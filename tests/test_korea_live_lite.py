@@ -12,6 +12,7 @@ from e2r.pipeline.korea_live_lite import (
     build_opendart_date_range_requests,
 )
 from e2r.research.search_provider import EmptySearchProvider, FixtureSearchProvider, SearchResult
+from e2r.sources.http_client import HttpClientStats, HttpResult
 
 
 AS_OF = date(2024, 5, 21)
@@ -216,6 +217,162 @@ class KoreaLiveLiteTests(unittest.TestCase):
         self.assertEqual(hard_risk.recommended_next_layer.value, "none")
         self.assertNotIn("555555", {item.stage.symbol for item in result.web_results})
 
+    def test_mocked_opendart_live_pagination_flows_into_disclosure_evidence(self):
+        http_client = MockHttpClient(
+            json_by_url_token={
+                "page_no=1": {
+                    "total_page": 2,
+                    "list": [
+                        {
+                            "stock_code": "111111",
+                            "corp_name": "한전변압기",
+                            "report_nm": "단일판매·공급계약체결",
+                            "rcept_no": "202405210091",
+                            "rcept_dt": "20240521",
+                        }
+                    ],
+                },
+                "page_no=2": {
+                    "total_page": 2,
+                    "list": [
+                        {
+                            "stock_code": "222222",
+                            "corp_name": "케이전력",
+                            "report_nm": "신규시설투자",
+                            "rcept_no": "202405210092",
+                            "rcept_dt": "20240521",
+                        }
+                    ],
+                },
+            }
+        )
+        env = {
+            "OPENDART_API_KEY": "OPENDART_SECRET",
+            "DATA_GO_KR_SERVICE_KEY": "DATA_SECRET",
+            "NAVER_CLIENT_ID": "NAVER_ID",
+            "NAVER_CLIENT_SECRET": "NAVER_SECRET",
+        }
+
+        with tempfile.TemporaryDirectory() as output_dir, patch.dict("os.environ", env, clear=True):
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    fixture_mode=False,
+                    live_enabled=True,
+                    http_client=http_client,
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+
+        disclosure_symbols = {item.symbol for item in result.evidence if item.source_type == "disclosure"}
+        self.assertIn("111111", disclosure_symbols)
+        self.assertIn("222222", disclosure_symbols)
+        self.assertEqual(result.run_log.source_modes["opendart"], "live_executed")
+        self.assertGreaterEqual(result.run_log.live_requests_executed, 2)
+        self.assertGreaterEqual(result.run_log.cache_writes, 2)
+
+    def test_mocked_naver_live_search_flows_into_news_evidence(self):
+        url = "https://news.example.com/live-naver-contract"
+        http_client = MockHttpClient(
+            json_by_url_token={
+                "opendart": {"total_page": 1, "list": []},
+                "openapi.naver.com": {
+                    "items": [
+                        {
+                            "title": "가격만강세 수주잔고 공급부족",
+                            "originallink": url,
+                            "link": url,
+                            "description": "가격만강세 수주잔고와 공급부족 뉴스",
+                            "pubDate": "Tue, 21 May 2024 08:00:00 +0900",
+                        }
+                    ]
+                },
+            }
+        )
+        env = {
+            "OPENDART_API_KEY": "OPENDART_SECRET",
+            "DATA_GO_KR_SERVICE_KEY": "DATA_SECRET",
+            "NAVER_CLIENT_ID": "NAVER_ID",
+            "NAVER_CLIENT_SECRET": "NAVER_SECRET",
+        }
+
+        with tempfile.TemporaryDirectory() as output_dir, patch.dict("os.environ", env, clear=True):
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    fixture_mode=False,
+                    live_enabled=True,
+                    http_client=http_client,
+                    budget=KoreaLiveLiteBudget(
+                        max_symbols_for_event_search=10,
+                        max_symbols_for_deep_research=10,
+                        max_naver_search_calls_per_day=20,
+                    ),
+                    browser_provider=EmptySearchProvider(),
+                    fixture_text_by_url={url: "가격만강세 수주잔고 공급부족과 판가 상승이 보도됐다."},
+                )
+            )
+
+        self.assertEqual(result.run_log.source_modes["naver_search"], "live_executed")
+        self.assertTrue(any(item.source_type == "news" for item in result.evidence))
+
+    def test_request_only_sources_are_marked_when_live_credentials_exist(self):
+        http_client = MockHttpClient(json_by_url_token={"opendart": {"total_page": 1, "list": []}})
+        env = {
+            "OPENDART_API_KEY": "OPENDART_SECRET",
+            "KRX_OPENAPI_KEY": "KRX_SECRET",
+            "NAVER_CLIENT_ID": "NAVER_ID",
+            "NAVER_CLIENT_SECRET": "NAVER_SECRET",
+        }
+
+        with tempfile.TemporaryDirectory() as output_dir, patch.dict("os.environ", env, clear=True):
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    fixture_mode=False,
+                    live_enabled=True,
+                    http_client=http_client,
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+
+        self.assertEqual(result.run_log.source_modes["krx"], "request_only")
+        self.assertEqual(result.run_log.source_modes["data_go_kr"], "request_only")
+        self.assertIn("krx", result.run_log.request_only_sources)
+        self.assertIn("data_go_kr", result.run_log.request_only_sources)
+
+    def test_api_keys_are_not_written_to_run_log(self):
+        http_client = MockHttpClient(json_by_url_token={"opendart": {"total_page": 1, "list": []}})
+        env = {
+            "OPENDART_API_KEY": "OPENDART_SECRET",
+            "DATA_GO_KR_SERVICE_KEY": "DATA_SECRET",
+            "NAVER_CLIENT_ID": "NAVER_ID",
+            "NAVER_CLIENT_SECRET": "NAVER_SECRET",
+        }
+
+        with tempfile.TemporaryDirectory() as output_dir, patch.dict("os.environ", env, clear=True):
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    fixture_mode=False,
+                    live_enabled=True,
+                    http_client=http_client,
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+            run_log_text = result.run_log_path.read_text(encoding="utf-8")
+
+        self.assertNotIn("OPENDART_SECRET", run_log_text)
+        self.assertNotIn("NAVER_SECRET", run_log_text)
+        self.assertNotIn("DATA_SECRET", run_log_text)
+
 
 STRONG_SINGLE_REPORT_TEXT = """
 발행일 2024.05.21
@@ -265,6 +422,25 @@ def _candidate(result, symbol):
         if candidate.symbol == symbol:
             return candidate
     raise AssertionError(f"candidate {symbol} not found")
+
+
+class MockHttpClient:
+    def __init__(self, json_by_url_token):
+        self.json_by_url_token = dict(json_by_url_token)
+        self.stats = HttpClientStats()
+        self.requests = []
+
+    def get_json(self, request, *, cache_path=None):
+        self.requests.append(request)
+        url = request.url + "?" + "&".join(f"{key}={value}" for key, value in request.params.items())
+        for token, payload in self.json_by_url_token.items():
+            if token in url:
+                self.stats.live_requests_executed += 1
+                if cache_path is not None:
+                    self.stats.cache_writes += 1
+                return HttpResult(ok=True, status_code=200, json_data=payload, text=json.dumps(payload), cache_path=str(cache_path) if cache_path else None)
+        self.stats.live_requests_failed += 1
+        return HttpResult(ok=False, error="mock_response_not_found")
 
 
 if __name__ == "__main__":

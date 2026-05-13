@@ -67,6 +67,52 @@ If credentials are missing, the runner falls back to fixture mode and records th
 output/korea_live_lite/YYYY-MM-DD_run_log.json
 ```
 
+## Source Modes
+
+`run_log.json` separates source state explicitly:
+
+```text
+fixture
+request_only
+live_executed
+fallback
+```
+
+Meaning:
+
+- `fixture`: local CSV/JSON/TXT fixtures were used.
+- `request_only`: request metadata was built, but live execution is not implemented or not enabled for that source.
+- `live_executed`: a controlled HTTP request was executed or served from live cache.
+- `fallback`: live mode was requested but the runner used fixture/fallback data because credentials were missing or the live request failed.
+
+Simple example:
+
+```json
+{
+  "source_modes": {
+    "opendart": "live_executed",
+    "krx": "request_only",
+    "data_go_kr": "request_only",
+    "naver_search": "live_executed"
+  }
+}
+```
+
+For now, OpenDART date-range disclosure search and Naver Search have live execution paths. KRX/data.go.kr remain request-only unless a complete live endpoint executor is wired in.
+
+`run_log.json` also records:
+
+```text
+live_requests_executed
+live_requests_failed
+cache_hits
+cache_writes
+fallback_reasons
+request_only_sources
+```
+
+API keys are not written into the run log.
+
 ## Default Budgets
 
 ```text
@@ -140,6 +186,16 @@ dropped search results and reasons
 run notes
 ```
 
+Use `source_modes` before reading the brief. For example:
+
+```text
+source_modes.opendart = fixture
+-> the brief came from fallback data, not actual OpenDART live data.
+
+source_modes.opendart = live_executed
+-> OpenDART date-range collection actually ran through the HTTP executor or cache.
+```
+
 ## OpenDART Date-Based Collection
 
 The runner intentionally avoids:
@@ -172,6 +228,90 @@ OpenDART list.json with bgn_de/end_de
 ```
 
 This is the main reason live-lite can be operated safely before a full production scheduler exists.
+
+OpenDART live execution uses paginated request metadata:
+
+```text
+bgn_de
+end_de
+page_no
+page_count
+```
+
+Raw JSON is cached under:
+
+```text
+data/cache/opendart/YYYY-MM-DD/
+```
+
+Tests use mocked HTTP responses, not real network calls.
+
+## Naver Search Live Execution
+
+Naver Search live mode is explicit and credential-gated.
+
+Required:
+
+```text
+NAVER_CLIENT_ID
+NAVER_CLIENT_SECRET
+```
+
+The runner executes only budgeted candidate queries, not all-listed deep search. Raw JSON is cached under:
+
+```text
+data/cache/naver/YYYY-MM-DD/
+```
+
+The search result then flows through the existing ranking/fetch/parsing path:
+
+```text
+Naver Search JSON
+-> SearchResult
+-> fixture/manual text or fetchable text
+-> NewsItem/ResearchReport/DisclosureEvent
+-> Evidence
+```
+
+## Tiny Live Pilot
+
+Start with a small live pilot:
+
+```python
+from datetime import date
+from e2r.pipeline.korea_live_lite import KoreaLiveLiteBudget, KoreaLiveLiteConfig, KoreaLiveLiteRunner
+
+result = KoreaLiveLiteRunner().run(
+    KoreaLiveLiteConfig(
+        as_of_date=date.today(),
+        fixture_mode=False,
+        live_enabled=True,
+        universe_limit=100,
+        budget=KoreaLiveLiteBudget(
+            max_opendart_calls_per_day=20,
+            max_krx_calls_per_day=100,
+            max_data_go_kr_calls_per_day=100,
+            max_naver_search_calls_per_day=30,
+            max_symbols_for_event_search=10,
+            max_symbols_for_deep_research=3,
+        ),
+    )
+)
+
+print(result.run_log_path)
+```
+
+Then inspect:
+
+```text
+missing_credentials
+source_modes
+live_requests_executed
+fallback_reasons
+request_only_sources
+skipped_queries
+dropped_search_results
+```
 
 ## Search Escalation
 
