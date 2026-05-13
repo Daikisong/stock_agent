@@ -1,0 +1,11 @@
+[project]
+name = "stock-agent-e2r"
+version = "0.1.0"
+description = "E2R 2.0 rerating detection and monitoring agent"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.pyright]
+pythonVersion = "3.10"
+typeCheckingMode = "basic"
+
