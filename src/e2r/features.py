@@ -508,6 +508,10 @@ class DeterministicFeatureEngineer:
         latest_consensus = DeterministicFeatureEngineer._latest_consensus(inputs.consensus)
         per = latest_consensus.per_e if latest_consensus else None
         pbr = latest_consensus.pbr_e if latest_consensus else None
+        if per is None:
+            per = fields.max_number("est_per", "per_e")
+        if pbr is None:
+            pbr = fields.max_number("est_pbr", "pbr_e")
         target_multiple_before = fields.max_number("target_multiple_before")
         target_multiple_after = fields.max_number("target_multiple_after")
         score = 0.0
