@@ -1,0 +1,32 @@
+{
+  "case_id": "daehan_cable_like_2026_red",
+  "symbol": "001440",
+  "company_name": "대한전선-like",
+  "market": "KR",
+  "exchange": "KRX",
+  "sector": "power_cable",
+  "stage3_date": "2026-04-14",
+  "stage3_price": 32000,
+  "stage3_source": "valuation and OPM weak fixture",
+  "expected_stage": "3-Red",
+  "financial_actuals": [
+    {"fiscal_year": 2025, "period_end": "2025-12-31", "reported_at": "2026-03-15T08:00:00", "as_of_date": "2026-03-15", "source": "historical-fixture", "sales": 3200000, "operating_profit": 100000, "net_income": 45000, "eps": 250, "cashflow_from_operations": 30000, "capex": 50000, "fcf": -20000}
+  ],
+  "consensus_evidence": [
+    {"date": "2026-04-14", "fiscal_year": 2026, "as_of_date": "2026-04-14", "source": "historical-consensus", "sales_e": 4100000, "op_e": 180000, "net_income_e": 90000, "eps_e": 500, "fcf_e": 10000, "per_e": 64, "pbr_e": 4.8, "roe_e": 4.5, "analyst_count": 3, "target_price": 36000}
+  ],
+  "consensus_revisions": [
+    {"date": "2026-04-14", "fiscal_year": 2026, "as_of_date": "2026-04-14", "eps_revision_1m": 8, "op_revision_1m": 10, "fcf_revision_1m": 2, "target_price_revision_1m": 8}
+  ],
+  "report_evidence": [
+    {"publish_date": "2026-04-14", "broker": "HistoricalBroker", "title": "전력망 모멘텀이나 OPM과 밸류 약함", "as_of_date": "2026-04-14", "current_price": 32000, "target_price": 36000, "target_revision_pct": 8, "est_per": 64, "est_pbr": 4.8, "roe": 4.5, "opm": 4.4, "investment_points": "수주잔고|전력망 테마", "risk_points": "낮은 OPM|높은 밸류|FCF 약함", "parsed_fields": {"contract_duration_months": 24, "contract_amount_to_prior_sales": 0.2, "order_backlog_to_sales": 1.1, "capa_utilization_pct": 85, "asp_yoy_pct": 4, "shortage_type": "cyclical", "one_off_shortage_risk": 45, "fcf_quality_score": 0, "cashflow_deterioration": true, "market_frame_shift": false}}
+  ],
+  "disclosure_evidence": [
+    {"source": "OpenDART fixture", "report_type": "수주잔고", "title": "2-3년치 수주잔고 언급", "published_at": "2026-04-14T08:00:00", "as_of_date": "2026-04-14", "raw_text": "수주잔고는 있으나 OPM 4.4%와 높은 밸류 부담"}
+  ],
+  "outcome_price_path": [
+    {"date": "2025-11-01", "low": 11000, "high": 13500, "close": 12500, "as_of_date": "2025-11-01"},
+    {"date": "2026-04-14", "low": 30000, "high": 34000, "close": 32000, "as_of_date": "2026-04-14"},
+    {"date": "2026-05-13", "low": 61000, "high": 75900, "close": 65400, "as_of_date": "2026-05-13"}
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "case_id": "smci_2024_4b_4c",
+  "symbol": "SMCI",
+  "company_name": "SMCI",
+  "market": "US",
+  "exchange": "NASDAQ",
+  "sector": "ai_server",
+  "stage3_date": "2024-01-19",
+  "stage3_price": 52.96,
+  "stage3_source": "AI server guidance fixture",
+  "expected_stage": "1",
+  "stage4b_date": "2024-03-08",
+  "stage4b_reason": "rapid rerating and crowded AI server trade",
+  "stage4c_date": "2024-08-28",
+  "stage4c_reason": "trust and accounting-risk thesis break fixture",
+  "financial_actuals": [
+    {"fiscal_year": 2023, "period_end": "2023-06-30", "reported_at": "2023-08-28T16:00:00", "as_of_date": "2023-08-28", "source": "SEC EDGAR fixture", "sales": 7123, "operating_profit": 760, "net_income": 640, "eps": 11.43, "cashflow_from_operations": 620, "capex": 120, "fcf": 500, "inventory": 1500}
+  ],
+  "consensus_evidence": [
+    {"date": "2024-01-19", "fiscal_year": 2024, "as_of_date": "2024-01-19", "source": "historical-consensus", "sales_e": 14500, "op_e": 1450, "net_income_e": 1200, "eps_e": 22, "fcf_e": 900, "per_e": 24, "pbr_e": 8, "analyst_count": 7, "target_price": 70}
+  ],
+  "consensus_revisions": [
+    {"date": "2024-01-19", "fiscal_year": 2024, "as_of_date": "2024-01-19", "eps_revision_1m": 35, "op_revision_1m": 40, "fcf_revision_1m": 20, "target_price_revision_1m": 25}
+  ],
+  "report_evidence": [
+    {"publish_date": "2024-01-19", "broker": "HistoricalBroker", "title": "SMCI AI server guidance and 4B watch setup", "as_of_date": "2024-01-19", "current_price": 52.96, "target_price": 70, "target_revision_pct": 25, "est_per": 24, "est_pbr": 8, "investment_points": "AI server demand|fast revenue guide", "risk_points": "inventory|trust risk", "parsed_fields": {"cyclical_shortage": true, "shortage_type": "cyclical", "one_off_shortage_risk": 45, "order_backlog_to_sales": 0.8, "backlog_yoy_pct": 25, "capa_utilization_pct": 92, "lead_time_months": 10, "asp_yoy_pct": 6, "market_frame_shift": true, "fcf_quality_score": 70, "opm_expansion_pctp": 5, "extreme_forward_valuation": true}}
+  ],
+  "disclosure_evidence": [
+    {"source": "SEC EDGAR fixture", "report_type": "8-K", "title": "AI server guidance raised", "published_at": "2024-01-19T16:00:00", "as_of_date": "2024-01-19", "raw_text": "AI server demand and inventory build"}
+  ],
+  "stage_snapshots": [
+    {"as_of_date": "2024-03-08", "stage": "4B", "previous_stage": "4A", "stage_changed": true, "grade": "4B-watch", "stage_reason": "rapid rerating and extreme valuation"},
+    {"as_of_date": "2024-08-28", "stage": "4C", "previous_stage": "4B", "stage_changed": true, "grade": "Thesis Break", "stage_reason": "trust and accounting-risk break"}
+  ],
+  "outcome_price_path": [
+    {"date": "2023-11-01", "low": 22, "high": 28, "close": 25, "as_of_date": "2023-11-01"},
+    {"date": "2024-01-19", "low": 50, "high": 58, "close": 52.96, "as_of_date": "2024-01-19"},
+    {"date": "2024-03-08", "low": 95, "high": 123, "close": 112, "as_of_date": "2024-03-08"},
+    {"date": "2024-03-15", "low": 100, "high": 122, "close": 108, "as_of_date": "2024-03-15"},
+    {"date": "2024-08-28", "low": 40, "high": 55, "close": 44, "as_of_date": "2024-08-28"},
+    {"date": "2024-09-30", "low": 35, "high": 48, "close": 39, "as_of_date": "2024-09-30"}
+  ]
+}

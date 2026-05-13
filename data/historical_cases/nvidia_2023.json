@@ -1,0 +1,33 @@
+{
+  "case_id": "nvidia_2023",
+  "symbol": "NVDA",
+  "company_name": "NVIDIA",
+  "market": "US",
+  "exchange": "NASDAQ",
+  "sector": "ai_infrastructure",
+  "stage3_date": "2023-05-25",
+  "stage3_price": 37.95,
+  "stage3_source": "FY2024 datacenter guidance fixture",
+  "expected_stage": "2",
+  "financial_actuals": [
+    {"fiscal_year": 2023, "period_end": "2023-01-29", "reported_at": "2023-02-24T16:00:00", "as_of_date": "2023-02-24", "source": "SEC EDGAR fixture", "sales": 26974, "operating_profit": 4224, "net_income": 4368, "eps": 1.74, "cashflow_from_operations": 5641, "capex": 1833, "fcf": 3808}
+  ],
+  "consensus_evidence": [
+    {"date": "2023-05-25", "fiscal_year": 2024, "as_of_date": "2023-05-25", "source": "historical-consensus", "sales_e": 52000, "op_e": 21000, "net_income_e": 18000, "eps_e": 7.2, "fcf_e": 17000, "per_e": 32, "pbr_e": 12, "analyst_count": 20, "target_price": 50}
+  ],
+  "consensus_revisions": [
+    {"date": "2023-05-25", "fiscal_year": 2024, "as_of_date": "2023-05-25", "eps_revision_1m": 40, "op_revision_1m": 55, "fcf_revision_1m": 35, "target_price_revision_1m": 30}
+  ],
+  "report_evidence": [
+    {"publish_date": "2023-05-25", "broker": "HistoricalBroker", "title": "NVIDIA AI datacenter demand shock", "as_of_date": "2023-05-25", "current_price": 37.95, "target_price": 50, "target_revision_pct": 30, "target_multiple_before": 35, "target_multiple_after": 45, "est_per": 32, "est_pbr": 12, "investment_points": "AI datacenter guide|GPU shortage|pricing power", "risk_points": "supply expansion|customer digestion", "parsed_fields": {"contract_duration_months": 36, "contract_amount_to_prior_sales": 0.35, "prepayment_exists": true, "rpo_to_sales": 1.2, "order_backlog_to_sales": 1.4, "backlog_yoy_pct": 55, "capa_utilization_pct": 98, "lead_time_months": 20, "capa_locked_years": 3, "asp_yoy_pct": 20, "high_margin_mix_pct": 70, "pricing_power_confirmed": true, "shortage_type": "structural", "one_off_shortage_risk": 10, "market_frame_shift": true, "fcf_quality_score": 95, "opm_expansion_pctp": 12, "capacity_precommitted": true}}
+  ],
+  "disclosure_evidence": [
+    {"source": "SEC EDGAR fixture", "report_type": "10-Q", "title": "RPO and datacenter demand keywords", "published_at": "2023-05-25T16:00:00", "as_of_date": "2023-05-25", "raw_text": "remaining performance obligations and datacenter demand expanded", "rpo_mentioned": true}
+  ],
+  "outcome_price_path": [
+    {"date": "2023-01-03", "low": 14.0, "high": 15.2, "close": 14.8, "as_of_date": "2023-01-03"},
+    {"date": "2023-05-25", "low": 36.0, "high": 39.5, "close": 37.95, "as_of_date": "2023-05-25"},
+    {"date": "2023-12-29", "low": 48.0, "high": 51.0, "close": 49.5, "as_of_date": "2023-12-29"},
+    {"date": "2024-06-20", "low": 120.0, "high": 140.0, "close": 130.0, "as_of_date": "2024-06-20"}
+  ]
+}

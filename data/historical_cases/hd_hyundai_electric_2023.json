@@ -1,0 +1,79 @@
+{
+  "case_id": "hd_hyundai_electric_2023",
+  "symbol": "267260",
+  "company_name": "HD현대일렉트릭",
+  "market": "KR",
+  "exchange": "KRX",
+  "sector": "power_equipment",
+  "stage3_date": "2023-07-27",
+  "stage3_price": 69600,
+  "stage3_source": "2023-07-27 broker report fixture",
+  "expected_stage": "3-Green",
+  "pre_runup_252d": 2.05,
+  "financial_actuals": [
+    {"fiscal_year": 2022, "period_end": "2022-12-31", "reported_at": "2023-02-06T08:00:00", "as_of_date": "2023-02-06", "source": "historical-fixture", "sales": 2100000, "operating_profit": 133000, "net_income": 90000, "eps": 2600, "cashflow_from_operations": 120000, "capex": 30000, "fcf": 90000}
+  ],
+  "consensus_evidence": [
+    {"date": "2023-07-27", "fiscal_year": 2024, "as_of_date": "2023-07-27", "source": "historical-consensus", "sales_e": 3300000, "op_e": 620000, "net_income_e": 470000, "eps_e": 13500, "fcf_e": 430000, "per_e": 6.3, "pbr_e": 1.4, "analyst_count": 5, "target_price": 95000, "target_multiple_type": "PER", "target_multiple": 8.0}
+  ],
+  "consensus_revisions": [
+    {"date": "2023-07-27", "fiscal_year": 2024, "as_of_date": "2023-07-27", "eps_revision_1m": 32, "op_revision_1m": 38, "fcf_revision_1m": 28, "target_price_revision_1m": 25, "analyst_count_change": 2, "street_high_eps_revision_1m": 40, "street_low_eps_revision_1m": 20}
+  ],
+  "report_evidence": [
+    {
+      "publish_date": "2023-07-27",
+      "broker": "HistoricalBroker",
+      "title": "HD현대일렉트릭 수주잔고와 리드타임 확인",
+      "as_of_date": "2023-07-27",
+      "current_price": 69600,
+      "target_price": 95000,
+      "target_revision_pct": 25,
+      "target_multiple_before": 6,
+      "target_multiple_after": 10,
+      "fy1_sales": 3300000,
+      "fy1_op": 620000,
+      "fy1_eps": 13500,
+      "est_per": 6.3,
+      "est_pbr": 1.4,
+      "investment_points": "수주잔고 확대|마진 개선|북미 전력망 병목",
+      "risk_points": "증설 지연|원가 변동",
+      "raw_text": "신규수주와 수주잔고가 동반 증가했고 리드타임은 24개월 이상이다.",
+      "parsed_fields": {
+        "contract_duration_months": 48,
+        "contract_amount_to_prior_sales": 0.55,
+        "prepayment_exists": true,
+        "non_cancellable": true,
+        "order_backlog_to_sales": 1.55,
+        "rpo_to_sales": 1.3,
+        "backlog_yoy_pct": 48,
+        "record_backlog": true,
+        "capa_utilization_pct": 96,
+        "capa_expansion_pct": 35,
+        "lead_time_months": 24,
+        "capa_locked_years": 3,
+        "asp_yoy_pct": 18,
+        "high_margin_mix_pct": 65,
+        "pricing_power_confirmed": true,
+        "shortage_type": "structural",
+        "one_off_shortage_risk": 10,
+        "market_frame_shift": true,
+        "fcf_quality_score": 95,
+        "opm_expansion_pctp": 9,
+        "capacity_precommitted": true
+      }
+    }
+  ],
+  "disclosure_evidence": [
+    {"source": "OpenDART fixture", "report_type": "수주잔고", "title": "장기 물량 중심 수주잔고 증가", "published_at": "2023-07-27T08:00:00", "as_of_date": "2023-07-27", "raw_text": "수주잔고와 리드타임 장기화 확인", "backlog_mentioned": true, "rpo_mentioned": true}
+  ],
+  "news_evidence": [
+    {"published_at": "2023-07-27T08:00:00", "source": "historical-news", "title": "북미 전력기기 공급 부족과 판가 상승", "as_of_date": "2023-07-27", "source_tier": 2, "shortage_comment": "전력기기 공급 부족", "asp_comment": "판가 상승"}
+  ],
+  "outcome_price_path": [
+    {"date": "2023-01-02", "low": 22000, "high": 26000, "close": 24000, "as_of_date": "2023-01-02"},
+    {"date": "2023-05-02", "low": 43000, "high": 50000, "close": 48000, "as_of_date": "2023-05-02"},
+    {"date": "2023-07-27", "low": 67500, "high": 72000, "close": 69600, "as_of_date": "2023-07-27"},
+    {"date": "2024-01-02", "low": 85000, "high": 120000, "close": 115000, "as_of_date": "2024-01-02"},
+    {"date": "2024-07-01", "low": 210000, "high": 280000, "close": 260000, "as_of_date": "2024-07-01"}
+  ]
+}

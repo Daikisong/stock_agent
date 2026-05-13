@@ -18,6 +18,13 @@ from .features import (
     engineer_score_from_connector,
 )
 from .fixtures import FIXTURE_CASES, FixtureCase, FixtureCategory, fixture_cases_by_category
+from .historical_cases import (
+    HistoricalCase,
+    HistoricalCasePipelineResult,
+    load_historical_case,
+    load_historical_cases,
+    run_historical_case_pipeline,
+)
 from .models import (
     BacktestResult,
     ConsensusRevision,
@@ -84,6 +91,8 @@ __all__ = [
     "FixtureCase",
     "FixtureCategory",
     "HARD_BREAK_SIGNALS",
+    "HistoricalCase",
+    "HistoricalCasePipelineResult",
     "IndustrialSubScores",
     "Instrument",
     "Market",
@@ -121,4 +130,7 @@ __all__ = [
     "evaluate_stage3_backtest",
     "fixture_cases_by_category",
     "generate_morning_briefing",
+    "load_historical_case",
+    "load_historical_cases",
+    "run_historical_case_pipeline",
 ]

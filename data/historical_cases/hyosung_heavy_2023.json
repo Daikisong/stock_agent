@@ -1,0 +1,71 @@
+{
+  "case_id": "hyosung_heavy_2023",
+  "symbol": "298040",
+  "company_name": "효성중공업",
+  "market": "KR",
+  "exchange": "KRX",
+  "sector": "power_equipment",
+  "stage3_date": "2023-07-31",
+  "stage3_price": 132000,
+  "stage3_source": "2023-07-31 margin and target revision fixture",
+  "expected_stage": "3-Green",
+  "financial_actuals": [
+    {"fiscal_year": 2022, "period_end": "2022-12-31", "reported_at": "2023-03-15T08:00:00", "as_of_date": "2023-03-15", "source": "historical-fixture", "sales": 3510000, "operating_profit": 143000, "net_income": 48000, "eps": 5200, "cashflow_from_operations": 90000, "capex": 25000, "fcf": 65000}
+  ],
+  "consensus_evidence": [
+    {"date": "2023-07-31", "fiscal_year": 2024, "as_of_date": "2023-07-31", "source": "historical-consensus", "sales_e": 4800000, "op_e": 560000, "net_income_e": 360000, "eps_e": 38000, "fcf_e": 310000, "per_e": 4.8, "pbr_e": 0.7, "analyst_count": 4, "target_price": 190000, "target_multiple_type": "PBR", "target_multiple": 1.0}
+  ],
+  "consensus_revisions": [
+    {"date": "2023-07-31", "fiscal_year": 2024, "as_of_date": "2023-07-31", "eps_revision_1m": 45, "op_revision_1m": 52, "fcf_revision_1m": 35, "target_price_revision_1m": 97.9, "analyst_count_change": 2}
+  ],
+  "report_evidence": [
+    {
+      "publish_date": "2023-07-31",
+      "broker": "HistoricalBroker",
+      "title": "효성중공업 저마진 수주 정리 후 마진 개선",
+      "as_of_date": "2023-07-31",
+      "current_price": 132000,
+      "target_price": 190000,
+      "target_revision_pct": 97.9,
+      "target_multiple_before": 0.55,
+      "target_multiple_after": 1.0,
+      "fy1_sales": 4800000,
+      "fy1_op": 560000,
+      "fy1_eps": 38000,
+      "est_per": 4.8,
+      "est_pbr": 0.7,
+      "investment_points": "저마진 수주 정리|중공업 마진 회복|고마진 수주잔고",
+      "risk_points": "수주 믹스 재악화",
+      "parsed_fields": {
+        "contract_duration_months": 48,
+        "contract_amount_to_prior_sales": 0.42,
+        "non_cancellable": true,
+        "order_backlog_to_sales": 1.45,
+        "backlog_yoy_pct": 55,
+        "record_backlog": true,
+        "capa_utilization_pct": 93,
+        "lead_time_months": 18,
+        "capa_locked_years": 2.5,
+        "asp_yoy_pct": 14,
+        "high_margin_mix_pct": 70,
+        "pricing_power_confirmed": true,
+        "shortage_type": "structural",
+        "one_off_shortage_risk": 12,
+        "market_frame_shift": true,
+        "fcf_quality_score": 90,
+        "opm_expansion_pctp": 10,
+        "capacity_precommitted": true
+      }
+    }
+  ],
+  "disclosure_evidence": [
+    {"source": "OpenDART fixture", "report_type": "실적", "title": "마진 개선과 고마진 잔고 인식", "published_at": "2023-07-31T08:00:00", "as_of_date": "2023-07-31", "raw_text": "저마진 수주 정리 후 고마진 수주잔고 매출 인식"}
+  ],
+  "outcome_price_path": [
+    {"date": "2023-01-02", "low": 68000, "high": 76000, "close": 72000, "as_of_date": "2023-01-02"},
+    {"date": "2023-05-02", "low": 76000, "high": 85000, "close": 78500, "as_of_date": "2023-05-02"},
+    {"date": "2023-07-31", "low": 126000, "high": 138000, "close": 132000, "as_of_date": "2023-07-31"},
+    {"date": "2024-01-02", "low": 175000, "high": 240000, "close": 230000, "as_of_date": "2024-01-02"},
+    {"date": "2024-07-01", "low": 300000, "high": 420000, "close": 390000, "as_of_date": "2024-07-01"}
+  ]
+}

@@ -191,14 +191,21 @@ class StageClassifier:
 
     @staticmethod
     def _is_stage_3_red(score: ScoreSnapshot, red_team: RedTeamAssessment) -> bool:
+        one_off_shortage_risk = _score_diagnostic(score, "one_off_shortage_risk")
+        revision_score = _score_diagnostic(score, "revision_score")
         if score.total_score < 80.0:
-            return False
+            return (
+                one_off_shortage_risk >= 80.0
+                and score.eps_fcf_explosion_score >= 17.0
+                and revision_score >= STAGE_3_GREEN_MIN_REVISION_SCORE
+                and score.information_confidence_score >= 3.0
+            )
         return (
             red_team.risk_level in {RedTeamRiskLevel.HIGH, RedTeamRiskLevel.HARD_BREAK}
             or score.valuation_rerating_score < 7.0
             or score.earnings_visibility_score < 12.0
             or score.bottleneck_pricing_score < 12.0
             or _score_diagnostic(score, "contract_quality", 100.0) < 25.0
-            or _score_diagnostic(score, "one_off_shortage_risk") >= 80.0
+            or one_off_shortage_risk >= 80.0
             or _score_diagnostic(score, "theme_overheat_score") >= 70.0
         )

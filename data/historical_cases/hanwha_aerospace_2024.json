@@ -1,0 +1,32 @@
+{
+  "case_id": "hanwha_aerospace_2024",
+  "symbol": "012450",
+  "company_name": "한화에어로스페이스",
+  "market": "KR",
+  "exchange": "KRX",
+  "sector": "defense",
+  "stage3_date": "2024-08-01",
+  "stage3_price": 300000,
+  "stage3_source": "defense backlog fixture",
+  "expected_stage": "3-Yellow",
+  "financial_actuals": [
+    {"fiscal_year": 2023, "period_end": "2023-12-31", "reported_at": "2024-03-01T08:00:00", "as_of_date": "2024-03-01", "source": "historical-fixture", "sales": 9400000, "operating_profit": 700000, "net_income": 600000, "eps": 12000, "cashflow_from_operations": 650000, "capex": 250000, "fcf": 400000}
+  ],
+  "consensus_evidence": [
+    {"date": "2024-08-01", "fiscal_year": 2025, "as_of_date": "2024-08-01", "source": "historical-consensus", "sales_e": 15000000, "op_e": 1800000, "net_income_e": 1300000, "eps_e": 26000, "fcf_e": 1000000, "per_e": 11.5, "pbr_e": 2.0, "analyst_count": 8, "target_price": 420000}
+  ],
+  "consensus_revisions": [
+    {"date": "2024-08-01", "fiscal_year": 2025, "as_of_date": "2024-08-01", "eps_revision_1m": 30, "op_revision_1m": 34, "fcf_revision_1m": 25, "target_price_revision_1m": 28}
+  ],
+  "report_evidence": [
+    {"publish_date": "2024-08-01", "broker": "HistoricalBroker", "title": "한화에어로스페이스 장기 방산 수주잔고", "as_of_date": "2024-08-01", "current_price": 300000, "target_price": 420000, "target_revision_pct": 28, "est_per": 11.5, "est_pbr": 2.0, "investment_points": "장기 납품|국가 계약|수주잔고", "risk_points": "계약 지연|환율", "parsed_fields": {"contract_duration_months": 72, "contract_amount_to_prior_sales": 0.8, "non_cancellable": true, "order_backlog_to_sales": 2.0, "backlog_yoy_pct": 60, "record_backlog": true, "capa_utilization_pct": 95, "lead_time_months": 24, "capa_locked_years": 4, "asp_yoy_pct": 12, "high_margin_mix_pct": 70, "pricing_power_confirmed": true, "shortage_type": "structural", "one_off_shortage_risk": 10, "market_frame_shift": true, "fcf_quality_score": 90, "opm_expansion_pctp": 6, "capacity_precommitted": true}}
+  ],
+  "disclosure_evidence": [
+    {"source": "OpenDART fixture", "report_type": "수주잔고", "title": "방산 장기 납품 계약", "published_at": "2024-08-01T08:00:00", "as_of_date": "2024-08-01", "raw_text": "장기 납품과 수주잔고 확대"}
+  ],
+  "outcome_price_path": [
+    {"date": "2024-01-02", "low": 135000, "high": 160000, "close": 150000, "as_of_date": "2024-01-02"},
+    {"date": "2024-08-01", "low": 280000, "high": 315000, "close": 300000, "as_of_date": "2024-08-01"},
+    {"date": "2025-01-02", "low": 340000, "high": 470000, "close": 430000, "as_of_date": "2025-01-02"}
+  ]
+}

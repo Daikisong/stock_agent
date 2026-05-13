@@ -1,0 +1,32 @@
+{
+  "case_id": "samyang_foods_2024",
+  "symbol": "003230",
+  "company_name": "삼양식품",
+  "market": "KR",
+  "exchange": "KRX",
+  "sector": "consumer_global_brand",
+  "stage3_date": "2024-05-17",
+  "stage3_price": 343500,
+  "stage3_source": "1Q24 review fixture",
+  "expected_stage": "1",
+  "financial_actuals": [
+    {"fiscal_year": 2023, "period_end": "2023-12-31", "reported_at": "2024-03-15T08:00:00", "as_of_date": "2024-03-15", "source": "historical-fixture", "sales": 1190000, "operating_profit": 147000, "net_income": 124000, "eps": 16500, "cashflow_from_operations": 135000, "capex": 45000, "fcf": 90000}
+  ],
+  "consensus_evidence": [
+    {"date": "2024-05-17", "fiscal_year": 2024, "as_of_date": "2024-05-17", "source": "historical-consensus", "sales_e": 1700000, "op_e": 340000, "net_income_e": 260000, "eps_e": 34500, "fcf_e": 230000, "per_e": 10.0, "pbr_e": 3.1, "analyst_count": 6, "target_price": 450000}
+  ],
+  "consensus_revisions": [
+    {"date": "2024-05-17", "fiscal_year": 2024, "as_of_date": "2024-05-17", "eps_revision_1m": 45, "op_revision_1m": 50, "fcf_revision_1m": 30, "target_price_revision_1m": 30}
+  ],
+  "report_evidence": [
+    {"publish_date": "2024-05-17", "broker": "HistoricalBroker", "title": "삼양식품 글로벌 브랜드 침투", "as_of_date": "2024-05-17", "current_price": 343500, "target_price": 450000, "target_revision_pct": 30, "est_per": 10.0, "est_pbr": 3.1, "investment_points": "해외 매출 급증|반복 소비|고마진 믹스", "risk_points": "마케팅비|성장률 둔화", "parsed_fields": {"recurring_consumer_demand": true, "repeat_purchase": true, "channel_expansion": true, "order_backlog_to_sales": 0.4, "capa_utilization_pct": 82, "capa_expansion_pct": 20, "asp_yoy_pct": 8, "high_margin_mix_pct": 75, "pricing_power_confirmed": true, "shortage_type": "none", "one_off_shortage_risk": 20, "market_frame_shift": true, "fcf_quality_score": 90, "opm_expansion_pctp": 8}}
+  ],
+  "disclosure_evidence": [
+    {"source": "company fixture", "report_type": "실적", "title": "해외 매출 비중 상승", "published_at": "2024-05-17T08:00:00", "as_of_date": "2024-05-17", "raw_text": "해외 매출 비중과 영업이익률 상승"}
+  ],
+  "outcome_price_path": [
+    {"date": "2024-01-02", "low": 103800, "high": 130000, "close": 120000, "as_of_date": "2024-01-02"},
+    {"date": "2024-05-17", "low": 320000, "high": 360000, "close": 343500, "as_of_date": "2024-05-17"},
+    {"date": "2025-01-02", "low": 520000, "high": 700000, "close": 660000, "as_of_date": "2025-01-02"}
+  ]
+}

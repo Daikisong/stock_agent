@@ -1,0 +1,14 @@
+{
+  "symbol": "NVDA",
+  "cik": "0001045810",
+  "facts": {
+    "us-gaap": {
+      "Revenues": {"units": {"USD": [{"fy": 2023, "fp": "FY", "end": "2023-01-29", "filed": "2023-02-24", "form": "10-K", "val": 26974000000}]}},
+      "OperatingIncomeLoss": {"units": {"USD": [{"fy": 2023, "fp": "FY", "end": "2023-01-29", "filed": "2023-02-24", "form": "10-K", "val": 4224000000}]}},
+      "NetIncomeLoss": {"units": {"USD": [{"fy": 2023, "fp": "FY", "end": "2023-01-29", "filed": "2023-02-24", "form": "10-K", "val": 4368000000}]}},
+      "EarningsPerShareDiluted": {"units": {"USD/shares": [{"fy": 2023, "fp": "FY", "end": "2023-01-29", "filed": "2023-02-24", "form": "10-K", "val": 1.74}]}},
+      "NetCashProvidedByUsedInOperatingActivities": {"units": {"USD": [{"fy": 2023, "fp": "FY", "end": "2023-01-29", "filed": "2023-02-24", "form": "10-K", "val": 5641000000}]}},
+      "PaymentsToAcquirePropertyPlantAndEquipment": {"units": {"USD": [{"fy": 2023, "fp": "FY", "end": "2023-01-29", "filed": "2023-02-24", "form": "10-K", "val": 1833000000}]}}
+    }
+  }
+}

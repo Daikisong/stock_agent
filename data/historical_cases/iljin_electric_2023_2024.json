@@ -1,0 +1,33 @@
+{
+  "case_id": "iljin_electric_2023_2024",
+  "symbol": "103590",
+  "company_name": "일진전기",
+  "market": "KR",
+  "exchange": "KRX",
+  "sector": "power_equipment",
+  "stage3_date": "2023-11-27",
+  "stage3_price": 17600,
+  "stage3_source": "2023-11-27 long-term contract fixture",
+  "expected_stage": "3-Green",
+  "financial_actuals": [
+    {"fiscal_year": 2022, "period_end": "2022-12-31", "reported_at": "2023-03-20T08:00:00", "as_of_date": "2023-03-20", "source": "historical-fixture", "sales": 1150000, "operating_profit": 32000, "net_income": 21000, "eps": 600, "cashflow_from_operations": 28000, "capex": 9000, "fcf": 19000}
+  ],
+  "consensus_evidence": [
+    {"date": "2023-11-27", "fiscal_year": 2024, "as_of_date": "2023-11-27", "source": "historical-consensus", "sales_e": 1600000, "op_e": 150000, "net_income_e": 105000, "eps_e": 2600, "fcf_e": 90000, "per_e": 8.2, "pbr_e": 1.3, "analyst_count": 3, "target_price": 26000}
+  ],
+  "consensus_revisions": [
+    {"date": "2023-11-27", "fiscal_year": 2024, "as_of_date": "2023-11-27", "eps_revision_1m": 26, "op_revision_1m": 31, "fcf_revision_1m": 22, "target_price_revision_1m": 24}
+  ],
+  "report_evidence": [
+    {"publish_date": "2023-11-27", "broker": "HistoricalBroker", "title": "일진전기 장기공급계약과 CAPA 잠김", "as_of_date": "2023-11-27", "current_price": 17600, "target_price": 26000, "target_revision_pct": 24, "target_multiple_before": 8, "target_multiple_after": 12, "est_per": 8.2, "est_pbr": 1.3, "investment_points": "장기계약|CAPA 잠김", "risk_points": "증설 지연", "parsed_fields": {"contract_duration_months": 60, "contract_amount_to_prior_sales": 0.3707, "non_cancellable": true, "order_backlog_to_sales": 1.4, "backlog_yoy_pct": 45, "capa_utilization_pct": 97, "capa_expansion_pct": 67, "lead_time_months": 18, "capa_locked_years": 3, "asp_yoy_pct": 12, "high_margin_mix_pct": 60, "pricing_power_confirmed": true, "shortage_type": "structural", "one_off_shortage_risk": 8, "market_frame_shift": true, "fcf_quality_score": 85, "opm_expansion_pctp": 8, "capacity_precommitted": true}}
+  ],
+  "disclosure_evidence": [
+    {"source": "OpenDART fixture", "report_type": "단일판매·공급계약체결", "title": "미국향 초고압 변압기 장기공급계약", "published_at": "2023-11-27T08:00:00", "as_of_date": "2023-11-27", "raw_text": "계약금액 4318억원 최근매출액 대비 37.07% 계약기간 2026.01.01 ~ 2030.12.31", "contract_amount_to_prior_sales": 0.3707, "contract_duration_months": 60}
+  ],
+  "outcome_price_path": [
+    {"date": "2023-01-02", "low": 5200, "high": 6200, "close": 5900, "as_of_date": "2023-01-02"},
+    {"date": "2023-11-27", "low": 16800, "high": 18500, "close": 17600, "as_of_date": "2023-11-27"},
+    {"date": "2024-03-27", "low": 18000, "high": 21000, "close": 19300, "as_of_date": "2024-03-27"},
+    {"date": "2025-01-02", "low": 42000, "high": 62000, "close": 58000, "as_of_date": "2025-01-02"}
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "case_id": "seegene_2020_red",
+  "symbol": "096530",
+  "company_name": "씨젠",
+  "market": "KR",
+  "exchange": "KRX",
+  "sector": "diagnostics",
+  "stage3_date": "2020-08-24",
+  "stage3_price": 242700,
+  "stage3_source": "diagnostics one-off demand fixture",
+  "expected_stage": "3-Red",
+  "financial_actuals": [
+    {"fiscal_year": 2020, "fiscal_quarter": 2, "period_end": "2020-06-30", "reported_at": "2020-08-14T08:00:00", "as_of_date": "2020-08-14", "source": "historical-fixture", "sales": 274800, "operating_profit": 169000, "net_income": 131000, "eps": 5200, "cashflow_from_operations": 140000, "capex": 15000, "fcf": 125000}
+  ],
+  "consensus_evidence": [
+    {"date": "2020-08-24", "fiscal_year": 2020, "as_of_date": "2020-08-24", "source": "historical-consensus", "sales_e": 1100000, "op_e": 650000, "net_income_e": 500000, "eps_e": 19000, "fcf_e": 520000, "per_e": 12.8, "pbr_e": 5.8, "analyst_count": 5, "target_price": 270000}
+  ],
+  "consensus_revisions": [
+    {"date": "2020-08-24", "fiscal_year": 2020, "as_of_date": "2020-08-24", "eps_revision_1m": 80, "op_revision_1m": 90, "fcf_revision_1m": 70, "target_price_revision_1m": 12}
+  ],
+  "report_evidence": [
+    {"publish_date": "2020-08-24", "broker": "HistoricalBroker", "title": "씨젠 진단키트 특수와 정상화 위험", "as_of_date": "2020-08-24", "current_price": 242700, "target_price": 270000, "target_revision_pct": 12, "est_per": 12.8, "est_pbr": 5.8, "investment_points": "진단키트 실적 급증", "risk_points": "팬데믹 특수 종료", "parsed_fields": {"pandemic_demand_spike": true, "one_off_shortage": true, "temporary_demand_risk": 98, "shortage_type": "one_off", "one_off_shortage_risk": 98, "capa_utilization_pct": 88, "market_frame_shift": true, "fcf_quality_score": 100, "opm_expansion_pctp": 25, "revision_slowdown": true}}
+  ],
+  "disclosure_evidence": [
+    {"source": "OpenDART fixture", "report_type": "잠정실적", "title": "진단키트 실적 급증", "published_at": "2020-08-14T08:00:00", "as_of_date": "2020-08-14", "raw_text": "진단키트 수요 급증"}
+  ],
+  "outcome_price_path": [
+    {"date": "2020-03-02", "low": 30000, "high": 42000, "close": 38000, "as_of_date": "2020-03-02"},
+    {"date": "2020-08-24", "low": 230000, "high": 260000, "close": 242700, "as_of_date": "2020-08-24"},
+    {"date": "2021-03-02", "low": 120000, "high": 160000, "close": 140000, "as_of_date": "2021-03-02"},
+    {"date": "2021-12-01", "low": 55000, "high": 75000, "close": 65000, "as_of_date": "2021-12-01"}
+  ]
+}

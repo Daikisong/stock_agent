@@ -1,0 +1,32 @@
+{
+  "case_id": "sanil_electric_2025",
+  "symbol": "062040",
+  "company_name": "산일전기",
+  "market": "KR",
+  "exchange": "KRX",
+  "sector": "power_equipment",
+  "stage3_date": "2025-02-06",
+  "stage3_price": 71600,
+  "stage3_source": "4Q24 review fixture",
+  "expected_stage": "2",
+  "financial_actuals": [
+    {"fiscal_year": 2024, "period_end": "2024-12-31", "reported_at": "2025-02-06T08:00:00", "as_of_date": "2025-02-06", "source": "historical-fixture", "sales": 350000, "operating_profit": 109500, "net_income": 82000, "eps": 2600, "cashflow_from_operations": 70000, "capex": 30000, "fcf": 40000}
+  ],
+  "consensus_evidence": [
+    {"date": "2025-02-06", "fiscal_year": 2025, "as_of_date": "2025-02-06", "source": "historical-consensus", "sales_e": 610000, "op_e": 190000, "net_income_e": 145000, "eps_e": 4300, "fcf_e": 100000, "per_e": 16.7, "pbr_e": 4.5, "analyst_count": 3, "target_price": 105000}
+  ],
+  "consensus_revisions": [
+    {"date": "2025-02-06", "fiscal_year": 2025, "as_of_date": "2025-02-06", "eps_revision_1m": 21, "op_revision_1m": 24, "fcf_revision_1m": 15, "target_price_revision_1m": 30}
+  ],
+  "report_evidence": [
+    {"publish_date": "2025-02-06", "broker": "HistoricalBroker", "title": "산일전기 실적과 CAPA 증설", "as_of_date": "2025-02-06", "current_price": 71600, "target_price": 105000, "target_revision_pct": 30, "est_per": 16.7, "est_pbr": 4.5, "investment_points": "OPM 31.3|CAPA 71 증가|미국향 매출", "risk_points": "상장 초기 변동성", "parsed_fields": {"contract_duration_months": 24, "contract_amount_to_prior_sales": 0.25, "order_backlog_to_sales": 1.25, "backlog_yoy_pct": 39, "capa_utilization_pct": 94, "capa_expansion_pct": 71, "lead_time_months": 16, "asp_yoy_pct": 14, "high_margin_mix_pct": 79, "pricing_power_confirmed": true, "shortage_type": "structural", "one_off_shortage_risk": 12, "market_frame_shift": true, "fcf_quality_score": 80, "opm_expansion_pctp": 7, "capacity_precommitted": true}}
+  ],
+  "disclosure_evidence": [
+    {"source": "OpenDART fixture", "report_type": "신규시설투자", "title": "제2공장 증설", "published_at": "2025-02-06T08:00:00", "as_of_date": "2025-02-06", "raw_text": "생산능력 증가 71% 완공예정일 2025.12.31", "capa_increase_pct": 71}
+  ],
+  "outcome_price_path": [
+    {"date": "2024-07-29", "low": 45000, "high": 55000, "close": 50200, "as_of_date": "2024-07-29"},
+    {"date": "2025-02-06", "low": 68000, "high": 76000, "close": 71600, "as_of_date": "2025-02-06"},
+    {"date": "2025-08-07", "low": 130000, "high": 170000, "close": 160000, "as_of_date": "2025-08-07"}
+  ]
+}

@@ -264,6 +264,7 @@ class ConsensusSnapshot:
     op_e: float | None = None
     net_income_e: float | None = None
     eps_e: float | None = None
+    fcf_e: float | None = None
     bps_e: float | None = None
     roe_e: float | None = None
     per_e: float | None = None
@@ -280,7 +281,7 @@ class ConsensusSnapshot:
         _require_date(self.as_of_date, "as_of_date")
         if self.date > self.as_of_date:
             raise ValueError("consensus date cannot be after as_of_date")
-        for field_name in ("sales_e", "bps_e", "per_e", "pbr_e", "target_price", "target_multiple"):
+        for field_name in ("sales_e", "fcf_e", "bps_e", "per_e", "pbr_e", "target_price", "target_multiple"):
             _require_non_negative(getattr(self, field_name), field_name)
         _require_non_negative(self.analyst_count, "analyst_count")
 
@@ -302,6 +303,8 @@ class ConsensusRevision:
     fcf_revision_1m: float | None = None
     target_price_revision_1m: float | None = None
     analyst_count_change: int | None = None
+    street_high_eps_revision_1m: float | None = None
+    street_low_eps_revision_1m: float | None = None
 
     def __post_init__(self) -> None:
         _require_text(self.symbol, "symbol")
@@ -363,8 +366,28 @@ class ResearchReport:
     fy2_sales: float | None = None
     fy2_op: float | None = None
     fy2_eps: float | None = None
+    fy3_sales: float | None = None
+    fy3_op: float | None = None
+    fy3_eps: float | None = None
     est_per: float | None = None
     est_pbr: float | None = None
+    upside_pct: float | None = None
+    fifty_two_week_high: float | None = None
+    fifty_two_week_low: float | None = None
+    one_month_return: float | None = None
+    three_month_return: float | None = None
+    twelve_month_return: float | None = None
+    roe: float | None = None
+    opm: float | None = None
+    backlog: float | None = None
+    new_orders: float | None = None
+    order_backlog_to_sales: float | None = None
+    capa_increase_pct: float | None = None
+    export_ratio: float | None = None
+    us_revenue_ratio: float | None = None
+    asp_increase_mentioned: bool = False
+    lead_time_mentioned: bool = False
+    shortage_mentioned: bool = False
     investment_points: tuple[str, ...] = field(default_factory=tuple)
     risk_points: tuple[str, ...] = field(default_factory=tuple)
     raw_text: str | None = None
@@ -385,8 +408,14 @@ class ResearchReport:
             "target_multiple_after",
             "fy1_sales",
             "fy2_sales",
+            "fy3_sales",
             "est_per",
             "est_pbr",
+            "fifty_two_week_high",
+            "fifty_two_week_low",
+            "backlog",
+            "new_orders",
+            "order_backlog_to_sales",
         ):
             _require_non_negative(getattr(self, field_name), field_name)
         object.__setattr__(self, "investment_points", _copy_tuple(self.investment_points))

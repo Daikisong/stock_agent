@@ -1,0 +1,36 @@
+{
+  "case_id": "zoom_2020_red",
+  "symbol": "ZM",
+  "company_name": "Zoom",
+  "market": "US",
+  "exchange": "NASDAQ",
+  "sector": "software",
+  "stage3_date": "2020-09-01",
+  "stage3_price": 470.11,
+  "stage3_source": "pandemic demand fixture",
+  "expected_stage": "3-Red",
+  "financial_actuals": [
+    {"fiscal_year": 2020, "fiscal_quarter": 2, "period_end": "2020-07-31", "reported_at": "2020-09-01T16:00:00", "as_of_date": "2020-09-01", "source": "SEC EDGAR fixture", "sales": 664, "operating_profit": 188, "net_income": 186, "eps": 0.66, "cashflow_from_operations": 401, "capex": 15, "fcf": 386}
+  ],
+  "consensus_evidence": [
+    {"date": "2020-09-01", "fiscal_year": 2021, "as_of_date": "2020-09-01", "source": "historical-consensus", "sales_e": 2500, "op_e": 900, "net_income_e": 800, "eps_e": 2.8, "fcf_e": 900, "per_e": 168, "pbr_e": 55, "analyst_count": 15, "target_price": 475}
+  ],
+  "consensus_revisions": [
+    {"date": "2020-09-01", "fiscal_year": 2021, "as_of_date": "2020-09-01", "eps_revision_1m": 60, "op_revision_1m": 70, "fcf_revision_1m": 55, "target_price_revision_1m": 20}
+  ],
+  "report_evidence": [
+    {"publish_date": "2020-09-01", "broker": "HistoricalBroker", "title": "Zoom pandemic demand spike", "as_of_date": "2020-09-01", "current_price": 470.11, "target_price": 475, "target_revision_pct": 20, "est_per": 168, "est_pbr": 55, "investment_points": "remote work surge", "risk_points": "pandemic normalization", "parsed_fields": {"pandemic_demand_spike": true, "one_off_shortage": true, "temporary_demand_risk": 95, "shortage_type": "one_off", "one_off_shortage_risk": 95, "capa_utilization_pct": 75, "revision_slowdown": true, "market_frame_shift": true, "fcf_quality_score": 100, "opm_expansion_pctp": 20, "extreme_forward_valuation": true}}
+  ],
+  "disclosure_evidence": [
+    {"source": "SEC EDGAR fixture", "report_type": "10-Q", "title": "Usage surge risk disclosure", "published_at": "2020-09-01T16:00:00", "as_of_date": "2020-09-01", "raw_text": "Demand surge may normalize after pandemic restrictions ease."}
+  ],
+  "news_evidence": [
+    {"published_at": "2020-09-01T09:00:00", "source": "historical-news", "title": "팬데믹 화상회의 수요 급증", "as_of_date": "2020-09-01", "source_tier": 2, "pandemic_demand_spike": true, "temporary_demand_risk": 95}
+  ],
+  "outcome_price_path": [
+    {"date": "2020-03-02", "low": 105, "high": 125, "close": 115, "as_of_date": "2020-03-02"},
+    {"date": "2020-09-01", "low": 440, "high": 485, "close": 470.11, "as_of_date": "2020-09-01"},
+    {"date": "2021-02-01", "low": 350, "high": 420, "close": 380, "as_of_date": "2021-02-01"},
+    {"date": "2021-12-01", "low": 180, "high": 230, "close": 200, "as_of_date": "2021-12-01"}
+  ]
+}

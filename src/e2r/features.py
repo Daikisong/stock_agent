@@ -430,6 +430,15 @@ class DeterministicFeatureEngineer:
             latest_actual.eps if latest_actual else None,
         )
         fcf_growth = fields.max_percent("fy1_fcf_growth_pct", "fy2_fcf_growth_pct", "fcf_growth_pct")
+        fcf_growth = _max_or_none(
+            (
+                fcf_growth,
+                _growth_pct(
+                    latest_consensus.fcf_e if latest_consensus else None,
+                    latest_actual.fcf if latest_actual else None,
+                ),
+            )
+        )
         op_yoy = fields.max_percent("op_yoy_pct", "operating_profit_yoy_pct")
         eps_yoy = fields.max_percent("eps_yoy_pct")
         best_growth_score = max(
@@ -653,8 +662,28 @@ class _ParsedFieldSource:
                 "fy2_sales",
                 "fy2_op",
                 "fy2_eps",
+                "fy3_sales",
+                "fy3_op",
+                "fy3_eps",
                 "est_per",
                 "est_pbr",
+                "upside_pct",
+                "fifty_two_week_high",
+                "fifty_two_week_low",
+                "one_month_return",
+                "three_month_return",
+                "twelve_month_return",
+                "roe",
+                "opm",
+                "backlog",
+                "new_orders",
+                "order_backlog_to_sales",
+                "capa_increase_pct",
+                "export_ratio",
+                "us_revenue_ratio",
+                "asp_increase_mentioned",
+                "lead_time_mentioned",
+                "shortage_mentioned",
             ):
                 value = getattr(report, key)
                 if value is not None:
