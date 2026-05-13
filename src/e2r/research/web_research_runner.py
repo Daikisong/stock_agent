@@ -310,6 +310,8 @@ def extract_e2r_text_fields(text: str) -> dict[str, Any]:
         ("op_delta_to_market_cap", ("OP 증가분/시총", "영업이익 증가분/시총")),
         ("capex_to_sales", ("CAPEX/매출", "투자/매출")),
         ("target_multiple_delta", ("멀티플 상향폭", "multiple expansion")),
+        ("return_since_stage3", ("return_since_stage3", "return since Stage 3", "Stage 3 이후 수익률")),
+        ("return_12_24m", ("return_12_24m", "12~24개월 수익률", "12-24m return")),
     ):
         value = _number_after(text, labels)
         if value is not None:
@@ -362,6 +364,14 @@ def extract_e2r_text_fields(text: str) -> dict[str, Any]:
         fields["supply_glut"] = True
     if "컨센서스 하향" in text or "revision down" in lowered:
         fields["eps_fcf_revision_down"] = True
+    if "extreme forward valuation" in lowered or "극단적 밸류에이션" in text:
+        fields["extreme_forward_valuation"] = True
+    if "revision slowdown" in lowered or "추정치 둔화" in text:
+        fields["revision_slowdown"] = True
+    if "market crowding" in lowered or "과밀" in text:
+        fields["market_crowding"] = True
+    if "blowoff price pattern" in lowered or "급등 과열" in text:
+        fields["blowoff_price_pattern"] = True
     if "회계 이슈" in text or "감사의견" in text or "accounting issue" in lowered:
         fields["accounting_or_trust_issue"] = True
         fields["risk_comment"] = _excerpt(text, ("회계 이슈", "감사의견", "accounting issue"))

@@ -18,6 +18,9 @@ REPORT_KEYWORDS: tuple[str, ...] = (
     "CAPA",
     "장기공급계약",
     "ASP",
+    "리드타임",
+    "상향",
+    "매출액 대비",
     "OPM",
     "PDF",
 )
@@ -35,6 +38,8 @@ HIGH_TIER_SOURCE_TOKENS: tuple[str, ...] = (
     "kind",
     "broker",
     "research",
+    "reuters",
+    "dart",
 )
 
 LOW_QUALITY_TOKENS: tuple[str, ...] = ("forum", "blog", "rumor", "dcinside", "fmkorea", "advert", "광고")

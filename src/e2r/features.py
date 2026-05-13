@@ -588,6 +588,19 @@ class DeterministicFeatureEngineer:
             soft_4b_factors["extreme_forward_valuation"] = 1.0
         if fields.any_bool("revision_slowdown"):
             soft_4b_factors["revision_slowdown"] = 1.0
+        for key in (
+            "return_since_stage3",
+            "return_12_24m",
+            "backlog_contract_slowdown",
+            "market_crowding",
+            "insider_or_major_event",
+            "blowoff_price_pattern",
+        ):
+            value = fields.max_percent(key)
+            if value is not None and value > 0:
+                soft_4b_factors[key] = min(1.0, value / 100.0)
+            elif fields.any_bool(key):
+                soft_4b_factors[key] = 1.0
         if sub_scores.one_off_shortage_risk >= 75.0:
             soft_4b_factors["market_crowding"] = 0.5
         for key in (

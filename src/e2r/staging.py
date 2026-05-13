@@ -198,7 +198,7 @@ class StageClassifier:
                 one_off_shortage_risk >= 80.0
                 and score.eps_fcf_explosion_score >= 17.0
                 and revision_score >= STAGE_3_GREEN_MIN_REVISION_SCORE
-                and score.information_confidence_score >= 3.0
+                and score.information_confidence_score >= 2.0
             )
         return (
             red_team.risk_level in {RedTeamRiskLevel.HIGH, RedTeamRiskLevel.HARD_BREAK}
