@@ -164,13 +164,12 @@ class KoreaLiveLiteRunner:
             source_call_counts=source_call_counts,
         )
         scan_sources = _sources_with_date_disclosures(sources, date_disclosures)
-        universe_limit = _budgeted_universe_limit(config, sources)
         cheap_scan = KoreaCheapScanner(scan_sources).run(
             KoreaCheapScanConfig(
                 as_of_date=config.as_of_date,
                 markets=(Market.KR,),
                 sources=scan_sources,
-                universe_limit=universe_limit,
+                universe_limit=config.universe_limit,
                 lookback_days=config.lookback_days,
                 disclosure_lookback_days=config.disclosure_lookback_days,
                 top_n=config.top_candidates,
@@ -289,10 +288,18 @@ def _collect_opendart_disclosures_by_date(
     built_requests: list[SourceRequest],
     source_call_counts: dict[str, int],
 ) -> tuple[DisclosureEvent, ...]:
+    """Preload OpenDART disclosures for the date window.
+
+    This supports all-listed cheap scan without one OpenDART API call per
+    symbol. The scanner still evaluates every listed instrument; per-symbol
+    disclosure lookup later is only a local filter over this preloaded set.
+    """
+
     if sources.opendart is None:
         return ()
-    built_requests.append(_date_based_opendart_request(sources.opendart, start, end, as_of_date))
-    source_call_counts["opendart_disclosure_date_range"] += 1
+    requests = build_opendart_date_range_requests(start, end, as_of_date)
+    built_requests.extend(requests)
+    source_call_counts["opendart_disclosure_date_range"] += len(requests)
     rows = load_fixture_records(sources.opendart.fixture_root, "disclosures")
     disclosures = tuple(sources.opendart.normalize_disclosure(row) for row in rows)
     return tuple(
@@ -309,22 +316,46 @@ def _collect_opendart_disclosures_by_date(
     )
 
 
-def _date_based_opendart_request(connector: OpenDARTConnector, start: date, end: date, as_of_date: date) -> SourceRequest:
-    return SourceRequest(
-        method="GET",
-        url=f"{connector.base_url}/list.json",
-        params={
-            "bgn_de": start.strftime("%Y%m%d"),
-            "end_de": min(end, as_of_date).strftime("%Y%m%d"),
-            "page_count": 100,
-        },
-        fixture_mode=connector.fixture_mode,
-        credential_name="OPENDART_API_KEY",
+def build_opendart_date_range_requests(
+    start: date,
+    end: date,
+    as_of_date: date,
+    page_count: int = 100,
+    max_pages: int | None = None,
+) -> tuple[SourceRequest, ...]:
+    """Build paginated OpenDART date-range request metadata without network calls."""
+
+    if page_count <= 0:
+        raise ValueError("page_count must be positive")
+    if max_pages is not None and max_pages <= 0:
+        raise ValueError("max_pages must be positive when set")
+    pages = range(1, (max_pages or 1) + 1)
+    return tuple(
+        SourceRequest(
+            method="GET",
+            url="https://opendart.fss.or.kr/api/list.json",
+            params={
+                "bgn_de": start.strftime("%Y%m%d"),
+                "end_de": min(end, as_of_date).strftime("%Y%m%d"),
+                "page_no": page_no,
+                "page_count": page_count,
+            },
+            fixture_mode=True,
+            credential_name="OPENDART_API_KEY",
+        )
+        for page_no in pages
     )
 
 
 @dataclass(frozen=True)
 class _DateBasedOpenDARTConnector:
+    """OpenDART adapter that turns per-symbol calls into local filters.
+
+    KoreaCheapScanner still scans all instruments. When it asks for one
+    symbol's disclosures, this connector filters the already loaded date-range
+    disclosures in memory, so ``opendart_symbol_disclosure_calls`` stays zero.
+    """
+
     base: OpenDARTConnector
     date_disclosures: tuple[DisclosureEvent, ...]
 
@@ -360,21 +391,6 @@ def _sources_with_date_disclosures(
         kind=sources.kind,
         fsc=sources.fsc,
     )
-
-
-def _budgeted_universe_limit(config: KoreaLiveLiteConfig, sources: KoreaCheapScanSources) -> int | None:
-    limits: list[int] = []
-    if sources.krx is not None:
-        limits.append(max(0, config.budget.max_krx_calls_per_day - 1))
-    if sources.fsc is not None:
-        limits.append(max(0, config.budget.max_data_go_kr_calls_per_day - 1))
-    if sources.opendart is not None:
-        limits.append(max(0, config.budget.max_opendart_calls_per_day - 1))
-    if config.universe_limit is not None:
-        limits.append(config.universe_limit)
-    if not limits:
-        return config.universe_limit
-    return max(0, min(limits))
 
 
 def _record_estimated_source_calls(
@@ -610,5 +626,6 @@ __all__ = [
     "KoreaLiveLiteRunLog",
     "KoreaLiveLiteRunner",
     "SkippedCandidate",
+    "build_opendart_date_range_requests",
     "fixture_sources",
 ]

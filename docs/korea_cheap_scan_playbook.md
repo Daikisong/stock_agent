@@ -26,6 +26,51 @@ Simple example:
 -> E2R 후보만 deep research
 ```
 
+## All-Listed Scan Does Not Mean Per-Symbol OpenDART Calls
+
+All-listed scan means every listed KOSPI/KOSDAQ instrument is evaluated.
+
+It does not mean:
+
+```text
+for each listed company:
+    call OpenDART list.json
+```
+
+The correct Layer 1 pattern is:
+
+```text
+load all KOSPI/KOSDAQ instruments
+call OpenDART list.json by bgn_de/end_de with pagination
+group collected disclosures by stock_code/corp_code
+scanner filters the preloaded disclosure set by symbol
+evaluate every instrument with price, financial, risk, and disclosure sensors
+```
+
+Simple example:
+
+```text
+2,500 listed instruments
+-> OpenDART date-range collection returns 80 same-day disclosures
+-> 80 disclosures are grouped by symbol
+-> all 2,500 instruments are still evaluated
+```
+
+Instruments without disclosures still participate. They can become cheap-scan candidates through:
+
+- price/volume signals
+- financial turnaround signals
+- KIND/KRX risk signals
+- 52-week high or local return percentile signals
+
+Per-symbol OpenDART calls are only allowed after Layer 1, for example:
+
+- deep research details for a small number of candidates
+- active watchlist monitoring
+- manual audit of a specific disclosure chain
+
+They are not allowed for the all-listed Layer 1 cheap scan.
+
 ## Free Source Map
 
 OpenDART:

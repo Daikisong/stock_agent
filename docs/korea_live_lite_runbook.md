@@ -148,6 +148,21 @@ The runner intentionally avoids:
 2,500 listed companies * 1 disclosure search each
 ```
 
+Bad:
+
+```text
+for each listed company:
+    call OpenDART list.json
+```
+
+Good:
+
+```text
+call OpenDART list.json by bgn_de/end_de with pagination
+group disclosures by stock_code/corp_code
+scanner filters by symbol in memory
+```
+
 Instead:
 
 ```text

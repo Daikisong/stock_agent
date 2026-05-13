@@ -9,6 +9,7 @@ from e2r.pipeline.korea_live_lite import (
     KoreaLiveLiteBudget,
     KoreaLiveLiteConfig,
     KoreaLiveLiteRunner,
+    build_opendart_date_range_requests,
 )
 from e2r.research.search_provider import EmptySearchProvider, FixtureSearchProvider, SearchResult
 
@@ -73,6 +74,70 @@ class KoreaLiveLiteTests(unittest.TestCase):
         self.assertGreater(result.cheap_scan.instruments_scanned, 1)
         self.assertEqual(result.run_log.source_call_counts["opendart_disclosure_date_range"], 1)
         self.assertEqual(result.run_log.source_call_counts["opendart_symbol_disclosure_calls"], 0)
+
+    def test_date_based_disclosure_collection_contains_multiple_symbols(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+
+        disclosure_symbols = {item.symbol for item in result.evidence if item.source_type == "disclosure"}
+        self.assertGreaterEqual(len(disclosure_symbols), 3)
+        self.assertIn("111111", disclosure_symbols)
+        self.assertIn("222222", disclosure_symbols)
+
+    def test_no_disclosure_instrument_is_still_evaluated_by_price_sensor(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+
+        candidate = _candidate(result, "444444")
+        self.assertEqual(candidate.recommended_next_layer.value, "event_search")
+        self.assertIn("PRICE_VOLUME_SPIKE", candidate.reason_codes)
+        self.assertFalse(any(code.startswith("DISC_") for code in candidate.reason_codes))
+        self.assertEqual(candidate.evidence_ids, ())
+
+    def test_no_disclosure_instrument_can_become_event_search_via_financial_rules(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+
+        candidate = _candidate(result, "777777")
+        self.assertEqual(candidate.recommended_next_layer.value, "event_search")
+        self.assertIn("FIN_OP_TURNAROUND", candidate.reason_codes)
+        self.assertIn("FIN_FCF_TURNAROUND", candidate.reason_codes)
+        self.assertFalse(any(code.startswith("DISC_") for code in candidate.reason_codes))
+
+    def test_page_request_builder_emits_page_metadata(self):
+        requests = build_opendart_date_range_requests(
+            date(2024, 5, 20),
+            date(2024, 5, 21),
+            AS_OF,
+            page_count=50,
+            max_pages=3,
+        )
+
+        self.assertEqual([item.params["page_no"] for item in requests], [1, 2, 3])
+        self.assertTrue(all(item.params["page_count"] == 50 for item in requests))
+        self.assertTrue(all(item.params["bgn_de"] == "20240520" for item in requests))
+        self.assertTrue(all(item.params["end_de"] == "20240521" for item in requests))
 
     def test_event_and_deep_research_symbol_budgets_are_respected(self):
         with tempfile.TemporaryDirectory() as output_dir:
@@ -194,6 +259,12 @@ CAPEX/매출 20%
 투자포인트: 수주잔고 확대|마진 개선|북미 전력망 병목
 리스크: 증설 지연|원가 변동
 """
+
+def _candidate(result, symbol):
+    for candidate in result.candidates:
+        if candidate.symbol == symbol:
+            return candidate
+    raise AssertionError(f"candidate {symbol} not found")
 
 
 if __name__ == "__main__":
