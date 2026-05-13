@@ -1,0 +1,2 @@
+symbol,company_name,market,as_of_date,managed_issue,investment_warning,trading_halt,unfaithful_disclosure,delisting_risk,investor_caution,title,source
+555555,관리위험,KR,2024-05-21,true,false,true,false,false,false,KIND 관리종목 및 거래정지,KIND

@@ -1,0 +1,2 @@
+symbol,date,open,high,low,close,adj_close,volume,trading_value,market_cap,source,as_of_date
+888888,2024-05-21,1000,1100,990,1050,1050,10000,10000000,10000000000,data.go.kr FSC,2024-05-21

@@ -224,6 +224,10 @@ class _FixedQueryPlanner:
 
 
 def _layer_for_query(query_spec: QuerySpec, stage_context: str | None) -> ResearchLayer:
+    if query_spec.group == "event_search":
+        return ResearchLayer.EVENT_SEARCH
+    if query_spec.group == "deep_research":
+        return ResearchLayer.DEEP_RESEARCH
     if query_spec.group == "discovery":
         return ResearchLayer.EVENT_SEARCH
     if query_spec.group == "monitoring" and stage_context:

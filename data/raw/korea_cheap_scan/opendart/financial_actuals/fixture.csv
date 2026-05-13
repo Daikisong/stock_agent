@@ -1,0 +1,3 @@
+symbol,fiscal_year,fiscal_quarter,period_end,reported_at,as_of_date,source,sales,operating_profit,net_income,eps,bps,roe,opm,cashflow_from_operations,capex,fcf,receivables,inventory
+777777,2023,4,2023-12-31,2024-03-15T09:00:00,2024-03-15,OpenDART,1000,-20,-30,-100,5000,-2,-2,10,30,-20,150,120
+777777,2024,1,2024-03-31,2024-05-16T09:00:00,2024-05-16,OpenDART,1200,90,70,250,5200,5,8,120,40,80,160,125

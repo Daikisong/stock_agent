@@ -1,0 +1,8 @@
+symbol,name,market,exchange,sector_exchange,listed_date,currency,is_preferred,is_spac,is_reit,is_etf,is_managed,is_invest_warning,is_trading_halt
+111111,한전변압기,KR,KOSPI,전기장비,2020-01-02,KRW,false,false,false,false,false,false,false
+222222,케이전력,KR,KOSDAQ,전기장비,2020-01-02,KRW,false,false,false,false,false,false,false
+333333,씨파워설비,KR,KOSPI,기계,2020-01-02,KRW,false,false,false,false,false,false,false
+444444,가격만강세,KR,KOSDAQ,소프트웨어,2020-01-02,KRW,false,false,false,false,false,false,false
+555555,관리위험,KR,KOSDAQ,바이오,2020-01-02,KRW,false,false,false,false,true,false,true
+666666,희석테크,KR,KOSPI,반도체,2020-01-02,KRW,false,false,false,false,false,false,false
+777777,실적턴어라운드,KR,KOSDAQ,부품,2020-01-02,KRW,false,false,false,false,false,false,false
