@@ -1,0 +1,13 @@
+large_sector,korean_name,description
+INDUSTRIAL_ORDERS_INFRA,산업재·수주·인프라,"전력설비, 전선, 방산, 조선, 건설기계, 피팅밸브, 원전, 철도"
+AI_SEMICONDUCTOR_ELECTRONICS,AI·반도체·전자부품,"HBM, CXL, 시스템반도체, PCB, OLED, MLCC, 유리기판, 클린룸, 스마트폰 부품"
+BATTERY_EV_GREEN,2차전지·전기차·친환경,"2차전지 소재/부품/장비, 전고체, 폐배터리, 전기차 인프라, 수소, 태양광, 풍력"
+MATERIALS_SPREAD_STRATEGIC,소재·스프레드·전략자원,"화학, 정유, 철강, 비철금속, 리튬, 희토류, 구리, 금은, 페라이트"
+CONSUMER_RETAIL_BRAND,소비재·유통·브랜드,"편의점, 홈쇼핑, 라면, K푸드, 음식료, 화장품, 의류, 건강기능식품"
+FINANCIAL_CAPITAL_DIGITAL,금융·자본배분·디지털금융,"은행, 보험, 증권, 금융지주, 고배당, 밸류업, 결제, STO, 스테이블코인"
+BIOTECH_HEALTHCARE_DEVICE,바이오·헬스케어·의료기기,"CMO, CRO, 바이오시밀러, 임상, 의료AI, 미용기기, 보톡스, 임플란트, 진단"
+PLATFORM_CONTENT_SW_SECURITY,플랫폼·콘텐츠·SW·보안,"게임, 엔터, 미디어, 클라우드, AI, IT보안, 딥페이크, 메타버스, NFT"
+MOBILITY_TRANSPORT_LEISURE,모빌리티·운송·레저,"항공, 해운, 택배, 렌터카, 중고차, 여행, 카지노, 면세, 골프"
+CONSTRUCTION_REAL_ESTATE_MATERIALS,건설·부동산·건자재,"대형/중소형 건설, 리츠, 개발신탁, 건자재, 시멘트, 철근, 가구"
+POLICY_GEOPOLITICAL_EVENT,정책·지정학·재난·이벤트,"남북경협, 우크라 재건, 네옴시티, 세종시, 지진, 폭염, 황사, 전염병"
+EDUCATION_LIFE_AGRI_MISC,교육·생활서비스·농수축산,"교육, 취업, 키즈, 유아용품, 스마트팜, 농기계, 양돈, 육계, 배합사료, 참치"
