@@ -1,0 +1,17 @@
+# Round-17 generated theme aliases.
+# Aliases normalize raw theme labels for coverage audit only.
+# They are not production scoring evidence.
+aliases:
+  "CMO·원료의약품": "CMO"
+  "K-푸드": "K푸드"
+  "OLED 소재·부품": "OLED 소재부품"
+  "드론·플라잉카": "드론"
+  "렌터카·중고차": "렌터카"
+  "마켓컬리·오아시스": "마켓컬리"
+  "밸류업 지수 편입": "밸류업"
+  "원자력·원전": "원자력"
+  "의료AI": "의료 AI"
+  "전선·케이블": "전선-케이블"
+  "키즈·유아용품": "키즈"
+  "현대·기아차 부품주": "현대-기아차 부품주"
+  "화장품 OEM·ODM": "화장품 OEM"

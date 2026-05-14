@@ -1,0 +1,18 @@
+{
+  "total_theme_tags": 151,
+  "mapped_theme_tags": 151,
+  "unmatched_theme_tags": 0,
+  "large_sector_count": 12,
+  "archetype_count": 73,
+  "green_allowed": 17,
+  "watch_to_green": 27,
+  "watch_only": 65,
+  "red_watch": 20,
+  "event_watch": 10,
+  "event_only": 7,
+  "red_flag": 5,
+  "production_scoring_changed": false,
+  "theme_tags_are_score_input": false,
+  "scoring_ready": false,
+  "coverage_status": "mapped_ready_for_case_mining"
+}
