@@ -64,3 +64,21 @@ Round 5 keeps Green strict.
 - Do not hardcode stock names into scoring.
 - Do not lower Stage 3-Green thresholds from this framework.
 - Use the framework to decide which cases, price paths, and counterexamples must be filled next.
+
+## Round 6 Overlay
+
+Round 6 adds a cross-sector correction layer:
+
+```text
+Round 5 large sector -> Round 6 overlay -> archetype evidence checklist
+```
+
+Example:
+
+```text
+AI/전력/인프라
+-> transformers, grid, cooling, PCB, HBM, and data-center CAPEX can move together
+-> score validation must check actual orders, CAPEX visibility, and EPS revision
+```
+
+See `docs/e2r_missing_sector_correction_round6.md` for the overlay matrix.

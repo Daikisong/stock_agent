@@ -137,12 +137,16 @@ scoring still requires real Evidence objects from the E2R flow.
 - `stage4c_price`
 - `peak_price`
 - `peak_return_from_stage3`
+- `mfe_30d`
 - `mfe_90d`
 - `mfe_180d`
 - `mfe_1y`
+- `mfe_2y`
+- `mae_30d`
 - `mae_90d`
 - `mae_180d`
 - `mae_1y`
+- `mae_2y`
 - `drawdown_after_peak`
 - `below_stage3_price_flag`
 - `time_to_50pct`

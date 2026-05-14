@@ -66,9 +66,11 @@ def _fill_record(record: E2RCaseRecord, bars: tuple[dict[str, float | date], ...
         )
 
     peak_price = _peak_price_after(bars, anchor_date)
+    mfe_30d, mae_30d = _mfe_mae(bars, anchor_date, anchor_price, 30)
     mfe_90d, mae_90d = _mfe_mae(bars, anchor_date, anchor_price, 90)
     mfe_180d, mae_180d = _mfe_mae(bars, anchor_date, anchor_price, 180)
     mfe_1y, mae_1y = _mfe_mae(bars, anchor_date, anchor_price, 365)
+    mfe_2y, mae_2y = _mfe_mae(bars, anchor_date, anchor_price, 730)
     below_flag = _below_anchor_after(bars, anchor_date, anchor_price)
     drawdown = _drawdown_after_peak(bars, anchor_date, peak_price)
     peak_return_from_stage3 = _return_from_anchor(peak_price, stage3_price) if stage3_price else None
@@ -85,12 +87,16 @@ def _fill_record(record: E2RCaseRecord, bars: tuple[dict[str, float | date], ...
             stage4c_price=stage4c_price,
             peak_price=peak_price,
             peak_return_from_stage3=peak_return_from_stage3,
+            mfe_30d=mfe_30d,
             mfe_90d=mfe_90d,
             mfe_180d=mfe_180d,
             mfe_1y=mfe_1y,
+            mfe_2y=mfe_2y,
+            mae_30d=mae_30d,
             mae_90d=mae_90d,
             mae_180d=mae_180d,
             mae_1y=mae_1y,
+            mae_2y=mae_2y,
             drawdown_after_peak=drawdown,
             below_stage3_price_flag=below_flag,
             time_to_50pct=time_to_50pct,
