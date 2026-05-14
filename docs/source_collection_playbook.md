@@ -27,6 +27,8 @@ That evidence maps to contract_quality, backlog_rpo_visibility, and structural_s
 | --- | --- | --- |
 | KRX | KR instruments, daily prices, trading value, market cap, 52-week range, halt/listing flags from fallback files | `Instrument`, `PriceBar` |
 | OpenDART | KR disclosures, contracts, facility investment, event filings, periodic reports | `DisclosureEvent`, `Evidence` |
+| data.go.kr FSC listed/price | KR listed-item and stock-price live-lite fallback where license permits | `Instrument`, `PriceBar` |
+| data.go.kr FSC stock issuance | Optional only. Use only if the API-specific license permits intended use | raw issuance rows |
 | KIND | managed issue, caution, halt, unfaithful disclosure, delisting-risk status | `Instrument` flags, `Evidence`, Red Team candidates |
 | Naver News | company and sector event search | `NewsItem`, `Evidence`, optional Red Team candidate |
 | Naver Web/Doc | report-like web documents and broker PDFs | `ReportSearchResult` |
@@ -51,6 +53,12 @@ Company news:
 {company} 공급부족
 {company} ASP 상승
 {company} 판가 상승
+{company} 유상증자
+{company} 전환사채
+{company} 신주인수권부사채
+{company} 보호예수 해제
+{company} 오버행
+{company} CB 리픽싱
 ```
 
 Sector news:
@@ -233,6 +241,31 @@ Structural example:
 ## Licensed Data Still Needed
 
 The repository uses CSV/JSON fallback for consensus because several KR and US estimate providers require licenses.
+
+## Optional Stock Issuance API
+
+`금융위원회_주식발행정보` / `GetStockIssuanceInfoService/getStockIssueInfo` is optional.
+
+It is not required for E2R scoring or Korea live-lite operation.
+
+Why:
+
+```text
+OpenDART 유상증자 / 전환사채 / 신주인수권부사채
+금융위원회_공시정보
+Naver Search risk queries
+```
+
+already cover the core dilution-risk workflow.
+
+Use the stock issuance API only if the latest public-data license allows the intended use. Do not assume commercial use is allowed. If the API is attribution-only, non-commercial-only, or otherwise constrained, keep it disabled for production and future commercial expansion.
+
+Current default:
+
+```text
+enable_stock_issuance_source = False
+source_modes.stock_issuance = disabled_optional
+```
 
 Still licensed or provider-dependent:
 

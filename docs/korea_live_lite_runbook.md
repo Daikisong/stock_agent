@@ -76,6 +76,8 @@ fixture
 request_only
 live_executed
 fallback
+disabled_optional
+not_configured
 ```
 
 Meaning:
@@ -84,6 +86,8 @@ Meaning:
 - `request_only`: request metadata was built, but live execution is not implemented or not enabled for that source.
 - `live_executed`: a controlled HTTP request was executed or served from live cache.
 - `fallback`: live mode was requested but the runner used fixture/fallback data because credentials were missing or the live request failed.
+- `disabled_optional`: optional source is intentionally off.
+- `not_configured`: optional source was enabled but is not wired for this run.
 
 Simple example:
 
@@ -93,7 +97,8 @@ Simple example:
     "opendart": "live_executed",
     "krx": "request_only",
     "data_go_kr": "live_executed",
-    "naver_search": "live_executed"
+    "naver_search": "live_executed",
+    "stock_issuance": "disabled_optional"
   }
 }
 ```
@@ -117,6 +122,8 @@ request_only_sources
 ```
 
 API keys are not written into the run log.
+
+`run_log.json` also includes `source_license_metadata`. This is an operator reminder, not legal advice. Verify each source's current terms before production or commercial use.
 
 ## Default Budgets
 
@@ -327,6 +334,56 @@ source_modes.krx = request_only
 ```
 
 This means KRX is not silently pretending to be live data. Use `source_modes` in `run_log.json` before interpreting the brief.
+
+## Optional Stock Issuance Source
+
+`금융위원회_주식발행정보` is optional and disabled by default.
+
+Config:
+
+```python
+KoreaLiveLiteConfig(
+    as_of_date=date.today(),
+    enable_stock_issuance_source=False,
+)
+```
+
+Default run log:
+
+```text
+source_modes.stock_issuance = disabled_optional
+```
+
+Why this is optional:
+
+```text
+OpenDART 유상증자 / 전환사채 / 신주인수권부사채
+금융위원회_공시정보
+Naver Search risk queries
+```
+
+are the primary dilution-risk sensors. The stock issuance API can be useful, but it is not required for E2R scoring.
+
+Use it only if the API-specific public-data license allows the intended use.
+
+Simple example:
+
+```text
+If 주식발행정보 is attribution + non-commercial only:
+-> keep enable_stock_issuance_source=False
+-> production run still detects dilution risk from OpenDART and risk searches
+```
+
+Fallback Red Team search queries include:
+
+```text
+{company} 유상증자
+{company} 전환사채
+{company} 신주인수권부사채
+{company} 보호예수 해제
+{company} 오버행
+{company} CB 리픽싱
+```
 
 ## Output Files
 

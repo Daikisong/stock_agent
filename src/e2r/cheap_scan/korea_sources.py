@@ -28,6 +28,7 @@ class DataGoKrFSCConnector:
     fixture_root: str | Path | None = "data/raw/data_go_kr_fsc"
     fixture_mode: bool = True
     base_url: str = FSC_BASE_URL
+    enable_stock_issuance_source: bool = False
 
     def require_live_credentials(self) -> str:
         return require_credential(self.service_key, "DATA_GO_KR_SERVICE_KEY")
@@ -165,6 +166,8 @@ class DataGoKrFSCConnector:
     def get_stock_issuance_records(self, symbol: str, as_of_date: date) -> tuple[dict[str, Any], ...]:
         """Return raw FSC stock-issuance fixture rows visible as of date."""
 
+        if not self.enable_stock_issuance_source:
+            return ()
         rows = load_fixture_records(self.fixture_root, "stock_issuance")
         return tuple(
             row

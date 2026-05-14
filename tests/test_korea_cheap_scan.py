@@ -75,6 +75,16 @@ class KoreaCheapScanTests(unittest.TestCase):
         self.assertIn("한전변압기 단일판매 공급계약 계약기간", queries)
         self.assertIn("한전변압기 신규시설투자 CAPA 증설", queries)
 
+    def test_dilution_risk_queries_include_red_team_fallback_terms(self):
+        queries = queries_for_reason_codes("희석테크", ("DISC_RIGHTS_OFFERING", "DISC_CONVERTIBLE_BOND", "DISC_BOND_WITH_WARRANT"))
+
+        self.assertIn("희석테크 유상증자", queries)
+        self.assertIn("희석테크 전환사채", queries)
+        self.assertIn("희석테크 신주인수권부사채", queries)
+        self.assertIn("희석테크 보호예수 해제", queries)
+        self.assertIn("희석테크 오버행", queries)
+        self.assertIn("희석테크 CB 리픽싱", queries)
+
     def test_scanner_processes_kospi_kosdaq_fixture_universe_and_ranks_candidates(self):
         result = _run_scan()
 
@@ -90,7 +100,7 @@ class KoreaCheapScanTests(unittest.TestCase):
         self.assertTrue(all("202405220001" not in evidence_id for evidence_id in candidate.evidence_ids))
 
     def test_fsc_connector_builds_requests_and_loads_fixture_instruments(self):
-        connector = DataGoKrFSCConnector(fixture_root=FIXTURE_ROOT / "data_go_kr_fsc")
+        connector = DataGoKrFSCConnector(fixture_root=FIXTURE_ROOT / "data_go_kr_fsc", enable_stock_issuance_source=True)
 
         request = connector.build_listed_items_request(Market.KR, AS_OF)
         issuance_request = connector.build_stock_issuance_request("666666", AS_OF)
@@ -104,6 +114,11 @@ class KoreaCheapScanTests(unittest.TestCase):
         self.assertEqual(instruments[0].symbol, "888888")
         self.assertEqual(bars[0].close, 1050)
         self.assertEqual(issuance[0]["issuance_type"], "rights_offering")
+
+    def test_stock_issuance_records_are_optional_by_default(self):
+        connector = DataGoKrFSCConnector(fixture_root=FIXTURE_ROOT / "data_go_kr_fsc")
+
+        self.assertEqual(connector.get_stock_issuance_records("666666", AS_OF), ())
 
     def test_escalate_candidates_to_web_research_uses_reason_code_query_groups(self):
         scanner = KoreaCheapScanner(_sources())

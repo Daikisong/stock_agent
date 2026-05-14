@@ -4,6 +4,7 @@ from .consensus import ConsensusCSVConnector
 from .http_client import HttpClient, HttpClientStats, HttpResult
 from .kind import KINDConnector, KINDRiskRecord
 from .krx import KRXConnector
+from .license import DEFAULT_SOURCE_LICENSE_METADATA, SourceLicenseMetadata
 from .naver_news import COMPANY_NEWS_QUERY_TEMPLATES, SECTOR_NEWS_QUERY_TEMPLATES, NaverNewsConnector
 from .naver_webdoc import NaverWebDocConnector
 from .opendart import DISCLOSURE_PARSED_FIELDS, DISCLOSURE_WATCH_TYPES, OpenDARTConnector
@@ -38,6 +39,8 @@ __all__ = [
     "ReportSearchResult",
     "SECEdgarConnector",
     "SECTOR_NEWS_QUERY_TEMPLATES",
+    "DEFAULT_SOURCE_LICENSE_METADATA",
+    "SourceLicenseMetadata",
     "SourceConnectorError",
     "SourceFixtureNotFoundError",
     "SourceRequest",

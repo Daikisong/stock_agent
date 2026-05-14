@@ -83,6 +83,28 @@ class KoreaLiveLiteTests(unittest.TestCase):
             self.assertIn("actual_http_requests_by_source", run_log_json)
             self.assertIn("logical_queries_by_source", run_log_json)
             self.assertIn("max_concurrency_used_by_source", run_log_json)
+            self.assertEqual(run_log_json["source_modes"]["stock_issuance"], "disabled_optional")
+            self.assertTrue(
+                any(item["source_name"] == "data_go_kr_fsc_stock_issuance" for item in run_log_json["source_license_metadata"])
+            )
+
+    def test_live_lite_works_without_stock_issuance_api_and_detects_dilution_from_opendart(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    enable_stock_issuance_source=False,
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+
+        candidate = _candidate(result, "666666")
+        self.assertIn("DISC_RIGHTS_OFFERING", candidate.reason_codes)
+        self.assertGreater(candidate.risk_event_score, 0)
+        self.assertEqual(result.run_log.source_modes["stock_issuance"], "disabled_optional")
+        self.assertIn("stock issuance API is disabled_optional", " ".join(result.run_log.notes))
 
     def test_review_cli_summarizes_fixture_run(self):
         with tempfile.TemporaryDirectory() as output_dir:

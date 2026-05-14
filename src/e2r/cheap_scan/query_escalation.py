@@ -80,9 +80,24 @@ REASON_CODE_QUERY_TEMPLATES: dict[str, tuple[str, ...]] = {
 }
 
 NEGATIVE_REASON_QUERY_TEMPLATES: dict[str, tuple[str, ...]] = {
-    "DISC_RIGHTS_OFFERING": ("{company} 유상증자", "{company} 희석 리스크"),
-    "DISC_CONVERTIBLE_BOND": ("{company} 전환사채", "{company} CB 발행"),
-    "DISC_BOND_WITH_WARRANT": ("{company} 신주인수권부사채", "{company} BW 발행"),
+    "DISC_RIGHTS_OFFERING": (
+        "{company} 유상증자",
+        "{company} 희석 리스크",
+        "{company} 보호예수 해제",
+        "{company} 오버행",
+    ),
+    "DISC_CONVERTIBLE_BOND": (
+        "{company} 전환사채",
+        "{company} CB 발행",
+        "{company} CB 리픽싱",
+        "{company} 오버행",
+    ),
+    "DISC_BOND_WITH_WARRANT": (
+        "{company} 신주인수권부사채",
+        "{company} BW 발행",
+        "{company} 보호예수 해제",
+        "{company} 오버행",
+    ),
     "DISC_AUDIT_OPINION_ISSUE": ("{company} 감사의견", "{company} 회계 이슈"),
     "DISC_TRADING_HALT": ("{company} 거래정지",),
     "RISK_MANAGED_ISSUE": ("{company} 관리종목",),

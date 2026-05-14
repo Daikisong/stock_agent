@@ -22,7 +22,7 @@ from e2r.research.free_web_research_runner import FreeWebResearchInput, FreeWebR
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
 from e2r.research.search_budget import SearchBudget
 from e2r.research.search_provider import EmptySearchProvider, SearchProvider, SearchResult
-from e2r.sources import KINDConnector, KRXConnector, OpenDARTConnector
+from e2r.sources import DEFAULT_SOURCE_LICENSE_METADATA, KINDConnector, KRXConnector, OpenDARTConnector, SourceLicenseMetadata
 from e2r.sources.http_client import HttpClient, HttpClientStats
 from e2r.sources.rate_limit import RateLimiter, SourceRateLimit
 from e2r.sources.source_errors import SourceRequest, load_fixture_records
@@ -80,6 +80,7 @@ class KoreaLiveLiteConfig:
     allow_parallel_live_requests: bool = False
     max_global_live_workers: int = 1
     live_smoke_preset_used: str | None = None
+    enable_stock_issuance_source: bool = False
 
     def __post_init__(self) -> None:
         if type(self.as_of_date) is not date:
@@ -189,6 +190,7 @@ class KoreaLiveLiteRunLog:
     logical_queries_by_source: Mapping[str, int] = field(default_factory=dict)
     max_concurrency_used_by_source: Mapping[str, int] = field(default_factory=dict)
     live_smoke_preset_used: str | None = None
+    source_license_metadata: tuple[SourceLicenseMetadata, ...] = field(default_factory=tuple)
     notes: tuple[str, ...] = field(default_factory=tuple)
 
 
@@ -222,8 +224,10 @@ class KoreaLiveLiteRunner:
         missing_credentials = _missing_credentials(config)
         effective_fixture_mode = config.fixture_mode or (config.live_enabled and bool(missing_credentials))
         sources = config.sources or self._sources
+        sources = _sources_with_stock_issuance_setting(sources, config.enable_stock_issuance_source)
         http_client = config.http_client or HttpClient(rate_limiter=_rate_limiter_for_config(config))
         source_modes, fallback_reasons, _request_only_sources = _initial_source_status(config, missing_credentials)
+        source_modes["stock_issuance"] = _stock_issuance_source_mode(config)
         start = config.as_of_date - timedelta(days=config.disclosure_lookback_days)
         built_requests: list[SourceRequest] = []
         source_call_counts: dict[str, int] = {
@@ -355,6 +359,7 @@ class KoreaLiveLiteRunner:
             logical_queries_by_source=_logical_queries_by_source(source_call_counts, http_client.stats),
             max_concurrency_used_by_source=dict(http_client.stats.max_concurrency_used_by_source),
             live_smoke_preset_used=config.live_smoke_preset_used,
+            source_license_metadata=DEFAULT_SOURCE_LICENSE_METADATA,
             notes=_run_notes(config, effective_fixture_mode) + _audit_notes(audit_findings),
         )
         candidates_path, evidence_path, brief_path, run_log_path = _write_outputs(
@@ -392,6 +397,24 @@ def fixture_sources(root: str | Path = DEFAULT_FIXTURE_ROOT) -> KoreaCheapScanSo
         kind=KINDConnector(fixture_root=root_path / "kind"),
         fsc=DataGoKrFSCConnector(fixture_root=root_path / "data_go_kr_fsc"),
     )
+
+
+def _sources_with_stock_issuance_setting(
+    sources: KoreaCheapScanSources,
+    enabled: bool,
+) -> KoreaCheapScanSources:
+    if sources.fsc is None:
+        return sources
+    return KoreaCheapScanSources(
+        krx=sources.krx,
+        opendart=sources.opendart,
+        kind=sources.kind,
+        fsc=replace(sources.fsc, enable_stock_issuance_source=enabled),
+    )
+
+
+def _stock_issuance_source_mode(config: KoreaLiveLiteConfig) -> str:
+    return "not_configured" if config.enable_stock_issuance_source else "disabled_optional"
 
 
 def _rate_limiter_for_config(config: KoreaLiveLiteConfig) -> RateLimiter:
@@ -1210,6 +1233,8 @@ def _run_notes(config: KoreaLiveLiteConfig, effective_fixture_mode: bool) -> tup
     notes = ["live calls are optional and fixture mode is the default"]
     if not config.allow_parallel_live_requests:
         notes.append("live HTTP execution defaults to serial source calls")
+    if not config.enable_stock_issuance_source:
+        notes.append("stock issuance API is disabled_optional; dilution risk uses OpenDART, FSC disclosure info, and Naver search fallback")
     if effective_fixture_mode:
         notes.append("running in fixture/fallback mode")
     if config.require_cross_evidence_for_stage3_green:
