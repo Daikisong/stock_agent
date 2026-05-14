@@ -11,3 +11,4 @@ build/
 .env
 output/
 data/cache/
+data/reconstructed_snapshots/

@@ -13,7 +13,19 @@ from e2r.backtest.blind_discovery_replay import (
     BlindDiscoveryReplay,
     BlindDiscoveryResult,
 )
+from e2r.backtest.asof_research_replay import (
+    AsOfReplayCandidate,
+    AsOfResearchReplay,
+    AsOfResearchReplayConfig,
+    AsOfResearchReplayResult,
+    AsOfResearchReplaySnapshot,
+    BenchmarkAsOfRecallRow,
+    FlowTrace,
+    FlowTraceStep,
+    render_asof_replay_summary,
+)
 from e2r.backtest.benchmark_labels import BenchmarkLabel, load_benchmark_labels
+from e2r.backtest.historical_official_store import HistoricalOfficialSources, HistoricalOfficialStore
 from e2r.backtest.e2r_standard_replay import (
     E2RStandardReplay,
     E2RStandardReplayCandidate,
@@ -70,15 +82,25 @@ __all__ = [
     "BenchmarkLabel",
     "AutopsyConfig",
     "AutopsyRow",
+    "AsOfReplayCandidate",
+    "AsOfResearchReplay",
+    "AsOfResearchReplayConfig",
+    "AsOfResearchReplayResult",
+    "AsOfResearchReplaySnapshot",
     "BlindDiscoveryConfig",
     "BlindDiscoveryReplay",
     "BlindDiscoveryResult",
+    "BenchmarkAsOfRecallRow",
     "E2RStandardReplay",
     "E2RStandardReplayCandidate",
     "E2RStandardReplayConfig",
     "E2RStandardReplayResult",
     "E2RStandardReplaySnapshot",
     "EvidenceAvailability",
+    "FlowTrace",
+    "FlowTraceStep",
+    "HistoricalOfficialSources",
+    "HistoricalOfficialStore",
     "MissedBenchmarkAutopsy",
     "MissedBenchmarkAutopsyResult",
     "ReplayFrequency",
@@ -99,6 +121,7 @@ __all__ = [
     "evaluate_layer1_recall_case",
     "failure_reason_for_layer1_miss",
     "load_benchmark_labels",
+    "render_asof_replay_summary",
     "render_historical_case_replay_summary",
     "render_historical_replay_summary",
 ]

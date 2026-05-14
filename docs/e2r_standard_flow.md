@@ -103,6 +103,38 @@ The benchmark label itself cannot create the candidate.
 fixture proxy mode; not proof of live discovery
 ```
 
+## Checkpoint 26 Replay Rule
+
+The current practical historical backtest is:
+
+```text
+asof_research_replay
+```
+
+It still uses the E2R_STANDARD component order, but the historical run starts
+from official historical data:
+
+```text
+official historical universe
+-> official cheap scan
+-> Layer-1 candidates
+-> web research for candidates only
+-> reject documents after as_of_date
+-> deterministic Stage
+-> benchmark comparison afterward
+```
+
+Example:
+
+```text
+Replay date: 2023-08-01
+Official disclosure: 2023-07-27 supply contract
+Accepted report: published 2023-07-27
+Rejected report: published 2023-08-15
+```
+
+This is retrospective as-of research. It is not strict forward-archive proof.
+
 ## LLM Role
 
 The LLM layer is optional.

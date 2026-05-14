@@ -95,3 +95,40 @@ So the user-facing interpretation is:
 fixture proxy success = regression success
 true E2R_STANDARD success = blind discovery evidence
 ```
+
+## Historical Backtest Names
+
+Current practical research replay:
+
+```text
+asof_research_replay
+```
+
+Meaning:
+
+```text
+official historical universe first
+-> official cheap scan
+-> web research only for Layer-1 candidates
+-> current/local search may reconstruct old public reports
+-> documents after the replay date are rejected
+```
+
+Future strict validation:
+
+```text
+forward_archive_replay
+```
+
+Meaning:
+
+```text
+use only search/report snapshots saved by actual live operation
+```
+
+So the simple distinction is:
+
+```text
+asof_research_replay = good for today's 2023~2026 research backtest
+forward_archive_replay = best proof after we have future archived searches
+```

@@ -1,5 +1,19 @@
 # Blind Discovery Replay Runbook
 
+Checkpoint 26 separates two backtest types:
+
+```text
+asof_research_replay
+-> current main historical research backtest
+-> official universe first
+-> current/local search reconstructs old public evidence
+-> rejects documents after replay date
+
+forward_archive_replay
+-> strict future validation
+-> uses only search/report snapshots saved by live operation
+```
+
 Blind discovery replay asks:
 
 ```text
@@ -115,6 +129,19 @@ report_snapshot_unavailable
 ```
 
 That is why future live runs should store search/report snapshots.
+
+For the practical 2023~2026 research replay, run:
+
+```bash
+PYTHONPATH=src python -m e2r.cli.run_asof_research_replay \
+  --start-date 2023-01-01 \
+  --end-date 2026-05-14 \
+  --frequency monthly \
+  --market KR
+```
+
+This is closer to the manual ChatGPT-style workflow, but it is not strict
+forward-archive proof.
 
 ## What Changed In Checkpoint 24
 

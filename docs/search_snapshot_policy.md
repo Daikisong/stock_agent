@@ -34,6 +34,10 @@ src/e2r/research/report_snapshot_store.py
 
 ## Historical Replay Rule
 
+There are now two different replay meanings.
+
+### Forward Archive Replay
+
 If a snapshot exists:
 
 ```text
@@ -66,6 +70,34 @@ If no report snapshot exists:
 mark report_snapshot_unavailable
 do not pretend a PDF was readable historically
 ```
+
+This is strict future validation. It becomes powerful only after the live
+agent has saved snapshots for a while.
+
+### As-Of Research Replay
+
+For the current 2023~2026 historical research backtest, use:
+
+```text
+asof_research_replay
+```
+
+That mode may search today's/local index for old public documents, but it must
+accept only documents whose `published_at` or `report_date` is not after the
+replay date.
+
+Example:
+
+```text
+2026 search finds a report dated 2023-07-27
+2023-08-01 replay accepts it
+
+2026 search finds a report dated 2023-08-15
+2023-08-01 replay rejects it
+```
+
+Undated documents are marked `date_unverified`; they cannot create Stage
+3-Green alone.
 
 ## Why This Matters
 

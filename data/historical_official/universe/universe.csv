@@ -1,0 +1,14 @@
+symbol,name,market,exchange,sector_custom,listed_date,currency,is_managed,is_invest_warning,is_trading_halt
+000660,SK하이닉스,KR,KRX,반도체,1996-12-26,KRW,false,false,false
+001440,대한전선-like,KR,KRX,전선,1968-12-27,KRW,false,false,false
+003230,삼양식품,KR,KRX,음식료,1975-06-30,KRW,false,false,false
+005930,삼성전자,KR,KRX,반도체,1975-06-11,KRW,false,false,false
+011200,HMM,KR,KRX,해운,1995-10-05,KRW,false,false,false
+012450,한화에어로스페이스,KR,KRX,방산,1987-05-27,KRW,false,false,false
+062040,산일전기,KR,KRX,전력기기,2024-07-29,KRW,false,false,false
+096530,씨젠,KR,KRX,진단,2010-09-10,KRW,false,false,false
+103590,일진전기,KR,KRX,전력기기,2008-08-01,KRW,false,false,false
+247540,에코프로비엠,KR,KRX,2차전지,2019-03-05,KRW,false,false,false
+257720,실리콘투,KR,KRX,화장품유통,2021-09-29,KRW,false,false,false
+267260,HD현대일렉트릭,KR,KRX,전력기기,2017-05-10,KRW,false,false,false
+298040,효성중공업,KR,KRX,전력기기,2018-07-13,KRW,false,false,false
