@@ -1,5 +1,6 @@
 from datetime import date, datetime
 import json
+from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -74,10 +75,15 @@ class KoreaLiveLiteTests(unittest.TestCase):
             self.assertTrue(result.evidence_path.exists())
             self.assertTrue(result.brief_path.exists())
             self.assertTrue(result.run_log_path.exists())
+            self.assertTrue(result.calibration_json_path.exists())
+            self.assertTrue(result.calibration_md_path.exists())
             self.assertIn("E2R Morning Brief", result.brief_path.read_text(encoding="utf-8"))
             candidates_json = json.loads(result.candidates_path.read_text(encoding="utf-8"))
+            calibration_json = json.loads(result.calibration_json_path.read_text(encoding="utf-8"))
             run_log_json = json.loads(result.run_log_path.read_text(encoding="utf-8"))
             self.assertGreaterEqual(len(candidates_json["candidates"]), 1)
+            self.assertIn("near_miss_top_50", calibration_json)
+            self.assertIn("diagnostic_reason_distribution", calibration_json)
             self.assertGreaterEqual(len(run_log_json["planned_opendart_detail_requests"]), 1)
             self.assertIn("audit_findings", run_log_json)
             self.assertIn("rate_limit_waits", run_log_json)
@@ -220,6 +226,70 @@ class KoreaLiveLiteTests(unittest.TestCase):
         self.assertEqual(requests[0].params["symbol"], "111111")
         self.assertNotIn("crtfc_key", requests[0].params)
 
+    def test_opendart_detail_fetch_executes_with_cap_and_writes_text_cache(self):
+        detail_xml = """
+        <DOCUMENT>
+          <SECTION-1>
+            계약금액: 4,000억원
+            최근매출액 대비: 45%
+            계약기간: 2024.05.21 ~ 2027.05.20
+            계약상대방: 북미 유틸리티
+            계약내용: 초고압변압기
+          </SECTION-1>
+        </DOCUMENT>
+        """
+        http_client = MockHttpClient(
+            json_by_url_token={
+                "opendart": {
+                    "total_page": 1,
+                    "list": [
+                        {
+                            "stock_code": "111111",
+                            "corp_name": "한전변압기",
+                            "report_nm": "단일판매·공급계약체결",
+                            "rcept_no": "202405210091",
+                            "rcept_dt": "20240521",
+                        },
+                        {
+                            "stock_code": "222222",
+                            "corp_name": "케이전력",
+                            "report_nm": "신규시설투자",
+                            "rcept_no": "202405210092",
+                            "rcept_dt": "20240521",
+                        },
+                    ],
+                }
+            },
+            text_by_url_token={"202405210091": detail_xml, "202405210092": detail_xml},
+        )
+        env = {"OPENDART_API_KEY": "OPENDART_SECRET"}
+
+        with tempfile.TemporaryDirectory() as output_dir, tempfile.TemporaryDirectory() as cache_dir, patch.dict("os.environ", env, clear=True):
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    cache_directory=cache_dir,
+                    fixture_mode=False,
+                    live_enabled=True,
+                    http_client=http_client,
+                    budget=KoreaLiveLiteBudget(max_opendart_detail_fetches_per_run=1),
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+
+            detail_cache_dir = Path(cache_dir) / "opendart_detail" / AS_OF.isoformat()
+            self.assertTrue((detail_cache_dir / "202405210091.xml").exists())
+            self.assertTrue((detail_cache_dir / "202405210091.txt").exists())
+
+        self.assertEqual(len(result.run_log.executed_opendart_detail_requests), 1)
+        self.assertEqual(result.run_log.source_call_counts["opendart_detail_fetches"], 1)
+        detail_evidence = [item for item in result.evidence if item.source_name == "OpenDART detail"]
+        self.assertEqual(len(detail_evidence), 1)
+        self.assertEqual(detail_evidence[0].parsed_fields["contract_amount_to_prior_sales"], 0.45)
+        self.assertGreaterEqual(detail_evidence[0].confidence, 0.7)
+
     def test_event_and_deep_research_symbol_budgets_are_respected(self):
         with tempfile.TemporaryDirectory() as output_dir:
             result = KoreaLiveLiteRunner().run(
@@ -281,6 +351,76 @@ class KoreaLiveLiteTests(unittest.TestCase):
         stage_by_symbol = {item.stage.symbol: item.stage for item in result.web_results}
         self.assertEqual(stage_by_symbol["444444"].stage, Stage.STAGE_3_YELLOW)
         self.assertIn("at least two independent evidence types", " ".join(stage_by_symbol["444444"].stage_reason))
+
+    def test_targeted_smoke_without_evidence_is_not_production_or_green(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    targeted_smoke_enabled=True,
+                    targeted_smoke_symbol="009999",
+                    targeted_smoke_company="스모크테스트",
+                    budget=KoreaLiveLiteBudget(
+                        max_symbols_for_event_search=20,
+                        max_symbols_for_deep_research=20,
+                        max_naver_search_calls_per_day=100,
+                    ),
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+            brief_text = result.brief_path.read_text(encoding="utf-8")
+
+        self.assertFalse(any(item.candidate_source_path == "targeted_smoke" for item in result.candidates))
+        self.assertTrue(result.run_log.targeted_smoke_results)
+        smoke = next(item for item in result.run_log.targeted_smoke_results if item["symbol"] == "009999")
+        self.assertEqual(smoke["status"], "insufficient_evidence")
+        self.assertFalse(smoke["production_candidate"])
+        self.assertNotEqual(smoke["stage"], Stage.STAGE_3_GREEN.value)
+        self.assertNotIn("스모크테스트", brief_text)
+
+    def test_report_radar_candidate_path_respects_budget_and_records_source_path(self):
+        url = "https://ssl.pstatic.net/imgstock/upload/research/company/radar_report.pdf"
+        provider = FixtureSearchProvider(
+            results_by_query={
+                "가격만강세 목표주가 상향 EPS 상향 PDF": (
+                    SearchResult(
+                        title="가격만강세 컨센서스 상회 Review PDF",
+                        url=url,
+                        snippet="목표주가 상향 EPS 상향 수주잔고 OPM",
+                        source="FixtureBroker",
+                        published_at=datetime(2024, 5, 21, 8),
+                        query="가격만강세 목표주가 상향 EPS 상향 PDF",
+                        rank=1,
+                        is_pdf=True,
+                        is_report_domain=True,
+                        confidence=0.8,
+                    ),
+                )
+            }
+        )
+        with tempfile.TemporaryDirectory() as output_dir:
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    report_radar_enabled=True,
+                    report_radar_universe_limit=1,
+                    active_watchlist_symbols=("444444",),
+                    budget=KoreaLiveLiteBudget(
+                        max_symbols_for_event_search=20,
+                        max_symbols_for_deep_research=20,
+                        max_naver_search_calls_per_day=100,
+                    ),
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=provider,
+                )
+            )
+
+        self.assertTrue(result.run_log.report_radar_candidates)
+        self.assertTrue(any(item.candidate_source_path == "report_radar" for item in result.candidates))
+        self.assertLessEqual(result.run_log.source_call_counts["naver_search_queries"], 100)
 
     def test_stage_3_green_is_blocked_by_hard_parser_audit_finding(self):
         url = "https://ssl.pstatic.net/imgstock/upload/research/company/kepower_report.pdf"
@@ -799,8 +939,9 @@ def _disclosure(symbol, title, rcept_no):
 
 
 class MockHttpClient:
-    def __init__(self, json_by_url_token):
+    def __init__(self, json_by_url_token, text_by_url_token=None):
         self.json_by_url_token = dict(json_by_url_token)
+        self.text_by_url_token = dict(text_by_url_token or {})
         self.stats = HttpClientStats()
         self.requests = []
 
@@ -815,6 +956,21 @@ class MockHttpClient:
                 return HttpResult(ok=True, status_code=200, json_data=payload, text=json.dumps(payload), cache_path=str(cache_path) if cache_path else None)
         self.stats.live_requests_failed += 1
         return HttpResult(ok=False, error="mock_response_not_found")
+
+    def get_text(self, request, *, cache_path=None):
+        self.requests.append(request)
+        url = request.url + "?" + "&".join(f"{key}={value}" for key, value in request.params.items())
+        for token, text in self.text_by_url_token.items():
+            if token in url:
+                self.stats.live_requests_executed += 1
+                if cache_path is not None:
+                    path = Path(cache_path)
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_text(text, encoding="utf-8")
+                    self.stats.cache_writes += 1
+                return HttpResult(ok=True, status_code=200, text=text, cache_path=str(cache_path) if cache_path else None)
+        self.stats.live_requests_failed += 1
+        return HttpResult(ok=False, error="mock_text_response_not_found")
 
 
 if __name__ == "__main__":

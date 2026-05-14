@@ -122,3 +122,52 @@ Run standard shadow after detail fetch and cheap-scan calibration are patched.
 3. Add a tiny/small price fetch mode that is genuinely small.
 4. Add a targeted same-day disclosure smoke test that forces one candidate into Naver search.
 5. Re-run tiny and small, then consider standard shadow.
+
+## Checkpoint 20 Quality Loop
+
+Checkpoint 20 implements the first set of fixes from the first live validation.
+
+What changed:
+
+```text
+OpenDART list rows
+-> signal_class = high_signal / risk_signal / routine / unknown
+
+watch disclosure
+-> capped document.xml detail fetch
+-> XML and extracted TXT cache
+-> stronger evidence only if explicit fields are parsed
+
+routine disclosure
+-> no positive cheap-scan score
+-> no detail fetch
+-> no low-confidence audit flood
+```
+
+Cheap-scan now writes calibration files so zero-candidate days are still reviewable:
+
+```text
+output/korea_live_lite/YYYY-MM-DD_cheap_scan_calibration.json
+output/korea_live_lite/YYYY-MM-DD_cheap_scan_calibration.md
+```
+
+Example:
+
+```text
+candidate_count = 0
+near_miss_top_50 shows many price-only signals
+-> candidate recall issue may be price/disclosure join, not web search
+```
+
+Report Radar was added as a budgeted search path for high-signal report phrases. It improves recall, but it does not bypass evidence rules.
+
+Targeted smoke was added only to test the pipeline:
+
+```text
+test_injected = True
+production_candidate = False
+```
+
+It cannot create production candidates or Stage 3-Green without real fetched evidence.
+
+Historical Layer-1 recall fixtures currently reach event search or deep research, while one-off cases such as Zoom and 씨젠 still classify as Stage 3-Red instead of Green.

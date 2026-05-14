@@ -9,7 +9,7 @@ from typing import Sequence
 
 from e2r.models import DisclosureEvent, Evidence, FinancialActual, Instrument, PriceBar
 from e2r.sources.kind import KINDConnector, KINDRiskRecord
-from e2r.sources.opendart import OpenDARTConnector
+from e2r.sources.opendart import DISCLOSURE_SIGNAL_ROUTINE, DISCLOSURE_SIGNAL_RISK, OpenDARTConnector
 
 
 POSITIVE_DISCLOSURE_CODES = frozenset(
@@ -139,10 +139,14 @@ def cheap_scan_total_score(result: CheapScanRuleResult) -> float:
 
 def _disclosure_codes(disclosure: DisclosureEvent) -> tuple[tuple[str, ...], float, float]:
     fields = disclosure.parsed_fields
+    signal_class = str(fields.get("signal_class") or "")
     haystack = f"{disclosure.title} {disclosure.report_type} {disclosure.raw_text or ''}"
     codes: list[str] = []
     positive_score = 0.0
     risk_score = 0.0
+
+    if signal_class == DISCLOSURE_SIGNAL_ROUTINE:
+        return (), 0.0, 0.0
 
     if any(token in haystack for token in ("단일판매", "공급계약", "장기공급")):
         codes.append("DISC_SUPPLY_CONTRACT")
@@ -172,6 +176,8 @@ def _disclosure_codes(disclosure: DisclosureEvent) -> tuple[tuple[str, ...], flo
         codes.append("DISC_BUYBACK_OR_CANCELLATION")
         positive_score += 10.0
 
+    if signal_class == DISCLOSURE_SIGNAL_RISK:
+        risk_score = max(risk_score, 45.0)
     if "유상증자" in haystack or fields.get("dilution_type") == "rights_offering":
         codes.append("DISC_RIGHTS_OFFERING")
         risk_score = max(risk_score, 45.0)

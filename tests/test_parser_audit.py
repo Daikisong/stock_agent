@@ -34,13 +34,24 @@ class ParserAuditTests(unittest.TestCase):
         self.assertEqual(finding.severity, "warning")
         self.assertEqual(finding.suggested_action, "manual_review")
 
+    def test_routine_opendart_list_evidence_does_not_flood_low_confidence_audit(self):
+        evidence = _evidence(
+            source_type="disclosure",
+            source_name="OpenDART",
+            parsed_fields={"parser_confidence": 0.3, "signal_class": "routine"},
+        )
 
-def _evidence(parsed_fields):
+        findings = audit_parser_outputs(evidence=(evidence,))
+
+        self.assertFalse(any(item.code == "low_parser_confidence" for item in findings))
+
+
+def _evidence(parsed_fields, source_type="research_report", source_name="FixtureBroker"):
     timestamp = datetime(2024, 5, 21, 8)
     return Evidence(
         evidence_id="test:evidence",
-        source_type="research_report",
-        source_name="FixtureBroker",
+        source_type=source_type,
+        source_name=source_name,
         source_tier=SourceTier.TIER_1,
         published_at=timestamp,
         observed_at=timestamp,

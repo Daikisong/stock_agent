@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import re
+from collections import Counter
 from dataclasses import dataclass, field, fields, is_dataclass, replace
 from datetime import date, datetime, timedelta
 from enum import Enum
@@ -20,10 +21,13 @@ from e2r.cheap_scan.query_escalation import EscalationQueryPlanner, queries_for_
 from e2r.models import DisclosureEvent, Evidence, FinancialActual, Instrument, Market, PriceBar, RedTeamFinding, ScoreSnapshot, Stage, StageSnapshot
 from e2r.research.free_web_research_runner import FreeWebResearchInput, FreeWebResearchRunner, WebResearchPipelineResult
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
+from e2r.research.report_radar import REPORT_RADAR_PHRASES, ReportRadar, ReportRadarCandidate
+from e2r.research.query_planner import QueryPlan, QuerySpec
 from e2r.research.search_budget import SearchBudget
 from e2r.research.search_provider import EmptySearchProvider, SearchProvider, SearchResult
 from e2r.sources import DEFAULT_SOURCE_LICENSE_METADATA, KINDConnector, KRXConnector, OpenDARTConnector, SourceLicenseMetadata
 from e2r.sources.http_client import HttpClient, HttpClientStats
+from e2r.sources.opendart import extract_document_text, normalize_disclosure_detail
 from e2r.sources.rate_limit import RateLimiter, SourceRateLimit
 from e2r.sources.source_errors import SourceRequest, load_fixture_records
 
@@ -41,6 +45,7 @@ class KoreaLiveLiteBudget:
     max_naver_search_calls_per_day: int = 2_000
     max_symbols_for_event_search: int = 200
     max_symbols_for_deep_research: int = 30
+    max_opendart_detail_fetches_per_run: int = 50
 
     def __post_init__(self) -> None:
         for field_name in (
@@ -50,6 +55,7 @@ class KoreaLiveLiteBudget:
             "max_naver_search_calls_per_day",
             "max_symbols_for_event_search",
             "max_symbols_for_deep_research",
+            "max_opendart_detail_fetches_per_run",
         ):
             if getattr(self, field_name) < 0:
                 raise ValueError(f"{field_name} must be non-negative")
@@ -82,6 +88,16 @@ class KoreaLiveLiteConfig:
     live_smoke_preset_used: str | None = None
     enable_stock_issuance_source: bool = False
     enable_krx_openapi_source: bool = False
+    event_search_min_score: float = 25.0
+    deep_research_min_score: float = 45.0
+    price_only_event_allowed: bool = True
+    report_radar_enabled: bool = False
+    report_radar_universe_limit: int = 20
+    active_watchlist_symbols: tuple[str, ...] = field(default_factory=tuple)
+    targeted_smoke_enabled: bool = False
+    targeted_smoke_symbol: str | None = None
+    targeted_smoke_company: str | None = None
+    targeted_smoke_queries: tuple[str, ...] = field(default_factory=tuple)
 
     def __post_init__(self) -> None:
         if type(self.as_of_date) is not date:
@@ -102,6 +118,12 @@ class KoreaLiveLiteConfig:
             raise ValueError("max_global_live_workers must be positive")
         if not self.allow_parallel_live_requests and self.max_global_live_workers != 1:
             raise ValueError("max_global_live_workers must be 1 unless allow_parallel_live_requests is true")
+        if self.event_search_min_score < 0 or self.deep_research_min_score < 0:
+            raise ValueError("cheap-scan score thresholds must be non-negative")
+        if self.report_radar_universe_limit <= 0:
+            raise ValueError("report_radar_universe_limit must be positive")
+        object.__setattr__(self, "active_watchlist_symbols", tuple(self.active_watchlist_symbols))
+        object.__setattr__(self, "targeted_smoke_queries", tuple(self.targeted_smoke_queries))
 
     @classmethod
     def smoke_preset(
@@ -121,6 +143,7 @@ class KoreaLiveLiteConfig:
                     max_naver_search_calls_per_day=50,
                     max_symbols_for_event_search=5,
                     max_symbols_for_deep_research=1,
+                    max_opendart_detail_fetches_per_run=3,
                 ),
                 "live_smoke_preset_used": "tiny",
             }
@@ -132,6 +155,7 @@ class KoreaLiveLiteConfig:
                     max_naver_search_calls_per_day=300,
                     max_symbols_for_event_search=30,
                     max_symbols_for_deep_research=5,
+                    max_opendart_detail_fetches_per_run=10,
                 ),
                 "live_smoke_preset_used": "small",
             }
@@ -143,6 +167,7 @@ class KoreaLiveLiteConfig:
                     max_naver_search_calls_per_day=2_000,
                     max_symbols_for_event_search=200,
                     max_symbols_for_deep_research=30,
+                    max_opendart_detail_fetches_per_run=50,
                 ),
                 "live_smoke_preset_used": "standard_shadow",
             }
@@ -185,6 +210,11 @@ class KoreaLiveLiteRunLog:
     request_only_sources: tuple[str, ...] = field(default_factory=tuple)
     audit_findings: tuple[AuditFinding, ...] = field(default_factory=tuple)
     planned_opendart_detail_requests: tuple[SourceRequest, ...] = field(default_factory=tuple)
+    executed_opendart_detail_requests: tuple[SourceRequest, ...] = field(default_factory=tuple)
+    opendart_detail_evidence_ids: tuple[str, ...] = field(default_factory=tuple)
+    report_radar_candidates: tuple[Mapping[str, Any], ...] = field(default_factory=tuple)
+    targeted_smoke_results: tuple[Mapping[str, Any], ...] = field(default_factory=tuple)
+    audit_summary: Mapping[str, Any] = field(default_factory=dict)
     rate_limit_waits: int = 0
     rate_limit_skips: int = 0
     actual_http_requests_by_source: Mapping[str, int] = field(default_factory=dict)
@@ -213,6 +243,8 @@ class KoreaLiveLiteResult:
     brief_path: Path
     run_log_path: Path
     run_log: KoreaLiveLiteRunLog
+    calibration_json_path: Path | None = None
+    calibration_md_path: Path | None = None
 
 
 class KoreaLiveLiteRunner:
@@ -238,6 +270,7 @@ class KoreaLiveLiteRunner:
         built_requests: list[SourceRequest] = []
         source_call_counts: dict[str, int] = {
             "opendart_disclosure_date_range": 0,
+            "opendart_detail_fetches": 0,
             "opendart_symbol_disclosure_calls": 0,
             "krx_calls": 0,
             "data_go_kr_calls": 0,
@@ -266,7 +299,17 @@ class KoreaLiveLiteRunner:
             fallback_reasons=fallback_reasons,
         )
         planned_opendart_detail_requests = plan_opendart_detail_fetches(date_disclosures, config.as_of_date)
-        scan_sources = _sources_with_date_disclosures(sources, date_disclosures)
+        detail_disclosures, executed_opendart_detail_requests = _execute_opendart_detail_fetches(
+            base_disclosures=date_disclosures,
+            planned_requests=planned_opendart_detail_requests,
+            as_of_date=config.as_of_date,
+            config=config,
+            http_client=http_client,
+            built_requests=built_requests,
+            source_call_counts=source_call_counts,
+        )
+        all_date_disclosures = _merge_detail_disclosures(date_disclosures, detail_disclosures)
+        scan_sources = _sources_with_date_disclosures(sources, all_date_disclosures)
         cheap_scan = KoreaCheapScanner(scan_sources).run(
             KoreaCheapScanConfig(
                 as_of_date=config.as_of_date,
@@ -276,17 +319,38 @@ class KoreaLiveLiteRunner:
                 lookback_days=config.lookback_days,
                 disclosure_lookback_days=config.disclosure_lookback_days,
                 top_n=config.top_candidates,
+                event_search_min_score=config.event_search_min_score,
+                deep_research_min_score=config.deep_research_min_score,
+                price_only_event_allowed=config.price_only_event_allowed,
+                report_radar_enabled=config.report_radar_enabled,
             )
         )
         _record_estimated_source_calls(source_call_counts, sources, cheap_scan.instruments_scanned, source_modes)
-        cheap_evidence = _cheap_scan_evidence_by_id(sources, date_disclosures, config.as_of_date)
-        selected_candidates, skipped_candidate_items = _select_candidates_for_research(cheap_scan.candidates, config.budget)
+        cheap_evidence = _cheap_scan_evidence_by_id(sources, all_date_disclosures, config.as_of_date)
+        instruments = _instruments_from_scan_sources(scan_sources, config.as_of_date, config.universe_limit)
+        free_search_provider = _free_search_provider(config, http_client, source_modes, fallback_reasons)
+        radar_candidates = _run_report_radar(
+            config=config,
+            instruments=instruments,
+            free_search_provider=free_search_provider,
+            remaining_queries=config.budget.max_naver_search_calls_per_day - source_call_counts["naver_search_queries"],
+        )
+        source_call_counts["naver_search_queries"] += _estimate_radar_queries(config, instruments, radar_candidates)
+        smoke_candidates = _targeted_smoke_candidates(config)
+        merged_candidates = _merge_candidates(
+            cheap_scan.candidates,
+            tuple(item.to_cheap_scan_candidate() for item in radar_candidates),
+            smoke_candidates,
+        )
+        production_candidates = tuple(candidate for candidate in merged_candidates if candidate.production_candidate)
+        selected_candidates, skipped_candidate_items = _select_candidates_for_research(merged_candidates, config.budget)
 
         web_results: list[WebResearchPipelineResult] = []
+        production_web_results: list[WebResearchPipelineResult] = []
+        targeted_smoke_results: list[Mapping[str, Any]] = []
         skipped_candidates = list(skipped_candidate_items)
         skipped_queries: list[Mapping[str, Any]] = []
         dropped_results: list[Mapping[str, Any]] = []
-        free_search_provider = _free_search_provider(config, http_client, source_modes, fallback_reasons)
         for candidate in selected_candidates:
             remaining_queries = config.budget.max_naver_search_calls_per_day - source_call_counts["naver_search_queries"]
             if remaining_queries <= 0:
@@ -295,7 +359,7 @@ class KoreaLiveLiteRunner:
             runner = FreeWebResearchRunner(
                 browser_provider=config.browser_provider or EmptySearchProvider(),
                 free_search_provider=free_search_provider,
-                query_planner=EscalationQueryPlanner(candidate),
+                query_planner=_query_planner_for_candidate(candidate, config),
             )
             result = runner.run(
                 FreeWebResearchInput(
@@ -315,6 +379,10 @@ class KoreaLiveLiteRunner:
             combined_evidence = tuple(item for item in combined_evidence if item is not None) + tuple(result.web_result.evidence)
             result = _enforce_cross_evidence_stage3_green(result, combined_evidence, config)
             web_results.append(result)
+            if candidate.production_candidate:
+                production_web_results.append(result)
+            else:
+                targeted_smoke_results.append(_targeted_smoke_result_row(candidate, result))
             skipped_queries.extend(_skipped_query_rows(candidate, result))
             dropped_results.extend(_dropped_result_rows(candidate, result))
 
@@ -323,14 +391,14 @@ class KoreaLiveLiteRunner:
         )
         audit_findings = audit_parser_outputs(
             evidence=evidence,
-            scores=tuple(result.score for result in web_results),
-            stages=tuple(result.stage for result in web_results),
+            scores=tuple(result.score for result in production_web_results),
+            stages=tuple(result.stage for result in production_web_results),
         )
         web_results = [_enforce_parser_audit_stage3_green(result, audit_findings) for result in web_results]
-        scores = tuple(result.score for result in web_results)
-        stages = tuple(result.stage for result in web_results)
-        findings = tuple(finding for result in web_results for finding in result.red_team_findings)
-        instruments = _instruments_from_scan_sources(scan_sources, config.as_of_date, config.universe_limit)
+        production_web_results = [result for candidate, result in zip(selected_candidates, web_results) if candidate.production_candidate]
+        scores = tuple(result.score for result in production_web_results)
+        stages = tuple(result.stage for result in production_web_results)
+        findings = tuple(finding for result in production_web_results for finding in result.red_team_findings)
         morning_brief = generate_morning_briefing(
             as_of_date=config.as_of_date,
             instruments=instruments,
@@ -359,6 +427,11 @@ class KoreaLiveLiteRunner:
             request_only_sources=tuple(source for source, mode in source_modes.items() if mode == "request_only"),
             audit_findings=tuple(audit_findings),
             planned_opendart_detail_requests=tuple(planned_opendart_detail_requests),
+            executed_opendart_detail_requests=tuple(executed_opendart_detail_requests),
+            opendart_detail_evidence_ids=tuple(OpenDARTConnector.to_evidence(item, Market.KR).evidence_id for item in detail_disclosures),
+            report_radar_candidates=tuple(_report_radar_row(item) for item in radar_candidates),
+            targeted_smoke_results=tuple(targeted_smoke_results),
+            audit_summary=_audit_summary(audit_findings, evidence),
             rate_limit_waits=http_client.stats.rate_limit_waits,
             rate_limit_skips=http_client.stats.rate_limit_skips,
             actual_http_requests_by_source=dict(http_client.stats.actual_http_requests_by_source),
@@ -371,14 +444,16 @@ class KoreaLiveLiteRunner:
         candidates_path, evidence_path, brief_path, run_log_path = _write_outputs(
             config=config,
             cheap_scan=cheap_scan,
+            candidates=production_candidates,
             evidence=evidence,
             morning_brief=morning_brief,
             run_log=run_log,
         )
+        calibration_json_path, calibration_md_path = _write_calibration_outputs(config, cheap_scan)
         return KoreaLiveLiteResult(
             as_of_date=config.as_of_date,
             cheap_scan=cheap_scan,
-            candidates=cheap_scan.candidates,
+            candidates=production_candidates,
             web_results=tuple(web_results),
             scores=scores,
             stages=stages,
@@ -389,6 +464,8 @@ class KoreaLiveLiteRunner:
             evidence_path=evidence_path,
             brief_path=brief_path,
             run_log_path=run_log_path,
+            calibration_json_path=calibration_json_path,
+            calibration_md_path=calibration_md_path,
             run_log=run_log,
         )
 
@@ -825,8 +902,12 @@ OPENDART_DETAIL_WATCH_TYPES: tuple[str, ...] = (
     "영업실적 전망",
     "유상증자",
     "전환사채",
+    "신주인수권부사채",
     "감사의견",
     "거래정지",
+    "계약 해지",
+    "계약 취소",
+    "계약 정정",
 )
 
 
@@ -836,9 +917,9 @@ def plan_opendart_detail_fetches(
 ) -> tuple[SourceRequest, ...]:
     """Plan detail fetch metadata for high-value OpenDART disclosures.
 
-    The runner does not execute these requests yet. They are stored in
-    ``run_log.json`` so a later detail-fetch checkpoint can review exactly
-    which receipt numbers need full-document parsing.
+    The runner executes only a capped subset in live mode. All requests are
+    still stored in ``run_log.json`` so operators can review exactly which
+    receipt numbers were eligible for full-document parsing.
     """
 
     requests: dict[str, SourceRequest] = {}
@@ -895,6 +976,70 @@ def _opendart_date_range_request(
 
 def _can_execute_live_opendart(config: KoreaLiveLiteConfig) -> bool:
     return bool(config.live_enabled and not config.fixture_mode and os.environ.get("OPENDART_API_KEY"))
+
+
+def _execute_opendart_detail_fetches(
+    *,
+    base_disclosures: Sequence[DisclosureEvent],
+    planned_requests: Sequence[SourceRequest],
+    as_of_date: date,
+    config: KoreaLiveLiteConfig,
+    http_client: HttpClient,
+    built_requests: list[SourceRequest],
+    source_call_counts: dict[str, int],
+) -> tuple[tuple[DisclosureEvent, ...], tuple[SourceRequest, ...]]:
+    """Execute capped OpenDART document.xml requests for watch disclosures."""
+
+    cap = max(0, config.budget.max_opendart_detail_fetches_per_run)
+    if cap <= 0 or not planned_requests:
+        return (), ()
+    if not _can_execute_live_opendart(config):
+        return (), ()
+    if not hasattr(http_client, "get_text"):
+        return (), ()
+    base_by_receipt = {item.rcept_no: item for item in base_disclosures if item.rcept_no}
+    detail_events: list[DisclosureEvent] = []
+    executed: list[SourceRequest] = []
+    for request in planned_requests[:cap]:
+        receipt_no = str(request.params.get("rcept_no") or "")
+        base_event = base_by_receipt.get(receipt_no)
+        if base_event is None:
+            continue
+        public_request = SourceRequest(
+            method=request.method,
+            url=request.url,
+            params={key: value for key, value in request.params.items() if key != "crtfc_key"},
+            headers=dict(request.headers),
+            fixture_mode=False,
+            credential_name=request.credential_name,
+        )
+        built_requests.append(public_request)
+        live_request = _with_secret_param(public_request, "crtfc_key", os.environ["OPENDART_API_KEY"])
+        cache_path = Path(config.cache_directory) / "opendart_detail" / as_of_date.isoformat() / f"{receipt_no}.xml"
+        result = http_client.get_text(live_request, cache_path=cache_path)
+        source_call_counts["opendart_detail_fetches"] += 1
+        if not result.ok or result.text is None:
+            continue
+        text_cache_path = cache_path.with_suffix(".txt")
+        text_cache_path.parent.mkdir(parents=True, exist_ok=True)
+        text_cache_path.write_text(extract_document_text(result.text), encoding="utf-8")
+        detail_events.append(normalize_disclosure_detail(base_event, result.text, as_of_date=as_of_date))
+        executed.append(public_request)
+    return tuple(detail_events), tuple(executed)
+
+
+def _merge_detail_disclosures(
+    list_disclosures: Sequence[DisclosureEvent],
+    detail_disclosures: Sequence[DisclosureEvent],
+) -> tuple[DisclosureEvent, ...]:
+    by_key: dict[str, DisclosureEvent] = {}
+    for item in list_disclosures:
+        key = item.rcept_no or f"{item.symbol}:{item.published_at.isoformat()}:{item.title}"
+        by_key[key] = item
+    for item in detail_disclosures:
+        key = item.rcept_no or f"{item.symbol}:{item.published_at.isoformat()}:{item.title}"
+        by_key[key] = item
+    return tuple(sorted(by_key.values(), key=lambda item: (item.symbol, item.published_at, item.rcept_no or "")))
 
 
 def _with_secret_param(request: SourceRequest, key: str, value: str) -> SourceRequest:
@@ -1010,7 +1155,8 @@ def _logical_queries_by_source(
 ) -> dict[str, int]:
     logical = {
         "opendart": int(source_call_counts.get("opendart_disclosure_date_range", 0))
-        + int(source_call_counts.get("opendart_symbol_disclosure_calls", 0)),
+        + int(source_call_counts.get("opendart_symbol_disclosure_calls", 0))
+        + int(source_call_counts.get("opendart_detail_fetches", 0)),
         "krx": int(source_call_counts.get("krx_calls", 0)),
         "data_go_kr": int(source_call_counts.get("data_go_kr_calls", 0)),
         "naver_search": int(source_call_counts.get("naver_search_queries", 0)),
@@ -1083,6 +1229,79 @@ def _free_search_provider(
     )
 
 
+def _run_report_radar(
+    *,
+    config: KoreaLiveLiteConfig,
+    instruments: Sequence[Instrument],
+    free_search_provider: SearchProvider,
+    remaining_queries: int,
+) -> tuple[ReportRadarCandidate, ...]:
+    if not config.report_radar_enabled or remaining_queries <= 0:
+        return ()
+    budget = SearchBudget(
+        max_total_queries_per_day=min(remaining_queries, config.budget.max_naver_search_calls_per_day),
+        max_queries_per_symbol=len(REPORT_RADAR_PHRASES),
+        max_deep_research_symbols=config.budget.max_symbols_for_deep_research,
+        max_active_monitoring_symbols=0,
+    )
+    return ReportRadar(free_search_provider, max_results_per_query=config.max_results_per_query).run(
+        instruments=instruments,
+        as_of_date=config.as_of_date,
+        budget=budget,
+        active_watchlist_symbols=config.active_watchlist_symbols,
+        max_symbols=config.report_radar_universe_limit,
+    )
+
+
+def _estimate_radar_queries(
+    config: KoreaLiveLiteConfig,
+    instruments: Sequence[Instrument],
+    radar_candidates: Sequence[ReportRadarCandidate],
+) -> int:
+    if not config.report_radar_enabled:
+        return 0
+    # The radar stops when its budget is exhausted. This conservative estimate
+    # prevents later candidate research from assuming the full Naver budget is
+    # still available after a radar pass.
+    if not radar_candidates:
+        return min(config.budget.max_naver_search_calls_per_day, min(len(instruments), config.report_radar_universe_limit) * len(REPORT_RADAR_PHRASES))
+    return min(config.budget.max_naver_search_calls_per_day, min(len(instruments), config.report_radar_universe_limit) * len(REPORT_RADAR_PHRASES))
+
+
+def _targeted_smoke_candidates(config: KoreaLiveLiteConfig) -> tuple[CheapScanCandidate, ...]:
+    if not config.targeted_smoke_enabled:
+        return ()
+    company = (config.targeted_smoke_company or "").strip()
+    symbol = (config.targeted_smoke_symbol or company or "TARGETED_SMOKE").strip()
+    if not company:
+        company = symbol
+    return (
+        CheapScanCandidate(
+            symbol=symbol,
+            company_name=company,
+            market=Market.KR,
+            as_of_date=config.as_of_date,
+            reason_codes=("TARGETED_SMOKE",),
+            cheap_scan_total_score=0.0,
+            recommended_next_layer=RecommendedNextLayer.EVENT_SEARCH,
+            candidate_source_path="targeted_smoke",
+            test_injected=True,
+            production_candidate=False,
+        ),
+    )
+
+
+def _merge_candidates(*groups: Sequence[CheapScanCandidate]) -> tuple[CheapScanCandidate, ...]:
+    merged: dict[tuple[str, str], CheapScanCandidate] = {}
+    for group in groups:
+        for candidate in group:
+            key = (candidate.symbol, candidate.candidate_source_path)
+            existing = merged.get(key)
+            if existing is None or candidate.cheap_scan_total_score > existing.cheap_scan_total_score:
+                merged[key] = candidate
+    return tuple(sorted(merged.values(), key=lambda item: (not item.production_candidate, -item.cheap_scan_total_score, item.symbol)))
+
+
 @dataclass
 class _LiveNaverSearchProvider:
     client_id: str
@@ -1139,6 +1358,85 @@ def _search_budget(budget: KoreaLiveLiteBudget, remaining_queries: int) -> Searc
     )
 
 
+def _query_planner_for_candidate(candidate: CheapScanCandidate, config: KoreaLiveLiteConfig):
+    if candidate.test_injected and config.targeted_smoke_queries:
+        return _FixedCandidateQueryPlanner(candidate, config.targeted_smoke_queries)
+    return EscalationQueryPlanner(candidate)
+
+
+class _FixedCandidateQueryPlanner:
+    def __init__(self, candidate: CheapScanCandidate, queries: Sequence[str]) -> None:
+        self._candidate = candidate
+        self._queries = tuple(queries)
+
+    def plan(self, **kwargs) -> QueryPlan:
+        specs = tuple(
+            QuerySpec(
+                group="event_search",
+                query=query,
+                priority=10 + index,
+                company_name=self._candidate.company_name,
+                symbol=self._candidate.symbol,
+                sector=None,
+                market=self._candidate.market,
+                as_of_date=self._candidate.as_of_date,
+            )
+            for index, query in enumerate(self._queries)
+        )
+        return QueryPlan(
+            company_name=self._candidate.company_name,
+            symbol=self._candidate.symbol,
+            sector=None,
+            market=self._candidate.market,
+            as_of_date=self._candidate.as_of_date,
+            queries=specs,
+        )
+
+
+def _targeted_smoke_result_row(candidate: CheapScanCandidate, result: WebResearchPipelineResult) -> Mapping[str, Any]:
+    return {
+        "symbol": candidate.symbol,
+        "company_name": candidate.company_name,
+        "candidate_source_path": candidate.candidate_source_path,
+        "test_injected": candidate.test_injected,
+        "production_candidate": candidate.production_candidate,
+        "stage": result.stage.stage,
+        "evidence_count": len(result.web_result.evidence),
+        "queries_run": result.web_result.queries_run,
+        "status": "insufficient_evidence" if not result.web_result.evidence else "evidence_found",
+    }
+
+
+def _report_radar_row(candidate: ReportRadarCandidate) -> Mapping[str, Any]:
+    return {
+        "company_name": candidate.company_name,
+        "symbol": candidate.symbol,
+        "trigger_query": candidate.trigger_query,
+        "matched_title": candidate.matched_result.title,
+        "matched_url": candidate.matched_result.url,
+        "confidence": candidate.confidence,
+        "reason_codes": candidate.reason_codes,
+        "recommended_next_layer": candidate.recommended_next_layer,
+    }
+
+
+def _audit_summary(audit_findings: Sequence[AuditFinding], evidence: Sequence[Evidence]) -> Mapping[str, Any]:
+    by_id = {item.evidence_id: item for item in evidence}
+    by_source_type: Counter[str] = Counter()
+    by_signal_class: Counter[str] = Counter()
+    for finding in audit_findings:
+        item = by_id.get(finding.evidence_id or "")
+        by_source_type[item.source_type if item is not None else "unknown"] += 1
+        signal_class = str((item.parsed_fields.get("signal_class") if item is not None else None) or "unknown")
+        by_signal_class[signal_class] += 1
+    return {
+        "audit_findings_by_source_type": dict(by_source_type.most_common()),
+        "audit_findings_by_signal_class": dict(by_signal_class.most_common()),
+        "high_signal_audit_count": by_signal_class.get("high_signal", 0),
+        "routine_audit_count": by_signal_class.get("routine", 0),
+    }
+
+
 def _enforce_cross_evidence_stage3_green(
     result: WebResearchPipelineResult,
     evidence: Sequence[Evidence],
@@ -1190,7 +1488,17 @@ def _enforce_parser_audit_stage3_green(
 
 def _independent_evidence_types(evidence: Sequence[Evidence]) -> tuple[str, ...]:
     accepted = {"disclosure", "research_report", "news", "financial_actual", "consensus", "consensus_revision"}
-    return tuple(sorted({item.source_type for item in evidence if item.source_type in accepted}))
+    return tuple(
+        sorted(
+            {
+                item.source_type
+                for item in evidence
+                if item.source_type in accepted
+                and item.parsed_fields.get("signal_class") != "routine"
+                and not item.parsed_fields.get("test_injected")
+            }
+        )
+    )
 
 
 def _cheap_scan_evidence_by_id(
@@ -1312,6 +1620,7 @@ def _write_outputs(
     *,
     config: KoreaLiveLiteConfig,
     cheap_scan: KoreaCheapScanResult,
+    candidates: Sequence[CheapScanCandidate],
     evidence: Sequence[Evidence],
     morning_brief: MorningBrief,
     run_log: KoreaLiveLiteRunLog,
@@ -1324,7 +1633,7 @@ def _write_outputs(
     brief_path = output_dir / f"{stem}_brief.md"
     run_log_path = output_dir / f"{stem}_run_log.json"
     candidates_path.write_text(
-        json.dumps(_jsonable({"as_of_date": config.as_of_date, "candidates": cheap_scan.candidates}), ensure_ascii=False, indent=2, sort_keys=True),
+        json.dumps(_jsonable({"as_of_date": config.as_of_date, "candidates": tuple(candidates)}), ensure_ascii=False, indent=2, sort_keys=True),
         encoding="utf-8",
     )
     evidence_path.write_text(
@@ -1334,6 +1643,47 @@ def _write_outputs(
     brief_path.write_text(morning_brief.text, encoding="utf-8")
     run_log_path.write_text(json.dumps(_jsonable(run_log), ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
     return candidates_path, evidence_path, brief_path, run_log_path
+
+
+def _write_calibration_outputs(
+    config: KoreaLiveLiteConfig,
+    cheap_scan: KoreaCheapScanResult,
+) -> tuple[Path | None, Path | None]:
+    if cheap_scan.calibration is None:
+        return None, None
+    output_dir = Path(config.output_directory) / "korea_live_lite"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    stem = config.as_of_date.isoformat()
+    json_path = output_dir / f"{stem}_cheap_scan_calibration.json"
+    md_path = output_dir / f"{stem}_cheap_scan_calibration.md"
+    json_path.write_text(json.dumps(_jsonable(cheap_scan.calibration), ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+    md_path.write_text(_render_calibration_markdown(cheap_scan), encoding="utf-8")
+    return json_path, md_path
+
+
+def _render_calibration_markdown(cheap_scan: KoreaCheapScanResult) -> str:
+    report = cheap_scan.calibration
+    if report is None:
+        return "# Korea Cheap Scan Calibration\n\n(no calibration report)\n"
+    lines = [
+        "# Korea Cheap Scan Calibration",
+        "",
+        f"- as_of_date: {report.as_of_date.isoformat()}",
+        f"- instruments_scanned: {report.instruments_scanned}",
+        f"- candidate_count: {report.candidate_count}",
+        f"- event_search_count: {report.event_search_count}",
+        f"- deep_research_count: {report.deep_research_count}",
+        "",
+        "## Reason Codes",
+        "",
+    ]
+    lines.extend(f"- {key}: {value}" for key, value in report.reason_code_distribution.items())
+    lines.extend(["", "## Diagnostic Reasons", ""])
+    lines.extend(f"- {key}: {value}" for key, value in report.diagnostic_reason_distribution.items())
+    lines.extend(["", "## Near Miss Top 50", "", "| symbol | company | score | reasons |", "| --- | --- | ---: | --- |"])
+    for item in report.near_miss_top_50:
+        lines.append(f"| {item.symbol} | {item.company_name} | {item.cheap_scan_total_score:.2f} | {', '.join(item.diagnostic_reasons)} |")
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def _dedupe_evidence(items: Sequence[Evidence]) -> tuple[Evidence, ...]:

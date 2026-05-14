@@ -77,6 +77,29 @@ REASON_CODE_QUERY_TEMPLATES: dict[str, tuple[str, ...]] = {
         "{company} OPM 개선",
         "{company} 마진 개선 목표주가 상향 PDF",
     ),
+    "REPORT_RADAR_MATCH": (
+        "{company} 컨센서스 상회 Review PDF",
+        "{company} 실적 서프라이즈 목표주가 상향 PDF",
+    ),
+    "REPORT_RADAR_REPORT": (
+        "{company} 목표주가 상향 EPS 상향 PDF",
+        "{company} 수주잔고 OPM 수출 비중 PDF",
+    ),
+    "REPORT_RADAR_CONTRACT": (
+        "{company} 장기공급계약 매출액 대비 PDF",
+        "{company} 수주잔고 OPM 수출 비중 PDF",
+    ),
+    "REPORT_RADAR_CAPA": (
+        "{company} 신규시설투자 CAPA 증설 PDF",
+        "{company} CAPA 증설 PDF",
+    ),
+    "REPORT_RADAR_PRICING": (
+        "{company} ASP 상승 판가 상승 리드타임 PDF",
+        "{company} 북미 미국향 데이터센터 수주 PDF",
+    ),
+    "TARGETED_SMOKE": (
+        "{company} 수주잔고",
+    ),
 }
 
 NEGATIVE_REASON_QUERY_TEMPLATES: dict[str, tuple[str, ...]] = {

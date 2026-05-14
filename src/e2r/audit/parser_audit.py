@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import Any, Mapping, Sequence
 
 from e2r.models import Evidence, ScoreSnapshot, Stage, StageSnapshot
+from e2r.sources.opendart import DISCLOSURE_SIGNAL_ROUTINE
 
 
 @dataclass(frozen=True)
@@ -87,7 +88,7 @@ def _audit_evidence(evidence: Evidence) -> tuple[AuditFinding, ...]:
         )
 
     confidence = _confidence(evidence)
-    if confidence < 0.5:
+    if confidence < 0.5 and not _skip_low_confidence_noise(evidence):
         findings.append(
             _finding(
                 evidence,
@@ -100,6 +101,15 @@ def _audit_evidence(evidence: Evidence) -> tuple[AuditFinding, ...]:
             )
         )
     return tuple(findings)
+
+
+def _skip_low_confidence_noise(evidence: Evidence) -> bool:
+    fields = evidence.parsed_fields
+    if fields.get("detail_fetched"):
+        return False
+    if fields.get("signal_class") == DISCLOSURE_SIGNAL_ROUTINE:
+        return True
+    return evidence.source_type == "disclosure" and evidence.source_name == "OpenDART" and fields.get("signal_class") == DISCLOSURE_SIGNAL_ROUTINE
 
 
 def _audit_contract_score_inputs(score: ScoreSnapshot, evidence: Sequence[Evidence]) -> tuple[AuditFinding, ...]:

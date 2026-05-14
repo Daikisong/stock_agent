@@ -34,6 +34,9 @@ class CheapScanCandidate:
     evidence_ids: tuple[str, ...] = field(default_factory=tuple)
     recommended_next_layer: RecommendedNextLayer = RecommendedNextLayer.NONE
     dropped_reason: str | None = None
+    candidate_source_path: str = "official_cheap_scan"
+    test_injected: bool = False
+    production_candidate: bool = True
 
     def __post_init__(self) -> None:
         if not self.symbol.strip():
@@ -46,6 +49,10 @@ class CheapScanCandidate:
             object.__setattr__(self, "market", Market(self.market))
         if not isinstance(self.recommended_next_layer, RecommendedNextLayer):
             object.__setattr__(self, "recommended_next_layer", RecommendedNextLayer(self.recommended_next_layer))
+        if self.candidate_source_path not in {"official_cheap_scan", "report_radar", "targeted_smoke"}:
+            raise ValueError("candidate_source_path must be official_cheap_scan, report_radar, or targeted_smoke")
+        if self.test_injected and self.production_candidate:
+            raise ValueError("test_injected candidates cannot be production candidates")
         object.__setattr__(self, "reason_codes", tuple(dict.fromkeys(self.reason_codes)))
         object.__setattr__(self, "evidence_ids", tuple(dict.fromkeys(self.evidence_ids)))
         for field_name in (

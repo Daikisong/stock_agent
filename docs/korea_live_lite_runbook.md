@@ -793,6 +793,103 @@ KoreaLiveLiteConfig(
 )
 ```
 
+## OpenDART List vs Detail
+
+OpenDART `list.json` is a headline feed. It is good for discovering that something happened, but it usually does not contain the detailed numbers E2R needs.
+
+Simple example:
+
+```text
+list.json title: 단일판매·공급계약체결
+-> candidate can enter event_search
+-> not enough for Stage 3-Green
+
+document.xml detail:
+계약금액, 매출액 대비, 계약기간, 상대방
+-> stronger Evidence if fields are explicitly parsed
+```
+
+Detail fetch is capped by preset:
+
+```text
+tiny = 3
+small = 10
+standard_shadow = 50
+```
+
+Only watch disclosures are fetched. Routine rows such as repetitive prospectus filings or administrative corrections do not trigger detail fetch and do not count as independent Green evidence.
+
+## Cheap-Scan Calibration Report
+
+Each run writes:
+
+```text
+output/korea_live_lite/YYYY-MM-DD_cheap_scan_calibration.json
+output/korea_live_lite/YYYY-MM-DD_cheap_scan_calibration.md
+```
+
+Use it when a run produces zero candidates.
+
+Example interpretation:
+
+```text
+near_miss_top_50 has many price signals
+-> price threshold may be too strict, or disclosures are missing
+
+top_high_signal_disclosures is empty
+-> OpenDART date window may be too narrow, or today had no official events
+
+instruments_missing_price_bars is high
+-> universe/price source join needs review
+```
+
+Do not lower thresholds just because one day has zero candidates. The report is for diagnosis first.
+
+## Report Radar
+
+Report Radar is an optional lightweight search path for high-signal E2R phrases:
+
+```text
+목표주가 상향 EPS 상향 PDF
+컨센서스 상회 Review PDF
+수주잔고 OPM 수출 비중 PDF
+장기공급계약 매출액 대비 PDF
+ASP 상승 판가 상승 리드타임 PDF
+```
+
+It is not a full-market deep search. It uses a capped universe slice, active watchlist symbols, and `SearchBudget`.
+
+Report Radar candidates are marked:
+
+```text
+candidate_source_path = report_radar
+```
+
+They can route to event search or deep research, but they still need normal parsed evidence before any Stage 3-Green classification.
+
+## Targeted Smoke
+
+Targeted smoke is a pipeline test for Naver/search escalation.
+
+It is marked:
+
+```text
+test_injected = True
+candidate_source_path = targeted_smoke
+production_candidate = False
+```
+
+It is excluded from production candidate JSON and the real morning brief. If the search returns no real document, the run log records `insufficient_evidence`.
+
+Simple example:
+
+```text
+targeted_smoke_company = "테스트회사"
+search returns nothing
+-> no Stage 3-Green
+-> only run_log.targeted_smoke_results records the pipeline test
+```
+
 ## Safety Rules
 
 Do:

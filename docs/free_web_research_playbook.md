@@ -258,3 +258,65 @@ The free web mode must not:
 - issue buy/sell recommendation wording
 
 It should produce evidence-backed monitoring output only.
+
+## Report Radar
+
+Report Radar is a lightweight recall layer before symbol-specific deep research.
+
+It searches high-signal phrases such as:
+
+```text
+목표주가 상향 EPS 상향 PDF
+컨센서스 상회 Review PDF
+실적 서프라이즈 목표주가 상향 PDF
+수주잔고 OPM 수출 비중 PDF
+신규시설투자 CAPA 증설 PDF
+장기공급계약 매출액 대비 PDF
+ASP 상승 판가 상승 리드타임 PDF
+북미 미국향 데이터센터 수주 PDF
+```
+
+It differs from production confirmation:
+
+```text
+Report Radar result
+-> "this looks worth checking"
+
+Parsed report/news/disclosure evidence
+-> "this can affect score/stage"
+```
+
+For example:
+
+```text
+검색 결과 제목: "효성중공업 저마진 수주 정리 Review PDF"
+-> report_radar candidate
+-> deep_research query
+-> parser must still extract margin, target revision, backlog, or risk fields
+```
+
+Report Radar respects `SearchBudget` and should use a capped universe or watchlist. It is not allowed to deep-search every listed company every day.
+
+## Targeted Smoke Is Not Evidence
+
+Targeted smoke exists to test the search pipeline after a zero-candidate day.
+
+It is marked:
+
+```text
+candidate_source_path = targeted_smoke
+test_injected = True
+production_candidate = False
+```
+
+Smoke output may appear in `run_log.targeted_smoke_results`, but it is excluded from production candidate ranking and the real morning brief.
+
+Example:
+
+```text
+targeted smoke query returns no document
+-> status = insufficient_evidence
+-> no Stage 3-Green
+```
+
+This keeps the pipeline test separate from evidence creation.

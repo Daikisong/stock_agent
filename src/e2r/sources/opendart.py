@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
@@ -42,6 +43,9 @@ DISCLOSURE_WATCH_TYPES: tuple[str, ...] = (
     "최대주주 변경",
     "소송",
     "거래정지",
+    "계약 해지",
+    "계약 취소",
+    "계약 정정",
 )
 
 DISCLOSURE_PARSED_FIELDS: tuple[str, ...] = (
@@ -63,7 +67,13 @@ DISCLOSURE_PARSED_FIELDS: tuple[str, ...] = (
     "capa_increase_pct",
     "expected_completion_date",
     "dilution_type",
+    "op_yoy_pct",
 )
+
+DISCLOSURE_SIGNAL_HIGH = "high_signal"
+DISCLOSURE_SIGNAL_RISK = "risk_signal"
+DISCLOSURE_SIGNAL_ROUTINE = "routine"
+DISCLOSURE_SIGNAL_UNKNOWN = "unknown"
 
 
 @dataclass(frozen=True)
@@ -200,8 +210,9 @@ class OpenDARTConnector:
         if raw_text:
             for key, value in parse_disclosure_text(raw_text, title=title).items():
                 parsed.setdefault(key, value)
-        parsed.setdefault("parser_confidence", _parser_confidence(parsed, raw_text))
         parsed.setdefault("watch_type", _watch_type(title, report_type))
+        parsed.setdefault("signal_class", classify_disclosure_signal(title, report_type, raw_text=raw_text, parsed_fields=parsed))
+        parsed.setdefault("parser_confidence", _parser_confidence(parsed, raw_text))
 
         return DisclosureEvent(
             symbol=str(row.get("symbol") or row.get("corp_code") or row.get("stock_code")),
@@ -300,10 +311,128 @@ def parse_disclosure_text(raw_text: str, *, title: str = "") -> dict[str, Any]:
     dilution = _dilution_type(title + "\n" + text)
     if dilution:
         parsed["dilution_type"] = dilution
+    op_yoy = _percent_after(text, ("영업이익 전년동기대비", "영업이익 전년 동기 대비", "OP YoY", "operating profit yoy"))
+    if op_yoy is not None:
+        parsed["op_yoy_pct"] = op_yoy
 
     if any(token in title for token in ("거래정지", "상장폐지", "관리종목")):
         parsed["listing_risk"] = True
     return parsed
+
+
+def normalize_disclosure_detail(
+    base_event: DisclosureEvent,
+    raw_document: str,
+    *,
+    as_of_date: date,
+) -> DisclosureEvent:
+    """Create higher-quality detail evidence from an OpenDART document body.
+
+    The detail parser only lifts confidence when explicit fields are present.
+    It never fills missing values from the list headline alone.
+    """
+
+    text = extract_document_text(raw_document)
+    parsed = dict(base_event.parsed_fields)
+    detail_fields = parse_disclosure_text(text, title=base_event.title)
+    parsed.update(detail_fields)
+    parsed["detail_fetched"] = True
+    parsed["raw_document_format"] = "xml" if raw_document.lstrip().startswith("<") else "text"
+    parsed["signal_class"] = classify_disclosure_signal(base_event.title, base_event.report_type, raw_text=text, parsed_fields=parsed)
+    parsed["parser_confidence"] = _detail_parser_confidence(parsed)
+    raw_text = text[:20_000] if text else None
+    return DisclosureEvent(
+        symbol=base_event.symbol,
+        source="OpenDART detail",
+        report_type=base_event.report_type,
+        title=base_event.title,
+        published_at=base_event.published_at,
+        observed_at=base_event.observed_at,
+        available_at=base_event.available_at,
+        as_of_date=as_of_date,
+        rcept_no=base_event.rcept_no,
+        raw_text=raw_text,
+        parsed_fields=parsed,
+    )
+
+
+def extract_document_text(raw_document: str) -> str:
+    """Extract readable text from OpenDART document XML or plain text."""
+
+    text = raw_document.strip()
+    if not text:
+        return ""
+    if text.lstrip().startswith("<"):
+        try:
+            root = ET.fromstring(text)
+            parts = [part.strip() for part in root.itertext() if part and part.strip()]
+            return "\n".join(parts)
+        except ET.ParseError:
+            return re.sub(r"<[^>]+>", "\n", text)
+    return text
+
+
+def classify_disclosure_signal(
+    title: str,
+    report_type: str = "",
+    *,
+    raw_text: str | None = None,
+    parsed_fields: Mapping[str, Any] | None = None,
+) -> str:
+    """Classify a disclosure headline/body for Layer-1 routing."""
+
+    fields = parsed_fields or {}
+    haystack = f"{title} {report_type} {raw_text or ''}"
+    if any(token in haystack for token in ("유상증자", "전환사채", "신주인수권부사채", "감사의견", "거래정지", "상장폐지", "관리종목", "소송", "계약 해지", "계약 취소", "계약 지연")):
+        return DISCLOSURE_SIGNAL_RISK
+    if any(
+        token in haystack
+        for token in (
+            "단일판매",
+            "공급계약",
+            "장기공급",
+            "신규시설투자",
+            "잠정실적",
+            "영업실적 전망",
+            "영업(잠정)실적",
+            "수주잔고",
+            "CAPA",
+            "생산능력",
+        )
+    ):
+        return DISCLOSURE_SIGNAL_HIGH
+    if any(
+        key in fields
+        for key in (
+            "contract_amount",
+            "contract_amount_to_prior_sales",
+            "facility_investment_amount",
+            "capa_increase_pct",
+            "op_yoy_pct",
+        )
+    ):
+        return DISCLOSURE_SIGNAL_HIGH
+    if any(
+        token in haystack
+        for token in (
+            "투자설명서",
+            "일괄신고",
+            "증권발행실적보고서",
+            "효력발생안내",
+            "임원ㆍ주요주주",
+            "임원·주요주주",
+            "주식등의대량보유",
+            "분기보고서",
+            "반기보고서",
+            "사업보고서",
+            "주주총회",
+            "주주명부",
+            "기업설명회",
+            "의결권대리",
+        )
+    ):
+        return DISCLOSURE_SIGNAL_ROUTINE
+    return DISCLOSURE_SIGNAL_UNKNOWN
 
 
 def _coerce_disclosure_value(key: str, value: Any) -> Any:
@@ -336,6 +465,13 @@ def _parser_confidence(parsed: Mapping[str, Any], raw_text: str | None) -> float
     if not raw_text:
         return min(1.0, 0.45 + explicit_fields * 0.04)
     return min(1.0, 0.35 + explicit_fields * 0.06)
+
+
+def _detail_parser_confidence(parsed: Mapping[str, Any]) -> float:
+    explicit_fields = sum(1 for key in DISCLOSURE_PARSED_FIELDS if key in parsed and parsed.get(key) not in (None, ""))
+    if explicit_fields <= 0:
+        return 0.45
+    return min(1.0, 0.55 + explicit_fields * 0.06)
 
 
 def _amount_after(text: str, labels: tuple[str, ...]) -> float | None:
