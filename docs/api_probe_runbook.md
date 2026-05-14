@@ -17,6 +17,11 @@ real response has CLPRC instead
 
 This prevents the full agent from silently using wrong field assumptions.
 
+For KRX/data.go.kr market data, the probe uses the prior calendar date for
+schema discovery. Same-day official market-data files can be empty before the
+provider publishes the close, and the probe only needs a representative row
+shape.
+
 ## What The Probe Does
 
 ```text
@@ -156,6 +161,19 @@ but the raw response did not expose them under the expected names.
 ```
 
 Fix the normalizer or expected-field aliases before running live-lite.
+
+As of the first live validation cycle, the approved data.go.kr V2 operations
+that returned live rows were:
+
+```text
+GetCorpBasicInfoService_V2/getCorpOutline_V2
+GetFinaStatInfoService_V2/getSummFinaStat_V2
+GetDiscInfoService_V2/getDiviDiscInfo_V2
+```
+
+The older `getCorpBasicInfo`, `getFinaStatInfo`, and `getDiscInfo` operation
+names should only be used as explicit legacy aliases when a deployed account
+requires them.
 
 Example:
 

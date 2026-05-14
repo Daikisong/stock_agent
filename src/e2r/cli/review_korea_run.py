@@ -129,7 +129,7 @@ def _low_confidence_evidence(rows: Sequence[Mapping[str, Any]]) -> tuple[str, ..
             confidence = _num(row.get("confidence"))
         if confidence is not None and confidence < 0.5:
             items.append(str(row.get("evidence_id") or row.get("title") or row.get("symbol") or "unknown"))
-    return tuple(items)
+    return _limited_items(items)
 
 
 def _manual_review_items(findings: Sequence[Mapping[str, Any]]) -> tuple[str, ...]:
@@ -138,7 +138,15 @@ def _manual_review_items(findings: Sequence[Mapping[str, Any]]) -> tuple[str, ..
         action = str(finding.get("suggested_action") or "")
         if action in {"manual_review", "block_green", "downgrade_to_yellow"}:
             items.append(str(finding.get("finding_id") or finding.get("code") or "audit_finding"))
-    return tuple(items)
+    return _limited_items(items)
+
+
+def _limited_items(items: Sequence[str], limit: int = 10) -> tuple[str, ...]:
+    """Keep terminal review output readable for high-volume live runs."""
+
+    if len(items) <= limit:
+        return tuple(items)
+    return tuple(items[:limit]) + (f"... +{len(items) - limit} more",)
 
 
 def _mapping_text(value: Mapping[str, Any]) -> str:

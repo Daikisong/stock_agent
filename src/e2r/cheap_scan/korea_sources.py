@@ -16,9 +16,9 @@ from e2r.sources.source_errors import SourceRequest, date_value, float_or_none, 
 FSC_BASE_URL = "https://apis.data.go.kr/1160100/service"
 FSC_LISTED_ITEMS_SERVICE_PATH = "GetKrxListedInfoService/getItemInfo"
 FSC_STOCK_PRICE_SERVICE_PATH = "GetStockSecuritiesInfoService/getStockPriceInfo"
-FSC_FINANCIAL_INFO_SERVICE_PATH = "GetFinaStatInfoService_V2/getFinaStatInfo"
-FSC_DISCLOSURE_INFO_SERVICE_PATH = "GetDiscInfoService_V2/getDiscInfo"
-FSC_CORP_BASIC_INFO_SERVICE_PATH = "GetCorpBasicInfoService_V2/getCorpBasicInfo"
+FSC_FINANCIAL_INFO_SERVICE_PATH = "GetFinaStatInfoService_V2/getSummFinaStat_V2"
+FSC_DISCLOSURE_INFO_SERVICE_PATH = "GetDiscInfoService_V2/getDiviDiscInfo_V2"
+FSC_CORP_BASIC_INFO_SERVICE_PATH = "GetCorpBasicInfoService_V2/getCorpOutline_V2"
 FSC_STOCK_ISSUANCE_SERVICE_PATH = "GetStockIssuanceInfoService/getStockIssueInfo"
 
 
@@ -83,32 +83,80 @@ class DataGoKrFSCConnector:
             },
         )
 
-    def build_financial_info_request(self, symbol: str, as_of_date: date) -> SourceRequest:
+    def build_financial_info_request(
+        self,
+        symbol: str,
+        as_of_date: date,
+        *,
+        company_name: str | None = None,
+        crno: str | None = None,
+        fiscal_year: int | None = None,
+    ) -> SourceRequest:
+        params: dict[str, Any] = {
+            "pageNo": 1,
+            "numOfRows": 10,
+            "bizYear": str(fiscal_year or as_of_date.year - 1),
+        }
+        if crno:
+            params["crno"] = crno
+        elif company_name:
+            params["corpNm"] = company_name
+        else:
+            params["likeSrtnCd"] = symbol
         return self._request(
             self.financial_info_service_path,
-            {
-                "likeSrtnCd": symbol,
-                "basDt": as_of_date.strftime("%Y%m%d"),
-            },
+            params,
         )
 
-    def build_disclosure_info_request(self, symbol: str, start: date, end: date, as_of_date: date) -> SourceRequest:
+    def build_disclosure_info_request(
+        self,
+        symbol: str,
+        start: date,
+        end: date,
+        as_of_date: date,
+        *,
+        company_name: str | None = None,
+        crno: str | None = None,
+        include_date: bool = True,
+    ) -> SourceRequest:
+        params: dict[str, Any] = {
+            "pageNo": 1,
+            "numOfRows": 10,
+        }
+        if include_date:
+            params["basDt"] = min(end, as_of_date).strftime("%Y%m%d")
+        if crno:
+            params["crno"] = crno
+        elif company_name:
+            params["corpNm"] = company_name
+        else:
+            params["likeSrtnCd"] = symbol
         return self._request(
             self.disclosure_info_service_path,
-            {
-                "likeSrtnCd": symbol,
-                "beginBasDt": start.strftime("%Y%m%d"),
-                "endBasDt": min(end, as_of_date).strftime("%Y%m%d"),
-            },
+            params,
         )
 
-    def build_corp_basic_info_request(self, symbol: str, as_of_date: date) -> SourceRequest:
+    def build_corp_basic_info_request(
+        self,
+        symbol: str,
+        as_of_date: date,
+        *,
+        company_name: str | None = None,
+        crno: str | None = None,
+    ) -> SourceRequest:
+        params: dict[str, Any] = {
+            "pageNo": 1,
+            "numOfRows": 10,
+        }
+        if crno:
+            params["crno"] = crno
+        elif company_name:
+            params["corpNm"] = company_name
+        else:
+            params["likeSrtnCd"] = symbol
         return self._request(
             self.corp_basic_info_service_path,
-            {
-                "likeSrtnCd": symbol,
-                "basDt": as_of_date.strftime("%Y%m%d"),
-            },
+            params,
         )
 
     def build_stock_issuance_request(self, symbol: str, as_of_date: date) -> SourceRequest:
@@ -213,31 +261,42 @@ class DataGoKrFSCConnector:
 
     @staticmethod
     def normalize_price_bar(row: Mapping[str, Any]) -> PriceBar:
+        close = _positive_float(row.get("close") or row.get("clpr"))
+        if close is None:
+            close = 0.0
+        open_price = _positive_float(row.get("open") or row.get("mkp")) or close
+        high = _positive_float(row.get("high") or row.get("hipr")) or max(open_price, close)
+        low = _positive_float(row.get("low") or row.get("lopr")) or min(open_price, close)
+        if close and close > high:
+            high = close
+        if close and close < low:
+            low = close
+        market_cap = _positive_float(row.get("market_cap") or row.get("mrktTotAmt"))
         mapped = {
             "symbol": row.get("symbol") or row.get("srtnCd") or row.get("isinCd"),
             "date": row.get("date") or row.get("basDt"),
-            "open": row.get("open") or row.get("mkp") or row.get("clpr"),
-            "high": row.get("high") or row.get("hipr") or row.get("clpr"),
-            "low": row.get("low") or row.get("lopr") or row.get("clpr"),
-            "close": row.get("close") or row.get("clpr"),
-            "adj_close": row.get("adj_close") or row.get("clpr") or row.get("close"),
+            "open": open_price,
+            "high": high,
+            "low": low,
+            "close": close,
+            "adj_close": _positive_float(row.get("adj_close")) or close,
             "volume": row.get("volume") or row.get("trqu") or 0,
             "trading_value": row.get("trading_value") or row.get("trPrc") or 0,
-            "market_cap": row.get("market_cap") or row.get("mrktTotAmt"),
+            "market_cap": market_cap,
             "source": row.get("source") or "data.go.kr FSC",
             "as_of_date": row.get("as_of_date") or row.get("basDt") or row.get("date"),
         }
         return PriceBar(
             symbol=str(mapped["symbol"]),
             date=date_value(mapped["date"]),
-            open=float_or_none(mapped["open"]) or 0.0,
-            high=float_or_none(mapped["high"]) or 0.0,
-            low=float_or_none(mapped["low"]) or 0.0,
-            close=float_or_none(mapped["close"]) or 0.0,
-            adj_close=float_or_none(mapped["adj_close"]) or 0.0,
+            open=float(mapped["open"]),
+            high=float(mapped["high"]),
+            low=float(mapped["low"]),
+            close=float(mapped["close"]),
+            adj_close=float(mapped["adj_close"]),
             volume=int_or_none(mapped["volume"]) or 0,
             trading_value=float_or_none(mapped["trading_value"]) or 0.0,
-            market_cap=float_or_none(mapped["market_cap"]),
+            market_cap=mapped["market_cap"],
             source=str(mapped["source"]),
             as_of_date=date_value(mapped["as_of_date"]),
         )
@@ -350,6 +409,13 @@ def _financial_actual(row: Mapping[str, Any]) -> FinancialActual:
         receivables=float_or_none(row.get("receivables")),
         inventory=float_or_none(row.get("inventory")),
     )
+
+
+def _positive_float(value: Any) -> float | None:
+    parsed = float_or_none(value)
+    if parsed is None or parsed <= 0:
+        return None
+    return parsed
 
 
 __all__ = ["DataGoKrFSCConnector", "KoreaCheapScanSources"]

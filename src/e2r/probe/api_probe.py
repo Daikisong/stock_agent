@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from e2r.cheap_scan.korea_sources import DataGoKrFSCConnector
-from e2r.models import DisclosureEvent, Instrument, Market, PriceBar
+from e2r.models import DisclosureEvent, FinancialActual, Instrument, Market, PriceBar
 from e2r.probe.schema_profiler import SchemaProfile, profile_payload, render_schema_markdown, select_item_rows, find_list_candidates
 from e2r.research.naver_search_provider import NAVER_SEARCH_ENDPOINTS, NaverFreeSearchProvider
 from e2r.research.search_provider import SearchResult
@@ -272,7 +272,7 @@ class APIProbeRunner:
                 skipped_sources.append(name)
 
         if config.probe_data_go_kr:
-            for target in _data_go_kr_targets(config.sample_symbol, market, as_of):
+            for target in _data_go_kr_targets(config.sample_symbol, config.sample_company, market, as_of):
                 add(target, "DATA_GO_KR_SERVICE_KEY")
         else:
             for name in (
@@ -321,6 +321,8 @@ class APIProbeRunner:
             return ProbeRawResponse(source_name=target.source_name, path=raw_path, ok=True, status_code=200), None
         result = http_client.get_text(target.request)
         if not result.ok or result.text is None:
+            if config.save_raw:
+                _write_failure_payload(raw_path, target, result)
             return ProbeRawResponse(source_name=target.source_name, path=raw_path, ok=False, status_code=result.status_code, error=result.error), None
         if config.save_raw:
             stored_path = _write_raw_text(raw_path, result.text)
@@ -380,18 +382,19 @@ def _naver_targets(as_of_date: date, sample_query: str = PROBE_QUERY) -> tuple[P
     return tuple(targets)
 
 
-def _data_go_kr_targets(sample_symbol: str, market: Market, as_of_date: date) -> tuple[ProbeTarget, ...]:
+def _data_go_kr_targets(sample_symbol: str, sample_company: str, market: Market, as_of_date: date) -> tuple[ProbeTarget, ...]:
     connector = DataGoKrFSCConnector(
         service_key=os.environ.get("DATA_GO_KR_SERVICE_KEY"),
         fixture_mode=False,
     )
     start = as_of_date - timedelta(days=7)
+    market_date = _market_probe_date(as_of_date)
     return (
         ProbeTarget(
             "data_go_kr_listed_items",
             "data_go_kr",
             "data_go_kr_listed_items.json",
-            connector.build_listed_items_page_request(market, as_of_date, page_no=1, num_rows=10),
+            connector.build_listed_items_page_request(market, market_date, page_no=1, num_rows=10),
         ),
         ProbeTarget(
             "data_go_kr_stock_prices",
@@ -403,33 +406,45 @@ def _data_go_kr_targets(sample_symbol: str, market: Market, as_of_date: date) ->
             "data_go_kr_corp_basic",
             "data_go_kr",
             "data_go_kr_corp_basic.json",
-            connector.build_corp_basic_info_request(sample_symbol, as_of_date),
+            connector.build_corp_basic_info_request(sample_symbol, as_of_date, company_name=sample_company),
         ),
         ProbeTarget(
             "data_go_kr_financial_stat",
             "data_go_kr",
             "data_go_kr_financial_stat.json",
-            connector.build_financial_info_request(sample_symbol, as_of_date),
+            connector.build_financial_info_request(sample_symbol, as_of_date, company_name=sample_company, fiscal_year=as_of_date.year - 1),
         ),
         ProbeTarget(
             "data_go_kr_disclosure_info",
             "data_go_kr",
             "data_go_kr_disclosure_info.json",
-            connector.build_disclosure_info_request(sample_symbol, as_of_date, as_of_date, as_of_date),
+            connector.build_disclosure_info_request(sample_symbol, as_of_date, as_of_date, as_of_date, company_name=sample_company, include_date=False),
         ),
     )
 
 
 def _krx_targets(as_of_date: date) -> tuple[ProbeTarget, ...]:
     connector = KRXConnector(fixture_mode=False, openapi_key=os.environ.get("KRX_OPENAPI_KEY"))
+    market_date = _market_probe_date(as_of_date)
     return (
-        ProbeTarget("krx_stk_bydd_trd", "krx", "krx_stk_bydd_trd.json", connector.build_openapi_kospi_daily_trading_request(as_of_date)),
-        ProbeTarget("krx_ksq_bydd_trd", "krx", "krx_ksq_bydd_trd.json", connector.build_openapi_kosdaq_daily_trading_request(as_of_date)),
-        ProbeTarget("krx_stk_isu_base_info", "krx", "krx_stk_isu_base_info.json", connector.build_openapi_kospi_issue_base_info_request(as_of_date)),
-        ProbeTarget("krx_ksq_isu_base_info", "krx", "krx_ksq_isu_base_info.json", connector.build_openapi_kosdaq_issue_base_info_request(as_of_date)),
-        ProbeTarget("krx_kospi_dd_trd", "krx", "krx_kospi_dd_trd.json", connector.build_openapi_kospi_index_daily_trading_request(as_of_date)),
-        ProbeTarget("krx_kosdaq_dd_trd", "krx", "krx_kosdaq_dd_trd.json", connector.build_openapi_kosdaq_index_daily_trading_request(as_of_date)),
+        ProbeTarget("krx_stk_bydd_trd", "krx", "krx_stk_bydd_trd.json", connector.build_openapi_kospi_daily_trading_request(market_date)),
+        ProbeTarget("krx_ksq_bydd_trd", "krx", "krx_ksq_bydd_trd.json", connector.build_openapi_kosdaq_daily_trading_request(market_date)),
+        ProbeTarget("krx_stk_isu_base_info", "krx", "krx_stk_isu_base_info.json", connector.build_openapi_kospi_issue_base_info_request(market_date)),
+        ProbeTarget("krx_ksq_isu_base_info", "krx", "krx_ksq_isu_base_info.json", connector.build_openapi_kosdaq_issue_base_info_request(market_date)),
+        ProbeTarget("krx_kospi_dd_trd", "krx", "krx_kospi_dd_trd.json", connector.build_openapi_kospi_index_daily_trading_request(market_date)),
+        ProbeTarget("krx_kosdaq_dd_trd", "krx", "krx_kosdaq_dd_trd.json", connector.build_openapi_kosdaq_index_daily_trading_request(market_date)),
     )
+
+
+def _market_probe_date(as_of_date: date) -> date:
+    """Use a settled market-data date for schema probes.
+
+    Same-day KRX/data.go.kr files can be empty before the provider publishes
+    the official close. The probe only needs response shape, so yesterday is a
+    safer tiny call than repeatedly probing a not-yet-published date.
+    """
+
+    return as_of_date - timedelta(days=1)
 
 
 def _normalizer_dry_run(source_name: str, payload: Any, as_of_date: date, sample_query: str = PROBE_QUERY) -> NormalizerDryRun:
@@ -443,6 +458,8 @@ def _normalizer_dry_run(source_name: str, payload: Any, as_of_date: date, sample
             results = NaverFreeSearchProvider.normalize_response(payload if isinstance(payload, Mapping) else {}, query=sample_query, as_of_date=as_of_date, source=source_name)
             return NormalizerDryRun(source_name, "NaverFreeSearchProvider.normalize_response", len(payload.get("items", ())) if isinstance(payload, Mapping) else 0, len(results), 0, (), missing)
         for row in rows:
+            if _skip_unpriced_probe_row(source_name, row):
+                continue
             try:
                 _normalize_row(source_name, row, as_of_date)
                 normalized += 1
@@ -475,6 +492,8 @@ def _normalize_row(source_name: str, row: Mapping[str, Any], as_of_date: date) -
         )
     if source_name == "data_go_kr_stock_prices":
         return connector.normalize_price_bar(row)
+    if source_name == "data_go_kr_financial_stat":
+        return _data_go_kr_financial_actual(row, as_of_date)
     if source_name in {"opendart_list", "data_go_kr_disclosure_info"}:
         return OpenDARTConnector.normalize_disclosure(_disclosure_row(row, as_of_date))
     if source_name in {"krx_stk_bydd_trd", "krx_ksq_bydd_trd", "krx_kospi_dd_trd", "krx_kosdaq_dd_trd"}:
@@ -491,6 +510,8 @@ def _normalizer_name_for(source_name: str) -> str:
         return "data.go.kr corp-basic metadata normalizer"
     if source_name == "data_go_kr_stock_prices":
         return "DataGoKrFSCConnector.normalize_price_bar"
+    if source_name == "data_go_kr_financial_stat":
+        return "data.go.kr financial-stat dry-run normalizer"
     if source_name in {"opendart_list", "data_go_kr_disclosure_info"}:
         return "OpenDARTConnector.normalize_disclosure"
     if source_name.startswith("naver_"):
@@ -501,7 +522,10 @@ def _normalizer_name_for(source_name: str) -> str:
 
 
 def _rows_for_payload(payload: Any) -> list[Mapping[str, Any]]:
-    _path, rows = select_item_rows(payload, find_list_candidates(payload))
+    candidates = find_list_candidates(payload)
+    path, rows = select_item_rows(payload, candidates)
+    if path == "$" and candidates:
+        return []
     return rows
 
 
@@ -517,14 +541,31 @@ def _disclosure_row(row: Mapping[str, Any], as_of_date: date) -> dict[str, Any]:
     }
 
 
+def _data_go_kr_financial_actual(row: Mapping[str, Any], as_of_date: date) -> FinancialActual:
+    period_end = date_value(row.get("basDt") or f"{row.get('bizYear') or as_of_date.year - 1}1231")
+    return FinancialActual(
+        symbol=str(row.get("srtnCd") or row.get("crno") or row.get("corpNm") or "UNKNOWN"),
+        fiscal_year=int(float(str(row.get("bizYear") or period_end.year))),
+        fiscal_quarter=None,
+        period_end=period_end,
+        reported_at=datetime(as_of_date.year, as_of_date.month, as_of_date.day),
+        as_of_date=as_of_date,
+        source="data.go.kr FSC financial-stat probe",
+        sales=float_or_none(row.get("sales") or row.get("saleAmt") or row.get("enpSaleAmt")),
+        operating_profit=float_or_none(row.get("operating_profit") or row.get("op") or row.get("enpBzopPft") or row.get("bzopPft")),
+        net_income=float_or_none(row.get("net_income") or row.get("enpCrtmNpf") or row.get("crtmNpf")),
+        debt_ratio=float_or_none(row.get("fnclDebtRto")),
+    )
+
+
 def _krx_price_bar(row: Mapping[str, Any], as_of_date: date) -> PriceBar:
-    close = float_or_none(row.get("TDD_CLSPRC") or row.get("CLSPRC") or row.get("IDX_CLSPRC") or row.get("clpr")) or 0.0
+    close = float_or_none(row.get("TDD_CLSPRC") or row.get("CLSPRC") or row.get("IDX_CLSPRC") or row.get("CLSPRC_IDX") or row.get("clpr")) or 0.0
     return PriceBar(
         symbol=str(row.get("ISU_SRT_CD") or row.get("ISU_CD") or row.get("IDX_CLSS") or row.get("IDX_NM") or "KRX_INDEX"),
         date=date_value(row.get("BAS_DD") or row.get("TRD_DD") or row.get("basDd") or as_of_date),
-        open=float_or_none(row.get("TDD_OPNPRC") or row.get("OPNPRC") or row.get("mkp")) or close,
-        high=float_or_none(row.get("TDD_HGPRC") or row.get("HGPRC") or row.get("hipr")) or close,
-        low=float_or_none(row.get("TDD_LWPRC") or row.get("LWPRC") or row.get("lopr")) or close,
+        open=float_or_none(row.get("TDD_OPNPRC") or row.get("OPNPRC") or row.get("OPNPRC_IDX") or row.get("mkp")) or close,
+        high=float_or_none(row.get("TDD_HGPRC") or row.get("HGPRC") or row.get("HGPRC_IDX") or row.get("hipr")) or close,
+        low=float_or_none(row.get("TDD_LWPRC") or row.get("LWPRC") or row.get("LWPRC_IDX") or row.get("lopr")) or close,
         close=close,
         adj_close=close,
         volume=int_or_none(row.get("ACC_TRDVOL") or row.get("trqu")) or 0,
@@ -540,7 +581,7 @@ def _krx_instrument(row: Mapping[str, Any]) -> Instrument:
         symbol=str(row.get("ISU_SRT_CD") or row.get("ISU_CD")),
         name=str(row.get("ISU_NM") or row.get("ISU_ABBRV") or row.get("ISU_ENG_NM") or row.get("ISU_CD")),
         market=Market.KR,
-        exchange=str(row.get("MKT_NM") or "KRX"),
+        exchange=str(row.get("MKT_NM") or row.get("MKT_TP_NM") or "KRX"),
         listed_date=date_value(row["LIST_DD"]) if row.get("LIST_DD") else None,
         currency="KRW",
     )
@@ -582,6 +623,25 @@ def _write_raw_text(path: Path, text: str) -> Path:
         return xml_path
     path.write_text(text, encoding="utf-8")
     return path
+
+
+def _write_failure_payload(path: Path, target: ProbeTarget, result: HttpResult) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "ok": False,
+        "source_name": target.source_name,
+        "status_code": result.status_code,
+        "error": result.error,
+        "request": _jsonable(target.request),
+    }
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+
+
+def _skip_unpriced_probe_row(source_name: str, row: Mapping[str, Any]) -> bool:
+    if source_name not in {"krx_kospi_dd_trd", "krx_kosdaq_dd_trd"}:
+        return False
+    close = row.get("TDD_CLSPRC") or row.get("CLSPRC") or row.get("IDX_CLSPRC") or row.get("CLSPRC_IDX")
+    return float_or_none(close) is None
 
 
 def _xml_to_dict(text: str) -> dict[str, Any]:

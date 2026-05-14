@@ -372,9 +372,9 @@ Approved data.go.kr FSC request paths:
 ```text
 GetStockSecuritiesInfoService/getStockPriceInfo
 GetKrxListedInfoService/getItemInfo
-GetFinaStatInfoService_V2/getFinaStatInfo
-GetDiscInfoService_V2/getDiscInfo
-GetCorpBasicInfoService_V2/getCorpBasicInfo
+GetFinaStatInfoService_V2/getSummFinaStat_V2
+GetDiscInfoService_V2/getDiviDiscInfo_V2
+GetCorpBasicInfoService_V2/getCorpOutline_V2
 ```
 
 `GetCorpBasicInfoService_V2` is optional and used only as a company metadata fallback.

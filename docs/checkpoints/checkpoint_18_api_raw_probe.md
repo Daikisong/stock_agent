@@ -75,9 +75,9 @@ data.go.kr:
 ```text
 GetStockSecuritiesInfoService/getStockPriceInfo
 GetKrxListedInfoService/getItemInfo
-GetCorpBasicInfoService_V2/getCorpBasicInfo
-GetFinaStatInfoService_V2/getFinaStatInfo
-GetDiscInfoService_V2/getDiscInfo
+GetCorpBasicInfoService_V2/getCorpOutline_V2
+GetFinaStatInfoService_V2/getSummFinaStat_V2
+GetDiscInfoService_V2/getDiviDiscInfo_V2
 ```
 
 KRX Open API:

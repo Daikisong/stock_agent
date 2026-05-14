@@ -555,9 +555,9 @@ class KoreaLiveLiteTests(unittest.TestCase):
             opendart=OpenDARTConnector(),
             kind=KINDConnector(),
             fsc=DataGoKrFSCConnector(
-                financial_info_service_path="GetFinaStatInfoService_V2/getFinaStatInfo",
-                disclosure_info_service_path="GetDiscInfoService_V2/getDiscInfo",
-                corp_basic_info_service_path="GetCorpBasicInfoService_V2/getCorpBasicInfo",
+                financial_info_service_path="GetFinaStatInfoService_V2/getSummFinaStat_V2",
+                disclosure_info_service_path="GetDiscInfoService_V2/getDiviDiscInfo_V2",
+                corp_basic_info_service_path="GetCorpBasicInfoService_V2/getCorpOutline_V2",
             ),
         )
 

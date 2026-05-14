@@ -486,11 +486,8 @@ def _sources_with_live_data_go_kr(
         return sources
 
     remaining_calls = config.budget.max_data_go_kr_calls_per_day
-    instruments, remaining_calls, instruments_ok = _execute_data_go_kr_pages(
-        request_factory=lambda page_no, num_rows: sources.fsc.build_listed_items_page_request(Market.KR, config.as_of_date, page_no, num_rows),
-        parser=lambda rows: tuple(sources.fsc.normalize_instrument(row) for row in rows),
-        cache_stem="listed_items",
-        as_of_date=config.as_of_date,
+    instruments, remaining_calls, instruments_ok, instruments_reason = _execute_data_go_kr_listed_items_with_lookback(
+        sources=sources,
         config=config,
         http_client=http_client,
         built_requests=built_requests,
@@ -499,7 +496,7 @@ def _sources_with_live_data_go_kr(
     )
     if not instruments_ok:
         source_modes["data_go_kr"] = "fallback"
-        fallback_reasons["data_go_kr"] = "data_go_kr_listed_items_failed"
+        fallback_reasons["data_go_kr"] = instruments_reason
         return sources
 
     price_start = config.as_of_date - timedelta(days=config.lookback_days)
@@ -532,6 +529,44 @@ def _sources_with_live_data_go_kr(
             price_bars=tuple(price_bars),
         ),
     )
+
+
+def _execute_data_go_kr_listed_items_with_lookback(
+    *,
+    sources: KoreaCheapScanSources,
+    config: KoreaLiveLiteConfig,
+    http_client: HttpClient,
+    built_requests: list[SourceRequest],
+    source_call_counts: dict[str, int],
+    remaining_calls: int,
+):
+    """Fetch listed-item rows, retrying recent settled dates when today is empty."""
+
+    if sources.fsc is None:
+        return (), remaining_calls, False, "data_go_kr_fsc_not_configured"
+    last_reason = "data_go_kr_listed_items_empty"
+    max_lookback_days = min(5, max(0, remaining_calls - 1))
+    for days_back in range(max_lookback_days + 1):
+        listed_date = config.as_of_date - timedelta(days=days_back)
+        instruments, remaining_calls, ok = _execute_data_go_kr_pages(
+            request_factory=lambda page_no, num_rows, listed_date=listed_date: sources.fsc.build_listed_items_page_request(Market.KR, listed_date, page_no, num_rows),
+            parser=lambda rows: tuple(sources.fsc.normalize_instrument(row) for row in rows),
+            cache_stem=f"listed_items_{listed_date.strftime('%Y%m%d')}",
+            as_of_date=config.as_of_date,
+            config=config,
+            http_client=http_client,
+            built_requests=built_requests,
+            source_call_counts=source_call_counts,
+            remaining_calls=remaining_calls,
+        )
+        if not ok:
+            return (), remaining_calls, False, "data_go_kr_listed_items_failed"
+        if instruments:
+            return instruments, remaining_calls, True, ""
+        last_reason = f"data_go_kr_listed_items_empty_{listed_date.strftime('%Y%m%d')}"
+        if remaining_calls <= 1:
+            break
+    return (), remaining_calls, False, last_reason
 
 
 def _can_execute_live_data_go_kr(config: KoreaLiveLiteConfig) -> bool:

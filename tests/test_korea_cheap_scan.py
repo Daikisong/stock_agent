@@ -122,11 +122,11 @@ class KoreaCheapScanTests(unittest.TestCase):
         disclosure = connector.build_disclosure_info_request("111111", AS_OF, AS_OF, AS_OF)
         corp_basic = connector.build_corp_basic_info_request("111111", AS_OF)
 
-        self.assertIn("GetFinaStatInfoService_V2/getFinaStatInfo", financial.url)
-        self.assertIn("GetDiscInfoService_V2/getDiscInfo", disclosure.url)
-        self.assertIn("GetCorpBasicInfoService_V2/getCorpBasicInfo", corp_basic.url)
-        self.assertEqual(financial.params["basDt"], "20240521")
-        self.assertEqual(disclosure.params["beginBasDt"], "20240521")
+        self.assertIn("GetFinaStatInfoService_V2/getSummFinaStat_V2", financial.url)
+        self.assertIn("GetDiscInfoService_V2/getDiviDiscInfo_V2", disclosure.url)
+        self.assertIn("GetCorpBasicInfoService_V2/getCorpOutline_V2", corp_basic.url)
+        self.assertEqual(financial.params["bizYear"], "2023")
+        self.assertEqual(disclosure.params["basDt"], "20240521")
 
     def test_fsc_legacy_endpoint_aliases_still_work_when_configured(self):
         connector = DataGoKrFSCConnector(
