@@ -25,6 +25,8 @@ class SearchSnapshot:
     source_type: str
     extracted_text_hash: str | None
     evidence_ids: tuple[str, ...]
+    symbol: str | None = None
+    company_name: str | None = None
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "evidence_ids", tuple(self.evidence_ids))
@@ -44,7 +46,24 @@ class SearchSnapshotStore:
                 handle.write(json.dumps(_jsonable(item), ensure_ascii=False, sort_keys=True) + "\n")
         return path
 
-    def load(self, *, as_of_date: date | None = None, query: str | None = None) -> tuple[SearchSnapshot, ...]:
+    def save_snapshot(self, snapshots: SearchSnapshot | Sequence[SearchSnapshot]) -> Path:
+        """Append one or more snapshots.
+
+        This name is used by replay code; ``save`` remains for compatibility.
+        """
+
+        if isinstance(snapshots, SearchSnapshot):
+            return self.save((snapshots,))
+        return self.save(tuple(snapshots))
+
+    def load(
+        self,
+        *,
+        as_of_date: date | None = None,
+        query: str | None = None,
+        symbol: str | None = None,
+        company_name: str | None = None,
+    ) -> tuple[SearchSnapshot, ...]:
         path = self.root / "search_snapshots.jsonl"
         if not path.exists():
             return ()
@@ -57,8 +76,39 @@ class SearchSnapshotStore:
                 continue
             if query is not None and item.query != query:
                 continue
+            if symbol is not None and item.symbol != symbol:
+                continue
+            if company_name is not None and item.company_name != company_name:
+                continue
             rows.append(item)
         return tuple(rows)
+
+    def load_snapshots(
+        self,
+        *,
+        query: str | None = None,
+        symbol: str | None = None,
+        company_name: str | None = None,
+        as_of_date: date | None = None,
+    ) -> tuple[SearchSnapshot, ...]:
+        """Load snapshots visible as of a replay date."""
+
+        return self.load(as_of_date=as_of_date, query=query, symbol=symbol, company_name=company_name)
+
+    def search_results(
+        self,
+        *,
+        query: str,
+        as_of_date: date,
+        max_results: int = 10,
+        symbol: str | None = None,
+        company_name: str | None = None,
+    ) -> tuple[SearchResult, ...]:
+        """Return ``SearchResult`` rows from stored snapshots."""
+
+        snapshots = self.load_snapshots(as_of_date=as_of_date, symbol=symbol, company_name=company_name)
+        matched = [item for item in snapshots if _query_matches(item, query)]
+        return tuple(_snapshot_to_search_result(item, query=query, rank=index) for index, item in enumerate(matched[:max_results], start=1))
 
 
 def snapshot_from_search_result(
@@ -70,6 +120,8 @@ def snapshot_from_search_result(
     source_type: str = "search_result",
     extracted_text_hash: str | None = None,
     evidence_ids: Sequence[str] = (),
+    symbol: str | None = None,
+    company_name: str | None = None,
 ) -> SearchSnapshot:
     return SearchSnapshot(
         query=query,
@@ -82,6 +134,8 @@ def snapshot_from_search_result(
         source_type=source_type,
         extracted_text_hash=extracted_text_hash,
         evidence_ids=tuple(evidence_ids),
+        symbol=symbol,
+        company_name=company_name,
     )
 
 
@@ -97,7 +151,36 @@ def search_snapshot_from_mapping(row: Mapping[str, Any]) -> SearchSnapshot:
         source_type=str(row["source_type"]),
         extracted_text_hash=row.get("extracted_text_hash"),
         evidence_ids=tuple(row.get("evidence_ids") or ()),
+        symbol=row.get("symbol"),
+        company_name=row.get("company_name"),
     )
+
+
+def _snapshot_to_search_result(snapshot: SearchSnapshot, *, query: str, rank: int) -> SearchResult:
+    return SearchResult(
+        title=snapshot.title,
+        url=snapshot.url,
+        snippet=snapshot.snippet,
+        source=snapshot.source_type,
+        published_at=snapshot.published_at,
+        query=query,
+        rank=rank,
+        is_pdf=snapshot.url.lower().endswith(".pdf") or "pdf" in snapshot.source_type.lower(),
+        is_report_domain=snapshot.source_type in {"research_report", "report", "broker_report"},
+        is_news=snapshot.source_type in {"news", "naver_news"},
+        is_disclosure=snapshot.source_type in {"disclosure", "opendart"},
+        confidence=0.82 if snapshot.source_type in {"research_report", "report", "broker_report"} else 0.65,
+    )
+
+
+def _query_matches(snapshot: SearchSnapshot, query: str) -> bool:
+    if snapshot.query == query:
+        return True
+    haystack = f"{snapshot.query} {snapshot.title} {snapshot.snippet or ''}"
+    if snapshot.company_name and snapshot.company_name in query:
+        return True
+    query_terms = {term for term in query.split() if len(term) >= 2}
+    return bool(query_terms and sum(1 for term in query_terms if term in haystack) >= 2)
 
 
 def _jsonable(value: Any) -> Any:

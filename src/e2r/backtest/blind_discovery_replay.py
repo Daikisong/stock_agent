@@ -11,14 +11,8 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from e2r.backtest.benchmark_labels import BenchmarkGroup, BenchmarkLabel, labels_for_market, load_benchmark_labels
-from e2r.backtest.historical_universe_replay import (
-    HistoricalReplayCandidate,
-    HistoricalReplayConfig,
-    HistoricalReplayMode,
-    HistoricalUniverseReplay,
-    HistoricalUniverseReplayResult,
-    ReplayFrequency,
-)
+from e2r.backtest.e2r_standard_replay import E2RStandardReplay, E2RStandardReplayConfig, E2RStandardReplayResult
+from e2r.backtest.historical_universe_replay import ReplayFrequency
 from e2r.models import Market, Stage
 from e2r.pipeline.e2r_standard_flow import E2R_STANDARD
 
@@ -38,6 +32,12 @@ class BlindDiscoveryConfig:
     max_candidates_per_date: int = 50
     case_root: str | Path = "data/historical_cases"
     benchmark_label_path: str | Path = "data/benchmark_labels/e2r_known_winners.json"
+    search_snapshot_root: str | Path = "data/search_snapshots"
+    report_snapshot_root: str | Path = "data/report_snapshots"
+    use_search_snapshots: bool = True
+    use_report_snapshots: bool = True
+    allow_fixture_source_proxy: bool = False
+    llm_enabled: bool = False
 
     def __post_init__(self) -> None:
         if self.flow != E2R_STANDARD:
@@ -80,7 +80,7 @@ class BenchmarkRecallRow:
 @dataclass(frozen=True)
 class BlindDiscoveryResult:
     config: BlindDiscoveryConfig
-    replay_result: HistoricalUniverseReplayResult
+    replay_result: E2RStandardReplayResult
     discovered_candidates: tuple[DiscoveredCandidate, ...]
     benchmark_recall: tuple[BenchmarkRecallRow, ...]
     output_root: Path | None = None
@@ -95,7 +95,7 @@ class BlindDiscoveryReplay:
         discovered = _discovered_candidates(replay_result)
         # Benchmark labels are loaded only after discovery output exists.
         labels = labels_for_market(load_benchmark_labels(config.benchmark_label_path), config.market)
-        recall = _evaluate_labels(labels, discovered)
+        recall = _evaluate_labels(labels, discovered, replay_result)
         result = BlindDiscoveryResult(
             config=config,
             replay_result=replay_result,
@@ -107,45 +107,46 @@ class BlindDiscoveryReplay:
         return _write_outputs(result)
 
 
-def _generate_standard_replay_outputs(config: BlindDiscoveryConfig) -> HistoricalUniverseReplayResult:
-    """Generate candidates without benchmark labels.
+def _generate_standard_replay_outputs(config: BlindDiscoveryConfig) -> E2RStandardReplayResult:
+    """Generate candidates with E2R_STANDARD before benchmark labels are loaded."""
 
-    Current historical fixtures stand in for archived official/search/report
-    snapshots. Reports explicitly state when true search snapshots are missing.
-    """
-
-    replay_config = HistoricalReplayConfig(
+    replay_config = E2RStandardReplayConfig(
         start_date=config.start_date,
         end_date=config.end_date,
         replay_frequency=config.frequency,
-        mode=HistoricalReplayMode.HYBRID,
         market=config.market,
+        output_directory=Path(config.output_directory) / "_standard_replay_internal",
         universe_limit=config.universe_limit,
         max_candidates_per_date=config.max_candidates_per_date,
-        output_directory=Path(config.output_directory) / "_standard_replay_internal",
         case_root=config.case_root,
+        search_snapshot_root=config.search_snapshot_root,
+        report_snapshot_root=config.report_snapshot_root,
+        use_search_snapshots=config.use_search_snapshots,
+        use_report_snapshots=config.use_report_snapshots,
+        allow_fixture_source_proxy=config.allow_fixture_source_proxy,
+        llm_enabled=config.llm_enabled,
     )
-    return HistoricalUniverseReplay().run(replay_config, write_outputs=False)
+    return E2RStandardReplay().run(replay_config)
 
 
-def _discovered_candidates(result: HistoricalUniverseReplayResult) -> tuple[DiscoveredCandidate, ...]:
+def _discovered_candidates(result: E2RStandardReplayResult) -> tuple[DiscoveredCandidate, ...]:
     rows: list[DiscoveredCandidate] = []
     for snapshot in result.snapshots:
-        ranked = sorted(snapshot.candidates, key=lambda item: (-item.layer1_score, -item.total_score, item.symbol))
+        ranked = sorted(snapshot.candidates, key=lambda item: (-item.score, item.symbol))
         for rank, candidate in enumerate(ranked, start=1):
             rows.append(_candidate_row(candidate, rank))
     return tuple(rows)
 
 
-def _candidate_row(candidate: HistoricalReplayCandidate, rank: int) -> DiscoveredCandidate:
+def _candidate_row(candidate, rank: int) -> DiscoveredCandidate:
     return DiscoveredCandidate(
         symbol=candidate.symbol,
         company_name=candidate.company_name,
         as_of_date=candidate.as_of_date,
-        layer=candidate.layer1_result,
+        layer=candidate.layer,
         stage=candidate.stage,
         rank=rank,
-        score=candidate.total_score,
+        score=candidate.score,
         evidence_types_seen=tuple(candidate.evidence_types_seen),
         reason_codes=tuple(candidate.reason_codes),
     )
@@ -154,6 +155,7 @@ def _candidate_row(candidate: HistoricalReplayCandidate, rank: int) -> Discovere
 def _evaluate_labels(
     labels: Sequence[BenchmarkLabel],
     discovered: Sequence[DiscoveredCandidate],
+    replay_result: E2RStandardReplayResult,
 ) -> tuple[BenchmarkRecallRow, ...]:
     rows: list[BenchmarkRecallRow] = []
     for label in labels:
@@ -194,14 +196,21 @@ def _evaluate_labels(
                 detection_lag_days=None,
                 top_n_rank_at_detection=None,
                 evidence_types_seen=(),
-                miss_reason=_miss_reason(label, discovered),
+                miss_reason=_miss_reason(label, discovered, replay_result),
             )
         )
     return tuple(rows)
 
 
-def _miss_reason(label: BenchmarkLabel, discovered: Sequence[DiscoveredCandidate]) -> str:
+def _miss_reason(label: BenchmarkLabel, discovered: Sequence[DiscoveredCandidate], replay_result: E2RStandardReplayResult) -> str:
     if not any(item.symbol == label.symbol for item in discovered):
+        limitations = set(replay_result.limitations)
+        if "search_snapshot_unavailable" in limitations:
+            return "search_snapshot_unavailable"
+        if "report_snapshot_unavailable" in limitations:
+            return "report_snapshot_unavailable"
+        if "official_data_unavailable" in limitations or "insufficient_historical_source_coverage" in limitations:
+            return "source_missing_or_not_in_universe"
         if label.expected_group in {BenchmarkGroup.STRUCTURAL, BenchmarkGroup.CYCLICAL}:
             return "source_missing_or_not_in_universe"
         return "not_in_universe"
@@ -222,16 +231,30 @@ def render_blind_discovery_summary(result: BlindDiscoveryResult) -> str:
         "# Blind Discovery Replay",
         "",
         f"- flow: {result.config.flow}",
+        f"- true_standard_flow_used: {'yes' if result.replay_result.true_standard_flow_used else 'no'}",
+        f"- fixture_proxy_used: {'yes' if result.replay_result.fixture_proxy_used else 'no'}",
+        "- benchmark_labels_used_before_candidate_generation: no",
+        f"- llm_enabled: {'true' if result.config.llm_enabled else 'false'}",
         f"- period: {result.config.start_date.isoformat()} to {result.config.end_date.isoformat()}",
         f"- frequency: {result.config.frequency.value}",
         f"- market: {result.config.market.value}",
         f"- discovered_candidates: {len(result.discovered_candidates)}",
         f"- benchmark_labels_appeared: {appeared}/{len(result.benchmark_recall)}",
         f"- unsafe_warning_green_count: {len(unsafe_green)}",
+        f"- Stage 3-Green count: {sum(1 for item in result.discovered_candidates if item.stage == Stage.STAGE_3_GREEN)}",
+        f"- Stage 3-Yellow count: {sum(1 for item in result.discovered_candidates if item.stage == Stage.STAGE_3_YELLOW)}",
+        f"- Stage 3-Red count: {sum(1 for item in result.discovered_candidates if item.stage == Stage.STAGE_3_RED)}",
+        f"- 4B count: {sum(1 for item in result.discovered_candidates if item.stage == Stage.STAGE_4B)}",
+        f"- 4C count: {sum(1 for item in result.discovered_candidates if item.stage == Stage.STAGE_4C)}",
         "",
         "Benchmark labels were applied only after candidate generation.",
-        "Current replay is limited by historical search/report snapshot availability.",
+        "Search/report snapshots are required for a true point-in-time report-driven replay.",
     ]
+    if result.replay_result.fixture_proxy_used:
+        lines.append("fixture proxy mode; not proof of live discovery")
+    if result.replay_result.limitations:
+        lines.extend(["", "Limitations:"])
+        lines.extend(f"- {item}" for item in result.replay_result.limitations)
     return "\n".join(lines).rstrip() + "\n"
 
 
@@ -281,14 +304,88 @@ def render_false_positive_report(result: BlindDiscoveryResult) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
-def render_limitations(result: BlindDiscoveryResult) -> str:
-    return (
-        "# Blind Discovery Limitations\n\n"
-        "- Current historical fixtures are not the same as archived search snapshots.\n"
-        "- If search/report snapshots are unavailable, the replay marks misses instead of pretending success.\n"
-        "- Benchmark labels are evaluation-only and are not used by E2R_STANDARD candidate generation.\n"
-        "- Stage 3-Green thresholds are not loosened for recall.\n"
+def render_source_coverage_report(result: BlindDiscoveryResult) -> str:
+    summary = result.replay_result.source_coverage_summary
+    lines = [
+        "# Source Coverage Report",
+        "",
+        "| field | value |",
+        "| --- | --- |",
+    ]
+    for key, value in sorted(summary.items()):
+        lines.append(f"| {key} | {json.dumps(_jsonable(value), ensure_ascii=False)} |")
+    lines.extend(
+        [
+            "",
+            "Missing search/report snapshots mean the replay can still run, but it cannot prove that old web reports were discoverable at the replay date.",
+        ]
     )
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def render_benchmark_leakage_audit(result: BlindDiscoveryResult) -> str:
+    return (
+        "# Benchmark Leakage Audit\n\n"
+        f"- true_standard_flow_used: {'yes' if result.replay_result.true_standard_flow_used else 'no'}\n"
+        f"- benchmark_labels_used_before_candidate_generation: {'yes' if result.replay_result.benchmark_labels_used_before_candidate_generation else 'no'}\n"
+        "- benchmark_labels_loaded_after_discovery: yes\n"
+        "- benchmark_labels_as_input_evidence: no\n"
+    )
+
+
+def render_evidence_coverage_report(result: BlindDiscoveryResult) -> str:
+    counts: dict[str, int] = {}
+    for item in result.discovered_candidates:
+        for evidence_type in item.evidence_types_seen:
+            counts[evidence_type] = counts.get(evidence_type, 0) + 1
+    lines = ["# Evidence Coverage Report", "", "| evidence type | count |", "| --- | ---: |"]
+    for key, value in sorted(counts.items()):
+        lines.append(f"| {key} | {value} |")
+    if not counts:
+        lines.append("| none | 0 |")
+    lines.extend(
+        [
+            "",
+            f"- search_snapshot_available_dates: {result.replay_result.source_coverage_summary.get('search_snapshot_available', 0)}",
+            f"- report_snapshot_available_dates: {result.replay_result.source_coverage_summary.get('report_snapshot_available', 0)}",
+        ]
+    )
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def render_stage_lifecycle_report(result: BlindDiscoveryResult) -> str:
+    rows = []
+    for snapshot in result.replay_result.snapshots:
+        rows.extend(snapshot.candidates)
+    lines = [
+        "# Stage Lifecycle Report",
+        "",
+        "| symbol | company | date | stage | lifecycle status | source path |",
+        "| --- | --- | --- | --- | --- | --- |",
+    ]
+    for item in rows:
+        lines.append(
+            f"| {item.symbol} | {item.company_name} | {item.as_of_date.isoformat()} | {item.stage.value} | "
+            f"{item.lifecycle_status} | {item.candidate_source_path} |"
+        )
+    if not rows:
+        lines.append("| n/a | n/a | n/a | n/a | unknown_insufficient_evidence | n/a |")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def render_limitations(result: BlindDiscoveryResult) -> str:
+    lines = [
+        "# Blind Discovery Limitations",
+        "",
+        "- Historical search/report snapshots are point-in-time evidence; benchmark labels are not evidence.",
+        "- If snapshots are unavailable, the replay marks misses instead of pretending success.",
+        "- Benchmark labels are evaluation-only and are not used by E2R_STANDARD candidate generation.",
+        "- Stage 3-Green thresholds are not loosened for recall.",
+    ]
+    if result.replay_result.fixture_proxy_used:
+        lines.append("- fixture proxy mode was enabled explicitly; this is regression only, not blind discovery proof.")
+    lines.extend(f"- {item}" for item in result.replay_result.limitations)
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def _write_outputs(result: BlindDiscoveryResult) -> BlindDiscoveryResult:
@@ -306,6 +403,10 @@ def _write_outputs(result: BlindDiscoveryResult) -> BlindDiscoveryResult:
         "lifecycle_md": output_root / "stage_lifecycle_report.md",
         "evidence_md": output_root / "evidence_coverage_report.md",
         "limitations_md": output_root / "limitations.md",
+        "source_coverage_md": output_root / "source_coverage_report.md",
+        "leakage_audit_md": output_root / "benchmark_leakage_audit.md",
+        "llm_review_json": output_root / "llm_review.json",
+        "llm_review_md": output_root / "llm_review.md",
     }
     paths["summary_md"].write_text(render_blind_discovery_summary(result), encoding="utf-8")
     paths["summary_json"].write_text(json.dumps(_jsonable(result), ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
@@ -314,8 +415,18 @@ def _write_outputs(result: BlindDiscoveryResult) -> BlindDiscoveryResult:
     paths["missed_md"].write_text(render_missed_benchmark_labels(result), encoding="utf-8")
     paths["false_positive_md"].write_text(render_false_positive_report(result), encoding="utf-8")
     paths["limitations_md"].write_text(render_limitations(result), encoding="utf-8")
-    paths["lifecycle_md"].write_text("# Stage Lifecycle Report\n\nSee E2R standard lifecycle detector and replay lifecycle outputs.\n", encoding="utf-8")
-    paths["evidence_md"].write_text("# Evidence Coverage Report\n\nHistorical search snapshots unavailable unless stored by snapshot stores.\n", encoding="utf-8")
+    paths["lifecycle_md"].write_text(render_stage_lifecycle_report(result), encoding="utf-8")
+    paths["evidence_md"].write_text(render_evidence_coverage_report(result), encoding="utf-8")
+    paths["source_coverage_md"].write_text(render_source_coverage_report(result), encoding="utf-8")
+    paths["leakage_audit_md"].write_text(render_benchmark_leakage_audit(result), encoding="utf-8")
+    paths["llm_review_json"].write_text(
+        json.dumps({"llm_enabled": result.config.llm_enabled, "outputs": []}, ensure_ascii=False, indent=2, sort_keys=True),
+        encoding="utf-8",
+    )
+    paths["llm_review_md"].write_text(
+        "# LLM Review\n\nLLM is disabled by default for blind replay unless explicitly configured.\n",
+        encoding="utf-8",
+    )
     _write_candidates(paths["candidates_csv"], paths["candidates_json"], result.discovered_candidates)
     return BlindDiscoveryResult(
         config=result.config,
@@ -349,6 +460,10 @@ def _write_candidates(csv_path: Path, json_path: Path, rows: Sequence[Discovered
 def _required_data(reason: str | None) -> str:
     if reason == "no_report_snapshot":
         return "archived search/report snapshots"
+    if reason == "search_snapshot_unavailable":
+        return "historical search snapshots"
+    if reason == "report_snapshot_unavailable":
+        return "historical report text snapshots"
     if reason == "source_missing_or_not_in_universe":
         return "historical universe, official evidence, and search snapshots"
     if reason == "not_in_universe":

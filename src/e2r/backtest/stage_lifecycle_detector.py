@@ -53,6 +53,31 @@ class StageLifecycleDetector:
     """Detect 4A/4B/4C without fabricating missing evidence."""
 
     def detect(self, inputs: StageLifecycleDetectionInput) -> StageLifecycleDetection:
+        if (
+            not inputs.hard_thesis_break
+            and not inputs.stage3_evidence_intact
+            and not inputs.eps_fcf_visibility_strong
+            and inputs.return_since_stage3 is None
+            and inputs.return_12m is None
+            and inputs.return_24m is None
+            and inputs.valuation_rerating_score is None
+            and not inputs.revision_momentum_slowing
+            and not inputs.backlog_order_margin_slowdown
+            and not inputs.blowoff_price_pattern
+            and not inputs.crowding_or_universally_bullish
+        ):
+            return StageLifecycleDetection(
+                symbol=inputs.symbol,
+                as_of_date=inputs.as_of_date,
+                lifecycle_stage=inputs.previous_stage,
+                soft_4b_status=Soft4BStatus.NONE,
+                status="unknown_insufficient_evidence",
+                score=0.0,
+                price_only_warning=False,
+                reasons=("unknown_insufficient_evidence",),
+                evidence_based=False,
+            )
+
         if inputs.hard_thesis_break:
             reasons = inputs.hard_break_reasons or ("hard_thesis_break",)
             return StageLifecycleDetection(

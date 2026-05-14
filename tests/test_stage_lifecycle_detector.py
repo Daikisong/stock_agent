@@ -68,6 +68,20 @@ class StageLifecycleDetectorTests(unittest.TestCase):
         self.assertEqual(result.lifecycle_stage, Stage.STAGE_4C)
         self.assertEqual(result.status, "hard_4c")
 
+    def test_missing_evidence_reports_unknown(self):
+        result = StageLifecycleDetector().detect(
+            StageLifecycleDetectionInput(
+                symbol="267260",
+                as_of_date=date(2024, 1, 1),
+                previous_stage=Stage.STAGE_3_GREEN,
+                stage3_evidence_intact=False,
+                eps_fcf_visibility_strong=False,
+            )
+        )
+
+        self.assertEqual(result.status, "unknown_insufficient_evidence")
+        self.assertFalse(result.evidence_based)
+
 
 if __name__ == "__main__":
     unittest.main()

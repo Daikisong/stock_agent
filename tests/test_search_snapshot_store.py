@@ -16,19 +16,23 @@ class SearchSnapshotStoreTests(unittest.TestCase):
                 query="q",
                 search_date=date(2023, 7, 27),
                 evidence_ids=("ev1",),
+                symbol="267260",
+                company_name="HD현대일렉트릭",
             )
             future = snapshot_from_search_result(
                 SearchResult(title="미래 리포트", url="https://example.com/b", query="q"),
                 query="q",
                 search_date=date(2023, 8, 1),
             )
-            store.save((old, future))
+            store.save_snapshot((old, future))
 
-            visible = store.load(as_of_date=date(2023, 7, 27), query="q")
+            visible = store.load_snapshots(as_of_date=date(2023, 7, 27), query="q", symbol="267260")
+            results = store.search_results(query="HD현대일렉트릭 Review PDF", as_of_date=date(2023, 7, 27))
 
         self.assertEqual(len(visible), 1)
         self.assertEqual(visible[0].title, "HD현대일렉트릭 수주잔고")
         self.assertIn("ev1", visible[0].evidence_ids)
+        self.assertEqual(results[0].url, "https://example.com/a")
 
     def test_report_snapshot_store_writes_hash_and_filters_symbol(self):
         with tempfile.TemporaryDirectory() as root:
@@ -44,10 +48,12 @@ class SearchSnapshotStoreTests(unittest.TestCase):
                 evidence_ids=("ev-report",),
             )
             loaded = store.load(as_of_date=date(2023, 7, 27), symbol="267260")
+            fixture_text = store.fixture_text_by_url(as_of_date=date(2023, 7, 27), symbol="267260")
 
         self.assertEqual(len(loaded), 1)
         self.assertEqual(loaded[0].extracted_text_hash, snapshot.extracted_text_hash)
         self.assertIn("ev-report", loaded[0].evidence_ids)
+        self.assertIn("https://example.com/report.pdf", fixture_text)
 
 
 if __name__ == "__main__":

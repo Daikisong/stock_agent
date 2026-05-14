@@ -67,7 +67,20 @@ class ReportSnapshotStore:
         self._append(snapshot)
         return snapshot
 
-    def load(self, *, as_of_date: date | None = None, symbol: str | None = None) -> tuple[ReportSnapshot, ...]:
+    def save_snapshot(self, snapshot: ReportSnapshot) -> Path:
+        """Append one prepared snapshot."""
+
+        self.root.mkdir(parents=True, exist_ok=True)
+        self._append(snapshot)
+        return self.root / "report_snapshots.jsonl"
+
+    def load(
+        self,
+        *,
+        as_of_date: date | None = None,
+        symbol: str | None = None,
+        company_name: str | None = None,
+    ) -> tuple[ReportSnapshot, ...]:
         path = self.root / "report_snapshots.jsonl"
         if not path.exists():
             return ()
@@ -80,8 +93,48 @@ class ReportSnapshotStore:
                 continue
             if symbol is not None and item.symbol != symbol:
                 continue
+            if company_name is not None and item.company_name != company_name:
+                continue
             rows.append(item)
         return tuple(rows)
+
+    def load_snapshots(
+        self,
+        *,
+        as_of_date: date | None = None,
+        symbol: str | None = None,
+        company_name: str | None = None,
+    ) -> tuple[ReportSnapshot, ...]:
+        """Load report snapshots visible as of a replay date."""
+
+        return self.load(as_of_date=as_of_date, symbol=symbol, company_name=company_name)
+
+    def text_for_snapshot(self, snapshot: ReportSnapshot) -> str | None:
+        if not snapshot.extracted_text_path:
+            return None
+        path = Path(snapshot.extracted_text_path)
+        if not path.is_absolute():
+            path = self.root / path
+        if not path.exists():
+            return None
+        return path.read_text(encoding="utf-8")
+
+    def fixture_text_by_url(
+        self,
+        *,
+        as_of_date: date | None = None,
+        symbol: str | None = None,
+        company_name: str | None = None,
+    ) -> Mapping[str, str | Path]:
+        """Return URL -> local text mapping for ``PageFetcher``."""
+
+        mapping: dict[str, str | Path] = {}
+        for item in self.load_snapshots(as_of_date=as_of_date, symbol=symbol, company_name=company_name):
+            if not item.extracted_text_path:
+                continue
+            path = Path(item.extracted_text_path)
+            mapping[item.url] = path if path.is_absolute() else self.root / path
+        return mapping
 
     def _append(self, snapshot: ReportSnapshot) -> None:
         path = self.root / "report_snapshots.jsonl"

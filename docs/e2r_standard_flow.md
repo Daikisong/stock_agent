@@ -66,6 +66,43 @@ Correct:
 E2R_STANDARD output -> compare against benchmark labels afterward
 ```
 
+## Checkpoint 24 Replay Rule
+
+Blind replay now calls the same `E2R_STANDARD` flow that live runs use.
+
+The default path is:
+
+```text
+historical point-in-time sources
+-> E2R_STANDARD
+-> discovered candidates
+-> benchmark label evaluation
+```
+
+It does not use `official_only`, `case_fixture`, or `hybrid` as a hidden proxy.
+
+If old search/report snapshots are missing, the replay says:
+
+```text
+search_snapshot_unavailable
+report_snapshot_unavailable
+candidate_generation_limited_by_missing_snapshots
+```
+
+Example:
+
+```text
+HD현대일렉트릭 appears only if a historical search/report snapshot exists
+or official evidence independently routes it into research.
+The benchmark label itself cannot create the candidate.
+```
+
+`--allow-fixture-source-proxy` is available only for diagnostic regression. Its report is marked:
+
+```text
+fixture proxy mode; not proof of live discovery
+```
+
 ## LLM Role
 
 The LLM layer is optional.

@@ -21,6 +21,8 @@ fetched_at
 source_type
 extracted_text_hash
 evidence_ids
+symbol if known
+company_name if known
 ```
 
 Code:
@@ -45,6 +47,25 @@ mark search_snapshot_unavailable
 ```
 
 Do not use modern search results as if they were historical.
+
+Report snapshots store fetched text separately:
+
+```text
+url
+title
+symbol/company if known
+fetched_at
+as_of_date
+source_type
+extracted_text_path or hash
+```
+
+If no report snapshot exists:
+
+```text
+mark report_snapshot_unavailable
+do not pretend a PDF was readable historically
+```
 
 ## Why This Matters
 

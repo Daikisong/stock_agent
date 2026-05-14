@@ -14,6 +14,13 @@ from e2r.backtest.blind_discovery_replay import (
     BlindDiscoveryResult,
 )
 from e2r.backtest.benchmark_labels import BenchmarkLabel, load_benchmark_labels
+from e2r.backtest.e2r_standard_replay import (
+    E2RStandardReplay,
+    E2RStandardReplayCandidate,
+    E2RStandardReplayConfig,
+    E2RStandardReplayResult,
+    E2RStandardReplaySnapshot,
+)
 from e2r.backtest.stage_lifecycle_detector import (
     StageLifecycleDetection,
     StageLifecycleDetectionInput,
@@ -57,6 +64,11 @@ __all__ = [
     "BlindDiscoveryConfig",
     "BlindDiscoveryReplay",
     "BlindDiscoveryResult",
+    "E2RStandardReplay",
+    "E2RStandardReplayCandidate",
+    "E2RStandardReplayConfig",
+    "E2RStandardReplayResult",
+    "E2RStandardReplaySnapshot",
     "ReplayFrequency",
     "STAGE4B_UNKNOWN_INSUFFICIENT_EVIDENCE",
     "StageLifecycleBacktest",

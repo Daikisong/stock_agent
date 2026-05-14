@@ -72,3 +72,26 @@ RedTeam
 ```
 
 They are used only after candidates are generated.
+
+## Fixture Proxy
+
+`--allow-fixture-source-proxy` is a diagnostic escape hatch.
+
+It means:
+
+```text
+curated historical case fixtures may stand in for missing archived sources
+```
+
+It does not mean:
+
+```text
+the agent would have found the same evidence live on that date
+```
+
+So the user-facing interpretation is:
+
+```text
+fixture proxy success = regression success
+true E2R_STANDARD success = blind discovery evidence
+```

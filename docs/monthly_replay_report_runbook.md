@@ -25,6 +25,15 @@ official_only / case_fixture / hybrid are diagnostic replay modes.
 case_fixture success is regression success, not proof of live discovery.
 ```
 
+For serious blind discovery after Checkpoint 24, use:
+
+```text
+PYTHONPATH=src python -m e2r.cli.run_blind_discovery_replay ... --flow E2R_STANDARD --no-fixture-source-proxy
+```
+
+The monthly suite remains useful for mode comparison and fixture regression.
+It should not be presented as proof that the agent found old winners without help.
+
 ## How To Run
 
 Default suite:
