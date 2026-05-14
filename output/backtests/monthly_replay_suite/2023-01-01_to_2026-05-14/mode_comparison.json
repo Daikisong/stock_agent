@@ -1,0 +1,38 @@
+{
+  "case_fixture": {
+    "candidates": 234,
+    "evidence_missing": 25,
+    "false_positives": 0,
+    "missed_winners": 0,
+    "official_evidence_coverage": 443,
+    "report_news_unavailable": 127,
+    "stage3_green": 101,
+    "stage3_red": 42,
+    "stage3_yellow": 23,
+    "stage4b_unknown": 0
+  },
+  "hybrid": {
+    "candidates": 234,
+    "evidence_missing": 25,
+    "false_positives": 0,
+    "missed_winners": 0,
+    "official_evidence_coverage": 443,
+    "report_news_unavailable": 127,
+    "stage3_green": 101,
+    "stage3_red": 42,
+    "stage3_yellow": 23,
+    "stage4b_unknown": 0
+  },
+  "official_only": {
+    "candidates": 234,
+    "evidence_missing": 508,
+    "false_positives": 0,
+    "missed_winners": 8,
+    "official_evidence_coverage": 443,
+    "report_news_unavailable": 378,
+    "stage3_green": 0,
+    "stage3_red": 0,
+    "stage3_yellow": 0,
+    "stage4b_unknown": 0
+  }
+}

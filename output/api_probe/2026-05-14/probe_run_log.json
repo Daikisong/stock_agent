@@ -1,0 +1,43 @@
+{
+  "as_of_date": "2026-05-14",
+  "cache_hits": 0,
+  "cache_writes": 15,
+  "credentials_present": {
+    "DATA_GO_KR_SERVICE_KEY": true,
+    "KRX_OPENAPI_KEY": true,
+    "NAVER_CLIENT_ID": true,
+    "NAVER_CLIENT_ID/NAVER_CLIENT_SECRET": true,
+    "NAVER_CLIENT_SECRET": true,
+    "OPENDART_API_KEY": true
+  },
+  "failed_sources": [],
+  "fallback_reasons": {},
+  "fixture_mode": false,
+  "live_enabled": true,
+  "rate_limit_skips": 0,
+  "rate_limit_waits": 2,
+  "requests_attempted": 15,
+  "requests_failed": 0,
+  "requests_succeeded": 15,
+  "skipped_sources": [],
+  "source_modes": {
+    "data_go_kr_corp_basic": "live_executed",
+    "data_go_kr_disclosure_info": "live_executed",
+    "data_go_kr_financial_stat": "live_executed",
+    "data_go_kr_listed_items": "live_executed",
+    "data_go_kr_stock_prices": "live_executed",
+    "krx_kosdaq_dd_trd": "live_executed",
+    "krx_kospi_dd_trd": "live_executed",
+    "krx_ksq_bydd_trd": "live_executed",
+    "krx_ksq_isu_base_info": "live_executed",
+    "krx_stk_bydd_trd": "live_executed",
+    "krx_stk_isu_base_info": "live_executed",
+    "naver_doc": "live_executed",
+    "naver_news": "live_executed",
+    "naver_web": "live_executed",
+    "opendart_list": "live_executed"
+  },
+  "warnings": [
+    "naver_doc: missing expected fields items[].title, items[].link, items[].description"
+  ]
+}

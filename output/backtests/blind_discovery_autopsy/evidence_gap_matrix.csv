@@ -1,0 +1,14 @@
+label_id,company_name,symbol,expected_group,appeared_in_candidates,primary_miss_reason,official,price,disclosure,financial,search_snapshot,report_snapshot,news_snapshot,recommended_fix
+hd_hyundai_electric_2023,HD현대일렉트릭,267260,structural,True,stage_not_green_but_detected,False,False,False,False,True,True,False,manual_review
+hyosung_heavy_2023,효성중공업,298040,structural,True,stage_not_green_but_detected,False,False,False,False,True,True,False,manual_review
+iljin_electric_2023_2024,일진전기,103590,structural,False,no_search_snapshot,False,False,False,False,False,False,False,add_search_snapshot
+sanil_electric_2025,산일전기,062040,structural,False,no_search_snapshot,False,False,False,False,False,False,False,add_search_snapshot
+samyang_foods_2024,삼양식품,003230,structural,True,,False,False,False,False,True,True,False,manual_review
+hanwha_aerospace_2024,한화에어로스페이스,012450,structural,False,no_search_snapshot,False,False,False,False,False,False,False,add_search_snapshot
+silicontwo_2024,실리콘투,257720,structural,False,no_search_snapshot,False,False,False,False,False,False,False,add_search_snapshot
+samsung_memory_rerating_2024,삼성전자 메모리 리레이팅,005930,cyclical,False,no_search_snapshot,False,False,False,False,False,False,False,add_search_snapshot
+sk_hynix_memory_rerating_2024,SK하이닉스 메모리 리레이팅,000660,cyclical,False,no_search_snapshot,False,False,False,False,False,False,False,add_search_snapshot
+seegene_2020_red,씨젠,096530,one_off,False,outside_expected_window,False,False,False,False,True,True,True,no_action_expected_false_positive
+ecopro_bm_2023,에코프로비엠,247540,valuation_overheat,False,not_in_universe,False,False,False,False,False,False,False,no_action_expected_false_positive
+hmm_2021,HMM,011200,cyclical,False,no_search_snapshot,False,False,False,False,False,False,False,add_search_snapshot
+daehan_cable_like_2026_red,대한전선-like,001440,valuation_overheat,False,not_in_universe,False,False,False,False,False,False,False,no_action_expected_false_positive

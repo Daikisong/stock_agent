@@ -1,0 +1,2947 @@
+[
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [],
+      "optional_missing_expected_fields": [],
+      "present_expected_fields": [
+        "status",
+        "message",
+        "page_no",
+        "total_count",
+        "total_page",
+        "list",
+        "list[].corp_code",
+        "list[].corp_name",
+        "list[].stock_code",
+        "list[].report_nm",
+        "list[].rcept_no",
+        "list[].rcept_dt"
+      ],
+      "source_name": "opendart_list",
+      "unexpected_fields": [
+        "corp_cls",
+        "flr_nm",
+        "page_count",
+        "rm"
+      ]
+    },
+    "fields": [
+      {
+        "name": "corp_cls",
+        "samples": [
+          "K",
+          "E",
+          "Y"
+        ],
+        "types": [
+          "bool_like",
+          "str"
+        ]
+      },
+      {
+        "name": "corp_code",
+        "samples": [
+          "00596677",
+          "01124644",
+          "00162072"
+        ],
+        "types": [
+          "date_like"
+        ]
+      },
+      {
+        "name": "corp_name",
+        "samples": [
+          "매커스",
+          "엔에이치에프제6호비공공임대유동화전문유한회사",
+          "한신기계공업"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "flr_nm",
+        "samples": [
+          "매커스",
+          "엔에이치에프제6호비공공임대유동화전문유한회사",
+          "한신기계공업"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "rcept_dt",
+        "samples": [
+          "20260514"
+        ],
+        "types": [
+          "date_like"
+        ]
+      },
+      {
+        "name": "rcept_no",
+        "samples": [
+          "20260514000838",
+          "20260514000839",
+          "20260514000837"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "report_nm",
+        "samples": [
+          "분기보고서 (2026.03)",
+          "반기보고서(유동화전문회사) (2026.03)",
+          "투자설명서(일괄신고)"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "rm",
+        "samples": [
+          ""
+        ],
+        "types": [
+          "null"
+        ]
+      },
+      {
+        "name": "stock_code",
+        "samples": [
+          "093520",
+          "",
+          "011700"
+        ],
+        "types": [
+          "int_like",
+          "null"
+        ]
+      }
+    ],
+    "item_count": 10,
+    "item_path_candidates": [
+      "list"
+    ],
+    "selected_item_path": "list",
+    "source_name": "opendart_list",
+    "top_level_keys": [
+      "list",
+      "message",
+      "page_count",
+      "page_no",
+      "status",
+      "total_count",
+      "total_page"
+    ]
+  },
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [],
+      "optional_missing_expected_fields": [],
+      "present_expected_fields": [
+        "items[].title",
+        "items[].link",
+        "items[].description",
+        "items[].pubDate"
+      ],
+      "source_name": "naver_news",
+      "unexpected_fields": [
+        "display",
+        "lastBuildDate",
+        "originallink",
+        "start",
+        "total"
+      ]
+    },
+    "fields": [
+      {
+        "name": "description",
+        "samples": [
+          "제조 대기업과 국방 분야 고객사를 바탕으로 <b>수주잔고</b>와 반복 매출을 얼마나 빠르게 확대하느냐가 상장 이후 관전 포인트다. 윤 대표는 MIT에서 물리학을 공부한 뒤 <b>삼성전자</b> 반도체와 SK텔레콤을 거쳐 2017년... ",
+          "최대 수준을 기록했다. 종목별로는 <b>삼성전자</b>가 20만4025건으로 가장 많았고, SK하이닉스가 14만2668건으로... 1분기 신규 <b>수주</b>는 3조4212억원으로 전년 동기 대비 21.2% 늘었고, <b>수주잔고</b>는 51조8902억원으로 약 6.4년치... ",
+          "글로벌 팹리스 <b>수주</b> 확대 14일 업계에 따르면 <b>삼성전자</b>는 테슬라 등 빅테크 고객사를 확보하며 선단 공정... 지난해 말 기준 <b>수주</b>액은 1684억원, <b>수주잔고</b>는 1094억원이다. 최근 대형 파운드리의 단가 인상이 추진되는... "
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "link",
+        "samples": [
+          "https://n.news.naver.com/mnews/article/018/0006281087?sid=105",
+          "https://www.wikitree.co.kr/articles/1136509",
+          "https://n.news.naver.com/mnews/article/293/0000084618?sid=101"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "originallink",
+        "samples": [
+          "http://www.edaily.co.kr/news/newspath.asp?newsid=05021686645448920",
+          "https://www.wikitree.co.kr/articles/1136509",
+          "https://www.bloter.net/news/articleView.html?idxno=662302"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "pubDate",
+        "samples": [
+          "Thu, 14 May 2026 15:10:00 +0900",
+          "Thu, 14 May 2026 14:52:00 +0900",
+          "Thu, 14 May 2026 14:44:00 +0900"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "title",
+        "samples": [
+          "“현대차 공장서 전장까지”…윤성호의 마키나락스, ‘자율 제조’ 향해...",
+          "“삼전·하닉 다음이래” 3000원 동전주 '대우건설'에 1억씩 꽂은 개미들...",
+          "[디자인하우스 특수] 세미파이브, 적자 감수한 선단 투자…ASIC 승부"
+        ],
+        "types": [
+          "str"
+        ]
+      }
+    ],
+    "item_count": 3,
+    "item_path_candidates": [
+      "items"
+    ],
+    "selected_item_path": "items",
+    "source_name": "naver_news",
+    "top_level_keys": [
+      "display",
+      "items",
+      "lastBuildDate",
+      "start",
+      "total"
+    ]
+  },
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [],
+      "optional_missing_expected_fields": [],
+      "present_expected_fields": [
+        "items[].title",
+        "items[].link",
+        "items[].description"
+      ],
+      "source_name": "naver_web",
+      "unexpected_fields": [
+        "display",
+        "lastBuildDate",
+        "start",
+        "total"
+      ]
+    },
+    "fields": [
+      {
+        "name": "description",
+        "samples": [
+          "<b>삼성전자</b> 파운드리가 향후 5년간 200조원에 육박하는 물량을 <b>수주</b>했다. 세계 최초로 3나노미터(㎚) 첨단 공정 검증을 완료하고 2분기 내 양산에 들어가면 <b>수주</b> 규모는 더욱 확대될 것으로 보인다. <b>삼성전자</b>는 수율...",
+          "<b>삼성전자</b>가 반도체 위탁 생산(파운드리) 사업의 향후 5년 <b>수주잔고</b>가 전년도 매출의 8배에 이른다고 밝혔다. 수율(결함 없는 합격품의 비율)을 시장에서 지나치게 우려한다는 입장이다.28일 강문수 <b>삼성전자</b> 파운드리사업부 부사장은 1분기 실적을 발표하고서 열린 기업설명회(IR)에서 ‘미국 퀄컴과...",
+          "<b>삼성전자</b>가 메모리, 반도체위탁생산(파운드리) 사업의 근본적 경쟁력이 여전히 굳건하다고 강조했다. 시장 안팎에서 제기됐던 메모리반도체 공정 로드맵 변경, 파운드리 빅 고객사 이탈 우려에 “사실이 아니다”라고 못박은 것이다. 강문수 <b>삼성전자</b> 파운드리사업부 부사장은 28일 1분기 실적발표 후 컨퍼런스콜에서 “주요 고객사 수요가 우리의 생산능력 이상으로 견조해 공..."
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "link",
+        "samples": [
+          "https://www.etnews.com/20220428000191",
+          "https://zdnet.co.kr/view/?no=20220428133216",
+          "https://www.asiatoday.co.kr/kn/view.php?key=20220428010017400"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "title",
+        "samples": [
+          "<b>삼성</b> 파운드리, 5년간 <b>수주</b>잔액 200조원 육박 전망",
+          "<b>삼성전자</b> &quot;파운드리 5년 <b>수주잔고</b>, 전년 매출 8배&quot;",
+          "[컨콜종합] <b>삼성전자</b> 파운드리 <b>수주잔고</b> 200조원대 추정…“메모리 여전히 세계 최고”"
+        ],
+        "types": [
+          "str"
+        ]
+      }
+    ],
+    "item_count": 3,
+    "item_path_candidates": [
+      "items"
+    ],
+    "selected_item_path": "items",
+    "source_name": "naver_web",
+    "top_level_keys": [
+      "display",
+      "items",
+      "lastBuildDate",
+      "start",
+      "total"
+    ]
+  },
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [
+        "items[].title",
+        "items[].link",
+        "items[].description"
+      ],
+      "optional_missing_expected_fields": [],
+      "present_expected_fields": [],
+      "source_name": "naver_doc",
+      "unexpected_fields": [
+        "display",
+        "lastBuildDate",
+        "start",
+        "total"
+      ]
+    },
+    "fields": [
+      {
+        "name": "display",
+        "samples": [
+          3
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "items",
+        "samples": [
+          []
+        ],
+        "types": [
+          "list"
+        ]
+      },
+      {
+        "name": "lastBuildDate",
+        "samples": [
+          "Thu, 14 May 2026 15:26:46 +0900"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "start",
+        "samples": [
+          1
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "total",
+        "samples": [
+          0
+        ],
+        "types": [
+          "int_like"
+        ]
+      }
+    ],
+    "item_count": 1,
+    "item_path_candidates": [
+      "items"
+    ],
+    "selected_item_path": "$",
+    "source_name": "naver_doc",
+    "top_level_keys": [
+      "display",
+      "items",
+      "lastBuildDate",
+      "start",
+      "total"
+    ]
+  },
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [],
+      "optional_missing_expected_fields": [],
+      "present_expected_fields": [
+        "basDt",
+        "srtnCd",
+        "isinCd",
+        "itmsNm",
+        "mrktCtg",
+        "corpNm"
+      ],
+      "source_name": "data_go_kr_listed_items",
+      "unexpected_fields": [
+        "crno"
+      ]
+    },
+    "fields": [
+      {
+        "name": "basDt",
+        "samples": [
+          "20260513"
+        ],
+        "types": [
+          "date_like"
+        ]
+      },
+      {
+        "name": "corpNm",
+        "samples": [
+          "이스트아시아홀딩스인베스트먼트리미티드",
+          "헝셩그룹유한회사",
+          "로스웰인터내셔널유한회사"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "crno",
+        "samples": [
+          "0000000000000",
+          "1831462000000",
+          "1101110043870"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "isinCd",
+        "samples": [
+          "HK0000057197",
+          "HK0000214814",
+          "HK0000295359"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "itmsNm",
+        "samples": [
+          "이스트아시아홀딩스",
+          "헝셩그룹",
+          "로스웰"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "mrktCtg",
+        "samples": [
+          "KOSDAQ",
+          "KOSPI"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "srtnCd",
+        "samples": [
+          "A900110",
+          "A900270",
+          "A900260"
+        ],
+        "types": [
+          "str"
+        ]
+      }
+    ],
+    "item_count": 10,
+    "item_path_candidates": [
+      "response.body.items.item"
+    ],
+    "selected_item_path": "response.body.items.item",
+    "source_name": "data_go_kr_listed_items",
+    "top_level_keys": [
+      "response"
+    ]
+  },
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [],
+      "optional_missing_expected_fields": [],
+      "present_expected_fields": [
+        "basDt",
+        "srtnCd",
+        "isinCd",
+        "itmsNm",
+        "mrktCtg",
+        "clpr",
+        "mkp",
+        "hipr",
+        "lopr",
+        "trqu",
+        "trPrc",
+        "mrktTotAmt"
+      ],
+      "source_name": "data_go_kr_stock_prices",
+      "unexpected_fields": [
+        "fltRt",
+        "lstgStCnt",
+        "vs"
+      ]
+    },
+    "fields": [
+      {
+        "name": "basDt",
+        "samples": [
+          "20260513"
+        ],
+        "types": [
+          "date_like"
+        ]
+      },
+      {
+        "name": "clpr",
+        "samples": [
+          "774",
+          "1015",
+          "1568"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "fltRt",
+        "samples": [
+          "-.39",
+          "3.36",
+          "-.44"
+        ],
+        "types": [
+          "float_like",
+          "int_like",
+          "str"
+        ]
+      },
+      {
+        "name": "hipr",
+        "samples": [
+          "789",
+          "1028",
+          "1587"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "isinCd",
+        "samples": [
+          "HK0000057197",
+          "HK0000214814",
+          "HK0000295359"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "itmsNm",
+        "samples": [
+          "이스트아시아홀딩스",
+          "헝셩그룹",
+          "로스웰"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "lopr",
+        "samples": [
+          "758",
+          "970",
+          "1561"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "lstgStCnt",
+        "samples": [
+          "36874745",
+          "24404704",
+          "46029706"
+        ],
+        "types": [
+          "date_like",
+          "int_like"
+        ]
+      },
+      {
+        "name": "mkp",
+        "samples": [
+          "787",
+          "982",
+          "1575"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "mrktCtg",
+        "samples": [
+          "KOSDAQ",
+          "KOSPI"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "mrktTotAmt",
+        "samples": [
+          "28541052630",
+          "24770774560",
+          "72174579008"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "srtnCd",
+        "samples": [
+          "900110",
+          "900270",
+          "900260"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "trPrc",
+        "samples": [
+          "41095950",
+          "142723738",
+          "106575381"
+        ],
+        "types": [
+          "date_like",
+          "int_like"
+        ]
+      },
+      {
+        "name": "trqu",
+        "samples": [
+          "53285",
+          "141898",
+          "67650"
+        ],
+        "types": [
+          "date_like",
+          "int_like"
+        ]
+      },
+      {
+        "name": "vs",
+        "samples": [
+          "-3",
+          "33",
+          "-7"
+        ],
+        "types": [
+          "int_like"
+        ]
+      }
+    ],
+    "item_count": 10,
+    "item_path_candidates": [
+      "response.body.items.item"
+    ],
+    "selected_item_path": "response.body.items.item",
+    "source_name": "data_go_kr_stock_prices",
+    "top_level_keys": [
+      "response"
+    ]
+  },
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [],
+      "optional_missing_expected_fields": [],
+      "present_expected_fields": [
+        "company_code_or_name",
+        "enpBsadr",
+        "bzno"
+      ],
+      "source_name": "data_go_kr_corp_basic",
+      "unexpected_fields": [
+        "actnAudpnNm",
+        "audtRptOpnnCtt",
+        "corpDcd",
+        "corpDcdNm",
+        "corpEnsnNm",
+        "corpRegMrktDcd",
+        "corpRegMrktDcdNm",
+        "empeAvgCnwkTermCtt",
+        "enpDtadr",
+        "enpEmpeCnt",
+        "enpEstbDt",
+        "enpFxno",
+        "enpHmpgUrl",
+        "enpKosdaqLstgAbolDt",
+        "enpKosdaqLstgDt",
+        "enpKrxLstgAbolDt",
+        "enpKrxLstgDt",
+        "enpMainBizNm",
+        "enpMntrBnkNm",
+        "enpOzpno",
+        "enpPbanCmpyNm",
+        "enpPn1AvgSlryAmt",
+        "enpRprFnm",
+        "enpStacMm",
+        "enpTlno",
+        "enpXchgLstgAbolDt",
+        "enpXchgLstgDt",
+        "fssCorpChgDtm",
+        "fssCorpUnqNo",
+        "fstOpegDt",
+        "lastOpegDt",
+        "sicNm",
+        "smenpYn"
+      ]
+    },
+    "fields": [
+      {
+        "name": "actnAudpnNm",
+        "samples": [
+          "",
+          "삼정회계법인"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "audtRptOpnnCtt",
+        "samples": [
+          "",
+          "적정의견",
+          "예외사항없음"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "bzno",
+        "samples": [
+          "",
+          "1228606517",
+          "1378614509"
+        ],
+        "types": [
+          "int_like",
+          "null"
+        ]
+      },
+      {
+        "name": "corpDcd",
+        "samples": [
+          "",
+          "31"
+        ],
+        "types": [
+          "int_like",
+          "null"
+        ]
+      },
+      {
+        "name": "corpDcdNm",
+        "samples": [
+          "",
+          "주식회사"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "corpEnsnNm",
+        "samples": [
+          "",
+          "SAMSUNG WOOHO CO., LTD.",
+          "samsungfreemart"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "corpNm",
+        "samples": [
+          "삼성전자잠실판매",
+          "삼성전자우호기업(주)",
+          "삼성전자검단본점"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "corpRegMrktDcd",
+        "samples": [
+          "",
+          "P"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "corpRegMrktDcdNm",
+        "samples": [
+          "",
+          "유가"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "crno",
+        "samples": [
+          "1101110877477",
+          "1201110505464",
+          "1201110582917"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "empeAvgCnwkTermCtt",
+        "samples": [
+          "",
+          "13.7",
+          "13.0"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      },
+      {
+        "name": "enpBsadr",
+        "samples": [
+          "",
+          "경기도  김포시  중봉로  31",
+          "인천광역시 서구 서곶로 770"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "enpDtadr",
+        "samples": [
+          "",
+          "(감정동)",
+          "(당하동)"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "enpEmpeCnt",
+        "samples": [
+          "0",
+          "36",
+          "7"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "enpEstbDt",
+        "samples": [
+          "",
+          "20090825",
+          "20111101"
+        ],
+        "types": [
+          "date_like",
+          "null"
+        ]
+      },
+      {
+        "name": "enpFxno",
+        "samples": [
+          "",
+          "031-981-6800",
+          "032 568 5592"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "enpHmpgUrl",
+        "samples": [
+          "",
+          "www.samsung.com/sec"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "enpKosdaqLstgAbolDt",
+        "samples": [
+          ""
+        ],
+        "types": [
+          "null"
+        ]
+      },
+      {
+        "name": "enpKosdaqLstgDt",
+        "samples": [
+          ""
+        ],
+        "types": [
+          "null"
+        ]
+      },
+      {
+        "name": "enpKrxLstgAbolDt",
+        "samples": [
+          ""
+        ],
+        "types": [
+          "null"
+        ]
+      },
+      {
+        "name": "enpKrxLstgDt",
+        "samples": [
+          ""
+        ],
+        "types": [
+          "null"
+        ]
+      },
+      {
+        "name": "enpMainBizNm",
+        "samples": [
+          ""
+        ],
+        "types": [
+          "null"
+        ]
+      },
+      {
+        "name": "enpMntrBnkNm",
+        "samples": [
+          ""
+        ],
+        "types": [
+          "null"
+        ]
+      },
+      {
+        "name": "enpOzpno",
+        "samples": [
+          "",
+          "10103",
+          "22678"
+        ],
+        "types": [
+          "int_like",
+          "null"
+        ]
+      },
+      {
+        "name": "enpPbanCmpyNm",
+        "samples": [
+          "",
+          "삼성전자"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "enpPn1AvgSlryAmt",
+        "samples": [
+          "0",
+          "158000000",
+          "130000000"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "enpRprFnm",
+        "samples": [
+          "",
+          "설기한",
+          "박은경"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "enpStacMm",
+        "samples": [
+          "",
+          "12"
+        ],
+        "types": [
+          "int_like",
+          "null"
+        ]
+      },
+      {
+        "name": "enpTlno",
+        "samples": [
+          "",
+          "02-0420-2525",
+          "82-031-997-2255"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "enpXchgLstgAbolDt",
+        "samples": [
+          ""
+        ],
+        "types": [
+          "null"
+        ]
+      },
+      {
+        "name": "enpXchgLstgDt",
+        "samples": [
+          "",
+          "75/06/11"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "fssCorpChgDtm",
+        "samples": [
+          "",
+          "2025/12/01",
+          "2025/03/26"
+        ],
+        "types": [
+          "null",
+          "str"
+        ]
+      },
+      {
+        "name": "fssCorpUnqNo",
+        "samples": [
+          "",
+          "00126380"
+        ],
+        "types": [
+          "date_like",
+          "null"
+        ]
+      },
+      {
+        "name": "fstOpegDt",
+        "samples": [
+          "20250319",
+          "20200509",
+          "20200517"
+        ],
+        "types": [
+          "date_like"
+        ]
+      },
+      {
+        "name": "lastOpegDt",
+        "samples": [
+          "20260513",
+          "20250318",
+          "20200517"
+        ],
+        "types": [
+          "date_like"
+        ]
+      },
+      {
+        "name": "sicNm",
+        "samples": [
+          ""
+        ],
+        "types": [
+          "null"
+        ]
+      },
+      {
+        "name": "smenpYn",
+        "samples": [
+          "",
+          "Y"
+        ],
+        "types": [
+          "bool_like",
+          "null"
+        ]
+      }
+    ],
+    "item_count": 10,
+    "item_path_candidates": [
+      "response.body.items.item"
+    ],
+    "selected_item_path": "response.body.items.item",
+    "source_name": "data_go_kr_corp_basic",
+    "top_level_keys": [
+      "response"
+    ]
+  },
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [],
+      "optional_missing_expected_fields": [
+        "corpNm",
+        "enpBsadr",
+        "operating_profit_like"
+      ],
+      "present_expected_fields": [
+        "base_date_or_year",
+        "sales_like"
+      ],
+      "source_name": "data_go_kr_financial_stat",
+      "unexpected_fields": [
+        "curCd",
+        "enpBzopPft",
+        "enpCptlAmt",
+        "enpCrtmNpf",
+        "enpTastAmt",
+        "enpTcptAmt",
+        "enpTdbtAmt",
+        "fnclDcd",
+        "fnclDcdNm",
+        "fnclDebtRto",
+        "iclsPalClcAmt"
+      ]
+    },
+    "fields": [
+      {
+        "name": "basDt",
+        "samples": [
+          "20251231"
+        ],
+        "types": [
+          "date_like"
+        ]
+      },
+      {
+        "name": "bizYear",
+        "samples": [
+          "2025"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "crno",
+        "samples": [
+          "0000000000000",
+          "1101110000086",
+          "1101110002694"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "curCd",
+        "samples": [
+          "CNY",
+          "KRW"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "enpBzopPft",
+        "samples": [
+          "-1079266",
+          "547037221095",
+          "411235004486"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "enpCptlAmt",
+        "samples": [
+          "610375708",
+          "141443775000",
+          "427907000000"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "enpCrtmNpf",
+        "samples": [
+          "-22545516",
+          "73555557525",
+          "110415787846"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "enpSaleAmt",
+        "samples": [
+          "550151496",
+          "13738354725833",
+          "8188060535596"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "enpTastAmt",
+        "samples": [
+          "2172428270",
+          "37910298847681",
+          "30348657634537"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "enpTcptAmt",
+        "samples": [
+          "1879757620",
+          "16866196238190",
+          "14267031838874"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "enpTdbtAmt",
+        "samples": [
+          "292670650",
+          "21044102609491",
+          "16081625795663"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "fnclDcd",
+        "samples": [
+          "110",
+          "120"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "fnclDcdNm",
+        "samples": [
+          "연결요약재무제표",
+          "별도요약재무제표"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "fnclDebtRto",
+        "samples": [
+          "15.5695950843",
+          "124.7708867625",
+          "112.7187909671"
+        ],
+        "types": [
+          "float_like"
+        ]
+      },
+      {
+        "name": "iclsPalClcAmt",
+        "samples": [
+          "-19395496",
+          "83446963642",
+          "77130000224"
+        ],
+        "types": [
+          "int_like"
+        ]
+      }
+    ],
+    "item_count": 10,
+    "item_path_candidates": [
+      "response.body.items.item"
+    ],
+    "selected_item_path": "response.body.items.item",
+    "source_name": "data_go_kr_financial_stat",
+    "top_level_keys": [
+      "response"
+    ]
+  },
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [],
+      "optional_missing_expected_fields": [
+        "disclosure_title",
+        "receipt_identifier"
+      ],
+      "present_expected_fields": [
+        "disclosure_date",
+        "company_code_or_name"
+      ],
+      "source_name": "data_go_kr_disclosure_info",
+      "unexpected_fields": [
+        "bpvtrCashDvdnTndnCtt",
+        "bpvtrCashTdvdAmt",
+        "bpvtrIdvCrtmNpf",
+        "bpvtrOnskCashDvdnAmt",
+        "bpvtrOnskCashDvdnBnfRt",
+        "bpvtrOnskStckDvdnAmt",
+        "bpvtrOnskStckDvdnBnfRt",
+        "bpvtrParPrc",
+        "bpvtrPfstCashDvdnAmt",
+        "bpvtrPfstCashDvdnBnfRt",
+        "bpvtrPfstStckDvdnAmt",
+        "bpvtrPfstStckDvdnBnfRt",
+        "bpvtrPstcNpf",
+        "bpvtrStckTdvdAmt",
+        "crtmCashDvdnTndnCtt",
+        "crtmCashTdvdAmt",
+        "crtmIdvCrtmNpf",
+        "crtmOnskCashDvdnAmt",
+        "crtmOnskCashDvdnBnfRt",
+        "crtmOnskStckDvdnAmt",
+        "crtmOnskStckDvdnBnfRt",
+        "crtmParPrc",
+        "crtmPfstCashDvdnAmt",
+        "crtmPfstCashDvdnBnfRt",
+        "crtmPfstStckDvdnAmt",
+        "crtmPfstStckDvdnBnfRt",
+        "crtmPstcNpf",
+        "crtmStckTdvdAmt",
+        "enpCrtmNpf",
+        "fnclCrtmNpf",
+        "pvtrCashDvdnTndnCtt",
+        "pvtrCashTdvdAmt",
+        "pvtrCrtmNpf",
+        "pvtrIdvCrtmNpf",
+        "pvtrOnskCashDvdnAmt",
+        "pvtrOnskCashDvdnBnfRt",
+        "pvtrOnskStckDvdnAmt",
+        "pvtrOnskStckDvdnBnfRt",
+        "pvtrParPrc",
+        "pvtrPfstCashDvdnAmt",
+        "pvtrPfstCashDvdnBnfRt",
+        "pvtrPfstStckDvdnAmt",
+        "pvtrPfstStckDvdnBnfRt",
+        "pvtrPstcNpf",
+        "pvtrStckTdvdAmt"
+      ]
+    },
+    "fields": [
+      {
+        "name": "basDt",
+        "samples": [
+          "20131231",
+          "20141231"
+        ],
+        "types": [
+          "date_like"
+        ]
+      },
+      {
+        "name": "bpvtrCashDvdnTndnCtt",
+        "samples": [
+          "",
+          "23.30",
+          "13.46"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      },
+      {
+        "name": "bpvtrCashTdvdAmt",
+        "samples": [
+          "0",
+          "164",
+          "998"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "bpvtrIdvCrtmNpf",
+        "samples": [
+          "0",
+          "786",
+          "-6860"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "bpvtrOnskCashDvdnAmt",
+        "samples": [
+          "0",
+          "20",
+          "150"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "bpvtrOnskCashDvdnBnfRt",
+        "samples": [
+          "0",
+          ".2"
+        ],
+        "types": [
+          "int_like",
+          "str"
+        ]
+      },
+      {
+        "name": "bpvtrOnskStckDvdnAmt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "bpvtrOnskStckDvdnBnfRt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "bpvtrParPrc",
+        "samples": [
+          "100",
+          "500",
+          "5000"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "bpvtrPfstCashDvdnAmt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "bpvtrPfstCashDvdnBnfRt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "bpvtrPfstStckDvdnAmt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "bpvtrPfstStckDvdnBnfRt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "bpvtrPstcNpf",
+        "samples": [
+          "0",
+          "21",
+          "-102"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "bpvtrStckTdvdAmt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "crno",
+        "samples": [
+          "1201110012914",
+          "1760110022654",
+          "1101111061954"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "crtmCashDvdnTndnCtt",
+        "samples": [
+          "",
+          "14.87",
+          "8.84"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      },
+      {
+        "name": "crtmCashTdvdAmt",
+        "samples": [
+          "0",
+          "163",
+          "1082"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "crtmIdvCrtmNpf",
+        "samples": [
+          "1094",
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "crtmOnskCashDvdnAmt",
+        "samples": [
+          "0",
+          "20",
+          "150"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "crtmOnskCashDvdnBnfRt",
+        "samples": [
+          "0",
+          ".2"
+        ],
+        "types": [
+          "int_like",
+          "str"
+        ]
+      },
+      {
+        "name": "crtmOnskStckDvdnAmt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "crtmOnskStckDvdnBnfRt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "crtmParPrc",
+        "samples": [
+          "100",
+          "500",
+          "5000"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "crtmPfstCashDvdnAmt",
+        "samples": [
+          "0",
+          "343"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "crtmPfstCashDvdnBnfRt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "crtmPfstStckDvdnAmt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "crtmPfstStckDvdnBnfRt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "crtmPstcNpf",
+        "samples": [
+          "0",
+          "-663",
+          "-840"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "crtmStckTdvdAmt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "enpCrtmNpf",
+        "samples": [
+          "-20329",
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "fnclCrtmNpf",
+        "samples": [
+          "-2472",
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "pvtrCashDvdnTndnCtt",
+        "samples": [
+          "",
+          "9.44",
+          "52.66"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      },
+      {
+        "name": "pvtrCashTdvdAmt",
+        "samples": [
+          "0",
+          "163",
+          "1003"
+        ],
+        "types": [
+          "date_like",
+          "int_like"
+        ]
+      },
+      {
+        "name": "pvtrCrtmNpf",
+        "samples": [
+          "0",
+          "216",
+          "-1238"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "pvtrIdvCrtmNpf",
+        "samples": [
+          "0",
+          "-8979",
+          "-10956"
+        ],
+        "types": [
+          "date_like",
+          "int_like"
+        ]
+      },
+      {
+        "name": "pvtrOnskCashDvdnAmt",
+        "samples": [
+          "0",
+          "20",
+          "150"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "pvtrOnskCashDvdnBnfRt",
+        "samples": [
+          "0",
+          ".2"
+        ],
+        "types": [
+          "int_like",
+          "str"
+        ]
+      },
+      {
+        "name": "pvtrOnskStckDvdnAmt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "pvtrOnskStckDvdnBnfRt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "pvtrParPrc",
+        "samples": [
+          "100",
+          "500",
+          "5000"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "pvtrPfstCashDvdnAmt",
+        "samples": [
+          "0",
+          "81"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "pvtrPfstCashDvdnBnfRt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "pvtrPfstStckDvdnAmt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "pvtrPfstStckDvdnBnfRt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "pvtrPstcNpf",
+        "samples": [
+          "0",
+          "35",
+          "-550"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "pvtrStckTdvdAmt",
+        "samples": [
+          "0"
+        ],
+        "types": [
+          "int_like"
+        ]
+      }
+    ],
+    "item_count": 10,
+    "item_path_candidates": [
+      "response.body.items.item"
+    ],
+    "selected_item_path": "response.body.items.item",
+    "source_name": "data_go_kr_disclosure_info",
+    "top_level_keys": [
+      "response"
+    ]
+  },
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [],
+      "optional_missing_expected_fields": [],
+      "present_expected_fields": [
+        "date",
+        "symbol",
+        "name",
+        "close",
+        "volume",
+        "trading_value",
+        "market_cap"
+      ],
+      "source_name": "krx_stk_bydd_trd",
+      "unexpected_fields": [
+        "CMPPREVDD_PRC",
+        "FLUC_RT",
+        "LIST_SHRS",
+        "MKT_NM",
+        "SECT_TP_NM",
+        "TDD_HGPRC",
+        "TDD_LWPRC",
+        "TDD_OPNPRC"
+      ]
+    },
+    "fields": [
+      {
+        "name": "ACC_TRDVAL",
+        "samples": [
+          "1756624160",
+          "89814200",
+          "1665921775"
+        ],
+        "types": [
+          "date_like",
+          "int_like"
+        ]
+      },
+      {
+        "name": "ACC_TRDVOL",
+        "samples": [
+          "385061",
+          "11649",
+          "356390"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "BAS_DD",
+        "samples": [
+          "20260513"
+        ],
+        "types": [
+          "date_like"
+        ]
+      },
+      {
+        "name": "CMPPREVDD_PRC",
+        "samples": [
+          "-85",
+          "100",
+          "-35"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "FLUC_RT",
+        "samples": [
+          "-1.84",
+          "1.30",
+          "-0.73"
+        ],
+        "types": [
+          "float_like"
+        ]
+      },
+      {
+        "name": "ISU_CD",
+        "samples": [
+          "095570",
+          "006840",
+          "027410"
+        ],
+        "types": [
+          "int_like",
+          "str"
+        ]
+      },
+      {
+        "name": "ISU_NM",
+        "samples": [
+          "AJ네트웍스",
+          "AK홀딩스",
+          "BGF"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "LIST_SHRS",
+        "samples": [
+          "45252759",
+          "13247561",
+          "95716791"
+        ],
+        "types": [
+          "date_like",
+          "int_like"
+        ]
+      },
+      {
+        "name": "MKTCAP",
+        "samples": [
+          "205673789655",
+          "103198500190",
+          "454176173295"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "MKT_NM",
+        "samples": [
+          "KOSPI"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "SECT_TP_NM",
+        "samples": [
+          ""
+        ],
+        "types": [
+          "null"
+        ]
+      },
+      {
+        "name": "TDD_CLSPRC",
+        "samples": [
+          "4545",
+          "7790",
+          "4745"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "TDD_HGPRC",
+        "samples": [
+          "4670",
+          "7790",
+          "4800"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "TDD_LWPRC",
+        "samples": [
+          "4485",
+          "7600",
+          "4560"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "TDD_OPNPRC",
+        "samples": [
+          "4640",
+          "7690",
+          "4775"
+        ],
+        "types": [
+          "int_like"
+        ]
+      }
+    ],
+    "item_count": 948,
+    "item_path_candidates": [
+      "OutBlock_1"
+    ],
+    "selected_item_path": "OutBlock_1",
+    "source_name": "krx_stk_bydd_trd",
+    "top_level_keys": [
+      "OutBlock_1"
+    ]
+  },
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [],
+      "optional_missing_expected_fields": [],
+      "present_expected_fields": [
+        "date",
+        "symbol",
+        "name",
+        "close",
+        "volume",
+        "trading_value",
+        "market_cap"
+      ],
+      "source_name": "krx_ksq_bydd_trd",
+      "unexpected_fields": [
+        "CMPPREVDD_PRC",
+        "FLUC_RT",
+        "LIST_SHRS",
+        "MKT_NM",
+        "SECT_TP_NM",
+        "TDD_HGPRC",
+        "TDD_LWPRC",
+        "TDD_OPNPRC"
+      ]
+    },
+    "fields": [
+      {
+        "name": "ACC_TRDVAL",
+        "samples": [
+          "15561042724",
+          "1158491390",
+          "1925567590"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "ACC_TRDVOL",
+        "samples": [
+          "8341122",
+          "192062",
+          "345797"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "BAS_DD",
+        "samples": [
+          "20260513"
+        ],
+        "types": [
+          "date_like"
+        ]
+      },
+      {
+        "name": "CMPPREVDD_PRC",
+        "samples": [
+          "105",
+          "20",
+          "140"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "FLUC_RT",
+        "samples": [
+          "6.14",
+          "0.33",
+          "2.57"
+        ],
+        "types": [
+          "float_like"
+        ]
+      },
+      {
+        "name": "ISU_CD",
+        "samples": [
+          "060310",
+          "054620",
+          "079810"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "ISU_NM",
+        "samples": [
+          "3S",
+          "APS",
+          "APS이노베이션"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "LIST_SHRS",
+        "samples": [
+          "53059040",
+          "18394221",
+          "21528094"
+        ],
+        "types": [
+          "date_like",
+          "int_like"
+        ]
+      },
+      {
+        "name": "MKTCAP",
+        "samples": [
+          "96302157600",
+          "111285037050",
+          "120342045460"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "MKT_NM",
+        "samples": [
+          "KOSDAQ"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "SECT_TP_NM",
+        "samples": [
+          "벤처기업부",
+          "중견기업부",
+          "우량기업부"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "TDD_CLSPRC",
+        "samples": [
+          "1815",
+          "6050",
+          "5590"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "TDD_HGPRC",
+        "samples": [
+          "1978",
+          "6400",
+          "5720"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "TDD_LWPRC",
+        "samples": [
+          "1660",
+          "5850",
+          "5360"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "TDD_OPNPRC",
+        "samples": [
+          "1719",
+          "5900",
+          "5390"
+        ],
+        "types": [
+          "int_like"
+        ]
+      }
+    ],
+    "item_count": 1821,
+    "item_path_candidates": [
+      "OutBlock_1"
+    ],
+    "selected_item_path": "OutBlock_1",
+    "source_name": "krx_ksq_bydd_trd",
+    "top_level_keys": [
+      "OutBlock_1"
+    ]
+  },
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [],
+      "optional_missing_expected_fields": [],
+      "present_expected_fields": [
+        "ISU_CD",
+        "ISU_SRT_CD",
+        "ISU_NM",
+        "market_name",
+        "LIST_DD"
+      ],
+      "source_name": "krx_stk_isu_base_info",
+      "unexpected_fields": [
+        "ISU_ABBRV",
+        "ISU_ENG_NM",
+        "KIND_STKCERT_TP_NM",
+        "LIST_SHRS",
+        "PARVAL",
+        "SECT_TP_NM",
+        "SECUGRP_NM"
+      ]
+    },
+    "fields": [
+      {
+        "name": "ISU_ABBRV",
+        "samples": [
+          "AJ네트웍스",
+          "AK홀딩스",
+          "BGF리테일"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "ISU_CD",
+        "samples": [
+          "KR7095570008",
+          "KR7006840003",
+          "KR7282330000"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "ISU_ENG_NM",
+        "samples": [
+          "AJ Networks Co.,Ltd.",
+          "AK Holdings, Inc.",
+          "BGF Retail"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "ISU_NM",
+        "samples": [
+          "AJ네트웍스보통주",
+          "AK홀딩스보통주",
+          "BGF리테일보통주"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "ISU_SRT_CD",
+        "samples": [
+          "095570",
+          "006840",
+          "282330"
+        ],
+        "types": [
+          "int_like",
+          "str"
+        ]
+      },
+      {
+        "name": "KIND_STKCERT_TP_NM",
+        "samples": [
+          "보통주",
+          "구형우선주",
+          "신형우선주"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "LIST_DD",
+        "samples": [
+          "20150821",
+          "19990811",
+          "20171208"
+        ],
+        "types": [
+          "date_like"
+        ]
+      },
+      {
+        "name": "LIST_SHRS",
+        "samples": [
+          "45252759",
+          "13247561",
+          "17283906"
+        ],
+        "types": [
+          "date_like",
+          "int_like"
+        ]
+      },
+      {
+        "name": "MKT_TP_NM",
+        "samples": [
+          "KOSPI"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "PARVAL",
+        "samples": [
+          "1000",
+          "5000",
+          "500"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "SECT_TP_NM",
+        "samples": [
+          ""
+        ],
+        "types": [
+          "null"
+        ]
+      },
+      {
+        "name": "SECUGRP_NM",
+        "samples": [
+          "주권"
+        ],
+        "types": [
+          "str"
+        ]
+      }
+    ],
+    "item_count": 948,
+    "item_path_candidates": [
+      "OutBlock_1"
+    ],
+    "selected_item_path": "OutBlock_1",
+    "source_name": "krx_stk_isu_base_info",
+    "top_level_keys": [
+      "OutBlock_1"
+    ]
+  },
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [],
+      "optional_missing_expected_fields": [],
+      "present_expected_fields": [
+        "ISU_CD",
+        "ISU_SRT_CD",
+        "ISU_NM",
+        "market_name",
+        "LIST_DD"
+      ],
+      "source_name": "krx_ksq_isu_base_info",
+      "unexpected_fields": [
+        "ISU_ABBRV",
+        "ISU_ENG_NM",
+        "KIND_STKCERT_TP_NM",
+        "LIST_SHRS",
+        "PARVAL",
+        "SECT_TP_NM",
+        "SECUGRP_NM"
+      ]
+    },
+    "fields": [
+      {
+        "name": "ISU_ABBRV",
+        "samples": [
+          "마이크로컨텍솔",
+          "포스코엠텍",
+          "APS이노베이션"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "ISU_CD",
+        "samples": [
+          "KR7098120009",
+          "KR7009520008",
+          "KR7079810008"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "ISU_ENG_NM",
+        "samples": [
+          "Micro Contact Solution Co.,Ltd.",
+          "POSCO M-TECH CO.,LTD.",
+          "APSInnovation"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "ISU_NM",
+        "samples": [
+          "(주)마이크로컨텍솔루션",
+          "(주)포스코엠텍",
+          "APS이노베이션"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "ISU_SRT_CD",
+        "samples": [
+          "098120",
+          "009520",
+          "079810"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "KIND_STKCERT_TP_NM",
+        "samples": [
+          "보통주"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "LIST_DD",
+        "samples": [
+          "20080923",
+          "19971110",
+          "20050126"
+        ],
+        "types": [
+          "date_like"
+        ]
+      },
+      {
+        "name": "LIST_SHRS",
+        "samples": [
+          "8312766",
+          "41642703",
+          "21528094"
+        ],
+        "types": [
+          "date_like",
+          "int_like"
+        ]
+      },
+      {
+        "name": "MKT_TP_NM",
+        "samples": [
+          "KOSDAQ"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "PARVAL",
+        "samples": [
+          "500",
+          "5000",
+          "2500"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "SECT_TP_NM",
+        "samples": [
+          "우량기업부",
+          "중견기업부",
+          "관리종목(소속부없음)"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "SECUGRP_NM",
+        "samples": [
+          "주권"
+        ],
+        "types": [
+          "str"
+        ]
+      }
+    ],
+    "item_count": 1821,
+    "item_path_candidates": [
+      "OutBlock_1"
+    ],
+    "selected_item_path": "OutBlock_1",
+    "source_name": "krx_ksq_isu_base_info",
+    "top_level_keys": [
+      "OutBlock_1"
+    ]
+  },
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [],
+      "optional_missing_expected_fields": [],
+      "present_expected_fields": [
+        "date",
+        "index_name",
+        "close",
+        "change_rate",
+        "volume",
+        "trading_value"
+      ],
+      "source_name": "krx_kospi_dd_trd",
+      "unexpected_fields": [
+        "HGPRC_IDX",
+        "LWPRC_IDX",
+        "MKTCAP",
+        "OPNPRC_IDX"
+      ]
+    },
+    "fields": [
+      {
+        "name": "ACC_TRDVAL",
+        "samples": [
+          "50464007486110",
+          "50460820538592",
+          "44647792328798"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "ACC_TRDVOL",
+        "samples": [
+          "738739332",
+          "737316551",
+          "247076417"
+        ],
+        "types": [
+          "date_like",
+          "int_like"
+        ]
+      },
+      {
+        "name": "BAS_DD",
+        "samples": [
+          "20260513"
+        ],
+        "types": [
+          "date_like"
+        ]
+      },
+      {
+        "name": "CLSPRC_IDX",
+        "samples": [
+          "",
+          "7844.01",
+          "1220.17"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      },
+      {
+        "name": "CMPPREVDD_IDX",
+        "samples": [
+          "",
+          "200.86",
+          "36.76"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      },
+      {
+        "name": "FLUC_RT",
+        "samples": [
+          "",
+          "2.63",
+          "3.11"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      },
+      {
+        "name": "HGPRC_IDX",
+        "samples": [
+          "",
+          "7855.47",
+          "1222.53"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      },
+      {
+        "name": "IDX_CLSS",
+        "samples": [
+          "KOSPI"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "IDX_NM",
+        "samples": [
+          "코스피 (외국주포함)",
+          "코스피",
+          "코스피 200"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "LWPRC_IDX",
+        "samples": [
+          "",
+          "7402.36",
+          "1143.13"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      },
+      {
+        "name": "MKTCAP",
+        "samples": [
+          "6423360481437913",
+          "6422565325020865",
+          "5946245819236475"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "OPNPRC_IDX",
+        "samples": [
+          "",
+          "7513.65",
+          "1158.87"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      }
+    ],
+    "item_count": 51,
+    "item_path_candidates": [
+      "OutBlock_1"
+    ],
+    "selected_item_path": "OutBlock_1",
+    "source_name": "krx_kospi_dd_trd",
+    "top_level_keys": [
+      "OutBlock_1"
+    ]
+  },
+  {
+    "expected_field_comparison": {
+      "missing_expected_fields": [],
+      "optional_missing_expected_fields": [],
+      "present_expected_fields": [
+        "date",
+        "index_name",
+        "close",
+        "change_rate",
+        "volume",
+        "trading_value"
+      ],
+      "source_name": "krx_kosdaq_dd_trd",
+      "unexpected_fields": [
+        "HGPRC_IDX",
+        "LWPRC_IDX",
+        "MKTCAP",
+        "OPNPRC_IDX"
+      ]
+    },
+    "fields": [
+      {
+        "name": "ACC_TRDVAL",
+        "samples": [
+          "14508842452293",
+          "14309541785027",
+          "5202701777528"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "ACC_TRDVOL",
+        "samples": [
+          "1132221224",
+          "988686226",
+          "91901299"
+        ],
+        "types": [
+          "date_like",
+          "int_like"
+        ]
+      },
+      {
+        "name": "BAS_DD",
+        "samples": [
+          "20260513"
+        ],
+        "types": [
+          "date_like"
+        ]
+      },
+      {
+        "name": "CLSPRC_IDX",
+        "samples": [
+          "",
+          "1176.93",
+          "1972.54"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      },
+      {
+        "name": "CMPPREVDD_IDX",
+        "samples": [
+          "",
+          "-2.36",
+          "-2.75"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      },
+      {
+        "name": "FLUC_RT",
+        "samples": [
+          "",
+          "-0.20",
+          "-0.14"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      },
+      {
+        "name": "HGPRC_IDX",
+        "samples": [
+          "",
+          "1183.07",
+          "1985.30"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      },
+      {
+        "name": "IDX_CLSS",
+        "samples": [
+          "KOSDAQ"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "IDX_NM",
+        "samples": [
+          "코스닥 (외국주포함)",
+          "코스닥",
+          "코스닥 150"
+        ],
+        "types": [
+          "str"
+        ]
+      },
+      {
+        "name": "LWPRC_IDX",
+        "samples": [
+          "",
+          "1153.65",
+          "1919.63"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      },
+      {
+        "name": "MKTCAP",
+        "samples": [
+          "656049418598827",
+          "643919173227855",
+          "349257206214440"
+        ],
+        "types": [
+          "int_like"
+        ]
+      },
+      {
+        "name": "OPNPRC_IDX",
+        "samples": [
+          "",
+          "1176.43",
+          "1974.73"
+        ],
+        "types": [
+          "float_like",
+          "null"
+        ]
+      }
+    ],
+    "item_count": 40,
+    "item_path_candidates": [
+      "OutBlock_1"
+    ],
+    "selected_item_path": "OutBlock_1",
+    "source_name": "krx_kosdaq_dd_trd",
+    "top_level_keys": [
+      "OutBlock_1"
+    ]
+  }
+]

@@ -1,0 +1,2587 @@
+[
+  {
+    "as_of_date": "2023-06-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "효성중공업",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "DISC_EARNINGS_PREANNOUNCE",
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 30.995,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2023-07-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "효성중공업",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 30.995,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2023-08-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "HD현대일렉트릭",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "DISC_SUPPLY_CONTRACT",
+      "DISC_LONG_TERM_CONTRACT",
+      "DISC_CONTRACT_TO_SALES_10P",
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 25.3988,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2023-08-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "효성중공업",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 30.995,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2023-08-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "에코프로비엠",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 0,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "DISC_CONVERTIBLE_BOND",
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 3,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "247540"
+  },
+  {
+    "as_of_date": "2023-09-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "HD현대일렉트릭",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "DISC_SUPPLY_CONTRACT",
+      "DISC_LONG_TERM_CONTRACT",
+      "DISC_CONTRACT_TO_SALES_10P",
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 25.3988,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2023-09-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "효성중공업",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 30.995,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2023-09-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "에코프로비엠",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 0,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 3,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "247540"
+  },
+  {
+    "as_of_date": "2023-10-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "HD현대일렉트릭",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 25.3988,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2023-10-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "효성중공업",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 30.995,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2023-10-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "에코프로비엠",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 0,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 3,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "247540"
+  },
+  {
+    "as_of_date": "2023-11-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "HD현대일렉트릭",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 25.3988,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2023-11-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "효성중공업",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 30.995,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2023-11-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "에코프로비엠",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 0,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 3,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "247540"
+  },
+  {
+    "as_of_date": "2023-12-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "일진전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "DISC_SUPPLY_CONTRACT",
+      "DISC_LONG_TERM_CONTRACT",
+      "DISC_CONTRACT_TO_SALES_10P",
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 34.3483,
+    "stage": "1",
+    "symbol": "103590"
+  },
+  {
+    "as_of_date": "2023-12-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "HD현대일렉트릭",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 25.3988,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2023-12-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "효성중공업",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 30.995,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2023-12-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "에코프로비엠",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 1,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 2,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "247540"
+  },
+  {
+    "as_of_date": "2024-01-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "일진전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "DISC_SUPPLY_CONTRACT",
+      "DISC_LONG_TERM_CONTRACT",
+      "DISC_CONTRACT_TO_SALES_10P",
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 34.3483,
+    "stage": "1",
+    "symbol": "103590"
+  },
+  {
+    "as_of_date": "2024-01-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "HD현대일렉트릭",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 25.3988,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-01-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "효성중공업",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 30.995,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-01-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "에코프로비엠",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 1,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 2,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "247540"
+  },
+  {
+    "as_of_date": "2024-02-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "HD현대일렉트릭",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 25.3988,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-02-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "효성중공업",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 30.995,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-02-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "에코프로비엠",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 1,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 2,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "247540"
+  },
+  {
+    "as_of_date": "2024-02-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "일진전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 34.3483,
+    "stage": "1",
+    "symbol": "103590"
+  },
+  {
+    "as_of_date": "2024-03-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "HD현대일렉트릭",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 25.3988,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-03-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "효성중공업",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 30.995,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-03-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "에코프로비엠",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 1,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 2,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "247540"
+  },
+  {
+    "as_of_date": "2024-03-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "일진전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 34.3483,
+    "stage": "1",
+    "symbol": "103590"
+  },
+  {
+    "as_of_date": "2024-04-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "HD현대일렉트릭",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 25.3988,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-04-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "효성중공업",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 30.995,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-04-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "에코프로비엠",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 1,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 2,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "247540"
+  },
+  {
+    "as_of_date": "2024-04-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 1,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "DISC_EARNINGS_PREANNOUNCE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 2,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2024-04-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "삼성전자",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 1,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 5,
+    "reason_codes": [
+      "DISC_EARNINGS_PREANNOUNCE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 2,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "005930"
+  },
+  {
+    "as_of_date": "2024-04-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "일진전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 6,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 34.3483,
+    "stage": "1",
+    "symbol": "103590"
+  },
+  {
+    "as_of_date": "2024-05-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 1,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 2,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2024-05-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "HD현대일렉트릭",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 25.3988,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-05-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "에코프로비엠",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 1,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 2,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "247540"
+  },
+  {
+    "as_of_date": "2024-05-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "일진전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 34.3483,
+    "stage": "1",
+    "symbol": "103590"
+  },
+  {
+    "as_of_date": "2024-06-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "삼양식품",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "DISC_EARNINGS_PREANNOUNCE",
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_GAP_WITH_DISCLOSURE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 16.3475,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2024-06-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2024-06-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "HD현대일렉트릭",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 25.3988,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-06-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "에코프로비엠",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "247540"
+  },
+  {
+    "as_of_date": "2024-06-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "실리콘투",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 5,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "257720"
+  },
+  {
+    "as_of_date": "2024-06-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "일진전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 6,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 34.3483,
+    "stage": "1",
+    "symbol": "103590"
+  },
+  {
+    "as_of_date": "2024-07-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2024-07-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "삼양식품",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 16.3475,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2024-07-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "실리콘투",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "257720"
+  },
+  {
+    "as_of_date": "2024-07-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "일진전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 34.3483,
+    "stage": "1",
+    "symbol": "103590"
+  },
+  {
+    "as_of_date": "2024-08-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "한화에어로스페이스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "DISC_SUPPLY_CONTRACT",
+      "DISC_LONG_TERM_CONTRACT",
+      "DISC_CONTRACT_TO_SALES_10P",
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 29.6675,
+    "stage": "1",
+    "symbol": "012450"
+  },
+  {
+    "as_of_date": "2024-08-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2024-08-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "삼양식품",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 16.3475,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2024-08-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "일진전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 34.3483,
+    "stage": "1",
+    "symbol": "103590"
+  },
+  {
+    "as_of_date": "2024-08-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "실리콘투",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 5,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "257720"
+  },
+  {
+    "as_of_date": "2024-09-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "한화에어로스페이스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "DISC_SUPPLY_CONTRACT",
+      "DISC_LONG_TERM_CONTRACT",
+      "DISC_CONTRACT_TO_SALES_10P",
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 29.6675,
+    "stage": "1",
+    "symbol": "012450"
+  },
+  {
+    "as_of_date": "2024-09-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2024-09-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "삼양식품",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 16.3475,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2024-09-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "일진전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 34.3483,
+    "stage": "1",
+    "symbol": "103590"
+  },
+  {
+    "as_of_date": "2024-09-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "실리콘투",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 5,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "257720"
+  },
+  {
+    "as_of_date": "2024-10-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2024-10-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "삼양식품",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 16.3475,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2024-10-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "일진전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 34.3483,
+    "stage": "1",
+    "symbol": "103590"
+  },
+  {
+    "as_of_date": "2024-10-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "실리콘투",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "257720"
+  },
+  {
+    "as_of_date": "2024-10-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "한화에어로스페이스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 5,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 29.6675,
+    "stage": "1",
+    "symbol": "012450"
+  },
+  {
+    "as_of_date": "2024-11-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2024-11-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "삼양식품",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 16.3475,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2024-11-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "실리콘투",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "257720"
+  },
+  {
+    "as_of_date": "2024-11-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "한화에어로스페이스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 29.6675,
+    "stage": "1",
+    "symbol": "012450"
+  },
+  {
+    "as_of_date": "2024-12-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2024-12-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "삼양식품",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 16.3475,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2024-12-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "실리콘투",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "257720"
+  },
+  {
+    "as_of_date": "2024-12-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "한화에어로스페이스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 29.6675,
+    "stage": "1",
+    "symbol": "012450"
+  },
+  {
+    "as_of_date": "2025-01-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2025-01-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "삼양식품",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 16.3475,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-01-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "실리콘투",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "257720"
+  },
+  {
+    "as_of_date": "2025-01-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "한화에어로스페이스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 29.6675,
+    "stage": "1",
+    "symbol": "012450"
+  },
+  {
+    "as_of_date": "2025-02-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2025-02-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "삼양식품",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 16.3475,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-02-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "실리콘투",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 2,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 1,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "257720"
+  },
+  {
+    "as_of_date": "2025-02-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "한화에어로스페이스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 29.6675,
+    "stage": "1",
+    "symbol": "012450"
+  },
+  {
+    "as_of_date": "2025-03-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2025-03-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "산일전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "DISC_EARNINGS_PREANNOUNCE",
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 15.7475,
+    "stage": "1",
+    "symbol": "062040"
+  },
+  {
+    "as_of_date": "2025-03-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "삼양식품",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 16.3475,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-03-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "실리콘투",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "257720"
+  },
+  {
+    "as_of_date": "2025-03-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "한화에어로스페이스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 5,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 29.6675,
+    "stage": "1",
+    "symbol": "012450"
+  },
+  {
+    "as_of_date": "2025-04-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "산일전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "DISC_EARNINGS_PREANNOUNCE",
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 15.7475,
+    "stage": "1",
+    "symbol": "062040"
+  },
+  {
+    "as_of_date": "2025-04-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2025-04-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "삼양식품",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "FIN_OPM_EXPANSION_5P"
+    ],
+    "rejected_future_documents": 0,
+    "score": 16.3475,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-04-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "실리콘투",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 4,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "257720"
+  },
+  {
+    "as_of_date": "2025-04-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "한화에어로스페이스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 5,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH"
+    ],
+    "rejected_future_documents": 0,
+    "score": 29.6675,
+    "stage": "1",
+    "symbol": "012450"
+  },
+  {
+    "as_of_date": "2025-05-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2025-05-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "한화에어로스페이스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 29.6675,
+    "stage": "1",
+    "symbol": "012450"
+  },
+  {
+    "as_of_date": "2025-05-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "산일전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 15.7475,
+    "stage": "1",
+    "symbol": "062040"
+  },
+  {
+    "as_of_date": "2025-06-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2025-06-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "한화에어로스페이스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 29.6675,
+    "stage": "1",
+    "symbol": "012450"
+  },
+  {
+    "as_of_date": "2025-06-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "산일전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 15.7475,
+    "stage": "1",
+    "symbol": "062040"
+  },
+  {
+    "as_of_date": "2025-07-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2025-07-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "한화에어로스페이스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 29.6675,
+    "stage": "1",
+    "symbol": "012450"
+  },
+  {
+    "as_of_date": "2025-07-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "산일전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 3,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 15.7475,
+    "stage": "1",
+    "symbol": "062040"
+  },
+  {
+    "as_of_date": "2025-08-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2025-08-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "산일전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 15.7475,
+    "stage": "1",
+    "symbol": "062040"
+  },
+  {
+    "as_of_date": "2025-09-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2025-09-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "산일전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 15.7475,
+    "stage": "1",
+    "symbol": "062040"
+  },
+  {
+    "as_of_date": "2025-10-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2025-10-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "산일전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 15.7475,
+    "stage": "1",
+    "symbol": "062040"
+  },
+  {
+    "as_of_date": "2025-11-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2025-11-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "산일전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 15.7475,
+    "stage": "1",
+    "symbol": "062040"
+  },
+  {
+    "as_of_date": "2025-12-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2025-12-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "산일전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 15.7475,
+    "stage": "1",
+    "symbol": "062040"
+  },
+  {
+    "as_of_date": "2026-01-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2026-01-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "산일전기",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 8,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 15.7475,
+    "stage": "1",
+    "symbol": "062040"
+  },
+  {
+    "as_of_date": "2026-02-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2026-02-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "대한전선-like",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "DISC_RIGHTS_OFFERING",
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "001440"
+  },
+  {
+    "as_of_date": "2026-03-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2026-03-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "대한전선-like",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "DISC_RIGHTS_OFFERING",
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "001440"
+  },
+  {
+    "as_of_date": "2026-04-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2026-04-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "대한전선-like",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "001440"
+  },
+  {
+    "as_of_date": "2026-05-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "SK하이닉스",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 1,
+    "reason_codes": [
+      "FIN_OP_TURNAROUND",
+      "FIN_OPM_EXPANSION_5P",
+      "FIN_FCF_TURNAROUND",
+      "FIN_CFO_NET_INCOME_IMPROVEMENT"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "000660"
+  },
+  {
+    "as_of_date": "2026-05-01",
+    "candidate_source_path": "official_cheap_scan",
+    "company_name": "대한전선-like",
+    "date_unverified_documents": 0,
+    "date_verified_documents": 3,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "layer": "event_search",
+    "rank": 2,
+    "reason_codes": [
+      "PRICE_VOLUME_SPIKE",
+      "PRICE_NEAR_52W_HIGH",
+      "PRICE_60D_TOP_PERCENTILE"
+    ],
+    "rejected_future_documents": 0,
+    "score": 0.0,
+    "stage": "0",
+    "symbol": "001440"
+  }
+]

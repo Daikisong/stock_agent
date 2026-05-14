@@ -1,0 +1,193 @@
+[
+  {
+    "appeared_in_candidates": true,
+    "company_name": "HD현대일렉트릭",
+    "detection_lag_days": 31,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "expected_group": "structural",
+    "failure_stage": null,
+    "first_detected_date": "2023-08-01",
+    "first_layer": "deep_research",
+    "first_stage": "1",
+    "label_id": "hd_hyundai_electric_2023",
+    "symbol": "267260"
+  },
+  {
+    "appeared_in_candidates": true,
+    "company_name": "효성중공업",
+    "detection_lag_days": 31,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "expected_group": "structural",
+    "failure_stage": null,
+    "first_detected_date": "2023-06-01",
+    "first_layer": "event_search",
+    "first_stage": "1",
+    "label_id": "hyosung_heavy_2023",
+    "symbol": "298040"
+  },
+  {
+    "appeared_in_candidates": true,
+    "company_name": "일진전기",
+    "detection_lag_days": 30,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "expected_group": "structural",
+    "failure_stage": null,
+    "first_detected_date": "2023-12-01",
+    "first_layer": "deep_research",
+    "first_stage": "1",
+    "label_id": "iljin_electric_2023_2024",
+    "symbol": "103590"
+  },
+  {
+    "appeared_in_candidates": true,
+    "company_name": "산일전기",
+    "detection_lag_days": 28,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "expected_group": "structural",
+    "failure_stage": null,
+    "first_detected_date": "2025-03-01",
+    "first_layer": "event_search",
+    "first_stage": "1",
+    "label_id": "sanil_electric_2025",
+    "symbol": "062040"
+  },
+  {
+    "appeared_in_candidates": true,
+    "company_name": "삼양식품",
+    "detection_lag_days": 31,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "expected_group": "structural",
+    "failure_stage": null,
+    "first_detected_date": "2024-06-01",
+    "first_layer": "event_search",
+    "first_stage": "1",
+    "label_id": "samyang_foods_2024",
+    "symbol": "003230"
+  },
+  {
+    "appeared_in_candidates": true,
+    "company_name": "한화에어로스페이스",
+    "detection_lag_days": 0,
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "expected_group": "structural",
+    "failure_stage": null,
+    "first_detected_date": "2024-08-01",
+    "first_layer": "deep_research",
+    "first_stage": "1",
+    "label_id": "hanwha_aerospace_2024",
+    "symbol": "012450"
+  },
+  {
+    "appeared_in_candidates": true,
+    "company_name": "실리콘투",
+    "detection_lag_days": 31,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "expected_group": "structural",
+    "failure_stage": null,
+    "first_detected_date": "2024-06-01",
+    "first_layer": "event_search",
+    "first_stage": "0",
+    "label_id": "silicontwo_2024",
+    "symbol": "257720"
+  },
+  {
+    "appeared_in_candidates": true,
+    "company_name": "삼성전자 메모리 리레이팅",
+    "detection_lag_days": 31,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "expected_group": "cyclical",
+    "failure_stage": null,
+    "first_detected_date": "2024-04-01",
+    "first_layer": "event_search",
+    "first_stage": "0",
+    "label_id": "samsung_memory_rerating_2024",
+    "symbol": "005930"
+  },
+  {
+    "appeared_in_candidates": true,
+    "company_name": "SK하이닉스 메모리 리레이팅",
+    "detection_lag_days": 31,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "expected_group": "cyclical",
+    "failure_stage": null,
+    "first_detected_date": "2024-04-01",
+    "first_layer": "event_search",
+    "first_stage": "0",
+    "label_id": "sk_hynix_memory_rerating_2024",
+    "symbol": "000660"
+  },
+  {
+    "appeared_in_candidates": false,
+    "company_name": "씨젠",
+    "detection_lag_days": null,
+    "evidence_types_seen": [],
+    "expected_group": "one_off",
+    "failure_stage": "outside_expected_window",
+    "first_detected_date": null,
+    "first_layer": null,
+    "first_stage": null,
+    "label_id": "seegene_2020_red",
+    "symbol": "096530"
+  },
+  {
+    "appeared_in_candidates": true,
+    "company_name": "에코프로비엠",
+    "detection_lag_days": 212,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "expected_group": "valuation_overheat",
+    "failure_stage": null,
+    "first_detected_date": "2023-08-01",
+    "first_layer": "event_search",
+    "first_stage": "0",
+    "label_id": "ecopro_bm_2023",
+    "symbol": "247540"
+  },
+  {
+    "appeared_in_candidates": false,
+    "company_name": "HMM",
+    "detection_lag_days": null,
+    "evidence_types_seen": [],
+    "expected_group": "cyclical",
+    "failure_stage": "outside_expected_window",
+    "first_detected_date": null,
+    "first_layer": null,
+    "first_stage": null,
+    "label_id": "hmm_2021",
+    "symbol": "011200"
+  },
+  {
+    "appeared_in_candidates": true,
+    "company_name": "대한전선-like",
+    "detection_lag_days": 31,
+    "evidence_types_seen": [
+      "official_cheap_scan"
+    ],
+    "expected_group": "valuation_overheat",
+    "failure_stage": null,
+    "first_detected_date": "2026-02-01",
+    "first_layer": "event_search",
+    "first_stage": "0",
+    "label_id": "daehan_cable_like_2026_red",
+    "symbol": "001440"
+  }
+]

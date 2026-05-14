@@ -1,0 +1,141 @@
+[
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [],
+    "normalizer_name": "OpenDARTConnector.normalize_disclosure",
+    "rows_normalized": 10,
+    "rows_seen": 10,
+    "source_name": "opendart_list"
+  },
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [],
+    "normalizer_name": "NaverFreeSearchProvider.normalize_response",
+    "rows_normalized": 3,
+    "rows_seen": 3,
+    "source_name": "naver_news"
+  },
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [],
+    "normalizer_name": "NaverFreeSearchProvider.normalize_response",
+    "rows_normalized": 3,
+    "rows_seen": 3,
+    "source_name": "naver_web"
+  },
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [
+      "items[].title",
+      "items[].link",
+      "items[].description"
+    ],
+    "normalizer_name": "NaverFreeSearchProvider.normalize_response",
+    "rows_normalized": 0,
+    "rows_seen": 0,
+    "source_name": "naver_doc"
+  },
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [],
+    "normalizer_name": "DataGoKrFSCConnector.normalize_instrument",
+    "rows_normalized": 10,
+    "rows_seen": 10,
+    "source_name": "data_go_kr_listed_items"
+  },
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [],
+    "normalizer_name": "DataGoKrFSCConnector.normalize_price_bar",
+    "rows_normalized": 10,
+    "rows_seen": 10,
+    "source_name": "data_go_kr_stock_prices"
+  },
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [],
+    "normalizer_name": "data.go.kr corp-basic metadata normalizer",
+    "rows_normalized": 10,
+    "rows_seen": 10,
+    "source_name": "data_go_kr_corp_basic"
+  },
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [],
+    "normalizer_name": "data.go.kr financial-stat dry-run normalizer",
+    "rows_normalized": 10,
+    "rows_seen": 10,
+    "source_name": "data_go_kr_financial_stat"
+  },
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [],
+    "normalizer_name": "OpenDARTConnector.normalize_disclosure",
+    "rows_normalized": 10,
+    "rows_seen": 10,
+    "source_name": "data_go_kr_disclosure_info"
+  },
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [],
+    "normalizer_name": "KRX probe row normalizer",
+    "rows_normalized": 948,
+    "rows_seen": 948,
+    "source_name": "krx_stk_bydd_trd"
+  },
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [],
+    "normalizer_name": "KRX probe row normalizer",
+    "rows_normalized": 1821,
+    "rows_seen": 1821,
+    "source_name": "krx_ksq_bydd_trd"
+  },
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [],
+    "normalizer_name": "KRX probe row normalizer",
+    "rows_normalized": 948,
+    "rows_seen": 948,
+    "source_name": "krx_stk_isu_base_info"
+  },
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [],
+    "normalizer_name": "KRX probe row normalizer",
+    "rows_normalized": 1821,
+    "rows_seen": 1821,
+    "source_name": "krx_ksq_isu_base_info"
+  },
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [],
+    "normalizer_name": "KRX probe row normalizer",
+    "rows_normalized": 50,
+    "rows_seen": 51,
+    "source_name": "krx_kospi_dd_trd"
+  },
+  {
+    "failure_examples": [],
+    "failures": 0,
+    "missing_expected_fields": [],
+    "normalizer_name": "KRX probe row normalizer",
+    "rows_normalized": 39,
+    "rows_seen": 40,
+    "source_name": "krx_kosdaq_dd_trd"
+  }
+]

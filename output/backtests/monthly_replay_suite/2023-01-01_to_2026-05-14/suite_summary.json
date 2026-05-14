@@ -1,0 +1,722 @@
+{
+  "aggregate_counts": {
+    "candidates": 702,
+    "deep_research": 418,
+    "event_search_or_higher": 702,
+    "false_positive_or_boom_bust": 6,
+    "missed_known_winners": 6,
+    "replay_dates": 126,
+    "scanned_instruments": 1008,
+    "stage4b": 0,
+    "stage4c": 0,
+    "still_active": 10
+  },
+  "config": {
+    "end_date": "2026-05-14",
+    "frequency": "monthly",
+    "market": "KR",
+    "max_candidates_per_date": 50,
+    "modes": [
+      "case_fixture",
+      "official_only",
+      "hybrid"
+    ],
+    "output_directory": "output/backtests/monthly_replay_suite",
+    "start_date": "2023-01-01",
+    "universe_limit": null
+  },
+  "evidence_coverage": {
+    "aggregate_counts_by_source_type": {
+      "consensus": 418,
+      "consensus_revision": 418,
+      "disclosure": 627,
+      "financial_actual": 702,
+      "news": 70,
+      "price": 762,
+      "research_report": 418
+    },
+    "missing_report_news_snapshot_count": 632,
+    "official_only_limitations": "official_only excludes report/news/consensus fixtures by design",
+    "recommended_next_fixtures": [
+      "add historical report/news snapshots for structural winners that are report-driven",
+      "add more 4B evidence fixtures such as revision slowdown, backlog slowdown, and blow-off pattern records",
+      "expand official historical disclosures and financial actuals before broad official_only replay"
+    ],
+    "stage4b_unknown_count": 0
+  },
+  "false_positives": [
+    {
+      "case_id": "daehan_cable_like_2026_red",
+      "category": "valuation_overheat",
+      "interpretation": "not_stage3_green",
+      "mode": "case_fixture",
+      "reason": "case_fixture:detected; official_only:skipped_missing_historical_report_news_data; hybrid:detected",
+      "stage": "1",
+      "stage4b_4c": "no lifecycle row"
+    },
+    {
+      "case_id": "daehan_cable_like_2026_red",
+      "category": "valuation_overheat",
+      "interpretation": "not_stage3_green",
+      "mode": "official_only",
+      "reason": "case_fixture:detected; official_only:skipped_missing_historical_report_news_data; hybrid:detected",
+      "stage": "1",
+      "stage4b_4c": "no lifecycle row"
+    },
+    {
+      "case_id": "daehan_cable_like_2026_red",
+      "category": "valuation_overheat",
+      "interpretation": "not_stage3_green",
+      "mode": "hybrid",
+      "reason": "case_fixture:detected; official_only:skipped_missing_historical_report_news_data; hybrid:detected",
+      "stage": "1",
+      "stage4b_4c": "no lifecycle row"
+    },
+    {
+      "case_id": "seegene_2020_red",
+      "category": "one_off",
+      "interpretation": "correctly_contained_as_warning",
+      "mode": "case_fixture",
+      "reason": "case_fixture:detected_but_yellow_red; official_only:skipped_missing_historical_report_news_data; hybrid:detected_but_yellow_red",
+      "stage": "3-Red",
+      "stage4b_4c": "no lifecycle row"
+    },
+    {
+      "case_id": "seegene_2020_red",
+      "category": "one_off",
+      "interpretation": "not_stage3_green",
+      "mode": "official_only",
+      "reason": "case_fixture:detected_but_yellow_red; official_only:skipped_missing_historical_report_news_data; hybrid:detected_but_yellow_red",
+      "stage": "1",
+      "stage4b_4c": "no lifecycle row"
+    },
+    {
+      "case_id": "seegene_2020_red",
+      "category": "one_off",
+      "interpretation": "correctly_contained_as_warning",
+      "mode": "hybrid",
+      "reason": "case_fixture:detected_but_yellow_red; official_only:skipped_missing_historical_report_news_data; hybrid:detected_but_yellow_red",
+      "stage": "3-Red",
+      "stage4b_4c": "no lifecycle row"
+    }
+  ],
+  "known_case_validation": [
+    {
+      "actual_stage_by_mode": {
+        "case_fixture": "1",
+        "hybrid": "1",
+        "official_only": "1"
+      },
+      "case_id": "daehan_cable_like_2026_red",
+      "company_name": "대한전선-like",
+      "evidence_types_seen": {
+        "case_fixture": [
+          "research_report",
+          "disclosure",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "hybrid": [
+          "research_report",
+          "disclosure",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "official_only": [
+          "disclosure",
+          "financial_actual",
+          "price"
+        ]
+      },
+      "expected_group": "valuation_overheat",
+      "expected_stage": "not S-grade Green",
+      "future_data_used": false,
+      "interpretation": "limited by missing report/news snapshot, especially official_only",
+      "layer1_result_by_mode": {
+        "case_fixture": "deep_research",
+        "hybrid": "deep_research",
+        "official_only": "event_search"
+      },
+      "missing_evidence_warnings": {
+        "case_fixture": [],
+        "hybrid": [],
+        "official_only": [
+          "evidence_missing:research_report_excluded_in_official_only",
+          "evidence_missing:consensus_excluded_in_official_only"
+        ]
+      },
+      "primary_failure_reason_by_mode": {
+        "case_fixture": null,
+        "hybrid": null,
+        "official_only": "evidence_missing:research_report_excluded_in_official_only,evidence_missing:consensus_excluded_in_official_only"
+      },
+      "status_by_mode": {
+        "case_fixture": "detected",
+        "hybrid": "detected",
+        "official_only": "skipped_missing_historical_report_news_data"
+      }
+    },
+    {
+      "actual_stage_by_mode": {
+        "case_fixture": "3-Yellow",
+        "hybrid": "3-Yellow",
+        "official_only": "1"
+      },
+      "case_id": "hanwha_aerospace_2024",
+      "company_name": "한화에어로스페이스",
+      "evidence_types_seen": {
+        "case_fixture": [
+          "research_report",
+          "disclosure",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "hybrid": [
+          "research_report",
+          "disclosure",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "official_only": [
+          "disclosure",
+          "financial_actual",
+          "price"
+        ]
+      },
+      "expected_group": "structural",
+      "expected_stage": "Stage 2 or Stage 3-Green/Yellow depending evidence",
+      "future_data_used": false,
+      "interpretation": "limited by missing report/news snapshot, especially official_only",
+      "layer1_result_by_mode": {
+        "case_fixture": "deep_research",
+        "hybrid": "deep_research",
+        "official_only": "event_search"
+      },
+      "missing_evidence_warnings": {
+        "case_fixture": [],
+        "hybrid": [],
+        "official_only": [
+          "evidence_missing:research_report_excluded_in_official_only",
+          "evidence_missing:consensus_excluded_in_official_only"
+        ]
+      },
+      "primary_failure_reason_by_mode": {
+        "case_fixture": null,
+        "hybrid": null,
+        "official_only": "evidence_missing:research_report_excluded_in_official_only,evidence_missing:consensus_excluded_in_official_only"
+      },
+      "status_by_mode": {
+        "case_fixture": "detected_but_yellow_red",
+        "hybrid": "detected_but_yellow_red",
+        "official_only": "skipped_missing_historical_report_news_data"
+      }
+    },
+    {
+      "actual_stage_by_mode": {
+        "case_fixture": "3-Green",
+        "hybrid": "3-Green",
+        "official_only": "1"
+      },
+      "case_id": "hd_hyundai_electric_2023",
+      "company_name": "HD현대일렉트릭",
+      "evidence_types_seen": {
+        "case_fixture": [
+          "research_report",
+          "disclosure",
+          "news",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "hybrid": [
+          "research_report",
+          "disclosure",
+          "news",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "official_only": [
+          "disclosure",
+          "financial_actual",
+          "price"
+        ]
+      },
+      "expected_group": "structural",
+      "expected_stage": "Stage 2 or Stage 3-Green/Yellow depending evidence",
+      "future_data_used": false,
+      "interpretation": "limited by missing report/news snapshot, especially official_only",
+      "layer1_result_by_mode": {
+        "case_fixture": "deep_research",
+        "hybrid": "deep_research",
+        "official_only": "event_search"
+      },
+      "missing_evidence_warnings": {
+        "case_fixture": [],
+        "hybrid": [],
+        "official_only": [
+          "evidence_missing:research_report_excluded_in_official_only",
+          "evidence_missing:news_excluded_in_official_only",
+          "evidence_missing:consensus_excluded_in_official_only"
+        ]
+      },
+      "primary_failure_reason_by_mode": {
+        "case_fixture": null,
+        "hybrid": null,
+        "official_only": "evidence_missing:research_report_excluded_in_official_only,evidence_missing:news_excluded_in_official_only,evidence_missing:consensus_excluded_in_official_only"
+      },
+      "status_by_mode": {
+        "case_fixture": "detected",
+        "hybrid": "detected",
+        "official_only": "skipped_missing_historical_report_news_data"
+      }
+    },
+    {
+      "actual_stage_by_mode": {
+        "case_fixture": "3-Green",
+        "hybrid": "3-Green",
+        "official_only": "1"
+      },
+      "case_id": "hyosung_heavy_2023",
+      "company_name": "효성중공업",
+      "evidence_types_seen": {
+        "case_fixture": [
+          "research_report",
+          "disclosure",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "hybrid": [
+          "research_report",
+          "disclosure",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "official_only": [
+          "disclosure",
+          "financial_actual",
+          "price"
+        ]
+      },
+      "expected_group": "structural",
+      "expected_stage": "Stage 2 or Stage 3-Green/Yellow depending evidence",
+      "future_data_used": false,
+      "interpretation": "limited by missing report/news snapshot, especially official_only",
+      "layer1_result_by_mode": {
+        "case_fixture": "deep_research",
+        "hybrid": "deep_research",
+        "official_only": "event_search"
+      },
+      "missing_evidence_warnings": {
+        "case_fixture": [],
+        "hybrid": [],
+        "official_only": [
+          "evidence_missing:research_report_excluded_in_official_only",
+          "evidence_missing:consensus_excluded_in_official_only"
+        ]
+      },
+      "primary_failure_reason_by_mode": {
+        "case_fixture": null,
+        "hybrid": null,
+        "official_only": "evidence_missing:research_report_excluded_in_official_only,evidence_missing:consensus_excluded_in_official_only"
+      },
+      "status_by_mode": {
+        "case_fixture": "detected",
+        "hybrid": "detected",
+        "official_only": "skipped_missing_historical_report_news_data"
+      }
+    },
+    {
+      "actual_stage_by_mode": {
+        "case_fixture": "3-Green",
+        "hybrid": "3-Green",
+        "official_only": "1"
+      },
+      "case_id": "iljin_electric_2023_2024",
+      "company_name": "일진전기",
+      "evidence_types_seen": {
+        "case_fixture": [
+          "research_report",
+          "disclosure",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "hybrid": [
+          "research_report",
+          "disclosure",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "official_only": [
+          "disclosure",
+          "financial_actual",
+          "price"
+        ]
+      },
+      "expected_group": "structural",
+      "expected_stage": "Stage 2 or Stage 3-Green/Yellow depending evidence",
+      "future_data_used": false,
+      "interpretation": "limited by missing report/news snapshot, especially official_only",
+      "layer1_result_by_mode": {
+        "case_fixture": "deep_research",
+        "hybrid": "deep_research",
+        "official_only": "event_search"
+      },
+      "missing_evidence_warnings": {
+        "case_fixture": [],
+        "hybrid": [],
+        "official_only": [
+          "evidence_missing:research_report_excluded_in_official_only",
+          "evidence_missing:consensus_excluded_in_official_only"
+        ]
+      },
+      "primary_failure_reason_by_mode": {
+        "case_fixture": null,
+        "hybrid": null,
+        "official_only": "evidence_missing:research_report_excluded_in_official_only,evidence_missing:consensus_excluded_in_official_only"
+      },
+      "status_by_mode": {
+        "case_fixture": "detected",
+        "hybrid": "detected",
+        "official_only": "skipped_missing_historical_report_news_data"
+      }
+    },
+    {
+      "actual_stage_by_mode": {
+        "case_fixture": "1",
+        "hybrid": "1",
+        "official_only": "1"
+      },
+      "case_id": "samyang_foods_2024",
+      "company_name": "삼양식품",
+      "evidence_types_seen": {
+        "case_fixture": [
+          "research_report",
+          "disclosure",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "hybrid": [
+          "research_report",
+          "disclosure",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "official_only": [
+          "disclosure",
+          "financial_actual",
+          "price"
+        ]
+      },
+      "expected_group": "structural",
+      "expected_stage": "Stage 2 or Stage 3-Green/Yellow depending evidence",
+      "future_data_used": false,
+      "interpretation": "limited by missing report/news snapshot, especially official_only",
+      "layer1_result_by_mode": {
+        "case_fixture": "deep_research",
+        "hybrid": "deep_research",
+        "official_only": "event_search"
+      },
+      "missing_evidence_warnings": {
+        "case_fixture": [],
+        "hybrid": [],
+        "official_only": [
+          "evidence_missing:research_report_excluded_in_official_only",
+          "evidence_missing:consensus_excluded_in_official_only"
+        ]
+      },
+      "primary_failure_reason_by_mode": {
+        "case_fixture": null,
+        "hybrid": null,
+        "official_only": "evidence_missing:research_report_excluded_in_official_only,evidence_missing:consensus_excluded_in_official_only"
+      },
+      "status_by_mode": {
+        "case_fixture": "detected_late",
+        "hybrid": "detected_late",
+        "official_only": "skipped_missing_historical_report_news_data"
+      }
+    },
+    {
+      "actual_stage_by_mode": {
+        "case_fixture": "2",
+        "hybrid": "2",
+        "official_only": "1"
+      },
+      "case_id": "sanil_electric_2025",
+      "company_name": "산일전기",
+      "evidence_types_seen": {
+        "case_fixture": [
+          "research_report",
+          "disclosure",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "hybrid": [
+          "research_report",
+          "disclosure",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "official_only": [
+          "disclosure",
+          "financial_actual",
+          "price"
+        ]
+      },
+      "expected_group": "structural",
+      "expected_stage": "Stage 2 or Stage 3-Green/Yellow depending evidence",
+      "future_data_used": false,
+      "interpretation": "limited by missing report/news snapshot, especially official_only",
+      "layer1_result_by_mode": {
+        "case_fixture": "deep_research",
+        "hybrid": "deep_research",
+        "official_only": "event_search"
+      },
+      "missing_evidence_warnings": {
+        "case_fixture": [],
+        "hybrid": [],
+        "official_only": [
+          "evidence_missing:research_report_excluded_in_official_only",
+          "evidence_missing:consensus_excluded_in_official_only"
+        ]
+      },
+      "primary_failure_reason_by_mode": {
+        "case_fixture": null,
+        "hybrid": null,
+        "official_only": "evidence_missing:research_report_excluded_in_official_only,evidence_missing:consensus_excluded_in_official_only"
+      },
+      "status_by_mode": {
+        "case_fixture": "detected",
+        "hybrid": "detected",
+        "official_only": "skipped_missing_historical_report_news_data"
+      }
+    },
+    {
+      "actual_stage_by_mode": {
+        "case_fixture": "3-Red",
+        "hybrid": "3-Red",
+        "official_only": "1"
+      },
+      "case_id": "seegene_2020_red",
+      "company_name": "씨젠",
+      "evidence_types_seen": {
+        "case_fixture": [
+          "research_report",
+          "disclosure",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "hybrid": [
+          "research_report",
+          "disclosure",
+          "financial_actual",
+          "consensus",
+          "consensus_revision",
+          "price"
+        ],
+        "official_only": [
+          "disclosure",
+          "financial_actual",
+          "price"
+        ]
+      },
+      "expected_group": "one_off",
+      "expected_stage": "Stage 3-Red or lower",
+      "future_data_used": false,
+      "interpretation": "limited by missing report/news snapshot, especially official_only",
+      "layer1_result_by_mode": {
+        "case_fixture": "deep_research",
+        "hybrid": "deep_research",
+        "official_only": "event_search"
+      },
+      "missing_evidence_warnings": {
+        "case_fixture": [],
+        "hybrid": [],
+        "official_only": [
+          "evidence_missing:research_report_excluded_in_official_only",
+          "evidence_missing:consensus_excluded_in_official_only"
+        ]
+      },
+      "primary_failure_reason_by_mode": {
+        "case_fixture": null,
+        "hybrid": null,
+        "official_only": "evidence_missing:research_report_excluded_in_official_only,evidence_missing:consensus_excluded_in_official_only"
+      },
+      "status_by_mode": {
+        "case_fixture": "detected_but_yellow_red",
+        "hybrid": "detected_but_yellow_red",
+        "official_only": "skipped_missing_historical_report_news_data"
+      }
+    }
+  ],
+  "lifecycle_aggregates": {
+    "by_stage": {
+      "3-Green": {
+        "avg_mae_180d": -0.040361,
+        "avg_mae_1y": -0.040361,
+        "avg_mae_30d": -0.040361,
+        "avg_mae_90d": -0.040361,
+        "avg_mfe_180d": 2.575845,
+        "avg_mfe_1y": 2.575845,
+        "avg_mfe_2y": 2.575845,
+        "avg_mfe_30d": 2.575845,
+        "avg_mfe_90d": 2.575845,
+        "avg_time_to_100pct": 2.0,
+        "avg_time_to_200pct": 2.0,
+        "avg_time_to_50pct": 1.333333,
+        "below_entry_rate": 0.0,
+        "count": 6,
+        "median_peak_return_from_stage": 2.522727,
+        "worst_drawdown_after_peak": -0.322581
+      },
+      "3-Red": {
+        "avg_mae_180d": null,
+        "avg_mae_1y": null,
+        "avg_mae_30d": null,
+        "avg_mae_90d": null,
+        "avg_mfe_180d": null,
+        "avg_mfe_1y": null,
+        "avg_mfe_2y": null,
+        "avg_mfe_30d": null,
+        "avg_mfe_90d": null,
+        "avg_time_to_100pct": null,
+        "avg_time_to_200pct": null,
+        "avg_time_to_50pct": null,
+        "below_entry_rate": null,
+        "count": 0,
+        "median_peak_return_from_stage": null,
+        "worst_drawdown_after_peak": null
+      },
+      "3-Yellow": {
+        "avg_mae_180d": -0.066667,
+        "avg_mae_1y": -0.066667,
+        "avg_mae_30d": -0.066667,
+        "avg_mae_90d": -0.066667,
+        "avg_mfe_180d": 0.566667,
+        "avg_mfe_1y": 0.566667,
+        "avg_mfe_2y": 0.566667,
+        "avg_mfe_30d": 0.566667,
+        "avg_mfe_90d": 0.566667,
+        "avg_time_to_100pct": null,
+        "avg_time_to_200pct": null,
+        "avg_time_to_50pct": 1.0,
+        "below_entry_rate": 0.0,
+        "count": 2,
+        "median_peak_return_from_stage": 0.566667,
+        "worst_drawdown_after_peak": -0.276596
+      }
+    },
+    "stage4b_count": 0,
+    "stage4b_unknown_count": 0,
+    "stage4c_count": 0,
+    "total_lifecycle_rows": 10
+  },
+  "limitations": [
+    "Layer 1 recall is not Stage 3 conviction.",
+    "case_fixture success is curated fixture replay, not proof of live discovery.",
+    "official_only misses report-driven winners when old report/news snapshots are unavailable.",
+    "4B is not fabricated; unknown_insufficient_evidence is a valid result.",
+    "Missing report/news snapshots limit historical discovery claims."
+  ],
+  "missed_winners": [
+    {
+      "case_id": "hanwha_aerospace_2024",
+      "company_name": "한화에어로스페이스",
+      "mode": "official_only",
+      "primary_failure_reason": "official_only_excluded_report_news",
+      "raw_reason": "evidence_missing:research_report_excluded_in_official_only,evidence_missing:consensus_excluded_in_official_only",
+      "status": "skipped_missing_historical_report_news_data"
+    },
+    {
+      "case_id": "hd_hyundai_electric_2023",
+      "company_name": "HD현대일렉트릭",
+      "mode": "official_only",
+      "primary_failure_reason": "official_only_excluded_report_news",
+      "raw_reason": "evidence_missing:research_report_excluded_in_official_only,evidence_missing:news_excluded_in_official_only,evidence_missing:consensus_excluded_in_official_only",
+      "status": "skipped_missing_historical_report_news_data"
+    },
+    {
+      "case_id": "hyosung_heavy_2023",
+      "company_name": "효성중공업",
+      "mode": "official_only",
+      "primary_failure_reason": "official_only_excluded_report_news",
+      "raw_reason": "evidence_missing:research_report_excluded_in_official_only,evidence_missing:consensus_excluded_in_official_only",
+      "status": "skipped_missing_historical_report_news_data"
+    },
+    {
+      "case_id": "iljin_electric_2023_2024",
+      "company_name": "일진전기",
+      "mode": "official_only",
+      "primary_failure_reason": "official_only_excluded_report_news",
+      "raw_reason": "evidence_missing:research_report_excluded_in_official_only,evidence_missing:consensus_excluded_in_official_only",
+      "status": "skipped_missing_historical_report_news_data"
+    },
+    {
+      "case_id": "samyang_foods_2024",
+      "company_name": "삼양식품",
+      "mode": "official_only",
+      "primary_failure_reason": "official_only_excluded_report_news",
+      "raw_reason": "evidence_missing:research_report_excluded_in_official_only,evidence_missing:consensus_excluded_in_official_only",
+      "status": "skipped_missing_historical_report_news_data"
+    },
+    {
+      "case_id": "sanil_electric_2025",
+      "company_name": "산일전기",
+      "mode": "official_only",
+      "primary_failure_reason": "official_only_excluded_report_news",
+      "raw_reason": "evidence_missing:research_report_excluded_in_official_only,evidence_missing:consensus_excluded_in_official_only",
+      "status": "skipped_missing_historical_report_news_data"
+    }
+  ],
+  "modes": [
+    "case_fixture",
+    "official_only",
+    "hybrid"
+  ],
+  "readiness_assessment": {
+    "must_fix_before_weekly_daily": [],
+    "preferred_mode": "hybrid",
+    "ready_for_larger_backtest": true,
+    "recommended_next_step": "run hybrid weekly after adding missing report/news snapshots",
+    "summary": "Monthly replay is structurally sane for a larger fixture backtest, but conclusions remain limited by missing historical report/news snapshots and sparse 4B evidence.",
+    "threshold_read": "no broad threshold loosening recommended; investigate misses by evidence source first",
+    "weak_evidence_sources": [
+      "historical_report_news_snapshots"
+    ]
+  },
+  "stage_distribution": {
+    "1": 338,
+    "2": 32,
+    "3-Green": 202,
+    "3-Red": 84,
+    "3-Yellow": 46
+  }
+}

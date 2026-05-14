@@ -1,0 +1,2543 @@
+[
+  {
+    "as_of_date": "2023-01-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH"
+    ],
+    "score": 0.0,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2023-02-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH"
+    ],
+    "score": 0.0,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2023-03-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH"
+    ],
+    "score": 0.0,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2023-04-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH"
+    ],
+    "score": 0.0,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2023-05-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH"
+    ],
+    "score": 0.0,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2023-06-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT"
+    ],
+    "score": 30.995,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2023-06-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT"
+    ],
+    "score": 20.5067,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2023-07-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT"
+    ],
+    "score": 30.995,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2023-07-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT"
+    ],
+    "score": 20.5067,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2023-08-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2023-08-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2023-08-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2023-09-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2023-09-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2023-09-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2023-10-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2023-10-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2023-10-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2023-11-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2023-11-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2023-11-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2023-12-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2023-12-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2023-12-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2024-01-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-01-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-01-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2024-02-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-02-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-02-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2024-03-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-03-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-03-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2024-04-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-04-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-04-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2024-05-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-05-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-05-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2024-06-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2024-06-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-06-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-06-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2024-07-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2024-07-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-07-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-07-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2024-08-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2024-08-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-08-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-08-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2024-09-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2024-09-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-09-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-09-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2024-10-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2024-10-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-10-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-10-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2024-11-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2024-11-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-11-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-11-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2024-12-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2024-12-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2024-12-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2024-12-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2025-01-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-01-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2025-01-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2025-01-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2025-02-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-02-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2025-02-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2025-02-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2025-03-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-03-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2025-03-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2025-03-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2025-04-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-04-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2025-04-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2025-04-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2025-05-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-05-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2025-05-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2025-05-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2025-06-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-06-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2025-06-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2025-06-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2025-07-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-07-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2025-07-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2025-07-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2025-08-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-08-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2025-08-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2025-08-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2025-09-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-09-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2025-09-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2025-09-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2025-10-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-10-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2025-10-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2025-10-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2025-11-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-11-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2025-11-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2025-11-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2025-12-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2025-12-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2025-12-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2025-12-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2026-01-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2026-01-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2026-01-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2026-01-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2026-02-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2026-02-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2026-02-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2026-02-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2026-03-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2026-03-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2026-03-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2026-03-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2026-04-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2026-04-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2026-04-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2026-04-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  },
+  {
+    "as_of_date": "2026-05-01",
+    "company_name": "삼양식품",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 1,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "003230"
+  },
+  {
+    "as_of_date": "2026-05-01",
+    "company_name": "HD현대일렉트릭",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 2,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "267260"
+  },
+  {
+    "as_of_date": "2026-05-01",
+    "company_name": "효성중공업",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 3,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 28.5487,
+    "stage": "1",
+    "symbol": "298040"
+  },
+  {
+    "as_of_date": "2026-05-01",
+    "company_name": "씨젠",
+    "evidence_types_seen": [
+      "research_report"
+    ],
+    "layer": "deep_research",
+    "rank": 4,
+    "reason_codes": [
+      "REPORT_RADAR_MATCH",
+      "REPORT_RADAR_REPORT",
+      "REPORT_RADAR_REVISION",
+      "REPORT_RADAR_CONTRACT",
+      "REPORT_RADAR_PRICING"
+    ],
+    "score": 17.6805,
+    "stage": "1",
+    "symbol": "096530"
+  }
+]
