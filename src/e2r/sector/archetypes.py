@@ -47,7 +47,21 @@ class E2RArchetype(str, Enum):
     BIOTECH_PRE_REVENUE_REGULATORY = "BIOTECH_PRE_REVENUE_REGULATORY"
     BIOTECH_ROYALTY_COMMERCIALIZATION = "BIOTECH_ROYALTY_COMMERCIALIZATION"
     CDMO_HEALTHCARE_CONTRACT = "CDMO_HEALTHCARE_CONTRACT"
+    CRO_CLINICAL_SERVICE = "CRO_CLINICAL_SERVICE"
+    BIOSIMILAR_COMMERCIALIZATION = "BIOSIMILAR_COMMERCIALIZATION"
+    BIOSIMILAR_ORIGINATOR_DEFENSE = "BIOSIMILAR_ORIGINATOR_DEFENSE"
+    OBESITY_GLP1_COMMERCIALIZATION = "OBESITY_GLP1_COMMERCIALIZATION"
+    GENE_THERAPY_RARE_DISEASE = "GENE_THERAPY_RARE_DISEASE"
+    AI_DRUG_DISCOVERY_PLATFORM = "AI_DRUG_DISCOVERY_PLATFORM"
+    DIGITAL_HEALTHCARE_AI = "DIGITAL_HEALTHCARE_AI"
+    DIGITAL_HEALTHCARE_REMOTE_MEDICINE = "DIGITAL_HEALTHCARE_REMOTE_MEDICINE"
+    TELEHEALTH_BEHAVIORAL_HEALTH = "TELEHEALTH_BEHAVIORAL_HEALTH"
+    PHARMA_CHANNEL_AND_PRIVACY_RISK = "PHARMA_CHANNEL_AND_PRIVACY_RISK"
     MEDICAL_DEVICE_HEALTHCARE_EXPORT = "MEDICAL_DEVICE_HEALTHCARE_EXPORT"
+    MEDICAL_DEVICE_DENTAL_IMPLANT = "MEDICAL_DEVICE_DENTAL_IMPLANT"
+    BOTULINUM_AESTHETIC_REGULATED = "BOTULINUM_AESTHETIC_REGULATED"
+    DIAGNOSTICS_INFECTIOUS_DISEASE = "DIAGNOSTICS_INFECTIOUS_DISEASE"
+    ANIMAL_HEALTH_BIOSECURITY = "ANIMAL_HEALTH_BIOSECURITY"
     RETAIL_DOMESTIC_CONSUMER = "RETAIL_DOMESTIC_CONSUMER"
     FOOD_AGRI_LIVESTOCK_CYCLE = "FOOD_AGRI_LIVESTOCK_CYCLE"
     RETAIL_CONVENIENCE_OFFLINE = "RETAIL_CONVENIENCE_OFFLINE"
@@ -266,6 +280,90 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("disclosure", "financial_actual", "research_report"),
             false_positive_patterns=("capacity exists but demand absent", "validation delay"),
             preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=16, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.CRO_CLINICAL_SERVICE: ArchetypeDefinition(
+            archetype=E2RArchetype.CRO_CLINICAL_SERVICE,
+            stage1_radar_signals=("clinical service backlog", "pharma R&D budget", "trial volume growth"),
+            stage2_candidate_signals=("repeat clinical-service revenue", "customer diversification", "OP/EPS improvement"),
+            stage3_high_conviction_signals=("multi-year service backlog", "funding cycle stable", "high FCF conversion"),
+            stage4a_ongoing_signals=("backlog converts to revenue", "customer funding remains healthy"),
+            stage4b_graduation_overheat_signals=("CRO recovery priced before backlog", "valuation multiple crowded"),
+            stage4c_thesis_break_signals=("biotech funding crunch", "customer R&D budget cut", "forecast cut"),
+            key_evidence_families=("financial_actual", "research_report", "news"),
+            false_positive_patterns=("R&D cycle headline without orders", "low-margin backlog", "customer budget cliff"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=20, bottleneck=8, mispricing=12, valuation=12),
+        ),
+        E2RArchetype.BIOSIMILAR_COMMERCIALIZATION: ArchetypeDefinition(
+            archetype=E2RArchetype.BIOSIMILAR_COMMERCIALIZATION,
+            stage1_radar_signals=("biosimilar approval", "patent expiry", "commercial launch news"),
+            stage2_candidate_signals=("PBM or reimbursement listing", "prescription conversion", "launch revenue"),
+            stage3_high_conviction_signals=("prescription growth", "margin defense", "multi-market launch"),
+            stage4a_ongoing_signals=("launch curve intact", "pricing remains disciplined"),
+            stage4b_graduation_overheat_signals=("approval headline fully priced", "biosimilar launch crowded"),
+            stage4c_thesis_break_signals=("price competition", "prescription conversion delay", "margin collapse"),
+            key_evidence_families=("news", "financial_actual", "research_report"),
+            false_positive_patterns=("approval treated as revenue", "PBM access missing", "price erosion ignored"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=20, bottleneck=6, mispricing=13, valuation=11),
+        ),
+        E2RArchetype.OBESITY_GLP1_COMMERCIALIZATION: ArchetypeDefinition(
+            archetype=E2RArchetype.OBESITY_GLP1_COMMERCIALIZATION,
+            stage1_radar_signals=("GLP-1 approval", "obesity drug prescription growth", "oral GLP-1 trial result"),
+            stage2_candidate_signals=("weekly prescriptions", "insurance coverage", "supply capacity", "sales ramp"),
+            stage3_high_conviction_signals=("durable prescription growth", "price defense", "OP/EPS revision"),
+            stage4a_ongoing_signals=("prescriptions and supply remain strong", "coverage expands"),
+            stage4b_graduation_overheat_signals=("obesity market narrative crowded", "valuation runs ahead of scripts"),
+            stage4c_thesis_break_signals=("price cut", "compounded alternative", "coverage denial", "prescription slowdown"),
+            key_evidence_families=("financial_actual", "research_report", "news"),
+            false_positive_patterns=("market size story without uptake", "competition ignored", "coverage assumed"),
+            preferred_score_weights=_weights(eps_fcf=22, visibility=20, bottleneck=12, mispricing=13, valuation=12),
+        ),
+        E2RArchetype.GENE_THERAPY_RARE_DISEASE: ArchetypeDefinition(
+            archetype=E2RArchetype.GENE_THERAPY_RARE_DISEASE,
+            stage1_radar_signals=("gene therapy approval", "rare disease unmet need", "patient recruitment"),
+            stage2_candidate_signals=("treated patients", "reimbursement", "commercial sales"),
+            stage3_high_conviction_signals=("repeat commercial uptake", "cash runway", "dilution risk controlled"),
+            stage4a_ongoing_signals=("uptake and reimbursement remain intact",),
+            stage4b_graduation_overheat_signals=("approval news priced as full commercialization",),
+            stage4c_thesis_break_signals=("slow uptake", "cash crunch", "going concern", "dilutive financing"),
+            key_evidence_families=("news", "financial_actual", "research_report"),
+            false_positive_patterns=("approval without commercialization", "patient access friction", "cash burn ignored"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=12, bottleneck=8, mispricing=10, valuation=6),
+        ),
+        E2RArchetype.AI_DRUG_DISCOVERY_PLATFORM: ArchetypeDefinition(
+            archetype=E2RArchetype.AI_DRUG_DISCOVERY_PLATFORM,
+            stage1_radar_signals=("AI drug discovery partnership", "candidate molecule", "platform milestone"),
+            stage2_candidate_signals=("big pharma milestone", "clinical entry", "cash runway"),
+            stage3_high_conviction_signals=("commercial or royalty path", "validated pipeline", "cash burn controlled"),
+            stage4a_ongoing_signals=("pipeline advances with partner funding",),
+            stage4b_graduation_overheat_signals=("AI platform label crowded", "valuation before clinical proof"),
+            stage4c_thesis_break_signals=("clinical failure", "cash burn", "platform hype unwind"),
+            key_evidence_families=("news", "research_report", "disclosure"),
+            false_positive_patterns=("PoC treated as drug approval", "AI label without economics"),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=10, bottleneck=7, mispricing=12, valuation=6),
+        ),
+        E2RArchetype.DIGITAL_HEALTHCARE_AI: ArchetypeDefinition(
+            archetype=E2RArchetype.DIGITAL_HEALTHCARE_AI,
+            stage1_radar_signals=("clinical AI paper", "regulatory clearance", "hospital pilot"),
+            stage2_candidate_signals=("hospital adoption", "reimbursement", "paid workflow", "recurring revenue"),
+            stage3_high_conviction_signals=("workflow embedded", "recurring revenue", "OP improvement", "liability risk low"),
+            stage4a_ongoing_signals=("hospital usage expands", "reimbursement remains intact"),
+            stage4b_graduation_overheat_signals=("AI healthcare narrative crowded", "paper-only valuation premium"),
+            stage4c_thesis_break_signals=("subgroup performance issue", "reimbursement denial", "liability event"),
+            key_evidence_families=("research_report", "news", "financial_actual"),
+            false_positive_patterns=("AUC headline without adoption", "pilot without revenue", "bias risk ignored"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=17, bottleneck=8, mispricing=13, valuation=12),
+        ),
+        E2RArchetype.MEDICAL_DEVICE_HEALTHCARE_EXPORT: ArchetypeDefinition(
+            archetype=E2RArchetype.MEDICAL_DEVICE_HEALTHCARE_EXPORT,
+            stage1_radar_signals=("medical device export growth", "new approval", "procedure growth"),
+            stage2_candidate_signals=("repeat consumable revenue", "export channel", "OPM/ROE improvement"),
+            stage3_high_conviction_signals=("recurring procedure demand", "ASP stable", "FCF improvement"),
+            stage4a_ongoing_signals=("export channel and procedures remain strong",),
+            stage4b_graduation_overheat_signals=("medical-device premium crowded", "target multiples saturated"),
+            stage4c_thesis_break_signals=("approval delay", "safety issue", "price control", "channel failure"),
+            key_evidence_families=("financial_actual", "research_report", "news"),
+            false_positive_patterns=("one-time device sale", "approval without channel", "safety risk ignored"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=22, bottleneck=13, mispricing=14, valuation=12),
         ),
     }
 )
