@@ -1,0 +1,8 @@
+component,weight,interpretation,production_scoring_changed
+eps_fcf_transition,22,Commodity price alone is capped; OP/EPS/FCF and cost control decide Stage 3.,false
+contract_offtake_price_floor_visibility,20,"Price floor, offtake, government investment, customer contract, production plan, and buyback support Stage 2.",false
+bottleneck_pricing_power,18,"Copper AI-grid demand, rare earth scarcity, realized gold price, and spread improvement are useful only with bottleneck durability.",false
+market_mispricing_rerating_gap,12,Separate structural mispricing from tender-offer or governance event premium.,false
+valuation_room_4b_runway,8,"Large scarcity rallies, YTD multi-baggers, and record commodity consensus reduce runway.",false
+capital_discipline_dilution_risk,10,"Capital raise, share issuance, all-stock dilution, CAPEX burden, dividend cut, and buyback quality are explicit score axes.",false
+information_confidence_disclosure_detail,10,"Stage 3 needs contract terms, counterparty, price floor, duration, realized price, AISC, production, and FCF details.",false
