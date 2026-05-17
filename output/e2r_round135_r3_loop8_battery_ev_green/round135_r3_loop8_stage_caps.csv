@@ -1,0 +1,6 @@
+cap_id,max_stage,condition,example,production_scoring_changed
+narrative_only_cap,Stage 1,EV/ESS/recycling/solid-state/solar/wind/hydrogen narrative only,"EV growth, ESS, or solar factory headline without customer, value, utilization, margin, or FCF.",false
+stage2_contract_visibility_cap,Stage 2,"contract/customer/GWh/license/production date partly confirmed, but revenue, OPM, utilization, and FCF unconfirmed","LGES-Tesla Megapack 3 or SK On-Flatiron ESS supply is visible, but ESS margin and ramp-up remain open.",false
+stage3_operating_confirmation_required,Stage 3 candidate,"revenue recognition, ESS OPM, utilization, FCF, EPS revision, and price path are visible",Contract value alone is not enough; the operating line must absorb fixed cost and produce measurable FCF.,false
+stage4b_narrative_priced_ahead,4B-watch,"ESS, solid-state, recycling, or AI storage narrative is priced before contracts, revenue, or margins","QuantumScape/VW license can be event-premium Stage 2 plus 4B-watch, not commercialization Green.",false
+stage4c_hard_redteam,4C,"contract cancellation, expected revenue loss, idle plant, UFLPA/customs, impairment, BESS/EV fire, SOH opacity","Ford-LGES cancellation, Ultium Ohio idle, Qcells UFLPA furlough, Orsted impairment, or Moss Landing fire.",false
