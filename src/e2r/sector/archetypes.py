@@ -158,9 +158,11 @@ class E2RArchetype(str, Enum):
     PLATFORM_SOFTWARE_INTERNET = "PLATFORM_SOFTWARE_INTERNET"
     B2B_SAAS_ERP_WORKFLOW = "B2B_SAAS_ERP_WORKFLOW"
     ENTERPRISE_AI_ONTOLOGY_WORKFLOW = "ENTERPRISE_AI_ONTOLOGY_WORKFLOW"
+    GOVERNMENT_AI_PROGRAM_OF_RECORD = "GOVERNMENT_AI_PROGRAM_OF_RECORD"
     CLOUD_AI_SOFTWARE_INFRA = "CLOUD_AI_SOFTWARE_INFRA"
     EDGE_AI_CLOUD_INFRASTRUCTURE = "EDGE_AI_CLOUD_INFRASTRUCTURE"
     AI_SOFTWARE_APPLICATION = "AI_SOFTWARE_APPLICATION"
+    LEGACY_SAAS_AI_REINFORCEMENT = "LEGACY_SAAS_AI_REINFORCEMENT"
     LEGACY_SAAS_AI_DISRUPTION_OVERLAY = "LEGACY_SAAS_AI_DISRUPTION_OVERLAY"
     OBSERVABILITY_AI_OPERATIONS = "OBSERVABILITY_AI_OPERATIONS"
     OBSERVABILITY_GUIDANCE_RISK = "OBSERVABILITY_GUIDANCE_RISK"
@@ -173,6 +175,7 @@ class E2RArchetype(str, Enum):
     MEDIA_AD_CONTENT_CYCLE = "MEDIA_AD_CONTENT_CYCLE"
     ADTECH_PLATFORM_PREMIUM = "ADTECH_PLATFORM_PREMIUM"
     STREAMING_AD_PLATFORM = "STREAMING_AD_PLATFORM"
+    CYBERSECURITY_AI_THREAT_DEMAND = "CYBERSECURITY_AI_THREAT_DEMAND"
     SECURITY_IDENTITY_DEEPFAKE = "SECURITY_IDENTITY_DEEPFAKE"
     SECURITY_OPERATIONAL_TRUST_OVERLAY = "SECURITY_OPERATIONAL_TRUST_OVERLAY"
     METAVERSE_NFT_THEME = "METAVERSE_NFT_THEME"
@@ -650,6 +653,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("announcement-only premium", "no FCF/NAV improvement", "one-off event"),
             preferred_score_weights=_weights(eps_fcf=16, visibility=19, bottleneck=8, mispricing=24, valuation=20),
         ),
+        E2RArchetype.GOVERNMENT_AI_PROGRAM_OF_RECORD: ArchetypeDefinition(
+            archetype=E2RArchetype.GOVERNMENT_AI_PROGRAM_OF_RECORD,
+            stage1_radar_signals=("government AI pilot", "defense AI software", "public-sector AI contract"),
+            stage2_candidate_signals=("program of record", "multi-year budget", "official procurement", "long-term contract"),
+            stage3_high_conviction_signals=("recurring government software revenue", "commercial expansion", "auditable workflow"),
+            stage4a_ongoing_signals=("program funding and commercial expansion remain intact",),
+            stage4b_graduation_overheat_signals=("government AI contractor premium crowded", "valuation saturated"),
+            stage4c_thesis_break_signals=("budget cut", "contract cancellation", "audit failure", "political risk"),
+            key_evidence_families=("disclosure", "financial_actual", "news", "research_report"),
+            false_positive_patterns=("pilot treated as program of record", "government concentration risk ignored"),
+            preferred_score_weights=_weights(eps_fcf=23, visibility=24, bottleneck=11, mispricing=15, valuation=10),
+        ),
         E2RArchetype.CLOUD_AI_SOFTWARE_INFRA: ArchetypeDefinition(
             archetype=E2RArchetype.CLOUD_AI_SOFTWARE_INFRA,
             stage1_radar_signals=("cloud ERP transition", "B2B SaaS expansion", "AI workflow feature"),
@@ -661,6 +676,18 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("financial_actual", "research_report", "news"),
             false_positive_patterns=("AI feature only", "SI-like revenue mistaken for SaaS", "retention not verified"),
             preferred_score_weights=_weights(eps_fcf=20, visibility=23, bottleneck=8, mispricing=16, valuation=14),
+        ),
+        E2RArchetype.LEGACY_SAAS_AI_REINFORCEMENT: ArchetypeDefinition(
+            archetype=E2RArchetype.LEGACY_SAAS_AI_REINFORCEMENT,
+            stage1_radar_signals=("AI agent launch", "copilot launch", "workflow AI feature"),
+            stage2_candidate_signals=("AI ARR", "attach rate", "customer adoption", "productivity ROI"),
+            stage3_high_conviction_signals=("seat churn low", "workflow lock-in stronger", "gross margin stable", "FCF conversion"),
+            stage4a_ongoing_signals=("AI attach grows without seat downsell",),
+            stage4b_graduation_overheat_signals=("AI agent narrative priced before ARR scale",),
+            stage4c_thesis_break_signals=("license downsell", "gross margin pressure", "agent cost overrun", "workflow lock-in failure"),
+            key_evidence_families=("financial_actual", "research_report", "news"),
+            false_positive_patterns=("AI feature treated as ARR", "agent revenue too small for multiple", "seat churn ignored"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=21, bottleneck=8, mispricing=14, valuation=11),
         ),
         E2RArchetype.AI_SOFTWARE_APPLICATION: ArchetypeDefinition(
             archetype=E2RArchetype.AI_SOFTWARE_APPLICATION,
@@ -709,6 +736,18 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("financial_actual", "research_report", "news"),
             false_positive_patterns=("threat narrative without revenue", "operational trust risk ignored"),
             preferred_score_weights=_weights(eps_fcf=20, visibility=20, bottleneck=10, mispricing=14, valuation=13),
+        ),
+        E2RArchetype.CYBERSECURITY_AI_THREAT_DEMAND: ArchetypeDefinition(
+            archetype=E2RArchetype.CYBERSECURITY_AI_THREAT_DEMAND,
+            stage1_radar_signals=("AI ransomware", "AI-driven cyber threat", "security budget increase"),
+            stage2_candidate_signals=("billings growth", "ARR growth", "guidance raise", "renewal stability"),
+            stage3_high_conviction_signals=("platform consolidation", "renewal strength", "operational trust intact", "FCF conversion"),
+            stage4a_ongoing_signals=("billings, renewals, and operational trust remain strong",),
+            stage4b_graduation_overheat_signals=("AI security narrative crowded", "incident risk ignored"),
+            stage4c_thesis_break_signals=("global outage", "customer lawsuit", "renewal risk", "trust damage"),
+            key_evidence_families=("financial_actual", "research_report", "news"),
+            false_positive_patterns=("threat narrative without billings", "security demand bubble", "outage risk ignored"),
+            preferred_score_weights=_weights(eps_fcf=21, visibility=21, bottleneck=10, mispricing=14, valuation=11),
         ),
         E2RArchetype.BIOTECH_ROYALTY_COMMERCIALIZATION: ArchetypeDefinition(
             archetype=E2RArchetype.BIOTECH_ROYALTY_COMMERCIALIZATION,
