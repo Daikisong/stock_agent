@@ -1,0 +1,8 @@
+component,points,loop8_direction,reason
+eps_fcf_revision,25,up,Stage 3 promotion depends on order/backlog becoming OP/EPS/FCF.
+contract_backlog_visibility,22,hold_but_detail_required,"Contract amount, period, counterparty, delivery, backlog, PPA, and slot reservation define Stage 2."
+bottleneck_pricing_power,18,hold_with_price_path_check,"Transformer lead time, turbine slot, grid bottleneck, and defense capacity matter only if they support margin."
+market_mispricing_gap,10,cap_after_consensus,"Old industrial frame must still be wrong, but crowded AI power or defense consensus lowers room."
+valuation_room_4b_runway,7,cap_after_rerating,GE Vernova-style rerating needs explicit 4B watch after the market recognizes the power-equipment theme.
+capital_discipline_fcf_conversion,10,up,"FCF-funded buyback/dividend adds quality; dilution, FSS correction, and unclear CAPEX become hard RedTeam."
+information_confidence_disclosure_detail,8,up,"OpenDART list-only, MoU-only, PPA without approval, or missing detail caps Stage 3."
