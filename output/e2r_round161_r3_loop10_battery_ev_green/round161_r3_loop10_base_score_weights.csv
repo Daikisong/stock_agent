@@ -1,0 +1,8 @@
+component,weight,interpretation,production_scoring_changed
+eps_fcf_opm_transition,24,"Stage 3 승격의 중심축. ESS OPM, revenue recognition, FCF, EPS revision이 없으면 Green을 만들지 않는다.",false
+contract_visibility,22,"고객, 계약금액, 계약기간, GWh, 생산시점이 같이 확인될수록 Stage 2 가시성이 강해진다.",false
+demand_durability_structural_change,16,"EV 성장 서사가 아니라 grid ESS, AI data center storage, China dependency reduction처럼 수요 지속성이 보여야 한다.",false
+safety_regulatory_disclosure_confidence,14,"계약취소, 고객/용도 비공개, UFLPA, BESS fire, SOH opacity 같은 안전·규제·공시 리스크를 더 강한 별도 축으로 본다.",false
+capa_utilization_capital_efficiency_fcf_stability,10,"EV 라인 전환, Lansing ramp-up, idle plant 해소, utilization, fixed-cost absorption을 본다.",false
+market_mispricing_rerating_gap,8,"시장이 아직 EV CAPA/정책 테마로만 보는지, ESS/FCF 구조 변화를 반영했는지 확인한다.",false
+valuation_room_4b_runway,6,이미 ESS·전고체·친환경 테마가 가격에 과도하게 반영되면 4B-watch로 제한한다.,false
