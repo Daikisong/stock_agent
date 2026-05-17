@@ -16,6 +16,8 @@
 | `korea_commercial_act_treasury_cancel_case` | `VALUE_UP_SHAREHOLDER_RETURN` | 2026-02-25 | missing_direct_symbol_mapping |
 | `sk_square_buyback_cancel_case` | `HOLDING_RESTRUCTURING_GOVERNANCE` | 2024-11-21 | needs_price_backfill |
 | `samsung_electronics_treasury_cancel_case` | `VALUE_UP_SHAREHOLDER_RETURN` | 2026-03-31 | needs_price_backfill |
+| `korea_bank_financial_holding_valueup_candidate` | `FINANCIAL_SPREAD_BALANCE_SHEET` | undated | needs_named_case_and_price_backfill |
+| `korea_insurance_underwriting_valueup_candidate` | `INSURANCE_UNDERWRITING_CYCLE` | undated | needs_named_case_and_price_backfill |
 | `samsung_ct_activist_rejection_case` | `GOVERNANCE_EXECUTION_FAILURE_OVERLAY` | undated | needs_source_date_and_price_backfill |
 | `korea_zinc_tender_offer_event_case` | `EVENT_PREMIUM_GOVERNANCE_BATTLE` | 2024-09-13 | needs_price_backfill |
 | `korea_zinc_share_issue_probe_case` | `GOVERNANCE_EXECUTION_FAILURE_OVERLAY` | 2024-10-31 | needs_price_backfill |

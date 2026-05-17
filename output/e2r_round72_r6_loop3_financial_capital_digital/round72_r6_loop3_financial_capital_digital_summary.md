@@ -4,8 +4,8 @@
 - large_sector: `FINANCIAL_CAPITAL_DIGITAL`
 - loop: `R6 Loop 3 / v3.0`
 - target_count: 16
-- case_candidate_count: 15
-- success_candidate_count: 5
+- case_candidate_count: 17
+- success_candidate_count: 7
 - failed_rerating_count: 1
 - event_premium_count: 1
 - stage4b_case_count: 1

@@ -18,7 +18,7 @@ Round 72는 금융·자본배분·디지털금융 영역에서 `저PBR`, `밸류
 ## 분류 요약
 
 - target_count: 16
-- case_candidate_count: 15
+- case_candidate_count: 17
 - Green possible targets: 2
 - Watch / Yellow-first targets: 8
 - RedTeam-first targets: 6
@@ -62,6 +62,8 @@ Round 72는 금융·자본배분·디지털금융 영역에서 `저PBR`, `밸류
 - `korea_commercial_act_treasury_cancel_case`
 - `sk_square_buyback_cancel_case`
 - `samsung_electronics_treasury_cancel_case`
+- `korea_bank_financial_holding_valueup_candidate`
+- `korea_insurance_underwriting_valueup_candidate`
 - `samsung_ct_activist_rejection_case`
 - `korea_zinc_tender_offer_event_case`
 - `korea_zinc_share_issue_probe_case`
@@ -76,6 +78,8 @@ Round 72는 금융·자본배분·디지털금융 영역에서 `저PBR`, `밸류
 - `naver_dunamu_upbit_deal_case`
 
 월 단위나 연도 범위만 있는 케이스는 날짜를 만들지 않았다. 예를 들어 `AI windfall tax comment`는 2026년 5월 수준으로만 주어졌기 때문에 `stage4c_date=null`로 두고 `needs_exact_stage_date_backfill`로 표시했다.
+
+은행·금융지주와 보험 후보군은 문서 4-4/4-5의 Green 가능 축을 빠뜨리지 않기 위해 generic calibration case로 추가했다. 단, 특정 종목명과 stage date는 만들지 않았고 `needs_named_case_and_price_backfill`로 표시했다.
 
 ## 안전 원칙
 
