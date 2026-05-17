@@ -1,0 +1,8 @@
+component,weight,interpretation,production_scoring_changed
+eps_fcf_commercialization_conversion,24,"Approvals, trials, and papers matter only when they convert into prescriptions, revenue, OPM, FCF, or cash runway.",false
+prescription_reimbursement_recurring_visibility,22,"Scripts, PBM/insurance, reimbursement, procedure growth, consumables, and CDMO utilization decide Stage 2 to Stage 3 promotion.",false
+barrier_recurring_bottleneck,14,"Installed base, long-term contracts, regulatory barrier, switching cost, and repeat consumables provide durable visibility.",false
+market_mispricing_rerating_gap,8,The market must still be using an old approval/TAM/capacity frame after commercialization evidence appears.,false
+valuation_room_4b_runway,6,"GLP-1, surgical robot, CDMO, medical AI, and biosimilar narratives can become crowded before FCF confirms.",false
+cash_runway_capital_discipline,10,"Cash runway, dilution, take-private risk, capex burden, and funding-cycle exposure are central healthcare gates.",false
+safety_regulatory_disclosure_confidence,16,"Safety, reimbursement, FDA/DOJ, patent litigation, subgroup validation, device counterfeit, and disclosure detail are stronger Loop-9 hard gates.",false
