@@ -1,0 +1,8 @@
+component,weight,interpretation,production_scoring_changed
+roe_eps_fcf_durability,22,"Stage 3 needs ROE/EPS/FCF durability, not a low-PBR label.",false
+capital_return_execution,18,"Actual cancellation, dividend expansion, and repeated return policy matter more than buyback plans.",false
+capital_ratio_credit_cost_stability,18,"CET1, K-ICS, PF exposure, reserve build, and credit cost are hard gates for financial value-up.",false
+regulated_revenue_model_visibility,14,"Stablecoin reserve/redemption, exchange fee/custody/tokenization, and fintech take rate need visible economics.",false
+market_mispricing_rerating_gap,10,The old low-PBR or non-bank discount frame must still be wrong after execution evidence appears.,false
+valuation_room_4b_runway,8,"Korea value-up, Circle-style stablecoin IPO rallies, and exchange-stake narratives can become crowded 4B.",false
+information_security_governance_confidence,10,"Governance execution, disclosure detail, exchange security, reserve design, and regulation decide confidence.",false
