@@ -22,6 +22,7 @@ from e2r.sector.round16_theme_coverage_v05 import Round16ThemeCoverageEntry, rou
 
 
 ROUND17_SOURCE_ROUND_PATH = "docs/round/round_17.md"
+ROUND17_ARCHIVED_SOURCE_ROUND_PATH = "docs/round/achieve/round_17.md"
 ROUND17_DEFAULT_OUTPUT_DIRECTORY = "output/e2r_round17_theme_absorption_audit"
 ROUND17_DEFAULT_THEME_MAP_PATH = "data/sector_taxonomy/theme_tag_map_v05.csv"
 ROUND17_DEFAULT_ALIAS_PATH = "data/sector_taxonomy/theme_aliases_round17.yml"
@@ -105,7 +106,7 @@ def parse_round17_theme_expectations(
 ) -> tuple[Round17ThemeExpectation, ...]:
     """Parse the Round-17 v0.5 markdown theme table."""
 
-    text_path = Path(path)
+    text_path = _resolve_round17_source_path(path)
     lines = text_path.read_text(encoding="utf-8").splitlines()
     in_theme_table = False
     expectations: list[Round17ThemeExpectation] = []
@@ -129,6 +130,16 @@ def parse_round17_theme_expectations(
             )
         )
     return tuple(expectations)
+
+
+def _resolve_round17_source_path(path: str | Path) -> Path:
+    text_path = Path(path)
+    if text_path.exists():
+        return text_path
+    archived_path = Path(ROUND17_ARCHIVED_SOURCE_ROUND_PATH)
+    if text_path.as_posix() == ROUND17_SOURCE_ROUND_PATH and archived_path.exists():
+        return archived_path
+    return text_path
 
 
 def round17_theme_audit_records(path: str | Path = ROUND17_SOURCE_ROUND_PATH) -> tuple[Round17ThemeAuditRecord, ...]:
