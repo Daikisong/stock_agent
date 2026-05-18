@@ -1,0 +1,8 @@
+component,points,loop11_direction,reason,production_scoring_changed
+eps_fcf_noi_affo_conversion,24,raise_cashflow_bodyweight,"Construction, REIT, and real-asset stories only matter when OP/EPS, FCF, NOI, or AFFO converts.",false
+contract_asset_tenant_pf_visibility,20,raise_visibility,"Contract amount, counterparty, period, tenant lease, occupancy, and project-level PF repair define Stage 2 visibility.",false
+cash_conversion_cost_ratio_dividend_coverage,18,raise_cash_quality,"Cost ratio, cash conversion, AFFO/share, dividend coverage, and refinancing rate separate Stage 2 from Stage 3.",false
+pf_safety_quality_regulatory_risk,16,hard_redteam_gate,"PF workout, safety accident, quality cost, business suspension, collusion, and dilution can break R10 immediately.",false
+early_price_path_validation,8,loop11_axis,Stage 2 이후 60D MFE validates early Stage 3; Stage 2 이후 120D MFE helps detect 4B cooling.,false
+market_mispricing_rerating_gap,8,old_frame_check,"PF, low-margin EPC, yield, or housing-cycle discounts matter only after cash-flow evidence exists.",false
+valuation_room_4b_runway,6,cool_theme_rerating,"PF relief, AI data-center, REIT yield, and cement headlines can rerate faster than cash flow.",false
