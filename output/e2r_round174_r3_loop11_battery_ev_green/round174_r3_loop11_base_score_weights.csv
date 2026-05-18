@@ -1,0 +1,8 @@
+component,points,loop11_direction,reason
+eps_fcf_opm_conversion,24,keep_high,"Stage 3 requires OP/EPS/FCF and margin conversion, not EV or ESS keywords."
+contract_visibility,22,raise_detail_requirement,"Customer, amount, GWh/tonnage, period, production start, offtake, and JV stake drive Stage 2."
+capa_utilization_line_conversion,14,raise_after_ev_slowdown,"After EV slowdown, installed CAPA is not a positive unless it can be utilized or converted."
+structural_demand_shift,12,focus_ess_supply_chain_security,"EV-to-ESS, data-center power, graphite security, and resource security matter when they convert to earnings."
+early_price_path_validation,10,loop11_axis,The score must test 60D/120D price validation and avoid late event-rally chasing.
+safety_regulatory_disclosure_confidence,8,hard_review,"Safety, regulation, disclosure gaps, customer secrecy, and non-binding terms cap Stage 3."
+valuation_room_4b_runway,10,raise_4b_focus,Battery materials often require 4B cooling when policy or commodity events drive price before revisions.

@@ -1,0 +1,11 @@
+case_id,detected_stage,price_path_status,verdict,normalization_adjustment
+samsung_sdi_ess_lfp_stage2_case,Stage 2 strong,Contract day +6.1% reference reaction; KRX exact price path needs backfill,stage2_strong_not_green_yet,"credit contract value, period, ESS line conversion; cap customer undisclosed and OPM/utilization missing"
+posco_future_m_graphite_tariff_4b_case,Stage 2 + 4B-watch,Graphite offtake is Stage 2; tariff +20% is event-rally 4B watch,supply_chain_event_not_green,"credit graphite supply security; haircut quarterly pricing, anode OPM missing, and tariff rally"
+posco_holdings_lithium_resource_stage2_case,Stage 2,"$765m lithium JV stake is resource security, but lithium cycle caps Green",resource_security_with_cycle_cap,"credit named mines and stake; cap before offtake economics, FCF, and low-cost proof"
+lg_chem_cathode_toyota_stage2_case,Stage 2,Toyota Tsusho stake reduces China dependency but plant OPM and utilization remain pending,supply_chain_realign_not_green_yet,"credit ownership realignment; cap before customer contract, utilization, and FCF"
+lg_chem_exxon_non_binding_lithium_case,Stage 1/2 option,Non-binding lithium deal is not final offtake,non_binding_cap_correct,support research routing; block Stage 3 before final terms
+lnf_lithium_event_rally_case,Stage 1 event / 4B-watch,CATL mine suspension +10% reference move is commodity event premium,event_rally_not_structural,"credit price reaction only lightly; block Green without contract, margin, and demand evidence"
+skiet_separator_sale_review_4c_case,4C-watch,"EV slowdown, SK On losses, and sale review break separator demand visibility",hard_redteam_alignment,apply separator utilization and parent restructuring penalty
+ecopro_materials_ev_slowdown_4c_case,4C-watch,"Weak EV demand, operating losses, and Ford EV strategy shock hit the material thesis",customer_strategy_break,"apply EV demand slowdown, loss, and customer strategy risk gates"
+enchem_electrolyte_capa_watch_case,Watch,"Electrolyte CAPA needs customer, OPM, and price path backfill",watch_not_green_yet,cap before contract and margin evidence
+daejoo_silicon_anode_commercialization_case,Stage 1/2 watch,Silicon anode commercialization needs customer qualification and volume revenue,commercialization_not_green_yet,"cap before commercial volume, ASP, and margin proof"
