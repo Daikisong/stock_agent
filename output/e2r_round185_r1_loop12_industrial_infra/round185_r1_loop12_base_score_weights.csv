@@ -1,0 +1,8 @@
+component,points,loop12_direction,reason,production_scoring_changed
+eps_fcf_opm_conversion,24,keep_high,"R1 Loop 12 still starts with OP/EPS/FCF and OPM conversion, not order headlines.",false
+contract_backlog_customer_visibility,20,detail_required,"Customer, amount, period, delivery schedule, government program, and recurring service define Stage 2 quality.",false
+bottleneck_pricing_power,16,sector_specific,"Transformer lead time, cable backlog, radar localization, and shipbuilding equipment shortage are useful only when they convert to margin.",false
+early_price_path_validation,12,required_backfill,"Stage 2 이후 MFE, relative strength, event return, and volume decide whether the market is validating or overheating.",false
+capital_discipline_governance,10,raised_for_loop12,Hanwha Aerospace dilution and Doosan Bobcat governance show why capital discipline must be visible in R1.,false
+disclosure_confidence_hard_redteam,10,hard_review,"OpenDART detail, customer/amount/period/margin, regulator correction, MOU/LOI, and hard RedTeam cap Green.",false
+valuation_room_4b_runway,8,cool_crowded_names,Good structures with price-only rotation or peer top-quartile valuation should move to 4B-watch.,false
