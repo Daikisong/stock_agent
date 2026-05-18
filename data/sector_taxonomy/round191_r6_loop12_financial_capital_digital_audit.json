@@ -1,0 +1,161 @@
+{
+  "case_records_are_candidate_generation_input": false,
+  "checks": [
+    {
+      "actual_count": "11",
+      "check_id": "required_targets_present",
+      "expected_count": "11",
+      "missing_items": "",
+      "notes": "Round191 required target list must be covered by the Round190 pack.",
+      "production_scoring_changed": "false",
+      "status": "pass"
+    },
+    {
+      "actual_count": "13",
+      "check_id": "required_case_records_present",
+      "expected_count": "13",
+      "missing_items": "",
+      "notes": "Round191 named Stage 2/3, 4B, 4C, price-fail, and confidence-cap cases must exist.",
+      "production_scoring_changed": "false",
+      "status": "pass"
+    },
+    {
+      "actual_count": "9",
+      "check_id": "stage3_six_of_nine_checks_present",
+      "expected_count": "9",
+      "missing_items": "",
+      "notes": "Stage 3 remains strict: at least 6 of 9 checks are required.",
+      "production_scoring_changed": "false",
+      "status": "pass"
+    },
+    {
+      "actual_count": "6",
+      "check_id": "stage4b_four_of_six_checks_present",
+      "expected_count": "6",
+      "missing_items": "",
+      "notes": "Stage 4B cools crowded value-up, Dunamu, stablecoin, and FacePay rallies.",
+      "production_scoring_changed": "false",
+      "status": "pass"
+    },
+    {
+      "actual_count": "9",
+      "check_id": "stage4c_hard_gates_present",
+      "expected_count": "9",
+      "missing_items": "",
+      "notes": "Stage 4C hard gates cover capital, credit, security, privacy, policy, and buyback price-fail breaks.",
+      "production_scoring_changed": "false",
+      "status": "pass"
+    },
+    {
+      "actual_count": "30",
+      "check_id": "price_fields_present",
+      "expected_count": "30",
+      "missing_items": "",
+      "notes": "Round191 price-path and financial backfill fields must exist before any future scoring implementation.",
+      "production_scoring_changed": "false",
+      "status": "pass"
+    },
+    {
+      "actual_count": "3",
+      "check_id": "hard_gate_target_count",
+      "expected_count": "3",
+      "missing_items": "",
+      "notes": "The three explicit Round191 hard-gate targets should remain hard gates.",
+      "production_scoring_changed": "false",
+      "status": "pass"
+    },
+    {
+      "actual_count": "13",
+      "check_id": "case_records_not_production_input",
+      "expected_count": "13",
+      "missing_items": "",
+      "notes": "Round191 is audit/calibration material only; case records must not become candidate-generation input.",
+      "production_scoring_changed": "false",
+      "status": "pass"
+    },
+    {
+      "actual_count": "1",
+      "check_id": "production_scoring_unchanged",
+      "expected_count": "1",
+      "missing_items": "",
+      "notes": "Round191 confirms no production scoring threshold or StageClassifier change.",
+      "production_scoring_changed": "false",
+      "status": "pass"
+    }
+  ],
+  "production_scoring_changed": false,
+  "required_cases": [
+    "samsung_life_insurance_nav_valueup_stage23_case",
+    "meritz_financial_shareholder_return_stage23_case",
+    "hana_financial_dunamu_equity_option_stage2_case",
+    "toss_facepay_payment_biometric_stage2_case",
+    "nice_credit_information_recurring_data_stage23_case",
+    "krw_stablecoin_policy_theme_4b_watch_case",
+    "kakaopay_privacy_regulatory_4c_watch_case",
+    "samsung_electronics_buyback_execution_price_failed_case",
+    "policy_tax_reversal_market_shock_4c_watch_case",
+    "securities_brokerage_market_beta_cycle_case",
+    "stablecoin_related_stock_price_only_rally_case",
+    "digital_asset_exchange_security_incident_4c_reference_case",
+    "r6_loop12_disclosure_confidence_reference_case"
+  ],
+  "required_price_fields": [
+    "roe",
+    "roe_change_yoy",
+    "net_profit_growth_yoy",
+    "cet1_ratio",
+    "k_ics_ratio",
+    "csm",
+    "credit_cost",
+    "pf_exposure",
+    "dividend_per_share",
+    "buyback_amount",
+    "cancelled_share_amount",
+    "total_shareholder_return_ratio",
+    "eps_accretion_from_buyback",
+    "pbr_band_percentile",
+    "nav_discount",
+    "major_equity_stake_value",
+    "digital_asset_stake_value",
+    "equity_method_income",
+    "stablecoin_issuance_volume",
+    "reserve_income",
+    "take_rate",
+    "merchant_count",
+    "user_count",
+    "transaction_volume",
+    "privacy_fine_flag",
+    "biometric_data_risk_flag",
+    "exchange_security_incident_flag",
+    "regulatory_approval_pending",
+    "tax_policy_shock_flag",
+    "disclosure_confidence"
+  ],
+  "required_targets": [
+    "INSURANCE_NAV_VALUEUP_SAMSUNG_ELECTRONICS_STAKE",
+    "SHAREHOLDER_RETURN_COMPOUNDING_FINANCIAL_HOLDCO",
+    "DIGITAL_ASSET_BANK_EQUITY_OPTION",
+    "KRW_STABLECOIN_POLICY_THEME",
+    "PAYMENT_BIOMETRIC_INFRASTRUCTURE",
+    "PAYMENT_PRIVACY_REGULATORY_4C",
+    "CREDIT_INFORMATION_RECURRING_DATA",
+    "SECURITIES_BROKERAGE_MARKET_BETA",
+    "BUYBACK_EXECUTION_PRICE_FAILED",
+    "POLICY_TAX_REVERSAL_MARKET_SHOCK",
+    "DISCLOSURE_CONFIDENCE_CAP"
+  ],
+  "summary": {
+    "audit_check_count": 9,
+    "audited_round": "round_190",
+    "case_records_are_candidate_generation_input": false,
+    "failed_check_count": 0,
+    "passed_check_count": 9,
+    "production_scoring_changed": false,
+    "required_case_count": 13,
+    "required_price_field_count": 30,
+    "required_target_count": 11,
+    "round190_case_candidate_count": 13,
+    "round190_hard_gate_target_count": 3,
+    "source_round": "docs/round/round_191.md"
+  }
+}

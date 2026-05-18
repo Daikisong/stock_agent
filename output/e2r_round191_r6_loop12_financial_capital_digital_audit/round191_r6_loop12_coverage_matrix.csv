@@ -1,0 +1,10 @@
+check_id,status,expected_count,actual_count,missing_items,notes,production_scoring_changed
+required_targets_present,pass,11,11,,Round191 required target list must be covered by the Round190 pack.,false
+required_case_records_present,pass,13,13,,"Round191 named Stage 2/3, 4B, 4C, price-fail, and confidence-cap cases must exist.",false
+stage3_six_of_nine_checks_present,pass,9,9,,Stage 3 remains strict: at least 6 of 9 checks are required.,false
+stage4b_four_of_six_checks_present,pass,6,6,,"Stage 4B cools crowded value-up, Dunamu, stablecoin, and FacePay rallies.",false
+stage4c_hard_gates_present,pass,9,9,,"Stage 4C hard gates cover capital, credit, security, privacy, policy, and buyback price-fail breaks.",false
+price_fields_present,pass,30,30,,Round191 price-path and financial backfill fields must exist before any future scoring implementation.,false
+hard_gate_target_count,pass,3,3,,The three explicit Round191 hard-gate targets should remain hard gates.,false
+case_records_not_production_input,pass,13,13,,Round191 is audit/calibration material only; case records must not become candidate-generation input.,false
+production_scoring_unchanged,pass,1,1,,Round191 confirms no production scoring threshold or StageClassifier change.,false
