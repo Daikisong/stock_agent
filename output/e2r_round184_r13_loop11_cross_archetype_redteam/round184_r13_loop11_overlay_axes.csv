@@ -1,0 +1,8 @@
+axis_id,points,loop11_direction,reason,production_scoring_changed
+eps_fcf_roe_affo_opm_bodyweight_change,24,raise_actual_bodyweight,"Stage 3 early capture starts with OP/EPS/FCF, ROE, AFFO, or OPM bodyweight change.",false
+cross_evidence_visibility,20,raise_detail_visibility,"Contracts, customers, amount, duration, backlog, royalty, ARR/bookings, NOI/AFFO, prescriptions, repeat revenue, and equity-method income must be visible.",false
+price_path_early_validation,14,raise_price_validation,"Stage 2/3 must be checked against event returns, MFE/MAE, relative strength, and volume spike.",false
+repeatability_durability,14,raise_durability,"Long-term contracts, recurring software, repeat procedures, shareholder returns, occupancy, renewal, and repeat consumption separate structure from event.",false
+redteam_hard_4c_risk,14,hard_redteam_gate,"PF, safety, legal, cyber, policy reversal, contract cancellation, CRL/patent/CMC, accounting, and audit issues block unsafe Green.",false
+disclosure_confidence,8,cap_list_only_or_media_only,"OpenDART detail, contract details, customer, amount, duration, and routine disclosure filtering set confidence.",false
+valuation_room_4b_margin,6,cool_crowded_winners,Good structures with crowded price paths need 4B monitoring rather than fresh Green promotion.,false
