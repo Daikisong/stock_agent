@@ -1,0 +1,21 @@
+axis,points,direction,reason
+commercial_revenue,5,raise,R7 Stage 3는 승인 뉴스가 아니라 실제 상업화 매출에서 시작한다.
+prescription_volume,5,raise,신약/보툴리눔은 처방량과 시술 채널 침투가 핵심이다.
+royalty_recognition,5,raise,파트너 peak sales보다 실제 로열티 인식이 중요하다.
+reimbursement_access,4,raise,보험/급여 접근이 없으면 처방과 매출 ramp가 제한된다.
+contract_backlog,4,raise,CDMO/CMO는 수주잔고가 있어야 가동률과 FCF로 이어진다.
+capacity_utilization,4,raise,공장 인수나 CAPA는 실제 가동률 확인 전까지 Stage 2다.
+gross_margin_visibility,4,raise,매출이 gross margin과 FCF로 내려와야 체급 변화다.
+cash_runway,4,raise,현금 runway와 dilution risk 통과는 바이오 Green의 기본 안전장치다.
+us_commercial_launch_with_sales,3,raise,미국 출시 자체보다 매출이 붙은 launch가 강하다.
+external_validation_with_adoption,3,raise,의료AI 외부검증은 병원 도입/수가와 연결될 때 강하다.
+approval_news_only,-5,lower,승인 뉴스만으로는 Stage 3-Green을 만들지 않는다.
+clinical_headline_only,-5,lower,임상 헤드라인은 상업화 전까지 Stage 1~2다.
+paper_validation_without_revenue,-4,lower,논문 성능만 있고 매출/수가가 없으면 제한한다.
+mna_without_utilization,-3,lower,M&A 공장 인수는 가동률/계약 전까지 event watch다.
+fda_approval_without_reimbursement,-4,lower,FDA 승인 후에도 payer access가 없으면 매출 ramp가 제한된다.
+partner_peak_sales_without_royalty_visibility,-3,lower,파트너 peak sales 목표만으로 로열티를 발명하지 않는다.
+pre_revenue_biotech_story,-5,lower,매출 전 바이오 narrative는 Green 금지에 가깝다.
+cash_burn_or_dilution_risk,-5,lower,cash burn과 유증/CB 위험은 hard RedTeam이다.
+manufacturing_inspection_issue,-3,lower,제조시설 CRL은 상업화 지연 watch지만 효능/안전성 CRL과 분리한다.
+subgroup_performance_risk,-3,lower,의료AI subgroup 성능 리스크는 Green 확신을 낮춘다.

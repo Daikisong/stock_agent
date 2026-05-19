@@ -1,0 +1,277 @@
+{
+  "case_ids": [
+    "yuhan_lazertinib_fda_approval_royalty_commercialization_watch",
+    "hugel_letybo_us_launch_botulinum_commercialization_watch",
+    "celltrion_us_facility_biosimilar_tariff_hedge_stage2_watch",
+    "sk_bioscience_idt_biologika_cmo_transition_event_watch",
+    "samsung_biologics_us_gsk_facility_cdmo_4b_benchmark",
+    "lunit_external_validation_medical_ai_commercialization_gap_watch",
+    "r7_hard_4c_reliable_source_gap_watch"
+  ],
+  "green_forbidden_patterns": [
+    "approval_news_only",
+    "clinical_headline_only",
+    "paper_validation_without_revenue",
+    "partner_peak_sales_without_royalty_visibility",
+    "mna_announcement_only",
+    "fda_clearance_without_sales",
+    "cash_runway_short",
+    "large_dilution_or_cb_risk"
+  ],
+  "green_required_fields": [
+    "approval_or_regulatory_clearance",
+    "commercial_launch",
+    "prescription_volume_or_hospital_adoption",
+    "reimbursement_or_payer_access",
+    "revenue_recognition",
+    "royalty_or_gross_margin_confirmed",
+    "cash_runway_and_dilution_risk_passed",
+    "partner_execution_risk_passed",
+    "price_path_after_commercial_evidence"
+  ],
+  "hard_4c_gates": [
+    "fda_crl_or_approval_rejection",
+    "efficacy_or_safety_crl",
+    "clinical_failure",
+    "commercialization_failure",
+    "prescription_volume_miss",
+    "reimbursement_failure",
+    "royalty_not_recognized",
+    "large_dilution",
+    "cash_runway_collapse",
+    "manufacturing_inspection_failure",
+    "product_safety_issue",
+    "subgroup_clinical_performance_failure",
+    "partner_launch_failure"
+  ],
+  "large_sector": "BIOTECH_HEALTHCARE_DEVICE",
+  "score_adjustments": [
+    {
+      "axis": "commercial_revenue",
+      "direction": "raise",
+      "points": "5",
+      "reason": "R7 Stage 3는 승인 뉴스가 아니라 실제 상업화 매출에서 시작한다."
+    },
+    {
+      "axis": "prescription_volume",
+      "direction": "raise",
+      "points": "5",
+      "reason": "신약/보툴리눔은 처방량과 시술 채널 침투가 핵심이다."
+    },
+    {
+      "axis": "royalty_recognition",
+      "direction": "raise",
+      "points": "5",
+      "reason": "파트너 peak sales보다 실제 로열티 인식이 중요하다."
+    },
+    {
+      "axis": "reimbursement_access",
+      "direction": "raise",
+      "points": "4",
+      "reason": "보험/급여 접근이 없으면 처방과 매출 ramp가 제한된다."
+    },
+    {
+      "axis": "contract_backlog",
+      "direction": "raise",
+      "points": "4",
+      "reason": "CDMO/CMO는 수주잔고가 있어야 가동률과 FCF로 이어진다."
+    },
+    {
+      "axis": "capacity_utilization",
+      "direction": "raise",
+      "points": "4",
+      "reason": "공장 인수나 CAPA는 실제 가동률 확인 전까지 Stage 2다."
+    },
+    {
+      "axis": "gross_margin_visibility",
+      "direction": "raise",
+      "points": "4",
+      "reason": "매출이 gross margin과 FCF로 내려와야 체급 변화다."
+    },
+    {
+      "axis": "cash_runway",
+      "direction": "raise",
+      "points": "4",
+      "reason": "현금 runway와 dilution risk 통과는 바이오 Green의 기본 안전장치다."
+    },
+    {
+      "axis": "us_commercial_launch_with_sales",
+      "direction": "raise",
+      "points": "3",
+      "reason": "미국 출시 자체보다 매출이 붙은 launch가 강하다."
+    },
+    {
+      "axis": "external_validation_with_adoption",
+      "direction": "raise",
+      "points": "3",
+      "reason": "의료AI 외부검증은 병원 도입/수가와 연결될 때 강하다."
+    },
+    {
+      "axis": "approval_news_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "승인 뉴스만으로는 Stage 3-Green을 만들지 않는다."
+    },
+    {
+      "axis": "clinical_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "임상 헤드라인은 상업화 전까지 Stage 1~2다."
+    },
+    {
+      "axis": "paper_validation_without_revenue",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "논문 성능만 있고 매출/수가가 없으면 제한한다."
+    },
+    {
+      "axis": "mna_without_utilization",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "M&A 공장 인수는 가동률/계약 전까지 event watch다."
+    },
+    {
+      "axis": "fda_approval_without_reimbursement",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "FDA 승인 후에도 payer access가 없으면 매출 ramp가 제한된다."
+    },
+    {
+      "axis": "partner_peak_sales_without_royalty_visibility",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "파트너 peak sales 목표만으로 로열티를 발명하지 않는다."
+    },
+    {
+      "axis": "pre_revenue_biotech_story",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "매출 전 바이오 narrative는 Green 금지에 가깝다."
+    },
+    {
+      "axis": "cash_burn_or_dilution_risk",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "cash burn과 유증/CB 위험은 hard RedTeam이다."
+    },
+    {
+      "axis": "manufacturing_inspection_issue",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "제조시설 CRL은 상업화 지연 watch지만 효능/안전성 CRL과 분리한다."
+    },
+    {
+      "axis": "subgroup_performance_risk",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "의료AI subgroup 성능 리스크는 Green 확신을 낮춘다."
+    }
+  ],
+  "source_round": "docs/round/round_198.md",
+  "stage4b_statuses": [
+    "none",
+    "watch",
+    "elevated",
+    "graduated"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "failed_rerating_count": 2,
+    "hard_4c_case_count": 0,
+    "needs_ohlc_backfill": true,
+    "needs_ohlc_backfill_count": 7,
+    "price_backfill_field_count": 51,
+    "production_scoring_changed": false,
+    "required_target_count": 18,
+    "score_adjustment_count": 20,
+    "shadow_weight_only": true,
+    "source_gap_case_count": 1,
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 1,
+    "stage4b_watch_or_elevated_count": 6,
+    "success_candidate_count": 4
+  },
+  "target_aliases": [
+    {
+      "canonical_archetype": "BIOTECH_ROYALTY_COMMERCIALIZATION",
+      "round198_label": "BIOTECH_ROYALTY_COMMERCIALIZATION"
+    },
+    {
+      "canonical_archetype": "KOREA_ONCOLOGY_DRUG_COMMERCIALIZATION",
+      "round198_label": "KOREA_ONCOLOGY_DRUG_COMMERCIALIZATION"
+    },
+    {
+      "canonical_archetype": "BIOSIMILAR_COMMERCIALIZATION",
+      "round198_label": "BIOSIMILAR_COMMERCIALIZATION"
+    },
+    {
+      "canonical_archetype": "BIOSIMILAR_TARIFF_HEDGE_MANUFACTURING",
+      "round198_label": "BIOSIMILAR_TARIFF_HEDGE_MANUFACTURING"
+    },
+    {
+      "canonical_archetype": "CDMO_HEALTHCARE_CONTRACT",
+      "round198_label": "CDMO_HEALTHCARE_CONTRACT"
+    },
+    {
+      "canonical_archetype": "CDMO_US_TARIFF_HEDGE_CAPACITY",
+      "round198_label": "CDMO_US_TARIFF_HEDGE_CAPACITY"
+    },
+    {
+      "canonical_archetype": "MEDICAL_DEVICE_HEALTHCARE_EXPORT",
+      "round198_label": "MEDICAL_DEVICE_HEALTHCARE_EXPORT"
+    },
+    {
+      "canonical_archetype": "BOTULINUM_US_MARKET_ENTRY",
+      "round198_label": "BOTULINUM_US_MARKET_ENTRY"
+    },
+    {
+      "canonical_archetype": "DIGITAL_HEALTHCARE_AI",
+      "round198_label": "DIGITAL_HEALTHCARE_AI"
+    },
+    {
+      "canonical_archetype": "MEDICAL_AI_EXTERNAL_VALIDATION",
+      "round198_label": "MEDICAL_AI_EXTERNAL_VALIDATION"
+    },
+    {
+      "canonical_archetype": "MEDICAL_AI_SUBGROUP_GENERALIZATION_RISK",
+      "round198_label": "MEDICAL_AI_SUBGROUP_GENERALIZATION_RISK"
+    },
+    {
+      "canonical_archetype": "APPROVAL_ONLY_NOT_COMMERCIALIZATION",
+      "round198_label": "APPROVAL_ONLY_NOT_COMMERCIALIZATION"
+    },
+    {
+      "canonical_archetype": "REIMBURSEMENT_ACCESS_OVERLAY",
+      "round198_label": "REIMBURSEMENT_ACCESS_OVERLAY"
+    },
+    {
+      "canonical_archetype": "COMMERCIALIZATION_FAILURE_OVERLAY",
+      "round198_label": "COMMERCIALIZATION_FAILURE_OVERLAY"
+    },
+    {
+      "canonical_archetype": "MANUFACTURING_INSPECTION_CRL_OVERLAY",
+      "round198_label": "MANUFACTURING_INSPECTION_CRL_OVERLAY"
+    },
+    {
+      "canonical_archetype": "DEVICE_SAFETY_COUNTERFEIT_OVERLAY",
+      "round198_label": "DEVICE_SAFETY_COUNTERFEIT_OVERLAY"
+    },
+    {
+      "canonical_archetype": "BIOTECH_PRE_REVENUE_REGULATORY",
+      "round198_label": "BIOTECH_PRE_REVENUE_REGULATORY"
+    },
+    {
+      "canonical_archetype": "CAPITAL_ALLOCATION_DILUTION_OVERLAY",
+      "round198_label": "CAPITAL_ALLOCATION_DILUTION_OVERLAY"
+    }
+  ],
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round198_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_approval_clinical_paper_partner_peak_sales_or_mna_as_green_evidence",
+    "do_not_invent_prices_stage_dates_prescriptions_reimbursement_revenue_royalty_utilization_margin_cash_runway_or_dilution",
+    "do_not_confirm_hard_4c_without_reliable_primary_or_major_source"
+  ]
+}
