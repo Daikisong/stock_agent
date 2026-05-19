@@ -1,0 +1,89 @@
+{
+  "green_forbidden_patterns": [
+    "policy_news_only",
+    "mou_only",
+    "geopolitical_headline_only",
+    "resource_estimate_without_drilling",
+    "disease_import_ban_only",
+    "preprint_or_science_claim_only",
+    "government_announcement_basket_rally_only",
+    "market_structure_reform_without_earnings",
+    "price_rally_before_contract",
+    "event_fade_risk"
+  ],
+  "green_required_fields": [
+    "event_escalated_to_company_contract",
+    "funded_budget_or_contract_amount",
+    "financing_secured",
+    "procurement_award_or_actual_order",
+    "revenue_conversion_visible",
+    "margin_or_eps_fcf_revision_visible",
+    "repeat_demand_not_event_fade",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "drilling_failure",
+    "commerciality_absent",
+    "mou_failure",
+    "budget_not_funded",
+    "policy_reversal",
+    "import_restriction_eased",
+    "independent_replication_failure",
+    "regulatory_reversal",
+    "political_shock",
+    "market_structure_reform_failure",
+    "contract_cancellation",
+    "financing_failure"
+  ],
+  "large_sector": "POLICY_GEOPOLITICAL_EVENT",
+  "source_round": "docs/round/round_215.md",
+  "stage4b_watch_triggers": [
+    "same_day_limit_up_or_intraday_spike",
+    "policy_mou_resource_theme_basket_rally",
+    "science_preprint_theme_rally",
+    "disease_disaster_event_5d_20d_spike",
+    "mou_priced_as_contract",
+    "theme_reports_before_contract"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "event_premium_count": 2,
+    "failed_rerating_count": 1,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "large_sector": "POLICY_GEOPOLITICAL_EVENT",
+    "overheat_count": 1,
+    "price_moved_without_evidence_count": 3,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "r11_default_stage3_bias": "very_conservative",
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_215.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 7,
+    "success_candidate_count": 3,
+    "target_archetype_count": 13
+  },
+  "target_aliases": {
+    "DOMESTIC_RESOURCE_DISCOVERY_EVENT": "DOMESTIC_RESOURCE_DISCOVERY_EVENT",
+    "ENERGY_SECURITY_POLICY_EVENT": "ENERGY_SECURITY_POLICY_EVENT",
+    "EVENT_DISEASE_PEST_DEMAND": "EVENT_DISEASE_PEST_DEMAND",
+    "EVENT_PREMIUM": "EVENT_PREMIUM",
+    "GEOPOLITICAL_SHIPBUILDING_POLICY": "GEOPOLITICAL_SHIPBUILDING_POLICY",
+    "MARKET_STRUCTURE_SHORT_SELLING_POLICY": "MARKET_STRUCTURE_SHORT_SELLING_POLICY",
+    "NUCLEAR_POLICY_TO_CONTRACT": "NUCLEAR_POLICY_TO_CONTRACT",
+    "POLICY_MARKET_SHOCK_EVENT": "POLICY_MARKET_SHOCK_EVENT",
+    "PRICE_ONLY_RALLY": "PRICE_ONLY_RALLY",
+    "SMR_AI_POWER_POLICY_EVENT": "SMR_AI_POWER_POLICY_EVENT",
+    "SPECULATIVE_SCIENCE_THEME": "SPECULATIVE_SCIENCE_THEME",
+    "THESIS_BREAK_4C": "THESIS_BREAK_4C",
+    "US_SHIPBUILDING_REBUILD_POLICY": "US_SHIPBUILDING_REBUILD_POLICY"
+  },
+  "what_not_to_change": [
+    "do_not_use_round215_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_policy_mou_resource_disaster_science_or_market_structure_event_as_green",
+    "do_not_invent_ohlc_or_stage_dates"
+  ]
+}

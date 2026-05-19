@@ -1,0 +1,19 @@
+axis,points,direction,reason
+funded_budget,5,raise,정책 이벤트는 예산이 배정돼야 Stage 2 이상으로 간다.
+actual_contract,5,raise,MOU보다 실제 계약과 발주가 중요하다.
+revenue_conversion,5,raise,정책 뉴스가 매출과 EPS/FCF로 내려와야 한다.
+financing_secured,5,raise,자원·원전·조선·인프라 이벤트는 financing 확인이 필요하다.
+procurement_award,4,raise,정부·국방·원전 정책은 조달계약이 Stage 2 증거다.
+commerciality_confirmed,5,raise,자원 발견은 상업성이 확인되기 전 Green 금지다.
+independent_replication_or_validation,5,raise,과학 테마는 독립 검증 전 Stage 1이다.
+event_to_contract_escalation,5,raise,정책이 계약으로 승격되는 순간만 긍정적으로 본다.
+policy_durability,4,raise,정책 지속성과 법적 안정성이 있어야 한다.
+policy_news_only,-5,lower,정책 뉴스만으로는 Stage 3-Green 금지다.
+mou_only,-5,lower,MOU는 계약이 아니다.
+geopolitical_headline_only,-5,lower,지정학 headline만으로 EPS/FCF가 생기지 않는다.
+resource_estimate_without_drilling,-5,lower,시추 전 자원 추정은 event premium이다.
+preprint_or_science_claim_only,-5,lower,preprint만으로는 Green 금지다.
+disease_import_ban_only,-4,lower,질병·수입금지 이벤트는 빠르게 fade될 수 있다.
+market_structure_reform_without_earnings,-3,lower,시장구조 개선은 개별 기업 이익 전까지 overlay다.
+price_rally_before_contract,-5,lower,계약 전 가격 급등은 4B-watch다.
+event_fade_risk,-5,lower,이벤트가 완화되면 Stage 4C/fade로 본다.
