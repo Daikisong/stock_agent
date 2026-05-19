@@ -1,0 +1,273 @@
+{
+  "case_ids": [
+    "samsung_ea_fadhili_epc_backlog_stage2_watch",
+    "hyundai_ec_jafurah_gas_infra_stage2_watch",
+    "daewoo_ec_grand_faw_handover_stage2_watch",
+    "taeyoung_pf_workout_credit_hard_4c",
+    "hdc_hyundai_development_apartment_collapse_hard_4c",
+    "posco_ec_dl_construction_workplace_safety_4c_watch",
+    "sk_aws_ulsan_ai_data_center_real_asset_insufficient_evidence"
+  ],
+  "green_forbidden_patterns": [
+    "contract_headline_only",
+    "pf_relief_policy_only",
+    "real_estate_rebound_theme_only",
+    "data_center_theme_without_tenant",
+    "asset_headline_without_noi_affo",
+    "reit_yield_headline_only",
+    "epc_backlog_without_margin",
+    "low_margin_order_risk",
+    "capex_per_share_dilution",
+    "quality_safety_incident",
+    "workplace_fatality_repeated",
+    "working_capital_worsening"
+  ],
+  "green_required_fields": [
+    "company_level_order_or_tenant_confirmed",
+    "cash_flow_after_working_capital_confirmed",
+    "epc_margin_or_noi_affo_confirmed",
+    "pf_and_funding_cost_risk_passed",
+    "cost_ratio_or_project_progress_stable",
+    "tenant_occupancy_or_utilization_confirmed",
+    "capex_per_share_or_dilution_passed",
+    "safety_quality_trust_passed",
+    "price_path_after_cash_flow_evidence"
+  ],
+  "hard_4c_gates": [
+    "pf_workout_or_debt_reschedule",
+    "pf_delinquency_spike",
+    "unsold_inventory_or_presale_failure",
+    "construction_cost_ratio_spike",
+    "working_capital_deterioration",
+    "order_cancellation_or_client_payment_delay",
+    "low_margin_epc_loss_recognition",
+    "apartment_collapse_or_quality_accident",
+    "repeated_workplace_fatality_or_site_shutdown",
+    "license_suspension_or_cancellation_risk",
+    "tenant_absent_or_no_binding_lease",
+    "power_water_or_permitting_failure",
+    "affo_integrity_break",
+    "capex_dilution"
+  ],
+  "large_sector": "CONSTRUCTION_REAL_ESTATE_MATERIALS",
+  "score_adjustments": [
+    {
+      "axis": "cash_flow_after_working_capital",
+      "direction": "raise",
+      "points": "5",
+      "reason": "R10 Green은 수주가 현금흐름으로 닫힐 때 강하다."
+    },
+    {
+      "axis": "epc_margin_visibility",
+      "direction": "raise",
+      "points": "5",
+      "reason": "대형 EPC는 계약 크기보다 마진 가시성이 Stage 3의 핵심이다."
+    },
+    {
+      "axis": "project_cost_control",
+      "direction": "raise",
+      "points": "4",
+      "reason": "공정률과 원가율이 안정되어야 저마진 수주 위험을 줄인다."
+    },
+    {
+      "axis": "handover_milestone",
+      "direction": "raise",
+      "points": "3",
+      "reason": "완공·인도 milestone은 수주 headline보다 강한 Stage 2 증거다."
+    },
+    {
+      "axis": "pf_credit_cleanup",
+      "direction": "raise",
+      "points": "5",
+      "reason": "PF 부실 정리와 우량 프로젝트 분리가 확인될 때만 credit relief를 올린다."
+    },
+    {
+      "axis": "funding_cost_control",
+      "direction": "raise",
+      "points": "4",
+      "reason": "리츠·부동산은 조달비용이 배당과 AFFO를 결정한다."
+    },
+    {
+      "axis": "tenant_contract_quality",
+      "direction": "raise",
+      "points": "5",
+      "reason": "데이터센터 real asset은 임차계약이 있어야 현금흐름 후보가 된다."
+    },
+    {
+      "axis": "noi_affo_visibility",
+      "direction": "raise",
+      "points": "5",
+      "reason": "자산 headline보다 NOI/AFFO와 배당 커버리지가 중요하다."
+    },
+    {
+      "axis": "occupancy_or_utilization",
+      "direction": "raise",
+      "points": "4",
+      "reason": "공실률·가동률이 숫자로 확인되어야 자산 수익성이 보인다."
+    },
+    {
+      "axis": "power_water_permitting_secured",
+      "direction": "raise",
+      "points": "4",
+      "reason": "AI 데이터센터는 전력·물·인허가가 병목이다."
+    },
+    {
+      "axis": "safety_quality_trust",
+      "direction": "raise",
+      "points": "5",
+      "reason": "건설주는 안전·품질 신뢰가 Green의 전제다."
+    },
+    {
+      "axis": "contract_headline_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "수주 headline만으로 Stage 3-Green을 만들지 않는다."
+    },
+    {
+      "axis": "pf_relief_policy_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "PF 지원책은 relief이지 체급 변화 증거가 아니다."
+    },
+    {
+      "axis": "real_estate_rebound_theme_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "부동산 반등 테마만으로 현금흐름을 발명하지 않는다."
+    },
+    {
+      "axis": "data_center_theme_without_tenant",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "임차인 없는 데이터센터 테마는 Green 금지다."
+    },
+    {
+      "axis": "asset_headline_without_noi_affo",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "자산 보유 headline은 NOI/AFFO 전까지 제한한다."
+    },
+    {
+      "axis": "epc_backlog_without_margin",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "수주잔고가 많아도 마진이 없으면 Stage 3가 아니다."
+    },
+    {
+      "axis": "low_margin_order_risk",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "저마진 EPC는 수주가 오히려 현금흐름 부담이 될 수 있다."
+    },
+    {
+      "axis": "capex_per_share_dilution",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "CAPEX가 주당 AFFO/FCF를 희석하면 Green을 막는다."
+    },
+    {
+      "axis": "quality_safety_incident",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "아파트 붕괴·품질 사고는 hard RedTeam이다."
+    },
+    {
+      "axis": "workplace_fatality_repeated",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "반복 사망사고와 현장중단은 operational trust 4C gate다."
+    }
+  ],
+  "source_round": "docs/round/round_201.md",
+  "stage4b_statuses": [
+    "none",
+    "watch",
+    "elevated",
+    "graduated"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "hard_4c_case_count": 2,
+    "needs_ohlc_backfill": true,
+    "needs_ohlc_backfill_count": 7,
+    "price_backfill_field_count": 52,
+    "production_scoring_changed": false,
+    "required_target_count": 15,
+    "score_adjustment_count": 21,
+    "shadow_weight_only": true,
+    "stage3_case_count": 0,
+    "stage4b_watch_or_elevated_count": 5,
+    "success_candidate_count": 4
+  },
+  "target_aliases": [
+    {
+      "canonical_archetype": "CONSTRUCTION_REAL_ESTATE_CREDIT",
+      "round201_label": "CONSTRUCTION_REAL_ESTATE_CREDIT"
+    },
+    {
+      "canonical_archetype": "CONSTRUCTION_REAL_ESTATE_CREDIT_KOREA",
+      "round201_label": "CONSTRUCTION_REAL_ESTATE_CREDIT_KOREA"
+    },
+    {
+      "canonical_archetype": "PF_RESTRUCTURING_RELIEF",
+      "round201_label": "PF_RESTRUCTURING_RELIEF"
+    },
+    {
+      "canonical_archetype": "PF_CREDIT_REDTEAM_OVERLAY",
+      "round201_label": "PF_CREDIT_REDTEAM_OVERLAY"
+    },
+    {
+      "canonical_archetype": "OVERSEAS_EPC_CONTRACT_BACKLOG_KOREA",
+      "round201_label": "OVERSEAS_EPC_CONTRACT_BACKLOG_KOREA"
+    },
+    {
+      "canonical_archetype": "EPC_LOW_MARGIN_ORDER_OVERLAY",
+      "round201_label": "EPC_LOW_MARGIN_ORDER_OVERLAY"
+    },
+    {
+      "canonical_archetype": "APARTMENT_QUALITY_SAFETY_OVERLAY",
+      "round201_label": "APARTMENT_QUALITY_SAFETY_OVERLAY"
+    },
+    {
+      "canonical_archetype": "BUILDING_MATERIALS_PRICE_COST",
+      "round201_label": "BUILDING_MATERIALS_PRICE_COST"
+    },
+    {
+      "canonical_archetype": "DATA_CENTER_REIT_INFRASTRUCTURE",
+      "round201_label": "DATA_CENTER_REIT_INFRASTRUCTURE"
+    },
+    {
+      "canonical_archetype": "AI_DATA_CENTER_REAL_ASSET_DEVELOPMENT",
+      "round201_label": "AI_DATA_CENTER_REAL_ASSET_DEVELOPMENT"
+    },
+    {
+      "canonical_archetype": "AI_DATA_CENTER_NO_REVENUE_NO_TENANT",
+      "round201_label": "AI_DATA_CENTER_NO_REVENUE_NO_TENANT"
+    },
+    {
+      "canonical_archetype": "DATA_CENTER_POWER_WATER_PERMITTING",
+      "round201_label": "DATA_CENTER_POWER_WATER_PERMITTING"
+    },
+    {
+      "canonical_archetype": "REIT_AFFO_INTEGRITY_OVERLAY",
+      "round201_label": "REIT_AFFO_INTEGRITY_OVERLAY"
+    },
+    {
+      "canonical_archetype": "AI_INFRA_REAL_ASSET_THEME_OVERLAY",
+      "round201_label": "AI_INFRA_REAL_ASSET_THEME_OVERLAY"
+    },
+    {
+      "canonical_archetype": "DISASTER_REBUILD_EVENT",
+      "round201_label": "DISASTER_REBUILD_EVENT"
+    }
+  ],
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round201_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_contract_pf_relief_real_estate_rebound_data_center_reit_or_disaster_rebuild_headline_as_green_evidence",
+    "do_not_invent_cash_flow_margin_noi_affo_tenant_power_water_capex_or_stage_prices",
+    "do_not_confirm_hard_4c_without_reliable_primary_or_major_source"
+  ]
+}
