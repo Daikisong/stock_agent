@@ -1,0 +1,262 @@
+{
+  "case_ids": [
+    "lg_energy_solution_ess_lfp_stage2_ev_contract_4c_watch",
+    "lnf_tesla_cathode_contract_value_reduction_hard_4c",
+    "sk_innovation_sk_on_ev_thesis_break_ess_pivot_watch",
+    "samsung_sdi_tesla_ess_unconfirmed_stage1_only",
+    "sk_iet_separator_ev_demand_cycle_4c_watch",
+    "posco_future_m_lithium_event_and_ford_shock_false_green_guard",
+    "ecopro_materials_precursor_ipo_theme_overheat_guard"
+  ],
+  "green_forbidden_patterns": [
+    "ev_theme",
+    "ess_theme",
+    "capa_announcement",
+    "customer_name_only",
+    "unconfirmed_media_report",
+    "lithium_price_spike",
+    "ipo_premium",
+    "contract_value_without_actual_order",
+    "operating_loss_ex_tax_credit"
+  ],
+  "green_required_fields": [
+    "binding_contract",
+    "gwh_or_tonnage_volume",
+    "customer_calloff_or_shipment",
+    "utilization_rate",
+    "opm_or_gross_margin_improvement",
+    "fcf_after_capex",
+    "eps_fcf_revision",
+    "ev_or_ess_demand_durability",
+    "tax_credit_quality_separated_from_underlying_profit"
+  ],
+  "hard_4c_gates": [
+    "contract_cancellation",
+    "contract_value_reduction",
+    "customer_model_cancelled",
+    "customer_ev_strategy_retreat",
+    "take_or_pay_absent",
+    "gwh_calloff_decline",
+    "capex_cut_or_factory_delay",
+    "utilization_collapse",
+    "opm_collapse",
+    "fcf_deterioration",
+    "inventory_or_receivables_increase",
+    "operating_loss_ex_ampc",
+    "ev_demand_recovery_delay"
+  ],
+  "large_sector": "BATTERY_EV_GREEN",
+  "score_adjustments": [
+    {
+      "axis": "contract_binding_quality",
+      "direction": "raise",
+      "points": "4",
+      "reason": "계약 headline보다 실제 구속력과 take-or-pay를 본다."
+    },
+    {
+      "axis": "gwh_volume_visibility",
+      "direction": "raise",
+      "points": "4",
+      "reason": "GWh/톤수 물량이 있어야 매출 경로를 계산할 수 있다."
+    },
+    {
+      "axis": "customer_order_calloff",
+      "direction": "raise",
+      "points": "4",
+      "reason": "고객 주문 call-off와 출하 증거가 없으면 Stage 3를 막는다."
+    },
+    {
+      "axis": "opm_margin_visibility",
+      "direction": "raise",
+      "points": "4",
+      "reason": "ESS/EV 전환이 OPM 또는 gross margin으로 내려오는지 본다."
+    },
+    {
+      "axis": "fcf_after_capex",
+      "direction": "raise",
+      "points": "4",
+      "reason": "CAPEX 뒤 FCF가 남는지 확인한다."
+    },
+    {
+      "axis": "ess_revenue_conversion",
+      "direction": "raise",
+      "points": "3",
+      "reason": "ESS 전환은 매출 인식이 확인될 때 강해진다."
+    },
+    {
+      "axis": "utilization_rate",
+      "direction": "raise",
+      "points": "3",
+      "reason": "공장 가동률은 CAPA announcement의 반대편 검증축이다."
+    },
+    {
+      "axis": "customer_quality",
+      "direction": "raise",
+      "points": "3",
+      "reason": "고객의 모델/전략/신용도가 계약 지속성을 좌우한다."
+    },
+    {
+      "axis": "tax_credit_quality",
+      "direction": "raise",
+      "points": "2",
+      "reason": "AMPC/세액공제는 본업 이익과 분리해서 본다."
+    },
+    {
+      "axis": "ev_theme",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "EV 성장 테마만으로 Stage 3를 만들지 않는다."
+    },
+    {
+      "axis": "capa_announcement",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "CAPA는 비용이 먼저 나갈 수 있으므로 매출/마진/FCF 전에는 감점한다."
+    },
+    {
+      "axis": "customer_name_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "Tesla/Ford 같은 고객명만으로는 충분하지 않다."
+    },
+    {
+      "axis": "non_binding_supply_mou",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "비구속 MOU는 Stage 1 라우팅에 가깝다."
+    },
+    {
+      "axis": "policy_subsidy_expectation",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "정책/보조금 기대는 본업 수익성과 분리한다."
+    },
+    {
+      "axis": "lithium_price_event",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "리튬 가격 이벤트는 구조적 Green이 아니라 cycle/event일 수 있다."
+    },
+    {
+      "axis": "ipo_theme_premium",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "IPO 수급과 그룹 스토리는 price-only 위험이다."
+    },
+    {
+      "axis": "group_vertical_integration_story",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "내재화 스토리는 외부 고객/OPM/FCF 전에는 제한한다."
+    },
+    {
+      "axis": "ess_media_report_unconfirmed",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "미확정 ESS 보도는 disclosure confidence cap을 건다."
+    },
+    {
+      "axis": "tax_credit_without_operating_profit",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "AMPC 제외 적자는 Green block에 가깝다."
+    }
+  ],
+  "source_round": "docs/round/round_194.md",
+  "stage4b_statuses": [
+    "none",
+    "watch",
+    "elevated",
+    "graduated"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "failed_rerating_count": 2,
+    "hard_4c_case_count": 1,
+    "needs_ohlc_backfill": true,
+    "needs_ohlc_backfill_count": 7,
+    "overheat_count": 2,
+    "price_backfill_field_count": 51,
+    "production_scoring_changed": false,
+    "required_target_count": 16,
+    "score_adjustment_count": 19,
+    "shadow_weight_only": true,
+    "stage3_case_count": 0,
+    "stage4b_watch_or_elevated_count": 6,
+    "success_candidate_count": 2
+  },
+  "target_aliases": [
+    {
+      "canonical_archetype": "BATTERY_MATERIALS_CAPEX_OVERHEAT",
+      "round194_label": "BATTERY_MATERIALS_CAPEX_OVERHEAT"
+    },
+    {
+      "canonical_archetype": "CATHODE_LONG_CONTRACT_VISIBILITY",
+      "round194_label": "CATHODE_LONG_CONTRACT_VISIBILITY"
+    },
+    {
+      "canonical_archetype": "LITHIUM_RESOURCE_SECURITY_KOREA",
+      "round194_label": "LITHIUM_RESOURCE_SECURITY_KOREA"
+    },
+    {
+      "canonical_archetype": "BATTERY_EQUIPMENT_CAPEX_CYCLE",
+      "round194_label": "BATTERY_EQUIPMENT_CAPEX_CYCLE"
+    },
+    {
+      "canonical_archetype": "BATTERY_RECYCLING_ESS_SHIFT",
+      "round194_label": "BATTERY_RECYCLING_ESS_SHIFT"
+    },
+    {
+      "canonical_archetype": "ESS_LFP_GRID_STORAGE",
+      "round194_label": "ESS_LFP_GRID_STORAGE"
+    },
+    {
+      "canonical_archetype": "EV_TO_ESS_CAPACITY_REDEPLOYMENT",
+      "round194_label": "EV_TO_ESS_CAPACITY_REDEPLOYMENT"
+    },
+    {
+      "canonical_archetype": "EV_BATTERY_JV_RESTRUCTURING",
+      "round194_label": "EV_BATTERY_JV_RESTRUCTURING"
+    },
+    {
+      "canonical_archetype": "BATTERY_CONTRACT_CANCELLATION_4C",
+      "round194_label": "BATTERY_CONTRACT_CANCELLATION_4C"
+    },
+    {
+      "canonical_archetype": "BATTERY_CONTRACT_DISCLOSURE_CONFIDENCE",
+      "round194_label": "BATTERY_CONTRACT_DISCLOSURE_CONFIDENCE"
+    },
+    {
+      "canonical_archetype": "BATTERY_TAX_CREDIT_QUALITY_OVERLAY",
+      "round194_label": "BATTERY_TAX_CREDIT_QUALITY_OVERLAY"
+    },
+    {
+      "canonical_archetype": "BATTERY_GRAPHITE_SUPPLYCHAIN_SECURITY",
+      "round194_label": "BATTERY_GRAPHITE_SUPPLYCHAIN_SECURITY"
+    },
+    {
+      "canonical_archetype": "SEPARATOR_EV_DEMAND_CYCLE",
+      "round194_label": "SEPARATOR_EV_DEMAND_CYCLE"
+    },
+    {
+      "canonical_archetype": "COPPER_FOIL_EV_DEMAND_CYCLE",
+      "round194_label": "COPPER_FOIL_EV_DEMAND_CYCLE"
+    },
+    {
+      "canonical_archetype": "LITHIUM_CYCLE_OVERLAY",
+      "round194_label": "LITHIUM_CYCLE_OVERLAY"
+    },
+    {
+      "canonical_archetype": "EVENT_LITHIUM_PRICE_RALLY",
+      "round194_label": "EVENT_LITHIUM_PRICE_RALLY"
+    }
+  ],
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round194_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_ev_ess_capa_or_customer_name_as_green_evidence",
+    "do_not_invent_prices_stage_dates_shipments_margins_or_fcf"
+  ]
+}
