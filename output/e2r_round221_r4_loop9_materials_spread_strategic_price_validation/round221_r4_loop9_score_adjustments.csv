@@ -1,0 +1,19 @@
+axis,points,direction,reason
+actual_product_spread,5,raise,R4 Stage 3는 원자재 가격보다 제품 스프레드 확인이 먼저다.
+fcf_after_working_capital,5,raise,재고와 운전자본 이후 FCF가 보여야 구조적 rerating 후보가 된다.
+supply_discipline_confirmed,5,raise,공급규율 또는 설비중단이 실제 확인되어야 spread 회복이 지속된다.
+capacity_shutdown_confirmed,4,raise,Daesan NCC 가동중단처럼 확정된 shutdown은 Stage 2 relief다.
+price_floor_or_offtake,5,raise,전략자원은 price floor/offtake가 있어야 commodity cycle과 분리된다.
+cost_curve_advantage,4,raise,cost curve 우위가 있어야 가격 하락에도 FCF 방어가 가능하다.
+tariff_resilience,4,raise,관세 환경에서도 수출 마진이 방어되는지 확인한다.
+resource_security_with_downstream_margin,4,raise,resource security는 downstream margin과 연결될 때만 강해진다.
+commodity_price_up_only,-5,lower,원자재 가격 상승만으로는 EPS/FCF 체급 변화를 증명하지 못한다.
+tariff_event_only,-4,lower,관세 headline은 수출업체에는 4C-watch가 될 수 있다.
+restructuring_plan_without_margin,-4,lower,구조조정 계획은 OPM/FCF 회복 전까지 Stage 2 watch다.
+policy_support_without_fcf,-4,lower,정책 지원만 있고 FCF가 없으면 Green 금지다.
+tender_offer_or_governance_premium,-5,lower,공개매수/경영권 프리미엄은 구조적 Stage 3와 분리한다.
+unconfirmed_media_report,-5,lower,미확정 고객·M&A 보도는 event premium이다.
+mna_rumor_without_transaction,-5,lower,거래가 확정되지 않은 M&A rumor는 Green 근거가 아니다.
+lithium_price_event,-5,lower,리튬 가격 반등은 cycle/event로 먼저 본다.
+refining_margin_geopolitical_shock,-3,lower,지정학적 정제마진 spike는 multi-quarter floor 전까지 cycle이다.
+capex_heavy_project_pre_revenue,-4,lower,상업가동 전 대형 CAPEX 프로젝트는 dilution/FCF 리스크가 크다.
