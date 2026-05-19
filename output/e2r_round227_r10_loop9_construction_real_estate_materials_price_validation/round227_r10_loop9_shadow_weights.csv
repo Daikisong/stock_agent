@@ -1,0 +1,9 @@
+archetype,cash_flow_after_wc,epc_margin,project_cost_control,progress_revenue,pf_cleanup,funding_cost,tenant_noi_affo,safety_trust,event_penalty,hard_4c_sensitivity,notes
+OVERSEAS_EPC_CONTRACT_BACKLOG_KOREA,+5,+5,+5,+4,+0,+3,+0,+2,-3,+4,"Large EPC is Stage 2; Stage 3 requires margin, progress revenue, and cash collection."
+EPC_LOW_MARGIN_ORDER_OVERLAY,+5,+5,+5,+4,+0,+3,+0,+2,-4,+5,Low-margin orders are a cap unless cost control and working capital are proven.
+PF_CREDIT_REDTEAM_OVERLAY,+5,+0,+0,+0,+5,+5,+0,+2,-5,+5,PF delinquency spike and debt reschedule are hard 4C inputs.
+POLICY_LOCAL_REAL_ESTATE_THEME,+3,+2,+3,+2,+4,+4,+0,+2,-5,+4,"Housing policy is Stage 1/2 until presales, margin, PF, and FCF confirm."
+OPERATIONAL_TRUST_HARD_4C,+0,+0,+0,+0,+0,+0,+0,+5,+0,+5,Bridge collapse and direct fatal safety events block Green.
+APARTMENT_QUALITY_SAFETY_OVERLAY,+0,+0,+0,+0,+0,+0,+0,+5,+0,+5,Recurring fatal accidents create fine/license/site shutdown risk.
+AI_DATA_CENTER_REAL_ASSET_DEVELOPMENT,+4,+0,+4,+2,+0,+5,+5,+3,-5,+4,"Data-center real asset needs tenant, NOI/AFFO, power/water, and capex per share."
+BUILDING_MATERIALS_CYCLE,+4,+4,+3,+0,+3,+4,+0,+2,-4,+4,Building-material demand weakness blocks Green until demand and margin stabilize.

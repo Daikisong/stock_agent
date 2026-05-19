@@ -1,0 +1,23 @@
+axis,points,direction,reason
+cash_flow_after_working_capital,5,raise,R10은 수주가 현금회수와 working capital 이후 FCF로 닫혀야 한다.
+epc_margin_visibility,5,raise,대형 EPC는 계약금액보다 마진과 공정률 가시성이 중요하다.
+project_cost_control,5,raise,원가율 통제 없이는 수주잔고가 오히려 손실 리스크가 된다.
+progress_revenue_visibility,4,raise,공정률 매출과 인도 milestone은 headline보다 강한 증거다.
+handover_milestone,4,raise,완공/인도 확인은 Stage 2에서 Stage 3로 넘어가기 전 필수 확인축이다.
+pf_credit_cleanup,5,raise,PF 부실 정리와 우량 프로젝트 분리가 확인될 때만 credit relief를 인정한다.
+funding_cost_control,5,raise,건설·부동산은 조달비용이 FCF와 배당 커버리지를 결정한다.
+tenant_contract_quality,5,raise,데이터센터는 임차계약이 있어야 현금흐름 후보가 된다.
+noi_affo_visibility,5,raise,자산 headline이 아니라 NOI/AFFO와 주당 현금흐름을 본다.
+power_water_permitting_secured,4,raise,AI 데이터센터는 전력·물·인허가가 병목이다.
+safety_quality_trust,5,raise,건설 안전·품질 신뢰는 Green의 전제 조건이다.
+contract_headline_only,-5,lower,수주 headline만으로 Stage 3-Green을 만들지 않는다.
+pf_relief_policy_only,-5,lower,PF 지원책은 relief이지 체급 변화 증거가 아니다.
+housing_supply_policy_only,-4,lower,공급정책만으로 분양률·마진·FCF를 알 수 없다.
+data_center_theme_without_tenant,-5,lower,임차인 없는 데이터센터 테마는 price-only rally가 되기 쉽다.
+asset_headline_without_noi_affo,-5,lower,자산 보유 headline은 NOI/AFFO 전까지 제한한다.
+epc_backlog_without_margin,-5,lower,수주잔고가 많아도 저마진이면 Stage 3가 아니다.
+low_margin_order_risk,-4,lower,저마진 EPC는 현금흐름 부담으로 바뀔 수 있다.
+capex_per_share_dilution,-4,lower,CAPEX가 주당 현금흐름을 희석하면 Green을 막는다.
+quality_safety_incident,-5,lower,붕괴·품질사고는 hard RedTeam 입력이다.
+workplace_fatality_repeated,-5,lower,반복 사망사고와 현장중단은 operational trust 4C gate다.
+building_material_demand_weakness,-4,lower,철근·건자재 수요 약화는 margin과 EPS를 동시에 깎을 수 있다.
