@@ -1,0 +1,35 @@
+# Round 210 R6 4B/4C Review
+
+## 4B Watch Triggers
+
+- financials_trade_near_or_above_book_after_pbr_rerating
+- buyback_cancellation_surprise_fades
+- nav_rally_transferred_to_holding_or_insurance_without_monetization
+- stablecoin_theme_two_to_three_x_without_revenue
+- digital_asset_stake_investment_at_volume_peak
+- mna_or_stock_swap_priced_before_regulatory_approval
+
+## Hard 4C Gates
+
+- pf_credit_cost_spike
+- cet1_or_kics_weakening
+- buyback_cancellation_cancelled
+- dividend_payout_retreat
+- large_acquisition_capital_ratio_damage
+- major_shareholder_suitability_risk
+- financial_crime_or_governance_legal_break
+- privacy_data_transfer_fine
+- stablecoin_forex_risk_regulation_tightening
+- digital_asset_volume_collapse
+- exchange_security_incident_or_abnormal_withdrawal
+- equity_stake_impairment
+
+## Case Notes
+
+- r6_loop8_sk_square_valueup_nav_discount: low_pbr_or_nav_discount_only, skhynix_price_dependency, discount_narrowing_price_path_unverified, repeated_cancellation_unverified
+- r6_loop8_hana_dunamu_equity_option: equity_method_income_unverified, regulatory_approval_unverified, capital_ratio_impact_unverified, stablecoin_forex_concern
+- r6_loop8_samsung_life_nav_valueup: forced_sale_or_regulatory_overhang, use_of_proceeds_unverified, kics_csm_unverified, samsung_electronics_nav_dependency
+- r6_loop8_naver_dunamu_digital_asset_event: abnormal_withdrawal_54bn_krw, event_rally_before_regulated_revenue, regulatory_approval_unverified, exchange_security_trust_watch
+- r6_loop8_kakaobank_kakao_governance_watch: major_shareholder_legal_risk, bank_ownership_cap_risk, financial_crime_governance_overhang, kakaobank_direct_price_unavailable
+- r6_loop8_stablecoin_theme_overheat: stablecoin_policy_theme_only, regulated_revenue_unverified, non_bank_systemic_risk, fx_outflow_risk, price_only_rally
+- r6_loop8_kakao_pay_privacy_4c_watch: privacy_data_trust_break, user_data_transfer_without_consent, payment_privacy_regulatory_break, source_confidence_medium_low
