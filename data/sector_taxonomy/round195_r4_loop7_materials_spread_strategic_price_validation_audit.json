@@ -1,0 +1,248 @@
+{
+  "case_ids": [
+    "lotte_chemical_petrochemical_loss_restructuring_watch",
+    "lg_chem_petrochemical_spread_failed_rerating_watch",
+    "sk_innovation_refining_margin_cyclical_success_not_structural",
+    "korea_zinc_governance_event_vs_critical_minerals_stage2",
+    "posco_holdings_lithium_resource_security_cycle_watch",
+    "oci_holdings_spacex_polysilicon_unconfirmed_event_premium",
+    "poongsan_copper_defense_sale_rumor_event_break"
+  ],
+  "green_forbidden_patterns": [
+    "commodity_price_spike",
+    "tender_offer_premium",
+    "governance_battle",
+    "policy_support_expectation",
+    "unconfirmed_media_report",
+    "restructuring_plan_only",
+    "lithium_or_polysilicon_price_event",
+    "geopolitical_refining_margin_spike"
+  ],
+  "green_required_fields": [
+    "actual_product_spread",
+    "cost_curve_advantage",
+    "supply_discipline_or_capacity_shutdown_confirmed",
+    "inventory_not_building",
+    "fcf_conversion_or_cashflow_improvement",
+    "price_floor_or_offtake_or_long_term_contract",
+    "medium_term_eps_revision",
+    "capex_and_dilution_risk_passed"
+  ],
+  "hard_4c_gates": [
+    "spread_reversal",
+    "china_oversupply",
+    "middle_east_capacity_overhang",
+    "inventory_build",
+    "ncc_shutdown",
+    "contract_sale_tender_event_failure",
+    "regulator_revision_order",
+    "large_share_issuance_or_dilution",
+    "commodity_price_decline",
+    "project_capex_overrun",
+    "offtake_absent",
+    "fcf_deterioration"
+  ],
+  "large_sector": "MATERIALS_SPREAD_STRATEGIC",
+  "score_adjustments": [
+    {
+      "axis": "actual_product_spread",
+      "direction": "raise",
+      "points": "4",
+      "reason": "가격 이벤트가 아니라 실제 제품 spread를 확인한다."
+    },
+    {
+      "axis": "fcf_after_working_capital",
+      "direction": "raise",
+      "points": "4",
+      "reason": "재고와 운전자본 뒤에 남는 FCF가 중요하다."
+    },
+    {
+      "axis": "supply_discipline_confirmed",
+      "direction": "raise",
+      "points": "4",
+      "reason": "공급규율이 확인될 때만 commodity cycle을 구조화한다."
+    },
+    {
+      "axis": "capacity_shutdown_confirmed",
+      "direction": "raise",
+      "points": "3",
+      "reason": "구조조정은 실제 shut-down/가동중단이 확인되어야 강해진다."
+    },
+    {
+      "axis": "price_floor_or_offtake",
+      "direction": "raise",
+      "points": "4",
+      "reason": "가격 floor와 offtake가 있으면 전략자원 visibility가 올라간다."
+    },
+    {
+      "axis": "cost_curve_advantage",
+      "direction": "raise",
+      "points": "3",
+      "reason": "원가곡선 우위가 없으면 가격 하락 때 이익이 무너진다."
+    },
+    {
+      "axis": "strategic_customer_or_government_offtake",
+      "direction": "raise",
+      "points": "3",
+      "reason": "전략광물은 정부/고객 offtake가 있어야 Stage 2 이상이다."
+    },
+    {
+      "axis": "inventory_normalization",
+      "direction": "raise",
+      "points": "3",
+      "reason": "재고 정상화는 spread 지속성의 핵심이다."
+    },
+    {
+      "axis": "capital_return_from_cashflow",
+      "direction": "raise",
+      "points": "2",
+      "reason": "현금흐름 기반 환원은 cycle과 구조 변화를 구분한다."
+    },
+    {
+      "axis": "commodity_price_up_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "원자재 가격 상승만으로 Stage 3를 만들지 않는다."
+    },
+    {
+      "axis": "restructuring_plan_without_margin",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "구조조정 계획만 있고 spread/OPM이 없으면 Stage 2 watch다."
+    },
+    {
+      "axis": "policy_support_without_fcf",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "정책 지원은 FCF 전까지 event premium이다."
+    },
+    {
+      "axis": "tender_offer_or_governance_premium",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "공개매수/경영권 분쟁 프리미엄은 구조적 EPS/FCF와 분리한다."
+    },
+    {
+      "axis": "unconfirmed_media_report",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "미확인 SpaceX/매각 보도는 Green 근거가 아니다."
+    },
+    {
+      "axis": "capacity_cut_expectation_only",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "기대만 있고 실제 capacity shutdown이 없으면 제한한다."
+    },
+    {
+      "axis": "lithium_price_event",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "리튬 가격 이벤트는 cycle/event premium으로 본다."
+    },
+    {
+      "axis": "refining_margin_geopolitical_shock",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "전쟁성 정제마진 spike는 구조적 Green이 아니다."
+    },
+    {
+      "axis": "customer_or_contract_unconfirmed",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "고객/계약 미확인은 disclosure confidence cap이다."
+    },
+    {
+      "axis": "capex_heavy_project_pre_revenue",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "대규모 CAPEX 프로젝트는 매출/FCF 전에는 부담이다."
+    }
+  ],
+  "source_round": "docs/round/round_195.md",
+  "stage4b_statuses": [
+    "none",
+    "watch",
+    "elevated",
+    "graduated"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "cyclical_success_count": 1,
+    "event_premium_count": 3,
+    "failed_rerating_count": 1,
+    "hard_4c_case_count": 1,
+    "needs_ohlc_backfill": true,
+    "needs_ohlc_backfill_count": 7,
+    "price_backfill_field_count": 49,
+    "production_scoring_changed": false,
+    "required_target_count": 13,
+    "score_adjustment_count": 19,
+    "shadow_weight_only": true,
+    "stage3_case_count": 0,
+    "stage4b_watch_or_elevated_count": 6,
+    "success_candidate_count": 1
+  },
+  "target_aliases": [
+    {
+      "canonical_archetype": "REFINING_OIL_SPREAD",
+      "round195_label": "REFINING_OIL_SPREAD"
+    },
+    {
+      "canonical_archetype": "CHEMICAL_SPREAD",
+      "round195_label": "CHEMICAL_SPREAD"
+    },
+    {
+      "canonical_archetype": "PETROCHEMICAL_RESTRUCTURING_KOREA",
+      "round195_label": "PETROCHEMICAL_RESTRUCTURING_KOREA"
+    },
+    {
+      "canonical_archetype": "COMMODITY_SPREAD_CYCLE_NOT_STRUCTURAL",
+      "round195_label": "COMMODITY_SPREAD_CYCLE_NOT_STRUCTURAL"
+    },
+    {
+      "canonical_archetype": "NONFERROUS_STRATEGIC_METALS",
+      "round195_label": "NONFERROUS_STRATEGIC_METALS"
+    },
+    {
+      "canonical_archetype": "RARE_METALS_STRATEGIC_MATERIALS",
+      "round195_label": "RARE_METALS_STRATEGIC_MATERIALS"
+    },
+    {
+      "canonical_archetype": "RARE_METALS_PRICE_FLOOR_OFFTAKE",
+      "round195_label": "RARE_METALS_PRICE_FLOOR_OFFTAKE"
+    },
+    {
+      "canonical_archetype": "LITHIUM_BATTERY_RAW_MATERIAL",
+      "round195_label": "LITHIUM_BATTERY_RAW_MATERIAL"
+    },
+    {
+      "canonical_archetype": "LITHIUM_CYCLE_OVERLAY",
+      "round195_label": "LITHIUM_CYCLE_OVERLAY"
+    },
+    {
+      "canonical_archetype": "POLYSILICON_NON_CHINA_SUPPLY_OPTION",
+      "round195_label": "POLYSILICON_NON_CHINA_SUPPLY_OPTION"
+    },
+    {
+      "canonical_archetype": "COPPER_PROCESSING_PLUS_DEFENSE",
+      "round195_label": "COPPER_PROCESSING_PLUS_DEFENSE"
+    },
+    {
+      "canonical_archetype": "EVENT_PREMIUM_GOVERNANCE_OVERLAY",
+      "round195_label": "EVENT_PREMIUM_GOVERNANCE_OVERLAY"
+    },
+    {
+      "canonical_archetype": "COMMODITY_PRICE_4C_OVERLAY",
+      "round195_label": "COMMODITY_PRICE_4C_OVERLAY"
+    }
+  ],
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round195_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_commodity_price_or_event_premium_as_green_evidence",
+    "do_not_invent_prices_stage_dates_spreads_offtake_margins_or_fcf"
+  ]
+}
