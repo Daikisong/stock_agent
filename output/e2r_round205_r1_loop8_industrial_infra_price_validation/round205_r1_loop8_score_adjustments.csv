@@ -1,0 +1,15 @@
+axis,points,direction,reason
+contract_amount_to_sales,4,raise,계약금액/매출 비율이 확인된 수주형 사례를 더 강하게 본다.
+delivery_schedule,4,raise,납품 일정이 있어야 수주가 매출로 이어질 수 있다.
+order_to_revenue_conversion,5,raise,수주 헤드라인보다 실제 매출 전환을 보상한다.
+op_eps_revision,5,raise,수주가 OP/EPS 상향으로 연결될 때 Stage 3 근거가 된다.
+government_backlog,4,raise,정부 고객과 다년 backlog는 방산 visibility를 높인다.
+combat_validation,3,raise,실전 검증은 방공/요격체계 수요 확률을 높인다.
+local_production_or_technology_transfer,3,raise,현지생산/기술이전은 방산 수주 지속성을 높인다.
+price_path_alignment,5,raise,Stage 2/3 증거 이후 가격경로가 맞는지 검증한다.
+order_headline_only,-4,lower,수주 기사만 있고 마진·납품·EPS가 없으면 Green 금지다.
+ipo_first_day_rally,-5,lower,IPO 첫날 급등은 수주/FCF 증거가 아니므로 4B-watch다.
+mou_or_preliminary_policy_event,-4,lower,MOU·정책 예비 이벤트는 매출 전환 전까지 Stage 1/2에 둔다.
+record_high_on_policy_event,-3,lower,정책/합병 이벤트 신고가는 evidence-before-price가 아닐 수 있다.
+contract_without_margin_visibility,-3,lower,계약이 있어도 마진 visibility가 없으면 Green을 막는다.
+geopolitical_exposure_unpriced,-3,lower,제재·지정학 리스크가 매출을 흔들 수 있으면 RedTeam에 반영한다.

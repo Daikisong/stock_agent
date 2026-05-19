@@ -1,0 +1,217 @@
+{
+  "case_ids": [
+    "r1_loop8_hyundai_rotem_k2_aligned",
+    "r1_loop8_hanwha_aerospace_mfe_4b",
+    "r1_loop8_lig_nex1_cheongung_watch",
+    "r1_loop8_kai_fa50_stage2",
+    "r1_loop8_hd_hyundai_marine_ipo_premium",
+    "r1_loop8_hanwha_ocean_china_sanction",
+    "r1_loop8_hd_hyundai_heavy_mipo_merger_4b"
+  ],
+  "green_forbidden_patterns": [
+    "order_headline_only",
+    "ipo_first_day_rally",
+    "mou_or_preliminary_policy_event",
+    "record_high_on_policy_event",
+    "contract_without_margin_visibility",
+    "policy_theme_only"
+  ],
+  "green_required_fields": [
+    "contract_amount_confirmed",
+    "contract_duration_or_delivery_schedule_confirmed",
+    "actual_delivery_or_revenue_recognition_confirmed",
+    "opm_or_eps_revision_confirmed",
+    "backlog_quality_confirmed",
+    "price_path_after_evidence",
+    "sanction_financing_dilution_margin_risk_passed"
+  ],
+  "hard_4c_gates": [
+    "contract_cancellation",
+    "financing_failure",
+    "delivery_delay_to_earnings_downgrade",
+    "sanction_revenue_disruption",
+    "margin_collapse",
+    "accounting_or_disclosure_trust_break",
+    "fatal_safety_or_quality_issue"
+  ],
+  "large_sector": "INDUSTRIAL_ORDERS_INFRA",
+  "score_adjustments": [
+    {
+      "axis": "contract_amount_to_sales",
+      "direction": "raise",
+      "points": "4",
+      "reason": "계약금액/매출 비율이 확인된 수주형 사례를 더 강하게 본다."
+    },
+    {
+      "axis": "delivery_schedule",
+      "direction": "raise",
+      "points": "4",
+      "reason": "납품 일정이 있어야 수주가 매출로 이어질 수 있다."
+    },
+    {
+      "axis": "order_to_revenue_conversion",
+      "direction": "raise",
+      "points": "5",
+      "reason": "수주 헤드라인보다 실제 매출 전환을 보상한다."
+    },
+    {
+      "axis": "op_eps_revision",
+      "direction": "raise",
+      "points": "5",
+      "reason": "수주가 OP/EPS 상향으로 연결될 때 Stage 3 근거가 된다."
+    },
+    {
+      "axis": "government_backlog",
+      "direction": "raise",
+      "points": "4",
+      "reason": "정부 고객과 다년 backlog는 방산 visibility를 높인다."
+    },
+    {
+      "axis": "combat_validation",
+      "direction": "raise",
+      "points": "3",
+      "reason": "실전 검증은 방공/요격체계 수요 확률을 높인다."
+    },
+    {
+      "axis": "local_production_or_technology_transfer",
+      "direction": "raise",
+      "points": "3",
+      "reason": "현지생산/기술이전은 방산 수주 지속성을 높인다."
+    },
+    {
+      "axis": "price_path_alignment",
+      "direction": "raise",
+      "points": "5",
+      "reason": "Stage 2/3 증거 이후 가격경로가 맞는지 검증한다."
+    },
+    {
+      "axis": "order_headline_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "수주 기사만 있고 마진·납품·EPS가 없으면 Green 금지다."
+    },
+    {
+      "axis": "ipo_first_day_rally",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "IPO 첫날 급등은 수주/FCF 증거가 아니므로 4B-watch다."
+    },
+    {
+      "axis": "mou_or_preliminary_policy_event",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "MOU·정책 예비 이벤트는 매출 전환 전까지 Stage 1/2에 둔다."
+    },
+    {
+      "axis": "record_high_on_policy_event",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "정책/합병 이벤트 신고가는 evidence-before-price가 아닐 수 있다."
+    },
+    {
+      "axis": "contract_without_margin_visibility",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "계약이 있어도 마진 visibility가 없으면 Green을 막는다."
+    },
+    {
+      "axis": "geopolitical_exposure_unpriced",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "제재·지정학 리스크가 매출을 흔들 수 있으면 RedTeam에 반영한다."
+    }
+  ],
+  "source_round": "docs/round/round_205.md",
+  "stage4b_watch_triggers": [
+    "stage3_after_2x_to_5x_return",
+    "new_contracts_are_consensus",
+    "market_cap_or_record_high_headline",
+    "large_capital_raise_or_convertible_bond",
+    "ipo_first_day_50_to_100pct_rally",
+    "policy_merger_or_mou_record_high"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "overheat_or_watch_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "price_validation_field_count": 14,
+    "production_scoring_changed": false,
+    "reported_price_anchor_count": 7,
+    "required_target_count": 14,
+    "score_adjustment_count": 14,
+    "shadow_weight_only": true,
+    "stage3_case_count": 1,
+    "stage4b_watch_or_elevated_count": 6,
+    "structural_success_count": 2,
+    "success_candidate_count": 3
+  },
+  "target_aliases": [
+    {
+      "canonical_archetype": "DEFENSE_GOVERNMENT_BACKLOG",
+      "round205_label": "DEFENSE_GOVERNMENT_BACKLOG"
+    },
+    {
+      "canonical_archetype": "DEFENSE_LOCAL_PRODUCTION_PLATFORM",
+      "round205_label": "DEFENSE_LOCAL_PRODUCTION_PLATFORM"
+    },
+    {
+      "canonical_archetype": "DEFENSE_INTERCEPTOR_COMBAT_VALIDATION",
+      "round205_label": "DEFENSE_INTERCEPTOR_COMBAT_VALIDATION"
+    },
+    {
+      "canonical_archetype": "DEFENSE_AIRCRAFT_EXPORT_BACKLOG",
+      "round205_label": "DEFENSE_AIRCRAFT_EXPORT_BACKLOG"
+    },
+    {
+      "canonical_archetype": "SHIPBUILDING_OFFSHORE_BACKLOG",
+      "round205_label": "SHIPBUILDING_OFFSHORE_BACKLOG"
+    },
+    {
+      "canonical_archetype": "SHIP_MRO_RECURRING_PLATFORM",
+      "round205_label": "SHIP_MRO_RECURRING_PLATFORM"
+    },
+    {
+      "canonical_archetype": "GEOPOLITICAL_SHIPBUILDING_SANCTION_OVERLAY",
+      "round205_label": "GEOPOLITICAL_SHIPBUILDING_SANCTION_OVERLAY"
+    },
+    {
+      "canonical_archetype": "CONTRACT_BACKLOG_INDUSTRIAL",
+      "round205_label": "CONTRACT_BACKLOG_INDUSTRIAL"
+    },
+    {
+      "canonical_archetype": "PRICE_ONLY_RALLY",
+      "round205_label": "PRICE_ONLY_RALLY"
+    },
+    {
+      "canonical_archetype": "CROWDED_RERATING_4B_WATCH",
+      "round205_label": "CROWDING_4B_WATCH"
+    },
+    {
+      "canonical_archetype": "CROWDED_RERATING_4B_WATCH",
+      "round205_label": "CROWDED_RERATING_4B_WATCH"
+    },
+    {
+      "canonical_archetype": "STRUCTURAL_SUCCESS_BUT_4B_WATCH",
+      "round205_label": "STRUCTURAL_SUCCESS_BUT_4B_WATCH"
+    },
+    {
+      "canonical_archetype": "EVENT_PREMIUM",
+      "round205_label": "EVENT_PREMIUM"
+    },
+    {
+      "canonical_archetype": "THESIS_BREAK_4C",
+      "round205_label": "THESIS_BREAK_4C"
+    }
+  ],
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round205_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_order_headline_ipo_mou_policy_or_record_high_event_as_green_evidence",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist",
+    "keep_full_ohlc_complete_false_until_official_backfill_is_done"
+  ]
+}
