@@ -1,0 +1,295 @@
+{
+  "case_ids": [
+    "sk_square_valueup_buyback_nav_discount_stage2_4b_watch",
+    "hana_financial_dunamu_equity_option_stage2_watch",
+    "samsung_life_nav_valueup_forced_stake_sale_regulatory_watch",
+    "kakaobank_internet_bank_governance_ownership_4c_watch",
+    "kakaopay_aton_krw_stablecoin_policy_theme_overheat",
+    "kakaopay_privacy_data_transfer_fine_payment_4c_break",
+    "woori_financial_valueup_nonbank_expansion_capital_buffer_watch"
+  ],
+  "green_forbidden_patterns": [
+    "low_pbr_only",
+    "policy_valueup_only",
+    "treasury_buyback_without_cancellation",
+    "stablecoin_policy_theme_only",
+    "digital_asset_equity_option_without_revenue",
+    "fintech_user_growth_without_profit",
+    "non_bank_acquisition_with_capital_ratio_weakening",
+    "major_shareholder_legal_risk",
+    "privacy_or_data_trust_break"
+  ],
+  "green_required_fields": [
+    "roe_structurally_improving_or_sustained",
+    "cet1_or_kics_capital_buffer",
+    "actual_buyback_cancellation",
+    "dividend_or_cancel_policy_durable",
+    "credit_cost_pf_risk_passed",
+    "pbr_rerating_runway",
+    "company_level_capital_allocation_evidence",
+    "digital_asset_revenue_model_or_equity_method_income",
+    "regulatory_privacy_governance_trust_passed"
+  ],
+  "hard_4c_gates": [
+    "pf_credit_cost_spike",
+    "cet1_or_kics_weakening",
+    "buyback_cancellation_cancelled",
+    "dividend_payout_retreat",
+    "large_acquisition_capital_ratio_damage",
+    "major_shareholder_legal_risk",
+    "financial_crime_or_governance_legal_break",
+    "privacy_data_transfer_fine",
+    "stablecoin_forex_risk_regulation_tightening",
+    "digital_asset_volume_collapse",
+    "equity_stake_impairment"
+  ],
+  "large_sector": "FINANCIAL_CAPITAL_DIGITAL",
+  "score_adjustments": [
+    {
+      "axis": "roe_sustainability",
+      "direction": "raise",
+      "points": "4",
+      "reason": "저PBR보다 ROE가 유지되거나 개선되는지가 PBR frame change의 시작이다."
+    },
+    {
+      "axis": "cet1_buffer",
+      "direction": "raise",
+      "points": "4",
+      "reason": "CET1/K-ICS buffer가 있어야 환원과 인수가 지속된다."
+    },
+    {
+      "axis": "real_buyback_cancellation",
+      "direction": "raise",
+      "points": "5",
+      "reason": "자사주 매입보다 실제 소각이 자본배분 실행 증거다."
+    },
+    {
+      "axis": "dividend_payout_visibility",
+      "direction": "raise",
+      "points": "3",
+      "reason": "배당/소각 정책이 반복 가능해야 한다."
+    },
+    {
+      "axis": "credit_cost_control",
+      "direction": "raise",
+      "points": "4",
+      "reason": "PF와 credit cost가 안정돼야 금융주 rerating이 지속된다."
+    },
+    {
+      "axis": "pbr_roe_gap",
+      "direction": "raise",
+      "points": "3",
+      "reason": "ROE 대비 PBR discount가 줄어들 여지가 있어야 한다."
+    },
+    {
+      "axis": "capital_release_quality",
+      "direction": "raise",
+      "points": "3",
+      "reason": "보험/지주 NAV는 매각대금 활용과 자본 release가 확인될 때 강해진다."
+    },
+    {
+      "axis": "regulated_revenue_visibility",
+      "direction": "raise",
+      "points": "3",
+      "reason": "디지털자산/결제는 실제 수수료, 지분법, reserve income이 필요하다."
+    },
+    {
+      "axis": "nav_discount_with_monetization",
+      "direction": "raise",
+      "points": "3",
+      "reason": "NAV discount는 소각/배당/자산화로 이어질 때만 강하다."
+    },
+    {
+      "axis": "non_bank_expansion_with_capital_buffer",
+      "direction": "raise",
+      "points": "2",
+      "reason": "비은행 확장은 CET1 buffer를 훼손하지 않을 때만 가점한다."
+    },
+    {
+      "axis": "low_pbr_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "저PBR만으로는 Stage 1 attention이다."
+    },
+    {
+      "axis": "policy_valueup_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "정책 기대만 있고 회사 실행이 없으면 Green 근거가 아니다."
+    },
+    {
+      "axis": "treasury_buyback_without_cancellation",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "자사주 매입만 있고 소각이 없으면 환원 실행력이 낮다."
+    },
+    {
+      "axis": "stablecoin_policy_theme_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "원화 스테이블코인 정책 테마만으로는 수익모델이 없다."
+    },
+    {
+      "axis": "digital_asset_equity_option_without_revenue",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "지분투자는 수익화와 자본비율 영향 확인 전 Stage 2 watch다."
+    },
+    {
+      "axis": "fintech_user_growth_without_profit",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "사용자 수만 있고 take rate/OP가 없으면 제한한다."
+    },
+    {
+      "axis": "privacy_or_data_trust_break",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "개인정보/데이터 신뢰 훼손은 fintech hard RedTeam이다."
+    },
+    {
+      "axis": "major_shareholder_legal_risk",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "대주주 적격성 리스크는 은행/핀테크 Green을 막는다."
+    },
+    {
+      "axis": "capital_ratio_weakening",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "인수나 환원으로 자본비율이 약해지면 Stage 3를 제한한다."
+    },
+    {
+      "axis": "pf_credit_cost_unknown",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "PF/credit cost가 불명확하면 저PBR rerating을 보류한다."
+    },
+    {
+      "axis": "mna_expansion_without_cet1_buffer",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "비은행 인수는 CET1 buffer 확인 전 가점하지 않는다."
+    }
+  ],
+  "source_round": "docs/round/round_197.md",
+  "stage4b_statuses": [
+    "none",
+    "watch",
+    "elevated",
+    "graduated"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "failed_rerating_count": 1,
+    "hard_4c_case_count": 2,
+    "needs_ohlc_backfill": true,
+    "needs_ohlc_backfill_count": 7,
+    "overheat_count": 1,
+    "price_backfill_field_count": 53,
+    "production_scoring_changed": false,
+    "required_target_count": 21,
+    "score_adjustment_count": 21,
+    "shadow_weight_only": true,
+    "stage3_case_count": 0,
+    "stage3_conditional_candidate_count": 1,
+    "stage4b_watch_or_elevated_count": 7,
+    "structural_success_count": 1,
+    "success_candidate_count": 3,
+    "thesis_break_count": 1
+  },
+  "target_aliases": [
+    {
+      "canonical_archetype": "FINANCIAL_SPREAD_BALANCE_SHEET",
+      "round197_label": "FINANCIAL_SPREAD_BALANCE_SHEET"
+    },
+    {
+      "canonical_archetype": "BANK_HOLDING_VALUEUP_CAPITAL_RETURN",
+      "round197_label": "BANK_HOLDING_VALUEUP_CAPITAL_RETURN"
+    },
+    {
+      "canonical_archetype": "BANK_ROE_PBR_RERATING_KOREA",
+      "round197_label": "BANK_ROE_PBR_RERATING_KOREA"
+    },
+    {
+      "canonical_archetype": "INSURANCE_CAPITAL_RELEASE_VALUEUP",
+      "round197_label": "INSURANCE_CAPITAL_RELEASE_VALUEUP"
+    },
+    {
+      "canonical_archetype": "INSURANCE_KICS_CSM_GATE",
+      "round197_label": "INSURANCE_KICS_CSM_GATE"
+    },
+    {
+      "canonical_archetype": "INSURANCE_NAV_VALUEUP_SAMSUNG_ELECTRONICS_STAKE",
+      "round197_label": "INSURANCE_NAV_VALUEUP_SAMSUNG_ELECTRONICS_STAKE"
+    },
+    {
+      "canonical_archetype": "VALUE_UP_SHAREHOLDER_RETURN",
+      "round197_label": "VALUE_UP_SHAREHOLDER_RETURN"
+    },
+    {
+      "canonical_archetype": "HOLDING_RESTRUCTURING_GOVERNANCE",
+      "round197_label": "HOLDING_RESTRUCTURING_GOVERNANCE"
+    },
+    {
+      "canonical_archetype": "TREASURY_SHARE_CANCEL_EXECUTION",
+      "round197_label": "TREASURY_SHARE_CANCEL_EXECUTION"
+    },
+    {
+      "canonical_archetype": "PAYMENT_FINTECH_INFRA",
+      "round197_label": "PAYMENT_FINTECH_INFRA"
+    },
+    {
+      "canonical_archetype": "PAYMENT_PRIVACY_REGULATORY_4C",
+      "round197_label": "PAYMENT_PRIVACY_REGULATORY_4C"
+    },
+    {
+      "canonical_archetype": "DIGITAL_ASSET_TOKENIZATION",
+      "round197_label": "DIGITAL_ASSET_TOKENIZATION"
+    },
+    {
+      "canonical_archetype": "DIGITAL_ASSET_BANK_EQUITY_OPTION",
+      "round197_label": "DIGITAL_ASSET_BANK_EQUITY_OPTION"
+    },
+    {
+      "canonical_archetype": "KRW_STABLECOIN_POLICY_THEME",
+      "round197_label": "KRW_STABLECOIN_POLICY_THEME"
+    },
+    {
+      "canonical_archetype": "DIGITAL_ASSET_THEME_OVERHEAT",
+      "round197_label": "DIGITAL_ASSET_THEME_OVERHEAT"
+    },
+    {
+      "canonical_archetype": "STABLECOIN_CONVERTIBILITY_OVERLAY",
+      "round197_label": "STABLECOIN_CONVERTIBILITY_OVERLAY"
+    },
+    {
+      "canonical_archetype": "REGULATED_STABLECOIN_INFRA",
+      "round197_label": "REGULATED_STABLECOIN_INFRA"
+    },
+    {
+      "canonical_archetype": "INTERNET_BANK_PROFITABILITY",
+      "round197_label": "INTERNET_BANK_PROFITABILITY"
+    },
+    {
+      "canonical_archetype": "PLATFORM_GOVERNANCE_LEGAL_RISK",
+      "round197_label": "PLATFORM_GOVERNANCE_LEGAL_RISK"
+    },
+    {
+      "canonical_archetype": "BANK_CREDIT_COST_PF_OVERLAY",
+      "round197_label": "BANK_CREDIT_COST_PF_OVERLAY"
+    },
+    {
+      "canonical_archetype": "VALUE_UP_CROWDED_4B_WATCH",
+      "round197_label": "VALUE_UP_CROWDED_4B_WATCH"
+    }
+  ],
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round197_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_low_pbr_policy_valueup_or_stablecoin_theme_as_green_evidence",
+    "do_not_invent_prices_stage_dates_roe_cet1_kics_credit_cost_buyback_cancellation_or_regulated_revenue"
+  ]
+}

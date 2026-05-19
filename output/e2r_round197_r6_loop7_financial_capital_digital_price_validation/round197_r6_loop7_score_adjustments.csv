@@ -1,0 +1,22 @@
+axis,points,direction,reason
+roe_sustainability,4,raise,저PBR보다 ROE가 유지되거나 개선되는지가 PBR frame change의 시작이다.
+cet1_buffer,4,raise,CET1/K-ICS buffer가 있어야 환원과 인수가 지속된다.
+real_buyback_cancellation,5,raise,자사주 매입보다 실제 소각이 자본배분 실행 증거다.
+dividend_payout_visibility,3,raise,배당/소각 정책이 반복 가능해야 한다.
+credit_cost_control,4,raise,PF와 credit cost가 안정돼야 금융주 rerating이 지속된다.
+pbr_roe_gap,3,raise,ROE 대비 PBR discount가 줄어들 여지가 있어야 한다.
+capital_release_quality,3,raise,보험/지주 NAV는 매각대금 활용과 자본 release가 확인될 때 강해진다.
+regulated_revenue_visibility,3,raise,"디지털자산/결제는 실제 수수료, 지분법, reserve income이 필요하다."
+nav_discount_with_monetization,3,raise,NAV discount는 소각/배당/자산화로 이어질 때만 강하다.
+non_bank_expansion_with_capital_buffer,2,raise,비은행 확장은 CET1 buffer를 훼손하지 않을 때만 가점한다.
+low_pbr_only,-5,lower,저PBR만으로는 Stage 1 attention이다.
+policy_valueup_only,-4,lower,정책 기대만 있고 회사 실행이 없으면 Green 근거가 아니다.
+treasury_buyback_without_cancellation,-4,lower,자사주 매입만 있고 소각이 없으면 환원 실행력이 낮다.
+stablecoin_policy_theme_only,-5,lower,원화 스테이블코인 정책 테마만으로는 수익모델이 없다.
+digital_asset_equity_option_without_revenue,-3,lower,지분투자는 수익화와 자본비율 영향 확인 전 Stage 2 watch다.
+fintech_user_growth_without_profit,-3,lower,사용자 수만 있고 take rate/OP가 없으면 제한한다.
+privacy_or_data_trust_break,-5,lower,개인정보/데이터 신뢰 훼손은 fintech hard RedTeam이다.
+major_shareholder_legal_risk,-5,lower,대주주 적격성 리스크는 은행/핀테크 Green을 막는다.
+capital_ratio_weakening,-4,lower,인수나 환원으로 자본비율이 약해지면 Stage 3를 제한한다.
+pf_credit_cost_unknown,-3,lower,PF/credit cost가 불명확하면 저PBR rerating을 보류한다.
+mna_expansion_without_cet1_buffer,-3,lower,비은행 인수는 CET1 buffer 확인 전 가점하지 않는다.
