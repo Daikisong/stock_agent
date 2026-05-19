@@ -1,0 +1,237 @@
+{
+  "case_ids": [
+    "r2_loop8_sk_hynix_hbm_aligned_4b",
+    "r2_loop8_hanmi_semiconductor_hbm_bonder_4b",
+    "r2_loop8_samsung_memory_recovery_hbm_watch",
+    "r2_loop8_gaonchips_pfn_design_win",
+    "r2_loop8_db_hitek_policy_foundry",
+    "r2_loop8_hana_micron_hanmi_export_control_watch",
+    "r2_loop8_openai_stargate_memory_4b"
+  ],
+  "green_forbidden_patterns": [
+    "ai_keyword_only",
+    "server_theme_only",
+    "unconfirmed_customer_media_report",
+    "design_win_without_revenue",
+    "policy_foundry_without_order",
+    "openai_or_nvidia_headline_without_company_revenue"
+  ],
+  "green_required_fields": [
+    "company_level_customer_evidence",
+    "product_specific_exposure",
+    "order_shipment_contract_or_revenue_path_confirmed",
+    "gross_margin_or_opm_improvement",
+    "eps_fcf_revision_confirmed",
+    "capacity_bottleneck_or_supply_allocation",
+    "price_path_after_evidence",
+    "export_control_china_fab_accounting_trust_passed"
+  ],
+  "hard_4c_gates": [
+    "hbm_qualification_failure",
+    "order_pushout",
+    "customer_capex_cut",
+    "memory_price_decline",
+    "hbm_supply_normalization",
+    "china_fab_export_control_disruption",
+    "equipment_authorization_loss",
+    "accounting_or_disclosure_trust_break",
+    "production_strike_or_labor_disruption",
+    "customer_concentration_failure"
+  ],
+  "large_sector": "AI_SEMICONDUCTOR_ELECTRONICS",
+  "score_adjustments": [
+    {
+      "axis": "eps_revision",
+      "direction": "raise",
+      "points": "5",
+      "reason": "HBM/메모리 rerating은 EPS 상향이 동반될 때 가격경로와 맞았다."
+    },
+    {
+      "axis": "capacity_bottleneck",
+      "direction": "raise",
+      "points": "5",
+      "reason": "HBM 공급 배분과 CAPA 병목은 R2 구조적 visibility의 핵심이다."
+    },
+    {
+      "axis": "customer_visibility",
+      "direction": "raise",
+      "points": "5",
+      "reason": "고객 주문과 수요 visibility가 없는 AI 이름표는 부족하다."
+    },
+    {
+      "axis": "confirmed_customer_order",
+      "direction": "raise",
+      "points": "5",
+      "reason": "확인된 고객 주문과 미확정 media report를 분리한다."
+    },
+    {
+      "axis": "hbm_product_specificity",
+      "direction": "raise",
+      "points": "4",
+      "reason": "HBM/TSV-TC bonder처럼 제품 노출이 특정될수록 신뢰도가 높다."
+    },
+    {
+      "axis": "order_to_revenue_conversion",
+      "direction": "raise",
+      "points": "4",
+      "reason": "수주와 design win은 매출 전환 경로가 있을 때 Stage 3 후보가 된다."
+    },
+    {
+      "axis": "gross_margin_visibility",
+      "direction": "raise",
+      "points": "4",
+      "reason": "R2 Green에는 gross margin 또는 OPM 개선이 필요하다."
+    },
+    {
+      "axis": "price_path_alignment",
+      "direction": "raise",
+      "points": "5",
+      "reason": "증거 이후 가격경로가 따라온 케이스를 보상한다."
+    },
+    {
+      "axis": "ai_keyword_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "AI 이름만으로는 EPS/FCF 체급 변화를 증명하지 못한다."
+    },
+    {
+      "axis": "server_theme_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "서버 테마만 있고 고객·제품·마진이 없으면 Green 금지다."
+    },
+    {
+      "axis": "design_win_without_revenue",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "design win은 Stage 2 근거지만 양산·매출 전 Green은 아니다."
+    },
+    {
+      "axis": "policy_foundry_without_order",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "정책 foundry 협의는 회사 단위 order/utilization 전까지 이벤트다."
+    },
+    {
+      "axis": "unconfirmed_media_report",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "미확정 고객 보도 급등은 4B-watch로 분리한다."
+    },
+    {
+      "axis": "openai_or_nvidia_event_without_company_revenue",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "OpenAI/Nvidia headline은 회사 매출 경로 전까지 Green 충분조건이 아니다."
+    },
+    {
+      "axis": "customer_name_without_margin",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "고객 이름만 있고 margin이 없으면 고신뢰 Green을 막는다."
+    },
+    {
+      "axis": "price_rally_before_confirmation",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "확인 전 가격 급등은 price-before-evidence로 본다."
+    }
+  ],
+  "source_round": "docs/round/round_206.md",
+  "stage4b_watch_triggers": [
+    "stage3_after_3x_or_more_return",
+    "market_cap_milestone_headline",
+    "unconfirmed_customer_diversification_report_rally",
+    "openai_nvidia_stargate_event_index_rally",
+    "ai_capex_consensus_crowding",
+    "new_order_price_moves_ahead_of_valuation"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "event_premium_or_watch_count": 3,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "price_validation_field_count": 17,
+    "production_scoring_changed": false,
+    "reported_price_anchor_count": 5,
+    "required_target_count": 15,
+    "score_adjustment_count": 16,
+    "shadow_weight_only": true,
+    "stage3_case_count": 2,
+    "stage4b_watch_or_elevated_count": 4,
+    "structural_success_count": 2,
+    "success_candidate_count": 2
+  },
+  "target_aliases": [
+    {
+      "canonical_archetype": "MEMORY_HBM_CAPACITY",
+      "round206_label": "MEMORY_HBM_CAPACITY"
+    },
+    {
+      "canonical_archetype": "MEMORY_HBM_LTA_PREPAYMENT",
+      "round206_label": "MEMORY_HBM_LTA_PREPAYMENT"
+    },
+    {
+      "canonical_archetype": "HBM_CATCHUP_EXECUTION",
+      "round206_label": "HBM_CATCHUP_EXECUTION"
+    },
+    {
+      "canonical_archetype": "COMMODITY_MEMORY_GENERAL_SEMI",
+      "round206_label": "COMMODITY_MEMORY_GENERAL_SEMI"
+    },
+    {
+      "canonical_archetype": "SEMI_EQUIPMENT_AI_CAPEX",
+      "round206_label": "SEMI_EQUIPMENT_AI_CAPEX"
+    },
+    {
+      "canonical_archetype": "HBM_BONDER_EQUIPMENT_KOREA",
+      "round206_label": "HBM_BONDER_EQUIPMENT_KOREA"
+    },
+    {
+      "canonical_archetype": "ADVANCED_PACKAGING_EQUIPMENT_KOREA",
+      "round206_label": "ADVANCED_PACKAGING_EQUIPMENT_KOREA"
+    },
+    {
+      "canonical_archetype": "SYSTEM_SEMI_DESIGN_HOUSE_AI_ORDER",
+      "round206_label": "SYSTEM_SEMI_DESIGN_HOUSE_AI_ORDER"
+    },
+    {
+      "canonical_archetype": "AI_CHIP_FABRIC_INFRA",
+      "round206_label": "AI_CHIP_FABRIC_INFRA"
+    },
+    {
+      "canonical_archetype": "AI_DATA_CENTER_INFRASTRUCTURE",
+      "round206_label": "AI_DATA_CENTER_INFRASTRUCTURE"
+    },
+    {
+      "canonical_archetype": "REDTEAM_ACCOUNTING_TRUST_OVERLAY",
+      "round206_label": "REDTEAM_ACCOUNTING_TRUST_OVERLAY"
+    },
+    {
+      "canonical_archetype": "AI_CAPEX_CROWDING_OVERLAY",
+      "round206_label": "AI_CAPEX_CROWDING_OVERLAY"
+    },
+    {
+      "canonical_archetype": "DISCLOSURE_CONFIDENCE_CAP",
+      "round206_label": "DISCLOSURE_CONFIDENCE_CAP"
+    },
+    {
+      "canonical_archetype": "PRICE_ONLY_RALLY",
+      "round206_label": "PRICE_ONLY_RALLY"
+    },
+    {
+      "canonical_archetype": "IP_LEAK_SUPPLY_CHAIN_REDTEAM",
+      "round206_label": "GEOPOLITICAL_EXPORT_CONTROL_OVERLAY"
+    }
+  ],
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round206_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_ai_keyword_design_win_policy_foundry_or_unconfirmed_customer_report_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist",
+    "keep_full_ohlc_complete_false_until_official_backfill_is_done"
+  ]
+}

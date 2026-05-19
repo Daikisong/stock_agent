@@ -1,0 +1,17 @@
+axis,points,direction,reason
+eps_revision,5,raise,HBM/메모리 rerating은 EPS 상향이 동반될 때 가격경로와 맞았다.
+capacity_bottleneck,5,raise,HBM 공급 배분과 CAPA 병목은 R2 구조적 visibility의 핵심이다.
+customer_visibility,5,raise,고객 주문과 수요 visibility가 없는 AI 이름표는 부족하다.
+confirmed_customer_order,5,raise,확인된 고객 주문과 미확정 media report를 분리한다.
+hbm_product_specificity,4,raise,HBM/TSV-TC bonder처럼 제품 노출이 특정될수록 신뢰도가 높다.
+order_to_revenue_conversion,4,raise,수주와 design win은 매출 전환 경로가 있을 때 Stage 3 후보가 된다.
+gross_margin_visibility,4,raise,R2 Green에는 gross margin 또는 OPM 개선이 필요하다.
+price_path_alignment,5,raise,증거 이후 가격경로가 따라온 케이스를 보상한다.
+ai_keyword_only,-5,lower,AI 이름만으로는 EPS/FCF 체급 변화를 증명하지 못한다.
+server_theme_only,-4,lower,서버 테마만 있고 고객·제품·마진이 없으면 Green 금지다.
+design_win_without_revenue,-4,lower,design win은 Stage 2 근거지만 양산·매출 전 Green은 아니다.
+policy_foundry_without_order,-4,lower,정책 foundry 협의는 회사 단위 order/utilization 전까지 이벤트다.
+unconfirmed_media_report,-5,lower,미확정 고객 보도 급등은 4B-watch로 분리한다.
+openai_or_nvidia_event_without_company_revenue,-3,lower,OpenAI/Nvidia headline은 회사 매출 경로 전까지 Green 충분조건이 아니다.
+customer_name_without_margin,-3,lower,고객 이름만 있고 margin이 없으면 고신뢰 Green을 막는다.
+price_rally_before_confirmation,-5,lower,확인 전 가격 급등은 price-before-evidence로 본다.
