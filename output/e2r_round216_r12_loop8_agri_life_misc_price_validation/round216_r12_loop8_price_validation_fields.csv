@@ -1,0 +1,16 @@
+field,required_for_round216_price_validation
+price_data_source,true
+full_ohlc_available,true
+reported_price_anchor,true
+reported_return_anchor,true
+reported_event_mfe_1d_range,true
+reported_event_mfe_1d_midpoint,true
+quota_original,true
+quota_2027,true
+quota_2030,true
+quota_increase_pct,true
+event_duration_days,true
+uav_counting_accuracy,true
+uav_weight_estimation_accuracy,true
+business_anchor,true
+price_validation_status,true

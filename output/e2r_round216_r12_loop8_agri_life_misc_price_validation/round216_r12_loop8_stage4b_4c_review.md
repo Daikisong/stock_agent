@@ -1,0 +1,39 @@
+# Round 216 R12 4B/4C Review
+
+## 4B Watch Triggers
+
+- education_smart_farm_agri_policy_basket_rally
+- poultry_disease_event_basket_rally
+- celebrity_or_viral_food_event_basket_rally
+- defensive_dividend_frame_multiple_expansion
+- rental_or_regulated_consumer_multiple_before_growth
+- medical_quota_policy_priced_before_student_arpu
+
+## Hard 4C Gates
+
+- recall_or_product_safety_issue
+- churn_spike
+- arpu_decline
+- dealer_inventory_build
+- farmer_financing_stress
+- education_policy_reversal
+- private_education_regulation
+- birth_rate_demand_collapse
+- import_ban_reversal
+- disease_event_cleared
+- celebrity_event_fade
+- regulatory_ban_or_youth_safety_restriction
+- subsidy_withdrawal
+- unit_economics_failure
+- cash_conversion_deterioration
+
+## Case Notes
+
+- r12_loop8_coway_recurring_rental_service_candidate: latest_ir_unverified, churn_unverified, arpu_unverified, fcf_conversion_unverified, product_safety_recall_watch, overseas_growth_slowdown_watch, capital_allocation_governance_watch
+- r12_loop8_daedong_tym_agri_machinery_export_watch: unconfirmed_export_theme, dealer_inventory_unknown, farmer_financing_unverified, agri_cycle_only, opm_fcf_unverified
+- r12_loop8_megastudy_medical_quota_policy_event: education_policy_expectation_only, education_policy_reversal, private_education_regulation_watch, birth_rate_demand_collapse_watch
+- r12_loop8_edtech_phone_ban_policy_watch: education_policy_expectation_only, policy_directionality_unclear, company_revenue_impact_unverified, edtech_ai_disruption_watch
+- r12_loop8_poultry_brazil_bird_flu_import_ban_event: disease_event_only, import_ban_event_only, import_ban_reversal, one_off_disease_event, feed_cost_unverified, margin_unverified
+- r12_loop8_kyochon_chicken_celebrity_food_event: celebrity_food_event_only, viral_food_story, same_day_theme_basket_rally_only, price_rally_before_company_evidence
+- r12_loop8_smart_farm_unit_economics_watch: smart_farm_theme_only, subsidy_dependent_unit_economics, commercial_installation_unverified, maintenance_revenue_unverified, unit_economics_unverified
+- r12_loop8_ktng_regulated_consumer_cashflow_watch: regulated_product_without_growth, volume_decline_watch, tobacco_tax_or_regulation_watch, hnb_competition_watch, source_confidence_medium_low
