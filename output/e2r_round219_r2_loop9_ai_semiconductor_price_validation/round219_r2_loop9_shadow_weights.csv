@@ -1,0 +1,9 @@
+archetype,eps_revision,capacity_bottleneck,customer_visibility,product_specificity,price_path_alignment,memory_price_upcycle,order_to_revenue,hbm_first_mover_or_execution,event_penalty,redteam_sensitivity,4b_watch_sensitivity,hard4c_sensitivity,notes
+MEMORY_HBM4_FIRST_MOVER,+5,+5,+5,+4,+5,+4,+4,+5,-1,+3,+5,+4,SK Hynix confirms large MFE and 4B-watch after HBM4 and market-cap milestone.
+HBM_CATCHUP_EXECUTION,+4,+3,+4,+3,+4,+3,+4,+3,-2,+5,+4,+4,Samsung is Stage 2 until volume HBM sales and margins; labor risk creates 4C-watch.
+HBM_BONDER_EQUIPMENT_KOREA,+3,0,+5,+5,+5,+4,+4,+4,-3,+2,+5,+3,Hanmi confirmed order is good; unconfirmed customer rumor is 4B/event risk.
+SYSTEM_SEMI_DESIGN_HOUSE_AI_ORDER,+2,+1,+4,+5,+2,0,+5,+2,-4,+2,+4,+4,"Gaonchips design win is Stage 2 until tape-out, revenue, and margin are visible."
+POLICY_FOUNDRY_EVENT,+1,+1,+2,+3,+1,0,+3,+1,-5,+3,+4,+4,DB HiTek foundry policy consultation is not company revenue evidence.
+OPENAI_STARGATE_AI_CAPEX_EVENT,+3,+2,+5,+3,+3,+2,+2,+4,-4,+2,+5,+3,OpenAI demand validates leaders but causes 4B/event premium for laggards.
+GEOPOLITICAL_EXPORT_CONTROL_OVERLAY,0,0,0,0,+2,0,0,0,0,+5,+3,+5,China fab authorization loss is 4C-watch until production/revenue disruption is confirmed.
+LABOR_SUPPLY_CHAIN_4C_WATCH,0,0,0,0,+1,0,0,0,-1,+5,+3,+5,"Samsung labor disruption is a RedTeam overlay, not positive E2R evidence."

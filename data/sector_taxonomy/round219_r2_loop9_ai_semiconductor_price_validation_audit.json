@@ -1,0 +1,323 @@
+{
+  "case_ids": [
+    "r2_loop9_sk_hynix_hbm4_stage3_4b",
+    "r2_loop9_samsung_hbm_catchup_labor_watch",
+    "r2_loop9_hanmi_hbm_bonder_confirmed_vs_rumor",
+    "r2_loop9_gaonchips_pfn_design_win",
+    "r2_loop9_db_hitek_policy_foundry",
+    "r2_loop9_openai_stargate_memory_4b",
+    "r2_loop9_export_control_china_fab_watch"
+  ],
+  "green_forbidden_patterns": [
+    "ai_keyword_only",
+    "server_theme_only",
+    "unconfirmed_customer_media_report",
+    "design_win_without_revenue",
+    "policy_foundry_without_order",
+    "openai_or_nvidia_headline_without_company_revenue",
+    "customer_name_without_margin",
+    "price_rally_before_confirmation",
+    "labor_disruption_unpriced",
+    "export_control_unpriced"
+  ],
+  "green_required_fields": [
+    "company_level_customer_evidence",
+    "product_specific_exposure",
+    "order_shipment_contract_or_revenue_path_confirmed",
+    "gross_margin_or_opm_improvement",
+    "eps_fcf_revision_confirmed",
+    "capacity_bottleneck_or_supply_allocation",
+    "price_path_after_evidence",
+    "export_control_china_fab_labor_accounting_trust_passed",
+    "no_hard_redteam"
+  ],
+  "hard_4c_gates": [
+    "hbm_qualification_failure",
+    "order_pushout",
+    "customer_capex_cut",
+    "memory_price_decline",
+    "hbm_supply_normalization",
+    "china_fab_export_control_disruption",
+    "equipment_authorization_loss",
+    "labor_strike_or_production_halt",
+    "accounting_or_disclosure_trust_break",
+    "customer_concentration_failure"
+  ],
+  "large_sector": "AI_SEMICONDUCTOR_ELECTRONICS",
+  "score_adjustments": [
+    {
+      "axis": "eps_revision",
+      "direction": "raise",
+      "points": "5",
+      "reason": "HBM 리더는 OP/EPS revision이 가격경로와 같이 움직일 때만 강하게 본다."
+    },
+    {
+      "axis": "capacity_bottleneck",
+      "direction": "raise",
+      "points": "5",
+      "reason": "HBM 세대 전환과 CAPA 배분은 구조적 visibility의 핵심이다."
+    },
+    {
+      "axis": "hbm4_first_mover",
+      "direction": "raise",
+      "points": "5",
+      "reason": "HBM4 first mover와 고객 인증은 단순 메모리 사이클보다 높은 신뢰도를 준다."
+    },
+    {
+      "axis": "customer_visibility",
+      "direction": "raise",
+      "points": "5",
+      "reason": "Nvidia/OpenAI급 고객 수요가 회사 매출 경로로 연결될 때 보상한다."
+    },
+    {
+      "axis": "memory_price_upcycle",
+      "direction": "raise",
+      "points": "4",
+      "reason": "메모리 가격 상승은 EPS/FCF revision과 같이 있을 때 보상한다."
+    },
+    {
+      "axis": "confirmed_customer_order",
+      "direction": "raise",
+      "points": "5",
+      "reason": "확인된 고객 주문은 미확정 media rumor와 분리한다."
+    },
+    {
+      "axis": "order_to_revenue_conversion",
+      "direction": "raise",
+      "points": "4",
+      "reason": "design win이나 장비 수주가 매출·마진으로 내려오는 경로를 보상한다."
+    },
+    {
+      "axis": "price_path_alignment",
+      "direction": "raise",
+      "points": "5",
+      "reason": "증거 이후 가격경로가 따라오면 score-price alignment를 인정한다."
+    },
+    {
+      "axis": "unconfirmed_media_report",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "미확정 고객 보도만으로 오른 구간은 4B-watch다."
+    },
+    {
+      "axis": "design_win_without_revenue",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "design win은 Stage 2 근거지만 양산·매출·마진 전 Green은 아니다."
+    },
+    {
+      "axis": "policy_foundry_without_order",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "정책 foundry 협의는 회사 단위 order/utilization 전 event premium이다."
+    },
+    {
+      "axis": "openai_or_nvidia_headline_without_company_revenue",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "OpenAI/Nvidia headline만으로 후발주 Green을 만들면 안 된다."
+    },
+    {
+      "axis": "customer_name_without_margin",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "고객 이름만 있고 margin이 없으면 Green 신뢰도를 막는다."
+    },
+    {
+      "axis": "price_rally_before_confirmation",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "확인 전 가격 급등은 price-before-evidence로 본다."
+    },
+    {
+      "axis": "labor_or_export_control_unpriced",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "노동/수출통제 리스크가 실적 차질로 이어질 수 있으면 4C-watch다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "MEMORY_HBM4_FIRST_MOVER",
+      "capacity_bottleneck": "+5",
+      "customer_visibility": "+5",
+      "eps_revision": "+5",
+      "event_penalty": "-1",
+      "hard4c_sensitivity": "+4",
+      "hbm_first_mover_or_execution": "+5",
+      "memory_price_upcycle": "+4",
+      "notes": "SK Hynix confirms large MFE and 4B-watch after HBM4 and market-cap milestone.",
+      "order_to_revenue": "+4",
+      "price_path_alignment": "+5",
+      "product_specificity": "+4",
+      "redteam_sensitivity": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "HBM_CATCHUP_EXECUTION",
+      "capacity_bottleneck": "+3",
+      "customer_visibility": "+4",
+      "eps_revision": "+4",
+      "event_penalty": "-2",
+      "hard4c_sensitivity": "+4",
+      "hbm_first_mover_or_execution": "+3",
+      "memory_price_upcycle": "+3",
+      "notes": "Samsung is Stage 2 until volume HBM sales and margins; labor risk creates 4C-watch.",
+      "order_to_revenue": "+4",
+      "price_path_alignment": "+4",
+      "product_specificity": "+3",
+      "redteam_sensitivity": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "HBM_BONDER_EQUIPMENT_KOREA",
+      "capacity_bottleneck": "0",
+      "customer_visibility": "+5",
+      "eps_revision": "+3",
+      "event_penalty": "-3",
+      "hard4c_sensitivity": "+3",
+      "hbm_first_mover_or_execution": "+4",
+      "memory_price_upcycle": "+4",
+      "notes": "Hanmi confirmed order is good; unconfirmed customer rumor is 4B/event risk.",
+      "order_to_revenue": "+4",
+      "price_path_alignment": "+5",
+      "product_specificity": "+5",
+      "redteam_sensitivity": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "SYSTEM_SEMI_DESIGN_HOUSE_AI_ORDER",
+      "capacity_bottleneck": "+1",
+      "customer_visibility": "+4",
+      "eps_revision": "+2",
+      "event_penalty": "-4",
+      "hard4c_sensitivity": "+4",
+      "hbm_first_mover_or_execution": "+2",
+      "memory_price_upcycle": "0",
+      "notes": "Gaonchips design win is Stage 2 until tape-out, revenue, and margin are visible.",
+      "order_to_revenue": "+5",
+      "price_path_alignment": "+2",
+      "product_specificity": "+5",
+      "redteam_sensitivity": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "POLICY_FOUNDRY_EVENT",
+      "capacity_bottleneck": "+1",
+      "customer_visibility": "+2",
+      "eps_revision": "+1",
+      "event_penalty": "-5",
+      "hard4c_sensitivity": "+4",
+      "hbm_first_mover_or_execution": "+1",
+      "memory_price_upcycle": "0",
+      "notes": "DB HiTek foundry policy consultation is not company revenue evidence.",
+      "order_to_revenue": "+3",
+      "price_path_alignment": "+1",
+      "product_specificity": "+3",
+      "redteam_sensitivity": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "OPENAI_STARGATE_AI_CAPEX_EVENT",
+      "capacity_bottleneck": "+2",
+      "customer_visibility": "+5",
+      "eps_revision": "+3",
+      "event_penalty": "-4",
+      "hard4c_sensitivity": "+3",
+      "hbm_first_mover_or_execution": "+4",
+      "memory_price_upcycle": "+2",
+      "notes": "OpenAI demand validates leaders but causes 4B/event premium for laggards.",
+      "order_to_revenue": "+2",
+      "price_path_alignment": "+3",
+      "product_specificity": "+3",
+      "redteam_sensitivity": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "GEOPOLITICAL_EXPORT_CONTROL_OVERLAY",
+      "capacity_bottleneck": "0",
+      "customer_visibility": "0",
+      "eps_revision": "0",
+      "event_penalty": "0",
+      "hard4c_sensitivity": "+5",
+      "hbm_first_mover_or_execution": "0",
+      "memory_price_upcycle": "0",
+      "notes": "China fab authorization loss is 4C-watch until production/revenue disruption is confirmed.",
+      "order_to_revenue": "0",
+      "price_path_alignment": "+2",
+      "product_specificity": "0",
+      "redteam_sensitivity": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "LABOR_SUPPLY_CHAIN_4C_WATCH",
+      "capacity_bottleneck": "0",
+      "customer_visibility": "0",
+      "eps_revision": "0",
+      "event_penalty": "-1",
+      "hard4c_sensitivity": "+5",
+      "hbm_first_mover_or_execution": "0",
+      "memory_price_upcycle": "0",
+      "notes": "Samsung labor disruption is a RedTeam overlay, not positive E2R evidence.",
+      "order_to_revenue": "0",
+      "price_path_alignment": "+1",
+      "product_specificity": "0",
+      "redteam_sensitivity": "+5"
+    }
+  ],
+  "source_round": "docs/round/round_219.md",
+  "stage4b_watch_triggers": [
+    "stage3_after_3x_or_more_return",
+    "market_cap_milestone_headline",
+    "openai_stargate_event_index_rally",
+    "unconfirmed_customer_report_20pct_rally",
+    "ai_capex_consensus_crowding",
+    "record_high_good_news",
+    "winner_already_rerated"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "event_premium_count": 1,
+    "failed_rerating_count": 1,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "large_sector": "AI_SEMICONDUCTOR_ELECTRONICS",
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "reported_price_anchor_count": 5,
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_219.md",
+    "stage3_case_count": 1,
+    "stage4b_watch_count": 4,
+    "stage4c_watch_count": 2,
+    "structural_success_count": 1,
+    "success_candidate_count": 3,
+    "target_archetype_count": 12,
+    "watch_count": 1
+  },
+  "target_aliases": {
+    "AI_CHIP_FABRIC_INFRA": "AI_CHIP_FABRIC_INFRA",
+    "GEOPOLITICAL_EXPORT_CONTROL_OVERLAY": "GEOPOLITICAL_EXPORT_CONTROL_OVERLAY",
+    "HBM_BONDER_EQUIPMENT_KOREA": "HBM_BONDER_EQUIPMENT_KOREA",
+    "HBM_CATCHUP_EXECUTION": "HBM_CATCHUP_EXECUTION",
+    "LABOR_SUPPLY_CHAIN_4C_WATCH": "LABOR_SUPPLY_CHAIN_4C_WATCH",
+    "MEMORY_HBM4_FIRST_MOVER": "MEMORY_HBM4_FIRST_MOVER",
+    "MEMORY_HBM_CAPACITY": "MEMORY_HBM_CAPACITY",
+    "MEMORY_SUPERCYCLE_AI_CAPEX": "MEMORY_SUPERCYCLE_AI_CAPEX",
+    "OPENAI_STARGATE_AI_CAPEX_EVENT": "OPENAI_STARGATE_AI_CAPEX_EVENT",
+    "POLICY_FOUNDRY_EVENT": "POLICY_FOUNDRY_EVENT",
+    "PRICE_ONLY_RALLY": "PRICE_ONLY_RALLY",
+    "SYSTEM_SEMI_DESIGN_HOUSE_AI_ORDER": "SYSTEM_SEMI_DESIGN_HOUSE_AI_ORDER"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round219_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_design_win_policy_foundry_openai_headline_or_unconfirmed_customer_report_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist",
+    "keep_export_control_and_labor_risk_as_watch_until_real_production_or_revenue_disruption_is_confirmed"
+  ]
+}
