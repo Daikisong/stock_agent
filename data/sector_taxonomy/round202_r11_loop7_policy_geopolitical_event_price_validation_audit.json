@@ -1,0 +1,275 @@
+{
+  "case_ids": [
+    "kogas_east_sea_resource_discovery_event_premium",
+    "doosan_enerbility_nuclear_smr_policy_to_contract_watch",
+    "hdhyundai_samsungheavy_us_shipbuilding_policy_mou_watch",
+    "poultry_basket_brazil_bird_flu_import_ban_event_fade",
+    "lk99_superconductor_speculative_science_thesis_break",
+    "korea_martial_law_policy_market_shock_overlay",
+    "short_selling_msci_market_structure_stage2_watch"
+  ],
+  "green_forbidden_patterns": [
+    "policy_news_only",
+    "mou_only",
+    "geopolitical_headline_only",
+    "resource_estimate_without_drilling",
+    "preprint_or_science_claim_only",
+    "disease_import_ban_only",
+    "tourist_or_reconstruction_policy_only",
+    "market_structure_reform_without_earnings",
+    "price_rally_before_contract",
+    "event_fade_risk",
+    "unfunded_budget",
+    "policy_reversal"
+  ],
+  "green_required_fields": [
+    "company_level_contract_confirmed",
+    "budget_or_contract_amount_confirmed",
+    "financing_secured",
+    "actual_order_or_procurement_award_confirmed",
+    "revenue_conversion_confirmed",
+    "margin_or_eps_fcf_revision_confirmed",
+    "repeat_demand_not_event_fade_confirmed",
+    "price_path_after_contract_evidence"
+  ],
+  "hard_4c_gates": [
+    "drilling_failure",
+    "commerciality_absent",
+    "mou_failure",
+    "budget_not_funded",
+    "policy_reversal",
+    "import_restriction_easing_event_fade",
+    "independent_replication_failure",
+    "regulatory_reversal",
+    "political_system_shock",
+    "market_access_upgrade_path_failure",
+    "contract_cancellation",
+    "financing_failure"
+  ],
+  "large_sector": "POLICY_GEOPOLITICAL_EVENT",
+  "score_adjustments": [
+    {
+      "axis": "funded_budget",
+      "direction": "raise",
+      "points": "5",
+      "reason": "R11 이벤트는 예산이 붙어야 회사 단위 증거가 된다."
+    },
+    {
+      "axis": "actual_contract",
+      "direction": "raise",
+      "points": "5",
+      "reason": "정책·MOU는 실제 계약으로 승격될 때만 강해진다."
+    },
+    {
+      "axis": "revenue_conversion",
+      "direction": "raise",
+      "points": "5",
+      "reason": "계약이 매출 인식으로 내려와야 Stage 3 후보가 된다."
+    },
+    {
+      "axis": "financing_secured",
+      "direction": "raise",
+      "points": "4",
+      "reason": "재건·인프라·원전 이벤트는 financing 확인이 필요하다."
+    },
+    {
+      "axis": "government_stockpile_order",
+      "direction": "raise",
+      "points": "4",
+      "reason": "정부 비축/조달은 실제 order와 guidance가 있어야 한다."
+    },
+    {
+      "axis": "procurement_award",
+      "direction": "raise",
+      "points": "4",
+      "reason": "발주·조달계약은 단순 headline보다 강한 Stage 2 증거다."
+    },
+    {
+      "axis": "commerciality_confirmed",
+      "direction": "raise",
+      "points": "4",
+      "reason": "자원 발견은 상업성이 확인되어야 현금흐름 후보가 된다."
+    },
+    {
+      "axis": "independent_replication_or_validation",
+      "direction": "raise",
+      "points": "4",
+      "reason": "과학/신소재 claim은 독립 검증 전까지 Stage 1이다."
+    },
+    {
+      "axis": "event_to_contract_escalation",
+      "direction": "raise",
+      "points": "4",
+      "reason": "이벤트가 계약으로 승격되는 순간을 따로 보상한다."
+    },
+    {
+      "axis": "policy_durability",
+      "direction": "raise",
+      "points": "3",
+      "reason": "정책 지속성과 예산 집행 가능성이 있어야 event fade를 줄인다."
+    },
+    {
+      "axis": "policy_news_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "정책 뉴스만으로 Stage 3-Green을 만들지 않는다."
+    },
+    {
+      "axis": "mou_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "MOU는 계약이 아니며 revenue conversion 전까지 Watch다."
+    },
+    {
+      "axis": "geopolitical_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "지정학 headline은 회사 단위 계약 전까지 event premium이다."
+    },
+    {
+      "axis": "resource_estimate_without_drilling",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "매장 가능성은 시추·상업성 전까지 Green 금지다."
+    },
+    {
+      "axis": "preprint_or_science_claim_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "preprint와 과학 claim은 독립 재현 전까지 Green 금지다."
+    },
+    {
+      "axis": "disease_import_ban_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "질병·수입금지는 마진 확인 전까지 one-off event다."
+    },
+    {
+      "axis": "tourist_or_reconstruction_policy_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "관광·재건 정책은 funded order 전까지 제한한다."
+    },
+    {
+      "axis": "market_structure_reform_without_earnings",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "시장구조 개선은 기업 EPS 전까지 개별 Green이 아니다."
+    },
+    {
+      "axis": "price_rally_before_contract",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "계약 전 가격 급등은 4B-watch 우선이다."
+    },
+    {
+      "axis": "event_fade_risk",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "후속 evidence 없는 이벤트는 drawdown 위험을 크게 본다."
+    }
+  ],
+  "source_round": "docs/round/round_202.md",
+  "stage4b_statuses": [
+    "none",
+    "watch",
+    "elevated",
+    "graduated"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "event_premium_count": 2,
+    "hard_4c_case_count": 1,
+    "needs_ohlc_backfill": true,
+    "needs_ohlc_backfill_count": 7,
+    "overheat_count": 1,
+    "price_backfill_field_count": 52,
+    "production_scoring_changed": false,
+    "r11_default_stage3_bias": "conservative",
+    "required_target_count": 17,
+    "score_adjustment_count": 20,
+    "shadow_weight_only": true,
+    "stage3_case_count": 0,
+    "stage4b_watch_or_elevated_count": 6,
+    "success_candidate_count": 3
+  },
+  "target_aliases": [
+    {
+      "canonical_archetype": "DOMESTIC_RESOURCE_DISCOVERY_EVENT",
+      "round202_label": "DOMESTIC_RESOURCE_DISCOVERY_EVENT"
+    },
+    {
+      "canonical_archetype": "ENERGY_SECURITY_POLICY_EVENT",
+      "round202_label": "ENERGY_SECURITY_POLICY_EVENT"
+    },
+    {
+      "canonical_archetype": "EVENT_PRICE_RALLY_NOT_STAGE3",
+      "round202_label": "EVENT_PRICE_RALLY_NOT_STAGE3"
+    },
+    {
+      "canonical_archetype": "POLICY_DIRECTIONALITY_ERROR",
+      "round202_label": "POLICY_DIRECTIONALITY_ERROR"
+    },
+    {
+      "canonical_archetype": "GEOPOLITICAL_RECONSTRUCTION",
+      "round202_label": "GEOPOLITICAL_RECONSTRUCTION"
+    },
+    {
+      "canonical_archetype": "REAL_RECONSTRUCTION_FINANCING",
+      "round202_label": "REAL_RECONSTRUCTION_FINANCING"
+    },
+    {
+      "canonical_archetype": "CRITICAL_INFRA_RECONSTRUCTION_FINANCING",
+      "round202_label": "CRITICAL_INFRA_RECONSTRUCTION_FINANCING"
+    },
+    {
+      "canonical_archetype": "NORTH_KOREA_POLICY_EVENT",
+      "round202_label": "NORTH_KOREA_POLICY_EVENT"
+    },
+    {
+      "canonical_archetype": "CLIMATE_DISASTER_EVENT",
+      "round202_label": "CLIMATE_DISASTER_EVENT"
+    },
+    {
+      "canonical_archetype": "EVENT_DISEASE_PEST_DEMAND",
+      "round202_label": "EVENT_DISEASE_PEST_DEMAND"
+    },
+    {
+      "canonical_archetype": "GOVERNMENT_STOCKPILE_REVENUE_GUIDANCE",
+      "round202_label": "GOVERNMENT_STOCKPILE_REVENUE_GUIDANCE"
+    },
+    {
+      "canonical_archetype": "PUBLIC_HEALTH_PROCUREMENT_REVERSAL",
+      "round202_label": "PUBLIC_HEALTH_PROCUREMENT_REVERSAL"
+    },
+    {
+      "canonical_archetype": "SPECULATIVE_SCIENCE_THEME",
+      "round202_label": "SPECULATIVE_SCIENCE_THEME"
+    },
+    {
+      "canonical_archetype": "ADVANCED_MATERIAL_SPECULATIVE_THEME",
+      "round202_label": "ADVANCED_MATERIAL_SPECULATIVE_THEME"
+    },
+    {
+      "canonical_archetype": "POLICY_LOCAL_THEME",
+      "round202_label": "POLICY_LOCAL_THEME"
+    },
+    {
+      "canonical_archetype": "MARKET_STRUCTURE_SHORT_SELLING_POLICY",
+      "round202_label": "MARKET_STRUCTURE_SHORT_SELLING_POLICY"
+    },
+    {
+      "canonical_archetype": "POLICY_MARKET_SHOCK_EVENT",
+      "round202_label": "POLICY_MARKET_SHOCK_EVENT"
+    }
+  ],
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round202_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_policy_mou_resource_disease_science_market_structure_or_geopolitical_headline_as_green_evidence",
+    "do_not_invent_contract_budget_financing_orders_revenue_eps_fcf_or_stage_prices",
+    "keep_r11_default_stage3_bias_conservative"
+  ]
+}
