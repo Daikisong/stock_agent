@@ -1,0 +1,22 @@
+axis,points,direction,reason
+repeat_demand,4,raise,유행이 아니라 반복구매가 확인될 때 R5 visibility가 올라간다.
+channel_sell_through,4,raise,입점이 아니라 매장 회전과 반복 발주가 확인되어야 한다.
+overseas_sales_mix,3,raise,미국/유럽/글로벌 매출 비중 증가는 내수 프레임 제거 근거다.
+us_retail_channel_confirmed,3,raise,Costco/Ulta/Target/Sephora/Walmart 등 실제 채널 확인은 Stage 2 이상 근거다.
+opm_improvement,4,raise,수출 성장이나 브랜드 열기가 OPM으로 내려와야 EPS/FCF 체급 변화다.
+inventory_quality,3,raise,재고가 안정적이면 channel stuffing 위험이 낮아진다.
+receivables_quality,3,raise,매출채권이 안정적이면 매출 성장의 현금화 품질이 올라간다.
+brand_portfolio_breadth,2,raise,단일 제품보다 포트폴리오가 넓으면 fad 위험이 낮다.
+odm_customer_diversification,3,raise,ODM은 고객 다변화와 주문 visibility가 핵심이다.
+localized_manufacturing,2,raise,현지 생산은 관세/물류 리스크를 줄이는 보조 근거다.
+viral_product_only,-5,lower,틱톡/viral만으로는 반복수요와 FCF를 확인할 수 없다.
+brand_heat_only,-4,lower,브랜드 열기만 있고 실적 품질이 없으면 Green 근거가 아니다.
+ipo_first_month_rally,-4,lower,상장 직후 주가 급등은 가격경로 경고이지 구조 증거가 아니다.
+retail_talks_without_sell_through,-3,lower,입점 논의는 Stage 2 attention이고 sell-through 전에는 제한한다.
+influencer_endorsement_only,-3,lower,인플루언서 endorsement만으로 반복구매를 만들지 않는다.
+single_sku_dependence,-4,lower,단일 SKU 의존도는 fad normalization과 4C 위험을 키운다.
+china_exposure_without_offset,-3,lower,중국 둔화를 미국/유럽 성장으로 상쇄하지 못하면 제한한다.
+holdco_or_private_link_cap,-3,lower,비상장 자회사 가치와 상장 모회사 수익률은 분리해야 한다.
+mna_event_premium,-4,lower,M&A/ROFR/법적 분쟁은 본업 브랜드 리레이팅 증거가 아니다.
+tariff_margin_uncertainty,-2,lower,관세 부담을 판가에 전가하지 못하면 OPM 품질이 낮아진다.
+inventory_or_receivables_build,-4,lower,재고/채권 증가는 channel stuffing과 현금화 리스크다.

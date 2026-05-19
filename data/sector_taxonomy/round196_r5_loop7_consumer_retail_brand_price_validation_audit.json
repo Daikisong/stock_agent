@@ -1,0 +1,281 @@
+{
+  "case_ids": [
+    "nongshim_shin_ramyun_global_staple_stage2_watch",
+    "apr_medicube_beauty_device_structural_success_4b_watch",
+    "dalba_global_us_retail_talks_ipo_overheat_watch",
+    "cosmax_kolmar_fast_beauty_odm_supply_chain_stage2_watch",
+    "amorepacific_legacy_kbeauty_china_to_us_transition_watch",
+    "cj_olive_young_private_platform_holdco_cap_stage2_watch",
+    "fnf_taylormade_mna_event_premium_not_brand_rerating"
+  ],
+  "green_forbidden_patterns": [
+    "tiktok_viral_only",
+    "retail_talks_only",
+    "ipo_first_month_rally",
+    "influencer_endorsement_only",
+    "mna_event_only",
+    "private_affiliate_value_only",
+    "china_decline_without_offset"
+  ],
+  "green_required_fields": [
+    "repeat_purchase_evidence",
+    "overseas_sales_mix_growth",
+    "channel_sell_through_confirmed",
+    "opm_improvement",
+    "inventory_and_receivables_stable",
+    "asp_or_product_mix_improvement",
+    "single_product_dependence_not_excessive",
+    "tariff_regulation_recall_passed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "recall_or_food_safety_issue",
+    "channel_stuffing",
+    "inventory_build",
+    "receivables_spike",
+    "single_product_fad_collapse",
+    "us_tariff_margin_squeeze",
+    "retail_channel_sellthrough_failure",
+    "china_sales_collapse_not_offset_by_us_or_europe",
+    "brand_acquisition_impairment",
+    "mna_event_failure",
+    "privacy_data_consumer_regulation_issue"
+  ],
+  "large_sector": "CONSUMER_RETAIL_BRAND",
+  "score_adjustments": [
+    {
+      "axis": "repeat_demand",
+      "direction": "raise",
+      "points": "4",
+      "reason": "유행이 아니라 반복구매가 확인될 때 R5 visibility가 올라간다."
+    },
+    {
+      "axis": "channel_sell_through",
+      "direction": "raise",
+      "points": "4",
+      "reason": "입점이 아니라 매장 회전과 반복 발주가 확인되어야 한다."
+    },
+    {
+      "axis": "overseas_sales_mix",
+      "direction": "raise",
+      "points": "3",
+      "reason": "미국/유럽/글로벌 매출 비중 증가는 내수 프레임 제거 근거다."
+    },
+    {
+      "axis": "us_retail_channel_confirmed",
+      "direction": "raise",
+      "points": "3",
+      "reason": "Costco/Ulta/Target/Sephora/Walmart 등 실제 채널 확인은 Stage 2 이상 근거다."
+    },
+    {
+      "axis": "opm_improvement",
+      "direction": "raise",
+      "points": "4",
+      "reason": "수출 성장이나 브랜드 열기가 OPM으로 내려와야 EPS/FCF 체급 변화다."
+    },
+    {
+      "axis": "inventory_quality",
+      "direction": "raise",
+      "points": "3",
+      "reason": "재고가 안정적이면 channel stuffing 위험이 낮아진다."
+    },
+    {
+      "axis": "receivables_quality",
+      "direction": "raise",
+      "points": "3",
+      "reason": "매출채권이 안정적이면 매출 성장의 현금화 품질이 올라간다."
+    },
+    {
+      "axis": "brand_portfolio_breadth",
+      "direction": "raise",
+      "points": "2",
+      "reason": "단일 제품보다 포트폴리오가 넓으면 fad 위험이 낮다."
+    },
+    {
+      "axis": "odm_customer_diversification",
+      "direction": "raise",
+      "points": "3",
+      "reason": "ODM은 고객 다변화와 주문 visibility가 핵심이다."
+    },
+    {
+      "axis": "localized_manufacturing",
+      "direction": "raise",
+      "points": "2",
+      "reason": "현지 생산은 관세/물류 리스크를 줄이는 보조 근거다."
+    },
+    {
+      "axis": "viral_product_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "틱톡/viral만으로는 반복수요와 FCF를 확인할 수 없다."
+    },
+    {
+      "axis": "brand_heat_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "브랜드 열기만 있고 실적 품질이 없으면 Green 근거가 아니다."
+    },
+    {
+      "axis": "ipo_first_month_rally",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "상장 직후 주가 급등은 가격경로 경고이지 구조 증거가 아니다."
+    },
+    {
+      "axis": "retail_talks_without_sell_through",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "입점 논의는 Stage 2 attention이고 sell-through 전에는 제한한다."
+    },
+    {
+      "axis": "influencer_endorsement_only",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "인플루언서 endorsement만으로 반복구매를 만들지 않는다."
+    },
+    {
+      "axis": "single_sku_dependence",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "단일 SKU 의존도는 fad normalization과 4C 위험을 키운다."
+    },
+    {
+      "axis": "china_exposure_without_offset",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "중국 둔화를 미국/유럽 성장으로 상쇄하지 못하면 제한한다."
+    },
+    {
+      "axis": "holdco_or_private_link_cap",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "비상장 자회사 가치와 상장 모회사 수익률은 분리해야 한다."
+    },
+    {
+      "axis": "mna_event_premium",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "M&A/ROFR/법적 분쟁은 본업 브랜드 리레이팅 증거가 아니다."
+    },
+    {
+      "axis": "tariff_margin_uncertainty",
+      "direction": "lower",
+      "points": "-2",
+      "reason": "관세 부담을 판가에 전가하지 못하면 OPM 품질이 낮아진다."
+    },
+    {
+      "axis": "inventory_or_receivables_build",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "재고/채권 증가는 channel stuffing과 현금화 리스크다."
+    }
+  ],
+  "source_round": "docs/round/round_196.md",
+  "stage4b_statuses": [
+    "none",
+    "watch",
+    "elevated",
+    "graduated"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "event_premium_count": 1,
+    "failed_rerating_count": 1,
+    "hard_4c_case_count": 0,
+    "needs_ohlc_backfill": true,
+    "needs_ohlc_backfill_count": 7,
+    "overheat_count": 1,
+    "price_backfill_field_count": 51,
+    "production_scoring_changed": false,
+    "required_target_count": 18,
+    "score_adjustment_count": 21,
+    "shadow_weight_only": true,
+    "stage3_case_count": 0,
+    "stage3_possible_candidate_count": 1,
+    "stage4b_watch_or_elevated_count": 4,
+    "structural_success_count": 1,
+    "success_candidate_count": 3
+  },
+  "target_aliases": [
+    {
+      "canonical_archetype": "EXPORT_RECURRING_CONSUMER",
+      "round196_label": "EXPORT_RECURRING_CONSUMER"
+    },
+    {
+      "canonical_archetype": "K_FOOD_GLOBAL_STAPLE_BRAND",
+      "round196_label": "K_FOOD_GLOBAL_STAPLE_BRAND"
+    },
+    {
+      "canonical_archetype": "K_FOOD_SINGLE_SKU_RISK",
+      "round196_label": "K_FOOD_SINGLE_SKU_RISK"
+    },
+    {
+      "canonical_archetype": "K_BEAUTY_EXPORT_DISTRIBUTION",
+      "round196_label": "K_BEAUTY_EXPORT_DISTRIBUTION"
+    },
+    {
+      "canonical_archetype": "K_BEAUTY_BRAND_US_CHANNEL",
+      "round196_label": "K_BEAUTY_BRAND_US_CHANNEL"
+    },
+    {
+      "canonical_archetype": "K_BEAUTY_OEM_ODM_SUPPLYCHAIN_KOREA",
+      "round196_label": "K_BEAUTY_OEM_ODM_SUPPLYCHAIN_KOREA"
+    },
+    {
+      "canonical_archetype": "K_BEAUTY_RETAIL_PLATFORM",
+      "round196_label": "K_BEAUTY_RETAIL_PLATFORM"
+    },
+    {
+      "canonical_archetype": "BEAUTY_DEVICE_EXPORT",
+      "round196_label": "BEAUTY_DEVICE_EXPORT"
+    },
+    {
+      "canonical_archetype": "RETAIL_ECOMMERCE_LOGISTICS",
+      "round196_label": "RETAIL_ECOMMERCE_LOGISTICS"
+    },
+    {
+      "canonical_archetype": "APPAREL_FAST_FASHION_BRAND_OEM",
+      "round196_label": "APPAREL_FAST_FASHION_BRAND_OEM"
+    },
+    {
+      "canonical_archetype": "EVENT_PREMIUM_GOVERNANCE_OVERLAY",
+      "round196_label": "EVENT_PREMIUM_GOVERNANCE_OVERLAY"
+    },
+    {
+      "canonical_archetype": "CHANNEL_STUFFING_INVENTORY_OVERLAY",
+      "round196_label": "CHANNEL_STUFFING_INVENTORY_OVERLAY"
+    },
+    {
+      "canonical_archetype": "TARIFF_IMPORT_MARGIN_OVERLAY",
+      "round196_label": "TARIFF_IMPORT_MARGIN_OVERLAY"
+    },
+    {
+      "canonical_archetype": "CHINA_CONSUMER_EXPOSURE_4C",
+      "round196_label": "CHINA_CONSUMER_EXPOSURE_4C"
+    },
+    {
+      "canonical_archetype": "DISCLOSURE_CONFIDENCE_CAP",
+      "round196_label": "DISCLOSURE_CONFIDENCE_CAP"
+    },
+    {
+      "canonical_archetype": "STRONG_PRIVATE_PLATFORM_BUT_HOLDCO_LINK_CAP",
+      "round196_label": "STRONG_PRIVATE_PLATFORM_BUT_HOLDCO_LINK_CAP"
+    },
+    {
+      "canonical_archetype": "BEAUTY_FAST_PRODUCT_CYCLE_RISK",
+      "round196_label": "BEAUTY_FAST_PRODUCT_CYCLE_RISK"
+    },
+    {
+      "canonical_archetype": "APPAREL_LICENSE_BRAND_CHINA_RISK",
+      "round196_label": "APPAREL_LICENSE_BRAND_CHINA_RISK"
+    }
+  ],
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round196_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_viral_ipo_retail_talks_or_mna_as_green_evidence",
+    "do_not_invent_prices_stage_dates_sellthrough_opm_inventory_receivables_or_fcf"
+  ]
+}
