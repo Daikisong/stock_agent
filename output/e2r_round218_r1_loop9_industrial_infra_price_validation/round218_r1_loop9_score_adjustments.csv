@@ -1,0 +1,15 @@
+axis,points,direction,reason
+confirmed_contract_amount,5,raise,계약금액이 고객·납기와 같이 확인되면 Stage 2 품질이 올라간다.
+order_to_revenue_conversion,5,raise,수주가 납품·매출·OP/EPS로 내려오는 경로를 보상한다.
+delivery_schedule,4,raise,납기와 공정이 있어야 backlog가 실제 실적으로 변한다.
+backlog_margin_visibility,5,raise,수주잔고가 마진과 FCF로 이어질 때만 Green에 가까워진다.
+customer_quality,4,raise,전력망·정부·Aramco처럼 고객 질이 높으면 visibility가 좋아진다.
+capacity_bottleneck,4,raise,"변압기 lead time, CAPA 병목, 선박 슬롯 부족은 구조적 신호다."
+us_grid_exposure,4,raise,미국 grid/data-center exposure는 R1 구조 신호지만 회사별 주문 확인이 필요하다.
+price_path_alignment,5,raise,증거 이후 가격경로가 따라오면 score-price alignment를 인정한다.
+contract_headline_without_margin,-5,lower,계약 headline만 있고 마진·현금회수가 없으면 Green 금지다.
+policy_or_mou_without_order,-5,lower,정책·MOU·합병 이벤트는 funded order 전 event premium이다.
+ipo_first_day_rally,-5,lower,IPO 첫날 급등은 구조적 Stage 3가 아니라 4B-watch다.
+record_high_on_policy_event,-4,lower,정책/합병 신고가는 가격이 증거보다 앞섰을 수 있다.
+geopolitical_sanction_unpriced,-4,lower,제재·지정학 리스크는 4C-watch로 별도 분리한다.
+epc_backlog_without_cashflow,-4,lower,EPC 대형수주는 원가율·cash collection 전 Green이 아니다.

@@ -1,0 +1,320 @@
+{
+  "case_ids": [
+    "r1_loop9_ls_electric_us_grid_watch",
+    "r1_loop9_k_transformer_bottleneck_basket",
+    "r1_loop9_samsung_ea_fadhili_epc",
+    "r1_loop9_doosan_czech_nuclear_policy_to_contract",
+    "r1_loop9_hd_hyundai_heavy_mipo_masga_event",
+    "r1_loop9_hanwha_ocean_china_sanction_watch",
+    "r1_loop9_hd_hyundai_marine_solution_ipo_premium"
+  ],
+  "green_forbidden_patterns": [
+    "policy_news_only",
+    "mou_or_merger_policy_only",
+    "contract_headline_without_margin",
+    "epc_order_without_cost_control",
+    "transformer_sector_data_without_company_order",
+    "nuclear_preferred_bidder_without_equipment_backlog",
+    "shipbuilding_policy_theme_without_funded_order",
+    "sanctions_or_geopolitical_trust_break",
+    "ipo_event_premium_only",
+    "record_high_event_rally",
+    "high_score_without_price_validation"
+  ],
+  "green_required_fields": [
+    "company_order_or_contract_confirmed",
+    "contract_amount_customer_delivery_visible",
+    "actual_delivery_or_revenue_recognition_confirmed",
+    "margin_and_cost_control_confirmed",
+    "backlog_to_revenue_conversion_confirmed",
+    "eps_revision_or_fcf_path_confirmed",
+    "price_path_after_evidence_confirmed",
+    "geopolitical_financing_dilution_risk_passed",
+    "no_hard_redteam"
+  ],
+  "hard_4c_gates": [
+    "contract_cancellation",
+    "final_contract_failure",
+    "epc_cost_overrun",
+    "margin_collapse",
+    "working_capital_deterioration",
+    "customer_payment_delay",
+    "legal_delay_or_court_block",
+    "sanction_trade_restriction",
+    "policy_budget_failure",
+    "integration_cost_overrun",
+    "supply_chain_blocked"
+  ],
+  "large_sector": "INDUSTRIAL_ORDERS_INFRA",
+  "score_adjustments": [
+    {
+      "axis": "confirmed_contract_amount",
+      "direction": "raise",
+      "points": "5",
+      "reason": "계약금액이 고객·납기와 같이 확인되면 Stage 2 품질이 올라간다."
+    },
+    {
+      "axis": "order_to_revenue_conversion",
+      "direction": "raise",
+      "points": "5",
+      "reason": "수주가 납품·매출·OP/EPS로 내려오는 경로를 보상한다."
+    },
+    {
+      "axis": "delivery_schedule",
+      "direction": "raise",
+      "points": "4",
+      "reason": "납기와 공정이 있어야 backlog가 실제 실적으로 변한다."
+    },
+    {
+      "axis": "backlog_margin_visibility",
+      "direction": "raise",
+      "points": "5",
+      "reason": "수주잔고가 마진과 FCF로 이어질 때만 Green에 가까워진다."
+    },
+    {
+      "axis": "customer_quality",
+      "direction": "raise",
+      "points": "4",
+      "reason": "전력망·정부·Aramco처럼 고객 질이 높으면 visibility가 좋아진다."
+    },
+    {
+      "axis": "capacity_bottleneck",
+      "direction": "raise",
+      "points": "4",
+      "reason": "변압기 lead time, CAPA 병목, 선박 슬롯 부족은 구조적 신호다."
+    },
+    {
+      "axis": "us_grid_exposure",
+      "direction": "raise",
+      "points": "4",
+      "reason": "미국 grid/data-center exposure는 R1 구조 신호지만 회사별 주문 확인이 필요하다."
+    },
+    {
+      "axis": "price_path_alignment",
+      "direction": "raise",
+      "points": "5",
+      "reason": "증거 이후 가격경로가 따라오면 score-price alignment를 인정한다."
+    },
+    {
+      "axis": "contract_headline_without_margin",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "계약 headline만 있고 마진·현금회수가 없으면 Green 금지다."
+    },
+    {
+      "axis": "policy_or_mou_without_order",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "정책·MOU·합병 이벤트는 funded order 전 event premium이다."
+    },
+    {
+      "axis": "ipo_first_day_rally",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "IPO 첫날 급등은 구조적 Stage 3가 아니라 4B-watch다."
+    },
+    {
+      "axis": "record_high_on_policy_event",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "정책/합병 신고가는 가격이 증거보다 앞섰을 수 있다."
+    },
+    {
+      "axis": "geopolitical_sanction_unpriced",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "제재·지정학 리스크는 4C-watch로 별도 분리한다."
+    },
+    {
+      "axis": "epc_backlog_without_cashflow",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "EPC 대형수주는 원가율·cash collection 전 Green이 아니다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "POWER_EQUIPMENT_EXPORT_US_GRID",
+      "backlog_margin": "+5",
+      "capacity_bottleneck": "+4",
+      "contract_amount": "+3",
+      "customer_quality": "+4",
+      "delivery_schedule": "+3",
+      "event_penalty": "-2",
+      "geopolitical_redteam": "+1",
+      "hard_4c_sensitivity": "+3",
+      "notes": "LS Electric has strong U.S. grid evidence but event price failed.",
+      "order_to_revenue": "+4",
+      "price_path_alignment": "+3",
+      "us_grid_exposure": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "TRANSFORMER_CAPACITY_BOTTLENECK",
+      "backlog_margin": "+5",
+      "capacity_bottleneck": "+5",
+      "contract_amount": "+3",
+      "customer_quality": "+4",
+      "delivery_schedule": "+4",
+      "event_penalty": "-2",
+      "geopolitical_redteam": "+1",
+      "hard_4c_sensitivity": "+3",
+      "notes": "K-transformer basket has strong bottleneck evidence but needs company-level orders and margins.",
+      "order_to_revenue": "+3",
+      "price_path_alignment": "+2",
+      "us_grid_exposure": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "OVERSEAS_EPC_CONTRACT_BACKLOG",
+      "backlog_margin": "+5",
+      "capacity_bottleneck": "0",
+      "contract_amount": "+5",
+      "customer_quality": "+5",
+      "delivery_schedule": "+4",
+      "event_penalty": "-3",
+      "geopolitical_redteam": "+2",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Samsung E&A confirms Stage 2 contract; Stage 3 requires margins and cash collection.",
+      "order_to_revenue": "+4",
+      "price_path_alignment": "+4",
+      "us_grid_exposure": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "NUCLEAR_POLICY_TO_EQUIPMENT_BACKLOG",
+      "backlog_margin": "+5",
+      "capacity_bottleneck": "+2",
+      "contract_amount": "+4",
+      "customer_quality": "+5",
+      "delivery_schedule": "+5",
+      "event_penalty": "-4",
+      "geopolitical_redteam": "+2",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Doosan preferred bidder/final contract is Stage 2; equipment backlog needed.",
+      "order_to_revenue": "+4",
+      "price_path_alignment": "+4",
+      "us_grid_exposure": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "SHIPBUILDING_US_POLICY_MASGA",
+      "backlog_margin": "+5",
+      "capacity_bottleneck": "+2",
+      "contract_amount": "+4",
+      "customer_quality": "+4",
+      "delivery_schedule": "+4",
+      "event_penalty": "-5",
+      "geopolitical_redteam": "+3",
+      "hard_4c_sensitivity": "+4",
+      "notes": "HD Hyundai/Mipo merger is Stage 2 and 4B-watch until funded orders and margins confirm.",
+      "order_to_revenue": "+3",
+      "price_path_alignment": "+3",
+      "us_grid_exposure": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "GEOPOLITICAL_SHIPBUILDING_SANCTION",
+      "backlog_margin": "0",
+      "capacity_bottleneck": "0",
+      "contract_amount": "0",
+      "customer_quality": "0",
+      "delivery_schedule": "0",
+      "event_penalty": "0",
+      "geopolitical_redteam": "+5",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Hanwha Ocean China sanctions require 4C-watch.",
+      "order_to_revenue": "0",
+      "price_path_alignment": "+2",
+      "us_grid_exposure": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "SHIP_MRO_RECURRING_PLATFORM",
+      "backlog_margin": "+4",
+      "capacity_bottleneck": "0",
+      "contract_amount": "+3",
+      "customer_quality": "+3",
+      "delivery_schedule": "+3",
+      "event_penalty": "-5",
+      "geopolitical_redteam": "+1",
+      "hard_4c_sensitivity": "+3",
+      "notes": "HD Hyundai Marine IPO rally is 4B/event premium before recurring MRO proof.",
+      "order_to_revenue": "+3",
+      "price_path_alignment": "+1",
+      "us_grid_exposure": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "IPO_EVENT_PREMIUM",
+      "backlog_margin": "0",
+      "capacity_bottleneck": "0",
+      "contract_amount": "0",
+      "customer_quality": "0",
+      "delivery_schedule": "0",
+      "event_penalty": "-5",
+      "geopolitical_redteam": "0",
+      "hard_4c_sensitivity": "+2",
+      "notes": "First-day IPO rally blocks Stage 3 until operating evidence appears.",
+      "order_to_revenue": "0",
+      "price_path_alignment": "0",
+      "us_grid_exposure": "0"
+    }
+  ],
+  "source_round": "docs/round/round_218.md",
+  "stage4b_watch_triggers": [
+    "ipo_first_day_50_to_100pct_rally",
+    "policy_or_merger_event_record_high",
+    "preferred_bidder_rally_before_final_contract",
+    "contract_announcement_event_rally",
+    "ai_grid_theme_multiple_ahead_of_company_orders",
+    "good_news_price_response_fade",
+    "valuation_ahead_of_delivery_margin_and_fcf"
+  ],
+  "summary": {
+    "aligned_stage2_count": 1,
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "evidence_good_but_price_failed_count": 1,
+    "failed_rerating_count": 1,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "large_sector": "INDUSTRIAL_ORDERS_INFRA",
+    "overheat_count": 1,
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_218.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 5,
+    "stage4c_watch_count": 2,
+    "success_candidate_count": 4,
+    "target_archetype_count": 13,
+    "watch_count": 1
+  },
+  "target_aliases": {
+    "CONTRACT_HEADLINE_NOT_STAGE3": "CONTRACT_HEADLINE_NOT_STAGE3",
+    "EPC_LOW_MARGIN_ORDER_OVERLAY": "EPC_LOW_MARGIN_ORDER_OVERLAY",
+    "GEOPOLITICAL_SHIPBUILDING_SANCTION": "GEOPOLITICAL_SHIPBUILDING_SANCTION",
+    "GRID_POWER_EQUIPMENT_AI_DATACENTER": "GRID_POWER_EQUIPMENT_AI_DATACENTER",
+    "IPO_EVENT_PREMIUM": "IPO_EVENT_PREMIUM",
+    "NUCLEAR_POLICY_TO_EQUIPMENT_BACKLOG": "NUCLEAR_POLICY_TO_EQUIPMENT_BACKLOG",
+    "OVERSEAS_EPC_CONTRACT_BACKLOG": "OVERSEAS_EPC_CONTRACT_BACKLOG",
+    "POWER_EQUIPMENT_EXPORT_US_GRID": "POWER_EQUIPMENT_EXPORT_US_GRID",
+    "PRICE_ONLY_RALLY": "PRICE_ONLY_RALLY",
+    "SHIPBUILDING_US_POLICY_MASGA": "SHIPBUILDING_US_POLICY_MASGA",
+    "SHIP_MRO_RECURRING_PLATFORM": "SHIP_MRO_RECURRING_PLATFORM",
+    "THESIS_BREAK_4C_WATCH": "THESIS_BREAK_4C_WATCH",
+    "TRANSFORMER_CAPACITY_BOTTLENECK": "TRANSFORMER_CAPACITY_BOTTLENECK"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round218_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_policy_mou_merger_ipo_or_contract_headline_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}

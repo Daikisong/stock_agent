@@ -1,0 +1,9 @@
+archetype,contract_amount,order_to_revenue,delivery_schedule,backlog_margin,customer_quality,capacity_bottleneck,us_grid_exposure,price_path_alignment,event_penalty,geopolitical_redteam,4b_watch_sensitivity,hard_4c_sensitivity,notes
+POWER_EQUIPMENT_EXPORT_US_GRID,+3,+4,+3,+5,+4,+4,+5,+3,-2,+1,+4,+3,LS Electric has strong U.S. grid evidence but event price failed.
+TRANSFORMER_CAPACITY_BOTTLENECK,+3,+3,+4,+5,+4,+5,+5,+2,-2,+1,+5,+3,K-transformer basket has strong bottleneck evidence but needs company-level orders and margins.
+OVERSEAS_EPC_CONTRACT_BACKLOG,+5,+4,+4,+5,+5,0,0,+4,-3,+2,+4,+4,Samsung E&A confirms Stage 2 contract; Stage 3 requires margins and cash collection.
+NUCLEAR_POLICY_TO_EQUIPMENT_BACKLOG,+4,+4,+5,+5,+5,+2,0,+4,-4,+2,+5,+4,Doosan preferred bidder/final contract is Stage 2; equipment backlog needed.
+SHIPBUILDING_US_POLICY_MASGA,+4,+3,+4,+5,+4,+2,0,+3,-5,+3,+5,+4,HD Hyundai/Mipo merger is Stage 2 and 4B-watch until funded orders and margins confirm.
+GEOPOLITICAL_SHIPBUILDING_SANCTION,0,0,0,0,0,0,0,+2,0,+5,+3,+5,Hanwha Ocean China sanctions require 4C-watch.
+SHIP_MRO_RECURRING_PLATFORM,+3,+3,+3,+4,+3,0,0,+1,-5,+1,+5,+3,HD Hyundai Marine IPO rally is 4B/event premium before recurring MRO proof.
+IPO_EVENT_PREMIUM,0,0,0,0,0,0,0,0,-5,0,+5,+2,First-day IPO rally blocks Stage 3 until operating evidence appears.
