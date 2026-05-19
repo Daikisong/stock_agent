@@ -127,6 +127,50 @@ class Round215ScoreAdjustment:
 
 
 @dataclass(frozen=True)
+class Round215ShadowWeightRow:
+    archetype: E2RArchetype
+    funded_budget: int
+    actual_contract: int
+    financing: int
+    procurement_award: int
+    revenue_conversion: int
+    independent_validation: int
+    event_penalty: int
+    stage4b_watch_sensitivity: int
+    hard_4c_sensitivity: int
+    notes: str
+
+    def as_row(self) -> dict[str, str]:
+        return {
+            "archetype": self.archetype.value,
+            "funded_budget": _signed_int_text(self.funded_budget),
+            "actual_contract": _signed_int_text(self.actual_contract),
+            "financing": _signed_int_text(self.financing),
+            "procurement_award": _signed_int_text(self.procurement_award),
+            "revenue_conversion": _signed_int_text(self.revenue_conversion),
+            "independent_validation": _signed_int_text(self.independent_validation),
+            "event_penalty": _signed_int_text(self.event_penalty),
+            "4b_watch_sensitivity": _signed_int_text(self.stage4b_watch_sensitivity),
+            "hard_4c_sensitivity": _signed_int_text(self.hard_4c_sensitivity),
+            "notes": self.notes,
+        }
+
+
+@dataclass(frozen=True)
+class Round215DeepSubArchetype:
+    category: str
+    primary_archetype: E2RArchetype
+    terms: tuple[str, ...]
+
+    def as_row(self) -> dict[str, str]:
+        return {
+            "category": self.category,
+            "primary_archetype": self.primary_archetype.value,
+            "terms": "|".join(self.terms),
+        }
+
+
+@dataclass(frozen=True)
 class Round215CaseCandidate:
     case_id: str
     symbol: str
@@ -189,6 +233,173 @@ ROUND215_SCORE_ADJUSTMENTS: tuple[Round215ScoreAdjustment, ...] = (
     Round215ScoreAdjustment("market_structure_reform_without_earnings", -3, "lower", "시장구조 개선은 개별 기업 이익 전까지 overlay다."),
     Round215ScoreAdjustment("price_rally_before_contract", -5, "lower", "계약 전 가격 급등은 4B-watch다."),
     Round215ScoreAdjustment("event_fade_risk", -5, "lower", "이벤트가 완화되면 Stage 4C/fade로 본다."),
+)
+
+ROUND215_SHADOW_WEIGHT_ROWS: tuple[Round215ShadowWeightRow, ...] = (
+    Round215ShadowWeightRow(
+        E2RArchetype.DOMESTIC_RESOURCE_DISCOVERY_EVENT,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -5,
+        5,
+        5,
+        "Korea Gas East Sea event is price_moved_without_evidence until drilling/commerciality/revenue.",
+    ),
+    Round215ShadowWeightRow(
+        E2RArchetype.NUCLEAR_POLICY_TO_CONTRACT,
+        4,
+        5,
+        4,
+        4,
+        4,
+        0,
+        -2,
+        5,
+        4,
+        "Doosan/Czech nuclear shows policy-to-contract Stage 2 but equipment backlog/margin needed for Green.",
+    ),
+    Round215ShadowWeightRow(
+        E2RArchetype.US_SHIPBUILDING_REBUILD_POLICY,
+        3,
+        3,
+        3,
+        3,
+        3,
+        0,
+        -4,
+        5,
+        4,
+        "HD Hyundai MASGA/merger event is Stage 2 and 4B-watch until funded order/margin.",
+    ),
+    Round215ShadowWeightRow(
+        E2RArchetype.EVENT_DISEASE_PEST_DEMAND,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        -5,
+        5,
+        5,
+        "Poultry import ban is one-off event; easing is event fade.",
+    ),
+    Round215ShadowWeightRow(
+        E2RArchetype.SPECULATIVE_SCIENCE_THEME,
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        -5,
+        5,
+        5,
+        "LK-99 preprint is Stage 1; independent replication failure is thesis break.",
+    ),
+    Round215ShadowWeightRow(
+        E2RArchetype.POLICY_MARKET_SHOCK_EVENT,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -3,
+        3,
+        5,
+        "Martial-law shock is macro RedTeam overlay.",
+    ),
+    Round215ShadowWeightRow(
+        E2RArchetype.MARKET_STRUCTURE_SHORT_SELLING_POLICY,
+        2,
+        0,
+        0,
+        0,
+        2,
+        0,
+        -3,
+        3,
+        3,
+        "Short-selling/MSCI accessibility is positive market-structure overlay but not company Green.",
+    ),
+)
+
+ROUND215_DEEP_SUB_ARCHETYPES: tuple[Round215DeepSubArchetype, ...] = (
+    Round215DeepSubArchetype(
+        "자원 발견 / 에너지 안보",
+        E2RArchetype.DOMESTIC_RESOURCE_DISCOVERY_EVENT,
+        (
+            "East Sea oil and gas",
+            "Korea Gas",
+            "exploration approval",
+            "reserve estimate",
+            "commerciality unknown",
+            "drilling cost",
+            "resource estimate vs revenue conversion",
+        ),
+    ),
+    Round215DeepSubArchetype(
+        "원전 / SMR / AI 전력",
+        E2RArchetype.NUCLEAR_POLICY_TO_CONTRACT,
+        (
+            "Czech nuclear preferred bidder",
+            "Doosan Enerbility",
+            "KHNP",
+            "X-energy / AWS / Fermi America",
+            "preferred bidder vs final contract",
+            "court/legal delay",
+            "equipment backlog",
+            "SMR MOU vs funded order",
+        ),
+    ),
+    Round215DeepSubArchetype(
+        "미국 조선정책",
+        E2RArchetype.US_SHIPBUILDING_REBUILD_POLICY,
+        (
+            "MASGA",
+            "HD Hyundai Heavy / HD Hyundai Mipo",
+            "U.S.-Korea shipbuilding cooperation",
+            "MOU / merger / record high",
+            "funded order vs policy premium",
+        ),
+    ),
+    Round215DeepSubArchetype(
+        "질병·수급 이벤트",
+        E2RArchetype.EVENT_DISEASE_PEST_DEMAND,
+        (
+            "Brazil bird flu",
+            "South Korea chicken import restriction",
+            "Harim / Maniker poultry basket",
+            "import ban / restriction easing",
+            "one-off disease demand",
+        ),
+    ),
+    Round215DeepSubArchetype(
+        "과학 테마",
+        E2RArchetype.SPECULATIVE_SCIENCE_THEME,
+        (
+            "LK-99",
+            "room-temperature superconductor claim",
+            "replication failure",
+            "speculative science rally",
+            "theme collapse",
+        ),
+    ),
+    Round215DeepSubArchetype(
+        "시장구조 / 정치 shock",
+        E2RArchetype.POLICY_MARKET_SHOCK_EVENT,
+        (
+            "martial law shock",
+            "short-selling resumption",
+            "MSCI market accessibility",
+            "market-level overlay",
+        ),
+    ),
 )
 
 
@@ -643,6 +854,14 @@ def round215_score_adjustment_rows() -> tuple[dict[str, str], ...]:
     return tuple(adjustment.as_row() for adjustment in ROUND215_SCORE_ADJUSTMENTS)
 
 
+def round215_shadow_weight_rows() -> tuple[dict[str, str], ...]:
+    return tuple(row.as_row() for row in ROUND215_SHADOW_WEIGHT_ROWS)
+
+
+def round215_deep_sub_archetype_rows() -> tuple[dict[str, str], ...]:
+    return tuple(row.as_row() for row in ROUND215_DEEP_SUB_ARCHETYPES)
+
+
 def round215_price_validation_field_rows() -> tuple[dict[str, str], ...]:
     return tuple({"field": field, "required_for_round215_price_validation": "true"} for field in ROUND215_PRICE_VALIDATION_FIELDS)
 
@@ -671,6 +890,8 @@ def round215_summary() -> dict[str, int | bool | str]:
         "stage4b_watch_count": sum(1 for case in cases if case.stage4b_status == "watch"),
         "hard_4c_case_count": sum(1 for case in cases if case.hard_4c_confirmed),
         "target_archetype_count": len(ROUND215_REQUIRED_TARGET_ALIASES),
+        "deep_sub_archetype_count": len(ROUND215_DEEP_SUB_ARCHETYPES),
+        "shadow_weight_row_count": len(ROUND215_SHADOW_WEIGHT_ROWS),
         "price_validation_completed": "partial_with_reported_price_anchors",
         "full_ohlc_complete": False,
         "r11_default_stage3_bias": ROUND215_DEFAULT_STAGE3_BIAS,
@@ -690,6 +911,8 @@ def round215_audit_payload() -> dict[str, object]:
         "green_forbidden_patterns": list(ROUND215_GREEN_FORBIDDEN_PATTERNS),
         "stage4b_watch_triggers": list(ROUND215_STAGE4B_WATCH_TRIGGERS),
         "hard_4c_gates": list(ROUND215_HARD_4C_GATES),
+        "deep_sub_archetypes": round215_deep_sub_archetype_rows(),
+        "shadow_weights": round215_shadow_weight_rows(),
         "what_not_to_change": [
             "do_not_use_round215_cases_as_candidate_generation_input",
             "do_not_apply_shadow_weights_to_production_scoring_yet",
@@ -719,6 +942,8 @@ def render_round215_summary_markdown() -> str:
         f"- Stage 3 dated cases: {summary['stage3_case_count']}",
         f"- 4B-watch cases: {summary['stage4b_watch_count']}",
         f"- hard_4c_case_count: {summary['hard_4c_case_count']}",
+        f"- deep_sub_archetype_count: {summary['deep_sub_archetype_count']}",
+        f"- shadow_weight_row_count: {summary['shadow_weight_row_count']}",
         f"- r11_default_stage3_bias: {summary['r11_default_stage3_bias']}",
         f"- full_ohlc_complete: {str(summary['full_ohlc_complete']).lower()}",
         "",
@@ -832,6 +1057,8 @@ def write_round215_r11_loop8_reports(
         "case_matrix": output / "round215_r11_loop8_case_matrix.csv",
         "target_aliases": output / "round215_r11_loop8_target_aliases.csv",
         "score_adjustments": output / "round215_r11_loop8_score_adjustments.csv",
+        "shadow_weights": output / "round215_r11_loop8_shadow_weights.csv",
+        "deep_sub_archetypes": output / "round215_r11_loop8_deep_sub_archetypes.csv",
         "price_validation_fields": output / "round215_r11_loop8_price_validation_fields.csv",
         "green_gate_review": output / "round215_r11_loop8_green_gate_review.md",
         "price_validation_plan": output / "round215_r11_loop8_price_validation_plan.md",
@@ -841,6 +1068,8 @@ def write_round215_r11_loop8_reports(
     _write_csv(round215_case_rows(), paths["case_matrix"])
     _write_csv(round215_target_alias_rows(), paths["target_aliases"])
     _write_csv(round215_score_adjustment_rows(), paths["score_adjustments"])
+    _write_csv(round215_shadow_weight_rows(), paths["shadow_weights"])
+    _write_csv(round215_deep_sub_archetype_rows(), paths["deep_sub_archetypes"])
     _write_csv(round215_price_validation_field_rows(), paths["price_validation_fields"])
     paths["green_gate_review"].write_text(render_round215_green_gate_review_markdown(), encoding="utf-8")
     paths["price_validation_plan"].write_text(render_round215_price_validation_plan_markdown(), encoding="utf-8")
@@ -875,3 +1104,7 @@ def _date_text(value: date | None) -> str:
 
 def _float_text(value: float | None) -> str:
     return "" if value is None else f"{value:g}"
+
+
+def _signed_int_text(value: int) -> str:
+    return f"+{value}" if value > 0 else str(value)

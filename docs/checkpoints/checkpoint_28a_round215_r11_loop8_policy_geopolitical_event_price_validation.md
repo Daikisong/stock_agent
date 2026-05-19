@@ -69,8 +69,12 @@ Hard 4C는 시추 실패, 경제성 부재, MOU 불발, 예산 미반영, 정책
 - `output/e2r_round215_r11_loop8_policy_geopolitical_event_price_validation/round215_r11_loop8_price_validation_summary.md`
 - `output/e2r_round215_r11_loop8_policy_geopolitical_event_price_validation/round215_r11_loop8_case_matrix.csv`
 - `output/e2r_round215_r11_loop8_policy_geopolitical_event_price_validation/round215_r11_loop8_score_adjustments.csv`
+- `output/e2r_round215_r11_loop8_policy_geopolitical_event_price_validation/round215_r11_loop8_shadow_weights.csv`
+- `output/e2r_round215_r11_loop8_policy_geopolitical_event_price_validation/round215_r11_loop8_deep_sub_archetypes.csv`
 - `output/e2r_round215_r11_loop8_policy_geopolitical_event_price_validation/round215_r11_loop8_green_gate_review.md`
 - `output/e2r_round215_r11_loop8_policy_geopolitical_event_price_validation/round215_r11_loop8_stage4b_4c_review.md`
+
+이번 추가 패치는 원문 후반의 `shadow weight row 초안`과 `deep sub-archetype` 목록을 별도 산출물로 남긴다. 예를 들면 `NUCLEAR_POLICY_TO_CONTRACT`는 실제 계약과 예산이 붙으면 점수를 올릴 수 있지만, `EVENT_DISEASE_PEST_DEMAND`는 event fade 위험 때문에 감점축을 강하게 둔다.
 
 ## 검증
 

@@ -1,0 +1,8 @@
+archetype,funded_budget,actual_contract,financing,procurement_award,revenue_conversion,independent_validation,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+DOMESTIC_RESOURCE_DISCOVERY_EVENT,0,0,0,0,0,0,-5,+5,+5,Korea Gas East Sea event is price_moved_without_evidence until drilling/commerciality/revenue.
+NUCLEAR_POLICY_TO_CONTRACT,+4,+5,+4,+4,+4,0,-2,+5,+4,Doosan/Czech nuclear shows policy-to-contract Stage 2 but equipment backlog/margin needed for Green.
+US_SHIPBUILDING_REBUILD_POLICY,+3,+3,+3,+3,+3,0,-4,+5,+4,HD Hyundai MASGA/merger event is Stage 2 and 4B-watch until funded order/margin.
+EVENT_DISEASE_PEST_DEMAND,0,0,0,0,+1,0,-5,+5,+5,Poultry import ban is one-off event; easing is event fade.
+SPECULATIVE_SCIENCE_THEME,0,0,0,0,0,+5,-5,+5,+5,LK-99 preprint is Stage 1; independent replication failure is thesis break.
+POLICY_MARKET_SHOCK_EVENT,0,0,0,0,0,0,-3,+3,+5,Martial-law shock is macro RedTeam overlay.
+MARKET_STRUCTURE_SHORT_SELLING_POLICY,+2,0,0,0,+2,0,-3,+3,+3,Short-selling/MSCI accessibility is positive market-structure overlay but not company Green.

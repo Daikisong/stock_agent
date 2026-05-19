@@ -1,0 +1,7 @@
+category,primary_archetype,terms
+자원 발견 / 에너지 안보,DOMESTIC_RESOURCE_DISCOVERY_EVENT,East Sea oil and gas|Korea Gas|exploration approval|reserve estimate|commerciality unknown|drilling cost|resource estimate vs revenue conversion
+원전 / SMR / AI 전력,NUCLEAR_POLICY_TO_CONTRACT,Czech nuclear preferred bidder|Doosan Enerbility|KHNP|X-energy / AWS / Fermi America|preferred bidder vs final contract|court/legal delay|equipment backlog|SMR MOU vs funded order
+미국 조선정책,US_SHIPBUILDING_REBUILD_POLICY,MASGA|HD Hyundai Heavy / HD Hyundai Mipo|U.S.-Korea shipbuilding cooperation|MOU / merger / record high|funded order vs policy premium
+질병·수급 이벤트,EVENT_DISEASE_PEST_DEMAND,Brazil bird flu|South Korea chicken import restriction|Harim / Maniker poultry basket|import ban / restriction easing|one-off disease demand
+과학 테마,SPECULATIVE_SCIENCE_THEME,LK-99|room-temperature superconductor claim|replication failure|speculative science rally|theme collapse
+시장구조 / 정치 shock,POLICY_MARKET_SHOCK_EVENT,martial law shock|short-selling resumption|MSCI market accessibility|market-level overlay

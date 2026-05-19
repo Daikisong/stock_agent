@@ -1,4 +1,36 @@
 {
+  "deep_sub_archetypes": [
+    {
+      "category": "자원 발견 / 에너지 안보",
+      "primary_archetype": "DOMESTIC_RESOURCE_DISCOVERY_EVENT",
+      "terms": "East Sea oil and gas|Korea Gas|exploration approval|reserve estimate|commerciality unknown|drilling cost|resource estimate vs revenue conversion"
+    },
+    {
+      "category": "원전 / SMR / AI 전력",
+      "primary_archetype": "NUCLEAR_POLICY_TO_CONTRACT",
+      "terms": "Czech nuclear preferred bidder|Doosan Enerbility|KHNP|X-energy / AWS / Fermi America|preferred bidder vs final contract|court/legal delay|equipment backlog|SMR MOU vs funded order"
+    },
+    {
+      "category": "미국 조선정책",
+      "primary_archetype": "US_SHIPBUILDING_REBUILD_POLICY",
+      "terms": "MASGA|HD Hyundai Heavy / HD Hyundai Mipo|U.S.-Korea shipbuilding cooperation|MOU / merger / record high|funded order vs policy premium"
+    },
+    {
+      "category": "질병·수급 이벤트",
+      "primary_archetype": "EVENT_DISEASE_PEST_DEMAND",
+      "terms": "Brazil bird flu|South Korea chicken import restriction|Harim / Maniker poultry basket|import ban / restriction easing|one-off disease demand"
+    },
+    {
+      "category": "과학 테마",
+      "primary_archetype": "SPECULATIVE_SCIENCE_THEME",
+      "terms": "LK-99|room-temperature superconductor claim|replication failure|speculative science rally|theme collapse"
+    },
+    {
+      "category": "시장구조 / 정치 shock",
+      "primary_archetype": "POLICY_MARKET_SHOCK_EVENT",
+      "terms": "martial law shock|short-selling resumption|MSCI market accessibility|market-level overlay"
+    }
+  ],
   "green_forbidden_patterns": [
     "policy_news_only",
     "mou_only",
@@ -36,6 +68,99 @@
     "financing_failure"
   ],
   "large_sector": "POLICY_GEOPOLITICAL_EVENT",
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_contract": "0",
+      "archetype": "DOMESTIC_RESOURCE_DISCOVERY_EVENT",
+      "event_penalty": "-5",
+      "financing": "0",
+      "funded_budget": "0",
+      "hard_4c_sensitivity": "+5",
+      "independent_validation": "0",
+      "notes": "Korea Gas East Sea event is price_moved_without_evidence until drilling/commerciality/revenue.",
+      "procurement_award": "0",
+      "revenue_conversion": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_contract": "+5",
+      "archetype": "NUCLEAR_POLICY_TO_CONTRACT",
+      "event_penalty": "-2",
+      "financing": "+4",
+      "funded_budget": "+4",
+      "hard_4c_sensitivity": "+4",
+      "independent_validation": "0",
+      "notes": "Doosan/Czech nuclear shows policy-to-contract Stage 2 but equipment backlog/margin needed for Green.",
+      "procurement_award": "+4",
+      "revenue_conversion": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_contract": "+3",
+      "archetype": "US_SHIPBUILDING_REBUILD_POLICY",
+      "event_penalty": "-4",
+      "financing": "+3",
+      "funded_budget": "+3",
+      "hard_4c_sensitivity": "+4",
+      "independent_validation": "0",
+      "notes": "HD Hyundai MASGA/merger event is Stage 2 and 4B-watch until funded order/margin.",
+      "procurement_award": "+3",
+      "revenue_conversion": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_contract": "0",
+      "archetype": "EVENT_DISEASE_PEST_DEMAND",
+      "event_penalty": "-5",
+      "financing": "0",
+      "funded_budget": "0",
+      "hard_4c_sensitivity": "+5",
+      "independent_validation": "0",
+      "notes": "Poultry import ban is one-off event; easing is event fade.",
+      "procurement_award": "0",
+      "revenue_conversion": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_contract": "0",
+      "archetype": "SPECULATIVE_SCIENCE_THEME",
+      "event_penalty": "-5",
+      "financing": "0",
+      "funded_budget": "0",
+      "hard_4c_sensitivity": "+5",
+      "independent_validation": "+5",
+      "notes": "LK-99 preprint is Stage 1; independent replication failure is thesis break.",
+      "procurement_award": "0",
+      "revenue_conversion": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "actual_contract": "0",
+      "archetype": "POLICY_MARKET_SHOCK_EVENT",
+      "event_penalty": "-3",
+      "financing": "0",
+      "funded_budget": "0",
+      "hard_4c_sensitivity": "+5",
+      "independent_validation": "0",
+      "notes": "Martial-law shock is macro RedTeam overlay.",
+      "procurement_award": "0",
+      "revenue_conversion": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "actual_contract": "0",
+      "archetype": "MARKET_STRUCTURE_SHORT_SELLING_POLICY",
+      "event_penalty": "-3",
+      "financing": "0",
+      "funded_budget": "+2",
+      "hard_4c_sensitivity": "+3",
+      "independent_validation": "0",
+      "notes": "Short-selling/MSCI accessibility is positive market-structure overlay but not company Green.",
+      "procurement_award": "0",
+      "revenue_conversion": "+2"
+    }
+  ],
   "source_round": "docs/round/round_215.md",
   "stage4b_watch_triggers": [
     "same_day_limit_up_or_intraday_spike",
@@ -48,6 +173,7 @@
   "summary": {
     "candidate_generation_input": false,
     "case_candidate_count": 7,
+    "deep_sub_archetype_count": 6,
     "event_premium_count": 2,
     "failed_rerating_count": 1,
     "full_ohlc_complete": false,
@@ -59,6 +185,7 @@
     "production_scoring_changed": false,
     "r11_default_stage3_bias": "very_conservative",
     "shadow_weight_only": true,
+    "shadow_weight_row_count": 7,
     "source_round": "docs/round/round_215.md",
     "stage3_case_count": 0,
     "stage4b_watch_count": 7,

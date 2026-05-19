@@ -18,12 +18,15 @@ from e2r.sector.round215_r11_loop8_policy_geopolitical_event_price_validation im
     ROUND215_PRICE_VALIDATION_FIELDS,
     ROUND215_REQUIRED_TARGET_ALIASES,
     ROUND215_SCORE_ADJUSTMENTS,
+    ROUND215_SHADOW_WEIGHT_ROWS,
     ROUND215_STAGE4B_WATCH_TRIGGERS,
     render_round215_green_gate_review_markdown,
     render_round215_stage4b_4c_review_markdown,
     round215_audit_payload,
     round215_case_records,
     round215_case_rows,
+    round215_deep_sub_archetype_rows,
+    round215_shadow_weight_rows,
     round215_summary,
     write_round215_r11_loop8_reports,
 )
@@ -66,6 +69,8 @@ class Round215R11Loop8PolicyGeopoliticalEventPriceValidationTests(unittest.TestC
         self.assertEqual(summary["failed_rerating_count"], 1)
         self.assertEqual(summary["stage3_case_count"], 0)
         self.assertEqual(summary["hard_4c_case_count"], 1)
+        self.assertEqual(summary["shadow_weight_row_count"], 7)
+        self.assertEqual(summary["deep_sub_archetype_count"], 6)
         self.assertEqual(summary["r11_default_stage3_bias"], ROUND215_DEFAULT_STAGE3_BIAS)
         self.assertFalse(summary["production_scoring_changed"])
         self.assertFalse(summary["full_ohlc_complete"])
@@ -159,6 +164,8 @@ class Round215R11Loop8PolicyGeopoliticalEventPriceValidationTests(unittest.TestC
     def test_price_validation_fields_and_score_adjustments_cover_r11_axes(self) -> None:
         fields = set(ROUND215_PRICE_VALIDATION_FIELDS)
         axes = {item.axis for item in ROUND215_SCORE_ADJUSTMENTS}
+        shadow_rows = {row["archetype"]: row for row in round215_shadow_weight_rows()}
+        deep_rows = round215_deep_sub_archetype_rows()
 
         self.assertIn("event_peak_price", fields)
         self.assertIn("reported_mfe_3m_pct", fields)
@@ -167,6 +174,11 @@ class Round215R11Loop8PolicyGeopoliticalEventPriceValidationTests(unittest.TestC
         self.assertIn("actual_contract", axes)
         self.assertIn("independent_replication_or_validation", axes)
         self.assertIn("event_fade_risk", axes)
+        self.assertEqual(len(ROUND215_SHADOW_WEIGHT_ROWS), 7)
+        self.assertEqual(shadow_rows["NUCLEAR_POLICY_TO_CONTRACT"]["actual_contract"], "+5")
+        self.assertEqual(shadow_rows["EVENT_DISEASE_PEST_DEMAND"]["event_penalty"], "-5")
+        self.assertTrue(any("East Sea oil and gas" in row["terms"] for row in deep_rows))
+        self.assertTrue(any("MSCI market accessibility" in row["terms"] for row in deep_rows))
 
     def test_summary_and_audit_payload_keep_non_production_guardrails(self) -> None:
         audit = round215_audit_payload()
@@ -177,6 +189,8 @@ class Round215R11Loop8PolicyGeopoliticalEventPriceValidationTests(unittest.TestC
         self.assertFalse(audit["summary"]["candidate_generation_input"])
         self.assertTrue(audit["summary"]["shadow_weight_only"])
         self.assertEqual(audit["summary"]["r11_default_stage3_bias"], "very_conservative")
+        self.assertEqual(len(audit["shadow_weights"]), 7)
+        self.assertEqual(len(audit["deep_sub_archetypes"]), 6)
         self.assertIn("do_not_use_round215_cases_as_candidate_generation_input", audit["what_not_to_change"])
 
     def test_cli_parser_and_writer_outputs(self) -> None:
@@ -202,6 +216,8 @@ class Round215R11Loop8PolicyGeopoliticalEventPriceValidationTests(unittest.TestC
             self.assertEqual(len(rows), len(ROUND215_CASE_CANDIDATES))
             self.assertIn("한국가스공사", paths["summary"].read_text(encoding="utf-8"))
             self.assertIn("funded_budget", paths["score_adjustments"].read_text(encoding="utf-8"))
+            self.assertIn("NUCLEAR_POLICY_TO_CONTRACT", paths["shadow_weights"].read_text(encoding="utf-8"))
+            self.assertIn("East Sea oil and gas", paths["deep_sub_archetypes"].read_text(encoding="utf-8"))
             self.assertIn("independent_replication_failure", paths["stage4b_4c_review"].read_text(encoding="utf-8"))
             self.assertEqual(json.loads(rows[0]["extra_price_metrics"])["event_peak_price_krw"], 38700.0)
 

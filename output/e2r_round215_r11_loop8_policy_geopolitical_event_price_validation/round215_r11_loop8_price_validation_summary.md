@@ -15,6 +15,8 @@ This pack is calibration-only. Production scoring and candidate generation are u
 - Stage 3 dated cases: 0
 - 4B-watch cases: 7
 - hard_4c_case_count: 1
+- deep_sub_archetype_count: 6
+- shadow_weight_row_count: 7
 - r11_default_stage3_bias: very_conservative
 - full_ohlc_complete: false
 
