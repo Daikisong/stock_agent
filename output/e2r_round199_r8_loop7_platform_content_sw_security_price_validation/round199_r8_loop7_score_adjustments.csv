@@ -1,0 +1,23 @@
+axis,points,direction,reason
+recurring_revenue,5,raise,R8 Green은 반복매출과 고객 lock-in에서 시작한다.
+arr_proxy,5,raise,"ARR, billings, bookings proxy가 확인되면 SaaS/플랫폼 visibility가 올라간다."
+bookings_repeatability,4,raise,게임/IP는 첫 주 판매보다 반복 bookings와 retention이 중요하다.
+paid_usage_conversion,4,raise,AI 기능은 유료 사용 전환이 보여야 강한 증거다.
+enterprise_contract_quality,4,raise,AI cloud/SW는 기업계약과 매출 전환이 확인될 때 강하다.
+opm_improvement,4,raise,OPM 개선은 테마가 이익 체급 변화로 내려왔다는 증거다.
+fcf_conversion,4,raise,AI capex와 콘텐츠 투자가 FCF를 훼손하지 않아야 한다.
+customer_retention_or_churn,4,raise,retention 안정과 churn 하락은 반복매출의 질을 보여준다.
+ip_monetization_beyond_launch,3,raise,콘텐츠/IP는 출시 이후 반복 monetization이 필요하다.
+cloud_ai_revenue_conversion,4,raise,AI infra 투자는 실제 AI 매출로 전환될 때 점수를 준다.
+operational_trust,4,raise,플랫폼/보안/콘텐츠는 법적·개인정보·운영 신뢰가 핵심 gate다.
+ai_feature_only,-5,lower,AI 기능 출시만으로 Stage 3-Green을 만들지 않는다.
+partnership_headline_only,-4,lower,OpenAI/KKR/파트너십 headline은 매출 전까지 Stage 1~2다.
+mau_without_arpu,-4,lower,MAU는 ARPU와 paid usage 없이 이익 체급 변화가 아니다.
+game_launch_first_week_only,-4,lower,첫 주 판매는 Stage 2 재료지만 반복 bookings 전 Green 금지다.
+ipo_first_month_rally,-4,lower,IPO 직후 가격반응은 single-IP/valuation overheat로 분리한다.
+single_ip_dependence,-4,lower,단일 IP 의존은 repeat portfolio 전까지 RedTeam이다.
+mna_event_without_integration,-3,lower,"M&A 발표는 integration, 계약, margin 전까지 event premium이다."
+ai_capex_without_revenue,-4,lower,AI capex가 매출로 전환되지 않으면 FCF를 훼손할 수 있다.
+media_report_or_model_release_only,-3,lower,모델 공개나 언론 보도만으로 유료화 근거를 발명하지 않는다.
+founder_legal_risk,-5,lower,창업자/대주주 법적 리스크는 플랫폼 Green을 막을 수 있다.
+privacy_or_security_trust_break,-5,lower,개인정보·보안 신뢰 훼손은 hard RedTeam이다.

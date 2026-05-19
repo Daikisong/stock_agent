@@ -1,0 +1,303 @@
+{
+  "case_ids": [
+    "douzone_bizon_eqt_cloud_erp_stage2_watch",
+    "samsung_sds_kkr_ai_cloud_cb_4b_watch",
+    "naver_webtoon_hyperclova_platform_ai_ip_stage2_watch",
+    "kakao_openai_partnership_governance_legal_event_watch",
+    "krafton_inzoi_adk_ai_first_game_ip_stage2_watch",
+    "shiftup_stellar_blade_ipo_single_ip_overheat_watch",
+    "hybe_newjeans_bang_legal_governance_4c_watch"
+  ],
+  "green_forbidden_patterns": [
+    "ai_feature_only",
+    "partnership_headline_only",
+    "model_release_or_paper_only",
+    "mau_without_arpu",
+    "game_launch_first_week_only",
+    "ipo_first_month_rally",
+    "mna_announcement_only",
+    "single_ip_dependence_without_repeat_monetization",
+    "ai_capex_without_revenue",
+    "founder_legal_risk",
+    "privacy_or_security_trust_break"
+  ],
+  "green_required_fields": [
+    "recurring_revenue_or_bookings_confirmed",
+    "arr_arpu_paid_usage_or_billings_confirmed",
+    "opm_or_gross_margin_improving",
+    "fcf_conversion_visible",
+    "retention_or_churn_stable",
+    "ip_monetization_beyond_single_launch",
+    "ai_feature_converts_to_paid_revenue_or_cost_savings",
+    "privacy_security_governance_trust_passed",
+    "price_path_after_repeat_economics"
+  ],
+  "hard_4c_gates": [
+    "privacy_breach",
+    "security_outage",
+    "founder_or_major_shareholder_legal_break",
+    "regulatory_sanction",
+    "ai_product_monetization_failure",
+    "arr_churn_spike",
+    "paid_user_decline",
+    "game_launch_failure",
+    "ip_litigation",
+    "mna_integration_failure",
+    "single_ip_collapse",
+    "advertising_or_commerce_take_rate_damage",
+    "fcf_deterioration_from_ai_capex"
+  ],
+  "large_sector": "PLATFORM_CONTENT_SW_SECURITY",
+  "score_adjustments": [
+    {
+      "axis": "recurring_revenue",
+      "direction": "raise",
+      "points": "5",
+      "reason": "R8 Green은 반복매출과 고객 lock-in에서 시작한다."
+    },
+    {
+      "axis": "arr_proxy",
+      "direction": "raise",
+      "points": "5",
+      "reason": "ARR, billings, bookings proxy가 확인되면 SaaS/플랫폼 visibility가 올라간다."
+    },
+    {
+      "axis": "bookings_repeatability",
+      "direction": "raise",
+      "points": "4",
+      "reason": "게임/IP는 첫 주 판매보다 반복 bookings와 retention이 중요하다."
+    },
+    {
+      "axis": "paid_usage_conversion",
+      "direction": "raise",
+      "points": "4",
+      "reason": "AI 기능은 유료 사용 전환이 보여야 강한 증거다."
+    },
+    {
+      "axis": "enterprise_contract_quality",
+      "direction": "raise",
+      "points": "4",
+      "reason": "AI cloud/SW는 기업계약과 매출 전환이 확인될 때 강하다."
+    },
+    {
+      "axis": "opm_improvement",
+      "direction": "raise",
+      "points": "4",
+      "reason": "OPM 개선은 테마가 이익 체급 변화로 내려왔다는 증거다."
+    },
+    {
+      "axis": "fcf_conversion",
+      "direction": "raise",
+      "points": "4",
+      "reason": "AI capex와 콘텐츠 투자가 FCF를 훼손하지 않아야 한다."
+    },
+    {
+      "axis": "customer_retention_or_churn",
+      "direction": "raise",
+      "points": "4",
+      "reason": "retention 안정과 churn 하락은 반복매출의 질을 보여준다."
+    },
+    {
+      "axis": "ip_monetization_beyond_launch",
+      "direction": "raise",
+      "points": "3",
+      "reason": "콘텐츠/IP는 출시 이후 반복 monetization이 필요하다."
+    },
+    {
+      "axis": "cloud_ai_revenue_conversion",
+      "direction": "raise",
+      "points": "4",
+      "reason": "AI infra 투자는 실제 AI 매출로 전환될 때 점수를 준다."
+    },
+    {
+      "axis": "operational_trust",
+      "direction": "raise",
+      "points": "4",
+      "reason": "플랫폼/보안/콘텐츠는 법적·개인정보·운영 신뢰가 핵심 gate다."
+    },
+    {
+      "axis": "ai_feature_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "AI 기능 출시만으로 Stage 3-Green을 만들지 않는다."
+    },
+    {
+      "axis": "partnership_headline_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "OpenAI/KKR/파트너십 headline은 매출 전까지 Stage 1~2다."
+    },
+    {
+      "axis": "mau_without_arpu",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "MAU는 ARPU와 paid usage 없이 이익 체급 변화가 아니다."
+    },
+    {
+      "axis": "game_launch_first_week_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "첫 주 판매는 Stage 2 재료지만 반복 bookings 전 Green 금지다."
+    },
+    {
+      "axis": "ipo_first_month_rally",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "IPO 직후 가격반응은 single-IP/valuation overheat로 분리한다."
+    },
+    {
+      "axis": "single_ip_dependence",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "단일 IP 의존은 repeat portfolio 전까지 RedTeam이다."
+    },
+    {
+      "axis": "mna_event_without_integration",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "M&A 발표는 integration, 계약, margin 전까지 event premium이다."
+    },
+    {
+      "axis": "ai_capex_without_revenue",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "AI capex가 매출로 전환되지 않으면 FCF를 훼손할 수 있다."
+    },
+    {
+      "axis": "media_report_or_model_release_only",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "모델 공개나 언론 보도만으로 유료화 근거를 발명하지 않는다."
+    },
+    {
+      "axis": "founder_legal_risk",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "창업자/대주주 법적 리스크는 플랫폼 Green을 막을 수 있다."
+    },
+    {
+      "axis": "privacy_or_security_trust_break",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "개인정보·보안 신뢰 훼손은 hard RedTeam이다."
+    }
+  ],
+  "source_round": "docs/round/round_199.md",
+  "stage4b_statuses": [
+    "none",
+    "watch",
+    "elevated",
+    "graduated"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "failed_rerating_count": 2,
+    "hard_4c_case_count": 0,
+    "needs_ohlc_backfill": true,
+    "needs_ohlc_backfill_count": 7,
+    "overheat_count": 1,
+    "price_backfill_field_count": 52,
+    "production_scoring_changed": false,
+    "required_target_count": 21,
+    "score_adjustment_count": 22,
+    "shadow_weight_only": true,
+    "stage3_case_count": 0,
+    "stage4b_watch_or_elevated_count": 7,
+    "success_candidate_count": 4
+  },
+  "target_aliases": [
+    {
+      "canonical_archetype": "B2B_SAAS_ERP_WORKFLOW",
+      "round199_label": "B2B_SAAS_ERP_WORKFLOW"
+    },
+    {
+      "canonical_archetype": "B2B_SAAS_ERP_WORKFLOW_KOREA",
+      "round199_label": "B2B_SAAS_ERP_WORKFLOW_KOREA"
+    },
+    {
+      "canonical_archetype": "PRIVATE_EQUITY_SOFTWARE_RERATING",
+      "round199_label": "PRIVATE_EQUITY_SOFTWARE_RERATING"
+    },
+    {
+      "canonical_archetype": "CLOUD_AI_SOFTWARE_INFRA",
+      "round199_label": "CLOUD_AI_SOFTWARE_INFRA"
+    },
+    {
+      "canonical_archetype": "ENTERPRISE_AI_CLOUD_INFRA_KOREA",
+      "round199_label": "ENTERPRISE_AI_CLOUD_INFRA_KOREA"
+    },
+    {
+      "canonical_archetype": "AI_CLOUD_CAPITAL_ALLOCATION",
+      "round199_label": "AI_CLOUD_CAPITAL_ALLOCATION"
+    },
+    {
+      "canonical_archetype": "EDGE_AI_CLOUD_INFRASTRUCTURE",
+      "round199_label": "EDGE_AI_CLOUD_INFRASTRUCTURE"
+    },
+    {
+      "canonical_archetype": "AI_SOFTWARE_APPLICATION",
+      "round199_label": "AI_SOFTWARE_APPLICATION"
+    },
+    {
+      "canonical_archetype": "SOVEREIGN_KOREAN_AI_MODEL",
+      "round199_label": "SOVEREIGN_KOREAN_AI_MODEL"
+    },
+    {
+      "canonical_archetype": "PLATFORM_SOFTWARE_INTERNET",
+      "round199_label": "PLATFORM_SOFTWARE_INTERNET"
+    },
+    {
+      "canonical_archetype": "WEBTOON_PLATFORM_IP_MONETIZATION",
+      "round199_label": "WEBTOON_PLATFORM_IP_MONETIZATION"
+    },
+    {
+      "canonical_archetype": "GAME_CONTENT_IP",
+      "round199_label": "GAME_CONTENT_IP"
+    },
+    {
+      "canonical_archetype": "GAME_CONTENT_IP_REPEAT_MONETIZATION",
+      "round199_label": "GAME_CONTENT_IP_REPEAT_MONETIZATION"
+    },
+    {
+      "canonical_archetype": "SINGLE_IP_RELEASE_EVENT_PREMIUM",
+      "round199_label": "SINGLE_IP_RELEASE_EVENT_PREMIUM"
+    },
+    {
+      "canonical_archetype": "GAME_SINGLE_IP_EVENT_PREMIUM",
+      "round199_label": "GAME_SINGLE_IP_EVENT_PREMIUM"
+    },
+    {
+      "canonical_archetype": "KPOP_PLATFORM_CONTENT_IP",
+      "round199_label": "KPOP_PLATFORM_CONTENT_IP"
+    },
+    {
+      "canonical_archetype": "PLATFORM_GOVERNANCE_LEGAL_RISK",
+      "round199_label": "PLATFORM_GOVERNANCE_LEGAL_RISK"
+    },
+    {
+      "canonical_archetype": "PLATFORM_PRIVACY_SECURITY_OVERLAY",
+      "round199_label": "PLATFORM_PRIVACY_SECURITY_OVERLAY"
+    },
+    {
+      "canonical_archetype": "SECURITY_OPERATIONAL_TRUST_OVERLAY",
+      "round199_label": "SECURITY_OPERATIONAL_TRUST_OVERLAY"
+    },
+    {
+      "canonical_archetype": "AD_CONTENT_PLATFORM_GUIDANCE_RISK",
+      "round199_label": "AD_CONTENT_PLATFORM_GUIDANCE_RISK"
+    },
+    {
+      "canonical_archetype": "DISCLOSURE_CONFIDENCE_CAP",
+      "round199_label": "DISCLOSURE_CONFIDENCE_CAP"
+    }
+  ],
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round199_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_ai_partnership_model_release_mau_game_launch_ipo_or_mna_as_green_evidence",
+    "do_not_invent_arr_bookings_paid_usage_arpu_opm_fcf_retention_churn_or_stage_prices",
+    "do_not_confirm_hard_4c_without_reliable_primary_or_major_source"
+  ]
+}
