@@ -1,0 +1,38 @@
+# Round 238 R8 4B/4C Review
+
+## 4B Watch Triggers
+
+- ai_partnership_spike_before_paid_usage
+- cloud_ai_or_kkr_mna_price_spike_before_revenue
+- ipo_debut_premium_before_repeat_monetization
+- webtoon_ip_valuation_before_subscription_or_ads
+- game_launch_sales_before_retention
+- kpop_comeback_expectation_over_governance_risk
+- single_ip_developer_ipo_premium
+
+## Hard 4C Gates
+
+- privacy_breach_or_security_outage
+- large_customer_data_leak
+- data_breach_revenue_cut
+- founder_legal_break
+- regulatory_sanction
+- ai_monetization_failure
+- arr_churn_or_paid_user_decline
+- game_launch_failure_or_retention_collapse
+- ip_litigation_or_artist_contract_break
+- mna_integration_failure
+- single_ip_collapse
+- ad_or_commerce_take_rate_damage
+- fcf_deterioration
+
+## Case Notes
+
+- r8_loop10_douzone_eqt_b2b_saas_stage2_watch: arr_unverified, churn_unverified, opm_fcf_unverified, regulatory_close_unverified, event_premium_watch
+- r8_loop10_samsung_sds_ai_cloud_kkr_event_premium: price_moved_before_ai_revenue, ai_capex_without_revenue, mna_integration_unverified, fcf_conversion_unverified
+- r8_loop10_lg_cns_ipo_cloud_ai_price_failed: ipo_price_failed, mna_integration_unverified, fcf_conversion_unverified, public_market_demand_unconfirmed
+- r8_loop10_naver_webtoon_ipo_disney_ip_watch: ipo_premium_before_profit, ip_event_before_monetization, post_ipo_drawdown_minus_55pct_watch, mau_without_arpu
+- r8_loop10_kakao_openai_partnership_price_only_rally: partnership_headline_only, paid_usage_unverified, arpu_unverified, governance_risk_watch, price_only_rally
+- r8_loop10_shiftup_single_ip_repeat_monetization_watch: single_ip_dependence, retention_unverified, dlc_tail_unverified, platform_expansion_unverified, ipo_premium_watch
+- r8_loop10_skt_data_breach_operational_trust_4c_watch: privacy_breach_or_security_outage, data_breach_revenue_cut, customer_compensation, operational_trust_break, regulatory_watch
+- r8_loop10_hybe_founder_legal_governance_4c_watch: founder_legal_risk, governance_trust_break_watch, kpop_ip_event_premium_watch, hard_4c_not_confirmed

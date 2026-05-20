@@ -1,0 +1,23 @@
+axis,points,direction,reason
+recurring_revenue,5,raise,SaaS/SW는 일회성 구축보다 반복 매출이 Stage 3 visibility를 만든다.
+arr_proxy,5,raise,ARR proxy나 구독·유지보수 반복 매출이 있어야 AI/SW 매출 지속성을 본다.
+paid_usage_conversion,5,raise,무료 사용량이나 MAU보다 유료 전환이 중요하다.
+bookings_repeatability,4,raise,엔터프라이즈 수주가 반복되면 Stage 2에서 Stage 3 후보로 올라간다.
+enterprise_contract_quality,4,raise,B2B 계약은 고객·기간·갱신성이 확인돼야 점수를 준다.
+opm_improvement,5,raise,플랫폼/SW는 매출 증가가 OPM 개선으로 이어져야 체급 변화다.
+fcf_conversion,5,raise,콘텐츠·게임·클라우드도 FCF가 따라오지 않으면 Green을 제한한다.
+customer_retention_or_churn,4,raise,재계약률/이탈률은 반복 매출의 품질 증거다.
+ip_monetization_beyond_launch,4,raise,게임·웹툰·K-pop은 출시/컴백 이후 반복 monetization이 필요하다.
+operational_trust,5,raise,보안·개인정보·지배구조 신뢰가 통과돼야 플랫폼 Green을 허용한다.
+security_privacy_trust,5,raise,플랫폼은 데이터·보안 신뢰가 유지돼야 반복 매출의 질을 인정한다.
+ai_feature_only,-5,lower,AI 기능 탑재만으로는 유료 매출 증거가 아니다.
+ai_partnership_headline_only,-5,lower,AI 파트너십 헤드라인은 paid usage 전까지 event premium이다.
+mau_without_arpu,-4,lower,MAU만 있고 ARPU/paid usage가 없으면 Stage 3를 막는다.
+ipo_debut_premium,-5,lower,IPO/debut premium은 반복 monetization 전까지 4B-watch다.
+mna_without_integration,-4,lower,M&A 발표만 있고 통합·가동률·매출 전환이 없으면 제한한다.
+ai_capex_without_revenue,-5,lower,AI capex는 매출/비용절감으로 연결돼야 한다.
+game_launch_first_week_only,-4,lower,첫 주 판매량만으로는 retention과 DLC/후속 매출을 알 수 없다.
+single_ip_dependence,-4,lower,단일 IP 의존은 Stage 3 확신을 낮춘다.
+founder_legal_risk,-5,lower,창업자·핵심 경영진 법적 리스크는 RedTeam 입력이다.
+privacy_security_trust_break,-5,lower,데이터 유출·보안 사고는 플랫폼 논리 훼손 감시다.
+data_breach_revenue_cut,-5,lower,보상·매출 감소가 동반된 유출은 hard 4C 후보가 된다.
