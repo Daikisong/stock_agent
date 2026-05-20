@@ -1,0 +1,20 @@
+axis,points,direction,reason
+safety_trust,5,raise,항공은 load factor보다 safety trust가 먼저다.
+route_yield,5,raise,LCC route remedy는 route yield가 확인돼야 Stage 3로 갈 수 있다.
+load_factor,5,raise,신규 장거리 노선은 load factor가 economics를 닫는다.
+fleet_utilization,5,raise,항공·렌터카·해운 모두 자산 utilization이 margin으로 이어져야 한다.
+component_take_rate,5,raise,부품 ASP uplift는 실제 take-rate가 붙어야 한다.
+component_asp_uplift,4,raise,hybrid/EREV 고ASP 부품은 Stage 2 증거지만 margin 확인이 필요하다.
+transaction_value_and_proceeds,4,raise,부품 포트폴리오 정리는 거래가치와 proceeds use가 확인돼야 한다.
+freight_rate_floor,5,raise,해운은 spot spike보다 freight floor와 contract coverage가 중요하다.
+logistics_security,5,raise,선박 공격·항로 리스크는 운임보다 먼저 보는 gate다.
+tourism_spend_conversion,5,raise,"관광은 방문객 수보다 hotel occupancy, casino drop, ADR, package margin이 중요하다."
+route_rights_only,-5,lower,노선권만으로 route economics를 대체하지 않는다.
+aviation_safety_incident,-5,lower,항공 안전사고는 즉시 4C gate로 본다.
+tourist_arrival_headline_only,-5,lower,관광객 headline은 spend/OPM 전 event premium이다.
+freight_spike_only,-5,lower,운임 급등은 freight floor 전 cyclical이다.
+shipping_security_event,-5,lower,"선박 공격은 insurance, rerouting, delay cost를 먼저 본다."
+divestiture_headline_only,-4,lower,매각 검토만으로 FCF나 주주환원을 인정하지 않는다.
+component_asp_without_margin,-4,lower,ASP premium은 margin과 FCF로 닫히기 전 Stage 2다.
+fleet_count_without_yield,-4,lower,기재 수와 pilot support만으로 수익성을 인정하지 않는다.
+china_travel_redirect_only,-4,lower,중국 관광 redirect는 spend conversion 전 Green이 아니다.

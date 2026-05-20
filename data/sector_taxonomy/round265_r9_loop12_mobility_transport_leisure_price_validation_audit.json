@@ -1,0 +1,107 @@
+{
+  "analyst_round_id": "round_193",
+  "case_ids": [
+    "r9_loop12_jeju_air_muan_crash_hard_4c",
+    "r9_loop12_air_busan_plane_fire_4c_watch",
+    "r9_loop12_tway_eu_route_remedy",
+    "r9_loop12_hl_mando_hybrid_erev_component_asp",
+    "r9_loop12_hyundai_mobis_lighting_divestiture",
+    "r9_loop12_hmm_namu_hormuz_shipping_security",
+    "r9_loop12_hmm_panocean_freight_normalization_watch",
+    "r9_loop12_lotte_yellowballoon_tourism_redirect"
+  ],
+  "deep_sub_archetypes": [
+    "Jeju Air Muan crash / aviation safety trust hard 4C",
+    "Air Busan aircraft fire / LCC safety 4C-watch",
+    "T'way Air European route remedy / long-haul LCC option",
+    "HL Mando hybrid EREV component ASP uplift",
+    "Hyundai Mobis lighting-business divestiture / portfolio restructuring",
+    "HMM Namu Hormuz vessel attack / shipping security 4C-watch",
+    "HMM Pan Ocean freight normalization / Maersk Hapag global proxy",
+    "Lotte Tour Yellow Balloon Shinsegae tourism redirect event premium"
+  ],
+  "green_forbidden_patterns": [
+    "route_rights_only",
+    "fleet_count_only",
+    "tourist_arrival_headline_only",
+    "freight_spike_only",
+    "safety_incident_unresolved",
+    "divestiture_headline_only",
+    "geopolitical_shipping_attack_unresolved",
+    "component_asp_without_margin"
+  ],
+  "green_required_fields": [
+    "route_yield_confirmed",
+    "load_factor_confirmed",
+    "fleet_utilization_confirmed",
+    "safety_trust_risk_passed",
+    "component_asp_to_margin_fcf_confirmed",
+    "transaction_value_and_proceeds_use_confirmed",
+    "freight_rate_floor_and_route_security_confirmed",
+    "tourism_spend_hotel_occupancy_casino_drop_adr_confirmed",
+    "logistics_insurance_fuel_cost_controlled",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "fatal_aviation_accident",
+    "major_aircraft_fire_or_repeated_safety_incident",
+    "independent_probe_or_safety_coverup_risk",
+    "shipping_vessel_attack",
+    "route_closure_or_war_risk_premium_spike",
+    "freight_normalization_rate_collapse",
+    "tourism_boycott_or_diplomatic_travel_ban",
+    "hotel_casino_spend_failure",
+    "component_take_rate_failure",
+    "divestiture_failure_or_valuation_disappointment"
+  ],
+  "large_sector": "MOBILITY_TRANSPORT_LEISURE",
+  "source_round": "docs/round/round_265.md",
+  "stage4b_watch_triggers": [
+    "route_remedy_headline_lcc_spike",
+    "tourism_redirect_basket_spike_before_spend",
+    "component_asp_narrative_spike_before_margin",
+    "divestiture_headline_spike_before_value",
+    "freight_rate_spike_shipping_basket_rerating",
+    "safety_relief_bounce_before_investigation_clears"
+  ],
+  "summary": {
+    "analyst_round_id": "round_193",
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "cyclical_success_count": 1,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "MOBILITY_TRANSPORT_LEISURE",
+    "price_moved_without_evidence_count": 1,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_265.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 5,
+    "stage4c_watch_count": 3,
+    "success_candidate_count": 3,
+    "target_archetype_count": 8,
+    "thesis_break_watch_count": 3
+  },
+  "target_aliases": {
+    "AUTO_COMPONENT_HYBRID_EREV_ASP": "AUTO_COMPONENT_HYBRID_EREV_ASP",
+    "AUTO_PARTS_PORTFOLIO_RESTRUCTURING": "AUTO_PARTS_PORTFOLIO_RESTRUCTURING",
+    "AVIATION_SAFETY_HARD_4C": "AVIATION_SAFETY_HARD_4C",
+    "LCC_ROUTE_REMEDY_LONG_HAUL_OPTION": "LCC_ROUTE_REMEDY_LONG_HAUL_OPTION",
+    "SHIPPING_FREIGHT_NORMALIZATION_4C": "SHIPPING_FREIGHT_NORMALIZATION_4C",
+    "SHIPPING_GEOPOLITICAL_SECURITY_4C": "SHIPPING_GEOPOLITICAL_SECURITY_4C",
+    "TOURISM_REDIRECT_EVENT_PREMIUM": "TOURISM_REDIRECT_EVENT_PREMIUM",
+    "TRAVEL_CASINO_DEMAND_CONVERSION": "TRAVEL_CASINO_DEMAND_CONVERSION"
+  },
+  "what_not_to_change": [
+    "do_not_use_round265_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_route_rights_tourist_arrivals_freight_spike_divestiture_or_component_asp_as_green",
+    "do_not_ignore_aviation_safety_shipping_security_or_freight_normalization_hard_gates",
+    "do_not_invent_ohlc_yield_load_factor_tourism_spend_margin_fcf_or_security_costs"
+  ]
+}
