@@ -1,0 +1,16 @@
+field,required_for_round253_price_validation
+price_data_source,true
+full_adjusted_ohlc_available,true
+reported_price_anchor,true
+reported_return_anchor,true
+stage1_price,true
+stage2_price,true
+stage3_price,true
+stage4b_price,true
+stage4c_price,true
+event_mfe_1d,true
+event_mae_1d,true
+relative_outperformance_pp,true
+contract_policy_safety_or_pf_anchor,true
+tenant_noi_affo_anchor,true
+price_validation_status,true

@@ -592,6 +592,8 @@ class E2RArchetype(str, Enum):
     PF_SYNDICATED_LOAN_SOFT_LANDING = "PF_SYNDICATED_LOAN_SOFT_LANDING"
     OVERSEAS_EPC_CONTRACT_BACKLOG = "OVERSEAS_EPC_CONTRACT_BACKLOG"
     OVERSEAS_EPC_CONTRACT_BACKLOG_KOREA = "OVERSEAS_EPC_CONTRACT_BACKLOG_KOREA"
+    OVERSEAS_EPC_MEGA_ORDER = "OVERSEAS_EPC_MEGA_ORDER"
+    GAS_INFRA_DELIVERY_VALIDATION = "GAS_INFRA_DELIVERY_VALIDATION"
     EPC_LOW_MARGIN_ORDER_OVERLAY = "EPC_LOW_MARGIN_ORDER_OVERLAY"
     APARTMENT_QUALITY_SAFETY_OVERLAY = "APARTMENT_QUALITY_SAFETY_OVERLAY"
     LARGE_BUILDER_BALANCE_SHEET_DEFENSE = "LARGE_BUILDER_BALANCE_SHEET_DEFENSE"
@@ -618,6 +620,7 @@ class E2RArchetype(str, Enum):
     DATA_CENTER_CAPEX_AFFO_DILUTION = "DATA_CENTER_CAPEX_AFFO_DILUTION"
     AI_POWER_DATA_CENTER_CAMPUS = "AI_POWER_DATA_CENTER_CAMPUS"
     AI_DATA_CENTER_POWER_CAMPUS = "AI_DATA_CENTER_POWER_CAMPUS"
+    AI_DATA_CENTER_REAL_ASSET = "AI_DATA_CENTER_REAL_ASSET"
     AI_DATA_CENTER_REAL_ASSET_KOREA = "AI_DATA_CENTER_REAL_ASSET_KOREA"
     AI_DATA_CENTER_NO_REVENUE_NO_TENANT = "AI_DATA_CENTER_NO_REVENUE_NO_TENANT"
     COLD_CHAIN_REIT_LOGISTICS = "COLD_CHAIN_REIT_LOGISTICS"
@@ -694,6 +697,7 @@ class E2RArchetype(str, Enum):
     HOUSING_POLICY_SUPPLY_EVENT = "HOUSING_POLICY_SUPPLY_EVENT"
     REAL_ESTATE_PF_CREDIT_BREAK = "REAL_ESTATE_PF_CREDIT_BREAK"
     CONSTRUCTION_SAFETY_OPERATIONAL_TRUST_4C = "CONSTRUCTION_SAFETY_OPERATIONAL_TRUST_4C"
+    CONSTRUCTION_SAFETY_REGULATORY_4C = "CONSTRUCTION_SAFETY_REGULATORY_4C"
     WORKPLACE_FATALITY_REGULATORY_4C = "WORKPLACE_FATALITY_REGULATORY_4C"
     BUILDING_MATERIALS_DEMAND_CYCLE = "BUILDING_MATERIALS_DEMAND_CYCLE"
     PRICE_ONLY_POLICY_RALLY = "PRICE_ONLY_POLICY_RALLY"
@@ -2400,6 +2404,30 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("headline treated as Stage 3 without execution economics"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
+        E2RArchetype.OVERSEAS_EPC_MEGA_ORDER: ArchetypeDefinition(
+            archetype=E2RArchetype.OVERSEAS_EPC_MEGA_ORDER,
+            stage1_radar_signals=("overseas EPC mega-order", "Middle East gas infrastructure demand", "large signed contract"),
+            stage2_candidate_signals=("signed contract", "project duration", "customer and package size", "contract share of total project"),
+            stage3_high_conviction_signals=("progress revenue", "EPC margin", "working-capital control", "cash collection", "OPM or gross margin confirmation"),
+            stage4a_ongoing_signals=("progress revenue converts to cash with margin intact"),
+            stage4b_graduation_overheat_signals=("contract announcement rally before margin and cash collection", "mega-order premium priced before execution"),
+            stage4c_thesis_break_signals=("order cancellation", "payment delay", "low-margin EPC loss", "working-capital spike", "cost overrun"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("contract headline treated as Green", "order value annualized without margin or cash recovery"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=16, mispricing=12, valuation=12),
+        ),
+        E2RArchetype.GAS_INFRA_DELIVERY_VALIDATION: ArchetypeDefinition(
+            archetype=E2RArchetype.GAS_INFRA_DELIVERY_VALIDATION,
+            stage1_radar_signals=("gas field expansion", "main gas network package", "Saudi or Middle East gas capex"),
+            stage2_candidate_signals=("project package awarded", "pipeline capacity or field output milestone", "company-level package identified"),
+            stage3_high_conviction_signals=("company-level package margin", "progress revenue", "cashflow visibility", "working-capital control"),
+            stage4a_ongoing_signals=("project milestone remains on schedule and cash conversion is visible"),
+            stage4b_graduation_overheat_signals=("gas-infra cycle priced before listed contractor economics"),
+            stage4c_thesis_break_signals=("cost overrun", "local labor execution delay", "Saudi payment risk", "low-margin EPC"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("national project size treated as listed contractor profit", "field milestone without company cashflow"),
+            preferred_score_weights=_weights(eps_fcf=19, visibility=23, bottleneck=14, mispricing=12, valuation=11),
+        ),
         E2RArchetype.NUCLEAR_INFRA_EPC_EXPORT: ArchetypeDefinition(
             archetype=E2RArchetype.NUCLEAR_INFRA_EPC_EXPORT,
             stage1_radar_signals=("preferred nuclear bidder", "overseas reactor project", "nuclear EPC export rally"),
@@ -2460,6 +2488,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("backlog treated as intact after fatal accident",),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
+        E2RArchetype.CONSTRUCTION_SAFETY_REGULATORY_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.CONSTRUCTION_SAFETY_REGULATORY_4C,
+            stage1_radar_signals=("workplace safety crackdown", "construction fatality regulation", "site shutdown"),
+            stage2_candidate_signals=("fine risk quantified", "executive resignation", "site halt or license risk identified"),
+            stage3_high_conviction_signals=("not a Green source; safety regulation is a Green blocker"),
+            stage4a_ongoing_signals=("remediation, site restart, and license risk must be monitored"),
+            stage4b_graduation_overheat_signals=("order backlog thesis ignores safety and license risk"),
+            stage4c_thesis_break_signals=("repeated fatal accident", "site shutdown", "fine up to operating-profit percentage", "license revocation risk"),
+            key_evidence_families=("news", "regulatory", "financial_actual", "price"),
+            false_positive_patterns=("construction backlog treated as intact while recurring fatality regulation is unresolved"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
         E2RArchetype.WORKPLACE_FATALITY_REGULATORY_4C: ArchetypeDefinition(
             archetype=E2RArchetype.WORKPLACE_FATALITY_REGULATORY_4C,
             stage1_radar_signals=("workplace fatality", "construction safety crackdown", "site shutdown"),
@@ -2482,6 +2522,18 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("tenant absent", "power/water/permitting failure", "capex dilution", "funding-cost spike"),
             key_evidence_families=("news", "disclosure", "financial_actual", "research_report", "price"),
             false_positive_patterns=("data-center label without tenant", "asset headline without NOI/AFFO"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=22, bottleneck=18, mispricing=13, valuation=12),
+        ),
+        E2RArchetype.AI_DATA_CENTER_REAL_ASSET: ArchetypeDefinition(
+            archetype=E2RArchetype.AI_DATA_CENTER_REAL_ASSET,
+            stage1_radar_signals=("AI data-center investment", "cloud campus", "floating data-center concept"),
+            stage2_candidate_signals=("named tenant or JV", "capacity MW", "construction schedule", "power/water/permitting plan"),
+            stage3_high_conviction_signals=("tenant contract", "NOI/AFFO", "power/water/permitting secured", "capex per share controlled"),
+            stage4a_ongoing_signals=("tenant revenue, occupancy, and NOI/AFFO scale with permits intact"),
+            stage4b_graduation_overheat_signals=("AI data-center headline rally before tenant and NOI/AFFO proof"),
+            stage4c_thesis_break_signals=("tenant absence", "power/water/permitting failure", "AFFO integrity impairment", "capex dilution", "funding-cost spike"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("data-center theme without tenant", "asset headline without NOI/AFFO", "capex plan without per-share economics"),
             preferred_score_weights=_weights(eps_fcf=18, visibility=22, bottleneck=18, mispricing=13, valuation=12),
         ),
         E2RArchetype.BUILDING_MATERIALS_DEMAND_CYCLE: ArchetypeDefinition(

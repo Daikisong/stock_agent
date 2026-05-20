@@ -1,0 +1,20 @@
+axis,points,direction,reason
+signed_contract,5,raise,R10 수주는 signed contract 이후에야 Stage 2로 강해진다.
+progress_revenue_visibility,5,raise,공정률과 진행매출이 보여야 계약 headline이 실적 evidence가 된다.
+EPC_margin_visibility,5,raise,대형 EPC는 계약금액보다 OPM/gross margin 확인이 중요하다.
+cash_collection_quality,5,raise,공사 매출은 현금회수로 닫혀야 FCF 체급 변화가 된다.
+working_capital_control,5,raise,운전자본 악화는 대형 수주를 4C로 바꿀 수 있다.
+handover_milestone,4,raise,Grand Faw dock completion처럼 인도 milestone은 단순 계획보다 높게 본다.
+tenant_NOI_AFFO_visibility,5,raise,데이터센터 real asset은 tenant와 NOI/AFFO가 보여야 한다.
+power_water_permitting_secured,4,raise,전력·용수·인허가 없이는 AI data center가 테마에 머문다.
+PF_credit_cleanup,5,raise,PF cleanup은 건설주 credit risk 해소의 필수 확인축이다.
+safety_quality_trust,5,raise,건설 안전 신뢰가 깨지면 수주잔고보다 hard gate가 먼저다.
+contract_headline_only,-5,lower,계약 headline만으로 Stage 3-Green을 만들지 않는다.
+policy_supply_headline_only,-5,lower,주택공급 정책은 분양률·마진·PF 안정 전 Green 근거가 아니다.
+data_center_theme_without_tenant,-5,lower,tenant 없는 data center 테마는 Stage 1/2에 묶는다.
+preferred_project_without_company_margin,-4,lower,상장사 package와 margin이 없으면 국가 프로젝트 headline은 제한한다.
+PF_relief_policy_only,-5,lower,PF 지원책은 crisis relief이지 rerating evidence가 아니다.
+working_capital_worsening,-5,lower,운전자본 급증은 EPC/건설 hard 4C 후보 신호다.
+safety_incident,-5,lower,안전사고는 R10 Green을 차단한다.
+fatality_recurrence,-5,lower,반복 사망사고는 벌금·면허 리스크를 만든다.
+building_material_demand_weakness,-4,lower,철근/건자재 수요 약화는 건자재 Green을 막는다.

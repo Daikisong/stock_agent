@@ -1,0 +1,37 @@
+# Round 253 R10 4B/4C Review
+
+## 4B Watch Triggers
+
+- large_EPC_contract_announcement_5_to_10pct_jump
+- AI_data_center_headline_basket_rally
+- housing_reconstruction_policy_rally
+- PF_relief_basket_rally_before_balance_sheet_repair
+- development_plan_without_completion
+- margin_or_working_capital_visibility_weak
+
+## Hard 4C Gates
+
+- PF_workout_or_debt_restructuring
+- PF_delinquency_spike
+- presales_failure_or_unsold_inventory
+- working_capital_spike
+- order_cancellation_or_payment_delay
+- low_margin_EPC_loss
+- fatal_construction_accident
+- repeated_site_shutdown
+- license_revocation_risk
+- tenant_absence
+- power_water_permitting_failure
+- AFFO_integrity_impairment
+- capex_dilution
+
+## Case Notes
+
+- r10_loop11_samsung_ea_fadhili_epc_4b: contract_headline_only, EPC_margin_unverified, working_capital_unverified, cash_collection_unverified
+- r10_loop11_hyundai_enc_jafurah_gas_infra: company_package_unverified, EPC_margin_unverified, cashflow_unverified, Saudi_payment_risk
+- r10_loop11_ai_data_center_real_asset: data_center_theme_without_tenant, NOI_AFFO_unverified, power_water_permitting_unverified, capex_per_share_unverified
+- r10_loop11_seoul_housing_policy_supply_watch: policy_supply_headline_only, LTV_tightening_demand_shock, presales_unverified, PF_stability_unverified, FCF_unverified
+- r10_loop11_pf_credit_break_taeyoung_basket: PF_workout_or_debt_restructuring, PF_delinquency_spike, PF_relief_policy_only, liquidity_crisis
+- r10_loop11_posco_dl_construction_safety_regulation: safety_incident, fatality_recurrence, repeated_site_shutdown, license_revocation_risk, fine_up_to_5pct_operating_profit
+- r10_loop11_hyundai_steel_rebar_construction_demand_watch: building_material_demand_weakness, net_profit_estimate_cut, rebar_price_decline, construction_demand_weakness
+- r10_loop11_daewoo_enc_grand_faw_port_delivery: additional_backlog_unverified, margin_unverified, cash_collection_unverified, Iraq_payment_or_security_risk
