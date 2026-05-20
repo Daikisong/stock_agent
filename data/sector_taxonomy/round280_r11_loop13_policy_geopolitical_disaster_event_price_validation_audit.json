@@ -1,0 +1,373 @@
+{
+  "case_ids": [
+    "r11_loop13_martial_law_korea_discount_political_shock",
+    "r11_loop13_iran_middle_east_energy_fx_macro_hard_4c",
+    "r11_loop13_ai_bonus_fiscal_redistribution_event",
+    "r11_loop13_samsung_strike_emergency_arbitration_supply_chain",
+    "r11_loop13_china_rare_earth_export_control_supply_chain",
+    "r11_loop13_us_korea_tariff_auto_semis_pharma_policy",
+    "r11_loop13_samsung_sk_china_fab_tool_license_relief",
+    "r11_loop13_2025_south_korea_wildfires_disaster_reference"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "정치 충격",
+      "primary_archetype": "POLITICAL_SHOCK_KOREA_DISCOUNT_HARD_GATE",
+      "terms": "martial law|KOSPI|won|10T stabilisation fund|Korea discount"
+    },
+    {
+      "category": "중동 전쟁·에너지",
+      "primary_archetype": "MIDDLE_EAST_ENERGY_FX_MACRO_HARD_4C",
+      "terms": "Iran conflict|KOSPI -12.06%|won 1505.8|Middle East oil purchase share|Samsung Hyundai Korean Air selloff"
+    },
+    {
+      "category": "AI 초과세수·분배",
+      "primary_archetype": "AI_WINDFALL_FISCAL_REDISTRIBUTION_EVENT",
+      "terms": "AI bonus|citizen dividend|Samsung -3.5%|SK Hynix -1.4%|excess tax revenue"
+    },
+    {
+      "category": "삼성 파업·공급망",
+      "primary_archetype": "SYSTEMIC_LABOR_SUPPLY_CHAIN_INTERVENTION",
+      "terms": "Samsung strike|45,000 workers|emergency arbitration|1T won one-day loss|22.8% exports"
+    },
+    {
+      "category": "희토류·전략광물",
+      "primary_archetype": "RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C",
+      "terms": "rare-earth export controls|yttrium|dysprosium|terbium|defence users denied|advanced semiconductor case-by-case"
+    },
+    {
+      "category": "한미 관세",
+      "primary_archetype": "US_KOREA_TARIFF_POLICY_4C_WATCH",
+      "terms": "15% auto tariff|Hyundai -4.5%|Kia -6.6%|FTA advantage lost|semiconductor pharma cap"
+    },
+    {
+      "category": "중국 fab 장비",
+      "primary_archetype": "CHINA_FAB_EXPORT_LICENSE_RELIEF",
+      "terms": "Samsung China fab|SK Hynix China fab|annual 2026 licence|validated end user expiry|tool access"
+    },
+    {
+      "category": "재난",
+      "primary_archetype": "CLIMATE_DISASTER_SUPPLY_CHAIN_REFERENCE",
+      "terms": "2025 wildfires|32 deaths|104000 hectares|5000 buildings|climate change twice as likely"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "policy_headline_only",
+    "relief_package_without_execution",
+    "tariff_cut_without_margin_bridge",
+    "rare_earth_truce_without_actual_license",
+    "strike_risk_unresolved",
+    "AI_tax_or_bonus_comment_without_legislation",
+    "disaster_rebuild_story_without_loss_assessment",
+    "geopolitical_risk_ignored",
+    "annual_license_treated_as_multiyear_visibility"
+  ],
+  "green_required_fields": [
+    "policy_law_budget_execution_confirmed",
+    "company_eps_fcf_bridge_confirmed",
+    "gross_margin_tariff_bridge_confirmed",
+    "price_pass_through_confirmed",
+    "local_production_economics_confirmed",
+    "fx_energy_hedge_confirmed",
+    "actual_supply_chain_license_confirmed",
+    "critical_material_inventory_confirmed",
+    "labor_production_continuity_confirmed",
+    "disaster_loss_assessment_confirmed",
+    "rebuild_contract_margin_confirmed",
+    "sovereign_credit_fx_stability_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "martial_law_or_political_crisis",
+    "index_circuit_breaker_or_record_market_drawdown",
+    "fx_disorderly_move_or_won_1500_breach",
+    "middle_east_oil_chokepoint_shock",
+    "rare_earth_license_denial",
+    "semiconductor_fab_tool_license_denial",
+    "systemic_strike_halting_production",
+    "tariff_shock_directly_cutting_OP_margin",
+    "climate_disaster_large_insured_or_uninsured_losses"
+  ],
+  "large_sector": "POLICY_GEOPOLITICS_DISASTER_EVENT",
+  "round_id": "round_208",
+  "score_adjustments": [
+    {
+      "axis": "political_risk_premium",
+      "direction": "raise",
+      "points": "5",
+      "reason": "계엄 같은 정치 충격은 KOSPI와 원화를 즉시 재가격화한다."
+    },
+    {
+      "axis": "FX_energy_sensitivity",
+      "direction": "raise",
+      "points": "5",
+      "reason": "중동 에너지 shock는 수입물가, 원화, 자동차, 반도체, 항공을 동시에 흔든다."
+    },
+    {
+      "axis": "supply_chain_license_visibility",
+      "direction": "raise",
+      "points": "5",
+      "reason": "희토류와 중국 fab 장비는 실제 license가 생산의 전제다."
+    },
+    {
+      "axis": "tariff_pass_through",
+      "direction": "raise",
+      "points": "5",
+      "reason": "관세 relief보다 기업별 gross margin과 가격전가가 더 중요하다."
+    },
+    {
+      "axis": "policy_to_EPS_bridge",
+      "direction": "raise",
+      "points": "5",
+      "reason": "정책은 법안/예산/시행과 회사 EPS bridge로 닫혀야 한다."
+    },
+    {
+      "axis": "labor_continuity",
+      "direction": "raise",
+      "points": "5",
+      "reason": "삼성 파업처럼 노사 이슈가 수출·공급망 이슈로 확장될 수 있다."
+    },
+    {
+      "axis": "critical_material_inventory",
+      "direction": "raise",
+      "points": "5",
+      "reason": "희토류는 headline보다 재고와 대체조달이 핵심이다."
+    },
+    {
+      "axis": "disaster_loss_exposure",
+      "direction": "raise",
+      "points": "5",
+      "reason": "재난은 복구수혜보다 피해비용과 보험손해율을 먼저 봐야 한다."
+    },
+    {
+      "axis": "government_relief_actual_execution",
+      "direction": "raise",
+      "points": "4",
+      "reason": "지원책은 실제 집행과 기업별 수혜 확인 후에만 올라간다."
+    },
+    {
+      "axis": "sovereign_credit_stability",
+      "direction": "raise",
+      "points": "4",
+      "reason": "정치/FX 충격 후 sovereign credibility 안정이 필요하다."
+    },
+    {
+      "axis": "policy_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "정책 발언만으로 Green을 만들지 않는다."
+    },
+    {
+      "axis": "tariff_cut_without_margin_bridge",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "관세율 인하는 margin bridge 없이는 relief에 그친다."
+    },
+    {
+      "axis": "rare_earth_truce_without_actual_license",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "희토류 완화 headline은 실제 license 전에는 부족하다."
+    },
+    {
+      "axis": "strike_risk_unresolved",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "파업 risk가 열려 있으면 생산연속성이 깨진다."
+    },
+    {
+      "axis": "disaster_rebuild_story_without_loss_assessment",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "재난 복구 테마는 피해액과 실제 복구계약 전까지 제한한다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "POLITICAL_SHOCK_KOREA_DISCOUNT_HARD_GATE",
+      "critical_material_inventory": "+1",
+      "disaster_loss_exposure": "+2",
+      "event_penalty": "0",
+      "fx_energy_sensitivity": "+4",
+      "government_relief_execution": "+5",
+      "hard_4c_sensitivity": "+5",
+      "labor_continuity": "+2",
+      "notes": "Martial law shows political shock can reprice KOSPI/won immediately.",
+      "policy_to_eps_bridge": "+3",
+      "political_risk_premium": "+5",
+      "sovereign_credit_stability": "+5",
+      "supply_chain_license_visibility": "+1",
+      "tariff_pass_through": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "MIDDLE_EAST_ENERGY_FX_MACRO_HARD_4C",
+      "critical_material_inventory": "+4",
+      "disaster_loss_exposure": "+3",
+      "event_penalty": "0",
+      "fx_energy_sensitivity": "+5",
+      "government_relief_execution": "+4",
+      "hard_4c_sensitivity": "+5",
+      "labor_continuity": "+2",
+      "notes": "Iran shock confirms energy/FX macro hard gate for Korea.",
+      "policy_to_eps_bridge": "+3",
+      "political_risk_premium": "+3",
+      "sovereign_credit_stability": "+5",
+      "supply_chain_license_visibility": "+3",
+      "tariff_pass_through": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "AI_WINDFALL_FISCAL_REDISTRIBUTION_EVENT",
+      "critical_material_inventory": "+1",
+      "disaster_loss_exposure": "0",
+      "event_penalty": "-4",
+      "fx_energy_sensitivity": "+2",
+      "government_relief_execution": "+4",
+      "hard_4c_sensitivity": "+4",
+      "labor_continuity": "+3",
+      "notes": "AI bonus comment is policy event; legislation and EPS bridge required.",
+      "policy_to_eps_bridge": "+5",
+      "political_risk_premium": "+4",
+      "sovereign_credit_stability": "+4",
+      "supply_chain_license_visibility": "+1",
+      "tariff_pass_through": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "SYSTEMIC_LABOR_SUPPLY_CHAIN_INTERVENTION",
+      "critical_material_inventory": "+3",
+      "disaster_loss_exposure": "0",
+      "event_penalty": "0",
+      "fx_energy_sensitivity": "+2",
+      "government_relief_execution": "+5",
+      "hard_4c_sensitivity": "+5",
+      "labor_continuity": "+5",
+      "notes": "Samsung strike risk affects exports, suppliers, index and chip supply.",
+      "policy_to_eps_bridge": "+3",
+      "political_risk_premium": "+3",
+      "sovereign_credit_stability": "+4",
+      "supply_chain_license_visibility": "+3",
+      "tariff_pass_through": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C",
+      "critical_material_inventory": "+5",
+      "disaster_loss_exposure": "0",
+      "event_penalty": "0",
+      "fx_energy_sensitivity": "+2",
+      "government_relief_execution": "+3",
+      "hard_4c_sensitivity": "+5",
+      "labor_continuity": "+1",
+      "notes": "China rare-earth controls require actual licences, inventory and alternative sourcing.",
+      "policy_to_eps_bridge": "+3",
+      "political_risk_premium": "+2",
+      "sovereign_credit_stability": "+4",
+      "supply_chain_license_visibility": "+5",
+      "tariff_pass_through": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "US_KOREA_TARIFF_POLICY_4C_WATCH",
+      "critical_material_inventory": "+1",
+      "disaster_loss_exposure": "0",
+      "event_penalty": "-5",
+      "fx_energy_sensitivity": "+3",
+      "government_relief_execution": "+4",
+      "hard_4c_sensitivity": "+4",
+      "labor_continuity": "+1",
+      "notes": "Tariff cut is not Green without gross margin and pass-through.",
+      "policy_to_eps_bridge": "+5",
+      "political_risk_premium": "+2",
+      "sovereign_credit_stability": "+4",
+      "supply_chain_license_visibility": "+2",
+      "tariff_pass_through": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "CHINA_FAB_EXPORT_LICENSE_RELIEF",
+      "critical_material_inventory": "+3",
+      "disaster_loss_exposure": "0",
+      "event_penalty": "-4",
+      "fx_energy_sensitivity": "+1",
+      "government_relief_execution": "+4",
+      "hard_4c_sensitivity": "+4",
+      "labor_continuity": "+1",
+      "notes": "Annual fab-tool licence is relief but not multiyear visibility.",
+      "policy_to_eps_bridge": "+4",
+      "political_risk_premium": "+1",
+      "sovereign_credit_stability": "+3",
+      "supply_chain_license_visibility": "+5",
+      "tariff_pass_through": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "CLIMATE_DISASTER_SUPPLY_CHAIN_REFERENCE",
+      "critical_material_inventory": "+2",
+      "disaster_loss_exposure": "+5",
+      "event_penalty": "-5",
+      "fx_energy_sensitivity": "+2",
+      "government_relief_execution": "+5",
+      "hard_4c_sensitivity": "+5",
+      "labor_continuity": "+1",
+      "notes": "Wildfire disaster shows loss exposure before rebuild-beneficiary scoring.",
+      "policy_to_eps_bridge": "+2",
+      "political_risk_premium": "+1",
+      "sovereign_credit_stability": "+4",
+      "supply_chain_license_visibility": "+1",
+      "tariff_pass_through": "+1"
+    }
+  ],
+  "source_round": "docs/round/round_280.md",
+  "stage4b_watch_triggers": [
+    "AI_chip_rally_then_redistribution_tax_comment_selloff",
+    "policy_support_or_tariff_relief_headline_before_margin_bridge",
+    "rare_earth_truce_headline_before_actual_license",
+    "disaster_rebuild_theme_before_loss_assessment",
+    "government_arbitration_relief_before_production_continuity",
+    "foreign_positioning_crowded_with_fx_volatility"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 1,
+    "evidence_good_but_price_failed_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 3,
+    "hard_4c_confirmed": true,
+    "large_sector": "POLICY_GEOPOLITICS_DISASTER_EVENT",
+    "policy_relief_count": 2,
+    "price_moved_without_evidence_count": 1,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_208",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_280.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 1,
+    "stage4c_watch_count": 6,
+    "success_candidate_count": 1,
+    "target_archetype_count": 8
+  },
+  "target_aliases": {
+    "AI_WINDFALL_FISCAL_REDISTRIBUTION_EVENT": "AI_WINDFALL_FISCAL_REDISTRIBUTION_EVENT",
+    "CHINA_FAB_EXPORT_LICENSE_RELIEF": "CHINA_FAB_EXPORT_LICENSE_RELIEF",
+    "CLIMATE_DISASTER_SUPPLY_CHAIN_REFERENCE": "CLIMATE_DISASTER_SUPPLY_CHAIN_REFERENCE",
+    "MIDDLE_EAST_ENERGY_FX_MACRO_HARD_4C": "MIDDLE_EAST_ENERGY_FX_MACRO_HARD_4C",
+    "POLITICAL_SHOCK_KOREA_DISCOUNT_HARD_GATE": "POLITICAL_SHOCK_KOREA_DISCOUNT_HARD_GATE",
+    "RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C": "RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C",
+    "SYSTEMIC_LABOR_SUPPLY_CHAIN_INTERVENTION": "SYSTEMIC_LABOR_SUPPLY_CHAIN_INTERVENTION",
+    "US_KOREA_TARIFF_POLICY_4C_WATCH": "US_KOREA_TARIFF_POLICY_4C_WATCH"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round280_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_policy_geopolitical_disaster_fx_energy_labor_tariff_or_license_headline_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}
