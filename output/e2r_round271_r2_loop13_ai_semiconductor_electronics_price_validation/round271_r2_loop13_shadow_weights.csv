@@ -1,0 +1,9 @@
+archetype,hbm_volume_certification,customer_qualification,mass_production_readiness,equipment_order_backlog,delivered_order_book,gross_margin_visibility,op_revision_quality,labor_operational_resilience,china_fab_export_control_clearance,capex_roi_bridge,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+HBM_MEMORY_STRUCTURAL_RERATING_NOW_4B,+5,+5,+5,+3,+4,+5,+5,+4,+4,+3,-1,+5,+4,SK Hynix remains aligned but is now 4B after massive MFE.
+SAMSUNG_HBM_CATCHUP_LAG_AND_LABOR_4C,+5,+5,+5,+3,+4,+5,+4,+5,+5,+4,-3,+5,+5,Samsung recovery needs HBM volume/margin and labor risk clearance.
+HBM_EQUIPMENT_CARVEOUT_NOT_GREEN,+3,+4,+4,+5,+5,+5,+3,+2,+3,+3,-4,+5,+4,Hanwha Precision carve-out requires actual HBM equipment orders and revenue.
+AI_CHIP_DESIGN_UNLISTED_MERGER_STAGE2,+2,+4,+5,+1,+4,+5,+2,+2,+3,+4,-5,+5,+4,Rebellions/Sapeon needs customer deployment and listed revenue bridge.
+SEMICONDUCTOR_INSPECTION_KOSDAQ_IPO_OVERHEAT,+2,+4,+4,+5,+5,+5,+3,+2,+3,+4,-5,+5,+4,TeraView IPO is Stage 2 but oversubscription/P-E overheat requires delivery proof.
+STATE_FOUNDRY_POLICY_RELIEF_NOT_GREEN,+1,+2,+3,+2,+2,+4,+2,+2,+4,+5,-5,+4,+4,Foundry policy needs operator/utilization/customer contracts.
+NVIDIA_BLACKWELL_DOMESTIC_AI_INFRA_STAGE2,+1,+2,+3,+0,+0,+3,+2,+2,+2,+5,-4,+4,+3,Blackwell consumption is not EPS without productivity/cloud revenue bridge.
+CHINA_FAB_EXPORT_CONTROL_4C_WATCH,+0,+0,+0,+0,+0,+2,+0,+2,+5,+0,+0,+4,+5,China fab exposure remains R2 hard-gate candidate.

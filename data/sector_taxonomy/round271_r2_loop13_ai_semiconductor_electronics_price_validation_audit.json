@@ -1,0 +1,272 @@
+{
+  "deep_sub_archetypes": [
+    {
+      "category": "HBM memory",
+      "primary_archetype": "HBM_MEMORY_STRUCTURAL_RERATING_NOW_4B",
+      "terms": "SK Hynix|HBM supply scarcity|Nvidia supply chain|massive MFE|4B-watch"
+    },
+    {
+      "category": "Samsung catch-up",
+      "primary_archetype": "SAMSUNG_HBM_CATCHUP_LAG_AND_LABOR_4C",
+      "terms": "Samsung Electronics|HBM lag|China curbs|Tesla foundry relief|labor strike"
+    },
+    {
+      "category": "HBM equipment carve-out",
+      "primary_archetype": "HBM_EQUIPMENT_CARVEOUT_NOT_GREEN",
+      "terms": "Hanwha Precision Machinery|Hanwha Vision|HBM equipment|spin-off|sell-the-news"
+    },
+    {
+      "category": "AI chip design",
+      "primary_archetype": "AI_CHIP_DESIGN_UNLISTED_MERGER_STAGE2",
+      "terms": "Rebellions|Sapeon|SK Telecom|SK Hynix|NPU|unlisted merger"
+    },
+    {
+      "category": "inspection IPO",
+      "primary_archetype": "SEMICONDUCTOR_INSPECTION_KOSDAQ_IPO_OVERHEAT",
+      "terms": "TeraView|terahertz inspection|Samsung stake|600x oversubscription|P/E 40x"
+    },
+    {
+      "category": "foundry policy",
+      "primary_archetype": "STATE_FOUNDRY_POLICY_RELIEF_NOT_GREEN",
+      "terms": "4.5T won foundry|12-inch 40nm|fabless|defense chips|operator utilization"
+    },
+    {
+      "category": "AI infra consumption",
+      "primary_archetype": "NVIDIA_BLACKWELL_DOMESTIC_AI_INFRA_STAGE2",
+      "terms": "Nvidia Blackwell|260000 chips|Samsung|SK|Hyundai|Naver"
+    },
+    {
+      "category": "export-control overlay",
+      "primary_archetype": "CHINA_FAB_EXPORT_CONTROL_4C_WATCH",
+      "terms": "Samsung China fab|SK Hynix China fab|Hana Micron|Hanmi Semiconductor|authorisation revocation"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "ai_keyword_only",
+    "hbm_rumor_only",
+    "foundry_policy_only",
+    "ipo_oversubscription_only",
+    "unlisted_merger_only",
+    "strategic_stake_only",
+    "blackwell_chip_consumption_only",
+    "equipment_carveout_only",
+    "china_fab_exposure_unresolved",
+    "labor_strike_unresolved"
+  ],
+  "green_required_fields": [
+    "customer_qualification_confirmed",
+    "mass_production_or_shipment_started",
+    "equipment_or_material_order_backlog_confirmed",
+    "delivered_order_book_or_recurring_order_confirmed",
+    "op_gross_margin_fcf_improvement_confirmed",
+    "capex_roi_or_utilization_confirmed",
+    "china_fab_export_control_risk_passed",
+    "labor_production_disruption_risk_passed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "hbm_qualification_failure",
+    "customer_shipment_delay",
+    "ai_chip_order_cancellation",
+    "mass_production_failure",
+    "china_fab_equipment_license_denial",
+    "export_control_escalation",
+    "labor_strike_causing_production_halt",
+    "equipment_order_cancellation",
+    "ipo_lockup_or_delivery_failure",
+    "foundry_utilization_failure"
+  ],
+  "large_sector": "AI_SEMICONDUCTOR_ELECTRONICS",
+  "round_id": "round_199",
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "HBM_MEMORY_STRUCTURAL_RERATING_NOW_4B",
+      "capex_roi_bridge": "+3",
+      "china_fab_export_control_clearance": "+4",
+      "customer_qualification": "+5",
+      "delivered_order_book": "+4",
+      "equipment_order_backlog": "+3",
+      "event_penalty": "-1",
+      "gross_margin_visibility": "+5",
+      "hard_4c_sensitivity": "+4",
+      "hbm_volume_certification": "+5",
+      "labor_operational_resilience": "+4",
+      "mass_production_readiness": "+5",
+      "notes": "SK Hynix remains aligned but is now 4B after massive MFE.",
+      "op_revision_quality": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "SAMSUNG_HBM_CATCHUP_LAG_AND_LABOR_4C",
+      "capex_roi_bridge": "+4",
+      "china_fab_export_control_clearance": "+5",
+      "customer_qualification": "+5",
+      "delivered_order_book": "+4",
+      "equipment_order_backlog": "+3",
+      "event_penalty": "-3",
+      "gross_margin_visibility": "+5",
+      "hard_4c_sensitivity": "+5",
+      "hbm_volume_certification": "+5",
+      "labor_operational_resilience": "+5",
+      "mass_production_readiness": "+5",
+      "notes": "Samsung recovery needs HBM volume/margin and labor risk clearance.",
+      "op_revision_quality": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "HBM_EQUIPMENT_CARVEOUT_NOT_GREEN",
+      "capex_roi_bridge": "+3",
+      "china_fab_export_control_clearance": "+3",
+      "customer_qualification": "+4",
+      "delivered_order_book": "+5",
+      "equipment_order_backlog": "+5",
+      "event_penalty": "-4",
+      "gross_margin_visibility": "+5",
+      "hard_4c_sensitivity": "+4",
+      "hbm_volume_certification": "+3",
+      "labor_operational_resilience": "+2",
+      "mass_production_readiness": "+4",
+      "notes": "Hanwha Precision carve-out requires actual HBM equipment orders and revenue.",
+      "op_revision_quality": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "AI_CHIP_DESIGN_UNLISTED_MERGER_STAGE2",
+      "capex_roi_bridge": "+4",
+      "china_fab_export_control_clearance": "+3",
+      "customer_qualification": "+4",
+      "delivered_order_book": "+4",
+      "equipment_order_backlog": "+1",
+      "event_penalty": "-5",
+      "gross_margin_visibility": "+5",
+      "hard_4c_sensitivity": "+4",
+      "hbm_volume_certification": "+2",
+      "labor_operational_resilience": "+2",
+      "mass_production_readiness": "+5",
+      "notes": "Rebellions/Sapeon needs customer deployment and listed revenue bridge.",
+      "op_revision_quality": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "SEMICONDUCTOR_INSPECTION_KOSDAQ_IPO_OVERHEAT",
+      "capex_roi_bridge": "+4",
+      "china_fab_export_control_clearance": "+3",
+      "customer_qualification": "+4",
+      "delivered_order_book": "+5",
+      "equipment_order_backlog": "+5",
+      "event_penalty": "-5",
+      "gross_margin_visibility": "+5",
+      "hard_4c_sensitivity": "+4",
+      "hbm_volume_certification": "+2",
+      "labor_operational_resilience": "+2",
+      "mass_production_readiness": "+4",
+      "notes": "TeraView IPO is Stage 2 but oversubscription/P-E overheat requires delivery proof.",
+      "op_revision_quality": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "STATE_FOUNDRY_POLICY_RELIEF_NOT_GREEN",
+      "capex_roi_bridge": "+5",
+      "china_fab_export_control_clearance": "+4",
+      "customer_qualification": "+2",
+      "delivered_order_book": "+2",
+      "equipment_order_backlog": "+2",
+      "event_penalty": "-5",
+      "gross_margin_visibility": "+4",
+      "hard_4c_sensitivity": "+4",
+      "hbm_volume_certification": "+1",
+      "labor_operational_resilience": "+2",
+      "mass_production_readiness": "+3",
+      "notes": "Foundry policy needs operator/utilization/customer contracts.",
+      "op_revision_quality": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "NVIDIA_BLACKWELL_DOMESTIC_AI_INFRA_STAGE2",
+      "capex_roi_bridge": "+5",
+      "china_fab_export_control_clearance": "+2",
+      "customer_qualification": "+2",
+      "delivered_order_book": "+0",
+      "equipment_order_backlog": "+0",
+      "event_penalty": "-4",
+      "gross_margin_visibility": "+3",
+      "hard_4c_sensitivity": "+3",
+      "hbm_volume_certification": "+1",
+      "labor_operational_resilience": "+2",
+      "mass_production_readiness": "+3",
+      "notes": "Blackwell consumption is not EPS without productivity/cloud revenue bridge.",
+      "op_revision_quality": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "CHINA_FAB_EXPORT_CONTROL_4C_WATCH",
+      "capex_roi_bridge": "+0",
+      "china_fab_export_control_clearance": "+5",
+      "customer_qualification": "+0",
+      "delivered_order_book": "+0",
+      "equipment_order_backlog": "+0",
+      "event_penalty": "+0",
+      "gross_margin_visibility": "+2",
+      "hard_4c_sensitivity": "+5",
+      "hbm_volume_certification": "+0",
+      "labor_operational_resilience": "+2",
+      "mass_production_readiness": "+0",
+      "notes": "China fab exposure remains R2 hard-gate candidate.",
+      "op_revision_quality": "+0"
+    }
+  ],
+  "source_round": "docs/round/round_271.md",
+  "stage4b_watch_triggers": [
+    "hbm_ai_memory_one_year_3x_to_5x",
+    "market_cap_one_trillion_milestone_headline",
+    "ipo_oversubscription_100x_to_600x",
+    "pe_40x_before_listed_delivery_record",
+    "spinoff_rumor_plus_15pct_confirmation_sell_the_news",
+    "ai_chip_merger_or_nvidia_infra_basket_rally_before_revenue",
+    "policy_foundry_headline_basket_priced_before_operator_utilization"
+  ],
+  "summary": {
+    "aligned_count": 1,
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 1,
+    "failed_rerating_count": 2,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "hard_4c_confirmed": false,
+    "large_sector": "AI_SEMICONDUCTOR_ELECTRONICS",
+    "overheat_count": 1,
+    "price_data_unavailable_count": 1,
+    "price_moved_without_evidence_count": 3,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_199",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_271.md",
+    "stage3_case_count": 1,
+    "stage4b_watch_count": 7,
+    "stage4c_watch_count": 2,
+    "structural_success_count": 1,
+    "success_candidate_count": 3,
+    "target_archetype_count": 8
+  },
+  "target_aliases": {
+    "AI_CHIP_DESIGN_UNLISTED_MERGER_STAGE2": "AI_CHIP_DESIGN_UNLISTED_MERGER_STAGE2",
+    "CHINA_FAB_EXPORT_CONTROL_4C_WATCH": "CHINA_FAB_EXPORT_CONTROL_4C_WATCH",
+    "HBM_EQUIPMENT_CARVEOUT_NOT_GREEN": "HBM_EQUIPMENT_CARVEOUT_NOT_GREEN",
+    "HBM_MEMORY_STRUCTURAL_RERATING_NOW_4B": "HBM_MEMORY_STRUCTURAL_RERATING_NOW_4B",
+    "NVIDIA_BLACKWELL_DOMESTIC_AI_INFRA_STAGE2": "NVIDIA_BLACKWELL_DOMESTIC_AI_INFRA_STAGE2",
+    "SAMSUNG_HBM_CATCHUP_LAG_AND_LABOR_4C": "SAMSUNG_HBM_CATCHUP_LAG_AND_LABOR_4C",
+    "SEMICONDUCTOR_INSPECTION_KOSDAQ_IPO_OVERHEAT": "SEMICONDUCTOR_INSPECTION_KOSDAQ_IPO_OVERHEAT",
+    "STATE_FOUNDRY_POLICY_RELIEF_NOT_GREEN": "STATE_FOUNDRY_POLICY_RELIEF_NOT_GREEN"
+  },
+  "what_not_to_change": [
+    "do_not_use_round271_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_ai_hbm_foundry_ipo_policy_or_blackwell_keywords_as_green_alone",
+    "do_not_invent_ohlc_or_stage_dates"
+  ]
+}

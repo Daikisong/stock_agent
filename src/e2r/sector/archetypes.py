@@ -816,6 +816,14 @@ class E2RArchetype(str, Enum):
     INDUSTRIAL_ROBOTICS_STRATEGIC_EQUITY_OPTION = "INDUSTRIAL_ROBOTICS_STRATEGIC_EQUITY_OPTION"
     DEFENSE_AEROSPACE_EXPORT_OPTIONALITY = "DEFENSE_AEROSPACE_EXPORT_OPTIONALITY"
     SHIPBUILDING_CONTRACT_CYCLE_4B = "SHIPBUILDING_CONTRACT_CYCLE_4B"
+    HBM_MEMORY_STRUCTURAL_RERATING_NOW_4B = "HBM_MEMORY_STRUCTURAL_RERATING_NOW_4B"
+    SAMSUNG_HBM_CATCHUP_LAG_AND_LABOR_4C = "SAMSUNG_HBM_CATCHUP_LAG_AND_LABOR_4C"
+    HBM_EQUIPMENT_CARVEOUT_NOT_GREEN = "HBM_EQUIPMENT_CARVEOUT_NOT_GREEN"
+    AI_CHIP_DESIGN_UNLISTED_MERGER_STAGE2 = "AI_CHIP_DESIGN_UNLISTED_MERGER_STAGE2"
+    SEMICONDUCTOR_INSPECTION_KOSDAQ_IPO_OVERHEAT = "SEMICONDUCTOR_INSPECTION_KOSDAQ_IPO_OVERHEAT"
+    STATE_FOUNDRY_POLICY_RELIEF_NOT_GREEN = "STATE_FOUNDRY_POLICY_RELIEF_NOT_GREEN"
+    NVIDIA_BLACKWELL_DOMESTIC_AI_INFRA_STAGE2 = "NVIDIA_BLACKWELL_DOMESTIC_AI_INFRA_STAGE2"
+    CHINA_FAB_EXPORT_CONTROL_4C_WATCH = "CHINA_FAB_EXPORT_CONTROL_4C_WATCH"
     CONTRACT_HEADLINE_STAGE2_NOT_GREEN = "CONTRACT_HEADLINE_STAGE2_NOT_GREEN"
     DIGITAL_POLICY_PRICE_ONLY = "DIGITAL_POLICY_PRICE_ONLY"
     PLATFORM_TRUST_4C_WATCH = "PLATFORM_TRUST_4C_WATCH"
@@ -4023,6 +4031,102 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("price", "industry_data", "financial_actual", "red_team"),
             false_positive_patterns=("broad shipbuilding cycle treated as individual Green"),
             preferred_score_weights=_weights(eps_fcf=12, visibility=14, bottleneck=12, mispricing=8, valuation=8),
+        ),
+        E2RArchetype.HBM_MEMORY_STRUCTURAL_RERATING_NOW_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.HBM_MEMORY_STRUCTURAL_RERATING_NOW_4B,
+            stage1_radar_signals=("AI memory demand", "HBM scarcity", "Nvidia supply-chain exposure"),
+            stage2_candidate_signals=("customer demand and HBM shipment trajectory become visible"),
+            stage3_high_conviction_signals=("HBM volume, customer qualification, OP revision, margin and price path align"),
+            stage4a_ongoing_signals=("HBM shipments and conventional DRAM pricing remain strong"),
+            stage4b_graduation_overheat_signals=("3x-5x+ rerating", "market-cap milestone", "HBM supercycle crowding"),
+            stage4c_thesis_break_signals=("HBM qualification failure", "shipment delay", "memory price reversal", "capacity overbuild"),
+            key_evidence_families=("financial_actual", "research_report", "price", "red_team"),
+            false_positive_patterns=("successful HBM winner treated as fresh Green after massive MFE"),
+            preferred_score_weights=_weights(eps_fcf=24, visibility=22, bottleneck=20, mispricing=8, valuation=8),
+        ),
+        E2RArchetype.SAMSUNG_HBM_CATCHUP_LAG_AND_LABOR_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.SAMSUNG_HBM_CATCHUP_LAG_AND_LABOR_4C,
+            stage1_radar_signals=("memory recovery", "HBM catch-up narrative", "foundry relief event"),
+            stage2_candidate_signals=("OP recovery appears but HBM volume and margin are still being qualified"),
+            stage3_high_conviction_signals=("HBM shipment volume, margin, customer qualification, labor resilience and China-fab clearance confirmed"),
+            stage4a_ongoing_signals=("memory recovery and HBM catch-up continue without operational disruption"),
+            stage4b_graduation_overheat_signals=("large-cap relief rally before HBM and labor gates clear"),
+            stage4c_thesis_break_signals=("HBM shipment delay", "China curbs", "labor strike", "production halt", "chip-division profit collapse"),
+            key_evidence_families=("financial_actual", "news", "labor", "regulatory", "price"),
+            false_positive_patterns=("memory recovery treated as Green while HBM lag and labor gates remain open"),
+            preferred_score_weights=_weights(eps_fcf=16, visibility=18, bottleneck=16, mispricing=8, valuation=8),
+        ),
+        E2RArchetype.HBM_EQUIPMENT_CARVEOUT_NOT_GREEN: ArchetypeDefinition(
+            archetype=E2RArchetype.HBM_EQUIPMENT_CARVEOUT_NOT_GREEN,
+            stage1_radar_signals=("HBM equipment carve-out", "spin-off speculation", "value unlock story"),
+            stage2_candidate_signals=("carve-out confirmed and HBM equipment development is visible"),
+            stage3_high_conviction_signals=("actual HBM equipment orders, shipment, margin, listed vehicle and cash-flow bridge confirmed"),
+            stage4a_ongoing_signals=("equipment backlog converts into profitable recurring order flow"),
+            stage4b_graduation_overheat_signals=("spin-off rumor rally followed by confirmation sell-the-news"),
+            stage4c_thesis_break_signals=("orders fail to materialize", "governance value unlock fails", "equipment margin misses"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "price"),
+            false_positive_patterns=("HBM equipment carve-out treated as order revenue before orders exist"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=14, bottleneck=14, mispricing=8, valuation=8),
+        ),
+        E2RArchetype.AI_CHIP_DESIGN_UNLISTED_MERGER_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.AI_CHIP_DESIGN_UNLISTED_MERGER_STAGE2,
+            stage1_radar_signals=("AI chip design merger", "NPU start-up funding", "Nvidia challenger narrative"),
+            stage2_candidate_signals=("funding, shareholders, merger plan and product direction are visible"),
+            stage3_high_conviction_signals=("tape-out, customer deployment, mass production, listed revenue bridge and margin confirmed"),
+            stage4a_ongoing_signals=("AI chip deployments convert into recurring listed revenue"),
+            stage4b_graduation_overheat_signals=("listed parent basket rerates before unlisted revenue bridge"),
+            stage4c_thesis_break_signals=("tape-out failure", "customer deployment failure", "funding shortfall", "listed revenue bridge absent"),
+            key_evidence_families=("news", "funding", "customer", "financial_actual"),
+            false_positive_patterns=("unlisted AI chip merger treated as listed-stock EPS"),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=12, bottleneck=10, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.SEMICONDUCTOR_INSPECTION_KOSDAQ_IPO_OVERHEAT: ArchetypeDefinition(
+            archetype=E2RArchetype.SEMICONDUCTOR_INSPECTION_KOSDAQ_IPO_OVERHEAT,
+            stage1_radar_signals=("semiconductor inspection IPO", "terahertz inspection", "Samsung customer or shareholder"),
+            stage2_candidate_signals=("order book, margin promise, customer relationship and listing valuation visible"),
+            stage3_high_conviction_signals=("delivered inspection systems, recurring service, durable margin and customer diversification confirmed"),
+            stage4a_ongoing_signals=("listed order book converts into high-margin revenue"),
+            stage4b_graduation_overheat_signals=("100x-600x oversubscription", "P/E 40x+ before listed execution record"),
+            stage4c_thesis_break_signals=("order delivery miss", "margin promise fails", "customer concentration issue", "IPO lockup pressure"),
+            key_evidence_families=("ipo", "financial_actual", "customer", "price"),
+            false_positive_patterns=("IPO oversubscription treated as delivered order book"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=14, bottleneck=12, mispricing=6, valuation=4),
+        ),
+        E2RArchetype.STATE_FOUNDRY_POLICY_RELIEF_NOT_GREEN: ArchetypeDefinition(
+            archetype=E2RArchetype.STATE_FOUNDRY_POLICY_RELIEF_NOT_GREEN,
+            stage1_radar_signals=("state-private foundry proposal", "fabless support", "defense-chip self-sufficiency"),
+            stage2_candidate_signals=("budget proposal, node, wafer size and policy intent become visible"),
+            stage3_high_conviction_signals=("operator, customer contracts, utilization, margin and capex ROI confirmed"),
+            stage4a_ongoing_signals=("policy foundry runs with real customers and acceptable utilization"),
+            stage4b_graduation_overheat_signals=("fabless or equipment basket rerates before operator/utilization proof"),
+            stage4c_thesis_break_signals=("budget fails", "operator absent", "utilization fails", "customer contracts absent"),
+            key_evidence_families=("policy", "financial_actual", "customer", "price"),
+            false_positive_patterns=("foundry policy headline treated as company EPS"),
+            preferred_score_weights=_weights(eps_fcf=4, visibility=10, bottleneck=8, mispricing=6, valuation=4),
+        ),
+        E2RArchetype.NVIDIA_BLACKWELL_DOMESTIC_AI_INFRA_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.NVIDIA_BLACKWELL_DOMESTIC_AI_INFRA_STAGE2,
+            stage1_radar_signals=("Blackwell AI chip supply", "national AI infrastructure", "smart factory AI capex"),
+            stage2_candidate_signals=("chip allocation volumes and buyer groups are visible"),
+            stage3_high_conviction_signals=("AI factory productivity, cloud revenue, process efficiency, and capex ROI confirmed"),
+            stage4a_ongoing_signals=("AI capex converts into measurable recurring revenue or cost advantage"),
+            stage4b_graduation_overheat_signals=("AI infra basket rallies before productivity and revenue bridge"),
+            stage4c_thesis_break_signals=("capex ROI fails", "cloud demand underwhelms", "smart-factory productivity absent"),
+            key_evidence_families=("news", "capex", "financial_actual", "price"),
+            false_positive_patterns=("buying Nvidia chips treated as Korean listed-company EPS"),
+            preferred_score_weights=_weights(eps_fcf=4, visibility=10, bottleneck=6, mispricing=6, valuation=4),
+        ),
+        E2RArchetype.CHINA_FAB_EXPORT_CONTROL_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.CHINA_FAB_EXPORT_CONTROL_4C_WATCH,
+            stage1_radar_signals=("U.S. authorisation revocation", "China fab equipment access risk", "export-control escalation"),
+            stage2_candidate_signals=("not a positive candidate; exposure and mitigation must be assessed"),
+            stage3_high_conviction_signals=("not a Green source; China fab exposure must clear for affected names"),
+            stage4a_ongoing_signals=("export-control access and fab upgrades remain intact"),
+            stage4b_graduation_overheat_signals=("AI/HBM rally ignores China fab restriction risk"),
+            stage4c_thesis_break_signals=("license denial", "fab upgrade blocked", "production impairment", "customer shipment disruption"),
+            key_evidence_families=("regulatory", "news", "price", "red_team"),
+            false_positive_patterns=("HBM supercycle ignores China fab hard gate"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.CONTRACT_HEADLINE_STAGE2_NOT_GREEN: ArchetypeDefinition(
             archetype=E2RArchetype.CONTRACT_HEADLINE_STAGE2_NOT_GREEN,

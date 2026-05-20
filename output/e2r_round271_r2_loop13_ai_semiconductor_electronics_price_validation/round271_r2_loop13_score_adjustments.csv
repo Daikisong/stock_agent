@@ -1,0 +1,20 @@
+axis,points,direction,reason
+HBM_volume_certification,5,raise,HBM은 고객 인증과 출하량이 확인될 때 강하게 본다.
+customer_qualification,5,raise,AI 반도체는 고객 qualification이 Stage 2와 Stage 3를 가른다.
+mass_production_readiness,5,raise,양산 준비와 shipment가 keyword보다 중요하다.
+equipment_order_backlog,5,raise,장비주는 실제 order backlog가 있어야 한다.
+delivered_order_book,5,raise,배송·검수된 order book이 있어야 매출 경로가 닫힌다.
+gross_margin_visibility,5,raise,고마진 약속보다 실제 gross margin visibility가 중요하다.
+OP_revision_quality,4,raise,OP revision이 EPS/FCF 체급 변화의 핵심이다.
+labor_operational_resilience,5,raise,노사/생산중단 리스크를 통과해야 Green이 가능하다.
+China_fab_export_control_clearance,5,raise,중국 fab 노출은 HBM 호황 속에서도 hard gate다.
+capex_ROI_bridge,4,raise,AI capex는 생산성·매출·FCF bridge가 있을 때만 긍정이다.
+AI_chip_keyword_only,-5,lower,AI칩 keyword만으로는 Green 금지다.
+policy_foundry_headline_only,-5,lower,foundry 정책 headline은 operator/utilization 전 Green이 아니다.
+IPO_oversubscription_only,-5,lower,IPO 청약 경쟁률은 납품·마진 증거가 아니다.
+strategic_equity_or_unlisted_merger_only,-5,lower,비상장 합병과 전략지분은 상장사 EPS가 아니다.
+equipment_carveout_without_orders,-4,lower,장비 분사는 실제 수주 전 Stage 2에 머문다.
+capex_consumption_without_EPS,-4,lower,칩을 사는 이벤트와 EPS가 늘어나는 이벤트를 분리한다.
+HBM_rumor_without_customer_qualification,-5,lower,HBM rumor는 고객 인증 전 감점한다.
+China_fab_exposure,-5,lower,중국 fab 노출이 열려 있으면 Green을 막는다.
+labor_strike_unresolved,-5,lower,노동쟁의 생산중단 리스크가 열려 있으면 Green을 막는다.
