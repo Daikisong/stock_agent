@@ -1,0 +1,19 @@
+axis,points,direction,reason
+stage3_evidence_to_price_alignment,5,raise,Stage 3는 증거 뒤 가격경로가 따라와야 검증된다.
+revenue_EPS_FCF_conversion,5,raise,좋은 이야기가 아니라 매출/EPS/FCF로 닫혀야 한다.
+actual_calloff_or_delivery,5,raise,"계약은 실제 call-off, 납품, 인도까지 봐야 한다."
+cash_collection_quality,5,raise,EPC/계약은 현금회수 전 Green이 아니다.
+operating_leverage,4,raise,실적 레버리지가 확인된 구조만 high-conviction으로 간다.
+platform_trust,5,raise,플랫폼은 M&A보다 신뢰/보안/출금 통제가 먼저다.
+safety_security_trust,5,raise,안전·보안 사고는 즉시 thesis gate다.
+macro_energy_FX_overlay,5,raise,에너지·FX shock은 전 섹터 위에 덮이는 hard overlay다.
+hard_4C_prevention,5,raise,계약취소·보안·안전·매크로 4C를 조기에 잡아야 한다.
+contract_headline_only,-5,lower,수주 headline은 margin/cash 전 Stage 2다.
+policy_CAPEX_without_ROI,-5,lower,CAPEX headline은 funding/ROI/utilization 전 false positive가 될 수 있다.
+stablecoin_policy_theme_only,-5,lower,license/reserve income/fee revenue 전 stablecoin 테마는 Green 금지다.
+M&A_without_trust_or_closing,-4,lower,M&A는 closing과 trust 회복 전 Stage 2/4C-watch다.
+IPO_or_event_pop_only,-5,lower,IPO·celebrity·event pop은 가격검증 전 구조적 증거가 아니다.
+single_product_or_single_theme_concentration,-4,lower,단일 제품/테마 concentration은 4B-watch를 빠르게 켠다.
+unconfirmed_revenue_bridge,-5,lower,정책·테마가 매출로 닫히지 않으면 Stage 3 금지다.
+data_breach_or_safety_failure,-5,lower,보안/안전 failure는 hard 4C로 격상한다.
+macro_shock_unhedged,-5,lower,hedge 없는 macro shock은 개별 thesis보다 먼저 본다.

@@ -1,0 +1,285 @@
+{
+  "analyst_round_id": "round_197",
+  "deep_sub_archetypes": [
+    {
+      "category": "성공 benchmark / HBM",
+      "primary_archetype": "STRUCTURAL_SUCCESS_NOW_4B",
+      "terms": "SK Hynix HBM|AI memory|OP revision|Stage 3 success|market cap $942B|4B-watch"
+    },
+    {
+      "category": "성공 benchmark / K-food",
+      "primary_archetype": "TRUE_STRUCTURAL_RERATING",
+      "terms": "Samyang Foods Buldak|export|ASP|capacity|OP revision|single-SKU 4B-watch"
+    },
+    {
+      "category": "계약 headline Stage 2",
+      "primary_archetype": "CONTRACT_HEADLINE_STAGE2_NOT_GREEN",
+      "terms": "Samsung E&A|Fadhili|Saudi Aramco|EPC margin|working capital|cash collection"
+    },
+    {
+      "category": "정책 CAPEX false positive",
+      "primary_archetype": "POLICY_CAPEX_FALSE_POSITIVE",
+      "terms": "Hyundai Steel|Louisiana steel plant|tariff hedge|funding unclear|ROI unclear"
+    },
+    {
+      "category": "디지털 policy price-only",
+      "primary_archetype": "DIGITAL_POLICY_PRICE_ONLY",
+      "terms": "KRW stablecoin|Kakao Pay|LG CNS|Aton|ME2ON|issuer license"
+    },
+    {
+      "category": "플랫폼 M&A trust gate",
+      "primary_archetype": "PLATFORM_TRUST_4C_WATCH",
+      "terms": "NAVER Financial|Dunamu|Upbit|abnormal withdrawal|exchange trust"
+    },
+    {
+      "category": "계약품질 hard 4C",
+      "primary_archetype": "CONTRACT_QUALITY_HARD_4C",
+      "terms": "LGES|Ford cancellation|Freudenberg cancellation|lost expected revenue|actual call-off"
+    },
+    {
+      "category": "운영신뢰 hard 4C",
+      "primary_archetype": "OPERATIONAL_TRUST_HARD_4C",
+      "terms": "Jeju Air crash|SK Telecom data breach|USIM replacement|fine|revenue forecast cut"
+    },
+    {
+      "category": "거시 지정학 hard 4C",
+      "primary_archetype": "MACRO_GEOPOLITICAL_HARD_4C",
+      "terms": "Middle East / Iran|KOSPI -12.06%|KRW 1505.8|Hyundai -15.8%|Samsung -11.7%"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "contract_headline_only",
+    "policy_capex_without_roi",
+    "stablecoin_policy_theme_only",
+    "mna_without_trust_or_closing",
+    "ipo_or_event_pop_only",
+    "single_product_or_single_theme_concentration",
+    "unconfirmed_revenue_bridge",
+    "data_breach_or_safety_failure",
+    "macro_shock_unhedged"
+  ],
+  "green_required_fields": [
+    "revenue_eps_fcf_conversion_confirmed",
+    "price_path_after_evidence",
+    "actual_calloff_or_delivery_confirmed",
+    "contract_margin_and_cash_collection_confirmed",
+    "platform_trust_and_security_cleared",
+    "policy_to_revenue_bridge_confirmed",
+    "capex_roi_funding_and_utilization_confirmed",
+    "no_4b_overheat_signal",
+    "no_hard_4c"
+  ],
+  "hard_4c_gates": [
+    "contract_cancellation_or_value_collapse",
+    "actual_calloff_failure",
+    "data_breach_or_security_failure",
+    "fatal_safety_accident",
+    "exchange_abnormal_withdrawal_or_hack",
+    "macro_energy_chokepoint_shock",
+    "fx_disorderly_depreciation",
+    "labor_strike_threatens_national_exports",
+    "legal_block_on_final_contract",
+    "capex_funding_failure"
+  ],
+  "large_sector": "CROSS_ARCHETYPE_REDTEAM_PRICE_VALIDATION",
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_calloff_delivery": "+4",
+      "archetype": "TRUE_STRUCTURAL_RERATING",
+      "cash_collection": "+4",
+      "event_penalty": "-1",
+      "hard_4c_prevention": "+3",
+      "hard_4c_sensitivity": "+3",
+      "macro_energy_fx_overlay": "+2",
+      "notes": "SK Hynix and Samyang show evidence-to-price alignment.",
+      "operating_leverage": "+5",
+      "platform_trust": "+2",
+      "revenue_eps_fcf": "+5",
+      "safety_security_trust": "+2",
+      "stage3_evidence_price_alignment": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_calloff_delivery": "+4",
+      "archetype": "STRUCTURAL_SUCCESS_NOW_4B",
+      "cash_collection": "+4",
+      "event_penalty": "-2",
+      "hard_4c_prevention": "+4",
+      "hard_4c_sensitivity": "+4",
+      "macro_energy_fx_overlay": "+2",
+      "notes": "Large MFE or market-cap milestone requires 4B-watch.",
+      "operating_leverage": "+5",
+      "platform_trust": "+2",
+      "revenue_eps_fcf": "+5",
+      "safety_security_trust": "+2",
+      "stage3_evidence_price_alignment": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_calloff_delivery": "+5",
+      "archetype": "CONTRACT_HEADLINE_STAGE2_NOT_GREEN",
+      "cash_collection": "+5",
+      "event_penalty": "-5",
+      "hard_4c_prevention": "+4",
+      "hard_4c_sensitivity": "+5",
+      "macro_energy_fx_overlay": "+1",
+      "notes": "Samsung E&A and LGES show contract headline must clear call-off/margin/cash.",
+      "operating_leverage": "+3",
+      "platform_trust": "+1",
+      "revenue_eps_fcf": "+3",
+      "safety_security_trust": "+2",
+      "stage3_evidence_price_alignment": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_calloff_delivery": "+1",
+      "archetype": "POLICY_CAPEX_FALSE_POSITIVE",
+      "cash_collection": "+2",
+      "event_penalty": "-5",
+      "hard_4c_prevention": "+4",
+      "hard_4c_sensitivity": "+5",
+      "macro_energy_fx_overlay": "+2",
+      "notes": "Hyundai Steel shows CAPEX headline without ROI can fail.",
+      "operating_leverage": "+2",
+      "platform_trust": "+1",
+      "revenue_eps_fcf": "+2",
+      "safety_security_trust": "+2",
+      "stage3_evidence_price_alignment": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_calloff_delivery": "+0",
+      "archetype": "DIGITAL_POLICY_PRICE_ONLY",
+      "cash_collection": "+0",
+      "event_penalty": "-5",
+      "hard_4c_prevention": "+5",
+      "hard_4c_sensitivity": "+5",
+      "macro_energy_fx_overlay": "+5",
+      "notes": "Stablecoin basket moved before regulated revenue and FX gate.",
+      "operating_leverage": "+1",
+      "platform_trust": "+5",
+      "revenue_eps_fcf": "+1",
+      "safety_security_trust": "+3",
+      "stage3_evidence_price_alignment": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_calloff_delivery": "+1",
+      "archetype": "PLATFORM_TRUST_4C_WATCH",
+      "cash_collection": "+2",
+      "event_penalty": "-5",
+      "hard_4c_prevention": "+5",
+      "hard_4c_sensitivity": "+5",
+      "macro_energy_fx_overlay": "+4",
+      "notes": "NAVER/Dunamu shows M&A needs closing and trust recovery.",
+      "operating_leverage": "+4",
+      "platform_trust": "+5",
+      "revenue_eps_fcf": "+3",
+      "safety_security_trust": "+5",
+      "stage3_evidence_price_alignment": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "actual_calloff_delivery": "+5",
+      "archetype": "CONTRACT_QUALITY_HARD_4C",
+      "cash_collection": "+5",
+      "event_penalty": "+0",
+      "hard_4c_prevention": "+5",
+      "hard_4c_sensitivity": "+5",
+      "macro_energy_fx_overlay": "+2",
+      "notes": "LGES contract cancellations are hard 4C.",
+      "operating_leverage": "+0",
+      "platform_trust": "+1",
+      "revenue_eps_fcf": "+0",
+      "safety_security_trust": "+2",
+      "stage3_evidence_price_alignment": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_calloff_delivery": "+0",
+      "archetype": "OPERATIONAL_TRUST_HARD_4C",
+      "cash_collection": "+0",
+      "event_penalty": "+0",
+      "hard_4c_prevention": "+5",
+      "hard_4c_sensitivity": "+5",
+      "macro_energy_fx_overlay": "+3",
+      "notes": "Jeju and SKT show safety/security hard gates.",
+      "operating_leverage": "+0",
+      "platform_trust": "+5",
+      "revenue_eps_fcf": "+0",
+      "safety_security_trust": "+5",
+      "stage3_evidence_price_alignment": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_calloff_delivery": "+0",
+      "archetype": "MACRO_GEOPOLITICAL_HARD_4C",
+      "cash_collection": "+0",
+      "event_penalty": "+0",
+      "hard_4c_prevention": "+5",
+      "hard_4c_sensitivity": "+5",
+      "macro_energy_fx_overlay": "+5",
+      "notes": "Middle East/Iran shock confirms macro hard 4C overlay.",
+      "operating_leverage": "+0",
+      "platform_trust": "+2",
+      "revenue_eps_fcf": "+0",
+      "safety_security_trust": "+3",
+      "stage3_evidence_price_alignment": "+0"
+    }
+  ],
+  "source_round": "docs/round/round_269.md",
+  "stage4b_watch_triggers": [
+    "stage3_after_3x_to_5x_or_more_move",
+    "market_cap_milestone_headline",
+    "contract_announcement_day_plus_5_to_10pct_move",
+    "policy_stablecoin_or_ai_fiscal_story_two_to_three_x_move",
+    "mna_announcement_before_regulatory_or_trust_gate",
+    "ipo_celebrity_or_policy_event_pop",
+    "index_or_sector_fomo_without_revenue_model"
+  ],
+  "summary": {
+    "aligned_count": 2,
+    "analyst_round_id": "round_197",
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 9,
+    "failed_rerating_count": 1,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 2,
+    "hard_4c_confirmed": true,
+    "large_sector": "CROSS_ARCHETYPE_REDTEAM_PRICE_VALIDATION",
+    "overheat_count": 1,
+    "price_moved_without_evidence_count": 3,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "r13_default_stage3_bias": "redteam_first_after_price_validation",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 9,
+    "source_round": "docs/round/round_269.md",
+    "stage3_case_count": 2,
+    "stage4b_watch_count": 5,
+    "stage4c_case_count": 5,
+    "structural_success_count": 1,
+    "success_candidate_count": 3,
+    "target_archetype_count": 9
+  },
+  "target_aliases": {
+    "CONTRACT_HEADLINE_STAGE2_NOT_GREEN": "CONTRACT_HEADLINE_STAGE2_NOT_GREEN",
+    "CONTRACT_QUALITY_HARD_4C": "CONTRACT_QUALITY_HARD_4C",
+    "DIGITAL_POLICY_PRICE_ONLY": "DIGITAL_POLICY_PRICE_ONLY",
+    "MACRO_GEOPOLITICAL_HARD_4C": "MACRO_GEOPOLITICAL_HARD_4C",
+    "OPERATIONAL_TRUST_HARD_4C": "OPERATIONAL_TRUST_HARD_4C",
+    "PLATFORM_TRUST_4C_WATCH": "PLATFORM_TRUST_4C_WATCH",
+    "POLICY_CAPEX_FALSE_POSITIVE": "POLICY_CAPEX_FALSE_POSITIVE",
+    "STRUCTURAL_SUCCESS_NOW_4B": "STRUCTURAL_SUCCESS_NOW_4B",
+    "TRUE_STRUCTURAL_RERATING": "TRUE_STRUCTURAL_RERATING"
+  },
+  "what_not_to_change": [
+    "do_not_use_round269_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_contract_policy_stablecoin_platform_or_hard_4c_event_as_green",
+    "do_not_invent_ohlc_or_stage_dates",
+    "do_not_weaken_stage3_green_to_improve_recall"
+  ]
+}
