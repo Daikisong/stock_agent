@@ -1,0 +1,20 @@
+axis,points,direction,reason
+recurring_revenue,5,raise,렌탈·구독·반복구매는 R12의 가장 강한 구조 증거다.
+churn_stability,5,raise,반복매출은 churn이 안정적일 때만 구조적이다.
+ARPU_or_repeat_purchase,4,raise,ARPU 또는 반복구매가 확인되어야 수요 질을 인정한다.
+unit_economics,5,raise,교육·돌봄·펫·외식은 unit economics가 없으면 정책/이벤트에 머문다.
+cash_conversion,5,raise,성장보다 현금전환이 R12 Green 가드레일이다.
+paid_enrollment_conversion,4,raise,의대정원 정책은 유료수강 전환이 확인되어야 한다.
+utilization_rate,4,raise,돌봄·서비스는 실제 이용률이 Stage 2 이후 핵심이다.
+input_cost_pass_through,5,raise,배추·사료곡물 shock 이후 가격전가가 확인되어야 한다.
+inventory_quality,4,raise,재고·매출채권 안정은 원가 shock 통과 조건이다.
+subsidy_independence,4,raise,보조금 의존 매출은 Green을 제한한다.
+policy_news_only,-5,lower,정책 뉴스만으로는 회사 EPS/FCF evidence가 아니다.
+education_quota_only,-5,lower,의대정원 headline은 수강생·ARPU 전까지 event premium이다.
+AI_textbook_theme_only,-5,lower,AI 교과서 테마는 채택·예산·매출 전까지 Green 금지다.
+birthrate_headline_only,-4,lower,출산율 반등만으로 유아·교육·돌봄주 매출을 만들지 않는다.
+pet_welfare_policy_only,-4,lower,펫/동물복지 정책은 상장사 매출전환 전까지 제한한다.
+celebrity_food_event_only,-5,lower,바이럴 외식 이벤트는 매출 evidence 전 price_moved_without_evidence다.
+input_price_spike_without_pass_through,-5,lower,원재료 가격 상승이 가격전가 없이 오면 margin 4C-watch다.
+subsidy_dependent_revenue,-4,lower,보조금 의존 수익은 지속성 점수를 제한한다.
+unconfirmed_demand_conversion,-5,lower,트래픽·정책 관심이 유료수요로 전환되지 않으면 Stage 3 금지다.
