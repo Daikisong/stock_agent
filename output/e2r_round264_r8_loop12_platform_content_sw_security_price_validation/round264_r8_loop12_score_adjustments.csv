@@ -1,0 +1,21 @@
+axis,points,direction,reason
+paid_user_retention,5,raise,게임·콘텐츠·플랫폼은 활성/유료 이용 유지가 반복매출의 첫 관문이다.
+arpu_or_take_rate,5,raise,"MAU나 조회수보다 ARPU, take-rate, paid usage가 Stage 3 visibility다."
+repeat_hit_generation,5,raise,단일 히트보다 반복 흥행과 후속 IP 전환이 중요하다.
+ip_licensing_revenue,5,raise,"조회수와 팬덤은 licensing, merchandise, platform fee로 닫혀야 한다."
+live_service_retention,5,raise,Nikke 같은 live-service 매출은 retention이 확인돼야 지속성이 있다.
+platform_trust,5,raise,디지털 플랫폼은 규모보다 거래소·개인정보·운영 신뢰가 먼저다.
+cybersecurity_control,5,raise,보안 사고는 매출전망·보상·투자비로 연결될 수 있는 hard gate다.
+data_governance,5,raise,플랫폼 데이터 거버넌스는 RedTeam 입력으로 강하게 본다.
+regulatory_closing,4,raise,M&A와 중국 optionality는 승인·공연·매출 전환이 확인돼야 한다.
+operating_leverage_fcf,5,raise,IP와 플랫폼 매출이 OPM/FCF로 닫히는지 확인한다.
+ipo_pop_only,-5,lower,IPO 첫날 급등은 event premium이지 Stage 3 증거가 아니다.
+single_title_or_single_ip_concentration,-5,lower,단일 게임·단일 IP 의존은 4B/4C 감시를 높인다.
+mna_deal_without_closing,-4,lower,M&A 발표만 있고 closing·integration·revenue bridge가 없으면 제한한다.
+china_reopening_optional_only,-4,lower,중국 재개 기대는 실제 공연·티켓 매출 전에는 Green이 아니다.
+digital_asset_platform_without_trust,-5,lower,거래소 trust issue가 있으면 deal value보다 먼저 감점한다.
+exchange_abnormal_withdrawal,-5,lower,비정상 출금은 플랫폼 M&A의 4C-watch 트리거다.
+data_breach,-5,lower,대규모 데이터 유출은 플랫폼 논리 훼손이다.
+cybersecurity_revenue_cut,-5,lower,보안 사고가 매출전망 하향으로 이어지면 hard 4C다.
+unlisted_or_non_krx_reference_gap,-3,lower,비KRX 참고사례는 직접 후보가 아니라 guardrail로만 쓴다.
+event_rally_before_paid_usage,-5,lower,유료 사용·ARPU 확인 전 이벤트 랠리는 4B-watch다.

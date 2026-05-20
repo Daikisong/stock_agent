@@ -1,0 +1,17 @@
+field,required_for_round264_price_validation
+price_data_source,true
+full_ohlc_available,true
+reported_price_anchor,true
+reported_event_return,true
+stage1_price,true
+stage2_price,true
+stage3_price,true
+stage4b_price,true
+stage4c_price,true
+mfe_1d,true
+mae_1d,true
+relative_underperformance_pp,true
+transaction_or_ipo_anchor,true
+revenue_margin_or_user_anchor,true
+trust_security_or_governance_anchor,true
+price_validation_status,true

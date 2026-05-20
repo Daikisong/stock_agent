@@ -1,0 +1,102 @@
+{
+  "analyst_round_id": "round_192",
+  "case_ids": [
+    "r8_loop12_shift_up_game_ip_ipo_single_title_watch",
+    "r8_loop12_pinkfong_kids_content_ip_ipo_event",
+    "r8_loop12_sm_tencent_kpop_china_optionality",
+    "r8_loop12_naver_dunamu_platform_merger_trust_gate",
+    "r8_loop12_coupang_platform_data_breach_reference",
+    "r8_loop12_krafton_unknown_worlds_subnautica_governance_watch",
+    "r8_loop12_skt_cybersecurity_operational_trust_hard_4c"
+  ],
+  "deep_sub_archetypes": [
+    "Shift Up game IPO / Nikke live-service / Stellar Blade single-title risk",
+    "Pinkfong kids content IPO / Baby Shark legacy IP / repeat-hit durability",
+    "SM Entertainment Tencent Music stake / China reopening optionality",
+    "NAVER Financial Dunamu Upbit M&A / exchange trust gate",
+    "Coupang e-commerce data breach / non-KRX platform trust reference",
+    "Krafton Unknown Worlds Subnautica 2 earnout / studio governance 4C-watch",
+    "SK Telecom USIM data breach / direct KRX cybersecurity hard 4C"
+  ],
+  "green_forbidden_patterns": [
+    "ipo_pop_only",
+    "single_title_hit_only",
+    "single_ip_legacy_only",
+    "mna_announcement_only",
+    "china_reopening_expectation_only",
+    "digital_asset_platform_without_trust_recovery",
+    "data_breach_unresolved",
+    "cybersecurity_remediation_cost_unquantified"
+  ],
+  "green_required_fields": [
+    "paid_user_or_active_user_retention",
+    "arpu_take_rate_or_paid_usage",
+    "repeat_content_hit_or_live_service_durability",
+    "ip_licensing_merchandise_or_platform_fee_revenue",
+    "operating_leverage_or_fcf",
+    "mna_closing_integration_and_revenue_bridge",
+    "platform_or_exchange_trust_intact",
+    "cybersecurity_data_governance_risk_passed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "major_data_breach",
+    "cybersecurity_breach_with_revenue_guidance_cut",
+    "platform_trust_failure",
+    "exchange_abnormal_withdrawal_or_hack",
+    "mna_governance_dispute_delays_release",
+    "regulatory_approval_failure",
+    "content_ip_single_hit_fade",
+    "live_service_retention_collapse",
+    "large_compensation_fine_or_remediation_cost"
+  ],
+  "large_sector": "PLATFORM_CONTENT_SW_SECURITY",
+  "source_round": "docs/round/round_264.md",
+  "stage4b_watch_triggers": [
+    "ipo_first_day_50pct_plus_spike",
+    "single_title_or_single_ip_valuation_before_repeat_revenue",
+    "mna_announcement_5_to_10pct_spike_before_closing",
+    "china_reopening_headline_prices_before_ticket_revenue",
+    "platform_deal_prices_before_regulatory_closing",
+    "digital_asset_platform_deal_swings_around_trust_incident",
+    "content_ip_views_valued_before_paid_monetization"
+  ],
+  "summary": {
+    "analyst_round_id": "round_192",
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "deep_sub_archetype_count": 7,
+    "event_premium_count": 1,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "PLATFORM_CONTENT_SW_SECURITY",
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_264.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 5,
+    "stage4c_watch_count": 3,
+    "success_candidate_count": 3,
+    "target_archetype_count": 7,
+    "thesis_break_or_watch_count": 4
+  },
+  "target_aliases": {
+    "DIGITAL_ASSET_PLATFORM_M_AND_A_TRUST_GATE": "DIGITAL_ASSET_PLATFORM_M_AND_A_TRUST_GATE",
+    "ECOMMERCE_PLATFORM_DATA_BREACH_4C": "ECOMMERCE_PLATFORM_DATA_BREACH_4C",
+    "GAME_IP_IPO_SINGLE_TITLE_RISK": "GAME_IP_IPO_SINGLE_TITLE_RISK",
+    "GAME_STUDIO_M_AND_A_GOVERNANCE_4C": "GAME_STUDIO_M_AND_A_GOVERNANCE_4C",
+    "KIDS_CONTENT_IP_IPO_EVENT_PREMIUM": "KIDS_CONTENT_IP_IPO_EVENT_PREMIUM",
+    "KPOP_IP_CHINA_OPTIONALITY": "KPOP_IP_CHINA_OPTIONALITY",
+    "TELECOM_CYBERSECURITY_OPERATIONAL_TRUST_HARD_4C": "TELECOM_CYBERSECURITY_OPERATIONAL_TRUST_HARD_4C"
+  },
+  "what_not_to_change": [
+    "do_not_use_round264_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_ipo_hit_title_single_ip_mna_china_optionality_or_platform_deal_headline_as_green",
+    "do_not_ignore_platform_exchange_data_cybersecurity_or_governance_hard_gates",
+    "do_not_invent_ohlc_retention_arpu_take_rate_opm_fcf_security_or_compensation_costs"
+  ]
+}
