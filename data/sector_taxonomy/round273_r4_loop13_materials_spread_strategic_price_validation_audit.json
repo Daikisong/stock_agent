@@ -1,0 +1,271 @@
+{
+  "deep_sub_archetypes": [
+    {
+      "category": "strategic minerals governance",
+      "primary_archetype": "CRITICAL_MINERALS_CONTROL_PREMIUM_AND_DILUTION",
+      "terms": "Korea Zinc|MBK|Young Poong|Tennessee refinery|dilution"
+    },
+    {
+      "category": "graphite lithium price event",
+      "primary_archetype": "GRAPHITE_LITHIUM_POLICY_PRICE_EVENT",
+      "terms": "POSCO Future M|graphite tariff|CATL lithium mine|L&F read-through"
+    },
+    {
+      "category": "steel tariff two-sided",
+      "primary_archetype": "STEEL_TARIFF_TWO_SIDED_RELIEF_RISK",
+      "terms": "POSCO|Hyundai Steel|SeAH Steel|anti-dumping|U.S. 50% tariff"
+    },
+    {
+      "category": "policy capex false positive",
+      "primary_archetype": "POLICY_CAPEX_FALSE_POSITIVE",
+      "terms": "Hyundai Steel|Louisiana plant|$5.8B|funding ROI missing"
+    },
+    {
+      "category": "petrochemical restructuring",
+      "primary_archetype": "PETROCHEMICAL_CAPACITY_RESTRUCTURING",
+      "terms": "LG Chem|Hanwha Solutions|DL Chemical|YNCC|NCC shutdown"
+    },
+    {
+      "category": "overseas petrochemical capex",
+      "primary_archetype": "PETROCHEMICAL_OVERSEAS_CAPEX_SPREAD_GATE",
+      "terms": "Lotte Chemical|Indonesia cracker|Pakistan PTA sale|utilization"
+    },
+    {
+      "category": "defense metals optionality",
+      "primary_archetype": "DEFENSE_METALS_AMMUNITION_OPTIONALITY",
+      "terms": "Poongsan|Hanwha Aerospace|ammunition|copper products|M&A rumor"
+    },
+    {
+      "category": "copper commodity overheat",
+      "primary_archetype": "COPPER_COMMODITY_OVERHEAT_4B",
+      "terms": "copper price|commodity beta|pass-through|working capital"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "control_premium_only",
+    "mna_rumor_only",
+    "commodity_price_event_only",
+    "tariff_relief_only",
+    "policy_capex_only",
+    "restructuring_plan_only",
+    "capacity_shutdown_only",
+    "dilution_or_governance_fight_unresolved",
+    "export_tariff_exposure_unresolved",
+    "capex_without_funding_or_roi"
+  ],
+  "green_required_fields": [
+    "product_spread_visibility_confirmed",
+    "cost_curve_advantage_confirmed",
+    "offtake_or_actual_contract_confirmed",
+    "capacity_utilization_confirmed",
+    "working_capital_control_confirmed",
+    "fcf_after_restructuring_confirmed",
+    "governance_dilution_risk_cleared",
+    "export_control_or_tariff_risk_cleared",
+    "restructuring_margin_recovery_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "contract_cancellation",
+    "dilutive_issuance_destroying_existing_holders",
+    "export_tariff_destroying_margin",
+    "china_end_use_restriction_or_sanction",
+    "commodity_price_collapse_without_hedge",
+    "petrochemical_credit_event_or_workout",
+    "capacity_cut_fails_to_restore_spread",
+    "capex_funding_failure",
+    "mna_denial_after_rumor_driven_rally"
+  ],
+  "large_sector": "MATERIALS_SPREAD_STRATEGIC_RESOURCES",
+  "round_id": "round_201",
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "CRITICAL_MINERALS_CONTROL_PREMIUM_AND_DILUTION",
+      "capacity_utilization": "+4",
+      "commodity_price_pass_through": "+3",
+      "cost_curve_advantage": "+5",
+      "event_penalty": "-5",
+      "export_control_resilience": "+5",
+      "fcf_after_restructuring": "+5",
+      "governance_dilution_control": "+5",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Korea Zinc needs offtake/margin/funding/dilution control beyond control premium.",
+      "offtake_actual_contract": "+5",
+      "policy_relief_to_margin_bridge": "+3",
+      "product_spread_visibility": "+4",
+      "working_capital_control": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "GRAPHITE_LITHIUM_POLICY_PRICE_EVENT",
+      "capacity_utilization": "+5",
+      "commodity_price_pass_through": "+5",
+      "cost_curve_advantage": "+4",
+      "event_penalty": "-5",
+      "export_control_resilience": "+5",
+      "fcf_after_restructuring": "+5",
+      "governance_dilution_control": "+3",
+      "hard_4c_sensitivity": "+4",
+      "notes": "POSCO Future M graphite/lithium events need supply contract and margin proof.",
+      "offtake_actual_contract": "+5",
+      "policy_relief_to_margin_bridge": "+3",
+      "product_spread_visibility": "+5",
+      "working_capital_control": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "STEEL_TARIFF_TWO_SIDED_RELIEF_RISK",
+      "capacity_utilization": "+4",
+      "commodity_price_pass_through": "+4",
+      "cost_curve_advantage": "+5",
+      "event_penalty": "-5",
+      "export_control_resilience": "+5",
+      "fcf_after_restructuring": "+5",
+      "governance_dilution_control": "+2",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Domestic tariff relief and export tariff risk must be scored together.",
+      "offtake_actual_contract": "+3",
+      "policy_relief_to_margin_bridge": "+4",
+      "product_spread_visibility": "+5",
+      "working_capital_control": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "POLICY_CAPEX_FALSE_POSITIVE",
+      "capacity_utilization": "+4",
+      "commodity_price_pass_through": "+2",
+      "cost_curve_advantage": "+3",
+      "event_penalty": "-5",
+      "export_control_resilience": "+4",
+      "fcf_after_restructuring": "+5",
+      "governance_dilution_control": "+3",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Hyundai Steel U.S. CAPEX failed without funding/ROI clarity.",
+      "offtake_actual_contract": "+2",
+      "policy_relief_to_margin_bridge": "+2",
+      "product_spread_visibility": "+3",
+      "working_capital_control": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "PETROCHEMICAL_CAPACITY_RESTRUCTURING",
+      "capacity_utilization": "+5",
+      "commodity_price_pass_through": "+4",
+      "cost_curve_advantage": "+4",
+      "event_penalty": "-4",
+      "export_control_resilience": "+2",
+      "fcf_after_restructuring": "+5",
+      "governance_dilution_control": "+3",
+      "hard_4c_sensitivity": "+5",
+      "notes": "NCC shutdown/support package is relief until spread/OPM/FCF recover.",
+      "offtake_actual_contract": "+2",
+      "policy_relief_to_margin_bridge": "+5",
+      "product_spread_visibility": "+5",
+      "working_capital_control": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "PETROCHEMICAL_OVERSEAS_CAPEX_SPREAD_GATE",
+      "capacity_utilization": "+5",
+      "commodity_price_pass_through": "+4",
+      "cost_curve_advantage": "+4",
+      "event_penalty": "-4",
+      "export_control_resilience": "+3",
+      "fcf_after_restructuring": "+5",
+      "governance_dilution_control": "+3",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Lotte overseas capex/asset sale requires utilization, ROIC and spread.",
+      "offtake_actual_contract": "+3",
+      "policy_relief_to_margin_bridge": "+3",
+      "product_spread_visibility": "+5",
+      "working_capital_control": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "DEFENSE_METALS_AMMUNITION_OPTIONALITY",
+      "capacity_utilization": "+4",
+      "commodity_price_pass_through": "+4",
+      "cost_curve_advantage": "+4",
+      "event_penalty": "-5",
+      "export_control_resilience": "+4",
+      "fcf_after_restructuring": "+5",
+      "governance_dilution_control": "+3",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Poongsan M&A rumor is event premium until confirmed order/transaction/cash return.",
+      "offtake_actual_contract": "+5",
+      "policy_relief_to_margin_bridge": "+2",
+      "product_spread_visibility": "+4",
+      "working_capital_control": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "COPPER_COMMODITY_OVERHEAT_4B",
+      "capacity_utilization": "+3",
+      "commodity_price_pass_through": "+5",
+      "cost_curve_advantage": "+4",
+      "event_penalty": "-5",
+      "export_control_resilience": "+3",
+      "fcf_after_restructuring": "+4",
+      "governance_dilution_control": "+2",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Copper/metal price rallies need pass-through, demand and FCF confirmation.",
+      "offtake_actual_contract": "+3",
+      "policy_relief_to_margin_bridge": "+2",
+      "product_spread_visibility": "+5",
+      "working_capital_control": "+4"
+    }
+  ],
+  "source_round": "docs/round/round_273.md",
+  "stage4b_watch_triggers": [
+    "tender_offer_or_control_premium_plus_20pct",
+    "commodity_tariff_or_lithium_event_plus_10_to_20pct",
+    "anti_dumping_relief_steel_rally",
+    "policy_capex_before_funding_roi",
+    "mna_rumor_before_confirmed_transaction",
+    "restructuring_support_package_before_spread_recovery"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 3,
+    "evidence_good_but_price_failed_count": 2,
+    "failed_rerating_count": 2,
+    "false_positive_score_count": 1,
+    "four_b_watch_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "hard_4c_confirmed": false,
+    "large_sector": "MATERIALS_SPREAD_STRATEGIC_RESOURCES",
+    "price_data_unavailable_count": 4,
+    "price_moved_without_evidence_count": 3,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_201",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_273.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 4,
+    "success_candidate_count": 2,
+    "target_archetype_count": 8
+  },
+  "target_aliases": {
+    "COPPER_COMMODITY_OVERHEAT_4B": "COPPER_COMMODITY_OVERHEAT_4B",
+    "CRITICAL_MINERALS_CONTROL_PREMIUM_AND_DILUTION": "CRITICAL_MINERALS_CONTROL_PREMIUM_AND_DILUTION",
+    "DEFENSE_METALS_AMMUNITION_OPTIONALITY": "DEFENSE_METALS_AMMUNITION_OPTIONALITY",
+    "GRAPHITE_LITHIUM_POLICY_PRICE_EVENT": "GRAPHITE_LITHIUM_POLICY_PRICE_EVENT",
+    "PETROCHEMICAL_CAPACITY_RESTRUCTURING": "PETROCHEMICAL_CAPACITY_RESTRUCTURING",
+    "PETROCHEMICAL_OVERSEAS_CAPEX_SPREAD_GATE": "PETROCHEMICAL_OVERSEAS_CAPEX_SPREAD_GATE",
+    "POLICY_CAPEX_FALSE_POSITIVE": "POLICY_CAPEX_FALSE_POSITIVE",
+    "STEEL_TARIFF_TWO_SIDED_RELIEF_RISK": "STEEL_TARIFF_TWO_SIDED_RELIEF_RISK"
+  },
+  "what_not_to_change": [
+    "do_not_use_round273_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_control_premium_tariff_policy_capex_or_restructuring_headlines_as_green_alone",
+    "do_not_invent_ohlc_or_stage_dates"
+  ]
+}

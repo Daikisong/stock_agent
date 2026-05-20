@@ -1,0 +1,20 @@
+axis,points,direction,reason
+product_spread_visibility,5,raise,R4는 제품 스프레드가 실제 이익으로 닫혀야 한다.
+cost_curve_advantage,5,raise,원가곡선 우위가 있어야 commodity event를 넘어선다.
+offtake_or_actual_contract,5,raise,전략자원은 실제 offtake나 계약이 필요하다.
+capacity_utilization,5,raise,CAPEX나 shutdown보다 가동률이 중요하다.
+working_capital_control,5,raise,소재/화학은 운전자본이 FCF를 크게 흔든다.
+FCF_after_restructuring,5,raise,구조조정 후 FCF가 돌아와야 Green 후보가 된다.
+governance_dilution_control,5,raise,전략광물 프리미엄은 희석·거버넌스 통과가 필요하다.
+export_control_resilience,5,raise,관세·수출통제 리스크를 통과해야 한다.
+commodity_price_pass_through,4,raise,가격 이벤트가 실제 판가/마진으로 전가되어야 한다.
+policy_relief_to_margin_bridge,4,raise,정책 relief가 마진으로 이어지는 bridge를 본다.
+control_premium_only,-5,lower,지배권 프리미엄은 operating Green이 아니다.
+M&A_rumor_only,-5,lower,M&A rumor는 확정 거래 전 event premium이다.
+tariff_relief_only,-5,lower,관세 relief만으로 제품 스프레드와 FCF를 만들지 않는다.
+policy_CAPEX_without_ROI,-5,lower,정책 CAPEX는 funding/ROI가 없으면 false positive가 된다.
+commodity_price_event_only,-5,lower,graphite/lithium 가격 이벤트만으로는 Green 금지다.
+restructuring_plan_undisclosed,-4,lower,비공개 구조조정 계획은 relief이지 Green이 아니다.
+capacity_shutdown_without_spread,-4,lower,capacity shutdown만 있고 spread가 없으면 Green 금지다.
+dilution_or_governance_fight,-5,lower,희석·지배권 분쟁이 열려 있으면 Green을 막는다.
+export_tariff_exposure,-5,lower,수출 관세 노출은 R4 4C-watch다.

@@ -1,0 +1,39 @@
+# Round 273 R4 Loop 13 4B/4C Review
+
+## 4B Watch Triggers
+
+- tender_offer_or_control_premium_plus_20pct
+- commodity_tariff_or_lithium_event_plus_10_to_20pct
+- anti_dumping_relief_steel_rally
+- policy_capex_before_funding_roi
+- mna_rumor_before_confirmed_transaction
+- restructuring_support_package_before_spread_recovery
+
+## Hard 4C Gates
+
+- contract_cancellation
+- dilutive_issuance_destroying_existing_holders
+- export_tariff_destroying_margin
+- china_end_use_restriction_or_sanction
+- commodity_price_collapse_without_hedge
+- petrochemical_credit_event_or_workout
+- capacity_cut_fails_to_restore_spread
+- capex_funding_failure
+- mna_denial_after_rumor_driven_rally
+
+## Plain-Language Gate Notes
+
+- 4B는 control premium, tariff relief, policy CAPEX, restructuring package가 실적보다 먼저 가격화된 상태다.
+- 4C-watch는 export tariff, dilution, petrochemical credit stress처럼 Green을 막는 위험이다.
+- 이번 라운드에서는 hard 4C를 확정하지 않고 watch로 둔다.
+
+## Case Notes
+
+- r4_loop13_korea_zinc_control_premium_dilution_watch: control_premium_only, withdrawn_share_sale, injunction_event_mae_minus_13pct, dilution_or_governance_fight
+- r4_loop13_posco_futurem_graphite_lithium_event: actual_graphite_supply_contract_unconfirmed, margin_unconfirmed, commodity_price_event_only, tariff_relief_only
+- r4_loop13_steel_tariff_two_sided_posco_hyundai_seah: us_25pct_tariff_event, us_50pct_tariff_event, seah_steel_minus_8pct, export_tariff_exposure
+- r4_loop13_hyundai_steel_us_plant_policy_capex_false_positive: post_announcement_drawdown_minus_21_2pct, funding_plan_incomplete, policy_CAPEX_without_ROI, relative_underperformance_vs_kospi_minus_15_7pp
+- r4_loop13_lgchem_hanwha_dl_yncc_petchem_credit_watch: yncc_debt_to_equity_249pct, yncc_no3_cracker_shut, shaheen_new_supply_2026, restructuring_plan_undisclosed
+- r4_loop13_lotte_hd_hyundai_petchem_restructuring_relief: capacity_shutdown_without_spread, support_package_not_margin, debt_cleanup_unconfirmed, fcf_unconfirmed
+- r4_loop13_lotte_chemical_overseas_portfolio_spread_gate: ethane_naphtha_spread_unconfirmed, utilization_unconfirmed, capex_without_funding_or_roi, working_capital_unconfirmed
+- r4_loop13_poongsan_defense_metals_mna_rumor: hanwha_dropped_acquisition_review, poongsan_denied_sale_plan, M&A_rumor_only, confirmed_transaction_absent
