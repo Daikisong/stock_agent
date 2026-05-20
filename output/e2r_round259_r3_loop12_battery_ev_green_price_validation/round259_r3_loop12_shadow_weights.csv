@@ -1,0 +1,10 @@
+archetype,actual_calloff,take_or_pay,gwh_volume,delivery_schedule,utilization,ess_revenue,line_redeployment,opm_visibility,fcf_after_capex,supply_chain_flow,factory_execution,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+EV_BATTERY_CONTRACT_QUALITY_BREAK,+5,+5,+5,+5,+5,+0,+0,+5,+5,+3,+3,+0,+3,+5,LGES/Ford/Freudenberg shows contract headline can become hard 4C without actual call-off.
+EV_BATTERY_JV_RESTRUCTURING,+4,+4,+5,+4,+5,+3,+4,+5,+5,+3,+5,-5,+4,+5,SK On/Ford and Samsung/Stellantis JV risks require 4C-watch.
+EV_TO_ESS_CAPACITY_REDEPLOYMENT,+4,+4,+5,+5,+5,+5,+5,+5,+5,+3,+4,-3,+5,+4,ESS pivot is Stage 2 until contract value/utilization/margin/FCF confirm.
+US_BATTERY_LOCALIZATION_DILUTION,+3,+3,+4,+4,+4,+2,+3,+4,+5,+4,+5,-5,+4,+5,Samsung SDI share issuance shows capex localization can fail without demand/funding clarity.
+BATTERY_SUPPLY_CHAIN_DEMAND_SHOCK,+0,+0,+0,+0,+0,+0,+0,+4,+4,+4,+3,+0,+3,+5,Ford EV retreat hit cathode/separator/precursor names directly.
+SILICON_ANODE_OPTIONALITY,+3,+3,+3,+3,+4,+0,+0,+4,+5,+3,+3,-4,+4,+4,Group14/SK is Stage 2 optionality until offtake and utilization confirm.
+SOLAR_US_SUPPLY_CHAIN_LOCALIZATION,+3,+3,+4,+4,+5,+0,+0,+5,+5,+5,+5,-4,+4,+5,Qcells loan guarantee is Stage 2; customs/component flow can create 4C-watch.
+HYDROGEN_FUELCELL_CAPEX_OPTIONALITY,+2,+2,+2,+4,+5,+0,+0,+5,+5,+3,+4,-5,+4,+4,Hyundai hydrogen plant is capex Stage 2 until offtake/utilization/margin confirm.
+US_FACTORY_EXECUTION_VISA_RISK,+0,+0,+0,+0,+5,+0,+0,+4,+5,+3,+5,+0,+3,+5,Hyundai-LG Georgia raid proves U.S. factory execution risk must be a hard gate candidate.

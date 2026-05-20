@@ -1,0 +1,22 @@
+axis,points,direction,reason
+actual_calloff,5,raise,계약 headline은 actual call-off 또는 take-or-pay로 닫혀야 한다.
+take_or_pay_quality,5,raise,take-or-pay 품질이 높을수록 매출 visibility가 높다.
+GWh_volume,5,raise,R3 계약은 GWh 물량과 기간이 핵심이다.
+delivery_schedule,5,raise,납기와 revenue recognition path가 있어야 Stage 2 품질이 올라간다.
+utilization_visibility,5,raise,공장·라인보다 실제 가동률 회복이 중요하다.
+ESS_revenue_conversion,5,raise,ESS pivot은 매출·마진 전환이 확인될 때 강해진다.
+line_redeployment_execution,4,raise,EV 라인을 ESS로 전환하는 실행력이 필요하다.
+OPM_visibility,5,raise,OPM/gross margin 확인 전 Green은 금지다.
+FCF_after_capex,5,raise,CAPEX 뒤 FCF가 남아야 구조적이다.
+supply_chain_flow_reliability,5,raise,Qcells처럼 component flow가 막히면 localization이 깨진다.
+factory_execution_readiness,5,raise,Hyundai-LG Georgia처럼 visa/workforce execution이 필요하다.
+EV_JV_headline_only,-5,lower,EV JV headline만으로는 Green이 아니다.
+US_localization_capex_only,-5,lower,미국 현지화 CAPEX만으로는 수익성이 없다.
+share_issuance_for_capex,-5,lower,수요 품질 없는 증자는 dilution risk다.
+customer_exit_report,-5,lower,고객 이탈 보도는 4C-watch다.
+ESS_pivot_without_contract_value,-4,lower,ESS pivot은 계약금액·마진 전 Stage 2다.
+silicon_anode_optionality_only,-4,lower,silicon-anode optionality만으로 Green 금지다.
+hydrogen_capex_without_offtake,-5,lower,수소 CAPEX는 offtake 전 Green이 아니다.
+solar_loan_guarantee_without_component_flow,-5,lower,태양광 loan guarantee는 component flow가 필요하다.
+factory_startup_visa_risk,-5,lower,visa/factory startup risk는 RedTeam 감점이다.
+EV_demand_shock,-5,lower,고객 EV 수요 후퇴는 R3 핵심 4C-watch다.

@@ -1,0 +1,9 @@
+category,primary_archetype,terms
+EV battery contract quality,EV_BATTERY_CONTRACT_QUALITY_BREAK,LG Energy Solution|Ford|Freudenberg|lost expected revenue|call-off failure
+EV battery JV restructuring,EV_BATTERY_JV_RESTRUCTURING,SK On Ford JV dissolution|Ultium Ohio restart uncertainty|Samsung SDI Stellantis StarPlus exit|share-sale dilution
+ESS pivot,EV_TO_ESS_CAPACITY_REDEPLOYMENT,SK On Flatiron LFP ESS|Ultium Tennessee ESS conversion|EV line redeployment
+Battery supply-chain shock,BATTERY_SUPPLY_CHAIN_DEMAND_SHOCK,POSCO Future M|SK IE Technology|EcoPro Materials|cathode separator precursor demand shock
+Alternative battery materials,SILICON_ANODE_OPTIONALITY,SK Group14|silicon-carbon anode|Korea BAM factory|offtake optionality
+Solar,SOLAR_CUSTOMS_UFLPA_4C_WATCH,Hanwha Qcells|DOE loan guarantee|UFLPA customs detention|furlough
+Hydrogen,HYDROGEN_FUELCELL_CAPEX_OPTIONALITY,Hyundai Motor Ulsan|hydrogen fuel-cell plant|fuel cells|electrolyzers
+Factory execution,US_FACTORY_EXECUTION_VISA_RISK,Hyundai-LG Georgia|immigration raid|visa rules|construction delay|restart
