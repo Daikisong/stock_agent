@@ -1,0 +1,269 @@
+{
+  "deep_sub_archetypes": [
+    {
+      "category": "조선·해양 MASGA",
+      "primary_archetype": "US_NAVAL_SHIPBUILDING_MASGA_CONSOLIDATION",
+      "terms": "HD Hyundai Heavy|HD Hyundai Mipo|MASGA|U.S. naval|icebreaker|merger"
+    },
+    {
+      "category": "조선 지정학 4C-watch",
+      "primary_archetype": "SHIPBUILDING_GEOPOLITICAL_SANCTION_4C",
+      "terms": "Hanwha Ocean|Philly Shipyard|U.S. Navy MRO|China sanctions|five subsidiaries"
+    },
+    {
+      "category": "수주취소 hard 4C",
+      "primary_archetype": "SHIPBUILDING_CONTRACT_CANCELLATION_HARD_4C",
+      "terms": "Samsung Heavy|Zvezda|icebreaker LNG carrier|contract cancellation|arbitration"
+    },
+    {
+      "category": "철도 수출",
+      "primary_archetype": "RAIL_EXPORT_MEGA_ORDER_STAGE2",
+      "terms": "Hyundai Rotem|Morocco ONCF|World Cup|110 urban trains|delivery margin cash"
+    },
+    {
+      "category": "선박 after-market",
+      "primary_archetype": "MARINE_AFTERMARKET_RECURRING_SERVICE",
+      "terms": "HD Hyundai Marine Solution|ship repair|retrofit|after-sales service|IPO 4B"
+    },
+    {
+      "category": "산업 로봇 옵션",
+      "primary_archetype": "INDUSTRIAL_ROBOTICS_STRATEGIC_EQUITY_OPTION",
+      "terms": "Rainbow Robotics|Samsung largest shareholder|Future Robotics Office|actual robot order"
+    },
+    {
+      "category": "항공우주 방산 옵션",
+      "primary_archetype": "DEFENSE_AEROSPACE_EXPORT_OPTIONALITY",
+      "terms": "KAI|FA-50|KF-21|Europe rearmament|sector rally"
+    },
+    {
+      "category": "조선 broad cycle",
+      "primary_archetype": "SHIPBUILDING_CONTRACT_CYCLE_4B",
+      "terms": "Samsung Heavy|Hanwha Ocean|HD Hyundai Heavy|Clarksons|newbuilding prices"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "order_headline_only",
+    "mou_only",
+    "merger_headline_only",
+    "ipo_pop_only",
+    "strategic_stake_only",
+    "defense_sector_ytd_rally_only",
+    "us_shipbuilding_policy_theme_only",
+    "contract_cancellation_present",
+    "sanction_legal_counterparty_risk_unresolved"
+  ],
+  "green_required_fields": [
+    "final_contract_signed",
+    "delivery_schedule_or_construction_milestone_confirmed",
+    "backlog_margin_quality_confirmed",
+    "working_capital_advance_payment_receivables_checked",
+    "cash_collection_confirmed",
+    "counterparty_sanction_legal_export_control_risk_passed",
+    "recurring_service_revenue_and_margin_confirmed",
+    "integration_synergy_and_fcf_confirmed",
+    "actual_robot_order_and_revenue_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "contract_cancellation",
+    "counterparty_illegal_termination",
+    "sanctioned_customer_or_subsidiary",
+    "arbitration_or_advance_payment_dispute",
+    "export_control_or_port_fee_retaliation",
+    "delivery_impossible_due_war_or_sanctions",
+    "shipyard_safety_or_labor_stoppage",
+    "mna_integration_failure",
+    "ipo_proceeds_misuse_or_aftermarket_margin_collapse",
+    "robotics_order_failure_after_strategic_investment"
+  ],
+  "large_sector": "INDUSTRIAL_ORDERS_INFRA",
+  "round_id": "round_198",
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_robot_order_revenue": "+0",
+      "aftermarket_margin": "+2",
+      "archetype": "US_NAVAL_SHIPBUILDING_MASGA_CONSOLIDATION",
+      "backlog_margin_quality": "+5",
+      "cash_collection": "+5",
+      "counterparty_sanction_check": "+5",
+      "delivery_schedule": "+4",
+      "event_penalty": "-5",
+      "final_contract_quality": "+4",
+      "hard_4c_sensitivity": "+5",
+      "integration_synergy": "+5",
+      "naval_mro_award": "+5",
+      "notes": "HD Hyundai Heavy/Mipo merger is Stage 2; actual U.S. awards and integration needed.",
+      "recurring_service_revenue": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_robot_order_revenue": "+0",
+      "aftermarket_margin": "+2",
+      "archetype": "SHIPBUILDING_GEOPOLITICAL_SANCTION_4C",
+      "backlog_margin_quality": "+5",
+      "cash_collection": "+5",
+      "counterparty_sanction_check": "+5",
+      "delivery_schedule": "+4",
+      "event_penalty": "+0",
+      "final_contract_quality": "+4",
+      "hard_4c_sensitivity": "+5",
+      "integration_synergy": "+3",
+      "naval_mro_award": "+5",
+      "notes": "Hanwha Ocean U.S. option is good but China sanctions create 4C-watch.",
+      "recurring_service_revenue": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "actual_robot_order_revenue": "+0",
+      "aftermarket_margin": "+0",
+      "archetype": "SHIPBUILDING_CONTRACT_CANCELLATION_HARD_4C",
+      "backlog_margin_quality": "+5",
+      "cash_collection": "+5",
+      "counterparty_sanction_check": "+5",
+      "delivery_schedule": "+5",
+      "event_penalty": "+0",
+      "final_contract_quality": "+5",
+      "hard_4c_sensitivity": "+5",
+      "integration_synergy": "+0",
+      "naval_mro_award": "+0",
+      "notes": "Samsung Heavy Zvezda cancellation is hard 4C.",
+      "recurring_service_revenue": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_robot_order_revenue": "+0",
+      "aftermarket_margin": "+1",
+      "archetype": "RAIL_EXPORT_MEGA_ORDER_STAGE2",
+      "backlog_margin_quality": "+5",
+      "cash_collection": "+5",
+      "counterparty_sanction_check": "+4",
+      "delivery_schedule": "+5",
+      "event_penalty": "-5",
+      "final_contract_quality": "+5",
+      "hard_4c_sensitivity": "+4",
+      "integration_synergy": "+0",
+      "naval_mro_award": "+0",
+      "notes": "Hyundai Rotem Morocco order needs delivery, localization, margin, FX and cash collection.",
+      "recurring_service_revenue": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_robot_order_revenue": "+0",
+      "aftermarket_margin": "+5",
+      "archetype": "MARINE_AFTERMARKET_RECURRING_SERVICE",
+      "backlog_margin_quality": "+4",
+      "cash_collection": "+5",
+      "counterparty_sanction_check": "+3",
+      "delivery_schedule": "+3",
+      "event_penalty": "-5",
+      "final_contract_quality": "+3",
+      "hard_4c_sensitivity": "+3",
+      "integration_synergy": "+2",
+      "naval_mro_award": "+2",
+      "notes": "HD Hyundai Marine after-market model is attractive but IPO pop is 4B.",
+      "recurring_service_revenue": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_robot_order_revenue": "+5",
+      "aftermarket_margin": "+3",
+      "archetype": "INDUSTRIAL_ROBOTICS_STRATEGIC_EQUITY_OPTION",
+      "backlog_margin_quality": "+3",
+      "cash_collection": "+4",
+      "counterparty_sanction_check": "+2",
+      "delivery_schedule": "+2",
+      "event_penalty": "-4",
+      "final_contract_quality": "+2",
+      "hard_4c_sensitivity": "+4",
+      "integration_synergy": "+4",
+      "naval_mro_award": "+0",
+      "notes": "Rainbow/Samsung stake is Stage 2 until robot orders/revenue/margin confirm.",
+      "recurring_service_revenue": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_robot_order_revenue": "+0",
+      "aftermarket_margin": "+1",
+      "archetype": "DEFENSE_AEROSPACE_EXPORT_OPTIONALITY",
+      "backlog_margin_quality": "+5",
+      "cash_collection": "+5",
+      "counterparty_sanction_check": "+4",
+      "delivery_schedule": "+5",
+      "event_penalty": "-4",
+      "final_contract_quality": "+5",
+      "hard_4c_sensitivity": "+4",
+      "integration_synergy": "+0",
+      "naval_mro_award": "+0",
+      "notes": "KAI needs company-specific contracts/delivery/cash collection; sector rally is not Green.",
+      "recurring_service_revenue": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_robot_order_revenue": "+0",
+      "aftermarket_margin": "+2",
+      "archetype": "SHIPBUILDING_CONTRACT_CYCLE_4B",
+      "backlog_margin_quality": "+5",
+      "cash_collection": "+5",
+      "counterparty_sanction_check": "+4",
+      "delivery_schedule": "+4",
+      "event_penalty": "-5",
+      "final_contract_quality": "+4",
+      "hard_4c_sensitivity": "+4",
+      "integration_synergy": "+1",
+      "naval_mro_award": "+0",
+      "notes": "Broad shipbuilder rally is cyclical success but not individual Stage 3.",
+      "recurring_service_revenue": "+2"
+    }
+  ],
+  "source_round": "docs/round/round_270.md",
+  "stage4b_watch_triggers": [
+    "shipbuilder_order_cycle_day_move_plus_10_to_16pct",
+    "ipo_day_plus_40_to_100pct",
+    "merger_masga_headline_record_high",
+    "defense_stock_ytd_plus_50_to_130pct",
+    "strategic_equity_stake_robotics_rerating",
+    "us_shipbuilding_policy_priced_before_award",
+    "sector_order_cycle_priced_before_company_cash_conversion"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "cyclical_success_count": 1,
+    "deep_sub_archetype_count": 8,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "INDUSTRIAL_ORDERS_INFRA",
+    "overheat_count": 1,
+    "price_data_unavailable_count": 2,
+    "price_moved_without_evidence_count": 3,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_198",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_270.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 7,
+    "stage4c_watch_or_hard_count": 2,
+    "success_candidate_count": 5,
+    "target_archetype_count": 8
+  },
+  "target_aliases": {
+    "DEFENSE_AEROSPACE_EXPORT_OPTIONALITY": "DEFENSE_AEROSPACE_EXPORT_OPTIONALITY",
+    "INDUSTRIAL_ROBOTICS_STRATEGIC_EQUITY_OPTION": "INDUSTRIAL_ROBOTICS_STRATEGIC_EQUITY_OPTION",
+    "MARINE_AFTERMARKET_RECURRING_SERVICE": "MARINE_AFTERMARKET_RECURRING_SERVICE",
+    "RAIL_EXPORT_MEGA_ORDER_STAGE2": "RAIL_EXPORT_MEGA_ORDER_STAGE2",
+    "SHIPBUILDING_CONTRACT_CANCELLATION_HARD_4C": "SHIPBUILDING_CONTRACT_CANCELLATION_HARD_4C",
+    "SHIPBUILDING_CONTRACT_CYCLE_4B": "SHIPBUILDING_CONTRACT_CYCLE_4B",
+    "SHIPBUILDING_GEOPOLITICAL_SANCTION_4C": "SHIPBUILDING_GEOPOLITICAL_SANCTION_4C",
+    "US_NAVAL_SHIPBUILDING_MASGA_CONSOLIDATION": "US_NAVAL_SHIPBUILDING_MASGA_CONSOLIDATION"
+  },
+  "what_not_to_change": [
+    "do_not_use_round270_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_order_mou_merger_ipo_policy_or_sector_rally_as_green_alone",
+    "do_not_invent_ohlc_or_stage_dates"
+  ]
+}

@@ -1,0 +1,41 @@
+# Round 270 R1 Loop 13 4B/4C Review
+
+## 4B Watch Triggers
+
+- shipbuilder_order_cycle_day_move_plus_10_to_16pct
+- ipo_day_plus_40_to_100pct
+- merger_masga_headline_record_high
+- defense_stock_ytd_plus_50_to_130pct
+- strategic_equity_stake_robotics_rerating
+- us_shipbuilding_policy_priced_before_award
+- sector_order_cycle_priced_before_company_cash_conversion
+
+## Hard 4C Gates
+
+- contract_cancellation
+- counterparty_illegal_termination
+- sanctioned_customer_or_subsidiary
+- arbitration_or_advance_payment_dispute
+- export_control_or_port_fee_retaliation
+- delivery_impossible_due_war_or_sanctions
+- shipyard_safety_or_labor_stoppage
+- mna_integration_failure
+- ipo_proceeds_misuse_or_aftermarket_margin_collapse
+- robotics_order_failure_after_strategic_investment
+
+## Plain-Language Gate Notes
+
+- 4B는 가격이나 이벤트 프리미엄이 납품, 마진, 현금 증거보다 먼저 간 상태다.
+- hard 4C는 원래 수주/정책 논리가 취소, 제재, 중재, 인도불능 등으로 훼손된 상태다.
+- Hanwha Ocean은 4C-watch이고, Samsung Heavy Zvezda cancellation은 hard 4C다.
+
+## Case Notes
+
+- r1_loop13_hd_hyundai_heavy_mipo_masga_merger: record_high_rally_before_us_revenue_bridge, merger_headline_only, integration_synergy_unconfirmed, actual_us_awards_unconfirmed
+- r1_loop13_hanwha_ocean_us_mro_china_sanction_watch: china_sanctions_five_us_linked_subsidiaries, sanction_event_close_minus_5_8pct, intraday_over_minus_8pct, geopolitical_retaliation_risk
+- r1_loop13_samsung_heavy_zvezda_cancellation_hard_4c: cancelled_orders_4_85tn_krw, shipowner_unilateral_termination, russia_ukraine_uncertainty, arbitration_damages_pursuit
+- r1_loop13_hyundai_rotem_morocco_oncf_rail_order: delivery_margin_cash_collection_unconfirmed, localization_financing_fx_unknown
+- r1_loop13_hd_hyundai_marine_solution_ipo_aftermarket: ipo_close_plus_96_5pct, ipo_pop_only, market_cap_to_op_36_2x, kk_or_pe_overhang_watch
+- r1_loop13_rainbow_robotics_samsung_strategic_equity: strategic_equity_investment_only, actual_robot_order_revenue_unconfirmed, unit_economics_unknown
+- r1_loop13_kai_defense_aerospace_export_optionality: defense_sector_rerating_only, company_specific_contract_delivery_margin_unconfirmed, sector_rally_before_cash_collection
+- r1_loop13_korean_shipbuilders_contract_cycle_4b: sector_order_cycle_not_individual_green, margin_cash_conversion_unconfirmed, day_move_plus_11_to_16pct

@@ -1,0 +1,17 @@
+field,required_for_round270_price_validation
+price_data_source,true
+full_adjusted_ohlc_complete,true
+reported_event_anchor,true
+reported_price_anchor,true
+reported_return_anchor,true
+stage2_price_anchor,true
+stage3_price,true
+stage4b_price,true
+stage4c_price,true
+event_mfe_pct,true
+event_mae_pct,true
+mfe_30d,true
+mae_30d,true
+contract_value_anchor,true
+order_or_ipo_or_merger_anchor,true
+price_validation_status,true

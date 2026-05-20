@@ -1,0 +1,20 @@
+axis,points,direction,reason
+final_contract_quality,5,raise,수주 금액보다 최종 계약 질과 이행 가능성이 중요하다.
+delivery_schedule_visibility,5,raise,납품·공정 일정이 있어야 매출 인식 경로가 닫힌다.
+backlog_margin_quality,5,raise,수주잔고가 있어도 마진이 안 보이면 Green이 아니다.
+cash_collection_quality,5,raise,산업재는 현금회수까지 확인해야 FCF 체급 변화가 된다.
+counterparty_sanction_check,5,raise,러시아·중국 제재처럼 거래상대방 리스크는 hard gate다.
+recurring_service_revenue,4,raise,선박 after-market은 반복 서비스 매출이 확인될 때 가치를 둔다.
+aftermarket_margin_visibility,4,raise,서비스 매출도 마진 지속성이 없으면 IPO pop에 그친다.
+naval_MRO_contract_award,5,raise,U.S. naval/MRO option은 실제 award가 나와야 Stage 3 후보가 된다.
+integration_synergy_realization,4,raise,합병은 통합 시너지와 FCF가 확인되어야 한다.
+actual_robot_order_revenue,5,raise,전략 지분투자는 로봇 주문·매출로 전환되어야 한다.
+order_headline_only,-5,lower,수주 headline만으로는 Green 금지다.
+MOU_or_merger_headline_only,-5,lower,MOU·합병 headline은 Stage 2 이상으로 자동 승격하지 않는다.
+IPO_pop_only,-5,lower,IPO 첫날 급등은 4B-watch이지 Green 근거가 아니다.
+defense_sector_rerating_only,-4,lower,방산 섹터 랠리는 회사별 납품·마진 증거와 분리한다.
+strategic_equity_investment_only,-4,lower,전략 지분투자는 매출이 아니므로 로봇 Green을 만들 수 없다.
+US_shipbuilding_policy_theme_only,-4,lower,MASGA 정책협력 기대는 실제 계약 전까지 Stage 2/4B-watch다.
+counterparty_sanction_risk,-5,lower,제재·상대방 리스크가 열려 있으면 Green을 막는다.
+contract_cancellation_risk,-5,lower,수주취소는 R1 hard 4C다.
+geopolitical_port_fee_risk,-4,lower,항만 수수료·제재 보복은 조선 Green gate에 포함한다.
