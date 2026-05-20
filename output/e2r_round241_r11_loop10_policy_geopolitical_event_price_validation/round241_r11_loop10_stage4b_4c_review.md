@@ -1,0 +1,36 @@
+# Round 241 R11 4B/4C Review
+
+## 4B Watch Triggers
+
+- wgbi_msci_expectation_basket_rally
+- short_selling_normalization_brokerage_rally_before_flow
+- policy_speech_theme_rally_before_law_or_budget
+- ai_dividend_tax_shock_rebound_before_clarity
+- energy_security_headline_rally_before_margin_stabilization
+- fx_policy_relief_rally_without_krw_stabilization
+- tariff_relief_rally_ignores_dollar_outflow
+
+## Hard 4C Gates
+
+- martial_law_or_coup_like_institutional_shock
+- major_political_legitimacy_crisis
+- tax_or_windfall_redistribution_shock
+- geopolitical_energy_chokepoint_closure
+- kospi_circuit_breaker_or_market_crash
+- krw_disorderly_depreciation
+- foreign_capital_flight
+- index_inclusion_failure
+- msci_access_disappointment
+- fx_liquidity_breakdown
+- policy_reversal
+
+## Case Notes
+
+- r11_loop10_martial_law_institutional_trust_shock: martial_law_or_institutional_shock, political_legitimacy_crisis, korea_discount_risk_premium_up
+- r11_loop10_wgbi_inclusion_market_structure: index_inclusion_expectation_only, actual_flow_unverified, company_funding_cost_effect_unverified
+- r11_loop10_short_selling_msci_access_reform: market_reform_without_foreign_flow, msci_watchlist_unverified, company_eps_bridge_absent
+- r11_loop10_ai_dividend_tax_policy_confidence_shock: tax_or_redistribution_surprise, policy_confidence_break, ai_semiconductor_risk_premium_up
+- r11_loop10_hormuz_iran_energy_shock_hard_4c: geopolitical_energy_chokepoint_closure, krw_disorderly_depreciation, market_wide_crash, oil_import_dependency
+- r11_loop10_hormuz_energy_security_policy_relief: energy_security_headline_without_cost_stabilization, margin_unverified, troop_or_security_escalation_watch
+- r11_loop10_kimchi_bond_fx_liquidity_policy: fx_policy_without_actual_flow, stablecoin_outflow_pressure, overseas_stock_outflow_watch
+- r11_loop10_us_investment_fx_outflow_watch: capital_outflow_pressure, krw_depreciation_watch, tariff_relief_without_fx_stability, foreign_bond_cap_is_defensive_policy
