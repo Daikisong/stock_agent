@@ -253,18 +253,23 @@ class E2RArchetype(str, Enum):
     COPPER_AI_GRID_KOREA = "COPPER_AI_GRID_KOREA"
     COPPER_PROCESSING_PLUS_DEFENSE = "COPPER_PROCESSING_PLUS_DEFENSE"
     DEFENSE_AMMO_EVENT_PREMIUM = "DEFENSE_AMMO_EVENT_PREMIUM"
+    DEFENSE_METALS_AMMUNITION_OPTIONALITY = "DEFENSE_METALS_AMMUNITION_OPTIONALITY"
     POLYSILICON_NON_CHINA_SUPPLY_OPTION = "POLYSILICON_NON_CHINA_SUPPLY_OPTION"
     NON_CHINA_POLYSILICON_OPTIONALITY = "NON_CHINA_POLYSILICON_OPTIONALITY"
     POLYSILICON_REPORT_NOT_CONTRACT = "POLYSILICON_REPORT_NOT_CONTRACT"
     STEEL_TARIFF_EVENT_KOREA = "STEEL_TARIFF_EVENT_KOREA"
+    STEEL_TARIFF_TWO_SIDED_RELIEF_RISK = "STEEL_TARIFF_TWO_SIDED_RELIEF_RISK"
     STEEL_EXPORT_TARIFF_4C = "STEEL_EXPORT_TARIFF_4C"
     SPECIALTY_STEEL_US_LOCALIZATION_OPTION = "SPECIALTY_STEEL_US_LOCALIZATION_OPTION"
     LITHIUM_PRICE_EVENT_KOREA = "LITHIUM_PRICE_EVENT_KOREA"
     RARE_EARTH_THEME_KOREA = "RARE_EARTH_THEME_KOREA"
+    RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C = "RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C"
     CHEMICAL_SPREAD_KOREA = "CHEMICAL_SPREAD_KOREA"
     RARE_EARTH_MAGNET_SUPPLY_CHAIN = "RARE_EARTH_MAGNET_SUPPLY_CHAIN"
     RARE_METALS_EXPORT_CONTROL_EVENT = "RARE_METALS_EXPORT_CONTROL_EVENT"
     RARE_EARTH_CAPITAL_RAISE_DILUTION = "RARE_EARTH_CAPITAL_RAISE_DILUTION"
+    CRITICAL_MINERALS_RECYCLING_SMELTER = "CRITICAL_MINERALS_RECYCLING_SMELTER"
+    CRITICAL_MINERALS_POLICY_RELIEF = "CRITICAL_MINERALS_POLICY_RELIEF"
     COPPER_PROCESSING_INPUT_COST_OVERLAY = "COPPER_PROCESSING_INPUT_COST_OVERLAY"
     NICKEL_SULFUR_HPAL_INPUT_COST = "NICKEL_SULFUR_HPAL_INPUT_COST"
     FERTILIZER_INPUT_COST_SULFURIC_ACID = "FERTILIZER_INPUT_COST_SULFURIC_ACID"
@@ -1570,6 +1575,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("strategic material headline only", "project capex before FCF", "critical-minerals story while dilution unresolved"),
             preferred_score_weights=_weights(eps_fcf=18, visibility=20, bottleneck=16, mispricing=11, valuation=9),
         ),
+        E2RArchetype.CRITICAL_MINERALS_RECYCLING_SMELTER: ArchetypeDefinition(
+            archetype=E2RArchetype.CRITICAL_MINERALS_RECYCLING_SMELTER,
+            stage1_radar_signals=("critical-minerals smelter", "data-center waste recycling", "antimony/gallium/germanium scarcity"),
+            stage2_candidate_signals=("project value", "planned output", "target margin", "construction and operation schedule"),
+            stage3_high_conviction_signals=("FID", "customer offtake", "minimum price or price floor", "FCF after capex", "dilution and governance risk cleared"),
+            stage4a_ongoing_signals=("construction, offtake, target margin and funding remain on plan"),
+            stage4b_graduation_overheat_signals=("strategic-minerals project premium before offtake or FCF", "share issuance funds project while valuation holds"),
+            stage4c_thesis_break_signals=("offtake failure", "permit or project delay", "share issuance dilution", "governance dispute", "FCF deterioration"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("strategic material headline treated as Green", "project capex without offtake", "target margin before FCF"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=21, bottleneck=17, mispricing=11, valuation=9),
+        ),
         E2RArchetype.STRATEGIC_METALS_DILUTION_GOVERNANCE: ArchetypeDefinition(
             archetype=E2RArchetype.STRATEGIC_METALS_DILUTION_GOVERNANCE,
             stage1_radar_signals=("strategic-metals control fight", "share issuance dispute", "governance battle"),
@@ -1581,6 +1598,18 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("news", "disclosure", "price", "red_team"),
             false_positive_patterns=("control fight treated as structural evidence", "strategic-metals premium ignores dilution"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.DEFENSE_METALS_AMMUNITION_OPTIONALITY: ArchetypeDefinition(
+            archetype=E2RArchetype.DEFENSE_METALS_AMMUNITION_OPTIONALITY,
+            stage1_radar_signals=("ammunition business optionality", "copper products", "defense-metals M&A rumor"),
+            stage2_candidate_signals=("confirmed transaction, defense order, copper spread, or cash-return path"),
+            stage3_high_conviction_signals=("confirmed transaction", "confirmed defense order", "spread and margin conversion", "FCF or shareholder-return path"),
+            stage4a_ongoing_signals=("defense orders and copper spread remain visible"),
+            stage4b_graduation_overheat_signals=("M&A rumor rally before transaction confirmation", "defense optionality priced before order evidence"),
+            stage4c_thesis_break_signals=("acquisition review dropped", "sale plan denied", "copper spread reversal", "ammunition order fails to materialize"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "price"),
+            false_positive_patterns=("M&A rumor treated as Green", "defense theme without confirmed order", "copper optionality without spread"),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=15, bottleneck=12, mispricing=10, valuation=8),
         ),
         E2RArchetype.PETROCHEMICAL_CAPACITY_RESTRUCTURING: ArchetypeDefinition(
             archetype=E2RArchetype.PETROCHEMICAL_CAPACITY_RESTRUCTURING,
@@ -1618,6 +1647,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("policy relief only", "tariff headline treated as EPS without spread"),
             preferred_score_weights=_weights(eps_fcf=17, visibility=15, bottleneck=13, mispricing=9, valuation=8),
         ),
+        E2RArchetype.STEEL_TARIFF_TWO_SIDED_RELIEF_RISK: ArchetypeDefinition(
+            archetype=E2RArchetype.STEEL_TARIFF_TWO_SIDED_RELIEF_RISK,
+            stage1_radar_signals=("anti-dumping relief", "U.S. steel tariff risk", "China steel import pressure"),
+            stage2_candidate_signals=("domestic tariff relief with event return", "import-share pressure quantified", "export tariff exposure identified"),
+            stage3_high_conviction_signals=("actual product spread", "utilization", "export-margin resilience", "FCF after working capital"),
+            stage4a_ongoing_signals=("domestic spread improves while export tariff risk remains contained"),
+            stage4b_graduation_overheat_signals=("anti-dumping relief rally before spread and FCF", "domestic relief priced while U.S. tariff risk ignored"),
+            stage4c_thesis_break_signals=("U.S. tariff destroys export margin", "Vietnam or U.S. tariff shock", "demand weakness", "policy reversal"),
+            key_evidence_families=("policy", "news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("domestic tariff relief counted without export risk", "tariff headline treated as permanent spread"),
+            preferred_score_weights=_weights(eps_fcf=16, visibility=14, bottleneck=13, mispricing=8, valuation=7),
+        ),
         E2RArchetype.STEEL_TARIFF_EXPORT_RISK: ArchetypeDefinition(
             archetype=E2RArchetype.STEEL_TARIFF_EXPORT_RISK,
             stage1_radar_signals=("U.S. steel tariff threat", "Vietnam tariff risk", "export margin risk"),
@@ -1641,6 +1682,30 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("news", "price", "commodity_price"),
             false_positive_patterns=("commodity price up only", "strategic headline only", "policy relief only"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C,
+            stage1_radar_signals=("rare-earth export-control pressure", "end-use restriction", "China sanction warning"),
+            stage2_candidate_signals=("not a positive Green source; supply-chain RedTeam overlay for affected sectors"),
+            stage3_high_conviction_signals=("not applicable until rare-earth end-use and tariff risks clear"),
+            stage4a_ongoing_signals=("alternative supply, inventory and compliance path remain verified"),
+            stage4b_graduation_overheat_signals=("strategic-material rally while end-use restriction is unresolved"),
+            stage4c_thesis_break_signals=("China end-use sanction", "rare-earth export restriction causing supply halt", "U.S. defense end-use ban", "customer supply-chain break"),
+            key_evidence_families=("policy", "news", "red_team", "price"),
+            false_positive_patterns=("rare-earth headline treated as beneficiary evidence", "China material restriction ignored"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.CRITICAL_MINERALS_POLICY_RELIEF: ArchetypeDefinition(
+            archetype=E2RArchetype.CRITICAL_MINERALS_POLICY_RELIEF,
+            stage1_radar_signals=("critical-minerals policy", "supply-chain hotline", "government mining support"),
+            stage2_candidate_signals=("monitored minerals list", "funding support", "FORGE or bilateral cooperation", "inventory or procurement pathway"),
+            stage3_high_conviction_signals=("actual supply contract", "offtake", "inventory security", "margin and FCF conversion"),
+            stage4a_ongoing_signals=("policy relief converts into reliable supply and margin"),
+            stage4b_graduation_overheat_signals=("policy basket rally before actual supply/offtake"),
+            stage4c_thesis_break_signals=("China restriction recurrence", "U.S.-China conflict blocks supply", "sanction risk", "policy support fails to convert"),
+            key_evidence_families=("policy", "news", "disclosure", "financial_actual"),
+            false_positive_patterns=("policy support treated as supply contract", "strategic-minerals headline without inventory/margin"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=14, bottleneck=12, mispricing=8, valuation=6),
         ),
         E2RArchetype.SOLAR_CUSTOMS_UFLPA_4C_WATCH: ArchetypeDefinition(
             archetype=E2RArchetype.SOLAR_CUSTOMS_UFLPA_4C_WATCH,

@@ -1,0 +1,21 @@
+axis,points,direction,reason
+product_spread,5,raise,R4는 전략자원 headline보다 제품 spread 확인이 먼저다.
+cost_curve_advantage,5,raise,원가곡선 우위가 있어야 spread가 흔들려도 FCF가 남는다.
+offtake_quality,5,raise,"전략광물은 offtake, price floor, take-or-pay로 cycle과 분리되어야 한다."
+supply_discipline,5,raise,공급규율과 실제 capacity shutdown은 spread 지속성을 높인다.
+capacity_shutdown_confirmed,5,raise,shutdown이 실제이고 지속될 때만 구조조정 relief 품질이 올라간다.
+working_capital_control,5,raise,운전자본이 무너지면 spread 회복도 현금흐름으로 닫히지 않는다.
+FCF_after_restructuring,5,raise,구조조정 뒤 OPM과 FCF가 보여야 Green 후보가 된다.
+critical_minerals_supply_security,4,raise,전략광물 공급 안정은 실제 supply contract와 inventory로 내려와야 한다.
+governance_and_dilution_control,4,raise,프로젝트 품질이 좋아도 희석과 지배구조를 통과해야 한다.
+export_control_resilience,5,raise,중국 end-use 제한과 관세 리스크를 견뎌야 한다.
+M&A_rumor_only,-5,lower,M&A rumor는 event premium이지 Green 근거가 아니다.
+policy_relief_only,-5,lower,정책지원은 실제 spread와 FCF 전에는 Stage 2 relief다.
+strategic_material_headline_only,-5,lower,전략자원 headline만으로 EPS/FCF 체급 변화가 증명되지 않는다.
+US_CAPEX_without_ROI,-5,lower,"미국 CAPEX는 고객수요, spread, margin, FCF가 확인되어야 한다."
+capacity_shutdown_without_spread_recovery,-4,lower,shutdown만 있고 spread 회복이 없으면 crisis relief다.
+restructuring_plan_undisclosed,-4,lower,공개되지 않은 구조조정 계획은 Green 근거가 아니다.
+China_customer_or_material_concentration,-5,lower,중국 원료·고객 집중은 sanction과 tariff risk를 키운다.
+rare_earth_end_use_restriction,-5,lower,희토류 end-use 제한은 sector 4C-watch다.
+tariff_export_risk,-5,lower,수출 관세가 margin을 훼손하면 domestic relief를 상쇄한다.
+dilution_for_project_capex,-4,lower,ROI 없는 프로젝트 증자는 RedTeam 입력이다.

@@ -1,0 +1,404 @@
+{
+  "case_ids": [
+    "r4_loop12_poongsan_defense_metals_mna_rumor",
+    "r4_loop12_korea_zinc_critical_minerals_dilution_watch",
+    "r4_loop12_china_rare_earth_end_use_restriction_overlay",
+    "r4_loop12_posco_hyundai_seah_steel_tariff_two_sided",
+    "r4_loop12_hyundai_steel_us_capex_false_positive",
+    "r4_loop12_lgchem_hanwha_dl_yncc_petrochemical_credit_watch",
+    "r4_loop12_lotte_hd_hyundai_chemical_restructuring_relief",
+    "r4_loop12_korea_critical_minerals_policy_relief"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "방산·금속 optionality",
+      "primary_archetype": "DEFENSE_METALS_AMMUNITION_OPTIONALITY",
+      "terms": "Poongsan|copper products|ammunition|Hanwha acquisition rumor|denial"
+    },
+    {
+      "category": "전략광물 smelter",
+      "primary_archetype": "CRITICAL_MINERALS_RECYCLING_SMELTER",
+      "terms": "Korea Zinc|Tennessee smelter|data-center waste|antimony|gallium|germanium"
+    },
+    {
+      "category": "희토류·중국 end-use overlay",
+      "primary_archetype": "RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C",
+      "terms": "China letters|U.S. defense firms|transformers|batteries|aerospace"
+    },
+    {
+      "category": "철강 관세 양면성",
+      "primary_archetype": "STEEL_TARIFF_TWO_SIDED_RELIEF_RISK",
+      "terms": "POSCO|Hyundai Steel|SeAH Steel|anti-dumping|U.S. tariff 50%"
+    },
+    {
+      "category": "정책 CAPEX false positive",
+      "primary_archetype": "POLICY_CAPEX_FALSE_POSITIVE",
+      "terms": "Hyundai Steel Louisiana plant|funding uncertainty|CAPEX without ROI"
+    },
+    {
+      "category": "석유화학 credit break",
+      "primary_archetype": "STANDALONE_NCC_CREDIT_BREAK",
+      "terms": "LG Chem|Hanwha Solutions|DL Chemical|YNCC|debt-to-equity 249%"
+    },
+    {
+      "category": "석유화학 구조조정 relief",
+      "primary_archetype": "PETROCHEMICAL_CAPACITY_RESTRUCTURING",
+      "terms": "Lotte Chemical|HD Hyundai Chemical|Daesan NCC shutdown|support package"
+    },
+    {
+      "category": "전략자원 정책 relief",
+      "primary_archetype": "CRITICAL_MINERALS_POLICY_RELIEF",
+      "terms": "17 monitored minerals|China hotline|FORGE|250B won overseas mining support"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "mna_rumor_only",
+    "policy_relief_only",
+    "strategic_material_headline_only",
+    "us_capex_without_roi",
+    "capacity_shutdown_without_spread_recovery",
+    "restructuring_plan_undisclosed",
+    "rare_earth_end_use_restriction_present",
+    "tariff_export_risk_unresolved",
+    "dilution_for_project_capex_unresolved"
+  ],
+  "green_required_fields": [
+    "product_spread_confirmed",
+    "cost_curve_advantage_confirmed",
+    "offtake_price_floor_or_take_or_pay_confirmed",
+    "supply_discipline_or_capacity_shutdown_confirmed",
+    "restructuring_after_opm_fcf_improvement",
+    "working_capital_stable",
+    "china_tariff_rare_earth_end_use_risk_passed",
+    "dilution_governance_risk_passed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "rare_earth_export_restriction_causing_supply_halt",
+    "china_end_use_sanction",
+    "us_tariff_destroying_export_margin",
+    "project_capex_funding_failure",
+    "equity_dilution_without_roi",
+    "ncc_credit_break_or_workout",
+    "standalone_cracker_shutdown_from_distress",
+    "spread_collapse",
+    "working_capital_blowout",
+    "offtake_failure"
+  ],
+  "large_sector": "MATERIALS_SPREAD_STRATEGIC",
+  "round_id": "round_188",
+  "score_adjustments": [
+    {
+      "axis": "product_spread",
+      "direction": "raise",
+      "points": "5",
+      "reason": "R4는 전략자원 headline보다 제품 spread 확인이 먼저다."
+    },
+    {
+      "axis": "cost_curve_advantage",
+      "direction": "raise",
+      "points": "5",
+      "reason": "원가곡선 우위가 있어야 spread가 흔들려도 FCF가 남는다."
+    },
+    {
+      "axis": "offtake_quality",
+      "direction": "raise",
+      "points": "5",
+      "reason": "전략광물은 offtake, price floor, take-or-pay로 cycle과 분리되어야 한다."
+    },
+    {
+      "axis": "supply_discipline",
+      "direction": "raise",
+      "points": "5",
+      "reason": "공급규율과 실제 capacity shutdown은 spread 지속성을 높인다."
+    },
+    {
+      "axis": "capacity_shutdown_confirmed",
+      "direction": "raise",
+      "points": "5",
+      "reason": "shutdown이 실제이고 지속될 때만 구조조정 relief 품질이 올라간다."
+    },
+    {
+      "axis": "working_capital_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "운전자본이 무너지면 spread 회복도 현금흐름으로 닫히지 않는다."
+    },
+    {
+      "axis": "FCF_after_restructuring",
+      "direction": "raise",
+      "points": "5",
+      "reason": "구조조정 뒤 OPM과 FCF가 보여야 Green 후보가 된다."
+    },
+    {
+      "axis": "critical_minerals_supply_security",
+      "direction": "raise",
+      "points": "4",
+      "reason": "전략광물 공급 안정은 실제 supply contract와 inventory로 내려와야 한다."
+    },
+    {
+      "axis": "governance_and_dilution_control",
+      "direction": "raise",
+      "points": "4",
+      "reason": "프로젝트 품질이 좋아도 희석과 지배구조를 통과해야 한다."
+    },
+    {
+      "axis": "export_control_resilience",
+      "direction": "raise",
+      "points": "5",
+      "reason": "중국 end-use 제한과 관세 리스크를 견뎌야 한다."
+    },
+    {
+      "axis": "M&A_rumor_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "M&A rumor는 event premium이지 Green 근거가 아니다."
+    },
+    {
+      "axis": "policy_relief_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "정책지원은 실제 spread와 FCF 전에는 Stage 2 relief다."
+    },
+    {
+      "axis": "strategic_material_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "전략자원 headline만으로 EPS/FCF 체급 변화가 증명되지 않는다."
+    },
+    {
+      "axis": "US_CAPEX_without_ROI",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "미국 CAPEX는 고객수요, spread, margin, FCF가 확인되어야 한다."
+    },
+    {
+      "axis": "capacity_shutdown_without_spread_recovery",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "shutdown만 있고 spread 회복이 없으면 crisis relief다."
+    },
+    {
+      "axis": "restructuring_plan_undisclosed",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "공개되지 않은 구조조정 계획은 Green 근거가 아니다."
+    },
+    {
+      "axis": "China_customer_or_material_concentration",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "중국 원료·고객 집중은 sanction과 tariff risk를 키운다."
+    },
+    {
+      "axis": "rare_earth_end_use_restriction",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "희토류 end-use 제한은 sector 4C-watch다."
+    },
+    {
+      "axis": "tariff_export_risk",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "수출 관세가 margin을 훼손하면 domestic relief를 상쇄한다."
+    },
+    {
+      "axis": "dilution_for_project_capex",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "ROI 없는 프로젝트 증자는 RedTeam 입력이다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "DEFENSE_METALS_AMMUNITION_OPTIONALITY",
+      "capacity_shutdown": "0",
+      "cost_curve": "+3",
+      "critical_minerals_security": "+3",
+      "event_penalty": "-5",
+      "export_control_resilience": "+3",
+      "fcf_after_restructuring": "+4",
+      "governance_dilution": "+3",
+      "hard_4c_sensitivity": "+3",
+      "notes": "Poongsan M&A rumor is event premium until confirmed transaction/order/spread.",
+      "offtake_quality": "+4",
+      "product_spread": "+3",
+      "supply_discipline": "+2",
+      "working_capital": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "CRITICAL_MINERALS_RECYCLING_SMELTER",
+      "capacity_shutdown": "0",
+      "cost_curve": "+5",
+      "critical_minerals_security": "+5",
+      "event_penalty": "-3",
+      "export_control_resilience": "+5",
+      "fcf_after_restructuring": "+5",
+      "governance_dilution": "+5",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Korea Zinc is strong Stage 2 but dilution/offtake/project execution must clear.",
+      "offtake_quality": "+5",
+      "product_spread": "+4",
+      "supply_discipline": "+3",
+      "working_capital": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C",
+      "capacity_shutdown": "0",
+      "cost_curve": "0",
+      "critical_minerals_security": "+5",
+      "event_penalty": "0",
+      "export_control_resilience": "+5",
+      "fcf_after_restructuring": "+3",
+      "governance_dilution": "+2",
+      "hard_4c_sensitivity": "+5",
+      "notes": "China rare-earth end-use restriction is sector 4C-watch.",
+      "offtake_quality": "0",
+      "product_spread": "0",
+      "supply_discipline": "0",
+      "working_capital": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "STEEL_TARIFF_TWO_SIDED_RELIEF_RISK",
+      "capacity_shutdown": "0",
+      "cost_curve": "+4",
+      "critical_minerals_security": "0",
+      "event_penalty": "-4",
+      "export_control_resilience": "+5",
+      "fcf_after_restructuring": "+4",
+      "governance_dilution": "+3",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Domestic tariff relief and export tariff risk must be scored together.",
+      "offtake_quality": "+2",
+      "product_spread": "+5",
+      "supply_discipline": "+3",
+      "working_capital": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "POLICY_CAPEX_FALSE_POSITIVE",
+      "capacity_shutdown": "0",
+      "cost_curve": "+3",
+      "critical_minerals_security": "+1",
+      "event_penalty": "-5",
+      "export_control_resilience": "+4",
+      "fcf_after_restructuring": "+5",
+      "governance_dilution": "+5",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Hyundai Steel U.S. CAPEX failed price validation due funding/ROI uncertainty.",
+      "offtake_quality": "+2",
+      "product_spread": "+3",
+      "supply_discipline": "+1",
+      "working_capital": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "PETROCHEMICAL_CAPACITY_RESTRUCTURING",
+      "capacity_shutdown": "+5",
+      "cost_curve": "+4",
+      "critical_minerals_security": "0",
+      "event_penalty": "-3",
+      "export_control_resilience": "+2",
+      "fcf_after_restructuring": "+5",
+      "governance_dilution": "+3",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Capacity shutdown is relief until spread/OPM/FCF improve.",
+      "offtake_quality": "+1",
+      "product_spread": "+5",
+      "supply_discipline": "+5",
+      "working_capital": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "STANDALONE_NCC_CREDIT_BREAK",
+      "capacity_shutdown": "+5",
+      "cost_curve": "+3",
+      "critical_minerals_security": "0",
+      "event_penalty": "0",
+      "export_control_resilience": "+2",
+      "fcf_after_restructuring": "+5",
+      "governance_dilution": "+3",
+      "hard_4c_sensitivity": "+5",
+      "notes": "YNCC debt/equity 249% and cracker shutdown are 4C-watch.",
+      "offtake_quality": "0",
+      "product_spread": "+5",
+      "supply_discipline": "+5",
+      "working_capital": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "CRITICAL_MINERALS_POLICY_RELIEF",
+      "capacity_shutdown": "0",
+      "cost_curve": "+2",
+      "critical_minerals_security": "+5",
+      "event_penalty": "-5",
+      "export_control_resilience": "+5",
+      "fcf_after_restructuring": "+2",
+      "governance_dilution": "+2",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Policy support is Stage 2 only; actual supply/of-take/margin required.",
+      "offtake_quality": "+3",
+      "product_spread": "+2",
+      "supply_discipline": "+3",
+      "working_capital": "+2"
+    }
+  ],
+  "source_round": "docs/round/round_260.md",
+  "stage4b_watch_triggers": [
+    "mna_rumor_materials_rally",
+    "strategic_minerals_headline_price_first",
+    "anti_dumping_tariff_relief_rally",
+    "critical_minerals_policy_basket_rally",
+    "us_capex_announcement_rally_then_fade",
+    "petrochemical_restructuring_relief_rally",
+    "support_package_without_debt_cleanup"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 2,
+    "failed_rerating_count": 2,
+    "false_positive_score_count": 1,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "hard_4c_confirmed": false,
+    "large_sector": "MATERIALS_SPREAD_STRATEGIC",
+    "policy_relief_not_green_count": 2,
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "reported_price_anchor_count": 4,
+    "round_id": "round_188",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_260.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 4,
+    "success_candidate_count": 2,
+    "target_archetype_count": 8,
+    "watch_4c_count": 4,
+    "watch_case_count": 2
+  },
+  "target_aliases": {
+    "CRITICAL_MINERALS_POLICY_RELIEF": "CRITICAL_MINERALS_POLICY_RELIEF",
+    "CRITICAL_MINERALS_RECYCLING_SMELTER": "CRITICAL_MINERALS_RECYCLING_SMELTER",
+    "DEFENSE_METALS_AMMUNITION_OPTIONALITY": "DEFENSE_METALS_AMMUNITION_OPTIONALITY",
+    "PETROCHEMICAL_CAPACITY_RESTRUCTURING": "PETROCHEMICAL_CAPACITY_RESTRUCTURING",
+    "POLICY_CAPEX_FALSE_POSITIVE": "POLICY_CAPEX_FALSE_POSITIVE",
+    "RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C": "RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C",
+    "STANDALONE_NCC_CREDIT_BREAK": "STANDALONE_NCC_CREDIT_BREAK",
+    "STEEL_TARIFF_TWO_SIDED_RELIEF_RISK": "STEEL_TARIFF_TWO_SIDED_RELIEF_RISK"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round260_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_policy_mna_capex_or_strategic_material_headlines_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}
