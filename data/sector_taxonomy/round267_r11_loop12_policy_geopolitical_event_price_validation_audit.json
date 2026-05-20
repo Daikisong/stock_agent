@@ -1,0 +1,274 @@
+{
+  "analyst_large_sector": "POLICY_GEOPOLITICAL_DISASTER_EVENT",
+  "analyst_round_id": "round_195",
+  "deep_sub_archetypes": [
+    {
+      "category": "반도체 노동·공급망",
+      "primary_archetype": "LABOR_DISRUPTION_SYSTEMIC_POLICY_4C",
+      "terms": "Samsung strike|50,000 workers|emergency arbitration|AI supply-chain disruption"
+    },
+    {
+      "category": "지정학·에너지 hard 4C",
+      "primary_archetype": "GEOPOLITICAL_ENERGY_MACRO_HARD_4C",
+      "terms": "Middle East / Iran|KOSPI -12.06%|KRW 17-year low|autos chips airlines drawdown"
+    },
+    {
+      "category": "재정·에너지 relief",
+      "primary_archetype": "FISCAL_POLICY_RELIEF_NOT_GREEN",
+      "terms": "26.2T won supplementary budget|no new treasury issuance|10.1T high-oil-price measures|AI fiscal room"
+    },
+    {
+      "category": "AI 자본시장 confidence",
+      "primary_archetype": "AI_CAPITAL_MARKET_CONFIDENCE_EVENT",
+      "terms": "KOSPI 7000|Samsung $1T|sidecar rally|foreign buying 3.1T won"
+    },
+    {
+      "category": "stablecoin FX gate",
+      "primary_archetype": "STABLECOIN_FX_POLICY_OVERHEAT",
+      "terms": "won stablecoin|Kakao Pay >2x|57T won stablecoin trading|capital outflow risk"
+    },
+    {
+      "category": "희토류 end-use restriction",
+      "primary_archetype": "RARE_EARTH_END_USE_RESTRICTION_4C",
+      "terms": "China sanction warning|U.S. defense end-use|transformers batteries displays|license gate"
+    },
+    {
+      "category": "critical minerals relief",
+      "primary_archetype": "CRITICAL_MINERALS_POLICY_RELIEF",
+      "terms": "17 monitored minerals|250B won overseas mining|FORGE|China hotline"
+    },
+    {
+      "category": "지역 CAPEX event premium",
+      "primary_archetype": "REGIONAL_POLICY_CAPEX_EVENT_PREMIUM",
+      "terms": "Hyundai Saemangeum|10T won capex|AI data center|ROI gate"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "policy_headline_only",
+    "macro_relief_only",
+    "index_milestone_only",
+    "stablecoin_theme_only",
+    "rare_earth_policy_letter_only",
+    "critical_mineral_hotline_only",
+    "regional_capex_media_report_only",
+    "strike_unresolved",
+    "geopolitical_energy_shock_unresolved"
+  ],
+  "green_required_fields": [
+    "policy_budget_law_or_binding_action_confirmed",
+    "company_revenue_eps_fcf_bridge_exists",
+    "capital_inflow_or_fx_stability_confirmed",
+    "supply_chain_license_or_end_use_clearance_confirmed",
+    "regulated_revenue_or_fee_bridge_confirmed",
+    "capex_roi_and_customer_contract_confirmed",
+    "operational_continuity_and_labor_risk_cleared",
+    "energy_security_cost_shock_absent_or_hedged",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "systemic_labor_disruption",
+    "emergency_arbitration",
+    "semiconductor_production_halt",
+    "geopolitical_energy_chokepoint_closure",
+    "kospi_historic_crash",
+    "krw_disorderly_depreciation",
+    "stablecoin_capital_outflow",
+    "rare_earth_end_use_license_denial",
+    "critical_mineral_export_block",
+    "policy_capex_roi_failure"
+  ],
+  "large_sector": "POLICY_GEOPOLITICAL_EVENT",
+  "round_case_types": {
+    "r11_loop12_ai_fiscal_room_policy_relief": "success_candidate_policy_relief",
+    "r11_loop12_energy_saving_oil_budget_policy_relief": "success_candidate_policy_relief",
+    "r11_loop12_hyundai_saemangeum_regional_capex_event": "event_premium_success_candidate",
+    "r11_loop12_kospi_7000_ai_capital_confidence_4b": "event_premium_plus_4b_watch",
+    "r11_loop12_middle_east_iran_energy_macro_hard_4c": "macro_hard_4c",
+    "r11_loop12_rare_earth_critical_minerals_policy_overlay": "4c_watch_plus_policy_relief",
+    "r11_loop12_samsung_strike_systemic_policy_4c_watch": "4c_watch_systemic_labor_policy_risk",
+    "r11_loop12_stablecoin_fx_policy_overheat": "overheat_plus_4c_watch"
+  },
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_supply_contract": "+0",
+      "archetype": "LABOR_DISRUPTION_SYSTEMIC_POLICY_4C",
+      "capital_flow_confirmation": "+2",
+      "emergency_policy_response": "+5",
+      "energy_security": "+1",
+      "event_penalty": "+0",
+      "fiscal_room_without_new_debt": "+2",
+      "fx_stability": "+2",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Samsung strike risk can become national export and chip supply-chain 4C-watch.",
+      "policy_funding_quality": "+3",
+      "regulated_revenue": "+0",
+      "systemic_operational_risk": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_supply_contract": "+0",
+      "archetype": "GEOPOLITICAL_ENERGY_MACRO_HARD_4C",
+      "capital_flow_confirmation": "+4",
+      "emergency_policy_response": "+5",
+      "energy_security": "+5",
+      "event_penalty": "+0",
+      "fiscal_room_without_new_debt": "+3",
+      "fx_stability": "+5",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Middle East/Iran shock is hard 4C for oil-import-dependent Korea.",
+      "policy_funding_quality": "+4",
+      "regulated_revenue": "+0",
+      "systemic_operational_risk": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_supply_contract": "+0",
+      "archetype": "FISCAL_POLICY_RELIEF_NOT_GREEN",
+      "capital_flow_confirmation": "+3",
+      "emergency_policy_response": "+5",
+      "energy_security": "+4",
+      "event_penalty": "-4",
+      "fiscal_room_without_new_debt": "+5",
+      "fx_stability": "+4",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Budget and AI fiscal room are relief, not company Green.",
+      "policy_funding_quality": "+5",
+      "regulated_revenue": "+0",
+      "systemic_operational_risk": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_supply_contract": "+0",
+      "archetype": "AI_CAPITAL_MARKET_CONFIDENCE_EVENT",
+      "capital_flow_confirmation": "+5",
+      "emergency_policy_response": "+3",
+      "energy_security": "+1",
+      "event_penalty": "-5",
+      "fiscal_room_without_new_debt": "+3",
+      "fx_stability": "+3",
+      "hard_4c_sensitivity": "+4",
+      "notes": "KOSPI 7,000 is confidence Stage 2 plus 4B overheat watch.",
+      "policy_funding_quality": "+3",
+      "regulated_revenue": "+0",
+      "systemic_operational_risk": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_supply_contract": "+0",
+      "archetype": "STABLECOIN_FX_POLICY_OVERHEAT",
+      "capital_flow_confirmation": "+2",
+      "emergency_policy_response": "+3",
+      "energy_security": "+0",
+      "event_penalty": "-5",
+      "fiscal_room_without_new_debt": "+1",
+      "fx_stability": "+5",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Stablecoin basket rallied before regulated revenue while FX risk rose.",
+      "policy_funding_quality": "+2",
+      "regulated_revenue": "+5",
+      "systemic_operational_risk": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_supply_contract": "+5",
+      "archetype": "RARE_EARTH_END_USE_RESTRICTION_4C",
+      "capital_flow_confirmation": "+3",
+      "emergency_policy_response": "+4",
+      "energy_security": "+3",
+      "event_penalty": "+0",
+      "fiscal_room_without_new_debt": "+2",
+      "fx_stability": "+3",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Rare-earth sanctions/end-use restrictions are strategic supply-chain 4C-watch.",
+      "policy_funding_quality": "+4",
+      "regulated_revenue": "+0",
+      "systemic_operational_risk": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_supply_contract": "+5",
+      "archetype": "CRITICAL_MINERALS_POLICY_RELIEF",
+      "capital_flow_confirmation": "+3",
+      "emergency_policy_response": "+4",
+      "energy_security": "+3",
+      "event_penalty": "-5",
+      "fiscal_room_without_new_debt": "+3",
+      "fx_stability": "+3",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Critical-minerals policy is relief until actual supply contracts and inventory confirm.",
+      "policy_funding_quality": "+5",
+      "regulated_revenue": "+0",
+      "systemic_operational_risk": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_supply_contract": "+0",
+      "archetype": "REGIONAL_POLICY_CAPEX_EVENT_PREMIUM",
+      "capital_flow_confirmation": "+2",
+      "emergency_policy_response": "+3",
+      "energy_security": "+2",
+      "event_penalty": "-5",
+      "fiscal_room_without_new_debt": "+2",
+      "fx_stability": "+2",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Hyundai Saemangeum CAPEX headline requires ROI/utilization/FCF bridge.",
+      "policy_funding_quality": "+3",
+      "regulated_revenue": "+0",
+      "systemic_operational_risk": "+2"
+    }
+  ],
+  "source_round": "docs/round/round_267.md",
+  "stage4b_watch_triggers": [
+    "policy_capex_or_budget_headline_plus_10pct_rally",
+    "stablecoin_basket_two_to_three_times",
+    "kospi_7000_sidecar_rally",
+    "samsung_one_trillion_fomo",
+    "securities_rally_before_earnings_bridge",
+    "rare_earth_theme_before_license",
+    "regional_capex_policy_rally_before_roi",
+    "policy_relief_rally_before_company_margin"
+  ],
+  "summary": {
+    "analyst_large_sector": "POLICY_GEOPOLITICAL_DISASTER_EVENT",
+    "analyst_round_id": "round_195",
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 2,
+    "failed_rerating_count": 2,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "POLICY_GEOPOLITICAL_EVENT",
+    "overheat_count": 1,
+    "policy_relief_count": 3,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_267.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 7,
+    "stage4c_watch_count": 3,
+    "success_candidate_count": 2,
+    "target_archetype_count": 8
+  },
+  "target_aliases": {
+    "AI_CAPITAL_MARKET_CONFIDENCE_EVENT": "AI_CAPITAL_MARKET_CONFIDENCE_EVENT",
+    "CRITICAL_MINERALS_POLICY_RELIEF": "CRITICAL_MINERALS_POLICY_RELIEF",
+    "FISCAL_POLICY_RELIEF_NOT_GREEN": "FISCAL_POLICY_RELIEF_NOT_GREEN",
+    "GEOPOLITICAL_ENERGY_MACRO_HARD_4C": "GEOPOLITICAL_ENERGY_MACRO_HARD_4C",
+    "LABOR_DISRUPTION_SYSTEMIC_POLICY_4C": "LABOR_DISRUPTION_SYSTEMIC_POLICY_4C",
+    "RARE_EARTH_END_USE_RESTRICTION_4C": "RARE_EARTH_END_USE_RESTRICTION_4C",
+    "REGIONAL_POLICY_CAPEX_EVENT_PREMIUM": "REGIONAL_POLICY_CAPEX_EVENT_PREMIUM",
+    "STABLECOIN_FX_POLICY_OVERHEAT": "STABLECOIN_FX_POLICY_OVERHEAT"
+  },
+  "what_not_to_change": [
+    "do_not_use_round267_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_policy_geopolitical_disaster_fx_energy_labor_stablecoin_or_capex_headline_as_green",
+    "do_not_invent_ohlc_or_stage_dates",
+    "keep_middle_east_iran_energy_shock_as_macro_hard_4c_reference"
+  ]
+}

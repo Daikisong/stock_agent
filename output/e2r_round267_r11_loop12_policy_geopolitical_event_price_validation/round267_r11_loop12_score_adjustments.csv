@@ -1,0 +1,19 @@
+axis,points,direction,reason
+systemic_operational_risk,5,raise,삼성전자 파업처럼 기업 이슈가 국가 수출과 AI 공급망 리스크가 될 수 있다.
+energy_security,5,raise,"중동 에너지 쇼크는 지수, 원화, 자동차, 반도체, 항공을 동시에 흔드는 hard 4C다."
+FX_stability,5,raise,stablecoin과 중동 충격은 원화 안정 없이는 Green 검토가 어렵다는 예시다.
+policy_funding_quality,5,raise,추경처럼 재원과 금액이 확인된 정책만 headline보다 높게 본다.
+fiscal_room_without_new_debt,4,raise,AI 세수 windfall로 추가 국채 없이 집행되는 정책은 relief 품질이 더 높다.
+actual_supply_contract,5,raise,희토류/critical minerals는 hotline보다 실제 공급계약과 재고가 중요하다.
+regulated_revenue_confirmation,5,raise,"stablecoin 테마는 발행허가, 준비금수익, 수수료 수익이 확인되어야 한다."
+capital_flow_confirmation,5,raise,"KOSPI 7,000 같은 이벤트도 실제 외국인 자금유입과 지속성을 분리해야 한다."
+emergency_policy_response_speed,4,raise,에너지·노동·공급망 충격에서는 정책 대응 속도가 Stage 2 relief 품질을 좌우한다.
+policy_headline_only,-5,lower,정책 headline만 있고 회사 EPS/FCF bridge가 없으면 Green 금지다.
+CAPEX_report_only,-5,lower,Saemangeum처럼 CAPEX 보도로 가격이 먼저 뛰면 ROI부터 확인한다.
+stablecoin_theme_only,-5,lower,regulated revenue 없이 2~3배 오른 stablecoin basket은 4B-watch다.
+fiscal_spending_without_company_bridge,-4,lower,재정지출만 있고 회사 마진 개선이 없으면 relief일 뿐이다.
+relief_budget_without_margin_effect,-4,lower,고유가 추경도 정유·항공·소비주의 margin bridge가 없으면 Green 근거가 아니다.
+index_rally_without_EPS_bridge,-5,lower,"KOSPI 7,000 지수 milestone은 개별기업 Stage 3-Green과 다르다."
+rare_earth_policy_without_contract,-5,lower,"희토류 정책완화는 실제 offtake, 재고, end-use 허가 전까지 relief다."
+labor_disruption_unresolved,-5,lower,파업·긴급조정 risk가 열려 있으면 AI/반도체 긍정증거를 RedTeam이 제한해야 한다.
+energy_shock_unhedged,-5,lower,에너지 shock이 hedge되지 않으면 비용·FX gate를 통과하지 못한다.

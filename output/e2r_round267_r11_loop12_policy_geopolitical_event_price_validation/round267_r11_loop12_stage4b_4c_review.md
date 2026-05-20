@@ -1,0 +1,36 @@
+# Round 267 R11 4B/4C Review
+
+## 4B Watch Triggers
+
+- policy_capex_or_budget_headline_plus_10pct_rally
+- stablecoin_basket_two_to_three_times
+- kospi_7000_sidecar_rally
+- samsung_one_trillion_fomo
+- securities_rally_before_earnings_bridge
+- rare_earth_theme_before_license
+- regional_capex_policy_rally_before_roi
+- policy_relief_rally_before_company_margin
+
+## Hard 4C Gates
+
+- systemic_labor_disruption
+- emergency_arbitration
+- semiconductor_production_halt
+- geopolitical_energy_chokepoint_closure
+- kospi_historic_crash
+- krw_disorderly_depreciation
+- stablecoin_capital_outflow
+- rare_earth_end_use_license_denial
+- critical_mineral_export_block
+- policy_capex_roi_failure
+
+## Case Notes
+
+- r11_loop12_samsung_strike_systemic_policy_4c_watch: systemic_labor_disruption, strike_unresolved, semiconductor_production_halt_risk, national_export_supply_chain_risk
+- r11_loop12_middle_east_iran_energy_macro_hard_4c: geopolitical_energy_chokepoint_closure, kospi_historic_crash, krw_disorderly_depreciation, market_wide_crash, energy_shock_unhedged
+- r11_loop12_energy_saving_oil_budget_policy_relief: relief_budget_without_margin_effect, macro_relief_only, energy_shock_unhedged
+- r11_loop12_kospi_7000_ai_capital_confidence_4b: index_rally_without_EPS_bridge, index_milestone_only, chip_concentration_fomo, securities_rally_before_earnings_bridge
+- r11_loop12_ai_fiscal_room_policy_relief: fiscal_spending_without_company_bridge, macro_relief_only, policy_confidence_watch
+- r11_loop12_stablecoin_fx_policy_overheat: stablecoin_theme_only, stablecoin_capital_outflow, regulated_revenue_unconfirmed, issuer_license_unconfirmed, reserve_income_unconfirmed
+- r11_loop12_rare_earth_critical_minerals_policy_overlay: rare_earth_policy_letter_only, strategic_supply_chain_sanction, critical_mineral_export_block, end_use_license_unconfirmed
+- r11_loop12_hyundai_saemangeum_regional_capex_event: CAPEX_report_only, regional_capex_media_report_only, capex_roi_unconfirmed, customer_contract_unconfirmed

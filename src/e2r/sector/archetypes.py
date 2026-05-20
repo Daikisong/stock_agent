@@ -704,6 +704,13 @@ class E2RArchetype(str, Enum):
     AI_WINDFALL_TAX_POLICY_CONFIDENCE_SHOCK = "AI_WINDFALL_TAX_POLICY_CONFIDENCE_SHOCK"
     GEOPOLITICAL_ENERGY_SUPPLY_SHOCK = "GEOPOLITICAL_ENERGY_SUPPLY_SHOCK"
     GEOPOLITICAL_ENERGY_SECURITY_HARD_4C = "GEOPOLITICAL_ENERGY_SECURITY_HARD_4C"
+    LABOR_DISRUPTION_SYSTEMIC_POLICY_4C = "LABOR_DISRUPTION_SYSTEMIC_POLICY_4C"
+    GEOPOLITICAL_ENERGY_MACRO_HARD_4C = "GEOPOLITICAL_ENERGY_MACRO_HARD_4C"
+    FISCAL_POLICY_RELIEF_NOT_GREEN = "FISCAL_POLICY_RELIEF_NOT_GREEN"
+    AI_CAPITAL_MARKET_CONFIDENCE_EVENT = "AI_CAPITAL_MARKET_CONFIDENCE_EVENT"
+    STABLECOIN_FX_POLICY_OVERHEAT = "STABLECOIN_FX_POLICY_OVERHEAT"
+    RARE_EARTH_END_USE_RESTRICTION_4C = "RARE_EARTH_END_USE_RESTRICTION_4C"
+    REGIONAL_POLICY_CAPEX_EVENT_PREMIUM = "REGIONAL_POLICY_CAPEX_EVENT_PREMIUM"
     HORMUZ_POLICY_RELIEF_RESPONSE = "HORMUZ_POLICY_RELIEF_RESPONSE"
     FX_LIQUIDITY_POLICY_RESPONSE = "FX_LIQUIDITY_POLICY_RESPONSE"
     FX_LIQUIDITY_STABLECOIN_OUTFLOW = "FX_LIQUIDITY_STABLECOIN_OUTFLOW"
@@ -3493,6 +3500,90 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("news", "energy", "fx", "price", "red_team"),
             false_positive_patterns=("geopolitical headline treated as refiner, shipper, defense, or exporter Green"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.LABOR_DISRUPTION_SYSTEMIC_POLICY_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.LABOR_DISRUPTION_SYSTEMIC_POLICY_4C,
+            stage1_radar_signals=("large semiconductor labor dispute", "national export supply-chain risk", "government emergency arbitration discussion"),
+            stage2_candidate_signals=("operational continuity plan and government containment evidence; not positive company Green"),
+            stage3_high_conviction_signals=("not applicable until labor risk clears and EPS/FCF path is intact"),
+            stage4a_ongoing_signals=("production continuity remains verified and customer supply-chain risk is contained"),
+            stage4b_graduation_overheat_signals=("chip rally ignores unresolved labor disruption"),
+            stage4c_thesis_break_signals=("national export production halt", "semiconductor fab disruption", "emergency arbitration", "customer supply-chain break"),
+            key_evidence_families=("labor", "policy", "news", "price", "red_team"),
+            false_positive_patterns=("AI semiconductor rerating treated as safe while strike risk is unresolved",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.GEOPOLITICAL_ENERGY_MACRO_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.GEOPOLITICAL_ENERGY_MACRO_HARD_4C,
+            stage1_radar_signals=("Middle East or Iran energy conflict", "Gulf energy facility disruption", "KRW stress"),
+            stage2_candidate_signals=("policy containment only; not a positive candidate path"),
+            stage3_high_conviction_signals=("not a Green source; index, FX, oil and exporter shock is macro hard 4C"),
+            stage4a_ongoing_signals=("oil, LNG, KRW, insurance and export costs normalize before candidate evidence is rechecked"),
+            stage4b_graduation_overheat_signals=("relief rally before energy and FX stabilization"),
+            stage4c_thesis_break_signals=("KOSPI crash", "KRW disorderly depreciation", "energy chokepoint disruption", "autos, chips, airlines and exporters draw down together"),
+            key_evidence_families=("news", "energy", "fx", "price", "red_team"),
+            false_positive_patterns=("geopolitical rebound treated as structural rerating"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.FISCAL_POLICY_RELIEF_NOT_GREEN: ArchetypeDefinition(
+            archetype=E2RArchetype.FISCAL_POLICY_RELIEF_NOT_GREEN,
+            stage1_radar_signals=("supplementary budget", "energy-saving campaign", "AI tax windfall fiscal room"),
+            stage2_candidate_signals=("funded budget", "no new treasury issuance", "targeted relief amount and policy tool visible"),
+            stage3_high_conviction_signals=("only after company-level revenue, margin, EPS and FCF bridge is verified"),
+            stage4a_ongoing_signals=("policy relief remains funded and company margins actually stabilize"),
+            stage4b_graduation_overheat_signals=("budget or voucher headline rally before company earnings bridge"),
+            stage4c_thesis_break_signals=("unfunded fiscal response", "inflation or rate pressure offsets relief", "policy relief fails to stabilize costs"),
+            key_evidence_families=("policy", "fiscal", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("fiscal spending treated as company Green without EPS/FCF bridge"),
+            preferred_score_weights=_weights(eps_fcf=4, visibility=10, bottleneck=4, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.AI_CAPITAL_MARKET_CONFIDENCE_EVENT: ArchetypeDefinition(
+            archetype=E2RArchetype.AI_CAPITAL_MARKET_CONFIDENCE_EVENT,
+            stage1_radar_signals=("AI-driven index milestone", "sidecar-level index rally", "foreign inflow confidence event"),
+            stage2_candidate_signals=("actual foreign buying and liquidity evidence; index confidence, not company Green"),
+            stage3_high_conviction_signals=("company-level EPS/FCF, valuation frame, and evidence bundle required after the event"),
+            stage4a_ongoing_signals=("capital inflow remains durable and company fundamentals continue to confirm"),
+            stage4b_graduation_overheat_signals=("KOSPI milestone rally", "chip concentration", "securities rally before earnings bridge", "FOMO"),
+            stage4c_thesis_break_signals=("capital flow reversal", "AI confidence break", "index crash after concentration overheat"),
+            key_evidence_families=("capital_flow", "price", "news", "financial_actual", "red_team"),
+            false_positive_patterns=("index milestone treated as individual company Stage 3-Green"),
+            preferred_score_weights=_weights(eps_fcf=4, visibility=8, bottleneck=4, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.STABLECOIN_FX_POLICY_OVERHEAT: ArchetypeDefinition(
+            archetype=E2RArchetype.STABLECOIN_FX_POLICY_OVERHEAT,
+            stage1_radar_signals=("won stablecoin policy", "digital-asset reform basket rally", "margin loan and retail leverage surge"),
+            stage2_candidate_signals=("issuer license, reserve economics, fee revenue and FX guardrails become visible"),
+            stage3_high_conviction_signals=("regulated revenue, FX stability, capital-flow control and company EPS/FCF bridge all verified"),
+            stage4a_ongoing_signals=("regulated revenue appears without FX or capital-outflow stress"),
+            stage4b_graduation_overheat_signals=("stablecoin basket two to three times before regulated revenue"),
+            stage4c_thesis_break_signals=("stablecoin-driven capital outflow", "non-bank issuance weakens monetary control", "KRW depreciation", "reserve-income thesis fails"),
+            key_evidence_families=("policy", "fx", "capital_flow", "price", "red_team"),
+            false_positive_patterns=("stablecoin theme treated as fintech Green without license or fee economics"),
+            preferred_score_weights=_weights(eps_fcf=2, visibility=6, bottleneck=0, mispricing=6, valuation=4),
+        ),
+        E2RArchetype.RARE_EARTH_END_USE_RESTRICTION_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.RARE_EARTH_END_USE_RESTRICTION_4C,
+            stage1_radar_signals=("rare-earth end-use restriction", "China sanction warning", "U.S. defense customer restriction"),
+            stage2_candidate_signals=("supply-chain relief plan or alternative supply appears; still a RedTeam overlay"),
+            stage3_high_conviction_signals=("not a Green source until end-use license, offtake, inventory and margin conversion are verified"),
+            stage4a_ongoing_signals=("alternative supply and compliance path remain verified"),
+            stage4b_graduation_overheat_signals=("rare-earth or critical-minerals basket rally before license or supply contract"),
+            stage4c_thesis_break_signals=("end-use license denial", "strategic supply-chain sanction", "customer shipment block", "critical mineral supply halt"),
+            key_evidence_families=("policy", "news", "supply_chain", "price", "red_team"),
+            false_positive_patterns=("rare-earth policy headline treated as beneficiary evidence"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.REGIONAL_POLICY_CAPEX_EVENT_PREMIUM: ArchetypeDefinition(
+            archetype=E2RArchetype.REGIONAL_POLICY_CAPEX_EVENT_PREMIUM,
+            stage1_radar_signals=("regional development capex report", "AI data center or hydrogen infrastructure headline", "local policy incentive"),
+            stage2_candidate_signals=("investment amount, project scope and funding route visible"),
+            stage3_high_conviction_signals=("only after ROI, utilization, customer contract, subsidy terms and FCF bridge are verified"),
+            stage4a_ongoing_signals=("capex execution converts into utilization and earnings"),
+            stage4b_graduation_overheat_signals=("regional capex headline rally before ROI or customer contract"),
+            stage4c_thesis_break_signals=("project delay", "subsidy failure", "utilization failure", "capex drag"),
+            key_evidence_families=("policy", "capex", "news", "financial_actual", "price"),
+            false_positive_patterns=("media-reported capex treated as Stage 3-Green before ROI"),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=10, bottleneck=4, mispricing=8, valuation=6),
         ),
         E2RArchetype.HORMUZ_POLICY_RELIEF_RESPONSE: ArchetypeDefinition(
             archetype=E2RArchetype.HORMUZ_POLICY_RELIEF_RESPONSE,
