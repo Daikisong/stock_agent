@@ -13,42 +13,42 @@
     {
       "category": "PF / 부동산 금융",
       "primary_archetype": "PF_LIQUIDITY_HARD_4C_WATCH",
-      "terms": "Taeyoung E&C|PF delinquency 2.70%|40.6T support|syndicated loan 1T to 5T|profitable project sorting"
+      "terms": "Taeyoung E&C|PF delinquency|40.6T support|1T to 5T syndicated loan|profitable project sorting"
     },
     {
       "category": "부동산 정책",
       "primary_archetype": "REAL_ESTATE_POLICY_STAGE2_NOT_GREEN",
-      "terms": "Seoul LTV 50 to 40|Gangnam|Seocho|Songpa|Yongsan|state land supply|reconstruction easing"
+      "terms": "Seoul LTV|Gangnam|Seocho|Songpa|Yongsan|state land supply"
     },
     {
       "category": "건설 안전",
       "primary_archetype": "CONSTRUCTION_SAFETY_HARD_4C",
-      "terms": "HDC Hyundai Development|Gwangju Hwajeong I-Park|six workers died|substandard materials|unauthorized slab change"
+      "terms": "HDC Hyundai Development|Gwangju Hwajeong I-Park|fatal collapse|substandard materials|brand safety trust"
     },
     {
       "category": "해외 EPC",
       "primary_archetype": "OVERSEAS_EPC_ORDER_4B_WATCH",
-      "terms": "Samsung E&A|Saudi Aramco Fadhili|$6B order|advance payment|working capital|completion margin"
+      "terms": "Samsung E&A|Saudi Aramco Fadhili|$6B order|completion margin|working capital"
     },
     {
       "category": "원전 건설수출",
       "primary_archetype": "NUCLEAR_CONSTRUCTION_EXPORT_STAGE2",
-      "terms": "KHNP|Czech nuclear|Doosan Enerbility|KEPCO E&C|preferred bidder|EDF legal challenge"
+      "terms": "KHNP|Czech nuclear|Doosan Enerbility|KEPCO E&C|EDF legal challenge"
     },
     {
       "category": "건자재 약수요",
       "primary_archetype": "BUILDING_MATERIAL_WEAK_DEMAND_FAILED_RERATING",
-      "terms": "Hyundai Steel|rebar price -10%|net-profit estimate cut -73%|weak construction demand"
+      "terms": "Hyundai Steel|rebar price decline|net-profit estimate cut|weak construction demand"
     },
     {
       "category": "건자재 관세 relief",
       "primary_archetype": "BUILDING_MATERIAL_TARIFF_RELIEF_EVENT_PREMIUM",
-      "terms": "Hyundai Steel|POSCO|Chinese steel plates|27.91-38.02% tariff|ASP volume margin"
+      "terms": "Hyundai Steel|POSCO|Chinese steel plate|27.91-38.02% tariff|ASP margin"
     },
     {
       "category": "미국 현지화 CAPEX",
       "primary_archetype": "US_LOCALIZATION_CAPEX_FALSE_POSITIVE",
-      "terms": "Hyundai Steel|$6B U.S. plant|$21B group package|funding clarity|IRR|tariff saving"
+      "terms": "Hyundai Steel|$6B U.S. plant|funding clarity|IRR|tariff saving"
     }
   ],
   "green_forbidden_patterns": [
@@ -76,12 +76,12 @@
     "price_path_after_evidence"
   ],
   "hard_4c_gates": [
-    "PF_workout_debt_rescheduling",
+    "PF_workout_or_debt_rescheduling",
+    "PF_liquidity_support_dependence",
     "fatal_construction_safety_event",
-    "major_defect_reconstruction_compensation",
-    "business_suspension_license_risk",
-    "pre_sale_failure_unsold_inventory_spike",
-    "construction_cost_overrun_unbilled_receivables_surge",
+    "major_defect_reconstruction_or_compensation",
+    "pre_sale_failure_or_unsold_inventory_spike",
+    "cost_overrun_or_unbilled_receivables_surge",
     "final_contract_blocked_by_legal_challenge",
     "capex_funding_gap_or_dilution"
   ],
@@ -92,7 +92,7 @@
       "axis": "PF_repayment_visibility",
       "direction": "raise",
       "points": "5",
-      "reason": "건설사는 수주잔고보다 PF 상환과 차환 비용이 먼저다."
+      "reason": "수주잔고보다 PF 상환과 refinancing visibility가 먼저다."
     },
     {
       "axis": "presale_absorption",
@@ -104,31 +104,31 @@
       "axis": "construction_cost_margin",
       "direction": "raise",
       "points": "5",
-      "reason": "원가율이 닫히지 않으면 매출 증가가 이익으로 내려오지 않는다."
+      "reason": "건설은 원가율이 닫혀야 이익이 현금으로 남는다."
     },
     {
       "axis": "unbilled_receivables_control",
       "direction": "raise",
       "points": "5",
-      "reason": "미청구공사 증가는 EPC/건설의 핵심 4C-watch다."
+      "reason": "미청구공사 증가는 EPC/건설 4C-watch다."
     },
     {
       "axis": "safety_quality_trust",
       "direction": "raise",
       "points": "5",
-      "reason": "사망 안전사고와 품질 붕괴는 hard gate다."
+      "reason": "건설 안전과 품질 신뢰는 hard gate다."
     },
     {
       "axis": "completion_margin_visibility",
       "direction": "raise",
       "points": "5",
-      "reason": "해외 EPC는 완공마진과 claim risk까지 봐야 한다."
+      "reason": "해외 EPC 수주는 completion margin이 닫혀야 한다."
     },
     {
       "axis": "working_capital_advance_payment",
       "direction": "raise",
       "points": "5",
-      "reason": "advance payment와 운전자본 통제가 cashflow를 만든다."
+      "reason": "advance payment와 working capital 통제가 EPC 본체다."
     },
     {
       "axis": "final_contract_signing",
@@ -140,66 +140,55 @@
       "axis": "building_material_ASP_volume",
       "direction": "raise",
       "points": "5",
-      "reason": "건자재는 ASP와 물량, 원가 spread가 같이 닫혀야 한다."
+      "reason": "건자재는 ASP, 물량, 원가, 재고가 같이 필요하다."
     },
     {
       "axis": "capex_IRR_funding_clarity",
       "direction": "raise",
       "points": "5",
-      "reason": "localization capex는 IRR과 funding plan이 없으면 Green이 아니다."
+      "reason": "localization capex는 IRR과 funding clarity가 필요하다."
     },
     {
       "axis": "order_value_headline_only",
       "direction": "lower",
       "points": "-5",
-      "reason": "수주금액 headline만으로 completion margin을 만들지 않는다."
+      "reason": "수주금액 headline은 Stage 2일 수 있지만 Green은 아니다."
     },
     {
       "axis": "policy_support_headline_only",
       "direction": "lower",
       "points": "-5",
-      "reason": "정책지원 headline만으로 PF 현금흐름을 만들지 않는다."
-    },
-    {
-      "axis": "property_supply_policy_only",
-      "direction": "lower",
-      "points": "-5",
-      "reason": "공급정책만으로 착공·분양·현금회수가 생기지 않는다."
+      "reason": "정책지원 headline만으로 PF cashflow를 만들지 않는다."
     },
     {
       "axis": "preferred_bidder_without_final_contract",
       "direction": "lower",
       "points": "-5",
-      "reason": "우선협상대상자는 booked margin이 아니다."
+      "reason": "우선협상대상자는 확정 매출과 다르다."
     },
     {
       "axis": "tariff_relief_without_ASP_margin",
       "direction": "lower",
       "points": "-5",
-      "reason": "관세 relief는 ASP와 margin 확인 전에는 event premium이다."
+      "reason": "반덤핑 관세는 ASP와 margin으로 내려와야 한다."
     },
     {
       "axis": "capex_localization_without_IRR",
       "direction": "lower",
       "points": "-5",
-      "reason": "미국공장 headline은 IRR/funding 전에는 false positive가 될 수 있다."
-    },
-    {
-      "axis": "backlog_without_PF_cashflow",
-      "direction": "lower",
-      "points": "-5",
-      "reason": "PF cashflow가 막히면 backlog는 Green 방어가 안 된다."
+      "reason": "미국 공장 투자는 IRR과 자금조달 전에는 false positive가 될 수 있다."
     },
     {
       "axis": "safety_risk_unresolved",
       "direction": "lower",
       "points": "-5",
-      "reason": "안전 리스크 미해소는 건설 Green을 막는다."
+      "reason": "안전 리스크 미해소는 Green을 막는다."
     }
   ],
   "shadow_weights": [
     {
       "4b_watch_sensitivity": "+5",
+      "PF_repayment_visibility": "+5",
       "archetype": "PF_LIQUIDITY_HARD_4C_WATCH",
       "building_material_ASP_volume": "+1",
       "capex_IRR_funding_clarity": "+4",
@@ -209,7 +198,6 @@
       "final_contract_signing": "+1",
       "hard_4c_sensitivity": "+5",
       "notes": "Taeyoung/PF shows backlog is not Green if PF repayment/refinancing fails.",
-      "pf_repayment_visibility": "+5",
       "presale_absorption": "+5",
       "safety_quality_trust": "+3",
       "unbilled_receivables_control": "+5",
@@ -217,6 +205,7 @@
     },
     {
       "4b_watch_sensitivity": "+5",
+      "PF_repayment_visibility": "+4",
       "archetype": "REAL_ESTATE_POLICY_STAGE2_NOT_GREEN",
       "building_material_ASP_volume": "+2",
       "capex_IRR_funding_clarity": "+2",
@@ -226,7 +215,6 @@
       "final_contract_signing": "+1",
       "hard_4c_sensitivity": "+4",
       "notes": "Seoul property policy needs permits, starts, presales and PF cashflow.",
-      "pf_repayment_visibility": "+4",
       "presale_absorption": "+5",
       "safety_quality_trust": "+2",
       "unbilled_receivables_control": "+4",
@@ -234,6 +222,7 @@
     },
     {
       "4b_watch_sensitivity": "+4",
+      "PF_repayment_visibility": "+3",
       "archetype": "CONSTRUCTION_SAFETY_HARD_4C",
       "building_material_ASP_volume": "+1",
       "capex_IRR_funding_clarity": "+3",
@@ -243,7 +232,6 @@
       "final_contract_signing": "+1",
       "hard_4c_sensitivity": "+5",
       "notes": "HDC/Gwangju confirms fatal quality/safety events override backlog.",
-      "pf_repayment_visibility": "+3",
       "presale_absorption": "+3",
       "safety_quality_trust": "+5",
       "unbilled_receivables_control": "+4",
@@ -251,6 +239,7 @@
     },
     {
       "4b_watch_sensitivity": "+5",
+      "PF_repayment_visibility": "+2",
       "archetype": "OVERSEAS_EPC_ORDER_4B_WATCH",
       "building_material_ASP_volume": "+1",
       "capex_IRR_funding_clarity": "+3",
@@ -260,7 +249,6 @@
       "final_contract_signing": "+5",
       "hard_4c_sensitivity": "+4",
       "notes": "Samsung E&A Fadhili order needs advance payment, working capital and completion margin.",
-      "pf_repayment_visibility": "+2",
       "presale_absorption": "0",
       "safety_quality_trust": "+3",
       "unbilled_receivables_control": "+5",
@@ -268,6 +256,7 @@
     },
     {
       "4b_watch_sensitivity": "+5",
+      "PF_repayment_visibility": "+2",
       "archetype": "NUCLEAR_CONSTRUCTION_EXPORT_STAGE2",
       "building_material_ASP_volume": "+1",
       "capex_IRR_funding_clarity": "+4",
@@ -277,7 +266,6 @@
       "final_contract_signing": "+5",
       "hard_4c_sensitivity": "+4",
       "notes": "Czech nuclear preferred bidder needs final contract and legal clearance.",
-      "pf_repayment_visibility": "+2",
       "presale_absorption": "0",
       "safety_quality_trust": "+3",
       "unbilled_receivables_control": "+5",
@@ -285,6 +273,7 @@
     },
     {
       "4b_watch_sensitivity": "+4",
+      "PF_repayment_visibility": "+1",
       "archetype": "BUILDING_MATERIAL_WEAK_DEMAND_FAILED_RERATING",
       "building_material_ASP_volume": "+5",
       "capex_IRR_funding_clarity": "+2",
@@ -294,7 +283,6 @@
       "final_contract_signing": "0",
       "hard_4c_sensitivity": "+4",
       "notes": "Hyundai Steel weak rebar demand shows ASP/volume must lead materials scoring.",
-      "pf_repayment_visibility": "+1",
       "presale_absorption": "+3",
       "safety_quality_trust": "+1",
       "unbilled_receivables_control": "+2",
@@ -302,6 +290,7 @@
     },
     {
       "4b_watch_sensitivity": "+5",
+      "PF_repayment_visibility": "+1",
       "archetype": "BUILDING_MATERIAL_TARIFF_RELIEF_EVENT_PREMIUM",
       "building_material_ASP_volume": "+5",
       "capex_IRR_funding_clarity": "+2",
@@ -311,7 +300,6 @@
       "final_contract_signing": "0",
       "hard_4c_sensitivity": "+3",
       "notes": "Anti-dumping tariff relief needs ASP, volume and spread confirmation.",
-      "pf_repayment_visibility": "+1",
       "presale_absorption": "+2",
       "safety_quality_trust": "+1",
       "unbilled_receivables_control": "+2",
@@ -319,6 +307,7 @@
     },
     {
       "4b_watch_sensitivity": "+5",
+      "PF_repayment_visibility": "+1",
       "archetype": "US_LOCALIZATION_CAPEX_FALSE_POSITIVE",
       "building_material_ASP_volume": "+4",
       "capex_IRR_funding_clarity": "+5",
@@ -328,7 +317,6 @@
       "final_contract_signing": "+2",
       "hard_4c_sensitivity": "+4",
       "notes": "Hyundai Steel U.S. plant shows capex headline needs funding clarity and IRR.",
-      "pf_repayment_visibility": "+1",
       "presale_absorption": "+1",
       "safety_quality_trust": "+1",
       "unbilled_receivables_control": "+3",
@@ -338,17 +326,17 @@
   "source_round": "docs/round/round_292.md",
   "stage4b_watch_triggers": [
     "overseas_EPC_mega_order_plus_5_to_10pct",
-    "nuclear_preferred_bidder_basket_plus_30_to_50pct",
-    "anti_dumping_tariff_rally_before_spread",
-    "government_property_supply_policy_prepricing",
-    "rate_cut_REIT_builder_rally_without_cashflow",
+    "nuclear_preferred_bidder_plus_30_to_50pct",
+    "anti_dumping_tariff_relief_rally",
+    "government_property_supply_policy_rally",
+    "rate_cut_expectation_property_rerating",
     "localization_capex_headline_before_IRR"
   ],
   "summary": {
     "candidate_generation_input": false,
     "case_candidate_count": 8,
     "deep_sub_archetype_count": 8,
-    "event_premium_count": 3,
+    "event_premium_count": 4,
     "evidence_good_but_price_failed_count": 1,
     "failed_rerating_count": 2,
     "false_positive_score_count": 3,
@@ -367,8 +355,7 @@
     "stage4b_watch_count": 4,
     "stage4c_watch_count": 5,
     "success_candidate_count": 2,
-    "target_archetype_count": 8,
-    "watch_count": 1
+    "target_archetype_count": 8
   },
   "target_aliases": {
     "BUILDING_MATERIAL_TARIFF_RELIEF_EVENT_PREMIUM": "BUILDING_MATERIAL_TARIFF_RELIEF_EVENT_PREMIUM",

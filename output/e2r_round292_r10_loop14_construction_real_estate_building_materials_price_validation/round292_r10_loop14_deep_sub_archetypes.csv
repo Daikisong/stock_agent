@@ -1,9 +1,9 @@
 category,primary_archetype,terms
-PF / 부동산 금융,PF_LIQUIDITY_HARD_4C_WATCH,Taeyoung E&C|PF delinquency 2.70%|40.6T support|syndicated loan 1T to 5T|profitable project sorting
-부동산 정책,REAL_ESTATE_POLICY_STAGE2_NOT_GREEN,Seoul LTV 50 to 40|Gangnam|Seocho|Songpa|Yongsan|state land supply|reconstruction easing
-건설 안전,CONSTRUCTION_SAFETY_HARD_4C,HDC Hyundai Development|Gwangju Hwajeong I-Park|six workers died|substandard materials|unauthorized slab change
-해외 EPC,OVERSEAS_EPC_ORDER_4B_WATCH,Samsung E&A|Saudi Aramco Fadhili|$6B order|advance payment|working capital|completion margin
-원전 건설수출,NUCLEAR_CONSTRUCTION_EXPORT_STAGE2,KHNP|Czech nuclear|Doosan Enerbility|KEPCO E&C|preferred bidder|EDF legal challenge
-건자재 약수요,BUILDING_MATERIAL_WEAK_DEMAND_FAILED_RERATING,Hyundai Steel|rebar price -10%|net-profit estimate cut -73%|weak construction demand
-건자재 관세 relief,BUILDING_MATERIAL_TARIFF_RELIEF_EVENT_PREMIUM,Hyundai Steel|POSCO|Chinese steel plates|27.91-38.02% tariff|ASP volume margin
-미국 현지화 CAPEX,US_LOCALIZATION_CAPEX_FALSE_POSITIVE,Hyundai Steel|$6B U.S. plant|$21B group package|funding clarity|IRR|tariff saving
+PF / 부동산 금융,PF_LIQUIDITY_HARD_4C_WATCH,Taeyoung E&C|PF delinquency|40.6T support|1T to 5T syndicated loan|profitable project sorting
+부동산 정책,REAL_ESTATE_POLICY_STAGE2_NOT_GREEN,Seoul LTV|Gangnam|Seocho|Songpa|Yongsan|state land supply
+건설 안전,CONSTRUCTION_SAFETY_HARD_4C,HDC Hyundai Development|Gwangju Hwajeong I-Park|fatal collapse|substandard materials|brand safety trust
+해외 EPC,OVERSEAS_EPC_ORDER_4B_WATCH,Samsung E&A|Saudi Aramco Fadhili|$6B order|completion margin|working capital
+원전 건설수출,NUCLEAR_CONSTRUCTION_EXPORT_STAGE2,KHNP|Czech nuclear|Doosan Enerbility|KEPCO E&C|EDF legal challenge
+건자재 약수요,BUILDING_MATERIAL_WEAK_DEMAND_FAILED_RERATING,Hyundai Steel|rebar price decline|net-profit estimate cut|weak construction demand
+건자재 관세 relief,BUILDING_MATERIAL_TARIFF_RELIEF_EVENT_PREMIUM,Hyundai Steel|POSCO|Chinese steel plate|27.91-38.02% tariff|ASP margin
+미국 현지화 CAPEX,US_LOCALIZATION_CAPEX_FALSE_POSITIVE,Hyundai Steel|$6B U.S. plant|funding clarity|IRR|tariff saving
