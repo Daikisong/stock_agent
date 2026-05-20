@@ -1,0 +1,9 @@
+archetype,unit_economics,tariff_adjusted_margin,hybrid_mix_profitability,fcf_after_capex,route_yield,load_factor,fleet_utilization,logistics_cost_control,supply_chain_continuity,safety_trust,tourist_spend,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+AUTO_HYBRID_SHAREHOLDER_RETURN,+5,+4,+5,+5,+0,+0,+0,+3,+3,+3,+0,-3,+4,+3,Hyundai hybrid/shareholder return is Stage 2 until margin and FCF confirm.
+AUTO_TARIFF_MARGIN_SHOCK,+5,+5,+3,+5,+0,+0,+0,+2,+3,+3,+0,+0,+3,+5,U.S. tariffs hit Kia OP and auto stock prices; strong 4C-watch.
+AUTO_LOGISTICS_GEOPOLITICAL_DISRUPTION,+4,+4,+2,+4,+0,+0,+0,+5,+5,+3,+0,+0,+4,+5,Middle East logistics disruption directly hit Hyundai/Glovis relative returns.
+AIRLINE_CONSOLIDATION_INTEGRATION,+5,+3,+0,+5,+5,+5,+5,+3,+3,+5,+0,-4,+5,+4,Korean Air/Asiana needs yield/load factor/synergy and safety quality before Green.
+AUTO_SUPPLIER_FACTORY_FIRE_HARD_4C,+0,+0,+0,+0,+0,+0,+0,+0,+5,+5,+0,+0,+3,+5,Kumho Tire factory fire is direct-listed hard 4C.
+AUTO_PARTS_WORKPLACE_SAFETY_HARD_4C,+0,+0,+0,+0,+0,+0,+0,+0,+5,+5,+0,+0,+3,+5,Daejeon supplier fire is sector hard 4C for Hyundai/Kia supplier network.
+SHIPPING_FREIGHT_CYCLE,+4,+0,+0,+5,+0,+0,+4,+4,+3,+2,+0,-5,+5,+4,Pan Ocean freight-cycle benefit needs rate floor/contract coverage/FCF.
+TOURISM_REDIRECT_POLICY_EVENT,+3,+0,+0,+4,+0,+0,+3,+2,+2,+3,+5,-5,+5,+4,Tourism policy/redirect rally is event premium until spend/OPM confirm.

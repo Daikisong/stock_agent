@@ -1,0 +1,22 @@
+axis,points,direction,reason
+unit_economics,5,raise,R9는 판매량보다 단위경제성이 Stage 3 visibility다.
+tariff_adjusted_margin,5,raise,자동차는 관세 이후 OPM이 지켜져야 한다.
+hybrid_mix_profitability,4,raise,하이브리드 mix가 ASP·OPM으로 닫혀야 한다.
+fcf_after_capex,5,raise,전략 투자와 자사주는 FCF로 유지돼야 한다.
+route_yield,5,raise,항공은 fleet count보다 route yield가 중요하다.
+load_factor,5,raise,통합 항공사는 load factor가 synergy 확인 축이다.
+fleet_utilization,5,raise,차량·항공·해운 모두 utilization이 margin으로 연결된다.
+logistics_cost_control,5,raise,중동 물류 차질은 수요가 좋아도 delivery와 비용을 깨뜨린다.
+supply_chain_continuity,5,raise,공장 화재나 공급망 사고는 생산 continuity를 직접 훼손한다.
+safety_trust,5,raise,항공·부품·타이어는 안전과 운영 신뢰가 hard gate다.
+tourist_spend_conversion,5,raise,"관광은 방문객 수보다 spend, occupancy, casino drop, OPM이 중요하다."
+strategy_day_only,-4,lower,전략 발표만으로 Stage 3-Green을 만들지 않는다.
+shareholder_return_without_margin,-4,lower,주주환원은 margin과 FCF가 없으면 Stage 2에 머문다.
+tariff_relief_headline_only,-5,lower,관세 완화 headline은 실제 margin 안정 전 event다.
+fleet_count_without_yield,-4,lower,fleet scale은 yield와 load factor가 없으면 Green 증거가 아니다.
+merger_without_synergy,-5,lower,"항공 통합은 synergy, debt, service quality 확인 전 Green 금지다."
+tourism_policy_only,-5,lower,무비자·관광정책만으로 spend/OPM을 대체하지 않는다.
+freight_rate_spike_only,-5,lower,운임 급등은 rate floor와 FCF 전 cyclical이다.
+factory_fire_or_supply_disruption,-5,lower,공장 화재와 생산중단은 수요논리를 즉시 훼손한다.
+workplace_fatality,-5,lower,사망사고는 supply-chain safety hard gate다.
+logistics_disruption,-5,lower,route closure와 delivery delay는 R9 thesis-break watch다.
