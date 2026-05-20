@@ -1,0 +1,425 @@
+{
+  "case_ids": [
+    "r5_loop14_samyang_buldak_export_stage3_candidate",
+    "r5_loop14_nongshim_shin_ramyun_global_expansion",
+    "r5_loop14_apr_medicube_beauty_device_brand_4b",
+    "r5_loop14_kbeauty_us_expansion_basket",
+    "r5_loop14_china_tourism_retail_event_premium",
+    "r5_loop14_shinsegae_emart_alibaba_gmarket_jv_data_gate",
+    "r5_loop14_coupang_data_breach_retail_trust_hard_reference",
+    "r5_loop14_cj_logistics_shinsegae_fulfillment_unit_economics",
+    "r5_loop14_domestic_retail_sales_shock_4c_watch"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "K-food export brand",
+      "primary_archetype": "K_FOOD_EXPORT_BRAND_STAGE3_CANDIDATE",
+      "terms": "Samyang|Buldak|Nongshim|Shin Ramyun|ASP|U.S./Europe shipments|capacity expansion"
+    },
+    {
+      "category": "K-food regulatory watch",
+      "primary_archetype": "K_FOOD_EXPORT_REGULATORY_4C_WATCH",
+      "terms": "Denmark recall|capsaicin|spiciness|local health regulation|youth challenge risk"
+    },
+    {
+      "category": "K-beauty device brand",
+      "primary_archetype": "K_BEAUTY_DEVICE_BRAND_4B",
+      "terms": "APR|Medicube|beauty device|repeat purchase|return rate|tariff"
+    },
+    {
+      "category": "K-beauty U.S. expansion",
+      "primary_archetype": "K_BEAUTY_US_EXPANSION_STAGE2",
+      "terms": "d'Alba|Beauty of Joseon|Tirtir|Torriden|COSRX|Silicon2|physical retail"
+    },
+    {
+      "category": "China tourism retail",
+      "primary_archetype": "CHINA_TOURISM_RETAIL_EVENT_PREMIUM",
+      "terms": "Hyundai Department Store|Hotel Shilla|Hankook Cosmetics|Paradise|spend per head"
+    },
+    {
+      "category": "cross-border e-commerce JV",
+      "primary_archetype": "ECOMMERCE_CROSS_BORDER_JV_STAGE2_DATA_GATE",
+      "terms": "Shinsegae|E-Mart|Gmarket|Alibaba|AliExpress|take-rate|data restriction"
+    },
+    {
+      "category": "e-commerce trust break",
+      "primary_archetype": "ECOMMERCE_TRUST_BREAK_HARD_REFERENCE",
+      "terms": "Coupang|data breach|customer trust|Naver|Kurly|CJ Logistics"
+    },
+    {
+      "category": "retail fulfilment unit economics",
+      "primary_archetype": "RETAIL_FULFILLMENT_UNIT_ECONOMICS_STAGE2",
+      "terms": "CJ Logistics|SSG.com|fulfillment|unit economics|parcel margin"
+    },
+    {
+      "category": "domestic consumption shock",
+      "primary_archetype": "DOMESTIC_CONSUMPTION_SHOCK_4C_WATCH",
+      "terms": "retail sales|cars|home appliances|entertainment spending|GDP|won weakness"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "viral_brand_headline_only",
+    "visitor_count_only",
+    "online_ecommerce_growth_without_offline_sellthrough",
+    "JV_scale_without_take_rate",
+    "revenue_uplift_without_unit_economics",
+    "IPO_or_stock_pop_without_repeat_purchase",
+    "consumer_export_story_without_local_regulatory_fit",
+    "domestic_retail_ignored",
+    "data_breach_or_customer_trust_failure"
+  ],
+  "green_required_fields": [
+    "export_sellthrough_confirmed",
+    "brand_ASP_power_confirmed",
+    "capacity_to_revenue_conversion_confirmed",
+    "offline_channel_sellthrough_confirmed",
+    "tariff_absorption_confirmed",
+    "tourist_spend_per_head_confirmed",
+    "ecommerce_take_rate_confirmed",
+    "data_trust_internal_control_confirmed",
+    "fulfillment_unit_economics_confirmed",
+    "domestic_consumption_sensitivity_measured",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "data_breach_customer_trust_break",
+    "regulatory_recall_local_health_issue",
+    "tariff_shock_not_absorbed",
+    "channel_inventory_or_sellthrough_failure",
+    "tourist_arrivals_without_spending_conversion",
+    "JV_data_regulation_constraint",
+    "fulfillment_cost_inflation_unit_economics_break",
+    "domestic_consumption_shock_discretionary_decline"
+  ],
+  "large_sector": "CONSUMER_RETAIL_BRAND",
+  "round_id": "round_215",
+  "score_adjustments": [
+    {
+      "axis": "export_sellthrough",
+      "direction": "raise",
+      "points": "5",
+      "reason": "K-food/K-beauty 수출은 sell-in보다 sell-through가 먼저다."
+    },
+    {
+      "axis": "brand_ASP_power",
+      "direction": "raise",
+      "points": "5",
+      "reason": "브랜드가 실제 판가와 마진으로 닫혀야 한다."
+    },
+    {
+      "axis": "capacity_to_revenue_conversion",
+      "direction": "raise",
+      "points": "4",
+      "reason": "CAPA 증설은 매출과 OP로 전환될 때만 강하다."
+    },
+    {
+      "axis": "offline_channel_sellthrough",
+      "direction": "raise",
+      "points": "5",
+      "reason": "미국 리테일 입점은 매장 회전과 리오더가 필요하다."
+    },
+    {
+      "axis": "tariff_absorption",
+      "direction": "raise",
+      "points": "5",
+      "reason": "관세 이후에도 gross margin이 유지되어야 한다."
+    },
+    {
+      "axis": "tourist_spend_per_head",
+      "direction": "raise",
+      "points": "5",
+      "reason": "관광객 수보다 객단가와 구매전환율이 중요하다."
+    },
+    {
+      "axis": "ecommerce_take_rate",
+      "direction": "raise",
+      "points": "5",
+      "reason": "플랫폼 규모는 take-rate과 margin으로 닫혀야 한다."
+    },
+    {
+      "axis": "data_trust_internal_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "이커머스는 데이터 신뢰와 내부통제가 Green gate다."
+    },
+    {
+      "axis": "fulfillment_unit_economics",
+      "direction": "raise",
+      "points": "5",
+      "reason": "물류 매출 증가는 건당 마진과 FCF 전환이 필요하다."
+    },
+    {
+      "axis": "domestic_consumption_sensitivity",
+      "direction": "raise",
+      "points": "4",
+      "reason": "내수 유통은 소비둔화 민감도를 RedTeam에 넣는다."
+    },
+    {
+      "axis": "viral_brand_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "바이럴 브랜드 headline만으로 Stage 3-Green을 만들지 않는다."
+    },
+    {
+      "axis": "visitor_count_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "방문객 수만 있고 지출/마진이 없으면 event premium이다."
+    },
+    {
+      "axis": "online_ecommerce_growth_without_offline_sellthrough",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "온라인 성장만으로 오프라인 sell-through를 대체하지 않는다."
+    },
+    {
+      "axis": "JV_scale_without_take_rate",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "JV 규모와 고객 DB는 take-rate 전에는 Stage 2다."
+    },
+    {
+      "axis": "revenue_uplift_without_unit_economics",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "물류 매출 uplift는 unit economics 전에는 Green 금지다."
+    },
+    {
+      "axis": "IPO_or_stock_pop_without_repeat_purchase",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "IPO/주가 급등은 반복구매 전에는 4B-watch다."
+    },
+    {
+      "axis": "consumer_export_story_without_local_regulatory_fit",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "수출 브랜드는 현지 규제 적합성 게이트가 필요하다."
+    },
+    {
+      "axis": "domestic_retail_ignored",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "내수 소비 충격을 무시하면 유통 Green이 왜곡된다."
+    },
+    {
+      "axis": "data_breach_or_customer_trust_failure",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "데이터 유출과 고객 신뢰 훼손은 hard 4C 참고점이다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "K_FOOD_EXPORT_BRAND_STAGE3_CANDIDATE",
+      "brand_ASP_power": "+5",
+      "capacity_to_revenue": "+4",
+      "data_trust": "+1",
+      "domestic_consumption_sensitivity": "+1",
+      "ecommerce_take_rate": "0",
+      "export_sellthrough": "+5",
+      "fulfillment_unit_economics": "0",
+      "hard_4c_sensitivity": "+4",
+      "headline_penalty": "-3",
+      "notes": "Samyang/Nongshim need export sell-through, ASP, capacity conversion and regulatory fit.",
+      "offline_sellthrough": "+1",
+      "tariff_absorption": "+2",
+      "tourist_spend_per_head": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "K_FOOD_EXPORT_REGULATORY_4C_WATCH",
+      "brand_ASP_power": "0",
+      "capacity_to_revenue": "0",
+      "data_trust": "+2",
+      "domestic_consumption_sensitivity": "0",
+      "ecommerce_take_rate": "0",
+      "export_sellthrough": "0",
+      "fulfillment_unit_economics": "0",
+      "hard_4c_sensitivity": "+5",
+      "headline_penalty": "-4",
+      "notes": "Food recall, spiciness and local health rules are RedTeam overlays.",
+      "offline_sellthrough": "0",
+      "tariff_absorption": "0",
+      "tourist_spend_per_head": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "K_BEAUTY_DEVICE_BRAND_4B",
+      "brand_ASP_power": "+5",
+      "capacity_to_revenue": "+2",
+      "data_trust": "+2",
+      "domestic_consumption_sensitivity": "0",
+      "ecommerce_take_rate": "0",
+      "export_sellthrough": "+3",
+      "fulfillment_unit_economics": "0",
+      "hard_4c_sensitivity": "+4",
+      "headline_penalty": "-5",
+      "notes": "APR-style device rerating needs repeat purchase, return-rate, tariff and margin proof.",
+      "offline_sellthrough": "+4",
+      "tariff_absorption": "+5",
+      "tourist_spend_per_head": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "K_BEAUTY_US_EXPANSION_STAGE2",
+      "brand_ASP_power": "+4",
+      "capacity_to_revenue": "+2",
+      "data_trust": "+2",
+      "domestic_consumption_sensitivity": "0",
+      "ecommerce_take_rate": "0",
+      "export_sellthrough": "+4",
+      "fulfillment_unit_economics": "0",
+      "hard_4c_sensitivity": "+4",
+      "headline_penalty": "-5",
+      "notes": "K-beauty U.S. growth is Stage 2 until physical sell-through and tariff absorption confirm.",
+      "offline_sellthrough": "+5",
+      "tariff_absorption": "+5",
+      "tourist_spend_per_head": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "CHINA_TOURISM_RETAIL_EVENT_PREMIUM",
+      "brand_ASP_power": "0",
+      "capacity_to_revenue": "0",
+      "data_trust": "+1",
+      "domestic_consumption_sensitivity": "+4",
+      "ecommerce_take_rate": "0",
+      "export_sellthrough": "0",
+      "fulfillment_unit_economics": "0",
+      "hard_4c_sensitivity": "+4",
+      "headline_penalty": "-5",
+      "notes": "Tourism policy needs spend-per-head, conversion and margin, not visitor count only.",
+      "offline_sellthrough": "0",
+      "tariff_absorption": "0",
+      "tourist_spend_per_head": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "ECOMMERCE_CROSS_BORDER_JV_STAGE2_DATA_GATE",
+      "brand_ASP_power": "0",
+      "capacity_to_revenue": "0",
+      "data_trust": "+5",
+      "domestic_consumption_sensitivity": "0",
+      "ecommerce_take_rate": "+5",
+      "export_sellthrough": "0",
+      "fulfillment_unit_economics": "+3",
+      "hard_4c_sensitivity": "+5",
+      "headline_penalty": "-5",
+      "notes": "Gmarket/AliExpress JV needs take-rate, compliance, retention and fulfillment margin.",
+      "offline_sellthrough": "0",
+      "tariff_absorption": "0",
+      "tourist_spend_per_head": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "ECOMMERCE_TRUST_BREAK_HARD_REFERENCE",
+      "brand_ASP_power": "0",
+      "capacity_to_revenue": "0",
+      "data_trust": "+5",
+      "domestic_consumption_sensitivity": "0",
+      "ecommerce_take_rate": "0",
+      "export_sellthrough": "0",
+      "fulfillment_unit_economics": "+2",
+      "hard_4c_sensitivity": "+5",
+      "headline_penalty": "-5",
+      "notes": "Coupang breach is a hard trust reference; competitor read-through cannot create Green.",
+      "offline_sellthrough": "0",
+      "tariff_absorption": "0",
+      "tourist_spend_per_head": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "RETAIL_FULFILLMENT_UNIT_ECONOMICS_STAGE2",
+      "brand_ASP_power": "0",
+      "capacity_to_revenue": "+2",
+      "data_trust": "+2",
+      "domestic_consumption_sensitivity": "+1",
+      "ecommerce_take_rate": "+2",
+      "export_sellthrough": "0",
+      "fulfillment_unit_economics": "+5",
+      "hard_4c_sensitivity": "+4",
+      "headline_penalty": "-5",
+      "notes": "CJ Logistics revenue uplift requires parcel economics and cash conversion.",
+      "offline_sellthrough": "0",
+      "tariff_absorption": "0",
+      "tourist_spend_per_head": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "DOMESTIC_CONSUMPTION_SHOCK_4C_WATCH",
+      "brand_ASP_power": "0",
+      "capacity_to_revenue": "0",
+      "data_trust": "+1",
+      "domestic_consumption_sensitivity": "+5",
+      "ecommerce_take_rate": "0",
+      "export_sellthrough": "0",
+      "fulfillment_unit_economics": "0",
+      "hard_4c_sensitivity": "+5",
+      "headline_penalty": "-4",
+      "notes": "Domestic consumption shock is a RedTeam overlay for discretionary retail.",
+      "offline_sellthrough": "0",
+      "tariff_absorption": "0",
+      "tourist_spend_per_head": "0"
+    }
+  ],
+  "source_round": "docs/round/round_287.md",
+  "stage4b_watch_triggers": [
+    "brand_rerating_50_to_100pct_before_channel_margin",
+    "IPO_pop_2x_before_repeat_purchase",
+    "viral_tiktok_or_celebrity_before_repeat_purchase",
+    "tourism_visa_headline_basket_rally",
+    "cross_border_JV_scale_before_take_rate",
+    "logistics_revenue_uplift_before_unit_economics",
+    "competitor_readthrough_after_trust_event"
+  ],
+  "summary": {
+    "aligned_count": 2,
+    "candidate_generation_input": false,
+    "case_candidate_count": 9,
+    "deep_sub_archetype_count": 9,
+    "event_premium_count": 1,
+    "evidence_good_but_price_failed_count": 1,
+    "failed_rerating_count": 2,
+    "false_positive_score_count": 2,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "CONSUMER_RETAIL_BRAND",
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_215",
+    "service_trust_hard_reference_confirmed": true,
+    "service_trust_hard_reference_count": 1,
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 9,
+    "source_round": "docs/round/round_287.md",
+    "stage3_case_count": 1,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 6,
+    "structural_success_count": 1,
+    "success_candidate_count": 4,
+    "target_archetype_count": 9,
+    "unknown_alignment_count": 2
+  },
+  "target_aliases": {
+    "CHINA_TOURISM_RETAIL_EVENT_PREMIUM": "CHINA_TOURISM_RETAIL_EVENT_PREMIUM",
+    "DOMESTIC_CONSUMPTION_SHOCK_4C_WATCH": "DOMESTIC_CONSUMPTION_SHOCK_4C_WATCH",
+    "ECOMMERCE_CROSS_BORDER_JV_STAGE2_DATA_GATE": "ECOMMERCE_CROSS_BORDER_JV_STAGE2_DATA_GATE",
+    "ECOMMERCE_TRUST_BREAK_HARD_REFERENCE": "ECOMMERCE_TRUST_BREAK_HARD_REFERENCE",
+    "K_BEAUTY_DEVICE_BRAND_4B": "K_BEAUTY_DEVICE_BRAND_4B",
+    "K_BEAUTY_US_EXPANSION_STAGE2": "K_BEAUTY_US_EXPANSION_STAGE2",
+    "K_FOOD_EXPORT_BRAND_STAGE3_CANDIDATE": "K_FOOD_EXPORT_BRAND_STAGE3_CANDIDATE",
+    "K_FOOD_EXPORT_REGULATORY_4C_WATCH": "K_FOOD_EXPORT_REGULATORY_4C_WATCH",
+    "RETAIL_FULFILLMENT_UNIT_ECONOMICS_STAGE2": "RETAIL_FULFILLMENT_UNIT_ECONOMICS_STAGE2"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round287_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_K_food_K_beauty_tourism_or_JV_headlines_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}

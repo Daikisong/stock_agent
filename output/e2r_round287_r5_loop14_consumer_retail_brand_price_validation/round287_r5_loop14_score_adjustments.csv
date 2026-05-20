@@ -1,0 +1,20 @@
+axis,points,direction,reason
+export_sellthrough,5,raise,K-food/K-beauty 수출은 sell-in보다 sell-through가 먼저다.
+brand_ASP_power,5,raise,브랜드가 실제 판가와 마진으로 닫혀야 한다.
+capacity_to_revenue_conversion,4,raise,CAPA 증설은 매출과 OP로 전환될 때만 강하다.
+offline_channel_sellthrough,5,raise,미국 리테일 입점은 매장 회전과 리오더가 필요하다.
+tariff_absorption,5,raise,관세 이후에도 gross margin이 유지되어야 한다.
+tourist_spend_per_head,5,raise,관광객 수보다 객단가와 구매전환율이 중요하다.
+ecommerce_take_rate,5,raise,플랫폼 규모는 take-rate과 margin으로 닫혀야 한다.
+data_trust_internal_control,5,raise,이커머스는 데이터 신뢰와 내부통제가 Green gate다.
+fulfillment_unit_economics,5,raise,물류 매출 증가는 건당 마진과 FCF 전환이 필요하다.
+domestic_consumption_sensitivity,4,raise,내수 유통은 소비둔화 민감도를 RedTeam에 넣는다.
+viral_brand_headline_only,-5,lower,바이럴 브랜드 headline만으로 Stage 3-Green을 만들지 않는다.
+visitor_count_only,-5,lower,방문객 수만 있고 지출/마진이 없으면 event premium이다.
+online_ecommerce_growth_without_offline_sellthrough,-5,lower,온라인 성장만으로 오프라인 sell-through를 대체하지 않는다.
+JV_scale_without_take_rate,-5,lower,JV 규모와 고객 DB는 take-rate 전에는 Stage 2다.
+revenue_uplift_without_unit_economics,-5,lower,물류 매출 uplift는 unit economics 전에는 Green 금지다.
+IPO_or_stock_pop_without_repeat_purchase,-5,lower,IPO/주가 급등은 반복구매 전에는 4B-watch다.
+consumer_export_story_without_local_regulatory_fit,-4,lower,수출 브랜드는 현지 규제 적합성 게이트가 필요하다.
+domestic_retail_ignored,-4,lower,내수 소비 충격을 무시하면 유통 Green이 왜곡된다.
+data_breach_or_customer_trust_failure,-5,lower,데이터 유출과 고객 신뢰 훼손은 hard 4C 참고점이다.

@@ -1,0 +1,10 @@
+category,primary_archetype,terms
+K-food export brand,K_FOOD_EXPORT_BRAND_STAGE3_CANDIDATE,Samyang|Buldak|Nongshim|Shin Ramyun|ASP|U.S./Europe shipments|capacity expansion
+K-food regulatory watch,K_FOOD_EXPORT_REGULATORY_4C_WATCH,Denmark recall|capsaicin|spiciness|local health regulation|youth challenge risk
+K-beauty device brand,K_BEAUTY_DEVICE_BRAND_4B,APR|Medicube|beauty device|repeat purchase|return rate|tariff
+K-beauty U.S. expansion,K_BEAUTY_US_EXPANSION_STAGE2,d'Alba|Beauty of Joseon|Tirtir|Torriden|COSRX|Silicon2|physical retail
+China tourism retail,CHINA_TOURISM_RETAIL_EVENT_PREMIUM,Hyundai Department Store|Hotel Shilla|Hankook Cosmetics|Paradise|spend per head
+cross-border e-commerce JV,ECOMMERCE_CROSS_BORDER_JV_STAGE2_DATA_GATE,Shinsegae|E-Mart|Gmarket|Alibaba|AliExpress|take-rate|data restriction
+e-commerce trust break,ECOMMERCE_TRUST_BREAK_HARD_REFERENCE,Coupang|data breach|customer trust|Naver|Kurly|CJ Logistics
+retail fulfilment unit economics,RETAIL_FULFILLMENT_UNIT_ECONOMICS_STAGE2,CJ Logistics|SSG.com|fulfillment|unit economics|parcel margin
+domestic consumption shock,DOMESTIC_CONSUMPTION_SHOCK_4C_WATCH,retail sales|cars|home appliances|entertainment spending|GDP|won weakness
