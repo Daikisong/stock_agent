@@ -1,0 +1,21 @@
+axis,points,direction,reason
+repeat_purchase,5,raise,R5 Green은 유행보다 반복구매가 먼저다.
+overseas_sell_through,5,raise,수출 선적이 해외 소비자 sell-through로 닫혀야 한다.
+physical_store_sell_through,5,raise,K-beauty는 오프라인 입점보다 매장 회전이 중요하다.
+ASP_uplift,4,raise,ASP와 mix 개선은 음식료·브랜드 체급 변화를 확인한다.
+channel_retention,5,raise,리오더와 채널 유지율은 일회성 viral을 걸러낸다.
+inventory_quality,4,raise,재고가 쌓이면 매출 성장은 sell-in일 수 있다.
+working_capital_quality,4,raise,매출채권과 운전자본이 악화되면 FCF로 닫히지 않는다.
+OPM_FCF_conversion,5,raise,브랜드력은 OPM과 FCF로 확인되어야 한다.
+data_compliance,5,raise,이커머스 JV는 고객데이터 규제 통과가 핵심 gate다.
+platform_trust,5,raise,플랫폼 trust가 깨지면 scale이 오히려 4C가 된다.
+brand_heat_only,-5,lower,브랜드가 핫하다는 문장만으로 Green을 만들 수 없다.
+viral_event_only,-5,lower,유명인 이벤트와 meme 수요는 매출 증거가 아니다.
+M&A_validation_without_revenue,-4,lower,M&A validation은 상장사 매출 bridge 없이는 Stage 2 참고다.
+U.S._store_plan_without_sell_through,-4,lower,U.S. store plan은 매장 sell-through 전까지 Green이 아니다.
+retail_talks_without_orders,-5,lower,Ulta/Sephora/Target talks는 발주와 sell-through가 필요하다.
+JV_without_GMV_margin,-5,lower,"JV headline은 GMV, take-rate, margin 전까지 Stage 2다."
+offline_asset_value_without_cashflow,-5,lower,오프라인 자산가치만으로는 회전율·현금흐름 붕괴를 못 막는다.
+overseas_capex_without_parent_FCF,-4,lower,해외 CAPEX는 연결 매출·마진·FCF bridge가 필요하다.
+single_SKU_concentration,-4,lower,단일 SKU 의존도는 4B-watch와 4C gate를 키운다.
+customer_data_risk,-5,lower,고객 데이터 리스크는 플랫폼 scale을 상쇄할 수 있다.

@@ -1,0 +1,403 @@
+{
+  "case_ids": [
+    "r5_loop12_samyang_buldak_export_asp_capacity",
+    "r5_loop12_cj_olive_young_hb_global_platform",
+    "r5_loop12_dr_g_loreal_kbeauty_brand_mna_validation",
+    "r5_loop12_dalba_silicon2_cosmax_kolmar_physical_store_test",
+    "r5_loop12_emart_shinsegae_alibaba_jv_data_gate",
+    "r5_loop12_homeplus_mbk_offline_grocery_distress_reference",
+    "r5_loop12_lotte_wellfood_india_pepero_localization",
+    "r5_loop12_kyochon_cherrybro_neuromeka_jensen_event"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "K-food export ASP capacity",
+      "primary_archetype": "K_FOOD_EXPORT_ASP_CAPACITY",
+      "terms": "Samyang|Buldak|ASP|U.S./Europe shipment|capacity expansion|single-SKU watch"
+    },
+    {
+      "category": "H&B retail global platform",
+      "primary_archetype": "H_AND_B_RETAIL_GLOBAL_PLATFORM",
+      "terms": "CJ Olive Young|U.S. store|global platform|California customers|CJ Corp indirect"
+    },
+    {
+      "category": "K-beauty brand M&A validation",
+      "primary_archetype": "K_BEAUTY_BRAND_M_AND_A_VALIDATION",
+      "terms": "Dr.G|Gowoonsesang|L'Oreal|dermocosmetics|ODM read-through"
+    },
+    {
+      "category": "K-beauty indie physical-store test",
+      "primary_archetype": "K_BEAUTY_INDIE_PHYSICAL_STORE_TEST",
+      "terms": "d'Alba|Tirtir|Torriden|Beauty of Joseon|Ulta|Sephora|Target|Costco|Silicon2|Cosmax|Kolmar"
+    },
+    {
+      "category": "E-commerce JV data gate",
+      "primary_archetype": "ECOMMERCE_JV_SCALE_DATA_GATE",
+      "terms": "E-Mart|Shinsegae|Alibaba|Gmarket|AliExpress Korea|KFTC|data-sharing restriction"
+    },
+    {
+      "category": "Offline grocery distress",
+      "primary_archetype": "OFFLINE_GROCERY_DISTRESS_4C",
+      "terms": "Homeplus|MBK|court-led restructuring|liquidation value|creditors"
+    },
+    {
+      "category": "Global confectionery localization",
+      "primary_archetype": "GLOBAL_CONFECTIONERY_LOCALIZATION",
+      "terms": "Lotte Wellfood|Lotte India|Pepero|ChocoPie|India snacks|capex"
+    },
+    {
+      "category": "Food service celebrity event",
+      "primary_archetype": "FOOD_SERVICE_CELEBRITY_EVENT_PREMIUM",
+      "terms": "Kyochon|Cherrybro|Neuromeka|Jensen Huang|Kkanbu Chicken|meme demand"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "k_food_or_k_beauty_label_only",
+    "us_store_plan_only",
+    "mna_validation_only",
+    "retail_talks_only",
+    "celebrity_food_event_only",
+    "jv_headline_only",
+    "offline_asset_value_only",
+    "overseas_capex_only"
+  ],
+  "green_required_fields": [
+    "repeat_purchase_or_repeat_demand_confirmed",
+    "overseas_sell_through_confirmed",
+    "physical_store_sell_through_confirmed_where_relevant",
+    "asp_or_mix_improvement_confirmed",
+    "opm_fcf_improvement_confirmed",
+    "inventory_and_receivables_stable",
+    "channel_retention_or_reorder_confirmed",
+    "customer_data_and_platform_trust_risk_passed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "channel_stuffing",
+    "inventory_build",
+    "receivables_deterioration",
+    "physical_store_sell_through_failure",
+    "customer_data_misuse",
+    "platform_trust_break",
+    "offline_grocery_court_led_restructuring",
+    "liquidation_value_above_going_concern_value",
+    "input_cost_shock_without_pass_through",
+    "single_sku_demand_fade",
+    "celebrity_event_fade"
+  ],
+  "large_sector": "CONSUMER_RETAIL_BRAND",
+  "round_id": "round_189",
+  "score_adjustments": [
+    {
+      "axis": "repeat_purchase",
+      "direction": "raise",
+      "points": "5",
+      "reason": "R5 Green은 유행보다 반복구매가 먼저다."
+    },
+    {
+      "axis": "overseas_sell_through",
+      "direction": "raise",
+      "points": "5",
+      "reason": "수출 선적이 해외 소비자 sell-through로 닫혀야 한다."
+    },
+    {
+      "axis": "physical_store_sell_through",
+      "direction": "raise",
+      "points": "5",
+      "reason": "K-beauty는 오프라인 입점보다 매장 회전이 중요하다."
+    },
+    {
+      "axis": "ASP_uplift",
+      "direction": "raise",
+      "points": "4",
+      "reason": "ASP와 mix 개선은 음식료·브랜드 체급 변화를 확인한다."
+    },
+    {
+      "axis": "channel_retention",
+      "direction": "raise",
+      "points": "5",
+      "reason": "리오더와 채널 유지율은 일회성 viral을 걸러낸다."
+    },
+    {
+      "axis": "inventory_quality",
+      "direction": "raise",
+      "points": "4",
+      "reason": "재고가 쌓이면 매출 성장은 sell-in일 수 있다."
+    },
+    {
+      "axis": "working_capital_quality",
+      "direction": "raise",
+      "points": "4",
+      "reason": "매출채권과 운전자본이 악화되면 FCF로 닫히지 않는다."
+    },
+    {
+      "axis": "OPM_FCF_conversion",
+      "direction": "raise",
+      "points": "5",
+      "reason": "브랜드력은 OPM과 FCF로 확인되어야 한다."
+    },
+    {
+      "axis": "data_compliance",
+      "direction": "raise",
+      "points": "5",
+      "reason": "이커머스 JV는 고객데이터 규제 통과가 핵심 gate다."
+    },
+    {
+      "axis": "platform_trust",
+      "direction": "raise",
+      "points": "5",
+      "reason": "플랫폼 trust가 깨지면 scale이 오히려 4C가 된다."
+    },
+    {
+      "axis": "brand_heat_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "브랜드가 핫하다는 문장만으로 Green을 만들 수 없다."
+    },
+    {
+      "axis": "viral_event_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "유명인 이벤트와 meme 수요는 매출 증거가 아니다."
+    },
+    {
+      "axis": "M&A_validation_without_revenue",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "M&A validation은 상장사 매출 bridge 없이는 Stage 2 참고다."
+    },
+    {
+      "axis": "U.S._store_plan_without_sell_through",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "U.S. store plan은 매장 sell-through 전까지 Green이 아니다."
+    },
+    {
+      "axis": "retail_talks_without_orders",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "Ulta/Sephora/Target talks는 발주와 sell-through가 필요하다."
+    },
+    {
+      "axis": "JV_without_GMV_margin",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "JV headline은 GMV, take-rate, margin 전까지 Stage 2다."
+    },
+    {
+      "axis": "offline_asset_value_without_cashflow",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "오프라인 자산가치만으로는 회전율·현금흐름 붕괴를 못 막는다."
+    },
+    {
+      "axis": "overseas_capex_without_parent_FCF",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "해외 CAPEX는 연결 매출·마진·FCF bridge가 필요하다."
+    },
+    {
+      "axis": "single_SKU_concentration",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "단일 SKU 의존도는 4B-watch와 4C gate를 키운다."
+    },
+    {
+      "axis": "customer_data_risk",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "고객 데이터 리스크는 플랫폼 scale을 상쇄할 수 있다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "K_FOOD_EXPORT_ASP_CAPACITY",
+      "asp_uplift": "+5",
+      "channel_retention": "+4",
+      "data_compliance": "+1",
+      "event_penalty": "-2",
+      "hard_4c_sensitivity": "+4",
+      "inventory_quality": "+4",
+      "notes": "Samyang supports Green candidate only when export, ASP, OP revision and capacity align; single-SKU watch remains.",
+      "opm_fcf": "+5",
+      "overseas_sell_through": "+5",
+      "physical_store_sell_through": "+3",
+      "platform_trust": "+2",
+      "repeat_purchase": "+5",
+      "working_capital_quality": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "H_AND_B_RETAIL_GLOBAL_PLATFORM",
+      "asp_uplift": "+3",
+      "channel_retention": "+5",
+      "data_compliance": "+4",
+      "event_penalty": "-4",
+      "hard_4c_sensitivity": "+4",
+      "inventory_quality": "+4",
+      "notes": "Olive Young is Stage 2; parent earnings bridge and physical-store economics required.",
+      "opm_fcf": "+5",
+      "overseas_sell_through": "+5",
+      "physical_store_sell_through": "+5",
+      "platform_trust": "+5",
+      "repeat_purchase": "+5",
+      "working_capital_quality": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "K_BEAUTY_BRAND_M_AND_A_VALIDATION",
+      "asp_uplift": "+3",
+      "channel_retention": "+4",
+      "data_compliance": "+1",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+3",
+      "inventory_quality": "+3",
+      "notes": "Dr.G/L'Oreal validates brand value but not listed-company revenue.",
+      "opm_fcf": "+4",
+      "overseas_sell_through": "+5",
+      "physical_store_sell_through": "+4",
+      "platform_trust": "+2",
+      "repeat_purchase": "+4",
+      "working_capital_quality": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "K_BEAUTY_INDIE_PHYSICAL_STORE_TEST",
+      "asp_uplift": "+3",
+      "channel_retention": "+5",
+      "data_compliance": "+1",
+      "event_penalty": "-4",
+      "hard_4c_sensitivity": "+4",
+      "inventory_quality": "+5",
+      "notes": "d'Alba/Silicon2/Cosmax/Kolmar need physical-store sell-through and inventory control.",
+      "opm_fcf": "+5",
+      "overseas_sell_through": "+5",
+      "physical_store_sell_through": "+5",
+      "platform_trust": "+2",
+      "repeat_purchase": "+5",
+      "working_capital_quality": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "ECOMMERCE_JV_SCALE_DATA_GATE",
+      "asp_uplift": "+2",
+      "channel_retention": "+5",
+      "data_compliance": "+5",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+5",
+      "inventory_quality": "+4",
+      "notes": "E-Mart/Alibaba JV is Stage 2 but data compliance and GMV/margin gate are essential.",
+      "opm_fcf": "+5",
+      "overseas_sell_through": "+3",
+      "physical_store_sell_through": "0",
+      "platform_trust": "+5",
+      "repeat_purchase": "+4",
+      "working_capital_quality": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "OFFLINE_GROCERY_DISTRESS_4C",
+      "asp_uplift": "0",
+      "channel_retention": "0",
+      "data_compliance": "+2",
+      "event_penalty": "0",
+      "hard_4c_sensitivity": "+5",
+      "inventory_quality": "+5",
+      "notes": "Homeplus is sector hard reference for offline grocery distress.",
+      "opm_fcf": "+5",
+      "overseas_sell_through": "0",
+      "physical_store_sell_through": "0",
+      "platform_trust": "+3",
+      "repeat_purchase": "0",
+      "working_capital_quality": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "GLOBAL_CONFECTIONERY_LOCALIZATION",
+      "asp_uplift": "+3",
+      "channel_retention": "+4",
+      "data_compliance": "+1",
+      "event_penalty": "-3",
+      "hard_4c_sensitivity": "+4",
+      "inventory_quality": "+4",
+      "notes": "Lotte India localization is Stage 2 until parent revenue/margin/FCF confirm.",
+      "opm_fcf": "+5",
+      "overseas_sell_through": "+5",
+      "physical_store_sell_through": "+4",
+      "platform_trust": "+2",
+      "repeat_purchase": "+5",
+      "working_capital_quality": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "FOOD_SERVICE_CELEBRITY_EVENT_PREMIUM",
+      "asp_uplift": "+2",
+      "channel_retention": "+2",
+      "data_compliance": "+1",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+3",
+      "inventory_quality": "+3",
+      "notes": "Kyochon/Cherrybro/Neuromeka Jensen event is price_moved_without_evidence.",
+      "opm_fcf": "+4",
+      "overseas_sell_through": "+1",
+      "physical_store_sell_through": "+2",
+      "platform_trust": "+2",
+      "repeat_purchase": "+2",
+      "working_capital_quality": "+3"
+    }
+  ],
+  "source_round": "docs/round/round_261.md",
+  "stage4b_watch_triggers": [
+    "debut_or_listing_return_above_2x",
+    "single_sku_or_single_brand_concentration_70_90pct_plus",
+    "us_store_or_major_retailer_expectation_rally",
+    "mna_validation_basket_rally",
+    "jv_or_platform_data_scale_headline_rally",
+    "celebrity_event_plus_20_30pct",
+    "offline_restructuring_relief_price_only"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "direct_krx_hard_4c_confirmed": false,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "CONSUMER_RETAIL_BRAND",
+    "overheat_count": 1,
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "reported_price_anchor_count": 5,
+    "round_id": "round_189",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_261.md",
+    "stage3_case_count": 1,
+    "stage4b_watch_count": 6,
+    "structural_success_count": 1,
+    "success_candidate_count": 5,
+    "target_archetype_count": 8,
+    "thesis_break_reference_count": 1,
+    "watch_4c_count": 1
+  },
+  "target_aliases": {
+    "ECOMMERCE_JV_SCALE_DATA_GATE": "ECOMMERCE_JV_SCALE_DATA_GATE",
+    "FOOD_SERVICE_CELEBRITY_EVENT_PREMIUM": "FOOD_SERVICE_CELEBRITY_EVENT_PREMIUM",
+    "GLOBAL_CONFECTIONERY_LOCALIZATION": "GLOBAL_CONFECTIONERY_LOCALIZATION",
+    "H_AND_B_RETAIL_GLOBAL_PLATFORM": "H_AND_B_RETAIL_GLOBAL_PLATFORM",
+    "K_BEAUTY_BRAND_M_AND_A_VALIDATION": "K_BEAUTY_BRAND_M_AND_A_VALIDATION",
+    "K_BEAUTY_INDIE_PHYSICAL_STORE_TEST": "K_BEAUTY_INDIE_PHYSICAL_STORE_TEST",
+    "K_FOOD_EXPORT_ASP_CAPACITY": "K_FOOD_EXPORT_ASP_CAPACITY",
+    "OFFLINE_GROCERY_DISTRESS_4C": "OFFLINE_GROCERY_DISTRESS_4C"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round261_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_k_food_k_beauty_store_plan_mna_jv_or_celebrity_events_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}
