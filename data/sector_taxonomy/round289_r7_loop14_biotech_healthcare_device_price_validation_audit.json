@@ -1,0 +1,398 @@
+{
+  "case_ids": [
+    "r7_loop14_samsung_biologics_gsk_us_facility",
+    "r7_loop14_celltrion_us_factory_tariff_hedge",
+    "r7_loop14_sk_bioscience_idt_biologika_ma",
+    "r7_loop14_alteogen_keytruda_qlex_sc_formulation",
+    "r7_loop14_yuhan_lazertinib_jnj_rybrevant_approval",
+    "r7_loop14_hugel_letybo_us_aesthetic_launch",
+    "r7_loop14_adel_sanofi_alzheimers_tech_export_reference",
+    "r7_loop14_global_clinical_fda_failure_hard_reference"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "CMO/CDMO U.S. localization",
+      "primary_archetype": "BIO_CMO_US_LOCALIZATION_STAGE2",
+      "terms": "Samsung Biologics|GSK Rockville|60,000L|FDA inspection|utilization"
+    },
+    {
+      "category": "Biosimilar tariff hedge",
+      "primary_archetype": "BIOSIMILAR_US_TARIFF_HEDGE_STAGE2",
+      "terms": "Celltrion|ImClone|Eli Lilly|tariff savings|product transfer"
+    },
+    {
+      "category": "Vaccine CDMO M&A",
+      "primary_archetype": "VACCINE_CDMO_MA_EVENT_PREMIUM",
+      "terms": "SK Bioscience|IDT Biologika|Novavax|CDMO backlog|plant utilization"
+    },
+    {
+      "category": "Blockbuster SC formulation",
+      "primary_archetype": "BLOCKBUSTER_SC_FORMULATION_STAGE3_CANDIDATE",
+      "terms": "Alteogen|Keytruda Qlex|30-40% adoption|royalty|patent dispute"
+    },
+    {
+      "category": "Oncology licensing royalty",
+      "primary_archetype": "ONCOLOGY_LICENSE_ROYALTY_STAGE2",
+      "terms": "Yuhan|lazertinib|Rybrevant|peak sales|manufacturing CRL"
+    },
+    {
+      "category": "Aesthetic medical U.S. launch",
+      "primary_archetype": "AESTHETIC_MEDICAL_DEVICE_US_LAUNCH_STAGE2",
+      "terms": "Hugel|Letybo|Botulax|physician adoption|counterfeit safety"
+    },
+    {
+      "category": "Korean biotech tech export",
+      "primary_archetype": "KOREAN_BIOTECH_TECH_EXPORT_STAGE2",
+      "terms": "ADEL|Sanofi|upfront|milestone|Phase 2/3"
+    },
+    {
+      "category": "Global clinical/FDA hard 4C",
+      "primary_archetype": "GLOBAL_CLINICAL_FAILURE_HARD_4C_REFERENCE",
+      "terms": "HilleVax|Corcept|PepGen|clinical hold|CRL"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "FDA_headline_only",
+    "facility_acquisition_only",
+    "CMO_capacity_without_utilization",
+    "tech_export_upfront_only",
+    "early_stage_deal_without_phase2_3",
+    "approval_without_reimbursement",
+    "aesthetic_launch_without_doctor_adoption",
+    "patent_dispute_unresolved",
+    "clinical_hold_or_CRL"
+  ],
+  "green_required_fields": [
+    "fda_approval_to_launch_conversion_confirmed",
+    "royalty_milestone_probability_confirmed",
+    "facility_utilization_confirmed",
+    "fda_inspection_and_tech_transfer_confirmed",
+    "cmo_recurring_order_visibility_confirmed",
+    "clinical_endpoint_quality_confirmed",
+    "partner_execution_quality_confirmed",
+    "patent_ip_freedom_to_operate_confirmed",
+    "reimbursement_and_market_access_confirmed",
+    "physician_adoption_sellthrough_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "FDA_CRL_or_rejection",
+    "clinical_hold",
+    "pivotal_trial_primary_endpoint_failure",
+    "partner_termination_or_milestone_cancellation",
+    "FDA_inspection_failure_at_key_facility",
+    "reimbursement_failure_after_approval",
+    "patent_injunction_or_freedom_to_operate_failure",
+    "serious_safety_signal_or_product_recall"
+  ],
+  "large_sector": "BIOTECH_HEALTHCARE_DEVICE",
+  "round_id": "round_217",
+  "score_adjustments": [
+    {
+      "axis": "FDA_approval_to_launch_conversion",
+      "direction": "raise",
+      "points": "5",
+      "reason": "승인 headline은 launch와 접근성으로 닫혀야 한다."
+    },
+    {
+      "axis": "royalty_milestone_probability",
+      "direction": "raise",
+      "points": "5",
+      "reason": "기술수출과 라이선스는 마일스톤/로열티 확률이 중요하다."
+    },
+    {
+      "axis": "facility_utilization",
+      "direction": "raise",
+      "points": "5",
+      "reason": "CMO/CDMO 시설은 capacity가 아니라 가동률이 Green 근거다."
+    },
+    {
+      "axis": "FDA_inspection_and_tech_transfer",
+      "direction": "raise",
+      "points": "5",
+      "reason": "미국 공장과 바이오 생산은 inspection/tech transfer gate를 통과해야 한다."
+    },
+    {
+      "axis": "CMO_recurring_order_visibility",
+      "direction": "raise",
+      "points": "5",
+      "reason": "반복 주문과 batch slot이 있어야 매출 visibility가 생긴다."
+    },
+    {
+      "axis": "clinical_endpoint_quality",
+      "direction": "raise",
+      "points": "5",
+      "reason": "임상은 headline보다 endpoint quality가 valuation을 지탱한다."
+    },
+    {
+      "axis": "partner_execution_quality",
+      "direction": "raise",
+      "points": "5",
+      "reason": "global partner 이름보다 실제 실행력이 중요하다."
+    },
+    {
+      "axis": "patent_IP_freedom_to_operate",
+      "direction": "raise",
+      "points": "5",
+      "reason": "SC formulation과 platform tech는 patent/IP gate가 핵심이다."
+    },
+    {
+      "axis": "reimbursement_and_market_access",
+      "direction": "raise",
+      "points": "5",
+      "reason": "승인 후 보험/market access가 있어야 매출 전환이 가능하다."
+    },
+    {
+      "axis": "physician_adoption_sellthrough",
+      "direction": "raise",
+      "points": "4",
+      "reason": "의료미용은 doctor adoption과 sell-through가 실제 수요다."
+    },
+    {
+      "axis": "FDA_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "FDA headline만으로 Stage 3-Green을 만들지 않는다."
+    },
+    {
+      "axis": "facility_acquisition_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "공장 인수만으로 가동률과 마진을 발명하지 않는다."
+    },
+    {
+      "axis": "CMO_capacity_without_utilization",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "CMO capacity는 utilization 전에는 Stage 2다."
+    },
+    {
+      "axis": "tech_export_upfront_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "upfront만 있고 Phase 2/3·마일스톤 확률이 없으면 Green이 아니다."
+    },
+    {
+      "axis": "early_stage_deal_without_phase2_3",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "초기 임상 기술수출은 strong option이지 Green 근거가 아니다."
+    },
+    {
+      "axis": "approval_without_reimbursement",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "승인 후 접근성/보험이 없으면 매출 bridge가 약하다."
+    },
+    {
+      "axis": "aesthetic_launch_without_doctor_adoption",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "의료미용 launch는 physician adoption 전에는 과열 가능성이 있다."
+    },
+    {
+      "axis": "patent_dispute_unresolved",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "patent dispute가 남으면 royalty/adoption을 유예한다."
+    },
+    {
+      "axis": "clinical_hold_or_CRL",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "clinical hold/CRL은 hard 4C 후보로 본다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "BIO_CMO_US_LOCALIZATION_STAGE2",
+      "clinical_endpoint_quality": "+2",
+      "cmo_recurring_order_visibility": "+5",
+      "event_penalty": "-5",
+      "facility_utilization": "+5",
+      "fda_approval_to_launch_conversion": "+3",
+      "fda_inspection_tech_transfer": "+5",
+      "hard4c_sensitivity": "+4",
+      "notes": "Samsung Biologics shows facility acquisition is not Green without utilization and margin.",
+      "partner_execution_quality": "+4",
+      "patent_ip_freedom_to_operate": "+2",
+      "physician_adoption_sellthrough": "0",
+      "reimbursement_market_access": "+2",
+      "royalty_milestone_probability": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "BIOSIMILAR_US_TARIFF_HEDGE_STAGE2",
+      "clinical_endpoint_quality": "+3",
+      "cmo_recurring_order_visibility": "+4",
+      "event_penalty": "-5",
+      "facility_utilization": "+5",
+      "fda_approval_to_launch_conversion": "+4",
+      "fda_inspection_tech_transfer": "+5",
+      "hard4c_sensitivity": "+4",
+      "notes": "Celltrion U.S. factory hedge needs product transfer, market share and tariff savings.",
+      "partner_execution_quality": "+4",
+      "patent_ip_freedom_to_operate": "+3",
+      "physician_adoption_sellthrough": "0",
+      "reimbursement_market_access": "+5",
+      "royalty_milestone_probability": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "VACCINE_CDMO_MA_EVENT_PREMIUM",
+      "clinical_endpoint_quality": "+3",
+      "cmo_recurring_order_visibility": "+5",
+      "event_penalty": "-5",
+      "facility_utilization": "+5",
+      "fda_approval_to_launch_conversion": "+3",
+      "fda_inspection_tech_transfer": "+5",
+      "hard4c_sensitivity": "+4",
+      "notes": "SK Bioscience IDT acquisition needs CDMO backlog, integration and margin.",
+      "partner_execution_quality": "+4",
+      "patent_ip_freedom_to_operate": "+2",
+      "physician_adoption_sellthrough": "0",
+      "reimbursement_market_access": "+3",
+      "royalty_milestone_probability": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "BLOCKBUSTER_SC_FORMULATION_STAGE3_CANDIDATE",
+      "clinical_endpoint_quality": "+5",
+      "cmo_recurring_order_visibility": "+2",
+      "event_penalty": "-3",
+      "facility_utilization": "+2",
+      "fda_approval_to_launch_conversion": "+5",
+      "fda_inspection_tech_transfer": "+4",
+      "hard4c_sensitivity": "+4",
+      "notes": "Alteogen/Keytruda Qlex needs adoption, royalty and patent freedom-to-operate.",
+      "partner_execution_quality": "+5",
+      "patent_ip_freedom_to_operate": "+5",
+      "physician_adoption_sellthrough": "+4",
+      "reimbursement_market_access": "+5",
+      "royalty_milestone_probability": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "ONCOLOGY_LICENSE_ROYALTY_STAGE2",
+      "clinical_endpoint_quality": "+5",
+      "cmo_recurring_order_visibility": "+1",
+      "event_penalty": "-4",
+      "facility_utilization": "+2",
+      "fda_approval_to_launch_conversion": "+5",
+      "fda_inspection_tech_transfer": "+4",
+      "hard4c_sensitivity": "+4",
+      "notes": "Yuhan/Lazertinib needs launch uptake, royalty economics and manufacturing gate.",
+      "partner_execution_quality": "+5",
+      "patent_ip_freedom_to_operate": "+4",
+      "physician_adoption_sellthrough": "0",
+      "reimbursement_market_access": "+5",
+      "royalty_milestone_probability": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "AESTHETIC_MEDICAL_DEVICE_US_LAUNCH_STAGE2",
+      "clinical_endpoint_quality": "+3",
+      "cmo_recurring_order_visibility": "+1",
+      "event_penalty": "-4",
+      "facility_utilization": "+1",
+      "fda_approval_to_launch_conversion": "+5",
+      "fda_inspection_tech_transfer": "+3",
+      "hard4c_sensitivity": "+3",
+      "notes": "Hugel/Letybo needs physician adoption, distributor margin and safety compliance.",
+      "partner_execution_quality": "+4",
+      "patent_ip_freedom_to_operate": "+3",
+      "physician_adoption_sellthrough": "+5",
+      "reimbursement_market_access": "+2",
+      "royalty_milestone_probability": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "KOREAN_BIOTECH_TECH_EXPORT_STAGE2",
+      "clinical_endpoint_quality": "+5",
+      "cmo_recurring_order_visibility": "0",
+      "event_penalty": "-5",
+      "facility_utilization": "0",
+      "fda_approval_to_launch_conversion": "+3",
+      "fda_inspection_tech_transfer": "+1",
+      "hard4c_sensitivity": "+4",
+      "notes": "ADEL/Sanofi upfront deal is Stage 2 until Phase 2/3 and royalty probability improve.",
+      "partner_execution_quality": "+5",
+      "patent_ip_freedom_to_operate": "+4",
+      "physician_adoption_sellthrough": "0",
+      "reimbursement_market_access": "+3",
+      "royalty_milestone_probability": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "GLOBAL_CLINICAL_FAILURE_HARD_4C_REFERENCE",
+      "clinical_endpoint_quality": "+5",
+      "cmo_recurring_order_visibility": "0",
+      "event_penalty": "0",
+      "facility_utilization": "0",
+      "fda_approval_to_launch_conversion": "+5",
+      "fda_inspection_tech_transfer": "+5",
+      "hard4c_sensitivity": "+5",
+      "notes": "Trial failure, FDA rejection or clinical hold must be hard 4C reference.",
+      "partner_execution_quality": "+3",
+      "patent_ip_freedom_to_operate": "+5",
+      "physician_adoption_sellthrough": "0",
+      "reimbursement_market_access": "+5",
+      "royalty_milestone_probability": "+5"
+    }
+  ],
+  "source_round": "docs/round/round_289.md",
+  "stage4b_watch_triggers": [
+    "FDA_approval_headline_before_launch_or_reimbursement",
+    "tech_export_upfront_total_deal_value_only",
+    "CDMO_facility_acquisition_before_utilization",
+    "global_partner_name_rally_before_milestones",
+    "aesthetic_us_launch_before_physician_adoption",
+    "unlisted_biotech_deal_readthrough_to_listed_peers"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "direct_KRX_hard_4c_confirmed": false,
+    "event_premium_count": 1,
+    "evidence_good_but_price_failed_count": 1,
+    "failed_rerating_count": 0,
+    "false_positive_score_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "large_sector": "BIOTECH_HEALTHCARE_DEVICE",
+    "price_moved_without_evidence_count": 1,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_217",
+    "sector_hard_4c_reference_confirmed": true,
+    "sector_hard_4c_reference_count": 1,
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_289.md",
+    "stage3_case_count": 1,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 8,
+    "success_candidate_count": 7,
+    "target_archetype_count": 8,
+    "unknown_alignment_count": 5
+  },
+  "target_aliases": {
+    "AESTHETIC_MEDICAL_DEVICE_US_LAUNCH_STAGE2": "AESTHETIC_MEDICAL_DEVICE_US_LAUNCH_STAGE2",
+    "BIOSIMILAR_US_TARIFF_HEDGE_STAGE2": "BIOSIMILAR_US_TARIFF_HEDGE_STAGE2",
+    "BIO_CMO_US_LOCALIZATION_STAGE2": "BIO_CMO_US_LOCALIZATION_STAGE2",
+    "BLOCKBUSTER_SC_FORMULATION_STAGE3_CANDIDATE": "BLOCKBUSTER_SC_FORMULATION_STAGE3_CANDIDATE",
+    "GLOBAL_CLINICAL_FAILURE_HARD_4C_REFERENCE": "GLOBAL_CLINICAL_FAILURE_HARD_4C_REFERENCE",
+    "KOREAN_BIOTECH_TECH_EXPORT_STAGE2": "KOREAN_BIOTECH_TECH_EXPORT_STAGE2",
+    "ONCOLOGY_LICENSE_ROYALTY_STAGE2": "ONCOLOGY_LICENSE_ROYALTY_STAGE2",
+    "VACCINE_CDMO_MA_EVENT_PREMIUM": "VACCINE_CDMO_MA_EVENT_PREMIUM"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round289_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_fda_cdmo_tech_export_or_medical_device_headlines_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}

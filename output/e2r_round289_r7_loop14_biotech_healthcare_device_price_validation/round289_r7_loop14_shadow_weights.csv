@@ -1,0 +1,9 @@
+archetype,fda_approval_to_launch_conversion,royalty_milestone_probability,facility_utilization,fda_inspection_tech_transfer,cmo_recurring_order_visibility,clinical_endpoint_quality,partner_execution_quality,patent_ip_freedom_to_operate,reimbursement_market_access,physician_adoption_sellthrough,event_penalty,4b_watch_sensitivity,hard4c_sensitivity,notes
+BIO_CMO_US_LOCALIZATION_STAGE2,+3,+1,+5,+5,+5,+2,+4,+2,+2,0,-5,+4,+4,Samsung Biologics shows facility acquisition is not Green without utilization and margin.
+BIOSIMILAR_US_TARIFF_HEDGE_STAGE2,+4,+3,+5,+5,+4,+3,+4,+3,+5,0,-5,+4,+4,"Celltrion U.S. factory hedge needs product transfer, market share and tariff savings."
+VACCINE_CDMO_MA_EVENT_PREMIUM,+3,+1,+5,+5,+5,+3,+4,+2,+3,0,-5,+5,+4,"SK Bioscience IDT acquisition needs CDMO backlog, integration and margin."
+BLOCKBUSTER_SC_FORMULATION_STAGE3_CANDIDATE,+5,+5,+2,+4,+2,+5,+5,+5,+5,+4,-3,+5,+4,"Alteogen/Keytruda Qlex needs adoption, royalty and patent freedom-to-operate."
+ONCOLOGY_LICENSE_ROYALTY_STAGE2,+5,+5,+2,+4,+1,+5,+5,+4,+5,0,-4,+4,+4,"Yuhan/Lazertinib needs launch uptake, royalty economics and manufacturing gate."
+AESTHETIC_MEDICAL_DEVICE_US_LAUNCH_STAGE2,+5,+3,+1,+3,+1,+3,+4,+3,+2,+5,-4,+5,+3,"Hugel/Letybo needs physician adoption, distributor margin and safety compliance."
+KOREAN_BIOTECH_TECH_EXPORT_STAGE2,+3,+5,0,+1,0,+5,+5,+4,+3,0,-5,+5,+4,ADEL/Sanofi upfront deal is Stage 2 until Phase 2/3 and royalty probability improve.
+GLOBAL_CLINICAL_FAILURE_HARD_4C_REFERENCE,+5,+5,0,+5,0,+5,+3,+5,+5,0,0,+5,+5,"Trial failure, FDA rejection or clinical hold must be hard 4C reference."

@@ -1,0 +1,20 @@
+axis,points,direction,reason
+FDA_approval_to_launch_conversion,5,raise,승인 headline은 launch와 접근성으로 닫혀야 한다.
+royalty_milestone_probability,5,raise,기술수출과 라이선스는 마일스톤/로열티 확률이 중요하다.
+facility_utilization,5,raise,CMO/CDMO 시설은 capacity가 아니라 가동률이 Green 근거다.
+FDA_inspection_and_tech_transfer,5,raise,미국 공장과 바이오 생산은 inspection/tech transfer gate를 통과해야 한다.
+CMO_recurring_order_visibility,5,raise,반복 주문과 batch slot이 있어야 매출 visibility가 생긴다.
+clinical_endpoint_quality,5,raise,임상은 headline보다 endpoint quality가 valuation을 지탱한다.
+partner_execution_quality,5,raise,global partner 이름보다 실제 실행력이 중요하다.
+patent_IP_freedom_to_operate,5,raise,SC formulation과 platform tech는 patent/IP gate가 핵심이다.
+reimbursement_and_market_access,5,raise,승인 후 보험/market access가 있어야 매출 전환이 가능하다.
+physician_adoption_sellthrough,4,raise,의료미용은 doctor adoption과 sell-through가 실제 수요다.
+FDA_headline_only,-5,lower,FDA headline만으로 Stage 3-Green을 만들지 않는다.
+facility_acquisition_only,-5,lower,공장 인수만으로 가동률과 마진을 발명하지 않는다.
+CMO_capacity_without_utilization,-5,lower,CMO capacity는 utilization 전에는 Stage 2다.
+tech_export_upfront_only,-5,lower,upfront만 있고 Phase 2/3·마일스톤 확률이 없으면 Green이 아니다.
+early_stage_deal_without_phase2_3,-5,lower,초기 임상 기술수출은 strong option이지 Green 근거가 아니다.
+approval_without_reimbursement,-4,lower,승인 후 접근성/보험이 없으면 매출 bridge가 약하다.
+aesthetic_launch_without_doctor_adoption,-4,lower,의료미용 launch는 physician adoption 전에는 과열 가능성이 있다.
+patent_dispute_unresolved,-5,lower,patent dispute가 남으면 royalty/adoption을 유예한다.
+clinical_hold_or_CRL,-5,lower,clinical hold/CRL은 hard 4C 후보로 본다.
