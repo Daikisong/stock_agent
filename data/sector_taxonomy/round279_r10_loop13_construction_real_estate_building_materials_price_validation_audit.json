@@ -1,0 +1,373 @@
+{
+  "case_ids": [
+    "r10_loop13_real_estate_pf_taeyoung_liquidity_watch",
+    "r10_loop13_samsung_ena_gs_fadhili_epc_order_stage2",
+    "r10_loop13_czech_nuclear_infra_preferred_bidder_legal_watch",
+    "r10_loop13_hyundai_steel_construction_material_demand_break",
+    "r10_loop13_seoul_property_policy_ratecut_macro_gate",
+    "r10_loop13_anseong_highway_construction_safety_reference",
+    "r10_loop13_builder_liquidity_package_policy_relief",
+    "r10_loop13_steel_plate_anti_dumping_construction_relief"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "PF / 주택",
+      "primary_archetype": "REAL_ESTATE_PF_LIQUIDITY_4C_WATCH",
+      "terms": "Taeyoung E&C|PF delinquency|40.6T support|syndicated loan 1T to 5T|profitable projects only"
+    },
+    {
+      "category": "해외 EPC",
+      "primary_archetype": "OVERSEAS_EPC_MEGA_ORDER_STAGE2_NOT_GREEN",
+      "terms": "Samsung E&A|GS E&C|Saudi Aramco Fadhili|$7.7B|EPC margin|working capital"
+    },
+    {
+      "category": "원전 인프라",
+      "primary_archetype": "NUCLEAR_INFRA_PREFERRED_BIDDER_STAGE2",
+      "terms": "KHNP|Doosan Enerbility|KEPCO E&C|Czech nuclear|Westinghouse appeal|preferred bidder not final contract"
+    },
+    {
+      "category": "건자재 / 철강",
+      "primary_archetype": "CONSTRUCTION_MATERIAL_DEMAND_BREAK",
+      "terms": "Hyundai Steel|rebar price -10%|net-profit cut -73%|construction demand|steel plate competition"
+    },
+    {
+      "category": "부동산 정책",
+      "primary_archetype": "SEOUL_PROPERTY_POLICY_EVENT_PREMIUM",
+      "terms": "Gangnam|Seocho|Songpa|Yongsan|household debt|BOK rate cuts"
+    },
+    {
+      "category": "건설 안전",
+      "primary_archetype": "CONSTRUCTION_SAFETY_HARD_REFERENCE",
+      "terms": "Anseong highway collapse|fatal construction-site accident|five 50m steel structures|safety trust"
+    },
+    {
+      "category": "건설사 유동성",
+      "primary_archetype": "HOUSING_SUPPLY_RATE_CUT_POLICY_RELIEF",
+      "terms": "builder liquidity package|loan guarantees|market stabilising fund|housing supply|PF restructuring"
+    },
+    {
+      "category": "철강 반덤핑",
+      "primary_archetype": "STEEL_PLATE_CONSTRUCTION_RELIEF_AND_EXPORT_RISK",
+      "terms": "Hyundai Steel|POSCO|27.91-38.02% tariff|Chinese steel imports|US tariff export risk"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "order_headline_only",
+    "preferred_bidder_only",
+    "policy_support_only",
+    "tariff_relief_only",
+    "rate_cut_property_expectation_only",
+    "housing_price_rebound_without_cashflow",
+    "PF_support_without_profitability",
+    "EPC_backlog_without_margin",
+    "safety_incident_unresolved"
+  ],
+  "green_required_fields": [
+    "PF_refinancing_success_confirmed",
+    "project_profitability_filter_confirmed",
+    "pre_sale_ratio_confirmed",
+    "unsold_inventory_reduction_confirmed",
+    "EPC_margin_visibility_confirmed",
+    "working_capital_control_confirmed",
+    "unbilled_receivables_control_confirmed",
+    "final_contract_signed_confirmed",
+    "legal_appeal_clearance_confirmed",
+    "construction_safety_trust_confirmed",
+    "building_material_demand_spread_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "PF_default_workout_or_debt_rescheduling",
+    "project_financing_delinquency_spike",
+    "fatal_construction_site_accident",
+    "EPC_contract_cancellation",
+    "sovereign_legal_appeal_blocking_contract",
+    "cost_overrun_or_unbilled_receivables_surge",
+    "pre_sale_failure_or_unsold_inventory_spike",
+    "rate_cuts_blocked_by_property_household_debt",
+    "construction_material_demand_collapse"
+  ],
+  "large_sector": "CONSTRUCTION_REAL_ESTATE_BUILDING_MATERIALS",
+  "round_id": "round_207",
+  "score_adjustments": [
+    {
+      "axis": "PF_refinancing_success",
+      "direction": "raise",
+      "points": "5",
+      "reason": "PF 지원이 아니라 실제 차환 성공을 봐야 한다."
+    },
+    {
+      "axis": "project_profitability_filter",
+      "direction": "raise",
+      "points": "5",
+      "reason": "지원 대상 프로젝트가 수익성 있는지 확인해야 한다."
+    },
+    {
+      "axis": "pre_sale_ratio",
+      "direction": "raise",
+      "points": "5",
+      "reason": "분양률이 현금회수의 출발점이다."
+    },
+    {
+      "axis": "unsold_inventory_reduction",
+      "direction": "raise",
+      "points": "5",
+      "reason": "미분양 감소 없이는 주택 Green이 어렵다."
+    },
+    {
+      "axis": "EPC_margin_visibility",
+      "direction": "raise",
+      "points": "5",
+      "reason": "해외 EPC 수주는 마진이 닫혀야 한다."
+    },
+    {
+      "axis": "working_capital_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "건설은 운전자본과 현금회수가 늦으면 이익이 훼손된다."
+    },
+    {
+      "axis": "unbilled_receivables_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "미청구공사 증가는 EPC/건설 4C-watch다."
+    },
+    {
+      "axis": "final_contract_signed",
+      "direction": "raise",
+      "points": "5",
+      "reason": "preferred bidder는 최종계약이 아니다."
+    },
+    {
+      "axis": "legal_appeal_clearance",
+      "direction": "raise",
+      "points": "5",
+      "reason": "원전/인프라는 법적 이의제기가 해소되어야 한다."
+    },
+    {
+      "axis": "construction_safety_trust",
+      "direction": "raise",
+      "points": "5",
+      "reason": "사망 안전사고는 hard gate다."
+    },
+    {
+      "axis": "order_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "수주 headline은 Stage 2일 수 있지만 Green은 아니다."
+    },
+    {
+      "axis": "preferred_bidder_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "우선협상대상자는 최종계약과 다르다."
+    },
+    {
+      "axis": "policy_support_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "정책지원만으로 현금흐름을 만들지 않는다."
+    },
+    {
+      "axis": "tariff_relief_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "반덤핑 관세는 relief이지 건자재 실수요 증거가 아니다."
+    },
+    {
+      "axis": "safety_incident_unresolved",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "안전 사고가 풀리지 않으면 수주보다 먼저 차단한다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "EPC_margin_visibility": "+1",
+      "archetype": "REAL_ESTATE_PF_LIQUIDITY_4C_WATCH",
+      "construction_safety_trust": "+3",
+      "event_penalty": "0",
+      "final_contract_signed": "+1",
+      "hard_4c_sensitivity": "+5",
+      "legal_appeal_clearance": "+2",
+      "notes": "PF support is relief; refinancing, presale, profitability and cash collection are core gates.",
+      "pf_refinancing_success": "+5",
+      "pre_sale_ratio": "+5",
+      "project_profitability_filter": "+5",
+      "unbilled_receivables_control": "+5",
+      "unsold_inventory_reduction": "+5",
+      "working_capital_control": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "EPC_margin_visibility": "+5",
+      "archetype": "OVERSEAS_EPC_MEGA_ORDER_STAGE2_NOT_GREEN",
+      "construction_safety_trust": "+4",
+      "event_penalty": "-5",
+      "final_contract_signed": "+5",
+      "hard_4c_sensitivity": "+5",
+      "legal_appeal_clearance": "+4",
+      "notes": "Fadhili shows order headline is not EPC margin/cashflow Green.",
+      "pf_refinancing_success": "+1",
+      "pre_sale_ratio": "0",
+      "project_profitability_filter": "+3",
+      "unbilled_receivables_control": "+5",
+      "unsold_inventory_reduction": "0",
+      "working_capital_control": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "EPC_margin_visibility": "+5",
+      "archetype": "NUCLEAR_INFRA_PREFERRED_BIDDER_STAGE2",
+      "construction_safety_trust": "+4",
+      "event_penalty": "-5",
+      "final_contract_signed": "+5",
+      "hard_4c_sensitivity": "+5",
+      "legal_appeal_clearance": "+5",
+      "notes": "Czech nuclear needs final contract, legal clearance, funding and EPC margin.",
+      "pf_refinancing_success": "+1",
+      "pre_sale_ratio": "0",
+      "project_profitability_filter": "+3",
+      "unbilled_receivables_control": "+5",
+      "unsold_inventory_reduction": "0",
+      "working_capital_control": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "EPC_margin_visibility": "+1",
+      "archetype": "CONSTRUCTION_MATERIAL_DEMAND_BREAK",
+      "construction_safety_trust": "+3",
+      "event_penalty": "0",
+      "final_contract_signed": "+2",
+      "hard_4c_sensitivity": "+4",
+      "legal_appeal_clearance": "+2",
+      "notes": "Hyundai Steel shows weak construction demand can break material margins.",
+      "pf_refinancing_success": "+2",
+      "pre_sale_ratio": "+2",
+      "project_profitability_filter": "+3",
+      "unbilled_receivables_control": "+3",
+      "unsold_inventory_reduction": "+2",
+      "working_capital_control": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "EPC_margin_visibility": "0",
+      "archetype": "SEOUL_PROPERTY_POLICY_EVENT_PREMIUM",
+      "construction_safety_trust": "+2",
+      "event_penalty": "-5",
+      "final_contract_signed": "0",
+      "hard_4c_sensitivity": "+4",
+      "legal_appeal_clearance": "0",
+      "notes": "Property/rate-cut headlines need presale, inventory, PF and cashflow proof.",
+      "pf_refinancing_success": "+5",
+      "pre_sale_ratio": "+5",
+      "project_profitability_filter": "+5",
+      "unbilled_receivables_control": "+4",
+      "unsold_inventory_reduction": "+5",
+      "working_capital_control": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "EPC_margin_visibility": "0",
+      "archetype": "CONSTRUCTION_SAFETY_HARD_REFERENCE",
+      "construction_safety_trust": "+5",
+      "event_penalty": "0",
+      "final_contract_signed": "0",
+      "hard_4c_sensitivity": "+5",
+      "legal_appeal_clearance": "0",
+      "notes": "Fatal worksite accidents are hard reference for R10.",
+      "pf_refinancing_success": "0",
+      "pre_sale_ratio": "0",
+      "project_profitability_filter": "0",
+      "unbilled_receivables_control": "0",
+      "unsold_inventory_reduction": "0",
+      "working_capital_control": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "EPC_margin_visibility": "+1",
+      "archetype": "HOUSING_SUPPLY_RATE_CUT_POLICY_RELIEF",
+      "construction_safety_trust": "+3",
+      "event_penalty": "-5",
+      "final_contract_signed": "+1",
+      "hard_4c_sensitivity": "+4",
+      "legal_appeal_clearance": "+1",
+      "notes": "Builder support package is relief until project cashflow proves out.",
+      "pf_refinancing_success": "+5",
+      "pre_sale_ratio": "+5",
+      "project_profitability_filter": "+5",
+      "unbilled_receivables_control": "+5",
+      "unsold_inventory_reduction": "+5",
+      "working_capital_control": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "EPC_margin_visibility": "+1",
+      "archetype": "STEEL_PLATE_CONSTRUCTION_RELIEF_AND_EXPORT_RISK",
+      "construction_safety_trust": "+3",
+      "event_penalty": "-5",
+      "final_contract_signed": "+2",
+      "hard_4c_sensitivity": "+4",
+      "legal_appeal_clearance": "+2",
+      "notes": "Tariff relief is not Green without construction demand, spread and export-risk control.",
+      "pf_refinancing_success": "+2",
+      "pre_sale_ratio": "+2",
+      "project_profitability_filter": "+3",
+      "unbilled_receivables_control": "+3",
+      "unsold_inventory_reduction": "+2",
+      "working_capital_control": "+4"
+    }
+  ],
+  "source_round": "docs/round/round_279.md",
+  "stage4b_watch_triggers": [
+    "overseas_EPC_order_day_plus_5_to_10pct_before_margin",
+    "nuclear_preferred_bidder_basket_plus_40pct_before_final_contract",
+    "anti_dumping_tariff_short_rally_before_spread",
+    "PF_support_headline_builder_rebound",
+    "rate_cut_and_property_price_expectation_prepricing"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "direct_listed_hard_4c_case_count": 0,
+    "direct_listed_hard_4c_confirmed": false,
+    "event_premium_count": 3,
+    "evidence_good_but_price_failed_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "CONSTRUCTION_REAL_ESTATE_BUILDING_MATERIALS",
+    "policy_relief_count": 4,
+    "price_moved_without_evidence_count": 3,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_207",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_279.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 6,
+    "success_candidate_count": 4,
+    "target_archetype_count": 8
+  },
+  "target_aliases": {
+    "CONSTRUCTION_MATERIAL_DEMAND_BREAK": "CONSTRUCTION_MATERIAL_DEMAND_BREAK",
+    "CONSTRUCTION_SAFETY_HARD_REFERENCE": "CONSTRUCTION_SAFETY_HARD_REFERENCE",
+    "HOUSING_SUPPLY_RATE_CUT_POLICY_RELIEF": "HOUSING_SUPPLY_RATE_CUT_POLICY_RELIEF",
+    "NUCLEAR_INFRA_PREFERRED_BIDDER_STAGE2": "NUCLEAR_INFRA_PREFERRED_BIDDER_STAGE2",
+    "OVERSEAS_EPC_MEGA_ORDER_STAGE2_NOT_GREEN": "OVERSEAS_EPC_MEGA_ORDER_STAGE2_NOT_GREEN",
+    "REAL_ESTATE_PF_LIQUIDITY_4C_WATCH": "REAL_ESTATE_PF_LIQUIDITY_4C_WATCH",
+    "SEOUL_PROPERTY_POLICY_EVENT_PREMIUM": "SEOUL_PROPERTY_POLICY_EVENT_PREMIUM",
+    "STEEL_PLATE_CONSTRUCTION_RELIEF_AND_EXPORT_RISK": "STEEL_PLATE_CONSTRUCTION_RELIEF_AND_EXPORT_RISK"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round279_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_policy_support_order_preferred_bidder_property_price_or_tariff_relief_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}

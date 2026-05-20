@@ -1,0 +1,15 @@
+field,required_for_round279_price_validation
+price_data_source,true
+full_adjusted_ohlc_complete,true
+reported_event_return_anchor,true
+policy_or_project_value_anchor,true
+PF_delinquency_anchor,true
+stage2_price_anchor,true
+stage3_price,true
+stage4b_price,true
+stage4c_price,true
+event_mfe_pct,true
+event_mae_pct,true
+safety_trust_anchor,true
+legal_appeal_anchor,true
+price_validation_status,true
