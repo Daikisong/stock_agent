@@ -485,6 +485,14 @@ class E2RArchetype(str, Enum):
     CONSUMER_REGULATED_PRODUCT = "CONSUMER_REGULATED_PRODUCT"
     EDUCATION_POLICY_EVENT = "EDUCATION_POLICY_EVENT"
     FOOD_SERVICE_EVENT_PREMIUM = "FOOD_SERVICE_EVENT_PREMIUM"
+    HOME_LIVING_RENTAL_RECURRING = "HOME_LIVING_RENTAL_RECURRING"
+    EDUCATION_POLICY_MEDICAL_QUOTA = "EDUCATION_POLICY_MEDICAL_QUOTA"
+    EDTECH_AI_TEXTBOOK_POLICY_REVERSAL = "EDTECH_AI_TEXTBOOK_POLICY_REVERSAL"
+    CHILDCARE_DEMOGRAPHIC_POLICY_EVENT = "CHILDCARE_DEMOGRAPHIC_POLICY_EVENT"
+    AGRI_FOOD_INPUT_COST_SHOCK = "AGRI_FOOD_INPUT_COST_SHOCK"
+    FEED_GRAIN_INPUT_COST_4C = "FEED_GRAIN_INPUT_COST_4C"
+    PET_WELFARE_POLICY_TRANSITION = "PET_WELFARE_POLICY_TRANSITION"
+    FOOD_SERVICE_CELEBRITY_EVENT_PREMIUM = "FOOD_SERVICE_CELEBRITY_EVENT_PREMIUM"
     BEAUTY_DEVICE_EXPORT = "BEAUTY_DEVICE_EXPORT"
     FOOD_SAFETY_RECALL_OVERLAY = "FOOD_SAFETY_RECALL_OVERLAY"
     DATA_SECURITY_SUPPLIER_REGULATION_OVERLAY = "DATA_SECURITY_SUPPLIER_REGULATION_OVERLAY"
@@ -1624,6 +1632,102 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("price", "fx", "news", "red_team"),
             false_positive_patterns=("macro crash rebound treated as structural rerating"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.HOME_LIVING_RENTAL_RECURRING: ArchetypeDefinition(
+            archetype=E2RArchetype.HOME_LIVING_RENTAL_RECURRING,
+            stage1_radar_signals=("rental account growth", "overseas subsidiary expansion", "water/air/bidet/mattress rental base"),
+            stage2_candidate_signals=("recurring accounts disclosed", "churn and ARPU visible", "OPM/FCF path visible"),
+            stage3_high_conviction_signals=("recurring revenue, churn stability, ARPU, overseas growth, and FCF conversion all verified"),
+            stage4a_ongoing_signals=("account growth and churn remain stable with cash conversion"),
+            stage4b_graduation_overheat_signals=("defensive rental multiple expands before account and FCF growth"),
+            stage4c_thesis_break_signals=("product recall", "churn spike", "overseas slowdown", "service-cost inflation"),
+            key_evidence_families=("financial_actual", "research_report", "disclosure", "price"),
+            false_positive_patterns=("defensive recurring label without churn/ARPU/FCF",),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=8, mispricing=14, valuation=14),
+        ),
+        E2RArchetype.EDUCATION_POLICY_MEDICAL_QUOTA: ArchetypeDefinition(
+            archetype=E2RArchetype.EDUCATION_POLICY_MEDICAL_QUOTA,
+            stage1_radar_signals=("medical-school quota policy", "private-education basket attention", "repeat-course demand narrative"),
+            stage2_candidate_signals=("quota expansion confirmed", "paid enrollment conversion starts", "ARPU and OPM evidence appears"),
+            stage3_high_conviction_signals=("paid enrollment, repeat course, ARPU, OPM, and cash conversion verified"),
+            stage4a_ongoing_signals=("enrollment and margin conversion remain visible"),
+            stage4b_graduation_overheat_signals=("education basket rally before paid enrollment and ARPU evidence"),
+            stage4c_thesis_break_signals=("policy rollback", "private education regulation", "student conversion failure", "AI tutoring disruption"),
+            key_evidence_families=("policy", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("medical quota headline treated as company revenue",),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=18, bottleneck=4, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.EDTECH_AI_TEXTBOOK_POLICY_REVERSAL: ArchetypeDefinition(
+            archetype=E2RArchetype.EDTECH_AI_TEXTBOOK_POLICY_REVERSAL,
+            stage1_radar_signals=("AI textbook policy", "AI classroom narrative", "edtech basket attention"),
+            stage2_candidate_signals=("actual school adoption and budget confirmed", "platform revenue conversion visible"),
+            stage3_high_conviction_signals=("paid school adoption, recurring contract, ARPU, OPM, and low policy friction verified"),
+            stage4a_ongoing_signals=("AI education revenue survives policy changes"),
+            stage4b_graduation_overheat_signals=("AI textbook rally before adoption and budget evidence"),
+            stage4c_thesis_break_signals=("official textbook status removed", "classroom device ban", "teacher/parent backlash", "policy reversal"),
+            key_evidence_families=("policy", "news", "financial_actual", "price"),
+            false_positive_patterns=("AI education theme without school adoption",),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=10, bottleneck=2, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.CHILDCARE_DEMOGRAPHIC_POLICY_EVENT: ArchetypeDefinition(
+            archetype=E2RArchetype.CHILDCARE_DEMOGRAPHIC_POLICY_EVENT,
+            stage1_radar_signals=("fertility rebound", "childcare support policy", "care-service pilot"),
+            stage2_candidate_signals=("fertility and births improve", "paid childcare demand or utilization appears", "care-service capacity expands"),
+            stage3_high_conviction_signals=("paid demand, utilization, margin, repeat revenue, and cash conversion verified"),
+            stage4a_ongoing_signals=("utilization and recurring revenue remain visible"),
+            stage4b_graduation_overheat_signals=("birthrate or childcare-policy rally before company utilization evidence"),
+            stage4c_thesis_break_signals=("fertility rebound fades", "subsidy withdrawal", "labor-cost burden", "utilization failure"),
+            key_evidence_families=("policy", "demographic", "financial_actual", "price"),
+            false_positive_patterns=("birthrate headline treated as listed-company revenue",),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=18, bottleneck=4, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.AGRI_FOOD_INPUT_COST_SHOCK: ArchetypeDefinition(
+            archetype=E2RArchetype.AGRI_FOOD_INPUT_COST_SHOCK,
+            stage1_radar_signals=("crop climate shock", "food input-price spike", "government stock release"),
+            stage2_candidate_signals=("price pass-through and inventory control verified", "processor margins stabilize"),
+            stage3_high_conviction_signals=("input-cost pass-through, stable inventory, margin resilience, and FCF conversion verified"),
+            stage4a_ongoing_signals=("input costs and margins remain controlled"),
+            stage4b_graduation_overheat_signals=("food basket rallies on input shock before pass-through proof"),
+            stage4c_thesis_break_signals=("input price spike without pass-through", "inventory build", "margin compression", "climate supply shock persists"),
+            key_evidence_families=("commodity", "policy", "financial_actual", "price"),
+            false_positive_patterns=("food price spike treated as structural profit without margin proof"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=10, bottleneck=14, mispricing=8, valuation=8),
+        ),
+        E2RArchetype.FEED_GRAIN_INPUT_COST_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.FEED_GRAIN_INPUT_COST_4C,
+            stage1_radar_signals=("feed wheat tender failure", "grain price spike", "livestock feed-cost pressure"),
+            stage2_candidate_signals=("feed-cost pass-through and inventory protection verified",),
+            stage3_high_conviction_signals=("not by itself; grain cost shock is a RedTeam gate until pass-through and margins prove resilient"),
+            stage4a_ongoing_signals=("feed cost and livestock margins stabilize"),
+            stage4b_graduation_overheat_signals=("livestock/feed basket rally before pass-through evidence"),
+            stage4c_thesis_break_signals=("feed cost shock", "FX grain-cost pressure", "inventory loss", "margin compression"),
+            key_evidence_families=("commodity", "financial_actual", "news", "price"),
+            false_positive_patterns=("feed-cost spike treated as positive demand"),
+            preferred_score_weights=_weights(eps_fcf=4, visibility=6, bottleneck=12, mispricing=4, valuation=4),
+        ),
+        E2RArchetype.PET_WELFARE_POLICY_TRANSITION: ArchetypeDefinition(
+            archetype=E2RArchetype.PET_WELFARE_POLICY_TRANSITION,
+            stage1_radar_signals=("dog-meat ban transition", "pet welfare policy", "shelter/adoption narrative"),
+            stage2_candidate_signals=("support budget and transition schedule visible", "listed pet/service revenue evidence appears"),
+            stage3_high_conviction_signals=("actual pet-food/service revenue, repeat demand, utilization, margin, and subsidy independence verified"),
+            stage4a_ongoing_signals=("pet/service demand converts without subsidy dependence"),
+            stage4b_graduation_overheat_signals=("pet welfare basket rallies before revenue conversion"),
+            stage4c_thesis_break_signals=("shelter capacity failure", "subsidy dissatisfaction", "policy delay", "transition cost burden"),
+            key_evidence_families=("policy", "news", "financial_actual", "price"),
+            false_positive_patterns=("animal-welfare policy treated as pet-stock revenue",),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=12, bottleneck=4, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.FOOD_SERVICE_CELEBRITY_EVENT_PREMIUM: ArchetypeDefinition(
+            archetype=E2RArchetype.FOOD_SERVICE_CELEBRITY_EVENT_PREMIUM,
+            stage1_radar_signals=("celebrity food event", "viral dinner", "food-service basket spike"),
+            stage2_candidate_signals=("store traffic, same-store sales, and franchise margin later verify conversion"),
+            stage3_high_conviction_signals=("not from event alone; repeat sales, franchise margin, and cash conversion required"),
+            stage4a_ongoing_signals=("traffic conversion and margins hold after event fades"),
+            stage4b_graduation_overheat_signals=("stock jumps 20-30% before revenue evidence"),
+            stage4c_thesis_break_signals=("viral fade", "traffic fails to convert", "input-cost pressure", "franchise margin miss"),
+            key_evidence_families=("price", "news", "financial_actual"),
+            false_positive_patterns=("celebrity meme event treated as structural demand"),
+            preferred_score_weights=_weights(eps_fcf=2, visibility=2, bottleneck=2, mispricing=2, valuation=2),
         ),
         E2RArchetype.PRICE_ONLY_POLICY_RALLY: ArchetypeDefinition(
             archetype=E2RArchetype.PRICE_ONLY_POLICY_RALLY,
