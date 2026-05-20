@@ -1,0 +1,273 @@
+{
+  "deep_sub_archetypes": [
+    {
+      "category": "K-beauty device",
+      "primary_archetype": "K_BEAUTY_DEVICE_GLOBAL_BRAND_4B",
+      "terms": "APR|Medicube|beauty device|celebrity TikTok|tariff risk"
+    },
+    {
+      "category": "indie K-beauty U.S. retail",
+      "primary_archetype": "INDIE_K_BEAUTY_US_RETAIL_CHANNEL",
+      "terms": "d'Alba|Tirtir|Sephora|Ulta|Costco|Target|sell-through"
+    },
+    {
+      "category": "H&B platform",
+      "primary_archetype": "H_AND_B_PLATFORM_GLOBALIZATION",
+      "terms": "CJ Olive Young|U.S. store|online GMV|parent value bridge"
+    },
+    {
+      "category": "K-food ASP capacity",
+      "primary_archetype": "K_FOOD_EXPORT_ASP_CAPACITY",
+      "terms": "Samyang|Buldak|ASP|capacity|recall|packaging cost"
+    },
+    {
+      "category": "China tourism retail",
+      "primary_archetype": "CHINA_TOURISM_DUTYFREE_RETAIL_EVENT",
+      "terms": "Hotel Shilla|Hyundai Department Store|Shinsegae|Chinese visa-free|duty-free spend"
+    },
+    {
+      "category": "cross-border e-commerce data",
+      "primary_archetype": "CROSS_BORDER_ECOMMERCE_DATA_GATE",
+      "terms": "Shinsegae|Gmarket|AliExpress|50M customers|data sharing ban"
+    },
+    {
+      "category": "grocery retail credit",
+      "primary_archetype": "GROCERY_RETAIL_CREDIT_4C_REFERENCE",
+      "terms": "Homeplus|MBK|liquidation value|court-led restructuring"
+    },
+    {
+      "category": "celebrity food-service event",
+      "primary_archetype": "CELEBRITY_FOOD_SERVICE_EVENT_PREMIUM",
+      "terms": "Kyochon|Cherrybro|Neuromeka|Jensen Huang|Kkanbu Chicken"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "viral_social_media_only",
+    "celebrity_event_only",
+    "tourist_arrival_headline_only",
+    "IPO_or_debut_pop_only",
+    "channel_talks_without_sellthrough",
+    "unlisted_subsidiary_readthrough_only",
+    "gross_margin_before_tariff_pass",
+    "data_sharing_regulatory_risk",
+    "offline_retail_credit_stress"
+  ],
+  "green_required_fields": [
+    "repeat_purchase_confirmed",
+    "physical_store_sellthrough_confirmed",
+    "same_store_sales_confirmed",
+    "gross_margin_after_tariff_confirmed",
+    "inventory_discipline_confirmed",
+    "channel_reorder_rate_confirmed",
+    "parent_value_bridge_confirmed",
+    "data_governance_passed",
+    "franchise_margin_confirmed",
+    "cash_conversion_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "food_safety_recall",
+    "input_cost_shock_without_pass_through",
+    "retail_credit_restructuring",
+    "data_governance_violation",
+    "tourism_policy_reversal",
+    "china_korea_diplomatic_shock",
+    "inventory_build_or_channel_stuffing",
+    "franchise_margin_collapse",
+    "celebrity_event_fade"
+  ],
+  "large_sector": "CONSUMER_RETAIL_BRAND",
+  "round_id": "round_202",
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "K_BEAUTY_DEVICE_GLOBAL_BRAND_4B",
+      "cash_conversion": "+5",
+      "channel_reorder_rate": "+5",
+      "data_governance": "+2",
+      "event_penalty": "-4",
+      "franchise_margin": "+0",
+      "gross_margin_after_tariff": "+5",
+      "hard_4c_sensitivity": "+3",
+      "inventory_discipline": "+5",
+      "notes": "APR device economics are strong, but >4x rally requires repeat purchase and margin proof.",
+      "parent_value_bridge": "+2",
+      "physical_store_sellthrough": "+4",
+      "repeat_purchase": "+5",
+      "same_store_sales": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "INDIE_K_BEAUTY_US_RETAIL_CHANNEL",
+      "cash_conversion": "+5",
+      "channel_reorder_rate": "+5",
+      "data_governance": "+2",
+      "event_penalty": "-5",
+      "franchise_margin": "+0",
+      "gross_margin_after_tariff": "+5",
+      "hard_4c_sensitivity": "+3",
+      "inventory_discipline": "+5",
+      "notes": "d'Alba/K-beauty channel talks need physical-store sell-through and reorder proof.",
+      "parent_value_bridge": "+2",
+      "physical_store_sellthrough": "+5",
+      "repeat_purchase": "+5",
+      "same_store_sales": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "H_AND_B_PLATFORM_GLOBALIZATION",
+      "cash_conversion": "+5",
+      "channel_reorder_rate": "+5",
+      "data_governance": "+4",
+      "event_penalty": "-4",
+      "franchise_margin": "+0",
+      "gross_margin_after_tariff": "+5",
+      "hard_4c_sensitivity": "+3",
+      "inventory_discipline": "+5",
+      "notes": "Olive Young platform value needs parent bridge and U.S. unit economics.",
+      "parent_value_bridge": "+5",
+      "physical_store_sellthrough": "+5",
+      "repeat_purchase": "+5",
+      "same_store_sales": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "K_FOOD_EXPORT_ASP_CAPACITY",
+      "cash_conversion": "+5",
+      "channel_reorder_rate": "+5",
+      "data_governance": "+1",
+      "event_penalty": "-2",
+      "franchise_margin": "+2",
+      "gross_margin_after_tariff": "+5",
+      "hard_4c_sensitivity": "+4",
+      "inventory_discipline": "+5",
+      "notes": "Samyang export/ASP/capacity aligned; recall and input-cost risks remain.",
+      "parent_value_bridge": "+1",
+      "physical_store_sellthrough": "+5",
+      "repeat_purchase": "+5",
+      "same_store_sales": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "CHINA_TOURISM_DUTYFREE_RETAIL_EVENT",
+      "cash_conversion": "+5",
+      "channel_reorder_rate": "+4",
+      "data_governance": "+2",
+      "event_penalty": "-5",
+      "franchise_margin": "+0",
+      "gross_margin_after_tariff": "+4",
+      "hard_4c_sensitivity": "+4",
+      "inventory_discipline": "+5",
+      "notes": "Tourist-flow event requires spend, SSS, hotel occupancy and margin.",
+      "parent_value_bridge": "+2",
+      "physical_store_sellthrough": "+5",
+      "repeat_purchase": "+4",
+      "same_store_sales": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "CROSS_BORDER_ECOMMERCE_DATA_GATE",
+      "cash_conversion": "+5",
+      "channel_reorder_rate": "+5",
+      "data_governance": "+5",
+      "event_penalty": "-4",
+      "franchise_margin": "+0",
+      "gross_margin_after_tariff": "+4",
+      "hard_4c_sensitivity": "+5",
+      "inventory_discipline": "+5",
+      "notes": "Shinsegae-Ali JV needs data compliance and GMV/take-rate proof.",
+      "parent_value_bridge": "+3",
+      "physical_store_sellthrough": "+4",
+      "repeat_purchase": "+5",
+      "same_store_sales": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "GROCERY_RETAIL_CREDIT_4C_REFERENCE",
+      "cash_conversion": "+5",
+      "channel_reorder_rate": "+3",
+      "data_governance": "+3",
+      "event_penalty": "+0",
+      "franchise_margin": "+0",
+      "gross_margin_after_tariff": "+4",
+      "hard_4c_sensitivity": "+5",
+      "inventory_discipline": "+5",
+      "notes": "Homeplus shows offline retail credit stress is hard reference.",
+      "parent_value_bridge": "+0",
+      "physical_store_sellthrough": "+3",
+      "repeat_purchase": "+3",
+      "same_store_sales": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "CELEBRITY_FOOD_SERVICE_EVENT_PREMIUM",
+      "cash_conversion": "+3",
+      "channel_reorder_rate": "+1",
+      "data_governance": "+1",
+      "event_penalty": "-5",
+      "franchise_margin": "+5",
+      "gross_margin_after_tariff": "+3",
+      "hard_4c_sensitivity": "+3",
+      "inventory_discipline": "+3",
+      "notes": "Kyochon/Cherrybro Jensen event is price_moved_without_evidence.",
+      "parent_value_bridge": "+0",
+      "physical_store_sellthrough": "+0",
+      "repeat_purchase": "+1",
+      "same_store_sales": "+5"
+    }
+  ],
+  "source_round": "docs/round/round_274.md",
+  "stage4b_watch_triggers": [
+    "beauty_stock_2x_to_4x_before_repeat_purchase_margin_proof",
+    "IPO_or_debut_pop_above_100pct",
+    "tourism_dutyfree_basket_plus_5_to_10pct_on_policy_headline",
+    "celebrity_food_service_event_plus_20_to_30pct",
+    "us_retail_channel_talks_before_sellthrough",
+    "parent_company_rally_on_unlisted_platform_value",
+    "cross_border_jv_premium_before_data_compliance"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "direct_listed_hard_4c_case_count": 0,
+    "direct_listed_hard_4c_confirmed": false,
+    "event_premium_count": 2,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "hard_4c_confirmed_scope": "true_for_retail_credit_reference",
+    "large_sector": "CONSUMER_RETAIL_BRAND",
+    "overheat_count": 2,
+    "price_data_unavailable_count": 2,
+    "price_moved_without_evidence_count": 3,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_202",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_274.md",
+    "stage3_case_count": 1,
+    "stage4b_watch_count": 7,
+    "stage4c_watch_count": 3,
+    "structural_success_candidate_count": 2,
+    "success_candidate_count": 4,
+    "target_archetype_count": 8
+  },
+  "target_aliases": {
+    "CELEBRITY_FOOD_SERVICE_EVENT_PREMIUM": "CELEBRITY_FOOD_SERVICE_EVENT_PREMIUM",
+    "CHINA_TOURISM_DUTYFREE_RETAIL_EVENT": "CHINA_TOURISM_DUTYFREE_RETAIL_EVENT",
+    "CROSS_BORDER_ECOMMERCE_DATA_GATE": "CROSS_BORDER_ECOMMERCE_DATA_GATE",
+    "GROCERY_RETAIL_CREDIT_4C_REFERENCE": "GROCERY_RETAIL_CREDIT_4C_REFERENCE",
+    "H_AND_B_PLATFORM_GLOBALIZATION": "H_AND_B_PLATFORM_GLOBALIZATION",
+    "INDIE_K_BEAUTY_US_RETAIL_CHANNEL": "INDIE_K_BEAUTY_US_RETAIL_CHANNEL",
+    "K_BEAUTY_DEVICE_GLOBAL_BRAND_4B": "K_BEAUTY_DEVICE_GLOBAL_BRAND_4B",
+    "K_FOOD_EXPORT_ASP_CAPACITY": "K_FOOD_EXPORT_ASP_CAPACITY"
+  },
+  "what_not_to_change": [
+    "do_not_use_round274_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_kbeauty_kfood_tourism_celeb_channel_or_jv_headlines_as_green_alone",
+    "do_not_invent_ohlc_or_stage_dates"
+  ]
+}

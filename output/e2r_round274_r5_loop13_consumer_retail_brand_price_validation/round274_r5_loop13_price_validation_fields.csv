@@ -1,0 +1,16 @@
+field,required_for_round274_price_validation
+price_data_source,true
+full_adjusted_ohlc_complete,true
+reported_price_anchor,true
+reported_return_anchor,true
+stage2_price_anchor,true
+stage3_price,true
+stage4b_price,true
+stage4c_price,true
+event_mfe_pct,true
+event_mae_pct,true
+business_anchor,true
+sellthrough_or_reorder_anchor,true
+gross_margin_or_tariff_anchor,true
+data_or_credit_gate,true
+price_validation_status,true

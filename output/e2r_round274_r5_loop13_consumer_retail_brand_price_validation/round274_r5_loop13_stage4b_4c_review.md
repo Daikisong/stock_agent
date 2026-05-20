@@ -1,0 +1,40 @@
+# Round 274 R5 Loop 13 4B/4C Review
+
+## 4B Watch Triggers
+
+- beauty_stock_2x_to_4x_before_repeat_purchase_margin_proof
+- IPO_or_debut_pop_above_100pct
+- tourism_dutyfree_basket_plus_5_to_10pct_on_policy_headline
+- celebrity_food_service_event_plus_20_to_30pct
+- us_retail_channel_talks_before_sellthrough
+- parent_company_rally_on_unlisted_platform_value
+- cross_border_jv_premium_before_data_compliance
+
+## Hard 4C Gates
+
+- food_safety_recall
+- input_cost_shock_without_pass_through
+- retail_credit_restructuring
+- data_governance_violation
+- tourism_policy_reversal
+- china_korea_diplomatic_shock
+- inventory_build_or_channel_stuffing
+- franchise_margin_collapse
+- celebrity_event_fade
+
+## Plain-Language Gate Notes
+
+- 4B는 반복구매·sell-through·마진 증거보다 가격이 먼저 간 상태다.
+- 4C는 recall, input-cost shock, data-governance violation, retail credit restructuring처럼 thesis를 끊는 위험이다.
+- 이번 라운드의 hard 4C는 Homeplus retail-credit reference에 한정되고, 직접 상장주 hard 4C는 확정하지 않는다.
+
+## Case Notes
+
+- r5_loop13_apr_medicube_kbeauty_device_4b: fourfold_rerating_before_repeat_purchase_proof, single_device_concentration, tariff_pass_through_untested, channel_durability_unconfirmed
+- r5_loop13_dalba_indie_kbeauty_us_channel: actual_physical_store_sellthrough_unconfirmed, channel_talks_without_sellthrough, debut_pop_above_100pct, tariff_margin_untested
+- r5_loop13_cj_olive_young_global_hb_platform: unlisted_subsidiary_readthrough_only, parent_value_bridge_unconfirmed, store_unit_economics_unconfirmed, online_gmv_take_rate_unconfirmed
+- r5_loop13_samyang_buldak_export_asp_capacity: denmark_recall_three_spicy_products, high_capsaicin_acute_poisoning_concern, packaging_material_shortage_risk, single_brand_concentration
+- r5_loop13_china_tourism_dutyfree_retail_event: tourist_arrival_headline_only, dutyfree_spend_unconfirmed, department_store_sss_unconfirmed, hotel_occupancy_unconfirmed, tourism_reversal_risk
+- r5_loop13_shinsegae_aliexpress_gmarket_data_gate: data_sharing_ban_three_years, independent_operation_required, take_rate_unconfirmed, gmv_profitability_unconfirmed, data_governance_gate
+- r5_loop13_homeplus_retail_credit_hard_reference: retail_credit_restructuring, liquidation_value_above_going_concern_value, equity_writeoff, forced_sale_to_repay_creditors
+- r5_loop13_kyochon_cherrybro_neuromeka_jensen_event: celebrity_event_only, same_store_sales_absent, franchise_margin_absent, repeat_demand_absent, actual_restaurant_not_listed

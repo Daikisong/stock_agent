@@ -1,0 +1,19 @@
+axis,points,direction,reason
+repeat_purchase,5,raise,R5 Green은 유행보다 반복구매가 먼저다.
+physical_store_sellthrough,5,raise,입점이나 채널 협의보다 실제 sell-through와 리오더를 본다.
+same_store_sales,5,raise,관광객·유명인 이벤트는 SSS로 닫혀야 한다.
+gross_margin_after_tariff,5,raise,관세와 가격전가 이후의 gross margin이 중요하다.
+inventory_discipline,5,raise,재고가 쌓이면 sell-in일 수 있다.
+channel_reorder_rate,5,raise,채널 리오더는 일회성 viral을 걸러낸다.
+parent_value_bridge,4,raise,비상장 자회사는 상장 모회사 이익 연결고리가 필요하다.
+data_governance,5,raise,플랫폼은 데이터 규제와 신뢰가 Green gate다.
+franchise_margin,4,raise,외식은 유명인 방문보다 가맹점 마진을 본다.
+cash_conversion,5,raise,매출 성장이 FCF로 닫혀야 한다.
+viral_social_media_only,-5,lower,TikTok/유명인 노출만으로 Green 금지다.
+celebrity_event_only,-5,lower,유명인이 먹었다는 장면은 매출 증거가 아니다.
+tourist_arrival_headline_only,-5,lower,관광객 headline은 spend와 margin 전에는 event premium이다.
+IPO_or_debut_pop_only,-5,lower,상장 직후 2배는 sell-through 전이면 4B-watch다.
+channel_talks_without_sellthrough,-5,lower,Costco/Ulta/Target 협의는 실제 매장 회전 전에는 Stage 2다.
+unlisted_subsidiary_readthrough_only,-4,lower,Olive Young처럼 비상장 자회사 가치는 parent bridge가 필요하다.
+data_sharing_regulatory_risk,-5,lower,데이터 공유 제한은 플랫폼 Green을 막는 핵심 리스크다.
+offline_retail_credit_stress,-5,lower,오프라인 점포망이 커도 credit stress면 thesis break다.
