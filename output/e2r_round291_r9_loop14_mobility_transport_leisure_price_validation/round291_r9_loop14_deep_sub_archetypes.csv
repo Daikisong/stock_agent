@@ -1,0 +1,10 @@
+category,primary_archetype,terms
+자동차 관세·하이브리드 mix,AUTO_TARIFF_HYBRID_MIX_STAGE2,Hyundai Motor|Kia|US tariff|hybrid mix|Genesis|local production hedge
+자동차 중동 물류 차질,AUTO_LOGISTICS_MIDDLE_EAST_4C_WATCH,Hyundai Motor|Hyundai Glovis|Middle East route|Europe exports|North Africa exports|intermediate hubs
+항공 통합 Stage 2,AIRLINE_CONSOLIDATION_STAGE2,Korean Air|Asiana|63.88% stake|international capacity|LCC consolidation|frequent flyer
+항공 remedy route/cargo,AIRLINE_REMEDY_ROUTE_CARGO_STAGE2,T'way Air|Air Incheon|Europe routes|A330-200|Asiana Cargo|freighters
+항공 안전 hard 4C,AVIATION_SAFETY_HARD_4C,Jeju Air|Muan crash|179 fatalities|safety inspection|market-cap wipeout
+해외 자동차 IPO 실패,OVERSEAS_AUTO_IPO_FAILED_RERATING,Hyundai Motor India|HYUN.NS|weak debut|first earnings|Red Sea export disruption
+중국 관광·레저 event premium,CHINA_TOURISM_LEISURE_EVENT_PREMIUM,Paradise|Hotel Shilla|Hyundai Department Store|Hankook Cosmetics|visa-free|visitor spend
+컨테이너 운임 event premium,CONTAINER_SHIPPING_RATE_EVENT_PREMIUM,HMM|Red Sea|Freightos|Hapag-Lloyd|Maersk|Suez normalization
+중고차 수출 물류 4C reference,USED_CAR_EXPORT_LOGISTICS_4C_REFERENCE,used-car exporters|Incheon storage|Dubai|Strait of Hormuz|Hyundai Glovis|HMM

@@ -1,0 +1,421 @@
+{
+  "case_ids": [
+    "r9_loop14_hyundai_kia_us_tariff_hybrid_mix",
+    "r9_loop14_hyundai_glovis_middle_east_logistics_4c_watch",
+    "r9_loop14_korean_air_asiana_integration_stage2",
+    "r9_loop14_tway_air_incheon_airline_remedy_stage2",
+    "r9_loop14_jeju_air_safety_hard_4c",
+    "r9_loop14_hyundai_india_ipo_failed_rerating",
+    "r9_loop14_china_tourism_leisure_basket",
+    "r9_loop14_hmm_red_sea_freight_rate_event_premium",
+    "r9_loop14_korea_used_car_export_logistics_shock"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "자동차 관세·하이브리드 mix",
+      "primary_archetype": "AUTO_TARIFF_HYBRID_MIX_STAGE2",
+      "terms": "Hyundai Motor|Kia|US tariff|hybrid mix|Genesis|local production hedge"
+    },
+    {
+      "category": "자동차 중동 물류 차질",
+      "primary_archetype": "AUTO_LOGISTICS_MIDDLE_EAST_4C_WATCH",
+      "terms": "Hyundai Motor|Hyundai Glovis|Middle East route|Europe exports|North Africa exports|intermediate hubs"
+    },
+    {
+      "category": "항공 통합 Stage 2",
+      "primary_archetype": "AIRLINE_CONSOLIDATION_STAGE2",
+      "terms": "Korean Air|Asiana|63.88% stake|international capacity|LCC consolidation|frequent flyer"
+    },
+    {
+      "category": "항공 remedy route/cargo",
+      "primary_archetype": "AIRLINE_REMEDY_ROUTE_CARGO_STAGE2",
+      "terms": "T'way Air|Air Incheon|Europe routes|A330-200|Asiana Cargo|freighters"
+    },
+    {
+      "category": "항공 안전 hard 4C",
+      "primary_archetype": "AVIATION_SAFETY_HARD_4C",
+      "terms": "Jeju Air|Muan crash|179 fatalities|safety inspection|market-cap wipeout"
+    },
+    {
+      "category": "해외 자동차 IPO 실패",
+      "primary_archetype": "OVERSEAS_AUTO_IPO_FAILED_RERATING",
+      "terms": "Hyundai Motor India|HYUN.NS|weak debut|first earnings|Red Sea export disruption"
+    },
+    {
+      "category": "중국 관광·레저 event premium",
+      "primary_archetype": "CHINA_TOURISM_LEISURE_EVENT_PREMIUM",
+      "terms": "Paradise|Hotel Shilla|Hyundai Department Store|Hankook Cosmetics|visa-free|visitor spend"
+    },
+    {
+      "category": "컨테이너 운임 event premium",
+      "primary_archetype": "CONTAINER_SHIPPING_RATE_EVENT_PREMIUM",
+      "terms": "HMM|Red Sea|Freightos|Hapag-Lloyd|Maersk|Suez normalization"
+    },
+    {
+      "category": "중고차 수출 물류 4C reference",
+      "primary_archetype": "USED_CAR_EXPORT_LOGISTICS_4C_REFERENCE",
+      "terms": "used-car exporters|Incheon storage|Dubai|Strait of Hormuz|Hyundai Glovis|HMM"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "tariff_relief_headline_only",
+    "visitor_count_only",
+    "merger_completion_only",
+    "route_rights_without_load_factor",
+    "cargo_asset_purchase_without_customer_retention",
+    "freight_spot_rate_only",
+    "overseas_IPO_size_only",
+    "EV_or_hybrid_mix_without_margin",
+    "safety_risk_unresolved"
+  ],
+  "green_required_fields": [
+    "tariff_pass_through_confirmed",
+    "hybrid_mix_margin_confirmed",
+    "local_production_hedge_confirmed",
+    "route_security_continuity_confirmed",
+    "logistics_cost_control_confirmed",
+    "load_factor_yield_confirmed",
+    "aviation_safety_trust_confirmed",
+    "integration_synergy_execution_confirmed",
+    "tourist_spend_per_head_confirmed",
+    "freight_rate_durability_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "fatal_aviation_safety_event",
+    "route_disruption_blocks_high_margin_exports",
+    "tariff_shock_not_passed_through",
+    "major_fuel_cost_spike_without_surcharge_recovery",
+    "airline_integration_failure_or_safety_inspection_escalation",
+    "tourism_arrivals_without_spend_conversion",
+    "freight_rate_normalization_after_spot_rally",
+    "overseas_IPO_weak_debut_plus_weak_first_earnings"
+  ],
+  "large_sector": "MOBILITY_TRANSPORT_LEISURE",
+  "round_id": "round_219",
+  "score_adjustments": [
+    {
+      "axis": "tariff_pass_through",
+      "direction": "raise",
+      "points": "5",
+      "reason": "관세 relief가 아니라 가격전가와 margin 회복이 핵심이다."
+    },
+    {
+      "axis": "hybrid_mix_margin",
+      "direction": "raise",
+      "points": "5",
+      "reason": "hybrid/high-margin mix가 OP margin으로 닫혀야 한다."
+    },
+    {
+      "axis": "local_production_hedge",
+      "direction": "raise",
+      "points": "5",
+      "reason": "현지생산 hedge가 관세와 물류비를 줄이는지 봐야 한다."
+    },
+    {
+      "axis": "route_security_continuity",
+      "direction": "raise",
+      "points": "5",
+      "reason": "자동차·해운은 항로 안정성이 margin의 하부 구조다."
+    },
+    {
+      "axis": "logistics_cost_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "rerouting과 보관비가 OP를 훼손하지 않아야 한다."
+    },
+    {
+      "axis": "load_factor_yield",
+      "direction": "raise",
+      "points": "5",
+      "reason": "항공은 탑승률보다 yield와 비용을 같이 봐야 한다."
+    },
+    {
+      "axis": "aviation_safety_trust",
+      "direction": "raise",
+      "points": "5",
+      "reason": "항공 안전 신뢰는 hard gate다."
+    },
+    {
+      "axis": "integration_synergy_execution",
+      "direction": "raise",
+      "points": "5",
+      "reason": "항공 통합은 완료보다 synergy 실행이 중요하다."
+    },
+    {
+      "axis": "tourist_spend_per_head",
+      "direction": "raise",
+      "points": "5",
+      "reason": "관광객 수는 객단가와 margin으로 검증해야 한다."
+    },
+    {
+      "axis": "freight_rate_durability",
+      "direction": "raise",
+      "points": "5",
+      "reason": "spot 운임보다 contract-rate durability가 중요하다."
+    },
+    {
+      "axis": "tariff_relief_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "관세 인하 headline만으로 margin 회복을 만들지 않는다."
+    },
+    {
+      "axis": "visitor_count_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "입국자 수만으로 소비·마진을 만들지 않는다."
+    },
+    {
+      "axis": "merger_completion_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "합병 완료는 synergy와 yield 전에는 Stage 2다."
+    },
+    {
+      "axis": "route_rights_without_load_factor",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "노선권만으로 항공 수익성을 만들지 않는다."
+    },
+    {
+      "axis": "cargo_asset_purchase_without_customer_retention",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "화물 자산 인수는 고객 유지와 utilization이 필요하다."
+    },
+    {
+      "axis": "freight_spot_rate_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "spot 운임 spike는 cycle일 수 있다."
+    },
+    {
+      "axis": "overseas_IPO_size_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "해외 IPO 규모만으로 parent rerating을 만들지 않는다."
+    },
+    {
+      "axis": "EV_or_hybrid_mix_without_margin",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "EV/hybrid mix는 margin 확인 전에는 부족하다."
+    },
+    {
+      "axis": "safety_risk_unresolved",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "안전 리스크 미해소는 Green을 막는다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "AUTO_TARIFF_HYBRID_MIX_STAGE2",
+      "aviation_safety_trust": "+1",
+      "event_penalty": "-5",
+      "freight_rate_durability": "0",
+      "hard_4c_sensitivity": "+4",
+      "hybrid_mix_margin": "+5",
+      "integration_synergy_execution": "+1",
+      "load_factor_yield": "0",
+      "local_production_hedge": "+5",
+      "logistics_cost_control": "+3",
+      "notes": "Hyundai/Kia tariff case needs pass-through and hybrid/high-margin mix proof.",
+      "route_security_continuity": "+2",
+      "tariff_pass_through": "+5",
+      "tourist_spend_per_head": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "AUTO_LOGISTICS_MIDDLE_EAST_4C_WATCH",
+      "aviation_safety_trust": "+1",
+      "event_penalty": "0",
+      "freight_rate_durability": "+2",
+      "hard_4c_sensitivity": "+5",
+      "hybrid_mix_margin": "+3",
+      "integration_synergy_execution": "+1",
+      "load_factor_yield": "0",
+      "local_production_hedge": "+3",
+      "logistics_cost_control": "+5",
+      "notes": "Hyundai/Glovis shows route disruption and logistics cost are mobility hard gates.",
+      "route_security_continuity": "+5",
+      "tariff_pass_through": "+3",
+      "tourist_spend_per_head": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "AIRLINE_CONSOLIDATION_STAGE2",
+      "aviation_safety_trust": "+5",
+      "event_penalty": "-5",
+      "freight_rate_durability": "+1",
+      "hard_4c_sensitivity": "+4",
+      "hybrid_mix_margin": "0",
+      "integration_synergy_execution": "+5",
+      "load_factor_yield": "+5",
+      "local_production_hedge": "0",
+      "logistics_cost_control": "+4",
+      "notes": "Korean Air/Asiana needs yield, load factor, LCC consolidation and integration cost proof.",
+      "route_security_continuity": "+3",
+      "tariff_pass_through": "+1",
+      "tourist_spend_per_head": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "AIRLINE_REMEDY_ROUTE_CARGO_STAGE2",
+      "aviation_safety_trust": "+5",
+      "event_penalty": "-5",
+      "freight_rate_durability": "+2",
+      "hard_4c_sensitivity": "+4",
+      "hybrid_mix_margin": "0",
+      "integration_synergy_execution": "+4",
+      "load_factor_yield": "+5",
+      "local_production_hedge": "0",
+      "logistics_cost_control": "+4",
+      "notes": "T'way/Air Incheon route/cargo remedy needs aircraft utilization and customer retention.",
+      "route_security_continuity": "+3",
+      "tariff_pass_through": "+1",
+      "tourist_spend_per_head": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "AVIATION_SAFETY_HARD_4C",
+      "aviation_safety_trust": "+5",
+      "event_penalty": "0",
+      "freight_rate_durability": "0",
+      "hard_4c_sensitivity": "+5",
+      "hybrid_mix_margin": "0",
+      "integration_synergy_execution": "+3",
+      "load_factor_yield": "+4",
+      "local_production_hedge": "0",
+      "logistics_cost_control": "+2",
+      "notes": "Jeju Air confirms fatal safety event overrides demand/valuation.",
+      "route_security_continuity": "+2",
+      "tariff_pass_through": "0",
+      "tourist_spend_per_head": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "OVERSEAS_AUTO_IPO_FAILED_RERATING",
+      "aviation_safety_trust": "+1",
+      "event_penalty": "-5",
+      "freight_rate_durability": "0",
+      "hard_4c_sensitivity": "+4",
+      "hybrid_mix_margin": "+4",
+      "integration_synergy_execution": "+2",
+      "load_factor_yield": "0",
+      "local_production_hedge": "+5",
+      "logistics_cost_control": "+3",
+      "notes": "Hyundai India IPO needs aftermarket demand and first-earnings validation.",
+      "route_security_continuity": "+3",
+      "tariff_pass_through": "+4",
+      "tourist_spend_per_head": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "CHINA_TOURISM_LEISURE_EVENT_PREMIUM",
+      "aviation_safety_trust": "+3",
+      "event_penalty": "-5",
+      "freight_rate_durability": "0",
+      "hard_4c_sensitivity": "+3",
+      "hybrid_mix_margin": "0",
+      "integration_synergy_execution": "+1",
+      "load_factor_yield": "+2",
+      "local_production_hedge": "0",
+      "logistics_cost_control": "+1",
+      "notes": "Tourism policy rally needs spend-per-head, occupancy, drop amount and margin.",
+      "route_security_continuity": "+1",
+      "tariff_pass_through": "0",
+      "tourist_spend_per_head": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "CONTAINER_SHIPPING_RATE_EVENT_PREMIUM",
+      "aviation_safety_trust": "+1",
+      "event_penalty": "-5",
+      "freight_rate_durability": "+5",
+      "hard_4c_sensitivity": "+4",
+      "hybrid_mix_margin": "0",
+      "integration_synergy_execution": "+1",
+      "load_factor_yield": "0",
+      "local_production_hedge": "0",
+      "logistics_cost_control": "+5",
+      "notes": "Red Sea freight spike is Stage 2 until contract-rate durability and route security hold.",
+      "route_security_continuity": "+5",
+      "tariff_pass_through": "0",
+      "tourist_spend_per_head": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "USED_CAR_EXPORT_LOGISTICS_4C_REFERENCE",
+      "aviation_safety_trust": "+1",
+      "event_penalty": "0",
+      "freight_rate_durability": "+4",
+      "hard_4c_sensitivity": "+4",
+      "hybrid_mix_margin": "0",
+      "integration_synergy_execution": "+1",
+      "load_factor_yield": "0",
+      "local_production_hedge": "0",
+      "logistics_cost_control": "+5",
+      "notes": "Used-car export shock shows destination demand and route availability are linked.",
+      "route_security_continuity": "+5",
+      "tariff_pass_through": "+1",
+      "tourist_spend_per_head": "0"
+    }
+  ],
+  "source_round": "docs/round/round_291.md",
+  "stage4b_watch_triggers": [
+    "tariff_relief_headline_auto_rally",
+    "china_tourism_visa_free_basket_rally",
+    "freight_spot_rate_spike",
+    "airline_merger_completion_before_synergy",
+    "route_cargo_remedy_before_margin",
+    "overseas_subsidiary_IPO_valuation_parent_rerating"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 9,
+    "deep_sub_archetype_count": 9,
+    "event_premium_count": 2,
+    "evidence_good_but_price_failed_count": 1,
+    "failed_rerating_count": 1,
+    "false_positive_score_count": 2,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "MOBILITY_TRANSPORT_LEISURE",
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_219",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 9,
+    "source_round": "docs/round/round_291.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 6,
+    "success_candidate_count": 3,
+    "target_archetype_count": 9,
+    "unknown_alignment_count": 4,
+    "watch_count": 1
+  },
+  "target_aliases": {
+    "AIRLINE_CONSOLIDATION_STAGE2": "AIRLINE_CONSOLIDATION_STAGE2",
+    "AIRLINE_REMEDY_ROUTE_CARGO_STAGE2": "AIRLINE_REMEDY_ROUTE_CARGO_STAGE2",
+    "AUTO_LOGISTICS_MIDDLE_EAST_4C_WATCH": "AUTO_LOGISTICS_MIDDLE_EAST_4C_WATCH",
+    "AUTO_TARIFF_HYBRID_MIX_STAGE2": "AUTO_TARIFF_HYBRID_MIX_STAGE2",
+    "AVIATION_SAFETY_HARD_4C": "AVIATION_SAFETY_HARD_4C",
+    "CHINA_TOURISM_LEISURE_EVENT_PREMIUM": "CHINA_TOURISM_LEISURE_EVENT_PREMIUM",
+    "CONTAINER_SHIPPING_RATE_EVENT_PREMIUM": "CONTAINER_SHIPPING_RATE_EVENT_PREMIUM",
+    "OVERSEAS_AUTO_IPO_FAILED_RERATING": "OVERSEAS_AUTO_IPO_FAILED_RERATING",
+    "USED_CAR_EXPORT_LOGISTICS_4C_REFERENCE": "USED_CAR_EXPORT_LOGISTICS_4C_REFERENCE"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round291_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_tariff_tourism_merger_route_freight_or_IPO_headlines_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}
