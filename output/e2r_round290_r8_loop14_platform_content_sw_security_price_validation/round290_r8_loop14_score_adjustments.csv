@@ -1,0 +1,20 @@
+axis,points,direction,reason
+paid_conversion_ARPU,5,raise,플랫폼 MAU는 결제전환과 ARPU로 닫혀야 한다.
+retention_and_repeat_usage,5,raise,콘텐츠와 게임은 반복 사용/retention이 핵심이다.
+IP_revenue_stability,5,raise,IP optionality는 안정 매출로 확인되어야 한다.
+artist_contract_continuity,5,raise,K-pop IP는 artist contract와 label governance가 뿌리다.
+game_live_service_retention,5,raise,게임 hit title은 live-service retention으로 검증한다.
+new_title_pipeline_execution,5,raise,레거시 게임 턴어라운드는 신작 실행력이 필요하다.
+cloud_AI_recurring_revenue,5,raise,AI/cloud 매출비중보다 반복매출과 margin이 중요하다.
+ARR_retention_enterprise_SW,5,raise,"enterprise SW는 ARR, churn, retention이 Green의 핵심이다."
+data_trust_internal_control,5,raise,"보안 신뢰는 매출전망, 과징금, 보상비용으로 연결된다."
+regulatory_governance_clearance,5,raise,창업자/규제 overhang이 있으면 플랫폼 premium을 유예한다.
+MAU_headline_only,-5,lower,MAU headline만으로 Stage 3-Green을 만들지 않는다.
+IPO_pop_only,-5,lower,IPO pop은 unit economics 전에는 event premium이다.
+AI_cloud_keyword_only,-5,lower,AI/cloud 키워드는 recurring revenue 전에는 부족하다.
+creator_IP_optional_value_only,-5,lower,creator/IP optional value만으로 OP/FCF를 만들지 않는다.
+artist_fandom_without_contract_stability,-5,lower,fandom은 contract stability 없이는 Green이 아니다.
+buyback_without_new_title_retention,-5,lower,buyback은 신작 retention 없이는 event premium이다.
+PE_control_premium_without_ARR,-5,lower,PE control premium은 ARR/margin 전에는 Stage 2다.
+cybersecurity_theme_readthrough_without_contract,-5,lower,보안사고 수혜 테마는 실제 계약/ARR 전에는 Green이 아니다.
+governance_legal_risk_unresolved,-5,lower,거버넌스·법률 리스크 미해소는 Green을 막는다.

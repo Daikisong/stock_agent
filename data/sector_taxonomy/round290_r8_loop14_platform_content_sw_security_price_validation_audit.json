@@ -1,0 +1,398 @@
+{
+  "case_ids": [
+    "r8_loop14_naver_webtoon_ipo_aftermarket_gate",
+    "r8_loop14_kakao_platform_governance_sm_case",
+    "r8_loop14_hybe_ador_newjeans_ip_governance",
+    "r8_loop14_shift_up_game_ip_ipo_quality_gate",
+    "r8_loop14_ncsoft_earnings_buyback_turnaround",
+    "r8_loop14_lg_cns_ai_cloud_ipo_false_positive",
+    "r8_loop14_douzone_bizon_eqt_enterprise_sw_stage2",
+    "r8_loop14_sk_telecom_cybersecurity_trust_hard_4c"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "웹툰 플랫폼 IPO after-market",
+      "primary_archetype": "WEBTOON_PLATFORM_IPO_AFTERMARKET_GATE",
+      "terms": "NAVER|Webtoon Entertainment|WBTN|170M MAU|Disney deal|parent holdco discount"
+    },
+    {
+      "category": "카카오 플랫폼 거버넌스",
+      "primary_archetype": "KAKAO_PLATFORM_GOVERNANCE_4C_WATCH",
+      "terms": "Kakao|SM Entertainment|founder arrest|KakaoBank control|stock manipulation allegation"
+    },
+    {
+      "category": "K-pop IP 계약 거버넌스",
+      "primary_archetype": "KPOP_IP_CONTRACT_GOVERNANCE_4C",
+      "terms": "HYBE|ADOR|NewJeans|artist contract|label governance"
+    },
+    {
+      "category": "게임 IP IPO 품질",
+      "primary_archetype": "GAME_IP_IPO_STAGE2_QUALITY_GATE",
+      "terms": "Shift Up|Nikke|Stellar Blade|Tencent|single-IP concentration"
+    },
+    {
+      "category": "레거시 게임 턴어라운드",
+      "primary_archetype": "LEGACY_GAME_TURNAROUND_BUYBACK_4B",
+      "terms": "NCSoft|buyback|earnings beat|new title pipeline|legacy decline"
+    },
+    {
+      "category": "AI/cloud IT서비스 IPO false positive",
+      "primary_archetype": "AI_CLOUD_IT_SERVICE_IPO_FALSE_POSITIVE",
+      "terms": "LG CNS|cloud AI sales|IPO price break|oversubscription|margin durability"
+    },
+    {
+      "category": "enterprise SW PE control",
+      "primary_archetype": "ENTERPRISE_SOFTWARE_PE_CONTROL_STAGE2",
+      "terms": "Douzone Bizon|EQT|ERP|ARR|KFTC clearance"
+    },
+    {
+      "category": "사이버보안 신뢰 hard 4C",
+      "primary_archetype": "CYBERSECURITY_TRUST_HARD_4C_REFERENCE",
+      "terms": "SK Telecom|USIM|26.96M data pieces|revenue forecast cut|fine"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "MAU_headline_only",
+    "IPO_pop_only",
+    "AI_cloud_keyword_only",
+    "creator_IP_optional_value_only",
+    "artist_fandom_without_contract_stability",
+    "buyback_without_new_title_retention",
+    "PE_control_premium_without_ARR",
+    "cybersecurity_theme_readthrough_without_contract",
+    "governance_legal_risk_unresolved"
+  ],
+  "green_required_fields": [
+    "paid_conversion_arpu_confirmed",
+    "retention_and_repeat_usage_confirmed",
+    "ip_revenue_stability_confirmed",
+    "artist_contract_continuity_confirmed",
+    "game_live_service_retention_confirmed",
+    "new_title_pipeline_execution_confirmed",
+    "cloud_ai_recurring_revenue_confirmed",
+    "arr_retention_enterprise_sw_confirmed",
+    "data_trust_internal_control_confirmed",
+    "regulatory_governance_clearance_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "major_data_breach_or_customer_trust_break",
+    "founder_legal_risk_blocks_platform_or_financial_control",
+    "artist_IP_contract_termination_or_label_governance_breakdown",
+    "IPO_weak_debut_after_aggressive_pricing",
+    "platform_IP_revenue_guidance_miss",
+    "game_launch_failure_or_retention_collapse",
+    "enterprise_software_regulatory_approval_failure",
+    "cloud_AI_revenue_mix_not_translating_into_margin"
+  ],
+  "large_sector": "PLATFORM_CONTENT_SW_SECURITY",
+  "round_id": "round_218",
+  "score_adjustments": [
+    {
+      "axis": "paid_conversion_ARPU",
+      "direction": "raise",
+      "points": "5",
+      "reason": "플랫폼 MAU는 결제전환과 ARPU로 닫혀야 한다."
+    },
+    {
+      "axis": "retention_and_repeat_usage",
+      "direction": "raise",
+      "points": "5",
+      "reason": "콘텐츠와 게임은 반복 사용/retention이 핵심이다."
+    },
+    {
+      "axis": "IP_revenue_stability",
+      "direction": "raise",
+      "points": "5",
+      "reason": "IP optionality는 안정 매출로 확인되어야 한다."
+    },
+    {
+      "axis": "artist_contract_continuity",
+      "direction": "raise",
+      "points": "5",
+      "reason": "K-pop IP는 artist contract와 label governance가 뿌리다."
+    },
+    {
+      "axis": "game_live_service_retention",
+      "direction": "raise",
+      "points": "5",
+      "reason": "게임 hit title은 live-service retention으로 검증한다."
+    },
+    {
+      "axis": "new_title_pipeline_execution",
+      "direction": "raise",
+      "points": "5",
+      "reason": "레거시 게임 턴어라운드는 신작 실행력이 필요하다."
+    },
+    {
+      "axis": "cloud_AI_recurring_revenue",
+      "direction": "raise",
+      "points": "5",
+      "reason": "AI/cloud 매출비중보다 반복매출과 margin이 중요하다."
+    },
+    {
+      "axis": "ARR_retention_enterprise_SW",
+      "direction": "raise",
+      "points": "5",
+      "reason": "enterprise SW는 ARR, churn, retention이 Green의 핵심이다."
+    },
+    {
+      "axis": "data_trust_internal_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "보안 신뢰는 매출전망, 과징금, 보상비용으로 연결된다."
+    },
+    {
+      "axis": "regulatory_governance_clearance",
+      "direction": "raise",
+      "points": "5",
+      "reason": "창업자/규제 overhang이 있으면 플랫폼 premium을 유예한다."
+    },
+    {
+      "axis": "MAU_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "MAU headline만으로 Stage 3-Green을 만들지 않는다."
+    },
+    {
+      "axis": "IPO_pop_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "IPO pop은 unit economics 전에는 event premium이다."
+    },
+    {
+      "axis": "AI_cloud_keyword_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "AI/cloud 키워드는 recurring revenue 전에는 부족하다."
+    },
+    {
+      "axis": "creator_IP_optional_value_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "creator/IP optional value만으로 OP/FCF를 만들지 않는다."
+    },
+    {
+      "axis": "artist_fandom_without_contract_stability",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "fandom은 contract stability 없이는 Green이 아니다."
+    },
+    {
+      "axis": "buyback_without_new_title_retention",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "buyback은 신작 retention 없이는 event premium이다."
+    },
+    {
+      "axis": "PE_control_premium_without_ARR",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "PE control premium은 ARR/margin 전에는 Stage 2다."
+    },
+    {
+      "axis": "cybersecurity_theme_readthrough_without_contract",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "보안사고 수혜 테마는 실제 계약/ARR 전에는 Green이 아니다."
+    },
+    {
+      "axis": "governance_legal_risk_unresolved",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "거버넌스·법률 리스크 미해소는 Green을 막는다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "WEBTOON_PLATFORM_IPO_AFTERMARKET_GATE",
+      "arr_retention_enterprise_sw": "0",
+      "artist_contract_continuity": "+1",
+      "cloud_ai_recurring_revenue": "+2",
+      "data_trust_internal_control": "+3",
+      "event_penalty": "-5",
+      "game_live_service_retention": "0",
+      "hard_4c_sensitivity": "+4",
+      "ip_revenue_stability": "+5",
+      "new_title_pipeline_execution": "0",
+      "notes": "Webtoon IPO pop/MAU failed to prove durable parent value capture and revenue-guide stability.",
+      "paid_conversion_arpu": "+5",
+      "regulatory_governance_clearance": "+3",
+      "retention_repeat_usage": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "KAKAO_PLATFORM_GOVERNANCE_4C_WATCH",
+      "arr_retention_enterprise_sw": "+2",
+      "artist_contract_continuity": "+2",
+      "cloud_ai_recurring_revenue": "+3",
+      "data_trust_internal_control": "+4",
+      "event_penalty": "0",
+      "game_live_service_retention": "0",
+      "hard_4c_sensitivity": "+5",
+      "ip_revenue_stability": "+3",
+      "new_title_pipeline_execution": "0",
+      "notes": "Kakao shows platform moat must pass founder/legal/regulatory gate.",
+      "paid_conversion_arpu": "+3",
+      "regulatory_governance_clearance": "+5",
+      "retention_repeat_usage": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "KPOP_IP_CONTRACT_GOVERNANCE_4C",
+      "arr_retention_enterprise_sw": "0",
+      "artist_contract_continuity": "+5",
+      "cloud_ai_recurring_revenue": "0",
+      "data_trust_internal_control": "+2",
+      "event_penalty": "0",
+      "game_live_service_retention": "0",
+      "hard_4c_sensitivity": "+4",
+      "ip_revenue_stability": "+5",
+      "new_title_pipeline_execution": "0",
+      "notes": "HYBE/NewJeans shows artist contract continuity is core IP gate.",
+      "paid_conversion_arpu": "+2",
+      "regulatory_governance_clearance": "+5",
+      "retention_repeat_usage": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "GAME_IP_IPO_STAGE2_QUALITY_GATE",
+      "arr_retention_enterprise_sw": "0",
+      "artist_contract_continuity": "0",
+      "cloud_ai_recurring_revenue": "0",
+      "data_trust_internal_control": "+1",
+      "event_penalty": "-5",
+      "game_live_service_retention": "+5",
+      "hard_4c_sensitivity": "+3",
+      "ip_revenue_stability": "+4",
+      "new_title_pipeline_execution": "+5",
+      "notes": "Shift Up hit IP/IPO needs live-service retention and next-title pipeline.",
+      "paid_conversion_arpu": "+2",
+      "regulatory_governance_clearance": "+3",
+      "retention_repeat_usage": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "LEGACY_GAME_TURNAROUND_BUYBACK_4B",
+      "arr_retention_enterprise_sw": "0",
+      "artist_contract_continuity": "0",
+      "cloud_ai_recurring_revenue": "0",
+      "data_trust_internal_control": "+1",
+      "event_penalty": "-5",
+      "game_live_service_retention": "+5",
+      "hard_4c_sensitivity": "+3",
+      "ip_revenue_stability": "+3",
+      "new_title_pipeline_execution": "+5",
+      "notes": "NCSoft buyback/earnings beat needs new-title retention and monetization proof.",
+      "paid_conversion_arpu": "+1",
+      "regulatory_governance_clearance": "+3",
+      "retention_repeat_usage": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "AI_CLOUD_IT_SERVICE_IPO_FALSE_POSITIVE",
+      "arr_retention_enterprise_sw": "+5",
+      "artist_contract_continuity": "0",
+      "cloud_ai_recurring_revenue": "+5",
+      "data_trust_internal_control": "+2",
+      "event_penalty": "-5",
+      "game_live_service_retention": "0",
+      "hard_4c_sensitivity": "+4",
+      "ip_revenue_stability": "0",
+      "new_title_pipeline_execution": "0",
+      "notes": "LG CNS shows AI/cloud mix and oversubscription can still fail aftermarket demand.",
+      "paid_conversion_arpu": "+2",
+      "regulatory_governance_clearance": "+3",
+      "retention_repeat_usage": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "ENTERPRISE_SOFTWARE_PE_CONTROL_STAGE2",
+      "arr_retention_enterprise_sw": "+5",
+      "artist_contract_continuity": "0",
+      "cloud_ai_recurring_revenue": "+4",
+      "data_trust_internal_control": "+3",
+      "event_penalty": "-5",
+      "game_live_service_retention": "0",
+      "hard_4c_sensitivity": "+3",
+      "ip_revenue_stability": "0",
+      "new_title_pipeline_execution": "0",
+      "notes": "Douzone/EQT needs ARR, churn, cloud margin and regulatory approval.",
+      "paid_conversion_arpu": "+3",
+      "regulatory_governance_clearance": "+5",
+      "retention_repeat_usage": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "CYBERSECURITY_TRUST_HARD_4C_REFERENCE",
+      "arr_retention_enterprise_sw": "+3",
+      "artist_contract_continuity": "0",
+      "cloud_ai_recurring_revenue": "+2",
+      "data_trust_internal_control": "+5",
+      "event_penalty": "0",
+      "game_live_service_retention": "0",
+      "hard_4c_sensitivity": "+5",
+      "ip_revenue_stability": "0",
+      "new_title_pipeline_execution": "0",
+      "notes": "SK Telecom confirms data-trust/internal-control failure is hard 4C.",
+      "paid_conversion_arpu": "0",
+      "regulatory_governance_clearance": "+5",
+      "retention_repeat_usage": "+3"
+    }
+  ],
+  "source_round": "docs/round/round_290.md",
+  "stage4b_watch_triggers": [
+    "IPO_debut_plus_10_to_20pct",
+    "AI_cloud_keyword_aggressive_IPO_pricing",
+    "game_IP_valuation_single_hit_concentration",
+    "buyback_earnings_beat_before_new_title_validation",
+    "K_content_artist_fandom_before_contract_stability",
+    "PE_control_premium_before_ARR",
+    "platform_MAU_before_paid_conversion"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "direct_KRX_hard_4c_confirmed": true,
+    "event_premium_count": 2,
+    "evidence_good_but_price_failed_count": 1,
+    "failed_rerating_count": 1,
+    "false_positive_score_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "large_sector": "PLATFORM_CONTENT_SW_SECURITY",
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_218",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_290.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 5,
+    "stage4c_watch_count": 4,
+    "success_candidate_count": 2,
+    "target_archetype_count": 8,
+    "unknown_alignment_count": 4,
+    "watch_count": 2
+  },
+  "target_aliases": {
+    "AI_CLOUD_IT_SERVICE_IPO_FALSE_POSITIVE": "AI_CLOUD_IT_SERVICE_IPO_FALSE_POSITIVE",
+    "CYBERSECURITY_TRUST_HARD_4C_REFERENCE": "CYBERSECURITY_TRUST_HARD_4C_REFERENCE",
+    "ENTERPRISE_SOFTWARE_PE_CONTROL_STAGE2": "ENTERPRISE_SOFTWARE_PE_CONTROL_STAGE2",
+    "GAME_IP_IPO_STAGE2_QUALITY_GATE": "GAME_IP_IPO_STAGE2_QUALITY_GATE",
+    "KAKAO_PLATFORM_GOVERNANCE_4C_WATCH": "KAKAO_PLATFORM_GOVERNANCE_4C_WATCH",
+    "KPOP_IP_CONTRACT_GOVERNANCE_4C": "KPOP_IP_CONTRACT_GOVERNANCE_4C",
+    "LEGACY_GAME_TURNAROUND_BUYBACK_4B": "LEGACY_GAME_TURNAROUND_BUYBACK_4B",
+    "WEBTOON_PLATFORM_IPO_AFTERMARKET_GATE": "WEBTOON_PLATFORM_IPO_AFTERMARKET_GATE"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round290_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_MAU_IPO_AI_cloud_IP_or_buyback_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}

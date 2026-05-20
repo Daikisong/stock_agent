@@ -396,6 +396,7 @@ class E2RArchetype(str, Enum):
     SOVEREIGN_KOREAN_AI_MODEL = "SOVEREIGN_KOREAN_AI_MODEL"
     WEBTOON_PLATFORM_IP_MONETIZATION = "WEBTOON_PLATFORM_IP_MONETIZATION"
     GLOBAL_CONTENT_PLATFORM_IPO_NOT_PARENT_GREEN = "GLOBAL_CONTENT_PLATFORM_IPO_NOT_PARENT_GREEN"
+    WEBTOON_PLATFORM_IPO_AFTERMARKET_GATE = "WEBTOON_PLATFORM_IPO_AFTERMARKET_GATE"
     ENTERPRISE_AI_ONTOLOGY_WORKFLOW = "ENTERPRISE_AI_ONTOLOGY_WORKFLOW"
     GOVERNMENT_AI_PROGRAM_OF_RECORD = "GOVERNMENT_AI_PROGRAM_OF_RECORD"
     CLOUD_AI_SOFTWARE_INFRA = "CLOUD_AI_SOFTWARE_INFRA"
@@ -415,6 +416,8 @@ class E2RArchetype(str, Enum):
     GAME_IP_M_AND_A_CONTENT_EXPANSION = "GAME_IP_M_AND_A_CONTENT_EXPANSION"
     GAME_IP_IPO_SINGLE_TITLE_RISK = "GAME_IP_IPO_SINGLE_TITLE_RISK"
     GAME_IP_MONETIZATION_IPO_STAGE2 = "GAME_IP_MONETIZATION_IPO_STAGE2"
+    GAME_IP_IPO_STAGE2_QUALITY_GATE = "GAME_IP_IPO_STAGE2_QUALITY_GATE"
+    LEGACY_GAME_TURNAROUND_BUYBACK_4B = "LEGACY_GAME_TURNAROUND_BUYBACK_4B"
     KIDS_CONTENT_IP_IPO_EVENT_PREMIUM = "KIDS_CONTENT_IP_IPO_EVENT_PREMIUM"
     GAME_SINGLE_IP_EVENT_PREMIUM = "GAME_SINGLE_IP_EVENT_PREMIUM"
     GAME_IP_LAUNCH_DELAY_LEGAL_RISK = "GAME_IP_LAUNCH_DELAY_LEGAL_RISK"
@@ -423,6 +426,7 @@ class E2RArchetype(str, Enum):
     KPOP_PLATFORM_CONTENT_IP = "KPOP_PLATFORM_CONTENT_IP"
     KPOP_IP_CHINA_OPTIONALITY = "KPOP_IP_CHINA_OPTIONALITY"
     KPOP_IP_GOVERNANCE_4C_WATCH = "KPOP_IP_GOVERNANCE_4C_WATCH"
+    KPOP_IP_CONTRACT_GOVERNANCE_4C = "KPOP_IP_CONTRACT_GOVERNANCE_4C"
     ENTERTAINMENT_GOVERNANCE_LEGAL_OVERLAY = "ENTERTAINMENT_GOVERNANCE_LEGAL_OVERLAY"
     AD_CONTENT_PLATFORM_GUIDANCE_RISK = "AD_CONTENT_PLATFORM_GUIDANCE_RISK"
     MEDIA_AD_CONTENT_CYCLE = "MEDIA_AD_CONTENT_CYCLE"
@@ -430,6 +434,7 @@ class E2RArchetype(str, Enum):
     STREAMING_AD_PLATFORM = "STREAMING_AD_PLATFORM"
     CYBERSECURITY_AI_THREAT_DEMAND = "CYBERSECURITY_AI_THREAT_DEMAND"
     CYBERSECURITY_TRUST_HARD_4C = "CYBERSECURITY_TRUST_HARD_4C"
+    CYBERSECURITY_TRUST_HARD_4C_REFERENCE = "CYBERSECURITY_TRUST_HARD_4C_REFERENCE"
     AI_NETWORKING_SOFTWARE_INFRA_CROSSOVER = "AI_NETWORKING_SOFTWARE_INFRA_CROSSOVER"
     SECURITY_IDENTITY_DEEPFAKE = "SECURITY_IDENTITY_DEEPFAKE"
     SECURITY_OPERATIONAL_TRUST_OVERLAY = "SECURITY_OPERATIONAL_TRUST_OVERLAY"
@@ -437,6 +442,7 @@ class E2RArchetype(str, Enum):
     METAVERSE_NFT_THEME = "METAVERSE_NFT_THEME"
     PLATFORM_GOVERNANCE_LEGAL_RISK = "PLATFORM_GOVERNANCE_LEGAL_RISK"
     PLATFORM_GOVERNANCE_LEGAL_4C_WATCH = "PLATFORM_GOVERNANCE_LEGAL_4C_WATCH"
+    KAKAO_PLATFORM_GOVERNANCE_4C_WATCH = "KAKAO_PLATFORM_GOVERNANCE_4C_WATCH"
     KPOP_PLATFORM_CONTENT_IP_GOVERNANCE = "KPOP_PLATFORM_CONTENT_IP_GOVERNANCE"
     PLATFORM_AD_TRUST_OVERLAY = "PLATFORM_AD_TRUST_OVERLAY"
     PLATFORM_PRIVACY_SECURITY_OVERLAY = "PLATFORM_PRIVACY_SECURITY_OVERLAY"
@@ -445,6 +451,8 @@ class E2RArchetype(str, Enum):
     GAME_STUDIO_M_AND_A_GOVERNANCE_4C = "GAME_STUDIO_M_AND_A_GOVERNANCE_4C"
     TELECOM_CYBERSECURITY_OPERATIONAL_TRUST_HARD_4C = "TELECOM_CYBERSECURITY_OPERATIONAL_TRUST_HARD_4C"
     AI_CLOUD_IT_SERVICE_IPO_QUALITY_GATE = "AI_CLOUD_IT_SERVICE_IPO_QUALITY_GATE"
+    AI_CLOUD_IT_SERVICE_IPO_FALSE_POSITIVE = "AI_CLOUD_IT_SERVICE_IPO_FALSE_POSITIVE"
+    ENTERPRISE_SOFTWARE_PE_CONTROL_STAGE2 = "ENTERPRISE_SOFTWARE_PE_CONTROL_STAGE2"
     EMERGING_MARKET_GAME_PLATFORM_OPTION = "EMERGING_MARKET_GAME_PLATFORM_OPTION"
     FINANCIAL_SPREAD_BALANCE_SHEET = "FINANCIAL_SPREAD_BALANCE_SHEET"
     BANK_VALUEUP_ROE_PBR_RERATING = "BANK_VALUEUP_ROE_PBR_RERATING"
@@ -3836,6 +3844,102 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("large data breach", "revenue forecast cut", "regulatory fine", "security investment burden", "customer compensation liability"),
             key_evidence_families=("news", "regulatory", "financial_actual", "price", "red_team"),
             false_positive_patterns=("subscriber base or dividend stability scored while cybersecurity trust is broken"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.WEBTOON_PLATFORM_IPO_AFTERMARKET_GATE: ArchetypeDefinition(
+            archetype=E2RArchetype.WEBTOON_PLATFORM_IPO_AFTERMARKET_GATE,
+            stage1_radar_signals=("webtoon IPO filing", "global MAU headline", "content platform public-market asset", "parent value-unlock narrative"),
+            stage2_candidate_signals=("IPO price and raise", "monthly active users", "Q1 revenue and net income", "strategic IP partnership"),
+            stage3_high_conviction_signals=("paid conversion / ARPU", "IP adaptation revenue stability", "creator economics", "OP/FCF conversion", "parent value capture"),
+            stage4a_ongoing_signals=("paid conversion, IP revenue stability and parent value bridge remain intact"),
+            stage4b_graduation_overheat_signals=("IPO debut pop before unit economics", "Disney or IP-deal rebound before revenue stability", "parent valuation lift before value capture"),
+            stage4c_thesis_break_signals=("post-IPO drawdown", "revenue guide miss", "IP adaptation revenue slowdown", "parent holding-company discount widens"),
+            key_evidence_families=("IPO", "financial_actual", "news", "price", "research_report"),
+            false_positive_patterns=("MAU headline treated as Green", "IPO pop treated as parent rerating", "creator IP optional value treated as OP/FCF"),
+            preferred_score_weights=_weights(eps_fcf=16, visibility=18, bottleneck=6, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.KAKAO_PLATFORM_GOVERNANCE_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.KAKAO_PLATFORM_GOVERNANCE_4C_WATCH,
+            stage1_radar_signals=("platform content acquisition", "founder legal risk", "SM acquisition stock-manipulation allegation", "financial-subsidiary control read-through"),
+            stage2_candidate_signals=("legal relief", "governance repair", "content monetization path", "regulatory clearance path"),
+            stage3_high_conviction_signals=("founder/legal overhang cleared", "governance trust repaired", "content and bank-control risk contained", "OP/FCF verified"),
+            stage4a_ongoing_signals=("governance, platform monetization and control rights remain intact"),
+            stage4b_graduation_overheat_signals=("acquittal relief rally before monetization proof", "AI or international expansion priced while founder risk remains"),
+            stage4c_thesis_break_signals=("founder arrest", "stock-manipulation allegation", "KakaoBank control risk", "capital-market law enforcement"),
+            key_evidence_families=("legal", "governance", "news", "price", "red_team"),
+            false_positive_patterns=("user base scored while founder legal risk is unresolved", "SM content optionality treated as platform Green"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=10, bottleneck=4, mispricing=8, valuation=8),
+        ),
+        E2RArchetype.KPOP_IP_CONTRACT_GOVERNANCE_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.KPOP_IP_CONTRACT_GOVERNANCE_4C,
+            stage1_radar_signals=("artist label dispute", "K-pop IP concentration", "multi-label governance risk", "artist contract continuity issue"),
+            stage2_candidate_signals=("artist IP remains monetizable", "contract stability path", "label governance repair", "tour or comeback revenue visibility"),
+            stage3_high_conviction_signals=("artist contract continuity", "label governance cleared", "repeat IP monetization", "OP/FCF conversion"),
+            stage4a_ongoing_signals=("IP continuity and label governance remain stable"),
+            stage4b_graduation_overheat_signals=("fandom or comeback priced before contract stability", "IP rebound while governance dispute persists"),
+            stage4c_thesis_break_signals=("artist contract termination", "label governance breakdown", "key group hiatus", "content-rights continuity break"),
+            key_evidence_families=("news", "legal", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("fandom strength treated as Green without contract stability", "multi-label scale masks artist/IP governance break"),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=16, bottleneck=5, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.GAME_IP_IPO_STAGE2_QUALITY_GATE: ArchetypeDefinition(
+            archetype=E2RArchetype.GAME_IP_IPO_STAGE2_QUALITY_GATE,
+            stage1_radar_signals=("game IPO", "hit title launch", "high OP margin game studio", "strategic holder exposure"),
+            stage2_candidate_signals=("IPO raise and valuation", "title sales", "OP margin", "global ranking", "live-service monetization evidence"),
+            stage3_high_conviction_signals=("live-service retention", "global sell-through", "recurring monetization", "next-title pipeline", "post-IPO demand"),
+            stage4a_ongoing_signals=("live-service retention and next-title execution remain visible"),
+            stage4b_graduation_overheat_signals=("top-range IPO before repeat-hit proof", "single-title premium before retention"),
+            stage4c_thesis_break_signals=("retention collapse", "new-title launch failure", "single-IP fade", "post-IPO demand failure"),
+            key_evidence_families=("IPO", "financial_actual", "news", "price", "research_report"),
+            false_positive_patterns=("hit IP and IPO treated as recurring revenue", "single-title OP margin treated as durable platform economics"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=18, bottleneck=8, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.LEGACY_GAME_TURNAROUND_BUYBACK_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.LEGACY_GAME_TURNAROUND_BUYBACK_4B,
+            stage1_radar_signals=("earnings beat", "share buyback", "legacy-game turnaround", "new-title pipeline"),
+            stage2_candidate_signals=("consensus beat", "buyback execution", "new title roadmap", "cost control"),
+            stage3_high_conviction_signals=("new-title retention", "global monetization", "legacy decline stabilized", "FCF conversion after buyback"),
+            stage4a_ongoing_signals=("new-title retention and legacy stabilization remain visible"),
+            stage4b_graduation_overheat_signals=("earnings beat and buyback rally before pipeline validation", "treasury-share narrative before retention"),
+            stage4c_thesis_break_signals=("new-title failure", "legacy-game decline continues", "buyback without business recovery", "global monetization miss"),
+            key_evidence_families=("financial_actual", "capital_allocation", "news", "price", "research_report"),
+            false_positive_patterns=("buyback plus one quarter beat treated as Green", "pipeline names scored without retention or monetization"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=15, bottleneck=5, mispricing=12, valuation=12),
+        ),
+        E2RArchetype.AI_CLOUD_IT_SERVICE_IPO_FALSE_POSITIVE: ArchetypeDefinition(
+            archetype=E2RArchetype.AI_CLOUD_IT_SERVICE_IPO_FALSE_POSITIVE,
+            stage1_radar_signals=("AI/cloud IT-service IPO", "cloud and AI sales mix", "large oversubscription", "enterprise systems integrator listing"),
+            stage2_candidate_signals=("cloud/AI sales share", "OP margin", "IPO raise", "order backlog or M&A use-of-proceeds"),
+            stage3_high_conviction_signals=("recurring cloud/AI revenue", "ARR retention", "customer retention", "margin durability", "FCF conversion"),
+            stage4a_ongoing_signals=("recurring cloud/AI revenue and margins stay durable after listing"),
+            stage4b_graduation_overheat_signals=("AI/cloud keyword priced before recurring revenue", "oversubscription before margin durability"),
+            stage4c_thesis_break_signals=("weak IPO debut", "price below IPO", "services margin reversion", "AI/cloud mix without margin"),
+            key_evidence_families=("IPO", "financial_actual", "news", "price", "research_report"),
+            false_positive_patterns=("AI/cloud sales mix treated as SaaS ARR", "IPO demand treated as Green despite aftermarket failure"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=18, bottleneck=6, mispricing=10, valuation=10),
+        ),
+        E2RArchetype.ENTERPRISE_SOFTWARE_PE_CONTROL_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.ENTERPRISE_SOFTWARE_PE_CONTROL_STAGE2,
+            stage1_radar_signals=("enterprise software control transaction", "ERP/cloud software", "private-equity stake acquisition", "SME workflow platform"),
+            stage2_candidate_signals=("large PE investment", "control premium", "ERP/accounting/tax/compliance software", "regulatory approval path"),
+            stage3_high_conviction_signals=("ARR retention", "cloud migration", "margin expansion", "cross-sell", "regulatory approval"),
+            stage4a_ongoing_signals=("ARR retention, cloud migration and margin expansion remain intact"),
+            stage4b_graduation_overheat_signals=("PE control premium priced before ARR and margin proof", "deal premium before regulatory clearance"),
+            stage4c_thesis_break_signals=("regulatory approval failure", "ARR churn", "cloud margin miss", "control premium without business conversion"),
+            key_evidence_families=("M&A", "financial_actual", "news", "price", "regulatory"),
+            false_positive_patterns=("PE deal value treated as recurring software economics", "control premium treated as Green before ARR retention"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=21, bottleneck=6, mispricing=13, valuation=12),
+        ),
+        E2RArchetype.CYBERSECURITY_TRUST_HARD_4C_REFERENCE: ArchetypeDefinition(
+            archetype=E2RArchetype.CYBERSECURITY_TRUST_HARD_4C_REFERENCE,
+            stage1_radar_signals=("large customer data breach", "USIM or identity leak", "security regulator investigation", "customer trust incident"),
+            stage2_candidate_signals=("not a positive Stage source; quantify leaked data, replacement cost, revenue cut, fine and compensation"),
+            stage3_high_conviction_signals=("not applicable while breach cost, revenue guide, fine, compensation or trust repair remains unresolved"),
+            stage4a_ongoing_signals=("security remediation complete and revenue/churn guidance recover"),
+            stage4b_graduation_overheat_signals=("relief rebound before full breach cost is known", "security-vendor read-through without contract evidence"),
+            stage4c_thesis_break_signals=("data breach", "revenue forecast cut", "security investment burden", "customer compensation", "regulatory fine"),
+            key_evidence_families=("news", "regulatory", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("telecom dividend stability scored while operational trust is broken", "cybersecurity theme read-through treated as Green without contracts"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.KPOP_PLATFORM_CONTENT_IP_GOVERNANCE: ArchetypeDefinition(
