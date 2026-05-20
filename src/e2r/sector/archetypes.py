@@ -68,7 +68,9 @@ class E2RArchetype(str, Enum):
     NUCLEAR_EXISTING_PPA_RESTART = "NUCLEAR_EXISTING_PPA_RESTART"
     NUCLEAR_EXPORT_PREFERRED_BIDDER = "NUCLEAR_EXPORT_PREFERRED_BIDDER"
     NUCLEAR_EPC_EXPORT_ORDER = "NUCLEAR_EPC_EXPORT_ORDER"
+    NUCLEAR_EPC_EXPORT_STAGE2 = "NUCLEAR_EPC_EXPORT_STAGE2"
     NUCLEAR_EXPORT_LEGAL_GATE = "NUCLEAR_EXPORT_LEGAL_GATE"
+    NUCLEAR_EXPORT_LEGAL_4C_WATCH = "NUCLEAR_EXPORT_LEGAL_4C_WATCH"
     NUCLEAR_DECOMMISSIONING_KOREA = "NUCLEAR_DECOMMISSIONING_KOREA"
     NUCLEAR_POLICY_STAGE1_2_NOT_GREEN = "NUCLEAR_POLICY_STAGE1_2_NOT_GREEN"
     NUCLEAR_GRID_INJECTION_RIGHTS = "NUCLEAR_GRID_INJECTION_RIGHTS"
@@ -757,11 +759,17 @@ class E2RArchetype(str, Enum):
     NUCLEAR_INFRA_EPC_EXPORT = "NUCLEAR_INFRA_EPC_EXPORT"
     PORT_INFRA_DELIVERY = "PORT_INFRA_DELIVERY"
     HOUSING_POLICY_SUPPLY_EVENT = "HOUSING_POLICY_SUPPLY_EVENT"
+    HOUSING_SUPPLY_POLICY_EVENT = "HOUSING_SUPPLY_POLICY_EVENT"
+    PUBLIC_INFRASTRUCTURE_POLICY_EVENT = "PUBLIC_INFRASTRUCTURE_POLICY_EVENT"
+    LNG_POWER_INFRA_CONSORTIUM_OPTION = "LNG_POWER_INFRA_CONSORTIUM_OPTION"
     REAL_ESTATE_PF_CREDIT_BREAK = "REAL_ESTATE_PF_CREDIT_BREAK"
+    CONSTRUCTION_SAFETY_HARD_REFERENCE = "CONSTRUCTION_SAFETY_HARD_REFERENCE"
+    RECURRING_FATAL_ACCIDENT_REGULATORY_4C = "RECURRING_FATAL_ACCIDENT_REGULATORY_4C"
     CONSTRUCTION_SAFETY_OPERATIONAL_TRUST_4C = "CONSTRUCTION_SAFETY_OPERATIONAL_TRUST_4C"
     CONSTRUCTION_SAFETY_REGULATORY_4C = "CONSTRUCTION_SAFETY_REGULATORY_4C"
     WORKPLACE_FATALITY_REGULATORY_4C = "WORKPLACE_FATALITY_REGULATORY_4C"
     BUILDING_MATERIALS_DEMAND_CYCLE = "BUILDING_MATERIALS_DEMAND_CYCLE"
+    BUILDING_MATERIALS_DEMAND_BREAK = "BUILDING_MATERIALS_DEMAND_BREAK"
     PRICE_ONLY_POLICY_RALLY = "PRICE_ONLY_POLICY_RALLY"
     EVIDENCE_GOOD_BUT_PRICE_UNPROVEN = "EVIDENCE_GOOD_BUT_PRICE_UNPROVEN"
     UTILITIES_REGULATED_TARIFF = "UTILITIES_REGULATED_TARIFF"
@@ -2946,6 +2954,30 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("preferred bidder treated as cashflow", "signed contract treated as listed-company margin proof"),
             preferred_score_weights=_weights(eps_fcf=18, visibility=24, bottleneck=12, mispricing=13, valuation=12),
         ),
+        E2RArchetype.NUCLEAR_EPC_EXPORT_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.NUCLEAR_EPC_EXPORT_STAGE2,
+            stage1_radar_signals=("preferred nuclear bidder", "overseas reactor EPC revival", "reactor talks approved"),
+            stage2_candidate_signals=("preferred bidder", "reactor count", "project value", "parliament or buyer approval"),
+            stage3_high_conviction_signals=("final contract signed", "listed-company scope", "EPC margin", "payment schedule", "cash collection"),
+            stage4a_ongoing_signals=("contract execution, legal clearance, margin, and working capital remain intact"),
+            stage4b_graduation_overheat_signals=("preferred-bidder rally before final contract", "nuclear export theme crowded before margin proof"),
+            stage4c_thesis_break_signals=("legal appeal", "court halt", "contract signing block", "financing failure", "scope or margin disappointment"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("preferred bidder treated as signed EPC cashflow", "talks treated as final contract"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=24, bottleneck=12, mispricing=13, valuation=12),
+        ),
+        E2RArchetype.NUCLEAR_EXPORT_LEGAL_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.NUCLEAR_EXPORT_LEGAL_4C_WATCH,
+            stage1_radar_signals=("nuclear export appeal", "IP dispute", "anti-monopoly block", "court halt"),
+            stage2_candidate_signals=("legal risk identified and dated", "contract signing dependency mapped"),
+            stage3_high_conviction_signals=("not a Green source while legal appeal or contract-signing block remains unresolved"),
+            stage4a_ongoing_signals=("appeal cleared and contract execution resumes"),
+            stage4b_graduation_overheat_signals=("nuclear rally ignores EDF, Westinghouse, or court halt risk"),
+            stage4c_thesis_break_signals=("legal appeal pending", "contract signing block", "court injunction", "IP dispute", "project halt"),
+            key_evidence_families=("news", "legal", "red_team", "price"),
+            false_positive_patterns=("preferred-bidder win scored while legal clearance is missing"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
         E2RArchetype.NUCLEAR_SMR_POLICY_MOU: ArchetypeDefinition(
             archetype=E2RArchetype.NUCLEAR_SMR_POLICY_MOU,
             stage1_radar_signals=("SMR policy cooperation", "AI power demand", "nuclear infrastructure MOU"),
@@ -3174,6 +3206,42 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("housing policy treated as earnings", "reconstruction headline without presales"),
             preferred_score_weights=_weights(eps_fcf=12, visibility=12, bottleneck=6, mispricing=12, valuation=10),
         ),
+        E2RArchetype.HOUSING_SUPPLY_POLICY_EVENT: ArchetypeDefinition(
+            archetype=E2RArchetype.HOUSING_SUPPLY_POLICY_EVENT,
+            stage1_radar_signals=("housing shortage policy", "LTV tightening", "state-owned land supply", "reconstruction simplification"),
+            stage2_candidate_signals=("presales path", "unsold-inventory risk mapped", "PF stability", "construction margin visibility"),
+            stage3_high_conviction_signals=("presales and margin confirmed", "PF stability", "unsold inventory controlled", "FCF visible"),
+            stage4a_ongoing_signals=("presales, margin, PF refinancing, and FCF remain stable"),
+            stage4b_graduation_overheat_signals=("housing supply policy rally before presales and margin proof"),
+            stage4c_thesis_break_signals=("LTV demand shock", "unsold inventory", "PF refinancing stress", "construction-cost inflation"),
+            key_evidence_families=("news", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("housing policy treated as construction-stock earnings", "LTV tightening ignored while supply headline is scored"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=12, bottleneck=6, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.PUBLIC_INFRASTRUCTURE_POLICY_EVENT: ArchetypeDefinition(
+            archetype=E2RArchetype.PUBLIC_INFRASTRUCTURE_POLICY_EVENT,
+            stage1_radar_signals=("public infrastructure headline", "government office construction", "regional development tender"),
+            stage2_candidate_signals=("tender notice", "site area", "preparation cost", "construction schedule"),
+            stage3_high_conviction_signals=("listed contractor award", "contract value", "margin", "working capital", "cash collection"),
+            stage4a_ongoing_signals=("award converts to progress revenue and cash collection"),
+            stage4b_graduation_overheat_signals=("public-infra theme rally before listed contract award"),
+            stage4c_thesis_break_signals=("tender delay", "contract award failure", "budget cut", "cost overrun"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "price"),
+            false_positive_patterns=("site-preparation headline treated as listed-company EPC profit"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=12, bottleneck=5, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.LNG_POWER_INFRA_CONSORTIUM_OPTION: ArchetypeDefinition(
+            archetype=E2RArchetype.LNG_POWER_INFRA_CONSORTIUM_OPTION,
+            stage1_radar_signals=("LNG power project candidate", "consortium option", "overseas power infrastructure"),
+            stage2_candidate_signals=("project value", "capacity GW", "commercial operation target", "named potential consortium"),
+            stage3_high_conviction_signals=("investor selected", "EPC scope", "contract value", "margin", "financing and offtake confirmed"),
+            stage4a_ongoing_signals=("award execution, financing, offtake, and margin remain intact"),
+            stage4b_graduation_overheat_signals=("consortium-candidate headline priced before award"),
+            stage4c_thesis_break_signals=("award failure", "financing failure", "offtake failure", "EPC scope excluded", "permitting delay"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "price"),
+            false_positive_patterns=("candidate consortium treated as awarded EPC contract"),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=16, bottleneck=8, mispricing=12, valuation=10),
+        ),
         E2RArchetype.REAL_ESTATE_PF_CREDIT_BREAK: ArchetypeDefinition(
             archetype=E2RArchetype.REAL_ESTATE_PF_CREDIT_BREAK,
             stage1_radar_signals=("PF delinquency", "debt reschedule", "workout", "construction credit stress"),
@@ -3184,6 +3252,30 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("PF workout", "delinquency spike", "bridge-loan rollover failure", "liquidity crisis"),
             key_evidence_families=("news", "financial_actual", "disclosure", "price"),
             false_positive_patterns=("government support treated as Green", "credit relief rally annualized"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.CONSTRUCTION_SAFETY_HARD_REFERENCE: ArchetypeDefinition(
+            archetype=E2RArchetype.CONSTRUCTION_SAFETY_HARD_REFERENCE,
+            stage1_radar_signals=("bridge collapse", "fatal construction collapse", "support-structure failure", "construction safety trust shock"),
+            stage2_candidate_signals=("not a positive source; fatalities, injuries, contractor responsibility, and regulatory action are mapped"),
+            stage3_high_conviction_signals=("not a Green source; fatal construction collapse is a sector hard-reference gate"),
+            stage4a_ongoing_signals=("remediation, investigation closure, and site restart must be monitored"),
+            stage4b_graduation_overheat_signals=("builder relief bounce before investigation clears"),
+            stage4c_thesis_break_signals=("fatal construction collapse", "bridge collapse", "site manager investigation", "license risk", "work suspension"),
+            key_evidence_families=("news", "regulatory", "red_team"),
+            false_positive_patterns=("backlog or policy headline scored while fatal-collapse reference is unresolved"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.RECURRING_FATAL_ACCIDENT_REGULATORY_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.RECURRING_FATAL_ACCIDENT_REGULATORY_4C,
+            stage1_radar_signals=("recurring fatal accident regulation", "workplace safety crackdown", "construction license revocation risk"),
+            stage2_candidate_signals=("fine up to operating profit percentage", "site suspension", "executive resignation", "license-risk quantified"),
+            stage3_high_conviction_signals=("not a Green source; recurring fatality regulation blocks R10 promotion"),
+            stage4a_ongoing_signals=("safety remediation, site restart, and license risk remain monitored"),
+            stage4b_graduation_overheat_signals=("construction order thesis ignores recurring-fatality regulation"),
+            stage4c_thesis_break_signals=("repeated fatal accidents", "fine up to operating profit", "license revocation risk", "site shutdown", "executive resignations"),
+            key_evidence_families=("news", "regulatory", "financial_actual", "price"),
+            false_positive_patterns=("construction backlog treated as intact while recurring fatality regulation is unresolved"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.CONSTRUCTION_SAFETY_OPERATIONAL_TRUST_4C: ArchetypeDefinition(
@@ -3257,6 +3349,18 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("research_report", "financial_actual", "news", "price"),
             false_positive_patterns=("price target upside despite estimate cut", "input-cycle bounce treated as structural"),
             preferred_score_weights=_weights(eps_fcf=16, visibility=12, bottleneck=10, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.BUILDING_MATERIALS_DEMAND_BREAK: ArchetypeDefinition(
+            archetype=E2RArchetype.BUILDING_MATERIALS_DEMAND_BREAK,
+            stage1_radar_signals=("construction demand weakness", "rebar price weakness", "building-material estimate cut"),
+            stage2_candidate_signals=("demand stabilization, spread recovery, inventory normalization, and FCF must be visible before promotion"),
+            stage3_high_conviction_signals=("volume, spread, margin, inventory, and FCF recover together"),
+            stage4a_ongoing_signals=("building-material spread and construction demand remain stable"),
+            stage4b_graduation_overheat_signals=("materials rebound priced before demand and spread proof"),
+            stage4c_thesis_break_signals=("net-profit forecast cut", "rebar price decline", "construction demand weakness", "shipbuilding steel-plate competition"),
+            key_evidence_families=("research_report", "financial_actual", "news", "price"),
+            false_positive_patterns=("small target-price upside scored while earnings forecast is cut sharply"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=10, bottleneck=8, mispricing=8, valuation=8),
         ),
         E2RArchetype.POLITICAL_INSTITUTIONAL_TRUST_BREAK: ArchetypeDefinition(
             archetype=E2RArchetype.POLITICAL_INSTITUTIONAL_TRUST_BREAK,

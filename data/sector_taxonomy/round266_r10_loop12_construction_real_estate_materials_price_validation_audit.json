@@ -1,0 +1,110 @@
+{
+  "analyst_round_id": "round_194",
+  "case_ids": [
+    "r10_loop12_czech_nuclear_preferred_bid_legal_watch",
+    "r10_loop12_hyundai_ec_bulgaria_kozloduy_talks",
+    "r10_loop12_hyundai_engineering_anseong_bridge_collapse",
+    "r10_loop12_posco_dl_recurring_fatal_accident_regulation",
+    "r10_loop12_seoul_housing_ltv_supply_policy",
+    "r10_loop12_sejong_presidential_office_public_infra",
+    "r10_loop12_daewoo_ec_nghi_son_lng_candidate",
+    "r10_loop12_hyundai_steel_rebar_construction_demand_break"
+  ],
+  "deep_sub_archetypes": [
+    "Czech Dukovany nuclear preferred bidder / legal 4C-watch",
+    "Bulgaria Kozloduy nuclear talks / Hyundai E&C pipeline",
+    "Hyundai Engineering Anseong bridge collapse / sector safety hard reference",
+    "POSCO E&C / DL Construction recurring fatal-accident regulation",
+    "Seoul LTV tightening and state-owned land housing supply policy",
+    "Sejong presidential office public infrastructure headline",
+    "Daewoo E&C Vietnam Nghi Son LNG power consortium option",
+    "Hyundai Steel rebar construction-demand break"
+  ],
+  "green_forbidden_patterns": [
+    "preferred_bidder_only",
+    "talks_or_parliament_nod_only",
+    "candidate_consortium_only",
+    "public_infra_headline_only",
+    "housing_policy_only",
+    "safety_incident_unresolved",
+    "legal_appeal_pending",
+    "building_material_demand_break"
+  ],
+  "green_required_fields": [
+    "final_contract_signed",
+    "scope_value_payment_schedule_confirmed",
+    "progress_revenue_or_delivery_milestone_confirmed",
+    "construction_margin_or_opm_confirmed",
+    "working_capital_and_receivables_stable",
+    "cash_collection_quality_confirmed",
+    "legal_appeal_permit_license_risk_cleared",
+    "safety_incident_absent_or_remediated",
+    "presales_unsold_inventory_pf_stability_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "fatal_construction_collapse",
+    "repeated_fatal_accidents",
+    "license_revocation",
+    "work_suspension",
+    "major_defect_or_collapse_investigation",
+    "legal_block_on_project_signing",
+    "contract_cancellation",
+    "pf_refinancing_failure",
+    "unsold_inventory_spike",
+    "construction_cost_overrun",
+    "rebar_or_materials_demand_collapse"
+  ],
+  "large_sector": "CONSTRUCTION_REAL_ESTATE_MATERIALS",
+  "source_round": "docs/round/round_266.md",
+  "stage4b_watch_triggers": [
+    "nuclear_preferred_bidder_rally_before_final_contract",
+    "housing_supply_policy_rally_before_presales",
+    "public_infra_tender_notice_theme_rally",
+    "lng_consortium_candidate_price_rally_before_award",
+    "safety_relief_bounce_before_investigation_clears",
+    "building_material_rebound_without_demand_recovery"
+  ],
+  "summary": {
+    "analyst_round_id": "round_194",
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "direct_listed_hard_4c_case_count": 0,
+    "direct_listed_hard_4c_confirmed": false,
+    "event_premium_count": 2,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "CONSTRUCTION_REAL_ESTATE_MATERIALS",
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "safety_hard_reference_count": 1,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_266.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 3,
+    "success_candidate_count": 3,
+    "target_archetype_count": 8,
+    "thesis_break_watch_count": 5
+  },
+  "target_aliases": {
+    "BUILDING_MATERIALS_DEMAND_BREAK": "BUILDING_MATERIALS_DEMAND_BREAK",
+    "CONSTRUCTION_SAFETY_HARD_REFERENCE": "CONSTRUCTION_SAFETY_HARD_REFERENCE",
+    "HOUSING_SUPPLY_POLICY_EVENT": "HOUSING_SUPPLY_POLICY_EVENT",
+    "LNG_POWER_INFRA_CONSORTIUM_OPTION": "LNG_POWER_INFRA_CONSORTIUM_OPTION",
+    "NUCLEAR_EPC_EXPORT_STAGE2": "NUCLEAR_EPC_EXPORT_STAGE2",
+    "NUCLEAR_EXPORT_LEGAL_4C_WATCH": "NUCLEAR_EXPORT_LEGAL_4C_WATCH",
+    "PUBLIC_INFRASTRUCTURE_POLICY_EVENT": "PUBLIC_INFRASTRUCTURE_POLICY_EVENT",
+    "RECURRING_FATAL_ACCIDENT_REGULATORY_4C": "RECURRING_FATAL_ACCIDENT_REGULATORY_4C"
+  },
+  "what_not_to_change": [
+    "do_not_use_round266_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_preferred_bidder_talks_policy_public_infra_candidate_consortium_or_rebar_target_upside_as_green",
+    "do_not_ignore_safety_legal_pf_or_building_material_demand_hard_gates",
+    "do_not_invent_ohlc_margin_working_capital_cash_collection_presales_pf_or_contract_award_data"
+  ]
+}

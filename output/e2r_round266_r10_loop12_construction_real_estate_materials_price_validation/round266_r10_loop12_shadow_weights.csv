@@ -1,0 +1,9 @@
+archetype,final_contract_signed,progress_revenue,construction_margin,working_capital,cash_collection,safety_execution,legal_clearance,presales_unsold_pf,building_material_spread,public_contract_quality,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+NUCLEAR_EPC_EXPORT_STAGE2,+5,+5,+5,+5,+5,+4,+5,+0,+0,+4,-5,+5,+5,Czech/Bulgaria nuclear is Stage 2 until final contract and legal clearance confirm.
+NUCLEAR_EXPORT_LEGAL_4C_WATCH,+0,+0,+0,+0,+0,+2,+5,+0,+0,+0,+0,+4,+5,EDF/Westinghouse/Czech court halt requires legal 4C-watch.
+CONSTRUCTION_SAFETY_HARD_REFERENCE,+0,+0,+0,+0,+0,+5,+2,+0,+0,+0,+0,+3,+5,Anseong bridge collapse is sector hard safety reference.
+RECURRING_FATAL_ACCIDENT_REGULATORY_4C,+0,+0,+0,+0,+0,+5,+5,+0,+0,+0,+0,+4,+5,Recurring fatalities can trigger 5% OP fine and license revocation.
+HOUSING_SUPPLY_POLICY_EVENT,+2,+2,+3,+4,+4,+2,+3,+5,+1,+2,-5,+5,+4,"Housing policy requires presales, margin, PF stability and FCF."
+PUBLIC_INFRASTRUCTURE_POLICY_EVENT,+3,+3,+3,+3,+3,+3,+3,+0,+0,+5,-5,+4,+3,"Public-infra headline needs listed award, contract value and margin."
+LNG_POWER_INFRA_CONSORTIUM_OPTION,+4,+4,+4,+4,+4,+3,+4,+0,+0,+4,-5,+4,+4,Consortium candidate is not award; EPC scope/value/offtake required.
+BUILDING_MATERIALS_DEMAND_BREAK,+0,+0,+0,+4,+4,+2,+0,+3,+5,+0,+0,+3,+5,Rebar/construction demand weakness requires spread/inventory/FCF watch.

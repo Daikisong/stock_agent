@@ -1,0 +1,21 @@
+axis,points,direction,reason
+final_contract_signed,5,raise,R10 원전/EPC는 preferred bidder가 아니라 final contract가 핵심이다.
+progress_revenue_visibility,5,raise,공정률과 진행매출이 보여야 수주가 EPS/FCF로 닫힌다.
+construction_margin_visibility,5,raise,건설은 계약금액보다 원가율과 OPM 확인이 중요하다.
+working_capital_control,5,raise,미청구공사·매출채권이 흔들리면 수주가 현금으로 닫히지 않는다.
+cash_collection_quality,5,raise,현금회수 확인 전에는 대형 프로젝트도 Stage 2다.
+safety_execution_trust,5,raise,건설 안전 신뢰는 R10 hard gate다.
+permit_and_legal_clearance,5,raise,법적 항소와 인허가가 풀려야 프로젝트가 실적이 된다.
+presales_and_unsold_inventory,5,raise,"주택정책은 분양률, 미분양, PF 안정으로 확인해야 한다."
+building_material_spread,4,raise,"건자재는 수요, spread, inventory, FCF가 함께 회복돼야 한다."
+public_contract_award_quality,4,raise,공공공사는 실제 낙찰사와 계약금액이 있어야 한다.
+preferred_bidder_only,-5,lower,preferred bidder는 Stage 2 후보일 뿐 Green이 아니다.
+talks_or_MOU_only,-5,lower,협상 승인과 MOU는 final EPC contract가 아니다.
+public_infra_headline_only,-5,lower,공공청사 headline은 listed contractor award 전 Green이 아니다.
+housing_policy_only,-5,lower,주택정책은 presales/margin/PF 확인 전 event premium이다.
+candidate_consortium_only,-5,lower,컨소시엄 후보군은 award가 아니다.
+safety_incident,-5,lower,치명적 안전사고는 수주·정책 점수를 덮는 4C gate다.
+recurring_fatality_risk,-5,lower,반복 사망사고는 벌금과 면허 리스크를 만든다.
+license_revocation_risk,-5,lower,면허취소 가능성은 R10 Green을 차단한다.
+rebar_demand_weakness,-4,lower,철근 수요 약화는 건자재 spread와 이익을 깨뜨린다.
+legal_appeal_pending,-4,lower,법적 항소가 남아 있으면 final contract cashflow로 볼 수 없다.
