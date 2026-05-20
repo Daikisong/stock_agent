@@ -490,6 +490,14 @@ class E2RArchetype(str, Enum):
     SURGICAL_ROBOT_INSTALLED_BASE = "SURGICAL_ROBOT_INSTALLED_BASE"
     SURGICAL_ROBOT_GLP1_PROCEDURE_MIX_OVERLAY = "SURGICAL_ROBOT_GLP1_PROCEDURE_MIX_OVERLAY"
     BOTULINUM_AESTHETIC_REGULATED = "BOTULINUM_AESTHETIC_REGULATED"
+    AESTHETIC_EBD_GLOBAL_BUYOUT = "AESTHETIC_EBD_GLOBAL_BUYOUT"
+    BEAUTY_DEVICE_CONSUMER_CLINIC_CROSSOVER = "BEAUTY_DEVICE_CONSUMER_CLINIC_CROSSOVER"
+    AESTHETIC_DEVICE_EXPORT_PLATFORM = "AESTHETIC_DEVICE_EXPORT_PLATFORM"
+    BOTULINUM_TOXIN_US_LAUNCH = "BOTULINUM_TOXIN_US_LAUNCH"
+    UNAPPROVED_TOXIN_SAFETY_TRUST_4C = "UNAPPROVED_TOXIN_SAFETY_TRUST_4C"
+    MEDICAL_AI_EXTERNAL_VALIDATION_NOT_REVENUE = "MEDICAL_AI_EXTERNAL_VALIDATION_NOT_REVENUE"
+    MEDICAL_SERVICE_DISRUPTION_POLICY_4C = "MEDICAL_SERVICE_DISRUPTION_POLICY_4C"
+    DENTAL_IMPLANT_GLOBAL_M_AND_A = "DENTAL_IMPLANT_GLOBAL_M_AND_A"
     DIAGNOSTICS_INFECTIOUS_DISEASE = "DIAGNOSTICS_INFECTIOUS_DISEASE"
     COMMERCIALIZATION_FAILURE_OVERLAY = "COMMERCIALIZATION_FAILURE_OVERLAY"
     REIMBURSEMENT_ACCESS_OVERLAY = "REIMBURSEMENT_ACCESS_OVERLAY"
@@ -2629,6 +2637,102 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("financial_actual", "research_report", "news"),
             false_positive_patterns=("one-time device sale", "approval without channel", "safety risk ignored"),
             preferred_score_weights=_weights(eps_fcf=20, visibility=22, bottleneck=13, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.AESTHETIC_EBD_GLOBAL_BUYOUT: ArchetypeDefinition(
+            archetype=E2RArchetype.AESTHETIC_EBD_GLOBAL_BUYOUT,
+            stage1_radar_signals=("energy-based aesthetic device buyout", "EBD global market expansion", "PE control transaction"),
+            stage2_candidate_signals=("transaction value", "revenue CAGR", "adjusted pretax earnings CAGR", "installed-base and consumable diligence"),
+            stage3_high_conviction_signals=("listed-equity tracking remains open", "procedure volume", "consumable attach-rate", "gross margin and FCF visible"),
+            stage4a_ongoing_signals=("installed base, utilization and consumables remain strong"),
+            stage4b_graduation_overheat_signals=("buyout premium or delisting premium closes public price path", "EBD premium priced before public tracking"),
+            stage4c_thesis_break_signals=("post-buyout tracking unavailable", "integration risk", "leverage risk", "procedure slowdown"),
+            key_evidence_families=("news", "transaction", "financial_actual", "price"),
+            false_positive_patterns=("PE buyout validation treated as ongoing public Stage 3-Green"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=20, bottleneck=12, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.BEAUTY_DEVICE_CONSUMER_CLINIC_CROSSOVER: ArchetypeDefinition(
+            archetype=E2RArchetype.BEAUTY_DEVICE_CONSUMER_CLINIC_CROSSOVER,
+            stage1_radar_signals=("at-home beauty-device boom", "social-commerce demand", "K-beauty device export"),
+            stage2_candidate_signals=("overseas revenue", "device revenue share", "market-value rerating", "clinic crossover optionality"),
+            stage3_high_conviction_signals=("repeat device revenue", "clinic or consumable crossover", "channel retention", "gross margin and FCF visible"),
+            stage4a_ongoing_signals=("overseas sell-through, repeat demand and margins remain intact"),
+            stage4b_graduation_overheat_signals=("stock rises multiple-fold before repeat revenue proof", "single device concentration"),
+            stage4c_thesis_break_signals=("viral demand fades", "regulatory boundary issue", "channel retention failure", "margin reversal"),
+            key_evidence_families=("financial_actual", "news", "price", "channel_data"),
+            false_positive_patterns=("viral beauty-device story treated as medical-device Green"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=18, bottleneck=8, mispricing=14, valuation=10),
+        ),
+        E2RArchetype.AESTHETIC_DEVICE_EXPORT_PLATFORM: ArchetypeDefinition(
+            archetype=E2RArchetype.AESTHETIC_DEVICE_EXPORT_PLATFORM,
+            stage1_radar_signals=("aesthetic device export", "global clinic channel", "PE ownership validation"),
+            stage2_candidate_signals=("export countries", "device shipments", "overseas distributor quality", "control stake validation"),
+            stage3_high_conviction_signals=("installed base", "consumable attach-rate", "overseas OPM", "FCF conversion"),
+            stage4a_ongoing_signals=("installed base, overseas channels and consumables remain strong"),
+            stage4b_graduation_overheat_signals=("K-aesthetic premium prices before installed-base data", "strategic-acquirer rumor"),
+            stage4c_thesis_break_signals=("procedure slowdown", "distributor inventory", "regulatory issue", "consumable attach-rate miss"),
+            key_evidence_families=("financial_actual", "news", "research_report", "price"),
+            false_positive_patterns=("export-country count without installed base or consumables"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=22, bottleneck=11, mispricing=13, valuation=11),
+        ),
+        E2RArchetype.BOTULINUM_TOXIN_US_LAUNCH: ArchetypeDefinition(
+            archetype=E2RArchetype.BOTULINUM_TOXIN_US_LAUNCH,
+            stage1_radar_signals=("FDA approval", "U.S. toxin launch", "price advantage vs Botox"),
+            stage2_candidate_signals=("U.S. availability", "provider adoption watch", "estimated unit price", "distributor execution"),
+            stage3_high_conviction_signals=("provider adoption", "repeat injection volume", "ASP and margin visible", "safety and counterfeit risk clear"),
+            stage4a_ongoing_signals=("repeat procedures, ASP and provider usage remain strong"),
+            stage4b_graduation_overheat_signals=("FDA approval price spike before procedure volume", "cheaper-than-Botox narrative crowded"),
+            stage4c_thesis_break_signals=("provider adoption failure", "price war", "safety issue", "counterfeit or unapproved toxin confusion"),
+            key_evidence_families=("regulatory", "news", "financial_actual", "price"),
+            false_positive_patterns=("FDA approval treated as commercial Green before repeat injections"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=19, bottleneck=9, mispricing=13, valuation=10),
+        ),
+        E2RArchetype.UNAPPROVED_TOXIN_SAFETY_TRUST_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.UNAPPROVED_TOXIN_SAFETY_TRUST_4C,
+            stage1_radar_signals=("unapproved toxin circulation", "DIY injection trend", "brand visibility outside approved channels"),
+            stage2_candidate_signals=("not a Green source; safety-trust overlay"),
+            stage3_high_conviction_signals=("not applicable until unauthorized distribution and safety risk clear"),
+            stage4a_ongoing_signals=("authorized channels and patient safety remain clean"),
+            stage4b_graduation_overheat_signals=("toxin brand premium ignores unauthorized distribution risk"),
+            stage4c_thesis_break_signals=("unapproved distribution", "FDA warning letters", "patient safety issue", "brand trust break"),
+            key_evidence_families=("news", "regulatory", "red_team"),
+            false_positive_patterns=("K-toxin visibility treated as Green while unauthorized channels exist"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.MEDICAL_AI_EXTERNAL_VALIDATION_NOT_REVENUE: ArchetypeDefinition(
+            archetype=E2RArchetype.MEDICAL_AI_EXTERNAL_VALIDATION_NOT_REVENUE,
+            stage1_radar_signals=("medical AI external validation", "AUC headline", "screening workflow expectation"),
+            stage2_candidate_signals=("large validation dataset", "aggregate AUC", "subgroup performance watch"),
+            stage3_high_conviction_signals=("reimbursement", "hospital adoption", "recurring revenue", "liability and subgroup risk cleared"),
+            stage4a_ongoing_signals=("hospital usage and reimbursement remain strong"),
+            stage4b_graduation_overheat_signals=("AI validation paper priced before revenue", "aggregate AUC ignores subgroup weakness"),
+            stage4c_thesis_break_signals=("subgroup performance weakness", "reimbursement absent", "hospital adoption failure", "liability event"),
+            key_evidence_families=("research_report", "news", "financial_actual", "regulatory"),
+            false_positive_patterns=("external validation or AUC score treated as Stage 3-Green alone"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=14, bottleneck=5, mispricing=12, valuation=8),
+        ),
+        E2RArchetype.MEDICAL_SERVICE_DISRUPTION_POLICY_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.MEDICAL_SERVICE_DISRUPTION_POLICY_4C,
+            stage1_radar_signals=("doctor strike", "medical-school quota dispute", "hospital utilization risk"),
+            stage2_candidate_signals=("policy relief is not company-level Green", "procedure-volume recovery must be visible"),
+            stage3_high_conviction_signals=("procedure volume restored", "hospital utilization restored", "reimbursement and medtech demand visible"),
+            stage4a_ongoing_signals=("medical service capacity and procedure demand remain stable"),
+            stage4b_graduation_overheat_signals=("healthcare basket rises on policy news before procedure volume"),
+            stage4c_thesis_break_signals=("doctor walkout", "surgery delays", "emergency-care disruption", "procedure-volume collapse"),
+            key_evidence_families=("policy", "news", "financial_actual", "red_team"),
+            false_positive_patterns=("quota policy headline treated as healthcare-stock Green"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.DENTAL_IMPLANT_GLOBAL_M_AND_A: ArchetypeDefinition(
+            archetype=E2RArchetype.DENTAL_IMPLANT_GLOBAL_M_AND_A,
+            stage1_radar_signals=("dental implant global M&A", "delisted Korean buyer", "U.S. target event"),
+            stage2_candidate_signals=("target event return", "market cap anchor", "financing arrangement", "transaction close watch"),
+            stage3_high_conviction_signals=("confirmed close", "integration", "margin and debt manageable", "cash return or public listed bridge"),
+            stage4a_ongoing_signals=("integration and margins remain intact"),
+            stage4b_graduation_overheat_signals=("target stock rally before confirmed transaction close", "M&A rumor priced as synergy"),
+            stage4c_thesis_break_signals=("M&A cancellation", "integration failure", "debt burden", "delisted-buyer tracking gap"),
+            key_evidence_families=("news", "price", "transaction", "financial_actual"),
+            false_positive_patterns=("M&A rumor or target rally treated as Korean listed Green"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=14, bottleneck=6, mispricing=12, valuation=10),
         ),
         E2RArchetype.SURGICAL_ROBOT_GLP1_PROCEDURE_MIX_OVERLAY: ArchetypeDefinition(
             archetype=E2RArchetype.SURGICAL_ROBOT_GLP1_PROCEDURE_MIX_OVERLAY,

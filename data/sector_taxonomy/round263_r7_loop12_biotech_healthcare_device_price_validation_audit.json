@@ -1,0 +1,402 @@
+{
+  "case_ids": [
+    "r7_loop12_jeisys_medical_ebd_global_buyout",
+    "r7_loop12_apr_medicube_device_crossover",
+    "r7_loop12_classys_aesthetic_device_export_platform",
+    "r7_loop12_hugel_letybo_us_toxin_launch",
+    "r7_loop12_medytox_innotox_unauthorized_distribution",
+    "r7_loop12_lunit_insight_dbt_validation_not_revenue",
+    "r7_loop12_medical_quota_doctors_strike_disruption",
+    "r7_loop12_osstem_zimvie_dental_mna_event"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "미용의료기기 EBD buyout",
+      "primary_archetype": "AESTHETIC_EBD_GLOBAL_BUYOUT",
+      "terms": "Jeisys Medical|ArchiMed|EBD|HIFU|RF|laser|body contouring|delisting"
+    },
+    {
+      "category": "Beauty device crossover",
+      "primary_archetype": "BEAUTY_DEVICE_CONSUMER_CLINIC_CROSSOVER",
+      "terms": "APR|Medicube|at-home beauty device|TikTok|overseas revenue"
+    },
+    {
+      "category": "Aesthetic export platform",
+      "primary_archetype": "AESTHETIC_DEVICE_EXPORT_PLATFORM",
+      "terms": "Classys|Bain Capital|60 countries|installed base|consumables"
+    },
+    {
+      "category": "톡신 U.S. launch",
+      "primary_archetype": "BOTULINUM_TOXIN_US_LAUNCH",
+      "terms": "Hugel|Letybo|FDA approval|provider adoption|Botox price"
+    },
+    {
+      "category": "톡신 safety trust",
+      "primary_archetype": "UNAPPROVED_TOXIN_SAFETY_TRUST_4C",
+      "terms": "Medytox|Innotox|DIY injection|UK unlicensed|FDA warning"
+    },
+    {
+      "category": "의료AI validation not revenue",
+      "primary_archetype": "MEDICAL_AI_EXTERNAL_VALIDATION_NOT_REVENUE",
+      "terms": "Lunit|INSIGHT DBT|AUC|subgroup weakness|reimbursement"
+    },
+    {
+      "category": "의료서비스 policy disruption",
+      "primary_archetype": "MEDICAL_SERVICE_DISRUPTION_POLICY_4C",
+      "terms": "doctors strike|medical quota|emergency care|surgery delay|hospital utilization"
+    },
+    {
+      "category": "치과 implant M&A",
+      "primary_archetype": "DENTAL_IMPLANT_GLOBAL_M_AND_A",
+      "terms": "Osstem Implant|ZimVie|delisted buyer|takeover rumor|integration"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "fda_approval_only",
+    "mna_rumor_only",
+    "external_validation_only",
+    "unlisted_or_delisted_asset_only",
+    "device_viral_story_only",
+    "unauthorized_toxin_distribution_risk_present",
+    "medical_service_capacity_disruption_present",
+    "subgroup_performance_weakness_unresolved"
+  ],
+  "green_required_fields": [
+    "procedure_or_prescription_volume_confirmed",
+    "installed_base_or_utilization_confirmed",
+    "consumable_or_repeat_treatment_revenue_confirmed",
+    "provider_or_hospital_adoption_confirmed",
+    "reimbursement_or_selfpay_asp_confirmed",
+    "gross_margin_or_fcf_confirmed",
+    "safety_counterfeit_and_unauthorized_distribution_risk_passed",
+    "policy_or_service_disruption_risk_passed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "fda_rejection_or_crl",
+    "post_approval_safety_signal",
+    "counterfeit_or_unauthorized_distribution_regulatory_action",
+    "provider_adoption_failure",
+    "reimbursement_failure",
+    "clinical_subgroup_failure_blocks_adoption",
+    "mna_cancellation",
+    "medical_service_disruption_procedure_volume_collapse",
+    "cash_burn_or_dilution_from_commercialization_failure"
+  ],
+  "large_sector": "BIOTECH_HEALTHCARE_DEVICE",
+  "round_id": "round_191",
+  "score_adjustments": [
+    {
+      "axis": "procedure_volume",
+      "direction": "raise",
+      "points": "5",
+      "reason": "R7 Green은 실제 시술량이나 처방량이 확인되어야 한다."
+    },
+    {
+      "axis": "device_installed_base",
+      "direction": "raise",
+      "points": "5",
+      "reason": "미용의료기기는 설치대수와 utilization이 반복매출의 출발점이다."
+    },
+    {
+      "axis": "consumable_attach_rate",
+      "direction": "raise",
+      "points": "5",
+      "reason": "소모품 attach-rate가 있어야 단발 장비판매가 아니다."
+    },
+    {
+      "axis": "repeat_treatment_frequency",
+      "direction": "raise",
+      "points": "5",
+      "reason": "반복 시술 빈도가 procedure TAM을 현금흐름으로 바꾼다."
+    },
+    {
+      "axis": "provider_adoption",
+      "direction": "raise",
+      "points": "5",
+      "reason": "톡신과 의료AI는 provider/hospital adoption 전까지 Stage 2다."
+    },
+    {
+      "axis": "reimbursement_or_selfpay_conversion",
+      "direction": "raise",
+      "points": "4",
+      "reason": "보험·수가 또는 self-pay ASP가 매출 지속성을 만든다."
+    },
+    {
+      "axis": "gross_margin_visibility",
+      "direction": "raise",
+      "points": "5",
+      "reason": "의료기기와 톡신은 gross margin과 FCF 확인이 중요하다."
+    },
+    {
+      "axis": "regulatory_safety_trust",
+      "direction": "raise",
+      "points": "5",
+      "reason": "안전·위조·비공식 유통 리스크가 Green을 막는다."
+    },
+    {
+      "axis": "commercial_revenue_conversion",
+      "direction": "raise",
+      "points": "5",
+      "reason": "승인·논문·M&A가 실제 매출로 전환되어야 한다."
+    },
+    {
+      "axis": "cash_conversion",
+      "direction": "raise",
+      "points": "4",
+      "reason": "성장률보다 FCF 전환이 Stage 3 품질을 결정한다."
+    },
+    {
+      "axis": "approval_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "FDA 승인만으로 Stage 3-Green을 만들지 않는다."
+    },
+    {
+      "axis": "M&A_rumor_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "M&A rumor는 확인 전 event premium이다."
+    },
+    {
+      "axis": "external_validation_without_revenue",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "AUC와 외부검증은 상환·병원도입·매출 전 Green 근거가 아니다."
+    },
+    {
+      "axis": "device_viral_demand_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "viral device 수요만으로 반복매출을 발명하지 않는다."
+    },
+    {
+      "axis": "unlisted_subsidiary_or_delisted_tracking_gap",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "비상장·상폐 자산은 상장주 Stage 3 추적을 제한한다."
+    },
+    {
+      "axis": "unauthorized_distribution_risk",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "비공식 톡신 유통은 safety/trust 4C-watch다."
+    },
+    {
+      "axis": "safety_or_counterfeit_toxin_risk",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "위조·미승인 톡신 리스크는 제품 신뢰를 훼손한다."
+    },
+    {
+      "axis": "medical_service_disruption",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "의사파업·정책 disruption은 procedure volume을 교란한다."
+    },
+    {
+      "axis": "subgroup_performance_weakness",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "의료AI subgroup weakness는 deployment risk다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "AESTHETIC_EBD_GLOBAL_BUYOUT",
+      "cash_conversion": "+4",
+      "commercial_revenue_conversion": "+5",
+      "consumable_attach_rate": "+4",
+      "event_penalty": "-4",
+      "gross_margin_visibility": "+5",
+      "hard_4c_sensitivity": "+4",
+      "installed_base": "+5",
+      "notes": "PE buyout validates business quality, but delisting closes public Stage 3 tracking.",
+      "procedure_volume": "+3",
+      "provider_adoption": "+3",
+      "regulatory_safety_trust": "+4",
+      "reimbursement_selfpay": "+2",
+      "repeat_treatment_frequency": "+4",
+      "safety_redteam": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "BEAUTY_DEVICE_CONSUMER_CLINIC_CROSSOVER",
+      "cash_conversion": "+4",
+      "commercial_revenue_conversion": "+5",
+      "consumable_attach_rate": "+3",
+      "event_penalty": "-4",
+      "gross_margin_visibility": "+4",
+      "hard_4c_sensitivity": "+4",
+      "installed_base": "+3",
+      "notes": "APR-style growth needs repeat demand and channel durability, not viral device demand alone.",
+      "procedure_volume": "+4",
+      "provider_adoption": "+3",
+      "regulatory_safety_trust": "+4",
+      "reimbursement_selfpay": "+3",
+      "repeat_treatment_frequency": "+4",
+      "safety_redteam": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "AESTHETIC_DEVICE_EXPORT_PLATFORM",
+      "cash_conversion": "+4",
+      "commercial_revenue_conversion": "+5",
+      "consumable_attach_rate": "+5",
+      "event_penalty": "-3",
+      "gross_margin_visibility": "+5",
+      "hard_4c_sensitivity": "+5",
+      "installed_base": "+5",
+      "notes": "Classys-like platform needs installed base, consumables, OPM and FCF.",
+      "procedure_volume": "+4",
+      "provider_adoption": "+4",
+      "regulatory_safety_trust": "+5",
+      "reimbursement_selfpay": "+3",
+      "repeat_treatment_frequency": "+4",
+      "safety_redteam": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "BOTULINUM_TOXIN_US_LAUNCH",
+      "cash_conversion": "+4",
+      "commercial_revenue_conversion": "+5",
+      "consumable_attach_rate": "+2",
+      "event_penalty": "-5",
+      "gross_margin_visibility": "+5",
+      "hard_4c_sensitivity": "+5",
+      "installed_base": "+1",
+      "notes": "FDA approval is Stage 2 until provider adoption and repeat injection volume confirm.",
+      "procedure_volume": "+5",
+      "provider_adoption": "+5",
+      "regulatory_safety_trust": "+5",
+      "reimbursement_selfpay": "+4",
+      "repeat_treatment_frequency": "+5",
+      "safety_redteam": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "UNAPPROVED_TOXIN_SAFETY_TRUST_4C",
+      "cash_conversion": "0",
+      "commercial_revenue_conversion": "0",
+      "consumable_attach_rate": "0",
+      "event_penalty": "-5",
+      "gross_margin_visibility": "0",
+      "hard_4c_sensitivity": "+5",
+      "installed_base": "0",
+      "notes": "Unauthorized toxin distribution is a safety/trust gate, not a Green source.",
+      "procedure_volume": "0",
+      "provider_adoption": "0",
+      "regulatory_safety_trust": "+5",
+      "reimbursement_selfpay": "0",
+      "repeat_treatment_frequency": "0",
+      "safety_redteam": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "MEDICAL_AI_EXTERNAL_VALIDATION_NOT_REVENUE",
+      "cash_conversion": "+3",
+      "commercial_revenue_conversion": "+5",
+      "consumable_attach_rate": "0",
+      "event_penalty": "-5",
+      "gross_margin_visibility": "+2",
+      "hard_4c_sensitivity": "+5",
+      "installed_base": "0",
+      "notes": "AUC and external validation need reimbursement, adoption and revenue bridge.",
+      "procedure_volume": "0",
+      "provider_adoption": "+5",
+      "regulatory_safety_trust": "+4",
+      "reimbursement_selfpay": "+5",
+      "repeat_treatment_frequency": "0",
+      "safety_redteam": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "MEDICAL_SERVICE_DISRUPTION_POLICY_4C",
+      "cash_conversion": "0",
+      "commercial_revenue_conversion": "0",
+      "consumable_attach_rate": "0",
+      "event_penalty": "-4",
+      "gross_margin_visibility": "0",
+      "hard_4c_sensitivity": "+5",
+      "installed_base": "0",
+      "notes": "Policy relief is not Green while procedure volume and hospital utilization are disrupted.",
+      "procedure_volume": "+5",
+      "provider_adoption": "0",
+      "regulatory_safety_trust": "+5",
+      "reimbursement_selfpay": "+3",
+      "repeat_treatment_frequency": "0",
+      "safety_redteam": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "DENTAL_IMPLANT_GLOBAL_M_AND_A",
+      "cash_conversion": "+3",
+      "commercial_revenue_conversion": "+4",
+      "consumable_attach_rate": "+2",
+      "event_penalty": "-5",
+      "gross_margin_visibility": "+4",
+      "hard_4c_sensitivity": "+4",
+      "installed_base": "+2",
+      "notes": "M&A target rally is event premium until close, integration and listed bridge are visible.",
+      "procedure_volume": "+3",
+      "provider_adoption": "+2",
+      "regulatory_safety_trust": "+3",
+      "reimbursement_selfpay": "+2",
+      "repeat_treatment_frequency": "+3",
+      "safety_redteam": "+4"
+    }
+  ],
+  "source_round": "docs/round/round_263.md",
+  "stage4b_watch_triggers": [
+    "pe_buyout_or_delisting_premium",
+    "fda_approval_spike_before_procedure_volume",
+    "medical_device_export_story_before_utilization",
+    "beauty_device_three_to_four_x_rally_on_viral_demand",
+    "mna_rumor_target_rally_before_close",
+    "ai_validation_paper_before_reimbursement",
+    "medical_policy_news_healthcare_basket_rally"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 1,
+    "failed_rerating_count": 1,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "hard_4c_confirmed": false,
+    "large_sector": "BIOTECH_HEALTHCARE_DEVICE",
+    "price_moved_without_evidence_count": 1,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "reported_price_anchor_count": 3,
+    "round_id": "round_191",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_263.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 5,
+    "stage4c_watch_count": 3,
+    "success_candidate_count": 4,
+    "target_archetype_count": 8,
+    "watch_case_count": 2
+  },
+  "target_aliases": {
+    "AESTHETIC_DEVICE_EXPORT_PLATFORM": "AESTHETIC_DEVICE_EXPORT_PLATFORM",
+    "AESTHETIC_EBD_GLOBAL_BUYOUT": "AESTHETIC_EBD_GLOBAL_BUYOUT",
+    "BEAUTY_DEVICE_CONSUMER_CLINIC_CROSSOVER": "BEAUTY_DEVICE_CONSUMER_CLINIC_CROSSOVER",
+    "BOTULINUM_TOXIN_US_LAUNCH": "BOTULINUM_TOXIN_US_LAUNCH",
+    "DENTAL_IMPLANT_GLOBAL_M_AND_A": "DENTAL_IMPLANT_GLOBAL_M_AND_A",
+    "MEDICAL_AI_EXTERNAL_VALIDATION_NOT_REVENUE": "MEDICAL_AI_EXTERNAL_VALIDATION_NOT_REVENUE",
+    "MEDICAL_SERVICE_DISRUPTION_POLICY_4C": "MEDICAL_SERVICE_DISRUPTION_POLICY_4C",
+    "UNAPPROVED_TOXIN_SAFETY_TRUST_4C": "UNAPPROVED_TOXIN_SAFETY_TRUST_4C"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round263_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_fda_approval_mna_auc_k_aesthetic_ai_diagnosis_or_medical_policy_headlines_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}

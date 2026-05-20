@@ -1,0 +1,20 @@
+axis,points,direction,reason
+procedure_volume,5,raise,R7 Green은 실제 시술량이나 처방량이 확인되어야 한다.
+device_installed_base,5,raise,미용의료기기는 설치대수와 utilization이 반복매출의 출발점이다.
+consumable_attach_rate,5,raise,소모품 attach-rate가 있어야 단발 장비판매가 아니다.
+repeat_treatment_frequency,5,raise,반복 시술 빈도가 procedure TAM을 현금흐름으로 바꾼다.
+provider_adoption,5,raise,톡신과 의료AI는 provider/hospital adoption 전까지 Stage 2다.
+reimbursement_or_selfpay_conversion,4,raise,보험·수가 또는 self-pay ASP가 매출 지속성을 만든다.
+gross_margin_visibility,5,raise,의료기기와 톡신은 gross margin과 FCF 확인이 중요하다.
+regulatory_safety_trust,5,raise,안전·위조·비공식 유통 리스크가 Green을 막는다.
+commercial_revenue_conversion,5,raise,승인·논문·M&A가 실제 매출로 전환되어야 한다.
+cash_conversion,4,raise,성장률보다 FCF 전환이 Stage 3 품질을 결정한다.
+approval_headline_only,-5,lower,FDA 승인만으로 Stage 3-Green을 만들지 않는다.
+M&A_rumor_only,-5,lower,M&A rumor는 확인 전 event premium이다.
+external_validation_without_revenue,-5,lower,AUC와 외부검증은 상환·병원도입·매출 전 Green 근거가 아니다.
+device_viral_demand_only,-4,lower,viral device 수요만으로 반복매출을 발명하지 않는다.
+unlisted_subsidiary_or_delisted_tracking_gap,-4,lower,비상장·상폐 자산은 상장주 Stage 3 추적을 제한한다.
+unauthorized_distribution_risk,-5,lower,비공식 톡신 유통은 safety/trust 4C-watch다.
+safety_or_counterfeit_toxin_risk,-5,lower,위조·미승인 톡신 리스크는 제품 신뢰를 훼손한다.
+medical_service_disruption,-4,lower,의사파업·정책 disruption은 procedure volume을 교란한다.
+subgroup_performance_weakness,-4,lower,의료AI subgroup weakness는 deployment risk다.

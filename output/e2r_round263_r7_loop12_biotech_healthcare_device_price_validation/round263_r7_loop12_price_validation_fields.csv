@@ -1,0 +1,16 @@
+field,required_for_round263_price_validation
+price_data_source,true
+full_ohlc_available,true
+reported_price_anchor,true
+reported_return_anchor,true
+stage2_price_anchor,true
+stage3_price,true
+stage4b_price,true
+stage4c_price,true
+mfe_1d,true
+mae_1d,true
+transaction_or_market_value_anchor,true
+procedure_volume_or_exam_count,true
+installed_base_or_export_channel_anchor,true
+regulatory_safety_or_policy_gate,true
+price_validation_status,true
