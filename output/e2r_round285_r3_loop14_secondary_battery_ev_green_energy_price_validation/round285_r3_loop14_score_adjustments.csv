@@ -1,0 +1,20 @@
+axis,points,direction,reason
+customer_calloff_visibility,5,raise,배터리 계약은 실제 call-off와 shipment가 보여야 강하다.
+contract_cancellation_risk,5,raise,대형 고객 계약 취소는 expected revenue와 utilization을 직접 깬다.
+plant_utilization,5,raise,공장·JV·capex는 utilization이 있어야 EPS/FCF로 연결된다.
+EV_model_mix_battery_content,5,raise,BEV에서 hybrid/EREV로 바뀌면 차량당 battery content가 줄 수 있다.
+subsidy_tariff_policy_stability,5,raise,IRA/AMPC/관세/보조금은 지속성과 실질 이익 품질을 확인해야 한다.
+ESS_PO_value_and_margin,5,raise,"ESS pivot은 PO value, installation, margin이 있어야 Stage 3로 간다."
+supply_chain_customs_clearance,5,raise,태양광·배터리 현지화는 customs clearance가 막히면 utilization이 무너진다.
+localization_execution,4,raise,"현지화는 공장 착공보다 부품 흐름, 인력, 가동률이 중요하다."
+raw_material_cost_pass_through,4,raise,"소재주는 원재료 가격과 판가연동, 재고손실을 같이 봐야 한다."
+listed_value_bridge_for_unlisted_tech,4,raise,비상장 소재 기술은 상장사 EPS/value bridge가 있어야 한다.
+EV_growth_headline_only,-5,lower,EV 장기성장 단어만으로 Stage 3를 만들지 않는다.
+signed_contract_without_calloff,-5,lower,계약 체결만 있고 실제 call-off가 없으면 제한한다.
+capacity_capex_without_utilization,-5,lower,capacity capex는 utilization 전에는 현금소모일 수 있다.
+IRA_or_policy_loan_only,-5,lower,정책자금이나 IRA headline은 이익 품질이 아니다.
+ESS_pivot_without_contract_value,-5,lower,ESS pivot은 계약가와 margin이 없으면 Stage 2에 머문다.
+hybrid_shift_ignored,-5,lower,hybrid 전환은 battery content 감소 리스크다.
+unlisted_material_tech_readthrough,-4,lower,비상장 기술 성과를 상장사 EPS로 바로 연결하지 않는다.
+solar_factory_without_customs_clearance,-5,lower,태양광 공장은 통관과 부품 흐름 없이는 Green이 아니다.
+hydrogen_capex_without_demand,-4,lower,수소 공장 착공은 고객 수요와 unit economics 전에는 Stage 2다.

@@ -169,6 +169,14 @@ class E2RArchetype(str, Enum):
     BATTERY_SUPPLY_CHAIN_DEMAND_SHOCK = "BATTERY_SUPPLY_CHAIN_DEMAND_SHOCK"
     BATTERY_TAX_CREDIT_QUALITY_OVERLAY = "BATTERY_TAX_CREDIT_QUALITY_OVERLAY"
     CONTRACT_CANCELLATION_CUSTOMER_STRATEGY_RISK = "CONTRACT_CANCELLATION_CUSTOMER_STRATEGY_RISK"
+    EV_BATTERY_CONTRACT_CANCELLATION_HARD_4C = "EV_BATTERY_CONTRACT_CANCELLATION_HARD_4C"
+    BATTERY_JV_STAGE2_WITH_EV_DEMAND_WATCH = "BATTERY_JV_STAGE2_WITH_EV_DEMAND_WATCH"
+    SK_ON_RESTRUCTURING_ESS_PIVOT_STAGE2 = "SK_ON_RESTRUCTURING_ESS_PIVOT_STAGE2"
+    BATTERY_MATERIAL_SUPPLY_CHAIN_BETA_4C = "BATTERY_MATERIAL_SUPPLY_CHAIN_BETA_4C"
+    SOLAR_US_MANUFACTURING_POLICY_STAGE2_CUSTOMS_4C = "SOLAR_US_MANUFACTURING_POLICY_STAGE2_CUSTOMS_4C"
+    HYDROGEN_FUEL_CELL_CAPEX_STAGE2 = "HYDROGEN_FUEL_CELL_CAPEX_STAGE2"
+    SILICON_ANODE_SCALEUP_STAGE2 = "SILICON_ANODE_SCALEUP_STAGE2"
+    BATTERY_DEMAND_POLICY_OVERHANG_CROSS_REFERENCE = "BATTERY_DEMAND_POLICY_OVERHANG_CROSS_REFERENCE"
     BATTERY_CONTRACT_DISCLOSURE_CONFIDENCE = "BATTERY_CONTRACT_DISCLOSURE_CONFIDENCE"
     SECOND_LIFE_BATTERY_GRID_STORAGE = "SECOND_LIFE_BATTERY_GRID_STORAGE"
     EV_INFRASTRUCTURE = "EV_INFRASTRUCTURE"
@@ -2068,6 +2076,102 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("news", "price", "financial_actual", "disclosure"),
             false_positive_patterns=("battery supply chain treated as structural while customer EV plans shrink",),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.EV_BATTERY_CONTRACT_CANCELLATION_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.EV_BATTERY_CONTRACT_CANCELLATION_HARD_4C,
+            stage1_radar_signals=("large EV battery supply contract", "European or U.S. EV factory utilization narrative", "automaker customer backlog"),
+            stage2_candidate_signals=("contract value, supply start year, customer model plan and plant utilization bridge are visible"),
+            stage3_high_conviction_signals=("actual customer call-off, shipment, revenue recognition, plant utilization, ASP/mix and FCF confirm"),
+            stage4a_ongoing_signals=("customer call-off remains intact and factory utilization improves"),
+            stage4b_graduation_overheat_signals=("contract value headline priced before call-off or utilization"),
+            stage4c_thesis_break_signals=("major customer contract cancellation", "expected revenue loss", "European plant utilization delay", "replacement order unavailable"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("signed contract without call-off", "EV growth headline treated as utilization", "replacement order assumed after cancellation"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.BATTERY_JV_STAGE2_WITH_EV_DEMAND_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.BATTERY_JV_STAGE2_WITH_EV_DEMAND_WATCH,
+            stage1_radar_signals=("EV battery JV", "U.S. battery localization", "IRA/AMPC optionality", "named automaker partner"),
+            stage2_candidate_signals=("JV investment amount, initial GWh capacity, expansion option and mass-production target are visible"),
+            stage3_high_conviction_signals=("automaker call-off, factory utilization, AMPC durability, gross margin and FCF confirm"),
+            stage4a_ongoing_signals=("JV ramp and customer demand remain on schedule"),
+            stage4b_graduation_overheat_signals=("JV capacity headline rerates before 2027 production or utilization"),
+            stage4c_thesis_break_signals=("EV demand sluggishness", "operating loss", "mass-production delay", "AMPC or subsidy risk"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "policy", "price"),
+            false_positive_patterns=("JV capacity treated as revenue", "IRA optionality counted before utilization", "EV demand watch ignored"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=18, bottleneck=13, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.SK_ON_RESTRUCTURING_ESS_PIVOT_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.SK_ON_RESTRUCTURING_ESS_PIVOT_STAGE2,
+            stage1_radar_signals=("EV battery emergency management", "battery parent restructuring", "ESS pivot", "EV line conversion"),
+            stage2_candidate_signals=("balance-sheet relief merger, ESS GWh deal, line-conversion plan and loss trajectory are visible"),
+            stage3_high_conviction_signals=("ESS PO value, shipment, installation, utilization, margin, loss reversal and FCF confirm"),
+            stage4a_ongoing_signals=("ESS deliveries scale and battery losses narrow"),
+            stage4b_graduation_overheat_signals=("ESS pivot premium before disclosed value, shipment or margin"),
+            stage4c_thesis_break_signals=("Ford JV dissolution", "operating loss widens", "Tennessee restart uncertainty", "ESS contract fails to convert"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("restructuring relief treated as battery profitability", "ESS GWh headline without contract value", "EV line conversion without utilization"),
+            preferred_score_weights=_weights(eps_fcf=17, visibility=17, bottleneck=13, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.BATTERY_MATERIAL_SUPPLY_CHAIN_BETA_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.BATTERY_MATERIAL_SUPPLY_CHAIN_BETA_4C,
+            stage1_radar_signals=("battery-material supplier beta", "automaker EV model change", "EV-to-hybrid or EREV pivot"),
+            stage2_candidate_signals=("not a Green source; customer mix and battery-content risk must be quantified"),
+            stage3_high_conviction_signals=("not applicable until customer BEV volume, material call-off, raw-material pass-through, utilization and FCF confirm"),
+            stage4a_ongoing_signals=("customer production schedule and material margin stay intact"),
+            stage4b_graduation_overheat_signals=("battery-material basket priced on EV long-term growth while model mix weakens"),
+            stage4c_thesis_break_signals=("BEV-to-hybrid shift lowering battery content", "customer model cancellation", "supply-chain repricing", "material utilization delay"),
+            key_evidence_families=("news", "price", "financial_actual", "commodity_price", "red_team"),
+            false_positive_patterns=("EV long-term growth headline only", "hybrid shift ignored", "battery content per vehicle not checked"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.SOLAR_US_MANUFACTURING_POLICY_STAGE2_CUSTOMS_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.SOLAR_US_MANUFACTURING_POLICY_STAGE2_CUSTOMS_4C,
+            stage1_radar_signals=("U.S. solar manufacturing", "DOE loan guarantee", "Georgia solar facility", "IRA/localization policy"),
+            stage2_candidate_signals=("loan guarantee, facility investment, component scope, job plan and production target are visible"),
+            stage3_high_conviction_signals=("customs clearance, full supply-chain localization, factory utilization, module ASP, tax-credit monetization and FCF confirm"),
+            stage4a_ongoing_signals=("component flow and utilization remain healthy"),
+            stage4b_graduation_overheat_signals=("policy-loan premium before component flow or utilization"),
+            stage4c_thesis_break_signals=("customs detention", "forced-labor import law component delay", "furloughs", "contractor cuts", "production curtailment"),
+            key_evidence_families=("policy", "news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("IRA or policy loan only", "solar factory without customs clearance", "localization execution assumed"),
+            preferred_score_weights=_weights(eps_fcf=17, visibility=18, bottleneck=12, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.HYDROGEN_FUEL_CELL_CAPEX_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.HYDROGEN_FUEL_CELL_CAPEX_STAGE2,
+            stage1_radar_signals=("hydrogen fuel-cell plant", "electrolyzer strategy", "green mobility capex"),
+            stage2_candidate_signals=("facility investment, site size, product scope, application scope and completion target are visible"),
+            stage3_high_conviction_signals=("customer demand, plant utilization, cost per kW, subsidy durability, unit margin and FCF confirm"),
+            stage4a_ongoing_signals=("hydrogen demand and unit economics improve after capex"),
+            stage4b_graduation_overheat_signals=("hydrogen capex headline priced before utilization or demand"),
+            stage4c_thesis_break_signals=("hydrogen demand fails", "utilization remains low", "unit economics fail", "subsidy rollback"),
+            key_evidence_families=("news", "financial_actual", "policy", "research_report", "price"),
+            false_positive_patterns=("hydrogen capex without demand", "factory construction treated as customer offtake"),
+            preferred_score_weights=_weights(eps_fcf=15, visibility=14, bottleneck=8, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.SILICON_ANODE_SCALEUP_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.SILICON_ANODE_SCALEUP_STAGE2,
+            stage1_radar_signals=("silicon-carbon anode", "BAM factory", "graphite replacement", "strategic battery-material funding"),
+            stage2_candidate_signals=("funding round, factory ownership, material technology and strategic investor are visible"),
+            stage3_high_conviction_signals=("customer contracts, yield, production ramp, ASP, margin and listed value bridge confirm"),
+            stage4a_ongoing_signals=("customer volume, yield and margin ramp after scale-up"),
+            stage4b_graduation_overheat_signals=("silicon-anode funding priced as listed EPS before customer contracts"),
+            stage4c_thesis_break_signals=("customer contract absent", "yield failure", "technology adoption delay", "listed value bridge fails"),
+            key_evidence_families=("news", "funding", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("unlisted material tech readthrough", "funding round treated as EPS", "graphite substitute optionality without offtake"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=14, bottleneck=11, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.BATTERY_DEMAND_POLICY_OVERHANG_CROSS_REFERENCE: ArchetypeDefinition(
+            archetype=E2RArchetype.BATTERY_DEMAND_POLICY_OVERHANG_CROSS_REFERENCE,
+            stage1_radar_signals=("EV subsidy expiry", "tariff policy overhang", "battery makers shifting to ESS", "data-center storage demand"),
+            stage2_candidate_signals=("ESS GWh supply, EV line conversion, subsidy phase-out context and data-center demand context are visible"),
+            stage3_high_conviction_signals=("ESS PO value, shipment, installation, margin, repeat orders, utilization and FCF confirm"),
+            stage4a_ongoing_signals=("ESS pivot offsets EV slowdown with visible margin"),
+            stage4b_graduation_overheat_signals=("ESS pivot headline rerates before PO value or installation"),
+            stage4c_thesis_break_signals=("EV subsidy expiry damages demand", "tariffs hit economics", "ESS demand fails to convert", "EV line conversion utilization misses"),
+            key_evidence_families=("news", "policy", "disclosure", "financial_actual", "price"),
+            false_positive_patterns=("ESS pivot without contract value", "policy overhang ignored", "data-center demand context treated as shipment"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=17, bottleneck=13, mispricing=10, valuation=8),
         ),
         E2RArchetype.SILICON_ANODE_OPTIONALITY: ArchetypeDefinition(
             archetype=E2RArchetype.SILICON_ANODE_OPTIONALITY,

@@ -1,0 +1,17 @@
+field,required_for_round285_price_validation
+price_data_source,true
+full_adjusted_ohlc_complete,true
+reported_event_return_anchor,true
+contract_value_anchor,true
+operating_loss_anchor,true
+factory_investment_anchor,true
+policy_subsidy_anchor,true
+customs_supply_chain_anchor,true
+stage1_price,true
+stage2_price,true
+stage3_price,true
+stage4b_price,true
+stage4c_price,true
+event_mfe_pct,true
+event_mae_pct,true
+price_validation_status,true

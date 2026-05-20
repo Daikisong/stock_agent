@@ -1,0 +1,403 @@
+{
+  "case_ids": [
+    "r3_loop14_lges_ford_freudenberg_contract_cancellation_hard_4c",
+    "r3_loop14_samsung_sdi_gm_jv_stage2_ev_demand_watch",
+    "r3_loop14_sk_innovation_skon_restructuring_ess_pivot",
+    "r3_loop14_battery_material_supply_chain_ford_beta",
+    "r3_loop14_hanwha_qcells_solar_policy_customs_gate",
+    "r3_loop14_hyundai_hydrogen_fuel_cell_capex_stage2",
+    "r3_loop14_sk_group14_silicon_anode_stage2",
+    "r3_loop14_korean_battery_ess_pivot_cross_reference"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "EV battery contract hard break",
+      "primary_archetype": "EV_BATTERY_CONTRACT_CANCELLATION_HARD_4C",
+      "terms": "LG Energy Solution|Ford cancellation 9.6T KRW|Freudenberg cancellation 3.9T KRW|expected revenue loss 13.5T KRW"
+    },
+    {
+      "category": "Battery JV demand watch",
+      "primary_archetype": "BATTERY_JV_STAGE2_WITH_EV_DEMAND_WATCH",
+      "terms": "Samsung SDI|GM JV $3.5B|27GWh to 36GWh|Q4 OP loss 257B KRW|EV demand sluggish until H1 2026"
+    },
+    {
+      "category": "SK On restructuring ESS pivot",
+      "primary_archetype": "SK_ON_RESTRUCTURING_ESS_PIVOT_STAGE2",
+      "terms": "SK Innovation|SK E&S merger|assets 100T KRW|Ford JV dissolution|Flatiron ESS 7.2GWh"
+    },
+    {
+      "category": "Battery material supply-chain beta",
+      "primary_archetype": "BATTERY_MATERIAL_SUPPLY_CHAIN_BETA_4C",
+      "terms": "EcoPro Materials|SK IE Technology|Ford hybrid pivot|lower battery content|material supplier beta"
+    },
+    {
+      "category": "Solar U.S. manufacturing customs gate",
+      "primary_archetype": "SOLAR_US_MANUFACTURING_POLICY_STAGE2_CUSTOMS_4C",
+      "terms": "Hanwha Qcells|DOE loan $1.45B|Georgia facility $2.5B|customs detentions|1,000 furloughs"
+    },
+    {
+      "category": "Hydrogen fuel-cell capex",
+      "primary_archetype": "HYDROGEN_FUEL_CELL_CAPEX_STAGE2",
+      "terms": "Hyundai Motor|930B KRW Ulsan plant|fuel cells|electrolyzers|utilization gate"
+    },
+    {
+      "category": "Silicon anode scale-up",
+      "primary_archetype": "SILICON_ANODE_SCALEUP_STAGE2",
+      "terms": "SK Inc|Group14|$463M Series D|Korea BAM factory|listed value bridge"
+    },
+    {
+      "category": "Battery ESS pivot cross-reference",
+      "primary_archetype": "BATTERY_DEMAND_POLICY_OVERHANG_CROSS_REFERENCE",
+      "terms": "LGES|Samsung SDI|SK On|ESS line conversion|PO value and margin gate"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "EV_growth_headline_only",
+    "signed_contract_without_calloff",
+    "capacity_capex_without_utilization",
+    "IRA_or_policy_loan_only",
+    "ESS_pivot_without_contract_value",
+    "hybrid_shift_ignored",
+    "unlisted_material_tech_readthrough",
+    "solar_factory_without_customs_clearance",
+    "hydrogen_capex_without_demand"
+  ],
+  "green_required_fields": [
+    "customer_calloff_visibility_confirmed",
+    "contract_cancellation_risk_cleared",
+    "plant_utilization_confirmed",
+    "EV_model_mix_battery_content_confirmed",
+    "subsidy_tariff_policy_stability_confirmed",
+    "ESS_PO_value_and_margin_confirmed",
+    "supply_chain_customs_clearance_confirmed",
+    "localization_execution_confirmed",
+    "raw_material_cost_pass_through_confirmed",
+    "listed_value_bridge_for_unlisted_tech_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "major_customer_contract_cancellation",
+    "automaker_EV_model_cancellation",
+    "BEV_to_hybrid_shift_lowering_battery_content",
+    "plant_utilization_delay",
+    "subsidy_or_tax_credit_expiry_damaging_demand",
+    "customs_detention_blocking_component_shipments",
+    "JV_dissolution_or_capacity_transfer",
+    "repeated_operating_losses_without_utilization_recovery",
+    "raw_material_price_collapse_inventory_loss"
+  ],
+  "large_sector": "SECONDARY_BATTERY_EV_GREEN_ENERGY",
+  "round_id": "round_213",
+  "score_adjustments": [
+    {
+      "axis": "customer_calloff_visibility",
+      "direction": "raise",
+      "points": "5",
+      "reason": "배터리 계약은 실제 call-off와 shipment가 보여야 강하다."
+    },
+    {
+      "axis": "contract_cancellation_risk",
+      "direction": "raise",
+      "points": "5",
+      "reason": "대형 고객 계약 취소는 expected revenue와 utilization을 직접 깬다."
+    },
+    {
+      "axis": "plant_utilization",
+      "direction": "raise",
+      "points": "5",
+      "reason": "공장·JV·capex는 utilization이 있어야 EPS/FCF로 연결된다."
+    },
+    {
+      "axis": "EV_model_mix_battery_content",
+      "direction": "raise",
+      "points": "5",
+      "reason": "BEV에서 hybrid/EREV로 바뀌면 차량당 battery content가 줄 수 있다."
+    },
+    {
+      "axis": "subsidy_tariff_policy_stability",
+      "direction": "raise",
+      "points": "5",
+      "reason": "IRA/AMPC/관세/보조금은 지속성과 실질 이익 품질을 확인해야 한다."
+    },
+    {
+      "axis": "ESS_PO_value_and_margin",
+      "direction": "raise",
+      "points": "5",
+      "reason": "ESS pivot은 PO value, installation, margin이 있어야 Stage 3로 간다."
+    },
+    {
+      "axis": "supply_chain_customs_clearance",
+      "direction": "raise",
+      "points": "5",
+      "reason": "태양광·배터리 현지화는 customs clearance가 막히면 utilization이 무너진다."
+    },
+    {
+      "axis": "localization_execution",
+      "direction": "raise",
+      "points": "4",
+      "reason": "현지화는 공장 착공보다 부품 흐름, 인력, 가동률이 중요하다."
+    },
+    {
+      "axis": "raw_material_cost_pass_through",
+      "direction": "raise",
+      "points": "4",
+      "reason": "소재주는 원재료 가격과 판가연동, 재고손실을 같이 봐야 한다."
+    },
+    {
+      "axis": "listed_value_bridge_for_unlisted_tech",
+      "direction": "raise",
+      "points": "4",
+      "reason": "비상장 소재 기술은 상장사 EPS/value bridge가 있어야 한다."
+    },
+    {
+      "axis": "EV_growth_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "EV 장기성장 단어만으로 Stage 3를 만들지 않는다."
+    },
+    {
+      "axis": "signed_contract_without_calloff",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "계약 체결만 있고 실제 call-off가 없으면 제한한다."
+    },
+    {
+      "axis": "capacity_capex_without_utilization",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "capacity capex는 utilization 전에는 현금소모일 수 있다."
+    },
+    {
+      "axis": "IRA_or_policy_loan_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "정책자금이나 IRA headline은 이익 품질이 아니다."
+    },
+    {
+      "axis": "ESS_pivot_without_contract_value",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "ESS pivot은 계약가와 margin이 없으면 Stage 2에 머문다."
+    },
+    {
+      "axis": "hybrid_shift_ignored",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "hybrid 전환은 battery content 감소 리스크다."
+    },
+    {
+      "axis": "unlisted_material_tech_readthrough",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "비상장 기술 성과를 상장사 EPS로 바로 연결하지 않는다."
+    },
+    {
+      "axis": "solar_factory_without_customs_clearance",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "태양광 공장은 통관과 부품 흐름 없이는 Green이 아니다."
+    },
+    {
+      "axis": "hydrogen_capex_without_demand",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "수소 공장 착공은 고객 수요와 unit economics 전에는 Stage 2다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "EV_BATTERY_CONTRACT_CANCELLATION_HARD_4C",
+      "contract_cancellation_risk": "+5",
+      "customer_calloff_visibility": "+5",
+      "ess_po_value_margin": "+2",
+      "ev_model_mix_battery_content": "+5",
+      "event_penalty": "0",
+      "hard_4c_sensitivity": "+5",
+      "listed_value_bridge": "+2",
+      "localization_execution": "+4",
+      "notes": "LGES cancellation shows call-off and utilization are hard gates.",
+      "plant_utilization": "+5",
+      "raw_material_cost_pass_through": "+3",
+      "subsidy_tariff_policy_stability": "+5",
+      "supply_chain_customs_clearance": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "BATTERY_JV_STAGE2_WITH_EV_DEMAND_WATCH",
+      "contract_cancellation_risk": "+4",
+      "customer_calloff_visibility": "+5",
+      "ess_po_value_margin": "+2",
+      "ev_model_mix_battery_content": "+5",
+      "event_penalty": "-4",
+      "hard_4c_sensitivity": "+4",
+      "listed_value_bridge": "+2",
+      "localization_execution": "+5",
+      "notes": "Samsung SDI GM JV needs 2027 production, call-off, AMPC and margin.",
+      "plant_utilization": "+5",
+      "raw_material_cost_pass_through": "+3",
+      "subsidy_tariff_policy_stability": "+5",
+      "supply_chain_customs_clearance": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "SK_ON_RESTRUCTURING_ESS_PIVOT_STAGE2",
+      "contract_cancellation_risk": "+5",
+      "customer_calloff_visibility": "+5",
+      "ess_po_value_margin": "+5",
+      "ev_model_mix_battery_content": "+5",
+      "event_penalty": "-4",
+      "hard_4c_sensitivity": "+4",
+      "listed_value_bridge": "+3",
+      "localization_execution": "+4",
+      "notes": "SK On restructuring/ESS pivot needs disclosed PO value and profitability.",
+      "plant_utilization": "+5",
+      "raw_material_cost_pass_through": "+3",
+      "subsidy_tariff_policy_stability": "+5",
+      "supply_chain_customs_clearance": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "BATTERY_MATERIAL_SUPPLY_CHAIN_BETA_4C",
+      "contract_cancellation_risk": "+5",
+      "customer_calloff_visibility": "+5",
+      "ess_po_value_margin": "+1",
+      "ev_model_mix_battery_content": "+5",
+      "event_penalty": "0",
+      "hard_4c_sensitivity": "+4",
+      "listed_value_bridge": "+2",
+      "localization_execution": "+3",
+      "notes": "Ford hybrid pivot shows lower battery content can hit materials.",
+      "plant_utilization": "+4",
+      "raw_material_cost_pass_through": "+5",
+      "subsidy_tariff_policy_stability": "+5",
+      "supply_chain_customs_clearance": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "SOLAR_US_MANUFACTURING_POLICY_STAGE2_CUSTOMS_4C",
+      "contract_cancellation_risk": "+3",
+      "customer_calloff_visibility": "+3",
+      "ess_po_value_margin": "0",
+      "ev_model_mix_battery_content": "0",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+4",
+      "listed_value_bridge": "+2",
+      "localization_execution": "+5",
+      "notes": "Qcells needs customs clearance and factory utilization after policy loan.",
+      "plant_utilization": "+5",
+      "raw_material_cost_pass_through": "+4",
+      "subsidy_tariff_policy_stability": "+5",
+      "supply_chain_customs_clearance": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "HYDROGEN_FUEL_CELL_CAPEX_STAGE2",
+      "contract_cancellation_risk": "+3",
+      "customer_calloff_visibility": "+3",
+      "ess_po_value_margin": "+1",
+      "ev_model_mix_battery_content": "0",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+3",
+      "listed_value_bridge": "+2",
+      "localization_execution": "+4",
+      "notes": "Hyundai hydrogen capex requires demand, utilization and unit economics.",
+      "plant_utilization": "+5",
+      "raw_material_cost_pass_through": "+3",
+      "subsidy_tariff_policy_stability": "+5",
+      "supply_chain_customs_clearance": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "SILICON_ANODE_SCALEUP_STAGE2",
+      "contract_cancellation_risk": "+4",
+      "customer_calloff_visibility": "+5",
+      "ess_po_value_margin": "+2",
+      "ev_model_mix_battery_content": "+4",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+4",
+      "listed_value_bridge": "+5",
+      "localization_execution": "+4",
+      "notes": "Group14/SK needs customer contracts, yield, margin and listed value bridge.",
+      "plant_utilization": "+5",
+      "raw_material_cost_pass_through": "+5",
+      "subsidy_tariff_policy_stability": "+4",
+      "supply_chain_customs_clearance": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "BATTERY_DEMAND_POLICY_OVERHANG_CROSS_REFERENCE",
+      "contract_cancellation_risk": "+5",
+      "customer_calloff_visibility": "+5",
+      "ess_po_value_margin": "+5",
+      "ev_model_mix_battery_content": "+5",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+4",
+      "listed_value_bridge": "+3",
+      "localization_execution": "+4",
+      "notes": "ESS pivot is not Green until PO value, shipment, installation and margin confirm.",
+      "plant_utilization": "+5",
+      "raw_material_cost_pass_through": "+4",
+      "subsidy_tariff_policy_stability": "+5",
+      "supply_chain_customs_clearance": "+3"
+    }
+  ],
+  "source_round": "docs/round/round_285.md",
+  "stage4b_watch_triggers": [
+    "EV_battery_plant_or_JV_headline_before_utilization",
+    "ESS_pivot_headline_before_disclosed_margin",
+    "hydrogen_capex_before_customer_demand",
+    "silicon_anode_funding_without_listed_EPS_bridge",
+    "solar_policy_loan_before_customs_and_utilization",
+    "automaker_customer_name_without_actual_calloff"
+  ],
+  "summary": {
+    "aligned_count": 0,
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 0,
+    "event_premium_or_result_count": 1,
+    "evidence_good_but_price_failed_count": 0,
+    "failed_rerating_count": 0,
+    "false_positive_score_count": 2,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "hard_4c_watch_case_count": 4,
+    "hard_4c_watch_confirmed": true,
+    "large_sector": "SECONDARY_BATTERY_EV_GREEN_ENERGY",
+    "overheat_count": 0,
+    "price_moved_without_evidence_count": 1,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_213",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_285.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 2,
+    "stage4c_watch_count": 5,
+    "structural_success_count": 0,
+    "success_candidate_count": 6,
+    "target_archetype_count": 8,
+    "unknown_alignment_count": 5
+  },
+  "target_aliases": {
+    "BATTERY_DEMAND_POLICY_OVERHANG_CROSS_REFERENCE": "BATTERY_DEMAND_POLICY_OVERHANG_CROSS_REFERENCE",
+    "BATTERY_JV_STAGE2_WITH_EV_DEMAND_WATCH": "BATTERY_JV_STAGE2_WITH_EV_DEMAND_WATCH",
+    "BATTERY_MATERIAL_SUPPLY_CHAIN_BETA_4C": "BATTERY_MATERIAL_SUPPLY_CHAIN_BETA_4C",
+    "EV_BATTERY_CONTRACT_CANCELLATION_HARD_4C": "EV_BATTERY_CONTRACT_CANCELLATION_HARD_4C",
+    "HYDROGEN_FUEL_CELL_CAPEX_STAGE2": "HYDROGEN_FUEL_CELL_CAPEX_STAGE2",
+    "SILICON_ANODE_SCALEUP_STAGE2": "SILICON_ANODE_SCALEUP_STAGE2",
+    "SK_ON_RESTRUCTURING_ESS_PIVOT_STAGE2": "SK_ON_RESTRUCTURING_ESS_PIVOT_STAGE2",
+    "SOLAR_US_MANUFACTURING_POLICY_STAGE2_CUSTOMS_4C": "SOLAR_US_MANUFACTURING_POLICY_STAGE2_CUSTOMS_4C"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round285_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_EV_battery_IRA_ESS_solar_hydrogen_or_silicon_anode_keywords_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}
