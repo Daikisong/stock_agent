@@ -1,0 +1,20 @@
+axis,points,direction,reason
+input_cost_pass_through,5,raise,농식품 원가 shock 이후 판가 전가가 확인되어야 한다.
+inventory_waste_control,5,raise,배추·식품·폐기물은 재고와 폐기 관리가 gross margin을 좌우한다.
+feed_cost_hedging,5,raise,사료·축산은 곡물가격 hedge와 재고 buffer가 핵심이다.
+disease_supply_chain_resilience,5,raise,bird flu 같은 질병 shock는 수입규제와 공급망 회복을 같이 봐야 한다.
+actual_order_backlog,5,raise,농기계와 IPO 제조업은 theme보다 실제 order book이 중요하다.
+dealer_sellthrough,5,raise,농기계는 dealer inventory와 North America sell-through가 Stage 3 조건이다.
+logistics_unit_economics,5,raise,"물류 계약은 물동량, 단가, 자동화, 인건비가 닫혀야 한다."
+data_trust_service_continuity,5,raise,생활서비스는 편의성보다 데이터 trust와 서비스 연속성이 먼저다.
+waste_tipping_fee_utilization,5,raise,"폐기물 인프라는 처리량, tipping fee, utilization, capex 회수를 봐야 한다."
+enrolment_ARPU_conversion,5,raise,"출산율 headline은 enrolment, ARPU, retention으로 내려와야 한다."
+food_inflation_headline_only,-5,lower,식품가격 상승 headline만으로 식품주 Green을 만들지 않는다.
+grain_price_event_only,-5,lower,곡물가격 이벤트는 사료·축산 margin gate다.
+disease_supply_shock_as_benefit_only,-5,lower,질병 shock를 가격상승 수혜로만 보면 4C risk를 놓친다.
+aging_farm_theme_only,-5,lower,농촌 고령화 theme만으로 농기계 주문을 만들지 않는다.
+logistics_revenue_uplift_without_margin,-5,lower,물류 매출 증가 추정은 unit margin 없이는 Stage 2에 그친다.
+birthrate_headline_without_enrolment,-5,lower,출생률 반등만으로 교육·돌봄 매출을 만들지 않는다.
+recycling_policy_without_tipping_fee,-5,lower,폐기물 정책 headline은 fee/utilization/FCF 전까지 제한한다.
+IPO_size_without_aftermarket_demand,-5,lower,IPO 규모는 상장 후 수요와 order book 전까지 품질 증거가 아니다.
+data_breach_or_trust_failure,-5,lower,데이터 breach는 생활서비스 hard gate다.

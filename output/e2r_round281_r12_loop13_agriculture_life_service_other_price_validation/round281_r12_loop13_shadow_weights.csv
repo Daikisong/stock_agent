@@ -1,0 +1,10 @@
+archetype,input_cost_pass_through,inventory_waste_control,feed_cost_hedging,disease_supply_chain_resilience,actual_order_backlog,dealer_sellthrough,logistics_unit_economics,data_trust_service_continuity,waste_tipping_fee_utilization,enrolment_arpu_conversion,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+FOOD_INFLATION_CLIMATE_INPUT_4C,+5,+5,+0,+2,+0,+0,+1,+1,+0,+0,-5,+5,+4,Cabbage price spike is input-cost gate unless pass-through and margin hold.
+ANIMAL_FEED_GRAIN_COST_4C,+5,+4,+5,+3,+0,+0,+1,+1,+0,+0,-5,+5,+4,Feed wheat tender failure shows grain-cost pressure before margin proof.
+POULTRY_EGG_BIRD_FLU_SUPPLY_SHOCK,+5,+4,+4,+5,+0,+0,+1,+1,+0,+0,-5,+5,+5,"Disease shock needs import rules, flock health, pass-through and margin."
+AGRI_MACHINERY_LABOR_SUBSTITUTION_OPTIONALITY,+1,+2,+0,+1,+5,+5,+1,+1,+0,+0,-5,+5,+3,"Daedong/TYM aging-farm theme needs backlog, dealer sell-through, FX and margin."
+LIFE_SERVICE_LOGISTICS_CONTRACT_STAGE2,+1,+2,+0,+1,+2,+0,+5,+4,+0,+0,-5,+5,+4,"CJ Logistics needs unit economics, automation, wage/fuel cost and volume conversion."
+ECOMMERCE_SERVICE_TRUST_HARD_REFERENCE,+0,+1,+0,+0,+0,+0,+5,+5,+0,+0,+0,+4,+5,Coupang breach confirms trust hard gate for life-service platforms.
+WASTE_RECYCLING_INFRA_PLATFORM_STAGE2,+0,+5,+0,+0,+2,+0,+2,+2,+5,+0,-5,+4,+4,"Waste/recycling policy needs tipping fee, utilization, permit and FCF."
+DEMOGRAPHIC_CHILDCARE_EDUCATION_POLICY_EVENT,+0,+1,+0,+0,+0,+0,+1,+2,+0,+5,-5,+5,+3,"Birthrate rebound needs enrolment, ARPU, retention and margin."
+OTHER_MANUFACTURING_TOOLS_IPO_QUALITY_GATE,+2,+2,+0,+0,+5,+3,+1,+1,+0,+0,-5,+5,+3,"DN Solutions IPO needs order book, export margin, tariff pass-through and aftermarket demand."

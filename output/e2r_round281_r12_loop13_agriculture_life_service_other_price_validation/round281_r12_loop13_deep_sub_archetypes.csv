@@ -1,0 +1,10 @@
+category,primary_archetype,terms
+농산물/식품,FOOD_INFLATION_CLIMATE_INPUT_4C,"napa cabbage|kimchi input cost|24,000 tonnes stock release|9,537 won cabbage|CJ CheilJedang / Daesang / Pulmuone"
+사료/축산,ANIMAL_FEED_GRAIN_COST_4C,"feed wheat tender|65,000 tonnes|$300.50/t effective offer|Black Sea loading ports prohibited|Harim / Easy Bio"
+계육/계란,POULTRY_EGG_BIRD_FLU_SUPPLY_SHOCK,Brazil bird flu|chicken and egg prices|import restriction easing|26% U.S. egg tariff risk
+농기계,AGRI_MACHINERY_LABOR_SUBSTITUTION_OPTIONALITY,Daedong|TYM|Kioti|tractors|North America sell-through
+생활물류,LIFE_SERVICE_LOGISTICS_CONTRACT_STAGE2,CJ Logistics|Shinsegae|SSG.com|300B won revenue uplift|unit economics
+생활서비스 trust,ECOMMERCE_SERVICE_TRUST_HARD_REFERENCE,Coupang data breach|34M users|shares -34%|Naver users +23%|CJ Logistics volume +120%
+폐기물/환경,WASTE_RECYCLING_INFRA_PLATFORM_STAGE2,KJ Environment|EQT|food-waste RFID|96.8% recycling rate|tipping fee utilization
+저출산/교육,DEMOGRAPHIC_CHILDCARE_EDUCATION_POLICY_EVENT,fertility 0.80|births +6.8%|marriages +8.1%|echo-boomer|enrolment ARPU
+기타 IPO,OTHER_MANUFACTURING_TOOLS_IPO_QUALITY_GATE,"DN Solutions|1.6T won IPO|65,000-89,700 won price range|machine tools|tariff risk"
