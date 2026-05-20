@@ -1,0 +1,21 @@
+axis,points,direction,reason
+product_spread,5,raise,R4는 원자재 가격보다 제품 spread 확인이 먼저다.
+cost_curve_advantage,5,raise,가격 하락에도 FCF가 버티려면 cost curve 우위가 필요하다.
+offtake_quality,5,raise,"전략자원은 offtake, price floor, take-or-pay가 있어야 cycle과 분리된다."
+contract_quality,5,raise,"소재 계약은 고객명보다 call-off, volume, margin 변환이 중요하다."
+FCF_after_working_capital,5,raise,재고와 운전자본 이후 현금흐름이 남아야 구조적이다.
+supply_discipline_confirmed,5,raise,설비중단과 공급규율은 spread 지속성을 높인다.
+capacity_shutdown_confirmed,4,raise,Daesan NCC shutdown처럼 확정된 설비 조정은 Stage 2 relief다.
+China_exposure_reduction,4,raise,중국 공급망 의존 완화는 Stage 2 품질을 높인다.
+resource_security_with_downstream_margin,4,raise,resource security는 downstream margin과 연결될 때 강하다.
+governance_cleanliness,4,raise,전략광물 프로젝트도 dilution/governance가 깨끗해야 Green 후보가 된다.
+commodity_price_up_only,-5,lower,가격 상승만으로 EPS/FCF 체급 변화를 증명하지 못한다.
+strategic_material_headline_only,-5,lower,전략광물 headline만으로 Green 금지다.
+policy_relief_only,-5,lower,정책 relief는 spread/FCF 확인 전 event premium이다.
+unconfirmed_media_report,-5,lower,미확정 고객 보도는 Stage 3 근거가 아니다.
+restructuring_plan_without_margin,-4,lower,구조조정 계획은 margin 회복 전 Stage 2 watch다.
+capacity_cut_without_spread_recovery,-4,lower,capacity cut만으로 petrochemical Green을 만들 수 없다.
+contract_headline_without_calloff,-5,lower,실제 call-off 없는 계약 headline은 L&F hard 4C의 반례다.
+customer_name_without_volume,-5,lower,고객명은 volume/margin 전환 전까지 visibility가 아니다.
+governance_dilution_risk,-5,lower,share issuance와 control fight는 RedTeam 입력이다.
+China_customer_or_supply_chain_concentration,-4,lower,중국 고객/공급망 집중은 tariff/sanction risk를 키운다.

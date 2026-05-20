@@ -180,6 +180,7 @@ class E2RArchetype(str, Enum):
     BATTERY_GRAPHITE_SUPPLYCHAIN_SECURITY = "BATTERY_GRAPHITE_SUPPLYCHAIN_SECURITY"
     ANODE_GRAPHITE_SUPPLYCHAIN_KOREA = "ANODE_GRAPHITE_SUPPLYCHAIN_KOREA"
     CATHODE_LONG_CONTRACT_VISIBILITY = "CATHODE_LONG_CONTRACT_VISIBILITY"
+    CATHODE_SUPPLY_CHAIN_DERISKING = "CATHODE_SUPPLY_CHAIN_DERISKING"
     LITHIUM_RESOURCE_SECURITY_KOREA = "LITHIUM_RESOURCE_SECURITY_KOREA"
     LITHIUM_RESOURCE_SECURITY = "LITHIUM_RESOURCE_SECURITY"
     LITHIUM_OFFTAKE_DLE_OPTIONALITY = "LITHIUM_OFFTAKE_DLE_OPTIONALITY"
@@ -215,6 +216,8 @@ class E2RArchetype(str, Enum):
     LUBRICANTS_HIGH_MARGIN_MIX = "LUBRICANTS_HIGH_MARGIN_MIX"
     CHEMICAL_SPREAD = "CHEMICAL_SPREAD"
     PETROCHEMICAL_RESTRUCTURING_KOREA = "PETROCHEMICAL_RESTRUCTURING_KOREA"
+    PETROCHEMICAL_CAPACITY_RESTRUCTURING = "PETROCHEMICAL_CAPACITY_RESTRUCTURING"
+    STANDALONE_NCC_CREDIT_BREAK = "STANDALONE_NCC_CREDIT_BREAK"
     NCC_CAPACITY_CUT_STAGE2 = "NCC_CAPACITY_CUT_STAGE2"
     NCC_OVERLOAD_SHAHEEN_RISK = "NCC_OVERLOAD_SHAHEEN_RISK"
     SPECIALTY_CHEM_GOVERNANCE_RESTRUCTURING = "SPECIALTY_CHEM_GOVERNANCE_RESTRUCTURING"
@@ -222,7 +225,11 @@ class E2RArchetype(str, Enum):
     TIRE_RUBBER_PRODUCTION_DISRUPTION = "TIRE_RUBBER_PRODUCTION_DISRUPTION"
     COMMODITY_SPREAD_CYCLE_NOT_STRUCTURAL = "COMMODITY_SPREAD_CYCLE_NOT_STRUCTURAL"
     STEEL_METAL_SPREAD = "STEEL_METAL_SPREAD"
+    STEEL_ANTIDUMPING_POLICY_RELIEF = "STEEL_ANTIDUMPING_POLICY_RELIEF"
+    STEEL_TARIFF_EXPORT_RISK = "STEEL_TARIFF_EXPORT_RISK"
     NONFERROUS_STRATEGIC_METALS = "NONFERROUS_STRATEGIC_METALS"
+    CRITICAL_MINERALS_SUPPLY_CHAIN = "CRITICAL_MINERALS_SUPPLY_CHAIN"
+    STRATEGIC_METALS_DILUTION_GOVERNANCE = "STRATEGIC_METALS_DILUTION_GOVERNANCE"
     COPPER_AI_GRID_STRUCTURAL_DEMAND = "COPPER_AI_GRID_STRUCTURAL_DEMAND"
     LITHIUM_BATTERY_RAW_MATERIAL = "LITHIUM_BATTERY_RAW_MATERIAL"
     PRECIOUS_METALS_SAFE_HAVEN_MINERS = "PRECIOUS_METALS_SAFE_HAVEN_MINERS"
@@ -238,6 +245,7 @@ class E2RArchetype(str, Enum):
     COPPER_PROCESSING_PLUS_DEFENSE = "COPPER_PROCESSING_PLUS_DEFENSE"
     DEFENSE_AMMO_EVENT_PREMIUM = "DEFENSE_AMMO_EVENT_PREMIUM"
     POLYSILICON_NON_CHINA_SUPPLY_OPTION = "POLYSILICON_NON_CHINA_SUPPLY_OPTION"
+    NON_CHINA_POLYSILICON_OPTIONALITY = "NON_CHINA_POLYSILICON_OPTIONALITY"
     POLYSILICON_REPORT_NOT_CONTRACT = "POLYSILICON_REPORT_NOT_CONTRACT"
     STEEL_TARIFF_EVENT_KOREA = "STEEL_TARIFF_EVENT_KOREA"
     STEEL_EXPORT_TARIFF_4C = "STEEL_EXPORT_TARIFF_4C"
@@ -669,6 +677,7 @@ class E2RArchetype(str, Enum):
     TARIFF_IMPORT_REGULATION_OVERLAY = "TARIFF_IMPORT_REGULATION_OVERLAY"
     PRICE_ONLY_RALLY = "PRICE_ONLY_RALLY"
     EVENT_PREMIUM = "EVENT_PREMIUM"
+    COMMODITY_PRICE_EVENT_PREMIUM = "COMMODITY_PRICE_EVENT_PREMIUM"
     IPO_EVENT_PREMIUM = "IPO_EVENT_PREMIUM"
     EVENT_TO_CONTRACT_ESCALATION = "EVENT_TO_CONTRACT_ESCALATION"
     CYCLICAL_SUCCESS = "CYCLICAL_SUCCESS"
@@ -692,6 +701,7 @@ class E2RArchetype(str, Enum):
     THESIS_BREAK_4C = "THESIS_BREAK_4C"
     THESIS_BREAK_4C_WATCH = "THESIS_BREAK_4C_WATCH"
     CONTRACT_QUALITY_BREAK = "CONTRACT_QUALITY_BREAK"
+    BATTERY_MATERIAL_CONTRACT_QUALITY_BREAK = "BATTERY_MATERIAL_CONTRACT_QUALITY_BREAK"
     GOVERNANCE_DILUTION_EVENT = "GOVERNANCE_DILUTION_EVENT"
     MARKET_STRUCTURE_WATCH = "MARKET_STRUCTURE_WATCH"
     STRATEGIC_MATERIALS_WITH_GOVERNANCE_OVERLAY = "STRATEGIC_MATERIALS_WITH_GOVERNANCE_OVERLAY"
@@ -1029,6 +1039,30 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("lithium resource headline only", "lithium price rebound only", "resource stake without downstream FCF"),
             preferred_score_weights=_weights(eps_fcf=18, visibility=16, bottleneck=13, mispricing=10, valuation=9),
         ),
+        E2RArchetype.CATHODE_SUPPLY_CHAIN_DERISKING: ArchetypeDefinition(
+            archetype=E2RArchetype.CATHODE_SUPPLY_CHAIN_DERISKING,
+            stage1_radar_signals=("cathode supply-chain derisking", "China exposure reduction", "Japan/Korea battery-material JV"),
+            stage2_candidate_signals=("ownership derisking", "customer or offtake path", "non-China supply-chain partner", "plant scope"),
+            stage3_high_conviction_signals=("confirmed cathode volume", "customer offtake", "OPM or FCF conversion", "utilization proof"),
+            stage4a_ongoing_signals=("derisked ownership remains stable", "customer demand and margin remain intact"),
+            stage4b_graduation_overheat_signals=("China-exposure derisking price-first rally", "customer headline priced before offtake"),
+            stage4c_thesis_break_signals=("cathode demand slowdown", "customer call-off failure", "utilization failure", "lithium/nickel price reversal"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "price"),
+            false_positive_patterns=("China exposure reduction treated as margin", "customer name without volume", "ownership headline without FCF"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=18, bottleneck=12, mispricing=10, valuation=9),
+        ),
+        E2RArchetype.BATTERY_MATERIAL_CONTRACT_QUALITY_BREAK: ArchetypeDefinition(
+            archetype=E2RArchetype.BATTERY_MATERIAL_CONTRACT_QUALITY_BREAK,
+            stage1_radar_signals=("large battery-material contract headline", "named EV customer", "high-nickel cathode supply deal"),
+            stage2_candidate_signals=("not a positive Green source; contract quality must be verified"),
+            stage3_high_conviction_signals=("not applicable until actual call-off, volume, margin, and FCF are confirmed"),
+            stage4a_ongoing_signals=("customer call-off remains intact", "margin conversion remains credible"),
+            stage4b_graduation_overheat_signals=("customer-name headline rally before actual volume",),
+            stage4c_thesis_break_signals=("contract value collapse", "contract cancellation", "customer strategy pullback", "actual call-off failure"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "price"),
+            false_positive_patterns=("customer name treated as revenue", "contract value headline without actual call-off"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
         E2RArchetype.LITHIUM_OFFTAKE_DLE_OPTIONALITY: ArchetypeDefinition(
             archetype=E2RArchetype.LITHIUM_OFFTAKE_DLE_OPTIONALITY,
             stage1_radar_signals=("DLE optionality", "lithium offtake MoU", "strategic U.S. lithium project"),
@@ -1052,6 +1086,102 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("policy", "news", "financial_actual", "price"),
             false_positive_patterns=("solar localization headline only", "loan guarantee treated as profit", "component flow ignored"),
             preferred_score_weights=_weights(eps_fcf=18, visibility=18, bottleneck=12, mispricing=10, valuation=9),
+        ),
+        E2RArchetype.NON_CHINA_POLYSILICON_OPTIONALITY: ArchetypeDefinition(
+            archetype=E2RArchetype.NON_CHINA_POLYSILICON_OPTIONALITY,
+            stage1_radar_signals=("non-China polysilicon", "U.S. solar supply-chain expansion", "AI data-center power demand"),
+            stage2_candidate_signals=("funded plant expansion", "target capacity", "production schedule", "potential customer discussion"),
+            stage3_high_conviction_signals=("confirmed customer contract", "polysilicon offtake", "gross margin", "FCF after capex"),
+            stage4a_ongoing_signals=("plant ramp, customer offtake, margin and FCF remain intact"),
+            stage4b_graduation_overheat_signals=("unconfirmed customer media report rally", "non-China supply-chain headline priced before contract"),
+            stage4c_thesis_break_signals=("unconfirmed deal failure", "subsidy rollback", "polysilicon price decline", "capex overrun"),
+            key_evidence_families=("news", "research_report", "financial_actual", "price"),
+            false_positive_patterns=("unconfirmed media report treated as contract", "capex-heavy project treated as FCF"),
+            preferred_score_weights=_weights(eps_fcf=16, visibility=18, bottleneck=12, mispricing=10, valuation=9),
+        ),
+        E2RArchetype.CRITICAL_MINERALS_SUPPLY_CHAIN: ArchetypeDefinition(
+            archetype=E2RArchetype.CRITICAL_MINERALS_SUPPLY_CHAIN,
+            stage1_radar_signals=("critical minerals", "antimony/gallium/germanium", "U.S. national-security supply chain"),
+            stage2_candidate_signals=("funded refinery project", "planned output", "named critical minerals", "government-backed supply-chain logic"),
+            stage3_high_conviction_signals=("FID", "offtake or price floor", "target margin", "FCF after capex", "dilution risk cleared"),
+            stage4a_ongoing_signals=("construction and offtake remain on plan", "margin and FCF path remain credible"),
+            stage4b_graduation_overheat_signals=("strategic mineral headline price-first rally", "national-security narrative priced before offtake"),
+            stage4c_thesis_break_signals=("resource project write-down", "offtake failure", "share issuance or governance abuse", "FCF deterioration"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "price"),
+            false_positive_patterns=("strategic material headline only", "project capex before FCF", "critical-minerals story while dilution unresolved"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=20, bottleneck=16, mispricing=11, valuation=9),
+        ),
+        E2RArchetype.STRATEGIC_METALS_DILUTION_GOVERNANCE: ArchetypeDefinition(
+            archetype=E2RArchetype.STRATEGIC_METALS_DILUTION_GOVERNANCE,
+            stage1_radar_signals=("strategic-metals control fight", "share issuance dispute", "governance battle"),
+            stage2_candidate_signals=("not a Green source; governance and dilution RedTeam overlay"),
+            stage3_high_conviction_signals=("not applicable until governance, dilution, offtake and FCF risks clear"),
+            stage4a_ongoing_signals=("governance stays clean and capex funding does not dilute economics"),
+            stage4b_graduation_overheat_signals=("governance fight drives strategic-minerals price-first rally"),
+            stage4c_thesis_break_signals=("large share issuance", "governance abuse", "injunction shock", "control battle damages FCF path"),
+            key_evidence_families=("news", "disclosure", "price", "red_team"),
+            false_positive_patterns=("control fight treated as structural evidence", "strategic-metals premium ignores dilution"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.PETROCHEMICAL_CAPACITY_RESTRUCTURING: ArchetypeDefinition(
+            archetype=E2RArchetype.PETROCHEMICAL_CAPACITY_RESTRUCTURING,
+            stage1_radar_signals=("NCC restructuring", "capacity cut", "China/Middle East oversupply relief"),
+            stage2_candidate_signals=("approved shutdown", "support package", "capital plan", "supply discipline"),
+            stage3_high_conviction_signals=("product spread recovery", "OPM improvement", "FCF after working capital", "debt burden controlled"),
+            stage4a_ongoing_signals=("shutdown discipline remains intact", "spread and FCF continue improving"),
+            stage4b_graduation_overheat_signals=("petrochemical basket rally on restructuring expectation only"),
+            stage4c_thesis_break_signals=("spread reversal", "China oversupply", "inventory build", "capacity cut insufficient", "debt burden worsens"),
+            key_evidence_families=("news", "financial_actual", "commodity_price", "price"),
+            false_positive_patterns=("restructuring plan without margin", "capacity cut without spread recovery"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=18, bottleneck=16, mispricing=9, valuation=8),
+        ),
+        E2RArchetype.STANDALONE_NCC_CREDIT_BREAK: ArchetypeDefinition(
+            archetype=E2RArchetype.STANDALONE_NCC_CREDIT_BREAK,
+            stage1_radar_signals=("standalone cracker weakness", "NCC shutdown risk", "petrochemical credit stress"),
+            stage2_candidate_signals=("not a positive candidate; credit-spread break RedTeam overlay"),
+            stage3_high_conviction_signals=("not applicable until credit risk and spread economics are rebuilt"),
+            stage4a_ongoing_signals=("not applicable while standalone credit risk dominates"),
+            stage4b_graduation_overheat_signals=("distressed restructuring rally before balance-sheet repair"),
+            stage4c_thesis_break_signals=("standalone cracker credit break", "NCC shutdown from distress", "debt-to-equity stress", "forced restructuring"),
+            key_evidence_families=("news", "financial_actual", "credit", "price"),
+            false_positive_patterns=("forced shutdown treated as positive restructuring", "weak financials ignored"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.STEEL_ANTIDUMPING_POLICY_RELIEF: ArchetypeDefinition(
+            archetype=E2RArchetype.STEEL_ANTIDUMPING_POLICY_RELIEF,
+            stage1_radar_signals=("anti-dumping duty", "cheap Chinese steel inflow", "domestic plate margin relief"),
+            stage2_candidate_signals=("tariff rate", "import share", "domestic spread relief", "relative event return"),
+            stage3_high_conviction_signals=("actual plate spread", "utilization", "export margin resilience", "FCF after working capital"),
+            stage4a_ongoing_signals=("domestic spread remains healthy and export risks stay controlled"),
+            stage4b_graduation_overheat_signals=("anti-dumping relief rally before spread/FCF confirmation"),
+            stage4c_thesis_break_signals=("tariff shock causing export margin damage", "demand weakness", "policy reversal"),
+            key_evidence_families=("policy", "news", "financial_actual", "price"),
+            false_positive_patterns=("policy relief only", "tariff headline treated as EPS without spread"),
+            preferred_score_weights=_weights(eps_fcf=17, visibility=15, bottleneck=13, mispricing=9, valuation=8),
+        ),
+        E2RArchetype.STEEL_TARIFF_EXPORT_RISK: ArchetypeDefinition(
+            archetype=E2RArchetype.STEEL_TARIFF_EXPORT_RISK,
+            stage1_radar_signals=("U.S. steel tariff threat", "Vietnam tariff risk", "export margin risk"),
+            stage2_candidate_signals=("not a Green source; export tariff RedTeam overlay"),
+            stage3_high_conviction_signals=("not applicable until export-margin damage risk is cleared"),
+            stage4a_ongoing_signals=("tariff exposure remains controlled"),
+            stage4b_graduation_overheat_signals=("domestic tariff relief priced while export tariff risk ignored"),
+            stage4c_thesis_break_signals=("export margin damage", "tariff shock", "demand/capex failure", "policy reversal"),
+            key_evidence_families=("policy", "news", "financial_actual", "price"),
+            false_positive_patterns=("domestic relief counted without export risk", "policy two-sidedness ignored"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.COMMODITY_PRICE_EVENT_PREMIUM: ArchetypeDefinition(
+            archetype=E2RArchetype.COMMODITY_PRICE_EVENT_PREMIUM,
+            stage1_radar_signals=("commodity price rebound", "policy relief event", "unconfirmed customer report"),
+            stage2_candidate_signals=("event magnitude and price anchor; not structural conviction"),
+            stage3_high_conviction_signals=("not applicable unless spread, offtake, FCF and contract quality independently confirm"),
+            stage4a_ongoing_signals=("event converts into earnings and FCF"),
+            stage4b_graduation_overheat_signals=("price moves before evidence", "unconfirmed media report rally", "policy relief rally"),
+            stage4c_thesis_break_signals=("unconfirmed deal failure", "commodity price recollapse", "spread reversal", "offtake failure"),
+            key_evidence_families=("news", "price", "commodity_price"),
+            false_positive_patterns=("commodity price up only", "strategic headline only", "policy relief only"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.SOLAR_CUSTOMS_UFLPA_4C_WATCH: ArchetypeDefinition(
             archetype=E2RArchetype.SOLAR_CUSTOMS_UFLPA_4C_WATCH,
