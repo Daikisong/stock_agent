@@ -1,0 +1,409 @@
+{
+  "case_ids": [
+    "r5_loop10_samyang_buldak_export_regulatory_watch",
+    "r5_loop10_nongshim_shin_global_staple",
+    "r5_loop10_apr_medicube_structural_4b",
+    "r5_loop10_indie_kbeauty_odm_distribution_watch",
+    "r5_loop10_cj_olive_young_retail_platform",
+    "r5_loop10_amorepacific_legacy_china_exposure",
+    "r5_loop10_tourism_retail_china_visa_event",
+    "r5_loop10_fnf_taylormade_mna_optionality"
+  ],
+  "deep_sub_archetypes": [
+    "Samyang_Buldak_export",
+    "Denmark_recall_partial_reversal",
+    "Nongshim_Shin_Ramyun_global_staple",
+    "US_Europe_expansion",
+    "single_SKU_dependence",
+    "local_regulation_food_safety_watch",
+    "APR_Medicube_device_skincare",
+    "dAlba_Tirtir_Torriden_Beauty_of_Joseon",
+    "Silicon2_distributor_leverage",
+    "Cosmax_Kolmar_ODM_leverage",
+    "Olive_Young_US_store",
+    "US_ecommerce_to_physical_retail_sellthrough",
+    "tariff_margin_squeeze",
+    "China_decline_saturation_watch",
+    "AmorePacific_LGHH_legacy_beauty",
+    "duty_free_weakness",
+    "local_Chinese_brand_competition",
+    "Hotel_Shilla_Hyundai_Department_Paradise_Hankook_Cosmetics",
+    "China_visa_free_policy",
+    "tourist_arrivals_vs_spend_OPM",
+    "FnF_TaylorMade",
+    "ROFR_consent_right_dispute",
+    "MNA_optionality_vs_confirmed_EPS_accretion"
+  ],
+  "green_forbidden_patterns": [
+    "viral_tiktok_only",
+    "brand_heat_only",
+    "retail_talks_without_sell_through",
+    "ipo_or_debut_rally_only",
+    "influencer_endorsement_only",
+    "mna_optionality_without_eps",
+    "china_decline_without_offset",
+    "single_product_story_only",
+    "tourism_policy_without_spend_or_opm",
+    "private_affiliate_value_without_listed_earnings_bridge"
+  ],
+  "green_required_fields": [
+    "repeat_purchase_or_repeat_demand",
+    "overseas_sales_mix_growth",
+    "channel_sell_through_confirmed",
+    "asp_or_product_mix_improvement",
+    "opm_improvement",
+    "inventory_and_receivables_stable",
+    "tariff_recall_regulation_passed",
+    "single_sku_or_single_device_risk_managed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "food_safety_recall_expands",
+    "regulatory_ban",
+    "channel_stuffing",
+    "inventory_build",
+    "receivables_spike",
+    "single_product_fad_collapse",
+    "us_tariff_margin_squeeze",
+    "retail_channel_sellthrough_failure",
+    "china_sales_collapse_not_offset_by_us_or_europe",
+    "mna_event_failure_or_impairment",
+    "brand_acquisition_impairment"
+  ],
+  "large_sector": "CONSUMER_RETAIL_BRAND",
+  "score_adjustments": [
+    {
+      "axis": "repeat_demand",
+      "direction": "raise",
+      "points": "5",
+      "reason": "R5는 유행보다 반복구매와 반복수요가 확인될 때 visibility가 올라간다."
+    },
+    {
+      "axis": "export_growth",
+      "direction": "raise",
+      "points": "5",
+      "reason": "수출 성장과 해외 mix 증가는 내수 소비재 프레임 제거 근거다."
+    },
+    {
+      "axis": "asp_uplift",
+      "direction": "raise",
+      "points": "4",
+      "reason": "ASP나 product mix 개선이 OPM으로 내려오면 EPS/FCF 체급 변화 가능성이 높다."
+    },
+    {
+      "axis": "channel_sell_through",
+      "direction": "raise",
+      "points": "5",
+      "reason": "입점 논의가 아니라 실제 sell-through와 반복 발주가 필요하다."
+    },
+    {
+      "axis": "overseas_sales_mix",
+      "direction": "raise",
+      "points": "5",
+      "reason": "해외 매출 비중이 높아지면 구조적 채널 전환 근거가 된다."
+    },
+    {
+      "axis": "us_sales_mix",
+      "direction": "raise",
+      "points": "4",
+      "reason": "미국 매출 비중은 K-food/K-beauty 프레임 전환의 핵심 보조축이다."
+    },
+    {
+      "axis": "opm_improvement",
+      "direction": "raise",
+      "points": "5",
+      "reason": "브랜드 열기가 OPM으로 내려와야 실제 이익 체급 변화다."
+    },
+    {
+      "axis": "inventory_quality",
+      "direction": "raise",
+      "points": "4",
+      "reason": "재고가 안정적이면 channel stuffing 위험이 낮아진다."
+    },
+    {
+      "axis": "receivables_quality",
+      "direction": "raise",
+      "points": "4",
+      "reason": "매출채권 품질은 성장의 현금화 여부를 확인한다."
+    },
+    {
+      "axis": "physical_store_sellthrough",
+      "direction": "raise",
+      "points": "5",
+      "reason": "오프라인 매장 sell-through는 e-commerce viral보다 강한 반복수요 증거다."
+    },
+    {
+      "axis": "brand_extension_success",
+      "direction": "raise",
+      "points": "3",
+      "reason": "검증된 hero brand 확장은 Stage 2 가산 근거다."
+    },
+    {
+      "axis": "viral_product_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "TikTok/viral만으로는 반복수요와 FCF를 증명하지 못한다."
+    },
+    {
+      "axis": "brand_heat_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "브랜드 열기만 있고 실적 품질이 없으면 Green 근거가 아니다."
+    },
+    {
+      "axis": "retail_talks_without_sell_through",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "Ulta/Sephora/Target 논의는 Stage 2 attention이지 Green 근거가 아니다."
+    },
+    {
+      "axis": "ipo_or_debut_rally",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "상장 직후 주가 2배는 4B-watch이지 구조 증거가 아니다."
+    },
+    {
+      "axis": "influencer_endorsement_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "인플루언서 endorsement만으로 반복구매와 OPM을 만들지 않는다."
+    },
+    {
+      "axis": "single_sku_dependence",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "단일 제품 의존도는 fad normalization과 recall 리스크를 키운다."
+    },
+    {
+      "axis": "china_exposure_without_offset",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "중국 둔화를 미국/유럽 성장으로 상쇄하지 못하면 Green을 제한한다."
+    },
+    {
+      "axis": "mna_optionality_without_eps",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "TaylorMade 같은 M&A optionality는 본업 EPS/FCF 증거와 분리한다."
+    },
+    {
+      "axis": "tariff_margin_uncertainty",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "관세 부담을 판가에 전가하지 못하면 OPM 품질이 낮아진다."
+    },
+    {
+      "axis": "local_regulatory_recall",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "현지 recall은 부분 해제 전까지 4C-watch로 둔다."
+    },
+    {
+      "axis": "inventory_or_receivables_build",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "재고/채권 증가는 channel stuffing과 현금화 리스크다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "EXPORT_RECURRING_CONSUMER",
+      "asp": "+4",
+      "channel_sellthrough": "+4",
+      "event_penalty": "-2",
+      "export_growth": "+5",
+      "hard4c_sensitivity": "+3",
+      "inventory_quality": "+4",
+      "notes": "Samyang export/ASP/OP revision supports Stage 3 candidate but recall/regulatory watch remains.",
+      "opm": "+5",
+      "overseas_mix": "+5",
+      "receivables_quality": "+4",
+      "regulatory_redteam": "+4",
+      "repeat_demand": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "K_FOOD_GLOBAL_STAPLE_BRAND",
+      "asp": "+3",
+      "channel_sellthrough": "+5",
+      "event_penalty": "-1",
+      "export_growth": "+5",
+      "hard4c_sensitivity": "+3",
+      "inventory_quality": "+4",
+      "notes": "Nongshim global staple is Stage 2 until OPM/EPS/sell-through confirm.",
+      "opm": "+4",
+      "overseas_mix": "+5",
+      "receivables_quality": "+4",
+      "regulatory_redteam": "+2",
+      "repeat_demand": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "BEAUTY_DEVICE_EXPORT",
+      "asp": "+3",
+      "channel_sellthrough": "+5",
+      "event_penalty": "-2",
+      "export_growth": "+5",
+      "hard4c_sensitivity": "+3",
+      "inventory_quality": "+3",
+      "notes": "APR is structural success but fourfold rally and concentration require 4B-watch.",
+      "opm": "+5",
+      "overseas_mix": "+5",
+      "receivables_quality": "+3",
+      "regulatory_redteam": "+2",
+      "repeat_demand": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "K_BEAUTY_BRAND_US_CHANNEL",
+      "asp": "+2",
+      "channel_sellthrough": "+5",
+      "event_penalty": "-5",
+      "export_growth": "+5",
+      "hard4c_sensitivity": "+4",
+      "inventory_quality": "+4",
+      "notes": "d'Alba/indie K-beauty retail talks require sell-through before Green.",
+      "opm": "+4",
+      "overseas_mix": "+5",
+      "receivables_quality": "+4",
+      "regulatory_redteam": "+3",
+      "repeat_demand": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "K_BEAUTY_EXPORT_DISTRIBUTION_KOREA",
+      "asp": "+2",
+      "channel_sellthrough": "+5",
+      "event_penalty": "-3",
+      "export_growth": "+5",
+      "hard4c_sensitivity": "+4",
+      "inventory_quality": "+5",
+      "notes": "Cosmax/Kolmar/Silicon2 benefit only if brand sell-through and working capital hold.",
+      "opm": "+4",
+      "overseas_mix": "+5",
+      "receivables_quality": "+5",
+      "regulatory_redteam": "+2",
+      "repeat_demand": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "K_BEAUTY_RETAIL_PLATFORM",
+      "asp": "+2",
+      "channel_sellthrough": "+5",
+      "event_penalty": "-3",
+      "export_growth": "+4",
+      "hard4c_sensitivity": "+3",
+      "inventory_quality": "+4",
+      "notes": "Olive Young platform needs listed earnings bridge and U.S. store economics.",
+      "opm": "+5",
+      "overseas_mix": "+4",
+      "receivables_quality": "+4",
+      "regulatory_redteam": "+3",
+      "repeat_demand": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "CHINA_CONSUMER_EXPOSURE_4C",
+      "asp": "+2",
+      "channel_sellthrough": "+3",
+      "event_penalty": "-2",
+      "export_growth": "+3",
+      "hard4c_sensitivity": "+5",
+      "inventory_quality": "+5",
+      "notes": "Amore legacy China exposure blocks macro K-beauty Green until offset is proven.",
+      "opm": "+4",
+      "overseas_mix": "+3",
+      "receivables_quality": "+5",
+      "regulatory_redteam": "+4",
+      "repeat_demand": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "TOURISM_POLICY_EVENT",
+      "asp": "+2",
+      "channel_sellthrough": "+5",
+      "event_penalty": "-5",
+      "export_growth": "+3",
+      "hard4c_sensitivity": "+4",
+      "inventory_quality": "+4",
+      "notes": "Tourism retail event needs spend/sell-through/OPM, not just visitor policy.",
+      "opm": "+4",
+      "overseas_mix": "+3",
+      "receivables_quality": "+3",
+      "regulatory_redteam": "+2",
+      "repeat_demand": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "APPAREL_FAST_FASHION_BRAND_OEM",
+      "asp": "+1",
+      "channel_sellthrough": "+1",
+      "event_penalty": "-5",
+      "export_growth": "+1",
+      "hard4c_sensitivity": "+3",
+      "inventory_quality": "+2",
+      "notes": "F&F TaylorMade optionality is not Green until confirmed deal and EPS accretion.",
+      "opm": "+3",
+      "overseas_mix": "+1",
+      "receivables_quality": "+2",
+      "regulatory_redteam": "+2",
+      "repeat_demand": "+1"
+    }
+  ],
+  "source_round": "docs/round/round_235.md",
+  "stage4b_watch_triggers": [
+    "stage3_after_2x_to_4x_price_run",
+    "ipo_or_debut_after_one_month_double",
+    "single_sku_or_single_device_dependence",
+    "us_retail_channel_expectation_before_sellthrough",
+    "tourism_policy_day_basket_rally",
+    "overseas_sales_good_but_opm_decelerating",
+    "mna_optionality_prices_before_signed_transaction"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 23,
+    "event_premium_count": 2,
+    "failed_rerating_count": 1,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "large_sector": "CONSUMER_RETAIL_BRAND",
+    "overheat_count": 1,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_163",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 9,
+    "source_round": "docs/round/round_235.md",
+    "stage3_case_count": 2,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 2,
+    "structural_success_count": 2,
+    "success_candidate_count": 2,
+    "target_archetype_count": 13
+  },
+  "target_aliases": {
+    "APPAREL_M_AND_A_OPTIONALITY": "APPAREL_FAST_FASHION_BRAND_OEM",
+    "CHANNEL_SELLTHROUGH_GATE": "K_BEAUTY_OFFLINE_SELL_THROUGH",
+    "EVENT_PREMIUM": "EVENT_PREMIUM",
+    "K_BEAUTY_DEVICE_GLOBAL_BRAND": "BEAUTY_DEVICE_EXPORT",
+    "K_BEAUTY_INDIE_BRAND_US_CHANNEL": "K_BEAUTY_BRAND_US_CHANNEL",
+    "K_BEAUTY_ODM_DISTRIBUTOR_LEVERAGE": "K_BEAUTY_EXPORT_DISTRIBUTION_KOREA",
+    "K_BEAUTY_RETAIL_PLATFORM": "K_BEAUTY_RETAIL_PLATFORM",
+    "K_FOOD_EXPORT_RECURRING": "EXPORT_RECURRING_CONSUMER",
+    "K_FOOD_GLOBAL_STAPLE_BRAND": "K_FOOD_GLOBAL_STAPLE_BRAND",
+    "K_FOOD_SINGLE_SKU_REGULATORY_WATCH": "K_FOOD_SINGLE_SKU_RISK",
+    "LEGACY_BEAUTY_CHINA_EXPOSURE_4C": "CHINA_CONSUMER_EXPOSURE_4C",
+    "PRICE_ONLY_RALLY": "PRICE_ONLY_RALLY",
+    "TOURISM_RETAIL_DUTYFREE_EVENT": "TOURISM_POLICY_EVENT"
+  },
+  "what_not_to_change": [
+    "do_not_use_round235_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_viral_ipo_debut_rally_retail_talks_tourism_policy_influencer_or_mna_optionality_as_green",
+    "do_not_invent_ohlc_stage_prices_or_business_metrics"
+  ]
+}

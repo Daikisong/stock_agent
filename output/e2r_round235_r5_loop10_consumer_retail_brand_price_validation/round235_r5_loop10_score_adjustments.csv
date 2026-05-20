@@ -1,0 +1,23 @@
+axis,points,direction,reason
+repeat_demand,5,raise,R5는 유행보다 반복구매와 반복수요가 확인될 때 visibility가 올라간다.
+export_growth,5,raise,수출 성장과 해외 mix 증가는 내수 소비재 프레임 제거 근거다.
+asp_uplift,4,raise,ASP나 product mix 개선이 OPM으로 내려오면 EPS/FCF 체급 변화 가능성이 높다.
+channel_sell_through,5,raise,입점 논의가 아니라 실제 sell-through와 반복 발주가 필요하다.
+overseas_sales_mix,5,raise,해외 매출 비중이 높아지면 구조적 채널 전환 근거가 된다.
+us_sales_mix,4,raise,미국 매출 비중은 K-food/K-beauty 프레임 전환의 핵심 보조축이다.
+opm_improvement,5,raise,브랜드 열기가 OPM으로 내려와야 실제 이익 체급 변화다.
+inventory_quality,4,raise,재고가 안정적이면 channel stuffing 위험이 낮아진다.
+receivables_quality,4,raise,매출채권 품질은 성장의 현금화 여부를 확인한다.
+physical_store_sellthrough,5,raise,오프라인 매장 sell-through는 e-commerce viral보다 강한 반복수요 증거다.
+brand_extension_success,3,raise,검증된 hero brand 확장은 Stage 2 가산 근거다.
+viral_product_only,-5,lower,TikTok/viral만으로는 반복수요와 FCF를 증명하지 못한다.
+brand_heat_only,-5,lower,브랜드 열기만 있고 실적 품질이 없으면 Green 근거가 아니다.
+retail_talks_without_sell_through,-5,lower,Ulta/Sephora/Target 논의는 Stage 2 attention이지 Green 근거가 아니다.
+ipo_or_debut_rally,-5,lower,상장 직후 주가 2배는 4B-watch이지 구조 증거가 아니다.
+influencer_endorsement_only,-4,lower,인플루언서 endorsement만으로 반복구매와 OPM을 만들지 않는다.
+single_sku_dependence,-4,lower,단일 제품 의존도는 fad normalization과 recall 리스크를 키운다.
+china_exposure_without_offset,-5,lower,중국 둔화를 미국/유럽 성장으로 상쇄하지 못하면 Green을 제한한다.
+mna_optionality_without_eps,-5,lower,TaylorMade 같은 M&A optionality는 본업 EPS/FCF 증거와 분리한다.
+tariff_margin_uncertainty,-3,lower,관세 부담을 판가에 전가하지 못하면 OPM 품질이 낮아진다.
+local_regulatory_recall,-4,lower,현지 recall은 부분 해제 전까지 4C-watch로 둔다.
+inventory_or_receivables_build,-5,lower,재고/채권 증가는 channel stuffing과 현금화 리스크다.
