@@ -1,0 +1,9 @@
+archetype,commercial_revenue,procedure_or_prescription_volume,channel_penetration,reimbursement,capacity_utilization,gross_margin,cash_runway,event_penalty,clinical_partner_redteam,4b_watch_sensitivity,hard_4c_sensitivity,notes
+AESTHETIC_DEVICE_EXPORT_KOREA,+5,+5,+5,+1,+3,+5,+4,-3,+2,+4,+3,"Jeisys take-private validates demand, but listed Green requires recurring sales/consumables/margin/FCF."
+BOTULINUM_US_MARKET_ENTRY,+5,+5,+5,+3,+0,+5,+4,-3,+3,+4,+4,Hugel Letybo U.S. launch needs sales/channel/ASP/repeat treatment before Green.
+CDMO_HEALTHCARE_CONTRACT,+4,+0,+0,+0,+5,+5,+4,-5,+2,+5,+4,SK Bioscience IDT M&A is Stage 2 until utilization/backlog/margin/FCF confirm.
+BIOSIMILAR_TARIFF_HEDGE_MANUFACTURING,+4,+0,+0,+1,+5,+5,+4,-3,+2,+4,+4,"Celltrion U.S. facility is tariff hedge Stage 2, not Green before transfer/utilization/FCF."
+CDMO_US_TARIFF_HEDGE_CAPACITY,+4,+0,+0,+0,+5,+5,+4,-4,+2,+4,+4,Samsung Biologics U.S. facility had weak price reaction; watch valuation saturation.
+THESIS_BREAK_4C_WATCH,+0,+0,+0,+0,+0,+0,+5,+0,+5,+3,+5,HanAll/Immunovant trial failure is 4C-watch for partner-pipeline value.
+MEDICAL_AI_EXTERNAL_VALIDATION,+2,+0,+0,+5,+0,+3,+5,-4,+3,+5,+5,Lunit external validation is not Green without reimbursement/adoption/revenue.
+APPROVAL_ONLY_NOT_COMMERCIALIZATION,+0,+0,+0,+0,+0,+0,+4,-5,+3,+5,+4,Approval or validation headlines should remain Stage 2 until commercial conversion.
