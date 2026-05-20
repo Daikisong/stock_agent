@@ -1,0 +1,9 @@
+category,primary_archetype,terms
+ESS transition,ESS_LFP_GRID_STORAGE,Samsung SDI America|LGES Tesla|SK On Flatiron|LFP ESS|grid storage
+EV-to-ESS redeployment,EV_TO_ESS_CAPACITY_REDEPLOYMENT,Georgia EV lines|line retrofit|ESS production|utilization
+U.S. battery localization,US_BATTERY_LOCALIZATION,U.S. factory|Michigan LFP|IRA localization|customs labor risk
+Contract quality break,EV_BATTERY_CONTRACT_QUALITY_BREAK,LGES Ford cancellation|Freudenberg cancellation|lost expected revenue
+Lithium resource security,LITHIUM_RESOURCE_SECURITY,POSCO|MinRes|Wodgina|Mt Marion|spodumene cycle
+Solar localization 4C,SOLAR_CUSTOMS_UFLPA_4C_WATCH,Hanwha Qcells|UFLPA|customs detention|furlough
+EV demand shock,BATTERY_SUPPLY_CHAIN_DEMAND_SHOCK,Ford EV retreat|LGES -6%|Samsung SDI -3.5%|POSCO Future M -8.2%
+Factory execution risk,EV_FACTORY_EXECUTION_LABOR_IMMIGRATION_RISK,Hyundai-LG Georgia|immigration raid|skilled-worker visa|construction restart

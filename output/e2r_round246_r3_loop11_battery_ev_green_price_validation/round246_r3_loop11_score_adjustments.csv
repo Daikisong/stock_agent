@@ -1,0 +1,22 @@
+axis,points,direction,reason
+binding_contract,5,raise,R3는 계약이 binding일수록 Stage 2 품질이 올라간다.
+GWh_volume,5,raise,ESS/LFP는 GWh 물량이 없으면 visibility가 약하다.
+delivery_schedule,5,raise,납기와 공급기간이 있어야 매출 전환 경로가 보인다.
+ESS_revenue_conversion,5,raise,ESS 계약은 실제 매출 전환 전 Green이 아니다.
+line_retrofit_execution,4,raise,EV 라인을 ESS로 전환하는 실행력이 중요하다.
+utilization_rate,5,raise,공장·라인 보유보다 가동률 회복이 더 중요하다.
+OPM_visibility,5,raise,OPM/gross margin 확인 전 Stage 3-Green 금지다.
+FCF_after_capex,5,raise,CAPEX 뒤 FCF가 남아야 구조적이다.
+customer_quality,4,raise,고객 품질과 수요 안정성은 Stage 2 증거다.
+resource_security_with_offtake,4,raise,리튬 자원 확보는 offtake와 downstream margin이 붙을 때 강하다.
+EV_capacity_announcement_only,-5,lower,EV CAPA 발표만으로는 수익 가시성이 없다.
+ESS_theme_only,-4,lower,ESS/LFP 테마만으로는 매출·마진·FCF가 아니다.
+customer_name_without_calloff,-5,lower,고객명만 있고 call-off가 없으면 Green 금지다.
+contract_value_without_utilization,-4,lower,계약금액만 있고 가동률이 없으면 Stage 2에 머문다.
+unofficial_customer_source_only,-3,lower,비공식 고객 보도는 disclosure confidence를 낮춘다.
+lithium_price_rebound_only,-5,lower,리튬 가격 반등만으로는 구조적 EPS/FCF가 아니다.
+solar_localization_without_component_flow,-5,lower,태양광 현지화는 component flow와 utilization이 필요하다.
+factory_construction_without_labor_execution,-4,lower,공장 건설은 labor/visa execution 전 Green이 아니다.
+subsidy_dependent_profit,-5,lower,보조금 제외 이익 품질이 약하면 감점한다.
+EV_demand_shock,-5,lower,고객 EV 전략 후퇴는 R3 핵심 4C-watch다.
+contract_cancellation,-5,lower,계약 취소는 hard 4C다.

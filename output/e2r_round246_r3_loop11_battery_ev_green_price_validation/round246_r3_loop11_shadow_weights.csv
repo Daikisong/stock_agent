@@ -1,0 +1,9 @@
+archetype,binding_contract,gwh_volume,delivery_schedule,ess_revenue_conversion,line_retrofit_execution,utilization,opm_fcf,customer_quality,event_penalty,execution_redteam,4b_watch_sensitivity,hard_4c_sensitivity,notes
+ESS_LFP_GRID_STORAGE,+5,+5,+5,+5,+4,+5,+5,+4,-2,+2,+4,+4,Samsung SDI/LGES/SK On ESS contracts are Stage 2 until delivery/utilization/margin/FCF confirm.
+EV_TO_ESS_CAPACITY_REDEPLOYMENT,+4,+5,+5,+5,+5,+5,+5,+3,-3,+4,+4,+5,EV line conversion is positive only if utilization and ESS margins confirm.
+US_BATTERY_LOCALIZATION,+4,+4,+4,+4,+5,+5,+5,+4,-3,+5,+4,+5,U.S. localization must pass customs/visa/labor execution risks.
+EV_BATTERY_CONTRACT_QUALITY_BREAK,+0,+0,+0,+0,+0,+0,+0,+0,+0,+5,+3,+5,LGES Ford/Freudenberg cancellations are hard 4C.
+LITHIUM_RESOURCE_SECURITY,+3,+3,+3,+2,+0,+3,+5,+3,-4,+2,+4,+4,POSCO/MinRes is Stage 2; lithium cycle and downstream margin matter.
+SOLAR_US_SUPPLY_CHAIN_LOCALIZATION,+3,+3,+4,+3,+4,+5,+5,+4,-4,+5,+4,+5,Qcells localization is blocked by customs/component flow risk.
+BATTERY_SUPPLY_CHAIN_DEMAND_SHOCK,+0,+0,+0,+0,+0,+0,+0,+0,+0,+5,+3,+5,Ford EV retreat is 4C-watch for Korean battery/cathode supply chain.
+EV_FACTORY_EXECUTION_LABOR_IMMIGRATION_RISK,+0,+0,+0,+0,+3,+3,+3,+2,+0,+5,+4,+5,Georgia raid shows U.S. plant execution risk beyond capex headline.

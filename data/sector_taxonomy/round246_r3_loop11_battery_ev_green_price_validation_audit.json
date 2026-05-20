@@ -1,0 +1,265 @@
+{
+  "deep_sub_archetypes": [
+    {
+      "category": "ESS transition",
+      "primary_archetype": "ESS_LFP_GRID_STORAGE",
+      "terms": "Samsung SDI America|LGES Tesla|SK On Flatiron|LFP ESS|grid storage"
+    },
+    {
+      "category": "EV-to-ESS redeployment",
+      "primary_archetype": "EV_TO_ESS_CAPACITY_REDEPLOYMENT",
+      "terms": "Georgia EV lines|line retrofit|ESS production|utilization"
+    },
+    {
+      "category": "U.S. battery localization",
+      "primary_archetype": "US_BATTERY_LOCALIZATION",
+      "terms": "U.S. factory|Michigan LFP|IRA localization|customs labor risk"
+    },
+    {
+      "category": "Contract quality break",
+      "primary_archetype": "EV_BATTERY_CONTRACT_QUALITY_BREAK",
+      "terms": "LGES Ford cancellation|Freudenberg cancellation|lost expected revenue"
+    },
+    {
+      "category": "Lithium resource security",
+      "primary_archetype": "LITHIUM_RESOURCE_SECURITY",
+      "terms": "POSCO|MinRes|Wodgina|Mt Marion|spodumene cycle"
+    },
+    {
+      "category": "Solar localization 4C",
+      "primary_archetype": "SOLAR_CUSTOMS_UFLPA_4C_WATCH",
+      "terms": "Hanwha Qcells|UFLPA|customs detention|furlough"
+    },
+    {
+      "category": "EV demand shock",
+      "primary_archetype": "BATTERY_SUPPLY_CHAIN_DEMAND_SHOCK",
+      "terms": "Ford EV retreat|LGES -6%|Samsung SDI -3.5%|POSCO Future M -8.2%"
+    },
+    {
+      "category": "Factory execution risk",
+      "primary_archetype": "EV_FACTORY_EXECUTION_LABOR_IMMIGRATION_RISK",
+      "terms": "Hyundai-LG Georgia|immigration raid|skilled-worker visa|construction restart"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "ev_capacity_announcement_only",
+    "ess_lfp_theme_only",
+    "customer_name_only",
+    "unofficial_customer_source_only",
+    "factory_construction_only",
+    "lithium_resource_headline_only",
+    "solar_localization_headline_only",
+    "subsidy_excluded_losses",
+    "contract_value_without_utilization"
+  ],
+  "green_required_fields": [
+    "binding_contract",
+    "customer_gwh_supply_period_confirmed",
+    "actual_delivery_or_revenue_recognition_started",
+    "utilization_improvement",
+    "opm_or_gross_margin_confirmed",
+    "fcf_after_capex",
+    "subsidy_excluded_profit_quality",
+    "customer_ev_strategy_or_ess_demand_risk_passed",
+    "supply_chain_customs_labor_execution_risk_passed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "contract_cancellation",
+    "contract_value_collapse",
+    "customer_ev_model_cancellation",
+    "customer_strategy_pullback",
+    "gwh_calloff_failure",
+    "utilization_delay",
+    "factory_restart_uncertainty",
+    "negative_fcf",
+    "jv_termination_or_weak_demand_transfer",
+    "subsidy_quality_profit_collapse",
+    "supply_chain_customs_detention",
+    "production_furlough",
+    "immigration_skilled_worker_execution_failure"
+  ],
+  "large_sector": "BATTERY_EV_GREEN",
+  "round_id": "round_174",
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "ESS_LFP_GRID_STORAGE",
+      "binding_contract": "+5",
+      "customer_quality": "+4",
+      "delivery_schedule": "+5",
+      "ess_revenue_conversion": "+5",
+      "event_penalty": "-2",
+      "execution_redteam": "+2",
+      "gwh_volume": "+5",
+      "hard_4c_sensitivity": "+4",
+      "line_retrofit_execution": "+4",
+      "notes": "Samsung SDI/LGES/SK On ESS contracts are Stage 2 until delivery/utilization/margin/FCF confirm.",
+      "opm_fcf": "+5",
+      "utilization": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "EV_TO_ESS_CAPACITY_REDEPLOYMENT",
+      "binding_contract": "+4",
+      "customer_quality": "+3",
+      "delivery_schedule": "+5",
+      "ess_revenue_conversion": "+5",
+      "event_penalty": "-3",
+      "execution_redteam": "+4",
+      "gwh_volume": "+5",
+      "hard_4c_sensitivity": "+5",
+      "line_retrofit_execution": "+5",
+      "notes": "EV line conversion is positive only if utilization and ESS margins confirm.",
+      "opm_fcf": "+5",
+      "utilization": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "US_BATTERY_LOCALIZATION",
+      "binding_contract": "+4",
+      "customer_quality": "+4",
+      "delivery_schedule": "+4",
+      "ess_revenue_conversion": "+4",
+      "event_penalty": "-3",
+      "execution_redteam": "+5",
+      "gwh_volume": "+4",
+      "hard_4c_sensitivity": "+5",
+      "line_retrofit_execution": "+5",
+      "notes": "U.S. localization must pass customs/visa/labor execution risks.",
+      "opm_fcf": "+5",
+      "utilization": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "EV_BATTERY_CONTRACT_QUALITY_BREAK",
+      "binding_contract": "+0",
+      "customer_quality": "+0",
+      "delivery_schedule": "+0",
+      "ess_revenue_conversion": "+0",
+      "event_penalty": "+0",
+      "execution_redteam": "+5",
+      "gwh_volume": "+0",
+      "hard_4c_sensitivity": "+5",
+      "line_retrofit_execution": "+0",
+      "notes": "LGES Ford/Freudenberg cancellations are hard 4C.",
+      "opm_fcf": "+0",
+      "utilization": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "LITHIUM_RESOURCE_SECURITY",
+      "binding_contract": "+3",
+      "customer_quality": "+3",
+      "delivery_schedule": "+3",
+      "ess_revenue_conversion": "+2",
+      "event_penalty": "-4",
+      "execution_redteam": "+2",
+      "gwh_volume": "+3",
+      "hard_4c_sensitivity": "+4",
+      "line_retrofit_execution": "+0",
+      "notes": "POSCO/MinRes is Stage 2; lithium cycle and downstream margin matter.",
+      "opm_fcf": "+5",
+      "utilization": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "SOLAR_US_SUPPLY_CHAIN_LOCALIZATION",
+      "binding_contract": "+3",
+      "customer_quality": "+4",
+      "delivery_schedule": "+4",
+      "ess_revenue_conversion": "+3",
+      "event_penalty": "-4",
+      "execution_redteam": "+5",
+      "gwh_volume": "+3",
+      "hard_4c_sensitivity": "+5",
+      "line_retrofit_execution": "+4",
+      "notes": "Qcells localization is blocked by customs/component flow risk.",
+      "opm_fcf": "+5",
+      "utilization": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "BATTERY_SUPPLY_CHAIN_DEMAND_SHOCK",
+      "binding_contract": "+0",
+      "customer_quality": "+0",
+      "delivery_schedule": "+0",
+      "ess_revenue_conversion": "+0",
+      "event_penalty": "+0",
+      "execution_redteam": "+5",
+      "gwh_volume": "+0",
+      "hard_4c_sensitivity": "+5",
+      "line_retrofit_execution": "+0",
+      "notes": "Ford EV retreat is 4C-watch for Korean battery/cathode supply chain.",
+      "opm_fcf": "+0",
+      "utilization": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "EV_FACTORY_EXECUTION_LABOR_IMMIGRATION_RISK",
+      "binding_contract": "+0",
+      "customer_quality": "+2",
+      "delivery_schedule": "+0",
+      "ess_revenue_conversion": "+0",
+      "event_penalty": "+0",
+      "execution_redteam": "+5",
+      "gwh_volume": "+0",
+      "hard_4c_sensitivity": "+5",
+      "line_retrofit_execution": "+3",
+      "notes": "Georgia raid shows U.S. plant execution risk beyond capex headline.",
+      "opm_fcf": "+3",
+      "utilization": "+3"
+    }
+  ],
+  "source_round": "docs/round/round_246.md",
+  "stage4b_watch_triggers": [
+    "ess_lfp_contract_headline_rally",
+    "ev_line_conversion_headline_multiple_expansion",
+    "unofficial_customer_name_rally",
+    "lithium_resource_security_price_first",
+    "solar_localization_before_utilization",
+    "battery_factory_construction_before_utilization",
+    "ev_demand_slowdown_ignored"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "evidence_good_but_price_failed_count": 4,
+    "failed_rerating_count": 2,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "BATTERY_EV_GREEN",
+    "price_moved_without_evidence_count": 0,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_174",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_246.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 5,
+    "success_candidate_count": 5,
+    "target_archetype_count": 10,
+    "watch_4c_count": 4
+  },
+  "target_aliases": {
+    "BATTERY_SUPPLY_CHAIN_DEMAND_SHOCK": "BATTERY_SUPPLY_CHAIN_DEMAND_SHOCK",
+    "ESS_LFP_GRID_STORAGE": "ESS_LFP_GRID_STORAGE",
+    "EV_BATTERY_CONTRACT_QUALITY_BREAK": "EV_BATTERY_CONTRACT_QUALITY_BREAK",
+    "EV_FACTORY_EXECUTION_LABOR_IMMIGRATION_RISK": "EV_FACTORY_EXECUTION_LABOR_IMMIGRATION_RISK",
+    "EV_TO_ESS_CAPACITY_REDEPLOYMENT": "EV_TO_ESS_CAPACITY_REDEPLOYMENT",
+    "LITHIUM_OFFTAKE_DLE_OPTIONALITY": "LITHIUM_OFFTAKE_DLE_OPTIONALITY",
+    "LITHIUM_RESOURCE_SECURITY": "LITHIUM_RESOURCE_SECURITY",
+    "SOLAR_CUSTOMS_UFLPA_4C_WATCH": "SOLAR_CUSTOMS_UFLPA_4C_WATCH",
+    "SOLAR_US_SUPPLY_CHAIN_LOCALIZATION": "SOLAR_US_SUPPLY_CHAIN_LOCALIZATION",
+    "US_BATTERY_LOCALIZATION": "US_BATTERY_LOCALIZATION"
+  },
+  "what_not_to_change": [
+    "do_not_use_round246_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_ess_lfp_lithium_solar_localization_or_factory_construction_as_green",
+    "do_not_invent_ohlc_or_stage_dates"
+  ]
+}

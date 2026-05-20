@@ -153,9 +153,12 @@ class E2RArchetype(str, Enum):
     ESS_AI_DATA_CENTER_STORAGE = "ESS_AI_DATA_CENTER_STORAGE"
     EV_TO_ESS_CAPACITY_REDEPLOYMENT = "EV_TO_ESS_CAPACITY_REDEPLOYMENT"
     EV_TO_ESS_CAPACITY_REDEPLOYMENT_KOREA = "EV_TO_ESS_CAPACITY_REDEPLOYMENT_KOREA"
+    US_BATTERY_LOCALIZATION = "US_BATTERY_LOCALIZATION"
     EV_BATTERY_JV_RESTRUCTURING = "EV_BATTERY_JV_RESTRUCTURING"
     EV_CAPA_CONTRACT_CANCELLATION = "EV_CAPA_CONTRACT_CANCELLATION"
     BATTERY_CONTRACT_CANCELLATION_4C = "BATTERY_CONTRACT_CANCELLATION_4C"
+    EV_BATTERY_CONTRACT_QUALITY_BREAK = "EV_BATTERY_CONTRACT_QUALITY_BREAK"
+    BATTERY_SUPPLY_CHAIN_DEMAND_SHOCK = "BATTERY_SUPPLY_CHAIN_DEMAND_SHOCK"
     BATTERY_TAX_CREDIT_QUALITY_OVERLAY = "BATTERY_TAX_CREDIT_QUALITY_OVERLAY"
     CONTRACT_CANCELLATION_CUSTOMER_STRATEGY_RISK = "CONTRACT_CANCELLATION_CUSTOMER_STRATEGY_RISK"
     BATTERY_CONTRACT_DISCLOSURE_CONFIDENCE = "BATTERY_CONTRACT_DISCLOSURE_CONFIDENCE"
@@ -178,6 +181,8 @@ class E2RArchetype(str, Enum):
     ANODE_GRAPHITE_SUPPLYCHAIN_KOREA = "ANODE_GRAPHITE_SUPPLYCHAIN_KOREA"
     CATHODE_LONG_CONTRACT_VISIBILITY = "CATHODE_LONG_CONTRACT_VISIBILITY"
     LITHIUM_RESOURCE_SECURITY_KOREA = "LITHIUM_RESOURCE_SECURITY_KOREA"
+    LITHIUM_RESOURCE_SECURITY = "LITHIUM_RESOURCE_SECURITY"
+    LITHIUM_OFFTAKE_DLE_OPTIONALITY = "LITHIUM_OFFTAKE_DLE_OPTIONALITY"
     SEPARATOR_EV_DEMAND_CYCLE = "SEPARATOR_EV_DEMAND_CYCLE"
     COPPER_FOIL_EV_DEMAND_CYCLE = "COPPER_FOIL_EV_DEMAND_CYCLE"
     ELECTROLYTE_CAPA_SUPPLYCHAIN = "ELECTROLYTE_CAPA_SUPPLYCHAIN"
@@ -198,6 +203,7 @@ class E2RArchetype(str, Enum):
     SOLAR_US_SUPPLY_CHAIN_LOCALIZATION = "SOLAR_US_SUPPLY_CHAIN_LOCALIZATION"
     SOLAR_US_LOCALIZATION_SUPPLYCHAIN = "SOLAR_US_LOCALIZATION_SUPPLYCHAIN"
     SOLAR_CUSTOMS_UFLPA_4C_WATCH = "SOLAR_CUSTOMS_UFLPA_4C_WATCH"
+    EV_FACTORY_EXECUTION_LABOR_IMMIGRATION_RISK = "EV_FACTORY_EXECUTION_LABOR_IMMIGRATION_RISK"
     WIND_POLICY_PERMITTING_RISK = "WIND_POLICY_PERMITTING_RISK"
     BATTERY_SAFETY_INDUSTRIAL_ACCIDENT_OVERLAY = "BATTERY_SAFETY_INDUSTRIAL_ACCIDENT_OVERLAY"
     EV_BATTERY_TRANSPARENCY_REGULATORY_OVERLAY = "EV_BATTERY_TRANSPARENCY_REGULATORY_OVERLAY"
@@ -949,6 +955,126 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("confirmed IP leakage", "customer trust loss", "competitive catch-up", "accounting or disclosure trust break"),
             key_evidence_families=("news", "legal", "disclosure"),
             false_positive_patterns=("IP leakage dismissed as non-operating noise", "competitive moat assumed without trust evidence"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.ESS_LFP_GRID_STORAGE: ArchetypeDefinition(
+            archetype=E2RArchetype.ESS_LFP_GRID_STORAGE,
+            stage1_radar_signals=("LFP ESS contract headline", "grid storage demand", "data-center storage demand", "EV-to-ESS pivot"),
+            stage2_candidate_signals=("binding ESS contract", "GWh volume", "delivery schedule", "customer quality", "line retrofit plan"),
+            stage3_high_conviction_signals=("actual delivery or revenue recognition", "utilization improvement", "ESS OPM or gross margin", "FCF after capex"),
+            stage4a_ongoing_signals=("ESS deliveries remain on schedule", "utilization and margin improve", "repeat customer orders"),
+            stage4b_graduation_overheat_signals=("ESS/LFP contract headline rally", "unofficial customer-name rally", "valuation expands before delivery"),
+            stage4c_thesis_break_signals=("GWh call-off failure", "utilization delay", "LFP margin failure", "customer demand pullback"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("ESS theme only", "contract value without utilization", "customer name without call-off"),
+            preferred_score_weights=_weights(eps_fcf=22, visibility=23, bottleneck=17, mispricing=13, valuation=11),
+        ),
+        E2RArchetype.EV_TO_ESS_CAPACITY_REDEPLOYMENT: ArchetypeDefinition(
+            archetype=E2RArchetype.EV_TO_ESS_CAPACITY_REDEPLOYMENT,
+            stage1_radar_signals=("EV demand slowdown", "ESS pivot", "factory line conversion", "battery plant underutilization"),
+            stage2_candidate_signals=("line retrofit execution plan", "ESS customer contract", "delivery period", "GWh volume"),
+            stage3_high_conviction_signals=("converted line utilization", "ESS revenue conversion", "OPM recovery", "FCF after capex"),
+            stage4a_ongoing_signals=("converted lines run at healthy utilization", "ESS margins remain visible"),
+            stage4b_graduation_overheat_signals=("EV line conversion headline rerates before utilization", "ESS pivot crowded narrative"),
+            stage4c_thesis_break_signals=("factory restart uncertainty", "line conversion delay", "negative FCF", "customer call-off failure"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "price"),
+            false_positive_patterns=("capacity conversion only", "factory ownership without utilization", "EV capacity announcement only"),
+            preferred_score_weights=_weights(eps_fcf=21, visibility=22, bottleneck=18, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.US_BATTERY_LOCALIZATION: ArchetypeDefinition(
+            archetype=E2RArchetype.US_BATTERY_LOCALIZATION,
+            stage1_radar_signals=("U.S. battery localization", "IRA or tariff localization", "domestic LFP production", "battery plant construction"),
+            stage2_candidate_signals=("U.S. factory contract", "localized production site", "customer or volume disclosure", "delivery schedule"),
+            stage3_high_conviction_signals=("local production utilization", "subsidy-excluded profit quality", "gross margin visibility", "customs/labor risk cleared"),
+            stage4a_ongoing_signals=("factory ramp continues", "local content economics remain healthy"),
+            stage4b_graduation_overheat_signals=("localization headline priced before component flow", "factory construction valued before utilization"),
+            stage4c_thesis_break_signals=("customs detention", "labor or visa disruption", "factory ramp delay", "subsidy quality profit collapse"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "policy", "price"),
+            false_positive_patterns=("factory construction only", "subsidy-dependent profit", "localization headline without utilization"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=21, bottleneck=15, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.EV_BATTERY_CONTRACT_QUALITY_BREAK: ArchetypeDefinition(
+            archetype=E2RArchetype.EV_BATTERY_CONTRACT_QUALITY_BREAK,
+            stage1_radar_signals=("large EV battery contract headline", "customer EV model plan", "battery backlog narrative"),
+            stage2_candidate_signals=("not a Green source; contract-quality RedTeam overlay",),
+            stage3_high_conviction_signals=("not applicable; contract cancellation blocks Green until thesis is rebuilt",),
+            stage4a_ongoing_signals=("customer call-off remains intact", "contract economics remain credible"),
+            stage4b_graduation_overheat_signals=("contract value headline priced before actual call-off",),
+            stage4c_thesis_break_signals=("contract cancellation", "contract value collapse", "customer EV model cancellation", "customer strategy pullback"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "price"),
+            false_positive_patterns=("headline backlog treated as actual revenue", "customer strategy risk ignored"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.BATTERY_SUPPLY_CHAIN_DEMAND_SHOCK: ArchetypeDefinition(
+            archetype=E2RArchetype.BATTERY_SUPPLY_CHAIN_DEMAND_SHOCK,
+            stage1_radar_signals=("automaker EV retreat", "battery supply-chain drawdown", "EV subsidy shift"),
+            stage2_candidate_signals=("not a Green source; demand-shock RedTeam overlay",),
+            stage3_high_conviction_signals=("not applicable; demand shock must be cleared before Green",),
+            stage4a_ongoing_signals=("customer EV strategy stabilizes", "orders and utilization remain intact"),
+            stage4b_graduation_overheat_signals=("EV demand slowdown ignored while valuation stays high",),
+            stage4c_thesis_break_signals=("customer strategy pullback", "EV model cancellation", "capacity underutilization", "order slowdown across cathode/separator/precursor chain"),
+            key_evidence_families=("news", "price", "financial_actual", "disclosure"),
+            false_positive_patterns=("battery supply chain treated as structural while customer EV plans shrink",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.LITHIUM_RESOURCE_SECURITY: ArchetypeDefinition(
+            archetype=E2RArchetype.LITHIUM_RESOURCE_SECURITY,
+            stage1_radar_signals=("lithium mine stake", "resource security", "spodumene or lithium rebound", "downstream lithium strategy"),
+            stage2_candidate_signals=("mine stake or JV", "offtake proportion", "asset quality", "transaction value"),
+            stage3_high_conviction_signals=("offtake economics", "downstream margin", "low-cost resource proof", "FCF after capex"),
+            stage4a_ongoing_signals=("lithium resource economics remain positive", "downstream utilization converts to margin"),
+            stage4b_graduation_overheat_signals=("lithium resource security price-first rally", "commodity rebound extrapolated"),
+            stage4c_thesis_break_signals=("lithium price collapse", "project write-down", "downstream margin failure", "demand slowdown"),
+            key_evidence_families=("news", "commodity_price", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("lithium resource headline only", "lithium price rebound only", "resource stake without downstream FCF"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=16, bottleneck=13, mispricing=10, valuation=9),
+        ),
+        E2RArchetype.LITHIUM_OFFTAKE_DLE_OPTIONALITY: ArchetypeDefinition(
+            archetype=E2RArchetype.LITHIUM_OFFTAKE_DLE_OPTIONALITY,
+            stage1_radar_signals=("DLE optionality", "lithium offtake MoU", "strategic U.S. lithium project"),
+            stage2_candidate_signals=("binding offtake", "commercial DLE proof", "project schedule", "cost curve evidence"),
+            stage3_high_conviction_signals=("commercial production", "low-cost output", "customer offtake revenue", "FCF path"),
+            stage4a_ongoing_signals=("production ramp and offtake remain intact",),
+            stage4b_graduation_overheat_signals=("DLE optionality prices before commercial output",),
+            stage4c_thesis_break_signals=("technology failure", "permitting delay", "offtake failure", "lithium price collapse"),
+            key_evidence_families=("news", "disclosure", "commodity_price", "financial_actual"),
+            false_positive_patterns=("non-binding offtake treated as production", "technology optionality without unit economics"),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=14, bottleneck=11, mispricing=9, valuation=7),
+        ),
+        E2RArchetype.SOLAR_US_SUPPLY_CHAIN_LOCALIZATION: ArchetypeDefinition(
+            archetype=E2RArchetype.SOLAR_US_SUPPLY_CHAIN_LOCALIZATION,
+            stage1_radar_signals=("U.S. solar localization", "DOE loan guarantee", "domestic module/cell/wafer/ingot plant"),
+            stage2_candidate_signals=("funded localization capex", "component scope", "production schedule", "customer or offtake path"),
+            stage3_high_conviction_signals=("component flow confirmed", "plant utilization", "gross margin", "FCF after capex"),
+            stage4a_ongoing_signals=("local component flow remains stable", "utilization and margin improve"),
+            stage4b_graduation_overheat_signals=("solar localization before utilization", "policy support priced before component flow"),
+            stage4c_thesis_break_signals=("customs detention", "component supply disruption", "production furlough", "subsidy reversal"),
+            key_evidence_families=("policy", "news", "financial_actual", "price"),
+            false_positive_patterns=("solar localization headline only", "loan guarantee treated as profit", "component flow ignored"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=18, bottleneck=12, mispricing=10, valuation=9),
+        ),
+        E2RArchetype.SOLAR_CUSTOMS_UFLPA_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.SOLAR_CUSTOMS_UFLPA_4C_WATCH,
+            stage1_radar_signals=("UFLPA customs detention", "forced-labor import law delay", "solar component shipment disruption"),
+            stage2_candidate_signals=("not a Green source; customs/supply-chain RedTeam overlay",),
+            stage3_high_conviction_signals=("not applicable; customs risk must clear before Green",),
+            stage4a_ongoing_signals=("component flow normalizes", "furloughs reverse", "utilization recovers"),
+            stage4b_graduation_overheat_signals=("localization premium ignores customs/component risk",),
+            stage4c_thesis_break_signals=("supply-chain customs detention", "production furlough", "component flow failure", "policy compliance failure"),
+            key_evidence_families=("news", "policy", "financial_actual", "price"),
+            false_positive_patterns=("U.S. localization treated as clean profit despite component detention",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.EV_FACTORY_EXECUTION_LABOR_IMMIGRATION_RISK: ArchetypeDefinition(
+            archetype=E2RArchetype.EV_FACTORY_EXECUTION_LABOR_IMMIGRATION_RISK,
+            stage1_radar_signals=("U.S. EV factory construction", "battery JV localization", "skilled-worker visa risk"),
+            stage2_candidate_signals=("not a Green source; factory-execution RedTeam overlay",),
+            stage3_high_conviction_signals=("not applicable; labor/visa execution risk must clear before Green",),
+            stage4a_ongoing_signals=("construction restart remains stable", "local labor plan clears", "production target remains credible"),
+            stage4b_graduation_overheat_signals=("factory construction valued before labor execution",),
+            stage4c_thesis_break_signals=("immigration raid", "skilled-worker execution failure", "construction shutdown", "production target delay"),
+            key_evidence_families=("news", "policy", "disclosure", "price"),
+            false_positive_patterns=("factory construction only", "localization benefit assumed without workforce execution"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.AUTO_MOBILITY_COMPLETED_VEHICLE: ArchetypeDefinition(
