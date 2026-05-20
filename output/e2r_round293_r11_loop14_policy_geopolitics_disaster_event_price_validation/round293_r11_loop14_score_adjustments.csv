@@ -1,0 +1,16 @@
+axis,points,direction,reason
+policy_implementation_certainty,5,raise,"정책은 발표보다 법안, 예산, 시행, 기업 EPS bridge가 중요하다."
+legal_regulatory_finality,5,raise,"우선협상, 완화 발언, clarification은 final law/contract와 다르다."
+geopolitical_counterparty_risk,5,raise,제재와 export-control은 수주잔고보다 먼저 거래 가능성을 흔든다.
+political_liquidity_risk,5,raise,"계엄·헌정 충격은 환율, 외국인 신뢰, 유동성 프리미엄을 재가격화한다."
+tax_policy_consistency,5,raise,Value-Up narrative도 세제 일관성이 깨지면 시장 신뢰가 훼손된다.
+market_access_foreign_flow,4,raise,시장접근성 개혁은 실제 외국인 flow와 증권사 수익으로 닫혀야 한다.
+service_continuity_under_policy,4,raise,의료개혁은 서비스 capacity가 깨지면 수혜보다 disruption이 먼저다.
+disaster_damage_to_cashflow,4,raise,"재난은 복구테마보다 claims, budget, contract, margin을 먼저 본다."
+labor_continuity_systemic_risk,5,raise,시스템 수출기업 파업은 단일 노사 이슈가 아니라 공급망 gate다.
+government_announcement_only,-5,lower,대통령 발표만으로 Green을 만들지 않는다.
+resource_estimate_without_drilling,-5,lower,매장량 가능성은 시추·경제성 전에는 event premium이다.
+sanction_ignored_order_backlog,-5,lower,제재가 거래를 막으면 order backlog가 방어막이 아니다.
+tax_reform_without_market_consistency,-5,lower,세제 충격은 shareholder return rerating을 막을 수 있다.
+market_access_reform_without_foreign_flow,-4,lower,제도개편만 있고 외국인 flow가 없으면 Stage 2에 머문다.
+defense_order_without_delivery_margin,-4,lower,"방산 수주는 납품, margin, cash collection 전에는 Green이 아니다."

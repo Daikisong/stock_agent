@@ -1,0 +1,387 @@
+{
+  "case_ids": [
+    "r11_loop14_kogas_blue_whale_resource_event_premium",
+    "r11_loop14_hanwha_ocean_china_sanctions_4c_watch",
+    "r11_loop14_martial_law_political_liquidity_shock",
+    "r11_loop14_tax_policy_market_confidence_4c",
+    "r11_loop14_short_selling_market_access_reform_stage2",
+    "r11_loop14_medical_reform_doctors_strike_service_disruption",
+    "r11_loop14_2025_wildfire_disaster_recovery_reference",
+    "r11_loop14_hanwha_aerospace_romania_k9_geopolitical_order",
+    "r11_loop14_samsung_strike_labor_policy_systemic_export_risk"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "정책 자원개발",
+      "primary_archetype": "RESOURCE_DISCOVERY_POLICY_EVENT_PREMIUM",
+      "terms": "Korea Gas|Blue Whale|14B boe|20% success probability|drilling economics"
+    },
+    {
+      "category": "중국 제재",
+      "primary_archetype": "GEOPOLITICAL_SANCTIONS_SUPPLY_CHAIN_4C",
+      "terms": "Hanwha Ocean|China sanctions|Philly Shipyard|transaction ban|shipbuilding cooperation"
+    },
+    {
+      "category": "정치 유동성",
+      "primary_archetype": "POLITICAL_LIQUIDITY_SHOCK_HARD_REFERENCE",
+      "terms": "martial law|unlimited liquidity|10T stock fund|40T bond fund|won near two-year low"
+    },
+    {
+      "category": "세제 신뢰",
+      "primary_archetype": "TAX_POLICY_MARKET_CONFIDENCE_4C",
+      "terms": "capital-gains threshold|transaction tax|AI windfall tax|KOSPI -3.9%|KOSPI intraday -5%"
+    },
+    {
+      "category": "시장접근성",
+      "primary_archetype": "MARKET_ACCESS_REFORM_STAGE2",
+      "terms": "short-selling normalization|MSCI accessibility|100% order fine|foreign flow|brokerage earnings"
+    },
+    {
+      "category": "의료개혁",
+      "primary_archetype": "MEDICAL_REFORM_SERVICE_DISRUPTION_4C_REFERENCE",
+      "terms": "medical-school quota|9000 trainee doctors|surgery cancellations|military doctors|service capacity"
+    },
+    {
+      "category": "자연재난",
+      "primary_archetype": "NATURAL_DISASTER_RECOVERY_POLICY_REFERENCE",
+      "terms": "2025 wildfires|28 deaths|118265 acres|30000 displaced|recovery budget"
+    },
+    {
+      "category": "방산 지정학 수주",
+      "primary_archetype": "GEOPOLITICAL_DEFENSE_ORDER_STAGE2",
+      "terms": "Hanwha Aerospace|Romania K9|$1B order|backlog 5.1T to 30T|dilution-adjusted EPS"
+    },
+    {
+      "category": "노동정책 수출 리스크",
+      "primary_archetype": "LABOR_POLICY_SYSTEMIC_EXPORT_RISK_4C",
+      "terms": "Samsung strike|emergency arbitration|1T one-day loss|100T prolonged disruption|22.8% exports"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "government_announcement_only",
+    "presidential_headline_only",
+    "resource_estimate_without_drilling",
+    "policy_beneficiary_theme_only",
+    "sanction_ignored_order_backlog",
+    "tax_reform_without_market_consistency",
+    "market_access_reform_without_foreign_flow",
+    "disaster_recovery_without_budget_contract",
+    "defense_order_without_delivery_margin",
+    "labor_relief_without_production_continuity"
+  ],
+  "green_required_fields": [
+    "policy_implementation_certainty_confirmed",
+    "legal_regulatory_finality_confirmed",
+    "company_eps_fcf_bridge_confirmed",
+    "foreign_flow_or_market_access_flow_confirmed",
+    "drilling_result_confirmed",
+    "resource_economic_viability_confirmed",
+    "CAPEX_IRR_confirmed",
+    "sanction_export_control_exposure_cleared",
+    "service_or_production_continuity_confirmed",
+    "disaster_claims_budget_contract_confirmed",
+    "defense_delivery_margin_cash_collection_confirmed",
+    "tax_policy_consistency_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "martial_law_or_constitutional_crisis",
+    "foreign_sanctions_blocking_transactions_or_cooperation",
+    "tax_policy_directly_damaging_investor_return_expectation",
+    "resource_exploration_failure_after_speculative_rally",
+    "nationwide_medical_service_disruption",
+    "major_natural_disaster_claims_recovery_uncertainty",
+    "prolonged_strike_threat_at_systemic_exporter",
+    "export_control_or_shipbuilding_sanction_hits_supply_chain"
+  ],
+  "large_sector": "POLICY_GEOPOLITICS_DISASTER_EVENT",
+  "round_id": "round_221",
+  "score_adjustments": [
+    {
+      "axis": "policy_implementation_certainty",
+      "direction": "raise",
+      "points": "5",
+      "reason": "정책은 발표보다 법안, 예산, 시행, 기업 EPS bridge가 중요하다."
+    },
+    {
+      "axis": "legal_regulatory_finality",
+      "direction": "raise",
+      "points": "5",
+      "reason": "우선협상, 완화 발언, clarification은 final law/contract와 다르다."
+    },
+    {
+      "axis": "geopolitical_counterparty_risk",
+      "direction": "raise",
+      "points": "5",
+      "reason": "제재와 export-control은 수주잔고보다 먼저 거래 가능성을 흔든다."
+    },
+    {
+      "axis": "political_liquidity_risk",
+      "direction": "raise",
+      "points": "5",
+      "reason": "계엄·헌정 충격은 환율, 외국인 신뢰, 유동성 프리미엄을 재가격화한다."
+    },
+    {
+      "axis": "tax_policy_consistency",
+      "direction": "raise",
+      "points": "5",
+      "reason": "Value-Up narrative도 세제 일관성이 깨지면 시장 신뢰가 훼손된다."
+    },
+    {
+      "axis": "market_access_foreign_flow",
+      "direction": "raise",
+      "points": "4",
+      "reason": "시장접근성 개혁은 실제 외국인 flow와 증권사 수익으로 닫혀야 한다."
+    },
+    {
+      "axis": "service_continuity_under_policy",
+      "direction": "raise",
+      "points": "4",
+      "reason": "의료개혁은 서비스 capacity가 깨지면 수혜보다 disruption이 먼저다."
+    },
+    {
+      "axis": "disaster_damage_to_cashflow",
+      "direction": "raise",
+      "points": "4",
+      "reason": "재난은 복구테마보다 claims, budget, contract, margin을 먼저 본다."
+    },
+    {
+      "axis": "labor_continuity_systemic_risk",
+      "direction": "raise",
+      "points": "5",
+      "reason": "시스템 수출기업 파업은 단일 노사 이슈가 아니라 공급망 gate다."
+    },
+    {
+      "axis": "government_announcement_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "대통령 발표만으로 Green을 만들지 않는다."
+    },
+    {
+      "axis": "resource_estimate_without_drilling",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "매장량 가능성은 시추·경제성 전에는 event premium이다."
+    },
+    {
+      "axis": "sanction_ignored_order_backlog",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "제재가 거래를 막으면 order backlog가 방어막이 아니다."
+    },
+    {
+      "axis": "tax_reform_without_market_consistency",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "세제 충격은 shareholder return rerating을 막을 수 있다."
+    },
+    {
+      "axis": "market_access_reform_without_foreign_flow",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "제도개편만 있고 외국인 flow가 없으면 Stage 2에 머문다."
+    },
+    {
+      "axis": "defense_order_without_delivery_margin",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "방산 수주는 납품, margin, cash collection 전에는 Green이 아니다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "RESOURCE_DISCOVERY_POLICY_EVENT_PREMIUM",
+      "disaster_cashflow_damage": "+0",
+      "event_penalty": "-5",
+      "geopolitical_counterparty_risk": "+0",
+      "hard_4c_sensitivity": "+3",
+      "labor_systemic_risk": "+0",
+      "market_access_flow": "+0",
+      "notes": "Blue Whale is event premium until drilling, economics and CAPEX/IRR close.",
+      "policy_implementation": "+3",
+      "political_liquidity_risk": "+0",
+      "regulatory_finality": "+2",
+      "service_continuity": "+0",
+      "tax_policy_consistency": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "GEOPOLITICAL_SANCTIONS_SUPPLY_CHAIN_4C",
+      "disaster_cashflow_damage": "+0",
+      "event_penalty": "-5",
+      "geopolitical_counterparty_risk": "+5",
+      "hard_4c_sensitivity": "+5",
+      "labor_systemic_risk": "+0",
+      "market_access_flow": "+0",
+      "notes": "China sanctions can override U.S.-ROK shipbuilding backlog narratives.",
+      "policy_implementation": "+2",
+      "political_liquidity_risk": "+0",
+      "regulatory_finality": "+4",
+      "service_continuity": "+0",
+      "tax_policy_consistency": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "POLITICAL_LIQUIDITY_SHOCK_HARD_REFERENCE",
+      "disaster_cashflow_damage": "+0",
+      "event_penalty": "+0",
+      "geopolitical_counterparty_risk": "+1",
+      "hard_4c_sensitivity": "+5",
+      "labor_systemic_risk": "+0",
+      "market_access_flow": "+1",
+      "notes": "Martial-law shock is cross-sector political liquidity hard reference.",
+      "policy_implementation": "+2",
+      "political_liquidity_risk": "+5",
+      "regulatory_finality": "+4",
+      "service_continuity": "+0",
+      "tax_policy_consistency": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "TAX_POLICY_MARKET_CONFIDENCE_4C",
+      "disaster_cashflow_damage": "+0",
+      "event_penalty": "-5",
+      "geopolitical_counterparty_risk": "+0",
+      "hard_4c_sensitivity": "+4",
+      "labor_systemic_risk": "+0",
+      "market_access_flow": "+2",
+      "notes": "Tax uncertainty can break Korea Discount reform narrative.",
+      "policy_implementation": "+4",
+      "political_liquidity_risk": "+4",
+      "regulatory_finality": "+5",
+      "service_continuity": "+0",
+      "tax_policy_consistency": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "MARKET_ACCESS_REFORM_STAGE2",
+      "disaster_cashflow_damage": "+0",
+      "event_penalty": "-2",
+      "geopolitical_counterparty_risk": "+0",
+      "hard_4c_sensitivity": "+2",
+      "labor_systemic_risk": "+0",
+      "market_access_flow": "+5",
+      "notes": "Short-selling reform is Stage 2 until foreign flow and earnings confirm.",
+      "policy_implementation": "+4",
+      "political_liquidity_risk": "+0",
+      "regulatory_finality": "+4",
+      "service_continuity": "+0",
+      "tax_policy_consistency": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "MEDICAL_REFORM_SERVICE_DISRUPTION_4C_REFERENCE",
+      "disaster_cashflow_damage": "+0",
+      "event_penalty": "-5",
+      "geopolitical_counterparty_risk": "+0",
+      "hard_4c_sensitivity": "+5",
+      "labor_systemic_risk": "+0",
+      "market_access_flow": "+0",
+      "notes": "Medical reform needs service capacity before beneficiary scoring.",
+      "policy_implementation": "+3",
+      "political_liquidity_risk": "+0",
+      "regulatory_finality": "+4",
+      "service_continuity": "+5",
+      "tax_policy_consistency": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "NATURAL_DISASTER_RECOVERY_POLICY_REFERENCE",
+      "disaster_cashflow_damage": "+5",
+      "event_penalty": "-5",
+      "geopolitical_counterparty_risk": "+0",
+      "hard_4c_sensitivity": "+5",
+      "labor_systemic_risk": "+0",
+      "market_access_flow": "+0",
+      "notes": "Disaster recovery trades need claims, budget, contracts and margin.",
+      "policy_implementation": "+3",
+      "political_liquidity_risk": "+0",
+      "regulatory_finality": "+3",
+      "service_continuity": "+0",
+      "tax_policy_consistency": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "GEOPOLITICAL_DEFENSE_ORDER_STAGE2",
+      "disaster_cashflow_damage": "+0",
+      "event_penalty": "-4",
+      "geopolitical_counterparty_risk": "+3",
+      "hard_4c_sensitivity": "+3",
+      "labor_systemic_risk": "+0",
+      "market_access_flow": "+0",
+      "notes": "Defense order is Stage 2 until delivery, margin, cash and dilution-adjusted EPS close.",
+      "policy_implementation": "+4",
+      "political_liquidity_risk": "+0",
+      "regulatory_finality": "+4",
+      "service_continuity": "+0",
+      "tax_policy_consistency": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "LABOR_POLICY_SYSTEMIC_EXPORT_RISK_4C",
+      "disaster_cashflow_damage": "+0",
+      "event_penalty": "-5",
+      "geopolitical_counterparty_risk": "+1",
+      "hard_4c_sensitivity": "+5",
+      "labor_systemic_risk": "+5",
+      "market_access_flow": "+0",
+      "notes": "Samsung strike risk is systemic export-chain gate.",
+      "policy_implementation": "+3",
+      "political_liquidity_risk": "+0",
+      "regulatory_finality": "+4",
+      "service_continuity": "+2",
+      "tax_policy_consistency": "+0"
+    }
+  ],
+  "source_round": "docs/round/round_293.md",
+  "stage4b_watch_triggers": [
+    "presidential_resource_announcement_plus_20_to_30pct",
+    "defense_order_record_high_before_delivery_margin",
+    "tax_relief_expectation_broad_rally",
+    "market_access_reform_brokerage_prepricing",
+    "disaster_recovery_theme_before_claims_budget_contract",
+    "policy_beneficiary_basket_before_law_budget_execution"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 9,
+    "deep_sub_archetype_count": 9,
+    "event_premium_count": 1,
+    "false_positive_score_count": 6,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 5,
+    "hard_4c_confirmed": true,
+    "large_sector": "POLICY_GEOPOLITICS_DISASTER_EVENT",
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_221",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 9,
+    "source_round": "docs/round/round_293.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 3,
+    "stage4c_watch_count": 6,
+    "success_candidate_count": 2,
+    "target_archetype_count": 9
+  },
+  "target_aliases": {
+    "GEOPOLITICAL_DEFENSE_ORDER_STAGE2": "GEOPOLITICAL_DEFENSE_ORDER_STAGE2",
+    "GEOPOLITICAL_SANCTIONS_SUPPLY_CHAIN_4C": "GEOPOLITICAL_SANCTIONS_SUPPLY_CHAIN_4C",
+    "LABOR_POLICY_SYSTEMIC_EXPORT_RISK_4C": "LABOR_POLICY_SYSTEMIC_EXPORT_RISK_4C",
+    "MARKET_ACCESS_REFORM_STAGE2": "MARKET_ACCESS_REFORM_STAGE2",
+    "MEDICAL_REFORM_SERVICE_DISRUPTION_4C_REFERENCE": "MEDICAL_REFORM_SERVICE_DISRUPTION_4C_REFERENCE",
+    "NATURAL_DISASTER_RECOVERY_POLICY_REFERENCE": "NATURAL_DISASTER_RECOVERY_POLICY_REFERENCE",
+    "POLITICAL_LIQUIDITY_SHOCK_HARD_REFERENCE": "POLITICAL_LIQUIDITY_SHOCK_HARD_REFERENCE",
+    "RESOURCE_DISCOVERY_POLICY_EVENT_PREMIUM": "RESOURCE_DISCOVERY_POLICY_EVENT_PREMIUM",
+    "TAX_POLICY_MARKET_CONFIDENCE_4C": "TAX_POLICY_MARKET_CONFIDENCE_4C"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round293_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_policy_geopolitical_disaster_tax_resource_or_labor_headline_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}

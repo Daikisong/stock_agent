@@ -837,6 +837,15 @@ class E2RArchetype(str, Enum):
     AI_WINDFALL_TAX_POLICY_SHOCK = "AI_WINDFALL_TAX_POLICY_SHOCK"
     AI_WINDFALL_TAX_POLICY_CONFIDENCE_SHOCK = "AI_WINDFALL_TAX_POLICY_CONFIDENCE_SHOCK"
     AI_WINDFALL_FISCAL_REDISTRIBUTION_EVENT = "AI_WINDFALL_FISCAL_REDISTRIBUTION_EVENT"
+    RESOURCE_DISCOVERY_POLICY_EVENT_PREMIUM = "RESOURCE_DISCOVERY_POLICY_EVENT_PREMIUM"
+    GEOPOLITICAL_SANCTIONS_SUPPLY_CHAIN_4C = "GEOPOLITICAL_SANCTIONS_SUPPLY_CHAIN_4C"
+    POLITICAL_LIQUIDITY_SHOCK_HARD_REFERENCE = "POLITICAL_LIQUIDITY_SHOCK_HARD_REFERENCE"
+    TAX_POLICY_MARKET_CONFIDENCE_4C = "TAX_POLICY_MARKET_CONFIDENCE_4C"
+    MARKET_ACCESS_REFORM_STAGE2 = "MARKET_ACCESS_REFORM_STAGE2"
+    MEDICAL_REFORM_SERVICE_DISRUPTION_4C_REFERENCE = "MEDICAL_REFORM_SERVICE_DISRUPTION_4C_REFERENCE"
+    NATURAL_DISASTER_RECOVERY_POLICY_REFERENCE = "NATURAL_DISASTER_RECOVERY_POLICY_REFERENCE"
+    GEOPOLITICAL_DEFENSE_ORDER_STAGE2 = "GEOPOLITICAL_DEFENSE_ORDER_STAGE2"
+    LABOR_POLICY_SYSTEMIC_EXPORT_RISK_4C = "LABOR_POLICY_SYSTEMIC_EXPORT_RISK_4C"
     GEOPOLITICAL_ENERGY_SUPPLY_SHOCK = "GEOPOLITICAL_ENERGY_SUPPLY_SHOCK"
     GEOPOLITICAL_ENERGY_SECURITY_HARD_4C = "GEOPOLITICAL_ENERGY_SECURITY_HARD_4C"
     LABOR_DISRUPTION_SYSTEMIC_POLICY_4C = "LABOR_DISRUPTION_SYSTEMIC_POLICY_4C"
@@ -5112,6 +5121,114 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("confirmed windfall tax on corporate profits", "policy confidence break", "AI semiconductor de-rating"),
             key_evidence_families=("policy", "news", "price", "red_team"),
             false_positive_patterns=("AI fiscal redistribution comment treated as company Green", "clarification bounce treated as structural rerating"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.RESOURCE_DISCOVERY_POLICY_EVENT_PREMIUM: ArchetypeDefinition(
+            archetype=E2RArchetype.RESOURCE_DISCOVERY_POLICY_EVENT_PREMIUM,
+            stage1_radar_signals=("presidential resource discovery announcement", "oil and gas prospect headline", "resource estimate event rally"),
+            stage2_candidate_signals=("drilling approval", "estimated resource size", "project cost and success probability mapped"),
+            stage3_high_conviction_signals=("drilling result", "economic viability", "CAPEX/IRR", "commercial production plan", "offtake or reserve income bridge"),
+            stage4a_ongoing_signals=("commerciality, funding, drilling schedule and reserve conversion remain on track"),
+            stage4b_graduation_overheat_signals=("resource event rally before drilling", "policy resource headline before economics"),
+            stage4c_thesis_break_signals=("failed drilling", "commerciality failure", "project funding failure", "resource estimate downgrade"),
+            key_evidence_families=("policy", "news", "disclosure", "price", "financial_actual"),
+            false_positive_patterns=("resource estimate without drilling", "presidential headline treated as Green", "price rally before commerciality"),
+            preferred_score_weights=_weights(eps_fcf=4, visibility=8, bottleneck=4, mispricing=4, valuation=4),
+        ),
+        E2RArchetype.GEOPOLITICAL_SANCTIONS_SUPPLY_CHAIN_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.GEOPOLITICAL_SANCTIONS_SUPPLY_CHAIN_4C,
+            stage1_radar_signals=("foreign sanctions", "shipbuilding cooperation sanction", "port-fee or maritime conflict"),
+            stage2_candidate_signals=("policy response and sanction removal request; not positive company Green"),
+            stage3_high_conviction_signals=("sanctions removed and transaction, delivery, margin and cash collection risk cleared"),
+            stage4a_ongoing_signals=("counterparty access and order execution remain intact after sanction relief"),
+            stage4b_graduation_overheat_signals=("geopolitical order theme ignores sanction counterparty risk"),
+            stage4c_thesis_break_signals=("foreign sanctions blocking transactions", "counterparty cooperation ban", "export-control restriction", "project execution impairment"),
+            key_evidence_families=("news", "policy", "disclosure", "price", "red_team"),
+            false_positive_patterns=("order backlog scored while sanctions block cooperation", "policy response treated as sanction removal"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.POLITICAL_LIQUIDITY_SHOCK_HARD_REFERENCE: ArchetypeDefinition(
+            archetype=E2RArchetype.POLITICAL_LIQUIDITY_SHOCK_HARD_REFERENCE,
+            stage1_radar_signals=("martial law", "constitutional crisis", "political liquidity shock"),
+            stage2_candidate_signals=("liquidity facility and legal normalization; not positive company Green"),
+            stage3_high_conviction_signals=("not a Green source; political liquidity shock is a cross-sector hard reference"),
+            stage4a_ongoing_signals=("foreign capital confidence, FX and credit spreads normalize"),
+            stage4b_graduation_overheat_signals=("relief rally before institutional trust returns"),
+            stage4c_thesis_break_signals=("martial law liquidity shock", "unlimited liquidity pledge required", "stock stabilization fund activation risk", "foreign capital confidence break"),
+            key_evidence_families=("policy", "news", "price", "fx", "foreign_flow"),
+            false_positive_patterns=("relief bounce treated as rerating", "macro hard reference used as company evidence"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.TAX_POLICY_MARKET_CONFIDENCE_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.TAX_POLICY_MARKET_CONFIDENCE_4C,
+            stage1_radar_signals=("capital-gains tax threshold proposal", "transaction tax hike", "AI windfall tax comment"),
+            stage2_candidate_signals=("policy relief or clarification; market confidence can recover only after investor-return consistency is clear"),
+            stage3_high_conviction_signals=("company-level EPS/FCF remains intact after final tax design and investor-return rules are stable"),
+            stage4a_ongoing_signals=("tax policy consistency and shareholder-return framework remain intact"),
+            stage4b_graduation_overheat_signals=("policy relief rally before final law text", "AI rally vulnerable to redistribution comment"),
+            stage4c_thesis_break_signals=("capital-gains threshold shock", "transaction tax surprise", "AI windfall tax surprise", "market confidence break"),
+            key_evidence_families=("policy", "news", "price", "red_team"),
+            false_positive_patterns=("tax clarification bounce treated as structural rerating", "reform narrative ignores investor-return tax shock"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.MARKET_ACCESS_REFORM_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.MARKET_ACCESS_REFORM_STAGE2,
+            stage1_radar_signals=("short-selling ban lift", "market-access reform", "unfair-trading enforcement"),
+            stage2_candidate_signals=("MSCI accessibility improved", "foreign access rules improve", "serious violation penalties implemented"),
+            stage3_high_conviction_signals=("foreign flow", "trading value", "brokerage earnings", "index upgrade path", "company EPS/FCF bridge"),
+            stage4a_ongoing_signals=("foreign participation, market liquidity and enforcement quality remain durable"),
+            stage4b_graduation_overheat_signals=("brokerage basket rally before actual flow or earnings"),
+            stage4c_thesis_break_signals=("access reform reversal", "foreign-flow disappointment", "market manipulation recurrence"),
+            key_evidence_families=("policy", "market_structure", "foreign_flow", "price", "financial_actual"),
+            false_positive_patterns=("market-access reform headline treated as company Green",),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=18, bottleneck=2, mispricing=18, valuation=16),
+        ),
+        E2RArchetype.MEDICAL_REFORM_SERVICE_DISRUPTION_4C_REFERENCE: ArchetypeDefinition(
+            archetype=E2RArchetype.MEDICAL_REFORM_SERVICE_DISRUPTION_4C_REFERENCE,
+            stage1_radar_signals=("medical-school quota reform", "trainee doctors walkout", "hospital service disruption"),
+            stage2_candidate_signals=("service capacity recovery and reimbursement economics mapped; not positive Green before continuity"),
+            stage3_high_conviction_signals=("service capacity, reimbursement, hospital earnings and implementation stability all verified"),
+            stage4a_ongoing_signals=("service capacity and implementation stability remain intact"),
+            stage4b_graduation_overheat_signals=("medical reform beneficiary trade before hospital operation recovery"),
+            stage4c_thesis_break_signals=("service disruption", "surgery cancellation", "license suspension conflict", "hospital capacity break"),
+            key_evidence_families=("policy", "news", "healthcare_service", "price", "red_team"),
+            false_positive_patterns=("policy objective treated as investable Green while service capacity is broken"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.NATURAL_DISASTER_RECOVERY_POLICY_REFERENCE: ArchetypeDefinition(
+            archetype=E2RArchetype.NATURAL_DISASTER_RECOVERY_POLICY_REFERENCE,
+            stage1_radar_signals=("large natural disaster", "wildfire disaster zone", "recovery spending headline"),
+            stage2_candidate_signals=("disaster zone and budget response; company candidates need claims, contracts and margin"),
+            stage3_high_conviction_signals=("insurance claims", "government recovery budget", "reconstruction contracts", "material margin", "cashflow bridge"),
+            stage4a_ongoing_signals=("recovery orders and claims remain within expected margin/cashflow"),
+            stage4b_graduation_overheat_signals=("recovery theme rally before actual claims and rebuild contracts"),
+            stage4c_thesis_break_signals=("large casualty disaster", "insured or uninsured loss shock", "operational disruption", "recovery cost overrun"),
+            key_evidence_families=("news", "policy", "disaster", "financial_actual", "price"),
+            false_positive_patterns=("recovery trade before claims/budget", "disaster headline treated as construction/material Green"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.GEOPOLITICAL_DEFENSE_ORDER_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.GEOPOLITICAL_DEFENSE_ORDER_STAGE2,
+            stage1_radar_signals=("geopolitical rearmament", "defense export order", "government customer order"),
+            stage2_candidate_signals=("order value", "delivery schedule", "government customer", "backlog growth"),
+            stage3_high_conviction_signals=("delivery margin cash collection", "local production economics", "dilution-adjusted EPS", "multi-year backlog conversion"),
+            stage4a_ongoing_signals=("deliveries, margin and cash collection remain on schedule"),
+            stage4b_graduation_overheat_signals=("defense order premium before delivery and margin", "dilution shock after rerating"),
+            stage4c_thesis_break_signals=("delivery delay", "cost overrun", "export license problem", "dilution invalidates EPS bridge"),
+            key_evidence_families=("news", "disclosure", "research_report", "financial_actual", "price"),
+            false_positive_patterns=("defense order headline treated as Green without delivery/margin/cash collection"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=17, mispricing=14, valuation=14),
+        ),
+        E2RArchetype.LABOR_POLICY_SYSTEMIC_EXPORT_RISK_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.LABOR_POLICY_SYSTEMIC_EXPORT_RISK_4C,
+            stage1_radar_signals=("systemically important exporter strike", "government emergency arbitration", "semiconductor export continuity risk"),
+            stage2_candidate_signals=("government containment and minimum staffing plan; not positive Green until production continuity clears"),
+            stage3_high_conviction_signals=("production continuity, yield, delivery schedule, customer allocation and labor settlement durability verified"),
+            stage4a_ongoing_signals=("production continuity and customer allocation remain intact"),
+            stage4b_graduation_overheat_signals=("AI supply-chain rally ignores unresolved labor risk"),
+            stage4c_thesis_break_signals=("systemic exporter production disruption", "semiconductor fab halt", "emergency arbitration failure", "customer allocation break"),
+            key_evidence_families=("labor", "policy", "news", "price", "red_team"),
+            false_positive_patterns=("labor relief treated as Green before production continuity", "company rerating ignores national export labor risk"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.GEOPOLITICAL_ENERGY_SUPPLY_SHOCK: ArchetypeDefinition(
