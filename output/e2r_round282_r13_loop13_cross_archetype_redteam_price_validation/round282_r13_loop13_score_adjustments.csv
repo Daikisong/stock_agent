@@ -1,0 +1,20 @@
+axis,points,direction,reason
+trust_and_internal_control,5,raise,보안·개인정보·내부통제 훼손은 EPS보다 먼저 Green을 막는다.
+fatal_safety_event,5,raise,항공·건설·배터리·의료기기에서는 사망사고가 hard 4C gate다.
+actual_calloff_vs_contract,5,raise,"고객명 계약 headline은 call-off, shipment, revenue로 닫혀야 한다."
+custody_and_digital_asset_control,5,raise,디지털자산 M&A는 수탁·인출·규제 통제가 확인되어야 한다.
+aftermarket_IPO_demand,5,raise,IPO 수요예측보다 상장 후 가격·거래 수요가 품질 검증이다.
+governance_dilution_control,5,raise,경영권 분쟁 프리미엄은 신주발행·희석·지배구조 리스크와 함께 본다.
+accounting_investigation_flag,5,raise,회계조사·공시통제 실패는 구조적 rerating을 차단한다.
+project_margin_cash_conversion,5,raise,대형 EPC 수주는 프로젝트 마진과 현금회수가 보여야 한다.
+working_capital_unbilled_receivables,5,raise,미청구공사·운전자본 stress는 수주 headline보다 중요하다.
+parent_ROI_bridge,4,raise,자회사 IPO는 모회사 ROIC/FCF/환원 bridge가 있어야 한다.
+customer_name_headline_only,-5,lower,고객명이 유명하다는 이유만으로 Green을 만들지 않는다.
+order_backlog_headline_only,-5,lower,수주잔고 headline만 있고 마진·현금화가 없으면 제한한다.
+IPO_size_or_oversubscription_only,-5,lower,IPO 규모와 청약경쟁률은 상장 후 수요 검증 전에는 부족하다.
+control_premium_only,-5,lower,경영권 프리미엄은 운영 EPS/FCF 변화가 아니다.
+M&A_synergy_before_trust,-5,lower,M&A synergy는 신뢰·수탁·규제 이슈보다 뒤에 본다.
+AI_cloud_keyword_without_aftermarket_demand,-5,lower,AI/cloud 키워드만으로 IPO 품질을 인정하지 않는다.
+governance_fight_or_dilution,-5,lower,분쟁·희석은 자본배분 질을 훼손한다.
+accounting_fraud_review,-5,lower,회계부정 검토 flag는 hard RedTeam 입력이다.
+safety_or_data_trust_unresolved,-5,lower,안전·데이터 신뢰가 열려 있으면 Green은 차단한다.

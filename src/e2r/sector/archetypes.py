@@ -906,6 +906,12 @@ class E2RArchetype(str, Enum):
     OPERATIONAL_TRUST_AND_MACRO_HARD_4C = "OPERATIONAL_TRUST_AND_MACRO_HARD_4C"
     DIGITAL_ASSET_POLICY_OVERHEAT = "DIGITAL_ASSET_POLICY_OVERHEAT"
     PRICE_MOVED_WITHOUT_EVIDENCE = "PRICE_MOVED_WITHOUT_EVIDENCE"
+    CONTRACT_VALUE_COLLAPSE_HARD_4C = "CONTRACT_VALUE_COLLAPSE_HARD_4C"
+    DIGITAL_ASSET_TRUST_4C_WATCH = "DIGITAL_ASSET_TRUST_4C_WATCH"
+    IPO_QUALITY_GATE_FALSE_POSITIVE = "IPO_QUALITY_GATE_FALSE_POSITIVE"
+    CONTROL_PREMIUM_DILUTION_4B = "CONTROL_PREMIUM_DILUTION_4B"
+    ORDER_HEADLINE_NOT_MARGIN_GREEN = "ORDER_HEADLINE_NOT_MARGIN_GREEN"
+    CAPITAL_RECYCLING_IPO_FAILED_RERATING = "CAPITAL_RECYCLING_IPO_FAILED_RERATING"
     ORDER_TO_REVENUE_CONVERSION = "ORDER_TO_REVENUE_CONVERSION"
     STAGE2_EVIDENCE_NOT_GREEN = "STAGE2_EVIDENCE_NOT_GREEN"
     CONTRACT_HEADLINE_NOT_STAGE3 = "CONTRACT_HEADLINE_NOT_STAGE3"
@@ -5183,6 +5189,78 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("event fades", "no revenue conversion", "theme reversal"),
             key_evidence_families=("price", "news", "red_team"),
             false_positive_patterns=("price action treated as evidence by itself"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.CONTRACT_VALUE_COLLAPSE_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.CONTRACT_VALUE_COLLAPSE_HARD_4C,
+            stage1_radar_signals=("large named-customer contract", "headline supply agreement", "program-linked order"),
+            stage2_candidate_signals=("contract value, period, customer and delivery bridge are visible"),
+            stage3_high_conviction_signals=("actual call-off, shipment, revenue recognition, margin and cash conversion are confirmed"),
+            stage4a_ongoing_signals=("call-off and revenue conversion remain intact"),
+            stage4b_graduation_overheat_signals=("customer-name contract rallies before call-off and shipment proof"),
+            stage4c_thesis_break_signals=("contract value collapse", "customer program cancellation", "call-off failure", "delivery volume collapse"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("customer name treated as call-off", "large contract headline treated as Stage 3 without revenue recognition"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.DIGITAL_ASSET_TRUST_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.DIGITAL_ASSET_TRUST_4C_WATCH,
+            stage1_radar_signals=("digital-asset merger", "stablecoin or exchange deal", "crypto custody event"),
+            stage2_candidate_signals=("regulatory approval, custody controls, reserve controls and revenue bridge are visible"),
+            stage3_high_conviction_signals=("not from M&A synergy alone; custody, regulatory and operating evidence must close"),
+            stage4a_ongoing_signals=("integration, custody and exchange operations remain clean"),
+            stage4b_graduation_overheat_signals=("M&A day rally before trust, custody and closing evidence"),
+            stage4c_thesis_break_signals=("abnormal withdrawal", "custody failure", "exchange trust break", "regulatory block"),
+            key_evidence_families=("news", "disclosure", "regulatory", "price", "red_team"),
+            false_positive_patterns=("M&A synergy before custody trust", "digital-asset policy optionality treated as Green"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.IPO_QUALITY_GATE_FALSE_POSITIVE: ArchetypeDefinition(
+            archetype=E2RArchetype.IPO_QUALITY_GATE_FALSE_POSITIVE,
+            stage1_radar_signals=("large IPO", "bookbuilding oversubscription", "AI/cloud IPO keyword"),
+            stage2_candidate_signals=("post-listing demand, aftermarket price, margin and cash conversion are visible"),
+            stage3_high_conviction_signals=("not from IPO size alone; listed trading, estimates, margin and FCF must validate"),
+            stage4a_ongoing_signals=("aftermarket demand and financial delivery remain intact"),
+            stage4b_graduation_overheat_signals=("large IPO valuation priced before aftermarket demand"),
+            stage4c_thesis_break_signals=("weak debut", "below IPO price", "valuation-heavy listing fails", "export or tariff risk hits post-listing"),
+            key_evidence_families=("news", "IPO", "price", "financial_actual", "red_team"),
+            false_positive_patterns=("IPO size treated as quality proof", "AI/cloud keyword treated as aftermarket demand"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.CONTROL_PREMIUM_DILUTION_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.CONTROL_PREMIUM_DILUTION_4B,
+            stage1_radar_signals=("tender offer", "control premium", "management-control fight"),
+            stage2_candidate_signals=("offer price, target stake, funding and governance path are visible"),
+            stage3_high_conviction_signals=("not from control premium alone; dilution, governance and accounting risk must clear"),
+            stage4a_ongoing_signals=("control premium converts into clean capital allocation and operating FCF"),
+            stage4b_graduation_overheat_signals=("tender or control premium rally before operating evidence"),
+            stage4c_thesis_break_signals=("dilutive share issuance", "accounting-fraud investigation", "governance abuse", "control premium reversal"),
+            key_evidence_families=("news", "disclosure", "price", "governance", "red_team"),
+            false_positive_patterns=("control premium treated as operating Green", "governance fight or dilution ignored"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.ORDER_HEADLINE_NOT_MARGIN_GREEN: ArchetypeDefinition(
+            archetype=E2RArchetype.ORDER_HEADLINE_NOT_MARGIN_GREEN,
+            stage1_radar_signals=("mega order", "EPC award", "project contract value"),
+            stage2_candidate_signals=("project scope, margin, completion schedule and working capital needs are visible"),
+            stage3_high_conviction_signals=("project margin, cash collection, unbilled receivables and FCF conversion are confirmed"),
+            stage4a_ongoing_signals=("order converts to margin and cash without cost overrun"),
+            stage4b_graduation_overheat_signals=("mega-order day rally before margin and working-capital proof"),
+            stage4c_thesis_break_signals=("EPC cost overrun", "unbilled receivables stress", "cash collection failure", "completion delay"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("mega-order headline treated as margin", "order backlog headline only"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.CAPITAL_RECYCLING_IPO_FAILED_RERATING: ArchetypeDefinition(
+            archetype=E2RArchetype.CAPITAL_RECYCLING_IPO_FAILED_RERATING,
+            stage1_radar_signals=("subsidiary IPO", "capital recycling", "large listing proceeds"),
+            stage2_candidate_signals=("parent ROI bridge, use of proceeds, listing price and aftermarket demand are visible"),
+            stage3_high_conviction_signals=("not from IPO proceeds alone; parent FCF, capital return and valuation bridge must close"),
+            stage4a_ongoing_signals=("capital recycling improves parent ROIC and shareholder return"),
+            stage4b_graduation_overheat_signals=("IPO valuation headline before parent ROI and aftermarket price validation"),
+            stage4c_thesis_break_signals=("weak subsidiary debut", "below-offer trading", "parent rerating fails", "capital recycling proceeds not value-accretive"),
+            key_evidence_families=("news", "IPO", "price", "capital_allocation", "red_team"),
+            false_positive_patterns=("IPO size treated as parent Green", "oversubscription treated as parent ROI"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.PRICE_ONLY_POLICY_RALLY: ArchetypeDefinition(

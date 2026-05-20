@@ -1,0 +1,398 @@
+{
+  "case_ids": [
+    "r13_loop13_skt_cybersecurity_hard_4c",
+    "r13_loop13_jeju_air_safety_hard_4c",
+    "r13_loop13_lnf_tesla_contract_collapse",
+    "r13_loop13_naver_dunamu_upbit_trust_4c_watch",
+    "r13_loop13_lg_cns_ipo_quality_false_positive",
+    "r13_loop13_korea_zinc_control_premium_dilution_4b",
+    "r13_loop13_samsung_ea_fadhili_order_not_margin_green",
+    "r13_loop13_hyundai_motor_india_ipo_failed_rerating"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "Trust break",
+      "primary_archetype": "CYBERSECURITY_TRUST_HARD_4C",
+      "terms": "SK Telecom data breach|26.96M data pieces|PIPC fine 134B KRW|revenue forecast cut 800B KRW|customer benefit 500B KRW"
+    },
+    {
+      "category": "Safety hard gate",
+      "primary_archetype": "AVIATION_SAFETY_HARD_4C",
+      "terms": "Jeju Air fatal crash|179 fatalities|event low 6,920 KRW|market cap wipeout 95.7B KRW|government safety inspection"
+    },
+    {
+      "category": "Contract quality",
+      "primary_archetype": "CONTRACT_VALUE_COLLAPSE_HARD_4C",
+      "terms": "L&F Tesla 4680 cathode|$2.9B projected value|$7,386 revised value|actual call-off failure|contract value collapse"
+    },
+    {
+      "category": "Digital asset trust",
+      "primary_archetype": "DIGITAL_ASSET_TRUST_4C_WATCH",
+      "terms": "Naver Financial Dunamu|Upbit 54B KRW abnormal withdrawal|15.13T KRW deal|custody trust|M&A synergy before trust"
+    },
+    {
+      "category": "IPO quality",
+      "primary_archetype": "IPO_QUALITY_GATE_FALSE_POSITIVE",
+      "terms": "LG CNS IPO|AI/cloud 54% sales|IPO price 61,900|weak debut|aftermarket demand"
+    },
+    {
+      "category": "Control and governance",
+      "primary_archetype": "CONTROL_PREMIUM_DILUTION_4B",
+      "terms": "Korea Zinc tender offer|660,000 KRW offer|$1.8B new share issue|accounting fraud review|control premium dilution"
+    },
+    {
+      "category": "Order headline",
+      "primary_archetype": "ORDER_HEADLINE_NOT_MARGIN_GREEN",
+      "terms": "Samsung E&A Fadhili|$6B contract|77.9% project share|EPC margin|working capital"
+    },
+    {
+      "category": "Capital recycling IPO",
+      "primary_archetype": "CAPITAL_RECYCLING_IPO_FAILED_RERATING",
+      "terms": "Hyundai Motor India IPO|$3.3B IPO|17.5% parent stake|weak debut|parent ROI bridge"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "customer_name_headline_only",
+    "order_backlog_headline_only",
+    "IPO_size_or_oversubscription_only",
+    "control_premium_only",
+    "M&A_synergy_before_trust",
+    "AI_cloud_keyword_without_aftermarket_demand",
+    "governance_fight_or_dilution",
+    "accounting_fraud_review",
+    "safety_or_data_trust_unresolved"
+  ],
+  "green_required_fields": [
+    "actual_calloff_revenue_recognition_confirmed",
+    "shipment_or_delivery_conversion_confirmed",
+    "project_margin_cash_conversion_confirmed",
+    "working_capital_unbilled_receivables_confirmed",
+    "aftermarket_ipo_demand_confirmed",
+    "parent_ROI_bridge_confirmed",
+    "M&A_closing_regulatory_integration_confirmed",
+    "data_trust_internal_control_confirmed",
+    "custody_and_digital_asset_control_confirmed",
+    "fatal_safety_event_absent_or_resolved",
+    "dilution_and_governance_risk_cleared",
+    "accounting_investigation_absent_or_resolved",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "data_breach_with_revenue_fine_compensation",
+    "fatal_safety_event",
+    "contract_value_collapse_or_customer_program_cancellation",
+    "abnormal_withdrawal_or_custody_failure",
+    "accounting_fraud_investigation_or_disclosure_control_failure",
+    "dilutive_issuance_after_control_premium_rally",
+    "IPO_debut_failure_after_valuation_heavy_bookbuilding",
+    "EPC_cost_overrun_unbilled_receivables_or_working_capital_stress"
+  ],
+  "large_sector": "CROSS_ARCHETYPE_REDTEAM_4B_ACCOUNTING_TRUST_PRICE_VALIDATION",
+  "round_id": "round_210",
+  "score_adjustments": [
+    {
+      "axis": "trust_and_internal_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "보안·개인정보·내부통제 훼손은 EPS보다 먼저 Green을 막는다."
+    },
+    {
+      "axis": "fatal_safety_event",
+      "direction": "raise",
+      "points": "5",
+      "reason": "항공·건설·배터리·의료기기에서는 사망사고가 hard 4C gate다."
+    },
+    {
+      "axis": "actual_calloff_vs_contract",
+      "direction": "raise",
+      "points": "5",
+      "reason": "고객명 계약 headline은 call-off, shipment, revenue로 닫혀야 한다."
+    },
+    {
+      "axis": "custody_and_digital_asset_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "디지털자산 M&A는 수탁·인출·규제 통제가 확인되어야 한다."
+    },
+    {
+      "axis": "aftermarket_IPO_demand",
+      "direction": "raise",
+      "points": "5",
+      "reason": "IPO 수요예측보다 상장 후 가격·거래 수요가 품질 검증이다."
+    },
+    {
+      "axis": "governance_dilution_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "경영권 분쟁 프리미엄은 신주발행·희석·지배구조 리스크와 함께 본다."
+    },
+    {
+      "axis": "accounting_investigation_flag",
+      "direction": "raise",
+      "points": "5",
+      "reason": "회계조사·공시통제 실패는 구조적 rerating을 차단한다."
+    },
+    {
+      "axis": "project_margin_cash_conversion",
+      "direction": "raise",
+      "points": "5",
+      "reason": "대형 EPC 수주는 프로젝트 마진과 현금회수가 보여야 한다."
+    },
+    {
+      "axis": "working_capital_unbilled_receivables",
+      "direction": "raise",
+      "points": "5",
+      "reason": "미청구공사·운전자본 stress는 수주 headline보다 중요하다."
+    },
+    {
+      "axis": "parent_ROI_bridge",
+      "direction": "raise",
+      "points": "4",
+      "reason": "자회사 IPO는 모회사 ROIC/FCF/환원 bridge가 있어야 한다."
+    },
+    {
+      "axis": "customer_name_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "고객명이 유명하다는 이유만으로 Green을 만들지 않는다."
+    },
+    {
+      "axis": "order_backlog_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "수주잔고 headline만 있고 마진·현금화가 없으면 제한한다."
+    },
+    {
+      "axis": "IPO_size_or_oversubscription_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "IPO 규모와 청약경쟁률은 상장 후 수요 검증 전에는 부족하다."
+    },
+    {
+      "axis": "control_premium_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "경영권 프리미엄은 운영 EPS/FCF 변화가 아니다."
+    },
+    {
+      "axis": "M&A_synergy_before_trust",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "M&A synergy는 신뢰·수탁·규제 이슈보다 뒤에 본다."
+    },
+    {
+      "axis": "AI_cloud_keyword_without_aftermarket_demand",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "AI/cloud 키워드만으로 IPO 품질을 인정하지 않는다."
+    },
+    {
+      "axis": "governance_fight_or_dilution",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "분쟁·희석은 자본배분 질을 훼손한다."
+    },
+    {
+      "axis": "accounting_fraud_review",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "회계부정 검토 flag는 hard RedTeam 입력이다."
+    },
+    {
+      "axis": "safety_or_data_trust_unresolved",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "안전·데이터 신뢰가 열려 있으면 Green은 차단한다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+5",
+      "accounting_investigation_flag": "+4",
+      "actual_calloff_vs_contract": "0",
+      "aftermarket_ipo_demand": "0",
+      "archetype": "CYBERSECURITY_TRUST_HARD_4C",
+      "custody_and_digital_asset_control": "+2",
+      "event_penalty": "-5",
+      "fatal_safety_event": "0",
+      "governance_dilution_control": "+1",
+      "hard_4c_sensitivity": "+5",
+      "notes": "SK Telecom shows data breach can cut revenue, add compensation, capex and fines.",
+      "parent_ROI_bridge": "0",
+      "project_margin_cash_conversion": "0",
+      "trust_and_internal_control": "+5",
+      "working_capital_unbilled_receivables": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "accounting_investigation_flag": "+1",
+      "actual_calloff_vs_contract": "0",
+      "aftermarket_ipo_demand": "0",
+      "archetype": "AVIATION_SAFETY_HARD_4C",
+      "custody_and_digital_asset_control": "0",
+      "event_penalty": "-5",
+      "fatal_safety_event": "+5",
+      "governance_dilution_control": "0",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Jeju Air confirms fatal aviation accident overrides demand recovery.",
+      "parent_ROI_bridge": "0",
+      "project_margin_cash_conversion": "0",
+      "trust_and_internal_control": "+2",
+      "working_capital_unbilled_receivables": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "accounting_investigation_flag": "+1",
+      "actual_calloff_vs_contract": "+5",
+      "aftermarket_ipo_demand": "0",
+      "archetype": "CONTRACT_VALUE_COLLAPSE_HARD_4C",
+      "custody_and_digital_asset_control": "0",
+      "event_penalty": "-5",
+      "fatal_safety_event": "0",
+      "governance_dilution_control": "0",
+      "hard_4c_sensitivity": "+5",
+      "notes": "L&F/Tesla confirms customer-name contract requires actual call-off and revenue.",
+      "parent_ROI_bridge": "0",
+      "project_margin_cash_conversion": "+2",
+      "trust_and_internal_control": "+1",
+      "working_capital_unbilled_receivables": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "accounting_investigation_flag": "+2",
+      "actual_calloff_vs_contract": "0",
+      "aftermarket_ipo_demand": "0",
+      "archetype": "DIGITAL_ASSET_TRUST_4C_WATCH",
+      "custody_and_digital_asset_control": "+5",
+      "event_penalty": "-5",
+      "fatal_safety_event": "0",
+      "governance_dilution_control": "+2",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Naver/Dunamu shows digital-asset M&A must pass custody and trust gates.",
+      "parent_ROI_bridge": "+1",
+      "project_margin_cash_conversion": "0",
+      "trust_and_internal_control": "+4",
+      "working_capital_unbilled_receivables": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "accounting_investigation_flag": "+1",
+      "actual_calloff_vs_contract": "0",
+      "aftermarket_ipo_demand": "+5",
+      "archetype": "IPO_QUALITY_GATE_FALSE_POSITIVE",
+      "custody_and_digital_asset_control": "0",
+      "event_penalty": "-5",
+      "fatal_safety_event": "0",
+      "governance_dilution_control": "+1",
+      "hard_4c_sensitivity": "+4",
+      "notes": "LG CNS shows AI/cloud IPO story needs aftermarket demand.",
+      "parent_ROI_bridge": "+2",
+      "project_margin_cash_conversion": "+1",
+      "trust_and_internal_control": "+1",
+      "working_capital_unbilled_receivables": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "accounting_investigation_flag": "+5",
+      "actual_calloff_vs_contract": "0",
+      "aftermarket_ipo_demand": "0",
+      "archetype": "CONTROL_PREMIUM_DILUTION_4B",
+      "custody_and_digital_asset_control": "0",
+      "event_penalty": "-5",
+      "fatal_safety_event": "0",
+      "governance_dilution_control": "+5",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Korea Zinc confirms control premium must be capped by dilution and accounting flags.",
+      "parent_ROI_bridge": "+3",
+      "project_margin_cash_conversion": "0",
+      "trust_and_internal_control": "+2",
+      "working_capital_unbilled_receivables": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "accounting_investigation_flag": "+1",
+      "actual_calloff_vs_contract": "+1",
+      "aftermarket_ipo_demand": "0",
+      "archetype": "ORDER_HEADLINE_NOT_MARGIN_GREEN",
+      "custody_and_digital_asset_control": "0",
+      "event_penalty": "-4",
+      "fatal_safety_event": "0",
+      "governance_dilution_control": "0",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Samsung E&A mega order needs margin, WC and cash collection before Green.",
+      "parent_ROI_bridge": "0",
+      "project_margin_cash_conversion": "+5",
+      "trust_and_internal_control": "+1",
+      "working_capital_unbilled_receivables": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "accounting_investigation_flag": "+1",
+      "actual_calloff_vs_contract": "0",
+      "aftermarket_ipo_demand": "+5",
+      "archetype": "CAPITAL_RECYCLING_IPO_FAILED_RERATING",
+      "custody_and_digital_asset_control": "0",
+      "event_penalty": "-5",
+      "fatal_safety_event": "0",
+      "governance_dilution_control": "+2",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Hyundai Motor India IPO shows parent capital recycling needs ROI and listing validation.",
+      "parent_ROI_bridge": "+4",
+      "project_margin_cash_conversion": "0",
+      "trust_and_internal_control": "+1",
+      "working_capital_unbilled_receivables": "0"
+    }
+  ],
+  "source_round": "docs/round/round_282.md",
+  "stage4b_watch_triggers": [
+    "tender_control_premium_15_25pct_rally",
+    "IPO_oversub_or_large_IPO_headline_near_issue_price",
+    "mega_order_announcement_day_5_10pct_rally",
+    "M&A_day_5pct_plus_rally_before_closing_or_trust",
+    "AI_cloud_stablecoin_robotics_customer_name_headline_before_revenue_bridge",
+    "large_contract_but_calloff_unclear",
+    "management_control_fight_new_share_issue_dilution_risk"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 1,
+    "event_premium_or_result_count": 3,
+    "evidence_good_but_price_failed_count": 2,
+    "failed_rerating_count": 2,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 3,
+    "hard_4c_confirmed": true,
+    "large_sector": "CROSS_ARCHETYPE_REDTEAM_4B_ACCOUNTING_TRUST_PRICE_VALIDATION",
+    "price_moved_without_evidence_count": 3,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_210",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_282.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 3,
+    "stage4c_watch_count": 6,
+    "success_candidate_count": 1,
+    "target_archetype_count": 8
+  },
+  "target_aliases": {
+    "AVIATION_SAFETY_HARD_4C": "AVIATION_SAFETY_HARD_4C",
+    "CAPITAL_RECYCLING_IPO_FAILED_RERATING": "CAPITAL_RECYCLING_IPO_FAILED_RERATING",
+    "CONTRACT_VALUE_COLLAPSE_HARD_4C": "CONTRACT_VALUE_COLLAPSE_HARD_4C",
+    "CONTROL_PREMIUM_DILUTION_4B": "CONTROL_PREMIUM_DILUTION_4B",
+    "CYBERSECURITY_TRUST_HARD_4C": "CYBERSECURITY_TRUST_HARD_4C",
+    "DIGITAL_ASSET_TRUST_4C_WATCH": "DIGITAL_ASSET_TRUST_4C_WATCH",
+    "IPO_QUALITY_GATE_FALSE_POSITIVE": "IPO_QUALITY_GATE_FALSE_POSITIVE",
+    "ORDER_HEADLINE_NOT_MARGIN_GREEN": "ORDER_HEADLINE_NOT_MARGIN_GREEN"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round282_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_customer_name_IPO_size_control_premium_M&A_or_order_headline_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}
