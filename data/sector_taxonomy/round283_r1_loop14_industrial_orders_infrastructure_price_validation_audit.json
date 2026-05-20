@@ -1,0 +1,398 @@
+{
+  "case_ids": [
+    "r1_loop14_hyundai_rotem_k2_poland_delivery_stage3_candidate",
+    "r1_loop14_ls_electric_us_grid_growth_price_failed",
+    "r1_loop14_hyosung_heavy_hico_transformer_capacity",
+    "r1_loop14_hd_hhi_mipo_merger_masga_4b",
+    "r1_loop14_samsung_heavy_zvezda_cancellation_hard_4c",
+    "r1_loop14_hanwha_aerospace_share_sale_dilution",
+    "r1_loop14_rainbow_robotics_samsung_stake_event",
+    "r1_loop14_hd_hyundai_marine_ipo_overheat"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "Defense export delivery",
+      "primary_archetype": "DEFENSE_EXPORT_DELIVERY_STAGE3_CANDIDATE",
+      "terms": "Hyundai Rotem|K2 Poland|18 tanks delivered|270B KRW Q1 revenue|59.1B KRW OP estimate|$6.5B second batch"
+    },
+    {
+      "category": "US grid equipment",
+      "primary_archetype": "GRID_EQUIPMENT_US_GROWTH_STAGE2",
+      "terms": "LS Electric|US revenue share 20%|target +87%|shares -5.4%|backlog/margin gate"
+    },
+    {
+      "category": "Transformer capacity",
+      "primary_archetype": "TRANSFORMER_CAPACITY_EXPANSION_STAGE2",
+      "terms": "Hyosung Heavy|Hyosung HICO|GSU demand +274%|delivery delay 143 weeks|$157M Memphis expansion"
+    },
+    {
+      "category": "Shipbuilding MASGA merger",
+      "primary_archetype": "SHIPBUILDING_MERGER_MASGA_4B",
+      "terms": "HD Hyundai Heavy|HD Hyundai Mipo|MASGA|+11.3%|+14.6%|exchange ratio 1.04059146"
+    },
+    {
+      "category": "Shipbuilding cancellation",
+      "primary_archetype": "SHIPBUILDING_ORDER_CANCELLATION_HARD_4C",
+      "terms": "Samsung Heavy|Zvezda|4.85T KRW cancellation|$3.54B|arbitration|sanctions risk"
+    },
+    {
+      "category": "Defense dilution",
+      "primary_archetype": "DEFENSE_DILUTION_FALSE_POSITIVE",
+      "terms": "Hanwha Aerospace|3.6T KRW share sale|-13%|FSS revised filing|2.3T KRW rights offering"
+    },
+    {
+      "category": "Robotics strategic stake",
+      "primary_archetype": "ROBOTICS_STRATEGIC_STAKE_EVENT_PREMIUM",
+      "terms": "Rainbow Robotics|Samsung largest shareholder|267B KRW stake|Future Robotics Office|shipment/margin missing"
+    },
+    {
+      "category": "Industrial service IPO",
+      "primary_archetype": "INDUSTRIAL_SERVICE_IPO_OVERHEAT",
+      "terms": "HD Hyundai Marine Solution|IPO 83,400 KRW|close 163,900 KRW|+96.5%|lock-up/aftermarket gate"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "order_headline_only",
+    "customer_or_parent_name_only",
+    "strategic_stake_only",
+    "capacity_expansion_without_backlog",
+    "IPO_first_day_pop_only",
+    "merger_theme_without_synergy",
+    "defence_order_expectation_without_funding",
+    "dilutive_share_issue",
+    "geopolitical_contract_execution_risk"
+  ],
+  "green_required_fields": [
+    "actual_delivery_revenue_confirmed",
+    "backlog_to_revenue_conversion_confirmed",
+    "order_margin_visibility_confirmed",
+    "working_capital_control_confirmed",
+    "local_production_execution_confirmed",
+    "capacity_utilization_confirmed",
+    "customer_financing_visibility_confirmed",
+    "dilution_adjusted_EPS_confirmed",
+    "contract_cancellation_risk_cleared",
+    "aftermarket_IPO_demand_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "large_contract_cancellation",
+    "shipowner_termination_or_arbitration",
+    "sanctions_war_execution_impossible",
+    "dilutive_share_issue_after_theme_rally",
+    "FSS_revision_order_or_disclosure_quality_issue",
+    "IPO_debut_failure_after_aggressive_pricing",
+    "strategic_customer_program_cancellation",
+    "backlog_not_converting_to_revenue_or_cash"
+  ],
+  "large_sector": "INDUSTRIALS_ORDERS_INFRASTRUCTURE",
+  "round_id": "round_211",
+  "score_adjustments": [
+    {
+      "axis": "actual_delivery_revenue",
+      "direction": "raise",
+      "points": "5",
+      "reason": "수주가 실제 납품과 매출 인식으로 닫혀야 Stage 3 후보가 된다."
+    },
+    {
+      "axis": "backlog_to_revenue_conversion",
+      "direction": "raise",
+      "points": "5",
+      "reason": "수주잔고가 매출로 내려오는 경로를 더 강하게 본다."
+    },
+    {
+      "axis": "order_margin_visibility",
+      "direction": "raise",
+      "points": "5",
+      "reason": "대형 수주는 원가율과 OP margin이 확인되어야 한다."
+    },
+    {
+      "axis": "working_capital_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "운전자본·미청구·현금회수 문제가 없을 때만 수주 품질을 인정한다."
+    },
+    {
+      "axis": "local_production_execution",
+      "direction": "raise",
+      "points": "4",
+      "reason": "방산 현지생산 조건은 납품 일정과 마진의 핵심 gate다."
+    },
+    {
+      "axis": "capacity_utilization",
+      "direction": "raise",
+      "points": "5",
+      "reason": "증설은 가동률과 주문이 같이 있어야 EPS/FCF로 연결된다."
+    },
+    {
+      "axis": "customer_financing_visibility",
+      "direction": "raise",
+      "points": "4",
+      "reason": "정부·고객 financing이 확인되지 않은 주문 기대는 제한한다."
+    },
+    {
+      "axis": "dilution_adjusted_EPS",
+      "direction": "raise",
+      "points": "5",
+      "reason": "증자 이후 EPS 체급이 유지되는지를 별도 확인한다."
+    },
+    {
+      "axis": "contract_cancellation_risk",
+      "direction": "raise",
+      "points": "5",
+      "reason": "수주 산업재는 계약취소·제재·arbitration 리스크를 hard gate로 본다."
+    },
+    {
+      "axis": "aftermarket_IPO_demand",
+      "direction": "raise",
+      "points": "4",
+      "reason": "IPO 첫날 수요보다 상장 후 수요와 실적 지속성이 중요하다."
+    },
+    {
+      "axis": "order_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "수주했다는 말만으로 Green을 만들지 않는다."
+    },
+    {
+      "axis": "customer_or_parent_name_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "유명 고객/모회사 이름은 납품·매출·마진의 대체물이 아니다."
+    },
+    {
+      "axis": "strategic_stake_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "전략적 지분투자는 로봇 출하량과 마진이 아니다."
+    },
+    {
+      "axis": "capacity_expansion_without_backlog",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "증설만 있고 수주잔고와 가동률이 없으면 제한한다."
+    },
+    {
+      "axis": "IPO_first_day_pop_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "IPO 첫날 급등은 4B-watch이지 Stage 3 근거가 아니다."
+    },
+    {
+      "axis": "merger_theme_without_synergy",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "합병/MASGA 테마는 실제 주문·시너지 전에는 event premium이다."
+    },
+    {
+      "axis": "defence_order_expectation_without_funding",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "방산 기대는 정부 예산·financing·납품 일정이 필요하다."
+    },
+    {
+      "axis": "dilutive_share_issue",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "테마 랠리 뒤 희석 증자는 EPS/FCF 경로를 훼손한다."
+    },
+    {
+      "axis": "geopolitical_contract_execution_risk",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "전쟁·제재·선주 리스크가 있으면 backlog를 그대로 인정하지 않는다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_delivery_revenue": "+5",
+      "aftermarket_IPO_demand": "+1",
+      "archetype": "DEFENSE_EXPORT_DELIVERY_STAGE3_CANDIDATE",
+      "backlog_to_revenue_conversion": "+5",
+      "capacity_utilization": "+3",
+      "contract_cancellation_risk": "+3",
+      "customer_financing_visibility": "+4",
+      "dilution_adjusted_EPS": "+3",
+      "event_penalty": "-3",
+      "hard_4c_sensitivity": "+4",
+      "local_production_execution": "+4",
+      "notes": "Hyundai Rotem shows delivery/revenue/OP evidence can support a Stage 3 candidate.",
+      "order_margin_visibility": "+5",
+      "working_capital_control": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_delivery_revenue": "+3",
+      "aftermarket_IPO_demand": "0",
+      "archetype": "GRID_EQUIPMENT_US_GROWTH_STAGE2",
+      "backlog_to_revenue_conversion": "+5",
+      "capacity_utilization": "+5",
+      "contract_cancellation_risk": "+3",
+      "customer_financing_visibility": "+2",
+      "dilution_adjusted_EPS": "+2",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+3",
+      "local_production_execution": "+2",
+      "notes": "LS Electric needs backlog and margin confirmation after estimate-upgrade price failure.",
+      "order_margin_visibility": "+5",
+      "working_capital_control": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_delivery_revenue": "+3",
+      "aftermarket_IPO_demand": "0",
+      "archetype": "TRANSFORMER_CAPACITY_EXPANSION_STAGE2",
+      "backlog_to_revenue_conversion": "+5",
+      "capacity_utilization": "+5",
+      "contract_cancellation_risk": "+3",
+      "customer_financing_visibility": "+2",
+      "dilution_adjusted_EPS": "+2",
+      "event_penalty": "-4",
+      "hard_4c_sensitivity": "+3",
+      "local_production_execution": "+2",
+      "notes": "Transformer shortage/capacity expansion is Stage 2 until utilization and ASP/margin confirm.",
+      "order_margin_visibility": "+5",
+      "working_capital_control": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_delivery_revenue": "+3",
+      "aftermarket_IPO_demand": "+1",
+      "archetype": "SHIPBUILDING_MERGER_MASGA_4B",
+      "backlog_to_revenue_conversion": "+4",
+      "capacity_utilization": "+5",
+      "contract_cancellation_risk": "+4",
+      "customer_financing_visibility": "+3",
+      "dilution_adjusted_EPS": "+3",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+4",
+      "local_production_execution": "+3",
+      "notes": "HD HHI/Mipo merger needs US orders, integration synergy and margin proof.",
+      "order_margin_visibility": "+5",
+      "working_capital_control": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_delivery_revenue": "0",
+      "aftermarket_IPO_demand": "0",
+      "archetype": "SHIPBUILDING_ORDER_CANCELLATION_HARD_4C",
+      "backlog_to_revenue_conversion": "+5",
+      "capacity_utilization": "+3",
+      "contract_cancellation_risk": "+5",
+      "customer_financing_visibility": "+4",
+      "dilution_adjusted_EPS": "+2",
+      "event_penalty": "0",
+      "hard_4c_sensitivity": "+5",
+      "local_production_execution": "+2",
+      "notes": "Samsung Heavy cancellation proves backlog execution risk is a hard gate.",
+      "order_margin_visibility": "+5",
+      "working_capital_control": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_delivery_revenue": "+4",
+      "aftermarket_IPO_demand": "+1",
+      "archetype": "DEFENSE_DILUTION_FALSE_POSITIVE",
+      "backlog_to_revenue_conversion": "+5",
+      "capacity_utilization": "+3",
+      "contract_cancellation_risk": "+3",
+      "customer_financing_visibility": "+4",
+      "dilution_adjusted_EPS": "+5",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+4",
+      "local_production_execution": "+4",
+      "notes": "Hanwha Aerospace shows defense order cycles must be dilution-adjusted.",
+      "order_margin_visibility": "+5",
+      "working_capital_control": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_delivery_revenue": "+1",
+      "aftermarket_IPO_demand": "0",
+      "archetype": "ROBOTICS_STRATEGIC_STAKE_EVENT_PREMIUM",
+      "backlog_to_revenue_conversion": "+2",
+      "capacity_utilization": "+4",
+      "contract_cancellation_risk": "+2",
+      "customer_financing_visibility": "+1",
+      "dilution_adjusted_EPS": "+2",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+3",
+      "local_production_execution": "+2",
+      "notes": "Strategic stake is not robot shipment/margin Green.",
+      "order_margin_visibility": "+4",
+      "working_capital_control": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_delivery_revenue": "+4",
+      "aftermarket_IPO_demand": "+5",
+      "archetype": "INDUSTRIAL_SERVICE_IPO_OVERHEAT",
+      "backlog_to_revenue_conversion": "+4",
+      "capacity_utilization": "+4",
+      "contract_cancellation_risk": "+2",
+      "customer_financing_visibility": "+1",
+      "dilution_adjusted_EPS": "+3",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+3",
+      "local_production_execution": "+1",
+      "notes": "HD Hyundai Marine needs aftermarket durability and lock-up/PE exit gates after +97% debut.",
+      "order_margin_visibility": "+5",
+      "working_capital_control": "+4"
+    }
+  ],
+  "source_round": "docs/round/round_283.md",
+  "stage4b_watch_triggers": [
+    "merger_MASGA_US_MRO_headline_10pct_plus_rally",
+    "IPO_debut_40_100pct_pop",
+    "strategic_stake_parent_name_event_before_revenue",
+    "transformer_grid_capacity_investment_before_backlog",
+    "defence_order_expectation_YTD_100pct_plus",
+    "order_headline_day_5_10pct_rally"
+  ],
+  "summary": {
+    "aligned_count": 1,
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 1,
+    "event_premium_or_result_count": 3,
+    "evidence_good_but_price_failed_count": 1,
+    "failed_rerating_count": 1,
+    "false_positive_score_count": 3,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "INDUSTRIALS_ORDERS_INFRASTRUCTURE",
+    "overheat_count": 1,
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_211",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_283.md",
+    "stage3_case_count": 1,
+    "stage4b_watch_count": 4,
+    "stage4c_watch_count": 2,
+    "success_candidate_count": 2,
+    "target_archetype_count": 8
+  },
+  "target_aliases": {
+    "DEFENSE_DILUTION_FALSE_POSITIVE": "DEFENSE_DILUTION_FALSE_POSITIVE",
+    "DEFENSE_EXPORT_DELIVERY_STAGE3_CANDIDATE": "DEFENSE_EXPORT_DELIVERY_STAGE3_CANDIDATE",
+    "GRID_EQUIPMENT_US_GROWTH_STAGE2": "GRID_EQUIPMENT_US_GROWTH_STAGE2",
+    "INDUSTRIAL_SERVICE_IPO_OVERHEAT": "INDUSTRIAL_SERVICE_IPO_OVERHEAT",
+    "ROBOTICS_STRATEGIC_STAKE_EVENT_PREMIUM": "ROBOTICS_STRATEGIC_STAKE_EVENT_PREMIUM",
+    "SHIPBUILDING_MERGER_MASGA_4B": "SHIPBUILDING_MERGER_MASGA_4B",
+    "SHIPBUILDING_ORDER_CANCELLATION_HARD_4C": "SHIPBUILDING_ORDER_CANCELLATION_HARD_4C",
+    "TRANSFORMER_CAPACITY_EXPANSION_STAGE2": "TRANSFORMER_CAPACITY_EXPANSION_STAGE2"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round283_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_order_grid_defense_shipbuilding_robotics_or_IPO_headlines_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}

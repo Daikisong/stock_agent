@@ -912,6 +912,14 @@ class E2RArchetype(str, Enum):
     CONTROL_PREMIUM_DILUTION_4B = "CONTROL_PREMIUM_DILUTION_4B"
     ORDER_HEADLINE_NOT_MARGIN_GREEN = "ORDER_HEADLINE_NOT_MARGIN_GREEN"
     CAPITAL_RECYCLING_IPO_FAILED_RERATING = "CAPITAL_RECYCLING_IPO_FAILED_RERATING"
+    DEFENSE_EXPORT_DELIVERY_STAGE3_CANDIDATE = "DEFENSE_EXPORT_DELIVERY_STAGE3_CANDIDATE"
+    GRID_EQUIPMENT_US_GROWTH_STAGE2 = "GRID_EQUIPMENT_US_GROWTH_STAGE2"
+    TRANSFORMER_CAPACITY_EXPANSION_STAGE2 = "TRANSFORMER_CAPACITY_EXPANSION_STAGE2"
+    SHIPBUILDING_MERGER_MASGA_4B = "SHIPBUILDING_MERGER_MASGA_4B"
+    SHIPBUILDING_ORDER_CANCELLATION_HARD_4C = "SHIPBUILDING_ORDER_CANCELLATION_HARD_4C"
+    DEFENSE_DILUTION_FALSE_POSITIVE = "DEFENSE_DILUTION_FALSE_POSITIVE"
+    ROBOTICS_STRATEGIC_STAKE_EVENT_PREMIUM = "ROBOTICS_STRATEGIC_STAKE_EVENT_PREMIUM"
+    INDUSTRIAL_SERVICE_IPO_OVERHEAT = "INDUSTRIAL_SERVICE_IPO_OVERHEAT"
     ORDER_TO_REVENUE_CONVERSION = "ORDER_TO_REVENUE_CONVERSION"
     STAGE2_EVIDENCE_NOT_GREEN = "STAGE2_EVIDENCE_NOT_GREEN"
     CONTRACT_HEADLINE_NOT_STAGE3 = "CONTRACT_HEADLINE_NOT_STAGE3"
@@ -5262,6 +5270,102 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("news", "IPO", "price", "capital_allocation", "red_team"),
             false_positive_patterns=("IPO size treated as parent Green", "oversubscription treated as parent ROI"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.DEFENSE_EXPORT_DELIVERY_STAGE3_CANDIDATE: ArchetypeDefinition(
+            archetype=E2RArchetype.DEFENSE_EXPORT_DELIVERY_STAGE3_CANDIDATE,
+            stage1_radar_signals=("defense export contract", "government customer", "Europe rearmament order"),
+            stage2_candidate_signals=("funded government contract, delivery schedule, local production and financing gates are visible"),
+            stage3_high_conviction_signals=("actual delivery revenue recognition", "order margin visibility", "customer financing visibility", "local production execution", "cash collection"),
+            stage4a_ongoing_signals=("shipments, revenue recognition, margin and cash collection remain intact"),
+            stage4b_graduation_overheat_signals=("defense order expectation YTD 100%+ before financing or local production execution"),
+            stage4c_thesis_break_signals=("government funding fails", "local production execution breaks", "delivery delay", "margin/cash collection fails"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("defence order expectation without funding", "order headline treated as delivery revenue"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=17, mispricing=14, valuation=14),
+        ),
+        E2RArchetype.GRID_EQUIPMENT_US_GROWTH_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.GRID_EQUIPMENT_US_GROWTH_STAGE2,
+            stage1_radar_signals=("US grid equipment demand", "data-center grid spend", "renewable/EV infrastructure demand"),
+            stage2_candidate_signals=("US revenue share growth, estimate revision and target-price upgrade are visible"),
+            stage3_high_conviction_signals=("actual backlog, capacity utilization, ASP/margin and working capital confirm the US growth path"),
+            stage4a_ongoing_signals=("US backlog converts into revenue and margin without working-capital stress"),
+            stage4b_graduation_overheat_signals=("grid/data-center theme front-runs actual backlog and capacity"),
+            stage4c_thesis_break_signals=("backlog fails to materialize", "capacity bottleneck or working capital breaks", "margin miss"),
+            key_evidence_families=("research_report", "financial_actual", "price", "disclosure", "news"),
+            false_positive_patterns=("estimate upgrade treated as Green without backlog/margin", "target-price jump treated as revenue conversion"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=22, bottleneck=20, mispricing=13, valuation=12),
+        ),
+        E2RArchetype.TRANSFORMER_CAPACITY_EXPANSION_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.TRANSFORMER_CAPACITY_EXPANSION_STAGE2,
+            stage1_radar_signals=("transformer shortage", "GSU delivery delay", "US transformer import bottleneck"),
+            stage2_candidate_signals=("capacity expansion, lead-time stress and price-hike context are visible"),
+            stage3_high_conviction_signals=("order backlog, shipment, utilization, ASP/margin and working capital confirm capacity economics"),
+            stage4a_ongoing_signals=("capacity expansion fills with profitable orders and cash conversion"),
+            stage4b_graduation_overheat_signals=("capacity investment or shortage headline rerates before backlog"),
+            stage4c_thesis_break_signals=("capacity expansion without backlog", "utilization disappoints", "margin or working capital breaks"),
+            key_evidence_families=("news", "research_report", "financial_actual", "price", "disclosure"),
+            false_positive_patterns=("capacity expansion without backlog", "shortage headline treated as margin"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=23, bottleneck=22, mispricing=12, valuation=12),
+        ),
+        E2RArchetype.SHIPBUILDING_MERGER_MASGA_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.SHIPBUILDING_MERGER_MASGA_4B,
+            stage1_radar_signals=("shipbuilding merger", "MASGA", "US-Korea shipbuilding cooperation"),
+            stage2_candidate_signals=("exchange ratio, merger timetable and strategic US market thesis are visible"),
+            stage3_high_conviction_signals=("funded US order or MRO revenue, dock capacity, integration synergy, margin and labor capacity confirm"),
+            stage4a_ongoing_signals=("integration produces real orders, revenue and margin"),
+            stage4b_graduation_overheat_signals=("merger/MASGA/US MRO headline +10% rally before orders or synergy"),
+            stage4c_thesis_break_signals=("integration fails", "no funded US order", "dock/labor bottleneck", "merger terms destroy value"),
+            key_evidence_families=("news", "price", "disclosure", "financial_actual", "red_team"),
+            false_positive_patterns=("merger theme without synergy", "MASGA headline treated as funded order"),
+            preferred_score_weights=_weights(eps_fcf=16, visibility=18, bottleneck=15, mispricing=10, valuation=10),
+        ),
+        E2RArchetype.SHIPBUILDING_ORDER_CANCELLATION_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.SHIPBUILDING_ORDER_CANCELLATION_HARD_4C,
+            stage1_radar_signals=("large shipbuilding order", "icebreaker or LNG carrier contract", "special vessel backlog"),
+            stage2_candidate_signals=("backlog exists but execution risk, sanctions, shipowner financing and arbitration must be checked"),
+            stage3_high_conviction_signals=("not while cancellation, shipowner termination, arbitration or sanctions risk remains unresolved"),
+            stage4a_ongoing_signals=("backlog executes without cancellation or sanctions risk"),
+            stage4b_graduation_overheat_signals=("record backlog priced before geopolitical execution risk clears"),
+            stage4c_thesis_break_signals=("large contract cancellation", "shipowner termination or arbitration", "sanctions/war execution impossible"),
+            key_evidence_families=("disclosure", "news", "price", "red_team"),
+            false_positive_patterns=("backlog treated as Green despite cancellation or sanctions risk"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.DEFENSE_DILUTION_FALSE_POSITIVE: ArchetypeDefinition(
+            archetype=E2RArchetype.DEFENSE_DILUTION_FALSE_POSITIVE,
+            stage1_radar_signals=("defense export rally", "rearmament theme", "large order expectation"),
+            stage2_candidate_signals=("funding plan, issue price, use of proceeds and dilution-adjusted EPS are visible"),
+            stage3_high_conviction_signals=("dilution-adjusted EPS, capital allocation ROI, disclosure quality and delivery margin clear"),
+            stage4a_ongoing_signals=("capital raise funds profitable delivery capacity and EPS accretion"),
+            stage4b_graduation_overheat_signals=("defense theme rally before dilution and funding quality are known"),
+            stage4c_thesis_break_signals=("dilutive share issue after theme rally", "FSS revision order or disclosure quality issue", "EPS dilution overwhelms order growth"),
+            key_evidence_families=("disclosure", "news", "price", "capital_allocation", "red_team"),
+            false_positive_patterns=("defense backlog scored without dilution-adjusted EPS", "order growth treated as Green while share issue is unclear"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=14, bottleneck=8, mispricing=6, valuation=5),
+        ),
+        E2RArchetype.ROBOTICS_STRATEGIC_STAKE_EVENT_PREMIUM: ArchetypeDefinition(
+            archetype=E2RArchetype.ROBOTICS_STRATEGIC_STAKE_EVENT_PREMIUM,
+            stage1_radar_signals=("strategic stake", "parent company robotics office", "robotics growth segment"),
+            stage2_candidate_signals=("strategic investor, integration option and governance path are visible"),
+            stage3_high_conviction_signals=("robot shipment, ASP, factory deployment, gross margin and repeat demand are confirmed"),
+            stage4a_ongoing_signals=("shipments and gross margin validate the strategic stake"),
+            stage4b_graduation_overheat_signals=("parent-name strategic stake event before revenue bridge"),
+            stage4c_thesis_break_signals=("strategic customer program cancellation", "shipment or margin fails", "stake premium reverses"),
+            key_evidence_families=("news", "price", "financial_actual", "research_report", "red_team"),
+            false_positive_patterns=("strategic stake only", "parent name treated as robot shipment"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=12, bottleneck=8, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.INDUSTRIAL_SERVICE_IPO_OVERHEAT: ArchetypeDefinition(
+            archetype=E2RArchetype.INDUSTRIAL_SERVICE_IPO_OVERHEAT,
+            stage1_radar_signals=("industrial service IPO", "marine after-sales", "retrofit service growth"),
+            stage2_candidate_signals=("revenue, operating profit, net profit and service growth are visible at IPO"),
+            stage3_high_conviction_signals=("post-IPO earnings durability, aftermarket demand, lock-up/PE exit pressure and FCF conversion clear"),
+            stage4a_ongoing_signals=("post-listing service margins and aftermarket demand remain durable"),
+            stage4b_graduation_overheat_signals=("IPO debut +40-100% before earnings durability or lock-up pressure clears"),
+            stage4c_thesis_break_signals=("IPO debut failure after aggressive pricing", "lock-up/PE exit pressure", "service margin durability fails"),
+            key_evidence_families=("IPO", "financial_actual", "price", "news", "red_team"),
+            false_positive_patterns=("IPO first-day pop only", "service story treated as durable Green before post-listing proof"),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=16, bottleneck=8, mispricing=8, valuation=6),
         ),
         E2RArchetype.PRICE_ONLY_POLICY_RALLY: ArchetypeDefinition(
             archetype=E2RArchetype.PRICE_ONLY_POLICY_RALLY,
