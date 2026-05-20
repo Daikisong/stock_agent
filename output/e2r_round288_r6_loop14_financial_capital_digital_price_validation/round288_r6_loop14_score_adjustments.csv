@@ -1,0 +1,20 @@
+axis,points,direction,reason
+CET1_capital_buffer,5,raise,금융지주 Green은 자본비율이 배당·소각을 버틸 때만 가능하다.
+actual_payout_execution,5,raise,배당·자사주는 발표가 아니라 실제 집행이 증거다.
+treasury_share_cancellation,5,raise,자사주 매입은 소각되어야 minority alignment로 연결된다.
+credit_cost_control,5,raise,은행/금융지주 EPS는 대손비용이 흔들리면 바로 약해진다.
+holdco_discount_compression,4,raise,지주 할인은 실제 discount compression이 확인되어야 한다.
+IPO_aftermarket_demand,5,raise,IPO 규모와 고객수보다 상장 후 수요와 가격 검증이 중요하다.
+digital_asset_custody_control,5,raise,디지털자산은 거래량보다 custody/internal control이 먼저다.
+AML_KYC_regulatory_clearance,5,raise,가상자산/핀테크 수익화는 AML/KYC와 규제 승인 전엔 Stage 2다.
+CB_dilution_adjusted_ROIC,5,raise,CB/PE 투자는 희석 조정 ROIC와 자금사용 성과로 닫혀야 한다.
+minority_shareholder_alignment,5,raise,Value-Up은 소액주주 정렬이 실제로 개선될 때만 점수를 준다.
+Value_Up_headline_only,-5,lower,정책 headline은 Stage 2 신호이지 은행 Green 증거가 아니다.
+shareholder_return_proposal_only,-5,lower,주주제안은 통과·집행 전에는 자본환원이 아니다.
+announced_buyback_without_cancellation,-5,lower,소각 없는 매입 발표는 반복 환원으로 보지 않는다.
+IPO_size_or_customer_count_only,-5,lower,인터넷은행 고객수/IPO 규모만으로 bank-quality Green 금지다.
+crypto_exchange_market_share_only,-5,lower,거래소 점유율은 custody와 regulatory gate 전에는 수익가시성이 아니다.
+M&A_synergy_without_custody_control,-5,lower,디지털자산 M&A 시너지는 custody/internal control 전에는 event premium이다.
+CB_or_PE_investment_headline_only,-5,lower,PE/CB headline만 있고 ROIC·희석 조건이 없으면 4B-watch다.
+stablecoin_keyword_without_revenue,-5,lower,stablecoin 단어는 실제 수익모델 전에는 Green 증거가 아니다.
+founder_legal_risk_unresolved,-5,lower,은행 ownership에 영향을 주는 창업자 법적 리스크는 RedTeam gate다.

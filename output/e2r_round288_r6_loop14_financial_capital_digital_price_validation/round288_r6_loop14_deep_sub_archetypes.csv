@@ -1,0 +1,9 @@
+category,primary_archetype,terms
+Value-Up / financial holding,VALUE_UP_FINANCIAL_HOLDING_STAGE2,KB|Shinhan|Hana|Woori|Commercial Act|treasury-share cancellation|CET1|credit cost
+Holdco discount,HOLDCO_DISCOUNT_BUYBACK_STAGE2,SK Square|SK Hynix stake|buyback|cancellation|activist|discount compression
+Shareholder return failure,SHAREHOLDER_RETURN_FAILURE_FALSE_POSITIVE,Samsung C&T|activist proposal|NPS vote|minority shareholders|proposal failure
+Internet bank IPO,DIGITAL_BANK_IPO_QUALITY_GATE,K Bank|IPO|10M customers|credit quality|aftermarket demand|NIM
+Digital-bank governance,DIGITAL_BANK_CONTROL_RISK_4C_WATCH,KakaoBank|Kakao founder|bank ownership 10%|financial crime|acquittal relief
+Digital asset M&A,DIGITAL_ASSET_MA_TRUST_4C_WATCH,Naver Financial|Dunamu|Upbit|abnormal withdrawal|custody|AML/KYC
+Bank digital-asset stake,BANK_DIGITAL_ASSET_STAKE_STAGE2,Hana Bank|Dunamu|6.55%|Upbit|capital treatment|custody
+PE/CB/stablecoin,PRIVATE_CAPITAL_CB_STABLECOIN_EVENT_PREMIUM,Samsung SDS|KKR|convertible bond|AI infrastructure|stablecoins|dilution-adjusted ROIC

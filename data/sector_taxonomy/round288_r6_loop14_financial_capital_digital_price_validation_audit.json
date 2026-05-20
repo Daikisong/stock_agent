@@ -1,0 +1,397 @@
+{
+  "case_ids": [
+    "r6_loop14_financial_holding_value_up_policy_stage2",
+    "r6_loop14_sk_square_holdco_discount_buyback",
+    "r6_loop14_samsung_ct_activist_valueup_failure",
+    "r6_loop14_kbank_digital_bank_ipo_quality_gate",
+    "r6_loop14_kakaobank_control_risk_kakao_founder",
+    "r6_loop14_naver_financial_dunamu_upbit_trust_gate",
+    "r6_loop14_hana_bank_dunamu_digital_asset_stake",
+    "r6_loop14_samsung_sds_kkr_cb_stablecoin_event"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "Value-Up / financial holding",
+      "primary_archetype": "VALUE_UP_FINANCIAL_HOLDING_STAGE2",
+      "terms": "KB|Shinhan|Hana|Woori|Commercial Act|treasury-share cancellation|CET1|credit cost"
+    },
+    {
+      "category": "Holdco discount",
+      "primary_archetype": "HOLDCO_DISCOUNT_BUYBACK_STAGE2",
+      "terms": "SK Square|SK Hynix stake|buyback|cancellation|activist|discount compression"
+    },
+    {
+      "category": "Shareholder return failure",
+      "primary_archetype": "SHAREHOLDER_RETURN_FAILURE_FALSE_POSITIVE",
+      "terms": "Samsung C&T|activist proposal|NPS vote|minority shareholders|proposal failure"
+    },
+    {
+      "category": "Internet bank IPO",
+      "primary_archetype": "DIGITAL_BANK_IPO_QUALITY_GATE",
+      "terms": "K Bank|IPO|10M customers|credit quality|aftermarket demand|NIM"
+    },
+    {
+      "category": "Digital-bank governance",
+      "primary_archetype": "DIGITAL_BANK_CONTROL_RISK_4C_WATCH",
+      "terms": "KakaoBank|Kakao founder|bank ownership 10%|financial crime|acquittal relief"
+    },
+    {
+      "category": "Digital asset M&A",
+      "primary_archetype": "DIGITAL_ASSET_MA_TRUST_4C_WATCH",
+      "terms": "Naver Financial|Dunamu|Upbit|abnormal withdrawal|custody|AML/KYC"
+    },
+    {
+      "category": "Bank digital-asset stake",
+      "primary_archetype": "BANK_DIGITAL_ASSET_STAKE_STAGE2",
+      "terms": "Hana Bank|Dunamu|6.55%|Upbit|capital treatment|custody"
+    },
+    {
+      "category": "PE/CB/stablecoin",
+      "primary_archetype": "PRIVATE_CAPITAL_CB_STABLECOIN_EVENT_PREMIUM",
+      "terms": "Samsung SDS|KKR|convertible bond|AI infrastructure|stablecoins|dilution-adjusted ROIC"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "Value_Up_headline_only",
+    "shareholder_return_proposal_only",
+    "announced_buyback_without_cancellation",
+    "IPO_size_or_customer_count_only",
+    "crypto_exchange_market_share_only",
+    "M&A_synergy_without_custody_control",
+    "CB_or_PE_investment_headline_only",
+    "stablecoin_keyword_without_revenue",
+    "founder_legal_risk_unresolved"
+  ],
+  "green_required_fields": [
+    "cet1_capital_buffer_confirmed",
+    "actual_payout_execution_confirmed",
+    "treasury_share_cancellation_confirmed",
+    "credit_cost_control_confirmed",
+    "holdco_discount_compression_confirmed",
+    "ipo_aftermarket_demand_confirmed",
+    "digital_asset_custody_control_confirmed",
+    "aml_kyc_regulatory_clearance_confirmed",
+    "cb_dilution_adjusted_roic_confirmed",
+    "minority_shareholder_alignment_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "bank_ownership_loss_due_founder_financial_crime_conviction",
+    "abnormal_withdrawal_or_custody_failure",
+    "aml_kyc_or_regulatory_rejection",
+    "shareholder_return_proposal_failure_after_valueup_rally",
+    "cb_dilution_without_clear_roic",
+    "credit_cost_spike_or_pf_deterioration",
+    "cet1_buffer_below_payout_requirement",
+    "weak_ipo_debut_after_aggressive_pricing"
+  ],
+  "large_sector": "FINANCE_CAPITAL_ALLOCATION_DIGITAL_FINANCE",
+  "round_id": "round_216",
+  "score_adjustments": [
+    {
+      "axis": "CET1_capital_buffer",
+      "direction": "raise",
+      "points": "5",
+      "reason": "금융지주 Green은 자본비율이 배당·소각을 버틸 때만 가능하다."
+    },
+    {
+      "axis": "actual_payout_execution",
+      "direction": "raise",
+      "points": "5",
+      "reason": "배당·자사주는 발표가 아니라 실제 집행이 증거다."
+    },
+    {
+      "axis": "treasury_share_cancellation",
+      "direction": "raise",
+      "points": "5",
+      "reason": "자사주 매입은 소각되어야 minority alignment로 연결된다."
+    },
+    {
+      "axis": "credit_cost_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "은행/금융지주 EPS는 대손비용이 흔들리면 바로 약해진다."
+    },
+    {
+      "axis": "holdco_discount_compression",
+      "direction": "raise",
+      "points": "4",
+      "reason": "지주 할인은 실제 discount compression이 확인되어야 한다."
+    },
+    {
+      "axis": "IPO_aftermarket_demand",
+      "direction": "raise",
+      "points": "5",
+      "reason": "IPO 규모와 고객수보다 상장 후 수요와 가격 검증이 중요하다."
+    },
+    {
+      "axis": "digital_asset_custody_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "디지털자산은 거래량보다 custody/internal control이 먼저다."
+    },
+    {
+      "axis": "AML_KYC_regulatory_clearance",
+      "direction": "raise",
+      "points": "5",
+      "reason": "가상자산/핀테크 수익화는 AML/KYC와 규제 승인 전엔 Stage 2다."
+    },
+    {
+      "axis": "CB_dilution_adjusted_ROIC",
+      "direction": "raise",
+      "points": "5",
+      "reason": "CB/PE 투자는 희석 조정 ROIC와 자금사용 성과로 닫혀야 한다."
+    },
+    {
+      "axis": "minority_shareholder_alignment",
+      "direction": "raise",
+      "points": "5",
+      "reason": "Value-Up은 소액주주 정렬이 실제로 개선될 때만 점수를 준다."
+    },
+    {
+      "axis": "Value_Up_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "정책 headline은 Stage 2 신호이지 은행 Green 증거가 아니다."
+    },
+    {
+      "axis": "shareholder_return_proposal_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "주주제안은 통과·집행 전에는 자본환원이 아니다."
+    },
+    {
+      "axis": "announced_buyback_without_cancellation",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "소각 없는 매입 발표는 반복 환원으로 보지 않는다."
+    },
+    {
+      "axis": "IPO_size_or_customer_count_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "인터넷은행 고객수/IPO 규모만으로 bank-quality Green 금지다."
+    },
+    {
+      "axis": "crypto_exchange_market_share_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "거래소 점유율은 custody와 regulatory gate 전에는 수익가시성이 아니다."
+    },
+    {
+      "axis": "M&A_synergy_without_custody_control",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "디지털자산 M&A 시너지는 custody/internal control 전에는 event premium이다."
+    },
+    {
+      "axis": "CB_or_PE_investment_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "PE/CB headline만 있고 ROIC·희석 조건이 없으면 4B-watch다."
+    },
+    {
+      "axis": "stablecoin_keyword_without_revenue",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "stablecoin 단어는 실제 수익모델 전에는 Green 증거가 아니다."
+    },
+    {
+      "axis": "founder_legal_risk_unresolved",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "은행 ownership에 영향을 주는 창업자 법적 리스크는 RedTeam gate다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_payout_execution": "+5",
+      "aml_kyc_regulatory_clearance": "+2",
+      "archetype": "VALUE_UP_FINANCIAL_HOLDING_STAGE2",
+      "cb_dilution_adjusted_roic": "+1",
+      "cet1_capital_buffer": "+5",
+      "credit_cost_control": "+5",
+      "digital_asset_custody_control": "0",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+4",
+      "holdco_discount_compression": "+2",
+      "ipo_aftermarket_demand": "+1",
+      "minority_shareholder_alignment": "+5",
+      "notes": "Financial holding Green needs CET1, actual payout/cancellation and credit-cost stability.",
+      "treasury_share_cancellation": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_payout_execution": "+5",
+      "aml_kyc_regulatory_clearance": "+1",
+      "archetype": "HOLDCO_DISCOUNT_BUYBACK_STAGE2",
+      "cb_dilution_adjusted_roic": "+2",
+      "cet1_capital_buffer": "+1",
+      "credit_cost_control": "+1",
+      "digital_asset_custody_control": "0",
+      "event_penalty": "-4",
+      "hard_4c_sensitivity": "+3",
+      "holdco_discount_compression": "+5",
+      "ipo_aftermarket_demand": "0",
+      "minority_shareholder_alignment": "+5",
+      "notes": "Holdco discount buyback is Stage 2 until discount compression and governance execution.",
+      "treasury_share_cancellation": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_payout_execution": "+5",
+      "aml_kyc_regulatory_clearance": "+1",
+      "archetype": "SHAREHOLDER_RETURN_FAILURE_FALSE_POSITIVE",
+      "cb_dilution_adjusted_roic": "+1",
+      "cet1_capital_buffer": "+1",
+      "credit_cost_control": "+1",
+      "digital_asset_custody_control": "0",
+      "event_penalty": "0",
+      "hard_4c_sensitivity": "+4",
+      "holdco_discount_compression": "+3",
+      "ipo_aftermarket_demand": "0",
+      "minority_shareholder_alignment": "+5",
+      "notes": "Samsung C&T shows proposal failure can create false positives.",
+      "treasury_share_cancellation": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_payout_execution": "+1",
+      "aml_kyc_regulatory_clearance": "+5",
+      "archetype": "DIGITAL_BANK_IPO_QUALITY_GATE",
+      "cb_dilution_adjusted_roic": "0",
+      "cet1_capital_buffer": "+4",
+      "credit_cost_control": "+5",
+      "digital_asset_custody_control": "+2",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+4",
+      "holdco_discount_compression": "0",
+      "ipo_aftermarket_demand": "+5",
+      "minority_shareholder_alignment": "+3",
+      "notes": "K Bank IPO needs credit quality, funding cost, NIM and aftermarket demand.",
+      "treasury_share_cancellation": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_payout_execution": "+2",
+      "aml_kyc_regulatory_clearance": "+5",
+      "archetype": "DIGITAL_BANK_CONTROL_RISK_4C_WATCH",
+      "cb_dilution_adjusted_roic": "0",
+      "cet1_capital_buffer": "+4",
+      "credit_cost_control": "+4",
+      "digital_asset_custody_control": "+2",
+      "event_penalty": "0",
+      "hard_4c_sensitivity": "+5",
+      "holdco_discount_compression": "0",
+      "ipo_aftermarket_demand": "+2",
+      "minority_shareholder_alignment": "+5",
+      "notes": "KakaoBank control risk shows founder/legal gate for digital banks.",
+      "treasury_share_cancellation": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_payout_execution": "+1",
+      "aml_kyc_regulatory_clearance": "+5",
+      "archetype": "DIGITAL_ASSET_MA_TRUST_4C_WATCH",
+      "cb_dilution_adjusted_roic": "+1",
+      "cet1_capital_buffer": "+2",
+      "credit_cost_control": "+2",
+      "digital_asset_custody_control": "+5",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+5",
+      "holdco_discount_compression": "0",
+      "ipo_aftermarket_demand": "+2",
+      "minority_shareholder_alignment": "+4",
+      "notes": "Naver/Dunamu shows M&A premium can reverse on custody/internal-control risk.",
+      "treasury_share_cancellation": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_payout_execution": "+2",
+      "aml_kyc_regulatory_clearance": "+5",
+      "archetype": "BANK_DIGITAL_ASSET_STAKE_STAGE2",
+      "cb_dilution_adjusted_roic": "+2",
+      "cet1_capital_buffer": "+4",
+      "credit_cost_control": "+4",
+      "digital_asset_custody_control": "+5",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+5",
+      "holdco_discount_compression": "0",
+      "ipo_aftermarket_demand": "+1",
+      "minority_shareholder_alignment": "+4",
+      "notes": "Hana/Dunamu stake needs custody, AML/KYC, capital treatment and revenue bridge.",
+      "treasury_share_cancellation": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_payout_execution": "+2",
+      "aml_kyc_regulatory_clearance": "+4",
+      "archetype": "PRIVATE_CAPITAL_CB_STABLECOIN_EVENT_PREMIUM",
+      "cb_dilution_adjusted_roic": "+5",
+      "cet1_capital_buffer": "+1",
+      "credit_cost_control": "+1",
+      "digital_asset_custody_control": "+4",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+4",
+      "holdco_discount_compression": "+1",
+      "ipo_aftermarket_demand": "+2",
+      "minority_shareholder_alignment": "+4",
+      "notes": "Samsung SDS/KKR CB needs dilution-adjusted ROIC and actual stablecoin/AI revenue.",
+      "treasury_share_cancellation": "+1"
+    }
+  ],
+  "source_round": "docs/round/round_288.md",
+  "stage4b_watch_triggers": [
+    "Value_Up_law_or_policy_pre_pricing",
+    "buyback_announcement_before_cancellation",
+    "activist_proposal_rally_before_vote",
+    "digital_asset_MA_plus_5_to_10pct",
+    "PE_CB_investment_plus_15_to_20pct",
+    "stablecoin_or_crypto_keyword_before_revenue",
+    "IPO_valuation_on_MAU_or_customers_only"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 2,
+    "failed_rerating_count": 2,
+    "false_positive_score_count": 2,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "hard_4c_confirmed": false,
+    "hard_4c_not_confirmed": true,
+    "large_sector": "FINANCE_CAPITAL_ALLOCATION_DIGITAL_FINANCE",
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_216",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_288.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 7,
+    "stage4c_watch_count": 4,
+    "success_candidate_count": 4,
+    "target_archetype_count": 8,
+    "unknown_alignment_count": 4
+  },
+  "target_aliases": {
+    "BANK_DIGITAL_ASSET_STAKE_STAGE2": "BANK_DIGITAL_ASSET_STAKE_STAGE2",
+    "DIGITAL_ASSET_MA_TRUST_4C_WATCH": "DIGITAL_ASSET_MA_TRUST_4C_WATCH",
+    "DIGITAL_BANK_CONTROL_RISK_4C_WATCH": "DIGITAL_BANK_CONTROL_RISK_4C_WATCH",
+    "DIGITAL_BANK_IPO_QUALITY_GATE": "DIGITAL_BANK_IPO_QUALITY_GATE",
+    "HOLDCO_DISCOUNT_BUYBACK_STAGE2": "HOLDCO_DISCOUNT_BUYBACK_STAGE2",
+    "PRIVATE_CAPITAL_CB_STABLECOIN_EVENT_PREMIUM": "PRIVATE_CAPITAL_CB_STABLECOIN_EVENT_PREMIUM",
+    "SHAREHOLDER_RETURN_FAILURE_FALSE_POSITIVE": "SHAREHOLDER_RETURN_FAILURE_FALSE_POSITIVE",
+    "VALUE_UP_FINANCIAL_HOLDING_STAGE2": "VALUE_UP_FINANCIAL_HOLDING_STAGE2"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round288_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_valueup_ipo_crypto_stablecoin_or_pe_headlines_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}

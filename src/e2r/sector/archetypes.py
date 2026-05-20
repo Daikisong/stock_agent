@@ -452,6 +452,7 @@ class E2RArchetype(str, Enum):
     BANK_HOLDING_VALUEUP_CAPITAL_RETURN_KOREA = "BANK_HOLDING_VALUEUP_CAPITAL_RETURN_KOREA"
     BANK_ROE_PBR_RERATING_KOREA = "BANK_ROE_PBR_RERATING_KOREA"
     BANK_VALUE_UP_RERATING_STAGE2 = "BANK_VALUE_UP_RERATING_STAGE2"
+    VALUE_UP_FINANCIAL_HOLDING_STAGE2 = "VALUE_UP_FINANCIAL_HOLDING_STAGE2"
     BANK_CREDIT_COST_PF_OVERLAY = "BANK_CREDIT_COST_PF_OVERLAY"
     REGIONAL_BANK_HIGH_ROE_VALUEUP = "REGIONAL_BANK_HIGH_ROE_VALUEUP"
     INSURANCE_UNDERWRITING_CYCLE = "INSURANCE_UNDERWRITING_CYCLE"
@@ -468,10 +469,14 @@ class E2RArchetype(str, Enum):
     SECURITIES_IB_PF_RISK_OVERLAY = "SECURITIES_IB_PF_RISK_OVERLAY"
     HOLDING_NAV_DISCOUNT_VALUEUP = "HOLDING_NAV_DISCOUNT_VALUEUP"
     HOLDCO_DISCOUNT_BUYBACK_CANCELLATION = "HOLDCO_DISCOUNT_BUYBACK_CANCELLATION"
+    HOLDCO_DISCOUNT_BUYBACK_STAGE2 = "HOLDCO_DISCOUNT_BUYBACK_STAGE2"
+    SHAREHOLDER_RETURN_FAILURE_FALSE_POSITIVE = "SHAREHOLDER_RETURN_FAILURE_FALSE_POSITIVE"
     INSURANCE_HOLDING_STAKE_REGULATORY_GATE = "INSURANCE_HOLDING_STAKE_REGULATORY_GATE"
     INTERNET_BANK_IPO_PROFITABILITY = "INTERNET_BANK_IPO_PROFITABILITY"
     INTERNET_BANK_GOVERNANCE_4C = "INTERNET_BANK_GOVERNANCE_4C"
     INTERNET_BANK_IPO_OVERHANG = "INTERNET_BANK_IPO_OVERHANG"
+    DIGITAL_BANK_IPO_QUALITY_GATE = "DIGITAL_BANK_IPO_QUALITY_GATE"
+    DIGITAL_BANK_CONTROL_RISK_4C_WATCH = "DIGITAL_BANK_CONTROL_RISK_4C_WATCH"
     INTERNET_BANK_PROFITABILITY = "INTERNET_BANK_PROFITABILITY"
     TREASURY_SHARE_CANCEL_EXECUTION = "TREASURY_SHARE_CANCEL_EXECUTION"
     TREASURY_CANCEL_MANDATE_POLICY = "TREASURY_CANCEL_MANDATE_POLICY"
@@ -491,9 +496,11 @@ class E2RArchetype(str, Enum):
     DIGITAL_ASSET_TOKENIZATION = "DIGITAL_ASSET_TOKENIZATION"
     BANK_DIGITAL_ASSET_EQUITY_OPTION = "BANK_DIGITAL_ASSET_EQUITY_OPTION"
     DIGITAL_ASSET_BANK_STAKE_STAGE2 = "DIGITAL_ASSET_BANK_STAKE_STAGE2"
+    BANK_DIGITAL_ASSET_STAKE_STAGE2 = "BANK_DIGITAL_ASSET_STAKE_STAGE2"
     DIGITAL_ASSET_BANK_EQUITY_OPTION = "DIGITAL_ASSET_BANK_EQUITY_OPTION"
     DIGITAL_ASSET_PLATFORM_MERGER_TRUST_WATCH = "DIGITAL_ASSET_PLATFORM_MERGER_TRUST_WATCH"
     DIGITAL_ASSET_PLATFORM_M_AND_A_TRUST_GATE = "DIGITAL_ASSET_PLATFORM_M_AND_A_TRUST_GATE"
+    DIGITAL_ASSET_MA_TRUST_4C_WATCH = "DIGITAL_ASSET_MA_TRUST_4C_WATCH"
     FINTECH_CRYPTO_M_AND_A_TRUST_GATE = "FINTECH_CRYPTO_M_AND_A_TRUST_GATE"
     CREDIT_DATA_INFRA = "CREDIT_DATA_INFRA"
     CREDIT_INFORMATION_RECURRING_DATA = "CREDIT_INFORMATION_RECURRING_DATA"
@@ -519,6 +526,7 @@ class E2RArchetype(str, Enum):
     STABLECOIN_BANK_DEPOSIT_DISINTERMEDIATION = "STABLECOIN_BANK_DEPOSIT_DISINTERMEDIATION"
     STABLECOIN_CONVERTIBILITY_OVERLAY = "STABLECOIN_CONVERTIBILITY_OVERLAY"
     STABLECOIN_POLICY_OVERHEAT_FX_GATE = "STABLECOIN_POLICY_OVERHEAT_FX_GATE"
+    PRIVATE_CAPITAL_CB_STABLECOIN_EVENT_PREMIUM = "PRIVATE_CAPITAL_CB_STABLECOIN_EVENT_PREMIUM"
     BIOTECH_REGULATORY = "BIOTECH_REGULATORY"
     BIOTECH_PRE_REVENUE_REGULATORY = "BIOTECH_PRE_REVENUE_REGULATORY"
     BIOTECH_ROYALTY_COMMERCIALIZATION = "BIOTECH_ROYALTY_COMMERCIALIZATION"
@@ -1062,6 +1070,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("value-up headline or sector rally without bank metrics", "low PBR treated as rerating without ROE"),
             preferred_score_weights=_weights(eps_fcf=16, visibility=21, bottleneck=4, mispricing=18, valuation=24),
         ),
+        E2RArchetype.VALUE_UP_FINANCIAL_HOLDING_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.VALUE_UP_FINANCIAL_HOLDING_STAGE2,
+            stage1_radar_signals=("Korea Value-Up financial holding basket", "commercial-act treasury-share cancellation reform", "low PBR bank rerating narrative"),
+            stage2_candidate_signals=("treasury-share cancellation law passed", "minority shareholder protection improves", "financial holding payout expectation rises", "CET1 buffer watch"),
+            stage3_high_conviction_signals=("CET1 buffer", "actual payout and treasury-share cancellation", "credit cost control", "ROE/PBR rerating with bank-quality earnings"),
+            stage4a_ongoing_signals=("CET1, payout execution, credit cost and ROE/PBR rerating remain intact"),
+            stage4b_graduation_overheat_signals=("Value-Up law or policy pre-prices bank basket before payout execution", "KOSPI reform rally crowds financial holdings"),
+            stage4c_thesis_break_signals=("credit-cost spike", "CET1 buffer below payout requirement", "buyback or dividend reversal", "PF or real-estate loan deterioration"),
+            key_evidence_families=("policy", "financial_actual", "capital_ratio", "disclosure", "price"),
+            false_positive_patterns=("Value-Up headline only", "low PBR treated as Green before CET1 and payout execution", "policy rally counted as ROE improvement"),
+            preferred_score_weights=_weights(eps_fcf=16, visibility=22, bottleneck=4, mispricing=18, valuation=24),
+        ),
         E2RArchetype.SECURITIES_MARKET_VOLUME_CYCLE: ArchetypeDefinition(
             archetype=E2RArchetype.SECURITIES_MARKET_VOLUME_CYCLE,
             stage1_radar_signals=("KOSPI rally", "trading value spike", "brokerage beta basket"),
@@ -1121,6 +1141,30 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("disclosure", "price", "financial_actual", "governance", "NAV"),
             false_positive_patterns=("one-time buyback treated as recurring value-up", "listed stake headline without shareholder return execution"),
             preferred_score_weights=_weights(eps_fcf=12, visibility=21, bottleneck=4, mispricing=23, valuation=22),
+        ),
+        E2RArchetype.HOLDCO_DISCOUNT_BUYBACK_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.HOLDCO_DISCOUNT_BUYBACK_STAGE2,
+            stage1_radar_signals=("holding-company discount visible", "listed subsidiary stake value exceeds market value", "activist pressure on capital allocation"),
+            stage2_candidate_signals=("buyback and cancellation announced", "repeat cancellation plan", "independent director or governance improvement", "NAV discount measurable"),
+            stage3_high_conviction_signals=("discount compression", "repeated buyback cancellation", "governance execution", "dividend flow from underlying stake", "underlying NAV remains intact"),
+            stage4a_ongoing_signals=("discount compression continues while cancellation and governance execution remain visible"),
+            stage4b_graduation_overheat_signals=("buyback announcement priced before cancellation", "single listed-stake rally closes discount before governance proof"),
+            stage4c_thesis_break_signals=("buyback cancellation stops", "underlying stake value falls", "governance execution retreats", "holdco discount widens again"),
+            key_evidence_families=("disclosure", "governance", "NAV", "price", "financial_actual"),
+            false_positive_patterns=("announced buyback without cancellation", "listed stake headline without minority shareholder alignment", "discount thesis without discount compression"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=22, bottleneck=4, mispricing=24, valuation=22),
+        ),
+        E2RArchetype.SHAREHOLDER_RETURN_FAILURE_FALSE_POSITIVE: ArchetypeDefinition(
+            archetype=E2RArchetype.SHAREHOLDER_RETURN_FAILURE_FALSE_POSITIVE,
+            stage1_radar_signals=("activist proposal", "dividend or buyback demand", "Value-Up policy expectation", "minority shareholder campaign"),
+            stage2_candidate_signals=("board adoption path", "large investor support", "NPS or stewardship vote watch"),
+            stage3_high_conviction_signals=("not applicable until board adoption, payout execution, treasury-share cancellation and minority shareholder alignment are confirmed"),
+            stage4a_ongoing_signals=("adopted return policy is actually executed and repeated"),
+            stage4b_graduation_overheat_signals=("activist proposal rally before vote outcome", "shareholder-return proposal priced as execution"),
+            stage4c_thesis_break_signals=("shareholder-return proposal failure", "management blocks payout execution", "NPS sides against minority proposal", "stock drops after failed vote"),
+            key_evidence_families=("governance", "price", "news", "disclosure", "red_team"),
+            false_positive_patterns=("shareholder-return proposal only", "activist headline treated as capital-return execution", "policy expectation counted as actual cash return"),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=8, bottleneck=2, mispricing=12, valuation=12),
         ),
         E2RArchetype.INSURANCE_NAV_CAPITAL_RELEASE: ArchetypeDefinition(
             archetype=E2RArchetype.INSURANCE_NAV_CAPITAL_RELEASE,
@@ -1182,6 +1226,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("digital-asset equity stake treated as bank earnings", "exchange market share counted before trust and capital gates"),
             preferred_score_weights=_weights(eps_fcf=12, visibility=17, bottleneck=6, mispricing=14, valuation=14),
         ),
+        E2RArchetype.BANK_DIGITAL_ASSET_STAKE_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.BANK_DIGITAL_ASSET_STAKE_STAGE2,
+            stage1_radar_signals=("bank acquires digital-asset exchange stake", "Dunamu or Upbit bank exposure", "digital-asset custody or stablecoin optionality"),
+            stage2_candidate_signals=("stake percentage", "transaction value", "implied exchange valuation", "regulatory approval path", "capital treatment watch"),
+            stage3_high_conviction_signals=("regulatory approval", "custody controls", "AML/KYC", "capital treatment", "digital-asset revenue contribution"),
+            stage4a_ongoing_signals=("digital-asset revenue contribution, bank capital impact and custody controls remain acceptable"),
+            stage4b_graduation_overheat_signals=("crypto exchange market share reprices bank before revenue bridge", "digital-asset stake premium expands before capital treatment"),
+            stage4c_thesis_break_signals=("custody failure", "AML/KYC or regulatory rejection", "capital charge too high", "crypto volume collapse"),
+            key_evidence_families=("disclosure", "news", "regulatory", "financial_actual", "trust"),
+            false_positive_patterns=("crypto exchange market share only", "strategic stake treated as bank EPS before revenue contribution", "stake value counted before capital treatment"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=18, bottleneck=6, mispricing=14, valuation=14),
+        ),
         E2RArchetype.DIGITAL_ASSET_PLATFORM_MERGER_TRUST_WATCH: ArchetypeDefinition(
             archetype=E2RArchetype.DIGITAL_ASSET_PLATFORM_MERGER_TRUST_WATCH,
             stage1_radar_signals=("digital-asset platform merger", "crypto exchange consolidation", "fintech all-stock deal"),
@@ -1204,6 +1260,18 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("abnormal withdrawal", "exchange trust break", "security incident", "regulatory approval failure"),
             key_evidence_families=("news", "regulatory", "price", "financial_actual", "red_team"),
             false_positive_patterns=("deal headline treated as Green while exchange trust is unresolved"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=16, bottleneck=6, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.DIGITAL_ASSET_MA_TRUST_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.DIGITAL_ASSET_MA_TRUST_4C_WATCH,
+            stage1_radar_signals=("digital-asset M&A announcement", "fintech exchange share-swap", "stablecoin or wallet expansion narrative"),
+            stage2_candidate_signals=("deal value", "exchange ratio", "exchange market share", "regulatory approval path", "custody trust watch"),
+            stage3_high_conviction_signals=("deal closes", "custody/internal control", "AML/KYC", "regulatory approval", "take-rate or revenue bridge"),
+            stage4a_ongoing_signals=("post-close revenue, custody controls, user trust and regulatory posture remain intact"),
+            stage4b_graduation_overheat_signals=("digital-asset M&A jumps 5-10pct before closing", "M&A synergy without custody proof", "stablecoin keyword expands valuation"),
+            stage4c_thesis_break_signals=("abnormal withdrawal or custody failure", "AML/KYC or regulatory rejection", "exchange trust break", "deal termination"),
+            key_evidence_families=("news", "regulatory", "trust", "price", "financial_actual"),
+            false_positive_patterns=("M&A synergy without custody control", "crypto exchange market share only", "stablecoin optionality before revenue"),
             preferred_score_weights=_weights(eps_fcf=10, visibility=16, bottleneck=6, mispricing=14, valuation=12),
         ),
         E2RArchetype.FINTECH_CRYPTO_M_AND_A_TRUST_GATE: ArchetypeDefinition(
@@ -1254,6 +1322,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("IPO valuation or customer count treated as bank quality", "Upbit linked deposit growth annualized"),
             preferred_score_weights=_weights(eps_fcf=20, visibility=18, bottleneck=4, mispricing=14, valuation=14),
         ),
+        E2RArchetype.DIGITAL_BANK_IPO_QUALITY_GATE: ArchetypeDefinition(
+            archetype=E2RArchetype.DIGITAL_BANK_IPO_QUALITY_GATE,
+            stage1_radar_signals=("internet-bank IPO plan", "digital-bank customer count", "operating-profit inflection", "IPO price range"),
+            stage2_candidate_signals=("IPO raise size", "new and existing share split", "valuation range", "reported operating profit", "10M plus customers"),
+            stage3_high_conviction_signals=("aftermarket demand", "credit quality", "deposit funding cost", "NIM", "CAC and fee income durability"),
+            stage4a_ongoing_signals=("listed price path, NIM, funding cost, credit quality and fee income remain intact"),
+            stage4b_graduation_overheat_signals=("IPO valuation on MAU or customers only", "aggressive IPO range before credit data", "customer count priced before bank quality"),
+            stage4c_thesis_break_signals=("weak IPO debut after aggressive pricing", "credit-cost spike", "deposit funding cost pressure", "major shareholder suitability risk"),
+            key_evidence_families=("IPO", "financial_actual", "credit", "price", "regulatory"),
+            false_positive_patterns=("IPO size or customer count only", "valuation range treated as post-listing demand", "customer growth without credit quality"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=18, bottleneck=4, mispricing=14, valuation=14),
+        ),
         E2RArchetype.INTERNET_BANK_GOVERNANCE_4C: ArchetypeDefinition(
             archetype=E2RArchetype.INTERNET_BANK_GOVERNANCE_4C,
             stage1_radar_signals=("internet-bank governance risk", "major shareholder legal risk", "bank ownership restriction"),
@@ -1264,6 +1344,18 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("major shareholder conviction risk", "bank ownership cap risk", "governance legal break"),
             key_evidence_families=("news", "regulatory", "price", "red_team"),
             false_positive_patterns=("profitability scored while ownership eligibility risk is ignored"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.DIGITAL_BANK_CONTROL_RISK_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.DIGITAL_BANK_CONTROL_RISK_4C_WATCH,
+            stage1_radar_signals=("digital-bank control risk", "founder legal risk", "major shareholder suitability watch", "bank ownership rule risk"),
+            stage2_candidate_signals=("legal relief or acquittal", "ownership eligibility remains stable", "regulatory control risk reduced"),
+            stage3_high_conviction_signals=("founder/legal risk clear", "bank ownership eligibility intact", "credit quality and NIM confirmed", "governance control risk remediated"),
+            stage4a_ongoing_signals=("legal clearance, bank ownership eligibility and digital-bank operating quality remain intact"),
+            stage4b_graduation_overheat_signals=("digital-bank growth priced while founder/legal risk remains unresolved"),
+            stage4c_thesis_break_signals=("bank ownership loss due financial-crime conviction", "major shareholder suitability failure", "regulatory forced stake reduction", "governance legal break"),
+            key_evidence_families=("news", "regulatory", "governance", "price", "red_team"),
+            false_positive_patterns=("founder legal risk unresolved", "digital-bank growth treated as Green while ownership restriction is unresolved"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.KRW_STABLECOIN_POLICY_OVERHEAT: ArchetypeDefinition(
@@ -1301,6 +1393,18 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("policy", "price", "macro", "regulatory"),
             false_positive_patterns=("stablecoin policy theme treated as company EPS before license, reserve income and fees"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=2, bottleneck=2, mispricing=2, valuation=2),
+        ),
+        E2RArchetype.PRIVATE_CAPITAL_CB_STABLECOIN_EVENT_PREMIUM: ArchetypeDefinition(
+            archetype=E2RArchetype.PRIVATE_CAPITAL_CB_STABLECOIN_EVENT_PREMIUM,
+            stage1_radar_signals=("private-capital convertible bond investment", "AI infrastructure or stablecoin use-of-funds headline", "foreign PE capital allocation catalyst"),
+            stage2_candidate_signals=("CB investment amount", "advisor period", "cash balance", "M&A and AI infrastructure plan", "stablecoin optionality disclosed"),
+            stage3_high_conviction_signals=("dilution-adjusted ROIC", "capital deployment execution", "stablecoin or AI-infra revenue contribution", "use-of-funds outcome", "minority shareholder alignment"),
+            stage4a_ongoing_signals=("ROIC, dilution terms, capital deployment and revenue contribution remain visible"),
+            stage4b_graduation_overheat_signals=("PE or CB investment headline drives plus 15-20pct event premium", "stablecoin keyword rerates before revenue", "AI infrastructure option priced before deployment"),
+            stage4c_thesis_break_signals=("CB dilution without clear ROIC", "stablecoin keyword without revenue", "capital allocation misses", "minority shareholder dilution risk"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "price", "capital_allocation"),
+            false_positive_patterns=("CB or PE investment headline only", "stablecoin keyword without revenue", "share pop counted before dilution-adjusted ROIC"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=14, bottleneck=6, mispricing=12, valuation=10),
         ),
         E2RArchetype.BIO_PLATFORM_ROYALTY_CONVERSION: ArchetypeDefinition(
             archetype=E2RArchetype.BIO_PLATFORM_ROYALTY_CONVERSION,

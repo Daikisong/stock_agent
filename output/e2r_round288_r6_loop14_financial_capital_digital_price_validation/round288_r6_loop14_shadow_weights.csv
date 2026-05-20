@@ -1,0 +1,9 @@
+archetype,cet1_capital_buffer,actual_payout_execution,treasury_share_cancellation,credit_cost_control,holdco_discount_compression,ipo_aftermarket_demand,digital_asset_custody_control,aml_kyc_regulatory_clearance,cb_dilution_adjusted_roic,minority_shareholder_alignment,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+VALUE_UP_FINANCIAL_HOLDING_STAGE2,+5,+5,+5,+5,+2,+1,0,+2,+1,+5,-5,+4,+4,"Financial holding Green needs CET1, actual payout/cancellation and credit-cost stability."
+HOLDCO_DISCOUNT_BUYBACK_STAGE2,+1,+5,+5,+1,+5,0,0,+1,+2,+5,-4,+4,+3,Holdco discount buyback is Stage 2 until discount compression and governance execution.
+SHAREHOLDER_RETURN_FAILURE_FALSE_POSITIVE,+1,+5,+5,+1,+3,0,0,+1,+1,+5,0,+5,+4,Samsung C&T shows proposal failure can create false positives.
+DIGITAL_BANK_IPO_QUALITY_GATE,+4,+1,+1,+5,0,+5,+2,+5,0,+3,-5,+5,+4,"K Bank IPO needs credit quality, funding cost, NIM and aftermarket demand."
+DIGITAL_BANK_CONTROL_RISK_4C_WATCH,+4,+2,+1,+4,0,+2,+2,+5,0,+5,0,+4,+5,KakaoBank control risk shows founder/legal gate for digital banks.
+DIGITAL_ASSET_MA_TRUST_4C_WATCH,+2,+1,+1,+2,0,+2,+5,+5,+1,+4,-5,+5,+5,Naver/Dunamu shows M&A premium can reverse on custody/internal-control risk.
+BANK_DIGITAL_ASSET_STAKE_STAGE2,+4,+2,+1,+4,0,+1,+5,+5,+2,+4,-5,+4,+5,"Hana/Dunamu stake needs custody, AML/KYC, capital treatment and revenue bridge."
+PRIVATE_CAPITAL_CB_STABLECOIN_EVENT_PREMIUM,+1,+2,+1,+1,+1,+2,+4,+4,+5,+4,-5,+5,+4,Samsung SDS/KKR CB needs dilution-adjusted ROIC and actual stablecoin/AI revenue.
