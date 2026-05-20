@@ -1,0 +1,20 @@
+axis,points,direction,reason
+actual_hbm_allocation,5,raise,HBM은 고객 allocation과 실제 납품이 확인될 때 강하다.
+customer_delivery_and_calloff,5,raise,고객 수요는 call-off와 delivery로 닫혀야 한다.
+HBM_ASP_mix_margin,5,raise,HBM ASP와 mix margin이 OP로 내려오는지 확인한다.
+capacity_utilization,5,raise,증설과 capex는 utilization이 있어야 FCF로 연결된다.
+equipment_PO_to_revenue,5,raise,"장비주는 PO, 납품, revenue recognition이 핵심이다."
+customer_diversification,4,raise,장비·부품주는 단일 고객 루머보다 고객 다변화가 중요하다.
+device_sellthrough,5,raise,on-device AI는 실제 기기 판매와 교체수요가 필요하다.
+component_mix_margin,5,raise,부품 탑재량과 mix가 margin으로 이어져야 한다.
+OLED_utilization,5,raise,OLED capex는 utilization과 현금흐름으로 검증한다.
+labor_supply_continuity,5,raise,파업·셧다운은 memory 공급 안정성 hard gate다.
+AI_keyword_only,-5,lower,AI 단어만으로 매출·마진을 만들지 않는다.
+HBM_theme_without_customer_delivery,-5,lower,HBM 테마는 고객 납품 전에는 제한한다.
+LOI_or_MOU_without_binding_contract,-5,lower,LOI/MOU는 binding take-or-pay가 아니다.
+rumored_customer_PO,-5,lower,고객 루머는 PO/revenue가 아니다.
+on_device_AI_expectation_only,-5,lower,Apple AI 기대는 sell-through와 부품 margin 전에는 부족하다.
+capacity_capex_without_utilization,-5,lower,capex만 있고 utilization이 없으면 현금소모일 수 있다.
+unlisted_AI_chip_readthrough,-5,lower,비상장 AI chip 성과를 상장사 EPS로 바로 연결하지 않는다.
+consumer_OEM_exposed_to_memory_cost,-4,lower,메모리 shortage는 OEM에는 부품비 부담일 수 있다.
+labor_disruption_risk,-5,lower,파업·공급차질은 HBM catch-up narrative를 막는다.

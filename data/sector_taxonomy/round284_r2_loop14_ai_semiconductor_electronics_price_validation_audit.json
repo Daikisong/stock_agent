@@ -1,0 +1,402 @@
+{
+  "case_ids": [
+    "r2_loop14_sk_hynix_hbm_dominance_stage3_4b",
+    "r2_loop14_samsung_hbm_catchup_labor_4c_watch",
+    "r2_loop14_hanmi_tc_bonder_hbm_equipment_4b",
+    "r2_loop14_lg_innotek_ai_iphone_component_price_failed",
+    "r2_loop14_lg_display_oled_restructuring_stage2",
+    "r2_loop14_rebellions_sapeon_korean_ai_chip_stage2",
+    "r2_loop14_samsung_sk_openai_stargate_memory_mou_4b",
+    "r2_loop14_lg_electronics_component_cost_4c_watch"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "HBM memory",
+      "primary_archetype": "HBM_DOMINANCE_STAGE3_AND_4B",
+      "terms": "SK Hynix|Nvidia HBM3E|Q2 OP 5.47T KRW|HBM share 61%|market cap $942B"
+    },
+    {
+      "category": "Samsung catch-up and labor risk",
+      "primary_archetype": "SAMSUNG_HBM_CATCHUP_AND_LABOR_4C_WATCH",
+      "terms": "Samsung Electronics|HBM China exposure 20%|KOSPI 7000|strike 50,000 workers|Nvidia qualification"
+    },
+    {
+      "category": "HBM equipment",
+      "primary_archetype": "TC_BONDER_HBM_EQUIPMENT_EVENT_PREMIUM",
+      "terms": "Hanmi Semiconductor|TSV-TC bonder|SK Hynix 21.48B KRW|Micron rumor +22%|customer PO gate"
+    },
+    {
+      "category": "On-device AI components",
+      "primary_archetype": "ON_DEVICE_AI_IPHONE_COMPONENT_STAGE2",
+      "terms": "LG Innotek|Apple Intelligence|Q2 OP estimate 106.4B KRW|shares -0.4%|sell-through gate"
+    },
+    {
+      "category": "OLED portfolio restructuring",
+      "primary_archetype": "OLED_PORTFOLIO_RESTRUCTURING_STAGE2",
+      "terms": "LG Display|Guangzhou LCD sale $1.54B|OLED capex 1.1T KRW|utilization gate"
+    },
+    {
+      "category": "Korean AI chip fabless",
+      "primary_archetype": "KOREAN_AI_CHIP_FABLESS_STAGE2",
+      "terms": "Rebellions|Sapeon|SK Telecom|SK Hynix|$225M funding|listed EPS bridge"
+    },
+    {
+      "category": "AI infra MOU",
+      "primary_archetype": "AI_INFRA_MEMORY_SUPPLY_MOU_4B",
+      "terms": "Samsung|SK Hynix|OpenAI Stargate|900,000 DRAM wafers/month|LOI not binding"
+    },
+    {
+      "category": "Consumer electronics cost pressure",
+      "primary_archetype": "CONSUMER_ELECTRONICS_COMPONENT_COST_4C_WATCH",
+      "terms": "LG Electronics|Q4 net loss 725.9B KRW|operating loss 109B KRW|component costs|weak TV demand"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "AI_keyword_only",
+    "HBM_theme_without_customer_delivery",
+    "LOI_or_MOU_without_binding_contract",
+    "rumored_customer_PO",
+    "on_device_AI_expectation_only",
+    "capacity_capex_without_utilization",
+    "unlisted_AI_chip_readthrough",
+    "consumer_OEM_exposed_to_memory_cost",
+    "labor_disruption_risk"
+  ],
+  "green_required_fields": [
+    "actual_hbm_allocation_confirmed",
+    "customer_delivery_and_calloff_confirmed",
+    "HBM_ASP_mix_margin_confirmed",
+    "capacity_utilization_confirmed",
+    "equipment_PO_to_revenue_confirmed",
+    "customer_diversification_confirmed",
+    "device_sellthrough_confirmed",
+    "component_mix_margin_confirmed",
+    "OLED_utilization_confirmed",
+    "labor_supply_continuity_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "HBM_qualification_failure",
+    "export_control_ban_on_HBM_or_AI_chips",
+    "major_customer_calloff_cancellation",
+    "strike_or_shutdown_disrupting_memory_supply",
+    "capex_without_utilization_cash_burn",
+    "component_cost_spike_crushing_OEM_margins",
+    "foundry_logic_chip_loss_widening_despite_AI_rally"
+  ],
+  "large_sector": "AI_SEMICONDUCTOR_ELECTRONIC_COMPONENTS",
+  "round_id": "round_212",
+  "score_adjustments": [
+    {
+      "axis": "actual_hbm_allocation",
+      "direction": "raise",
+      "points": "5",
+      "reason": "HBM은 고객 allocation과 실제 납품이 확인될 때 강하다."
+    },
+    {
+      "axis": "customer_delivery_and_calloff",
+      "direction": "raise",
+      "points": "5",
+      "reason": "고객 수요는 call-off와 delivery로 닫혀야 한다."
+    },
+    {
+      "axis": "HBM_ASP_mix_margin",
+      "direction": "raise",
+      "points": "5",
+      "reason": "HBM ASP와 mix margin이 OP로 내려오는지 확인한다."
+    },
+    {
+      "axis": "capacity_utilization",
+      "direction": "raise",
+      "points": "5",
+      "reason": "증설과 capex는 utilization이 있어야 FCF로 연결된다."
+    },
+    {
+      "axis": "equipment_PO_to_revenue",
+      "direction": "raise",
+      "points": "5",
+      "reason": "장비주는 PO, 납품, revenue recognition이 핵심이다."
+    },
+    {
+      "axis": "customer_diversification",
+      "direction": "raise",
+      "points": "4",
+      "reason": "장비·부품주는 단일 고객 루머보다 고객 다변화가 중요하다."
+    },
+    {
+      "axis": "device_sellthrough",
+      "direction": "raise",
+      "points": "5",
+      "reason": "on-device AI는 실제 기기 판매와 교체수요가 필요하다."
+    },
+    {
+      "axis": "component_mix_margin",
+      "direction": "raise",
+      "points": "5",
+      "reason": "부품 탑재량과 mix가 margin으로 이어져야 한다."
+    },
+    {
+      "axis": "OLED_utilization",
+      "direction": "raise",
+      "points": "5",
+      "reason": "OLED capex는 utilization과 현금흐름으로 검증한다."
+    },
+    {
+      "axis": "labor_supply_continuity",
+      "direction": "raise",
+      "points": "5",
+      "reason": "파업·셧다운은 memory 공급 안정성 hard gate다."
+    },
+    {
+      "axis": "AI_keyword_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "AI 단어만으로 매출·마진을 만들지 않는다."
+    },
+    {
+      "axis": "HBM_theme_without_customer_delivery",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "HBM 테마는 고객 납품 전에는 제한한다."
+    },
+    {
+      "axis": "LOI_or_MOU_without_binding_contract",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "LOI/MOU는 binding take-or-pay가 아니다."
+    },
+    {
+      "axis": "rumored_customer_PO",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "고객 루머는 PO/revenue가 아니다."
+    },
+    {
+      "axis": "on_device_AI_expectation_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "Apple AI 기대는 sell-through와 부품 margin 전에는 부족하다."
+    },
+    {
+      "axis": "capacity_capex_without_utilization",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "capex만 있고 utilization이 없으면 현금소모일 수 있다."
+    },
+    {
+      "axis": "unlisted_AI_chip_readthrough",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "비상장 AI chip 성과를 상장사 EPS로 바로 연결하지 않는다."
+    },
+    {
+      "axis": "consumer_OEM_exposed_to_memory_cost",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "메모리 shortage는 OEM에는 부품비 부담일 수 있다."
+    },
+    {
+      "axis": "labor_disruption_risk",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "파업·공급차질은 HBM catch-up narrative를 막는다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+5",
+      "HBM_ASP_mix_margin": "+5",
+      "OLED_utilization": "0",
+      "actual_hbm_allocation": "+5",
+      "archetype": "HBM_DOMINANCE_STAGE3_AND_4B",
+      "capacity_utilization": "+5",
+      "component_mix_margin": "0",
+      "customer_delivery_calloff": "+5",
+      "customer_diversification": "+4",
+      "device_sellthrough": "0",
+      "equipment_PO_to_revenue": "0",
+      "event_penalty": "-2",
+      "hard_4c_sensitivity": "+4",
+      "labor_supply_continuity": "+4",
+      "notes": "SK Hynix HBM success is real, but valuation/crowding 4B must trigger."
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "HBM_ASP_mix_margin": "+5",
+      "OLED_utilization": "0",
+      "actual_hbm_allocation": "+5",
+      "archetype": "SAMSUNG_HBM_CATCHUP_AND_LABOR_4C_WATCH",
+      "capacity_utilization": "+5",
+      "component_mix_margin": "0",
+      "customer_delivery_calloff": "+5",
+      "customer_diversification": "+4",
+      "device_sellthrough": "0",
+      "equipment_PO_to_revenue": "0",
+      "event_penalty": "-4",
+      "hard_4c_sensitivity": "+5",
+      "labor_supply_continuity": "+5",
+      "notes": "Samsung needs HBM qualification, China exposure and labor continuity gates."
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "HBM_ASP_mix_margin": "+4",
+      "OLED_utilization": "0",
+      "actual_hbm_allocation": "+3",
+      "archetype": "TC_BONDER_HBM_EQUIPMENT_EVENT_PREMIUM",
+      "capacity_utilization": "+4",
+      "component_mix_margin": "0",
+      "customer_delivery_calloff": "+5",
+      "customer_diversification": "+5",
+      "device_sellthrough": "0",
+      "equipment_PO_to_revenue": "+5",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+4",
+      "labor_supply_continuity": "+2",
+      "notes": "Hanmi needs confirmed customer PO/shipment/revenue, not rumor."
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "HBM_ASP_mix_margin": "0",
+      "OLED_utilization": "0",
+      "actual_hbm_allocation": "0",
+      "archetype": "ON_DEVICE_AI_IPHONE_COMPONENT_STAGE2",
+      "capacity_utilization": "+4",
+      "component_mix_margin": "+5",
+      "customer_delivery_calloff": "+3",
+      "customer_diversification": "+4",
+      "device_sellthrough": "+5",
+      "equipment_PO_to_revenue": "0",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+3",
+      "labor_supply_continuity": "+1",
+      "notes": "LG Innotek needs actual iPhone sell-through and component margin."
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "HBM_ASP_mix_margin": "0",
+      "OLED_utilization": "+5",
+      "actual_hbm_allocation": "0",
+      "archetype": "OLED_PORTFOLIO_RESTRUCTURING_STAGE2",
+      "capacity_utilization": "+5",
+      "component_mix_margin": "+4",
+      "customer_delivery_calloff": "+3",
+      "customer_diversification": "+3",
+      "device_sellthrough": "+4",
+      "equipment_PO_to_revenue": "0",
+      "event_penalty": "-4",
+      "hard_4c_sensitivity": "+3",
+      "labor_supply_continuity": "+1",
+      "notes": "LG Display LCD exit/OLED capex needs utilization and FCF."
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "HBM_ASP_mix_margin": "+3",
+      "OLED_utilization": "0",
+      "actual_hbm_allocation": "0",
+      "archetype": "KOREAN_AI_CHIP_FABLESS_STAGE2",
+      "capacity_utilization": "+4",
+      "component_mix_margin": "0",
+      "customer_delivery_calloff": "+5",
+      "customer_diversification": "+5",
+      "device_sellthrough": "0",
+      "equipment_PO_to_revenue": "0",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+4",
+      "labor_supply_continuity": "+2",
+      "notes": "Rebellions/Sapeon needs tape-out, production, workload revenue and listed EPS bridge."
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "HBM_ASP_mix_margin": "+5",
+      "OLED_utilization": "0",
+      "actual_hbm_allocation": "+5",
+      "archetype": "AI_INFRA_MEMORY_SUPPLY_MOU_4B",
+      "capacity_utilization": "+5",
+      "component_mix_margin": "0",
+      "customer_delivery_calloff": "+5",
+      "customer_diversification": "+4",
+      "device_sellthrough": "0",
+      "equipment_PO_to_revenue": "0",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+4",
+      "labor_supply_continuity": "+2",
+      "notes": "OpenAI/Stargate LOI is demand signal, not binding take-or-pay Green."
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "HBM_ASP_mix_margin": "0",
+      "OLED_utilization": "0",
+      "actual_hbm_allocation": "0",
+      "archetype": "CONSUMER_ELECTRONICS_COMPONENT_COST_4C_WATCH",
+      "capacity_utilization": "+3",
+      "component_mix_margin": "+5",
+      "customer_delivery_calloff": "+2",
+      "customer_diversification": "+2",
+      "device_sellthrough": "+5",
+      "equipment_PO_to_revenue": "0",
+      "event_penalty": "0",
+      "hard_4c_sensitivity": "+4",
+      "labor_supply_continuity": "+1",
+      "notes": "LG Electronics shows memory shortage can hurt OEM margins."
+    }
+  ],
+  "source_round": "docs/round/round_284.md",
+  "stage4b_watch_triggers": [
+    "HBM_leader_one_year_200pct_plus_after_prior_274pct",
+    "AI_memory_MOU_LOI_10pct_plus_rally",
+    "equipment_unconfirmed_customer_rumor_20pct_plus",
+    "on_device_AI_iPhone_expectation_before_component_margin",
+    "OLED_capex_or_LCD_exit_before_utilization",
+    "unlisted_AI_chip_merger_readthrough_to_listed_EPS",
+    "Samsung_catchup_rally_before_strike_export_control_clearance"
+  ],
+  "summary": {
+    "aligned_count": 1,
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 1,
+    "event_premium_or_result_count": 2,
+    "evidence_good_but_price_failed_count": 1,
+    "failed_rerating_count": 2,
+    "false_positive_score_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "hard_4c_confirmed": false,
+    "hard_4c_watch_case_count": 2,
+    "hard_4c_watch_confirmed": true,
+    "large_sector": "AI_SEMICONDUCTOR_ELECTRONIC_COMPONENTS",
+    "overheat_count": 0,
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_212",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_284.md",
+    "stage3_case_count": 1,
+    "stage4b_watch_count": 4,
+    "stage4c_watch_count": 2,
+    "structural_success_count": 1,
+    "success_candidate_count": 3,
+    "target_archetype_count": 8,
+    "unknown_alignment_count": 3
+  },
+  "target_aliases": {
+    "AI_INFRA_MEMORY_SUPPLY_MOU_4B": "AI_INFRA_MEMORY_SUPPLY_MOU_4B",
+    "CONSUMER_ELECTRONICS_COMPONENT_COST_4C_WATCH": "CONSUMER_ELECTRONICS_COMPONENT_COST_4C_WATCH",
+    "HBM_DOMINANCE_STAGE3_AND_4B": "HBM_DOMINANCE_STAGE3_AND_4B",
+    "KOREAN_AI_CHIP_FABLESS_STAGE2": "KOREAN_AI_CHIP_FABLESS_STAGE2",
+    "OLED_PORTFOLIO_RESTRUCTURING_STAGE2": "OLED_PORTFOLIO_RESTRUCTURING_STAGE2",
+    "ON_DEVICE_AI_IPHONE_COMPONENT_STAGE2": "ON_DEVICE_AI_IPHONE_COMPONENT_STAGE2",
+    "SAMSUNG_HBM_CATCHUP_AND_LABOR_4C_WATCH": "SAMSUNG_HBM_CATCHUP_AND_LABOR_4C_WATCH",
+    "TC_BONDER_HBM_EQUIPMENT_EVENT_PREMIUM": "TC_BONDER_HBM_EQUIPMENT_EVENT_PREMIUM"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round284_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_AI_HBM_OpenAI_Apple_OLED_or_AI_chip_keywords_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}
