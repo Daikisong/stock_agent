@@ -1,0 +1,98 @@
+{
+  "case_ids": [
+    "r13_loop14_hanwha_aerospace_backlog_dilution_4b",
+    "r13_loop14_lnf_tesla_signed_contract_collapse_hard_4c",
+    "r13_loop14_kogas_blue_whale_resource_event_premium",
+    "r13_loop14_lg_cns_ai_cloud_ipo_false_positive",
+    "r13_loop14_samsung_ct_valueup_proposal_failure",
+    "r13_loop14_skt_data_trust_hard_4c",
+    "r13_loop14_hyundai_steel_us_localization_capex_false_positive",
+    "r13_loop14_korea_zinc_control_premium_4b"
+  ],
+  "green_forbidden_patterns": [
+    "headline_order_backlog_only",
+    "large_customer_name_only",
+    "policy_or_presidential_announcement_only",
+    "IPO_oversubscription_only",
+    "activist_or_valueup_proposal_only",
+    "control_premium_as_operating_green",
+    "capex_localization_headline_only",
+    "resource_estimate_without_drilling",
+    "data_breach_treated_as_oneoff"
+  ],
+  "green_required_fields": [
+    "actual_calloff_vs_signed_contract",
+    "actual_calloff_revenue_recognition_confirmed",
+    "dilution_adjusted_EPS",
+    "capital_raise_disclosure_quality",
+    "capex_IRR_and_funding_clarity",
+    "aftermarket_price_validation",
+    "data_trust_internal_control",
+    "contingent_liability_risk",
+    "governance_execution_not_proposal",
+    "control_premium_separation",
+    "resource_economic_viability",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "signed_contract_value_collapse",
+    "data_breach_or_trust_failure_with_compensation_capex_revenue_forecast_impact",
+    "fatal_safety_or_service_trust_event",
+    "financing_plan_blocked_or_revised_due_disclosure_quality",
+    "capex_debt_or_dilution_without_IRR_clarity",
+    "governance_proposal_fails_after_valueup_rerating",
+    "resource_drilling_fails_after_speculative_rally",
+    "customer_calloff_or_model_cancellation_destroys_expected_revenue"
+  ],
+  "large_sector": "CROSS_ARCHETYPE_REDTEAM_4B_ACCOUNTING_TRUST_PRICE_VALIDATION",
+  "round_id": "round_223",
+  "source_round": "docs/round/round_295.md",
+  "stage4b_watch_triggers": [
+    "6_to_12m_double_plus_before_large_capital_raise_or_CB",
+    "order_backlog_defense_AI_resource_headline_before_PER_rerating",
+    "IPO_oversubscription_high_but_debut_below_IPO",
+    "control_premium_15_to_30pct_without_operating_cashflow",
+    "government_or_presidential_announcement_20_to_30pct_without_proof",
+    "capex_localization_headline_without_funding_IRR_customer_demand",
+    "activist_proposal_without_board_adoption"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "event_premium_count": 1,
+    "evidence_good_but_price_failed_count": 1,
+    "failed_rerating_count": 3,
+    "false_positive_score_count": 5,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 2,
+    "large_sector": "CROSS_ARCHETYPE_REDTEAM_4B_ACCOUNTING_TRUST_PRICE_VALIDATION",
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_223",
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_295.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 4,
+    "stage4c_watch_count": 5,
+    "success_candidate_count": 0,
+    "watch_counterexample_count": 2
+  },
+  "target_aliases": {
+    "AI_CLOUD_IPO_FALSE_POSITIVE": "AI_CLOUD_IPO_FALSE_POSITIVE",
+    "CONTROL_PREMIUM_4B_GOVERNANCE_WATCH": "CONTROL_PREMIUM_4B_GOVERNANCE_WATCH",
+    "DATA_TRUST_HARD_4C": "DATA_TRUST_HARD_4C",
+    "DEFENSE_BACKLOG_DILUTION_4B": "DEFENSE_BACKLOG_DILUTION_4B",
+    "LOCALIZATION_CAPEX_FALSE_POSITIVE": "LOCALIZATION_CAPEX_FALSE_POSITIVE",
+    "RESOURCE_DISCOVERY_PRICE_MOVED_WITHOUT_EVIDENCE": "RESOURCE_DISCOVERY_PRICE_MOVED_WITHOUT_EVIDENCE",
+    "SIGNED_CONTRACT_COLLAPSE_HARD_4C": "SIGNED_CONTRACT_COLLAPSE_HARD_4C",
+    "VALUE_UP_SHAREHOLDER_RETURN_FALSE_POSITIVE": "VALUE_UP_SHAREHOLDER_RETURN_FALSE_POSITIVE"
+  },
+  "what_not_to_change": [
+    "do_not_apply_round295_shadow_weights_to_production_scoring_yet",
+    "do_not_use_round295_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_headlines_as_cashflow",
+    "do_not_invent_full_adjusted_ohlc"
+  ]
+}

@@ -1,0 +1,12 @@
+axis,points,direction,reason
+actual_calloff_vs_signed_contract,5,raise,계약 headline은 매출이 아니다. 실제 call-off와 매출 인식이 필요하다.
+dilution_adjusted_EPS,5,raise,수주가 좋아도 증자·CB가 EPS를 희석하면 Green이 아니다.
+capital_raise_disclosure_quality,5,raise,대규모 자금조달은 사용처와 투자자 의사결정 정보가 충분해야 한다.
+capex_IRR_and_funding_clarity,5,raise,"현지화 CAPEX는 IRR, funding, customer demand가 닫혀야 한다."
+aftermarket_price_validation,5,raise,IPO 청약경쟁률보다 상장 후 가격과 첫 실적이 더 강한 검증이다.
+data_trust_internal_control,5,raise,"데이터 신뢰 훼손은 보상, 보안투자, 매출전망, 우발부채로 이어진다."
+contingent_liability_risk,5,raise,보상·소송·규제 리스크는 일회성 비용으로 단정하면 안 된다.
+governance_execution_not_proposal,5,raise,Value-Up 제안은 실행 전까지 현금흐름 증거가 아니다.
+control_premium_separation,4,raise,지배권 premium은 영업현금흐름 리레이팅과 분리한다.
+resource_economic_viability,5,raise,자원 estimate는 시추·경제성·IRR 전까지 Green 증거가 아니다.
+headline_only_event,-5,lower,좋은 headline 하나로 Stage 3-Green을 만들지 않는다.
