@@ -1,0 +1,21 @@
+axis,points,direction,reason
+confirmed_customer_order,5,raise,R2는 고객 주문이 확인될 때만 강하게 본다.
+HBM_generation_transition,5,raise,HBM 세대 전환은 EPS/FCF 체급 변화의 핵심 증거다.
+capacity_bottleneck,5,raise,CAPA 병목과 allocation은 단순 AI keyword보다 강하다.
+advanced_packaging_capacity,5,raise,advanced packaging CAPA가 HBM 출하로 이어질 때 visibility가 오른다.
+EUV_order,5,raise,EUV 발주는 HBM/advanced DRAM 생산능력 검증 신호다.
+delivery_or_mass_production_readiness,5,raise,출하·양산 readiness가 design win을 매출로 바꾼다.
+customer_specific_design_lockin,4,raise,고객별 HBM4·ASIC lock-in은 반복 수요 가능성을 높인다.
+order_to_revenue_conversion,5,raise,주문과 design win은 매출·마진으로 전환되어야 한다.
+gross_margin_visibility,5,raise,메모리·장비·부품 모두 마진 가시성이 필요하다.
+price_path_alignment,5,raise,증거 이후 가격경로가 따라오는지 검증한다.
+AI_keyword_only,-5,lower,AI 이름만 있으면 Stage 1 연구 라우팅 수준이다.
+unconfirmed_customer_rumor,-5,lower,미확정 고객 보도로 급등하면 4B-watch다.
+design_win_without_revenue,-5,lower,design win은 양산·매출·마진 전 Stage 2다.
+Apple_AI_replacement_cycle_only,-4,lower,Apple AI 교체수요 기대만으로 부품주 Green은 금지다.
+lidar_optionality_without_volume,-4,lower,lidar optionality는 실제 volume ramp 전 event premium이다.
+LCD_exit_without_OLED_profit,-4,lower,LCD exit는 OLED 이익과 FCF 전 Stage 2다.
+China_customer_concentration,-5,lower,중국 고객 집중은 export-control RedTeam을 키운다.
+export_control_exposure,-5,lower,중국 fab 장비허가 리스크는 4C-watch다.
+labor_disruption_risk,-5,lower,파업·생산중단은 HBM/foundry 실행 신뢰도를 낮춘다.
+event_rally_before_revenue,-5,lower,매출 전 event rally는 4B-watch다.

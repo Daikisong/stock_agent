@@ -1,0 +1,9 @@
+archetype,confirmed_customer_order,hbm_transition,capacity_bottleneck,advanced_packaging,euv_order,production_readiness,design_lockin,order_to_revenue,gross_margin,price_path_alignment,event_penalty,china_labor_export_redteam,4b_watch_sensitivity,hard_4c_sensitivity,notes
+MEMORY_HBM4_CAPACITY_LEADER,+5,+5,+5,+5,+5,+5,+5,+5,+5,+5,-1,+4,+5,+4,SK Hynix is aligned Stage 3 but current state is 4B-watch.
+HBM_CATCHUP_FOUNDRY_TURNAROUND,+5,+5,+4,+4,+3,+5,+4,+5,+5,+4,-3,+5,+5,+4,Samsung is Stage 2 until volume/margin and labor/export-control risk clear.
+HBM_BONDER_EQUIPMENT_ORDER,+5,+5,+5,+4,+1,+4,+3,+5,+5,+5,-4,+4,+5,+4,"Hanmi confirmed order is good, but unconfirmed customer rumor gets 4B penalty."
+SYSTEM_SEMI_DESIGN_HOUSE_AI_ORDER,+3,+2,+2,+3,+0,+3,+5,+5,+4,+3,-5,+2,+4,+4,"Gaonchips design win needs tape-out, mass production and revenue."
+AI_DEVICE_COMPONENT_OPTIONALITY,+3,+2,+2,+2,+0,+3,+3,+5,+4,+4,-5,+2,+5,+3,LG Innotek Apple AI/lidar optionality needs actual volume and margin.
+DISPLAY_LCD_EXIT_OLED_TURNAROUND,+2,+0,+1,+0,+0,+3,+1,+4,+5,+3,-4,+2,+4,+4,LG Display LCD exit/loss narrowing is Stage 2 until OLED profit/FCF confirm.
+CHINA_CXMT_EQUIPMENT_SUPPLIER_RELIEF,+3,+2,+3,+2,+0,+3,+2,+4,+4,+3,-5,+5,+5,+4,Jusung/Mirae relief is not Green due China concentration/export-control risk.
+GEOPOLITICAL_EXPORT_CONTROL_OVERLAY,+0,+0,+0,+0,+0,+0,+0,+0,+0,+3,+0,+5,+4,+5,China fab VEU revocation and MATCH Act are 4C-watch overlays.
