@@ -1,0 +1,9 @@
+archetype,prescription_ramp,royalty_milestone_cashflow,commercial_launch,cdmo_utilization,customer_transfer,regulatory_quality,reimbursement_access,device_clinic_utilization,recurring_consumables_service,ex_policy_margin_fcf,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+KOREAN_ORIGIN_DRUG_GLOBAL_APPROVAL,+5,+5,+5,0,0,+5,+5,0,0,+5,-4,+4,+5,Yuhan/lazertinib needs royalty/milestone cash and prescription ramp after FDA approval.
+PLATFORM_TECH_ENZYME_ROYALTY_OPTIONALITY,+3,+5,+5,0,0,+5,+4,0,0,+5,-5,+5,+5,"Alteogen/SC Keytruda needs royalty cashflow, launch adoption and patent clearance."
+CDMO_US_TARIFF_HEDGE_STAGE2,0,0,+3,+5,+5,+5,0,0,0,+5,-5,+4,+4,"Samsung Bio U.S. facility needs utilization, customer transfer, FDA inspection and margin."
+BIOPHARMA_US_FACTORY_TARIFF_HEDGE,0,0,+3,+5,+5,+5,0,0,0,+5,-5,+4,+4,"Celltrion U.S. factory needs product transfer, tariff saving, utilization and FCF."
+VACCINE_CDMO_M_AND_A_STAGE2,0,0,+3,+5,+5,+5,0,0,+1,+5,-5,+5,+4,"SK Bioscience/IDT M&A needs order book, integration and utilization."
+AESTHETIC_MEDICAL_DEVICE_PE_TAKEOUT,0,0,+4,0,0,+4,+3,+5,+5,+5,-3,+4,+3,Jeisys is device benchmark; peer scoring needs clinic utilization and consumables/service revenue.
+BIOPHARMA_POLICY_RALLY_EVENT_PREMIUM,0,0,+2,+3,+2,+3,0,0,0,+5,-5,+5,+4,Policy support rally is not Green without tariff/margin bridge.
+VACCINE_DEMAND_COLLAPSE_HARD_REFERENCE,0,0,+2,+2,0,+4,+3,0,0,+5,0,+3,+5,SkyCovione shows approval/procurement without administered demand can fail.

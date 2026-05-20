@@ -1,0 +1,15 @@
+field,required_for_round276_price_validation
+price_data_source,true
+full_adjusted_ohlc_complete,true
+reported_price_anchor,true
+reported_return_anchor,true
+stage2_price_anchor,true
+stage3_price,true
+stage4b_price,true
+stage4c_price,true
+event_mfe_pct,true
+event_mae_pct,true
+commercialization_or_utilization_anchor,true
+regulatory_quality_or_patent_gate,true
+demand_or_administered_dose_anchor,true
+price_validation_status,true

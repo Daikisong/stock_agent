@@ -1,0 +1,391 @@
+{
+  "case_ids": [
+    "r7_loop13_yuhan_lazertinib_global_fda_approval",
+    "r7_loop13_alteogen_merck_sc_keytruda_platform",
+    "r7_loop13_samsung_biologics_gsk_rockville_facility",
+    "r7_loop13_celltrion_us_factory_tariff_hedge",
+    "r7_loop13_sk_bioscience_idt_biologika_cdmomna",
+    "r7_loop13_jeisys_medical_archimed_aesthetic_device_takeout",
+    "r7_loop13_biopharma_tariff_support_policy_rally",
+    "r7_loop13_sk_bioscience_skycovione_demand_collapse_reference"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "신약 글로벌 승인",
+      "primary_archetype": "KOREAN_ORIGIN_DRUG_GLOBAL_APPROVAL",
+      "terms": "Yuhan|lazertinib|Rybrevant|Lazcluze|EGFR NSCLC|prescription ramp"
+    },
+    {
+      "category": "플랫폼 기술 royalty",
+      "primary_archetype": "PLATFORM_TECH_ENZYME_ROYALTY_OPTIONALITY",
+      "terms": "Alteogen|hyaluronidase|SC Keytruda|Merck|Halozyme|royalty"
+    },
+    {
+      "category": "CDMO U.S. tariff hedge",
+      "primary_archetype": "CDMO_US_TARIFF_HEDGE_STAGE2",
+      "terms": "Samsung Biologics|GSK Rockville|60,000L|FDA inspection|utilization"
+    },
+    {
+      "category": "Biopharma U.S. factory",
+      "primary_archetype": "BIOPHARMA_US_FACTORY_TARIFF_HEDGE",
+      "terms": "Celltrion|ImClone|Eli Lilly|tariff hedge|product transfer"
+    },
+    {
+      "category": "Vaccine CDMO M&A",
+      "primary_archetype": "VACCINE_CDMO_M_AND_A_STAGE2",
+      "terms": "SK Bioscience|IDT Biologika|order book|fill-finish|utilization"
+    },
+    {
+      "category": "Aesthetic device takeout",
+      "primary_archetype": "AESTHETIC_MEDICAL_DEVICE_PE_TAKEOUT",
+      "terms": "Jeisys|ArchiMed|EBD|take-private|clinic utilization"
+    },
+    {
+      "category": "Biopharma policy rally",
+      "primary_archetype": "BIOPHARMA_POLICY_RALLY_EVENT_PREMIUM",
+      "terms": "pharma sector|tariff support|Samsung Biologics|Celltrion|margin bridge"
+    },
+    {
+      "category": "Vaccine demand hard reference",
+      "primary_archetype": "VACCINE_DEMAND_COLLAPSE_HARD_REFERENCE",
+      "terms": "SkyCovione|10M doses|3,787 shots|production suspended|demand collapse"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "FDA_approval_without_sales_bridge",
+    "platform_tech_without_royalty_cash",
+    "CDMO_facility_acquisition_only",
+    "policy_tariff_support_only",
+    "M&A_without_utilization",
+    "vaccine_procurement_without_demand",
+    "device_takeout_not_tradeable",
+    "patent_or_CRL_overhang"
+  ],
+  "green_required_fields": [
+    "actual_prescription_ramp_confirmed",
+    "royalty_milestone_cashflow_confirmed",
+    "commercial_launch_execution_confirmed",
+    "cdmo_capacity_utilization_confirmed",
+    "customer_transfer_success_confirmed",
+    "regulatory_quality_clearance_confirmed",
+    "reimbursement_and_access_confirmed",
+    "device_clinic_utilization_confirmed",
+    "recurring_consumables_or_service_revenue_confirmed",
+    "ex_policy_margin_fcf_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "FDA_CRL_or_approval_rejection",
+    "clinical_hold_or_serious_safety_event",
+    "CMC_or_manufacturing_inspection_failure",
+    "patent_injunction_or_launch_delay",
+    "royalty_or_milestone_non_realization",
+    "CDMO_facility_underutilization",
+    "vaccine_demand_collapse",
+    "device_recall_or_safety_issue",
+    "reimbursement_denial",
+    "tariff_economics_negative_despite_US_facility"
+  ],
+  "large_sector": "BIOTECH_HEALTHCARE_DEVICE",
+  "round_id": "round_204",
+  "score_adjustments": [
+    {
+      "axis": "actual_prescription_ramp",
+      "direction": "raise",
+      "points": "5",
+      "reason": "신약 Green은 승인보다 실제 처방 ramp가 중요하다."
+    },
+    {
+      "axis": "royalty_milestone_cashflow",
+      "direction": "raise",
+      "points": "5",
+      "reason": "플랫폼/라이선스는 royalty와 milestone 현금흐름으로 닫혀야 한다."
+    },
+    {
+      "axis": "commercial_launch_execution",
+      "direction": "raise",
+      "points": "5",
+      "reason": "승인 이후 출시 실행과 접근성이 확인되어야 한다."
+    },
+    {
+      "axis": "CDMO_capacity_utilization",
+      "direction": "raise",
+      "points": "5",
+      "reason": "CDMO 시설은 capacity가 아니라 utilization이 Green 근거다."
+    },
+    {
+      "axis": "customer_transfer_success",
+      "direction": "raise",
+      "points": "5",
+      "reason": "미국 공장은 고객 이전과 제품 이전이 확인되어야 한다."
+    },
+    {
+      "axis": "regulatory_quality_clearance",
+      "direction": "raise",
+      "points": "5",
+      "reason": "CMC/FDA inspection과 patent gate를 통과해야 한다."
+    },
+    {
+      "axis": "reimbursement_and_access",
+      "direction": "raise",
+      "points": "5",
+      "reason": "처방·시술은 reimbursement/access가 있어야 매출로 전환된다."
+    },
+    {
+      "axis": "device_clinic_utilization",
+      "direction": "raise",
+      "points": "5",
+      "reason": "의료기기는 clinic utilization이 실제 수요다."
+    },
+    {
+      "axis": "recurring_consumables_or_service",
+      "direction": "raise",
+      "points": "4",
+      "reason": "장비 판매보다 반복 소모품/서비스 매출이 질을 만든다."
+    },
+    {
+      "axis": "ex_policy_margin_FCF",
+      "direction": "raise",
+      "points": "5",
+      "reason": "정책 지원 후에도 margin과 FCF로 닫혀야 한다."
+    },
+    {
+      "axis": "FDA_approval_without_sales_bridge",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "FDA approval만으로 Stage 3-Green을 만들지 않는다."
+    },
+    {
+      "axis": "platform_tech_without_royalty_cash",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "플랫폼 기술 headline은 royalty cash 전에는 option이다."
+    },
+    {
+      "axis": "CDMO_facility_acquisition_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "공장 인수만으로 utilization과 margin을 발명하지 않는다."
+    },
+    {
+      "axis": "policy_tariff_support_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "정책지원은 company margin bridge 전에는 event premium이다."
+    },
+    {
+      "axis": "M&A_without_utilization",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "M&A pop은 order book/utilization 전에는 4B-watch다."
+    },
+    {
+      "axis": "vaccine_procurement_without_demand",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "정부 구매가 실제 접종 수요를 뜻하지 않는다."
+    },
+    {
+      "axis": "device_takeout_not_tradeable",
+      "direction": "lower",
+      "points": "-3",
+      "reason": "take-private benchmark는 상장 Stage 3 추적이 어렵다."
+    },
+    {
+      "axis": "patent_or_CRL_overhang",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "CRL/patent overhang은 launch ramp를 막을 수 있다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "KOREAN_ORIGIN_DRUG_GLOBAL_APPROVAL",
+      "cdmo_utilization": "0",
+      "commercial_launch": "+5",
+      "customer_transfer": "0",
+      "device_clinic_utilization": "0",
+      "event_penalty": "-4",
+      "ex_policy_margin_fcf": "+5",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Yuhan/lazertinib needs royalty/milestone cash and prescription ramp after FDA approval.",
+      "prescription_ramp": "+5",
+      "recurring_consumables_service": "0",
+      "regulatory_quality": "+5",
+      "reimbursement_access": "+5",
+      "royalty_milestone_cashflow": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "PLATFORM_TECH_ENZYME_ROYALTY_OPTIONALITY",
+      "cdmo_utilization": "0",
+      "commercial_launch": "+5",
+      "customer_transfer": "0",
+      "device_clinic_utilization": "0",
+      "event_penalty": "-5",
+      "ex_policy_margin_fcf": "+5",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Alteogen/SC Keytruda needs royalty cashflow, launch adoption and patent clearance.",
+      "prescription_ramp": "+3",
+      "recurring_consumables_service": "0",
+      "regulatory_quality": "+5",
+      "reimbursement_access": "+4",
+      "royalty_milestone_cashflow": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "CDMO_US_TARIFF_HEDGE_STAGE2",
+      "cdmo_utilization": "+5",
+      "commercial_launch": "+3",
+      "customer_transfer": "+5",
+      "device_clinic_utilization": "0",
+      "event_penalty": "-5",
+      "ex_policy_margin_fcf": "+5",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Samsung Bio U.S. facility needs utilization, customer transfer, FDA inspection and margin.",
+      "prescription_ramp": "0",
+      "recurring_consumables_service": "0",
+      "regulatory_quality": "+5",
+      "reimbursement_access": "0",
+      "royalty_milestone_cashflow": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "BIOPHARMA_US_FACTORY_TARIFF_HEDGE",
+      "cdmo_utilization": "+5",
+      "commercial_launch": "+3",
+      "customer_transfer": "+5",
+      "device_clinic_utilization": "0",
+      "event_penalty": "-5",
+      "ex_policy_margin_fcf": "+5",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Celltrion U.S. factory needs product transfer, tariff saving, utilization and FCF.",
+      "prescription_ramp": "0",
+      "recurring_consumables_service": "0",
+      "regulatory_quality": "+5",
+      "reimbursement_access": "0",
+      "royalty_milestone_cashflow": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "VACCINE_CDMO_M_AND_A_STAGE2",
+      "cdmo_utilization": "+5",
+      "commercial_launch": "+3",
+      "customer_transfer": "+5",
+      "device_clinic_utilization": "0",
+      "event_penalty": "-5",
+      "ex_policy_margin_fcf": "+5",
+      "hard_4c_sensitivity": "+4",
+      "notes": "SK Bioscience/IDT M&A needs order book, integration and utilization.",
+      "prescription_ramp": "0",
+      "recurring_consumables_service": "+1",
+      "regulatory_quality": "+5",
+      "reimbursement_access": "0",
+      "royalty_milestone_cashflow": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "AESTHETIC_MEDICAL_DEVICE_PE_TAKEOUT",
+      "cdmo_utilization": "0",
+      "commercial_launch": "+4",
+      "customer_transfer": "0",
+      "device_clinic_utilization": "+5",
+      "event_penalty": "-3",
+      "ex_policy_margin_fcf": "+5",
+      "hard_4c_sensitivity": "+3",
+      "notes": "Jeisys is device benchmark; peer scoring needs clinic utilization and consumables/service revenue.",
+      "prescription_ramp": "0",
+      "recurring_consumables_service": "+5",
+      "regulatory_quality": "+4",
+      "reimbursement_access": "+3",
+      "royalty_milestone_cashflow": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "BIOPHARMA_POLICY_RALLY_EVENT_PREMIUM",
+      "cdmo_utilization": "+3",
+      "commercial_launch": "+2",
+      "customer_transfer": "+2",
+      "device_clinic_utilization": "0",
+      "event_penalty": "-5",
+      "ex_policy_margin_fcf": "+5",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Policy support rally is not Green without tariff/margin bridge.",
+      "prescription_ramp": "0",
+      "recurring_consumables_service": "0",
+      "regulatory_quality": "+3",
+      "reimbursement_access": "0",
+      "royalty_milestone_cashflow": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "VACCINE_DEMAND_COLLAPSE_HARD_REFERENCE",
+      "cdmo_utilization": "+2",
+      "commercial_launch": "+2",
+      "customer_transfer": "0",
+      "device_clinic_utilization": "0",
+      "event_penalty": "0",
+      "ex_policy_margin_fcf": "+5",
+      "hard_4c_sensitivity": "+5",
+      "notes": "SkyCovione shows approval/procurement without administered demand can fail.",
+      "prescription_ramp": "0",
+      "recurring_consumables_service": "0",
+      "regulatory_quality": "+4",
+      "reimbursement_access": "+3",
+      "royalty_milestone_cashflow": "0"
+    }
+  ],
+  "source_round": "docs/round/round_276.md",
+  "stage4b_watch_triggers": [
+    "FDA_approval_global_approval_headline_rerating",
+    "SC_Keytruda_platform_enzyme_story_before_royalty",
+    "CDMO_US_facility_acquisition_before_utilization",
+    "M&A_announcement_plus_10pct_before_order_book",
+    "policy_support_sector_rally_3_to_6pct",
+    "medical_device_takeout_peer_valuation_overheat",
+    "vaccine_sovereignty_narrative_before_administered_demand"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 3,
+    "failed_rerating_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "hard_4c_confirmed": false,
+    "hard_4c_reference_confirmed": true,
+    "hard_4c_reference_count": 1,
+    "large_sector": "BIOTECH_HEALTHCARE_DEVICE",
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_204",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_276.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 6,
+    "success_candidate_count": 6,
+    "target_archetype_count": 8
+  },
+  "target_aliases": {
+    "AESTHETIC_MEDICAL_DEVICE_PE_TAKEOUT": "AESTHETIC_MEDICAL_DEVICE_PE_TAKEOUT",
+    "BIOPHARMA_POLICY_RALLY_EVENT_PREMIUM": "BIOPHARMA_POLICY_RALLY_EVENT_PREMIUM",
+    "BIOPHARMA_US_FACTORY_TARIFF_HEDGE": "BIOPHARMA_US_FACTORY_TARIFF_HEDGE",
+    "CDMO_US_TARIFF_HEDGE_STAGE2": "CDMO_US_TARIFF_HEDGE_STAGE2",
+    "KOREAN_ORIGIN_DRUG_GLOBAL_APPROVAL": "KOREAN_ORIGIN_DRUG_GLOBAL_APPROVAL",
+    "PLATFORM_TECH_ENZYME_ROYALTY_OPTIONALITY": "PLATFORM_TECH_ENZYME_ROYALTY_OPTIONALITY",
+    "VACCINE_CDMO_M_AND_A_STAGE2": "VACCINE_CDMO_M_AND_A_STAGE2",
+    "VACCINE_DEMAND_COLLAPSE_HARD_REFERENCE": "VACCINE_DEMAND_COLLAPSE_HARD_REFERENCE"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round276_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_fda_approval_cdmo_factory_platform_tech_policy_mna_or_procurement_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}

@@ -1,0 +1,9 @@
+category,primary_archetype,terms
+신약 글로벌 승인,KOREAN_ORIGIN_DRUG_GLOBAL_APPROVAL,Yuhan|lazertinib|Rybrevant|Lazcluze|EGFR NSCLC|prescription ramp
+플랫폼 기술 royalty,PLATFORM_TECH_ENZYME_ROYALTY_OPTIONALITY,Alteogen|hyaluronidase|SC Keytruda|Merck|Halozyme|royalty
+CDMO U.S. tariff hedge,CDMO_US_TARIFF_HEDGE_STAGE2,"Samsung Biologics|GSK Rockville|60,000L|FDA inspection|utilization"
+Biopharma U.S. factory,BIOPHARMA_US_FACTORY_TARIFF_HEDGE,Celltrion|ImClone|Eli Lilly|tariff hedge|product transfer
+Vaccine CDMO M&A,VACCINE_CDMO_M_AND_A_STAGE2,SK Bioscience|IDT Biologika|order book|fill-finish|utilization
+Aesthetic device takeout,AESTHETIC_MEDICAL_DEVICE_PE_TAKEOUT,Jeisys|ArchiMed|EBD|take-private|clinic utilization
+Biopharma policy rally,BIOPHARMA_POLICY_RALLY_EVENT_PREMIUM,pharma sector|tariff support|Samsung Biologics|Celltrion|margin bridge
+Vaccine demand hard reference,VACCINE_DEMAND_COLLAPSE_HARD_REFERENCE,"SkyCovione|10M doses|3,787 shots|production suspended|demand collapse"

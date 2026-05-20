@@ -1,0 +1,19 @@
+axis,points,direction,reason
+actual_prescription_ramp,5,raise,신약 Green은 승인보다 실제 처방 ramp가 중요하다.
+royalty_milestone_cashflow,5,raise,플랫폼/라이선스는 royalty와 milestone 현금흐름으로 닫혀야 한다.
+commercial_launch_execution,5,raise,승인 이후 출시 실행과 접근성이 확인되어야 한다.
+CDMO_capacity_utilization,5,raise,CDMO 시설은 capacity가 아니라 utilization이 Green 근거다.
+customer_transfer_success,5,raise,미국 공장은 고객 이전과 제품 이전이 확인되어야 한다.
+regulatory_quality_clearance,5,raise,CMC/FDA inspection과 patent gate를 통과해야 한다.
+reimbursement_and_access,5,raise,처방·시술은 reimbursement/access가 있어야 매출로 전환된다.
+device_clinic_utilization,5,raise,의료기기는 clinic utilization이 실제 수요다.
+recurring_consumables_or_service,4,raise,장비 판매보다 반복 소모품/서비스 매출이 질을 만든다.
+ex_policy_margin_FCF,5,raise,정책 지원 후에도 margin과 FCF로 닫혀야 한다.
+FDA_approval_without_sales_bridge,-4,lower,FDA approval만으로 Stage 3-Green을 만들지 않는다.
+platform_tech_without_royalty_cash,-5,lower,플랫폼 기술 headline은 royalty cash 전에는 option이다.
+CDMO_facility_acquisition_only,-5,lower,공장 인수만으로 utilization과 margin을 발명하지 않는다.
+policy_tariff_support_only,-5,lower,정책지원은 company margin bridge 전에는 event premium이다.
+M&A_without_utilization,-5,lower,M&A pop은 order book/utilization 전에는 4B-watch다.
+vaccine_procurement_without_demand,-5,lower,정부 구매가 실제 접종 수요를 뜻하지 않는다.
+device_takeout_not_tradeable,-3,lower,take-private benchmark는 상장 Stage 3 추적이 어렵다.
+patent_or_CRL_overhang,-5,lower,CRL/patent overhang은 launch ramp를 막을 수 있다.
