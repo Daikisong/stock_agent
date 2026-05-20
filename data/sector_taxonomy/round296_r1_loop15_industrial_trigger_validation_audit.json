@@ -1,0 +1,118 @@
+{
+  "case_ids": [
+    "r1_loop15_hyundai_rotem_k2_poland",
+    "r1_loop15_lig_nex1_msam",
+    "r1_loop15_hanwha_aerospace_k9_backlog_dilution",
+    "r1_loop15_shipbuilding_order_price_basket",
+    "r1_loop15_ls_electric_us_grid",
+    "r1_loop15_samsung_ena_fadhili",
+    "r1_loop15_czech_nuclear_doosan"
+  ],
+  "green_blockers": [
+    "full_trigger_level_ohlc_missing",
+    "delivery_margin_unconfirmed",
+    "cash_collection_unconfirmed",
+    "working_capital_or_claim_risk_unresolved",
+    "final_contract_or_legal_clearance_pending",
+    "4b_overlay_requires_sizing_down_rule"
+  ],
+  "hard_4c_gates": [
+    "signed_contract_collapse",
+    "export_license_sanction_or_legal_block",
+    "major_cost_overrun_or_claim",
+    "dilution_financing_after_overheat",
+    "preferred_bidder_cancellation",
+    "final_contract_blocked_by_court_or_regulator"
+  ],
+  "large_sector": "INDUSTRIALS_ORDERS_INFRASTRUCTURE",
+  "method": "trigger_level_backtest_v1",
+  "round_id": "round_224",
+  "score_down_axes": [
+    "order_value_only",
+    "preferred_bidder_only",
+    "mou_or_partnership_only",
+    "target_price_raise_without_price_strength",
+    "event_pop_without_margin_visibility",
+    "sector_hype_without_company_estimate"
+  ],
+  "score_up_axes": [
+    "shipment_revenue_contribution",
+    "op_estimate_vs_consensus",
+    "relative_strength_on_evidence_day",
+    "backlog_duration_quality",
+    "pricing_power_index_or_ASP",
+    "target_price_revision_with_estimate_raise",
+    "export_contract_repeatability",
+    "stage3_plus_4b_overlay_handling"
+  ],
+  "source_round": "docs/round/round_296.md",
+  "stage2_actionable_rules": [
+    "shipment_delivery_calloff_or_revenue_contribution_confirmed",
+    "op_estimate_or_revenue_forecast_beats_consensus_by_20pct_plus",
+    "market_relative_strength_on_evidence_day_5pp_plus",
+    "backlog_duration_or_repeat_order_visibility_confirmed",
+    "asp_price_index_or_target_revision_confirmed",
+    "binding_order_or_delivery_evidence_not_mou_or_preferred_bidder_only"
+  ],
+  "stage3_yellow_rules": [
+    "real_order_contract_shipment_or_approval_confirmed",
+    "op_eps_or_revenue_contribution_quantified",
+    "trigger_day_relative_strength_is_strong",
+    "margin_cash_collection_final_delivery_or_legal_clearance_still_pending"
+  ],
+  "stage4b_watch_triggers": [
+    "six_to_twelve_month_plus_60_to_100pct_then_target_downgrade_or_hold",
+    "YTD_double_plus_then_large_share_sale_CB_or_capital_raise",
+    "event_trigger_is_control_MA_governance_premium_not_operating_margin",
+    "new_order_pipeline_alive_but_valuation_burden_clear"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 7,
+    "event_premium_count": 1,
+    "evidence_good_but_price_failed_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "large_sector": "INDUSTRIALS_ORDERS_INFRASTRUCTURE",
+    "legal_4c_watch_count": 1,
+    "method": "trigger_level_backtest_v1",
+    "missed_due_to_score_count": 5,
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_224",
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_296.md",
+    "stage2_promote_candidate_count": 7,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 4,
+    "stage4b_watch_count": 4,
+    "trigger_count": 9
+  },
+  "target_aliases": {
+    "DEFENSE_BACKLOG_DILUTION_OVERLAY": "DEFENSE_BACKLOG_DILUTION_OVERLAY",
+    "DEFENSE_EXPORT_STAGE2_ACTIONABLE": "DEFENSE_EXPORT_STAGE2_ACTIONABLE",
+    "GRID_EQUIPMENT_US_GROWTH_STAGE2_PROMOTE": "GRID_EQUIPMENT_US_GROWTH_STAGE2_PROMOTE",
+    "MISSILE_DEFENSE_ORDER_4B_TIMING": "MISSILE_DEFENSE_ORDER_4B_TIMING",
+    "NUCLEAR_EXPORT_PREFERRED_BIDDER_STAGE2": "NUCLEAR_EXPORT_PREFERRED_BIDDER_STAGE2",
+    "OVERSEAS_EPC_ORDER_STAGE2_YELLOW": "OVERSEAS_EPC_ORDER_STAGE2_YELLOW",
+    "SHIPBUILDING_BACKLOG_PRICE_STAGE2_ACTIONABLE": "SHIPBUILDING_BACKLOG_PRICE_STAGE2_ACTIONABLE"
+  },
+  "trigger_ids": [
+    "r1l15_hyundai_rotem_T2",
+    "r1l15_lig_nex1_T2",
+    "r1l15_lig_nex1_T3",
+    "r1l15_hanwha_aero_T1",
+    "r1l15_hanwha_aero_T4",
+    "r1l15_shipbuilding_T1",
+    "r1l15_ls_electric_T2",
+    "r1l15_samsung_ena_T2",
+    "r1l15_czech_nuclear_T1"
+  ],
+  "what_not_to_change": [
+    "do_not_apply_round296_shadow_weights_to_production_scoring_yet",
+    "do_not_use_round296_cases_as_candidate_generation_input",
+    "do_not_force_stage3_green_without_full_ohlc_and_margin_cash_confirmation",
+    "do_not_downgrade_stage_candidate_merely_because_full_ohlc_is_missing",
+    "do_not_treat_preferred_bidder_or_MOU_as_final_contract"
+  ]
+}

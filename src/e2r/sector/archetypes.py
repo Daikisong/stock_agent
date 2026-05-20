@@ -998,6 +998,13 @@ class E2RArchetype(str, Enum):
     DATA_TRUST_HARD_4C = "DATA_TRUST_HARD_4C"
     LOCALIZATION_CAPEX_FALSE_POSITIVE = "LOCALIZATION_CAPEX_FALSE_POSITIVE"
     CONTROL_PREMIUM_4B_GOVERNANCE_WATCH = "CONTROL_PREMIUM_4B_GOVERNANCE_WATCH"
+    DEFENSE_EXPORT_STAGE2_ACTIONABLE = "DEFENSE_EXPORT_STAGE2_ACTIONABLE"
+    MISSILE_DEFENSE_ORDER_4B_TIMING = "MISSILE_DEFENSE_ORDER_4B_TIMING"
+    DEFENSE_BACKLOG_DILUTION_OVERLAY = "DEFENSE_BACKLOG_DILUTION_OVERLAY"
+    SHIPBUILDING_BACKLOG_PRICE_STAGE2_ACTIONABLE = "SHIPBUILDING_BACKLOG_PRICE_STAGE2_ACTIONABLE"
+    GRID_EQUIPMENT_US_GROWTH_STAGE2_PROMOTE = "GRID_EQUIPMENT_US_GROWTH_STAGE2_PROMOTE"
+    OVERSEAS_EPC_ORDER_STAGE2_YELLOW = "OVERSEAS_EPC_ORDER_STAGE2_YELLOW"
+    NUCLEAR_EXPORT_PREFERRED_BIDDER_STAGE2 = "NUCLEAR_EXPORT_PREFERRED_BIDDER_STAGE2"
     ORDER_HEADLINE_NOT_MARGIN_GREEN = "ORDER_HEADLINE_NOT_MARGIN_GREEN"
     CAPITAL_RECYCLING_IPO_FAILED_RERATING = "CAPITAL_RECYCLING_IPO_FAILED_RERATING"
     DEFENSE_EXPORT_DELIVERY_STAGE3_CANDIDATE = "DEFENSE_EXPORT_DELIVERY_STAGE3_CANDIDATE"
@@ -6398,6 +6405,90 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("news", "governance", "price", "financial_actual", "red_team"),
             false_positive_patterns=("control premium treated as operating Green", "tender offer treated as FCF rerating"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.DEFENSE_EXPORT_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.DEFENSE_EXPORT_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("defense export shipment", "tank export delivery", "government customer shipment"),
+            stage2_candidate_signals=("shipment, OP estimate beat, export revenue contribution and relative strength are visible"),
+            stage3_high_conviction_signals=("shipment revenue, delivery margin, follow-on contract and EPS revision support Stage3-Yellow"),
+            stage4a_ongoing_signals=("delivery, margin and cash collection continue after the first shipment trigger"),
+            stage4b_graduation_overheat_signals=("defense YTD double+ rally before follow-on delivery and margin close"),
+            stage4c_thesis_break_signals=("delivery delay", "local production funding break", "export license issue", "margin collapse"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "price", "research_report"),
+            false_positive_patterns=("defense export headline without shipment", "order value only treated as Stage3"),
+            preferred_score_weights=_weights(eps_fcf=21, visibility=24, bottleneck=17, mispricing=14, valuation=14),
+        ),
+        E2RArchetype.MISSILE_DEFENSE_ORDER_4B_TIMING: ArchetypeDefinition(
+            archetype=E2RArchetype.MISSILE_DEFENSE_ORDER_4B_TIMING,
+            stage1_radar_signals=("missile defense export", "M-SAM II order", "Cheongung-II order"),
+            stage2_candidate_signals=("repeat export order, government customer, order value and relative strength are visible"),
+            stage3_high_conviction_signals=("repeat orders, combat validation, delivery margin and follow-on pipeline support Yellow before Green"),
+            stage4a_ongoing_signals=("order pipeline and delivery evidence continue after a trim signal"),
+            stage4b_graduation_overheat_signals=("1H +60% rally and downgrade reaction", "combat validation rally after crowded defense rerating"),
+            stage4c_thesis_break_signals=("order cancellation", "export permit issue", "combat performance failure", "delivery margin break"),
+            key_evidence_families=("news", "disclosure", "price", "defense_validation", "red_team"),
+            false_positive_patterns=("4B trim treated as hard exit while order pipeline remains", "combat validation treated as Green without delivery economics"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=17, mispricing=14, valuation=14),
+        ),
+        E2RArchetype.DEFENSE_BACKLOG_DILUTION_OVERLAY: ArchetypeDefinition(
+            archetype=E2RArchetype.DEFENSE_BACKLOG_DILUTION_OVERLAY,
+            stage1_radar_signals=("K9 export", "defense backlog expansion", "Europe rearmament"),
+            stage2_candidate_signals=("government order, backlog growth, delivery schedule and export share are visible"),
+            stage3_high_conviction_signals=("strong order/backlog evidence may support Yellow, while dilution remains a separate 4B overlay"),
+            stage4a_ongoing_signals=("backlog converts to margin and FCF without fresh dilution shock"),
+            stage4b_graduation_overheat_signals=("YTD double+ rally followed by large share sale", "dilution overlay after strong backlog"),
+            stage4c_thesis_break_signals=("FSS filing revision", "capital raise disclosure issue", "delivery delay", "margin break"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("4B dilution cancels historical Stage3 evidence", "backlog scored without dilution overlay"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=17, mispricing=14, valuation=14),
+        ),
+        E2RArchetype.SHIPBUILDING_BACKLOG_PRICE_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.SHIPBUILDING_BACKLOG_PRICE_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("shipbuilding order momentum", "newbuilding price index", "LNG carrier orders"),
+            stage2_candidate_signals=("orders, ship-price index, backlog duration and broad relative strength are visible"),
+            stage3_high_conviction_signals=("orders, pricing, backlog duration and delivery margin are visible; labor and steel cost remain gates"),
+            stage4a_ongoing_signals=("higher-priced backlog converts into margin and cash through delivery"),
+            stage4b_graduation_overheat_signals=("MASGA or merger event premium before margin evidence", "U.S. shipbuilding cooperation rally"),
+            stage4c_thesis_break_signals=("sanctions", "contract cancellation", "steel cost shock", "labor cost overrun", "delivery delay"),
+            key_evidence_families=("news", "price", "backlog", "financial_actual", "red_team"),
+            false_positive_patterns=("order value only treated as margin", "MOU partnership treated as shipbuilding Green"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=22, bottleneck=18, mispricing=13, valuation=13),
+        ),
+        E2RArchetype.GRID_EQUIPMENT_US_GROWTH_STAGE2_PROMOTE: ArchetypeDefinition(
+            archetype=E2RArchetype.GRID_EQUIPMENT_US_GROWTH_STAGE2_PROMOTE,
+            stage1_radar_signals=("U.S. grid demand", "data-center electrical equipment", "transformer shortage"),
+            stage2_candidate_signals=("U.S. revenue mix, forecast raise, target revision and grid shortage evidence are visible"),
+            stage3_high_conviction_signals=("U.S. mix converts into backlog, margin, capacity and EPS revision; immediate price fail needs full-window retest"),
+            stage4a_ongoing_signals=("U.S. revenue share, backlog and margin continue after the initial research trigger"),
+            stage4b_graduation_overheat_signals=("grid equipment target revision without price strength", "transformer shortage consensus crowds"),
+            stage4c_thesis_break_signals=("U.S. grid demand delay", "capacity normalization", "margin miss", "target revision fails price validation"),
+            key_evidence_families=("research_report", "news", "price", "financial_actual", "backlog"),
+            false_positive_patterns=("target price raise without price strength", "U.S. demand headline without company estimate"),
+            preferred_score_weights=_weights(eps_fcf=22, visibility=23, bottleneck=20, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.OVERSEAS_EPC_ORDER_STAGE2_YELLOW: ArchetypeDefinition(
+            archetype=E2RArchetype.OVERSEAS_EPC_ORDER_STAGE2_YELLOW,
+            stage1_radar_signals=("overseas EPC order", "Saudi Aramco project", "large plant contract"),
+            stage2_candidate_signals=("large order, relative strength, target upside and project schedule are visible"),
+            stage3_high_conviction_signals=("Stage3-Yellow possible until advance payment, cost lock-in, working capital and completion margin close"),
+            stage4a_ongoing_signals=("execution margin, working capital and claims stay controlled"),
+            stage4b_graduation_overheat_signals=("mega-order event pop before margin and cash proof"),
+            stage4c_thesis_break_signals=("cost overrun", "claim risk", "working capital stress", "completion margin miss"),
+            key_evidence_families=("disclosure", "news", "price", "research_report", "red_team"),
+            false_positive_patterns=("order value only treated as Green", "event pop without margin visibility"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=20, bottleneck=10, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.NUCLEAR_EXPORT_PREFERRED_BIDDER_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.NUCLEAR_EXPORT_PREFERRED_BIDDER_STAGE2,
+            stage1_radar_signals=("nuclear export tender", "preferred bidder", "reactor export expectation"),
+            stage2_candidate_signals=("preferred bidder, project scale, buyer country and final-contract path are visible"),
+            stage3_high_conviction_signals=("Green requires final contract, legal clearance, margin, cashflow and construction schedule"),
+            stage4a_ongoing_signals=("final contract and legal status remain intact through project execution"),
+            stage4b_graduation_overheat_signals=("pre-priced preferred bidder rally before final contract"),
+            stage4c_thesis_break_signals=("court blocks signing", "Westinghouse or EDF legal challenge", "preferred bidder cancellation", "final contract failure"),
+            key_evidence_families=("news", "legal", "disclosure", "price", "red_team"),
+            false_positive_patterns=("preferred bidder only treated as Green", "nuclear policy event treated as final contract"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=20, bottleneck=8, mispricing=12, valuation=10),
         ),
         E2RArchetype.ORDER_HEADLINE_NOT_MARGIN_GREEN: ArchetypeDefinition(
             archetype=E2RArchetype.ORDER_HEADLINE_NOT_MARGIN_GREEN,

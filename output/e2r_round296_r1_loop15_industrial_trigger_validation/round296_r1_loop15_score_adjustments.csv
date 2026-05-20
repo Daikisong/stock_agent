@@ -1,0 +1,12 @@
+axis,points,direction,reason
+shipment_revenue_contribution,5,raise,실제 출하와 매출 기여는 단순 수주 headline보다 강하다.
+op_estimate_vs_consensus,5,raise,OP 추정치가 consensus 대비 20% 이상 높으면 Stage2-Actionable 승격 후보가 된다.
+relative_strength_on_evidence_day,5,raise,증거가 나온 날 시장 대비 +5pp 이상이면 trigger 품질이 높다.
+backlog_duration_quality,4,raise,3년치 backlog 같은 duration evidence는 단순 order보다 강하다.
+pricing_power_index_or_ASP,4,raise,조선 선가 지수나 전력기기 ASP처럼 가격 지표가 같이 붙으면 visibility가 좋아진다.
+target_price_revision_with_estimate_raise,3,raise,target 상향은 추정치 상향과 같이 있을 때만 의미가 크다.
+export_contract_repeatability,4,raise,Saudi 이후 Iraq처럼 반복 수출 계약은 Stage2 강도를 높인다.
+stage3_plus_4b_overlay_handling,5,raise,좋은 Stage3 후보를 4B 때문에 취소하지 말고 overlay로 병기한다.
+order_value_only,-5,lower,"계약금액만 있고 margin, cash, delivery가 없으면 Green 금지다."
+preferred_bidder_only,-4,lower,preferred bidder는 final contract와 legal clearance 전까지 Green이 아니다.
+mou_or_partnership_only,-5,lower,MOU나 partnership은 계약·매출이 아니므로 Actionable 승격을 제한한다.
