@@ -1,0 +1,19 @@
+axis,points,direction,reason
+PF_repayment_visibility,5,raise,건설사는 수주잔고보다 PF 상환과 차환 비용이 먼저다.
+presale_absorption,5,raise,분양률과 미분양 감소가 현금회수의 출발점이다.
+construction_cost_margin,5,raise,원가율이 닫히지 않으면 매출 증가가 이익으로 내려오지 않는다.
+unbilled_receivables_control,5,raise,미청구공사 증가는 EPC/건설의 핵심 4C-watch다.
+safety_quality_trust,5,raise,사망 안전사고와 품질 붕괴는 hard gate다.
+completion_margin_visibility,5,raise,해외 EPC는 완공마진과 claim risk까지 봐야 한다.
+working_capital_advance_payment,5,raise,advance payment와 운전자본 통제가 cashflow를 만든다.
+final_contract_signing,4,raise,preferred bidder는 최종계약이 아니다.
+building_material_ASP_volume,5,raise,"건자재는 ASP와 물량, 원가 spread가 같이 닫혀야 한다."
+capex_IRR_funding_clarity,5,raise,localization capex는 IRR과 funding plan이 없으면 Green이 아니다.
+order_value_headline_only,-5,lower,수주금액 headline만으로 completion margin을 만들지 않는다.
+policy_support_headline_only,-5,lower,정책지원 headline만으로 PF 현금흐름을 만들지 않는다.
+property_supply_policy_only,-5,lower,공급정책만으로 착공·분양·현금회수가 생기지 않는다.
+preferred_bidder_without_final_contract,-5,lower,우선협상대상자는 booked margin이 아니다.
+tariff_relief_without_ASP_margin,-5,lower,관세 relief는 ASP와 margin 확인 전에는 event premium이다.
+capex_localization_without_IRR,-5,lower,미국공장 headline은 IRR/funding 전에는 false positive가 될 수 있다.
+backlog_without_PF_cashflow,-5,lower,PF cashflow가 막히면 backlog는 Green 방어가 안 된다.
+safety_risk_unresolved,-5,lower,안전 리스크 미해소는 건설 Green을 막는다.

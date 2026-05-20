@@ -1,0 +1,9 @@
+archetype,pf_repayment_visibility,presale_absorption,construction_cost_margin,unbilled_receivables_control,safety_quality_trust,completion_margin_visibility,working_capital_advance_payment,final_contract_signing,building_material_ASP_volume,capex_IRR_funding_clarity,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+PF_LIQUIDITY_HARD_4C_WATCH,+5,+5,+5,+5,+3,+2,+5,+1,+1,+4,0,+5,+5,Taeyoung/PF shows backlog is not Green if PF repayment/refinancing fails.
+REAL_ESTATE_POLICY_STAGE2_NOT_GREEN,+4,+5,+5,+4,+2,+2,+3,+1,+2,+2,-5,+5,+4,"Seoul property policy needs permits, starts, presales and PF cashflow."
+CONSTRUCTION_SAFETY_HARD_4C,+3,+3,+4,+4,+5,+4,+3,+1,+1,+3,0,+4,+5,HDC/Gwangju confirms fatal quality/safety events override backlog.
+OVERSEAS_EPC_ORDER_4B_WATCH,+2,0,+5,+5,+3,+5,+5,+5,+1,+3,-5,+5,+4,"Samsung E&A Fadhili order needs advance payment, working capital and completion margin."
+NUCLEAR_CONSTRUCTION_EXPORT_STAGE2,+2,0,+5,+5,+3,+5,+5,+5,+1,+4,-5,+5,+4,Czech nuclear preferred bidder needs final contract and legal clearance.
+BUILDING_MATERIAL_WEAK_DEMAND_FAILED_RERATING,+1,+3,+4,+2,+1,+1,+1,0,+5,+2,0,+4,+4,Hyundai Steel weak rebar demand shows ASP/volume must lead materials scoring.
+BUILDING_MATERIAL_TARIFF_RELIEF_EVENT_PREMIUM,+1,+2,+4,+2,+1,+1,+1,0,+5,+2,-5,+5,+3,"Anti-dumping tariff relief needs ASP, volume and spread confirmation."
+US_LOCALIZATION_CAPEX_FALSE_POSITIVE,+1,+1,+4,+3,+1,+2,+3,+2,+4,+5,0,+5,+4,Hyundai Steel U.S. plant shows capex headline needs funding clarity and IRR.
