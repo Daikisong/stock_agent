@@ -547,6 +547,7 @@ class E2RArchetype(str, Enum):
     K_FOOD_VIRAL_BRAND_CULTURE = "K_FOOD_VIRAL_BRAND_CULTURE"
     K_FOOD_EXPORT_RECURRING = "K_FOOD_EXPORT_RECURRING"
     K_FOOD_EXPORT_ASP_CAPACITY = "K_FOOD_EXPORT_ASP_CAPACITY"
+    K_FOOD_EXPORT_CAPACITY_RECURRING_CONSUMPTION = "K_FOOD_EXPORT_CAPACITY_RECURRING_CONSUMPTION"
     K_FOOD_GLOBAL_STAPLE_BRAND = "K_FOOD_GLOBAL_STAPLE_BRAND"
     K_FOOD_GLOBAL_STAPLE_BRAND_SECOND_WAVE = "K_FOOD_GLOBAL_STAPLE_BRAND_SECOND_WAVE"
     K_FOOD_INPUT_PACKAGING_4C = "K_FOOD_INPUT_PACKAGING_4C"
@@ -598,11 +599,15 @@ class E2RArchetype(str, Enum):
     TOURISM_RETAIL_DUTYFREE_EVENT = "TOURISM_RETAIL_DUTYFREE_EVENT"
     HOME_LIVING_RENTAL_RECURRING = "HOME_LIVING_RENTAL_RECURRING"
     EDUCATION_POLICY_MEDICAL_QUOTA = "EDUCATION_POLICY_MEDICAL_QUOTA"
+    EDUCATION_POLICY_MEDICAL_QUOTA_EVENT = "EDUCATION_POLICY_MEDICAL_QUOTA_EVENT"
     EDTECH_AI_TEXTBOOK_POLICY_REVERSAL = "EDTECH_AI_TEXTBOOK_POLICY_REVERSAL"
+    EDTECH_POLICY_ROLLBACK_4C = "EDTECH_POLICY_ROLLBACK_4C"
     CHILDCARE_DEMOGRAPHIC_POLICY_EVENT = "CHILDCARE_DEMOGRAPHIC_POLICY_EVENT"
+    CHILDCARE_FOREIGN_HELPER_POLICY_EVENT = "CHILDCARE_FOREIGN_HELPER_POLICY_EVENT"
     AGRI_FOOD_INPUT_COST_SHOCK = "AGRI_FOOD_INPUT_COST_SHOCK"
     FEED_GRAIN_INPUT_COST_4C = "FEED_GRAIN_INPUT_COST_4C"
     PET_WELFARE_POLICY_TRANSITION = "PET_WELFARE_POLICY_TRANSITION"
+    PET_WELFARE_TRANSITION_POLICY_EVENT = "PET_WELFARE_TRANSITION_POLICY_EVENT"
     FOOD_SERVICE_CELEBRITY_EVENT_PREMIUM = "FOOD_SERVICE_CELEBRITY_EVENT_PREMIUM"
     BEAUTY_DEVICE_EXPORT = "BEAUTY_DEVICE_EXPORT"
     FOOD_SAFETY_RECALL_OVERLAY = "FOOD_SAFETY_RECALL_OVERLAY"
@@ -1202,6 +1207,18 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("financial_actual", "research_report", "news", "price"),
             false_positive_patterns=("K-food label alone", "single-SKU viral demand without sell-through", "capacity plan without margin or FCF"),
             preferred_score_weights=_weights(eps_fcf=23, visibility=23, bottleneck=13, mispricing=15, valuation=12),
+        ),
+        E2RArchetype.K_FOOD_EXPORT_CAPACITY_RECURRING_CONSUMPTION: ArchetypeDefinition(
+            archetype=E2RArchetype.K_FOOD_EXPORT_CAPACITY_RECURRING_CONSUMPTION,
+            stage1_radar_signals=("K-food export growth", "global ramen sales", "U.S./Europe channel penetration", "overseas capacity expansion"),
+            stage2_candidate_signals=("overseas sales mix visible", "North America or Europe sales growth", "mainstream channel share", "capacity plan supports recurring consumption"),
+            stage3_high_conviction_signals=("overseas sell-through, repeat purchase, ASP, capacity utilization, margin, FCF and price path all verified"),
+            stage4a_ongoing_signals=("global channel reorder and capacity utilization remain strong with cash conversion"),
+            stage4b_graduation_overheat_signals=("K-food export story priced before margin, FCF, or reorder evidence"),
+            stage4c_thesis_break_signals=("China slowdown", "Europe adoption miss", "input-cost shock", "channel inventory build", "spicy-food fad fade"),
+            key_evidence_families=("financial_actual", "research_report", "news", "price"),
+            false_positive_patterns=("export sales headline without margin/FCF", "capacity plan without utilization", "viral K-food story without repeat purchase"),
+            preferred_score_weights=_weights(eps_fcf=22, visibility=24, bottleneck=13, mispricing=15, valuation=12),
         ),
         E2RArchetype.K_FOOD_GLOBAL_STAPLE_BRAND: ArchetypeDefinition(
             archetype=E2RArchetype.K_FOOD_GLOBAL_STAPLE_BRAND,
@@ -3729,6 +3746,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("medical quota headline treated as company revenue",),
             preferred_score_weights=_weights(eps_fcf=14, visibility=18, bottleneck=4, mispricing=12, valuation=10),
         ),
+        E2RArchetype.EDUCATION_POLICY_MEDICAL_QUOTA_EVENT: ArchetypeDefinition(
+            archetype=E2RArchetype.EDUCATION_POLICY_MEDICAL_QUOTA_EVENT,
+            stage1_radar_signals=("medical-school quota policy", "private-education basket attention", "repeat-course demand expectation"),
+            stage2_candidate_signals=("quota expansion schedule visible", "paid enrollment or repeat-course conversion begins", "ARPU and OPM evidence appears"),
+            stage3_high_conviction_signals=("paid enrollment, repeat-course sales, ARPU, OPM, cash conversion, and policy durability verified"),
+            stage4a_ongoing_signals=("enrollment and margin conversion remain visible after policy execution"),
+            stage4b_graduation_overheat_signals=("education basket rallies before paid enrollment, ARPU, or cash conversion"),
+            stage4c_thesis_break_signals=("medical quota policy reversal", "healthcare-service disruption", "paid enrollment failure", "private education regulation"),
+            key_evidence_families=("policy", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("medical quota headline treated as paid enrollment revenue"),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=18, bottleneck=4, mispricing=12, valuation=10),
+        ),
         E2RArchetype.EDTECH_AI_TEXTBOOK_POLICY_REVERSAL: ArchetypeDefinition(
             archetype=E2RArchetype.EDTECH_AI_TEXTBOOK_POLICY_REVERSAL,
             stage1_radar_signals=("AI textbook policy", "AI classroom narrative", "edtech basket attention"),
@@ -3741,6 +3770,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("AI education theme without school adoption",),
             preferred_score_weights=_weights(eps_fcf=8, visibility=10, bottleneck=2, mispricing=8, valuation=6),
         ),
+        E2RArchetype.EDTECH_POLICY_ROLLBACK_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.EDTECH_POLICY_ROLLBACK_4C,
+            stage1_radar_signals=("AI textbook expectation", "AI tutor policy", "digital classroom infrastructure narrative"),
+            stage2_candidate_signals=("actual school adoption, budget, paid contract, and teacher acceptance visible"),
+            stage3_high_conviction_signals=("paid school adoption, recurring contract, ARPU, OPM, teacher acceptance, and policy stability verified"),
+            stage4a_ongoing_signals=("adoption and paid contracts survive policy friction"),
+            stage4b_graduation_overheat_signals=("AI textbook rally before adoption and budget evidence"),
+            stage4c_thesis_break_signals=("AI textbook official status removed", "classroom phone/device ban", "teacher or parent backlash", "policy rollback"),
+            key_evidence_families=("policy", "news", "financial_actual", "price"),
+            false_positive_patterns=("AI education headline treated as recurring edtech revenue"),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=8, bottleneck=2, mispricing=6, valuation=4),
+        ),
         E2RArchetype.CHILDCARE_DEMOGRAPHIC_POLICY_EVENT: ArchetypeDefinition(
             archetype=E2RArchetype.CHILDCARE_DEMOGRAPHIC_POLICY_EVENT,
             stage1_radar_signals=("fertility rebound", "childcare support policy", "care-service pilot"),
@@ -3751,6 +3792,18 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("fertility rebound fades", "subsidy withdrawal", "labor-cost burden", "utilization failure"),
             key_evidence_families=("policy", "demographic", "financial_actual", "price"),
             false_positive_patterns=("birthrate headline treated as listed-company revenue",),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=18, bottleneck=4, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.CHILDCARE_FOREIGN_HELPER_POLICY_EVENT: ArchetypeDefinition(
+            archetype=E2RArchetype.CHILDCARE_FOREIGN_HELPER_POLICY_EVENT,
+            stage1_radar_signals=("foreign housekeeper pilot", "childcare burden relief", "birthrate policy", "care-service capacity"),
+            stage2_candidate_signals=("pilot expansion path", "fertility and births improve", "paid household demand or service utilization appears"),
+            stage3_high_conviction_signals=("paid care demand, utilization, margin, repeat service, subsidy independence, and cash conversion verified"),
+            stage4a_ongoing_signals=("service utilization and recurring household demand remain visible"),
+            stage4b_graduation_overheat_signals=("fertility or childcare policy rally before paid utilization and margin"),
+            stage4c_thesis_break_signals=("pilot fails to scale", "labor-cost burden", "subsidy withdrawal", "paid utilization failure"),
+            key_evidence_families=("policy", "demographic", "financial_actual", "price"),
+            false_positive_patterns=("fertility rebound treated as listed childcare revenue"),
             preferred_score_weights=_weights(eps_fcf=14, visibility=18, bottleneck=4, mispricing=12, valuation=10),
         ),
         E2RArchetype.AGRI_FOOD_INPUT_COST_SHOCK: ArchetypeDefinition(
@@ -3787,6 +3840,18 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("shelter capacity failure", "subsidy dissatisfaction", "policy delay", "transition cost burden"),
             key_evidence_families=("policy", "news", "financial_actual", "price"),
             false_positive_patterns=("animal-welfare policy treated as pet-stock revenue",),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=12, bottleneck=4, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.PET_WELFARE_TRANSITION_POLICY_EVENT: ArchetypeDefinition(
+            archetype=E2RArchetype.PET_WELFARE_TRANSITION_POLICY_EVENT,
+            stage1_radar_signals=("dog-meat ban transition", "pet welfare policy", "shelter/adoption/pet-care demand narrative"),
+            stage2_candidate_signals=("support budget, transition schedule, rehoming scale, and listed pet/service revenue evidence appear"),
+            stage3_high_conviction_signals=("actual pet-food/service revenue, adoption-service monetization, shelter capacity, margin, and subsidy independence verified"),
+            stage4a_ongoing_signals=("pet/service demand converts without subsidy dependence"),
+            stage4b_graduation_overheat_signals=("pet welfare basket rallies before revenue conversion"),
+            stage4c_thesis_break_signals=("shelter capacity failure", "subsidy dissatisfaction", "adoption bottleneck", "policy delay"),
+            key_evidence_families=("policy", "news", "financial_actual", "price"),
+            false_positive_patterns=("dog-meat ban policy treated as pet-food revenue"),
             preferred_score_weights=_weights(eps_fcf=10, visibility=12, bottleneck=4, mispricing=8, valuation=6),
         ),
         E2RArchetype.FOOD_SERVICE_CELEBRITY_EVENT_PREMIUM: ArchetypeDefinition(

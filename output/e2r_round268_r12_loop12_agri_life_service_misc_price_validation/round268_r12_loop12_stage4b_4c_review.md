@@ -1,0 +1,35 @@
+# Round 268 R12 4B/4C Review
+
+## 4B Watch Triggers
+
+- k_food_export_headline_rally_before_margin
+- medical_quota_rally_before_paid_enrollment
+- fertility_rebound_rally_before_utilization
+- ai_textbook_theme_rally_before_paid_contract
+- dog_meat_ban_pet_policy_rally_before_monetization
+- celebrity_food_event_stock_spike_without_sales
+- agri_input_shock_rally_before_pass_through
+
+## Hard 4C Gates
+
+- raw_material_shock_without_pass_through
+- feed_cost_spike_with_no_inventory_buffer
+- policy_rollback
+- paid_enrollment_failure
+- service_utilization_failure
+- inventory_build
+- cash_conversion_deterioration
+- product_recall_or_food_safety
+- shelter_capacity_failure
+- celebrity_event_fade
+
+## Case Notes
+
+- r12_loop12_nongshim_shin_export_capacity: overseas_sell_through_unverified, capacity_utilization_unverified, margin_fcf_unverified, china_slowdown_watch, channel_inventory_watch
+- r12_loop12_kimchi_cabbage_input_cost_watch: raw_material_price_spike_without_pass_through, input_cost_pass_through_unverified, inventory_control_unverified, climate_supply_shock_persists
+- r12_loop12_feed_wheat_livestock_cost_watch: feed_cost_spike_without_inventory_buffer, feed_cost_spike_only, price_pass_through_unverified, feed_inventory_buffer_unverified
+- r12_loop12_medical_quota_private_education_event: medical_quota_only, paid_enrollment_unverified, arpu_unverified, policy_uncertainty_healthcare_disruption
+- r12_loop12_ai_textbook_edtech_policy_rollback: ai_textbook_theme_only, policy_rollback, teacher_acceptance_unverified, paid_contract_unverified, classroom_device_ban
+- r12_loop12_childcare_foreign_helper_fertility_policy: fertility_headline_only, paid_household_demand_unverified, service_utilization_unverified, subsidy_dependency_watch
+- r12_loop12_dog_meat_ban_pet_welfare_transition: pet_welfare_policy_only, pet_service_revenue_unverified, shelter_capacity_unverified, subsidy_dependency_watch, policy_delay_watch
+- r12_loop12_kyochon_cherrybro_neuromeka_jensen_event: celebrity_food_event_only, same_store_sales_unconfirmed, franchise_margin_unconfirmed, repeat_demand_unconfirmed

@@ -1,0 +1,9 @@
+archetype,repeat_purchase,overseas_sell_through,capacity_utilization,paid_conversion,service_utilization,arpu_price_pass,input_cost_pass_through,inventory_quality,cash_conversion,policy_to_revenue_bridge,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+K_FOOD_EXPORT_CAPACITY_RECURRING_CONSUMPTION,+5,+5,+5,+2,+0,+5,+4,+4,+5,+3,-2,+4,+3,Nongshim export structure is Stage 2 until margin/FCF/price path confirm.
+AGRI_FOOD_INPUT_COST_SHOCK,+2,+1,+1,+0,+0,+5,+5,+5,+5,+1,+0,+4,+5,Cabbage climate/input shock is 4C-watch unless pass-through and inventory control prove out.
+FEED_GRAIN_INPUT_COST_4C,+1,+0,+1,+0,+0,+4,+5,+5,+4,+0,+0,+4,+5,Feed wheat cost shock hits livestock/feed margin unless pass-through and inventory buffer exist.
+EDUCATION_POLICY_MEDICAL_QUOTA_EVENT,+2,+0,+0,+5,+4,+5,+0,+1,+5,+5,-5,+5,+4,"Medical quota is event until paid enrollment, ARPU and repeat-course revenue confirm."
+EDTECH_POLICY_ROLLBACK_4C,+2,+0,+0,+4,+4,+4,+0,+1,+4,+5,+0,+4,+5,AI textbook rollback and phone ban block edtech Green.
+CHILDCARE_FOREIGN_HELPER_POLICY_EVENT,+4,+0,+2,+5,+5,+5,+1,+2,+5,+5,-5,+5,+4,Fertility and foreign-helper policy need paid utilization and margin.
+PET_WELFARE_TRANSITION_POLICY_EVENT,+4,+0,+2,+3,+5,+4,+1,+2,+4,+5,-5,+5,+4,Dog-meat ban is policy event until pet-service revenue and shelter capacity confirm.
+FOOD_SERVICE_CELEBRITY_EVENT_PREMIUM,+2,+0,+1,+2,+2,+3,+3,+3,+3,+0,-5,+5,+3,Kyochon/Cherrybro/Neuromeka Jensen event is price_moved_without_evidence.

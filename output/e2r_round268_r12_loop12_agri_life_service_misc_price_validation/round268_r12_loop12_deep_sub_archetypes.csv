@@ -1,0 +1,9 @@
+category,primary_archetype,terms
+K-food / 라면,K_FOOD_EXPORT_CAPACITY_RECURRING_CONSUMPTION,Nongshim Shin Ramyun|U.S. / Europe export|Walmart / Costco channel|sell-through / ASP / capacity
+김치·농산물,AGRI_FOOD_INPUT_COST_SHOCK,Daesang|CJ CheilJedang|napa cabbage heat shock|Chinese kimchi price pressure
+사료·축산,FEED_GRAIN_INPUT_COST_4C,Harim|Maniker|Farm Story|feed wheat tender failure|grain cost / FX / pass-through
+교육,EDUCATION_POLICY_MEDICAL_QUOTA_EVENT,Megastudy|YBMNet|NE Neungyule|medical-school quota|paid enrollment / ARPU
+AI 교과서,EDTECH_POLICY_ROLLBACK_4C,Woongjin Thinkbig|AI textbook rollback|classroom device ban|teacher support gap
+돌봄·출산,CHILDCARE_FOREIGN_HELPER_POLICY_EVENT,foreign housekeeper pilot|fertility rebound|paid household demand|service utilization
+펫·동물복지,PET_WELFARE_TRANSITION_POLICY_EVENT,dog-meat ban|pet-food / shelter|adoption|subsidy / capacity
+생활서비스 이벤트,FOOD_SERVICE_CELEBRITY_EVENT_PREMIUM,Kyochon F&B|Cherrybro|Neuromeka|Jensen Huang chicken event|same-store sales / meme fade
