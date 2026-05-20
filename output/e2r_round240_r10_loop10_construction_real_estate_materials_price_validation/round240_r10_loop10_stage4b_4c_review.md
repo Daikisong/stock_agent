@@ -1,0 +1,37 @@
+# Round 240 R10 4B/4C Review
+
+## 4B Watch Triggers
+
+- preferred_bidder_rally_before_supplier_margin
+- large_epc_order_rally_before_cash_collection
+- pf_support_rally_before_balance_sheet_repair
+- data_center_theme_rally_before_tenant_noi_affo
+- housing_policy_rally_before_presales_margin_fcf
+- reit_or_real_asset_yield_rally_before_affo_integrity
+
+## Hard 4C Gates
+
+- pf_workout_or_debt_reschedule
+- pf_delinquency_spike
+- bridge_loan_rollover_failure
+- fatal_construction_accident
+- repeated_workplace_fatality
+- site_shutdown
+- license_revocation_risk
+- low_margin_epc_loss
+- payment_delay_or_order_cancellation
+- tenant_absence
+- power_water_permitting_failure
+- affo_integrity_break
+- capex_dilution
+
+## Case Notes
+
+- r10_loop10_czech_nuclear_infra_korea_epc: preferred_bidder_only, legal_challenge_watch, listed_supplier_package_unverified, margin_unverified, cash_collection_unverified
+- r10_loop10_daewoo_enc_grand_faw_port_delivery: new_order_unverified, margin_unverified, cash_collection_unverified, iraq_payment_or_security_risk
+- r10_loop10_seoul_housing_policy_supply_watch: housing_supply_policy_only, ltv_tightening_demand_shock, presales_unverified, pf_stability_unverified, fcf_unverified
+- r10_loop10_taeyoung_pf_credit_hard_4c: pf_workout_or_debt_reschedule, pf_delinquency_spike, liquidity_crisis, pf_relief_policy_only
+- r10_loop10_hyundai_engineering_bridge_collapse_sector_hard_4c: fatal_construction_accident, operational_trust_break, site_safety_failure, direct_listed_mapping_unclear
+- r10_loop10_posco_dl_construction_safety_regulation: repeated_workplace_fatality, site_shutdown, license_revocation_risk, fine_up_to_5pct_operating_profit
+- r10_loop10_ai_data_center_real_asset_event: data_center_theme_without_tenant, asset_headline_without_noi_affo, power_water_permitting_unverified, capex_per_share_unverified
+- r10_loop10_hyundai_steel_rebar_construction_demand_watch: building_material_demand_weakness, net_profit_estimate_cut, rebar_price_decline, construction_demand_weakness

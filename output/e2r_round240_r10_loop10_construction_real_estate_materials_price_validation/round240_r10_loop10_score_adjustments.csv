@@ -1,0 +1,24 @@
+axis,points,direction,reason
+cash_flow_after_working_capital,5,raise,R10 수주는 운전자본 이후 현금흐름이 닫혀야 강해진다.
+EPC_margin_visibility,5,raise,해외 EPC/원전/항만은 계약금액보다 마진과 현금회수가 핵심이다.
+project_cost_control,5,raise,공사비·인건비·금융비용 통제가 Stage 3 전제다.
+progress_revenue_visibility,4,raise,공정률과 진행매출 가시성이 없는 backlog는 Stage 2에 머문다.
+handover_milestone,4,raise,Grand Faw dock completion처럼 인도 milestone은 단순 수주보다 높게 본다.
+PF_credit_cleanup,5,raise,PF cleanup이 확인될 때만 건설 credit risk가 풀린다.
+funding_cost_control,5,raise,PF·REIT·data center는 funding cost가 FCF/AFFO를 흔든다.
+tenant_contract_quality,5,raise,데이터센터는 임차인 계약이 있어야 real asset evidence가 된다.
+NOI_AFFO_visibility,5,raise,부동산/데이터센터는 NOI/AFFO per share가 Stage 3 핵심이다.
+power_water_permitting_secured,4,raise,전력·용수·인허가가 빠진 data center는 headline이다.
+safety_quality_trust,5,raise,건설 안전 신뢰가 깨지면 수주보다 4C gate가 우선한다.
+contract_headline_only,-5,lower,수주 headline만으로는 margin/cash collection이 아니다.
+preferred_bidder_only,-4,lower,우선협상대상자는 signed contract와 supplier package 전 Stage 2 이전 신호다.
+PF_relief_policy_only,-5,lower,PF 지원책은 crisis relief이지 Green 근거가 아니다.
+housing_supply_policy_only,-4,lower,주택공급 정책은 분양률·원가율·PF·FCF 전 Green이 아니다.
+data_center_theme_without_tenant,-5,lower,데이터센터 테마는 tenant/NOI/AFFO 전 Stage 1/2다.
+asset_headline_without_NOI_AFFO,-5,lower,자산 보유 headline은 AFFO integrity 전 Green이 아니다.
+EPC_backlog_without_margin,-5,lower,저마진 EPC backlog는 오히려 4C가 될 수 있다.
+low_margin_order_risk,-4,lower,대형 수주라도 원가율·마진이 약하면 감점한다.
+capex_per_share_dilution,-4,lower,capex가 주당 AFFO/FCF를 희석하면 Stage 3를 막는다.
+quality_safety_incident,-5,lower,붕괴·품질·안전사고는 hard 4C 입력이다.
+workplace_fatality_repeated,-5,lower,반복 사망사고와 면허 리스크는 건설 Green을 차단한다.
+building_material_demand_weakness,-4,lower,철근·건자재 수요 약화는 건자재 Green을 막는다.

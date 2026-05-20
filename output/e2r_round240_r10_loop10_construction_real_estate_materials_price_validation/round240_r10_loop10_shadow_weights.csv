@@ -1,0 +1,9 @@
+archetype,cash_flow_after_wc,epc_margin,project_cost_control,progress_revenue,handover_milestone,pf_cleanup,funding_cost,tenant_noi_affo,safety_trust,event_penalty,hard_4c_sensitivity,notes
+NUCLEAR_INFRA_EPC_EXPORT,+5,+5,+5,+4,+4,+0,+4,+0,+3,-4,+4,Preferred bidder/signed contract is Stage 2 until listed-company margin and cashflow confirm.
+PORT_INFRA_DELIVERY,+5,+5,+4,+4,+5,+0,+3,+0,+3,-3,+4,Grand Faw dock completion is delivery Stage 2; margin and cash collection required.
+HOUSING_POLICY_SUPPLY_EVENT,+3,+2,+3,+2,+0,+4,+4,+0,+2,-5,+4,"Housing policy is Stage 1/2 until presales, margin, PF and FCF confirm."
+REAL_ESTATE_PF_CREDIT_BREAK,+5,+0,+0,+0,+0,+5,+5,+0,+2,-5,+5,PF delinquency spike and debt reschedule are hard 4C.
+CONSTRUCTION_SAFETY_OPERATIONAL_TRUST_4C,+0,+0,+0,+0,+0,+0,+0,+0,+5,+0,+5,Fatal construction accident is sector hard 4C.
+WORKPLACE_FATALITY_REGULATORY_4C,+0,+0,+0,+0,+0,+0,+0,+0,+5,+0,+5,Recurring fatal accidents create fine/license risk and block Green.
+AI_DATA_CENTER_REAL_ASSET_DEVELOPMENT,+4,+0,+4,+2,+0,+0,+5,+5,+3,-5,+4,"Data center requires tenant, NOI/AFFO, power/water and capex per share."
+BUILDING_MATERIALS_DEMAND_CYCLE,+4,+4,+3,+0,+0,+3,+4,+0,+2,-4,+4,Rebar/building-material weakness blocks Green until demand and margin stabilize.

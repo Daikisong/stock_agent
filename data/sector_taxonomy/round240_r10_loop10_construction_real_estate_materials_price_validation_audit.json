@@ -1,0 +1,98 @@
+{
+  "analyst_round_id": "round_168",
+  "green_forbidden_patterns": [
+    "preferred_bidder_only",
+    "contract_headline_only",
+    "pf_relief_policy_only",
+    "housing_supply_policy_only",
+    "data_center_theme_without_tenant",
+    "asset_headline_without_noi_affo",
+    "epc_backlog_without_margin",
+    "safety_accident_or_fatality",
+    "working_capital_or_funding_cost_break"
+  ],
+  "green_required_fields": [
+    "listed_company_contract_or_delivery_milestone",
+    "margin_or_noi_affo_visibility",
+    "cash_flow_after_working_capital",
+    "pf_or_funding_cost_risk_passed",
+    "cost_control_and_progress_revenue_visibility",
+    "tenant_occupancy_or_utilization_verified",
+    "capex_per_share_or_dilution_passed",
+    "safety_quality_hard_risk_absent",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "pf_workout_or_debt_reschedule",
+    "pf_delinquency_spike",
+    "bridge_loan_rollover_failure",
+    "fatal_construction_accident",
+    "repeated_workplace_fatality",
+    "site_shutdown",
+    "license_revocation_risk",
+    "low_margin_epc_loss",
+    "payment_delay_or_order_cancellation",
+    "tenant_absence",
+    "power_water_permitting_failure",
+    "affo_integrity_break",
+    "capex_dilution"
+  ],
+  "large_sector": "CONSTRUCTION_REAL_ESTATE_MATERIALS",
+  "round_case_types": {
+    "r10_loop10_ai_data_center_real_asset_event": "success_candidate_event_premium",
+    "r10_loop10_czech_nuclear_infra_korea_epc": "success_candidate_legal_watch",
+    "r10_loop10_daewoo_enc_grand_faw_port_delivery": "success_candidate_infrastructure_delivery",
+    "r10_loop10_hyundai_engineering_bridge_collapse_sector_hard_4c": "sector_hard_4c_direct_listed_mapping_unclear",
+    "r10_loop10_hyundai_steel_rebar_construction_demand_watch": "4c_watch_building_material_demand_cycle",
+    "r10_loop10_posco_dl_construction_safety_regulation": "4c_watch_recurring_fatality_regulation",
+    "r10_loop10_seoul_housing_policy_supply_watch": "event_premium_policy_watch",
+    "r10_loop10_taeyoung_pf_credit_hard_4c": "hard_4c_pf_credit_break"
+  },
+  "source_round": "docs/round/round_240.md",
+  "stage4b_watch_triggers": [
+    "preferred_bidder_rally_before_supplier_margin",
+    "large_epc_order_rally_before_cash_collection",
+    "pf_support_rally_before_balance_sheet_repair",
+    "data_center_theme_rally_before_tenant_noi_affo",
+    "housing_policy_rally_before_presales_margin_fcf",
+    "reit_or_real_asset_yield_rally_before_affo_integrity"
+  ],
+  "summary": {
+    "analyst_round_id": "round_168",
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "event_premium_count": 1,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 2,
+    "hard_4c_confirmed": true,
+    "large_sector": "CONSTRUCTION_REAL_ESTATE_MATERIALS",
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_240.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 3,
+    "success_candidate_count": 3,
+    "target_archetype_count": 10
+  },
+  "target_aliases": {
+    "AI_DATA_CENTER_REAL_ASSET_DEVELOPMENT": "AI_DATA_CENTER_REAL_ASSET_DEVELOPMENT",
+    "BUILDING_MATERIALS_DEMAND_CYCLE": "BUILDING_MATERIALS_DEMAND_CYCLE",
+    "CONSTRUCTION_SAFETY_OPERATIONAL_TRUST_4C": "CONSTRUCTION_SAFETY_OPERATIONAL_TRUST_4C",
+    "EVIDENCE_GOOD_BUT_PRICE_UNPROVEN": "EVIDENCE_GOOD_BUT_PRICE_UNPROVEN",
+    "HOUSING_POLICY_SUPPLY_EVENT": "HOUSING_POLICY_SUPPLY_EVENT",
+    "NUCLEAR_INFRA_EPC_EXPORT": "NUCLEAR_INFRA_EPC_EXPORT",
+    "PORT_INFRA_DELIVERY": "PORT_INFRA_DELIVERY",
+    "PRICE_ONLY_POLICY_RALLY": "PRICE_ONLY_POLICY_RALLY",
+    "REAL_ESTATE_PF_CREDIT_BREAK": "REAL_ESTATE_PF_CREDIT_BREAK",
+    "WORKPLACE_FATALITY_REGULATORY_4C": "WORKPLACE_FATALITY_REGULATORY_4C"
+  },
+  "what_not_to_change": [
+    "do_not_use_round240_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_contract_policy_data_center_pf_relief_or_safety_headline_as_green",
+    "do_not_invent_ohlc_or_stage_dates",
+    "keep_pf_credit_break_and_fatal_construction_accident_as_hard_4c_references"
+  ]
+}
