@@ -1,0 +1,10 @@
+archetype,roe,capital_buffer,buyback_cancel,shareholder_return,pbr_roe_gap,credit_cost,regulated_revenue,nav_monetization,platform_trust,event_penalty,governance_trust_redteam,4b_watch_sensitivity,hard_4c_sensitivity,notes
+BANK_VALUEUP_ROE_PBR_RERATING,+5,+5,+5,+5,+5,+5,0,0,+2,-3,+3,+4,+4,Bank value-up needs ROE/CET1/credit cost and repeated shareholder return.
+SECURITIES_MARKET_VOLUME_CYCLE,+4,+3,0,+2,+3,+3,0,0,+2,-3,+2,+5,+4,Securities +13.5% is cyclical; revenue/ROE must confirm before Green.
+HOLDING_NAV_DISCOUNT_VALUEUP,+2,+2,+5,+5,+5,+1,0,+5,+2,-2,+2,+4,+3,SK Square needs actual cancellation and discount narrowing.
+INSURANCE_NAV_CAPITAL_RELEASE,+3,+5,+1,+4,+5,+3,0,+5,+2,-2,+3,+4,+4,Samsung Life needs use of proceeds and K-ICS/CSM confirmation.
+DIGITAL_ASSET_BANK_EQUITY_OPTION,+2,+4,0,+1,+2,+2,+5,+2,+4,-3,+4,+5,+4,Hana/Dunamu is Stage 2 until regulated revenue and capital impact confirm.
+DIGITAL_ASSET_PLATFORM_MERGER_TRUST_WATCH,+2,+3,0,+1,+2,+2,+5,+1,+5,-4,+5,+5,+5,Naver/Dunamu has exchange-trust 4C-watch from abnormal withdrawal.
+INTERNET_BANK_IPO_PROFITABILITY,+5,+4,0,+1,+4,+5,+2,0,+3,-4,+3,+5,+4,"K Bank needs listed path, ROE/NIM/credit quality."
+INTERNET_BANK_GOVERNANCE_4C,0,0,0,0,0,0,0,0,+5,-3,+5,+3,+5,KakaoBank Green blocked by major shareholder legal/ownership risk.
+KRW_STABLECOIN_POLICY_OVERHEAT,0,+1,0,0,+1,0,+1,0,+3,-5,+4,+5,+4,Stablecoin rally is price_moved_without_evidence until licensing/revenue clarity.

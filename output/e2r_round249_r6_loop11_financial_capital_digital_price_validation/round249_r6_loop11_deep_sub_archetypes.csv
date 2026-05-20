@@ -1,0 +1,10 @@
+category,primary_archetype,terms
+Bank value-up,BANK_VALUEUP_ROE_PBR_RERATING,KB|Shinhan|Hana|Woori|ROE|CET1|credit cost
+Securities cycle,SECURITIES_MARKET_VOLUME_CYCLE,securities basket|KOSPI 7000|trading volume|brokerage|IB
+Holding NAV,HOLDING_NAV_DISCOUNT_VALUEUP,SK Square|SK Hynix stake|buyback cancellation|NAV discount
+Insurance NAV,INSURANCE_NAV_CAPITAL_RELEASE,Samsung Life|Samsung Electronics stake|K-ICS|CSM
+Bank digital asset,DIGITAL_ASSET_BANK_EQUITY_OPTION,Hana Bank|Dunamu|Upbit|equity method income
+Platform merger trust,DIGITAL_ASSET_PLATFORM_MERGER_TRUST_WATCH,NAVER Financial|Dunamu|abnormal withdrawal|exchange trust
+Internet bank,INTERNET_BANK_IPO_PROFITABILITY,K Bank|KakaoBank|IPO|credit quality|NIM
+Internet bank governance,INTERNET_BANK_GOVERNANCE_4C,Kakao founder|bank ownership cap|major shareholder suitability
+KRW stablecoin theme,KRW_STABLECOIN_POLICY_OVERHEAT,Kakao Pay|LG CNS|Aton|ME2ON|issuer license|reserve income

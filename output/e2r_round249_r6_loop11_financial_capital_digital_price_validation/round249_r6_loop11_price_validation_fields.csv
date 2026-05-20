@@ -1,0 +1,15 @@
+field,required_now,reason
+price_data_source,false,round249 full OHLC not available; keep missing values explicit
+full_ohlc_available,false,round249 full OHLC not available; keep missing values explicit
+reported_price_anchor,false,round249 full OHLC not available; keep missing values explicit
+reported_return_anchor,false,round249 full OHLC not available; keep missing values explicit
+stage2_price_anchor,false,round249 full OHLC not available; keep missing values explicit
+stage3_price,false,round249 full OHLC not available; keep missing values explicit
+stage4b_price,false,round249 full OHLC not available; keep missing values explicit
+stage4c_price,false,round249 full OHLC not available; keep missing values explicit
+mfe_1d,false,round249 full OHLC not available; keep missing values explicit
+mae_1d,false,round249 full OHLC not available; keep missing values explicit
+transaction_value_anchor,false,round249 full OHLC not available; keep missing values explicit
+policy_or_regulatory_anchor,false,round249 full OHLC not available; keep missing values explicit
+capital_or_trust_anchor,false,round249 full OHLC not available; keep missing values explicit
+price_validation_status,false,round249 full OHLC not available; keep missing values explicit
