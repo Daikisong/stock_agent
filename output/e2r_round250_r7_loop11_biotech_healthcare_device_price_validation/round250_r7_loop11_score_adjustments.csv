@@ -1,0 +1,21 @@
+axis,points,direction,reason
+commercial_revenue,5,raise,승인 뒤 실제 매출이 들어와야 R7 Stage 3 후보가 된다.
+royalty_revenue_visibility,5,raise,플랫폼 바이오는 royalty/supply revenue가 확인되어야 현금흐름 전환이다.
+prescription_volume,5,raise,신약은 처방량이 approval headline을 상업 성과로 바꾸는 증거다.
+reimbursement_access,5,raise,보험·수가 접근 없이는 병원 도입과 반복 매출 지속성이 약하다.
+hospital_adoption,4,raise,의료AI와 의료기기는 병원 도입 전까지 validation-only다.
+capacity_utilization,5,raise,CDMO 공장·M&A는 가동률과 backlog가 있어야 이익으로 바뀐다.
+contract_backlog,4,raise,CMO/CDMO는 계약 잔고가 시설 증설을 Stage 3 근거로 만든다.
+gross_margin_visibility,4,raise,의료 제품은 매출만큼 gross margin과 FCF 확인이 중요하다.
+cash_runway,4,raise,바이오 섹터는 cash runway와 dilution risk 통과가 필수다.
+partner_execution_quality,5,raise,대형 파트너도 임상·제조·출시 실행이 깨지면 RedTeam 근거다.
+approval_news_only,-5,lower,FDA 승인만으로 Stage 3-Green을 만들지 않는다.
+clinical_headline_only,-5,lower,임상 headline은 revenue conversion 전 Stage 2에 그친다.
+external_validation_without_revenue,-5,lower,AUC나 외부검증은 수가·도입·반복매출 전 Green 근거가 아니다.
+mna_without_utilization,-5,lower,M&A 발표는 가동률·margin·FCF 전 event premium이다.
+policy_support_without_order,-4,lower,정책지원은 회사별 주문·마진·FCF로 닫히기 전 Green이 아니다.
+facility_acquisition_without_backlog,-4,lower,미국 공장 인수는 product transfer/backlog 전 Stage 2다.
+partner_program_without_indication_success,-5,lower,파트너 pipeline 기대는 indication별 성공 전 Green 금지다.
+patent_litigation_risk,-4,lower,특허분쟁은 royalty durability를 깎는 RedTeam 축이다.
+cash_burn_or_dilution_risk,-5,lower,상업화 전 현금소진/희석 위험은 Green을 막는다.
+subgroup_performance_risk,-3,lower,의료AI subgroup 약점은 실제 도입 리스크다.

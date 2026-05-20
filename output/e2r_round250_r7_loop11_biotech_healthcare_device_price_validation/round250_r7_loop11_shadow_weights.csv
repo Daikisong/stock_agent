@@ -1,0 +1,9 @@
+archetype,commercial_revenue,royalty_visibility,prescription_volume,reimbursement,hospital_adoption,utilization,gross_margin,cash_runway,partner_execution,event_penalty,clinical_regulatory_redteam,4b_watch_sensitivity,hard_4c_sensitivity,notes
+BIO_PLATFORM_ROYALTY_CONVERSION,+5,+5,+3,+3,+3,+0,+5,+4,+5,-3,+5,+5,+4,"Alteogen/Keytruda SC needs royalty, supply revenue and patent durability."
+KOREAN_NEW_DRUG_GLOBAL_APPROVAL,+5,+5,+5,+5,+4,+0,+5,+4,+5,-4,+4,+5,+4,Yuhan/lazertinib approval is Stage 2 until prescription and royalty revenue confirm.
+CDMO_US_TARIFF_HEDGE_CAPACITY,+4,+0,+0,+0,+0,+5,+5,+4,+3,-4,+2,+4,+4,"SamsungBio/Celltrion facilities need utilization, backlog, margin and FCF."
+CMO_M_AND_A_TRANSITION,+4,+0,+0,+0,+0,+5,+5,+4,+4,-5,+2,+5,+4,SK Bioscience IDT acquisition is Stage 2 until integration and utilization confirm.
+BIOPHARMA_POLICY_TARIFF_RELIEF,+2,+0,+0,+0,+0,+2,+3,+3,+2,-5,+3,+5,+3,"Policy support is relief, not Green."
+AUTOIMMUNE_PARTNER_TRIAL_FAILURE,+0,+0,+0,+0,+0,+0,+0,+5,+5,+0,+5,+3,+5,HanAll/Immunovant trial failure is partner-program 4C-watch.
+MEDICAL_AI_EXTERNAL_VALIDATION,+2,+0,+0,+5,+5,+0,+3,+5,+3,-4,+4,+5,+5,"Lunit external validation is not Green without reimbursement, adoption and revenue."
+APPROVAL_OR_VALIDATION_ONLY_NOT_GREEN,+0,+0,+0,+0,+0,+0,+0,+4,+3,-5,+4,+5,+4,Approval or validation headlines stay Stage 2 until commercial conversion.
