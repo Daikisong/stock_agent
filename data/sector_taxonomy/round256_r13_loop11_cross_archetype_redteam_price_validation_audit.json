@@ -1,0 +1,280 @@
+{
+  "analyst_round_id": "round_184",
+  "deep_sub_archetypes": [
+    {
+      "category": "성공 benchmark / HBM",
+      "primary_archetype": "STRUCTURAL_SUCCESS_BUT_4B_WATCH",
+      "terms": "SK Hynix HBM|ASML EUV order|AI memory|EPS revision|stage3 to +551.8% MFE|market-cap milestone"
+    },
+    {
+      "category": "성공 검증 / K-beauty device",
+      "primary_archetype": "STRUCTURAL_SUCCESS_BUT_4B_WATCH",
+      "terms": "APR|Medicube|K-beauty device|overseas revenue growth|single-brand concentration"
+    },
+    {
+      "category": "계약 headline Stage 2",
+      "primary_archetype": "STAGE2_STRONG_NOT_GREEN",
+      "terms": "Samsung E&A|Fadhili|Saudi Aramco|EPC margin|progress revenue|cash collection"
+    },
+    {
+      "category": "AI capital allocation 4B",
+      "primary_archetype": "AI_CAPITAL_ALLOCATION_EVENT_PREMIUM",
+      "terms": "Samsung SDS|KKR convertible bond|AI infrastructure|M&A|capital allocation|recurring AI revenue required"
+    },
+    {
+      "category": "디지털자산 policy overheat",
+      "primary_archetype": "DIGITAL_ASSET_POLICY_OVERHEAT",
+      "terms": "KRW stablecoin|Kakao Pay|LG CNS|Aton|ME2ON|issuer license|reserve income"
+    },
+    {
+      "category": "좋은 증거 but price failed",
+      "primary_archetype": "EVIDENCE_GOOD_BUT_PRICE_FAILED",
+      "terms": "LG CNS IPO|Samsung Biologics GSK facility|cloud AI IPO|U.S. CDMO facility|fresh rerating failed"
+    },
+    {
+      "category": "계약품질 hard 4C",
+      "primary_archetype": "CONTRACT_QUALITY_HARD_4C",
+      "terms": "LGES|Ford cancellation|Freudenberg cancellation|L&F Tesla cathode|contract value collapse|actual call-off"
+    },
+    {
+      "category": "운영신뢰 hard 4C",
+      "primary_archetype": "OPERATIONAL_TRUST_HARD_4C",
+      "terms": "SK Telecom data breach|Kumho Tire factory fire|security fine|revenue forecast cut|production suspension"
+    },
+    {
+      "category": "거시 지정학 hard 4C",
+      "primary_archetype": "MACRO_GEOPOLITICAL_HARD_4C",
+      "terms": "Hormuz|Iran shock|KOSPI -12.06%|KRW 1505.8|macro hard 4C"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "policy_news_only",
+    "ai_capital_allocation_without_revenue",
+    "stablecoin_policy_theme_only",
+    "contract_headline_without_margin",
+    "customer_name_without_calloff",
+    "mna_or_facility_without_utilization",
+    "ipo_debut_or_listing_story",
+    "good_news_but_price_failed_for_green",
+    "data_breach_or_security_failure",
+    "factory_fire_or_supply_disruption",
+    "macro_energy_fx_shock_ignored"
+  ],
+  "green_required_fields": [
+    "revenue_eps_fcf_conversion_confirmed",
+    "price_path_after_evidence",
+    "stage3_to_large_mfe_confirmation",
+    "mae_not_excessive",
+    "actual_calloff_margin_cash_collection_for_contracts",
+    "paid_usage_arpu_trust_for_platforms",
+    "capacity_utilization_supply_continuity_for_manufacturing",
+    "no_hard_4c",
+    "no_macro_hard_overlay"
+  ],
+  "hard_4c_gates": [
+    "contract_cancellation",
+    "contract_value_collapse",
+    "actual_calloff_failure",
+    "operational_trust_break",
+    "data_breach_or_security_failure",
+    "security_or_privacy_breach_with_revenue_cut",
+    "factory_fire_or_supply_disruption",
+    "fatal_safety_accident",
+    "regulatory_reversal",
+    "geopolitical_energy_chokepoint_shock",
+    "krw_disorderly_depreciation",
+    "macro_circuit_breaker_or_index_crash"
+  ],
+  "large_sector": "CROSS_ARCHETYPE_REDTEAM_PRICE_VALIDATION",
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_contract_quality": "+4",
+      "archetype": "STRUCTURAL_SUCCESS_ALIGNED",
+      "capex_funding_redteam": "+0",
+      "event_penalty": "+0",
+      "governance_security_redteam": "+0",
+      "hard_4c_sensitivity": "+2",
+      "macro_risk_overlay": "+2",
+      "notes": "SK Hynix and APR prove Stage 3 can produce large MFE when revenue/EPS conversion exists.",
+      "operational_trust": "+3",
+      "price_path_alignment": "+5",
+      "revenue_eps_conversion": "+5",
+      "stage3_mfe_confirmation": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_contract_quality": "+4",
+      "archetype": "STRUCTURAL_SUCCESS_BUT_4B_WATCH",
+      "capex_funding_redteam": "+1",
+      "event_penalty": "-1",
+      "governance_security_redteam": "+1",
+      "hard_4c_sensitivity": "+3",
+      "macro_risk_overlay": "+2",
+      "notes": "Large MFE, market-cap milestone, or concentration requires 4B-watch.",
+      "operational_trust": "+3",
+      "price_path_alignment": "+5",
+      "revenue_eps_conversion": "+5",
+      "stage3_mfe_confirmation": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_contract_quality": "+4",
+      "archetype": "STAGE2_STRONG_NOT_GREEN",
+      "capex_funding_redteam": "+2",
+      "event_penalty": "-3",
+      "governance_security_redteam": "+1",
+      "hard_4c_sensitivity": "+3",
+      "macro_risk_overlay": "+1",
+      "notes": "Samsung E&A contract headline is strong Stage 2 until margin and cash collection close.",
+      "operational_trust": "+2",
+      "price_path_alignment": "+3",
+      "revenue_eps_conversion": "+3",
+      "stage3_mfe_confirmation": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_contract_quality": "+2",
+      "archetype": "AI_CAPITAL_ALLOCATION_EVENT_PREMIUM",
+      "capex_funding_redteam": "+3",
+      "event_penalty": "-5",
+      "governance_security_redteam": "+2",
+      "hard_4c_sensitivity": "+3",
+      "macro_risk_overlay": "+2",
+      "notes": "Samsung SDS KKR event is Stage 2 and 4B before AI revenue/FCF.",
+      "operational_trust": "+3",
+      "price_path_alignment": "+3",
+      "revenue_eps_conversion": "+3",
+      "stage3_mfe_confirmation": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_contract_quality": "+0",
+      "archetype": "DIGITAL_ASSET_POLICY_OVERHEAT",
+      "capex_funding_redteam": "+1",
+      "event_penalty": "-5",
+      "governance_security_redteam": "+3",
+      "hard_4c_sensitivity": "+4",
+      "macro_risk_overlay": "+3",
+      "notes": "Stablecoin rallies are price_moved_without_evidence until licensing/revenue clarity.",
+      "operational_trust": "+1",
+      "price_path_alignment": "+0",
+      "revenue_eps_conversion": "+0",
+      "stage3_mfe_confirmation": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "actual_contract_quality": "+2",
+      "archetype": "EVIDENCE_GOOD_BUT_PRICE_FAILED",
+      "capex_funding_redteam": "+2",
+      "event_penalty": "-4",
+      "governance_security_redteam": "+1",
+      "hard_4c_sensitivity": "+2",
+      "macro_risk_overlay": "+1",
+      "notes": "LG CNS and SamsungBio show good evidence is not fresh rerating when price response fails.",
+      "operational_trust": "+2",
+      "price_path_alignment": "+3",
+      "revenue_eps_conversion": "+4",
+      "stage3_mfe_confirmation": "-2"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "actual_contract_quality": "+5",
+      "archetype": "CONTRACT_QUALITY_HARD_4C",
+      "capex_funding_redteam": "+1",
+      "event_penalty": "+0",
+      "governance_security_redteam": "+1",
+      "hard_4c_sensitivity": "+5",
+      "macro_risk_overlay": "+1",
+      "notes": "LGES and L&F contract cancellations/value collapse are hard 4C.",
+      "operational_trust": "+2",
+      "price_path_alignment": "+0",
+      "revenue_eps_conversion": "+0",
+      "stage3_mfe_confirmation": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "actual_contract_quality": "+0",
+      "archetype": "OPERATIONAL_TRUST_HARD_4C",
+      "capex_funding_redteam": "+0",
+      "event_penalty": "+0",
+      "governance_security_redteam": "+5",
+      "hard_4c_sensitivity": "+5",
+      "macro_risk_overlay": "+2",
+      "notes": "SK Telecom breach and Kumho factory fire are operational trust hard 4C.",
+      "operational_trust": "+5",
+      "price_path_alignment": "+0",
+      "revenue_eps_conversion": "+0",
+      "stage3_mfe_confirmation": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_contract_quality": "+0",
+      "archetype": "MACRO_GEOPOLITICAL_HARD_4C",
+      "capex_funding_redteam": "+2",
+      "event_penalty": "+0",
+      "governance_security_redteam": "+2",
+      "hard_4c_sensitivity": "+5",
+      "macro_risk_overlay": "+5",
+      "notes": "Hormuz/Iran shock is cross-sector macro hard 4C.",
+      "operational_trust": "+3",
+      "price_path_alignment": "+0",
+      "revenue_eps_conversion": "+0",
+      "stage3_mfe_confirmation": "+0"
+    }
+  ],
+  "source_round": "docs/round/round_256.md",
+  "stage4b_watch_triggers": [
+    "stage3_after_3x_to_5x_price_move",
+    "market_cap_milestone_headline",
+    "large_contract_day_plus_5_to_10pct_move",
+    "ai_mna_cb_event_plus_20pct_move",
+    "stablecoin_policy_theme_two_to_three_x_move",
+    "ipo_debut_after_short_term_double",
+    "good_news_with_weak_price_response",
+    "valuation_moves_ahead_of_evidence",
+    "single_brand_or_customer_concentration_above_80pct"
+  ],
+  "summary": {
+    "analyst_round_id": "round_184",
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 9,
+    "failed_rerating_count": 1,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 3,
+    "hard_4c_confirmed": true,
+    "large_sector": "CROSS_ARCHETYPE_REDTEAM_PRICE_VALIDATION",
+    "overheat_count": 1,
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "r13_default_stage3_bias": "redteam_first_after_price_validation",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 9,
+    "source_round": "docs/round/round_256.md",
+    "stage3_case_count": 2,
+    "stage4b_watch_count": 4,
+    "structural_success_count": 2,
+    "success_candidate_count": 1,
+    "target_archetype_count": 9
+  },
+  "target_aliases": {
+    "AI_CAPITAL_ALLOCATION_EVENT_PREMIUM": "AI_CAPITAL_ALLOCATION_EVENT_PREMIUM",
+    "CONTRACT_HEADLINE_STAGE2_NOT_GREEN": "STAGE2_STRONG_NOT_GREEN",
+    "CONTRACT_QUALITY_HARD_4C": "CONTRACT_QUALITY_HARD_4C",
+    "EVIDENCE_GOOD_BUT_PRICE_FAILED": "EVIDENCE_GOOD_BUT_PRICE_FAILED",
+    "MACRO_GEOPOLITICAL_HARD_4C": "MACRO_GEOPOLITICAL_HARD_4C",
+    "OPERATIONAL_TRUST_HARD_4C": "OPERATIONAL_TRUST_HARD_4C",
+    "POLICY_DIGITAL_ASSET_PRICE_ONLY": "DIGITAL_ASSET_POLICY_OVERHEAT",
+    "STRUCTURAL_SUCCESS_ALIGNED": "STRUCTURAL_SUCCESS_ALIGNED",
+    "STRUCTURAL_SUCCESS_BUT_4B_WATCH": "STRUCTURAL_SUCCESS_BUT_4B_WATCH"
+  },
+  "what_not_to_change": [
+    "do_not_use_round256_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_contract_ai_stablecoin_macro_or_operational_event_as_green",
+    "do_not_invent_ohlc_or_stage_dates",
+    "do_not_weaken_stage3_green_to_improve_recall"
+  ]
+}

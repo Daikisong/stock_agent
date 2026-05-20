@@ -1,0 +1,45 @@
+# Round 256 R13 4B/4C Review
+
+## 4B Watch Triggers
+
+- stage3_after_3x_to_5x_price_move
+- market_cap_milestone_headline
+- large_contract_day_plus_5_to_10pct_move
+- ai_mna_cb_event_plus_20pct_move
+- stablecoin_policy_theme_two_to_three_x_move
+- ipo_debut_after_short_term_double
+- good_news_with_weak_price_response
+- valuation_moves_ahead_of_evidence
+- single_brand_or_customer_concentration_above_80pct
+
+## Hard 4C Gates
+
+- contract_cancellation
+- contract_value_collapse
+- actual_calloff_failure
+- operational_trust_break
+- data_breach_or_security_failure
+- security_or_privacy_breach_with_revenue_cut
+- factory_fire_or_supply_disruption
+- fatal_safety_accident
+- regulatory_reversal
+- geopolitical_energy_chokepoint_shock
+- krw_disorderly_depreciation
+- macro_circuit_breaker_or_index_crash
+
+## Plain-Language Gate Notes
+
+- 4B is about graduation, crowding, price prepayment, and event premium.
+- 4C is about thesis break: contract quality, operational trust, security, factory disruption, or macro shock.
+- Price-only rallies stay watch items until company-level revenue, EPS, FCF, or licensed economics are visible.
+
+## Case Notes
+
+- r13_loop11_sk_hynix_hbm_structural_success_4b_watch: market_cap_milestone_headline, reported_2025_return_274pct, reported_2026_return_above_200pct, crowding_watch
+- r13_loop11_apr_medicube_structural_concentration_4b: single_brand_device_concentration, medicube_revenue_share_91_7pct, valuation_premium_after_rapid_growth, fast_product_cycle_watch
+- r13_loop11_samsung_ea_fadhili_contract_stage2_4b: contract_headline_without_margin, progress_revenue_unconfirmed, epc_margin_unconfirmed, cash_collection_unconfirmed, price_moves_before_cash_conversion
+- r13_loop11_samsung_sds_stablecoin_ai_digital_event_premium: ai_capital_allocation_without_revenue, stablecoin_policy_theme_only, issuer_license_unconfirmed, reserve_income_unconfirmed, fee_revenue_unconfirmed, price_moved_before_revenue
+- r13_loop11_lg_cns_samsung_biologics_good_evidence_price_failed: good_news_but_price_failed, fresh_rerating_response_missing, ipo_debut_below_offer, facility_utilization_unconfirmed, margin_fcf_conversion_unconfirmed
+- r13_loop11_lges_lnf_contract_quality_hard_4c: contract_cancellation, contract_value_collapse, actual_calloff_failure, customer_name_without_calloff, ev_demand_slowdown, take_or_pay_unconfirmed
+- r13_loop11_skt_kumho_operational_trust_hard_4c: data_breach_or_security_failure, security_privacy_trust_break, revenue_forecast_cut, regulatory_fine, factory_fire_or_supply_disruption, production_suspension
+- r13_loop11_hormuz_iran_macro_hard_4c: geopolitical_energy_chokepoint_shock, macro_energy_fx_shock, krw_disorderly_depreciation, macro_circuit_breaker_or_index_crash, market_wide_riskoff, oil_import_dependency
