@@ -1,0 +1,23 @@
+axis,points,direction,reason
+unit_economics,5,raise,R9는 수요보다 한 대/한 노선/한 계약이 실제로 돈을 버는지가 핵심이다.
+fcf_after_capex,5,raise,미래모빌리티·항공·철도 투자는 capex 이후 FCF가 확인돼야 Stage 3를 검토한다.
+utilization,5,raise,항공기·선박·열차·로봇은 가동률과 생산성이 이익으로 닫혀야 한다.
+contract_delivery_schedule,4,raise,철도/인프라 수주는 납품·마진·현금회수 일정이 있어야 품질이 생긴다.
+load_factor_with_yield,5,raise,항공 노선은 탑승률만이 아니라 yield와 비용이 같이 필요하다.
+route_profitability,5,raise,장거리 LCC는 노선권보다 노선 손익이 Stage 3 증거다.
+fleet_integration_synergy,4,raise,LCC 통합은 fleet count보다 integration synergy와 서비스 품질이 중요하다.
+maintenance_safety_trust,5,raise,운송 섹터는 safety trust가 깨지면 수요 논리가 바로 훼손된다.
+quality_recall_control,5,raise,자동차부품은 품질/recall 비용 통제가 Green 전제다.
+tourist_spend_conversion,5,raise,"관광주는 입국자 수보다 spend, occupancy, casino drop, OPM으로 확인한다."
+casino_drop_and_hold,4,raise,카지노/복합리조트는 drop과 hold가 실제 OP로 이어져야 한다.
+freight_rate_floor,4,raise,해운은 운임 반등보다 floor와 contract coverage가 있어야 한다.
+future_mobility_capex_headline,-5,lower,AI/robotics 투자설만으로는 robot/software revenue가 아니다.
+robotics_ai_city_theme_only,-5,lower,AI city/hydrogen/robotics 테마만 있으면 4B/event premium으로 둔다.
+route_allocation_without_yield,-4,lower,노선 배정만 있고 yield/load factor가 없으면 Stage 2에 머문다.
+fleet_count_without_margin,-4,lower,fleet count는 integration cost와 margin 확인 전 Green 증거가 아니다.
+tourism_redirect_event_only,-5,lower,관광 reroute 기대만으로는 spend/occupancy가 아니다.
+freight_rate_cycle_only,-5,lower,운임 사이클만으로 구조적 Green을 주지 않는다.
+quality_recall_issue,-5,lower,품질/recall은 자동차부품 RedTeam 입력이다.
+safety_trust_break,-5,lower,fatal accident나 안전 신뢰 붕괴는 hard 4C 후보가 된다.
+labor_disruption_risk,-4,lower,노동 갈등이 deployment를 막으면 미래모빌리티 capex 점수를 낮춘다.
+capex_without_fcf,-4,lower,capex만 있고 FCF bridge가 없으면 4B-watch다.

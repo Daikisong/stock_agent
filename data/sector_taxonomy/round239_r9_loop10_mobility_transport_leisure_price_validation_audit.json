@@ -1,0 +1,98 @@
+{
+  "analyst_round_id": "round_167",
+  "green_forbidden_patterns": [
+    "future_mobility_capex_headline_only",
+    "robotics_ai_city_theme_only",
+    "route_allocation_without_yield",
+    "fleet_count_without_margin",
+    "tourism_redirect_event_only",
+    "freight_rate_cycle_only",
+    "quality_recall_issue",
+    "fatal_safety_accident"
+  ],
+  "green_required_fields": [
+    "unit_economics",
+    "fcf_after_capex",
+    "utilization_or_load_factor",
+    "route_yield_or_contract_margin",
+    "contract_delivery_or_fleet_productivity",
+    "safety_quality_operational_trust_passed",
+    "labor_integration_maintenance_risk_passed",
+    "tourist_spend_occupancy_or_casino_drop",
+    "freight_rate_floor_and_contract_coverage",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "fatal_safety_accident",
+    "operational_trust_break",
+    "quality_recall_with_earnings_or_reputation_damage",
+    "route_launch_failure",
+    "fleet_integration_failure",
+    "labor_disruption_blocking_deployment",
+    "capex_overrun",
+    "fcf_deterioration",
+    "freight_rate_collapse",
+    "tourist_spend_failure",
+    "casino_utilization_collapse",
+    "consumer_trust_shock"
+  ],
+  "large_sector": "MOBILITY_TRANSPORT_LEISURE",
+  "round_case_types": {
+    "r9_loop10_hyundai_kia_future_mobility_capex_4b": "success_candidate_event_premium_labor_capex_watch",
+    "r9_loop10_hyundai_mobis_iccu_quality_recall_watch": "4c_watch_evidence_good_but_quality_failed",
+    "r9_loop10_hyundai_rotem_morocco_rail_order": "success_candidate_rail_export_order",
+    "r9_loop10_jeju_air_fatal_crash_hard_4c": "hard_4c_operational_safety_trust_break",
+    "r9_loop10_jin_air_air_busan_air_seoul_integration": "success_candidate_lcc_consolidation_integration",
+    "r9_loop10_lotte_tour_yellow_balloon_china_japan_redirect": "event_premium_price_moved_without_evidence",
+    "r9_loop10_pan_ocean_dry_bulk_cycle": "cyclical_success_dry_bulk_lng_fleet_expansion",
+    "r9_loop10_tway_europe_route_allocation": "success_candidate_long_haul_lcc_route_allocation"
+  },
+  "source_round": "docs/round/round_239.md",
+  "stage4b_watch_triggers": [
+    "future_mobility_investment_rally_before_revenue",
+    "tourism_reroute_rally_before_spend",
+    "lcc_route_rally_before_load_factor",
+    "fleet_integration_rally_before_synergy",
+    "shipping_cycle_rerating_before_freight_floor",
+    "robotics_ai_hydrogen_headline_valuation_expansion"
+  ],
+  "summary": {
+    "analyst_round_id": "round_167",
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "cyclical_success_count": 1,
+    "event_premium_count": 1,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "MOBILITY_TRANSPORT_LEISURE",
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_239.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 7,
+    "stage4c_watch_count": 2,
+    "success_candidate_count": 4,
+    "target_archetype_count": 10
+  },
+  "target_aliases": {
+    "AIRLINE_SAFETY_OPERATIONAL_TRUST_4C": "AIRLINE_SAFETY_OPERATIONAL_TRUST_4C",
+    "AUTO_PARTS_QUALITY_RECALL_4C": "AUTO_PARTS_QUALITY_RECALL_4C",
+    "EVENT_PREMIUM": "EVENT_PREMIUM",
+    "FUTURE_MOBILITY_AI_ROBOTICS_CAPEX": "FUTURE_MOBILITY_AI_ROBOTICS_CAPEX",
+    "LCC_CONSOLIDATION_INTEGRATION": "LCC_CONSOLIDATION_INTEGRATION",
+    "LCC_LONG_HAUL_ROUTE_ALLOCATION": "LCC_LONG_HAUL_ROUTE_ALLOCATION",
+    "PRICE_ONLY_RALLY": "PRICE_ONLY_RALLY",
+    "RAIL_EXPORT_ORDER_TO_DELIVERY": "RAIL_EXPORT_ORDER_TO_DELIVERY",
+    "SHIPPING_DRY_BULK_CYCLE": "SHIPPING_DRY_BULK_CYCLE",
+    "TOURISM_REDIRECT_EVENT_PREMIUM": "TOURISM_REDIRECT_EVENT_PREMIUM"
+  },
+  "what_not_to_change": [
+    "do_not_use_round239_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_capex_route_fleet_tourism_or_freight_headline_as_green",
+    "do_not_invent_ohlc_or_stage_dates",
+    "keep_jeju_air_fatal_crash_as_hard_4c_reference_case"
+  ]
+}

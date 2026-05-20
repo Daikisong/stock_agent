@@ -1,0 +1,36 @@
+# Round 239 R9 4B/4C Review
+
+## 4B Watch Triggers
+
+- future_mobility_investment_rally_before_revenue
+- tourism_reroute_rally_before_spend
+- lcc_route_rally_before_load_factor
+- fleet_integration_rally_before_synergy
+- shipping_cycle_rerating_before_freight_floor
+- robotics_ai_hydrogen_headline_valuation_expansion
+
+## Hard 4C Gates
+
+- fatal_safety_accident
+- operational_trust_break
+- quality_recall_with_earnings_or_reputation_damage
+- route_launch_failure
+- fleet_integration_failure
+- labor_disruption_blocking_deployment
+- capex_overrun
+- fcf_deterioration
+- freight_rate_collapse
+- tourist_spend_failure
+- casino_utilization_collapse
+- consumer_trust_shock
+
+## Case Notes
+
+- r9_loop10_hyundai_kia_future_mobility_capex_4b: future_mobility_capex_headline_only, robotics_ai_city_theme_only, labor_disruption_risk, software_revenue_unverified, fcf_after_capex_unverified
+- r9_loop10_hyundai_mobis_iccu_quality_recall_watch: quality_recall_issue, earnings_reputation_damage_watch, recurring_iccu_defect, ev_component_exposure_not_green
+- r9_loop10_hyundai_rotem_morocco_rail_order: delivery_schedule_unverified, margin_unverified, working_capital_unverified, cash_collection_unverified
+- r9_loop10_tway_europe_route_allocation: route_allocation_without_yield, load_factor_unverified, crew_cost_unverified, fuel_cost_unverified, safety_service_execution_unverified
+- r9_loop10_jin_air_air_busan_air_seoul_integration: fleet_count_without_margin, integration_cost_unverified, route_profitability_unverified, safety_service_quality_unverified
+- r9_loop10_pan_ocean_dry_bulk_cycle: freight_rate_cycle_only, price_failed_on_target_raise, freight_floor_unverified, contract_coverage_unverified, deleveraging_unverified
+- r9_loop10_lotte_tour_yellow_balloon_china_japan_redirect: tourism_redirect_event_only, tourist_spend_unverified, occupancy_unverified, casino_drop_unverified, event_premium_watch
+- r9_loop10_jeju_air_fatal_crash_hard_4c: fatal_safety_accident, operational_trust_break, consumer_trust_shock, booking_cancellation, hard_4c_confirmed
