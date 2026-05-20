@@ -1,0 +1,396 @@
+{
+  "case_ids": [
+    "r4_loop14_lotte_lgchem_petrochemical_spread_collapse",
+    "r4_loop14_lotte_hdhyundai_petrochemical_restructuring",
+    "r4_loop14_hyundai_posco_steel_spread_antidumping",
+    "r4_loop14_korea_zinc_strategic_metal_control_premium",
+    "r4_loop14_posco_minres_lithium_resource_integration",
+    "r4_loop14_posco_future_m_lnf_lithium_squeeze_rally",
+    "r4_loop14_lnf_tesla_4680_cathode_contract_collapse",
+    "r4_loop14_rare_earth_export_control_supply_chain",
+    "r4_loop14_lg_chem_cathode_supply_chain_rebalancing"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "petrochemical spread collapse",
+      "primary_archetype": "PETROCHEMICAL_SPREAD_COLLAPSE_4C",
+      "terms": "Lotte Chemical|LG Chem|NE Asia oversupply|deep operating loss|NCC spread collapse"
+    },
+    {
+      "category": "Korea petrochemical restructuring",
+      "primary_archetype": "PETROCHEMICAL_RESTRUCTURING_STAGE2_NOT_GREEN",
+      "terms": "Daesan NCC shutdown|2T KRW policy support|1.2T KRW capital increase|utility support"
+    },
+    {
+      "category": "steel anti-dumping event premium",
+      "primary_archetype": "STEEL_ANTI_DUMPING_EVENT_PREMIUM",
+      "terms": "Hyundai Steel|POSCO|Chinese steel dumping|anti-dumping tariff|weak construction demand"
+    },
+    {
+      "category": "strategic metal control premium",
+      "primary_archetype": "STRATEGIC_METAL_CONTROL_PREMIUM_4B",
+      "terms": "Korea Zinc|Young Poong|MBK|tender offer|buyback defence|governance risk"
+    },
+    {
+      "category": "lithium resource integration",
+      "primary_archetype": "LITHIUM_RESOURCE_INTEGRATION_STAGE2",
+      "terms": "POSCO|Mineral Resources|Wodgina|Mt Marion|lithium hydroxide JV"
+    },
+    {
+      "category": "lithium squeeze event premium",
+      "primary_archetype": "LITHIUM_PRICE_SQUEEZE_EVENT_PREMIUM",
+      "terms": "POSCO Future M|L&F|Samsung SDI|LGES|CATL Yichun suspension"
+    },
+    {
+      "category": "battery material contract hard 4C",
+      "primary_archetype": "BATTERY_MATERIAL_CONTRACT_COLLAPSE_HARD_4C",
+      "terms": "L&F|Tesla|4680 cathode|contract value collapse|customer call-off failure"
+    },
+    {
+      "category": "rare-earth export control",
+      "primary_archetype": "RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C",
+      "terms": "China export controls|processed rare earths|magnets|exports down 50%|license continuity"
+    },
+    {
+      "category": "cathode supply-chain rebalancing",
+      "primary_archetype": "CATHODE_SUPPLY_CHAIN_REBALANCING_STAGE2",
+      "terms": "LG Chem|Toyota Tsusho|Huayou|Exxon|non-binding lithium"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "commodity_rebound_headline_only",
+    "tariff_relief_only",
+    "control_premium_only",
+    "capacity_restructuring_policy_only",
+    "mine_stake_without_processing_margin",
+    "CATL_license_suspension_sentiment",
+    "nonbinding_supply_agreement",
+    "signed_contract_without_calloff",
+    "rare_earth_truce_without_actual_exports"
+  ],
+  "green_required_fields": [
+    "spread_margin_realization_confirmed",
+    "capacity_cut_actual_execution_confirmed",
+    "plant_shutdown_discipline_confirmed",
+    "commodity_price_sensitivity_measured",
+    "customer_calloff_visibility_confirmed",
+    "contract_value_durability_confirmed",
+    "resource_offtake_utilization_confirmed",
+    "export_license_continuity_confirmed",
+    "governance_dilution_control_confirmed",
+    "inventory_valuation_risk_controlled",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "signed_contract_value_collapse",
+    "customer_calloff_failure",
+    "petrochemical_spread_collapse_with_deep_operating_loss",
+    "rare_earth_export_license_denial_or_shipment_failure",
+    "tariff_reversal_or_export_tariff_shock",
+    "forced_plant_shutdown_without_balance_sheet_relief",
+    "commodity_price_collapse_breaking_mine_or_offtake_economics",
+    "governance_dilution_accounting_risk_after_control_premium"
+  ],
+  "large_sector": "MATERIALS_SPREADS_STRATEGIC_RESOURCES",
+  "round_id": "round_214",
+  "score_adjustments": [
+    {
+      "axis": "spread_margin_realization",
+      "direction": "raise",
+      "points": "5",
+      "reason": "소재/화학은 가격보다 제품 스프레드와 현금마진이 먼저다."
+    },
+    {
+      "axis": "capacity_cut_actual_execution",
+      "direction": "raise",
+      "points": "5",
+      "reason": "구조조정은 발표가 아니라 실제 shutdown과 공급규율이 필요하다."
+    },
+    {
+      "axis": "customer_calloff_visibility",
+      "direction": "raise",
+      "points": "5",
+      "reason": "장기 소재 계약은 실제 고객 call-off가 있어야 매출이 된다."
+    },
+    {
+      "axis": "contract_value_durability",
+      "direction": "raise",
+      "points": "5",
+      "reason": "초기 계약금액이 줄어들면 Stage 4C가 될 수 있다."
+    },
+    {
+      "axis": "resource_offtake_utilization",
+      "direction": "raise",
+      "points": "5",
+      "reason": "광산 지분은 offtake와 가공설비 utilization으로 닫혀야 한다."
+    },
+    {
+      "axis": "export_license_continuity",
+      "direction": "raise",
+      "points": "5",
+      "reason": "희토류/전략자원은 실제 수출허가와 선적 지속성이 핵심이다."
+    },
+    {
+      "axis": "governance_dilution_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "지배권 프리미엄은 희석·거버넌스 통과 전에는 operating Green이 아니다."
+    },
+    {
+      "axis": "inventory_valuation_risk_controlled",
+      "direction": "raise",
+      "points": "4",
+      "reason": "리튬·양극재는 재고평가손실과 판가연동을 같이 봐야 한다."
+    },
+    {
+      "axis": "commodity_rebound_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "상품가격 반등 headline만으로 Green을 만들지 않는다."
+    },
+    {
+      "axis": "tariff_relief_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "반덤핑 관세는 수요와 스프레드가 없으면 event premium이다."
+    },
+    {
+      "axis": "control_premium_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "지배권 프리미엄은 FCF 증거가 아니다."
+    },
+    {
+      "axis": "capacity_restructuring_policy_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "정책 지원만 있고 스프레드 회복이 없으면 Stage 2다."
+    },
+    {
+      "axis": "mine_stake_without_processing_margin",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "광산 지분만 있고 가공마진이 없으면 Green 금지다."
+    },
+    {
+      "axis": "CATL_license_suspension_sentiment",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "CATL 허가 중단 감성 랠리는 마진 확인 전 event premium이다."
+    },
+    {
+      "axis": "nonbinding_supply_agreement",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "non-binding lithium agreement는 계약/마진으로 보지 않는다."
+    },
+    {
+      "axis": "signed_contract_without_calloff",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "서명 계약만 있고 실제 발주가 없으면 Stage 4C 리스크다."
+    },
+    {
+      "axis": "rare_earth_truce_without_actual_exports",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "희토류 휴전 headline은 실제 수출량 회복 전 Green이 아니다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "PETROCHEMICAL_SPREAD_COLLAPSE_4C",
+      "commodity_price_sensitivity": "+5",
+      "customer_calloff_visibility": "0",
+      "event_penalty": "-5",
+      "export_license_continuity": "0",
+      "governance_dilution_control": "+2",
+      "hard_4c_sensitivity": "+5",
+      "inventory_valuation_control": "+5",
+      "notes": "Petrochemical oversupply and deep losses are RedTeam until spread/cash margin recover.",
+      "resource_offtake_utilization": "0",
+      "restructuring_execution": "+5",
+      "spread_margin_realization": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "PETROCHEMICAL_RESTRUCTURING_STAGE2_NOT_GREEN",
+      "commodity_price_sensitivity": "+4",
+      "customer_calloff_visibility": "0",
+      "event_penalty": "-4",
+      "export_license_continuity": "0",
+      "governance_dilution_control": "+3",
+      "hard_4c_sensitivity": "+4",
+      "inventory_valuation_control": "+4",
+      "notes": "Daesan restructuring is Stage 2 until shutdown execution and spread recovery close.",
+      "resource_offtake_utilization": "0",
+      "restructuring_execution": "+5",
+      "spread_margin_realization": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "STEEL_ANTI_DUMPING_EVENT_PREMIUM",
+      "commodity_price_sensitivity": "+4",
+      "customer_calloff_visibility": "0",
+      "event_penalty": "-5",
+      "export_license_continuity": "0",
+      "governance_dilution_control": "+2",
+      "hard_4c_sensitivity": "+4",
+      "inventory_valuation_control": "+4",
+      "notes": "Anti-dumping relief is useful but needs demand and spread.",
+      "resource_offtake_utilization": "0",
+      "restructuring_execution": "+2",
+      "spread_margin_realization": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "STRATEGIC_METAL_CONTROL_PREMIUM_4B",
+      "commodity_price_sensitivity": "+3",
+      "customer_calloff_visibility": "0",
+      "event_penalty": "-5",
+      "export_license_continuity": "0",
+      "governance_dilution_control": "+5",
+      "hard_4c_sensitivity": "+5",
+      "inventory_valuation_control": "+3",
+      "notes": "Korea Zinc control premium is 4B-watch before operating evidence.",
+      "resource_offtake_utilization": "0",
+      "restructuring_execution": "+1",
+      "spread_margin_realization": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "LITHIUM_RESOURCE_INTEGRATION_STAGE2",
+      "commodity_price_sensitivity": "+5",
+      "customer_calloff_visibility": "+4",
+      "event_penalty": "-4",
+      "export_license_continuity": "0",
+      "governance_dilution_control": "+2",
+      "hard_4c_sensitivity": "+4",
+      "inventory_valuation_control": "+5",
+      "notes": "Mine stake is Stage 2 until offtake, processing utilization and lithium price support confirm.",
+      "resource_offtake_utilization": "+5",
+      "restructuring_execution": "+2",
+      "spread_margin_realization": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "LITHIUM_PRICE_SQUEEZE_EVENT_PREMIUM",
+      "commodity_price_sensitivity": "+5",
+      "customer_calloff_visibility": "+3",
+      "event_penalty": "-5",
+      "export_license_continuity": "0",
+      "governance_dilution_control": "+1",
+      "hard_4c_sensitivity": "+4",
+      "inventory_valuation_control": "+5",
+      "notes": "Lithium squeeze rally needs ASP, inventory and margin before Green.",
+      "resource_offtake_utilization": "+2",
+      "restructuring_execution": "0",
+      "spread_margin_realization": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "BATTERY_MATERIAL_CONTRACT_COLLAPSE_HARD_4C",
+      "commodity_price_sensitivity": "+4",
+      "customer_calloff_visibility": "+5",
+      "event_penalty": "0",
+      "export_license_continuity": "0",
+      "governance_dilution_control": "+2",
+      "hard_4c_sensitivity": "+5",
+      "inventory_valuation_control": "+5",
+      "notes": "Contract value collapse and call-off failure are hard 4C gates.",
+      "resource_offtake_utilization": "+2",
+      "restructuring_execution": "0",
+      "spread_margin_realization": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C",
+      "commodity_price_sensitivity": "+4",
+      "customer_calloff_visibility": "0",
+      "event_penalty": "-5",
+      "export_license_continuity": "+5",
+      "governance_dilution_control": "+1",
+      "hard_4c_sensitivity": "+5",
+      "inventory_valuation_control": "+3",
+      "notes": "Rare-earth export controls are supply-chain RedTeam until license and shipment continuity prove otherwise.",
+      "resource_offtake_utilization": "+2",
+      "restructuring_execution": "0",
+      "spread_margin_realization": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "CATHODE_SUPPLY_CHAIN_REBALANCING_STAGE2",
+      "commodity_price_sensitivity": "+4",
+      "customer_calloff_visibility": "+5",
+      "event_penalty": "-4",
+      "export_license_continuity": "+3",
+      "governance_dilution_control": "+2",
+      "hard_4c_sensitivity": "+4",
+      "inventory_valuation_control": "+5",
+      "notes": "Cathode rebalancing requires binding terms, ramp, customer call-off and margin.",
+      "resource_offtake_utilization": "+4",
+      "restructuring_execution": "+2",
+      "spread_margin_realization": "+4"
+    }
+  ],
+  "source_round": "docs/round/round_286.md",
+  "stage4b_watch_triggers": [
+    "control_premium_20pct_plus",
+    "CATL_lithium_license_headline_8pct_plus",
+    "anti_dumping_tariff_5pct_plus",
+    "restructuring_policy_support_before_spread",
+    "strategic_mineral_or_rare_earth_headline_before_license",
+    "mine_stake_acquisition_before_processing_utilization"
+  ],
+  "summary": {
+    "aligned_count": 0,
+    "candidate_generation_input": false,
+    "case_candidate_count": 9,
+    "deep_sub_archetype_count": 9,
+    "event_premium_count": 2,
+    "event_premium_or_result_count": 3,
+    "evidence_good_but_price_failed_count": 1,
+    "failed_rerating_count": 1,
+    "false_positive_score_count": 3,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "hard_4c_watch_case_count": 3,
+    "hard_4c_watch_confirmed": true,
+    "large_sector": "MATERIALS_SPREADS_STRATEGIC_RESOURCES",
+    "overheat_count": 0,
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_214",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 9,
+    "source_round": "docs/round/round_286.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 5,
+    "stage4c_watch_count": 4,
+    "structural_success_count": 0,
+    "success_candidate_count": 3,
+    "target_archetype_count": 9,
+    "unknown_alignment_count": 3
+  },
+  "target_aliases": {
+    "BATTERY_MATERIAL_CONTRACT_COLLAPSE_HARD_4C": "BATTERY_MATERIAL_CONTRACT_COLLAPSE_HARD_4C",
+    "CATHODE_SUPPLY_CHAIN_REBALANCING_STAGE2": "CATHODE_SUPPLY_CHAIN_REBALANCING_STAGE2",
+    "LITHIUM_PRICE_SQUEEZE_EVENT_PREMIUM": "LITHIUM_PRICE_SQUEEZE_EVENT_PREMIUM",
+    "LITHIUM_RESOURCE_INTEGRATION_STAGE2": "LITHIUM_RESOURCE_INTEGRATION_STAGE2",
+    "PETROCHEMICAL_RESTRUCTURING_STAGE2_NOT_GREEN": "PETROCHEMICAL_RESTRUCTURING_STAGE2_NOT_GREEN",
+    "PETROCHEMICAL_SPREAD_COLLAPSE_4C": "PETROCHEMICAL_SPREAD_COLLAPSE_4C",
+    "RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C": "RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C",
+    "STEEL_ANTI_DUMPING_EVENT_PREMIUM": "STEEL_ANTI_DUMPING_EVENT_PREMIUM",
+    "STRATEGIC_METAL_CONTROL_PREMIUM_4B": "STRATEGIC_METAL_CONTROL_PREMIUM_4B"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round286_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_spread_policy_control_premium_lithium_or_rare_earth_headlines_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}

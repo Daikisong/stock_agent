@@ -1,0 +1,10 @@
+archetype,spread_margin_realization,restructuring_execution,customer_calloff_visibility,resource_offtake_utilization,export_license_continuity,governance_dilution_control,commodity_price_sensitivity,inventory_valuation_control,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+PETROCHEMICAL_SPREAD_COLLAPSE_4C,+5,+5,0,0,0,+2,+5,+5,-5,+5,+5,Petrochemical oversupply and deep losses are RedTeam until spread/cash margin recover.
+PETROCHEMICAL_RESTRUCTURING_STAGE2_NOT_GREEN,+5,+5,0,0,0,+3,+4,+4,-4,+5,+4,Daesan restructuring is Stage 2 until shutdown execution and spread recovery close.
+STEEL_ANTI_DUMPING_EVENT_PREMIUM,+5,+2,0,0,0,+2,+4,+4,-5,+5,+4,Anti-dumping relief is useful but needs demand and spread.
+STRATEGIC_METAL_CONTROL_PREMIUM_4B,+3,+1,0,0,0,+5,+3,+3,-5,+5,+5,Korea Zinc control premium is 4B-watch before operating evidence.
+LITHIUM_RESOURCE_INTEGRATION_STAGE2,+4,+2,+4,+5,0,+2,+5,+5,-4,+4,+4,"Mine stake is Stage 2 until offtake, processing utilization and lithium price support confirm."
+LITHIUM_PRICE_SQUEEZE_EVENT_PREMIUM,+3,0,+3,+2,0,+1,+5,+5,-5,+5,+4,"Lithium squeeze rally needs ASP, inventory and margin before Green."
+BATTERY_MATERIAL_CONTRACT_COLLAPSE_HARD_4C,+2,0,+5,+2,0,+2,+4,+5,0,+4,+5,Contract value collapse and call-off failure are hard 4C gates.
+RARE_EARTH_EXPORT_CONTROL_SUPPLY_CHAIN_4C,+2,0,0,+2,+5,+1,+4,+3,-5,+5,+5,Rare-earth export controls are supply-chain RedTeam until license and shipment continuity prove otherwise.
+CATHODE_SUPPLY_CHAIN_REBALANCING_STAGE2,+4,+2,+5,+4,+3,+2,+4,+5,-4,+4,+4,"Cathode rebalancing requires binding terms, ramp, customer call-off and margin."
