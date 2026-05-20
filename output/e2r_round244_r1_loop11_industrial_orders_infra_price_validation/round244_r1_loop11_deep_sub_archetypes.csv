@@ -1,0 +1,10 @@
+category,primary_archetype,terms
+원전 EPC,NUCLEAR_EPC_EXPORT_ORDER,KHNP|Doosan Enerbility|KEPCO E&C|KEPCO KPS|Czech Dukovany|signed contract
+SMR / AI power,NUCLEAR_SMR_POLICY_MOU,Doosan Enerbility|X-energy|AWS|Fermi America|funded order required
+전력망·케이블,POWER_GRID_CABLE_TRANSFORMER_EXPORT,LS Electric|LS Corp|Elia Asset|data-center grid demand|price failed
+조선 MRO,MARINE_MRO_RECURRING_SERVICE,HD Hyundai Marine Solution|maintenance|repair|retrofit|IPO 4B
+조선정책 MASGA,SHIPBUILDING_US_POLICY_MASGA,HD Hyundai Heavy|HD Hyundai Mipo|MASGA|US shipbuilding|record high
+계약취소,SHIPBUILDING_CONTRACT_CANCELLATION_4C,Samsung Heavy|Zvezda|Russia sanctions|contract cancellation|arbitration
+방산 현지생산,DEFENSE_LOCAL_PRODUCTION_DILUTION_WATCH,Hanwha Aerospace|Poland missile JV|CGR-080|capital raise|dilution
+철도 수출,RAIL_EXPORT_ORDER_TO_DELIVERY,Hyundai Rotem|Morocco ONCF|110 trains|delivery margin cash collection
+지정학 제재,GEOPOLITICAL_SHIPBUILDING_SANCTION,Hanwha Ocean|China sanctions|US-linked subsidiaries|4C-watch

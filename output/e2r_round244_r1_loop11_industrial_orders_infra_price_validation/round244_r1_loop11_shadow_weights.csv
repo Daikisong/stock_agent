@@ -1,0 +1,10 @@
+archetype,signed_contract,contract_amount,order_to_revenue,delivery_schedule,backlog_margin,cash_collection,recurring_service,geopolitical_risk,event_penalty,dilution_redteam,4b_watch_sensitivity,hard_4c_sensitivity,notes
+NUCLEAR_EPC_EXPORT_ORDER,+5,+5,+4,+4,+5,+5,+0,+4,-2,+1,+5,+4,Czech signed contract is Stage 2; listed-company package/margin/cashflow required.
+NUCLEAR_SMR_POLICY_MOU,+2,+2,+1,+1,+3,+3,+0,+3,-5,+1,+5,+3,SMR/AI MOU is attention only until funded order.
+POWER_GRID_CABLE_TRANSFORMER_EXPORT,+5,+5,+4,+4,+5,+4,+0,+2,-2,+1,+4,+3,LS contract and U.S. grid mix are good but event price failed.
+MARINE_MRO_RECURRING_SERVICE,+4,+3,+4,+3,+5,+5,+5,+2,-5,+2,+5,+3,HD Hyundai Marine has recurring-service story but IPO premium is 4B.
+SHIPBUILDING_US_POLICY_MASGA,+3,+3,+2,+2,+4,+4,+0,+4,-5,+1,+5,+4,MASGA/merger is Stage 2 and 4B until funded U.S. orders/margins confirm.
+SHIPBUILDING_CONTRACT_CANCELLATION_4C,+0,+0,+0,+0,+0,+0,+0,+5,+0,+1,+3,+5,Samsung Heavy/Zvezda cancellation is hard 4C.
+DEFENSE_LOCAL_PRODUCTION_DILUTION_WATCH,+4,+4,+4,+4,+5,+4,+0,+3,-3,+5,+5,+4,Hanwha Aerospace JV is Stage 2 but dilution after rerating is 4B-watch.
+RAIL_EXPORT_ORDER_TO_DELIVERY,+5,+5,+4,+5,+5,+5,+0,+3,-2,+1,+3,+4,Hyundai Rotem rail order is Stage 2 until delivery/margin/cash collection confirm.
+GEOPOLITICAL_SHIPBUILDING_SANCTION,+0,+0,+0,+0,+0,+0,+0,+5,+0,+1,+4,+5,Hanwha Ocean China sanctions require 4C-watch.

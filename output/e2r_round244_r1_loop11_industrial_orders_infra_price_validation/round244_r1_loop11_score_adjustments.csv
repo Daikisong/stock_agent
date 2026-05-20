@@ -1,0 +1,18 @@
+axis,points,direction,reason
+signed_contract,5,raise,preferred bidder보다 signed contract가 강한 Stage 2 증거다.
+confirmed_contract_amount,5,raise,계약금액과 고객이 확인되어야 한다.
+order_to_revenue_conversion,5,raise,수주가 납품·매출로 내려와야 Stage 3 후보가 된다.
+delivery_schedule,4,raise,납기와 인도 일정은 visibility를 높인다.
+backlog_margin_visibility,5,raise,수주잔고가 마진과 EPS revision으로 이어져야 한다.
+cash_collection_quality,5,raise,EPC·철도·방산은 현금회수와 working capital이 중요하다.
+recurring_MRO_service,4,raise,MRO 반복서비스는 일회성 선박수주보다 질이 좋다.
+customer_quality,4,raise,정부·유틸리티·국영 고객은 신뢰도를 높인다.
+geopolitical_risk_cleared,4,raise,법적·지정학 리스크가 해소되어야 한다.
+preferred_bidder_only,-4,lower,preferred bidder만으로는 Green 금지다.
+MOU_without_funded_order,-5,lower,MOU는 funded order 전 Stage 2 watch다.
+policy_shipbuilding_headline,-5,lower,MASGA·정책 headline은 수주와 마진 전 event premium이다.
+IPO_premium_without_post_listing_FCF,-5,lower,IPO 첫날 프리미엄은 4B-watch다.
+contract_headline_without_execution,-5,lower,계약 headline보다 실행·납품·마진이 중요하다.
+geopolitical_customer_risk,-5,lower,Russia·제재 고객 노출은 RedTeam으로 강하게 깎는다.
+dilution_after_rerating,-5,lower,리레이팅 후 대형 증자·CB는 4B/dilution watch다.
+legal_delay_risk,-4,lower,계약 체결을 막는 법적 지연은 Stage 3를 차단한다.

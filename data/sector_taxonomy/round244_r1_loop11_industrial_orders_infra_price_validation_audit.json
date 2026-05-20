@@ -1,0 +1,281 @@
+{
+  "deep_sub_archetypes": [
+    {
+      "category": "원전 EPC",
+      "primary_archetype": "NUCLEAR_EPC_EXPORT_ORDER",
+      "terms": "KHNP|Doosan Enerbility|KEPCO E&C|KEPCO KPS|Czech Dukovany|signed contract"
+    },
+    {
+      "category": "SMR / AI power",
+      "primary_archetype": "NUCLEAR_SMR_POLICY_MOU",
+      "terms": "Doosan Enerbility|X-energy|AWS|Fermi America|funded order required"
+    },
+    {
+      "category": "전력망·케이블",
+      "primary_archetype": "POWER_GRID_CABLE_TRANSFORMER_EXPORT",
+      "terms": "LS Electric|LS Corp|Elia Asset|data-center grid demand|price failed"
+    },
+    {
+      "category": "조선 MRO",
+      "primary_archetype": "MARINE_MRO_RECURRING_SERVICE",
+      "terms": "HD Hyundai Marine Solution|maintenance|repair|retrofit|IPO 4B"
+    },
+    {
+      "category": "조선정책 MASGA",
+      "primary_archetype": "SHIPBUILDING_US_POLICY_MASGA",
+      "terms": "HD Hyundai Heavy|HD Hyundai Mipo|MASGA|US shipbuilding|record high"
+    },
+    {
+      "category": "계약취소",
+      "primary_archetype": "SHIPBUILDING_CONTRACT_CANCELLATION_4C",
+      "terms": "Samsung Heavy|Zvezda|Russia sanctions|contract cancellation|arbitration"
+    },
+    {
+      "category": "방산 현지생산",
+      "primary_archetype": "DEFENSE_LOCAL_PRODUCTION_DILUTION_WATCH",
+      "terms": "Hanwha Aerospace|Poland missile JV|CGR-080|capital raise|dilution"
+    },
+    {
+      "category": "철도 수출",
+      "primary_archetype": "RAIL_EXPORT_ORDER_TO_DELIVERY",
+      "terms": "Hyundai Rotem|Morocco ONCF|110 trains|delivery margin cash collection"
+    },
+    {
+      "category": "지정학 제재",
+      "primary_archetype": "GEOPOLITICAL_SHIPBUILDING_SANCTION",
+      "terms": "Hanwha Ocean|China sanctions|US-linked subsidiaries|4C-watch"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "preferred_bidder_only",
+    "mou_without_funded_order",
+    "policy_summit_headline_only",
+    "ipo_first_day_surge_only",
+    "record_high_policy_rally",
+    "sanctioned_or_russia_customer_exposure",
+    "contract_cancellation_risk_unpriced",
+    "delivery_margin_cash_collection_unknown"
+  ],
+  "green_required_fields": [
+    "signed_contract_or_firm_order",
+    "contract_amount_customer_delivery_confirmed",
+    "actual_delivery_or_revenue_recognition",
+    "opm_eps_revision_confirmed",
+    "working_capital_cash_collection_stable",
+    "geopolitical_legal_sanction_risk_passed",
+    "dilution_capital_allocation_risk_passed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "contract_cancellation",
+    "customer_unilateral_termination",
+    "advance_payment_dispute",
+    "sanctions_or_war_exposure",
+    "arbitration_risk",
+    "legal_injunction_blocking_contract",
+    "geopolitical_sanction_transaction_ban",
+    "capital_raise_regulator_revision_order",
+    "delivery_delay",
+    "cost_overrun",
+    "cash_collection_failure"
+  ],
+  "large_sector": "INDUSTRIAL_ORDERS_INFRA",
+  "round_id": "round_172",
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "NUCLEAR_EPC_EXPORT_ORDER",
+      "backlog_margin": "+5",
+      "cash_collection": "+5",
+      "contract_amount": "+5",
+      "delivery_schedule": "+4",
+      "dilution_redteam": "+1",
+      "event_penalty": "-2",
+      "geopolitical_risk": "+4",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Czech signed contract is Stage 2; listed-company package/margin/cashflow required.",
+      "order_to_revenue": "+4",
+      "recurring_service": "+0",
+      "signed_contract": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "NUCLEAR_SMR_POLICY_MOU",
+      "backlog_margin": "+3",
+      "cash_collection": "+3",
+      "contract_amount": "+2",
+      "delivery_schedule": "+1",
+      "dilution_redteam": "+1",
+      "event_penalty": "-5",
+      "geopolitical_risk": "+3",
+      "hard_4c_sensitivity": "+3",
+      "notes": "SMR/AI MOU is attention only until funded order.",
+      "order_to_revenue": "+1",
+      "recurring_service": "+0",
+      "signed_contract": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "POWER_GRID_CABLE_TRANSFORMER_EXPORT",
+      "backlog_margin": "+5",
+      "cash_collection": "+4",
+      "contract_amount": "+5",
+      "delivery_schedule": "+4",
+      "dilution_redteam": "+1",
+      "event_penalty": "-2",
+      "geopolitical_risk": "+2",
+      "hard_4c_sensitivity": "+3",
+      "notes": "LS contract and U.S. grid mix are good but event price failed.",
+      "order_to_revenue": "+4",
+      "recurring_service": "+0",
+      "signed_contract": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "MARINE_MRO_RECURRING_SERVICE",
+      "backlog_margin": "+5",
+      "cash_collection": "+5",
+      "contract_amount": "+3",
+      "delivery_schedule": "+3",
+      "dilution_redteam": "+2",
+      "event_penalty": "-5",
+      "geopolitical_risk": "+2",
+      "hard_4c_sensitivity": "+3",
+      "notes": "HD Hyundai Marine has recurring-service story but IPO premium is 4B.",
+      "order_to_revenue": "+4",
+      "recurring_service": "+5",
+      "signed_contract": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "SHIPBUILDING_US_POLICY_MASGA",
+      "backlog_margin": "+4",
+      "cash_collection": "+4",
+      "contract_amount": "+3",
+      "delivery_schedule": "+2",
+      "dilution_redteam": "+1",
+      "event_penalty": "-5",
+      "geopolitical_risk": "+4",
+      "hard_4c_sensitivity": "+4",
+      "notes": "MASGA/merger is Stage 2 and 4B until funded U.S. orders/margins confirm.",
+      "order_to_revenue": "+2",
+      "recurring_service": "+0",
+      "signed_contract": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "SHIPBUILDING_CONTRACT_CANCELLATION_4C",
+      "backlog_margin": "+0",
+      "cash_collection": "+0",
+      "contract_amount": "+0",
+      "delivery_schedule": "+0",
+      "dilution_redteam": "+1",
+      "event_penalty": "+0",
+      "geopolitical_risk": "+5",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Samsung Heavy/Zvezda cancellation is hard 4C.",
+      "order_to_revenue": "+0",
+      "recurring_service": "+0",
+      "signed_contract": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "DEFENSE_LOCAL_PRODUCTION_DILUTION_WATCH",
+      "backlog_margin": "+5",
+      "cash_collection": "+4",
+      "contract_amount": "+4",
+      "delivery_schedule": "+4",
+      "dilution_redteam": "+5",
+      "event_penalty": "-3",
+      "geopolitical_risk": "+3",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Hanwha Aerospace JV is Stage 2 but dilution after rerating is 4B-watch.",
+      "order_to_revenue": "+4",
+      "recurring_service": "+0",
+      "signed_contract": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "RAIL_EXPORT_ORDER_TO_DELIVERY",
+      "backlog_margin": "+5",
+      "cash_collection": "+5",
+      "contract_amount": "+5",
+      "delivery_schedule": "+5",
+      "dilution_redteam": "+1",
+      "event_penalty": "-2",
+      "geopolitical_risk": "+3",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Hyundai Rotem rail order is Stage 2 until delivery/margin/cash collection confirm.",
+      "order_to_revenue": "+4",
+      "recurring_service": "+0",
+      "signed_contract": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "GEOPOLITICAL_SHIPBUILDING_SANCTION",
+      "backlog_margin": "+0",
+      "cash_collection": "+0",
+      "contract_amount": "+0",
+      "delivery_schedule": "+0",
+      "dilution_redteam": "+1",
+      "event_penalty": "+0",
+      "geopolitical_risk": "+5",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Hanwha Ocean China sanctions require 4C-watch.",
+      "order_to_revenue": "+0",
+      "recurring_service": "+0",
+      "signed_contract": "+0"
+    }
+  ],
+  "source_round": "docs/round/round_244.md",
+  "stage4b_watch_triggers": [
+    "preferred_bidder_period_plus_40_to_50pct",
+    "ipo_first_day_plus_40_to_100pct",
+    "policy_masga_mou_record_high",
+    "large_order_announcement_day_surge",
+    "dilution_or_capital_raise_after_rerating",
+    "us_shipbuilding_or_smr_theme_before_funded_order"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 9,
+    "deep_sub_archetype_count": 9,
+    "evidence_good_but_price_failed_count": 3,
+    "failed_rerating_count": 1,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "INDUSTRIAL_ORDERS_INFRA",
+    "price_moved_without_evidence_count": 3,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_172",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 9,
+    "source_round": "docs/round/round_244.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 7,
+    "structural_success_count": 0,
+    "success_candidate_count": 7,
+    "target_archetype_count": 11
+  },
+  "target_aliases": {
+    "CONTRACT_HEADLINE_NOT_STAGE3": "CONTRACT_HEADLINE_NOT_STAGE3",
+    "DEFENSE_LOCAL_PRODUCTION_DILUTION_WATCH": "DEFENSE_LOCAL_PRODUCTION_DILUTION_WATCH",
+    "GEOPOLITICAL_SHIPBUILDING_SANCTION": "GEOPOLITICAL_SHIPBUILDING_SANCTION",
+    "MARINE_MRO_RECURRING_SERVICE": "MARINE_MRO_RECURRING_SERVICE",
+    "NUCLEAR_EPC_EXPORT_ORDER": "NUCLEAR_EPC_EXPORT_ORDER",
+    "NUCLEAR_SMR_POLICY_MOU": "NUCLEAR_SMR_POLICY_MOU",
+    "POWER_GRID_CABLE_TRANSFORMER_EXPORT": "POWER_GRID_CABLE_TRANSFORMER_EXPORT",
+    "PRICE_ONLY_POLICY_RALLY": "PRICE_ONLY_POLICY_RALLY",
+    "RAIL_EXPORT_ORDER_TO_DELIVERY": "RAIL_EXPORT_ORDER_TO_DELIVERY",
+    "SHIPBUILDING_CONTRACT_CANCELLATION_4C": "SHIPBUILDING_CONTRACT_CANCELLATION_4C",
+    "SHIPBUILDING_US_POLICY_MASGA": "SHIPBUILDING_US_POLICY_MASGA"
+  },
+  "what_not_to_change": [
+    "do_not_use_round244_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_orders_policy_mou_ipo_or_merger_as_green_alone",
+    "do_not_invent_ohlc_or_stage_dates"
+  ]
+}
