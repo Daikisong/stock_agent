@@ -1,0 +1,9 @@
+archetype,actual_calloff,gwh_volume_disclosed,delivery_start,utilization_visibility,ex_subsidy_op_quality,margin_fcf_visibility,counterparty_program_health,battery_safety_quality,non_china_sourcing_certification,capital_allocation_roic,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+EV_BATTERY_MATERIAL_CONTRACT_COLLAPSE,+5,+5,+5,+5,+3,+5,+5,+4,+3,+2,+0,+4,+5,L&F/Tesla proves customer-name contract can hard-break without call-off.
+ESS_LFP_CONTRACT_STAGE2_NOT_GREEN,+5,+5,+5,+5,+4,+5,+4,+4,+4,+2,-3,+5,+4,LGES/Tesla ESS is Stage 2 until GWh/margin/utilization prove out.
+IRA_SUBSIDY_DEPENDENCE_QUALITY_GATE,+3,+3,+4,+5,+5,+5,+4,+3,+3,+3,-4,+4,+5,LGES Q2 shows reported OP must be adjusted for IRA tax credit.
+BATTERY_PARENT_CAPITAL_RECYCLING,+2,+0,+0,+1,+3,+4,+2,+2,+3,+5,-4,+4,+4,LG Chem stake sale needs ROIC/debt reduction/shareholder return proof.
+ESS_REPORT_UNCONFIRMED_EVENT_PREMIUM,+4,+5,+5,+4,+3,+4,+4,+3,+3,+1,-5,+5,+3,Samsung SDI reported ESS deal is not Green without company confirmation.
+PRECURSOR_IPO_OVERHEAT_DEMAND_BREAK,+4,+4,+4,+5,+3,+5,+4,+3,+4,+2,-5,+5,+5,"EcoPro Materials needs utilization/margin, not IPO/vertical-integration story."
+BATTERY_SAFETY_HARD_REFERENCE,+0,+0,+0,+0,+0,+0,+0,+5,+2,+0,+0,+3,+5,Aricell/S-Connect shows battery safety/quality hard gate.
+FEOC_GRAPHITE_POLICY_RELIEF_NOT_GREEN,+2,+2,+2,+3,+3,+4,+4,+3,+5,+3,-5,+4,+4,FEOC/graphite policy is relief until actual supply contracts and certification.

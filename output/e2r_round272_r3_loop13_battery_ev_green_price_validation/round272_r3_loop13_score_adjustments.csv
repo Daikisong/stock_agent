@@ -1,0 +1,20 @@
+axis,points,direction,reason
+actual_calloff,5,raise,계약금액보다 실제 call-off가 더 중요하다.
+GWh_volume_disclosed,5,raise,ESS/배터리는 GWh 또는 소재 물량이 있어야 Stage 3에 가까워진다.
+delivery_start,5,raise,납품 시작이나 매출 인식이 확인되어야 한다.
+utilization_visibility,5,raise,라인 가동률이 확인되어야 EPS/FCF 경로가 닫힌다.
+ex_subsidy_OP_quality,5,raise,IRA 같은 보조금을 뺀 OP 품질을 본다.
+margin_and_FCF_visibility,5,raise,매출보다 마진과 FCF가 Green 핵심이다.
+counterparty_program_health,5,raise,Tesla 4680처럼 고객 프로그램 리스크를 따로 본다.
+battery_safety_quality,5,raise,배터리는 안전·품질 문제가 hard gate다.
+non_China_sourcing_certification,4,raise,FEOC/graphite는 실제 탈중국 공급과 인증이 필요하다.
+capital_allocation_ROIC,4,raise,지분매각은 ROIC와 부채감축이 확인될 때만 긍정이다.
+customer_name_headline_only,-5,lower,Tesla/GM/Ford 이름만으로는 Green 금지다.
+contract_value_without_calloff,-5,lower,계약금액만 있고 call-off가 없으면 4C가 될 수 있다.
+reported_deal_without_confirmation,-5,lower,회사 확인 없는 보도는 event premium이다.
+subsidy_adjusted_profit_dependency,-5,lower,보조금 의존 OP는 품질 게이트에서 감점한다.
+IPO_vertical_integration_story_only,-4,lower,IPO/수직계열화 story는 수요·마진 증거가 아니다.
+policy_support_without_contracts,-5,lower,정책 지원만으로 회사 Green을 만들지 않는다.
+capital_recycling_without_ROIC,-4,lower,지분매각만 있고 ROIC가 없으면 Stage 2에 머문다.
+battery_safety_incident,-5,lower,안전 사고가 열려 있으면 Green을 막는다.
+counterparty_4680_or_EV_program_risk,-5,lower,고객 EV/4680 프로그램이 흔들리면 계약 품질이 깨진다.

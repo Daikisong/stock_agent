@@ -1,0 +1,272 @@
+{
+  "deep_sub_archetypes": [
+    {
+      "category": "EV battery-material contract collapse",
+      "primary_archetype": "EV_BATTERY_MATERIAL_CONTRACT_COLLAPSE",
+      "terms": "L&F|Tesla 4680|high-nickel cathode|$2.9B to $7,386|hard 4C"
+    },
+    {
+      "category": "ESS LFP contract Stage 2",
+      "primary_archetype": "ESS_LFP_CONTRACT_STAGE2_NOT_GREEN",
+      "terms": "LG Energy Solution|Tesla reported by WSJ|$4.3B|2027-2030|GWh missing"
+    },
+    {
+      "category": "IRA subsidy quality",
+      "primary_archetype": "IRA_SUBSIDY_DEPENDENCE_QUALITY_GATE",
+      "terms": "LGES Q2 2025|OP 492B won|ex-IRA OP 1.4B won|stock -2.3%"
+    },
+    {
+      "category": "parent capital recycling",
+      "primary_archetype": "BATTERY_PARENT_CAPITAL_RECYCLING",
+      "terms": "LG Chem|LGES stake sale|2T won|price return swap|ROIC needed"
+    },
+    {
+      "category": "unconfirmed ESS report",
+      "primary_archetype": "ESS_REPORT_UNCONFIRMED_EVENT_PREMIUM",
+      "terms": "Samsung SDI|Tesla ESS report|>3T won|nothing decided"
+    },
+    {
+      "category": "precursor IPO overheat",
+      "primary_archetype": "PRECURSOR_IPO_OVERHEAT_DEMAND_BREAK",
+      "terms": "EcoPro Materials|precursor|IPO|-11%|119,200 won"
+    },
+    {
+      "category": "battery safety hard reference",
+      "primary_archetype": "BATTERY_SAFETY_HARD_REFERENCE",
+      "terms": "Aricell|S-Connect|23 deaths|quality failures|15-year sentence"
+    },
+    {
+      "category": "FEOC graphite policy relief",
+      "primary_archetype": "FEOC_GRAPHITE_POLICY_RELIEF_NOT_GREEN",
+      "terms": "China graphite|FEOC|9.7T won support|policy not Green"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "tesla_customer_name_only",
+    "gm_or_ford_customer_name_only",
+    "contract_value_without_calloff",
+    "reported_deal_without_company_confirmation",
+    "ira_subsidy_driven_op_only",
+    "policy_support_only",
+    "ipo_vertical_integration_story_only",
+    "battery_safety_incident_unresolved",
+    "feoc_policy_relief_without_contracts",
+    "capital_recycling_without_roic"
+  ],
+  "green_required_fields": [
+    "signed_contract_and_actual_calloff",
+    "gwh_or_material_volume_disclosed",
+    "delivery_start_or_revenue_recognition_confirmed",
+    "utilization_improvement_confirmed",
+    "ex_subsidy_op_quality_confirmed",
+    "margin_and_fcf_improvement_confirmed",
+    "counterparty_ev_or_ess_program_health_confirmed",
+    "battery_safety_quality_risk_clear",
+    "non_china_sourcing_or_feoc_compliance_if_relevant",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "contract_value_collapse",
+    "customer_program_cancellation",
+    "actual_calloff_failure",
+    "order_cancellation",
+    "subsidy_removal_exposes_near_zero_op",
+    "battery_fire_or_fatal_safety_incident",
+    "quality_failure_or_recall",
+    "feoc_non_compliance",
+    "non_china_sourcing_failure",
+    "counterparty_production_yield_failure"
+  ],
+  "large_sector": "BATTERY_EV_GREEN",
+  "round_id": "round_200",
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_calloff": "+5",
+      "archetype": "EV_BATTERY_MATERIAL_CONTRACT_COLLAPSE",
+      "battery_safety_quality": "+4",
+      "capital_allocation_roic": "+2",
+      "counterparty_program_health": "+5",
+      "delivery_start": "+5",
+      "event_penalty": "+0",
+      "ex_subsidy_op_quality": "+3",
+      "gwh_volume_disclosed": "+5",
+      "hard_4c_sensitivity": "+5",
+      "margin_fcf_visibility": "+5",
+      "non_china_sourcing_certification": "+3",
+      "notes": "L&F/Tesla proves customer-name contract can hard-break without call-off.",
+      "utilization_visibility": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_calloff": "+5",
+      "archetype": "ESS_LFP_CONTRACT_STAGE2_NOT_GREEN",
+      "battery_safety_quality": "+4",
+      "capital_allocation_roic": "+2",
+      "counterparty_program_health": "+4",
+      "delivery_start": "+5",
+      "event_penalty": "-3",
+      "ex_subsidy_op_quality": "+4",
+      "gwh_volume_disclosed": "+5",
+      "hard_4c_sensitivity": "+4",
+      "margin_fcf_visibility": "+5",
+      "non_china_sourcing_certification": "+4",
+      "notes": "LGES/Tesla ESS is Stage 2 until GWh/margin/utilization prove out.",
+      "utilization_visibility": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_calloff": "+3",
+      "archetype": "IRA_SUBSIDY_DEPENDENCE_QUALITY_GATE",
+      "battery_safety_quality": "+3",
+      "capital_allocation_roic": "+3",
+      "counterparty_program_health": "+4",
+      "delivery_start": "+4",
+      "event_penalty": "-4",
+      "ex_subsidy_op_quality": "+5",
+      "gwh_volume_disclosed": "+3",
+      "hard_4c_sensitivity": "+5",
+      "margin_fcf_visibility": "+5",
+      "non_china_sourcing_certification": "+3",
+      "notes": "LGES Q2 shows reported OP must be adjusted for IRA tax credit.",
+      "utilization_visibility": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_calloff": "+2",
+      "archetype": "BATTERY_PARENT_CAPITAL_RECYCLING",
+      "battery_safety_quality": "+2",
+      "capital_allocation_roic": "+5",
+      "counterparty_program_health": "+2",
+      "delivery_start": "+0",
+      "event_penalty": "-4",
+      "ex_subsidy_op_quality": "+3",
+      "gwh_volume_disclosed": "+0",
+      "hard_4c_sensitivity": "+4",
+      "margin_fcf_visibility": "+4",
+      "non_china_sourcing_certification": "+3",
+      "notes": "LG Chem stake sale needs ROIC/debt reduction/shareholder return proof.",
+      "utilization_visibility": "+1"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_calloff": "+4",
+      "archetype": "ESS_REPORT_UNCONFIRMED_EVENT_PREMIUM",
+      "battery_safety_quality": "+3",
+      "capital_allocation_roic": "+1",
+      "counterparty_program_health": "+4",
+      "delivery_start": "+5",
+      "event_penalty": "-5",
+      "ex_subsidy_op_quality": "+3",
+      "gwh_volume_disclosed": "+5",
+      "hard_4c_sensitivity": "+3",
+      "margin_fcf_visibility": "+4",
+      "non_china_sourcing_certification": "+3",
+      "notes": "Samsung SDI reported ESS deal is not Green without company confirmation.",
+      "utilization_visibility": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_calloff": "+4",
+      "archetype": "PRECURSOR_IPO_OVERHEAT_DEMAND_BREAK",
+      "battery_safety_quality": "+3",
+      "capital_allocation_roic": "+2",
+      "counterparty_program_health": "+4",
+      "delivery_start": "+4",
+      "event_penalty": "-5",
+      "ex_subsidy_op_quality": "+3",
+      "gwh_volume_disclosed": "+4",
+      "hard_4c_sensitivity": "+5",
+      "margin_fcf_visibility": "+5",
+      "non_china_sourcing_certification": "+4",
+      "notes": "EcoPro Materials needs utilization/margin, not IPO/vertical-integration story.",
+      "utilization_visibility": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "actual_calloff": "+0",
+      "archetype": "BATTERY_SAFETY_HARD_REFERENCE",
+      "battery_safety_quality": "+5",
+      "capital_allocation_roic": "+0",
+      "counterparty_program_health": "+0",
+      "delivery_start": "+0",
+      "event_penalty": "+0",
+      "ex_subsidy_op_quality": "+0",
+      "gwh_volume_disclosed": "+0",
+      "hard_4c_sensitivity": "+5",
+      "margin_fcf_visibility": "+0",
+      "non_china_sourcing_certification": "+2",
+      "notes": "Aricell/S-Connect shows battery safety/quality hard gate.",
+      "utilization_visibility": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_calloff": "+2",
+      "archetype": "FEOC_GRAPHITE_POLICY_RELIEF_NOT_GREEN",
+      "battery_safety_quality": "+3",
+      "capital_allocation_roic": "+3",
+      "counterparty_program_health": "+4",
+      "delivery_start": "+2",
+      "event_penalty": "-5",
+      "ex_subsidy_op_quality": "+3",
+      "gwh_volume_disclosed": "+2",
+      "hard_4c_sensitivity": "+4",
+      "margin_fcf_visibility": "+4",
+      "non_china_sourcing_certification": "+5",
+      "notes": "FEOC/graphite policy is relief until actual supply contracts and certification.",
+      "utilization_visibility": "+3"
+    }
+  ],
+  "source_round": "docs/round/round_272.md",
+  "stage4b_watch_triggers": [
+    "tesla_ess_lfp_headline_short_term_rally",
+    "ira_or_feoc_policy_basket_rally_before_contracts",
+    "battery_recycler_or_precursor_ipo_premium",
+    "subsidy_benefit_op_growth_then_valuation_expansion",
+    "capital_recycling_parent_value_up_rerating",
+    "reported_contract_before_company_confirmation"
+  ],
+  "summary": {
+    "aligned_count": 0,
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 1,
+    "evidence_good_but_price_failed_count": 3,
+    "failed_rerating_count": 2,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 2,
+    "hard_4c_confirmed": true,
+    "hard_4c_reference_count": 2,
+    "large_sector": "BATTERY_EV_GREEN",
+    "price_data_unavailable_count": 1,
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_200",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_272.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 4,
+    "success_candidate_count": 3,
+    "target_archetype_count": 8
+  },
+  "target_aliases": {
+    "BATTERY_PARENT_CAPITAL_RECYCLING": "BATTERY_PARENT_CAPITAL_RECYCLING",
+    "BATTERY_SAFETY_HARD_REFERENCE": "BATTERY_SAFETY_HARD_REFERENCE",
+    "ESS_LFP_CONTRACT_STAGE2_NOT_GREEN": "ESS_LFP_CONTRACT_STAGE2_NOT_GREEN",
+    "ESS_REPORT_UNCONFIRMED_EVENT_PREMIUM": "ESS_REPORT_UNCONFIRMED_EVENT_PREMIUM",
+    "EV_BATTERY_MATERIAL_CONTRACT_COLLAPSE": "EV_BATTERY_MATERIAL_CONTRACT_COLLAPSE",
+    "FEOC_GRAPHITE_POLICY_RELIEF_NOT_GREEN": "FEOC_GRAPHITE_POLICY_RELIEF_NOT_GREEN",
+    "IRA_SUBSIDY_DEPENDENCE_QUALITY_GATE": "IRA_SUBSIDY_DEPENDENCE_QUALITY_GATE",
+    "PRECURSOR_IPO_OVERHEAT_DEMAND_BREAK": "PRECURSOR_IPO_OVERHEAT_DEMAND_BREAK"
+  },
+  "what_not_to_change": [
+    "do_not_use_round272_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_tesla_ess_lfp_ira_feoc_or_battery_material_keywords_as_green_alone",
+    "do_not_invent_ohlc_or_stage_dates"
+  ]
+}

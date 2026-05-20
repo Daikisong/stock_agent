@@ -220,6 +220,14 @@ class E2RArchetype(str, Enum):
     BATTERY_SAFETY_INDUSTRIAL_ACCIDENT_OVERLAY = "BATTERY_SAFETY_INDUSTRIAL_ACCIDENT_OVERLAY"
     EV_BATTERY_TRANSPARENCY_REGULATORY_OVERLAY = "EV_BATTERY_TRANSPARENCY_REGULATORY_OVERLAY"
     PRECURSOR_SUPPLY_CHAIN_SHOCK = "PRECURSOR_SUPPLY_CHAIN_SHOCK"
+    EV_BATTERY_MATERIAL_CONTRACT_COLLAPSE = "EV_BATTERY_MATERIAL_CONTRACT_COLLAPSE"
+    ESS_LFP_CONTRACT_STAGE2_NOT_GREEN = "ESS_LFP_CONTRACT_STAGE2_NOT_GREEN"
+    IRA_SUBSIDY_DEPENDENCE_QUALITY_GATE = "IRA_SUBSIDY_DEPENDENCE_QUALITY_GATE"
+    BATTERY_PARENT_CAPITAL_RECYCLING = "BATTERY_PARENT_CAPITAL_RECYCLING"
+    ESS_REPORT_UNCONFIRMED_EVENT_PREMIUM = "ESS_REPORT_UNCONFIRMED_EVENT_PREMIUM"
+    PRECURSOR_IPO_OVERHEAT_DEMAND_BREAK = "PRECURSOR_IPO_OVERHEAT_DEMAND_BREAK"
+    BATTERY_SAFETY_HARD_REFERENCE = "BATTERY_SAFETY_HARD_REFERENCE"
+    FEOC_GRAPHITE_POLICY_RELIEF_NOT_GREEN = "FEOC_GRAPHITE_POLICY_RELIEF_NOT_GREEN"
     COMMODITY_SPREAD = "COMMODITY_SPREAD"
     REFINING_OIL_SPREAD = "REFINING_OIL_SPREAD"
     REFINING_SPREAD_TURNAROUND_KOREA = "REFINING_SPREAD_TURNAROUND_KOREA"
@@ -1757,6 +1765,102 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("disclosure", "news", "financial_actual", "price"),
             false_positive_patterns=("customer name treated as revenue", "contract value headline without actual call-off"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.EV_BATTERY_MATERIAL_CONTRACT_COLLAPSE: ArchetypeDefinition(
+            archetype=E2RArchetype.EV_BATTERY_MATERIAL_CONTRACT_COLLAPSE,
+            stage1_radar_signals=("Tesla or automaker battery-material contract headline", "4680 or EV program cathode supply", "high-nickel material supply deal"),
+            stage2_candidate_signals=("contract value and supply period visible, but call-off, volume, utilization, and margin still pending"),
+            stage3_high_conviction_signals=("actual call-off, material volume, delivery start, utilization, margin, FCF, and counterparty program health confirmed"),
+            stage4a_ongoing_signals=("call-off and deliveries continue while margin and FCF improve"),
+            stage4b_graduation_overheat_signals=("customer-name contract priced before actual volume", "Tesla headline priced before 4680 yield and demand proof"),
+            stage4c_thesis_break_signals=("contract value collapse", "customer program cancellation", "actual call-off failure", "counterparty production-yield failure", "EV demand slowdown"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "price"),
+            false_positive_patterns=("Tesla name treated as revenue", "contract value without call-off", "battery-material backlog assumed despite customer program risk"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.ESS_LFP_CONTRACT_STAGE2_NOT_GREEN: ArchetypeDefinition(
+            archetype=E2RArchetype.ESS_LFP_CONTRACT_STAGE2_NOT_GREEN,
+            stage1_radar_signals=("ESS pivot", "LFP ESS supply contract", "EV slowdown hedge", "grid-storage customer headline"),
+            stage2_candidate_signals=("signed ESS contract value", "delivery period", "customer report", "extension option", "factory or line redeployment plan"),
+            stage3_high_conviction_signals=("actual GWh volume, shipment, utilization, ESS margin, ex-subsidy OP, and FCF confirmed"),
+            stage4a_ongoing_signals=("ESS shipment and margin remain on schedule", "utilization improves without subsidy-quality issue"),
+            stage4b_graduation_overheat_signals=("Tesla ESS headline rally before GWh and margin", "ESS pivot premium expands before utilization"),
+            stage4c_thesis_break_signals=("GWh undisclosed and never called off", "ESS margin miss", "customer demand pullback", "subsidy or tariff damage"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("ESS contract value treated as Green before GWh", "reported customer name without margin or utilization"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=21, bottleneck=14, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.IRA_SUBSIDY_DEPENDENCE_QUALITY_GATE: ArchetypeDefinition(
+            archetype=E2RArchetype.IRA_SUBSIDY_DEPENDENCE_QUALITY_GATE,
+            stage1_radar_signals=("battery OP beat", "IRA tax credit benefit", "U.S. production tax credit", "customer stockpiling"),
+            stage2_candidate_signals=("reported OP and ex-subsidy OP both disclosed", "tariff and EV subsidy-end risk visible"),
+            stage3_high_conviction_signals=("ex-subsidy OP quality, gross margin, utilization, FCF, and demand visibility confirmed"),
+            stage4a_ongoing_signals=("profit remains healthy after tax-credit adjustment",),
+            stage4b_graduation_overheat_signals=("headline OP rerates before subsidy-adjusted quality",),
+            stage4c_thesis_break_signals=("subsidy removal exposes near-zero OP", "tariff damage", "EV demand slowdown", "quality gate failure"),
+            key_evidence_families=("financial_actual", "news", "policy", "price"),
+            false_positive_patterns=("reported OP treated as structural despite tax-credit dependency", "subsidy benefit mistaken for margin"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.BATTERY_PARENT_CAPITAL_RECYCLING: ArchetypeDefinition(
+            archetype=E2RArchetype.BATTERY_PARENT_CAPITAL_RECYCLING,
+            stage1_radar_signals=("battery subsidiary stake sale", "parent value unlock", "balance-sheet repair", "capital recycling"),
+            stage2_candidate_signals=("sale amount, transaction method, stake reduction, and use of proceeds visible"),
+            stage3_high_conviction_signals=("debt reduction, ROIC improvement, shareholder return, battery-material margin, and FCF bridge confirmed"),
+            stage4a_ongoing_signals=("capital recycling improves ROIC and balance sheet without impairing subsidiary value"),
+            stage4b_graduation_overheat_signals=("parent value-up priced before ROIC and shareholder-return evidence"),
+            stage4c_thesis_break_signals=("forced-sale perception", "subsidiary valuation decline", "battery-material capex ROI miss", "debt burden persists"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "price"),
+            false_positive_patterns=("stake sale treated as Green without ROIC", "sum-of-parts unlock without cash-flow improvement"),
+            preferred_score_weights=_weights(eps_fcf=13, visibility=14, bottleneck=4, mispricing=13, valuation=13),
+        ),
+        E2RArchetype.ESS_REPORT_UNCONFIRMED_EVENT_PREMIUM: ArchetypeDefinition(
+            archetype=E2RArchetype.ESS_REPORT_UNCONFIRMED_EVENT_PREMIUM,
+            stage1_radar_signals=("newspaper-reported ESS deal", "Tesla ESS supply report", "unnamed customer report"),
+            stage2_candidate_signals=("reported contract value and duration, but company confirmation absent"),
+            stage3_high_conviction_signals=("signed final contract, GWh volume, shipment schedule, margin, and utilization confirmed"),
+            stage4a_ongoing_signals=("reported deal converts into signed contract and delivery"),
+            stage4b_graduation_overheat_signals=("reported deal premium before company confirmation", "customer headline price spike"),
+            stage4c_thesis_break_signals=("company says nothing decided", "Tesla or customer does not confirm", "reported deal fails to sign"),
+            key_evidence_families=("news", "disclosure", "price"),
+            false_positive_patterns=("press report treated as signed contract", "customer rumor treated as EPS/FCF"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.PRECURSOR_IPO_OVERHEAT_DEMAND_BREAK: ArchetypeDefinition(
+            archetype=E2RArchetype.PRECURSOR_IPO_OVERHEAT_DEMAND_BREAK,
+            stage1_radar_signals=("cathode precursor IPO", "vertical integration story", "battery-material localization"),
+            stage2_candidate_signals=("IPO proceeds, business scope, customer plan, and utilization roadmap visible"),
+            stage3_high_conviction_signals=("precursor demand, customer order, utilization, margin, and FCF conversion confirmed"),
+            stage4a_ongoing_signals=("precursor demand and margin hold after listing"),
+            stage4b_graduation_overheat_signals=("IPO premium before demand and margin", "vertical-integration story crowded"),
+            stage4c_thesis_break_signals=("EV demand weakness", "mineral-price reversal", "precursor utilization failure", "listed price breaks on demand shock"),
+            key_evidence_families=("news", "financial_actual", "price", "research_report"),
+            false_positive_patterns=("IPO demand treated as customer demand", "vertical integration treated as margin"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.BATTERY_SAFETY_HARD_REFERENCE: ArchetypeDefinition(
+            archetype=E2RArchetype.BATTERY_SAFETY_HARD_REFERENCE,
+            stage1_radar_signals=("battery fire", "battery factory accident", "quality or safety issue"),
+            stage2_candidate_signals=("not a positive source; safety RedTeam overlay only"),
+            stage3_high_conviction_signals=("not applicable; unresolved battery safety and quality failure blocks Green"),
+            stage4a_ongoing_signals=("safety systems and regulatory compliance remain intact"),
+            stage4b_graduation_overheat_signals=("battery story priced while safety risk is ignored"),
+            stage4c_thesis_break_signals=("fatal battery fire", "quality failure", "production deadline pressure", "temporary-worker safety failure", "criminal sentencing"),
+            key_evidence_families=("news", "legal", "red_team", "price"),
+            false_positive_patterns=("battery growth scored while safety hard gate is open", "quality failure treated as non-operating noise"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.FEOC_GRAPHITE_POLICY_RELIEF_NOT_GREEN: ArchetypeDefinition(
+            archetype=E2RArchetype.FEOC_GRAPHITE_POLICY_RELIEF_NOT_GREEN,
+            stage1_radar_signals=("FEOC graphite rule", "China graphite dominance", "battery supply-chain policy support"),
+            stage2_candidate_signals=("support package, loans, tax incentives, and non-China sourcing plan visible"),
+            stage3_high_conviction_signals=("company-level non-China supply contract, customer certification, margin, utilization, and FCF confirmed"),
+            stage4a_ongoing_signals=("non-China sourcing works economically and customer certifications remain valid"),
+            stage4b_graduation_overheat_signals=("FEOC policy relief basket rallies before contracts and margin"),
+            stage4c_thesis_break_signals=("FEOC non-compliance", "non-China sourcing failure", "graphite dependency persists", "subsidy eligibility loss"),
+            key_evidence_families=("policy", "news", "disclosure", "financial_actual"),
+            false_positive_patterns=("policy support treated as company Green", "critical-minerals relief without certification or margin"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=13, bottleneck=14, mispricing=9, valuation=8),
         ),
         E2RArchetype.LITHIUM_OFFTAKE_DLE_OPTIONALITY: ArchetypeDefinition(
             archetype=E2RArchetype.LITHIUM_OFFTAKE_DLE_OPTIONALITY,
