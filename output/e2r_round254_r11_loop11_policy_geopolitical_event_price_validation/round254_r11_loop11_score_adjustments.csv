@@ -1,0 +1,20 @@
+axis,points,direction,reason
+actual_capital_inflow,5,raise,WGBI 같은 정책도 실제 외국인 자금유입이 확인될 때만 Stage 2 품질이 오른다.
+funded_policy,5,raise,법안·예산·집행 재원이 확인된 정책만 정책 발언보다 높게 본다.
+market_access_improvement,5,raise,공매도 정상화와 MSCI 접근성 개선은 시장구조 Stage 2 증거다.
+governance_implementation,4,raise,자사주소각 의무처럼 실제 이행 규칙이 있을 때 value-up 신뢰도가 오른다.
+institutional_trust,5,raise,정치·제도 신뢰가 유지되어야 Korea discount 축소 논리가 유지된다.
+FX_stability,5,raise,원화 안정은 funding cost와 외국인 flow의 기본 조건이다.
+energy_security_resilience,5,raise,에너지 충격 후 비용 안정과 공급망 복구가 확인되어야 한다.
+policy_to_company_revenue_bridge,5,raise,정책이 회사 매출·마진·EPS/FCF로 내려와야 Green 검토가 가능하다.
+foreign_flow_confirmation,5,raise,실제 외국인 flow 확인은 기대 기반 리레이팅과 구분된다.
+policy_speech_only,-5,lower,발언만 있고 법안·예산·자금유입·회사 bridge가 없으면 Green 금지다.
+tax_or_redistribution_surprise,-5,lower,AI dividend/tax 같은 surprise는 risk premium을 먼저 깬다.
+political_institutional_shock,-5,lower,martial-law shock은 시장 전체 4C-watch다.
+geopolitical_energy_shock,-5,lower,Hormuz shock은 에너지·환율·수출주 리스크를 동시에 키운다.
+stablecoin_policy_theme_only,-5,lower,stablecoin 테마만 있고 규제수익/FX 안정이 없으면 Green 근거가 아니다.
+FX_policy_without_flow,-4,lower,FX 정책만 있고 실제 안정/유입이 없으면 Stage 2 watch에 머문다.
+index_inclusion_expectation_only,-3,lower,WGBI/MSCI 기대만으로 특정 종목 Green은 금지한다.
+market_reform_without_foreign_flow,-3,lower,공매도 정상화만 있고 foreign flow가 없으면 Stage 2 watch다.
+foreign_investment_pledge_outflow,-4,lower,대규모 해외투자 약속은 관세 relief와 별개로 FX outflow watch다.
+event_rally_before_earnings_bridge,-5,lower,이벤트가 먼저 가격을 움직이면 4B-watch부터 확인한다.

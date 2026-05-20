@@ -1,0 +1,17 @@
+field,required_for_round254_price_validation
+price_data_source,true
+full_ohlc_available,true
+reported_price_anchor,true
+reported_return_anchor,true
+index_anchor,true
+fx_anchor,true
+capital_flow_anchor,true
+policy_amount_anchor,true
+stage1_price,true
+stage2_price,true
+stage3_price,true
+stage4b_price,true
+stage4c_price,true
+mfe_1d,true
+mae_1d,true
+price_validation_status,true

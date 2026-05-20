@@ -1,0 +1,300 @@
+{
+  "analyst_round_id": "round_182",
+  "deep_sub_archetypes": [
+    {
+      "category": "정치·제도 신뢰",
+      "primary_archetype": "POLITICAL_INSTITUTIONAL_TRUST_BREAK",
+      "terms": "martial law crisis|Korea discount risk premium|won / KOSPI shock|unlimited liquidity"
+    },
+    {
+      "category": "시장구조",
+      "primary_archetype": "GLOBAL_INDEX_INCLUSION_CAPITAL_FLOW",
+      "terms": "WGBI inclusion|actual foreign bond inflow|2.22% weight|largest monthly inflow since 2016"
+    },
+    {
+      "category": "공매도 / MSCI 접근성",
+      "primary_archetype": "SHORT_SELLING_MARKET_ACCESS_REFORM",
+      "terms": "short-selling normalization|MSCI accessibility|one-strike-out|100% order penalty"
+    },
+    {
+      "category": "밸류업·상법",
+      "primary_archetype": "CORPORATE_GOVERNANCE_VALUEUP_POLICY",
+      "terms": "treasury share cancellation mandate|minority shareholder rights|Korea Discount policy|ROE/PBR bridge"
+    },
+    {
+      "category": "AI dividend / tax",
+      "primary_archetype": "AI_WINDFALL_TAX_POLICY_CONFIDENCE_SHOCK",
+      "terms": "AI boom excess tax revenue|Samsung / SK Hynix selloff|policy-confidence 4C-watch"
+    },
+    {
+      "category": "지정학·에너지",
+      "primary_archetype": "GEOPOLITICAL_ENERGY_SECURITY_HARD_4C",
+      "terms": "Iran / Hormuz conflict|KOSPI circuit breaker level selloff|KRW 17-year low|Middle East oil dependency"
+    },
+    {
+      "category": "Hormuz 정책대응",
+      "primary_archetype": "HORMUZ_POLICY_RELIEF_RESPONSE",
+      "terms": "maritime-security support|information sharing|oil above $100/bbl|policy relief not Green"
+    },
+    {
+      "category": "FX / capital flow",
+      "primary_archetype": "FX_LIQUIDITY_STABLECOIN_OUTFLOW",
+      "terms": "kimchi bond deregulation|dollar-backed stablecoin trading|overseas-stock retail outflow|500M won issuer equity"
+    },
+    {
+      "category": "대미투자 / FX outflow",
+      "primary_archetype": "FOREIGN_INVESTMENT_PLEDGE_FX_OUTFLOW",
+      "terms": "$350B U.S. investment pledge|$20B annual outflow limit|$5B FX bond cap|retail U.S. stock holdings"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "policy_speech_only",
+    "election_pledge_only",
+    "tax_or_redistribution_surprise",
+    "geopolitical_headline_only",
+    "wgbi_msci_expectation_only",
+    "fx_policy_without_actual_flow",
+    "stablecoin_theme_only",
+    "event_rally_before_earnings_bridge"
+  ],
+  "green_required_fields": [
+    "policy_actual_law_budget_index_inclusion_or_capital_inflow_confirmed",
+    "company_revenue_eps_fcf_bridge_exists",
+    "foreign_flow_or_funding_cost_improvement_confirmed",
+    "fx_rates_or_credit_cost_effect_positive",
+    "political_institutional_regulatory_trust_intact",
+    "no_tax_or_redistribution_surprise",
+    "no_energy_or_geopolitical_hard_risk",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "martial_law_or_coup_like_institutional_shock",
+    "major_political_legitimacy_crisis",
+    "tax_or_windfall_redistribution_shock",
+    "geopolitical_energy_chokepoint_closure",
+    "kospi_circuit_breaker",
+    "krw_disorderly_depreciation",
+    "foreign_capital_flight",
+    "index_inclusion_failure",
+    "msci_access_disappointment",
+    "fx_liquidity_breakdown",
+    "stablecoin_driven_capital_outflow",
+    "policy_reversal"
+  ],
+  "large_sector": "POLICY_GEOPOLITICAL_EVENT",
+  "round_case_types": {
+    "r11_loop11_ai_dividend_tax_policy_confidence_shock": "4c_watch_policy_confidence_break",
+    "r11_loop11_commercial_act_treasury_share_valueup": "success_candidate_governance_valueup_stage2",
+    "r11_loop11_fx_stablecoin_kimchi_bond_outflow_watch": "success_candidate_fx_relief_plus_4c_watch",
+    "r11_loop11_hormuz_iran_energy_security_hard_4c": "macro_hard_4c",
+    "r11_loop11_hormuz_policy_relief_response": "success_candidate_policy_relief",
+    "r11_loop11_martial_law_institutional_trust_4c_watch": "4c_watch_macro_institutional_trust_break",
+    "r11_loop11_short_selling_market_access_reform": "success_candidate_market_access_stage2",
+    "r11_loop11_us_investment_pledge_fx_outflow_watch": "macro_4c_watch_policy_relief",
+    "r11_loop11_wgbi_actual_bond_inflow_stage2": "success_candidate_capital_flow_stage2"
+  },
+  "shadow_weights": [
+    {
+      "actual_capital_inflow": "+0",
+      "archetype": "POLITICAL_INSTITUTIONAL_TRUST_BREAK",
+      "energy_security_resilience": "+0",
+      "event_penalty": "-5",
+      "foreign_flow_confirmation": "+0",
+      "funded_policy": "+0",
+      "fx_stability": "+2",
+      "governance_implementation": "+0",
+      "institutional_trust": "+5",
+      "macro_4c_sensitivity": "+5",
+      "market_access_improvement": "+0",
+      "notes": "Martial law crisis is institutional trust 4C-watch, not company Green.",
+      "policy_to_company_revenue_bridge": "+0"
+    },
+    {
+      "actual_capital_inflow": "+5",
+      "archetype": "GLOBAL_INDEX_INCLUSION_CAPITAL_FLOW",
+      "energy_security_resilience": "+0",
+      "event_penalty": "-2",
+      "foreign_flow_confirmation": "+5",
+      "funded_policy": "+4",
+      "fx_stability": "+5",
+      "governance_implementation": "+0",
+      "institutional_trust": "+4",
+      "macro_4c_sensitivity": "+2",
+      "market_access_improvement": "+3",
+      "notes": "WGBI is Stage 2 only after actual capital inflow; company Green needs EPS/FCF bridge.",
+      "policy_to_company_revenue_bridge": "+2"
+    },
+    {
+      "actual_capital_inflow": "+3",
+      "archetype": "SHORT_SELLING_MARKET_ACCESS_REFORM",
+      "energy_security_resilience": "+0",
+      "event_penalty": "-2",
+      "foreign_flow_confirmation": "+3",
+      "funded_policy": "+3",
+      "fx_stability": "+2",
+      "governance_implementation": "+0",
+      "institutional_trust": "+4",
+      "macro_4c_sensitivity": "+3",
+      "market_access_improvement": "+5",
+      "notes": "Short-selling normalization helps market access, but not company earnings by itself.",
+      "policy_to_company_revenue_bridge": "+1"
+    },
+    {
+      "actual_capital_inflow": "+2",
+      "archetype": "CORPORATE_GOVERNANCE_VALUEUP_POLICY",
+      "energy_security_resilience": "+0",
+      "event_penalty": "-2",
+      "foreign_flow_confirmation": "+2",
+      "funded_policy": "+5",
+      "fx_stability": "+2",
+      "governance_implementation": "+4",
+      "institutional_trust": "+4",
+      "macro_4c_sensitivity": "+2",
+      "market_access_improvement": "+2",
+      "notes": "Commercial Act value-up is Stage 2 until actual cancellation, ROE/PBR, and shareholder return bridge appear.",
+      "policy_to_company_revenue_bridge": "+3"
+    },
+    {
+      "actual_capital_inflow": "+0",
+      "archetype": "AI_WINDFALL_TAX_POLICY_CONFIDENCE_SHOCK",
+      "energy_security_resilience": "+0",
+      "event_penalty": "-5",
+      "foreign_flow_confirmation": "+0",
+      "funded_policy": "+0",
+      "fx_stability": "+1",
+      "governance_implementation": "+0",
+      "institutional_trust": "+2",
+      "macro_4c_sensitivity": "+5",
+      "market_access_improvement": "+0",
+      "notes": "AI dividend/tax language can break policy confidence before law text is known.",
+      "policy_to_company_revenue_bridge": "+0"
+    },
+    {
+      "actual_capital_inflow": "+0",
+      "archetype": "GEOPOLITICAL_ENERGY_SECURITY_HARD_4C",
+      "energy_security_resilience": "+5",
+      "event_penalty": "+0",
+      "foreign_flow_confirmation": "+0",
+      "funded_policy": "+0",
+      "fx_stability": "+5",
+      "governance_implementation": "+0",
+      "institutional_trust": "+2",
+      "macro_4c_sensitivity": "+5",
+      "market_access_improvement": "+0",
+      "notes": "Hormuz/Iran shock is hard macro 4C for oil-import dependent Korea.",
+      "policy_to_company_revenue_bridge": "+0"
+    },
+    {
+      "actual_capital_inflow": "+1",
+      "archetype": "HORMUZ_POLICY_RELIEF_RESPONSE",
+      "energy_security_resilience": "+5",
+      "event_penalty": "-3",
+      "foreign_flow_confirmation": "+1",
+      "funded_policy": "+5",
+      "fx_stability": "+4",
+      "governance_implementation": "+0",
+      "institutional_trust": "+3",
+      "macro_4c_sensitivity": "+3",
+      "market_access_improvement": "+0",
+      "notes": "Hormuz response is policy relief until oil/LNG cost and margin stabilization is verified.",
+      "policy_to_company_revenue_bridge": "+2"
+    },
+    {
+      "actual_capital_inflow": "+2",
+      "archetype": "FX_LIQUIDITY_STABLECOIN_OUTFLOW",
+      "energy_security_resilience": "+0",
+      "event_penalty": "-5",
+      "foreign_flow_confirmation": "+2",
+      "funded_policy": "+4",
+      "fx_stability": "+5",
+      "governance_implementation": "+0",
+      "institutional_trust": "+3",
+      "macro_4c_sensitivity": "+5",
+      "market_access_improvement": "+2",
+      "notes": "Kimchi bond relief and stablecoin outflow risk must be separated.",
+      "policy_to_company_revenue_bridge": "+1"
+    },
+    {
+      "actual_capital_inflow": "+1",
+      "archetype": "FOREIGN_INVESTMENT_PLEDGE_FX_OUTFLOW",
+      "energy_security_resilience": "+0",
+      "event_penalty": "-4",
+      "foreign_flow_confirmation": "+1",
+      "funded_policy": "+4",
+      "fx_stability": "+5",
+      "governance_implementation": "+0",
+      "institutional_trust": "+3",
+      "macro_4c_sensitivity": "+5",
+      "market_access_improvement": "+1",
+      "notes": "$350B pledge can be tariff relief and FX outflow risk at the same time.",
+      "policy_to_company_revenue_bridge": "+2"
+    },
+    {
+      "actual_capital_inflow": "+0",
+      "archetype": "POLICY_HEADLINE_NOT_GREEN",
+      "energy_security_resilience": "+0",
+      "event_penalty": "-5",
+      "foreign_flow_confirmation": "+0",
+      "funded_policy": "+1",
+      "fx_stability": "+0",
+      "governance_implementation": "+0",
+      "institutional_trust": "+1",
+      "macro_4c_sensitivity": "+3",
+      "market_access_improvement": "+0",
+      "notes": "Policy headline alone is not Stage 3-Green.",
+      "policy_to_company_revenue_bridge": "+0"
+    }
+  ],
+  "source_round": "docs/round/round_254.md",
+  "stage4b_watch_triggers": [
+    "wgbi_msci_expectation_rally",
+    "commercial_act_expectation_rally",
+    "policy_speech_theme_rally",
+    "ai_dividend_tax_selloff_rebound_before_clarity",
+    "energy_security_headline_rally",
+    "fx_policy_relief_bank_exporter_rerating",
+    "stablecoin_theme_two_to_three_times"
+  ],
+  "summary": {
+    "analyst_round_id": "round_182",
+    "candidate_generation_input": false,
+    "case_candidate_count": 9,
+    "deep_sub_archetype_count": 9,
+    "failed_rerating_count": 3,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "POLICY_GEOPOLITICAL_EVENT",
+    "policy_relief_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "r11_default_stage3_bias": "very_conservative",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 10,
+    "source_round": "docs/round/round_254.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 8,
+    "stage4c_watch_count": 4,
+    "success_candidate_count": 5,
+    "target_archetype_count": 10
+  },
+  "target_aliases": {
+    "AI_WINDFALL_TAX_POLICY_CONFIDENCE_SHOCK": "AI_WINDFALL_TAX_POLICY_CONFIDENCE_SHOCK",
+    "CORPORATE_GOVERNANCE_VALUEUP_POLICY": "CORPORATE_GOVERNANCE_VALUEUP_POLICY",
+    "FOREIGN_INVESTMENT_PLEDGE_FX_OUTFLOW": "FOREIGN_INVESTMENT_PLEDGE_FX_OUTFLOW",
+    "FX_LIQUIDITY_STABLECOIN_OUTFLOW": "FX_LIQUIDITY_STABLECOIN_OUTFLOW",
+    "GEOPOLITICAL_ENERGY_SECURITY_HARD_4C": "GEOPOLITICAL_ENERGY_SECURITY_HARD_4C",
+    "GLOBAL_INDEX_INCLUSION_CAPITAL_FLOW": "GLOBAL_INDEX_INCLUSION_CAPITAL_FLOW",
+    "HORMUZ_POLICY_RELIEF_RESPONSE": "HORMUZ_POLICY_RELIEF_RESPONSE",
+    "POLICY_HEADLINE_NOT_GREEN": "POLICY_HEADLINE_NOT_GREEN",
+    "POLITICAL_INSTITUTIONAL_TRUST_BREAK": "POLITICAL_INSTITUTIONAL_TRUST_BREAK",
+    "SHORT_SELLING_MARKET_ACCESS_REFORM": "SHORT_SELLING_MARKET_ACCESS_REFORM"
+  },
+  "what_not_to_change": [
+    "do_not_use_round254_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_policy_geopolitical_disaster_fx_index_energy_or_stablecoin_headline_as_green",
+    "do_not_invent_ohlc_or_stage_dates",
+    "keep_hormuz_iran_energy_shock_as_macro_hard_4c_reference"
+  ]
+}

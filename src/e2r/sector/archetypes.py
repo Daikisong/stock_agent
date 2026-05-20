@@ -641,14 +641,23 @@ class E2RArchetype(str, Enum):
     POLITICAL_INSTITUTIONAL_TRUST_BREAK = "POLITICAL_INSTITUTIONAL_TRUST_BREAK"
     MARKET_STRUCTURE_REFORM = "MARKET_STRUCTURE_REFORM"
     GLOBAL_INDEX_INCLUSION = "GLOBAL_INDEX_INCLUSION"
+    GLOBAL_INDEX_INCLUSION_CAPITAL_FLOW = "GLOBAL_INDEX_INCLUSION_CAPITAL_FLOW"
     SHORT_SELLING_NORMALIZATION = "SHORT_SELLING_NORMALIZATION"
+    SHORT_SELLING_MARKET_ACCESS_REFORM = "SHORT_SELLING_MARKET_ACCESS_REFORM"
+    CORPORATE_GOVERNANCE_VALUEUP_POLICY = "CORPORATE_GOVERNANCE_VALUEUP_POLICY"
     AI_WINDFALL_TAX_POLICY_SHOCK = "AI_WINDFALL_TAX_POLICY_SHOCK"
+    AI_WINDFALL_TAX_POLICY_CONFIDENCE_SHOCK = "AI_WINDFALL_TAX_POLICY_CONFIDENCE_SHOCK"
     GEOPOLITICAL_ENERGY_SUPPLY_SHOCK = "GEOPOLITICAL_ENERGY_SUPPLY_SHOCK"
+    GEOPOLITICAL_ENERGY_SECURITY_HARD_4C = "GEOPOLITICAL_ENERGY_SECURITY_HARD_4C"
+    HORMUZ_POLICY_RELIEF_RESPONSE = "HORMUZ_POLICY_RELIEF_RESPONSE"
     FX_LIQUIDITY_POLICY_RESPONSE = "FX_LIQUIDITY_POLICY_RESPONSE"
+    FX_LIQUIDITY_STABLECOIN_OUTFLOW = "FX_LIQUIDITY_STABLECOIN_OUTFLOW"
     STABLECOIN_AND_OVERSEAS_OUTFLOW_MACRO = "STABLECOIN_AND_OVERSEAS_OUTFLOW_MACRO"
     POLICY_CONFIDENCE_EVENT_PREMIUM = "POLICY_CONFIDENCE_EVENT_PREMIUM"
+    POLICY_HEADLINE_NOT_GREEN = "POLICY_HEADLINE_NOT_GREEN"
     POLICY_RELIEF_RESPONSE = "POLICY_RELIEF_RESPONSE"
     FX_OUTFLOW_TRADE_DEAL_OVERLAY = "FX_OUTFLOW_TRADE_DEAL_OVERLAY"
+    FOREIGN_INVESTMENT_PLEDGE_FX_OUTFLOW = "FOREIGN_INVESTMENT_PLEDGE_FX_OUTFLOW"
     MACRO_HARD_4C = "MACRO_HARD_4C"
     MARKET_STRUCTURE_SHORT_SELLING_POLICY = "MARKET_STRUCTURE_SHORT_SELLING_POLICY"
     SHORT_SELLING_RESUMPTION_RISK = "SHORT_SELLING_RESUMPTION_RISK"
@@ -2584,6 +2593,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("expected inflow alone treated as company rerating",),
             preferred_score_weights=_weights(eps_fcf=6, visibility=18, bottleneck=2, mispricing=20, valuation=18),
         ),
+        E2RArchetype.GLOBAL_INDEX_INCLUSION_CAPITAL_FLOW: ArchetypeDefinition(
+            archetype=E2RArchetype.GLOBAL_INDEX_INCLUSION_CAPITAL_FLOW,
+            stage1_radar_signals=("WGBI inclusion announcement", "global index access reform", "expected passive bond inflow"),
+            stage2_candidate_signals=("WGBI 2.22% weight confirmed", "actual foreign bond inflow", "largest monthly inflow validation"),
+            stage3_high_conviction_signals=("actual foreign flow plus rates, FX, funding-cost, and company EPS/FCF bridge"),
+            stage4a_ongoing_signals=("foreign bond inflows persist and funding conditions improve"),
+            stage4b_graduation_overheat_signals=("WGBI or MSCI expectation rally before company earnings bridge"),
+            stage4c_thesis_break_signals=("index inclusion delay", "foreign inflow disappointment", "FX stress despite index inclusion"),
+            key_evidence_families=("policy", "foreign_flow", "rates", "fx", "price"),
+            false_positive_patterns=("WGBI expectation treated as company Stage 3-Green",),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=20, bottleneck=2, mispricing=20, valuation=18),
+        ),
         E2RArchetype.SHORT_SELLING_NORMALIZATION: ArchetypeDefinition(
             archetype=E2RArchetype.SHORT_SELLING_NORMALIZATION,
             stage1_radar_signals=("short-selling ban lift", "unfair-trading enforcement", "MSCI access issue resolution"),
@@ -2596,6 +2617,30 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("short-selling normalization treated as direct company earnings",),
             preferred_score_weights=_weights(eps_fcf=6, visibility=16, bottleneck=2, mispricing=18, valuation=16),
         ),
+        E2RArchetype.SHORT_SELLING_MARKET_ACCESS_REFORM: ArchetypeDefinition(
+            archetype=E2RArchetype.SHORT_SELLING_MARKET_ACCESS_REFORM,
+            stage1_radar_signals=("short-selling ban lifted", "illegal short-selling detection system", "MSCI accessibility discussion"),
+            stage2_candidate_signals=("MSCI short-selling accessibility improved", "one-strike-out enforcement", "up to 100% order penalty"),
+            stage3_high_conviction_signals=("market-access reform plus actual foreign flow and company-level EPS/FCF bridge"),
+            stage4a_ongoing_signals=("market access remains open and foreign participation improves"),
+            stage4b_graduation_overheat_signals=("brokerage or low-PBR basket rally before flow confirmation"),
+            stage4c_thesis_break_signals=("illegal short-selling recurrence", "MSCI access disappointment", "foreign-flow reversal"),
+            key_evidence_families=("policy", "market_structure", "foreign_flow", "price"),
+            false_positive_patterns=("market-access reform headline treated as company Green",),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=18, bottleneck=2, mispricing=18, valuation=16),
+        ),
+        E2RArchetype.CORPORATE_GOVERNANCE_VALUEUP_POLICY: ArchetypeDefinition(
+            archetype=E2RArchetype.CORPORATE_GOVERNANCE_VALUEUP_POLICY,
+            stage1_radar_signals=("Korea Discount policy", "minority shareholder protection", "treasury-share misuse debate"),
+            stage2_candidate_signals=("treasury share cancellation mandate", "one-year cancellation rule", "six-month grace period for existing shares"),
+            stage3_high_conviction_signals=("actual buyback cancellation, ROE/PBR improvement, shareholder return, and company EPS/FCF bridge"),
+            stage4a_ongoing_signals=("cancellation and return policy repeat with ROE intact"),
+            stage4b_graduation_overheat_signals=("value-up rally before company capital return execution"),
+            stage4c_thesis_break_signals=("implementation delay", "buyback without cancellation", "weak ROE", "business group resistance"),
+            key_evidence_families=("policy", "capital_allocation", "financial_actual", "valuation", "price"),
+            false_positive_patterns=("Commercial Act headline treated as company Green without ROE or cancellation proof",),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=18, bottleneck=2, mispricing=22, valuation=22, confidence=8),
+        ),
         E2RArchetype.AI_WINDFALL_TAX_POLICY_SHOCK: ArchetypeDefinition(
             archetype=E2RArchetype.AI_WINDFALL_TAX_POLICY_SHOCK,
             stage1_radar_signals=("AI dividend or windfall-tax language", "redistribution surprise", "AI semiconductor basket selloff"),
@@ -2606,6 +2651,18 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("windfall tax surprise", "policy confidence break", "AI semiconductor de-rating"),
             key_evidence_families=("policy", "news", "price", "red_team"),
             false_positive_patterns=("policy clarification bounce treated as structural rerating"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.AI_WINDFALL_TAX_POLICY_CONFIDENCE_SHOCK: ArchetypeDefinition(
+            archetype=E2RArchetype.AI_WINDFALL_TAX_POLICY_CONFIDENCE_SHOCK,
+            stage1_radar_signals=("AI bonus or dividend language", "AI windfall-tax interpretation", "Samsung or SK Hynix policy-confidence selloff"),
+            stage2_candidate_signals=("official clarification that excess tax revenue is used", "legal tax design visible", "company exposure bounded"),
+            stage3_high_conviction_signals=("not a positive Green source; tax or redistribution surprise remains a RedTeam gate"),
+            stage4a_ongoing_signals=("policy-confidence shock removed and EPS/FCF revisions remain intact"),
+            stage4b_graduation_overheat_signals=("AI semiconductor rebound before tax clarity"),
+            stage4c_thesis_break_signals=("tax or redistribution surprise", "policy-confidence break", "AI semiconductor de-rating"),
+            key_evidence_families=("policy", "news", "price", "red_team"),
+            false_positive_patterns=("policy clarification bounce treated as structural semiconductor rerating"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.GEOPOLITICAL_ENERGY_SUPPLY_SHOCK: ArchetypeDefinition(
@@ -2620,6 +2677,30 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("energy-security headline treated as refiner, shipper, or defense Green"),
             preferred_score_weights=_weights(eps_fcf=8, visibility=12, bottleneck=20, mispricing=6, valuation=6),
         ),
+        E2RArchetype.GEOPOLITICAL_ENERGY_SECURITY_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.GEOPOLITICAL_ENERGY_SECURITY_HARD_4C,
+            stage1_radar_signals=("Iran or Hormuz escalation", "Korea oil import dependency exposed", "KRW energy shock"),
+            stage2_candidate_signals=("risk containment evidence only; not a positive candidate path"),
+            stage3_high_conviction_signals=("not a Green source; energy chokepoint shock is a macro hard 4C gate"),
+            stage4a_ongoing_signals=("oil, LNG, KRW, and shipping insurance normalize before candidate evidence is rechecked"),
+            stage4b_graduation_overheat_signals=("energy-security basket rally before cost or margin stabilization"),
+            stage4c_thesis_break_signals=("geopolitical energy chokepoint closure", "KOSPI circuit-breaker level shock", "KRW disorderly depreciation", "exporter and chip drawdown"),
+            key_evidence_families=("news", "energy", "fx", "price", "red_team"),
+            false_positive_patterns=("geopolitical headline treated as refiner, shipper, defense, or exporter Green"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.HORMUZ_POLICY_RELIEF_RESPONSE: ArchetypeDefinition(
+            archetype=E2RArchetype.HORMUZ_POLICY_RELIEF_RESPONSE,
+            stage1_radar_signals=("Hormuz disruption aftershock", "oil or LNG security response", "maritime-security support discussion"),
+            stage2_candidate_signals=("phased Hormuz role", "personnel or information sharing", "policy relief after energy shock"),
+            stage3_high_conviction_signals=("actual oil/LNG cost stabilization plus company margin and EPS/FCF bridge"),
+            stage4a_ongoing_signals=("relief remains effective and sector margins stabilize"),
+            stage4b_graduation_overheat_signals=("energy-security headline rally before oil/LNG cost confirmation"),
+            stage4c_thesis_break_signals=("Hormuz reclosure", "oil price re-spike", "LNG disruption", "KRW shock"),
+            key_evidence_families=("policy", "energy", "fx", "financial_actual", "price"),
+            false_positive_patterns=("policy relief headline treated as new structural revenue"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=16, bottleneck=10, mispricing=10, valuation=8),
+        ),
         E2RArchetype.FX_LIQUIDITY_POLICY_RESPONSE: ArchetypeDefinition(
             archetype=E2RArchetype.FX_LIQUIDITY_POLICY_RESPONSE,
             stage1_radar_signals=("KRW stress", "FX borrowing rules loosened", "kimchi bond rule change"),
@@ -2631,6 +2712,18 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("fx", "policy", "foreign_flow", "financial_actual", "price"),
             false_positive_patterns=("FX policy announcement treated as company Green without flow"),
             preferred_score_weights=_weights(eps_fcf=8, visibility=18, bottleneck=4, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.FX_LIQUIDITY_STABLECOIN_OUTFLOW: ArchetypeDefinition(
+            archetype=E2RArchetype.FX_LIQUIDITY_STABLECOIN_OUTFLOW,
+            stage1_radar_signals=("dollar-backed stablecoin trading surge", "retail overseas-stock outflow", "KRW liquidity strain"),
+            stage2_candidate_signals=("kimchi bond ban lifted", "KRW stabilizes after policy", "regulated stablecoin framework under discussion"),
+            stage3_high_conviction_signals=("actual KRW stability, foreign inflow, regulated revenue, and company EPS/FCF bridge"),
+            stage4a_ongoing_signals=("outflow pressure eases and FX liquidity remains stable"),
+            stage4b_graduation_overheat_signals=("stablecoin or FX relief theme rally before regulated revenue proof"),
+            stage4c_thesis_break_signals=("stablecoin-driven capital outflow", "FX liquidity breakdown", "KRW depreciation", "reserves stress"),
+            key_evidence_families=("fx", "capital_flow", "policy", "price", "red_team"),
+            false_positive_patterns=("stablecoin theme treated as bank, broker, or fintech Green without regulated revenue"),
+            preferred_score_weights=_weights(eps_fcf=4, visibility=12, bottleneck=2, mispricing=8, valuation=6),
         ),
         E2RArchetype.STABLECOIN_AND_OVERSEAS_OUTFLOW_MACRO: ArchetypeDefinition(
             archetype=E2RArchetype.STABLECOIN_AND_OVERSEAS_OUTFLOW_MACRO,
@@ -2656,6 +2749,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("policy speech treated as structural earnings evidence"),
             preferred_score_weights=_weights(eps_fcf=4, visibility=8, bottleneck=2, mispricing=8, valuation=6),
         ),
+        E2RArchetype.POLICY_HEADLINE_NOT_GREEN: ArchetypeDefinition(
+            archetype=E2RArchetype.POLICY_HEADLINE_NOT_GREEN,
+            stage1_radar_signals=("policy speech", "election pledge", "headline-only theme rally"),
+            stage2_candidate_signals=("law, budget, index inclusion, capital inflow, or implementation proof appears"),
+            stage3_high_conviction_signals=("only after policy execution, actual flow, and company revenue/EPS/FCF bridge are verified"),
+            stage4a_ongoing_signals=("implementation remains funded and predictable"),
+            stage4b_graduation_overheat_signals=("policy headline rally before implementation or earnings bridge"),
+            stage4c_thesis_break_signals=("policy reversal", "tax surprise", "institutional confidence break"),
+            key_evidence_families=("policy", "news", "price", "red_team"),
+            false_positive_patterns=("policy headline or theme rally treated as Stage 3-Green",),
+            preferred_score_weights=_weights(eps_fcf=2, visibility=6, bottleneck=0, mispricing=6, valuation=4),
+        ),
         E2RArchetype.POLICY_RELIEF_RESPONSE: ArchetypeDefinition(
             archetype=E2RArchetype.POLICY_RELIEF_RESPONSE,
             stage1_radar_signals=("policy relief", "reserve release or alternative-supplier plan", "security support"),
@@ -2678,6 +2783,18 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("structural dollar outflow", "KRW depreciation", "FX reserve stress"),
             key_evidence_families=("policy", "fx", "capital_flow", "financial_actual", "price"),
             false_positive_patterns=("trade deal treated as Green while FX outflow worsens"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=12, bottleneck=4, mispricing=12, valuation=8),
+        ),
+        E2RArchetype.FOREIGN_INVESTMENT_PLEDGE_FX_OUTFLOW: ArchetypeDefinition(
+            archetype=E2RArchetype.FOREIGN_INVESTMENT_PLEDGE_FX_OUTFLOW,
+            stage1_radar_signals=("$350B overseas investment pledge", "tariff relief with dollar outflow", "KRW pressure"),
+            stage2_candidate_signals=("annual dollar-outflow limit agreed", "FX bond cap raised", "FX reserves response"),
+            stage3_high_conviction_signals=("tariff margin relief plus actual KRW stabilization, funding-cost relief, and company EPS/FCF bridge"),
+            stage4a_ongoing_signals=("tariff relief and FX stability both hold"),
+            stage4b_graduation_overheat_signals=("tariff-relief rally ignores dollar outflow"),
+            stage4c_thesis_break_signals=("structural dollar outflow", "KRW depreciation", "FX reserve stress", "foreign capital flight"),
+            key_evidence_families=("policy", "fx", "capital_flow", "financial_actual", "price"),
+            false_positive_patterns=("trade-deal relief treated as Green while dollar outflow risk worsens"),
             preferred_score_weights=_weights(eps_fcf=8, visibility=12, bottleneck=4, mispricing=12, valuation=8),
         ),
         E2RArchetype.MACRO_HARD_4C: ArchetypeDefinition(
