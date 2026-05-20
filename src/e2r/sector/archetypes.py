@@ -477,8 +477,10 @@ class E2RArchetype(str, Enum):
     K_FOOD_GLOBAL_PORTFOLIO_EXPANSION = "K_FOOD_GLOBAL_PORTFOLIO_EXPANSION"
     K_FOOD_GLOBAL_LOCALIZATION = "K_FOOD_GLOBAL_LOCALIZATION"
     K_FOOD_VIRAL_BRAND_CULTURE = "K_FOOD_VIRAL_BRAND_CULTURE"
+    K_FOOD_EXPORT_RECURRING = "K_FOOD_EXPORT_RECURRING"
     K_FOOD_GLOBAL_STAPLE_BRAND = "K_FOOD_GLOBAL_STAPLE_BRAND"
     K_FOOD_GLOBAL_STAPLE_BRAND_SECOND_WAVE = "K_FOOD_GLOBAL_STAPLE_BRAND_SECOND_WAVE"
+    K_FOOD_INPUT_PACKAGING_4C = "K_FOOD_INPUT_PACKAGING_4C"
     K_FOOD_SINGLE_SKU_RISK = "K_FOOD_SINGLE_SKU_RISK"
     K_FOOD_SINGLE_SKU_EXPORT_RISK = "K_FOOD_SINGLE_SKU_EXPORT_RISK"
     K_BEAUTY_OFFLINE_SELL_THROUGH = "K_BEAUTY_OFFLINE_SELL_THROUGH"
@@ -486,11 +488,16 @@ class E2RArchetype(str, Enum):
     K_BEAUTY_RETAIL_PLATFORM_OPTION = "K_BEAUTY_RETAIL_PLATFORM_OPTION"
     K_BEAUTY_EXPORT_DISTRIBUTION_KOREA = "K_BEAUTY_EXPORT_DISTRIBUTION_KOREA"
     K_BEAUTY_BRAND_US_CHANNEL = "K_BEAUTY_BRAND_US_CHANNEL"
+    K_BEAUTY_DEVICE_GLOBAL_BRAND = "K_BEAUTY_DEVICE_GLOBAL_BRAND"
+    K_BEAUTY_INDIE_BRAND_US_CHANNEL = "K_BEAUTY_INDIE_BRAND_US_CHANNEL"
     K_BEAUTY_BRAND_SECOND_WAVE = "K_BEAUTY_BRAND_SECOND_WAVE"
     K_BEAUTY_OEM_ODM_SUPPLYCHAIN_KOREA = "K_BEAUTY_OEM_ODM_SUPPLYCHAIN_KOREA"
+    K_BEAUTY_ODM_DISTRIBUTOR_LEVERAGE = "K_BEAUTY_ODM_DISTRIBUTOR_LEVERAGE"
     K_BEAUTY_BRAND_MNA_VALIDATION_STAGE2_REFERENCE = "K_BEAUTY_BRAND_MNA_VALIDATION_STAGE2_REFERENCE"
     K_BEAUTY_TARIFF_IMPORT_REVIEW = "K_BEAUTY_TARIFF_IMPORT_REVIEW"
+    LEGACY_BEAUTY_CHINA_EXPOSURE_4C = "LEGACY_BEAUTY_CHINA_EXPOSURE_4C"
     ECOMMERCE_RESTRUCTURING_JV_KOREA = "ECOMMERCE_RESTRUCTURING_JV_KOREA"
+    ECOMMERCE_JV_SCALE_AND_DATA_GATE = "ECOMMERCE_JV_SCALE_AND_DATA_GATE"
     RETAIL_PLATFORM_DATA_REGULATION_OVERLAY = "RETAIL_PLATFORM_DATA_REGULATION_OVERLAY"
     DEPARTMENT_STORE_MALL_REDEVELOPMENT = "DEPARTMENT_STORE_MALL_REDEVELOPMENT"
     CONVENIENCE_STORE_PB_SSSG_KOREA = "CONVENIENCE_STORE_PB_SSSG_KOREA"
@@ -503,6 +510,7 @@ class E2RArchetype(str, Enum):
     STRONG_PRIVATE_PLATFORM_BUT_HOLDCO_LINK_CAP = "STRONG_PRIVATE_PLATFORM_BUT_HOLDCO_LINK_CAP"
     ULTRA_LOW_COST_CROSSBORDER_PLATFORM = "ULTRA_LOW_COST_CROSSBORDER_PLATFORM"
     ECOMMERCE_TRUST_SECURITY = "ECOMMERCE_TRUST_SECURITY"
+    ECOMMERCE_TRUST_BREACH_HARD_4C = "ECOMMERCE_TRUST_BREACH_HARD_4C"
     ECOMMERCE_SUPPLIER_MARGIN_QUALITY = "ECOMMERCE_SUPPLIER_MARGIN_QUALITY"
     FAST_FASHION_IP_SUPPLIER_LITIGATION = "FAST_FASHION_IP_SUPPLIER_LITIGATION"
     FAST_FASHION_PRODUCT_SAFETY_DSA = "FAST_FASHION_PRODUCT_SAFETY_DSA"
@@ -512,6 +520,7 @@ class E2RArchetype(str, Enum):
     CONSUMER_REGULATED_PRODUCT = "CONSUMER_REGULATED_PRODUCT"
     EDUCATION_POLICY_EVENT = "EDUCATION_POLICY_EVENT"
     FOOD_SERVICE_EVENT_PREMIUM = "FOOD_SERVICE_EVENT_PREMIUM"
+    TOURISM_RETAIL_DUTYFREE_EVENT = "TOURISM_RETAIL_DUTYFREE_EVENT"
     HOME_LIVING_RENTAL_RECURRING = "HOME_LIVING_RENTAL_RECURRING"
     EDUCATION_POLICY_MEDICAL_QUOTA = "EDUCATION_POLICY_MEDICAL_QUOTA"
     EDTECH_AI_TEXTBOOK_POLICY_REVERSAL = "EDTECH_AI_TEXTBOOK_POLICY_REVERSAL"
@@ -822,6 +831,126 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("research_report", "financial_actual", "news", "consensus_revision"),
             false_positive_patterns=("single brand fad", "channel stuffing", "low-quality receivables growth"),
             preferred_score_weights=_weights(eps_fcf=22, visibility=23, bottleneck=13, mispricing=16, valuation=14),
+        ),
+        E2RArchetype.K_FOOD_EXPORT_RECURRING: ArchetypeDefinition(
+            archetype=E2RArchetype.K_FOOD_EXPORT_RECURRING,
+            stage1_radar_signals=("K-food export growth", "viral product crosses into repeat demand", "U.S./Europe shipment growth"),
+            stage2_candidate_signals=("ASP uplift", "capacity expansion", "OP/EPS revision", "overseas channel growth"),
+            stage3_high_conviction_signals=("repeat demand", "channel sell-through", "ASP defended", "OPM/FCF improvement", "inventory stable"),
+            stage4a_ongoing_signals=("export sell-through and reorder remain strong", "capacity converts to margin"),
+            stage4b_graduation_overheat_signals=("single-SKU premium valuation", "brand heat priced before reorder data"),
+            stage4c_thesis_break_signals=("packaging/input shortage", "food safety recall", "viral SKU demand collapse", "ASP/OPM reversal"),
+            key_evidence_families=("financial_actual", "research_report", "news", "price"),
+            false_positive_patterns=("viral product only", "retail listing without reorder", "shipment growth without sell-through"),
+            preferred_score_weights=_weights(eps_fcf=23, visibility=22, bottleneck=12, mispricing=15, valuation=12),
+        ),
+        E2RArchetype.K_FOOD_GLOBAL_STAPLE_BRAND: ArchetypeDefinition(
+            archetype=E2RArchetype.K_FOOD_GLOBAL_STAPLE_BRAND,
+            stage1_radar_signals=("global ramen staple", "K-culture food demand", "overseas sales mix"),
+            stage2_candidate_signals=("record brand sales", "North America sales growth", "mainstream shelf expansion", "long-term U.S. sales target"),
+            stage3_high_conviction_signals=("OP/EPS revision", "channel sell-through", "reorder repeat consumption", "ASP/mix defended", "inventory stable"),
+            stage4a_ongoing_signals=("global staple demand and margins remain stable"),
+            stage4b_graduation_overheat_signals=("global staple narrative priced before OP/EPS", "single-brand premium crowded"),
+            stage4c_thesis_break_signals=("China slowdown not offset", "packaging/input shock", "commodity cost pressure", "channel stuffing"),
+            key_evidence_families=("financial_actual", "research_report", "news", "price"),
+            false_positive_patterns=("brand sales headline without margin", "overseas target without sell-through"),
+            preferred_score_weights=_weights(eps_fcf=22, visibility=21, bottleneck=10, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.K_FOOD_INPUT_PACKAGING_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.K_FOOD_INPUT_PACKAGING_4C,
+            stage1_radar_signals=("naphtha shock", "packaging shortage", "food packaging input pressure"),
+            stage2_candidate_signals=("not a Green source; input availability and cost RedTeam overlay"),
+            stage3_high_conviction_signals=("not applicable until production continuity and margin pass-through are proven"),
+            stage4a_ongoing_signals=("packaging/input supply remains stable"),
+            stage4b_graduation_overheat_signals=("export premium ignores input shortage"),
+            stage4c_thesis_break_signals=("packaging shortage causing production disruption", "input-cost spike", "margin squeeze", "capacity operation cut"),
+            key_evidence_families=("news", "financial_actual", "price"),
+            false_positive_patterns=("export growth scored while packaging/input constraint is ignored"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.K_BEAUTY_DEVICE_GLOBAL_BRAND: ArchetypeDefinition(
+            archetype=E2RArchetype.K_BEAUTY_DEVICE_GLOBAL_BRAND,
+            stage1_radar_signals=("K-beauty device virality", "TikTok/Amazon/creator-affiliate distribution", "global skincare device brand"),
+            stage2_candidate_signals=("reported stage price", "market-cap rerating", "overseas revenue growth", "retail expansion"),
+            stage3_high_conviction_signals=("revenue conversion", "overseas sell-through", "OPM/FCF improvement", "channel retention", "brand concentration risk controlled"),
+            stage4a_ongoing_signals=("device and skincare revenue remain strong while channel sell-through stays healthy"),
+            stage4b_graduation_overheat_signals=("stock up sharply after IPO", "single-brand/device concentration", "creator-commerce narrative crowded"),
+            stage4c_thesis_break_signals=("device demand fade", "channel sell-through failure", "safety/regulatory issue", "inventory build"),
+            key_evidence_families=("financial_actual", "research_report", "news", "price"),
+            false_positive_patterns=("device virality without revenue", "single-brand concentration ignored"),
+            preferred_score_weights=_weights(eps_fcf=23, visibility=22, bottleneck=10, mispricing=14, valuation=11),
+        ),
+        E2RArchetype.K_BEAUTY_INDIE_BRAND_US_CHANNEL: ArchetypeDefinition(
+            archetype=E2RArchetype.K_BEAUTY_INDIE_BRAND_US_CHANNEL,
+            stage1_radar_signals=("indie K-beauty U.S. channel talks", "Amazon/TikTok/Sephora/Ulta/Target/Costco expansion", "post-debut brand rally"),
+            stage2_candidate_signals=("U.S. e-commerce growth", "retail talks", "brand portfolio demand", "reported price anchor"),
+            stage3_high_conviction_signals=("physical-store sell-through", "repeat order", "OPM/FCF conversion", "inventory and receivables stable"),
+            stage4a_ongoing_signals=("offline channel sell-through and reorder remain strong"),
+            stage4b_graduation_overheat_signals=("IPO/debut price doubles", "retail-talks rally before store sell-through"),
+            stage4c_thesis_break_signals=("offline sell-through failure", "channel inventory build", "tariff margin squeeze", "single-brand fade"),
+            key_evidence_families=("news", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("retail talks without sell-through", "brand heat only", "debut rally treated as earnings"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=21, bottleneck=9, mispricing=13, valuation=10),
+        ),
+        E2RArchetype.K_BEAUTY_ODM_DISTRIBUTOR_LEVERAGE: ArchetypeDefinition(
+            archetype=E2RArchetype.K_BEAUTY_ODM_DISTRIBUTOR_LEVERAGE,
+            stage1_radar_signals=("K-beauty ODM leverage", "distribution platform leverage", "indie brand order flow"),
+            stage2_candidate_signals=("multi-brand orders", "customer diversification", "distribution leverage", "working-capital watch"),
+            stage3_high_conviction_signals=("repeat orders", "brand sell-through", "OPM/FCF conversion", "inventory/receivables quality"),
+            stage4a_ongoing_signals=("customer diversification and cash conversion remain healthy"),
+            stage4b_graduation_overheat_signals=("ODM/distributor basket rerates before working-capital proof"),
+            stage4c_thesis_break_signals=("channel stuffing", "receivables spike", "inventory build", "indie brand churn"),
+            key_evidence_families=("financial_actual", "research_report", "news", "price"),
+            false_positive_patterns=("shipment growth without sell-through", "distribution multiple expansion before cash conversion"),
+            preferred_score_weights=_weights(eps_fcf=22, visibility=21, bottleneck=9, mispricing=13, valuation=11),
+        ),
+        E2RArchetype.LEGACY_BEAUTY_CHINA_EXPOSURE_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.LEGACY_BEAUTY_CHINA_EXPOSURE_4C,
+            stage1_radar_signals=("legacy K-beauty turnaround", "China premium beauty recovery", "U.S./Europe offset expectation"),
+            stage2_candidate_signals=("not a Green source; legacy China exposure RedTeam overlay"),
+            stage3_high_conviction_signals=("not applicable until China/travel-retail drag is offset by verified U.S./Europe sell-through and OPM"),
+            stage4a_ongoing_signals=("U.S./Europe offset and margin recovery remain visible"),
+            stage4b_graduation_overheat_signals=("K-beauty macro rerating ignores legacy China exposure"),
+            stage4c_thesis_break_signals=("China demand weakness", "C-Beauty local competition", "duty-free/travel retail weakness", "premium beauty slowdown"),
+            key_evidence_families=("news", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("K-beauty macro treated as company turnaround", "China decline offset not proven"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.ECOMMERCE_JV_SCALE_AND_DATA_GATE: ArchetypeDefinition(
+            archetype=E2RArchetype.ECOMMERCE_JV_SCALE_AND_DATA_GATE,
+            stage1_radar_signals=("e-commerce JV", "cross-border scale-up", "customer data scale"),
+            stage2_candidate_signals=("JV structure", "market-share estimate", "customer database", "conditional approval"),
+            stage3_high_conviction_signals=("GMV growth", "take-rate", "margin", "customer retention", "data compliance"),
+            stage4a_ongoing_signals=("GMV, take-rate, margin and compliance remain on track"),
+            stage4b_graduation_overheat_signals=("JV/data-scale headline rally before GMV/margin"),
+            stage4c_thesis_break_signals=("customer data misuse", "data-sharing restriction", "cross-border margin pressure", "price competition"),
+            key_evidence_families=("news", "financial_actual", "regulatory", "price"),
+            false_positive_patterns=("e-commerce JV headline without GMV/margin", "data scale without compliance"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=19, bottleneck=8, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.ECOMMERCE_TRUST_BREACH_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.ECOMMERCE_TRUST_BREACH_HARD_4C,
+            stage1_radar_signals=("data breach", "platform trust shock", "e-commerce user activity decline"),
+            stage2_candidate_signals=("not a Green source; platform trust RedTeam overlay"),
+            stage3_high_conviction_signals=("not applicable for breached platform; competitors still need GMV/margin proof"),
+            stage4a_ongoing_signals=("trust and retention remain intact for non-breached competitors"),
+            stage4b_graduation_overheat_signals=("competitor rally after breach before GMV/margin proof"),
+            stage4c_thesis_break_signals=("customer data breach", "platform trust break", "GMV/user/spending deterioration", "earnings estimate cut"),
+            key_evidence_families=("news", "regulatory", "financial_actual", "price"),
+            false_positive_patterns=("competitor opportunity treated as Green without user retention and margin"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.TOURISM_RETAIL_DUTYFREE_EVENT: ArchetypeDefinition(
+            archetype=E2RArchetype.TOURISM_RETAIL_DUTYFREE_EVENT,
+            stage1_radar_signals=("visa-free tourism policy", "Chinese group tourists", "duty-free/casino/department-store basket"),
+            stage2_candidate_signals=("policy start date", "event return", "tourist arrival expectation", "retail basket reaction"),
+            stage3_high_conviction_signals=("tourist spend", "duty-free sales", "casino drop/hold", "store sell-through", "OPM/FCF conversion"),
+            stage4a_ongoing_signals=("tourist spend and OPM remain visible after policy start"),
+            stage4b_graduation_overheat_signals=("tourism policy basket rally before spend evidence"),
+            stage4c_thesis_break_signals=("low-spend tour mix", "duty-free margin weakness", "anti-Chinese social trust risk", "tourism-policy fade"),
+            key_evidence_families=("news", "financial_actual", "price", "policy"),
+            false_positive_patterns=("tourist count without spend", "visa headline treated as OPM"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=9, bottleneck=4, mispricing=10, valuation=7),
         ),
         E2RArchetype.MEMORY_HBM_CAPACITY: ArchetypeDefinition(
             archetype=E2RArchetype.MEMORY_HBM_CAPACITY,

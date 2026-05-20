@@ -1,0 +1,11 @@
+archetype,repeat_demand,export_growth,overseas_mix,asp,channel_sellthrough,physical_store_sellthrough,opm_fcf,inventory_quality,platform_trust,data_compliance,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+K_FOOD_EXPORT_RECURRING,+5,+5,+5,+4,+5,+3,+5,+4,+2,+1,-2,+4,+3,Samyang export/ASP/OP revision supports Stage 3 candidate but packaging/input watch remains.
+K_FOOD_GLOBAL_STAPLE_BRAND,+5,+5,+5,+3,+5,+4,+4,+4,+2,+1,-1,+3,+3,Nongshim global staple is Stage 2 until OPM/EPS/sell-through confirm.
+K_FOOD_INPUT_PACKAGING_4C,0,0,0,0,0,0,+4,+5,+2,+1,-3,+3,+5,Packaging/naphtha shortage can become R5 input-cost 4C.
+K_BEAUTY_DEVICE_GLOBAL_BRAND,+5,+5,+5,+3,+5,+5,+5,+3,+2,+1,-2,+5,+3,APR is structural success but valuation/concentration require 4B-watch.
+K_BEAUTY_INDIE_BRAND_US_CHANNEL,+3,+5,+5,+2,+5,+5,+4,+4,+2,+1,-5,+5,+4,D'Alba/indie K-beauty requires physical sell-through before Green.
+K_BEAUTY_ODM_DISTRIBUTOR_LEVERAGE,+3,+5,+5,+2,+5,+5,+4,+5,+2,+1,-3,+4,+4,Cosmax/Kolmar/Silicon2 benefit only if brand sell-through and working capital hold.
+LEGACY_BEAUTY_CHINA_EXPOSURE_4C,+2,+3,+3,+2,+3,+3,+4,+5,+2,+1,-2,+4,+5,Amore/LG H&H legacy China exposure blocks macro K-beauty Green until offset is proven.
+ECOMMERCE_JV_SCALE_AND_DATA_GATE,+4,+3,+2,+2,+5,+4,+5,+4,+5,+5,-4,+5,+5,E-Mart/Alibaba JV needs GMV/take-rate/margin and data compliance.
+ECOMMERCE_TRUST_BREACH_HARD_4C,0,0,0,0,0,0,0,0,+5,+5,0,+3,+5,Coupang breach is R5 platform-trust hard 4C reference.
+TOURISM_RETAIL_DUTYFREE_EVENT,+2,+3,+3,+2,+5,+5,+4,+3,+3,+1,-5,+5,+4,"Tourism retail needs spend/sell-through/OPM, not just visitor policy."
