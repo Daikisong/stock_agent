@@ -401,6 +401,7 @@ class E2RArchetype(str, Enum):
     INSURANCE_CAPITAL_RELEASE_VALUEUP_KOREA = "INSURANCE_CAPITAL_RELEASE_VALUEUP_KOREA"
     INSURANCE_KICS_CSM_GATE = "INSURANCE_KICS_CSM_GATE"
     INSURANCE_NAV_VALUEUP_SAMSUNG_ELECTRONICS_STAKE = "INSURANCE_NAV_VALUEUP_SAMSUNG_ELECTRONICS_STAKE"
+    BROKERAGE_MARKET_VOLUME_CYCLE = "BROKERAGE_MARKET_VOLUME_CYCLE"
     SECURITIES_MARKET_VOLUME_CYCLE = "SECURITIES_MARKET_VOLUME_CYCLE"
     SECURITIES_BROKERAGE_CYCLE = "SECURITIES_BROKERAGE_CYCLE"
     SECURITIES_BROKERAGE_MARKET_BETA = "SECURITIES_BROKERAGE_MARKET_BETA"
@@ -425,6 +426,7 @@ class E2RArchetype(str, Enum):
     KRW_STABLECOIN_POLICY_OPTION = "KRW_STABLECOIN_POLICY_OPTION"
     KRW_STABLECOIN_POLICY_THEME = "KRW_STABLECOIN_POLICY_THEME"
     DIGITAL_ASSET_TOKENIZATION = "DIGITAL_ASSET_TOKENIZATION"
+    BANK_DIGITAL_ASSET_EQUITY_OPTION = "BANK_DIGITAL_ASSET_EQUITY_OPTION"
     DIGITAL_ASSET_BANK_EQUITY_OPTION = "DIGITAL_ASSET_BANK_EQUITY_OPTION"
     DIGITAL_ASSET_PLATFORM_MERGER_TRUST_WATCH = "DIGITAL_ASSET_PLATFORM_MERGER_TRUST_WATCH"
     CREDIT_DATA_INFRA = "CREDIT_DATA_INFRA"
@@ -432,6 +434,7 @@ class E2RArchetype(str, Enum):
     VC_EXIT_MARKET_CYCLE = "VC_EXIT_MARKET_CYCLE"
     EVENT_PREMIUM_GOVERNANCE_BATTLE = "EVENT_PREMIUM_GOVERNANCE_BATTLE"
     REGULATED_STABLECOIN_INFRA = "REGULATED_STABLECOIN_INFRA"
+    FINTECH_SUPERAPP_BIOMETRIC_PAYMENT = "FINTECH_SUPERAPP_BIOMETRIC_PAYMENT"
     STABLECOIN_AI_AGENT_PAYMENT_OPTION = "STABLECOIN_AI_AGENT_PAYMENT_OPTION"
     STABLECOIN_REGULATORY_ECONOMICS = "STABLECOIN_REGULATORY_ECONOMICS"
     ALGORITHMIC_STABLECOIN_FAILURE = "ALGORITHMIC_STABLECOIN_FAILURE"
@@ -448,6 +451,7 @@ class E2RArchetype(str, Enum):
     AI_WINDFALL_CITIZEN_DIVIDEND_POLICY_SHOCK = "AI_WINDFALL_CITIZEN_DIVIDEND_POLICY_SHOCK"
     STABLECOIN_BANK_DEPOSIT_DISINTERMEDIATION = "STABLECOIN_BANK_DEPOSIT_DISINTERMEDIATION"
     STABLECOIN_CONVERTIBILITY_OVERLAY = "STABLECOIN_CONVERTIBILITY_OVERLAY"
+    STABLECOIN_POLICY_OVERHEAT_FX_GATE = "STABLECOIN_POLICY_OVERHEAT_FX_GATE"
     BIOTECH_REGULATORY = "BIOTECH_REGULATORY"
     BIOTECH_PRE_REVENUE_REGULATORY = "BIOTECH_PRE_REVENUE_REGULATORY"
     BIOTECH_ROYALTY_COMMERCIALIZATION = "BIOTECH_ROYALTY_COMMERCIALIZATION"
@@ -874,6 +878,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("market beta treated as structural Green", "one-day sector rally annualized"),
             preferred_score_weights=_weights(eps_fcf=18, visibility=12, bottleneck=4, mispricing=12, valuation=12),
         ),
+        E2RArchetype.BROKERAGE_MARKET_VOLUME_CYCLE: ArchetypeDefinition(
+            archetype=E2RArchetype.BROKERAGE_MARKET_VOLUME_CYCLE,
+            stage1_radar_signals=("KOSPI bull market", "foreign inflow", "market trading value spike", "brokerage beta basket"),
+            stage2_candidate_signals=("securities firms outperform market", "brokerage fee revenue expectation", "IB/trading income expectation"),
+            stage3_high_conviction_signals=("brokerage and IB revenue realized", "ROE improves", "PF and credit risk low", "client asset growth and trading value durable"),
+            stage4a_ongoing_signals=("fee revenue, ROE and market volume remain strong"),
+            stage4b_graduation_overheat_signals=("securities basket jumps before brokerage/IB earnings proof", "market-volume cycle crowded"),
+            stage4c_thesis_break_signals=("trading value drop", "PF or IB loss", "proprietary trading loss", "tax policy shock"),
+            key_evidence_families=("price", "financial_actual", "market_data", "news"),
+            false_positive_patterns=("market volume spike treated as structural Green", "one-day securities rally annualized"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=12, bottleneck=4, mispricing=12, valuation=12),
+        ),
         E2RArchetype.HOLDING_NAV_DISCOUNT_VALUEUP: ArchetypeDefinition(
             archetype=E2RArchetype.HOLDING_NAV_DISCOUNT_VALUEUP,
             stage1_radar_signals=("NAV discount", "activist engagement", "holding-company value-up"),
@@ -908,6 +924,18 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("exchange trust incident", "regulatory delay", "capital charge", "crypto volume collapse"),
             key_evidence_families=("disclosure", "news", "financial_actual", "regulatory"),
             false_positive_patterns=("stake headline treated as bank EPS before equity-method income"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=16, bottleneck=6, mispricing=14, valuation=14),
+        ),
+        E2RArchetype.BANK_DIGITAL_ASSET_EQUITY_OPTION: ArchetypeDefinition(
+            archetype=E2RArchetype.BANK_DIGITAL_ASSET_EQUITY_OPTION,
+            stage1_radar_signals=("bank digital-asset equity stake", "bank stablecoin/remittance optionality", "regulated exchange exposure"),
+            stage2_candidate_signals=("stake acquired", "transaction value and implied exchange value", "exchange trading share", "closing and approval path"),
+            stage3_high_conviction_signals=("equity-method income", "regulated digital revenue", "capital ratio impact cleared", "exchange trust intact"),
+            stage4a_ongoing_signals=("regulated revenue and bank capital impact remain acceptable"),
+            stage4b_graduation_overheat_signals=("digital-asset equity option priced before revenue", "crypto volume peak"),
+            stage4c_thesis_break_signals=("exchange trust incident", "stablecoin regulation delay", "capital charge", "crypto volume collapse"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "regulatory"),
+            false_positive_patterns=("digital-asset stake headline treated as bank Green before equity-method income"),
             preferred_score_weights=_weights(eps_fcf=12, visibility=16, bottleneck=6, mispricing=14, valuation=14),
         ),
         E2RArchetype.DIGITAL_ASSET_PLATFORM_MERGER_TRUST_WATCH: ArchetypeDefinition(
@@ -956,6 +984,30 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("issuer restriction", "FX risk concern", "regulatory delay", "no revenue model"),
             key_evidence_families=("policy", "price", "news", "regulatory"),
             false_positive_patterns=("stablecoin policy theme treated as company EPS before license and revenue"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=2, bottleneck=2, mispricing=2, valuation=2),
+        ),
+        E2RArchetype.FINTECH_SUPERAPP_BIOMETRIC_PAYMENT: ArchetypeDefinition(
+            archetype=E2RArchetype.FINTECH_SUPERAPP_BIOMETRIC_PAYMENT,
+            stage1_radar_signals=("fintech super-app", "biometric payment rollout", "IPO or overseas expansion plan"),
+            stage2_candidate_signals=("user count", "merchant count", "IPO valuation range", "stablecoin or payment optionality"),
+            stage3_high_conviction_signals=("payment take-rate", "credit loss controlled", "bank NIM and fee income visible", "privacy and biometric data compliance cleared"),
+            stage4a_ongoing_signals=("users, merchants, take-rate and credit quality remain strong"),
+            stage4b_graduation_overheat_signals=("IPO or FacePay narrative priced before take-rate and credit-cost proof"),
+            stage4c_thesis_break_signals=("biometric data breach", "privacy regulation", "credit cost spike", "overseas launch failure"),
+            key_evidence_families=("news", "financial_actual", "regulatory", "privacy"),
+            false_positive_patterns=("user count or IPO valuation treated as listed-company cash flow"),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=18, bottleneck=6, mispricing=12, valuation=12),
+        ),
+        E2RArchetype.STABLECOIN_POLICY_OVERHEAT_FX_GATE: ArchetypeDefinition(
+            archetype=E2RArchetype.STABLECOIN_POLICY_OVERHEAT_FX_GATE,
+            stage1_radar_signals=("won stablecoin policy pledge", "digital-asset reform", "stablecoin related-stock basket rally"),
+            stage2_candidate_signals=("issuer license, reserve income, fee revenue, capital and FX framework must become visible"),
+            stage3_high_conviction_signals=("not from policy theme alone; regulated issuer economics, reserve income, fee revenue and FX stability required"),
+            stage4a_ongoing_signals=("licensed revenue, reserve income and FX stability remain transparent"),
+            stage4b_graduation_overheat_signals=("related stocks double or triple before issuer economics", "margin loans and retail frenzy rise"),
+            stage4c_thesis_break_signals=("stablecoin-driven FX outflow", "non-bank issuer failure", "convertibility stress", "regulatory delay"),
+            key_evidence_families=("policy", "price", "macro", "regulatory"),
+            false_positive_patterns=("stablecoin policy theme treated as company EPS before license, reserve income and fees"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=2, bottleneck=2, mispricing=2, valuation=2),
         ),
         E2RArchetype.BIO_PLATFORM_ROYALTY_CONVERSION: ArchetypeDefinition(

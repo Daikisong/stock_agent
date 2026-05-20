@@ -1,0 +1,417 @@
+{
+  "case_ids": [
+    "r6_loop12_financial_holdings_valueup_stage2",
+    "r6_loop12_securities_market_volume_cycle",
+    "r6_loop12_samsung_life_nav_capital_release",
+    "r6_loop12_hana_bank_dunamu_equity_option",
+    "r6_loop12_naver_dunamu_platform_merger_trust_watch",
+    "r6_loop12_toss_facepay_fintech_superapp_privacy_watch",
+    "r6_loop12_kakao_kakaobank_governance_gate",
+    "r6_loop12_stablecoin_policy_overheat_fx_gate"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "금융지주 value-up",
+      "primary_archetype": "BANK_VALUEUP_ROE_PBR_RERATING",
+      "terms": "KB|Shinhan|Hana|Woori|treasury-share cancellation|ROE|CET1|credit cost"
+    },
+    {
+      "category": "증권 거래대금 cycle",
+      "primary_archetype": "BROKERAGE_MARKET_VOLUME_CYCLE",
+      "terms": "securities basket|KOSPI 7000|brokerage revenue|IB|trading income"
+    },
+    {
+      "category": "보험 NAV capital release",
+      "primary_archetype": "INSURANCE_NAV_CAPITAL_RELEASE",
+      "terms": "Samsung Life|Samsung Electronics stake sale|K-ICS|CSM|use of proceeds"
+    },
+    {
+      "category": "은행 디지털자산 지분 option",
+      "primary_archetype": "BANK_DIGITAL_ASSET_EQUITY_OPTION",
+      "terms": "Hana Bank|Dunamu|Upbit|equity-method income|remittance"
+    },
+    {
+      "category": "플랫폼 금융 merger trust",
+      "primary_archetype": "DIGITAL_ASSET_PLATFORM_MERGER_TRUST_WATCH",
+      "terms": "NAVER Financial|Dunamu|Naver Pay|Upbit|abnormal withdrawal"
+    },
+    {
+      "category": "핀테크 super-app biometric",
+      "primary_archetype": "FINTECH_SUPERAPP_BIOMETRIC_PAYMENT",
+      "terms": "Toss|FacePay|Toss Bank|Toss Securities|biometric payment|privacy"
+    },
+    {
+      "category": "인터넷은행 governance 4C",
+      "primary_archetype": "INTERNET_BANK_GOVERNANCE_4C",
+      "terms": "Kakao|KakaoBank|founder legal risk|bank ownership suitability"
+    },
+    {
+      "category": "Stablecoin / FX gate",
+      "primary_archetype": "STABLECOIN_POLICY_OVERHEAT_FX_GATE",
+      "terms": "Kakao Pay|LG CNS|Aton|ME2ON|kimchi bond|FX outflow"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "low_pbr_only",
+    "policy_valueup_only",
+    "market_volume_spike_only",
+    "stablecoin_theme_only",
+    "digital_asset_equity_option_only",
+    "major_shareholder_legal_risk_present",
+    "exchange_trust_incident_present",
+    "privacy_or_data_gate_unresolved"
+  ],
+  "green_required_fields": [
+    "roe_improvement_or_sustainability",
+    "cet1_kics_or_capital_buffer_sufficient",
+    "credit_cost_or_pf_risk_stable",
+    "actual_buyback_cancellation_or_recurring_dividend",
+    "brokerage_ib_or_trading_income_sustainability",
+    "regulated_digital_revenue_or_equity_method_income",
+    "platform_exchange_trust_intact",
+    "data_privacy_and_biometric_risk_passed",
+    "fx_outflow_and_stablecoin_macro_risk_passed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "pf_credit_cost_spike",
+    "cet1_or_kics_deterioration",
+    "buyback_cancellation_failure",
+    "dividend_retreat",
+    "bank_ownership_suitability_failure",
+    "financial_crime_conviction_affecting_bank_control",
+    "exchange_abnormal_withdrawal_or_hack",
+    "stablecoin_driven_fx_outflow",
+    "non_bank_issuer_failure",
+    "biometric_data_breach",
+    "major_credit_loss_from_fintech_lending"
+  ],
+  "large_sector": "FINANCIAL_CAPITAL_DIGITAL",
+  "round_id": "round_190",
+  "score_adjustments": [
+    {
+      "axis": "ROE_sustainability",
+      "direction": "raise",
+      "points": "5",
+      "reason": "R6 Green은 저PBR보다 지속 ROE가 먼저다."
+    },
+    {
+      "axis": "CET1_or_capital_buffer",
+      "direction": "raise",
+      "points": "5",
+      "reason": "은행과 보험은 자본비율이 주주환원을 받쳐야 한다."
+    },
+    {
+      "axis": "real_buyback_cancellation",
+      "direction": "raise",
+      "points": "5",
+      "reason": "자사주는 취득보다 실제 소각이 중요하다."
+    },
+    {
+      "axis": "recurring_dividend_policy",
+      "direction": "raise",
+      "points": "4",
+      "reason": "반복 배당정책이 있어야 value-up이 일회성이 아니다."
+    },
+    {
+      "axis": "credit_cost_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "PF와 credit cost가 흔들리면 저PBR 리레이팅은 막힌다."
+    },
+    {
+      "axis": "brokerage_fee_sustainability",
+      "direction": "raise",
+      "points": "4",
+      "reason": "증권주는 거래대금 spike보다 수수료와 IB 수익 지속성이 필요하다."
+    },
+    {
+      "axis": "regulated_digital_revenue",
+      "direction": "raise",
+      "points": "5",
+      "reason": "디지털자산과 스테이블코인은 규제된 수익모델이 보여야 한다."
+    },
+    {
+      "axis": "equity_method_visibility",
+      "direction": "raise",
+      "points": "4",
+      "reason": "Dunamu 지분투자는 지분법 이익으로 닫혀야 은행 EPS가 된다."
+    },
+    {
+      "axis": "platform_trust",
+      "direction": "raise",
+      "points": "5",
+      "reason": "거래소·결제 플랫폼은 trust가 깨지면 scale이 의미 없다."
+    },
+    {
+      "axis": "FX_stability",
+      "direction": "raise",
+      "points": "5",
+      "reason": "stablecoin은 FX outflow gate를 통과해야 한다."
+    },
+    {
+      "axis": "data_privacy_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "생체결제와 fintech는 privacy/data gate가 hard risk다."
+    },
+    {
+      "axis": "low_PBR_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "저PBR만으로는 Stage 3 근거가 아니다."
+    },
+    {
+      "axis": "policy_valueup_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "정책 value-up만 있고 실제 소각·배당이 없으면 Stage 2다."
+    },
+    {
+      "axis": "market_volume_spike_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "거래대금 spike는 cycle이지 구조적 Green이 아니다."
+    },
+    {
+      "axis": "digital_asset_equity_option_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "디지털자산 지분투자만으로 은행 EPS가 생기지 않는다."
+    },
+    {
+      "axis": "stablecoin_policy_theme_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "스테이블코인 정책 테마는 수익모델 전까지 가격 테마다."
+    },
+    {
+      "axis": "nonbank_stablecoin_FX_risk",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "비은행 발행과 FX outflow는 4C-watch다."
+    },
+    {
+      "axis": "exchange_trust_break",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "거래소 이상출금과 hack은 digital finance hard gate다."
+    },
+    {
+      "axis": "biometric_data_risk",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "생체정보 사고는 fintech thesis break가 될 수 있다."
+    },
+    {
+      "axis": "major_shareholder_legal_risk",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "인터넷은행은 대주주 적격성 리스크가 성장성보다 먼저다."
+    },
+    {
+      "axis": "event_rally_before_regulated_revenue",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "규제된 수익 전 이벤트 rally는 4B-watch다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "BANK_VALUEUP_ROE_PBR_RERATING",
+      "brokerage_fee_sustainability": "0",
+      "capital_buffer": "+5",
+      "credit_cost": "+5",
+      "data_privacy": "+1",
+      "equity_method_visibility": "0",
+      "event_penalty": "-5",
+      "fx_stability": "+3",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Financial holding value-up is Stage 2 until ROE/CET1/credit cost and recurring capital return confirm.",
+      "platform_trust": "+3",
+      "real_buyback_cancel": "+5",
+      "recurring_dividend": "+4",
+      "regulated_digital_revenue": "0",
+      "roe_sustainability": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "BROKERAGE_MARKET_VOLUME_CYCLE",
+      "brokerage_fee_sustainability": "+5",
+      "capital_buffer": "+3",
+      "credit_cost": "+3",
+      "data_privacy": "+1",
+      "equity_method_visibility": "0",
+      "event_penalty": "-4",
+      "fx_stability": "+3",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Securities +13.5% is cyclical success and 4B-watch before revenue/ROE confirmation.",
+      "platform_trust": "+3",
+      "real_buyback_cancel": "0",
+      "recurring_dividend": "+2",
+      "regulated_digital_revenue": "0",
+      "roe_sustainability": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "INSURANCE_NAV_CAPITAL_RELEASE",
+      "brokerage_fee_sustainability": "0",
+      "capital_buffer": "+5",
+      "credit_cost": "+3",
+      "data_privacy": "+1",
+      "equity_method_visibility": "0",
+      "event_penalty": "-3",
+      "fx_stability": "+2",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Samsung Life stake sale is capital release Stage 2; K-ICS/CSM/use of proceeds needed.",
+      "platform_trust": "+3",
+      "real_buyback_cancel": "+2",
+      "recurring_dividend": "+4",
+      "regulated_digital_revenue": "0",
+      "roe_sustainability": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "BANK_DIGITAL_ASSET_EQUITY_OPTION",
+      "brokerage_fee_sustainability": "+1",
+      "capital_buffer": "+4",
+      "credit_cost": "+2",
+      "data_privacy": "+3",
+      "equity_method_visibility": "+5",
+      "event_penalty": "-4",
+      "fx_stability": "+4",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Hana/Dunamu is Stage 2 until regulated revenue/equity-method earnings and trust confirm.",
+      "platform_trust": "+5",
+      "real_buyback_cancel": "0",
+      "recurring_dividend": "+1",
+      "regulated_digital_revenue": "+5",
+      "roe_sustainability": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "DIGITAL_ASSET_PLATFORM_MERGER_TRUST_WATCH",
+      "brokerage_fee_sustainability": "+1",
+      "capital_buffer": "+3",
+      "credit_cost": "+2",
+      "data_privacy": "+4",
+      "equity_method_visibility": "+4",
+      "event_penalty": "-5",
+      "fx_stability": "+4",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Naver/Dunamu has exchange abnormal-withdrawal 4C-watch.",
+      "platform_trust": "+5",
+      "real_buyback_cancel": "0",
+      "recurring_dividend": "+1",
+      "regulated_digital_revenue": "+5",
+      "roe_sustainability": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "FINTECH_SUPERAPP_BIOMETRIC_PAYMENT",
+      "brokerage_fee_sustainability": "+3",
+      "capital_buffer": "+3",
+      "credit_cost": "+4",
+      "data_privacy": "+5",
+      "equity_method_visibility": "0",
+      "event_penalty": "-4",
+      "fx_stability": "+4",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Toss FacePay is unlisted Stage 2 with biometric privacy/data gate.",
+      "platform_trust": "+5",
+      "real_buyback_cancel": "0",
+      "recurring_dividend": "0",
+      "regulated_digital_revenue": "+5",
+      "roe_sustainability": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "INTERNET_BANK_GOVERNANCE_4C",
+      "brokerage_fee_sustainability": "+2",
+      "capital_buffer": "+4",
+      "credit_cost": "+4",
+      "data_privacy": "+3",
+      "equity_method_visibility": "0",
+      "event_penalty": "0",
+      "fx_stability": "+2",
+      "hard_4c_sensitivity": "+5",
+      "notes": "KakaoBank Green blocked by major-shareholder legal/ownership risk.",
+      "platform_trust": "+5",
+      "real_buyback_cancel": "0",
+      "recurring_dividend": "0",
+      "regulated_digital_revenue": "+2",
+      "roe_sustainability": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "STABLECOIN_POLICY_OVERHEAT_FX_GATE",
+      "brokerage_fee_sustainability": "0",
+      "capital_buffer": "+2",
+      "credit_cost": "0",
+      "data_privacy": "+4",
+      "equity_method_visibility": "0",
+      "event_penalty": "-5",
+      "fx_stability": "+5",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Stablecoin basket moved before issuer license/reserve income/fee revenue and creates FX 4C-watch.",
+      "platform_trust": "+3",
+      "real_buyback_cancel": "0",
+      "recurring_dividend": "0",
+      "regulated_digital_revenue": "+5",
+      "roe_sustainability": "0"
+    }
+  ],
+  "source_round": "docs/round/round_262.md",
+  "stage4b_watch_triggers": [
+    "pbr_rerating_before_roe_cet1",
+    "securities_basket_plus_10pct_on_volume_cycle",
+    "bank_rerates_on_digital_asset_stake_before_equity_method_income",
+    "stablecoin_related_stocks_double_or_triple_without_revenue_model",
+    "large_platform_merger_priced_before_regulatory_approval",
+    "toss_ipo_or_facepay_narrative_before_take_rate_credit_cost",
+    "financial_valueup_prices_before_actual_cancellation_or_dividend"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "cyclical_success_count": 1,
+    "deep_sub_archetype_count": 8,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "hard_4c_confirmed": false,
+    "large_sector": "FINANCIAL_CAPITAL_DIGITAL",
+    "overheat_count": 1,
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "reported_price_anchor_count": 6,
+    "round_id": "round_190",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_262.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 6,
+    "success_candidate_count": 5,
+    "target_archetype_count": 8,
+    "watch_4c_count": 3,
+    "watch_case_count": 1
+  },
+  "target_aliases": {
+    "BANK_DIGITAL_ASSET_EQUITY_OPTION": "BANK_DIGITAL_ASSET_EQUITY_OPTION",
+    "BANK_VALUEUP_ROE_PBR_RERATING": "BANK_VALUEUP_ROE_PBR_RERATING",
+    "BROKERAGE_MARKET_VOLUME_CYCLE": "BROKERAGE_MARKET_VOLUME_CYCLE",
+    "DIGITAL_ASSET_PLATFORM_MERGER_TRUST_WATCH": "DIGITAL_ASSET_PLATFORM_MERGER_TRUST_WATCH",
+    "FINTECH_SUPERAPP_BIOMETRIC_PAYMENT": "FINTECH_SUPERAPP_BIOMETRIC_PAYMENT",
+    "INSURANCE_NAV_CAPITAL_RELEASE": "INSURANCE_NAV_CAPITAL_RELEASE",
+    "INTERNET_BANK_GOVERNANCE_4C": "INTERNET_BANK_GOVERNANCE_4C",
+    "STABLECOIN_POLICY_OVERHEAT_FX_GATE": "STABLECOIN_POLICY_OVERHEAT_FX_GATE"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round262_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_low_pbr_valueup_brokerage_volume_digital_asset_stablecoin_or_ipo_headlines_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}

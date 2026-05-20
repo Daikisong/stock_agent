@@ -1,0 +1,16 @@
+field,required_for_round262_price_validation
+price_data_source,true
+full_ohlc_available,true
+reported_price_anchor,true
+reported_return_anchor,true
+stage2_price_anchor,true
+stage3_price,true
+stage4b_price,true
+stage4c_price,true
+mfe_1d,true
+mae_1d,true
+relative_performance_vs_kospi,true
+capital_return_or_ratio_anchor,true
+digital_revenue_or_equity_anchor,true
+trust_privacy_or_fx_gate,true
+price_validation_status,true

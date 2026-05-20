@@ -1,0 +1,9 @@
+category,primary_archetype,terms
+금융지주 value-up,BANK_VALUEUP_ROE_PBR_RERATING,KB|Shinhan|Hana|Woori|treasury-share cancellation|ROE|CET1|credit cost
+증권 거래대금 cycle,BROKERAGE_MARKET_VOLUME_CYCLE,securities basket|KOSPI 7000|brokerage revenue|IB|trading income
+보험 NAV capital release,INSURANCE_NAV_CAPITAL_RELEASE,Samsung Life|Samsung Electronics stake sale|K-ICS|CSM|use of proceeds
+은행 디지털자산 지분 option,BANK_DIGITAL_ASSET_EQUITY_OPTION,Hana Bank|Dunamu|Upbit|equity-method income|remittance
+플랫폼 금융 merger trust,DIGITAL_ASSET_PLATFORM_MERGER_TRUST_WATCH,NAVER Financial|Dunamu|Naver Pay|Upbit|abnormal withdrawal
+핀테크 super-app biometric,FINTECH_SUPERAPP_BIOMETRIC_PAYMENT,Toss|FacePay|Toss Bank|Toss Securities|biometric payment|privacy
+인터넷은행 governance 4C,INTERNET_BANK_GOVERNANCE_4C,Kakao|KakaoBank|founder legal risk|bank ownership suitability
+Stablecoin / FX gate,STABLECOIN_POLICY_OVERHEAT_FX_GATE,Kakao Pay|LG CNS|Aton|ME2ON|kimchi bond|FX outflow
