@@ -1,0 +1,22 @@
+axis,points,direction,reason
+roe_sustainability,5,raise,저PBR보다 ROE가 유지되거나 개선되는지가 PBR 프레임 변화의 핵심이다.
+cet1_or_capital_buffer,5,raise,은행 CET1과 보험 K-ICS/CSM buffer가 있어야 환원과 인수가 지속된다.
+real_buyback_cancellation,5,raise,자사주 매입보다 실제 소각이 자본배분 실행 증거다.
+dividend_payout_visibility,4,raise,배당과 소각이 반복 policy로 고정될 때 신뢰도가 올라간다.
+credit_cost_control,5,raise,PF와 credit cost가 안정돼야 금융주 rerating이 지속된다.
+pbr_roe_gap,4,raise,ROE 대비 PBR discount가 줄어들 여지가 있어야 한다.
+capital_release_quality,4,raise,보험/지주 NAV는 매각대금 활용과 capital release가 확인될 때 강해진다.
+regulated_revenue_visibility,4,raise,"디지털자산/결제는 실제 수수료, 지분법, reserve income이 필요하다."
+nav_discount_with_monetization,4,raise,NAV discount는 소각/배당/자산화로 이어질 때만 강하다.
+digital_asset_equity_value_with_regulation,3,raise,디지털자산 지분 옵션은 규제 승인과 수익화 구조가 붙어야 한다.
+low_pbr_only,-5,lower,저PBR만으로는 Stage 3-Green을 만들 수 없다.
+policy_valueup_only,-4,lower,밸류업 정책 기대만 있고 실행이 없으면 Stage 1 attention이다.
+treasury_buyback_without_cancellation,-4,lower,자사주 매입만 있고 소각이 없으면 자본배분 품질을 제한한다.
+stablecoin_policy_theme_only,-5,lower,스테이블코인 정책 테마만으로는 규제수익을 증명하지 못한다.
+digital_asset_equity_option_without_revenue,-3,lower,지분 옵션만 있고 지분법/수수료/거래량 지속성이 없으면 Green 금지다.
+fintech_user_growth_without_profit,-3,lower,사용자 수 성장만 있고 take-rate/이익이 없으면 제한한다.
+privacy_or_exchange_trust_break,-5,lower,개인정보·거래소 신뢰 훼손은 핀테크 hard gate다.
+major_shareholder_legal_risk,-5,lower,인터넷은행은 대주주 적격성 리스크가 성장성보다 먼저다.
+capital_ratio_weakening,-4,lower,대형 인수나 비은행 확장이 자본비율을 훼손하면 제한한다.
+mna_expansion_without_capital_buffer,-3,lower,M&A 확장은 자본 buffer와 수익성을 확인하기 전 Stage 2 watch다.
+event_rally_before_regulated_revenue,-5,lower,규제수익 전 가격 급등은 4B/event premium이다.
