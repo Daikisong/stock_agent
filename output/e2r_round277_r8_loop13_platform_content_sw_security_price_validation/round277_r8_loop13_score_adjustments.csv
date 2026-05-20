@@ -1,0 +1,18 @@
+axis,points,direction,reason
+paid_conversion,5,raise,MAU는 유료 전환과 ARPU/take-rate로 닫혀야 한다.
+ARPU_take_rate,5,raise,플랫폼 Green은 사용자 수보다 monetization이 중요하다.
+recurring_cloud_AI_revenue,5,raise,AI/cloud 매출은 반복성과 margin이 확인되어야 한다.
+creator_economics,4,raise,콘텐츠 플랫폼은 creator economics가 지속 가능해야 한다.
+content_IP_retention,5,raise,게임/K-pop IP는 retention과 repeat monetization이 필요하다.
+platform_data_governance,5,raise,해외 플랫폼은 data governance와 control risk가 먼저다.
+cybersecurity_internal_control,5,raise,보안 신뢰는 플랫폼/통신 cash flow의 hard gate다.
+regulatory_clearance,5,raise,규제·창업자·법률 overhang 해소가 필요하다.
+parent_value_bridge,4,raise,상장 자회사/해외 IPO는 모회사 가치 연결고리가 필요하다.
+customer_trust_repair_cost,5,raise,"데이터 침해는 매출, 보상, 과징금, 보안투자 비용으로 내려온다."
+MAU_only,-5,lower,MAU-only는 Stage 3-Green 증거가 아니다.
+IPO_pop_only,-5,lower,IPO pop은 unit economics 전에는 event premium이다.
+downloads_without_ARPU,-5,lower,다운로드만으로 ARPU/FCF를 만들지 않는다.
+AI_cloud_keyword_without_margin,-5,lower,AI/cloud 키워드는 recurring margin 전에는 부족하다.
+founder_legal_overhang,-5,lower,창업자/자본시장법 리스크는 platform premium을 막는다.
+label_or_artist_governance_dispute,-5,lower,K-pop IP는 label governance가 깨지면 4C-watch다.
+data_breach_or_internal_control_failure,-5,lower,대형 data breach는 hard 4C가 될 수 있다.

@@ -1,0 +1,387 @@
+{
+  "case_ids": [
+    "r8_loop13_naver_line_yahoo_data_sovereignty_watch",
+    "r8_loop13_naver_webtoon_entertainment_ipo",
+    "r8_loop13_kakao_sm_founder_legal_governance",
+    "r8_loop13_hybe_ador_bang_legal_ip_governance",
+    "r8_loop13_shiftup_game_ip_ipo_overheat",
+    "r8_loop13_lg_cns_ai_cloud_ipo_quality_gate",
+    "r8_loop13_krafton_india_game_platform_option",
+    "r8_loop13_skt_data_breach_cybersecurity_hard_4c"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "플랫폼 데이터 주권",
+      "primary_archetype": "DATA_SOVEREIGNTY_PLATFORM_4C_WATCH",
+      "terms": "NAVER|LY Corp|Line Yahoo|Japan administrative guidance|SoftBank control|data sovereignty"
+    },
+    {
+      "category": "글로벌 웹툰 플랫폼",
+      "primary_archetype": "GLOBAL_CONTENT_PLATFORM_IPO_NOT_PARENT_GREEN",
+      "terms": "Webtoon Entertainment|Nasdaq IPO|170M MAU|Line Manga|Wattpad|parent value bridge"
+    },
+    {
+      "category": "플랫폼 거버넌스 법률",
+      "primary_archetype": "PLATFORM_GOVERNANCE_LEGAL_4C_WATCH",
+      "terms": "Kakao|SM Entertainment|founder arrest|KakaoBank control|IPO pipeline"
+    },
+    {
+      "category": "K-pop IP 거버넌스",
+      "primary_archetype": "KPOP_IP_GOVERNANCE_4C_WATCH",
+      "terms": "HYBE|ADOR|NewJeans|Bang Si-hyuk|artist IP concentration"
+    },
+    {
+      "category": "게임 IP IPO",
+      "primary_archetype": "GAME_IP_MONETIZATION_IPO_STAGE2",
+      "terms": "Shift Up|Nikke|Stellar Blade|Tencent stake|single-IP concentration"
+    },
+    {
+      "category": "AI/cloud IT서비스 IPO",
+      "primary_archetype": "AI_CLOUD_IT_SERVICE_IPO_QUALITY_GATE",
+      "terms": "LG CNS|cloud and AI sales|IPO price failure|recurring revenue|margin durability"
+    },
+    {
+      "category": "인도 게임 플랫폼 옵션",
+      "primary_archetype": "EMERGING_MARKET_GAME_PLATFORM_OPTION",
+      "terms": "Krafton|BGMI|India fund|240M downloads|ARPU|regulatory volatility"
+    },
+    {
+      "category": "사이버보안 신뢰 hard 4C",
+      "primary_archetype": "CYBERSECURITY_TRUST_HARD_4C",
+      "terms": "SK Telecom|USIM replacement|26.96M data pieces|revenue forecast cut|fine|compensation"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "MAU_only",
+    "IPO_pop_only",
+    "downloads_without_ARPU",
+    "AI_cloud_keyword_without_margin",
+    "content_IP_headline_only",
+    "unlisted_subsidiary_or_US_listed_parent_bridge_missing",
+    "founder_legal_overhang_unresolved",
+    "label_or_artist_governance_dispute_unresolved",
+    "data_breach_or_internal_control_failure"
+  ],
+  "green_required_fields": [
+    "paid_conversion_confirmed",
+    "arpu_take_rate_growth_confirmed",
+    "platform_unit_economics_confirmed",
+    "creator_or_developer_economics_confirmed",
+    "parent_value_bridge_confirmed",
+    "multi_title_or_ip_retention_confirmed",
+    "recurring_cloud_ai_revenue_confirmed",
+    "cloud_ai_margin_durability_confirmed",
+    "data_governance_clearance_confirmed",
+    "cybersecurity_internal_control_confirmed",
+    "regulatory_founder_legal_overhang_cleared",
+    "op_fcf_conversion_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "large_data_breach",
+    "USIM_identity_authentication_leakage",
+    "regulatory_fine",
+    "revenue_forecast_cut_from_trust_event",
+    "platform_forced_selldown_or_data_sovereignty_dispute",
+    "founder_arrest_or_capital_market_law_risk",
+    "artist_IP_contract_rupture",
+    "cloud_AI_recurring_revenue_miss",
+    "IPO_valuation_break",
+    "game_regulatory_ban_or_data_security_ban"
+  ],
+  "large_sector": "PLATFORM_CONTENT_SW_SECURITY",
+  "round_id": "round_205",
+  "score_adjustments": [
+    {
+      "axis": "paid_conversion",
+      "direction": "raise",
+      "points": "5",
+      "reason": "MAU는 유료 전환과 ARPU/take-rate로 닫혀야 한다."
+    },
+    {
+      "axis": "ARPU_take_rate",
+      "direction": "raise",
+      "points": "5",
+      "reason": "플랫폼 Green은 사용자 수보다 monetization이 중요하다."
+    },
+    {
+      "axis": "recurring_cloud_AI_revenue",
+      "direction": "raise",
+      "points": "5",
+      "reason": "AI/cloud 매출은 반복성과 margin이 확인되어야 한다."
+    },
+    {
+      "axis": "creator_economics",
+      "direction": "raise",
+      "points": "4",
+      "reason": "콘텐츠 플랫폼은 creator economics가 지속 가능해야 한다."
+    },
+    {
+      "axis": "content_IP_retention",
+      "direction": "raise",
+      "points": "5",
+      "reason": "게임/K-pop IP는 retention과 repeat monetization이 필요하다."
+    },
+    {
+      "axis": "platform_data_governance",
+      "direction": "raise",
+      "points": "5",
+      "reason": "해외 플랫폼은 data governance와 control risk가 먼저다."
+    },
+    {
+      "axis": "cybersecurity_internal_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "보안 신뢰는 플랫폼/통신 cash flow의 hard gate다."
+    },
+    {
+      "axis": "regulatory_clearance",
+      "direction": "raise",
+      "points": "5",
+      "reason": "규제·창업자·법률 overhang 해소가 필요하다."
+    },
+    {
+      "axis": "parent_value_bridge",
+      "direction": "raise",
+      "points": "4",
+      "reason": "상장 자회사/해외 IPO는 모회사 가치 연결고리가 필요하다."
+    },
+    {
+      "axis": "customer_trust_repair_cost",
+      "direction": "raise",
+      "points": "5",
+      "reason": "데이터 침해는 매출, 보상, 과징금, 보안투자 비용으로 내려온다."
+    },
+    {
+      "axis": "MAU_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "MAU-only는 Stage 3-Green 증거가 아니다."
+    },
+    {
+      "axis": "IPO_pop_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "IPO pop은 unit economics 전에는 event premium이다."
+    },
+    {
+      "axis": "downloads_without_ARPU",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "다운로드만으로 ARPU/FCF를 만들지 않는다."
+    },
+    {
+      "axis": "AI_cloud_keyword_without_margin",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "AI/cloud 키워드는 recurring margin 전에는 부족하다."
+    },
+    {
+      "axis": "founder_legal_overhang",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "창업자/자본시장법 리스크는 platform premium을 막는다."
+    },
+    {
+      "axis": "label_or_artist_governance_dispute",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "K-pop IP는 label governance가 깨지면 4C-watch다."
+    },
+    {
+      "axis": "data_breach_or_internal_control_failure",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "대형 data breach는 hard 4C가 될 수 있다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "DATA_SOVEREIGNTY_PLATFORM_4C_WATCH",
+      "arpu_take_rate": "+3",
+      "content_ip_retention": "+3",
+      "creator_economics": "+2",
+      "customer_trust_repair_cost": "+5",
+      "cybersecurity_internal_control": "+5",
+      "event_penalty": "0",
+      "hard_4c_sensitivity": "+5",
+      "notes": "NAVER/Line Yahoo shows data sovereignty can override platform scale.",
+      "paid_conversion": "+3",
+      "parent_value_bridge": "+4",
+      "platform_data_governance": "+5",
+      "recurring_cloud_ai_revenue": "+2",
+      "regulatory_clearance": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "GLOBAL_CONTENT_PLATFORM_IPO_NOT_PARENT_GREEN",
+      "arpu_take_rate": "+5",
+      "content_ip_retention": "+5",
+      "creator_economics": "+5",
+      "customer_trust_repair_cost": "+3",
+      "cybersecurity_internal_control": "+3",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Webtoon IPO/MAU needs monetization and parent NAVER value bridge.",
+      "paid_conversion": "+5",
+      "parent_value_bridge": "+5",
+      "platform_data_governance": "+4",
+      "recurring_cloud_ai_revenue": "+1",
+      "regulatory_clearance": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "PLATFORM_GOVERNANCE_LEGAL_4C_WATCH",
+      "arpu_take_rate": "+4",
+      "content_ip_retention": "+5",
+      "creator_economics": "+3",
+      "customer_trust_repair_cost": "+4",
+      "cybersecurity_internal_control": "+4",
+      "event_penalty": "0",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Kakao/SM shows founder legal risk blocks platform content premium.",
+      "paid_conversion": "+3",
+      "parent_value_bridge": "+4",
+      "platform_data_governance": "+4",
+      "recurring_cloud_ai_revenue": "+2",
+      "regulatory_clearance": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "KPOP_IP_GOVERNANCE_4C_WATCH",
+      "arpu_take_rate": "+5",
+      "content_ip_retention": "+5",
+      "creator_economics": "+3",
+      "customer_trust_repair_cost": "+4",
+      "cybersecurity_internal_control": "+3",
+      "event_penalty": "0",
+      "hard_4c_sensitivity": "+5",
+      "notes": "HYBE/ADOR shows artist IP is not enough without label governance.",
+      "paid_conversion": "+4",
+      "parent_value_bridge": "+3",
+      "platform_data_governance": "+4",
+      "recurring_cloud_ai_revenue": "+1",
+      "regulatory_clearance": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "GAME_IP_MONETIZATION_IPO_STAGE2",
+      "arpu_take_rate": "+5",
+      "content_ip_retention": "+5",
+      "creator_economics": "+2",
+      "customer_trust_repair_cost": "+2",
+      "cybersecurity_internal_control": "+2",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Shift Up needs multi-title durability beyond IPO and single-IP economics.",
+      "paid_conversion": "+5",
+      "parent_value_bridge": "+2",
+      "platform_data_governance": "+2",
+      "recurring_cloud_ai_revenue": "+1",
+      "regulatory_clearance": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "AI_CLOUD_IT_SERVICE_IPO_QUALITY_GATE",
+      "arpu_take_rate": "+4",
+      "content_ip_retention": "+1",
+      "creator_economics": "0",
+      "customer_trust_repair_cost": "+2",
+      "cybersecurity_internal_control": "+4",
+      "event_penalty": "-5",
+      "hard_4c_sensitivity": "+3",
+      "notes": "LG CNS needs recurring AI/cloud revenue and margin durability, not IPO demand.",
+      "paid_conversion": "+3",
+      "parent_value_bridge": "+3",
+      "platform_data_governance": "+3",
+      "recurring_cloud_ai_revenue": "+5",
+      "regulatory_clearance": "+3"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "EMERGING_MARKET_GAME_PLATFORM_OPTION",
+      "arpu_take_rate": "+5",
+      "content_ip_retention": "+4",
+      "creator_economics": "+1",
+      "customer_trust_repair_cost": "+3",
+      "cybersecurity_internal_control": "+3",
+      "event_penalty": "-4",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Krafton India needs ARPU, paid conversion, regulatory clearance and second-hit proof.",
+      "paid_conversion": "+5",
+      "parent_value_bridge": "+2",
+      "platform_data_governance": "+4",
+      "recurring_cloud_ai_revenue": "+1",
+      "regulatory_clearance": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "CYBERSECURITY_TRUST_HARD_4C",
+      "arpu_take_rate": "0",
+      "content_ip_retention": "0",
+      "creator_economics": "0",
+      "customer_trust_repair_cost": "+5",
+      "cybersecurity_internal_control": "+5",
+      "event_penalty": "0",
+      "hard_4c_sensitivity": "+5",
+      "notes": "SKT breach confirms data/security trust hard gate.",
+      "paid_conversion": "0",
+      "parent_value_bridge": "0",
+      "platform_data_governance": "+5",
+      "recurring_cloud_ai_revenue": "0",
+      "regulatory_clearance": "+5"
+    }
+  ],
+  "source_round": "docs/round/round_277.md",
+  "stage4b_watch_triggers": [
+    "IPO_debut_plus_10_to_15pct_before_unit_economics",
+    "game_IPO_top_range_before_multi_title_durability",
+    "MAU_100mn_headline_parent_rally_without_value_bridge",
+    "AI_cloud_sales_mix_headline_before_recurring_margin",
+    "India_or_emerging_market_downloads_before_ARPU",
+    "Kpop_IP_rebound_without_governance_clearance",
+    "data_breach_relief_rebound_before_full_cost"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 2,
+    "evidence_good_but_price_failed_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "PLATFORM_CONTENT_SW_SECURITY",
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_205",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_277.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 4,
+    "stage4c_watch_count": 6,
+    "success_candidate_count": 4,
+    "target_archetype_count": 8,
+    "watch_count": 3
+  },
+  "target_aliases": {
+    "AI_CLOUD_IT_SERVICE_IPO_QUALITY_GATE": "AI_CLOUD_IT_SERVICE_IPO_QUALITY_GATE",
+    "CYBERSECURITY_TRUST_HARD_4C": "CYBERSECURITY_TRUST_HARD_4C",
+    "DATA_SOVEREIGNTY_PLATFORM_4C_WATCH": "DATA_SOVEREIGNTY_PLATFORM_4C_WATCH",
+    "EMERGING_MARKET_GAME_PLATFORM_OPTION": "EMERGING_MARKET_GAME_PLATFORM_OPTION",
+    "GAME_IP_MONETIZATION_IPO_STAGE2": "GAME_IP_MONETIZATION_IPO_STAGE2",
+    "GLOBAL_CONTENT_PLATFORM_IPO_NOT_PARENT_GREEN": "GLOBAL_CONTENT_PLATFORM_IPO_NOT_PARENT_GREEN",
+    "KPOP_IP_GOVERNANCE_4C_WATCH": "KPOP_IP_GOVERNANCE_4C_WATCH",
+    "PLATFORM_GOVERNANCE_LEGAL_4C_WATCH": "PLATFORM_GOVERNANCE_LEGAL_4C_WATCH"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round277_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_mau_ipo_ip_ai_cloud_downloads_or_policy_relief_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}
