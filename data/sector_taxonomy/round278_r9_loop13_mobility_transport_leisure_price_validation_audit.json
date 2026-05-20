@@ -1,0 +1,373 @@
+{
+  "case_ids": [
+    "r9_loop13_hyundai_motor_hybrid_shareholder_return_tariff_watch",
+    "r9_loop13_kia_us_tariff_margin_break",
+    "r9_loop13_hyundai_motor_india_ipo_capital_recycling",
+    "r9_loop13_korean_air_asiana_consolidation_fleet_capex_watch",
+    "r9_loop13_jeju_air_fatal_crash_aviation_safety_hard_4c",
+    "r9_loop13_hyundai_mobis_lighting_portfolio_recycling",
+    "r9_loop13_hmm_pan_ocean_red_sea_freight_cycle_watch",
+    "r9_loop13_china_tourism_leisure_event_premium"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "자동차 하이브리드·주주환원",
+      "primary_archetype": "HYBRID_SHAREHOLDER_RETURN_MOBILITY_STAGE2",
+      "terms": "Hyundai Motor|hybrid lineup doubling|EREV|Georgia plant|buyback|dividend policy"
+    },
+    {
+      "category": "자동차 관세 마진 4C-watch",
+      "primary_archetype": "AUTO_TARIFF_MARGIN_4C_WATCH",
+      "terms": "Kia|US tariff|tariff hit|unit sales|OP margin"
+    },
+    {
+      "category": "인도 자동차 IPO 자본재활용",
+      "primary_archetype": "INDIA_AUTO_IPO_CAPITAL_RECYCLING",
+      "terms": "Hyundai Motor India|IPO|stake sale|parent capital return|SUV mix"
+    },
+    {
+      "category": "항공 합병 Stage 2",
+      "primary_archetype": "AIRLINE_CONSOLIDATION_STAGE2",
+      "terms": "Korean Air|Asiana|LCC integration|Boeing 103 aircraft|GE engine deal"
+    },
+    {
+      "category": "항공 안전 hard 4C",
+      "primary_archetype": "AVIATION_SAFETY_HARD_4C",
+      "terms": "Jeju Air|fatal crash|safety inspection|consumer trust"
+    },
+    {
+      "category": "자동차부품 포트폴리오 재활용",
+      "primary_archetype": "AUTO_PARTS_PORTFOLIO_RECYCLING",
+      "terms": "Hyundai Mobis|lighting business|OPmobility|deal value|proceeds use"
+    },
+    {
+      "category": "Red Sea 해운 운임 cycle",
+      "primary_archetype": "RED_SEA_FREIGHT_CYCLE_4B_4C",
+      "terms": "HMM|Pan Ocean|Red Sea rerouting|Suez return|freight rate durability"
+    },
+    {
+      "category": "중국 관광·레저 event premium",
+      "primary_archetype": "CHINA_TOURISM_LEISURE_EVENT_PREMIUM",
+      "terms": "Lotte Tour|Yellow Balloon|Hotel Shilla|Paradise|visa-free|booking margin"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "unit_sales_without_margin",
+    "IPO_valuation_without_parent_ROI",
+    "tourist_flow_headline_only",
+    "freight_rate_spike_only",
+    "fleet_order_without_ROI",
+    "exploratory_asset_sale_only",
+    "tariff_exposure_unhedged",
+    "fatal_safety_event",
+    "booking_without_margin"
+  ],
+  "green_required_fields": [
+    "OP_margin_after_tariff_confirmed",
+    "hybrid_SUV_mix_quality_confirmed",
+    "price_pass_through_confirmed",
+    "shareholder_return_execution_confirmed",
+    "integration_synergy_realization_confirmed",
+    "fleet_capex_ROI_confirmed",
+    "aviation_safety_trust_confirmed",
+    "freight_rate_durability_confirmed",
+    "booking_occupancy_conversion_confirmed",
+    "asset_sale_ROIC_confirmed",
+    "OP_FCF_conversion_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "fatal_crash_or_safety_inspection",
+    "tariff_cost_crushing_margin",
+    "airline_integration_failure",
+    "fleet_capex_overhang_with_weak_demand",
+    "tourism_cancellation_shock",
+    "shipping_route_normalization_collapsing_freight_rates",
+    "asset_sale_failure_after_price_premium",
+    "IPO_debut_failure_if_used_as_parent_valueup_thesis"
+  ],
+  "large_sector": "MOBILITY_TRANSPORT_LEISURE",
+  "round_id": "round_206",
+  "score_adjustments": [
+    {
+      "axis": "OP_margin_after_tariff",
+      "direction": "raise",
+      "points": "5",
+      "reason": "판매량보다 관세 이후 OP margin이 먼저다."
+    },
+    {
+      "axis": "hybrid_SUV_mix_quality",
+      "direction": "raise",
+      "points": "5",
+      "reason": "하이브리드/SUV mix가 ASP와 margin으로 닫혀야 한다."
+    },
+    {
+      "axis": "price_pass_through",
+      "direction": "raise",
+      "points": "5",
+      "reason": "관세와 비용을 가격에 전가할 수 있어야 한다."
+    },
+    {
+      "axis": "shareholder_return_execution",
+      "direction": "raise",
+      "points": "4",
+      "reason": "자사주·배당은 실제 실행과 FCF 재원이 필요하다."
+    },
+    {
+      "axis": "integration_synergy_realization",
+      "direction": "raise",
+      "points": "5",
+      "reason": "항공 합병은 통합 시너지와 노선 수익성이 확인되어야 한다."
+    },
+    {
+      "axis": "fleet_capex_ROI",
+      "direction": "raise",
+      "points": "5",
+      "reason": "항공기 주문은 성장투자이면서 capex 부담이다."
+    },
+    {
+      "axis": "aviation_safety_trust",
+      "direction": "raise",
+      "points": "5",
+      "reason": "항공 안전 신뢰는 hard gate다."
+    },
+    {
+      "axis": "freight_rate_durability",
+      "direction": "raise",
+      "points": "5",
+      "reason": "해운은 spot 운임이 아니라 contract durability가 필요하다."
+    },
+    {
+      "axis": "booking_occupancy_conversion",
+      "direction": "raise",
+      "points": "5",
+      "reason": "관광객 headline은 booking, occupancy, ADR, margin으로 검증해야 한다."
+    },
+    {
+      "axis": "asset_sale_ROIC",
+      "direction": "raise",
+      "points": "4",
+      "reason": "자산매각은 deal value와 proceeds use가 확인되어야 한다."
+    },
+    {
+      "axis": "unit_sales_without_margin",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "판매량만 좋고 OP가 깨지면 Green이 아니다."
+    },
+    {
+      "axis": "IPO_valuation_without_parent_ROI",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "자회사 IPO valuation은 모회사 ROIC/환원 연결고리 전에는 부족하다."
+    },
+    {
+      "axis": "tourist_flow_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "관광객 수만으로 소비·마진을 만들지 않는다."
+    },
+    {
+      "axis": "freight_rate_spike_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "운임 spike는 cycle일 수 있으므로 구조적 Green을 제한한다."
+    },
+    {
+      "axis": "fatal_safety_event",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "사망 사고는 safety trust hard 4C다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "HYBRID_SHAREHOLDER_RETURN_MOBILITY_STAGE2",
+      "asset_sale_ROIC": "0",
+      "aviation_safety_trust": "+2",
+      "booking_occupancy_conversion": "0",
+      "event_penalty": "-2",
+      "fleet_capex_ROI": "+1",
+      "freight_rate_durability": "0",
+      "hard_4c_sensitivity": "+4",
+      "hybrid_suv_mix_quality": "+5",
+      "integration_synergy_realization": "0",
+      "notes": "Hyundai Motor is Stage 2 until tariff-adjusted margin and FCF close.",
+      "op_margin_after_tariff": "+5",
+      "price_pass_through": "+5",
+      "shareholder_return_execution": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "AUTO_TARIFF_MARGIN_4C_WATCH",
+      "asset_sale_ROIC": "0",
+      "aviation_safety_trust": "0",
+      "booking_occupancy_conversion": "0",
+      "event_penalty": "-5",
+      "fleet_capex_ROI": "0",
+      "freight_rate_durability": "0",
+      "hard_4c_sensitivity": "+5",
+      "hybrid_suv_mix_quality": "+2",
+      "integration_synergy_realization": "0",
+      "notes": "Kia shows unit sales can fail when tariff cost crushes OP.",
+      "op_margin_after_tariff": "+5",
+      "price_pass_through": "+5",
+      "shareholder_return_execution": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "INDIA_AUTO_IPO_CAPITAL_RECYCLING",
+      "asset_sale_ROIC": "+3",
+      "aviation_safety_trust": "0",
+      "booking_occupancy_conversion": "0",
+      "event_penalty": "-5",
+      "fleet_capex_ROI": "0",
+      "freight_rate_durability": "0",
+      "hard_4c_sensitivity": "+4",
+      "hybrid_suv_mix_quality": "+3",
+      "integration_synergy_realization": "0",
+      "notes": "India IPO is capital recycling, not parent Green without proceeds use and ROIC.",
+      "op_margin_after_tariff": "+2",
+      "price_pass_through": "+1",
+      "shareholder_return_execution": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "AIRLINE_CONSOLIDATION_STAGE2",
+      "asset_sale_ROIC": "0",
+      "aviation_safety_trust": "+5",
+      "booking_occupancy_conversion": "+2",
+      "event_penalty": "-4",
+      "fleet_capex_ROI": "+5",
+      "freight_rate_durability": "0",
+      "hard_4c_sensitivity": "+5",
+      "hybrid_suv_mix_quality": "0",
+      "integration_synergy_realization": "+5",
+      "notes": "Korean Air/Asiana needs integration synergy, fleet ROI and safety trust.",
+      "op_margin_after_tariff": "0",
+      "price_pass_through": "0",
+      "shareholder_return_execution": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "AVIATION_SAFETY_HARD_4C",
+      "asset_sale_ROIC": "0",
+      "aviation_safety_trust": "+5",
+      "booking_occupancy_conversion": "0",
+      "event_penalty": "0",
+      "fleet_capex_ROI": "0",
+      "freight_rate_durability": "0",
+      "hard_4c_sensitivity": "+5",
+      "hybrid_suv_mix_quality": "0",
+      "integration_synergy_realization": "0",
+      "notes": "Jeju Air confirms fatal crash is hard 4C.",
+      "op_margin_after_tariff": "0",
+      "price_pass_through": "0",
+      "shareholder_return_execution": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "AUTO_PARTS_PORTFOLIO_RECYCLING",
+      "asset_sale_ROIC": "+4",
+      "aviation_safety_trust": "0",
+      "booking_occupancy_conversion": "0",
+      "event_penalty": "-4",
+      "fleet_capex_ROI": "0",
+      "freight_rate_durability": "0",
+      "hard_4c_sensitivity": "+4",
+      "hybrid_suv_mix_quality": "+2",
+      "integration_synergy_realization": "0",
+      "notes": "Hyundai Mobis lighting sale needs final value and proceeds use.",
+      "op_margin_after_tariff": "0",
+      "price_pass_through": "0",
+      "shareholder_return_execution": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "RED_SEA_FREIGHT_CYCLE_4B_4C",
+      "asset_sale_ROIC": "0",
+      "aviation_safety_trust": "0",
+      "booking_occupancy_conversion": "0",
+      "event_penalty": "-5",
+      "fleet_capex_ROI": "0",
+      "freight_rate_durability": "+5",
+      "hard_4c_sensitivity": "+5",
+      "hybrid_suv_mix_quality": "0",
+      "integration_synergy_realization": "0",
+      "notes": "HMM/Pan Ocean Red Sea benefit is cycle until contract rate durability is shown.",
+      "op_margin_after_tariff": "0",
+      "price_pass_through": "0",
+      "shareholder_return_execution": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "CHINA_TOURISM_LEISURE_EVENT_PREMIUM",
+      "asset_sale_ROIC": "0",
+      "aviation_safety_trust": "+1",
+      "booking_occupancy_conversion": "+5",
+      "event_penalty": "-5",
+      "fleet_capex_ROI": "0",
+      "freight_rate_durability": "0",
+      "hard_4c_sensitivity": "+4",
+      "hybrid_suv_mix_quality": "0",
+      "integration_synergy_realization": "0",
+      "notes": "China tourism headlines need booking, occupancy, ADR and margin conversion.",
+      "op_margin_after_tariff": "0",
+      "price_pass_through": "0",
+      "shareholder_return_execution": "0"
+    }
+  ],
+  "source_round": "docs/round/round_278.md",
+  "stage4b_watch_triggers": [
+    "hybrid_shareholder_return_event_plus_5pct_before_margin",
+    "tourism_travel_basket_plus_20pct_before_booking_margin",
+    "freight_rate_cycle_short_rally",
+    "airline_consolidation_premium_before_integration",
+    "aircraft_order_headline_before_ROI",
+    "India_IPO_valuation_before_parent_capital_return_bridge",
+    "asset_sale_exploration_before_final_value"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "cyclical_success_count": 1,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 1,
+    "evidence_good_but_price_failed_count": 1,
+    "failed_rerating_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "MOBILITY_TRANSPORT_LEISURE",
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_206",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_278.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 5,
+    "success_candidate_count": 4,
+    "target_archetype_count": 8
+  },
+  "target_aliases": {
+    "AIRLINE_CONSOLIDATION_STAGE2": "AIRLINE_CONSOLIDATION_STAGE2",
+    "AUTO_PARTS_PORTFOLIO_RECYCLING": "AUTO_PARTS_PORTFOLIO_RECYCLING",
+    "AUTO_TARIFF_MARGIN_4C_WATCH": "AUTO_TARIFF_MARGIN_4C_WATCH",
+    "AVIATION_SAFETY_HARD_4C": "AVIATION_SAFETY_HARD_4C",
+    "CHINA_TOURISM_LEISURE_EVENT_PREMIUM": "CHINA_TOURISM_LEISURE_EVENT_PREMIUM",
+    "HYBRID_SHAREHOLDER_RETURN_MOBILITY_STAGE2": "HYBRID_SHAREHOLDER_RETURN_MOBILITY_STAGE2",
+    "INDIA_AUTO_IPO_CAPITAL_RECYCLING": "INDIA_AUTO_IPO_CAPITAL_RECYCLING",
+    "RED_SEA_FREIGHT_CYCLE_4B_4C": "RED_SEA_FREIGHT_CYCLE_4B_4C"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round278_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_unit_sales_ipo_tourism_freight_fleet_or_asset_sale_headline_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}

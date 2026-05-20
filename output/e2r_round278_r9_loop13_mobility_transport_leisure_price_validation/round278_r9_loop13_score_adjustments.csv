@@ -1,0 +1,16 @@
+axis,points,direction,reason
+OP_margin_after_tariff,5,raise,판매량보다 관세 이후 OP margin이 먼저다.
+hybrid_SUV_mix_quality,5,raise,하이브리드/SUV mix가 ASP와 margin으로 닫혀야 한다.
+price_pass_through,5,raise,관세와 비용을 가격에 전가할 수 있어야 한다.
+shareholder_return_execution,4,raise,자사주·배당은 실제 실행과 FCF 재원이 필요하다.
+integration_synergy_realization,5,raise,항공 합병은 통합 시너지와 노선 수익성이 확인되어야 한다.
+fleet_capex_ROI,5,raise,항공기 주문은 성장투자이면서 capex 부담이다.
+aviation_safety_trust,5,raise,항공 안전 신뢰는 hard gate다.
+freight_rate_durability,5,raise,해운은 spot 운임이 아니라 contract durability가 필요하다.
+booking_occupancy_conversion,5,raise,"관광객 headline은 booking, occupancy, ADR, margin으로 검증해야 한다."
+asset_sale_ROIC,4,raise,자산매각은 deal value와 proceeds use가 확인되어야 한다.
+unit_sales_without_margin,-5,lower,판매량만 좋고 OP가 깨지면 Green이 아니다.
+IPO_valuation_without_parent_ROI,-5,lower,자회사 IPO valuation은 모회사 ROIC/환원 연결고리 전에는 부족하다.
+tourist_flow_headline_only,-5,lower,관광객 수만으로 소비·마진을 만들지 않는다.
+freight_rate_spike_only,-5,lower,운임 spike는 cycle일 수 있으므로 구조적 Green을 제한한다.
+fatal_safety_event,-5,lower,사망 사고는 safety trust hard 4C다.
