@@ -334,6 +334,7 @@ class E2RArchetype(str, Enum):
     CLOUD_AI_SOFTWARE_INFRA = "CLOUD_AI_SOFTWARE_INFRA"
     EDGE_AI_CLOUD_INFRASTRUCTURE = "EDGE_AI_CLOUD_INFRASTRUCTURE"
     AI_SOFTWARE_APPLICATION = "AI_SOFTWARE_APPLICATION"
+    AI_SOFTWARE_PARTNERSHIP_EVENT = "AI_SOFTWARE_PARTNERSHIP_EVENT"
     LEGACY_SAAS_AI_REINFORCEMENT = "LEGACY_SAAS_AI_REINFORCEMENT"
     LEGACY_SAAS_AI_DISRUPTION_OVERLAY = "LEGACY_SAAS_AI_DISRUPTION_OVERLAY"
     OBSERVABILITY_AI_OPERATIONS = "OBSERVABILITY_AI_OPERATIONS"
@@ -343,6 +344,8 @@ class E2RArchetype(str, Enum):
     SERVICE_KIOSK_SELF_CHECKOUT = "SERVICE_KIOSK_SELF_CHECKOUT"
     GAME_CONTENT_IP = "GAME_CONTENT_IP"
     GAME_CONTENT_IP_REPEAT_MONETIZATION = "GAME_CONTENT_IP_REPEAT_MONETIZATION"
+    GAME_IP_PLATFORM_EXPANSION = "GAME_IP_PLATFORM_EXPANSION"
+    GAME_IP_M_AND_A_CONTENT_EXPANSION = "GAME_IP_M_AND_A_CONTENT_EXPANSION"
     GAME_SINGLE_IP_EVENT_PREMIUM = "GAME_SINGLE_IP_EVENT_PREMIUM"
     GAME_IP_LAUNCH_DELAY_LEGAL_RISK = "GAME_IP_LAUNCH_DELAY_LEGAL_RISK"
     SINGLE_IP_RELEASE_EVENT_PREMIUM = "SINGLE_IP_RELEASE_EVENT_PREMIUM"
@@ -357,8 +360,10 @@ class E2RArchetype(str, Enum):
     AI_NETWORKING_SOFTWARE_INFRA_CROSSOVER = "AI_NETWORKING_SOFTWARE_INFRA_CROSSOVER"
     SECURITY_IDENTITY_DEEPFAKE = "SECURITY_IDENTITY_DEEPFAKE"
     SECURITY_OPERATIONAL_TRUST_OVERLAY = "SECURITY_OPERATIONAL_TRUST_OVERLAY"
+    SECURITY_OPERATIONAL_TRUST_HARD_4C = "SECURITY_OPERATIONAL_TRUST_HARD_4C"
     METAVERSE_NFT_THEME = "METAVERSE_NFT_THEME"
     PLATFORM_GOVERNANCE_LEGAL_RISK = "PLATFORM_GOVERNANCE_LEGAL_RISK"
+    KPOP_PLATFORM_CONTENT_IP_GOVERNANCE = "KPOP_PLATFORM_CONTENT_IP_GOVERNANCE"
     PLATFORM_AD_TRUST_OVERLAY = "PLATFORM_AD_TRUST_OVERLAY"
     PLATFORM_PRIVACY_SECURITY_OVERLAY = "PLATFORM_PRIVACY_SECURITY_OVERLAY"
     PLATFORM_PRIVACY_YOUTH_SAFETY_OVERLAY = "PLATFORM_PRIVACY_YOUTH_SAFETY_OVERLAY"
@@ -1877,6 +1882,66 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("financial_actual", "research_report", "news"),
             false_positive_patterns=("AI feature only", "SI-like revenue mistaken for SaaS", "retention not verified"),
             preferred_score_weights=_weights(eps_fcf=20, visibility=23, bottleneck=8, mispricing=16, valuation=14),
+        ),
+        E2RArchetype.AI_SOFTWARE_PARTNERSHIP_EVENT: ArchetypeDefinition(
+            archetype=E2RArchetype.AI_SOFTWARE_PARTNERSHIP_EVENT,
+            stage1_radar_signals=("AI partnership headline", "messaging-platform integration plan", "AI feature announcement"),
+            stage2_candidate_signals=("product launch", "paid usage", "ARPU or ad-commerce monetization path"),
+            stage3_high_conviction_signals=("paid AI usage", "ARPU lift", "ad or commerce revenue conversion", "OPM or FCF support"),
+            stage4a_ongoing_signals=("paid usage expands and compute cost remains controlled"),
+            stage4b_graduation_overheat_signals=("partnership spike before paid usage", "AI headline rally fades after announcement"),
+            stage4c_thesis_break_signals=("AI monetization failure", "platform trust break", "founder legal risk", "compute cost damage"),
+            key_evidence_families=("news", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("partnership headline without monetization", "MAU treated as paid AI usage"),
+            preferred_score_weights=_weights(eps_fcf=16, visibility=18, bottleneck=8, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.GAME_IP_PLATFORM_EXPANSION: ArchetypeDefinition(
+            archetype=E2RArchetype.GAME_IP_PLATFORM_EXPANSION,
+            stage1_radar_signals=("large live-service game", "new market expansion", "game IP investment"),
+            stage2_candidate_signals=("bookings growth", "downloads plus retention", "new IP pipeline", "regional expansion"),
+            stage3_high_conviction_signals=("repeat bookings", "live-service retention", "new IP conversion", "FCF support"),
+            stage4a_ongoing_signals=("bookings and retention remain durable across content cycles"),
+            stage4b_graduation_overheat_signals=("downloads valued before bookings", "M&A or AI narrative outruns FCF"),
+            stage4c_thesis_break_signals=("data-security ban", "game launch failure", "retention collapse", "single-IP decline"),
+            key_evidence_families=("financial_actual", "news", "price", "research_report"),
+            false_positive_patterns=("download count without bookings", "new IP story before retention"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=18, bottleneck=8, mispricing=12, valuation=12),
+        ),
+        E2RArchetype.GAME_IP_M_AND_A_CONTENT_EXPANSION: ArchetypeDefinition(
+            archetype=E2RArchetype.GAME_IP_M_AND_A_CONTENT_EXPANSION,
+            stage1_radar_signals=("content studio acquisition", "animation/IP library expansion", "cross-media game IP plan"),
+            stage2_candidate_signals=("transaction value", "IP catalog", "production capability", "integration plan"),
+            stage3_high_conviction_signals=("bookings conversion", "licensing revenue", "new-IP release cadence", "FCF after integration"),
+            stage4a_ongoing_signals=("integration improves recurring IP monetization"),
+            stage4b_graduation_overheat_signals=("M&A premium before content monetization", "IP catalog valued before FCF"),
+            stage4c_thesis_break_signals=("integration failure", "IP litigation", "production delay", "single-IP collapse"),
+            key_evidence_families=("news", "financial_actual", "disclosure", "price"),
+            false_positive_patterns=("M&A headline treated as repeat monetization"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=18, bottleneck=7, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.SECURITY_OPERATIONAL_TRUST_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.SECURITY_OPERATIONAL_TRUST_HARD_4C,
+            stage1_radar_signals=("security incident disclosure", "customer data leak", "network trust issue"),
+            stage2_candidate_signals=("not a positive Stage source; quantify affected users, cost, fine and revenue impact"),
+            stage3_high_conviction_signals=("not applicable while data breach, revenue cut, compensation or fine remains unresolved"),
+            stage4a_ongoing_signals=("trust remediation complete and revenue guidance recovers"),
+            stage4b_graduation_overheat_signals=("platform valuation ignores active privacy/security risk"),
+            stage4c_thesis_break_signals=("privacy breach", "data leak with revenue cut", "compensation cost", "regulatory fine", "governance overhaul"),
+            key_evidence_families=("news", "regulatory", "financial_actual", "red_team"),
+            false_positive_patterns=("subscriber base stability scored while operational trust is broken"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.KPOP_PLATFORM_CONTENT_IP_GOVERNANCE: ArchetypeDefinition(
+            archetype=E2RArchetype.KPOP_PLATFORM_CONTENT_IP_GOVERNANCE,
+            stage1_radar_signals=("global K-pop IP", "fan platform", "tour or comeback expectation"),
+            stage2_candidate_signals=("paid platform usage", "tour revenue", "IP monetization", "governance risk cleared"),
+            stage3_high_conviction_signals=("repeat IP monetization", "OPM/FCF conversion", "platform paid usage", "legal overhang cleared"),
+            stage4a_ongoing_signals=("IP monetization remains strong and governance risk stays contained"),
+            stage4b_graduation_overheat_signals=("comeback expectation prices before governance clearance", "IP event crowded"),
+            stage4c_thesis_break_signals=("founder legal risk", "IPO-related investigation", "warrant or enforcement action", "artist/IP contract break"),
+            key_evidence_families=("news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("BTS/comeback expectation used while governance overhang remains"),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=16, bottleneck=6, mispricing=12, valuation=10),
         ),
         E2RArchetype.LEGACY_SAAS_AI_REINFORCEMENT: ArchetypeDefinition(
             archetype=E2RArchetype.LEGACY_SAAS_AI_REINFORCEMENT,
