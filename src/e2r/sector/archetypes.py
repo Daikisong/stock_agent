@@ -593,6 +593,12 @@ class E2RArchetype(str, Enum):
     OVERSEAS_EPC_CONTRACT_BACKLOG = "OVERSEAS_EPC_CONTRACT_BACKLOG"
     OVERSEAS_EPC_CONTRACT_BACKLOG_KOREA = "OVERSEAS_EPC_CONTRACT_BACKLOG_KOREA"
     OVERSEAS_EPC_MEGA_ORDER = "OVERSEAS_EPC_MEGA_ORDER"
+    DEFENSE_EXPORT_BACKLOG_COMPOUNDING = "DEFENSE_EXPORT_BACKLOG_COMPOUNDING"
+    MISSILE_DEFENSE_COMBAT_VALIDATION = "MISSILE_DEFENSE_COMBAT_VALIDATION"
+    ARMORED_VEHICLE_DELIVERY_TO_REVENUE = "ARMORED_VEHICLE_DELIVERY_TO_REVENUE"
+    GRID_TRANSFORMER_DATA_CENTER_BOTTLENECK = "GRID_TRANSFORMER_DATA_CENTER_BOTTLENECK"
+    US_GRID_EQUIPMENT_LOCALIZATION = "US_GRID_EQUIPMENT_LOCALIZATION"
+    DILUTION_AFTER_RERATING_4B = "DILUTION_AFTER_RERATING_4B"
     GAS_INFRA_DELIVERY_VALIDATION = "GAS_INFRA_DELIVERY_VALIDATION"
     EPC_LOW_MARGIN_ORDER_OVERLAY = "EPC_LOW_MARGIN_ORDER_OVERLAY"
     APARTMENT_QUALITY_SAFETY_OVERLAY = "APARTMENT_QUALITY_SAFETY_OVERLAY"
@@ -2413,6 +2419,66 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("headline treated as Stage 3 without execution economics"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
+        E2RArchetype.DEFENSE_EXPORT_BACKLOG_COMPOUNDING: ArchetypeDefinition(
+            archetype=E2RArchetype.DEFENSE_EXPORT_BACKLOG_COMPOUNDING,
+            stage1_radar_signals=("defense export order", "Europe rearmament", "backlog compounding"),
+            stage2_candidate_signals=("government customer", "multi-year contract", "delivery schedule", "backlog growth"),
+            stage3_high_conviction_signals=("delivery to revenue", "margin confirmation", "cash collection", "repeat export customer", "MRO or support revenue"),
+            stage4a_ongoing_signals=("deliveries convert to revenue with stable margin and working capital"),
+            stage4b_graduation_overheat_signals=("record high after order announcement", "large capital raise after defense rerating", "geopolitical rally before delivery proof"),
+            stage4c_thesis_break_signals=("export license failure", "customer budget cancellation", "delivery delay", "large dilution without clear ROI"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "research_report", "price", "red_team"),
+            false_positive_patterns=("defense backlog headline treated as Green before delivery, margin, and cash collection"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=17, mispricing=14, valuation=14),
+        ),
+        E2RArchetype.MISSILE_DEFENSE_COMBAT_VALIDATION: ArchetypeDefinition(
+            archetype=E2RArchetype.MISSILE_DEFENSE_COMBAT_VALIDATION,
+            stage1_radar_signals=("missile-defense demand", "combat validation", "Middle East or Europe air-defense order"),
+            stage2_candidate_signals=("export contract", "repeat country customer", "production cycle advantage", "replenishment demand watch"),
+            stage3_high_conviction_signals=("deliveries, missile production rate, margin, cash collection, and recurring replenishment confirmed"),
+            stage4a_ongoing_signals=("orders convert to deliveries while replenishment demand remains visible"),
+            stage4b_graduation_overheat_signals=("geopolitical defense rally outruns production and margin evidence", "shares jump 30-50% on conflict narrative"),
+            stage4c_thesis_break_signals=("customer budget cancellation", "export license issue", "production bottleneck failure", "payment risk"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("war headline treated as structural missile demand without delivery and margin evidence"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=17, mispricing=14, valuation=14),
+        ),
+        E2RArchetype.ARMORED_VEHICLE_DELIVERY_TO_REVENUE: ArchetypeDefinition(
+            archetype=E2RArchetype.ARMORED_VEHICLE_DELIVERY_TO_REVENUE,
+            stage1_radar_signals=("armored vehicle export", "K2 or tank delivery", "rapid defense delivery model"),
+            stage2_candidate_signals=("delivered units", "export revenue contribution", "consensus beat", "second batch order"),
+            stage3_high_conviction_signals=("local production economics, second-batch margin, working capital, and cash collection confirmed"),
+            stage4a_ongoing_signals=("deliveries and local production continue with intact margin"),
+            stage4b_graduation_overheat_signals=("second contract priced before local-production margin", "record-high defense rally"),
+            stage4c_thesis_break_signals=("delivery delay", "local production margin failure", "customer funding delay", "working-capital blowout"),
+            key_evidence_families=("news", "financial_actual", "research_report", "price", "red_team"),
+            false_positive_patterns=("tank order treated as Green before delivery-to-revenue and local production economics"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=16, mispricing=14, valuation=14),
+        ),
+        E2RArchetype.GRID_TRANSFORMER_DATA_CENTER_BOTTLENECK: ArchetypeDefinition(
+            archetype=E2RArchetype.GRID_TRANSFORMER_DATA_CENTER_BOTTLENECK,
+            stage1_radar_signals=("U.S. transformer shortage", "data-center grid demand", "large-transformer lead time"),
+            stage2_candidate_signals=("utility contract", "data-center end demand", "delivery period", "capacity slot visibility"),
+            stage3_high_conviction_signals=("delivery, margin, copper/GOES cost pass-through, cash collection, and repeat utility orders confirmed"),
+            stage4a_ongoing_signals=("transformer deliveries convert with stable input costs and cash collection"),
+            stage4b_graduation_overheat_signals=("grid shortage theme priced before margin and delivery", "capacity value runs ahead of orders"),
+            stage4c_thesis_break_signals=("lead-time delay", "input cost spike", "contract execution failure", "demand normalization"),
+            key_evidence_families=("news", "disclosure", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("transformer shortage headline treated as Green before delivery, margin, and input-cost proof"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=22, bottleneck=22, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.US_GRID_EQUIPMENT_LOCALIZATION: ArchetypeDefinition(
+            archetype=E2RArchetype.US_GRID_EQUIPMENT_LOCALIZATION,
+            stage1_radar_signals=("U.S. grid equipment localization", "transformer capacity investment", "factory slot shortage"),
+            stage2_candidate_signals=("U.S. factory investment", "lead-time shortage", "order-book utilization path"),
+            stage3_high_conviction_signals=("firm backlog, utilization, margin, FCF, and local production economics confirmed"),
+            stage4a_ongoing_signals=("localized capacity ramps with profitable utilization"),
+            stage4b_graduation_overheat_signals=("localization capex priced before utilization and FCF proof"),
+            stage4c_thesis_break_signals=("factory ramp failure", "input-cost shock", "policy bottleneck", "demand normalization"),
+            key_evidence_families=("news", "financial_actual", "research_report", "price", "red_team"),
+            false_positive_patterns=("factory investment treated as revenue before firm orders and utilization"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=22, bottleneck=20, mispricing=12, valuation=12),
+        ),
         E2RArchetype.OVERSEAS_EPC_MEGA_ORDER: ArchetypeDefinition(
             archetype=E2RArchetype.OVERSEAS_EPC_MEGA_ORDER,
             stage1_radar_signals=("overseas EPC mega-order", "Middle East gas infrastructure demand", "large signed contract"),
@@ -2424,6 +2490,18 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("disclosure", "news", "financial_actual", "research_report", "price"),
             false_positive_patterns=("contract headline treated as Green", "order value annualized without margin or cash recovery"),
             preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=16, mispricing=12, valuation=12),
+        ),
+        E2RArchetype.DILUTION_AFTER_RERATING_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.DILUTION_AFTER_RERATING_4B,
+            stage1_radar_signals=("large capital raise after rerating", "rights offering", "affiliate share issue"),
+            stage2_candidate_signals=("use of proceeds and ROI path disclosed", "regulator filing clarity", "dilution math visible"),
+            stage3_high_conviction_signals=("not a Green source by itself; only clears risk if ROI, FCF, and capital discipline are proven"),
+            stage4a_ongoing_signals=("capital raise funds profitable capacity without damaging FCF per share"),
+            stage4b_graduation_overheat_signals=("rerated shares fund large expansion", "dilution shock after strong price path"),
+            stage4c_thesis_break_signals=("large dilution without clear ROI", "regulator revision order", "capital allocation trust break"),
+            key_evidence_families=("disclosure", "news", "price", "red_team"),
+            false_positive_patterns=("capital raise ignored because backlog headline remains positive"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=4, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.GAS_INFRA_DELIVERY_VALIDATION: ArchetypeDefinition(
             archetype=E2RArchetype.GAS_INFRA_DELIVERY_VALIDATION,

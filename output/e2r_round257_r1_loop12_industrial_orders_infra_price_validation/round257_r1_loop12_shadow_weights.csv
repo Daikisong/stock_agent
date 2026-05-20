@@ -1,0 +1,9 @@
+archetype,confirmed_order,delivery_to_revenue,backlog_compounding,local_production_economics,mro_aftermarket,production_capacity,cash_collection,working_capital,repeat_customer,price_path_alignment,event_penalty,dilution_redteam,4b_watch_sensitivity,hard_4c_sensitivity,notes
+DEFENSE_EXPORT_BACKLOG_COMPOUNDING,+5,+5,+5,+4,+4,+4,+5,+5,+4,+5,-2,+5,+5,+4,Hanwha shows strong Stage 2 but delivery/margin/cash collection and dilution must clear.
+MISSILE_DEFENSE_COMBAT_VALIDATION,+5,+4,+5,+4,+5,+5,+5,+4,+5,+5,-2,+2,+5,+4,"LIG Nex1 has Iraq/Saudi orders and geopolitical validation, but replenishment/margin must confirm."
+ARMORED_VEHICLE_DELIVERY_TO_REVENUE,+5,+5,+5,+4,+4,+4,+5,+5,+5,+5,-2,+2,+4,+4,Hyundai Rotem has delivery-to-revenue evidence; local production economics remain key.
+GRID_TRANSFORMER_DATA_CENTER_BOTTLENECK,+5,+4,+4,+2,+2,+5,+5,+5,+4,+4,-2,+1,+4,+4,LS Electric benefits from data-center transformer bottleneck but needs margin/input-cost/delivery proof.
+US_GRID_EQUIPMENT_LOCALIZATION,+4,+3,+4,+4,+2,+5,+4,+5,+4,+3,-3,+2,+4,+4,Hyosung/HICO capacity localization is Stage 2 until utilization/order book/FCF confirm.
+OVERSEAS_EPC_MEGA_ORDER,+5,+5,+4,+2,+1,+3,+5,+5,+4,+5,-5,+2,+5,+5,Samsung E&A shows EPC contract headline is not Green without margin/cash collection.
+POLICY_CAPEX_FALSE_POSITIVE,+2,+1,+1,+1,+0,+3,+3,+5,+1,+5,-5,+4,+5,+5,Hyundai Steel U.S. plant is policy CAPEX false positive due funding and strategy uncertainty.
+DILUTION_AFTER_RERATING_4B,+0,+0,+0,+0,+0,+2,+3,+5,+0,+4,-5,+5,+5,+4,Hanwha capital raise after rerating requires 4B/dilution penalty.

@@ -1,0 +1,20 @@
+axis,points,direction,reason
+confirmed_order,5,raise,확정 수주는 Stage 1 headline보다 강한 Stage 2 증거다.
+delivery_to_revenue,5,raise,납품이 매출로 내려와야 Stage 3 후보가 된다.
+backlog_compounding,5,raise,수주잔고가 누적되고 반복 고객이 확인되면 visibility가 오른다.
+local_production_economics,4,raise,현지생산은 마진과 수익성이 확인될 때만 긍정이다.
+MRO_or_aftermarket_revenue,4,raise,MRO·aftermarket은 방산·인프라 수주의 반복성을 높인다.
+production_capacity_visibility,4,raise,생산 슬롯·CAPA 가시성은 납품 가능성을 높인다.
+cash_collection_quality,5,raise,EPC·방산·전력기기는 현금회수가 핵심이다.
+working_capital_control,5,raise,운전자본이 망가지면 수주는 이익이 되어도 FCF가 안 된다.
+repeat_export_customer,4,raise,반복 해외 고객은 일회성 order risk를 낮춘다.
+price_path_alignment,5,raise,증거 이후 가격경로가 따라와야 score-price alignment가 생긴다.
+contract_headline_only,-5,lower,수주 headline만으로는 Green 금지다.
+policy_capex_without_funding,-5,lower,정책 CAPEX는 자금조달·수요·마진이 없으면 false positive다.
+local_production_without_margin,-4,lower,현지생산은 마진 불명확 시 감점한다.
+defense_rally_without_delivery,-4,lower,전쟁·방산 rally가 납품·마진보다 앞서면 4B-watch다.
+EPC_order_without_working_capital,-5,lower,EPC 수주는 운전자본·공정률·마진 전 Stage 2다.
+capacity_expansion_without_order,-4,lower,CAPA 증설만 있고 firm order가 없으면 Green 차단이다.
+dilution_after_rerating,-5,lower,리레이팅 후 대형 증자는 4B/dilution watch다.
+unconfirmed_geopolitical_replenishment,-4,lower,지정학 보충수요는 실제 주문 전까지 과신하면 안 된다.
+input_cost_unknown,-3,lower,구리·GOES·후판·원가 미확인은 마진 리스크다.
