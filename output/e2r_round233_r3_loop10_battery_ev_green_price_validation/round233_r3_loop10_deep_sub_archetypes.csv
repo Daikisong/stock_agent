@@ -1,0 +1,9 @@
+category,primary_archetype,terms
+ESS transition,ESS_LFP_GRID_STORAGE,LG Energy Solution|SK On|LFP ESS|EV line conversion|grid storage demand
+EV-to-ESS redeployment,EV_TO_ESS_CAPACITY_REDEPLOYMENT,NextStar|Ohio Ultium|Tennessee ESS cells|factory restart uncertainty|layoffs
+EV battery JV,EV_BATTERY_JV_RESTRUCTURING,Samsung SDI|GM Indiana|27GWh|36GWh|EV demand delay
+Cathode derisking,CATHODE_LONG_CONTRACT_VISIBILITY,LG Chem|Toyota Tsusho|Huayou stake reduction|China exposure reduction
+Solar localization 4C,SOLAR_CUSTOMS_UFLPA_4C_WATCH,Hanwha Qcells|UFLPA|customs detention|Georgia furloughs
+EV demand shock,SEPARATOR_EV_DEMAND_CYCLE,SKIET|EcoPro Materials|Ford EV retreat|hybrid pivot
+Lithium event premium,EVENT_LITHIUM_PRICE_RALLY,CATL Yichun|lithium futures|POSCO Future M|L&F|not structural
+Hydrogen capex,HYDROGEN_FUEL_CELL_CAPEX,Hyundai|Ulsan hydrogen fuel-cell plant|2027 completion|utilization required

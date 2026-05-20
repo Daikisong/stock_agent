@@ -1,0 +1,246 @@
+{
+  "deep_sub_archetypes": [
+    {
+      "category": "ESS transition",
+      "primary_archetype": "ESS_LFP_GRID_STORAGE",
+      "terms": "LG Energy Solution|SK On|LFP ESS|EV line conversion|grid storage demand"
+    },
+    {
+      "category": "EV-to-ESS redeployment",
+      "primary_archetype": "EV_TO_ESS_CAPACITY_REDEPLOYMENT",
+      "terms": "NextStar|Ohio Ultium|Tennessee ESS cells|factory restart uncertainty|layoffs"
+    },
+    {
+      "category": "EV battery JV",
+      "primary_archetype": "EV_BATTERY_JV_RESTRUCTURING",
+      "terms": "Samsung SDI|GM Indiana|27GWh|36GWh|EV demand delay"
+    },
+    {
+      "category": "Cathode derisking",
+      "primary_archetype": "CATHODE_LONG_CONTRACT_VISIBILITY",
+      "terms": "LG Chem|Toyota Tsusho|Huayou stake reduction|China exposure reduction"
+    },
+    {
+      "category": "Solar localization 4C",
+      "primary_archetype": "SOLAR_CUSTOMS_UFLPA_4C_WATCH",
+      "terms": "Hanwha Qcells|UFLPA|customs detention|Georgia furloughs"
+    },
+    {
+      "category": "EV demand shock",
+      "primary_archetype": "SEPARATOR_EV_DEMAND_CYCLE",
+      "terms": "SKIET|EcoPro Materials|Ford EV retreat|hybrid pivot"
+    },
+    {
+      "category": "Lithium event premium",
+      "primary_archetype": "EVENT_LITHIUM_PRICE_RALLY",
+      "terms": "CATL Yichun|lithium futures|POSCO Future M|L&F|not structural"
+    },
+    {
+      "category": "Hydrogen capex",
+      "primary_archetype": "HYDROGEN_FUEL_CELL_CAPEX",
+      "terms": "Hyundai|Ulsan hydrogen fuel-cell plant|2027 completion|utilization required"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "customer_name_only",
+    "factory_groundbreaking_only",
+    "jv_restructuring_only",
+    "ess_lfp_theme_only",
+    "capacity_conversion_only",
+    "lithium_price_event_only",
+    "ampc_or_subsidy_quality_loss",
+    "ev_demand_slowdown_ignored"
+  ],
+  "green_required_fields": [
+    "binding_contract",
+    "actual_calloff",
+    "gwh_or_tonnage_volume",
+    "utilization_improvement",
+    "opm_or_gross_margin_improvement",
+    "fcf_after_capex",
+    "subsidy_excluded_profit_quality",
+    "customer_ev_strategy_risk_passed",
+    "supply_chain_disruption_risk_passed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "contract_cancellation",
+    "contract_value_collapse",
+    "customer_ev_model_cancellation",
+    "customer_strategy_pullback",
+    "gwh_calloff_failure",
+    "utilization_delay",
+    "factory_restart_uncertainty",
+    "negative_fcf",
+    "debt_burden_or_emergency_restructuring",
+    "jv_termination_or_weak_demand_transfer",
+    "subsidy_quality_profit_collapse",
+    "share_issuance_or_dilution_under_weak_demand",
+    "supply_chain_customs_detention",
+    "production_furlough"
+  ],
+  "large_sector": "BATTERY_EV_GREEN",
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_calloff": "+5",
+      "archetype": "ESS_LFP_GRID_STORAGE",
+      "customer_quality": "+4",
+      "ess_revenue_conversion": "+5",
+      "event_penalty": "-2",
+      "gwh_volume": "+5",
+      "hard_4c_sensitivity": "+4",
+      "notes": "LGES/SK On ESS contracts are Stage 2; revenue/utilization/OPM/FCF required.",
+      "opm_fcf": "+5",
+      "supply_chain_derisking": "+3",
+      "utilization": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_calloff": "+4",
+      "archetype": "EV_TO_ESS_CAPACITY_REDEPLOYMENT",
+      "customer_quality": "+3",
+      "ess_revenue_conversion": "+5",
+      "event_penalty": "-3",
+      "gwh_volume": "+5",
+      "hard_4c_sensitivity": "+5",
+      "notes": "EV line conversion is positive only if utilization and ESS margins confirm.",
+      "opm_fcf": "+5",
+      "supply_chain_derisking": "+3",
+      "utilization": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_calloff": "+4",
+      "archetype": "EV_BATTERY_JV_RESTRUCTURING",
+      "customer_quality": "+4",
+      "ess_revenue_conversion": "+3",
+      "event_penalty": "-4",
+      "gwh_volume": "+5",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Samsung SDI/GM JV is Stage 2; demand delay and utilization risk remain.",
+      "opm_fcf": "+5",
+      "supply_chain_derisking": "+3",
+      "utilization": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "actual_calloff": "+4",
+      "archetype": "CATHODE_LONG_CONTRACT_VISIBILITY",
+      "customer_quality": "+4",
+      "ess_revenue_conversion": "+2",
+      "event_penalty": "-2",
+      "gwh_volume": "+4",
+      "hard_4c_sensitivity": "+4",
+      "notes": "LG Chem/Toyota reduces China exposure but needs offtake and margin.",
+      "opm_fcf": "+5",
+      "supply_chain_derisking": "+5",
+      "utilization": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_calloff": "+3",
+      "archetype": "SOLAR_US_SUPPLY_CHAIN_LOCALIZATION",
+      "customer_quality": "+4",
+      "ess_revenue_conversion": "+2",
+      "event_penalty": "-3",
+      "gwh_volume": "+3",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Qcells localization is Stage 2; customs/component disruption is 4C-watch.",
+      "opm_fcf": "+5",
+      "supply_chain_derisking": "+5",
+      "utilization": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_calloff": "+3",
+      "archetype": "SEPARATOR_EV_DEMAND_CYCLE",
+      "customer_quality": "+4",
+      "ess_revenue_conversion": "+2",
+      "event_penalty": "-5",
+      "gwh_volume": "+4",
+      "hard_4c_sensitivity": "+5",
+      "notes": "Ford EV retreat shows EV demand shock for separator/precursor names.",
+      "opm_fcf": "+5",
+      "supply_chain_derisking": "+3",
+      "utilization": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_calloff": "+1",
+      "archetype": "EVENT_LITHIUM_PRICE_RALLY",
+      "customer_quality": "+1",
+      "ess_revenue_conversion": "+0",
+      "event_penalty": "-5",
+      "gwh_volume": "+1",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Lithium price rally is event premium unless call-off/OPM/FCF confirm.",
+      "opm_fcf": "+3",
+      "supply_chain_derisking": "+2",
+      "utilization": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_calloff": "+2",
+      "archetype": "HYDROGEN_FUEL_CELL_CAPEX",
+      "customer_quality": "+3",
+      "ess_revenue_conversion": "+1",
+      "event_penalty": "-4",
+      "gwh_volume": "+2",
+      "hard_4c_sensitivity": "+4",
+      "notes": "Hydrogen plant capex is Stage 2 until order/utilization/margin/FCF confirm.",
+      "opm_fcf": "+5",
+      "supply_chain_derisking": "+3",
+      "utilization": "+5"
+    }
+  ],
+  "source_round": "docs/round/round_233.md",
+  "stage4b_watch_triggers": [
+    "ess_lfp_contract_headline_rally",
+    "ev_line_conversion_headline_multiple_expansion",
+    "lithium_price_event_materials_basket_rally",
+    "hydrogen_capex_theme_rally",
+    "us_localization_prices_before_utilization",
+    "battery_factory_ownership_prices_before_utilization"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "event_premium_count": 1,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "large_sector": "BATTERY_EV_GREEN",
+    "price_moved_without_evidence_count": 1,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_233.md",
+    "stage3_case_count": 0,
+    "success_candidate_count": 6,
+    "target_archetype_count": 13,
+    "watch_4c_count": 3
+  },
+  "target_aliases": {
+    "BATTERY_CONTRACT_DISCLOSURE_CONFIDENCE": "BATTERY_CONTRACT_DISCLOSURE_CONFIDENCE",
+    "BATTERY_MATERIALS_CYCLE_OVERLAY": "BATTERY_MATERIALS_CAPEX_OVERHEAT",
+    "CATHODE_SUPPLY_CHAIN_DERISKING": "CATHODE_LONG_CONTRACT_VISIBILITY",
+    "ESS_LFP_GRID_STORAGE": "ESS_LFP_GRID_STORAGE",
+    "EVENT_PREMIUM": "EVENT_PREMIUM",
+    "EV_BATTERY_FACTORY_UTILIZATION_4C": "EV_TO_ESS_CAPACITY_REDEPLOYMENT",
+    "EV_BATTERY_JV_RESTRUCTURING": "EV_BATTERY_JV_RESTRUCTURING",
+    "EV_TO_ESS_CAPACITY_REDEPLOYMENT": "EV_TO_ESS_CAPACITY_REDEPLOYMENT",
+    "HYDROGEN_FUEL_CELL_CAPEX": "HYDROGEN_FUEL_CELL_CAPEX",
+    "LITHIUM_CYCLE_EVENT_PREMIUM": "EVENT_LITHIUM_PRICE_RALLY",
+    "PRICE_ONLY_RALLY": "PRICE_ONLY_RALLY",
+    "SOLAR_CUSTOMS_UFLPA_4C_WATCH": "SOLAR_CUSTOMS_UFLPA_4C_WATCH",
+    "SOLAR_US_SUPPLY_CHAIN_LOCALIZATION": "SOLAR_US_SUPPLY_CHAIN_LOCALIZATION"
+  },
+  "what_not_to_change": [
+    "do_not_use_round233_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_battery_ess_green_capex_lithium_or_jv_headline_as_green",
+    "do_not_invent_ohlc_or_stage_dates"
+  ]
+}

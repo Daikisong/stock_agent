@@ -1,0 +1,20 @@
+axis,points,direction,reason
+actual_calloff,5,raise,계약은 실제 call-off가 확인될 때 강해진다.
+gwh_volume,5,raise,ESS/배터리는 GWh volume이 핵심 visibility다.
+ess_revenue_conversion,5,raise,ESS 전환은 매출 전환 전 Stage 2다.
+utilization_rate,5,raise,공장 ownership보다 가동률이 중요하다.
+opm_visibility,5,raise,OPM/gross margin 확인 전 Green 금지다.
+fcf_after_capex,5,raise,CAPEX 이후 FCF가 남아야 구조적이다.
+customer_quality,4,raise,"Hanwha QCells, Flatiron, GM 등 고객 품질은 Stage 2 증거다."
+supply_chain_derisking,4,raise,중국 노출 축소와 현지화는 visibility를 보강한다.
+localization_with_real_utilization,4,raise,현지화는 utilization이 동반될 때만 강하다.
+ev_capacity_announcement_only,-5,lower,EV CAPA 발표만으로 Green 금지다.
+ess_theme_only,-4,lower,ESS 테마만으로는 매출/OPM/FCF가 아니다.
+jv_restructuring_relief_only,-4,lower,JV 재편은 수요 부진을 숨길 수 있다.
+factory_ownership_without_utilization,-4,lower,공장 소유보다 가동률이 중요하다.
+customer_name_without_calloff,-5,lower,고객명만 있고 call-off가 없으면 Green 금지다.
+lithium_price_event,-5,lower,리튬 가격 이벤트는 commodity event premium이다.
+subsidy_dependent_profit,-5,lower,보조금 제외 이익 품질이 약하면 감점한다.
+negative_fcf_or_debt_burden,-5,lower,CAPEX 뒤 FCF/부채 부담은 RedTeam이다.
+supply_chain_customs_disruption,-5,lower,UFLPA/customs disruption은 4C-watch다.
+ev_demand_shock,-5,lower,고객 EV 전략 후퇴는 R3의 핵심 4C-watch다.

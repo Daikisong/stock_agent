@@ -1,0 +1,9 @@
+archetype,actual_calloff,gwh_volume,ess_revenue_conversion,utilization,opm_fcf,customer_quality,supply_chain_derisking,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+ESS_LFP_GRID_STORAGE,+5,+5,+5,+5,+5,+4,+3,-2,+4,+4,LGES/SK On ESS contracts are Stage 2; revenue/utilization/OPM/FCF required.
+EV_TO_ESS_CAPACITY_REDEPLOYMENT,+4,+5,+5,+5,+5,+3,+3,-3,+4,+5,EV line conversion is positive only if utilization and ESS margins confirm.
+EV_BATTERY_JV_RESTRUCTURING,+4,+5,+3,+5,+5,+4,+3,-4,+4,+4,Samsung SDI/GM JV is Stage 2; demand delay and utilization risk remain.
+CATHODE_LONG_CONTRACT_VISIBILITY,+4,+4,+2,+5,+5,+4,+5,-2,+3,+4,LG Chem/Toyota reduces China exposure but needs offtake and margin.
+SOLAR_US_SUPPLY_CHAIN_LOCALIZATION,+3,+3,+2,+5,+5,+4,+5,-3,+4,+5,Qcells localization is Stage 2; customs/component disruption is 4C-watch.
+SEPARATOR_EV_DEMAND_CYCLE,+3,+4,+2,+5,+5,+4,+3,-5,+4,+5,Ford EV retreat shows EV demand shock for separator/precursor names.
+EVENT_LITHIUM_PRICE_RALLY,+1,+1,+0,+2,+3,+1,+2,-5,+5,+4,Lithium price rally is event premium unless call-off/OPM/FCF confirm.
+HYDROGEN_FUEL_CELL_CAPEX,+2,+2,+1,+5,+5,+3,+3,-4,+4,+4,Hydrogen plant capex is Stage 2 until order/utilization/margin/FCF confirm.
