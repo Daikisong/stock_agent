@@ -1,0 +1,256 @@
+{
+  "deep_sub_archetypes": [
+    {
+      "category": "성공 검증 / HBM",
+      "primary_archetype": "STRUCTURAL_SUCCESS_BUT_4B_WATCH",
+      "terms": "SK Hynix HBM|HBM4|AI memory|EPS revision|stage3 to large MFE|market-cap milestone"
+    },
+    {
+      "category": "성공 검증 / K-beauty device",
+      "primary_archetype": "STRUCTURAL_SUCCESS_BUT_4B_WATCH",
+      "terms": "APR|Medicube|K-beauty device|overseas revenue growth|single-brand concentration"
+    },
+    {
+      "category": "AI capital allocation 4B",
+      "primary_archetype": "AI_CAPITAL_ALLOCATION_EVENT_PREMIUM",
+      "terms": "Samsung SDS|KKR convertible bond|AI infrastructure|M&A|capital allocation|recurring AI revenue required"
+    },
+    {
+      "category": "정책 CAPEX 실패",
+      "primary_archetype": "POLICY_CAPEX_FALSE_POSITIVE",
+      "terms": "Hyundai Steel U.S. plant|tariff hedge|funding uncertainty|margin clarity|policy capex false positive"
+    },
+    {
+      "category": "계약품질 hard 4C",
+      "primary_archetype": "CONTRACT_QUALITY_HARD_4C",
+      "terms": "L&F|Tesla cathode|contract value collapse|actual call-off|take-or-pay"
+    },
+    {
+      "category": "운영안전 hard 4C",
+      "primary_archetype": "OPERATIONAL_SAFETY_HARD_4C",
+      "terms": "Jeju Air|fatal crash|operational safety|market-cap wipeout|consumer trust"
+    },
+    {
+      "category": "거시 지정학 hard 4C",
+      "primary_archetype": "MACRO_GEOPOLITICAL_HARD_4C",
+      "terms": "Hormuz|Iran shock|oil supply deficit|corporate cost|macro hard 4C"
+    },
+    {
+      "category": "디지털자산 policy overheat",
+      "primary_archetype": "DIGITAL_ASSET_POLICY_OVERHEAT",
+      "terms": "KRW stablecoin|Kakao Pay|LG CNS|Aton|ME2ON|issuer license|reserve income"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "policy_news_only",
+    "stablecoin_policy_theme_only",
+    "ai_capital_allocation_without_revenue",
+    "contract_headline_without_calloff",
+    "capex_without_funding_or_margin",
+    "mna_or_cb_event_without_revenue",
+    "ipo_or_debut_premium",
+    "high_score_without_price_validation",
+    "fatal_safety_accident",
+    "macro_geopolitical_chokepoint_ignored"
+  ],
+  "green_required_fields": [
+    "company_level_evidence",
+    "revenue_eps_or_fcf_conversion",
+    "price_path_after_evidence",
+    "stage3_to_large_mfe_confirmation",
+    "mae_not_excessive",
+    "not_4b_saturated",
+    "no_hard_redteam",
+    "contract_operational_governance_security_trust_passed"
+  ],
+  "hard_4c_gates": [
+    "contract_cancellation",
+    "contract_value_collapse",
+    "fatal_safety_accident",
+    "operational_trust_break",
+    "security_or_privacy_breach_with_revenue_cut",
+    "major_governance_legal_break",
+    "pf_workout_or_credit_break",
+    "regulatory_reversal",
+    "geopolitical_energy_chokepoint_shock",
+    "commercialization_failure",
+    "financing_failure",
+    "capex_without_funding_clarity"
+  ],
+  "large_sector": "CROSS_ARCHETYPE_REDTEAM_PRICE_VALIDATION",
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_contract_quality": "+4",
+      "archetype": "STRUCTURAL_SUCCESS_ALIGNED",
+      "capex_funding_redteam": "+0",
+      "event_penalty": "+0",
+      "governance_security_redteam": "+0",
+      "hard_4c_sensitivity": "+2",
+      "macro_risk_overlay": "+2",
+      "notes": "SK Hynix and APR prove Stage 3 can produce large MFE when revenue/EPS conversion exists.",
+      "operational_trust": "+3",
+      "price_path_alignment": "+5",
+      "revenue_eps_conversion": "+5",
+      "stage3_mfe_confirmation": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_contract_quality": "+4",
+      "archetype": "STRUCTURAL_SUCCESS_BUT_4B_WATCH",
+      "capex_funding_redteam": "+1",
+      "event_penalty": "-1",
+      "governance_security_redteam": "+1",
+      "hard_4c_sensitivity": "+3",
+      "macro_risk_overlay": "+2",
+      "notes": "Large MFE plus market-cap/valuation milestone requires 4B-watch.",
+      "operational_trust": "+3",
+      "price_path_alignment": "+5",
+      "revenue_eps_conversion": "+5",
+      "stage3_mfe_confirmation": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_contract_quality": "+2",
+      "archetype": "AI_CAPITAL_ALLOCATION_EVENT_PREMIUM",
+      "capex_funding_redteam": "+3",
+      "event_penalty": "-5",
+      "governance_security_redteam": "+2",
+      "hard_4c_sensitivity": "+3",
+      "macro_risk_overlay": "+2",
+      "notes": "Samsung SDS KKR event is Stage 2 and 4B before AI revenue/FCF.",
+      "operational_trust": "+3",
+      "price_path_alignment": "+3",
+      "revenue_eps_conversion": "+3",
+      "stage3_mfe_confirmation": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_contract_quality": "+1",
+      "archetype": "POLICY_CAPEX_FALSE_POSITIVE",
+      "capex_funding_redteam": "+5",
+      "event_penalty": "-5",
+      "governance_security_redteam": "+2",
+      "hard_4c_sensitivity": "+4",
+      "macro_risk_overlay": "+2",
+      "notes": "Hyundai Steel shows policy capex without funding/margin can fail.",
+      "operational_trust": "+2",
+      "price_path_alignment": "+0",
+      "revenue_eps_conversion": "+0",
+      "stage3_mfe_confirmation": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "actual_contract_quality": "+5",
+      "archetype": "CONTRACT_QUALITY_HARD_4C",
+      "capex_funding_redteam": "+1",
+      "event_penalty": "+0",
+      "governance_security_redteam": "+1",
+      "hard_4c_sensitivity": "+5",
+      "macro_risk_overlay": "+1",
+      "notes": "L&F contract value collapse is hard 4C.",
+      "operational_trust": "+2",
+      "price_path_alignment": "+0",
+      "revenue_eps_conversion": "+0",
+      "stage3_mfe_confirmation": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "actual_contract_quality": "+0",
+      "archetype": "OPERATIONAL_SAFETY_HARD_4C",
+      "capex_funding_redteam": "+0",
+      "event_penalty": "+0",
+      "governance_security_redteam": "+2",
+      "hard_4c_sensitivity": "+5",
+      "macro_risk_overlay": "+2",
+      "notes": "Jeju Air fatal crash is hard operational trust 4C.",
+      "operational_trust": "+5",
+      "price_path_alignment": "+0",
+      "revenue_eps_conversion": "+0",
+      "stage3_mfe_confirmation": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "actual_contract_quality": "+0",
+      "archetype": "MACRO_GEOPOLITICAL_HARD_4C",
+      "capex_funding_redteam": "+2",
+      "event_penalty": "+0",
+      "governance_security_redteam": "+2",
+      "hard_4c_sensitivity": "+5",
+      "macro_risk_overlay": "+5",
+      "notes": "Hormuz/Iran shock is cross-sector macro hard 4C.",
+      "operational_trust": "+3",
+      "price_path_alignment": "+0",
+      "revenue_eps_conversion": "+0",
+      "stage3_mfe_confirmation": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "actual_contract_quality": "+0",
+      "archetype": "DIGITAL_ASSET_POLICY_OVERHEAT",
+      "capex_funding_redteam": "+1",
+      "event_penalty": "-5",
+      "governance_security_redteam": "+3",
+      "hard_4c_sensitivity": "+4",
+      "macro_risk_overlay": "+3",
+      "notes": "Stablecoin rallies are price_moved_without_evidence until licensing/revenue clarity.",
+      "operational_trust": "+1",
+      "price_path_alignment": "+0",
+      "revenue_eps_conversion": "+0",
+      "stage3_mfe_confirmation": "+0"
+    }
+  ],
+  "source_round": "docs/round/round_243.md",
+  "stage4b_watch_triggers": [
+    "stage3_after_2x_to_5x_price_move",
+    "market_cap_milestone_headline",
+    "large_cb_equity_or_mna_event",
+    "news_day_plus_20_to_30pct_move",
+    "policy_mou_resource_stablecoin_theme_rally",
+    "ipo_or_debut_after_short_term_double",
+    "good_news_with_weak_price_response",
+    "valuation_moves_ahead_of_evidence"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "failed_rerating_count": 1,
+    "full_ohlc_complete": false,
+    "hard_4c_case_count": 3,
+    "hard_4c_confirmed": true,
+    "large_sector": "CROSS_ARCHETYPE_REDTEAM_PRICE_VALIDATION",
+    "overheat_count": 1,
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "r13_default_stage3_bias": "redteam_first_after_price_validation",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_243.md",
+    "stage3_case_count": 2,
+    "stage4b_watch_count": 5,
+    "structural_success_count": 2,
+    "success_candidate_count": 1,
+    "target_archetype_count": 11
+  },
+  "target_aliases": {
+    "AI_CAPITAL_ALLOCATION_EVENT_PREMIUM": "AI_CAPITAL_ALLOCATION_EVENT_PREMIUM",
+    "CONTRACT_QUALITY_HARD_4C": "CONTRACT_QUALITY_HARD_4C",
+    "CROWDED_RERATING_4B_WATCH": "CROWDED_RERATING_4B_WATCH",
+    "DIGITAL_ASSET_POLICY_OVERHEAT": "DIGITAL_ASSET_POLICY_OVERHEAT",
+    "EVIDENCE_GOOD_BUT_PRICE_FAILED": "EVIDENCE_GOOD_BUT_PRICE_FAILED",
+    "MACRO_GEOPOLITICAL_HARD_4C": "MACRO_GEOPOLITICAL_HARD_4C",
+    "OPERATIONAL_SAFETY_HARD_4C": "OPERATIONAL_SAFETY_HARD_4C",
+    "POLICY_CAPEX_FALSE_POSITIVE": "POLICY_CAPEX_FALSE_POSITIVE",
+    "PRICE_MOVED_WITHOUT_EVIDENCE": "PRICE_MOVED_WITHOUT_EVIDENCE",
+    "STRUCTURAL_SUCCESS_ALIGNED": "STRUCTURAL_SUCCESS_ALIGNED",
+    "STRUCTURAL_SUCCESS_BUT_4B_WATCH": "STRUCTURAL_SUCCESS_BUT_4B_WATCH"
+  },
+  "what_not_to_change": [
+    "do_not_use_round243_cases_as_candidate_generation_input",
+    "do_not_apply_shadow_weights_to_production_scoring_yet",
+    "do_not_treat_policy_stablecoin_cb_macro_or_capex_event_as_green",
+    "do_not_invent_ohlc_or_stage_dates"
+  ]
+}

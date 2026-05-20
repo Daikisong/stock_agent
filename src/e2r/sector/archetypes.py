@@ -655,6 +655,13 @@ class E2RArchetype(str, Enum):
     CYCLICAL_SUCCESS = "CYCLICAL_SUCCESS"
     STRUCTURAL_SUCCESS_ALIGNED = "STRUCTURAL_SUCCESS_ALIGNED"
     STRUCTURAL_SUCCESS_BUT_4B_WATCH = "STRUCTURAL_SUCCESS_BUT_4B_WATCH"
+    AI_CAPITAL_ALLOCATION_EVENT_PREMIUM = "AI_CAPITAL_ALLOCATION_EVENT_PREMIUM"
+    POLICY_CAPEX_FALSE_POSITIVE = "POLICY_CAPEX_FALSE_POSITIVE"
+    CONTRACT_QUALITY_HARD_4C = "CONTRACT_QUALITY_HARD_4C"
+    OPERATIONAL_SAFETY_HARD_4C = "OPERATIONAL_SAFETY_HARD_4C"
+    MACRO_GEOPOLITICAL_HARD_4C = "MACRO_GEOPOLITICAL_HARD_4C"
+    DIGITAL_ASSET_POLICY_OVERHEAT = "DIGITAL_ASSET_POLICY_OVERHEAT"
+    PRICE_MOVED_WITHOUT_EVIDENCE = "PRICE_MOVED_WITHOUT_EVIDENCE"
     ORDER_TO_REVENUE_CONVERSION = "ORDER_TO_REVENUE_CONVERSION"
     STAGE2_EVIDENCE_NOT_GREEN = "STAGE2_EVIDENCE_NOT_GREEN"
     CONTRACT_HEADLINE_NOT_STAGE3 = "CONTRACT_HEADLINE_NOT_STAGE3"
@@ -1728,6 +1735,90 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("price", "news", "financial_actual"),
             false_positive_patterns=("celebrity meme event treated as structural demand"),
             preferred_score_weights=_weights(eps_fcf=2, visibility=2, bottleneck=2, mispricing=2, valuation=2),
+        ),
+        E2RArchetype.AI_CAPITAL_ALLOCATION_EVENT_PREMIUM: ArchetypeDefinition(
+            archetype=E2RArchetype.AI_CAPITAL_ALLOCATION_EVENT_PREMIUM,
+            stage1_radar_signals=("AI infrastructure funding", "convertible bond or M&A event", "capital allocation headline"),
+            stage2_candidate_signals=("capital secured and strategic use disclosed", "recurring AI revenue path starts to appear"),
+            stage3_high_conviction_signals=("recurring AI revenue, margin, FCF conversion, and price path after evidence verified"),
+            stage4a_ongoing_signals=("AI revenue conversion continues after funding event"),
+            stage4b_graduation_overheat_signals=("stock jumps 20-30% before recurring AI revenue evidence"),
+            stage4c_thesis_break_signals=("CB dilution", "AI capex fails to create revenue", "M&A failure", "regulatory risk"),
+            key_evidence_families=("news", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("AI capital allocation treated as revenue before conversion"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=14, bottleneck=8, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.POLICY_CAPEX_FALSE_POSITIVE: ArchetypeDefinition(
+            archetype=E2RArchetype.POLICY_CAPEX_FALSE_POSITIVE,
+            stage1_radar_signals=("policy CAPEX headline", "localization or tariff hedge narrative", "large plant investment"),
+            stage2_candidate_signals=("funding, utilization, margin, and ROI path visible"),
+            stage3_high_conviction_signals=("not from CAPEX headline alone; funding clarity, margin, FCF, and demand conversion required"),
+            stage4a_ongoing_signals=("funded CAPEX ramps with margin and FCF discipline"),
+            stage4b_graduation_overheat_signals=("CAPEX headline rallies before funding and margin clarity"),
+            stage4c_thesis_break_signals=("financing failure", "margin deterioration", "demand weakness", "relative underperformance after CAPEX"),
+            key_evidence_families=("news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("policy plant headline treated as rerating without funding or margin"),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=8, bottleneck=4, mispricing=6, valuation=4),
+        ),
+        E2RArchetype.CONTRACT_QUALITY_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.CONTRACT_QUALITY_HARD_4C,
+            stage1_radar_signals=("large contract headline", "major customer named", "supply agreement"),
+            stage2_candidate_signals=("actual call-off, take-or-pay, volume, margin, and delivery schedule visible"),
+            stage3_high_conviction_signals=("not from customer name alone; actual order conversion and FCF required"),
+            stage4a_ongoing_signals=("contract deliveries and margins remain intact"),
+            stage4b_graduation_overheat_signals=("contract headline rerating before call-off and margin evidence"),
+            stage4c_thesis_break_signals=("contract cancellation", "contract value collapse", "volume collapse", "customer demand failure"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "red_team"),
+            false_positive_patterns=("customer name or contract headline treated as guaranteed revenue"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.OPERATIONAL_SAFETY_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.OPERATIONAL_SAFETY_HARD_4C,
+            stage1_radar_signals=("operational safety incident", "consumer trust shock", "regulatory safety probe"),
+            stage2_candidate_signals=("not a positive candidate; safety recovery evidence only supports later recheck"),
+            stage3_high_conviction_signals=("not a Green source; fatal or major safety failure blocks unsafe promotion"),
+            stage4a_ongoing_signals=("safety remediation and demand recovery are proven"),
+            stage4b_graduation_overheat_signals=("recovery rally before safety trust restoration"),
+            stage4c_thesis_break_signals=("fatal safety accident", "operational trust break", "consumer trust collapse", "regulatory safety action"),
+            key_evidence_families=("news", "price", "red_team"),
+            false_positive_patterns=("travel or demand recovery treated as intact after fatal safety break"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.MACRO_GEOPOLITICAL_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.MACRO_GEOPOLITICAL_HARD_4C,
+            stage1_radar_signals=("geopolitical energy chokepoint", "oil or shipping cost shock", "FX and macro stress"),
+            stage2_candidate_signals=("not a positive candidate; macro containment and cost stabilization required for later recheck"),
+            stage3_high_conviction_signals=("not a Green source; macro hard 4C overlays all affected sectors"),
+            stage4a_ongoing_signals=("macro cost and FX stress normalize"),
+            stage4b_graduation_overheat_signals=("relief rally before energy, FX, and shipping costs stabilize"),
+            stage4c_thesis_break_signals=("geopolitical energy chokepoint shock", "oil supply deficit", "shipping cost shock", "FX stress"),
+            key_evidence_families=("macro", "news", "price", "red_team"),
+            false_positive_patterns=("company thesis ignores macro energy and FX hard gate"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.DIGITAL_ASSET_POLICY_OVERHEAT: ArchetypeDefinition(
+            archetype=E2RArchetype.DIGITAL_ASSET_POLICY_OVERHEAT,
+            stage1_radar_signals=("stablecoin policy pledge", "digital asset reform headline", "policy basket rally"),
+            stage2_candidate_signals=("issuer license, reserve income, fee revenue, and regulatory capital path visible"),
+            stage3_high_conviction_signals=("not from policy theme alone; licensed revenue and reserve economics required"),
+            stage4a_ongoing_signals=("regulated revenue and reserve income are proven"),
+            stage4b_graduation_overheat_signals=("stablecoin basket rallies 2-3x before regulated revenue evidence"),
+            stage4c_thesis_break_signals=("issuer restrictions", "FX outflow risk", "regulatory delay", "no revenue conversion"),
+            key_evidence_families=("policy", "news", "price", "financial_actual"),
+            false_positive_patterns=("digital asset policy treated as earnings before license and revenue"),
+            preferred_score_weights=_weights(eps_fcf=2, visibility=2, bottleneck=2, mispricing=2, valuation=2),
+        ),
+        E2RArchetype.PRICE_MOVED_WITHOUT_EVIDENCE: ArchetypeDefinition(
+            archetype=E2RArchetype.PRICE_MOVED_WITHOUT_EVIDENCE,
+            stage1_radar_signals=("price jump", "policy or event headline", "theme basket spike"),
+            stage2_candidate_signals=("company-level revenue evidence must follow"),
+            stage3_high_conviction_signals=("not a Green source; price move must be backed by revenue, EPS, FCF, or contract conversion"),
+            stage4a_ongoing_signals=("later evidence validates or invalidates the initial price move"),
+            stage4b_graduation_overheat_signals=("large price move before company evidence"),
+            stage4c_thesis_break_signals=("event fades", "no revenue conversion", "theme reversal"),
+            key_evidence_families=("price", "news", "red_team"),
+            false_positive_patterns=("price action treated as evidence by itself"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.PRICE_ONLY_POLICY_RALLY: ArchetypeDefinition(
             archetype=E2RArchetype.PRICE_ONLY_POLICY_RALLY,

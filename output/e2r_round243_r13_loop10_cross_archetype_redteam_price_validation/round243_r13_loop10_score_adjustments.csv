@@ -1,0 +1,20 @@
+axis,points,direction,reason
+price_path_alignment,5,raise,Stage 3 증거 이후 가격경로가 따라와야 한다.
+stage3_to_large_MFE_confirmation,5,raise,SK하이닉스처럼 Stage 3 이후 대형 MFE가 확인되면 성공 기준점이 된다.
+revenue_or_EPS_revision,5,raise,가격경로는 revenue/EPS/FCF 전환과 함께 확인해야 한다.
+order_to_revenue_conversion,5,raise,계약·수주는 실제 매출 인식까지 이어져야 한다.
+commercial_revenue_conversion,5,raise,정책·AI·자원 이벤트는 상업 매출 전환 전 Green이 아니다.
+actual_contract_quality,5,raise,"계약 headline보다 call-off, take-or-pay, volume, margin이 중요하다."
+actual_calloff_or_take_or_pay,5,raise,실제 인출·take-or-pay는 계약 품질을 높인다.
+operational_trust,5,raise,운영 신뢰는 항공·서비스·플랫폼의 hard gate다.
+security_privacy_trust,5,raise,보안·개인정보 훼손은 매출전망과 보상비용으로 이어진다.
+macro_risk_overlay,5,raise,Hormuz/Iran 같은 거시 shock은 모든 섹터 위에 덮이는 hard gate다.
+hard_4c_early_warning,5,raise,계약·안전·거시 hard 4C를 빨리 잡아야 한다.
+policy_news_only,-5,lower,정책 뉴스만으로는 Green 금지다.
+stablecoin_policy_theme_only,-5,lower,발행권·reserve income 전 stablecoin 테마는 event premium이다.
+AI_capital_allocation_without_revenue,-5,lower,AI 투자·CB 이벤트는 recurring AI revenue 전 Stage 2/4B다.
+contract_headline_without_calloff,-5,lower,고객명과 계약 headline만으로 Green을 주면 hard 4C에 취약하다.
+capex_without_funding_or_margin,-5,lower,funding·margin 없는 CAPEX는 RedTeam이다.
+M&A_or_CB_event_without_revenue,-4,lower,M&A/CB 이벤트는 매출 전환 전 4B-watch다.
+IPO_or_debut_premium,-4,lower,상장 초기 프리미엄은 구조 증거가 아니다.
+high_score_without_price_validation,-5,lower,가격검증이 없는 높은 점수는 calibration 대상이다.
