@@ -1,0 +1,21 @@
+axis,points,direction,reason
+confirmed_customer_order,5,raise,R2는 고객 주문이 확인될 때만 강하게 본다.
+HBM_generation_transition,5,raise,HBM 세대 전환은 EPS/FCF 체급 변화의 핵심 증거다.
+capacity_bottleneck,5,raise,CAPA 병목과 allocation은 단순 AI keyword보다 강하다.
+EUV_or_advanced_packaging_capacity,5,raise,EUV/advanced packaging 투자가 HBM 매출로 이어질 때 visibility가 올라간다.
+product_specificity,4,raise,"HBM4, 2nm GAA, TSV-TC bonder처럼 제품이 구체적이어야 한다."
+order_to_revenue_conversion,5,raise,주문이 매출·마진으로 전환되어야 Stage 3 후보가 된다.
+gross_margin_visibility,5,raise,장비/파운드리/메모리 모두 마진 가시성이 필요하다.
+customer_diversification,4,raise,단일 고객·중국 고객 집중은 Green 전에 확인해야 한다.
+price_path_alignment,5,raise,증거 이후 가격경로가 따라오는지 검증한다.
+AI_keyword_only,-5,lower,AI 이름만 있으면 Stage 1 연구 라우팅 수준이다.
+MOU_or_policy_only,-5,lower,MoU와 정책 검토는 주문·매출 전 Green이 아니다.
+unconfirmed_media_report,-5,lower,미확정 고객 보도로 급등하면 4B-watch다.
+design_win_without_revenue,-4,lower,design win은 양산·매출·마진 전 Stage 2다.
+policy_foundry_without_order,-5,lower,정책 foundry는 회사 단위 order 전 event premium이다.
+corporate_action_without_order,-4,lower,spin-off optionality는 order/revenue 전 Green이 아니다.
+China_customer_dependency,-5,lower,중국 고객 집중은 export-control RedTeam을 키운다.
+export_control_exposure,-5,lower,중국 fab 장비허가 리스크는 4C-watch다.
+IP_leak_risk,-5,lower,기술유출은 moat와 trust를 훼손할 수 있다.
+labor_disruption_risk,-5,lower,파업·생산중단은 HBM/foundry 실행 신뢰도를 낮춘다.
+price_rally_before_confirmation,-5,lower,확인 전 가격만 먼저 움직이면 4B-watch다.

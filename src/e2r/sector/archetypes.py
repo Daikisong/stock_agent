@@ -84,16 +84,20 @@ class E2RArchetype(str, Enum):
     EXPORT_RECURRING_CONSUMER = "EXPORT_RECURRING_CONSUMER"
     K_BEAUTY_EXPORT_DISTRIBUTION = "K_BEAUTY_EXPORT_DISTRIBUTION"
     MEMORY_HBM_CAPACITY = "MEMORY_HBM_CAPACITY"
+    MEMORY_HBM_CAPACITY_LEADER = "MEMORY_HBM_CAPACITY_LEADER"
+    HBM_EUV_ADVANCED_PACKAGING_CAPEX = "HBM_EUV_ADVANCED_PACKAGING_CAPEX"
     MEMORY_HBM4_FIRST_MOVER = "MEMORY_HBM4_FIRST_MOVER"
     MEMORY_SUPERCYCLE_AI_CAPEX = "MEMORY_SUPERCYCLE_AI_CAPEX"
     MEMORY_HBM_LTA_PREPAYMENT = "MEMORY_HBM_LTA_PREPAYMENT"
     HBM_CATCHUP_EXECUTION = "HBM_CATCHUP_EXECUTION"
     HBM_CATCHUP_EXECUTION_RISK = "HBM_CATCHUP_EXECUTION_RISK"
+    FOUNDRY_TURNAROUND_CONTRACT = "FOUNDRY_TURNAROUND_CONTRACT"
     MEMORY_SUPPLY_REALLOCATION = "MEMORY_SUPPLY_REALLOCATION"
     AI_STORAGE_NAND_SHORTAGE = "AI_STORAGE_NAND_SHORTAGE"
     COMMODITY_MEMORY_GENERAL_SEMI = "COMMODITY_MEMORY_GENERAL_SEMI"
     SEMI_EQUIPMENT_CAPEX = "SEMI_EQUIPMENT_CAPEX"
     SEMI_EQUIPMENT_AI_CAPEX = "SEMI_EQUIPMENT_AI_CAPEX"
+    HBM_BONDER_EQUIPMENT = "HBM_BONDER_EQUIPMENT"
     HBM_BONDER_EQUIPMENT_KOREA = "HBM_BONDER_EQUIPMENT_KOREA"
     ADVANCED_PACKAGING_EQUIPMENT_KOREA = "ADVANCED_PACKAGING_EQUIPMENT_KOREA"
     AI_SERVER_PCB_MLB_KOREA = "AI_SERVER_PCB_MLB_KOREA"
@@ -108,11 +112,14 @@ class E2RArchetype(str, Enum):
     ON_DEVICE_AI_THEME_KOREA = "ON_DEVICE_AI_THEME_KOREA"
     SEMI_CAPEX_ORDER_TO_REVENUE = "SEMI_CAPEX_ORDER_TO_REVENUE"
     IP_LEAK_SUPPLY_CHAIN_REDTEAM = "IP_LEAK_SUPPLY_CHAIN_REDTEAM"
+    SEMICONDUCTOR_IP_LEAK_REDTEAM = "SEMICONDUCTOR_IP_LEAK_REDTEAM"
     GEOPOLITICAL_EXPORT_CONTROL_OVERLAY = "GEOPOLITICAL_EXPORT_CONTROL_OVERLAY"
     LABOR_PRODUCTION_DISRUPTION_OVERLAY = "LABOR_PRODUCTION_DISRUPTION_OVERLAY"
     LABOR_SUPPLY_CHAIN_4C_WATCH = "LABOR_SUPPLY_CHAIN_4C_WATCH"
     SYSTEM_SEMI_FOUNDARY_OPTION_KOREA = "SYSTEM_SEMI_FOUNDARY_OPTION_KOREA"
     POLICY_FOUNDRY_EVENT = "POLICY_FOUNDRY_EVENT"
+    CHINA_CXMT_EQUIPMENT_SUPPLIER_RELIEF = "CHINA_CXMT_EQUIPMENT_SUPPLIER_RELIEF"
+    SEMICONDUCTOR_EQUIPMENT_SPINOFF_OPTIONALITY = "SEMICONDUCTOR_EQUIPMENT_SPINOFF_OPTIONALITY"
     AI_CHIP_FABRIC_PRIVATE_RELATED = "AI_CHIP_FABRIC_PRIVATE_RELATED"
     OPENAI_STARGATE_AI_CAPEX_EVENT = "OPENAI_STARGATE_AI_CAPEX_EVENT"
     ON_DEVICE_AI_THEME = "ON_DEVICE_AI_THEME"
@@ -811,6 +818,138 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("financial_actual", "research_report", "consensus_revision", "news"),
             false_positive_patterns=("pure cyclical bounce", "price-only memory rally", "capex overbuild ignored"),
             preferred_score_weights=_weights(eps_fcf=24, visibility=21, bottleneck=19, mispricing=15, valuation=12),
+        ),
+        E2RArchetype.MEMORY_HBM_CAPACITY_LEADER: ArchetypeDefinition(
+            archetype=E2RArchetype.MEMORY_HBM_CAPACITY_LEADER,
+            stage1_radar_signals=("AI server HBM demand", "commodity memory frame break", "HBM share leadership"),
+            stage2_candidate_signals=("HBM dominance", "DRAM price upcycle", "EPS revision", "capacity allocation"),
+            stage3_high_conviction_signals=("customer allocation", "HBM generation leadership", "capacity bottleneck", "multi-year EPS/FCF revision"),
+            stage4a_ongoing_signals=("HBM demand and pricing remain strong", "advanced packaging capacity converts to shipments"),
+            stage4b_graduation_overheat_signals=("market-cap milestone headline", "multi-year return multiple", "AI memory consensus crowded"),
+            stage4c_thesis_break_signals=("HBM qualification failure", "memory price decline", "customer capex cut", "supply normalization"),
+            key_evidence_families=("financial_actual", "research_report", "consensus_revision", "news", "price"),
+            false_positive_patterns=("HBM keyword without customer allocation", "price-only memory rerating", "capex headline before shipment"),
+            preferred_score_weights=_weights(eps_fcf=24, visibility=22, bottleneck=20, mispricing=14, valuation=11),
+        ),
+        E2RArchetype.HBM_EUV_ADVANCED_PACKAGING_CAPEX: ArchetypeDefinition(
+            archetype=E2RArchetype.HBM_EUV_ADVANCED_PACKAGING_CAPEX,
+            stage1_radar_signals=("EUV order", "advanced packaging investment", "HBM capacity expansion"),
+            stage2_candidate_signals=("tool order amount", "plant investment amount", "delivery schedule", "AI memory use case"),
+            stage3_high_conviction_signals=("capacity bottleneck relief tied to HBM revenue", "shipment conversion", "margin and EPS revision"),
+            stage4a_ongoing_signals=("tools install on schedule", "packaging capacity remains constrained", "HBM mix improves"),
+            stage4b_graduation_overheat_signals=("capex milestone fully priced", "market-cap milestone", "consensus crowding"),
+            stage4c_thesis_break_signals=("equipment delay", "advanced packaging overcapacity", "customer demand slowdown"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "research_report"),
+            false_positive_patterns=("capex headline without HBM revenue bridge", "capacity spend treated as free cash flow"),
+            preferred_score_weights=_weights(eps_fcf=22, visibility=22, bottleneck=21, mispricing=13, valuation=11),
+        ),
+        E2RArchetype.HBM_CATCHUP_EXECUTION: ArchetypeDefinition(
+            archetype=E2RArchetype.HBM_CATCHUP_EXECUTION,
+            stage1_radar_signals=("HBM catch-up narrative", "foundry recovery", "AI memory MoU"),
+            stage2_candidate_signals=("customer contract or MoU", "HBM4 qualification progress", "foundry contract duration"),
+            stage3_high_conviction_signals=("volume shipment", "yield stability", "customer revenue recognition", "margin/EPS revision"),
+            stage4a_ongoing_signals=("shipment volume and margin keep improving", "customer qualification remains intact"),
+            stage4b_graduation_overheat_signals=("catch-up valuation expands before volume proof", "HBM/foundry narrative crowds"),
+            stage4c_thesis_break_signals=("qualification delay", "yield failure", "labor disruption", "export-control disruption", "IP leakage"),
+            key_evidence_families=("news", "research_report", "financial_actual", "consensus_revision"),
+            false_positive_patterns=("MOU treated as shipment", "foundry contract without margin", "catch-up headline before yield"),
+            preferred_score_weights=_weights(eps_fcf=22, visibility=20, bottleneck=17, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.FOUNDRY_TURNAROUND_CONTRACT: ArchetypeDefinition(
+            archetype=E2RArchetype.FOUNDRY_TURNAROUND_CONTRACT,
+            stage1_radar_signals=("large foundry contract", "legacy or AI chip capacity policy", "customer speculation"),
+            stage2_candidate_signals=("contract value", "contract duration", "customer commitment", "process-node specificity"),
+            stage3_high_conviction_signals=("wafer revenue recognition", "yield and utilization proof", "foundry margin recovery", "EPS/FCF revision"),
+            stage4a_ongoing_signals=("utilization and yield remain on plan", "customer pipeline expands"),
+            stage4b_graduation_overheat_signals=("contract headline priced before utilization", "customer speculation drives rally"),
+            stage4c_thesis_break_signals=("yield failure", "customer cancellation", "utilization miss", "labor or export-control disruption"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "research_report"),
+            false_positive_patterns=("customer not disclosed", "contract value without margin", "policy foundry treated as company order"),
+            preferred_score_weights=_weights(eps_fcf=21, visibility=22, bottleneck=14, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.HBM_BONDER_EQUIPMENT: ArchetypeDefinition(
+            archetype=E2RArchetype.HBM_BONDER_EQUIPMENT,
+            stage1_radar_signals=("HBM bonder demand", "TSV/TC bonder keyword", "packaging equipment order"),
+            stage2_candidate_signals=("confirmed HBM customer order", "contract amount", "recent order book", "customer diversification"),
+            stage3_high_conviction_signals=("repeat customer orders", "order-to-revenue conversion", "gross margin visibility", "EPS revision"),
+            stage4a_ongoing_signals=("orders convert to revenue", "new customers confirm", "HBM capex remains strong"),
+            stage4b_graduation_overheat_signals=("unconfirmed customer rumor moves price", "equipment narrative crowded", "rapid one-day rerating"),
+            stage4c_thesis_break_signals=("customer capex pause", "order cancellation", "export-control disruption", "single-customer concentration failure"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "research_report"),
+            false_positive_patterns=("media report treated as contract", "HBM equipment rumor without PO", "price rally before confirmation"),
+            preferred_score_weights=_weights(eps_fcf=22, visibility=22, bottleneck=20, mispricing=13, valuation=10),
+        ),
+        E2RArchetype.CHINA_CXMT_EQUIPMENT_SUPPLIER_RELIEF: ArchetypeDefinition(
+            archetype=E2RArchetype.CHINA_CXMT_EQUIPMENT_SUPPLIER_RELIEF,
+            stage1_radar_signals=("China memory capex", "CXMT customer exposure", "export-control relief"),
+            stage2_candidate_signals=("CXMT exclusion relief", "customer revenue share", "equipment supply deal"),
+            stage3_high_conviction_signals=("non-China customer diversification", "durable export authorization", "revenue and margin conversion"),
+            stage4a_ongoing_signals=("export-control status remains stable", "customer diversification improves"),
+            stage4b_graduation_overheat_signals=("relief rally prices before durable authorization", "China customer concentration ignored"),
+            stage4c_thesis_break_signals=("new export-control wave", "CXMT restriction", "authorization loss", "receivables or margin stress"),
+            key_evidence_families=("news", "disclosure", "financial_actual"),
+            false_positive_patterns=("regulatory relief treated as structural order", "China-only customer concentration"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=14, bottleneck=14, mispricing=9, valuation=8),
+        ),
+        E2RArchetype.SYSTEM_SEMI_DESIGN_HOUSE_AI_ORDER: ArchetypeDefinition(
+            archetype=E2RArchetype.SYSTEM_SEMI_DESIGN_HOUSE_AI_ORDER,
+            stage1_radar_signals=("AI chip design win", "2nm GAA", "advanced packaging ecosystem"),
+            stage2_candidate_signals=("named customer design win", "end-use specificity", "tape-out path"),
+            stage3_high_conviction_signals=("mass production", "revenue recognition", "gross margin visibility", "repeat design wins"),
+            stage4a_ongoing_signals=("production ramp remains on schedule", "customer pipeline expands"),
+            stage4b_graduation_overheat_signals=("design-house theme rallies before revenue", "order size undisclosed"),
+            stage4c_thesis_break_signals=("tape-out delay", "yield issue", "customer cancellation", "no revenue conversion"),
+            key_evidence_families=("news", "disclosure", "research_report"),
+            false_positive_patterns=("design win treated as revenue", "AI chip keyword without order size"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=18, bottleneck=13, mispricing=13, valuation=10),
+        ),
+        E2RArchetype.POLICY_FOUNDRY_EVENT: ArchetypeDefinition(
+            archetype=E2RArchetype.POLICY_FOUNDRY_EVENT,
+            stage1_radar_signals=("public-private foundry policy", "legacy chip localization", "defense semiconductor localization"),
+            stage2_candidate_signals=("budget discussion", "consultation target", "process-node and wafer-size detail"),
+            stage3_high_conviction_signals=("funded capex", "company-level order", "customer commitment", "utilization and margin proof"),
+            stage4a_ongoing_signals=("funding and utilization path remain intact",),
+            stage4b_graduation_overheat_signals=("policy foundry theme rallies before order", "fabless basket price-only move"),
+            stage4c_thesis_break_signals=("budget not funded", "customer absent", "utilization failure", "private burden excessive"),
+            key_evidence_families=("news", "policy", "disclosure"),
+            false_positive_patterns=("policy consultation treated as company order", "foundry capex without customer"),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=12, bottleneck=10, mispricing=8, valuation=7),
+        ),
+        E2RArchetype.SEMICONDUCTOR_EQUIPMENT_SPINOFF_OPTIONALITY: ArchetypeDefinition(
+            archetype=E2RArchetype.SEMICONDUCTOR_EQUIPMENT_SPINOFF_OPTIONALITY,
+            stage1_radar_signals=("equipment spin-off", "HBM equipment optionality", "valuation unlock"),
+            stage2_candidate_signals=("spin-off terms", "segment value", "listed exposure", "revenue contribution"),
+            stage3_high_conviction_signals=("HBM equipment order book", "revenue conversion", "margin and EPS bridge", "listed vehicle economics"),
+            stage4a_ongoing_signals=("spin-off economics convert to revenue", "equipment orders confirm"),
+            stage4b_graduation_overheat_signals=("media report rally before announcement", "corporate action priced before order"),
+            stage4c_thesis_break_signals=("order book absent", "revenue bridge missing", "post-announcement selloff", "governance execution risk"),
+            key_evidence_families=("news", "disclosure", "financial_actual"),
+            false_positive_patterns=("corporate action treated as HBM order", "sum-of-parts premium without FCF"),
+            preferred_score_weights=_weights(eps_fcf=16, visibility=13, bottleneck=11, mispricing=12, valuation=13),
+        ),
+        E2RArchetype.GEOPOLITICAL_EXPORT_CONTROL_OVERLAY: ArchetypeDefinition(
+            archetype=E2RArchetype.GEOPOLITICAL_EXPORT_CONTROL_OVERLAY,
+            stage1_radar_signals=("U.S.-China chip export control", "China fab exposure", "authorization change"),
+            stage2_candidate_signals=("not a Green source; RedTeam overlay",),
+            stage3_high_conviction_signals=("not applicable; export-control risk must clear before Green",),
+            stage4a_ongoing_signals=("authorization and customer access remain stable",),
+            stage4b_graduation_overheat_signals=("AI/HBM rally ignores China fab exposure",),
+            stage4c_thesis_break_signals=("equipment authorization loss", "China fab disruption", "customer concentration failure", "production impact"),
+            key_evidence_families=("news", "disclosure", "financial_actual"),
+            false_positive_patterns=("China customer concentration ignored", "regulatory relief treated as durable"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.SEMICONDUCTOR_IP_LEAK_REDTEAM: ArchetypeDefinition(
+            archetype=E2RArchetype.SEMICONDUCTOR_IP_LEAK_REDTEAM,
+            stage1_radar_signals=("IP leak charge", "technology leakage", "China competitive catch-up"),
+            stage2_candidate_signals=("not a Green source; trust and technology moat overlay",),
+            stage3_high_conviction_signals=("not applicable; IP trust risk can block Green",),
+            stage4a_ongoing_signals=("technology moat remains intact", "legal and customer trust stable"),
+            stage4b_graduation_overheat_signals=("technology moat priced while leakage risk rises",),
+            stage4c_thesis_break_signals=("confirmed IP leakage", "customer trust loss", "competitive catch-up", "accounting or disclosure trust break"),
+            key_evidence_families=("news", "legal", "disclosure"),
+            false_positive_patterns=("IP leakage dismissed as non-operating noise", "competitive moat assumed without trust evidence"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.AUTO_MOBILITY_COMPLETED_VEHICLE: ArchetypeDefinition(
             archetype=E2RArchetype.AUTO_MOBILITY_COMPLETED_VEHICLE,

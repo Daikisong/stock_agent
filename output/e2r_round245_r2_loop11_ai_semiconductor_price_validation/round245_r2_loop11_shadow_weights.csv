@@ -1,0 +1,10 @@
+archetype,confirmed_order,hbm_transition,capacity_bottleneck,euv_packaging,product_specificity,order_to_revenue,margin_visibility,customer_diversification,price_path_alignment,event_penalty,china_export_ip_redteam,4b_watch_sensitivity,hard_4c_sensitivity,notes
+MEMORY_HBM_CAPACITY_LEADER,+5,+5,+5,+5,+5,+5,+5,+4,+5,-1,+4,+5,+4,SK Hynix is aligned Stage 3 but now requires 4B-watch.
+HBM_CATCHUP_EXECUTION,+4,+4,+4,+3,+4,+4,+5,+3,+3,-2,+5,+4,+4,"Samsung is Stage 2 until HBM/foundry volume, margin and labor/export risks clear."
+FOUNDRY_TURNAROUND_CONTRACT,+5,+2,+3,+3,+4,+4,+5,+3,+3,-3,+4,+4,+4,$16.5B contract helps Samsung but yield/margin/revenue bridge must confirm.
+HBM_BONDER_EQUIPMENT,+5,+5,+5,+3,+5,+5,+5,+4,+4,-3,+3,+5,+3,Hanmi confirmed order is good; unconfirmed Micron rumor is 4B risk.
+CHINA_CXMT_EQUIPMENT_SUPPLIER_RELIEF,+3,+2,+3,+2,+4,+4,+4,+2,+2,-4,+5,+5,+4,"Jusung/Mirae CXMT relief is event, not Green; customer concentration matters."
+SYSTEM_SEMI_DESIGN_HOUSE_AI_ORDER,+2,+1,+2,+2,+5,+4,+4,+3,+2,-4,+2,+3,+3,"Gaonchips design win needs tape-out, production and revenue."
+POLICY_FOUNDRY_EVENT,+1,+0,+2,+1,+2,+1,+2,+1,+1,-5,+2,+4,+3,Policy foundry consultation is not company Green.
+SEMICONDUCTOR_EQUIPMENT_SPINOFF_OPTIONALITY,+2,+2,+2,+2,+3,+2,+3,+2,+2,-5,+2,+5,+3,Spin-off optionality requires order book and revenue conversion.
+GEOPOLITICAL_EXPORT_CONTROL_OVERLAY,+0,+0,+0,+0,+0,+0,+0,+0,+2,+0,+5,+3,+5,China fab authorization loss and IP leak are 4C-watch until production/revenue impact confirms.

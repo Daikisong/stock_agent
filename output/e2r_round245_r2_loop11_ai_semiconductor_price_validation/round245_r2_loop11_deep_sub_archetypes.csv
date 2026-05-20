@@ -1,0 +1,10 @@
+category,primary_archetype,terms
+HBM leader,MEMORY_HBM_CAPACITY_LEADER,SK Hynix|HBM|advanced DRAM|ASML EUV|advanced packaging|4B crowding
+Samsung catch-up,HBM_CATCHUP_EXECUTION,Samsung Electronics|HBM4|AMD MoU|foundry contract|strike|China fab
+Foundry turnaround,FOUNDRY_TURNAROUND_CONTRACT,$16.5B contract|through 2033|yield margin utilization required
+HBM bonder equipment,HBM_BONDER_EQUIPMENT,Hanmi Semiconductor|TSV-TC bonder|SK Hynix contract|Micron unconfirmed report
+China/CXMT equipment suppliers,CHINA_CXMT_EQUIPMENT_SUPPLIER_RELIEF,Jusung Engineering|Mirae Corp|CXMT exclusion relief|export-control uncertainty
+Design house,SYSTEM_SEMI_DESIGN_HOUSE_AI_ORDER,Gaonchips|Preferred Networks|Samsung 2nm GAA|advanced packaging
+Policy foundry,POLICY_FOUNDRY_EVENT,DB HiTek|40nm|12-inch|defense semiconductor localization|consultation target
+Equipment spin-off,SEMICONDUCTOR_EQUIPMENT_SPINOFF_OPTIONALITY,Hanwha Precision Machinery|Hanwha Aerospace|HBM equipment optionality|spin-off
+RedTeam,SEMICONDUCTOR_IP_LEAK_REDTEAM,export-control|China fab authorization|Samsung DRAM IP leak|CXMT|labor disruption
