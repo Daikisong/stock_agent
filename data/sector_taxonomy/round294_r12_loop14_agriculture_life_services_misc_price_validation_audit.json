@@ -1,0 +1,344 @@
+{
+  "case_ids": [
+    "r12_loop14_daedong_tym_agri_equipment_export_cycle",
+    "r12_loop14_food_input_cost_inflation_basket",
+    "r12_loop14_fried_chicken_jensen_huang_meme_rally",
+    "r12_loop14_naver_uber_baemin_food_delivery_consolidation",
+    "r12_loop14_delivery_labor_service_continuity_reference",
+    "r12_loop14_waste_recycling_infra_stage2",
+    "r12_loop14_birthrate_childcare_infant_goods_stage2",
+    "r12_loop14_private_education_hagwon_demand_stage2"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "농기계 수출사이클",
+      "primary_archetype": "AGRI_EQUIPMENT_EXPORT_CYCLE_4C_WATCH",
+      "terms": "Daedong|TYM|CNH forecast cut|AGCO recovery reference|dealer inventory"
+    },
+    {
+      "category": "식품 원가",
+      "primary_archetype": "AGRI_FOOD_INPUT_COST_4C_WATCH",
+      "terms": "CJ CheilJedang|Pulmuone|CJ Freshway|rice +18.6%|mandarin +26.5%"
+    },
+    {
+      "category": "치킨 밈 이벤트",
+      "primary_archetype": "FRIED_CHICKEN_MEME_EVENT_PREMIUM",
+      "terms": "Kyochon|Cherrybro|Neuromeka|Jensen Huang|Kkanbu Chicken"
+    },
+    {
+      "category": "배달앱 M&A",
+      "primary_archetype": "FOOD_DELIVERY_CONSOLIDATION_STAGE2",
+      "terms": "Naver|Uber|Baemin|Delivery Hero|8T won bid"
+    },
+    {
+      "category": "배송 노동 연속성",
+      "primary_archetype": "DELIVERY_LABOR_SERVICE_CONTINUITY_REFERENCE",
+      "terms": "CJ Logistics|Hanjin|Coupang|Rocket Delivery pause|courier labor"
+    },
+    {
+      "category": "폐기물/재활용",
+      "primary_archetype": "WASTE_RECYCLING_INFRA_STAGE2",
+      "terms": "KJ Environment|EQT|plastic recycling|actual recycling 27%|cleanup liability"
+    },
+    {
+      "category": "출산/육아",
+      "primary_archetype": "DEMOGRAPHIC_CHILDCARE_STAGE2",
+      "terms": "fertility 0.72 to 0.80|births +6.8%|Agabang|Zero to Seven|echo-boomer"
+    },
+    {
+      "category": "사교육/학원",
+      "primary_archetype": "PRIVATE_EDUCATION_HAGWON_STAGE2_4C",
+      "terms": "MegaStudy|Chungdahm|under-6 hagwon 47.6%|tuition 332000 KRW|English kindergarten 1.5M KRW"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "farm_equipment_recovery_headline_only",
+    "food_input_inflation_as_pricing_power",
+    "celebrity_AI_visit_without_restaurant_economics",
+    "M&A_scale_without_take_rate_margin",
+    "fast_delivery_without_labor_continuity",
+    "waste_platform_EV_without_recycling_yield",
+    "birthrate_headline_without_customer_count",
+    "hagwon_demand_without_policy_and_demographic_check"
+  ],
+  "green_required_fields": [
+    "farm_income_order_visibility_confirmed",
+    "dealer_inventory_normalization_confirmed",
+    "export_order_and_ASP_margin_confirmed",
+    "food_input_cost_pass_through_confirmed",
+    "volume_retention_after_price_increase_confirmed",
+    "same_store_sales_franchise_fee_confirmed",
+    "delivery_take_rate_unit_economics_confirmed",
+    "labor_service_continuity_confirmed",
+    "recycling_yield_gate_fee_utilization_confirmed",
+    "cleanup_liability_control_confirmed",
+    "childcare_customer_count_ARPU_margin_confirmed",
+    "education_enrolment_retention_regulatory_durability_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "farm_income_decline_and_dealer_inventory_overhang",
+    "input_cost_inflation_without_pass_through",
+    "delivery_service_interruption_from_labor_or_regulation",
+    "recycling_yield_failure_or_cleanup_liability",
+    "temporary_birthrate_rebound_after_echo_boomer_effect",
+    "hagwon_regulation_or_child_population_decline",
+    "franchisee_profitability_collapse_after_brand_virality"
+  ],
+  "large_sector": "AGRICULTURE_LIFE_SERVICES_MISC",
+  "round_id": "round_222",
+  "score_adjustments": [
+    {
+      "axis": "farm_income_order_visibility",
+      "direction": "raise",
+      "points": "5",
+      "reason": "농기계는 회복 기대보다 농가소득, dealer inventory, order와 ASP/margin이 먼저다."
+    },
+    {
+      "axis": "dealer_inventory_normalization",
+      "direction": "raise",
+      "points": "5",
+      "reason": "수출 농기계는 dealer inventory overhang이 풀려야 Stage 3 후보가 된다."
+    },
+    {
+      "axis": "food_input_cost_pass_through",
+      "direction": "raise",
+      "points": "5",
+      "reason": "식품 원가 상승은 판가 전가와 volume retention 전에는 margin 악재다."
+    },
+    {
+      "axis": "same_store_sales_franchise_fee",
+      "direction": "raise",
+      "points": "5",
+      "reason": "프랜차이즈 밈은 동일점 매출과 가맹 수수료로 닫혀야 한다."
+    },
+    {
+      "axis": "delivery_take_rate_unit_economics",
+      "direction": "raise",
+      "points": "5",
+      "reason": "배달앱 M&A는 GMV보다 take-rate, rider cost, merchant churn이 핵심이다."
+    },
+    {
+      "axis": "labor_service_continuity",
+      "direction": "raise",
+      "points": "5",
+      "reason": "생활물류 moat는 빠른 배송뿐 아니라 노동·규제·운영 연속성이다."
+    },
+    {
+      "axis": "recycling_yield_gate_fee_margin",
+      "direction": "raise",
+      "points": "5",
+      "reason": "폐기물 인프라는 EV보다 recycling yield, gate fee, utilization, cleanup liability가 중요하다."
+    },
+    {
+      "axis": "childcare_actual_customer_growth",
+      "direction": "raise",
+      "points": "5",
+      "reason": "출산율 headline은 실제 고객수, ARPU, 보조금 capture와 margin으로 내려와야 한다."
+    },
+    {
+      "axis": "education_enrolment_retention",
+      "direction": "raise",
+      "points": "5",
+      "reason": "사교육 수요는 등록률, retention, 교사 비용, 규제 내구성으로 검증한다."
+    },
+    {
+      "axis": "headline_only_event",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "유명인 방문, 출산율 headline, M&A headline만으로 Green을 만들지 않는다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "AGRI_EQUIPMENT_EXPORT_CYCLE_4C_WATCH",
+      "childcare_actual_customer_growth": "+0",
+      "dealer_inventory_normalization": "+5",
+      "delivery_take_rate_unit_economics": "+0",
+      "education_enrolment_retention": "+0",
+      "event_penalty": "+0",
+      "farm_income_order_visibility": "+5",
+      "food_input_cost_pass_through": "+1",
+      "hard_4c_sensitivity": "+4",
+      "labor_service_continuity": "+1",
+      "notes": "Daedong/TYM require farm income, dealer inventory, export orders and ASP/margin confirmation.",
+      "policy_regulatory_durability": "+3",
+      "recycling_yield_gate_fee_margin": "+0",
+      "same_store_sales_franchise_fee": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "AGRI_FOOD_INPUT_COST_4C_WATCH",
+      "childcare_actual_customer_growth": "+0",
+      "dealer_inventory_normalization": "+0",
+      "delivery_take_rate_unit_economics": "+0",
+      "education_enrolment_retention": "+0",
+      "event_penalty": "+0",
+      "farm_income_order_visibility": "+1",
+      "food_input_cost_pass_through": "+5",
+      "hard_4c_sensitivity": "+4",
+      "labor_service_continuity": "+0",
+      "notes": "Food inflation can be margin-negative unless pass-through and volume retention confirm.",
+      "policy_regulatory_durability": "+3",
+      "recycling_yield_gate_fee_margin": "+0",
+      "same_store_sales_franchise_fee": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "FRIED_CHICKEN_MEME_EVENT_PREMIUM",
+      "childcare_actual_customer_growth": "+0",
+      "dealer_inventory_normalization": "+0",
+      "delivery_take_rate_unit_economics": "+0",
+      "education_enrolment_retention": "+0",
+      "event_penalty": "-5",
+      "farm_income_order_visibility": "+0",
+      "food_input_cost_pass_through": "+2",
+      "hard_4c_sensitivity": "+3",
+      "labor_service_continuity": "+0",
+      "notes": "Jensen fried-chicken rally is meme premium without same-store sales or franchise economics.",
+      "policy_regulatory_durability": "+1",
+      "recycling_yield_gate_fee_margin": "+0",
+      "same_store_sales_franchise_fee": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "FOOD_DELIVERY_CONSOLIDATION_STAGE2",
+      "childcare_actual_customer_growth": "+0",
+      "dealer_inventory_normalization": "+0",
+      "delivery_take_rate_unit_economics": "+5",
+      "education_enrolment_retention": "+0",
+      "event_penalty": "-5",
+      "farm_income_order_visibility": "+0",
+      "food_input_cost_pass_through": "+1",
+      "hard_4c_sensitivity": "+4",
+      "labor_service_continuity": "+5",
+      "notes": "Baemin M&A needs approval, take-rate, rider cost, merchant churn and integration economics.",
+      "policy_regulatory_durability": "+5",
+      "recycling_yield_gate_fee_margin": "+0",
+      "same_store_sales_franchise_fee": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "DELIVERY_LABOR_SERVICE_CONTINUITY_REFERENCE",
+      "childcare_actual_customer_growth": "+0",
+      "dealer_inventory_normalization": "+0",
+      "delivery_take_rate_unit_economics": "+5",
+      "education_enrolment_retention": "+0",
+      "event_penalty": "+0",
+      "farm_income_order_visibility": "+0",
+      "food_input_cost_pass_through": "+0",
+      "hard_4c_sensitivity": "+4",
+      "labor_service_continuity": "+5",
+      "notes": "Delivery service moat depends on labor continuity and service reliability.",
+      "policy_regulatory_durability": "+5",
+      "recycling_yield_gate_fee_margin": "+0",
+      "same_store_sales_franchise_fee": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "WASTE_RECYCLING_INFRA_STAGE2",
+      "childcare_actual_customer_growth": "+0",
+      "dealer_inventory_normalization": "+0",
+      "delivery_take_rate_unit_economics": "+0",
+      "education_enrolment_retention": "+0",
+      "event_penalty": "-5",
+      "farm_income_order_visibility": "+0",
+      "food_input_cost_pass_through": "+0",
+      "hard_4c_sensitivity": "+4",
+      "labor_service_continuity": "+2",
+      "notes": "Waste infra needs recycling yield, gate fee, utilization and cleanup liability control.",
+      "policy_regulatory_durability": "+5",
+      "recycling_yield_gate_fee_margin": "+5",
+      "same_store_sales_franchise_fee": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "DEMOGRAPHIC_CHILDCARE_STAGE2",
+      "childcare_actual_customer_growth": "+5",
+      "dealer_inventory_normalization": "+0",
+      "delivery_take_rate_unit_economics": "+0",
+      "education_enrolment_retention": "+3",
+      "event_penalty": "-5",
+      "farm_income_order_visibility": "+0",
+      "food_input_cost_pass_through": "+0",
+      "hard_4c_sensitivity": "+3",
+      "labor_service_continuity": "+1",
+      "notes": "Birthrate rebound is Stage 2 until customer growth and ARPU/margin confirm.",
+      "policy_regulatory_durability": "+5",
+      "recycling_yield_gate_fee_margin": "+0",
+      "same_store_sales_franchise_fee": "+0"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "PRIVATE_EDUCATION_HAGWON_STAGE2_4C",
+      "childcare_actual_customer_growth": "+2",
+      "dealer_inventory_normalization": "+0",
+      "delivery_take_rate_unit_economics": "+0",
+      "education_enrolment_retention": "+5",
+      "event_penalty": "-4",
+      "farm_income_order_visibility": "+0",
+      "food_input_cost_pass_through": "+0",
+      "hard_4c_sensitivity": "+3",
+      "labor_service_continuity": "+1",
+      "notes": "Hagwon demand is strong but demographic and regulatory burden remain.",
+      "policy_regulatory_durability": "+5",
+      "recycling_yield_gate_fee_margin": "+0",
+      "same_store_sales_franchise_fee": "+0"
+    }
+  ],
+  "source_round": "docs/round/round_294.md",
+  "stage4b_watch_triggers": [
+    "celebrity_visit_photo_moves_food_service_peers",
+    "birthrate_headline_baby_education_basket_rally",
+    "M&A_bid_headline_food_delivery_premium",
+    "waste_infra_EV_headline_listed_readthrough",
+    "farm_equipment_recovery_hope_before_global_order_data",
+    "food_price_inflation_scored_as_pricing_power"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 8,
+    "direct_KRX_hard_4c_confirmed": false,
+    "direct_listed_hard_4c_case_count": 0,
+    "event_premium_count": 1,
+    "false_positive_score_count": 3,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "hard_reference_count": 1,
+    "large_sector": "AGRICULTURE_LIFE_SERVICES_MISC",
+    "price_moved_without_evidence_count": 1,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_222",
+    "sector_hard_reference_confirmed": true,
+    "sector_hard_reference_count": 7,
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 8,
+    "source_round": "docs/round/round_294.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 2,
+    "stage4c_watch_count": 5,
+    "success_candidate_count": 4,
+    "target_archetype_count": 8,
+    "watch_counterexample_count": 3
+  },
+  "target_aliases": {
+    "AGRI_EQUIPMENT_EXPORT_CYCLE_4C_WATCH": "AGRI_EQUIPMENT_EXPORT_CYCLE_4C_WATCH",
+    "AGRI_FOOD_INPUT_COST_4C_WATCH": "AGRI_FOOD_INPUT_COST_4C_WATCH",
+    "DELIVERY_LABOR_SERVICE_CONTINUITY_REFERENCE": "DELIVERY_LABOR_SERVICE_CONTINUITY_REFERENCE",
+    "DEMOGRAPHIC_CHILDCARE_STAGE2": "DEMOGRAPHIC_CHILDCARE_STAGE2",
+    "FOOD_DELIVERY_CONSOLIDATION_STAGE2": "FOOD_DELIVERY_CONSOLIDATION_STAGE2",
+    "FRIED_CHICKEN_MEME_EVENT_PREMIUM": "FRIED_CHICKEN_MEME_EVENT_PREMIUM",
+    "PRIVATE_EDUCATION_HAGWON_STAGE2_4C": "PRIVATE_EDUCATION_HAGWON_STAGE2_4C",
+    "WASTE_RECYCLING_INFRA_STAGE2": "WASTE_RECYCLING_INFRA_STAGE2"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round294_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_agri_life_service_headlines_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}

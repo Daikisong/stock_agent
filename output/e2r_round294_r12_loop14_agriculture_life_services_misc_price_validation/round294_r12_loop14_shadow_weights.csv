@@ -1,0 +1,9 @@
+archetype,farm_income_order_visibility,dealer_inventory_normalization,food_input_cost_pass_through,same_store_sales_franchise_fee,delivery_take_rate_unit_economics,labor_service_continuity,recycling_yield_gate_fee_margin,childcare_actual_customer_growth,education_enrolment_retention,policy_regulatory_durability,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+AGRI_EQUIPMENT_EXPORT_CYCLE_4C_WATCH,+5,+5,+1,+0,+0,+1,+0,+0,+0,+3,+0,+4,+4,"Daedong/TYM require farm income, dealer inventory, export orders and ASP/margin confirmation."
+AGRI_FOOD_INPUT_COST_4C_WATCH,+1,+0,+5,+2,+0,+0,+0,+0,+0,+3,+0,+4,+4,Food inflation can be margin-negative unless pass-through and volume retention confirm.
+FRIED_CHICKEN_MEME_EVENT_PREMIUM,+0,+0,+2,+5,+0,+0,+0,+0,+0,+1,-5,+5,+3,Jensen fried-chicken rally is meme premium without same-store sales or franchise economics.
+FOOD_DELIVERY_CONSOLIDATION_STAGE2,+0,+0,+1,+0,+5,+5,+0,+0,+0,+5,-5,+5,+4,"Baemin M&A needs approval, take-rate, rider cost, merchant churn and integration economics."
+DELIVERY_LABOR_SERVICE_CONTINUITY_REFERENCE,+0,+0,+0,+0,+5,+5,+0,+0,+0,+5,+0,+4,+4,Delivery service moat depends on labor continuity and service reliability.
+WASTE_RECYCLING_INFRA_STAGE2,+0,+0,+0,+0,+0,+2,+5,+0,+0,+5,-5,+4,+4,"Waste infra needs recycling yield, gate fee, utilization and cleanup liability control."
+DEMOGRAPHIC_CHILDCARE_STAGE2,+0,+0,+0,+0,+0,+1,+0,+5,+3,+5,-5,+5,+3,Birthrate rebound is Stage 2 until customer growth and ARPU/margin confirm.
+PRIVATE_EDUCATION_HAGWON_STAGE2_4C,+0,+0,+0,+0,+0,+1,+0,+2,+5,+5,-4,+4,+3,Hagwon demand is strong but demographic and regulatory burden remain.

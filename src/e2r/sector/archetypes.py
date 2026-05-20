@@ -898,6 +898,14 @@ class E2RArchetype(str, Enum):
     POLICY_MARKET_SHOCK_OVERLAY = "POLICY_MARKET_SHOCK_OVERLAY"
     AGRI_MACHINERY_EXPORT_CYCLE_KOREA = "AGRI_MACHINERY_EXPORT_CYCLE_KOREA"
     AGRI_MACHINERY_AUTONOMOUS_ROBOT_OPTION = "AGRI_MACHINERY_AUTONOMOUS_ROBOT_OPTION"
+    AGRI_EQUIPMENT_EXPORT_CYCLE_4C_WATCH = "AGRI_EQUIPMENT_EXPORT_CYCLE_4C_WATCH"
+    AGRI_FOOD_INPUT_COST_4C_WATCH = "AGRI_FOOD_INPUT_COST_4C_WATCH"
+    FRIED_CHICKEN_MEME_EVENT_PREMIUM = "FRIED_CHICKEN_MEME_EVENT_PREMIUM"
+    FOOD_DELIVERY_CONSOLIDATION_STAGE2 = "FOOD_DELIVERY_CONSOLIDATION_STAGE2"
+    DELIVERY_LABOR_SERVICE_CONTINUITY_REFERENCE = "DELIVERY_LABOR_SERVICE_CONTINUITY_REFERENCE"
+    WASTE_RECYCLING_INFRA_STAGE2 = "WASTE_RECYCLING_INFRA_STAGE2"
+    DEMOGRAPHIC_CHILDCARE_STAGE2 = "DEMOGRAPHIC_CHILDCARE_STAGE2"
+    PRIVATE_EDUCATION_HAGWON_STAGE2_4C = "PRIVATE_EDUCATION_HAGWON_STAGE2_4C"
     FERTILIZER_INPUT_PRICE_COST_KOREA = "FERTILIZER_INPUT_PRICE_COST_KOREA"
     LIVESTOCK_DISEASE_PRICE_EVENT_KOREA = "LIVESTOCK_DISEASE_PRICE_EVENT_KOREA"
     FEED_GRAIN_COST_PASS_THROUGH = "FEED_GRAIN_COST_PASS_THROUGH"
@@ -5722,6 +5730,102 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("demographic", "policy", "financial_actual", "research_report", "price"),
             false_positive_patterns=("birthrate headline treated as childcare or education Green", "policy incentive scored before enrolment and ARPU"),
             preferred_score_weights=_weights(eps_fcf=10, visibility=14, bottleneck=4, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.AGRI_EQUIPMENT_EXPORT_CYCLE_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.AGRI_EQUIPMENT_EXPORT_CYCLE_4C_WATCH,
+            stage1_radar_signals=("tractor export cycle", "farm-equipment recovery hope", "agriculture machinery demand rebound"),
+            stage2_candidate_signals=("farm income, dealer inventory, export order, ASP and margin evidence are mapped"),
+            stage3_high_conviction_signals=("farm income recovers, dealer inventory normalizes, export orders convert, ASP and OPM improve"),
+            stage4a_ongoing_signals=("orders, sell-through, financing cost and margin remain healthy"),
+            stage4b_graduation_overheat_signals=("agri-equipment recovery theme prices before global order and dealer data"),
+            stage4c_thesis_break_signals=("farm income weakness", "dealer inventory overhang", "tractor sales decline", "combine sales decline", "forecast cut"),
+            key_evidence_families=("financial_actual", "export", "research_report", "price", "red_team"),
+            false_positive_patterns=("farm-equipment rebound scored before order recovery", "tractor export theme without dealer sell-through"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=18, bottleneck=8, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.AGRI_FOOD_INPUT_COST_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.AGRI_FOOD_INPUT_COST_4C_WATCH,
+            stage1_radar_signals=("food input inflation", "rice price spike", "mandarin price spike", "agricultural fishery price rise"),
+            stage2_candidate_signals=("cost pass-through, volume retention, contract repricing and gross margin evidence are mapped"),
+            stage3_high_conviction_signals=("input-cost pass-through, stable volume, gross margin resilience and FCF conversion verified"),
+            stage4a_ongoing_signals=("food input costs are passed through without demand or margin break"),
+            stage4b_graduation_overheat_signals=("food basket rallies on CPI or input-cost headline before margin proof"),
+            stage4c_thesis_break_signals=("rice price spike", "mandarin price spike", "agricultural fishery inflation", "volume decline after price increase"),
+            key_evidence_families=("commodity", "financial_actual", "news", "price", "red_team"),
+            false_positive_patterns=("input-cost inflation treated as pricing power", "food CPI scored as Green without gross margin"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=8, bottleneck=14, mispricing=6, valuation=6),
+        ),
+        E2RArchetype.FRIED_CHICKEN_MEME_EVENT_PREMIUM: ArchetypeDefinition(
+            archetype=E2RArchetype.FRIED_CHICKEN_MEME_EVENT_PREMIUM,
+            stage1_radar_signals=("celebrity restaurant visit", "fried-chicken meme rally", "AI CEO social-media event"),
+            stage2_candidate_signals=("same-store sales, franchise fee, royalty, raw-material spread and repeat demand are verified"),
+            stage3_high_conviction_signals=("not by itself; celebrity virality must convert into durable store economics and FCF"),
+            stage4a_ongoing_signals=("same-store sales and franchise economics remain visible after event traffic"),
+            stage4b_graduation_overheat_signals=("celebrity visit moves listed peers before direct economics"),
+            stage4c_thesis_break_signals=("no direct revenue link", "same-store sales absent", "franchise fee margin absent", "input cost pressure"),
+            key_evidence_families=("news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("celebrity chicken meme rally without restaurant economics", "unlisted restaurant event read through to listed peers"),
+            preferred_score_weights=_weights(eps_fcf=2, visibility=4, bottleneck=4, mispricing=2, valuation=2),
+        ),
+        E2RArchetype.FOOD_DELIVERY_CONSOLIDATION_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.FOOD_DELIVERY_CONSOLIDATION_STAGE2,
+            stage1_radar_signals=("delivery app order recovery", "food-delivery M&A", "quick-commerce profitability"),
+            stage2_candidate_signals=("GMV, order growth, bid value, regulatory path, take-rate and rider cost are mapped"),
+            stage3_high_conviction_signals=("approval, take-rate, rider cost, merchant churn, integration economics and cash-flow bridge verified"),
+            stage4a_ongoing_signals=("GMV, take-rate, rider cost and merchant retention remain healthy after consolidation"),
+            stage4b_graduation_overheat_signals=("M&A scale premium prices before regulatory approval and unit economics"),
+            stage4c_thesis_break_signals=("regulatory block", "rider cost spike", "merchant churn", "integration failure", "quick-commerce loss reversal"),
+            key_evidence_families=("deal", "financial_actual", "research_report", "news", "price"),
+            false_positive_patterns=("food-delivery GMV scored before take-rate and rider cost", "M&A headline treated as margin proof"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=18, bottleneck=8, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.DELIVERY_LABOR_SERVICE_CONTINUITY_REFERENCE: ArchetypeDefinition(
+            archetype=E2RArchetype.DELIVERY_LABOR_SERVICE_CONTINUITY_REFERENCE,
+            stage1_radar_signals=("delivery service pause", "courier labor event", "rider regulatory pressure"),
+            stage2_candidate_signals=("service continuity, labor settlement durability, unit economics and compliance are mapped"),
+            stage3_high_conviction_signals=("not a positive source by itself; delivery moat needs service reliability, labor durability and cash margin"),
+            stage4a_ongoing_signals=("service reliability and labor cost remain stable"),
+            stage4b_graduation_overheat_signals=("fast-delivery premium before labor and service-continuity evidence"),
+            stage4c_thesis_break_signals=("delivery service halt", "rider labor continuity break", "gig-worker classification risk", "operating-day disruption"),
+            key_evidence_families=("labor", "regulatory", "financial_actual", "news", "red_team"),
+            false_positive_patterns=("delivery speed moat scored while labor continuity is unresolved", "service halt ignored in unit economics"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.WASTE_RECYCLING_INFRA_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.WASTE_RECYCLING_INFRA_STAGE2,
+            stage1_radar_signals=("waste-treatment platform deal", "plastic recycling", "waste-to-energy", "waste sorting"),
+            stage2_candidate_signals=("enterprise value, catchment coverage, business lines, gate fee, utilization and cleanup liability are mapped"),
+            stage3_high_conviction_signals=("recycling yield, gate fee, utilization, permit durability, cleanup liability control and FCF verified"),
+            stage4a_ongoing_signals=("processing volume, recycling yield, utilization and FCF remain visible"),
+            stage4b_graduation_overheat_signals=("waste infra EV headline prices before listed cash-flow bridge"),
+            stage4c_thesis_break_signals=("actual recycling yield far below official claim", "untreated waste", "cleanup liability", "utilization collapse"),
+            key_evidence_families=("infrastructure", "policy", "financial_actual", "news", "price"),
+            false_positive_patterns=("waste platform EV treated as listed FCF", "official recycling rate scored without actual yield"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=18, bottleneck=8, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.DEMOGRAPHIC_CHILDCARE_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.DEMOGRAPHIC_CHILDCARE_STAGE2,
+            stage1_radar_signals=("fertility rebound", "births rebound", "baby and childcare basket rally"),
+            stage2_candidate_signals=("births, marriages, fertility trend, cohort effect, customer count and ARPU are mapped"),
+            stage3_high_conviction_signals=("actual sales, customer count, enrolment, ARPU, subsidy capture, margin and retention verified"),
+            stage4a_ongoing_signals=("customer count and ARPU persist beyond one cohort effect"),
+            stage4b_graduation_overheat_signals=("baby-stock theme rallies on fertility headline before company conversion"),
+            stage4c_thesis_break_signals=("echo-boomer effect fades", "deaths still outpace births", "customer count fails", "subsidy withdrawal"),
+            key_evidence_families=("demographic", "policy", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("birthrate headline only treated as childcare revenue", "baby basket rally without customer count"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=14, bottleneck=4, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.PRIVATE_EDUCATION_HAGWON_STAGE2_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.PRIVATE_EDUCATION_HAGWON_STAGE2_4C,
+            stage1_radar_signals=("hagwon enrolment survey", "under-6 private education demand", "English kindergarten tuition"),
+            stage2_candidate_signals=("enrolment, tuition, private-class hours, retention, teacher cost and regulation are mapped"),
+            stage3_high_conviction_signals=("enrolment growth, pricing power, retention, online/offline margin, FCF and regulatory durability verified"),
+            stage4a_ongoing_signals=("enrolment, pricing and retention remain durable without policy backlash"),
+            stage4b_graduation_overheat_signals=("private-education premium prices before retention and margin evidence"),
+            stage4c_thesis_break_signals=("demographic decline", "private education regulation", "household burden backlash", "teacher cost inflation"),
+            key_evidence_families=("demographic", "policy", "financial_actual", "research_report", "price", "red_team"),
+            false_positive_patterns=("hagwon demand treated as Green while demographic and policy burden are ignored"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=16, bottleneck=4, mispricing=10, valuation=8),
         ),
         E2RArchetype.OTHER_MANUFACTURING_TOOLS_IPO_QUALITY_GATE: ArchetypeDefinition(
             archetype=E2RArchetype.OTHER_MANUFACTURING_TOOLS_IPO_QUALITY_GATE,
