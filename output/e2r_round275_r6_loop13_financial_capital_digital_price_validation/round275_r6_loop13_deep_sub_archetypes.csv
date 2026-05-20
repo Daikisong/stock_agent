@@ -1,0 +1,10 @@
+category,primary_archetype,terms
+금융지주 value-up,BANK_VALUE_UP_RERATING_STAGE2,KB|Shinhan|Hana|Woori|CET1|NIM|credit cost|RWA
+지주사 discount,HOLDCO_DISCOUNT_BUYBACK_CANCELLATION,SK Square|SK Hynix stake|buyback cancellation|NAV discount|Palliser
+보험 보유지분 규제,INSURANCE_HOLDING_STAKE_REGULATORY_GATE,Samsung Life|Samsung Electronics stake|book-value discount|RBC|K-ICS
+은행 디지털자산 지분,DIGITAL_ASSET_BANK_STAKE_STAGE2,Hana Bank|Dunamu|Upbit|equity-method income|capital impact
+핀테크 crypto M&A,FINTECH_CRYPTO_M_AND_A_TRUST_GATE,NAVER Financial|Dunamu|Upbit|abnormal withdrawal|deal close
+인터넷은행 IPO overhang,INTERNET_BANK_IPO_OVERHANG,K Bank|IPO|customers|deposit concentration|credit quality
+Stablecoin / FX gate,STABLECOIN_POLICY_OVERHEAT_FX_GATE,Kakao Pay|LG CNS|Aton|ME2ON|issuer equity|FX outflow
+Crypto exchange hard reference,CRYPTO_EXCHANGE_OPERATIONAL_HARD_REFERENCE,Bithumb|erroneous distribution|abnormal withdrawal|regulator inspection
+증권 거래대금 event premium,SECURITIES_TRADING_VOLUME_EVENT_PREMIUM,securities firms|KOSPI 7000|foreign net purchase|brokerage fee

@@ -1,0 +1,16 @@
+axis,points,direction,reason
+actual_buyback_cancellation,5,raise,Value-up은 취득보다 실제 소각과 반복성이 중요하다.
+sustainable_dividend_payout,4,raise,배당은 CET1/RBC와 credit cost가 받쳐야 한다.
+CET1_RBC_capital_buffer,5,raise,은행·보험 Green은 자본비율이 먼저다.
+NIM_fee_income_stability,5,raise,금융 EPS는 NIM·수수료·credit cost로 닫혀야 한다.
+ROE_RWA_control,5,raise,저PBR이 아니라 ROE와 RWA control이 rerating 근거다.
+regulatory_approval_clearance,5,raise,지분투자와 M&A는 규제 승인 전에는 Stage 2다.
+digital_asset_trust,5,raise,Upbit/Dunamu optionality는 exchange trust가 있어야 한다.
+exchange_internal_control,5,raise,이상출금·오배분은 hard 4C reference다.
+policy_valueup_headline_only,-5,lower,정책 headline만으로 은행 Green 금지다.
+sector_rally_without_bank_metrics,-5,lower,섹터 랠리는 ROE/CET1/NIM 확인 전엔 4B-watch다.
+IPO_valuation_without_credit_quality,-5,lower,인터넷은행 IPO는 credit/NIM/예금집중 확인 전엔 event premium이다.
+digital_asset_equity_stake_only,-5,lower,Dunamu 지분만으로 은행 EPS를 만들지 않는다.
+stablecoin_theme_only,-5,lower,스테이블코인 정책 테마는 발행·준비금·수수료 전에는 과열이다.
+exchange_trust_incident,-5,lower,거래소 신뢰 사고는 Green을 막는 RedTeam gate다.
+trading_volume_event_only,-4,lower,증권주는 거래대금 이벤트만으로 구조적 Green 금지다.

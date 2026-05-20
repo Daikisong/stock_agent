@@ -1,0 +1,10 @@
+archetype,capital_return_execution,cet1_rbc_buffer,roe_nim_credit_quality,regulatory_clearance,digital_asset_trust,fee_revenue_bridge,internal_control,event_penalty,4b_watch_sensitivity,hard_4c_sensitivity,notes
+BANK_VALUE_UP_RERATING_STAGE2,+5,+5,+5,+3,0,+3,+2,-5,+4,+5,"Bank value-up is Stage 2 until CET1, ROE, NIM, credit cost and RWA confirm."
+HOLDCO_DISCOUNT_BUYBACK_CANCELLATION,+5,+2,+2,+3,0,+2,+2,-3,+4,+4,"Holdco discount needs repeated cancellation and NAV bridge, not one buyback only."
+INSURANCE_HOLDING_STAKE_REGULATORY_GATE,+3,+5,+4,+5,0,+2,+2,-3,+4,+5,Insurance stake sale is Stage 2 until use of proceeds and capital buffer confirm.
+DIGITAL_ASSET_BANK_STAKE_STAGE2,+1,+4,+2,+5,+5,+4,+5,-5,+5,+5,"Dunamu stake is Stage 2 until regulated revenue, capital impact and trust confirm."
+FINTECH_CRYPTO_M_AND_A_TRUST_GATE,0,+2,+2,+5,+5,+5,+5,-5,+5,+5,"Fintech-crypto M&A must clear closing, approval, trust and take-rate bridge."
+INTERNET_BANK_IPO_OVERHANG,0,+5,+5,+3,+2,+4,+3,-5,+5,+5,"Internet-bank IPO is not Green before credit quality, NIM and deposit concentration."
+STABLECOIN_POLICY_OVERHEAT_FX_GATE,0,+1,0,+5,+4,+5,+4,-5,+5,+5,Stablecoin basket is 4B/FX watch before licensed revenue and FX stability.
+CRYPTO_EXCHANGE_OPERATIONAL_HARD_REFERENCE,0,0,0,+5,+5,0,+5,0,+3,+5,"Exchange operational error is hard reference, not production Green evidence."
+SECURITIES_TRADING_VOLUME_EVENT_PREMIUM,0,+2,+3,+2,0,+5,+2,-4,+5,+4,Trading-volume event premium needs recurring brokerage and IB revenue.

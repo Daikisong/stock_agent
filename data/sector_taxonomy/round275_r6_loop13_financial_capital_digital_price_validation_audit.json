@@ -1,0 +1,367 @@
+{
+  "case_ids": [
+    "r6_loop13_financial_holdings_valueup_sector_4b",
+    "r6_loop13_sk_square_holdco_discount_buyback",
+    "r6_loop13_samsung_life_samsung_electronics_stake_regulatory_gate",
+    "r6_loop13_hana_bank_dunamu_digital_asset_stake",
+    "r6_loop13_naver_dunamu_fintech_ma_trust_gate",
+    "r6_loop13_kbank_internet_bank_ipo_overhang",
+    "r6_loop13_stablecoin_policy_overheat_fx_gate",
+    "r6_loop13_bithumb_operational_error_hard_reference"
+  ],
+  "deep_sub_archetypes": [
+    {
+      "category": "금융지주 value-up",
+      "primary_archetype": "BANK_VALUE_UP_RERATING_STAGE2",
+      "terms": "KB|Shinhan|Hana|Woori|CET1|NIM|credit cost|RWA"
+    },
+    {
+      "category": "지주사 discount",
+      "primary_archetype": "HOLDCO_DISCOUNT_BUYBACK_CANCELLATION",
+      "terms": "SK Square|SK Hynix stake|buyback cancellation|NAV discount|Palliser"
+    },
+    {
+      "category": "보험 보유지분 규제",
+      "primary_archetype": "INSURANCE_HOLDING_STAKE_REGULATORY_GATE",
+      "terms": "Samsung Life|Samsung Electronics stake|book-value discount|RBC|K-ICS"
+    },
+    {
+      "category": "은행 디지털자산 지분",
+      "primary_archetype": "DIGITAL_ASSET_BANK_STAKE_STAGE2",
+      "terms": "Hana Bank|Dunamu|Upbit|equity-method income|capital impact"
+    },
+    {
+      "category": "핀테크 crypto M&A",
+      "primary_archetype": "FINTECH_CRYPTO_M_AND_A_TRUST_GATE",
+      "terms": "NAVER Financial|Dunamu|Upbit|abnormal withdrawal|deal close"
+    },
+    {
+      "category": "인터넷은행 IPO overhang",
+      "primary_archetype": "INTERNET_BANK_IPO_OVERHANG",
+      "terms": "K Bank|IPO|customers|deposit concentration|credit quality"
+    },
+    {
+      "category": "Stablecoin / FX gate",
+      "primary_archetype": "STABLECOIN_POLICY_OVERHEAT_FX_GATE",
+      "terms": "Kakao Pay|LG CNS|Aton|ME2ON|issuer equity|FX outflow"
+    },
+    {
+      "category": "Crypto exchange hard reference",
+      "primary_archetype": "CRYPTO_EXCHANGE_OPERATIONAL_HARD_REFERENCE",
+      "terms": "Bithumb|erroneous distribution|abnormal withdrawal|regulator inspection"
+    },
+    {
+      "category": "증권 거래대금 event premium",
+      "primary_archetype": "SECURITIES_TRADING_VOLUME_EVENT_PREMIUM",
+      "terms": "securities firms|KOSPI 7000|foreign net purchase|brokerage fee"
+    }
+  ],
+  "green_forbidden_patterns": [
+    "policy_valueup_headline_only",
+    "sector_rally_without_bank_metrics",
+    "IPO_valuation_without_credit_quality",
+    "digital_asset_equity_stake_only",
+    "stablecoin_theme_only",
+    "exchange_trust_incident",
+    "regulatory_capital_uncertainty",
+    "data_or_internal_control_failure",
+    "trading_volume_event_only"
+  ],
+  "green_required_fields": [
+    "actual_buyback_cancellation_confirmed",
+    "sustainable_dividend_payout_confirmed",
+    "cet1_rbc_capital_buffer_stable",
+    "credit_cost_control_confirmed",
+    "nim_fee_income_stability_confirmed",
+    "roe_improvement_confirmed",
+    "regulatory_approval_clearance_confirmed",
+    "digital_asset_trust_confirmed",
+    "exchange_internal_control_confirmed",
+    "fee_revenue_bridge_confirmed",
+    "price_path_after_evidence"
+  ],
+  "hard_4c_gates": [
+    "bank_credit_cost_spike",
+    "cet1_or_rbc_deterioration",
+    "regulatory_rejection_of_mna_or_stake_investment",
+    "crypto_exchange_abnormal_withdrawal_or_operational_error",
+    "stablecoin_driven_fx_outflow",
+    "data_breach_or_internal_control_failure",
+    "ipo_cancellation_due_valuation_or_concentration_risk",
+    "dividend_or_buyback_cancellation_reversal"
+  ],
+  "large_sector": "FINANCIAL_CAPITAL_DIGITAL",
+  "round_id": "round_203",
+  "score_adjustments": [
+    {
+      "axis": "actual_buyback_cancellation",
+      "direction": "raise",
+      "points": "5",
+      "reason": "Value-up은 취득보다 실제 소각과 반복성이 중요하다."
+    },
+    {
+      "axis": "sustainable_dividend_payout",
+      "direction": "raise",
+      "points": "4",
+      "reason": "배당은 CET1/RBC와 credit cost가 받쳐야 한다."
+    },
+    {
+      "axis": "CET1_RBC_capital_buffer",
+      "direction": "raise",
+      "points": "5",
+      "reason": "은행·보험 Green은 자본비율이 먼저다."
+    },
+    {
+      "axis": "NIM_fee_income_stability",
+      "direction": "raise",
+      "points": "5",
+      "reason": "금융 EPS는 NIM·수수료·credit cost로 닫혀야 한다."
+    },
+    {
+      "axis": "ROE_RWA_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "저PBR이 아니라 ROE와 RWA control이 rerating 근거다."
+    },
+    {
+      "axis": "regulatory_approval_clearance",
+      "direction": "raise",
+      "points": "5",
+      "reason": "지분투자와 M&A는 규제 승인 전에는 Stage 2다."
+    },
+    {
+      "axis": "digital_asset_trust",
+      "direction": "raise",
+      "points": "5",
+      "reason": "Upbit/Dunamu optionality는 exchange trust가 있어야 한다."
+    },
+    {
+      "axis": "exchange_internal_control",
+      "direction": "raise",
+      "points": "5",
+      "reason": "이상출금·오배분은 hard 4C reference다."
+    },
+    {
+      "axis": "policy_valueup_headline_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "정책 headline만으로 은행 Green 금지다."
+    },
+    {
+      "axis": "sector_rally_without_bank_metrics",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "섹터 랠리는 ROE/CET1/NIM 확인 전엔 4B-watch다."
+    },
+    {
+      "axis": "IPO_valuation_without_credit_quality",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "인터넷은행 IPO는 credit/NIM/예금집중 확인 전엔 event premium이다."
+    },
+    {
+      "axis": "digital_asset_equity_stake_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "Dunamu 지분만으로 은행 EPS를 만들지 않는다."
+    },
+    {
+      "axis": "stablecoin_theme_only",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "스테이블코인 정책 테마는 발행·준비금·수수료 전에는 과열이다."
+    },
+    {
+      "axis": "exchange_trust_incident",
+      "direction": "lower",
+      "points": "-5",
+      "reason": "거래소 신뢰 사고는 Green을 막는 RedTeam gate다."
+    },
+    {
+      "axis": "trading_volume_event_only",
+      "direction": "lower",
+      "points": "-4",
+      "reason": "증권주는 거래대금 이벤트만으로 구조적 Green 금지다."
+    }
+  ],
+  "shadow_weights": [
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "BANK_VALUE_UP_RERATING_STAGE2",
+      "capital_return_execution": "+5",
+      "cet1_rbc_buffer": "+5",
+      "digital_asset_trust": "0",
+      "event_penalty": "-5",
+      "fee_revenue_bridge": "+3",
+      "hard_4c_sensitivity": "+5",
+      "internal_control": "+2",
+      "notes": "Bank value-up is Stage 2 until CET1, ROE, NIM, credit cost and RWA confirm.",
+      "regulatory_clearance": "+3",
+      "roe_nim_credit_quality": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "HOLDCO_DISCOUNT_BUYBACK_CANCELLATION",
+      "capital_return_execution": "+5",
+      "cet1_rbc_buffer": "+2",
+      "digital_asset_trust": "0",
+      "event_penalty": "-3",
+      "fee_revenue_bridge": "+2",
+      "hard_4c_sensitivity": "+4",
+      "internal_control": "+2",
+      "notes": "Holdco discount needs repeated cancellation and NAV bridge, not one buyback only.",
+      "regulatory_clearance": "+3",
+      "roe_nim_credit_quality": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+4",
+      "archetype": "INSURANCE_HOLDING_STAKE_REGULATORY_GATE",
+      "capital_return_execution": "+3",
+      "cet1_rbc_buffer": "+5",
+      "digital_asset_trust": "0",
+      "event_penalty": "-3",
+      "fee_revenue_bridge": "+2",
+      "hard_4c_sensitivity": "+5",
+      "internal_control": "+2",
+      "notes": "Insurance stake sale is Stage 2 until use of proceeds and capital buffer confirm.",
+      "regulatory_clearance": "+5",
+      "roe_nim_credit_quality": "+4"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "DIGITAL_ASSET_BANK_STAKE_STAGE2",
+      "capital_return_execution": "+1",
+      "cet1_rbc_buffer": "+4",
+      "digital_asset_trust": "+5",
+      "event_penalty": "-5",
+      "fee_revenue_bridge": "+4",
+      "hard_4c_sensitivity": "+5",
+      "internal_control": "+5",
+      "notes": "Dunamu stake is Stage 2 until regulated revenue, capital impact and trust confirm.",
+      "regulatory_clearance": "+5",
+      "roe_nim_credit_quality": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "FINTECH_CRYPTO_M_AND_A_TRUST_GATE",
+      "capital_return_execution": "0",
+      "cet1_rbc_buffer": "+2",
+      "digital_asset_trust": "+5",
+      "event_penalty": "-5",
+      "fee_revenue_bridge": "+5",
+      "hard_4c_sensitivity": "+5",
+      "internal_control": "+5",
+      "notes": "Fintech-crypto M&A must clear closing, approval, trust and take-rate bridge.",
+      "regulatory_clearance": "+5",
+      "roe_nim_credit_quality": "+2"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "INTERNET_BANK_IPO_OVERHANG",
+      "capital_return_execution": "0",
+      "cet1_rbc_buffer": "+5",
+      "digital_asset_trust": "+2",
+      "event_penalty": "-5",
+      "fee_revenue_bridge": "+4",
+      "hard_4c_sensitivity": "+5",
+      "internal_control": "+3",
+      "notes": "Internet-bank IPO is not Green before credit quality, NIM and deposit concentration.",
+      "regulatory_clearance": "+3",
+      "roe_nim_credit_quality": "+5"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "STABLECOIN_POLICY_OVERHEAT_FX_GATE",
+      "capital_return_execution": "0",
+      "cet1_rbc_buffer": "+1",
+      "digital_asset_trust": "+4",
+      "event_penalty": "-5",
+      "fee_revenue_bridge": "+5",
+      "hard_4c_sensitivity": "+5",
+      "internal_control": "+4",
+      "notes": "Stablecoin basket is 4B/FX watch before licensed revenue and FX stability.",
+      "regulatory_clearance": "+5",
+      "roe_nim_credit_quality": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+3",
+      "archetype": "CRYPTO_EXCHANGE_OPERATIONAL_HARD_REFERENCE",
+      "capital_return_execution": "0",
+      "cet1_rbc_buffer": "0",
+      "digital_asset_trust": "+5",
+      "event_penalty": "0",
+      "fee_revenue_bridge": "0",
+      "hard_4c_sensitivity": "+5",
+      "internal_control": "+5",
+      "notes": "Exchange operational error is hard reference, not production Green evidence.",
+      "regulatory_clearance": "+5",
+      "roe_nim_credit_quality": "0"
+    },
+    {
+      "4b_watch_sensitivity": "+5",
+      "archetype": "SECURITIES_TRADING_VOLUME_EVENT_PREMIUM",
+      "capital_return_execution": "0",
+      "cet1_rbc_buffer": "+2",
+      "digital_asset_trust": "0",
+      "event_penalty": "-4",
+      "fee_revenue_bridge": "+5",
+      "hard_4c_sensitivity": "+4",
+      "internal_control": "+2",
+      "notes": "Trading-volume event premium needs recurring brokerage and IB revenue.",
+      "regulatory_clearance": "+2",
+      "roe_nim_credit_quality": "+3"
+    }
+  ],
+  "source_round": "docs/round/round_275.md",
+  "stage4b_watch_triggers": [
+    "securities_financials_plus_10pct_on_trading_volume_expectation",
+    "stablecoin_basket_2x_to_3x_before_regulated_revenue",
+    "dunamu_upbit_stake_rerating_before_bank_earnings_bridge",
+    "ipo_valuation_5tn_without_credit_data",
+    "holdco_discount_closes_before_repeated_buyback_execution",
+    "insurance_stock_rerates_on_electronics_stake_before_insurance_earnings_bridge"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "deep_sub_archetype_count": 9,
+    "direct_listed_hard_4c_case_count": 0,
+    "direct_listed_hard_4c_confirmed": false,
+    "event_premium_count": 2,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "hard_4c_confirmed": true,
+    "large_sector": "FINANCIAL_CAPITAL_DIGITAL",
+    "overheat_count": 1,
+    "price_moved_without_evidence_count": 2,
+    "price_validation_completed": "partial_with_reported_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_203",
+    "shadow_weight_only": true,
+    "shadow_weight_row_count": 9,
+    "source_round": "docs/round/round_275.md",
+    "stage3_case_count": 0,
+    "stage4b_watch_count": 7,
+    "stage4c_watch_count": 4,
+    "success_candidate_count": 5,
+    "target_archetype_count": 9
+  },
+  "target_aliases": {
+    "BANK_VALUE_UP_RERATING_STAGE2": "BANK_VALUE_UP_RERATING_STAGE2",
+    "CRYPTO_EXCHANGE_OPERATIONAL_HARD_REFERENCE": "CRYPTO_EXCHANGE_OPERATIONAL_HARD_REFERENCE",
+    "DIGITAL_ASSET_BANK_STAKE_STAGE2": "DIGITAL_ASSET_BANK_STAKE_STAGE2",
+    "FINTECH_CRYPTO_M_AND_A_TRUST_GATE": "FINTECH_CRYPTO_M_AND_A_TRUST_GATE",
+    "HOLDCO_DISCOUNT_BUYBACK_CANCELLATION": "HOLDCO_DISCOUNT_BUYBACK_CANCELLATION",
+    "INSURANCE_HOLDING_STAKE_REGULATORY_GATE": "INSURANCE_HOLDING_STAKE_REGULATORY_GATE",
+    "INTERNET_BANK_IPO_OVERHANG": "INTERNET_BANK_IPO_OVERHANG",
+    "SECURITIES_TRADING_VOLUME_EVENT_PREMIUM": "SECURITIES_TRADING_VOLUME_EVENT_PREMIUM",
+    "STABLECOIN_POLICY_OVERHEAT_FX_GATE": "STABLECOIN_POLICY_OVERHEAT_FX_GATE"
+  },
+  "what_not_to_change": [
+    "do_not_apply_to_production_scoring_yet",
+    "do_not_use_round275_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_valueup_holdco_stake_ipo_stablecoin_volume_or_exchange_headlines_as_green",
+    "do_not_invent_full_ohlc_or_stage_prices_when_only_reported_anchors_exist"
+  ]
+}
