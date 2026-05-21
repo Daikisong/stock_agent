@@ -1,0 +1,11 @@
+# Round 316 Row Separation Plan
+
+Case evidence, trigger anchors and full OHLC windows must be separate rows.
+
+Easy example: a Webtoon MAU or Disney headline is Stage2 evidence. It is not Green until ARPU, paid conversion, IP revenue and profit are visible.
+
+- case_library_row_describes_stage_candidate_and_evidence_quality
+- trigger_calibration_row_stores_event_anchor_AI_infra_IPO_MAU_IP_deal_game_governance_or_cybersecurity_metrics
+- ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown
+- do_not_downgrade_valid_Stage2_or_Yellow_candidate_only_because_OHLC_backfill_is_missing
+- do_not_treat_AI_infra_IPO_MAU_game_hit_artist_IP_founder_relief_or_security_headline_as_Green_without_recurring_revenue_ARPU_profit_repeat_sales_governance_clearance_or_trust_recovery

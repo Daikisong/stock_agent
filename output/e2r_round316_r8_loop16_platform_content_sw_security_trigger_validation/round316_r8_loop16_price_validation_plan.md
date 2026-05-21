@@ -1,0 +1,12 @@
+# Round 316 Price Validation Plan
+
+Full adjusted OHLC was not available. Reported event anchors are retained without inventing full-window MFE/MAE.
+
+- r8_loop16_kakao_lgcns_sk_aws_ai_datacenter: r8l16_kakao_lgcns_ai_dc_T1 / excellent_stage2_actionable_AI_infrastructure / full_window=`price_data_unavailable_after_deep_search`
+- r8_loop16_lg_cns_ipo_ai_cloud_price_muted: r8l16_lgcns_ipo_T1 / evidence_good_but_price_failed / full_window=`price_data_unavailable_after_deep_search`
+- r8_loop16_webtoon_naver_ip_monetization: r8l16_webtoon_disney_T2 / Stage2_Actionable_content_platform_with_4B_volatility / full_window=`price_data_unavailable_after_deep_search`
+- r8_loop16_krafton_naver_mirae_india_fund: r8l16_krafton_india_T1 / Stage2_geographic_expansion_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r8_loop16_shiftup_game_ip_ipo: r8l16_shiftup_ipo_T0 / Stage2_game_IP_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r8_loop16_hybe_content_label_governance: r8l16_hybe_ador_T0 / content_IP_governance_4C_watch / full_window=`price_data_unavailable_after_deep_search`
+- r8_loop16_kakao_founder_regulatory_relief: r8l16_kakao_founder_T0 / platform_founder_regulatory_4C_with_relief / full_window=`price_data_unavailable_after_deep_search`
+- r8_loop16_sk_telecom_cyber_breach: r8l16_skt_breach_T0 / hard_4C_success_cybersecurity / full_window=`price_data_unavailable_after_deep_search`

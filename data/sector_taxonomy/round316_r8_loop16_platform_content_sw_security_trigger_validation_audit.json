@@ -1,0 +1,128 @@
+{
+  "green_blockers": [
+    "AI_infra_headline_without_revenue",
+    "IPO_valuation_without_post_listing_strength",
+    "MAU_without_ARPU_profit",
+    "game_hit_without_pipeline",
+    "geographic_fund_without_ROI",
+    "artist_IP_without_governance",
+    "platform_founder_risk_ignored",
+    "security_incident_treated_as_one_off",
+    "full_adjusted_ohlc_missing_for_Green_confirmation"
+  ],
+  "large_sector": "PLATFORM_CONTENT_SW_SECURITY",
+  "method": "trigger_level_backtest_v1_after_redteam",
+  "required_target_aliases": {
+    "AI_CLOUD_IPO_PRICE_MUTED": "AI_CLOUD_IPO_PRICE_MUTED",
+    "AI_DATA_CENTER_CLOUD_SI_STAGE2_ACTIONABLE": "AI_DATA_CENTER_CLOUD_SI_STAGE2_ACTIONABLE",
+    "CONTENT_LABEL_GOVERNANCE_4C_WATCH": "CONTENT_LABEL_GOVERNANCE_4C_WATCH",
+    "CYBERSECURITY_DATA_BREACH_HARD_4C": "CYBERSECURITY_DATA_BREACH_HARD_4C",
+    "GAME_IP_GLOBAL_EXPANSION_STAGE2": "GAME_IP_GLOBAL_EXPANSION_STAGE2",
+    "GAME_IP_IPO_STAGE2_WITH_CONCENTRATION_4B": "GAME_IP_IPO_STAGE2_WITH_CONCENTRATION_4B",
+    "PLATFORM_FOUNDER_REGULATORY_4C_RELIEF": "PLATFORM_FOUNDER_REGULATORY_4C_RELIEF",
+    "WEBTOON_IP_MONETIZATION_STAGE2_ACTIONABLE": "WEBTOON_IP_MONETIZATION_STAGE2_ACTIONABLE"
+  },
+  "round_id": "round_244",
+  "row_separation_rules": [
+    "case_library_row_describes_stage_candidate_and_evidence_quality",
+    "trigger_calibration_row_stores_event_anchor_AI_infra_IPO_MAU_IP_deal_game_governance_or_cybersecurity_metrics",
+    "ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown",
+    "do_not_downgrade_valid_Stage2_or_Yellow_candidate_only_because_OHLC_backfill_is_missing",
+    "do_not_treat_AI_infra_IPO_MAU_game_hit_artist_IP_founder_relief_or_security_headline_as_Green_without_recurring_revenue_ARPU_profit_repeat_sales_governance_clearance_or_trust_recovery"
+  ],
+  "score_down_axes": [
+    "AI_infra_headline_without_revenue",
+    "IPO_valuation_without_post_listing_strength",
+    "MAU_without_ARPU_profit",
+    "game_hit_without_pipeline",
+    "geographic_fund_without_ROI",
+    "artist_IP_without_governance",
+    "platform_founder_risk_ignored",
+    "security_incident_treated_as_one_off"
+  ],
+  "score_up_axes": [
+    "AI_compute_to_cloud_revenue",
+    "SI_contract_backlog",
+    "IP_platform_MAU_monetization",
+    "content_IP_license_revenue",
+    "game_IP_repeat_sales",
+    "India_platform_monetization",
+    "label_governance_stability",
+    "founder_regulatory_clearance",
+    "cybersecurity_trust_cost"
+  ],
+  "source_round": "docs/round/round_316.md",
+  "stage2_actionable_rules": [
+    "event_return_at_least_5pct_or_market_relative_return_at_least_5pp",
+    "AI_cloud_or_data_center_trigger_links_to_cloud_SI_backlog_or_recurring_revenue",
+    "content_platform_has_two_of_MAU_revenue_profit_or_IP_licensing",
+    "game_company_has_two_of_hit_sales_retention_live_service_or_pipeline",
+    "platform_expansion_has_ARPU_GMV_ROI_or_regulatory_stability",
+    "governance_founder_legal_or_cybersecurity_4B_4C_overlay_is_not_dominant_for_positive_candidate"
+  ],
+  "stage3_green_rules": [
+    "AI_infrastructure_converts_to_recurring_cloud_SI_revenue",
+    "MAU_converts_to_ARPU_paid_conversion_ad_revenue_and_profit",
+    "IP_licensing_converts_to_durable_revenue_and_margin",
+    "game_hit_converts_to_repeat_sales_live_service_retention_and_sequel_pipeline",
+    "governance_founder_and_label_legal_overhangs_are_resolved",
+    "cybersecurity_remediation_is_complete_and_revenue_guidance_recovers",
+    "full_adjusted_OHLC_MFE_MAE_window_supports_stage_candidate"
+  ],
+  "stage3_yellow_rules": [
+    "Stage2_Actionable_conditions_pass",
+    "EPS_OP_FCF_path_can_change_materially",
+    "one_of_monetization_margin_retention_legal_or_security_gate_remains_open",
+    "reported_price_anchor_supports_trigger_but_full_adjusted_OHLC_is_missing",
+    "case_is_not_pure_AI_infra_IPO_MAU_game_hit_artist_IP_or_founder_relief_headline"
+  ],
+  "stage4b_watch_triggers": [
+    "AI_infra_headline_rallies_before_cloud_SI_revenue",
+    "IPO_prices_high_but_trades_below_issue_price",
+    "content_platform_rallies_on_IP_deal_after_large_drawdown",
+    "game_IPO_rallies_on_one_or_two_hit_titles_before_repeatability",
+    "Kpop_content_IP_faces_label_or_founder_governance_dispute",
+    "platform_founder_faces_regulatory_or_legal_investigation",
+    "security_breach_creates_compensation_and_revenue_guidance_tail_risk"
+  ],
+  "stage4c_watch_gates": [
+    "large_scale_customer_data_breach",
+    "regulatory_fine_or_compensation_changes_revenue_guidance",
+    "platform_founder_arrest_or_capital_market_law_investigation",
+    "content_label_control_dispute_disrupts_artist_IP",
+    "cyber_incident_with_user_churn_and_remediation_cost",
+    "IPO_below_issue_price_with_no_follow_through_demand",
+    "game_pipeline_cancellation_after_one_title_concentration"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "evidence_good_but_price_failed_or_muted_count": 2,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "large_sector": "PLATFORM_CONTENT_SW_SECURITY",
+    "method": "trigger_level_backtest_v1_after_redteam",
+    "next_round": "R9 Loop 16",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_244",
+    "row_separation_required": true,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_316.md",
+    "stage2_actionable_candidate_count": 2,
+    "stage2_candidate_count": 5,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 1,
+    "stage4b_watch_count": 5,
+    "stage4c_watch_count": 3,
+    "target_archetype_count": 8,
+    "trigger_count": 11
+  },
+  "what_not_to_change": [
+    "do_not_change_production_scoring",
+    "do_not_use_round316_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_AI_infra_IPO_MAU_game_hit_artist_IP_founder_relief_or_security_headline_as_Green_without_recurring_revenue_ARPU_profit_repeat_sales_governance_clearance_or_trust_recovery",
+    "do_not_invent_full_mfe_mae_without_adjusted_ohlc"
+  ]
+}

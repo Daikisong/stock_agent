@@ -1,0 +1,29 @@
+# Round 316 Stage 4B / 4C Review
+
+## 4B Watch
+- AI_infra_headline_rallies_before_cloud_SI_revenue
+- IPO_prices_high_but_trades_below_issue_price
+- content_platform_rallies_on_IP_deal_after_large_drawdown
+- game_IPO_rallies_on_one_or_two_hit_titles_before_repeatability
+- Kpop_content_IP_faces_label_or_founder_governance_dispute
+- platform_founder_faces_regulatory_or_legal_investigation
+- security_breach_creates_compensation_and_revenue_guidance_tail_risk
+
+## 4C Watch Gates
+- large_scale_customer_data_breach
+- regulatory_fine_or_compensation_changes_revenue_guidance
+- platform_founder_arrest_or_capital_market_law_investigation
+- content_label_control_dispute_disrupts_artist_IP
+- cyber_incident_with_user_churn_and_remediation_cost
+- IPO_below_issue_price_with_no_follow_through_demand
+- game_pipeline_cancellation_after_one_title_concentration
+
+## Case Review
+- r8_loop16_kakao_lgcns_sk_aws_ai_datacenter: Stage2-Actionable / excellent_stage2_actionable_AI_infrastructure
+- r8_loop16_lg_cns_ipo_ai_cloud_price_muted: Stage2 but not Actionable / evidence_good_but_price_failed
+- r8_loop16_webtoon_naver_ip_monetization: Stage2-Actionable to Yellow candidate / Stage2_Actionable_content_platform_with_4B_volatility
+- r8_loop16_krafton_naver_mirae_india_fund: Stage2 / Stage2_geographic_expansion_not_Green
+- r8_loop16_shiftup_game_ip_ipo: Stage2 + 4B-watch / Stage2_game_IP_not_Green
+- r8_loop16_hybe_content_label_governance: 4C-watch / content_IP_governance_4C_watch
+- r8_loop16_kakao_founder_regulatory_relief: 4C-watch to relief / platform_founder_regulatory_4C_with_relief
+- r8_loop16_sk_telecom_cyber_breach: 4C / hard_4C_success_cybersecurity

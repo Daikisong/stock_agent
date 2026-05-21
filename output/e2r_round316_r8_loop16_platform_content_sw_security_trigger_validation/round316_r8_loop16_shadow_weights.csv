@@ -1,0 +1,9 @@
+archetype,AI_compute_to_cloud_revenue,SI_contract_backlog,IP_platform_MAU_monetization,content_IP_license_revenue,game_IP_repeat_sales,India_platform_monetization,label_governance_stability,founder_regulatory_clearance,cybersecurity_trust_cost,AI_infra_headline_without_revenue_penalty,IPO_valuation_without_post_listing_strength_penalty,MAU_without_ARPU_profit_penalty,game_hit_without_pipeline_penalty,stage2_actionable_promote,stage3_yellow_gate,stage3_green_gate,notes
+AI_DATA_CENTER_CLOUD_SI_STAGE2_ACTIONABLE,+5,+5,+1,+0,+0,+0,+1,+1,+2,-5,-2,-1,-1,AI data center+price reaction,cloud/SI revenue missing,recurring revenue+margin,Kakao/LG CNS.
+AI_CLOUD_IPO_PRICE_MUTED,+4,+4,+0,+0,+0,+0,+0,+0,+1,-4,-5,-1,-1,AI/cloud sales but IPO price failed,post-listing strength missing,contract growth+margin,LG CNS IPO.
+WEBTOON_IP_MONETIZATION_STAGE2_ACTIONABLE,+1,+0,+5,+5,+0,+1,+1,+1,+0,-1,-3,-5,-1,MAU+IPO+Disney/IP deal,profit durability missing,paid conversion+IP revenue+profit,Webtoon/Naver.
+GAME_IP_GLOBAL_EXPANSION_STAGE2,+0,+0,+1,+1,+5,+5,+0,+0,+1,-1,-2,-1,-4,India expansion+BGMI scale,ARPU/fund ROI missing,India monetization+fund exits,Krafton/Naver/Mirae.
+GAME_IP_IPO_STAGE2_WITH_CONCENTRATION_4B,+0,+0,+0,+1,+5,+0,+0,+0,+0,-1,-4,-1,-5,game IP sales/profit,repeat sales/pipeline missing,retention+new title pipeline,Shift Up.
+CONTENT_LABEL_GOVERNANCE_4C_WATCH,+0,+0,+2,+5,+0,+0,+5,+4,+1,-1,-1,-1,-1,artist IP disrupted by governance,legal resolution missing,N/A,HYBE.
+PLATFORM_FOUNDER_REGULATORY_4C_RELIEF,+2,+0,+2,+0,+0,+0,+3,+5,+1,-1,-1,-1,-1,founder regulatory overhang,platform monetization/relief price missing,regulatory clearance+business normalization,Kakao.
+CYBERSECURITY_DATA_BREACH_HARD_4C,+0,+0,+0,+0,+0,+0,+1,+1,+5,-1,-1,-1,-1,data breach/fine/compensation,remediation and trust recovery missing,N/A,SK Telecom.
