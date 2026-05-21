@@ -1,0 +1,125 @@
+{
+  "green_blockers": [
+    "contract_headline_without_margin",
+    "housing_policy_without_presales",
+    "PF_support_without_writeoff",
+    "reconstruction_theme_without_start",
+    "AI_fab_headline_without_order_value",
+    "material_supplier_rally_ignoring_builder_cost",
+    "safety_incident_treated_as_one_off",
+    "full_adjusted_ohlc_missing_for_Green_confirmation"
+  ],
+  "hard_4c_gates": [
+    "debt_workout_or_PF_default",
+    "PF_delinquency_spike_and_failed_refinancing",
+    "fatal_construction_accident",
+    "work_suspension_or_license_revocation_risk",
+    "major_defect_collapse_or_safety_investigation",
+    "input_cost_spike_without_pass_through",
+    "housing_demand_collapse_or_pre_sale_failure"
+  ],
+  "large_sector": "CONSTRUCTION_REAL_ESTATE_BUILDING_MATERIALS",
+  "method": "trigger_level_backtest_v1_after_redteam",
+  "required_target_aliases": {
+    "AI_FAB_CONSTRUCTION_STAGE2": "AI_FAB_CONSTRUCTION_STAGE2",
+    "BUILDING_MATERIAL_INPUT_COST_STAGE2_4B": "BUILDING_MATERIAL_INPUT_COST_STAGE2_4B",
+    "CONSTRUCTION_SAFETY_HARD_4C": "CONSTRUCTION_SAFETY_HARD_4C",
+    "HOUSING_SUPPLY_RECONSTRUCTION_STAGE2_WITH_LTV_4B": "HOUSING_SUPPLY_RECONSTRUCTION_STAGE2_WITH_LTV_4B",
+    "MEGA_GAS_PIPELINE_EPC_STAGE2_WITH_MARGIN_GATE": "MEGA_GAS_PIPELINE_EPC_STAGE2_WITH_MARGIN_GATE",
+    "MIDDLE_EAST_EPC_BACKLOG_STAGE2_ACTIONABLE": "MIDDLE_EAST_EPC_BACKLOG_STAGE2_ACTIONABLE",
+    "PF_LIQUIDITY_RESTRUCTURING_4C_AND_RELIEF": "PF_LIQUIDITY_RESTRUCTURING_4C_AND_RELIEF",
+    "RATE_CUT_HOUSING_POLICY_MIXED_STAGE2_4B": "RATE_CUT_HOUSING_POLICY_MIXED_STAGE2_4B"
+  },
+  "round_id": "round_246",
+  "row_separation_rules": [
+    "case_library_row_describes_stage_candidate_and_evidence_quality",
+    "trigger_calibration_row_stores_event_anchor_contract_policy_safety_material_or_macro_metrics",
+    "ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown",
+    "do_not_downgrade_valid_Stage2_or_Yellow_candidate_only_because_OHLC_backfill_is_missing",
+    "do_not_treat_EPC_PF_housing_safety_fab_or_material_headline_as_Green_without_margin_cash_presales_refinancing_safety_clearance_or_spread"
+  ],
+  "score_down_axes": [
+    "contract_headline_without_margin",
+    "housing_policy_without_presales",
+    "PF_support_without_writeoff",
+    "reconstruction_theme_without_start",
+    "AI_fab_headline_without_order_value",
+    "material_supplier_rally_ignoring_builder_cost",
+    "safety_incident_treated_as_one_off"
+  ],
+  "score_up_axes": [
+    "EPC_contract_value_visibility",
+    "EPC_margin_cash_conversion",
+    "project_execution_progress",
+    "PF_refinancing_success",
+    "pre_sale_recovery",
+    "reconstruction_permit_conversion",
+    "construction_safety_license_risk",
+    "AI_fab_construction_backlog",
+    "material_cost_pass_through"
+  ],
+  "source_round": "docs/round/round_318.md",
+  "stage2_actionable_rules": [
+    "contract_value_is_clear",
+    "event_return_at_least_5pct",
+    "market_relative_return_at_least_5pp",
+    "project_margin_or_cash_conversion_visibility_exists",
+    "housing_policy_connects_to_permits_presales_or_PF_refinancing",
+    "construction_safety_license_or_fatal_accident_4C_overlay_is_absent",
+    "input_material_cost_pass_through_is_confirmed"
+  ],
+  "stage3_green_rules": [
+    "EPC_backlog_converts_to_profitable_revenue_and_cash_flow",
+    "project_execution_progresses_without_cost_overrun_or_claim",
+    "housing_policy_converts_to_permits_pre_sales_and_PF_refinancing",
+    "reconstruction_projects_start_construction",
+    "construction_safety_risk_is_remediated",
+    "input_cost_pass_through_is_contractually_protected",
+    "full_adjusted_OHLC_MFE_MAE_window_supports_stage_candidate"
+  ],
+  "stage3_yellow_rules": [
+    "Stage2_Actionable_conditions_pass",
+    "EPS_OP_FCF_path_can_change_materially",
+    "one_of_margin_cash_collection_permits_PF_refinancing_safety_remediation_or_material_pass_through_gate_remains_open",
+    "reported_price_anchor_supports_trigger_but_full_adjusted_OHLC_is_missing"
+  ],
+  "stage4b_watch_triggers": [
+    "overseas_EPC_contract_rallies_before_margin_or_cash_conversion",
+    "housing_supply_policy_rallies_before_presales_and_permits",
+    "PF_support_appears_before_loss_recognition_and_refinancing",
+    "AI_fab_construction_story_appears_before_order_value_and_margin",
+    "building_material_supplier_rally_increases_builder_input_cost",
+    "fatal_construction_accident_triggers_fine_license_or_work_suspension_risk"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "evidence_good_but_price_failed_or_unavailable_count": 6,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "large_sector": "CONSTRUCTION_REAL_ESTATE_BUILDING_MATERIALS",
+    "method": "trigger_level_backtest_v1_after_redteam",
+    "next_round": "R11 Loop 16",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_246",
+    "row_separation_required": true,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_318.md",
+    "stage2_actionable_candidate_count": 2,
+    "stage2_candidate_count": 6,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 4,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 4,
+    "target_archetype_count": 8,
+    "trigger_count": 8
+  },
+  "what_not_to_change": [
+    "do_not_change_production_scoring",
+    "do_not_use_round318_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_EPC_PF_housing_safety_fab_or_material_headline_as_Green_without_margin_cash_presales_refinancing_safety_clearance_or_spread",
+    "do_not_invent_full_mfe_mae_without_adjusted_ohlc"
+  ]
+}

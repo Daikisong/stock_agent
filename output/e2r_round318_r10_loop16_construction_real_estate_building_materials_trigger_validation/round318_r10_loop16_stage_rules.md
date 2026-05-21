@@ -1,0 +1,46 @@
+# Round 318 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- contract_value_is_clear
+- event_return_at_least_5pct
+- market_relative_return_at_least_5pp
+- project_margin_or_cash_conversion_visibility_exists
+- housing_policy_connects_to_permits_presales_or_PF_refinancing
+- construction_safety_license_or_fatal_accident_4C_overlay_is_absent
+- input_material_cost_pass_through_is_confirmed
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- EPS_OP_FCF_path_can_change_materially
+- one_of_margin_cash_collection_permits_PF_refinancing_safety_remediation_or_material_pass_through_gate_remains_open
+- reported_price_anchor_supports_trigger_but_full_adjusted_OHLC_is_missing
+
+## Stage3-Green Rules
+- EPC_backlog_converts_to_profitable_revenue_and_cash_flow
+- project_execution_progresses_without_cost_overrun_or_claim
+- housing_policy_converts_to_permits_pre_sales_and_PF_refinancing
+- reconstruction_projects_start_construction
+- construction_safety_risk_is_remediated
+- input_cost_pass_through_is_contractually_protected
+- full_adjusted_OHLC_MFE_MAE_window_supports_stage_candidate
+
+## Green Blockers
+- contract_headline_without_margin
+- housing_policy_without_presales
+- PF_support_without_writeoff
+- reconstruction_theme_without_start
+- AI_fab_headline_without_order_value
+- material_supplier_rally_ignoring_builder_cost
+- safety_incident_treated_as_one_off
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## Hard 4C Gates
+- debt_workout_or_PF_default
+- PF_delinquency_spike_and_failed_refinancing
+- fatal_construction_accident
+- work_suspension_or_license_revocation_risk
+- major_defect_collapse_or_safety_investigation
+- input_cost_spike_without_pass_through
+- housing_demand_collapse_or_pre_sale_failure

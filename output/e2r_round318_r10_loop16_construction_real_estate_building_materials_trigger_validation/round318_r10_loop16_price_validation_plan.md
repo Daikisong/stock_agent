@@ -1,0 +1,12 @@
+# Round 318 Price Validation Plan
+
+Full adjusted OHLC was not available. Reported event anchors are retained without inventing full-window MFE/MAE.
+
+- r10_loop16_samsung_ea_fadhili: r10l16_samsung_ea_fadhili_T1 / excellent_stage2_actionable_EPC_contract / full_window=`price_data_unavailable_after_deep_search`
+- r10_loop16_hyundai_ec_jafurah_gas: r10l16_hyundai_ec_jafurah_T0 / Stage2_mega_EPC_backlog_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r10_loop16_pf_taeyoung_builder_restructuring: r10l16_pf_taeyoung_T1 / PF_4C_watch_with_policy_relief / full_window=`price_data_unavailable_after_deep_search`
+- r10_loop16_seoul_housing_supply_reconstruction: r10l16_seoul_housing_supply_T2 / mixed_supply_policy_Stage2_with_demand_4B / full_window=`price_data_unavailable_after_deep_search`
+- r10_loop16_construction_safety_hyundai_engineering_bridge: r10l16_construction_safety_T0 / hard_4C_success_construction_safety / full_window=`price_data_unavailable_after_deep_search`
+- r10_loop16_samsung_ct_p5_fab_construction: r10l16_samsung_ct_p5_T1 / Stage2_AI_fab_construction_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r10_loop16_steel_plate_antidumping_construction_input: r10l16_steel_plate_antidumping_T0 / mixed_building_material_supplier_relief_builder_cost_4B / full_window=`price_data_unavailable_after_deep_search`
+- r10_loop16_bok_rate_cut_housing_construction_mixed: r10l16_bok_rate_cut_housing_T0 / macro_relief_Stage2_with_housing_4B / full_window=`price_data_unavailable_after_deep_search`

@@ -1,0 +1,17 @@
+direction,axis,production_scoring_changed
+up,EPC_contract_value_visibility,false
+up,EPC_margin_cash_conversion,false
+up,project_execution_progress,false
+up,PF_refinancing_success,false
+up,pre_sale_recovery,false
+up,reconstruction_permit_conversion,false
+up,construction_safety_license_risk,false
+up,AI_fab_construction_backlog,false
+up,material_cost_pass_through,false
+down,contract_headline_without_margin,false
+down,housing_policy_without_presales,false
+down,PF_support_without_writeoff,false
+down,reconstruction_theme_without_start,false
+down,AI_fab_headline_without_order_value,false
+down,material_supplier_rally_ignoring_builder_cost,false
+down,safety_incident_treated_as_one_off,false

@@ -1,0 +1,28 @@
+# Round 318 Stage 4B / 4C Review
+
+## 4B Watch
+- overseas_EPC_contract_rallies_before_margin_or_cash_conversion
+- housing_supply_policy_rallies_before_presales_and_permits
+- PF_support_appears_before_loss_recognition_and_refinancing
+- AI_fab_construction_story_appears_before_order_value_and_margin
+- building_material_supplier_rally_increases_builder_input_cost
+- fatal_construction_accident_triggers_fine_license_or_work_suspension_risk
+
+## Hard 4C Gates
+- debt_workout_or_PF_default
+- PF_delinquency_spike_and_failed_refinancing
+- fatal_construction_accident
+- work_suspension_or_license_revocation_risk
+- major_defect_collapse_or_safety_investigation
+- input_cost_spike_without_pass_through
+- housing_demand_collapse_or_pre_sale_failure
+
+## Case Review
+- r10_loop16_samsung_ea_fadhili: Stage2-Actionable / excellent_stage2_actionable_EPC_contract
+- r10_loop16_hyundai_ec_jafurah_gas: Stage2 / Stage2_mega_EPC_backlog_not_Green
+- r10_loop16_pf_taeyoung_builder_restructuring: 4C-watch + Stage2 relief / PF_4C_watch_with_policy_relief
+- r10_loop16_seoul_housing_supply_reconstruction: Stage2 + 4B-watch / mixed_supply_policy_Stage2_with_demand_4B
+- r10_loop16_construction_safety_hyundai_engineering_bridge: 4C / hard_4C_success_construction_safety
+- r10_loop16_samsung_ct_p5_fab_construction: Stage2 / Stage2_AI_fab_construction_not_Green
+- r10_loop16_steel_plate_antidumping_construction_input: mixed Stage2/4B / mixed_building_material_supplier_relief_builder_cost_4B
+- r10_loop16_bok_rate_cut_housing_construction_mixed: Stage2 macro relief + 4B / macro_relief_Stage2_with_housing_4B
