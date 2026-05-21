@@ -1,0 +1,39 @@
+# Round 301 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable
+
+- actual_buyback_cancellation_is_disclosed
+- cet1_or_capital_buffer_supports_return_capacity
+- brokerage_beta_bridges_to_trading_value_margin_finance_or_ib_fee
+- fintech_ma_has_regulatory_approval_path_and_revenue_synergy
+- nav_discount_is_measurable_with_activist_buyback_or_asset_monetization_trigger
+- event_or_market_relative_price_reaction_is_strong
+
+## Stage3-Yellow
+
+- financial_trigger_likely_connects_to_earnings_but_one_gate_remains
+- brokerage_trading_value_or_fee_income_confirmed_but_cycle_risk_remains
+- nav_discount_narrowing_or_repeat_cancellation_visible_but_underlying_asset_risk_remains
+- crypto_ma_security_remediation_and_regulatory_path_visible_but_revenue_durability_pending
+
+## Stage3-Green
+
+- buyback_cancellation_executes_and_eps_accretion_is_visible
+- financial_group_cet1_roe_payout_credit_cost_and_nim_are_stable
+- brokerage_trading_value_converts_to_net_profit
+- fintech_ma_approval_security_revenue_and_aml_kyc_controls_are_closed
+- stablecoin_license_reserve_quality_fee_revenue_and_redemption_are_verified
+- full_window_mfe_mae_is_available_and_supportive
+
+## Green Blockers
+
+- policy_valueup_headline_only
+- buyback_announcement_without_cancellation
+- brokerage_beta_without_trading_value
+- crypto_exchange_market_share_only
+- fintech_ma_without_regulatory_approval
+- stablecoin_policy_hype_only
+- founder_legal_risk_ignored
+- data_rights_privacy_or_security_unresolved

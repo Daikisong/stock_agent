@@ -1,0 +1,18 @@
+axis,points,direction,reason
+actual_buyback_cancellation,+5,raise,R6 financial trigger quality axis
+cet1_capital_return_capacity,+5,raise,R6 financial trigger quality axis
+roe_and_credit_cost_visibility,+5,raise,R6 financial trigger quality axis
+brokerage_trading_value_conversion,+5,raise,R6 financial trigger quality axis
+nav_discount_narrowing,+5,raise,R6 financial trigger quality axis
+regulatory_approval_for_fintech_ma,+5,raise,R6 financial trigger quality axis
+custody_security_trust,+5,raise,R6 financial trigger quality axis
+stablecoin_license_and_reserve_quality,+5,raise,R6 financial trigger quality axis
+customer_data_rights_and_privacy,+5,raise,R6 financial trigger quality axis
+financial_license_governance_risk_cleared,+5,raise,R6 financial trigger quality axis
+policy_valueup_headline_only,-5,lower,"R6 headline, policy, market-share or legal-risk blocker"
+buyback_announcement_without_cancellation,-5,lower,"R6 headline, policy, market-share or legal-risk blocker"
+crypto_exchange_market_share_only,-5,lower,"R6 headline, policy, market-share or legal-risk blocker"
+stablecoin_policy_hype_only,-5,lower,"R6 headline, policy, market-share or legal-risk blocker"
+fintech_ma_without_regulatory_approval,-5,lower,"R6 headline, policy, market-share or legal-risk blocker"
+brokerage_beta_without_trading_value,-5,lower,"R6 headline, policy, market-share or legal-risk blocker"
+founder_legal_risk_ignored,-5,lower,"R6 headline, policy, market-share or legal-risk blocker"

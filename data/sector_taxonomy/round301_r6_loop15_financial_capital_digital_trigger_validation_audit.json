@@ -1,0 +1,113 @@
+{
+  "green_blockers": [
+    "policy_valueup_headline_only",
+    "buyback_announcement_without_cancellation",
+    "brokerage_beta_without_trading_value",
+    "crypto_exchange_market_share_only",
+    "fintech_ma_without_regulatory_approval",
+    "stablecoin_policy_hype_only",
+    "founder_legal_risk_ignored",
+    "data_rights_privacy_or_security_unresolved"
+  ],
+  "hard_4c_gates": [
+    "crypto_exchange_abnormal_withdrawal_or_custody_failure",
+    "fintech_customer_data_violation",
+    "founder_or_major_shareholder_legal_risk_threatens_bank_license_or_ownership",
+    "stablecoin_reserve_failure_or_regulatory_ban",
+    "broker_pf_loss_or_margin_loan_unwind",
+    "bank_credit_cost_spike_or_cet1_deterioration_blocks_return",
+    "buyback_cancellation_not_executed_after_announcement"
+  ],
+  "large_sector": "FINANCIALS_CAPITAL_ALLOCATION_DIGITAL_FINANCE",
+  "method": "trigger_level_backtest_v1",
+  "round_id": "round_229",
+  "score_down_axes": [
+    "policy_valueup_headline_only",
+    "buyback_announcement_without_cancellation",
+    "crypto_exchange_market_share_only",
+    "stablecoin_policy_hype_only",
+    "fintech_ma_without_regulatory_approval",
+    "brokerage_beta_without_trading_value",
+    "founder_legal_risk_ignored"
+  ],
+  "score_up_axes": [
+    "actual_buyback_cancellation",
+    "cet1_capital_return_capacity",
+    "roe_and_credit_cost_visibility",
+    "brokerage_trading_value_conversion",
+    "nav_discount_narrowing",
+    "regulatory_approval_for_fintech_ma",
+    "custody_security_trust",
+    "stablecoin_license_and_reserve_quality",
+    "customer_data_rights_and_privacy",
+    "financial_license_governance_risk_cleared"
+  ],
+  "source_round": "docs/round/round_301.md",
+  "stage2_actionable_rules": [
+    "actual_buyback_cancellation_is_disclosed",
+    "cet1_or_capital_buffer_supports_return_capacity",
+    "brokerage_beta_bridges_to_trading_value_margin_finance_or_ib_fee",
+    "fintech_ma_has_regulatory_approval_path_and_revenue_synergy",
+    "nav_discount_is_measurable_with_activist_buyback_or_asset_monetization_trigger",
+    "event_or_market_relative_price_reaction_is_strong"
+  ],
+  "stage3_green_rules": [
+    "buyback_cancellation_executes_and_eps_accretion_is_visible",
+    "financial_group_cet1_roe_payout_credit_cost_and_nim_are_stable",
+    "brokerage_trading_value_converts_to_net_profit",
+    "fintech_ma_approval_security_revenue_and_aml_kyc_controls_are_closed",
+    "stablecoin_license_reserve_quality_fee_revenue_and_redemption_are_verified",
+    "full_window_mfe_mae_is_available_and_supportive"
+  ],
+  "stage3_yellow_rules": [
+    "financial_trigger_likely_connects_to_earnings_but_one_gate_remains",
+    "brokerage_trading_value_or_fee_income_confirmed_but_cycle_risk_remains",
+    "nav_discount_narrowing_or_repeat_cancellation_visible_but_underlying_asset_risk_remains",
+    "crypto_ma_security_remediation_and_regulatory_path_visible_but_revenue_durability_pending"
+  ],
+  "stage4b_watch_triggers": [
+    "stablecoin_or_crypto_policy_theme_doubles_or_triples_before_revenue",
+    "ma_headline_price_pop_before_security_or_regulatory_clearance",
+    "securities_basket_rerates_on_market_beta_before_earnings_conversion",
+    "buyback_rebound_without_business_recovery",
+    "valueup_policy_expectation_without_firm_level_execution"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "large_sector": "FINANCIALS_CAPITAL_ALLOCATION_DIGITAL_FINANCE",
+    "method": "trigger_level_backtest_v1",
+    "missed_structural_count": 2,
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_229",
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_301.md",
+    "stage2_actionable_candidate_count": 4,
+    "stage3_green_candidate_count": 0,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 3,
+    "stage4b_watch_count": 5,
+    "stage4c_watch_count": 4,
+    "trigger_count": 8
+  },
+  "target_archetypes": {
+    "BROKERAGE_MARKET_VOLUME_STAGE2_ACTIONABLE": "BROKERAGE_MARKET_VOLUME_STAGE2_ACTIONABLE",
+    "BUYBACK_CAPITAL_ALLOCATION_STAGE2_ACTIONABLE": "BUYBACK_CAPITAL_ALLOCATION_STAGE2_ACTIONABLE",
+    "CRYPTO_EXCHANGE_MA_STAGE2_WITH_SECURITY_4C": "CRYPTO_EXCHANGE_MA_STAGE2_WITH_SECURITY_4C",
+    "DIGITAL_ASSET_BANK_ENTRY_STAGE2": "DIGITAL_ASSET_BANK_ENTRY_STAGE2",
+    "FINANCIAL_GROUP_VALUEUP_STAGE2": "FINANCIAL_GROUP_VALUEUP_STAGE2",
+    "FINTECH_DATA_GOVERNANCE_4C": "FINTECH_DATA_GOVERNANCE_4C",
+    "HOLDCO_DISCOUNT_ACTIVIST_STAGE2": "HOLDCO_DISCOUNT_ACTIVIST_STAGE2",
+    "KAKAO_BANK_CONTROL_REGULATORY_4C": "KAKAO_BANK_CONTROL_REGULATORY_4C",
+    "STABLECOIN_POLICY_4B_OVERHEAT": "STABLECOIN_POLICY_4B_OVERHEAT"
+  },
+  "what_not_to_change": [
+    "do_not_apply_round301_shadow_weights_to_production_scoring_yet",
+    "do_not_use_round301_cases_as_candidate_generation_input",
+    "do_not_treat_policy_buyback_ma_market_share_or_stablecoin_headline_as_green",
+    "do_not_ignore_cet1_roe_credit_cost_security_regulatory_data_rights_or_execution_gates"
+  ]
+}
