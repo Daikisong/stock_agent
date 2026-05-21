@@ -1,0 +1,11 @@
+# Round 322 Row Separation Plan
+
+Industrial order rows must separate case evidence, trigger anchors and full adjusted OHLC backfill.
+
+Easy example: Hyosung HICO's $157M transformer expansion is Stage2 evidence, but without orderbook, utilization, margin and price data it cannot become Green.
+
+- case_library_row_describes_stage_candidate_and_evidence_quality
+- trigger_calibration_row_stores_reported_event_return_market_relative_return_contract_value_and_cancellation_metrics
+- ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown
+- do_not_create_MFE_MAE_without_full_adjusted_OHLC
+- do_not_treat_MASGA_AI_power_SMR_or_target_price_headline_as_Green_without_margin_capacity_finality_or_price_validation

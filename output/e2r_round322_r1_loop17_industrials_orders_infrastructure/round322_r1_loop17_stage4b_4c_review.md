@@ -1,0 +1,28 @@
+# Round 322 Stage 4B / 4C Review
+
+## 4B Watch
+- shipbuilding_policy_rally_before_formal_US_orders
+- China_sanction_after_US_linked_naval_optionality
+- transformer_capacity_expansion_before_utilization
+- target_price_upgrade_but_stock_falls
+- local_production_or_technology_transfer_before_margin
+- SMR_MOU_before_final_equipment_contract
+- orderbook_becomes_cancellation_or_arbitration
+
+## Hard 4C Gates
+- major_order_cancellation
+- arbitration_or_advance_payment_dispute
+- geopolitical_sanction_blocking_operations
+- final_contract_failure_after_preferred_bidder_or_MOU
+- large_contract_with_negative_margin_or_cash_conversion
+- capacity_expansion_followed_by_demand_collapse
+
+## Case Review
+- r1_loop17_hd_hyundai_heavy_mipo_masga: Stage2-Actionable / excellent_stage2_actionable_shipbuilding_consolidation
+- r1_loop17_hanwha_ocean_us_navy_china_sanction: Stage2 + 4B-watch / Stage2_naval_optional_with_geopolitical_4B
+- r1_loop17_hyundai_rotem_k2_poland: Stage3-Yellow candidate / Stage3_Yellow_candidate_repeat_export
+- r1_loop17_hd_hyundai_electric_ai_power: Stage2_promote_candidate / missed_structural_if_stage2_ignored
+- r1_loop17_ls_electric_us_data_center_price_failed: Stage2 only / no Actionable / evidence_good_but_price_failed
+- r1_loop17_hyosung_heavy_us_transformer_capacity: Stage2 / Stage2_capacity_expansion_not_Green
+- r1_loop17_doosan_enerbility_smr_ai_power: Stage2 / Stage2_SMR_supply_chain_not_Green
+- r1_loop17_samsung_heavy_zvezda_cancellation: 4C-watch / order_cancellation_4C_thesis_break

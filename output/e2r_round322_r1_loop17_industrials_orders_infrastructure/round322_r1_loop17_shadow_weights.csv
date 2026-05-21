@@ -1,0 +1,9 @@
+archetype,reported_event_return,market_relative_return,contract_value_visibility,naval_shipbuilding_us_workshare,grid_equipment_backlog,capacity_utilization,repeat_export_operator,order_quality_risk,theme_label_without_orders_penalty,report_upgrade_without_price_validation_penalty,capacity_headline_without_utilization_penalty,mou_without_final_contract_penalty,stage2_actionable_promote,stage3_yellow_gate,stage3_green_gate,notes
+SHIPBUILDING_MASGA_MERGER_STAGE2_ACTIONABLE,+5,+4,+3,+5,+0,+3,+2,+3,-2,-1,-2,-1,shipbuilding merger+MASGA event,actual US orders/workshare missing,US order+post-merger margin,HD Hyundai Heavy/Mipo.
+SHIPBUILDING_NAVAL_EXPORT_STAGE2_WITH_SANCTION_4B,+4,+2,+3,+5,+0,+2,+3,+5,-2,-1,-1,-1,US Navy optionality,China sanction 4B,formal contract+sanction resolution,Hanwha Ocean.
+DEFENSE_INDUSTRIAL_EXPORT_STAGE2_YELLOW,+5,+5,+5,+0,+0,+3,+5,+2,-1,-1,-2,-1,repeat K2 export,local production margin gate,delivery+margin+local production,Hyundai Rotem.
+GRID_EQUIPMENT_AI_POWER_STAGE2_PROMOTE,+4,+3,+2,+0,+5,+5,+1,+2,-4,-2,-4,-1,broad AI power rally,backlog/margin missing,orders+ASP+margin,HD Hyundai Electric.
+GRID_EQUIPMENT_US_CAPACITY_STAGE2_WITH_PRICE_FAILED,+0,-5,+1,+0,+4,+3,+0,+2,-4,-5,-3,-1,good US data center report but price failed,actionable prohibited,actual orders+margin,LS Electric.
+TRANSFORMER_CAPACITY_EXPANSION_STAGE2_NO_PRICE,+1,+0,+1,+0,+5,+5,+0,+2,-3,-1,-4,-1,US transformer shortage and capacity expansion,KRX price/orderbook missing,utilization+orderbook+margin,Hyosung Heavy.
+NUCLEAR_SMR_INDUSTRIAL_SUPPLY_STAGE2_WITH_FINAL_CONTRACT_GATE,+1,+0,+2,+0,+1,+3,+0,+3,-3,-1,-2,-5,SMR/AI power cooperation,final contract missing,equipment order+workshare+margin,Doosan Enerbility.
+SHIPBUILDING_ORDER_CANCELLATION_4C,-5,-3,-5,+0,+0,+0,+0,+5,-1,-1,-1,-1,major order cancellation,backlog quality impaired,damages recovery+replacement orders,Samsung Heavy.

@@ -1,0 +1,17 @@
+direction,axis,production_scoring_changed
+up,reported_event_return,false
+up,market_relative_return,false
+up,contract_value_visibility,false
+up,naval_shipbuilding_us_workshare,false
+up,grid_equipment_backlog,false
+up,capacity_utilization,false
+up,repeat_export_operator,false
+up,order_quality_risk,false
+down,theme_label_without_orders,false
+down,report_upgrade_without_price_validation,false
+down,capacity_headline_without_utilization,false
+down,MOU_without_final_contract,false
+down,shipbuilding_policy_without_orders,false
+down,geopolitical_sanction_ignored,false
+down,orderbook_without_cancellation_check,false
+down,local_production_without_margin,false

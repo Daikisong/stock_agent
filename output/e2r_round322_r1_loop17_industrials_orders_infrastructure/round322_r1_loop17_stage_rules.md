@@ -1,0 +1,46 @@
+# Round 322 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- event_return_at_least_5pct
+- market_relative_return_at_least_5pp
+- contract_deal_order_value_is_clear
+- order_can_convert_to_revenue_or_backlog
+- repeat_order_or_new_market_entry_exists
+- capacity_or_localization_links_directly_to_customer_demand
+- sanction_cancellation_mou_only_margin_unknown_4B_is_identified
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- EPS_OP_or_FCF_path_likely_changes
+- delivery_margin_capacity_or_sanction_gate_partly_open
+- repeat_export_or_capacity_conversion_is_visible
+- full_Green_fatal_blocker_absent
+
+## Stage3-Green Rules
+- contract_or_order_value_is_final
+- backlog_converts_to_profitable_revenue
+- production_capacity_and_utilization_are_visible
+- margin_and_cash_conversion_are_confirmed
+- sanction_cancellation_mou_only_or_legal_risk_is_resolved
+- full_window_MFE_MAE_is_available_and_supportive
+
+## Green Blockers
+- shipbuilding_policy_without_orders
+- theme_label_without_orders
+- report_upgrade_without_price_validation
+- capacity_headline_without_utilization
+- MOU_without_final_contract
+- geopolitical_sanction_ignored
+- orderbook_without_cancellation_check
+- local_production_without_margin
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## Hard 4C Gates
+- major_order_cancellation
+- arbitration_or_advance_payment_dispute
+- geopolitical_sanction_blocking_operations
+- final_contract_failure_after_preferred_bidder_or_MOU
+- large_contract_with_negative_margin_or_cash_conversion
+- capacity_expansion_followed_by_demand_collapse
