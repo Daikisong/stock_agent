@@ -1,0 +1,44 @@
+# Round 310 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- customer_qualification_mass_production_shipment_or_production_readiness_visible
+- ASP_contract_price_OP_guidance_or_estimate_revision_visible
+- event_return_at_least_5pct_or_market_relative_return_at_least_5pp
+- equipment_order_capex_or_capacity_directly_tied_to_HBM_AI_memory_or_sensors
+- partnership_is_separated_from_binding_order_or_volume_shipment
+- no_unresolved_4c_overlay_certification_export_control_labor_or_yield_failure
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- EPS_OP_FCF_path_can_change_materially
+- one_of_customer_volume_margin_capacity_or_4c_overlay_remains_open
+- reported_price_anchor_or_relative_strength_supports_trigger
+- case_is_not_pure_partnership_rumor_or_policy_relief
+
+## Stage3-Green Rules
+- HBM_customer_qualification_plus_volume_shipment_confirmed
+- memory_ASP_converts_to_quarterly_OP_margin_and_FCF
+- equipment_repeat_orders_or_customer_broadening_confirmed
+- foundry_node_yield_utilization_and_margin_confirmed
+- export_control_and_labor_output_continuity_cleared
+- full_adjusted_OHLC_MFE_MAE_path_supports_stage_candidate
+
+## Green Blockers
+- HBM_headline_without_customer_certification
+- foundry_contract_without_node_yield_or_customer_identity
+- AI_partnership_without_binding_wafer_order
+- equipment_rumor_without_signed_order
+- capex_without_installation_yield_or_customer_allocation
+- component_partnership_without_design_in
+- memory_supercycle_without_labor_export_control_and_inventory_overlay
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## 4C Watch Gates
+- HBM_qualification_failure_or_customer_rejection
+- export_license_revocation_limiting_China_fab_upgrade
+- labor_strike_affecting_DRAM_NAND_output
+- foundry_yield_failure_or_fab_utilization_loss
+- inventory_write_down_from_unsold_HBM
+- customer_cancellation_or_delayed_qualification

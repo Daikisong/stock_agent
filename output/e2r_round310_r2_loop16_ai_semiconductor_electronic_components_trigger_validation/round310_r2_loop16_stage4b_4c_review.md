@@ -1,0 +1,28 @@
+# Round 310 Stage 4B / 4C Review
+
+## 4B Watch
+- HBM_rumor_or_test_speculation_before_customer_certification
+- foundry_mega_contract_before_node_yield_customer_and_utilization_evidence
+- equipment_customer_rumor_before_signed_order
+- AI_infra_partnership_before_binding_wafer_order
+- memory_supercycle_valuation_surge_before_labor_export_control_and_inventory_risks_clear
+- component_partnership_before_design_in_and_revenue
+
+## 4C Watch Gates
+- HBM_qualification_failure_or_customer_rejection
+- export_license_revocation_limiting_China_fab_upgrade
+- labor_strike_affecting_DRAM_NAND_output
+- foundry_yield_failure_or_fab_utilization_loss
+- inventory_write_down_from_unsold_HBM
+- customer_cancellation_or_delayed_qualification
+
+## Case Review
+- r2_loop16_sk_hynix_hbm3e_hbm4_euv: Stage3-Yellow candidate / Green deferred / excellent_stage2_to_yellow_green_candidate
+- r2_loop16_samsung_memory_supercycle: Stage3-Yellow candidate / 4B overlay / Stage3_Yellow_candidate_with_4B_overheat_overlay
+- r2_loop16_samsung_skhynix_openai_stargate: Stage2-Actionable demand trigger / Stage2_Actionable_AI_infra_demand_not_Green
+- r2_loop16_samsung_foundry_165b_contract: Stage2 + 4B-watch / Stage2_contract_with_4B_yield_gate
+- r2_loop16_hanmi_semiconductor_hbm_equipment: Stage2-Actionable + rumor 4B / Stage2_Actionable_with_rumor_4B
+- r2_loop16_samsung_hbm_delay_false_positive: 4C-watch / HBM_certification_delay_4C_watch
+- r2_loop16_china_fab_export_control: 4C-watch / China_fab_export_control_4C_watch
+- r2_loop16_samsung_labor_strike_4c: 4C-watch / semiconductor_labor_strike_4C_watch
+- r2_loop16_lg_innotek_aeva_lidar: Stage2 order-gate / Stage2_component_diversification_not_Green

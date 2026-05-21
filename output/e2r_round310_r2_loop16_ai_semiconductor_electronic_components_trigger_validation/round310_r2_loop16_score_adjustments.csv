@@ -1,0 +1,14 @@
+direction,axis,production_scoring_changed
+up,hbm_customer_certification,false
+up,hbm_mass_production_shipment,false
+up,memory_asp_contract_power,false
+up,op_estimate_guidance_beat,false
+up,euv_capacity_commitment,false
+up,advanced_packaging_order_visibility,false
+up,binding_ai_infra_purchase,false
+up,export_license_stability,false
+up,labor_output_continuity,false
+down,hbm_headline_without_customer_certification,false
+down,foundry_contract_without_node_yield,false
+down,ai_partnership_without_binding_order,false
+down,equipment_rumor_without_signed_order,false

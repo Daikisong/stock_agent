@@ -1,0 +1,13 @@
+# Round 310 Price Validation Plan
+
+Full adjusted OHLC was not available. Reported event anchors are retained without inventing full-window MFE/MAE.
+
+- r2_loop16_sk_hynix_hbm3e_hbm4_euv: r2l16_skhynix_hbm4_T1/r2l16_skhynix_asml_T2 / excellent_stage2_to_yellow_green_candidate / full_window=`price_data_unavailable_after_deep_search`
+- r2_loop16_samsung_memory_supercycle: r2l16_samsung_memory_T1 / Stage3_Yellow_candidate_with_4B_overheat_overlay / full_window=`price_data_unavailable_after_deep_search`
+- r2_loop16_samsung_skhynix_openai_stargate: r2l16_openai_stargate_T1 / Stage2_Actionable_AI_infra_demand_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r2_loop16_samsung_foundry_165b_contract: r2l16_samsung_foundry_T1 / Stage2_contract_with_4B_yield_gate / full_window=`price_data_unavailable_after_deep_search`
+- r2_loop16_hanmi_semiconductor_hbm_equipment: r2l16_hanmi_hbm_T0/r2l16_hanmi_micron_rumor_T2 / Stage2_Actionable_with_rumor_4B / full_window=`price_data_unavailable_after_deep_search`
+- r2_loop16_samsung_hbm_delay_false_positive: r2l16_samsung_hbm_delay_T0 / HBM_certification_delay_4C_watch / full_window=`price_data_unavailable_after_deep_search`
+- r2_loop16_china_fab_export_control: r2l16_china_fab_export_T1 / China_fab_export_control_4C_watch / full_window=`price_data_unavailable_after_deep_search`
+- r2_loop16_samsung_labor_strike_4c: r2l16_samsung_strike_T1 / semiconductor_labor_strike_4C_watch / full_window=`price_data_unavailable_after_deep_search`
+- r2_loop16_lg_innotek_aeva_lidar: r2l16_lginnotek_aeva_T1 / Stage2_component_diversification_not_Green / full_window=`price_data_unavailable_after_deep_search`

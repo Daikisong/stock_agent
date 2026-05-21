@@ -1135,6 +1135,13 @@ class E2RArchetype(str, Enum):
     ROBOTICS_STRATEGIC_CONTROL_STAGE2_WITH_ORDER_GATE = "ROBOTICS_STRATEGIC_CONTROL_STAGE2_WITH_ORDER_GATE"
     DATA_CENTER_COOLING_MA_STAGE2_PRICE_MUTED = "DATA_CENTER_COOLING_MA_STAGE2_PRICE_MUTED"
     AEROSPACE_EXPORT_CONTRACT_STAGE2 = "AEROSPACE_EXPORT_CONTRACT_STAGE2"
+    HBM_LEADERSHIP_STAGE2_TO_GREEN_CANDIDATE = "HBM_LEADERSHIP_STAGE2_TO_GREEN_CANDIDATE"
+    MEMORY_SUPERCYCLE_ASP_STAGE2_YELLOW = "MEMORY_SUPERCYCLE_ASP_STAGE2_YELLOW"
+    OPENAI_STARGATE_HBM_DEMAND_STAGE2_ACTIONABLE = "OPENAI_STARGATE_HBM_DEMAND_STAGE2_ACTIONABLE"
+    FOUNDRY_MEGA_CONTRACT_STAGE2_WITH_YIELD_4B = "FOUNDRY_MEGA_CONTRACT_STAGE2_WITH_YIELD_4B"
+    ADVANCED_PACKAGING_EQUIPMENT_STAGE2_WITH_RUMOR_4B = "ADVANCED_PACKAGING_EQUIPMENT_STAGE2_WITH_RUMOR_4B"
+    HBM_CERTIFICATION_DELAY_FALSE_POSITIVE = "HBM_CERTIFICATION_DELAY_FALSE_POSITIVE"
+    ELECTRONIC_COMPONENT_LIDAR_STAGE2_ORDER_GATE = "ELECTRONIC_COMPONENT_LIDAR_STAGE2_ORDER_GATE"
     FALSE_POSITIVE_SCORE = "FALSE_POSITIVE_SCORE"
     CROWDED_RERATING_4B_WATCH = "CROWDED_RERATING_4B_WATCH"
     THESIS_BREAK_4C = "THESIS_BREAK_4C"
@@ -8107,6 +8114,90 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("disclosure", "news", "financial_actual", "price", "red_team"),
             false_positive_patterns=("aerospace export headline treated as delivered cashflow",),
             preferred_score_weights=_weights(eps_fcf=18, visibility=22, bottleneck=10, mispricing=12, valuation=12),
+        ),
+        E2RArchetype.HBM_LEADERSHIP_STAGE2_TO_GREEN_CANDIDATE: ArchetypeDefinition(
+            archetype=E2RArchetype.HBM_LEADERSHIP_STAGE2_TO_GREEN_CANDIDATE,
+            stage1_radar_signals=("HBM3E or HBM4 milestone", "AI memory supplier leadership", "EUV capacity commitment"),
+            stage2_candidate_signals=("customer qualification, mass production, shipment or production readiness is visible",),
+            stage3_high_conviction_signals=("HBM volume shipment, ASP, customer allocation, OP margin, cash conversion and full OHLC price path confirm",),
+            stage4a_ongoing_signals=("HBM capacity remains sold out and margin stays strong through multiple quarters",),
+            stage4b_graduation_overheat_signals=("HBM leader rerates before customer concentration, EUV installation, labor and valuation risks clear",),
+            stage4c_thesis_break_signals=("customer qualification failure", "HBM shipment delay", "ASP/mix reversal", "capacity overbuild", "major customer concentration break"),
+            key_evidence_families=("news", "financial_actual", "price", "customer", "consensus_revision", "red_team"),
+            false_positive_patterns=("HBM headline treated as volume shipment without certification",),
+            preferred_score_weights=_weights(eps_fcf=24, visibility=22, bottleneck=20, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.MEMORY_SUPERCYCLE_ASP_STAGE2_YELLOW: ArchetypeDefinition(
+            archetype=E2RArchetype.MEMORY_SUPERCYCLE_ASP_STAGE2_YELLOW,
+            stage1_radar_signals=("DRAM or NAND price hike", "DDR5 module shortage", "AI data-center memory demand"),
+            stage2_candidate_signals=("ASP increase, long-term contract context, OP guidance beat or estimate revision is visible",),
+            stage3_high_conviction_signals=("ASP converts into quarterly OP, margin, FCF, durable supply discipline and favorable OHLC path",),
+            stage4a_ongoing_signals=("memory ASP and shipment mix remain strong without labor or export-control disruption",),
+            stage4b_graduation_overheat_signals=("memory supercycle rally reaches index crowding or valuation saturation before risk overlays clear",),
+            stage4c_thesis_break_signals=("memory price reversal", "labor strike-driven output risk", "export-control disruption", "HBM certification delay", "energy-cost margin squeeze"),
+            key_evidence_families=("news", "financial_actual", "price", "consensus_revision", "red_team"),
+            false_positive_patterns=("memory price hike scored without labor, export-control or HBM lag overlay",),
+            preferred_score_weights=_weights(eps_fcf=24, visibility=20, bottleneck=18, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.OPENAI_STARGATE_HBM_DEMAND_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.OPENAI_STARGATE_HBM_DEMAND_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("OpenAI Stargate", "AI infrastructure memory demand", "Korean semiconductor partnership"),
+            stage2_candidate_signals=("partnership, market-cap reaction, demand capacity and semiconductor procurement intent are visible",),
+            stage3_high_conviction_signals=("binding purchase order, wafer allocation, ASP, delivery schedule and payment terms are confirmed",),
+            stage4a_ongoing_signals=("AI infrastructure demand converts into shipped wafers and high-margin memory revenue",),
+            stage4b_graduation_overheat_signals=("LOI or partnership rerates before binding wafer order and delivery economics",),
+            stage4c_thesis_break_signals=("binding order fails", "customer capex slows", "wafer allocation shifts", "AI infra financing breaks"),
+            key_evidence_families=("news", "customer", "price", "financial_actual", "red_team"),
+            false_positive_patterns=("OpenAI partnership treated as actual wafer shipment",),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=18, bottleneck=16, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.FOUNDRY_MEGA_CONTRACT_STAGE2_WITH_YIELD_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.FOUNDRY_MEGA_CONTRACT_STAGE2_WITH_YIELD_4B,
+            stage1_radar_signals=("foundry mega contract", "global customer chip manufacturing deal", "Texas or advanced-node utilization story"),
+            stage2_candidate_signals=("contract value and duration are visible, but customer, node and yield may remain undisclosed",),
+            stage3_high_conviction_signals=("customer identity, node details, yield, fab utilization, gross margin and payment schedule are confirmed",),
+            stage4a_ongoing_signals=("foundry utilization and margin improve after contract ramp",),
+            stage4b_graduation_overheat_signals=("mega contract rerates before node, yield, customer and utilization evidence",),
+            stage4c_thesis_break_signals=("yield failure", "fab delay", "customer cancellation", "utilization miss", "gross margin deterioration"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("foundry contract treated as cutting-edge AI win without node or yield evidence",),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=16, bottleneck=12, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.ADVANCED_PACKAGING_EQUIPMENT_STAGE2_WITH_RUMOR_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.ADVANCED_PACKAGING_EQUIPMENT_STAGE2_WITH_RUMOR_4B,
+            stage1_radar_signals=("HBM packaging equipment", "TSV-TC bonder", "advanced packaging order"),
+            stage2_candidate_signals=("signed equipment order, customer link, contract value and event price reaction are visible",),
+            stage3_high_conviction_signals=("repeat orders, multi-customer revenue, equipment margin, shipment schedule and customer concentration reduction are confirmed",),
+            stage4a_ongoing_signals=("equipment backlog converts into profitable shipments across customers",),
+            stage4b_graduation_overheat_signals=("unconfirmed Micron or other customer rumor rallies before signed order",),
+            stage4c_thesis_break_signals=("customer order fails", "equipment shipment delay", "single-customer concentration breaks", "margin miss"),
+            key_evidence_families=("disclosure", "news", "price", "financial_actual", "customer"),
+            false_positive_patterns=("equipment rumor treated as signed order",),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=20, bottleneck=18, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.HBM_CERTIFICATION_DELAY_FALSE_POSITIVE: ArchetypeDefinition(
+            archetype=E2RArchetype.HBM_CERTIFICATION_DELAY_FALSE_POSITIVE,
+            stage1_radar_signals=("HBM customer test issue", "Nvidia qualification delay", "HBM heat or power issue"),
+            stage2_candidate_signals=("not a positive candidate source; this is a Red Team qualification overlay",),
+            stage3_high_conviction_signals=("not Green until customer volume qualification and margin recovery are visible",),
+            stage4a_ongoing_signals=("qualification issue is resolved and shipment economics recover",),
+            stage4b_graduation_overheat_signals=("HBM catch-up rally ignores qualification delay and inventory risk",),
+            stage4c_thesis_break_signals=("HBM test failure", "profit miss from HBM delay", "inventory write-down", "AI China curb-driven profit miss"),
+            key_evidence_families=("news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("HBM headline scored despite failed customer qualification",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.ELECTRONIC_COMPONENT_LIDAR_STAGE2_ORDER_GATE: ArchetypeDefinition(
+            archetype=E2RArchetype.ELECTRONIC_COMPONENT_LIDAR_STAGE2_ORDER_GATE,
+            stage1_radar_signals=("lidar or precision-sensing collaboration", "sensor equity investment", "robotics or AR sensor roadmap"),
+            stage2_candidate_signals=("strategic collaboration, equity investment, target markets and capacity roadmap are visible",),
+            stage3_high_conviction_signals=("design-in, mass-production order, customer launch, ASP/margin and module revenue are confirmed",),
+            stage4a_ongoing_signals=("sensor design wins convert into repeat component revenue and margin",),
+            stage4b_graduation_overheat_signals=("component partnership or equity stake rerates before design-in and revenue",),
+            stage4c_thesis_break_signals=("design-in fails", "customer launch delayed", "sensor ASP/margin disappoints", "strategic partner funding breaks"),
+            key_evidence_families=("news", "customer", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("sensor partnership treated as mass-production revenue",),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=16, bottleneck=8, mispricing=8, valuation=8),
         ),
         E2RArchetype.PRICE_ONLY_POLICY_RALLY: ArchetypeDefinition(
             archetype=E2RArchetype.PRICE_ONLY_POLICY_RALLY,

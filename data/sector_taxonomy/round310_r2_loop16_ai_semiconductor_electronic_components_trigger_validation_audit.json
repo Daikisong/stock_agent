@@ -1,0 +1,120 @@
+{
+  "green_blockers": [
+    "HBM_headline_without_customer_certification",
+    "foundry_contract_without_node_yield_or_customer_identity",
+    "AI_partnership_without_binding_wafer_order",
+    "equipment_rumor_without_signed_order",
+    "capex_without_installation_yield_or_customer_allocation",
+    "component_partnership_without_design_in",
+    "memory_supercycle_without_labor_export_control_and_inventory_overlay",
+    "full_adjusted_ohlc_missing_for_Green_confirmation"
+  ],
+  "large_sector": "AI_SEMICONDUCTOR_ELECTRONIC_COMPONENTS",
+  "method": "trigger_level_backtest_v1_after_redteam",
+  "required_target_aliases": {
+    "ADVANCED_PACKAGING_EQUIPMENT_STAGE2_WITH_RUMOR_4B": "ADVANCED_PACKAGING_EQUIPMENT_STAGE2_WITH_RUMOR_4B",
+    "CHINA_FAB_EXPORT_CONTROL_4C_WATCH": "CHINA_FAB_EXPORT_CONTROL_4C_WATCH",
+    "ELECTRONIC_COMPONENT_LIDAR_STAGE2_ORDER_GATE": "ELECTRONIC_COMPONENT_LIDAR_STAGE2_ORDER_GATE",
+    "FOUNDRY_MEGA_CONTRACT_STAGE2_WITH_YIELD_4B": "FOUNDRY_MEGA_CONTRACT_STAGE2_WITH_YIELD_4B",
+    "HBM_CERTIFICATION_DELAY_FALSE_POSITIVE": "HBM_CERTIFICATION_DELAY_FALSE_POSITIVE",
+    "HBM_LEADERSHIP_STAGE2_TO_GREEN_CANDIDATE": "HBM_LEADERSHIP_STAGE2_TO_GREEN_CANDIDATE",
+    "MEMORY_SUPERCYCLE_ASP_STAGE2_YELLOW": "MEMORY_SUPERCYCLE_ASP_STAGE2_YELLOW",
+    "OPENAI_STARGATE_HBM_DEMAND_STAGE2_ACTIONABLE": "OPENAI_STARGATE_HBM_DEMAND_STAGE2_ACTIONABLE",
+    "SEMICONDUCTOR_LABOR_STRIKE_4C_WATCH": "SEMICONDUCTOR_LABOR_STRIKE_4C_WATCH"
+  },
+  "round_id": "round_238",
+  "row_separation_rules": [
+    "case_library_row_describes_stage_candidate_and_evidence_quality",
+    "trigger_calibration_row_stores_event_anchor_price_reaction_and_reported_metrics",
+    "ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown",
+    "do_not_downgrade_valid_Stage2_or_Yellow_candidate_only_because_OHLC_backfill_is_missing",
+    "do_not_treat_partnership_rumor_policy_or_capex_headline_as_actual_volume_shipment"
+  ],
+  "score_down_axes": [
+    "hbm_headline_without_customer_certification",
+    "foundry_contract_without_node_yield",
+    "ai_partnership_without_binding_order",
+    "equipment_rumor_without_signed_order"
+  ],
+  "score_up_axes": [
+    "hbm_customer_certification",
+    "hbm_mass_production_shipment",
+    "memory_asp_contract_power",
+    "op_estimate_guidance_beat",
+    "euv_capacity_commitment",
+    "advanced_packaging_order_visibility",
+    "binding_ai_infra_purchase",
+    "export_license_stability",
+    "labor_output_continuity"
+  ],
+  "source_round": "docs/round/round_310.md",
+  "stage2_actionable_rules": [
+    "customer_qualification_mass_production_shipment_or_production_readiness_visible",
+    "ASP_contract_price_OP_guidance_or_estimate_revision_visible",
+    "event_return_at_least_5pct_or_market_relative_return_at_least_5pp",
+    "equipment_order_capex_or_capacity_directly_tied_to_HBM_AI_memory_or_sensors",
+    "partnership_is_separated_from_binding_order_or_volume_shipment",
+    "no_unresolved_4c_overlay_certification_export_control_labor_or_yield_failure"
+  ],
+  "stage3_green_rules": [
+    "HBM_customer_qualification_plus_volume_shipment_confirmed",
+    "memory_ASP_converts_to_quarterly_OP_margin_and_FCF",
+    "equipment_repeat_orders_or_customer_broadening_confirmed",
+    "foundry_node_yield_utilization_and_margin_confirmed",
+    "export_control_and_labor_output_continuity_cleared",
+    "full_adjusted_OHLC_MFE_MAE_path_supports_stage_candidate"
+  ],
+  "stage3_yellow_rules": [
+    "Stage2_Actionable_conditions_pass",
+    "EPS_OP_FCF_path_can_change_materially",
+    "one_of_customer_volume_margin_capacity_or_4c_overlay_remains_open",
+    "reported_price_anchor_or_relative_strength_supports_trigger",
+    "case_is_not_pure_partnership_rumor_or_policy_relief"
+  ],
+  "stage4b_watch_triggers": [
+    "HBM_rumor_or_test_speculation_before_customer_certification",
+    "foundry_mega_contract_before_node_yield_customer_and_utilization_evidence",
+    "equipment_customer_rumor_before_signed_order",
+    "AI_infra_partnership_before_binding_wafer_order",
+    "memory_supercycle_valuation_surge_before_labor_export_control_and_inventory_risks_clear",
+    "component_partnership_before_design_in_and_revenue"
+  ],
+  "stage4c_watch_gates": [
+    "HBM_qualification_failure_or_customer_rejection",
+    "export_license_revocation_limiting_China_fab_upgrade",
+    "labor_strike_affecting_DRAM_NAND_output",
+    "foundry_yield_failure_or_fab_utilization_loss",
+    "inventory_write_down_from_unsold_HBM",
+    "customer_cancellation_or_delayed_qualification"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 9,
+    "evidence_good_but_price_failed_count": 3,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "large_sector": "AI_SEMICONDUCTOR_ELECTRONIC_COMPONENTS",
+    "method": "trigger_level_backtest_v1_after_redteam",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_238",
+    "row_separation_required": true,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_310.md",
+    "stage2_actionable_candidate_count": 4,
+    "stage2_event_candidate_count": 2,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 4,
+    "stage4b_watch_count": 5,
+    "stage4c_watch_count": 3,
+    "target_archetype_count": 9,
+    "trigger_count": 11
+  },
+  "what_not_to_change": [
+    "do_not_change_production_scoring",
+    "do_not_use_round310_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_ai_semiconductor_headline_as_green_without_shipment_asp_margin_customer_evidence",
+    "do_not_invent_full_mfe_mae_without_adjusted_ohlc"
+  ]
+}
