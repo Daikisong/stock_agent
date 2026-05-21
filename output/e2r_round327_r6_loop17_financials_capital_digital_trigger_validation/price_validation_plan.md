@@ -1,0 +1,14 @@
+# Round 327 R6 Loop 17 Price Validation Plan
+
+Full adjusted OHLC is not complete. Do not create MFE/MAE or peak/drawdown values from reported event anchors.
+
+| case_id | status | event anchor | next backfill |
+| --- | --- | --- | --- |
+| r6_loop17_kospi_boom_securities_financials | price_data_unavailable_after_deep_search | {"financial_groups_index_event_return_pct": 4.2, "kospi_event_return_pct": 6.45, "securities_firms_index_event_return_pct": 13.5, "trigger_date": "2026-05-06"} | adjusted OHLC backfill required |
+| r6_loop17_sk_square_buyback_holding_discount | price_data_unavailable_after_deep_search | {"market_value_vs_stake_value_context": "less_than_half", "new_buyback_cancel_krw_bn": 100, "prior_buyback_cancel_krw_bn": 100, "sk_hynix_stake_value_context_usd_bn": 18, "trigger_date": "2024-11-21"} | adjusted OHLC backfill required |
+| r6_loop17_hana_bank_dunamu_stake | price_data_unavailable_after_deep_search | {"deal_value_krw_trn": 1.0, "deal_value_usd_mn": 700, "hana_bank_dunamu_stake_pct": 6.55, "kakao_investment_post_sale_stake_pct": 4.03, "trigger_date": "2026-05-14", "upbit_korea_virtual_asset_volume_share_pct": ">80"} | adjusted OHLC backfill required |
+| r6_loop17_naver_financial_dunamu_merger | price_data_unavailable_after_deep_search | {"deal_value_krw_trn": 15.13, "deal_value_usd_bn": 10.27, "exchange_ratio": "2.54_Naver_Financial_shares_per_1_Dunamu_share", "naver_initial_event_return_pct": ">7", "naver_later_event_return_pct": -4.2, "trigger_date": "2025-11-27", "upbit_abnormal_withdrawal_krw_bn": 54} | adjusted OHLC backfill required |
+| r6_loop17_kakao_pay_won_stablecoin_frenzy | price_data_unavailable_after_deep_search | {"aton_event_return_context_pct": 80, "kakao_pay_event_return_context": ">2x", "lg_cns_event_return_context_pct": "almost_70", "margin_loans_context_krw_trn": 20.5, "me2on_event_return_context": "tripled", "trigger_period": "2025-06"} | adjusted OHLC backfill required |
+| r6_loop17_bok_stablecoin_kimchi_bond_fx_policy | price_data_unavailable_after_deep_search | {"kimchi_bond_ban_duration_years": 14, "kimchi_bond_ban_lifted": true, "stablecoin_policy_date": "2026-04-14", "stablecoin_trading_q1_2025_krw_trn": 57, "stablecoin_trading_q1_2025_usd_bn": 42} | adjusted OHLC backfill required |
+| r6_loop17_hong_kong_els_bank_sanctions | price_data_unavailable_after_deep_search | {"finalization_body": "Financial_Services_Commission", "fine_context_krw_trn": 1.0, "hard_4C_status": "not_confirmed", "product": "Hong_Kong_equity_linked_derivatives", "regulator": "Financial_Supervisory_Service", "trigger_date": "2026-02-12"} | adjusted OHLC backfill required |
+| r6_loop17_short_selling_normalization | price_data_unavailable_after_deep_search | {"ban_lift_target_month": "2025-03", "court_outcome": "cleared", "hsbc_case_value_krw_bn": 16, "illegal_trade_detection_system": true, "trigger_date": "2025-02-11"} | adjusted OHLC backfill required |
