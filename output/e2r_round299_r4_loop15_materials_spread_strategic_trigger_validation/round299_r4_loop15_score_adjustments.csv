@@ -1,0 +1,19 @@
+axis,points,direction,reason
+tariff_rate_and_import_share,+5,raise,R4 trigger quality axis
+china_dependency_reduction,+5,raise,R4 trigger quality axis
+non_china_capacity_quality_certification,+5,raise,R4 trigger quality axis
+spread_margin_visibility,+5,raise,R4 trigger quality axis
+raw_material_price_durability,+5,raise,R4 trigger quality axis
+tcrc_smelt_margin,+5,raise,R4 trigger quality axis
+strategic_resource_offtake_contract,+5,raise,R4 trigger quality axis
+funding_irr_capex_clarity,+5,raise,R4 trigger quality axis
+control_premium_separation,+5,raise,R4 trigger quality axis
+export_control_exposure,+5,raise,R4 trigger quality axis
+commodity_price_event_only,-5,lower,R4 false-positive or 4B/4C blocker
+control_premium_as_operating_green,-5,lower,R4 false-positive or 4B/4C blocker
+localization_capex_without_funding,-5,lower,R4 false-positive or 4B/4C blocker
+upstream_stake_without_downstream_margin,-5,lower,R4 false-positive or 4B/4C blocker
+tariff_headline_without_asp_volume,-5,lower,R4 false-positive or 4B/4C blocker
+lithium_supply_shock_without_inventory_draw,-5,lower,R4 false-positive or 4B/4C blocker
+metal_price_without_spread,-5,lower,R4 false-positive or 4B/4C blocker
+strategic_resource_label_only,-5,lower,R4 false-positive or 4B/4C blocker

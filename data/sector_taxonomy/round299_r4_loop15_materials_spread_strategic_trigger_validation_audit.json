@@ -1,0 +1,113 @@
+{
+  "green_blockers": [
+    "commodity_price_event_only",
+    "control_premium_as_operating_green",
+    "localization_capex_without_funding",
+    "upstream_stake_without_downstream_margin",
+    "tariff_headline_without_asp_volume",
+    "lithium_supply_shock_without_inventory_draw",
+    "metal_price_without_spread",
+    "strategic_resource_label_only"
+  ],
+  "hard_4c_gates": [
+    "tcrc_collapse_breaks_smelter_margin",
+    "commodity_price_rally_does_not_convert_to_company_spread",
+    "china_export_control_blocks_strategic_material_sourcing",
+    "capex_funding_gap_dilution_or_injunction",
+    "control_premium_disappears_and_operating_valuation_returns",
+    "lithium_price_reversal_inventory_write_down_or_asp_pass_through_failure"
+  ],
+  "large_sector": "MATERIALS_SPREAD_STRATEGIC_RESOURCES",
+  "method": "trigger_level_backtest_v1",
+  "round_id": "round_227",
+  "score_down_axes": [
+    "commodity_price_event_only",
+    "control_premium_as_operating_green",
+    "localization_capex_without_funding",
+    "upstream_stake_without_downstream_margin",
+    "tariff_headline_without_asp_volume",
+    "lithium_supply_shock_without_inventory_draw",
+    "metal_price_without_spread",
+    "strategic_resource_label_only"
+  ],
+  "score_up_axes": [
+    "tariff_rate_and_import_share",
+    "china_dependency_reduction",
+    "non_china_capacity_quality_certification",
+    "spread_margin_visibility",
+    "raw_material_price_durability",
+    "tcrc_smelt_margin",
+    "strategic_resource_offtake_contract",
+    "funding_irr_capex_clarity",
+    "control_premium_separation",
+    "export_control_exposure"
+  ],
+  "source_round": "docs/round/round_299.md",
+  "stage2_actionable_rules": [
+    "tariff_rate_antidumping_duty_or_import_share_is_numeric",
+    "china_dependency_or_export_control_risk_is_reduced",
+    "trigger_day_market_relative_return_5pp_plus",
+    "spread_improvement_path_from_asp_raw_material_or_import_cost_is_explainable",
+    "capacity_quality_customer_certification_or_offtake_is_partly_visible",
+    "commodity_move_can_bridge_to_company_margin"
+  ],
+  "stage3_green_rules": [
+    "spread_improvement_is_visible_in_results",
+    "asp_volume_utilization_margin_are_confirmed",
+    "upstream_stake_links_to_downstream_cost_advantage",
+    "strategic_resource_project_funding_and_offtake_are_confirmed",
+    "operating_fcf_improves_not_just_control_premium",
+    "full_window_mfe_mae_is_available_and_supportive"
+  ],
+  "stage3_yellow_rules": [
+    "spread_or_strategic_resource_cashflow_path_is_numeric",
+    "capacity_customer_qualification_offtake_funding_or_irr_gate_still_pending",
+    "no_control_premium_localization_capex_or_export_control_hard_gate_dominates"
+  ],
+  "stage4b_watch_triggers": [
+    "control_premium_rally_20_to_30pct",
+    "commodity_spot_event_rally_without_margin_evidence",
+    "strategic_resource_capex_rally_without_funding_or_offtake",
+    "localization_capex_headline_without_irr",
+    "tender_buyback_or_share_issuance_dominates_operating_thesis"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 10,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "large_sector": "MATERIALS_SPREAD_STRATEGIC_RESOURCES",
+    "method": "trigger_level_backtest_v1",
+    "missed_structural_count": 0,
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_227",
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_299.md",
+    "stage2_actionable_candidate_count": 4,
+    "stage3_green_candidate_count": 0,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 3,
+    "stage4b_watch_count": 4,
+    "stage4c_watch_count": 5,
+    "trigger_count": 11
+  },
+  "target_archetypes": {
+    "CHINA_STRATEGIC_MINERAL_EXPORT_CONTROL_4C": "CHINA_STRATEGIC_MINERAL_EXPORT_CONTROL_4C",
+    "COPPER_TCRC_SPREAD_4C_WATCH": "COPPER_TCRC_SPREAD_4C_WATCH",
+    "CRITICAL_MINERALS_SMELTER_STAGE2_WITH_DILUTION_4B": "CRITICAL_MINERALS_SMELTER_STAGE2_WITH_DILUTION_4B",
+    "GRAPHITE_TARIFF_STAGE2_ACTIONABLE": "GRAPHITE_TARIFF_STAGE2_ACTIONABLE",
+    "KOREA_ZINC_CONTROL_PREMIUM_4B": "KOREA_ZINC_CONTROL_PREMIUM_4B",
+    "LITHIUM_PRICE_EVENT_PREMIUM": "LITHIUM_PRICE_EVENT_PREMIUM",
+    "LOCALIZATION_CAPEX_FALSE_POSITIVE": "LOCALIZATION_CAPEX_FALSE_POSITIVE",
+    "STEEL_ANTIDUMPING_SPREAD_STAGE2_ACTIONABLE": "STEEL_ANTIDUMPING_SPREAD_STAGE2_ACTIONABLE",
+    "STEEL_WEAK_DEMAND_FAILED_RERATING": "STEEL_WEAK_DEMAND_FAILED_RERATING",
+    "UPSTREAM_LITHIUM_SUPPLY_SECURITY_STAGE2": "UPSTREAM_LITHIUM_SUPPLY_SECURITY_STAGE2"
+  },
+  "what_not_to_change": [
+    "do_not_apply_round299_shadow_weights_to_production_scoring_yet",
+    "do_not_use_round299_cases_as_candidate_generation_input",
+    "do_not_treat_commodity_price_or_control_premium_as_green",
+    "do_not_ignore_tcrc_spread_funding_irr_or_export_control_overlays"
+  ]
+}

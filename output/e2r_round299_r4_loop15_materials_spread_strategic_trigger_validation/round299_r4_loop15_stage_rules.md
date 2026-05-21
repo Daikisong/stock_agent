@@ -1,0 +1,38 @@
+# Round 299 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable
+
+- tariff_rate_antidumping_duty_or_import_share_is_numeric
+- china_dependency_or_export_control_risk_is_reduced
+- trigger_day_market_relative_return_5pp_plus
+- spread_improvement_path_from_asp_raw_material_or_import_cost_is_explainable
+- capacity_quality_customer_certification_or_offtake_is_partly_visible
+- commodity_move_can_bridge_to_company_margin
+
+## Stage3-Yellow
+
+- spread_or_strategic_resource_cashflow_path_is_numeric
+- capacity_customer_qualification_offtake_funding_or_irr_gate_still_pending
+- no_control_premium_localization_capex_or_export_control_hard_gate_dominates
+
+## Stage3-Green
+
+- spread_improvement_is_visible_in_results
+- asp_volume_utilization_margin_are_confirmed
+- upstream_stake_links_to_downstream_cost_advantage
+- strategic_resource_project_funding_and_offtake_are_confirmed
+- operating_fcf_improves_not_just_control_premium
+- full_window_mfe_mae_is_available_and_supportive
+
+## Green Blockers
+
+- commodity_price_event_only
+- control_premium_as_operating_green
+- localization_capex_without_funding
+- upstream_stake_without_downstream_margin
+- tariff_headline_without_asp_volume
+- lithium_supply_shock_without_inventory_draw
+- metal_price_without_spread
+- strategic_resource_label_only

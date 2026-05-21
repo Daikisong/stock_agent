@@ -1,0 +1,20 @@
+# Round 299 4B/4C Review
+
+이번 라운드에서 확정 Green과 hard 4C는 없다. 대신 strong 4B/4C-watch가 많다.
+
+## 4B Watch
+
+- control_premium_rally_20_to_30pct
+- commodity_spot_event_rally_without_margin_evidence
+- strategic_resource_capex_rally_without_funding_or_offtake
+- localization_capex_headline_without_irr
+- tender_buyback_or_share_issuance_dominates_operating_thesis
+
+## 4C Gates
+
+- tcrc_collapse_breaks_smelter_margin
+- commodity_price_rally_does_not_convert_to_company_spread
+- china_export_control_blocks_strategic_material_sourcing
+- capex_funding_gap_dilution_or_injunction
+- control_premium_disappears_and_operating_valuation_returns
+- lithium_price_reversal_inventory_write_down_or_asp_pass_through_failure
