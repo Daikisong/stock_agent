@@ -1,0 +1,12 @@
+# Round 319 Price Validation Plan
+
+Full adjusted OHLC was not available. Reported event anchors are retained without inventing full-window MFE/MAE.
+
+- r11_loop16_hanwha_aerospace_romania_defense_export: r11l16_hanwha_romania_T1/r11l16_hanwha_dilution_T4 / excellent_stage2_actionable_defense_export_with_4B_dilution / full_window=`price_data_unavailable_after_deep_search`
+- r11_loop16_lig_nex1_iraq_msam_iran_validation: r11l16_lig_iraq_T0/r11l16_lig_iran_validation_T2 / Stage3_Yellow_candidate_missile_defense_export / full_window=`price_data_unavailable_after_deep_search`
+- r11_loop16_khnp_czech_nuclear_export: r11l16_czech_nuclear_T1/r11l16_czech_nuclear_legal_T3 / nuclear_export_stage2_with_legal_4B / full_window=`price_data_unavailable_after_deep_search`
+- r11_loop16_martial_law_political_shock: r11l16_martial_law_T0 / hard_4C_success_political_crisis / full_window=`price_data_unavailable_after_deep_search`
+- r11_loop16_commercial_act_valueup: r11l16_commercial_act_T1 / Stage2_policy_reform_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r11_loop16_samsung_sds_kkr_strategic_capital: r11l16_samsung_sds_kkr_T1 / excellent_stage2_actionable_foreign_capital_policy_reform / full_window=`price_data_unavailable_after_deep_search`
+- r11_loop16_short_selling_market_integrity: r11l16_short_selling_integrity_T1 / Stage2_market_integrity_policy_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r11_loop16_2025_wildfire_disaster_relief: r11l16_wildfire_disaster_T0 / natural_disaster_4C_relief_reference / full_window=`price_data_unavailable_after_deep_search`

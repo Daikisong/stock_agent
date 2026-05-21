@@ -1,0 +1,11 @@
+# Round 319 Row Separation Plan
+
+Policy, defense, nuclear, disaster and market-integrity headlines must be separated from trigger anchors and full OHLC windows.
+
+Easy example: a wildfire can create reconstruction demand, but it is not a listed-company Stage2 until a company contract or insurance-loss bridge appears.
+
+- case_library_row_describes_stage_candidate_and_evidence_quality
+- trigger_calibration_row_stores_event_anchor_contract_policy_legal_disaster_or_market_structure_metrics
+- ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown
+- do_not_downgrade_valid_Stage2_or_Yellow_candidate_only_because_OHLC_backfill_is_missing
+- do_not_treat_policy_defense_nuclear_disaster_or_market_integrity_headline_as_Green_without_law_contract_budget_delivery_margin_ROIC_or_company_execution

@@ -951,6 +951,14 @@ class E2RArchetype(str, Enum):
     GLOBAL_INDEX_INCLUSION_CAPITAL_FLOW = "GLOBAL_INDEX_INCLUSION_CAPITAL_FLOW"
     SHORT_SELLING_NORMALIZATION = "SHORT_SELLING_NORMALIZATION"
     SHORT_SELLING_MARKET_ACCESS_REFORM = "SHORT_SELLING_MARKET_ACCESS_REFORM"
+    GEOPOLITICAL_DEFENSE_EXPORT_STAGE2_ACTIONABLE = "GEOPOLITICAL_DEFENSE_EXPORT_STAGE2_ACTIONABLE"
+    MISSILE_DEFENSE_COMBAT_VALIDATION_STAGE3_YELLOW = "MISSILE_DEFENSE_COMBAT_VALIDATION_STAGE3_YELLOW"
+    NUCLEAR_EXPORT_POLICY_STAGE2_WITH_LEGAL_4B = "NUCLEAR_EXPORT_POLICY_STAGE2_WITH_LEGAL_4B"
+    POLITICAL_CRISIS_MARKET_HARD_4C = "POLITICAL_CRISIS_MARKET_HARD_4C"
+    COMMERCIAL_ACT_VALUEUP_STAGE2_POLICY = "COMMERCIAL_ACT_VALUEUP_STAGE2_POLICY"
+    FOREIGN_STRATEGIC_CAPITAL_POLICY_STAGE2_ACTIONABLE = "FOREIGN_STRATEGIC_CAPITAL_POLICY_STAGE2_ACTIONABLE"
+    SHORT_SELLING_MARKET_INTEGRITY_STAGE2_4B = "SHORT_SELLING_MARKET_INTEGRITY_STAGE2_4B"
+    NATURAL_DISASTER_RECONSTRUCTION_4C_RELIEF = "NATURAL_DISASTER_RECONSTRUCTION_4C_RELIEF"
     CORPORATE_GOVERNANCE_VALUEUP_POLICY = "CORPORATE_GOVERNANCE_VALUEUP_POLICY"
     AI_WINDFALL_TAX_POLICY_SHOCK = "AI_WINDFALL_TAX_POLICY_SHOCK"
     AI_WINDFALL_TAX_POLICY_CONFIDENCE_SHOCK = "AI_WINDFALL_TAX_POLICY_CONFIDENCE_SHOCK"
@@ -6794,6 +6802,102 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("policy", "market_structure", "foreign_flow", "price"),
             false_positive_patterns=("market-access reform headline treated as company Green",),
             preferred_score_weights=_weights(eps_fcf=6, visibility=18, bottleneck=2, mispricing=18, valuation=16),
+        ),
+        E2RArchetype.GEOPOLITICAL_DEFENSE_EXPORT_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.GEOPOLITICAL_DEFENSE_EXPORT_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("European rearmament", "defense export order", "government customer backlog"),
+            stage2_candidate_signals=("contract value", "relative price reaction", "backlog expansion", "government buyer"),
+            stage3_high_conviction_signals=("production capacity, delivery margin, working capital and cash collection are visible",),
+            stage4a_ongoing_signals=("defense backlog converts into deliveries, margin and cash without dilution damage",),
+            stage4b_graduation_overheat_signals=("geopolitical defense rally before delivery margin proof", "equity dilution after rerating"),
+            stage4c_thesis_break_signals=("delivery delay", "export license problem", "government funding failure", "dilution invalidates EPS bridge"),
+            key_evidence_families=("news", "disclosure", "backlog", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("defense export order treated as Green before delivery margin and production capacity",),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=17, mispricing=14, valuation=14),
+        ),
+        E2RArchetype.MISSILE_DEFENSE_COMBAT_VALIDATION_STAGE3_YELLOW: ArchetypeDefinition(
+            archetype=E2RArchetype.MISSILE_DEFENSE_COMBAT_VALIDATION_STAGE3_YELLOW,
+            stage1_radar_signals=("missile defense export", "Middle East air-defense demand", "combat validation"),
+            stage2_candidate_signals=("export order", "repeat operator country", "reported interception performance", "price reaction"),
+            stage3_high_conviction_signals=("combat validation plus production ramp, delivery, margin and replenishment orders are visible",),
+            stage4a_ongoing_signals=("missile deliveries, replenishment demand and margin remain intact",),
+            stage4b_graduation_overheat_signals=("war-event premium outruns production ramp or export margin",),
+            stage4c_thesis_break_signals=("customer budget cancellation", "export license issue", "production bottleneck failure", "payment risk"),
+            key_evidence_families=("news", "disclosure", "defense_validation", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("combat headline treated as Green without production ramp and margin",),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=17, mispricing=14, valuation=14),
+        ),
+        E2RArchetype.NUCLEAR_EXPORT_POLICY_STAGE2_WITH_LEGAL_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.NUCLEAR_EXPORT_POLICY_STAGE2_WITH_LEGAL_4B,
+            stage1_radar_signals=("nuclear export tender", "energy-security policy", "preferred bidder"),
+            stage2_candidate_signals=("preferred bidder selected", "reactor value", "supplier basket reaction"),
+            stage3_high_conviction_signals=("final contract, Korean workshare, financing, delivery schedule and margin are confirmed",),
+            stage4a_ongoing_signals=("final contract and supplier workshare proceed without litigation delay",),
+            stage4b_graduation_overheat_signals=("preferred-bidder rally before final contract or legal challenge resolution",),
+            stage4c_thesis_break_signals=("legal challenge blocks signing", "rival bidder complaint", "financing failure", "workshare collapses"),
+            key_evidence_families=("news", "policy", "legal", "disclosure", "price", "red_team"),
+            false_positive_patterns=("preferred bidder treated as final contract while legal challenge remains open",),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=20, bottleneck=8, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.POLITICAL_CRISIS_MARKET_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.POLITICAL_CRISIS_MARKET_HARD_4C,
+            stage1_radar_signals=("martial law", "constitutional crisis", "KRW disorderly weakness", "KOSPI confidence shock"),
+            stage2_candidate_signals=("not a positive company path; legal normalization, foreign flow and KRW stabilization are checked",),
+            stage3_high_conviction_signals=("not a Green source; political crisis is a market-wide hard gate",),
+            stage4a_ongoing_signals=("institutional trust, KRW and foreign capital confidence normalize",),
+            stage4b_graduation_overheat_signals=("relief bounce before policy continuity and foreign-flow repair",),
+            stage4c_thesis_break_signals=("martial law", "constitutional crisis", "KRW two-year low", "foreign capital confidence break"),
+            key_evidence_families=("news", "policy", "price", "fx", "foreign_flow", "red_team"),
+            false_positive_patterns=("political crisis treated as one-day event or company-specific rerating",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.COMMERCIAL_ACT_VALUEUP_STAGE2_POLICY: ArchetypeDefinition(
+            archetype=E2RArchetype.COMMERCIAL_ACT_VALUEUP_STAGE2_POLICY,
+            stage1_radar_signals=("Korea Discount reform", "Commercial Act revision", "minority shareholders"),
+            stage2_candidate_signals=("law passed", "fiduciary duty expanded", "market reaction", "board duty framework"),
+            stage3_high_conviction_signals=("company-specific buyback cancellation, dividend policy, board behavior and ROE/PBR bridge are visible",),
+            stage4a_ongoing_signals=("shareholder-return behavior repeats and minority protection remains credible",),
+            stage4b_graduation_overheat_signals=("value-up rally before company-specific board action",),
+            stage4c_thesis_break_signals=("implementation delay", "buyback without cancellation", "tender-offer unfairness", "family-control resistance"),
+            key_evidence_families=("policy", "capital_allocation", "financial_actual", "valuation", "price"),
+            false_positive_patterns=("Commercial Act headline treated as Green without minority shareholders protection and buyback cancellation evidence",),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=18, bottleneck=2, mispricing=22, valuation=22, confidence=8),
+        ),
+        E2RArchetype.FOREIGN_STRATEGIC_CAPITAL_POLICY_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.FOREIGN_STRATEGIC_CAPITAL_POLICY_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("foreign strategic capital", "convertible bond investment", "Korea reform premium"),
+            stage2_candidate_signals=("named strategic investor", "large capital injection", "market-relative price reaction", "advisory mandate"),
+            stage3_high_conviction_signals=("ROIC, M&A discipline, AI revenue bridge and capital allocation execution are verified",),
+            stage4a_ongoing_signals=("foreign strategic capital converts into profitable growth and shareholder-return discipline",),
+            stage4b_graduation_overheat_signals=("CB dilution, AI execution risk or M&A premium before ROIC proof",),
+            stage4c_thesis_break_signals=("foreign capital withdraws", "CB dilution overwhelms EPS", "M&A destroys ROIC", "AI execution miss"),
+            key_evidence_families=("news", "disclosure", "capital_allocation", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("foreign capital headline treated as Green without ROIC and CB dilution analysis",),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=18, bottleneck=4, mispricing=18, valuation=18, confidence=8),
+        ),
+        E2RArchetype.SHORT_SELLING_MARKET_INTEGRITY_STAGE2_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.SHORT_SELLING_MARKET_INTEGRITY_STAGE2_4B,
+            stage1_radar_signals=("short-selling ban lift", "illegal short-selling monitoring", "market-integrity enforcement"),
+            stage2_candidate_signals=("detection system implemented", "one-strike penalty", "fine up to 100% of orders"),
+            stage3_high_conviction_signals=("foreign flow, liquidity, market trust and company-level EPS/FCF bridge improve together",),
+            stage4a_ongoing_signals=("market access remains open while enforcement reduces manipulation risk",),
+            stage4b_graduation_overheat_signals=("trust reform rally before foreign flow and liquidity proof",),
+            stage4c_thesis_break_signals=("illegal short-selling recurrence", "foreign access disappointment", "liquidity deterioration", "market trust break"),
+            key_evidence_families=("policy", "market_structure", "foreign_flow", "liquidity", "price"),
+            false_positive_patterns=("market rule headline treated as company Green without foreign flow and liquidity evidence",),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=18, bottleneck=2, mispricing=18, valuation=16),
+        ),
+        E2RArchetype.NATURAL_DISASTER_RECONSTRUCTION_4C_RELIEF: ArchetypeDefinition(
+            archetype=E2RArchetype.NATURAL_DISASTER_RECONSTRUCTION_4C_RELIEF,
+            stage1_radar_signals=("large wildfire", "special disaster zone", "reconstruction relief"),
+            stage2_candidate_signals=("reconstruction budget, insurance loss and listed-company contracts are identified",),
+            stage3_high_conviction_signals=("reconstruction contracts, margin, insurance loss clarity and cashflow bridge are verified",),
+            stage4a_ongoing_signals=("recovery work proceeds without loss, disruption or cost overrun",),
+            stage4b_graduation_overheat_signals=("disaster-recovery basket rally before actual contracts or insurance loss clarity",),
+            stage4c_thesis_break_signals=("mass casualty disaster", "large uninsured loss", "tourism or local-asset disruption", "recovery cost overrun"),
+            key_evidence_families=("news", "policy", "disaster", "insurance", "financial_actual", "price"),
+            false_positive_patterns=("disaster relief headline treated as listed-company Green without reconstruction budget and insurance loss evidence",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=8, bottleneck=0, mispricing=6, valuation=4),
         ),
         E2RArchetype.CORPORATE_GOVERNANCE_VALUEUP_POLICY: ArchetypeDefinition(
             archetype=E2RArchetype.CORPORATE_GOVERNANCE_VALUEUP_POLICY,

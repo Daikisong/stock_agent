@@ -1,0 +1,29 @@
+# Round 319 Stage 4B / 4C Review
+
+## 4B Watch
+- defense_export_rally_followed_by_equity_dilution
+- nuclear_preferred_bidder_rally_before_final_contract
+- policy_reform_rally_before_company_specific_governance_action
+- foreign_strategic_capital_rally_before_ROIC
+- short_selling_reform_trust_positive_but_liquidity_or_foreign_participation_unclear
+- political_shock_hits_KRW_KOSPI_or_ETF_confidence
+- disaster_damage_lacks_listed_company_reconstruction_contract
+
+## Hard 4C Gates
+- martial_law_or_constitutional_crisis
+- final_contract_blocked_by_court_or_rival_bidder_challenge
+- defense_contract_cancelled_or_delivery_blocked
+- large_equity_dilution_after_geopolitics_driven_rally
+- disaster_causing_deaths_and_large_asset_destruction
+- market_integrity_scandal_or_illegal_trading_undermines_trust
+- sanctions_or_export_control_shock
+
+## Case Review
+- r11_loop16_hanwha_aerospace_romania_defense_export: Stage2-Actionable + 4B-watch / excellent_stage2_actionable_defense_export_with_4B_dilution
+- r11_loop16_lig_nex1_iraq_msam_iran_validation: Stage3-Yellow candidate / Stage3_Yellow_candidate_missile_defense_export
+- r11_loop16_khnp_czech_nuclear_export: Stage2 + 4B-watch / nuclear_export_stage2_with_legal_4B
+- r11_loop16_martial_law_political_shock: 4C / hard_4C_success_political_crisis
+- r11_loop16_commercial_act_valueup: Stage2 / Stage2_policy_reform_not_Green
+- r11_loop16_samsung_sds_kkr_strategic_capital: Stage2-Actionable + 4B-watch / excellent_stage2_actionable_foreign_capital_policy_reform
+- r11_loop16_short_selling_market_integrity: Stage2 + 4B-watch / Stage2_market_integrity_policy_not_Green
+- r11_loop16_2025_wildfire_disaster_relief: disaster 4C reference / natural_disaster_4C_relief_reference

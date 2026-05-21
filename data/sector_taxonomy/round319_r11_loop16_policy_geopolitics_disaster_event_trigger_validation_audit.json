@@ -1,0 +1,130 @@
+{
+  "green_blockers": [
+    "defense_order_without_capacity",
+    "defense_growth_with_dilution_ignored",
+    "preferred_bidder_without_contract",
+    "policy_reform_without_company_action",
+    "foreign_capital_without_ROIC",
+    "market_rule_without_flow_data",
+    "political_crisis_treated_as_one_day_event",
+    "disaster_relief_without_listed_contract",
+    "full_adjusted_ohlc_missing_for_Green_confirmation"
+  ],
+  "hard_4c_gates": [
+    "martial_law_or_constitutional_crisis",
+    "final_contract_blocked_by_court_or_rival_bidder_challenge",
+    "defense_contract_cancelled_or_delivery_blocked",
+    "large_equity_dilution_after_geopolitics_driven_rally",
+    "disaster_causing_deaths_and_large_asset_destruction",
+    "market_integrity_scandal_or_illegal_trading_undermines_trust",
+    "sanctions_or_export_control_shock"
+  ],
+  "large_sector": "POLICY_GEOPOLITICS_DISASTER_EVENT",
+  "method": "trigger_level_backtest_v1_after_redteam",
+  "required_target_aliases": {
+    "COMMERCIAL_ACT_VALUEUP_STAGE2_POLICY": "COMMERCIAL_ACT_VALUEUP_STAGE2_POLICY",
+    "FOREIGN_STRATEGIC_CAPITAL_POLICY_STAGE2_ACTIONABLE": "FOREIGN_STRATEGIC_CAPITAL_POLICY_STAGE2_ACTIONABLE",
+    "GEOPOLITICAL_DEFENSE_EXPORT_STAGE2_ACTIONABLE": "GEOPOLITICAL_DEFENSE_EXPORT_STAGE2_ACTIONABLE",
+    "MISSILE_DEFENSE_COMBAT_VALIDATION_STAGE3_YELLOW": "MISSILE_DEFENSE_COMBAT_VALIDATION_STAGE3_YELLOW",
+    "NATURAL_DISASTER_RECONSTRUCTION_4C_RELIEF": "NATURAL_DISASTER_RECONSTRUCTION_4C_RELIEF",
+    "NUCLEAR_EXPORT_POLICY_STAGE2_WITH_LEGAL_4B": "NUCLEAR_EXPORT_POLICY_STAGE2_WITH_LEGAL_4B",
+    "POLITICAL_CRISIS_MARKET_HARD_4C": "POLITICAL_CRISIS_MARKET_HARD_4C",
+    "SHORT_SELLING_MARKET_INTEGRITY_STAGE2_4B": "SHORT_SELLING_MARKET_INTEGRITY_STAGE2_4B"
+  },
+  "round_id": "round_247",
+  "row_separation_rules": [
+    "case_library_row_describes_stage_candidate_and_evidence_quality",
+    "trigger_calibration_row_stores_event_anchor_contract_policy_legal_disaster_or_market_structure_metrics",
+    "ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown",
+    "do_not_downgrade_valid_Stage2_or_Yellow_candidate_only_because_OHLC_backfill_is_missing",
+    "do_not_treat_policy_defense_nuclear_disaster_or_market_integrity_headline_as_Green_without_law_contract_budget_delivery_margin_ROIC_or_company_execution"
+  ],
+  "score_down_axes": [
+    "defense_order_without_capacity",
+    "defense_growth_with_dilution_ignored",
+    "preferred_bidder_without_contract",
+    "policy_reform_without_company_action",
+    "foreign_capital_without_ROIC",
+    "market_rule_without_flow_data",
+    "political_crisis_treated_as_one_day_event",
+    "disaster_relief_without_listed_contract"
+  ],
+  "score_up_axes": [
+    "defense_export_contract_value",
+    "defense_backlog_delivery_visibility",
+    "combat_validation",
+    "nuclear_final_contract_signing",
+    "nuclear_legal_resolution",
+    "board_fiduciary_reform_execution",
+    "foreign_strategic_capital_execution",
+    "market_integrity_enforcement",
+    "political_stability_risk",
+    "disaster_reconstruction_budget"
+  ],
+  "source_round": "docs/round/round_319.md",
+  "stage2_actionable_rules": [
+    "contract_or_order_value_is_clear",
+    "event_return_at_least_5pct",
+    "market_relative_return_at_least_5pp",
+    "policy_or_legal_trigger_closes_as_law_contract_budget_fine_or_enforcement",
+    "defense_or_nuclear_has_at_least_one_delivery_workshare_margin_or_final_contract_gate",
+    "governance_valueup_connects_to_company_specific_capital_allocation_or_board_action",
+    "political_disaster_or_security_4C_overlay_is_absent"
+  ],
+  "stage3_green_rules": [
+    "defense_export_backlog_converts_to_deliveries_and_margin",
+    "nuclear_preferred_bidder_converts_to_final_contract_and_supplier_workshare",
+    "policy_reform_converts_to_company_specific_capital_allocation",
+    "foreign_strategic_capital_converts_to_ROIC_and_earnings",
+    "market_integrity_reform_improves_foreign_flow_and_liquidity_without_retail_backlash",
+    "disaster_relief_converts_into_listed_company_contracts",
+    "political_risk_is_resolved_and_foreign_capital_confidence_returns",
+    "full_adjusted_OHLC_MFE_MAE_window_supports_stage_candidate"
+  ],
+  "stage3_yellow_rules": [
+    "Stage2_Actionable_conditions_pass",
+    "EPS_OP_FCF_path_can_change_materially",
+    "one_of_delivery_legal_resolution_final_budget_or_company_specific_execution_remains_open",
+    "reported_price_anchor_supports_trigger_but_full_adjusted_OHLC_is_missing"
+  ],
+  "stage4b_watch_triggers": [
+    "defense_export_rally_followed_by_equity_dilution",
+    "nuclear_preferred_bidder_rally_before_final_contract",
+    "policy_reform_rally_before_company_specific_governance_action",
+    "foreign_strategic_capital_rally_before_ROIC",
+    "short_selling_reform_trust_positive_but_liquidity_or_foreign_participation_unclear",
+    "political_shock_hits_KRW_KOSPI_or_ETF_confidence",
+    "disaster_damage_lacks_listed_company_reconstruction_contract"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "evidence_good_but_price_failed_or_unavailable_count": 4,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 2,
+    "large_sector": "POLICY_GEOPOLITICS_DISASTER_EVENT",
+    "method": "trigger_level_backtest_v1_after_redteam",
+    "next_round": "R12 Loop 16",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_247",
+    "row_separation_required": true,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_319.md",
+    "stage2_actionable_candidate_count": 4,
+    "stage2_candidate_count": 6,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 5,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 4,
+    "target_archetype_count": 8,
+    "trigger_count": 11
+  },
+  "what_not_to_change": [
+    "do_not_change_production_scoring",
+    "do_not_use_round319_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_policy_defense_nuclear_disaster_or_market_integrity_headline_as_Green_without_law_contract_budget_delivery_margin_ROIC_or_company_execution",
+    "do_not_invent_full_mfe_mae_without_adjusted_ohlc"
+  ]
+}

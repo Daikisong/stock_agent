@@ -1,0 +1,48 @@
+# Round 319 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- contract_or_order_value_is_clear
+- event_return_at_least_5pct
+- market_relative_return_at_least_5pp
+- policy_or_legal_trigger_closes_as_law_contract_budget_fine_or_enforcement
+- defense_or_nuclear_has_at_least_one_delivery_workshare_margin_or_final_contract_gate
+- governance_valueup_connects_to_company_specific_capital_allocation_or_board_action
+- political_disaster_or_security_4C_overlay_is_absent
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- EPS_OP_FCF_path_can_change_materially
+- one_of_delivery_legal_resolution_final_budget_or_company_specific_execution_remains_open
+- reported_price_anchor_supports_trigger_but_full_adjusted_OHLC_is_missing
+
+## Stage3-Green Rules
+- defense_export_backlog_converts_to_deliveries_and_margin
+- nuclear_preferred_bidder_converts_to_final_contract_and_supplier_workshare
+- policy_reform_converts_to_company_specific_capital_allocation
+- foreign_strategic_capital_converts_to_ROIC_and_earnings
+- market_integrity_reform_improves_foreign_flow_and_liquidity_without_retail_backlash
+- disaster_relief_converts_into_listed_company_contracts
+- political_risk_is_resolved_and_foreign_capital_confidence_returns
+- full_adjusted_OHLC_MFE_MAE_window_supports_stage_candidate
+
+## Green Blockers
+- defense_order_without_capacity
+- defense_growth_with_dilution_ignored
+- preferred_bidder_without_contract
+- policy_reform_without_company_action
+- foreign_capital_without_ROIC
+- market_rule_without_flow_data
+- political_crisis_treated_as_one_day_event
+- disaster_relief_without_listed_contract
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## Hard 4C Gates
+- martial_law_or_constitutional_crisis
+- final_contract_blocked_by_court_or_rival_bidder_challenge
+- defense_contract_cancelled_or_delivery_blocked
+- large_equity_dilution_after_geopolitics_driven_rally
+- disaster_causing_deaths_and_large_asset_destruction
+- market_integrity_scandal_or_illegal_trading_undermines_trust
+- sanctions_or_export_control_shock
