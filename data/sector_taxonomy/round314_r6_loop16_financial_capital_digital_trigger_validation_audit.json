@@ -1,0 +1,127 @@
+{
+  "green_blockers": [
+    "buyback_without_business_recovery",
+    "shareholder_return_without_cancellation",
+    "stablecoin_policy_without_license",
+    "crypto_MA_without_security_controls",
+    "bank_digital_asset_without_capital_clarity",
+    "market_beta_without_earnings",
+    "overseas_stock_flow_without_FX_risk",
+    "full_adjusted_ohlc_missing_for_Green_confirmation"
+  ],
+  "large_sector": "FINANCIALS_CAPITAL_ALLOCATION_DIGITAL_FINANCE",
+  "method": "trigger_level_backtest_v1_after_redteam",
+  "required_target_aliases": {
+    "BANK_DIGITAL_ASSET_STAKE_STAGE2_WITH_CAPITAL_GATE": "BANK_DIGITAL_ASSET_STAKE_STAGE2_WITH_CAPITAL_GATE",
+    "BROKERAGE_TRADING_VOLUME_STAGE2_BETA": "BROKERAGE_TRADING_VOLUME_STAGE2_BETA",
+    "BUYBACK_CANCELLATION_VALUEUP_STAGE2_ACTIONABLE": "BUYBACK_CANCELLATION_VALUEUP_STAGE2_ACTIONABLE",
+    "ELS_MISSELLING_CONSUMER_PROTECTION_4C": "ELS_MISSELLING_CONSUMER_PROTECTION_4C",
+    "FINTECH_CRYPTO_EXCHANGE_MA_STAGE2_WITH_SECURITY_4B": "FINTECH_CRYPTO_EXCHANGE_MA_STAGE2_WITH_SECURITY_4B",
+    "FX_OVERSEAS_STOCK_FLOW_4C_WATCH": "FX_OVERSEAS_STOCK_FLOW_4C_WATCH",
+    "HOLDCO_DISCOUNT_BUYBACK_STAGE2": "HOLDCO_DISCOUNT_BUYBACK_STAGE2",
+    "PRIVATE_FINTECH_STABLECOIN_IPO_OPTIONALITY_STAGE2": "PRIVATE_FINTECH_STABLECOIN_IPO_OPTIONALITY_STAGE2",
+    "STABLECOIN_POLICY_EVENT_PREMIUM_4B": "STABLECOIN_POLICY_EVENT_PREMIUM_4B"
+  },
+  "round_id": "round_242",
+  "row_separation_rules": [
+    "case_library_row_describes_stage_candidate_and_evidence_quality",
+    "trigger_calibration_row_stores_event_anchor_buyback_deal_policy_flow_or_penalty_metrics",
+    "ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown",
+    "do_not_downgrade_valid_Stage2_or_Yellow_candidate_only_because_OHLC_backfill_is_missing",
+    "do_not_treat_buyback_stablecoin_crypto_MA_market_beta_or_private_fintech_headline_as_Green_without_ROE_EPS_security_approval_revenue_or_FCF"
+  ],
+  "score_down_axes": [
+    "buyback_without_business_recovery",
+    "shareholder_return_without_cancellation",
+    "stablecoin_policy_without_license",
+    "crypto_MA_without_security_controls",
+    "bank_digital_asset_without_capital_clarity",
+    "market_beta_without_earnings",
+    "overseas_stock_flow_without_FX_risk"
+  ],
+  "score_up_axes": [
+    "actual_buyback_cancellation",
+    "ROE_EPS_recovery_after_buyback",
+    "holdco_discount_narrowing",
+    "brokerage_turnover_fee_conversion",
+    "digital_asset_regulatory_approval",
+    "custody_security_AML",
+    "bank_capital_ratio_after_digital_asset",
+    "consumer_protection_compliance",
+    "FX_risk_disclosure"
+  ],
+  "source_round": "docs/round/round_314.md",
+  "stage2_actionable_rules": [
+    "large_buyback_and_actual_cancellation_disclosed",
+    "event_return_at_least_5pct_or_market_relative_return_at_least_5pp",
+    "capital_allocation_can_link_to_EPS_ROE_or_discount_narrowing",
+    "digital_asset_deal_has_value_stake_approval_path_or_revenue_model",
+    "brokerage_beta_links_to_turnover_foreign_inflow_or_fee_income",
+    "no_consumer_protection_custody_security_or_FX_hard_gate_for_positive_candidate"
+  ],
+  "stage3_green_rules": [
+    "buyback_is_executed_and_cancelled",
+    "ROE_EPS_improves_after_capital_return",
+    "digital_asset_MA_receives_regulatory_approval",
+    "custody_security_AML_controls_are_proven",
+    "stablecoin_issuer_license_reserve_rule_and_revenue_model_are_confirmed",
+    "ELS_consumer_protection_liabilities_are_provisioned_and_cleared",
+    "FX_overseas_stock_risk_is_managed",
+    "full_adjusted_OHLC_MFE_MAE_window_supports_stage_candidate"
+  ],
+  "stage3_yellow_rules": [
+    "Stage2_Actionable_conditions_pass",
+    "EPS_ROE_fee_income_or_revenue_model_can_change_materially",
+    "one_of_approval_security_capital_ratio_consumer_protection_or_FX_gate_remains_open",
+    "reported_price_anchor_supports_trigger_but_full_adjusted_OHLC_is_missing",
+    "case_is_not_pure_policy_stablecoin_market_beta_or_private_optionality"
+  ],
+  "stage4b_watch_triggers": [
+    "buyback_rally_without_business_recovery",
+    "stablecoin_theme_rallies_before_issuer_license_or_reserve_rules",
+    "crypto_exchange_MA_rallies_before_security_or_custody_controls",
+    "brokerage_stocks_rally_on_market_beta_before_fee_earnings",
+    "bank_buys_crypto_stake_before_capital_or_risk_weight_treatment",
+    "retail_overseas_stock_flow_grows_while_won_or_FX_risk_worsens"
+  ],
+  "stage4c_watch_gates": [
+    "mis_selling_consumer_protection_fine",
+    "crypto_exchange_abnormal_withdrawal_or_custody_failure",
+    "financial_platform_data_breach",
+    "stablecoin_issuer_failure_or_reserve_mismatch",
+    "FX_risk_mis_disclosure_to_retail_investors",
+    "capital_ratio_breach_after_acquisition_or_digital_asset_exposure"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 9,
+    "evidence_good_but_price_failed_or_muted_count": 3,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "large_sector": "FINANCIALS_CAPITAL_ALLOCATION_DIGITAL_FINANCE",
+    "method": "trigger_level_backtest_v1_after_redteam",
+    "next_round": "R7 Loop 16",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "private_stage2_reference_count": 1,
+    "production_scoring_changed": false,
+    "round_id": "round_242",
+    "row_separation_required": true,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_314.md",
+    "stage2_actionable_candidate_count": 3,
+    "stage2_event_candidate_count": 5,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 0,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 4,
+    "target_archetype_count": 9,
+    "trigger_count": 9
+  },
+  "what_not_to_change": [
+    "do_not_change_production_scoring",
+    "do_not_use_round314_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_buyback_stablecoin_crypto_MA_market_beta_or_private_fintech_headline_as_green_without_ROE_EPS_security_approval_revenue_or_FCF",
+    "do_not_invent_full_mfe_mae_without_adjusted_ohlc"
+  ]
+}

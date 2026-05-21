@@ -1,0 +1,17 @@
+direction,axis,production_scoring_changed
+up,actual_buyback_cancellation,false
+up,ROE_EPS_recovery_after_buyback,false
+up,holdco_discount_narrowing,false
+up,brokerage_turnover_fee_conversion,false
+up,digital_asset_regulatory_approval,false
+up,custody_security_AML,false
+up,bank_capital_ratio_after_digital_asset,false
+up,consumer_protection_compliance,false
+up,FX_risk_disclosure,false
+down,buyback_without_business_recovery,false
+down,shareholder_return_without_cancellation,false
+down,stablecoin_policy_without_license,false
+down,crypto_MA_without_security_controls,false
+down,bank_digital_asset_without_capital_clarity,false
+down,market_beta_without_earnings,false
+down,overseas_stock_flow_without_FX_risk,false

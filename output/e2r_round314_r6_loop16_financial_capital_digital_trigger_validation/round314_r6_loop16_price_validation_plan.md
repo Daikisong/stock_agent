@@ -1,0 +1,13 @@
+# Round 314 Price Validation Plan
+
+Full adjusted OHLC was not available. Reported event anchors are retained without inventing full-window MFE/MAE.
+
+- r6_loop16_samsung_buyback_capital_allocation: r6l16_samsung_buyback_T1 / excellent_stage2_buyback_candidate_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r6_loop16_sk_square_buyback_holdco_discount: r6l16_sk_square_buyback_T1 / Stage2_holdco_discount_but_discount_close_pending / full_window=`price_data_unavailable_after_deep_search`
+- r6_loop16_kospi_brokerage_financial_beta: r6l16_kospi_brokerage_T1 / Stage2_beta_not_structural_Green / full_window=`price_data_unavailable_after_deep_search`
+- r6_loop16_naver_financial_dunamu_ma: r6l16_naver_dunamu_T1 / Stage2_crypto_MA_but_security_gate_open / full_window=`price_data_unavailable_after_deep_search`
+- r6_loop16_hana_bank_dunamu_stake: r6l16_hana_dunamu_T1 / Stage2_stake_value_but_capital_gate_open / full_window=`price_data_unavailable_after_deep_search`
+- r6_loop16_won_stablecoin_policy_mania: r6l16_stablecoin_policy_T1 / policy_theme_4B_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r6_loop16_hongkong_els_misselling_banks: r6l16_els_misselling_T0 / consumer_protection_hard_4C / full_window=`price_data_unavailable_after_deep_search`
+- r6_loop16_overseas_stock_fx_flow: r6l16_overseas_stock_fx_T1 / Stage2_flow_but_FX_4C_watch / full_window=`price_data_unavailable_after_deep_search`
+- r6_loop16_toss_global_stablecoin_ipo: r6l16_toss_ipo_stablecoin_T1 / private_optionality_reference_not_live_Green / full_window=`price_data_unavailable_after_deep_search`

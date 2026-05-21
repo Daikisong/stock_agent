@@ -1,0 +1,46 @@
+# Round 314 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- large_buyback_and_actual_cancellation_disclosed
+- event_return_at_least_5pct_or_market_relative_return_at_least_5pp
+- capital_allocation_can_link_to_EPS_ROE_or_discount_narrowing
+- digital_asset_deal_has_value_stake_approval_path_or_revenue_model
+- brokerage_beta_links_to_turnover_foreign_inflow_or_fee_income
+- no_consumer_protection_custody_security_or_FX_hard_gate_for_positive_candidate
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- EPS_ROE_fee_income_or_revenue_model_can_change_materially
+- one_of_approval_security_capital_ratio_consumer_protection_or_FX_gate_remains_open
+- reported_price_anchor_supports_trigger_but_full_adjusted_OHLC_is_missing
+- case_is_not_pure_policy_stablecoin_market_beta_or_private_optionality
+
+## Stage3-Green Rules
+- buyback_is_executed_and_cancelled
+- ROE_EPS_improves_after_capital_return
+- digital_asset_MA_receives_regulatory_approval
+- custody_security_AML_controls_are_proven
+- stablecoin_issuer_license_reserve_rule_and_revenue_model_are_confirmed
+- ELS_consumer_protection_liabilities_are_provisioned_and_cleared
+- FX_overseas_stock_risk_is_managed
+- full_adjusted_OHLC_MFE_MAE_window_supports_stage_candidate
+
+## Green Blockers
+- buyback_without_business_recovery
+- shareholder_return_without_cancellation
+- stablecoin_policy_without_license
+- crypto_MA_without_security_controls
+- bank_digital_asset_without_capital_clarity
+- market_beta_without_earnings
+- overseas_stock_flow_without_FX_risk
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## 4C Watch Gates
+- mis_selling_consumer_protection_fine
+- crypto_exchange_abnormal_withdrawal_or_custody_failure
+- financial_platform_data_breach
+- stablecoin_issuer_failure_or_reserve_mismatch
+- FX_risk_mis_disclosure_to_retail_investors
+- capital_ratio_breach_after_acquisition_or_digital_asset_exposure

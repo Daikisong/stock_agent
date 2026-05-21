@@ -1,0 +1,10 @@
+archetype,buyback_cancellation,ROE_EPS_recovery,holdco_discount_narrowing,brokerage_fee_conversion,digital_asset_approval,custody_security_AML,bank_capital_ratio,consumer_protection,FX_risk_disclosure,policy_without_license_penalty,market_beta_without_earnings_penalty,security_or_custody_penalty,stage2_actionable_promote,stage3_yellow_gate,stage3_green_gate,notes
+BUYBACK_CANCELLATION_VALUEUP_STAGE2_ACTIONABLE,+5,+4,+1,+0,+0,+0,+0,+0,+0,-1,+0,+0,buyback+cancellation+event return,business recovery pending,executed cancellation+ROE/EPS recovery,Samsung template.
+HOLDCO_DISCOUNT_BUYBACK_STAGE2,+4,+1,+5,+0,+0,+0,+0,+0,+0,-1,+0,+0,discount+repeat cancellation,discount compression pending,repeat execution+NAV intact,SK Square template.
+BROKERAGE_TRADING_VOLUME_STAGE2_BETA,+0,+0,+0,+5,+0,+0,+0,+0,+0,+0,-5,+0,trading value+foreign flow,fee income pending,fee income+ROE proof,Brokerage beta template.
+FINTECH_CRYPTO_EXCHANGE_MA_STAGE2_WITH_SECURITY_4B,+0,+0,+0,+0,+4,+5,+0,+0,+0,-2,+0,-5,deal value+approval path,security and custody pending,closed deal+security+revenue,Naver/Dunamu template.
+BANK_DIGITAL_ASSET_STAKE_STAGE2_WITH_CAPITAL_GATE,+0,+0,+0,+0,+4,+4,+5,+0,+0,-2,+0,-4,stake value+exchange share,capital treatment pending,capital+revenue+trust,Hana/Dunamu template.
+STABLECOIN_POLICY_EVENT_PREMIUM_4B,+0,+0,+0,+0,+2,+1,+0,+0,+2,-5,+0,-2,policy event only,license/reserve missing,licensed issuer economics,Stablecoin theme template.
+ELS_MISSELLING_CONSUMER_PROTECTION_4C,+0,+0,+0,+0,+0,+0,-5,-5,+0,+0,+0,+0,not positive,liability clearing required,N/A,Bank ELS 4C template.
+FX_OVERSEAS_STOCK_FLOW_4C_WATCH,+0,+0,+0,+3,+0,+0,+0,+1,+5,+0,-2,+0,overseas flow+fee bridge,FX disclosure pending,fee conversion+FX risk control,Overseas-stock flow template.
+PRIVATE_FINTECH_STABLECOIN_IPO_OPTIONALITY_STAGE2,+0,+1,+0,+0,+3,+2,+0,+0,+1,-4,+0,-3,private users+IPO option,license/listing pending,listed price+licensed revenue,Toss private reference.
