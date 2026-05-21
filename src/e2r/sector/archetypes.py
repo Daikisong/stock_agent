@@ -376,6 +376,8 @@ class E2RArchetype(str, Enum):
     HYBRID_MIX_SHAREHOLDER_RETURN_STAGE2_YELLOW = "HYBRID_MIX_SHAREHOLDER_RETURN_STAGE2_YELLOW"
     ROBOTICS_OPTIONALITY_STAGE2_WITH_4B = "ROBOTICS_OPTIONALITY_STAGE2_WITH_4B"
     AUTO_HYBRID_VALUEUP_STAGE2_ACTIONABLE = "AUTO_HYBRID_VALUEUP_STAGE2_ACTIONABLE"
+    AUTO_TARIFF_LOCALIZATION_4B = "AUTO_TARIFF_LOCALIZATION_4B"
+    MOBILITY_ROBOTICS_AI_FACTORY_STAGE2_OVERHEAT = "MOBILITY_ROBOTICS_AI_FACTORY_STAGE2_OVERHEAT"
     AUTO_TARIFF_4C_AND_LOCALIZATION_HEDGE = "AUTO_TARIFF_4C_AND_LOCALIZATION_HEDGE"
     AUTO_ROBOTICS_OPTIONALITY_STAGE2_WITH_LABOR_4B = "AUTO_ROBOTICS_OPTIONALITY_STAGE2_WITH_LABOR_4B"
     AUTO_LOCALIZATION_CAPEX_OPERATIONAL_4C = "AUTO_LOCALIZATION_CAPEX_OPERATIONAL_4C"
@@ -387,8 +389,10 @@ class E2RArchetype(str, Enum):
     AIRLINE_CONSOLIDATION_INTEGRATION = "AIRLINE_CONSOLIDATION_INTEGRATION"
     AIRLINE_CONSOLIDATION_STAGE2 = "AIRLINE_CONSOLIDATION_STAGE2"
     AIRLINE_CONSOLIDATION_STAGE2_WITH_INTEGRATION_4B = "AIRLINE_CONSOLIDATION_STAGE2_WITH_INTEGRATION_4B"
+    AIRLINE_CONSOLIDATION_STAGE2_NO_PRICE = "AIRLINE_CONSOLIDATION_STAGE2_NO_PRICE"
     AIRLINE_REMEDY_ROUTE_CARGO_STAGE2 = "AIRLINE_REMEDY_ROUTE_CARGO_STAGE2"
     AIRLINE_SAFETY_HARD_4C = "AIRLINE_SAFETY_HARD_4C"
+    LCC_SAFETY_TRUST_HARD_4C = "LCC_SAFETY_TRUST_HARD_4C"
     AUTO_SUPPLIER_FACTORY_FIRE_HARD_4C = "AUTO_SUPPLIER_FACTORY_FIRE_HARD_4C"
     AUTO_PARTS_WORKPLACE_SAFETY_HARD_4C = "AUTO_PARTS_WORKPLACE_SAFETY_HARD_4C"
     AUTO_US_LOCALIZATION_LABOR_VISA_RISK = "AUTO_US_LOCALIZATION_LABOR_VISA_RISK"
@@ -428,6 +432,9 @@ class E2RArchetype(str, Enum):
     TOURISM_POLICY_EVENT = "TOURISM_POLICY_EVENT"
     TOURISM_VISA_WAIVER_STAGE2_ACTIONABLE = "TOURISM_VISA_WAIVER_STAGE2_ACTIONABLE"
     CHINA_TOURISM_LEISURE_STAGE2_EVENT = "CHINA_TOURISM_LEISURE_STAGE2_EVENT"
+    CHINA_TOURISM_LEISURE_STAGE2_ACTIONABLE = "CHINA_TOURISM_LEISURE_STAGE2_ACTIONABLE"
+    MARINE_AFTERMARKET_IPO_STAGE2_ACTIONABLE = "MARINE_AFTERMARKET_IPO_STAGE2_ACTIONABLE"
+    SHIPBUILDING_MERGER_US_NAVAL_STAGE2_ACTIONABLE = "SHIPBUILDING_MERGER_US_NAVAL_STAGE2_ACTIONABLE"
     TOURISM_REDIRECT_EVENT_PREMIUM = "TOURISM_REDIRECT_EVENT_PREMIUM"
     TOURISM_REDIRECT_POLICY_EVENT = "TOURISM_REDIRECT_POLICY_EVENT"
     TRAVEL_CASINO_DEMAND_CONVERSION = "TRAVEL_CASINO_DEMAND_CONVERSION"
@@ -10125,6 +10132,95 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("legal", "governance", "news", "price", "red_team"),
             false_positive_patterns=("platform user base scored while founder legal risk is unresolved", "legal relief treated as earnings conversion"),
             preferred_score_weights=_weights(eps_fcf=8, visibility=10, bottleneck=4, mispricing=8, valuation=8),
+        ),
+    }
+)
+
+ARCHETYPE_DEFINITIONS.update(
+    {
+        E2RArchetype.AUTO_TARIFF_LOCALIZATION_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.AUTO_TARIFF_LOCALIZATION_4B,
+            stage1_radar_signals=("U.S. auto tariff reset", "local production hedge", "export margin shock"),
+            stage2_candidate_signals=("tariff rate is quantified", "localization path exists", "OEM/supplier margin exposure is separated"),
+            stage3_high_conviction_signals=("not Green until tariff-adjusted OP margin, local capacity utilization and sourcing savings are verified"),
+            stage4a_ongoing_signals=("local production and tariff pass-through keep margin intact"),
+            stage4b_graduation_overheat_signals=("15% tariff resets margin", "localization relief priced before execution", "FTA advantage loss not fully offset"),
+            stage4c_thesis_break_signals=("tariff shock causing structural export-margin break", "localization cost fails to offset", "supplier pass-through breaks"),
+            key_evidence_families=("policy", "news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("tariff relief treated as earnings recovery before margin bridge", "localization headline treated as completed hedge"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=10, bottleneck=4, mispricing=5, valuation=5),
+        ),
+        E2RArchetype.MOBILITY_ROBOTICS_AI_FACTORY_STAGE2_OVERHEAT: ArchetypeDefinition(
+            archetype=E2RArchetype.MOBILITY_ROBOTICS_AI_FACTORY_STAGE2_OVERHEAT,
+            stage1_radar_signals=("AI factory", "robotics capex", "Boston Dynamics or humanoid deployment", "future mobility optionality"),
+            stage2_candidate_signals=("capex amount, deployment target or robot production target is quantified", "event-day price anchor exists"),
+            stage3_high_conviction_signals=("robot deployment revenue/productivity", "external robot sales", "factory productivity gain", "capex ROI", "unit economics"),
+            stage4a_ongoing_signals=("deployment productivity and robot revenue conversion remain visible"),
+            stage4b_graduation_overheat_signals=("capex ROI unproven", "robotics optionality rerates before revenue", "AI chip depreciation or labor gate remains open"),
+            stage4c_thesis_break_signals=("robot deployment fails", "factory productivity not proven", "labor or safety block", "commercial revenue absent"),
+            key_evidence_families=("news", "capex", "price", "financial_actual", "red_team"),
+            false_positive_patterns=("robotics capex treated as earnings before deployment", "AI factory narrative scored without productivity data"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=13, bottleneck=10, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.AIRLINE_CONSOLIDATION_STAGE2_NO_PRICE: ArchetypeDefinition(
+            archetype=E2RArchetype.AIRLINE_CONSOLIDATION_STAGE2_NO_PRICE,
+            stage1_radar_signals=("airline merger completion", "LCC consolidation", "fleet and route scale"),
+            stage2_candidate_signals=("stake acquisition, integration year, fleet/rank and LCC integration plan are visible"),
+            stage3_high_conviction_signals=("yield/cost/load-factor synergy", "route rationalization", "mileage/labor/fare clarity", "FCF after integration"),
+            stage4a_ongoing_signals=("synergy, yield and load factor remain visible after integration"),
+            stage4b_graduation_overheat_signals=("direct stock-price anchor unavailable", "merger scale premium before synergy proof", "fuel/FX or route-remedy risk"),
+            stage4c_thesis_break_signals=("integration delay", "fare-cap or mileage burden", "labor conflict", "safety incident", "fuel/FX cost shock"),
+            key_evidence_families=("news", "regulatory", "financial_actual", "research_report"),
+            false_positive_patterns=("merger completion treated as Green before yield and cost synergy", "no-price case treated as price-aligned"),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=17, bottleneck=7, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.LCC_SAFETY_TRUST_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.LCC_SAFETY_TRUST_HARD_4C,
+            stage1_radar_signals=("LCC demand recovery", "route expansion", "travel recovery basket"),
+            stage2_candidate_signals=("not a positive source; quantify safety shock, cancellations, inspection and compensation"),
+            stage3_high_conviction_signals=("not applicable while a fatal aviation safety event or trust break remains unresolved"),
+            stage4a_ongoing_signals=("safety remediation, booking recovery, compensation finality and regulatory clearance are monitored"),
+            stage4b_graduation_overheat_signals=("relief rally before safety investigation and booking recovery"),
+            stage4c_thesis_break_signals=("fatal aviation safety event", "booking cancellations", "market cap wiped", "consumer trust collapse", "regulatory inspection"),
+            key_evidence_families=("news", "price", "regulatory", "red_team"),
+            false_positive_patterns=("travel recovery scored while LCC safety trust is broken", "inspection event treated as temporary noise before booking recovery"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.CHINA_TOURISM_LEISURE_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.CHINA_TOURISM_LEISURE_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("China visa-free travel", "casino/duty-free/hotel basket rally", "visitor policy event"),
+            stage2_candidate_signals=("policy period, basket reaction and affected leisure operators are explicit", "event return or relative outperformance exists"),
+            stage3_high_conviction_signals=("visitor volume, casino/drop, hotel occupancy and duty-free basket convert to OP", "repeat inbound demand", "spend per visitor"),
+            stage4a_ongoing_signals=("visitor volume, basket size, occupancy and OP conversion remain visible"),
+            stage4b_graduation_overheat_signals=("temporary policy window", "low-spend tourism", "headline basket rally before OP conversion"),
+            stage4c_thesis_break_signals=("policy ends without conversion", "geopolitical/protest disruption", "visitor count rises but spend and margin fail"),
+            key_evidence_families=("policy", "news", "price", "financial_actual", "research_report"),
+            false_positive_patterns=("tourism headline scored without basket size", "visitor count treated as OP before spend and margin"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=14, bottleneck=5, mispricing=11, valuation=8),
+        ),
+        E2RArchetype.MARINE_AFTERMARKET_IPO_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.MARINE_AFTERMARKET_IPO_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("marine aftermarket IPO", "ship repair/retrofit platform", "green-vessel retrofit demand"),
+            stage2_candidate_signals=("IPO proceeds, debut strength, aftermarket/retrofit demand and margin narrative are explicit"),
+            stage3_high_conviction_signals=("recurring retrofit demand and margin durability", "aftermarket backlog", "customer retention", "FCF conversion"),
+            stage4a_ongoing_signals=("retrofit demand, service margin and recurring customer revenue remain visible"),
+            stage4b_graduation_overheat_signals=("KKR overhang", "shipping cycle", "IPO valuation priced before recurring margin proof"),
+            stage4c_thesis_break_signals=("shipping-cycle downturn cuts retrofit demand", "service margin fails", "overhang supply pressures price"),
+            key_evidence_families=("IPO", "news", "price", "financial_actual", "research_report"),
+            false_positive_patterns=("IPO pop treated as Green before recurring service margin", "green-vessel theme scored without retrofit economics"),
+            preferred_score_weights=_weights(eps_fcf=16, visibility=18, bottleneck=8, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.SHIPBUILDING_MERGER_US_NAVAL_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.SHIPBUILDING_MERGER_US_NAVAL_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("shipbuilding merger", "MASGA or U.S. naval policy", "icebreaker/naval opportunity"),
+            stage2_candidate_signals=("merger terms, event reaction, U.S. naval policy readthrough and shipbuilding scale are explicit"),
+            stage3_high_conviction_signals=("U.S. naval/icebreaker contracts", "backlog margin", "merger execution", "defense MRO conversion", "FCF bridge"),
+            stage4a_ongoing_signals=("merger integration, naval contracts and backlog margins stay on track"),
+            stage4b_graduation_overheat_signals=("exchange-ratio dispute", "defense-cycle risk", "policy premium before signed contracts"),
+            stage4c_thesis_break_signals=("merger fails", "U.S. contract conversion fails", "backlog margin deteriorates", "defense policy support reverses"),
+            key_evidence_families=("news", "M&A", "policy", "price", "financial_actual", "red_team"),
+            false_positive_patterns=("shipbuilding policy headline treated as contract", "merger rally scored before contract and margin proof"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=20, bottleneck=12, mispricing=13, valuation=10),
         ),
     }
 )
