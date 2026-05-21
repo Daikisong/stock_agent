@@ -1,0 +1,38 @@
+# Round 300 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable
+
+- asp_increase_or_price_pass_through_visible
+- shipment_export_or_ecommerce_sellthrough_visible_by_region
+- op_estimate_or_target_revision_has_operating_reason
+- capacity_or_distribution_channel_expansion_visible
+- event_or_market_relative_price_reaction_is_strong
+- viral_or_sns_signal_converts_to_revenue_mix_or_sales
+- tourism_policy_can_bridge_to_arrivals_spending_or_store_sales
+
+## Stage3-Yellow
+
+- two_or_three_operating_numbers_change_eps_op_path
+- repeat_purchase_offline_channel_regulatory_or_margin_gate_still_pending
+- valuation_4b_overlay_applied_if_price_already_reran
+
+## Stage3-Green
+
+- export_or_sales_are_confirmed_in_actual_quarter
+- asp_and_volume_hold_together
+- capacity_expansion_converts_to_revenue_and_margin
+- offline_sellthrough_and_repeat_purchase_confirm
+- tourism_spending_adr_dutyfree_or_store_sales_confirm
+- full_window_mfe_mae_is_available_and_supportive
+
+## Green Blockers
+
+- viral_celebrity_event_only
+- brand_name_only
+- tourism_policy_without_spending
+- jv_without_data_rights
+- ma_option_without_funding_control
+- target_market_size_only
+- social_media_hype_without_repeat_purchase

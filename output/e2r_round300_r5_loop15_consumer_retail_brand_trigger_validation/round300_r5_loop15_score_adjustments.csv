@@ -1,0 +1,18 @@
+axis,points,direction,reason
+export_shipment_growth,+5,raise,R5 consumer trigger quality axis
+asp_increase,+5,raise,R5 consumer trigger quality axis
+op_estimate_revision,+5,raise,R5 consumer trigger quality axis
+production_capacity_expansion,+5,raise,R5 consumer trigger quality axis
+us_europe_sellthrough,+5,raise,R5 consumer trigger quality axis
+physical_retail_channel_entry,+5,raise,R5 consumer trigger quality axis
+repeat_purchase_or_same_store_sales,+5,raise,R5 consumer trigger quality axis
+tourist_arrival_spending_conversion,+5,raise,R5 consumer trigger quality axis
+customer_data_monetization_permission,+5,raise,R5 consumer trigger quality axis
+brand_ma_control_execution,+5,raise,R5 consumer trigger quality axis
+viral_celebrity_event_only,-5,lower,"R5 headline, meme, data-rights or repeat-demand blocker"
+brand_name_only,-5,lower,"R5 headline, meme, data-rights or repeat-demand blocker"
+tourism_policy_without_spending,-5,lower,"R5 headline, meme, data-rights or repeat-demand blocker"
+jv_without_data_rights,-5,lower,"R5 headline, meme, data-rights or repeat-demand blocker"
+ma_option_without_funding_control,-5,lower,"R5 headline, meme, data-rights or repeat-demand blocker"
+target_market_size_only,-5,lower,"R5 headline, meme, data-rights or repeat-demand blocker"
+social_media_hype_without_repeat_purchase,-5,lower,"R5 headline, meme, data-rights or repeat-demand blocker"

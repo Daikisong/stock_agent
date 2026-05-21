@@ -680,6 +680,16 @@ class E2RArchetype(str, Enum):
     K_BEAUTY_TARIFF_IMPORT_REVIEW = "K_BEAUTY_TARIFF_IMPORT_REVIEW"
     K_BEAUTY_DEVICE_BRAND_4B = "K_BEAUTY_DEVICE_BRAND_4B"
     K_BEAUTY_US_EXPANSION_STAGE2 = "K_BEAUTY_US_EXPANSION_STAGE2"
+    K_FOOD_EXPORT_STAGE2_TO_STAGE3_YELLOW = "K_FOOD_EXPORT_STAGE2_TO_STAGE3_YELLOW"
+    K_FOOD_REGULATORY_FALSE_BREAK_4C_WATCH = "K_FOOD_REGULATORY_FALSE_BREAK_4C_WATCH"
+    K_BEAUTY_US_EXPORT_STAGE2_ACTIONABLE = "K_BEAUTY_US_EXPORT_STAGE2_ACTIONABLE"
+    BEAUTY_DEVICE_VIRAL_STAGE3_WITH_4B = "BEAUTY_DEVICE_VIRAL_STAGE3_WITH_4B"
+    CHINA_TOURIST_DUTYFREE_STAGE2_ACTIONABLE = "CHINA_TOURIST_DUTYFREE_STAGE2_ACTIONABLE"
+    ECOMMERCE_JV_STAGE2_WITH_DATA_REGULATORY_4B = "ECOMMERCE_JV_STAGE2_WITH_DATA_REGULATORY_4B"
+    BRAND_MA_CONTROL_RIGHTS_STAGE2 = "BRAND_MA_CONTROL_RIGHTS_STAGE2"
+    FRIED_CHICKEN_MEME_PRICE_MOVED_WITHOUT_EVIDENCE = "FRIED_CHICKEN_MEME_PRICE_MOVED_WITHOUT_EVIDENCE"
+    RAMEN_GLOBAL_EXPANSION_STAGE2 = "RAMEN_GLOBAL_EXPANSION_STAGE2"
+    TOURISM_REROUTE_EVENT_PREMIUM = "TOURISM_REROUTE_EVENT_PREMIUM"
     LEGACY_BEAUTY_CHINA_EXPOSURE_4C = "LEGACY_BEAUTY_CHINA_EXPOSURE_4C"
     ECOMMERCE_RESTRUCTURING_JV_KOREA = "ECOMMERCE_RESTRUCTURING_JV_KOREA"
     ECOMMERCE_JV_SCALE_AND_DATA_GATE = "ECOMMERCE_JV_SCALE_AND_DATA_GATE"
@@ -2139,6 +2149,126 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("news", "financial_actual", "research_report", "price"),
             false_positive_patterns=("online ecommerce growth without offline sell-through", "brand heat without channel economics", "tariff risk ignored"),
             preferred_score_weights=_weights(eps_fcf=22, visibility=23, bottleneck=12, mispricing=16, valuation=13),
+        ),
+        E2RArchetype.K_FOOD_EXPORT_STAGE2_TO_STAGE3_YELLOW: ArchetypeDefinition(
+            archetype=E2RArchetype.K_FOOD_EXPORT_STAGE2_TO_STAGE3_YELLOW,
+            stage1_radar_signals=("K-food viral export demand", "Buldak or ramen overseas shipment growth", "global K-food brand awareness"),
+            stage2_candidate_signals=("ASP increase, regional shipment growth, capacity expansion, OP estimate revision and target revision are visible"),
+            stage3_high_conviction_signals=("ASP plus volume, capacity-to-revenue conversion, repeat overseas demand, OP margin and FCF quality support Yellow before Green"),
+            stage4a_ongoing_signals=("export shipments, ASP, capacity utilization and repeat demand remain intact"),
+            stage4b_graduation_overheat_signals=("single-product brand heat or target upgrades outrun repeat-demand and margin proof"),
+            stage4c_thesis_break_signals=("major food safety issue", "market ban persists", "export shipment slowdown", "ASP or OPM reversal"),
+            key_evidence_families=("research_report", "financial_actual", "news", "price", "red_team"),
+            false_positive_patterns=("viral K-food headline scored without ASP and shipment", "capacity expansion scored without OP revision"),
+            preferred_score_weights=_weights(eps_fcf=22, visibility=23, bottleneck=12, mispricing=16, valuation=13),
+        ),
+        E2RArchetype.K_FOOD_REGULATORY_FALSE_BREAK_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.K_FOOD_REGULATORY_FALSE_BREAK_4C_WATCH,
+            stage1_radar_signals=("food recall", "spiciness or capsaicin regulatory review", "temporary product ban"),
+            stage2_candidate_signals=("not positive evidence; use as RedTeam watch until ban scope and sales impact are known"),
+            stage3_high_conviction_signals=("not applicable unless ban is reversed and local sell-through/margin remain intact"),
+            stage4a_ongoing_signals=("regulatory issue remains contained and brand demand continues"),
+            stage4b_graduation_overheat_signals=("brand heat ignores local regulatory watch"),
+            stage4c_thesis_break_signals=("recall expands into quality defect", "major market ban persists", "retailer delisting", "repeat demand breaks"),
+            key_evidence_families=("regulatory", "news", "price", "red_team"),
+            false_positive_patterns=("temporary recall treated as hard 4C without ban status", "ban reversal ignored after false-break relief"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.K_BEAUTY_US_EXPORT_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.K_BEAUTY_US_EXPORT_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("K-beauty U.S. export share", "U.S. ecommerce sell-through", "indie beauty brand channel expansion"),
+            stage2_candidate_signals=("Korea U.S. export rank, ecommerce growth, physical retail talks and ODM beneficiary mapping are visible"),
+            stage3_high_conviction_signals=("physical-store sell-through, repeat purchase, ODM margin, tariff pass-through and inventory discipline confirm"),
+            stage4a_ongoing_signals=("online and offline channel conversion holds without working-capital stress"),
+            stage4b_graduation_overheat_signals=("K-beauty basket crowded before physical-store sell-through and margin proof"),
+            stage4c_thesis_break_signals=("tariff shock not absorbed", "retail sell-through fails", "channel stuffing", "receivables deterioration"),
+            key_evidence_families=("news", "financial_actual", "research_report", "price", "red_team"),
+            false_positive_patterns=("SNS beauty heat without sell-through", "online growth scored as Green before offline channel economics"),
+            preferred_score_weights=_weights(eps_fcf=22, visibility=23, bottleneck=12, mispricing=16, valuation=13),
+        ),
+        E2RArchetype.BEAUTY_DEVICE_VIRAL_STAGE3_WITH_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.BEAUTY_DEVICE_VIRAL_STAGE3_WITH_4B,
+            stage1_radar_signals=("beauty-device social commerce", "Medicube device viral demand", "influencer-triggered overseas demand"),
+            stage2_candidate_signals=("overseas revenue mix, device category share, ASP and channel growth are visible"),
+            stage3_high_conviction_signals=("viral device demand links to overseas revenue, repeat purchase, device margin and channel sustainability"),
+            stage4a_ongoing_signals=("device reorder, return rate, overseas channel and margin remain healthy"),
+            stage4b_graduation_overheat_signals=("stock rises 3x to 4x before repeat purchase and margin proof", "celebrity virality outruns fundamentals"),
+            stage4c_thesis_break_signals=("return rate spikes", "tariff or safety issue damages margin", "offline sell-through fails", "competition compresses ASP"),
+            key_evidence_families=("news", "financial_actual", "research_report", "price", "red_team"),
+            false_positive_patterns=("celebrity TikTok treated as repeat demand", "viral device price move treated as Green after valuation rerating"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=21, bottleneck=10, mispricing=13, valuation=10),
+        ),
+        E2RArchetype.CHINA_TOURIST_DUTYFREE_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.CHINA_TOURIST_DUTYFREE_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("Chinese tourist visa-free policy", "duty-free retail basket rally", "department hotel casino beauty tourism rebound"),
+            stage2_candidate_signals=("policy period, visitor share, basket event return and consumption channel exposure are visible"),
+            stage3_high_conviction_signals=("actual arrivals, card spending, duty-free sales, hotel ADR, casino drop and beauty sell-through confirm"),
+            stage4a_ongoing_signals=("tourist flow converts into spending, SSS, ADR and margin"),
+            stage4b_graduation_overheat_signals=("tourism policy headline priced before spending conversion"),
+            stage4c_thesis_break_signals=("visa policy reversal", "diplomatic conflict", "anti-tourist backlash", "low-spend tour mix"),
+            key_evidence_families=("policy", "news", "price", "financial_actual", "red_team"),
+            false_positive_patterns=("visitor-count policy treated as spend", "tourism basket rally treated as store margin"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=10, bottleneck=4, mispricing=10, valuation=7),
+        ),
+        E2RArchetype.ECOMMERCE_JV_STAGE2_WITH_DATA_REGULATORY_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.ECOMMERCE_JV_STAGE2_WITH_DATA_REGULATORY_4B,
+            stage1_radar_signals=("ecommerce JV", "Gmarket AliExpress Korea combination", "cross-border marketplace consolidation"),
+            stage2_candidate_signals=("deal value, assets combined, conditional approval, customer database and market share are visible"),
+            stage3_high_conviction_signals=("GMV growth, take-rate, retention, data monetization permission, regulatory compliance and margin improvement confirm"),
+            stage4a_ongoing_signals=("JV integration and data usage convert into GMV, take-rate and margin"),
+            stage4b_graduation_overheat_signals=("JV scale premium priced before data rights and unit economics"),
+            stage4c_thesis_break_signals=("data sharing restriction blocks monetization", "KFTC conditions tighten", "GMV share fails", "take-rate or margin misses"),
+            key_evidence_families=("deal", "regulatory", "news", "financial_actual", "red_team"),
+            false_positive_patterns=("JV headline treated as margin", "customer database scored without data rights"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=16, bottleneck=6, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.BRAND_MA_CONTROL_RIGHTS_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.BRAND_MA_CONTROL_RIGHTS_STAGE2,
+            stage1_radar_signals=("global brand acquisition optionality", "strategic investor control rights", "ROFR or consent rights"),
+            stage2_candidate_signals=("prior investment, advisor, potential sale value, consent rights and ROFR are visible"),
+            stage3_high_conviction_signals=("funding, control execution, acquisition price, brand integration, ROIC and FCF conversion confirm"),
+            stage4a_ongoing_signals=("brand integration and ROIC stay on plan after acquisition"),
+            stage4b_graduation_overheat_signals=("M&A optionality priced before funding, control and ROIC"),
+            stage4c_thesis_break_signals=("legal dispute blocks sale", "funding fails", "control rights rejected", "integration economics fail"),
+            key_evidence_families=("deal", "governance", "news", "financial_actual", "red_team"),
+            false_positive_patterns=("brand name optionality treated as operating rerating", "ROFR treated as full control"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=16, bottleneck=6, mispricing=13, valuation=12),
+        ),
+        E2RArchetype.FRIED_CHICKEN_MEME_PRICE_MOVED_WITHOUT_EVIDENCE: ArchetypeDefinition(
+            archetype=E2RArchetype.FRIED_CHICKEN_MEME_PRICE_MOVED_WITHOUT_EVIDENCE,
+            stage1_radar_signals=("celebrity fried-chicken visit", "AI CEO meme rally", "unlisted restaurant read-through"),
+            stage2_candidate_signals=("not Stage2 unless same-store sales, franchise fees, royalties and repeat traffic are confirmed"),
+            stage3_high_conviction_signals=("not applicable without direct listed-company revenue evidence"),
+            stage4a_ongoing_signals=("not applicable unless direct economics appear later"),
+            stage4b_graduation_overheat_signals=("listed peers rise on celebrity meme without direct sales evidence"),
+            stage4c_thesis_break_signals=("no direct revenue link", "same-store sales absent", "franchise fee absent", "event traffic fades"),
+            key_evidence_families=("news", "price", "red_team"),
+            false_positive_patterns=("celebrity meme treated as brand rerating", "unlisted brand event read through to listed peers"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.RAMEN_GLOBAL_EXPANSION_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.RAMEN_GLOBAL_EXPANSION_STAGE2,
+            stage1_radar_signals=("global ramen sales", "record Korean ramen exports", "U.S. ramen sales target"),
+            stage2_candidate_signals=("global sales, overseas mix, U.S. target and regional expansion plan are visible"),
+            stage3_high_conviction_signals=("OP estimate revision, ASP increase, shipment by region, production capacity and event price anchor confirm"),
+            stage4a_ongoing_signals=("global staple demand and margin hold across regions"),
+            stage4b_graduation_overheat_signals=("global brand target priced before OP and ASP evidence"),
+            stage4c_thesis_break_signals=("China sales slowdown", "regional execution failure", "input cost or pricing pressure"),
+            key_evidence_families=("news", "financial_actual", "research_report", "price"),
+            false_positive_patterns=("global brand target treated as OP revision", "export sales without margin bridge"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=21, bottleneck=10, mispricing=15, valuation=12),
+        ),
+        E2RArchetype.TOURISM_REROUTE_EVENT_PREMIUM: ArchetypeDefinition(
+            archetype=E2RArchetype.TOURISM_REROUTE_EVENT_PREMIUM,
+            stage1_radar_signals=("China-Japan tourism reroute", "travel agency event rally", "tourism diplomatic shock"),
+            stage2_candidate_signals=("event return is visible but arrival, spending and margin conversion are still pending"),
+            stage3_high_conviction_signals=("not Green until rerouted visitors convert into bookings, spending, ADR and margin"),
+            stage4a_ongoing_signals=("rerouted traffic remains measurable and cash-generative"),
+            stage4b_graduation_overheat_signals=("reroute event premium priced before travel spending conversion"),
+            stage4c_thesis_break_signals=("diplomatic issue resolves", "visitor reroute fails", "low-margin tour mix", "travel demand reverses"),
+            key_evidence_families=("news", "policy", "price", "financial_actual"),
+            false_positive_patterns=("geopolitical travel reroute treated as structural tourism rerating", "travel-agent price pop treated as spend"),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=8, bottleneck=3, mispricing=7, valuation=5),
         ),
         E2RArchetype.CHINA_TOURISM_RETAIL_EVENT_PREMIUM: ArchetypeDefinition(
             archetype=E2RArchetype.CHINA_TOURISM_RETAIL_EVENT_PREMIUM,

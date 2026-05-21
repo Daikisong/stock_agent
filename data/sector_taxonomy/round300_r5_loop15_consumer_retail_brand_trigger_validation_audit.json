@@ -1,0 +1,112 @@
+{
+  "green_blockers": [
+    "viral_celebrity_event_only",
+    "brand_name_only",
+    "tourism_policy_without_spending",
+    "jv_without_data_rights",
+    "ma_option_without_funding_control",
+    "target_market_size_only",
+    "social_media_hype_without_repeat_purchase"
+  ],
+  "hard_4c_gates": [
+    "food_safety_or_recall_quality_problem_confirmed",
+    "major_market_ban_persists",
+    "meme_rally_collapses_without_direct_revenue",
+    "tourism_policy_reversal_or_diplomatic_conflict_blocks_flow",
+    "ecommerce_jv_data_regulation_blocks_monetization",
+    "brand_ma_funding_or_control_failure"
+  ],
+  "large_sector": "CONSUMER_RETAIL_BRAND",
+  "method": "trigger_level_backtest_v1",
+  "round_id": "round_228",
+  "score_down_axes": [
+    "viral_celebrity_event_only",
+    "brand_name_only",
+    "tourism_policy_without_spending",
+    "jv_without_data_rights",
+    "ma_option_without_funding_control",
+    "target_market_size_only",
+    "social_media_hype_without_repeat_purchase"
+  ],
+  "score_up_axes": [
+    "export_shipment_growth",
+    "asp_increase",
+    "op_estimate_revision",
+    "production_capacity_expansion",
+    "us_europe_sellthrough",
+    "physical_retail_channel_entry",
+    "repeat_purchase_or_same_store_sales",
+    "tourist_arrival_spending_conversion",
+    "customer_data_monetization_permission",
+    "brand_ma_control_execution"
+  ],
+  "source_round": "docs/round/round_300.md",
+  "stage2_actionable_rules": [
+    "asp_increase_or_price_pass_through_visible",
+    "shipment_export_or_ecommerce_sellthrough_visible_by_region",
+    "op_estimate_or_target_revision_has_operating_reason",
+    "capacity_or_distribution_channel_expansion_visible",
+    "event_or_market_relative_price_reaction_is_strong",
+    "viral_or_sns_signal_converts_to_revenue_mix_or_sales",
+    "tourism_policy_can_bridge_to_arrivals_spending_or_store_sales"
+  ],
+  "stage3_green_rules": [
+    "export_or_sales_are_confirmed_in_actual_quarter",
+    "asp_and_volume_hold_together",
+    "capacity_expansion_converts_to_revenue_and_margin",
+    "offline_sellthrough_and_repeat_purchase_confirm",
+    "tourism_spending_adr_dutyfree_or_store_sales_confirm",
+    "full_window_mfe_mae_is_available_and_supportive"
+  ],
+  "stage3_yellow_rules": [
+    "two_or_three_operating_numbers_change_eps_op_path",
+    "repeat_purchase_offline_channel_regulatory_or_margin_gate_still_pending",
+    "valuation_4b_overlay_applied_if_price_already_reran"
+  ],
+  "stage4b_watch_triggers": [
+    "sns_or_influencer_trigger_rallies_without_direct_sales",
+    "stock_rises_three_to_four_times_before_channel_margin_confirm",
+    "tourism_policy_rally_without_spending_data",
+    "jv_or_ma_headline_without_data_rights_funding_control_or_roic",
+    "regulatory_recall_or_social_backlash_watch"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "large_sector": "CONSUMER_RETAIL_BRAND",
+    "method": "trigger_level_backtest_v1",
+    "missed_structural_count": 1,
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_228",
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_300.md",
+    "stage2_actionable_candidate_count": 4,
+    "stage3_green_candidate_count": 0,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 2,
+    "stage4b_watch_count": 5,
+    "stage4c_watch_count": 4,
+    "trigger_count": 9
+  },
+  "target_archetypes": {
+    "BEAUTY_DEVICE_VIRAL_STAGE3_WITH_4B": "BEAUTY_DEVICE_VIRAL_STAGE3_WITH_4B",
+    "BRAND_MA_CONTROL_RIGHTS_STAGE2": "BRAND_MA_CONTROL_RIGHTS_STAGE2",
+    "CHINA_TOURIST_DUTYFREE_STAGE2_ACTIONABLE": "CHINA_TOURIST_DUTYFREE_STAGE2_ACTIONABLE",
+    "ECOMMERCE_JV_STAGE2_WITH_DATA_REGULATORY_4B": "ECOMMERCE_JV_STAGE2_WITH_DATA_REGULATORY_4B",
+    "FRIED_CHICKEN_MEME_PRICE_MOVED_WITHOUT_EVIDENCE": "FRIED_CHICKEN_MEME_PRICE_MOVED_WITHOUT_EVIDENCE",
+    "K_BEAUTY_US_EXPORT_STAGE2_ACTIONABLE": "K_BEAUTY_US_EXPORT_STAGE2_ACTIONABLE",
+    "K_FOOD_EXPORT_STAGE2_TO_STAGE3_YELLOW": "K_FOOD_EXPORT_STAGE2_TO_STAGE3_YELLOW",
+    "K_FOOD_REGULATORY_FALSE_BREAK_4C_WATCH": "K_FOOD_REGULATORY_FALSE_BREAK_4C_WATCH",
+    "RAMEN_GLOBAL_EXPANSION_STAGE2": "RAMEN_GLOBAL_EXPANSION_STAGE2",
+    "TOURISM_REROUTE_EVENT_PREMIUM": "TOURISM_REROUTE_EVENT_PREMIUM"
+  },
+  "what_not_to_change": [
+    "do_not_apply_round300_shadow_weights_to_production_scoring_yet",
+    "do_not_use_round300_cases_as_candidate_generation_input",
+    "do_not_treat_celebrity_meme_policy_jv_or_ma_optional_headline_as_green",
+    "do_not_ignore_repeat_purchase_spending_conversion_data_rights_or_funding_gates"
+  ]
+}
