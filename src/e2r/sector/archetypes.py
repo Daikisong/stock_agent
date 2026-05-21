@@ -1023,6 +1023,14 @@ class E2RArchetype(str, Enum):
     KOREAN_AI_CHIP_FABLESS_STAGE2 = "KOREAN_AI_CHIP_FABLESS_STAGE2"
     AI_INFRA_MEMORY_SUPPLY_MOU_4B = "AI_INFRA_MEMORY_SUPPLY_MOU_4B"
     CONSUMER_ELECTRONICS_COMPONENT_COST_4C_WATCH = "CONSUMER_ELECTRONICS_COMPONENT_COST_4C_WATCH"
+    HBM_FIRST_MOVER_STAGE2_TO_GREEN = "HBM_FIRST_MOVER_STAGE2_TO_GREEN"
+    HBM_EQUIPMENT_STAGE2_ACTIONABLE = "HBM_EQUIPMENT_STAGE2_ACTIONABLE"
+    HBM_CATCHUP_LATE_STAGE2 = "HBM_CATCHUP_LATE_STAGE2"
+    OPENAI_STARGATE_MEMORY_4B_WATCH = "OPENAI_STARGATE_MEMORY_4B_WATCH"
+    SEMICONDUCTOR_EXPORT_CONTROL_4C_WATCH = "SEMICONDUCTOR_EXPORT_CONTROL_4C_WATCH"
+    AI_DEVICE_COMPONENT_STAGE2_ACTIONABLE = "AI_DEVICE_COMPONENT_STAGE2_ACTIONABLE"
+    DISPLAY_OLED_APPLE_RECOVERY_STAGE2 = "DISPLAY_OLED_APPLE_RECOVERY_STAGE2"
+    SEMICONDUCTOR_LABOR_SUPPLY_CHAIN_4C = "SEMICONDUCTOR_LABOR_SUPPLY_CHAIN_4C"
     ORDER_TO_REVENUE_CONVERSION = "ORDER_TO_REVENUE_CONVERSION"
     STAGE2_EVIDENCE_NOT_GREEN = "STAGE2_EVIDENCE_NOT_GREEN"
     CONTRACT_HEADLINE_NOT_STAGE3 = "CONTRACT_HEADLINE_NOT_STAGE3"
@@ -6705,6 +6713,102 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("financial_actual", "news", "price", "red_team"),
             false_positive_patterns=("AI memory shortage treated as positive for OEM", "B2B optionality treated as core-margin repair"),
             preferred_score_weights=_weights(eps_fcf=10, visibility=10, bottleneck=4, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.HBM_FIRST_MOVER_STAGE2_TO_GREEN: ArchetypeDefinition(
+            archetype=E2RArchetype.HBM_FIRST_MOVER_STAGE2_TO_GREEN,
+            stage1_radar_signals=("HBM3E premium", "AI memory rally", "HBM contribution to EPS revision"),
+            stage2_candidate_signals=("HBM mix, OP estimate revision, mass production and relative strength are visible"),
+            stage3_high_conviction_signals=("HBM mass production, customer supply, record OP and volume commitments support Yellow-to-Green"),
+            stage4a_ongoing_signals=("HBM mix, ASP, margin and customer allocation remain intact after first-mover trigger"),
+            stage4b_graduation_overheat_signals=("HBM leader rises 200%+ after prior 274% year", "OpenAI or Nvidia headline after parabolic move"),
+            stage4c_thesis_break_signals=("HBM qualification loss", "customer allocation loss", "legacy memory price collapse", "China equipment restriction"),
+            key_evidence_families=("financial_actual", "research_report", "news", "price", "consensus_revision"),
+            false_positive_patterns=("HBM theme without OP estimate revision", "record profit day used as first entry after earlier HBM triggers were missed"),
+            preferred_score_weights=_weights(eps_fcf=24, visibility=21, bottleneck=19, mispricing=15, valuation=12),
+        ),
+        E2RArchetype.HBM_EQUIPMENT_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.HBM_EQUIPMENT_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("HBM packaging equipment", "TSV-TC bonder", "advanced packaging order"),
+            stage2_candidate_signals=("named customer, named HBM equipment, supply deal and repeat wins are visible"),
+            stage3_high_conviction_signals=("equipment PO, shipment, revenue recognition, gross margin and customer diversification confirm"),
+            stage4a_ongoing_signals=("repeat orders convert into revenue and margin across HBM customers"),
+            stage4b_graduation_overheat_signals=("HBM equipment pure-play rerates before customer concentration clears"),
+            stage4c_thesis_break_signals=("customer PO cancellation", "shipment delay", "customer capex cut", "customer concentration risk breaks"),
+            key_evidence_families=("disclosure", "news", "price", "financial_actual", "research_report"),
+            false_positive_patterns=("HBM equipment rumor without named customer order", "equipment theme treated as revenue before shipment"),
+            preferred_score_weights=_weights(eps_fcf=22, visibility=20, bottleneck=18, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.HBM_CATCHUP_LATE_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.HBM_CATCHUP_LATE_STAGE2,
+            stage1_radar_signals=("HBM catch-up", "Nvidia partnership talks", "OpenAI memory demand"),
+            stage2_candidate_signals=("OpenAI or Nvidia catch-up evidence is visible, but relative-strength discount applies"),
+            stage3_high_conviction_signals=("actual HBM3E/HBM4 allocation, shipment timing, memory margin and foundry loss control confirm"),
+            stage4a_ongoing_signals=("catch-up execution remains intact and labor/export-control risk stays contained"),
+            stage4b_graduation_overheat_signals=("catch-up rally before allocation and margin evidence"),
+            stage4c_thesis_break_signals=("HBM qualification failure", "shipment delay", "labor strike disrupting memory supply", "foundry/logic losses widen"),
+            key_evidence_families=("news", "financial_actual", "price", "labor", "regulatory"),
+            false_positive_patterns=("late catch-up treated like first-mover Green", "customer name without allocation"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=18, bottleneck=16, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.OPENAI_STARGATE_MEMORY_4B_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.OPENAI_STARGATE_MEMORY_4B_WATCH,
+            stage1_radar_signals=("OpenAI Stargate", "hyperscaler AI capex", "memory wafer demand"),
+            stage2_candidate_signals=("AI capex commitment and memory demand validation are visible"),
+            stage3_high_conviction_signals=("demand validation, record OP, HBM shipment and volume commitment confirm, with 4B overlay"),
+            stage4a_ongoing_signals=("AI capex and HBM allocation continue while valuation remains supportable"),
+            stage4b_graduation_overheat_signals=("OpenAI or Nvidia headline after parabolic rally", "large EUV capex order", "possible listing or dilution"),
+            stage4c_thesis_break_signals=("AI capex slowdown", "capex overbuild", "customer allocation loss", "dilution changes EPS path"),
+            key_evidence_families=("news", "financial_actual", "price", "capex", "red_team"),
+            false_positive_patterns=("OpenAI headline after 200%+ rally treated as fresh Green without 4B", "capex order scored without ROIC or dilution check"),
+            preferred_score_weights=_weights(eps_fcf=24, visibility=21, bottleneck=19, mispricing=15, valuation=12),
+        ),
+        E2RArchetype.SEMICONDUCTOR_EXPORT_CONTROL_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.SEMICONDUCTOR_EXPORT_CONTROL_4C_WATCH,
+            stage1_radar_signals=("China fab authorization", "U.S. semiconductor equipment restriction", "export-control headline"),
+            stage2_candidate_signals=("short-term impact may be contained, but fab exposure and license path must be explicit"),
+            stage3_high_conviction_signals=("not a Green source; it is a Red Team overlay unless alternative equipment and capacity path clear"),
+            stage4a_ongoing_signals=("license relief or alternative capacity keeps thesis intact"),
+            stage4b_graduation_overheat_signals=("AI memory rally ignores China fab upgrade block"),
+            stage4c_thesis_break_signals=("equipment license denial", "China fab upgrade block", "production disruption", "competitiveness loss"),
+            key_evidence_families=("regulatory", "news", "price", "red_team"),
+            false_positive_patterns=("AI memory thesis scored without China fab exposure", "short-term limited impact treated as no risk"),
+            preferred_score_weights=_weights(eps_fcf=2, visibility=4, bottleneck=2, mispricing=2, valuation=2),
+        ),
+        E2RArchetype.AI_DEVICE_COMPONENT_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.AI_DEVICE_COMPONENT_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("Apple Intelligence", "OpenAI iPhone integration", "AI device upgrade cycle"),
+            stage2_candidate_signals=("device upgrade narrative, OP estimate beat, target revision and relative strength are visible"),
+            stage3_high_conviction_signals=("sell-through, component ASP, content share, inventory and margin confirm"),
+            stage4a_ongoing_signals=("device sell-through and component margin remain strong after launch"),
+            stage4b_graduation_overheat_signals=("AI device expectation rerates before sell-through and component margin"),
+            stage4c_thesis_break_signals=("iPhone sell-through disappoints", "inventory builds", "camera/module ASP falls", "Apple cycle conversion fails"),
+            key_evidence_families=("research_report", "financial_actual", "price", "news"),
+            false_positive_patterns=("Apple AI expectation only", "target-price raise treated as sell-through"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=18, bottleneck=10, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.DISPLAY_OLED_APPLE_RECOVERY_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.DISPLAY_OLED_APPLE_RECOVERY_STAGE2,
+            stage1_radar_signals=("Apple OLED orders", "OLED iPad/iPhone panel recovery", "loss beat"),
+            stage2_candidate_signals=("loss beat, revenue growth and Apple OLED orders are visible"),
+            stage3_high_conviction_signals=("sustained profitability, OLED utilization, panel ASP, customer demand and FCF conversion confirm"),
+            stage4a_ongoing_signals=("OLED utilization and profitability remain intact"),
+            stage4b_graduation_overheat_signals=("OLED order story prices recovery before profit guidance"),
+            stage4c_thesis_break_signals=("2H profitability guidance refused", "panel demand weakens", "cash burn persists", "OLED utilization disappoints"),
+            key_evidence_families=("financial_actual", "news", "price", "customer_order"),
+            false_positive_patterns=("loss beat treated as sustained profit", "Apple OLED order treated as Green without guidance"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=18, bottleneck=10, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.SEMICONDUCTOR_LABOR_SUPPLY_CHAIN_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.SEMICONDUCTOR_LABOR_SUPPLY_CHAIN_4C,
+            stage1_radar_signals=("semiconductor strike risk", "union talks fail", "memory supply disruption estimate"),
+            stage2_candidate_signals=("not a positive candidate source; it is a continuity overlay"),
+            stage3_high_conviction_signals=("not a Green source; production continuity must be restored before positive scoring"),
+            stage4a_ongoing_signals=("labor continuity remains intact after settlement"),
+            stage4b_graduation_overheat_signals=("memory upcycle ignores production continuity risk"),
+            stage4c_thesis_break_signals=("major strike disrupts DRAM/NAND supply", "bonus dispute escalates", "government mediation fails", "shipment delay"),
+            key_evidence_families=("labor", "news", "red_team", "supply_chain"),
+            false_positive_patterns=("AI memory upcycle scored without labor continuity", "court injunction treated as full settlement"),
+            preferred_score_weights=_weights(eps_fcf=2, visibility=4, bottleneck=2, mispricing=2, valuation=2),
         ),
         E2RArchetype.PRICE_ONLY_POLICY_RALLY: ArchetypeDefinition(
             archetype=E2RArchetype.PRICE_ONLY_POLICY_RALLY,

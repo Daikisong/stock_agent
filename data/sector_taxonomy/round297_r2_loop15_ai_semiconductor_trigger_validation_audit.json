@@ -1,0 +1,132 @@
+{
+  "case_ids": [
+    "r2_loop15_sk_hynix_hbm_first_mover",
+    "r2_loop15_hanmi_semiconductor_hbm_equipment",
+    "r2_loop15_samsung_electronics_hbm_catchup_labor_watch",
+    "r2_loop15_sk_hynix_openai_asml_4b",
+    "r2_loop15_memory_china_equipment_export_control",
+    "r2_loop15_lg_innotek_apple_ai_upgrade",
+    "r2_loop15_lg_display_apple_oled_recovery",
+    "r2_loop15_samsung_labor_supply_chain_4c"
+  ],
+  "green_blockers": [
+    "full_adjusted_ohlc_window_missing",
+    "late_catchup_without_relative_strength",
+    "customer_name_without_allocation",
+    "sellthrough_or_component_margin_missing",
+    "profitability_guidance_missing",
+    "parabolic_rally_requires_4b_overlay",
+    "china_export_control_or_labor_continuity_4c_watch"
+  ],
+  "hard_4c_gates": [
+    "HBM_qualification_failure",
+    "customer_allocation_loss",
+    "actual_shipment_delay",
+    "china_fab_equipment_license_restriction_blocks_upgrade",
+    "major_labor_strike_disrupting_memory_supply",
+    "capex_or_dilution_changes_EPS_path",
+    "hyperscaler_AI_capex_slowdown"
+  ],
+  "large_sector": "AI_SEMICONDUCTOR_ELECTRONIC_PARTS",
+  "method": "trigger_level_backtest_v1",
+  "round_id": "round_225",
+  "score_down_axes": [
+    "ai_theme_only",
+    "customer_name_without_allocation",
+    "target_price_raise_without_price_strength",
+    "late_catchup_without_relative_strength",
+    "capex_without_ROIC_or_dilution_check",
+    "openai_or_nvidia_headline_after_parabolic_rally"
+  ],
+  "score_up_axes": [
+    "hbm_mix_revenue_share",
+    "op_estimate_revision_vs_consensus",
+    "mass_production_or_customer_qualification",
+    "named_customer_equipment_order",
+    "repeat_order_backlog_quality",
+    "relative_strength_on_evidence_day",
+    "ai_capex_customer_commitment",
+    "device_upgrade_op_estimate"
+  ],
+  "source_round": "docs/round/round_297.md",
+  "stage2_actionable_rules": [
+    "hbm_mix_or_ai_revenue_share_or_op_estimate_is_quantified",
+    "named_customer_or_product_is_specific",
+    "mass_production_certification_shipment_or_supply_deal_confirmed",
+    "trigger_day_market_relative_strength_5pp_plus",
+    "target_price_or_op_estimate_20pct_plus_above_consensus",
+    "repeat_order_or_capacity_allocation_confirmed"
+  ],
+  "stage3_green_rules": [
+    "hbm_or_ai_component_revenue_confirmed_in_actual_results",
+    "op_beat_record_profit_or_consensus_revision_confirmed",
+    "mass_production_to_customer_revenue_conversion_confirmed",
+    "full_window_price_path_validation_available",
+    "4b_and_4c_overlays_do_not_break_the_thesis"
+  ],
+  "stage3_yellow_rules": [
+    "mass_production_or_customer_qualification_confirmed",
+    "op_eps_or_hbm_mix_numeric_improvement_visible",
+    "trigger_day_relative_strength_is_strong",
+    "forward_allocation_margin_capacity_or_customer_concentration_still_pending"
+  ],
+  "stage4b_watch_triggers": [
+    "one_year_200pct_plus_or_prior_year_274pct_rally_before_new_AI_headline",
+    "openai_or_nvidia_headline_after_parabolic_move",
+    "large_capex_order_without_ROIC_or_dilution_check",
+    "possible_listing_or_share_issuance_after_success",
+    "customer_concentration_high_and_single_customer_allocation_sensitive"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "large_sector": "AI_SEMICONDUCTOR_ELECTRONIC_PARTS",
+    "method": "trigger_level_backtest_v1",
+    "missed_structural_count": 1,
+    "price_data_incomplete_count": 1,
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "reported_event_anchor_case_count": 8,
+    "round_id": "round_225",
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_297.md",
+    "stage2_actionable_candidate_count": 6,
+    "stage3_green_candidate_count": 2,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 4,
+    "stage4b_watch_count": 3,
+    "stage4c_watch_count": 5,
+    "trigger_count": 10
+  },
+  "target_aliases": {
+    "AI_DEVICE_COMPONENT_STAGE2_ACTIONABLE": "AI_DEVICE_COMPONENT_STAGE2_ACTIONABLE",
+    "DISPLAY_OLED_APPLE_RECOVERY_STAGE2": "DISPLAY_OLED_APPLE_RECOVERY_STAGE2",
+    "HBM_CATCHUP_LATE_STAGE2": "HBM_CATCHUP_LATE_STAGE2",
+    "HBM_EQUIPMENT_STAGE2_ACTIONABLE": "HBM_EQUIPMENT_STAGE2_ACTIONABLE",
+    "HBM_FIRST_MOVER_STAGE2_TO_GREEN": "HBM_FIRST_MOVER_STAGE2_TO_GREEN",
+    "OPENAI_STARGATE_MEMORY_4B_WATCH": "OPENAI_STARGATE_MEMORY_4B_WATCH",
+    "SEMICONDUCTOR_EXPORT_CONTROL_4C_WATCH": "SEMICONDUCTOR_EXPORT_CONTROL_4C_WATCH",
+    "SEMICONDUCTOR_LABOR_SUPPLY_CHAIN_4C": "SEMICONDUCTOR_LABOR_SUPPLY_CHAIN_4C"
+  },
+  "trigger_ids": [
+    "r2l15_skhynix_T0",
+    "r2l15_skhynix_T1",
+    "r2l15_skhynix_T2",
+    "r2l15_hanmi_T1",
+    "r2l15_samsung_T2",
+    "r2l15_skhynix_openai_T1",
+    "r2l15_export_control_T1",
+    "r2l15_lginnotek_T1",
+    "r2l15_lgdisplay_T1",
+    "r2l15_samsung_labor_T2"
+  ],
+  "what_not_to_change": [
+    "do_not_apply_round297_shadow_weights_to_production_scoring_yet",
+    "do_not_use_round297_cases_as_candidate_generation_input",
+    "do_not_force_stage3_green_without_full_ohlc_and_margin_allocation_confirmation",
+    "do_not_treat_AI_HBM_theme_only_as_revenue_margin_evidence",
+    "do_not_ignore_4b_4c_overlays_after_parabolic_rally_or_supply_chain_risk"
+  ]
+}

@@ -1,0 +1,15 @@
+axis,points,direction,reason
+hbm_mix_revenue_share,5,raise,HBM 매출 mix가 숫자로 보이면 단순 AI 테마보다 강하다.
+op_estimate_revision_vs_consensus,5,raise,OP 추정치가 consensus보다 20% 이상 높으면 Stage2-Actionable 승격 후보가 된다.
+mass_production_or_customer_qualification,5,raise,"양산, 인증, 고객 공급은 테마를 실적 경로로 바꾼다."
+named_customer_equipment_order,5,raise,"SK Hynix, Nvidia, Apple처럼 고객과 장비명이 닫히면 trigger 품질이 높다."
+repeat_order_backlog_quality,4,raise,반복 수주와 backlog는 일회성 장비 기대보다 강하다.
+relative_strength_on_evidence_day,5,raise,증거가 나온 날 시장 대비 +5pp 이상이면 실제 자금 반응이 확인된다.
+ai_capex_customer_commitment,4,raise,OpenAI/hyperscaler capex는 수요 검증이지만 4B overlay를 같이 본다.
+device_upgrade_op_estimate,4,raise,AI device cycle은 OP estimate beat가 붙을 때 Stage2 후보가 된다.
+ai_theme_only,-5,lower,AI 단어만으로 매출·마진을 만들지 않는다.
+customer_name_without_allocation,-4,lower,고객 이름만 있고 allocation이나 shipment가 없으면 Green 금지다.
+target_price_raise_without_price_strength,-3,lower,target 상향만 있고 가격 반응이 없으면 full-window 재검증이 필요하다.
+late_catchup_without_relative_strength,-4,lower,후발 catch-up은 first mover보다 상대강도 discount를 적용한다.
+capex_without_ROIC_or_dilution_check,-4,lower,대규모 capex는 ROIC와 희석 가능성을 같이 본다.
+openai_or_nvidia_headline_after_parabolic_rally,-4,lower,급등 이후 OpenAI/Nvidia headline은 Green만이 아니라 4B overlay다.
