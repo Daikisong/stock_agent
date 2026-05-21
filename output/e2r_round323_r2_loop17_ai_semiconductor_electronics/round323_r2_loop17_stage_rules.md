@@ -1,0 +1,44 @@
+# Round 323 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- reported_event_return_at_least_5pct_or_strong_market_relative_return
+- HBM_memory_demand_or_packaging_equipment_trigger_is_company_specific
+- mass_production_certification_LOI_order_or_equipment_supply_evidence_exists
+- price_validation_uses_reported_event_anchor_only_until_adjusted_OHLC_backfill
+- 4B_overlay_is_recorded_when_LOI_labor_export_control_or_customer_concentration_is_unresolved
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- customer_certification_or_supply_demand_is_specific
+- EPS_OP_or_HBM_mix_path_likely_changes
+- yield_ASP_margin_capacity_or_binding_order_gate_partly_open
+- full_Green_fatal_blocker_absent
+
+## Stage3-Green Rules
+- binding_customer_order_or_confirmed_volume_exists
+- HBM_yield_ASP_gross_margin_and_capacity_allocation_are_visible
+- shipment_schedule_and_payment_terms_are_confirmed_where_relevant
+- labor_and_export_control_risks_are_contained
+- commodity_memory_price_and_PC_smartphone_demand_do_not_break_the_thesis
+- full_window_MFE_MAE_is_available_and_supportive
+
+## Green Blockers
+- mass_production_without_customer_order_volume
+- HBM4_certification_without_top_customer_volume
+- LOI_without_binding_order
+- HBM_catchup_without_large_volume_or_yield
+- equipment_order_without_repeat_order_or_customer_diversification
+- record_profit_with_negative_event_return
+- China_export_control_ignored
+- labor_disruption_ignored
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## Hard 4C Gates
+- customer_allocation_loss_or_HBM_qualification_failure
+- binding_order_failure_after_LOI
+- HBM_yield_or_ASP_break
+- commodity_memory_price_collapse
+- export_control_blocks_fab_upgrade_or_output
+- strike_causes_confirmed_shipment_delay

@@ -1,0 +1,9 @@
+archetype,hbm_mass_production,hbm4_certification,customer_binding_demand,hbm_wafer_allocation,packaging_equipment_orders,market_relative_return,hbm_yield_margin,china_fab_license_risk,labor_supply_stability,earnings_without_price_validation_penalty,loi_without_final_order_penalty,hbm_catchup_without_volume_penalty,commodity_memory_ignored_penalty,stage2_actionable_promote,stage3_yellow_gate,stage3_green_gate,notes
+HBM_FIRST_MOVER_STAGE2_ACTIONABLE,+5,+2,+4,+4,+1,+5,+5,+2,+1,-2,-1,-1,-3,12-layer HBM3E mass production,customer economics incomplete,customer volume+yield+ASP+margin,SK Hynix HBM3E.
+HBM4_CERTIFICATION_STAGE3_YELLOW_CANDIDATE,+4,+5,+4,+4,+1,+5,+5,+2,+1,-2,-1,-1,-3,HBM4 certification,certification plus price validation,top-customer volume+yield+ASP,SK Hynix HBM4.
+OPENAI_STARGATE_MEMORY_DEMAND_STAGE2_ACTIONABLE,+4,+3,+5,+5,+1,+4,+4,+1,+1,-1,-4,-1,-2,OpenAI demand shock,LOI not binding,binding order+delivery economics,OpenAI Stargate.
+SAMSUNG_HBM_CATCHUP_STAGE2_WITH_LABOR_4B,+3,+4,+4,+3,+0,+2,+5,+2,+5,-1,-1,-5,-3,Samsung catch-up,volume/yield incomplete,large volume+yield+labor resolution,Samsung HBM catch-up.
+HBM_PACKAGING_EQUIPMENT_STAGE2_ACTIONABLE,+3,+2,+3,+3,+5,+5,+4,+3,+1,-1,-1,-2,-2,TSV-TC bonder order,repeat order/customer mix,repeat order+margin+diversification,Hanmi Semiconductor.
+MEMORY_EARNINGS_GOOD_BUT_PRICE_FAILED,+3,+2,+3,+2,+0,-5,+4,+3,+1,-5,-1,-1,-5,blocked,price failed,not allowed until price/revision recovery,SK Hynix record profit day.
+CHINA_EXPORT_CONTROL_4B,+0,+0,+0,+0,+1,-5,+1,+5,+1,-1,-1,-1,-2,none,4B overlay,license stability required,China fab export control.
+LABOR_SUPPLY_DISRUPTION_4B,+0,+0,+0,+0,+0,-4,+2,+0,+5,-1,-1,-2,-1,none,4B overlay,labor settlement required,Samsung labor supply.

@@ -1,0 +1,14 @@
+direction,axis,production_scoring_changed
+up,hbm_mass_production,false
+up,hbm4_certification,false
+up,customer_binding_demand,false
+up,hbm_wafer_allocation,false
+up,packaging_equipment_orders,false
+up,market_relative_return,false
+up,hbm_yield_margin,false
+down,china_fab_license_risk,false
+down,labor_supply_stability,false
+down,earnings_without_price_validation_penalty,false
+down,loi_without_final_order_penalty,false
+down,hbm_catchup_without_volume_penalty,false
+down,commodity_memory_ignored_penalty,false

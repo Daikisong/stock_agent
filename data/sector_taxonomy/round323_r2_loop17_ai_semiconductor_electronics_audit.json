@@ -1,0 +1,122 @@
+{
+  "green_blockers": [
+    "mass_production_without_customer_order_volume",
+    "HBM4_certification_without_top_customer_volume",
+    "LOI_without_binding_order",
+    "HBM_catchup_without_large_volume_or_yield",
+    "equipment_order_without_repeat_order_or_customer_diversification",
+    "record_profit_with_negative_event_return",
+    "China_export_control_ignored",
+    "labor_disruption_ignored",
+    "full_adjusted_ohlc_missing_for_Green_confirmation"
+  ],
+  "hard_4c_gates": [
+    "customer_allocation_loss_or_HBM_qualification_failure",
+    "binding_order_failure_after_LOI",
+    "HBM_yield_or_ASP_break",
+    "commodity_memory_price_collapse",
+    "export_control_blocks_fab_upgrade_or_output",
+    "strike_causes_confirmed_shipment_delay"
+  ],
+  "large_sector": "AI_SEMICONDUCTOR_ELECTRONIC_COMPONENTS",
+  "loop_name": "R2 Loop 17",
+  "method": "trigger_level_backtest_v1_after_redteam",
+  "required_target_aliases": {
+    "CHINA_EXPORT_CONTROL_4B": "CHINA_EXPORT_CONTROL_4B",
+    "HBM4_CERTIFICATION_STAGE3_YELLOW_CANDIDATE": "HBM4_CERTIFICATION_STAGE3_YELLOW_CANDIDATE",
+    "HBM_FIRST_MOVER_STAGE2_ACTIONABLE": "HBM_FIRST_MOVER_STAGE2_ACTIONABLE",
+    "HBM_PACKAGING_EQUIPMENT_STAGE2_ACTIONABLE": "HBM_PACKAGING_EQUIPMENT_STAGE2_ACTIONABLE",
+    "LABOR_SUPPLY_DISRUPTION_4B": "LABOR_SUPPLY_DISRUPTION_4B",
+    "MEMORY_EARNINGS_GOOD_BUT_PRICE_FAILED": "MEMORY_EARNINGS_GOOD_BUT_PRICE_FAILED",
+    "OPENAI_STARGATE_MEMORY_DEMAND_STAGE2_ACTIONABLE": "OPENAI_STARGATE_MEMORY_DEMAND_STAGE2_ACTIONABLE",
+    "SAMSUNG_HBM_CATCHUP_STAGE2_WITH_LABOR_4B": "SAMSUNG_HBM_CATCHUP_STAGE2_WITH_LABOR_4B"
+  },
+  "round_id": "round_251",
+  "row_separation_rules": [
+    "case_library_row_describes_stage_candidate_and_evidence_quality",
+    "trigger_calibration_row_stores_reported_event_return_market_relative_return_customer_and_supply_metrics",
+    "ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown",
+    "do_not_create_MFE_MAE_without_full_adjusted_OHLC",
+    "do_not_treat_HBM_mass_production_certification_LOI_or_record_profit_as_Green_without_volume_yield_ASP_margin_capacity_and_risk_resolution"
+  ],
+  "score_down_axes": [
+    "china_fab_license_risk",
+    "labor_supply_stability",
+    "earnings_without_price_validation_penalty",
+    "loi_without_final_order_penalty",
+    "hbm_catchup_without_volume_penalty",
+    "commodity_memory_ignored_penalty"
+  ],
+  "score_up_axes": [
+    "hbm_mass_production",
+    "hbm4_certification",
+    "customer_binding_demand",
+    "hbm_wafer_allocation",
+    "packaging_equipment_orders",
+    "market_relative_return",
+    "hbm_yield_margin"
+  ],
+  "source_round": "docs/round/round_323.md",
+  "stage2_actionable_rules": [
+    "reported_event_return_at_least_5pct_or_strong_market_relative_return",
+    "HBM_memory_demand_or_packaging_equipment_trigger_is_company_specific",
+    "mass_production_certification_LOI_order_or_equipment_supply_evidence_exists",
+    "price_validation_uses_reported_event_anchor_only_until_adjusted_OHLC_backfill",
+    "4B_overlay_is_recorded_when_LOI_labor_export_control_or_customer_concentration_is_unresolved"
+  ],
+  "stage3_green_rules": [
+    "binding_customer_order_or_confirmed_volume_exists",
+    "HBM_yield_ASP_gross_margin_and_capacity_allocation_are_visible",
+    "shipment_schedule_and_payment_terms_are_confirmed_where_relevant",
+    "labor_and_export_control_risks_are_contained",
+    "commodity_memory_price_and_PC_smartphone_demand_do_not_break_the_thesis",
+    "full_window_MFE_MAE_is_available_and_supportive"
+  ],
+  "stage3_yellow_rules": [
+    "Stage2_Actionable_conditions_pass",
+    "customer_certification_or_supply_demand_is_specific",
+    "EPS_OP_or_HBM_mix_path_likely_changes",
+    "yield_ASP_margin_capacity_or_binding_order_gate_partly_open",
+    "full_Green_fatal_blocker_absent"
+  ],
+  "stage4b_watch_triggers": [
+    "OpenAI_Stargate_LOI_before_binding_order",
+    "Samsung_HBM_catchup_before_volume_yield_and_labor_resolution",
+    "Hanmi_HBM_equipment_customer_concentration_before_repeat_orders",
+    "record_profit_day_with_negative_stock_reaction",
+    "China_fab_license_or_export_control_change",
+    "Samsung_labor_strike_with_possible_DRAM_NAND_supply_impact"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "evidence_good_but_price_failed_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "large_sector": "AI_SEMICONDUCTOR_ELECTRONIC_COMPONENTS",
+    "loop_name": "R2 Loop 17",
+    "method": "trigger_level_backtest_v1_after_redteam",
+    "next_round": "R3 Loop 17",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_251",
+    "row_separation_required": true,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_323.md",
+    "stage2_actionable_candidate_count": 3,
+    "stage2_candidate_count": 5,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 4,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 0,
+    "strong_4c_case_count": 0,
+    "target_archetype_count": 8,
+    "trigger_count": 8
+  },
+  "what_not_to_change": [
+    "do_not_change_production_scoring",
+    "do_not_use_round323_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_invent_full_mfe_mae_without_adjusted_ohlc",
+    "do_not_treat_HBM_mass_production_certification_LOI_or_record_profit_as_Green_without_volume_yield_ASP_margin_capacity_and_risk_resolution"
+  ]
+}

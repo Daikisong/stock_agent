@@ -1232,6 +1232,14 @@ class E2RArchetype(str, Enum):
     OPENAI_STARGATE_HBM_DEMAND_STAGE2_ACTIONABLE = "OPENAI_STARGATE_HBM_DEMAND_STAGE2_ACTIONABLE"
     FOUNDRY_MEGA_CONTRACT_STAGE2_WITH_YIELD_4B = "FOUNDRY_MEGA_CONTRACT_STAGE2_WITH_YIELD_4B"
     ADVANCED_PACKAGING_EQUIPMENT_STAGE2_WITH_RUMOR_4B = "ADVANCED_PACKAGING_EQUIPMENT_STAGE2_WITH_RUMOR_4B"
+    HBM_FIRST_MOVER_STAGE2_ACTIONABLE = "HBM_FIRST_MOVER_STAGE2_ACTIONABLE"
+    HBM4_CERTIFICATION_STAGE3_YELLOW_CANDIDATE = "HBM4_CERTIFICATION_STAGE3_YELLOW_CANDIDATE"
+    OPENAI_STARGATE_MEMORY_DEMAND_STAGE2_ACTIONABLE = "OPENAI_STARGATE_MEMORY_DEMAND_STAGE2_ACTIONABLE"
+    SAMSUNG_HBM_CATCHUP_STAGE2_WITH_LABOR_4B = "SAMSUNG_HBM_CATCHUP_STAGE2_WITH_LABOR_4B"
+    HBM_PACKAGING_EQUIPMENT_STAGE2_ACTIONABLE = "HBM_PACKAGING_EQUIPMENT_STAGE2_ACTIONABLE"
+    MEMORY_EARNINGS_GOOD_BUT_PRICE_FAILED = "MEMORY_EARNINGS_GOOD_BUT_PRICE_FAILED"
+    CHINA_EXPORT_CONTROL_4B = "CHINA_EXPORT_CONTROL_4B"
+    LABOR_SUPPLY_DISRUPTION_4B = "LABOR_SUPPLY_DISRUPTION_4B"
     HBM_CERTIFICATION_DELAY_FALSE_POSITIVE = "HBM_CERTIFICATION_DELAY_FALSE_POSITIVE"
     ELECTRONIC_COMPONENT_LIDAR_STAGE2_ORDER_GATE = "ELECTRONIC_COMPONENT_LIDAR_STAGE2_ORDER_GATE"
     FALSE_POSITIVE_SCORE = "FALSE_POSITIVE_SCORE"
@@ -9370,6 +9378,102 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("disclosure", "news", "price", "financial_actual", "customer"),
             false_positive_patterns=("equipment rumor treated as signed order",),
             preferred_score_weights=_weights(eps_fcf=20, visibility=20, bottleneck=18, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.HBM_FIRST_MOVER_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.HBM_FIRST_MOVER_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("12-layer HBM3E mass production", "HBM first-mover event return", "AI memory capacity uplift"),
+            stage2_candidate_signals=("mass production, market-relative return and capacity uplift are visible before customer economics are complete",),
+            stage3_high_conviction_signals=("customer order volume, HBM yield, HBM ASP, gross margin, capacity allocation and full OHLC MFE/MAE confirm",),
+            stage4a_ongoing_signals=("12-layer HBM3E shipments convert into sustained high-margin memory revenue",),
+            stage4b_graduation_overheat_signals=("HBM first-mover rally extends before customer volume, yield and ASP are confirmed",),
+            stage4c_thesis_break_signals=("customer allocation loss", "HBM yield miss", "HBM ASP reversal", "capacity allocation disappoints"),
+            key_evidence_families=("news", "price", "customer", "financial_actual", "consensus_revision"),
+            false_positive_patterns=("mass-production headline treated as Green without customer order volume or HBM ASP",),
+            preferred_score_weights=_weights(eps_fcf=24, visibility=21, bottleneck=19, mispricing=15, valuation=12),
+        ),
+        E2RArchetype.HBM4_CERTIFICATION_STAGE3_YELLOW_CANDIDATE: ArchetypeDefinition(
+            archetype=E2RArchetype.HBM4_CERTIFICATION_STAGE3_YELLOW_CANDIDATE,
+            stage1_radar_signals=("HBM4 certification", "12-layer HBM4", "customer-specific base die"),
+            stage2_candidate_signals=("HBM4 readiness and customer-specific base die evidence are visible with strong price validation",),
+            stage3_high_conviction_signals=("Nvidia or top-customer confirmed volume, HBM4 yield, HBM4 ASP, gross margin, capacity ramp and full OHLC confirm",),
+            stage4a_ongoing_signals=("HBM4 certified volume converts into high-margin shipped revenue",),
+            stage4b_graduation_overheat_signals=("HBM4 certification rally before customer volume and yield economics",),
+            stage4c_thesis_break_signals=("HBM4 qualification fails", "top customer volume delayed", "yield or margin disappoints"),
+            key_evidence_families=("news", "customer", "price", "financial_actual", "consensus_revision"),
+            false_positive_patterns=("certification treated as final Nvidia volume", "base-die customization scored without shipment economics"),
+            preferred_score_weights=_weights(eps_fcf=24, visibility=22, bottleneck=20, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.OPENAI_STARGATE_MEMORY_DEMAND_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.OPENAI_STARGATE_MEMORY_DEMAND_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("OpenAI Stargate memory LOI", "900,000 DRAM wafers", "AI data-center memory demand shock"),
+            stage2_candidate_signals=("LOI, wafer demand and market reaction are visible, but binding order and delivery economics are not final",),
+            stage3_high_conviction_signals=("binding order, capacity allocation, HBM yield, ASP, delivery schedule and payment terms confirm",),
+            stage4a_ongoing_signals=("LOI converts into binding high-margin wafer shipments",),
+            stage4b_graduation_overheat_signals=("LOI without final order rerates memory stocks before terms, pricing and shipment schedule",),
+            stage4c_thesis_break_signals=("binding order fails", "wafer demand reduced", "AI financing breaks", "capacity allocation shifts"),
+            key_evidence_families=("news", "customer", "price", "financial_actual", "red_team"),
+            false_positive_patterns=("LOI treated as take-or-pay revenue", "900,000 wafer headline scored without binding order"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=18, bottleneck=16, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.SAMSUNG_HBM_CATCHUP_STAGE2_WITH_LABOR_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.SAMSUNG_HBM_CATCHUP_STAGE2_WITH_LABOR_4B,
+            stage1_radar_signals=("Samsung HBM4 catch-up", "Nvidia or AMD customer headline", "labor supply disruption overlay"),
+            stage2_candidate_signals=("HBM4 catch-up customer evidence is visible but volume, yield, margin and labor stability are incomplete",),
+            stage3_high_conviction_signals=("large-volume customer shipment, HBM4 yield, gross margin, AMD/Nvidia order volume and labor-cost resolution confirm",),
+            stage4a_ongoing_signals=("catch-up execution converts into profitable HBM volume with stable labor supply",),
+            stage4b_graduation_overheat_signals=("HBM catch-up rally before volume/yield economics or labor dispute resolution",),
+            stage4c_thesis_break_signals=("customer volume fails", "HBM4 yield disappoints", "labor strike disrupts memory supply", "gross margin does not recover"),
+            key_evidence_families=("news", "customer", "labor", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("late HBM catch-up treated like first-mover Green", "customer name scored without volume/yield"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=18, bottleneck=16, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.HBM_PACKAGING_EQUIPMENT_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.HBM_PACKAGING_EQUIPMENT_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("TSV-TC bonder", "HBM packaging equipment order", "advanced packaging bottleneck"),
+            stage2_candidate_signals=("named HBM packaging equipment, customer supply deal and event price reaction are visible",),
+            stage3_high_conviction_signals=("repeat order, customer diversification, gross margin, capacity and shipment conversion confirm",),
+            stage4a_ongoing_signals=("repeat TSV-TC bonder orders convert into profitable HBM equipment revenue",),
+            stage4b_graduation_overheat_signals=("HBM equipment pure-play rerates before repeat orders and customer diversification",),
+            stage4c_thesis_break_signals=("repeat order fails", "customer concentration breaks", "export-control impact blocks shipment", "margin disappoints"),
+            key_evidence_families=("disclosure", "news", "price", "financial_actual", "customer"),
+            false_positive_patterns=("HBM equipment rumor treated as signed repeat order", "single-customer win treated as durable backlog"),
+            preferred_score_weights=_weights(eps_fcf=22, visibility=20, bottleneck=18, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.MEMORY_EARNINGS_GOOD_BUT_PRICE_FAILED: ArchetypeDefinition(
+            archetype=E2RArchetype.MEMORY_EARNINGS_GOOD_BUT_PRICE_FAILED,
+            stage1_radar_signals=("record profit", "HBM revenue share", "earnings beat with negative price reaction"),
+            stage2_candidate_signals=("record profit and HBM mix are visible, but price failed and commodity memory risks are explicit",),
+            stage3_high_conviction_signals=("not Green until price validation, commodity memory stabilization, margin and forward revisions recover",),
+            stage4a_ongoing_signals=("later HBM mix and commodity memory improve after the price-failed trigger",),
+            stage4b_graduation_overheat_signals=("record-profit headline after prior rally while stock falls on event day",),
+            stage4c_thesis_break_signals=("commodity memory price decline", "smartphone/PC demand weakness", "Chinese competition", "post-rally profit taking"),
+            key_evidence_families=("financial_actual", "price", "news", "red_team"),
+            false_positive_patterns=("record profit treated as Actionable while the market rejects it",),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=10, bottleneck=8, mispricing=0, valuation=5),
+        ),
+        E2RArchetype.CHINA_EXPORT_CONTROL_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.CHINA_EXPORT_CONTROL_4B,
+            stage1_radar_signals=("China fab license", "VEU export-control change", "U.S. semiconductor equipment restriction"),
+            stage2_candidate_signals=("not a positive source; it is a China fab continuity and export-control overlay",),
+            stage3_high_conviction_signals=("not Green until annual license stability, upgrade permission, maintenance path and supply disruption quantification are clear",),
+            stage4a_ongoing_signals=("license relief or Korea capacity shift keeps memory thesis intact",),
+            stage4b_graduation_overheat_signals=("AI memory rally ignores China fab license and upgrade risk",),
+            stage4c_thesis_break_signals=("license denial", "China fab upgrade block", "DRAM/NAND output disruption", "competitiveness loss"),
+            key_evidence_families=("regulatory", "news", "price", "red_team", "supply_chain"),
+            false_positive_patterns=("AI memory evidence scored without China fab exposure or export-control license stability",),
+            preferred_score_weights=_weights(eps_fcf=2, visibility=4, bottleneck=2, mispricing=2, valuation=2),
+        ),
+        E2RArchetype.LABOR_SUPPLY_DISRUPTION_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.LABOR_SUPPLY_DISRUPTION_4B,
+            stage1_radar_signals=("memory strike", "labor supply disruption", "DRAM and NAND supply impact"),
+            stage2_candidate_signals=("not a positive source; it is a labor continuity overlay for memory supply",),
+            stage3_high_conviction_signals=("not Green until strike duration, essential-worker coverage, DRAM/NAND impact and settlement are clear",),
+            stage4a_ongoing_signals=("labor settlement keeps production continuity intact",),
+            stage4b_graduation_overheat_signals=("memory upcycle ignores strike, bonus dispute and production continuity risk",),
+            stage4c_thesis_break_signals=("strike disrupts DRAM supply", "strike disrupts NAND supply", "settlement fails", "shipment delay"),
+            key_evidence_families=("labor", "news", "price", "red_team", "supply_chain"),
+            false_positive_patterns=("court injunction treated as full labor settlement", "AI memory upcycle scored without labor continuity"),
+            preferred_score_weights=_weights(eps_fcf=2, visibility=4, bottleneck=2, mispricing=2, valuation=2),
         ),
         E2RArchetype.HBM_CERTIFICATION_DELAY_FALSE_POSITIVE: ArchetypeDefinition(
             archetype=E2RArchetype.HBM_CERTIFICATION_DELAY_FALSE_POSITIVE,
