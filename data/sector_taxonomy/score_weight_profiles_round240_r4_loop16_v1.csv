@@ -1,0 +1,10 @@
+archetype,domestic_spread_recovery,tariff_exposure_absorption,actual_capacity_cut,naphtha_spread_recovery,strategic_resource_offtake,dilution_governance_overlay,lithium_price_duration,smelter_TC_RC_margin,commercialization_contract,commodity_price_headline_without_margin_penalty,tariff_policy_without_spread_proof_penalty,strategic_resource_capex_without_offtake_penalty,restructuring_plan_without_shutdown_penalty,stage2_actionable_promote,stage3_yellow_gate,stage3_green_gate,notes
+STEEL_TARIFF_4C_AND_ANTIDUMPING_RELIEF,+5,+5,+0,+0,+0,+1,+0,+0,+0,-2,-4,-1,-1,anti-dumping/tariff event,actual spread missing,ASP+spread+margin,Hyundai Steel/POSCO tariff vs anti-dumping.
+STEEL_US_LOCALIZATION_CAPEX_4B,+2,+5,+0,+0,+0,+2,+0,+0,+0,-2,-3,-4,-1,U.S. plant capex,capex ROI missing,utilization+tariff savings+margin,Hyundai Steel Louisiana.
+PETROCHEMICAL_OVER_SUPPLY_FAILED_RERATING,+0,+0,+4,+5,+0,+1,+0,+0,+0,-3,-1,-1,-5,oversupply/losses,capacity cuts missing,N/A,LG Chem/Lotte oversupply.
+PETROCHEMICAL_CAPACITY_RESTRUCTURING_STAGE2_RELIEF,+0,+0,+5,+5,+0,+1,+0,+0,+0,-2,-1,-1,-5,restructuring plan,shutdown/spread missing,capacity cut+spread recovery,Lotte/HD Hyundai.
+CRITICAL_MINERALS_REFINERY_STAGE2_WITH_DILUTION_4B,+0,+0,+0,+0,+5,+5,+2,+2,+2,-2,-1,-5,-1,critical minerals refinery,offtake/governance missing,offtake+margin+dilution clarity,Korea Zinc.
+LITHIUM_MINE_JV_STRATEGIC_RESOURCE_STAGE2,+0,+0,+0,+0,+5,+2,+5,+0,+2,-5,-1,-5,-1,lithium mine stake,offtake/margin missing,offtake+hydroxide margin,POSCO/MinRes.
+LITHIUM_PRICE_BETA_CYCLICAL_STAGE2,+0,+0,+0,+0,+2,+0,+5,+0,+0,-5,-1,-2,-1,lithium price spike,duration/margin missing,cathode ASP+margin,CATL/POSCO Future M/L&F.
+COPPER_TC_RC_SPREAD_4C_WATCH,+0,+0,+0,+0,+2,+1,+0,+5,+0,-5,-1,-2,-1,copper TC/RC compression,margin recovery missing,N/A,copper smelter spread.
+SODIUM_ION_MATERIAL_OPTIONALITY_STAGE2,+0,+0,+0,+0,+2,+0,+1,+0,+5,-2,-1,-3,-1,sodium-ion material partnership,commercialization missing,customer contract+margin,LG Chem/Sinopec.

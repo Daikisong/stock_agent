@@ -1,0 +1,29 @@
+# Round 312 Stage 4B / 4C Review
+
+## 4B Watch
+- strategic_mineral_investment_requires_large_share_issuance
+- commodity_price_spike_has_no_margin_confirmation
+- plant_localization_capex_reverses_price_intraday
+- restructuring_plan_announced_before_shutdown_execution
+- lithium_mine_suspension_can_reverse_after_license_renewal
+- copper_price_rises_while_TC_RC_collapses
+
+## 4C Watch Gates
+- export_tariff_destroys_spread
+- commodity_spread_collapse
+- smelter_TC_RC_negative_economics
+- dilutive_issuance_under_control_battle
+- petrochemical_oversupply_persistent_operating_loss
+- strategic_mine_acquisition_without_offtake_and_falling_price
+- regulatory_or_court_investigation_into_share_issuance_or_governance
+
+## Case Review
+- r4_loop16_hyundai_steel_posco_tariff_antidumping: 4C-watch + Stage2 relief / mixed_tariff_4C_and_antidumping_relief
+- r4_loop16_hyundai_steel_louisiana_capex: Stage2 capex + 4B-watch / capex_localization_price_reversal_4B
+- r4_loop16_lgchem_lotte_petrochemical_oversupply: 4C-watch / failed_rerating_spread_4C_watch
+- r4_loop16_lotte_hdhyundai_petrochemical_restructuring: Stage2 relief / Stage2_relief_not_Green
+- r4_loop16_korea_zinc_tennessee_critical_minerals: Stage2 + 4B-watch / Stage2_strategic_resource_with_governance_4B
+- r4_loop16_posco_minres_lithium_jv: Stage2 / Stage2_strategic_resource_not_Green
+- r4_loop16_catl_yichun_korea_lithium_beta: cyclical Stage2 / cyclical_lithium_beta_not_Green
+- r4_loop16_copper_tcrc_spread_watch: 4C-watch / copper_price_not_equal_smelter_margin
+- r4_loop16_lgchem_sinopec_sodium_ion_materials: Stage2 optionality / Stage2_optionality_not_Green

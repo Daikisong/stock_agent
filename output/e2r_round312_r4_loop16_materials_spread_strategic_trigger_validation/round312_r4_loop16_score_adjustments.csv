@@ -1,0 +1,17 @@
+direction,axis,production_scoring_changed
+up,domestic_spread_recovery,false
+up,tariff_exposure_absorption,false
+up,actual_capacity_cut,false
+up,naphtha_spread_recovery,false
+up,strategic_resource_offtake,false
+up,dilution_governance_overlay,false
+up,lithium_price_duration,false
+up,smelter_TC_RC_margin,false
+up,commercialization_contract,false
+down,commodity_price_headline_without_margin,false
+down,tariff_policy_without_spread_proof,false
+down,strategic_resource_capex_without_offtake,false
+down,restructuring_plan_without_shutdown,false
+down,petrochemical_recovery_without_capacity_cut,false
+down,lithium_JV_without_price_anchor,false
+down,copper_bull_without_TCRC,false

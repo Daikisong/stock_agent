@@ -1,0 +1,13 @@
+# Round 312 Price Validation Plan
+
+Full adjusted OHLC was not available. Reported event anchors are retained without inventing full-window MFE/MAE.
+
+- r4_loop16_hyundai_steel_posco_tariff_antidumping: r4l16_steel_us_tariff_T0/r4l16_steel_antidumping_T1 / mixed_tariff_4C_and_antidumping_relief / full_window=`price_data_unavailable_after_deep_search`
+- r4_loop16_hyundai_steel_louisiana_capex: r4l16_hyundai_steel_louisiana_T1 / capex_localization_price_reversal_4B / full_window=`price_data_unavailable_after_deep_search`
+- r4_loop16_lgchem_lotte_petrochemical_oversupply: r4l16_petrochem_oversupply_T0 / failed_rerating_spread_4C_watch / full_window=`price_data_unavailable_after_deep_search`
+- r4_loop16_lotte_hdhyundai_petrochemical_restructuring: r4l16_petrochem_restructuring_T0 / Stage2_relief_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r4_loop16_korea_zinc_tennessee_critical_minerals: r4l16_koreazinc_refinery_T0/r4l16_koreazinc_court_T2 / Stage2_strategic_resource_with_governance_4B / full_window=`price_data_unavailable_after_deep_search`
+- r4_loop16_posco_minres_lithium_jv: r4l16_posco_minres_T0 / Stage2_strategic_resource_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r4_loop16_catl_yichun_korea_lithium_beta: r4l16_catl_lithium_T0 / cyclical_lithium_beta_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r4_loop16_copper_tcrc_spread_watch: r4l16_copper_tcrc_T1 / copper_price_not_equal_smelter_margin / full_window=`price_data_unavailable_after_deep_search`
+- r4_loop16_lgchem_sinopec_sodium_ion_materials: r4l16_lgchem_sinopec_sodium_T0 / Stage2_optionality_not_Green / full_window=`price_data_unavailable_after_deep_search`

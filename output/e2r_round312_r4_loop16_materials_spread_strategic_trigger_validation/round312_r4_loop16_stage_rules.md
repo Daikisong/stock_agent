@@ -1,0 +1,47 @@
+# Round 312 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- commodity_price_or_policy_change_links_to_company_ASP_or_margin
+- event_return_at_least_5pct_or_market_relative_return_at_least_5pp
+- supply_restriction_has_duration_not_one_day_headline
+- strategic_resource_investment_links_to_offtake_customer_government_funding_or_margin
+- restructuring_has_actual_capacity_shutdown_or_merger_execution
+- no_dilution_governance_export_tariff_or_TC_RC_4B_4C_overlay
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- EPS_OP_FCF_path_can_change_materially
+- one_of_spread_margin_offtake_capacity_cut_dilution_or_commercialization_gate_remains_open
+- reported_price_anchor_or_relative_strength_supports_trigger
+- case_is_not_pure_commodity_beta_capex_optional_or_restructuring_plan
+
+## Stage3-Green Rules
+- commodity_price_or_policy_change_converts_to_gross_margin_and_OP
+- strategic_resource_investment_has_clear_offtake_or_customer_demand
+- dilution_governance_overhang_is_resolved_or_priced
+- restructuring_results_in_real_capacity_cut_and_spread_improvement
+- lithium_copper_or_steel_spread_is_durable_across_quarters
+- commercialization_contract_and_customer_adoption_are_visible_for_new_materials
+- full_adjusted_OHLC_MFE_MAE_path_supports_stage_candidate
+
+## Green Blockers
+- commodity_price_headline_without_margin
+- tariff_policy_without_spread_proof
+- strategic_resource_capex_without_offtake
+- restructuring_plan_without_shutdown
+- petrochemical_recovery_without_capacity_cut
+- lithium_JV_without_issuer_price_anchor
+- copper_bull_without_TC_RC
+- sodium_ion_TAM_without_customer_contract
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## 4C Watch Gates
+- export_tariff_destroys_spread
+- commodity_spread_collapse
+- smelter_TC_RC_negative_economics
+- dilutive_issuance_under_control_battle
+- petrochemical_oversupply_persistent_operating_loss
+- strategic_mine_acquisition_without_offtake_and_falling_price
+- regulatory_or_court_investigation_into_share_issuance_or_governance
