@@ -1,0 +1,18 @@
+axis,points,direction,reason
+contract_value_vs_annual_backlog,+5,raise,R10 construction/real-estate/building-material trigger quality axis
+project_margin_visibility,+5,raise,R10 construction/real-estate/building-material trigger quality axis
+cash_collection_schedule,+5,raise,R10 construction/real-estate/building-material trigger quality axis
+cost_overrun_delay_control,+5,raise,R10 construction/real-estate/building-material trigger quality axis
+final_contract_signed_not_preferred_bidder,+5,raise,R10 construction/real-estate/building-material trigger quality axis
+legal_appeal_clearance,+4,raise,R10 construction/real-estate/building-material trigger quality axis
+housing_starts_presale_rate,+5,raise,R10 construction/real-estate/building-material trigger quality axis
+PF_restructuring_completion,+5,raise,R10 construction/real-estate/building-material trigger quality axis
+construction_quality_safety_trust,+5,raise,R10 construction/real-estate/building-material trigger quality axis
+building_material_spread_visibility,+4,raise,R10 construction/real-estate/building-material trigger quality axis
+headline_order_without_margin,-5,lower,"R10 order, policy, PF or material-demand false-positive blocker"
+preferred_bidder_without_final_contract,-5,lower,"R10 order, policy, PF or material-demand false-positive blocker"
+policy_support_without_project_cashflow,-5,lower,"R10 order, policy, PF or material-demand false-positive blocker"
+housing_supply_headline_without_starts,-4,lower,"R10 order, policy, PF or material-demand false-positive blocker"
+PF_liquidity_without_impairment_cleanup,-5,lower,"R10 order, policy, PF or material-demand false-positive blocker"
+construction_material_demand_assumption_only,-4,lower,"R10 order, policy, PF or material-demand false-positive blocker"
+large_project_without_legal_clearance,-4,lower,"R10 order, policy, PF or material-demand false-positive blocker"

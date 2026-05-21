@@ -1,0 +1,40 @@
+# Round 305 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable
+
+- contract_value_is_meaningful_vs_annual_wins_or_backlog
+- market_relative_event_return_exceeds_5pp_or_sector_basket_reacts
+- customer_scope_completion_schedule_or_policy_amount_is_specific
+- final_contract_or_award_is_preferred_over_preferred_bidder_only
+- reported_event_anchor_is_recorded_without_inventing_full_ohlc
+
+## Stage3-Yellow
+
+- EPC_margin_cash_collection_or_cost_overrun_partially_visible
+- nuclear_contract_signed_but_work_allocation_or_legal_cleanup_pending
+- housing_permits_starts_or_presales_visible_but_PF_repayment_pending
+- PF_restructuring_terms_visible_but_impairment_or_cashflow_pending
+- building_material_ASP_or_spread_recovery_visible_but_demand_duration_pending
+
+## Stage3-Green
+
+- EPC_backlog_to_OP_cashflow_conversion_visible
+- project_margin_cash_collection_and_cost_overrun_risk_controlled
+- nuclear_final_contract_legal_clearance_work_split_and_payment_schedule_visible
+- housing_policy_converts_to_starts_presales_unsold_absorption_and_PF_repayment
+- PF_cleanup_refinancing_and_impairment_resolution_visible
+- construction_quality_safety_overhang_cleared
+- full_window_mfe_mae_is_available_and_supportive
+
+## Green Blockers
+
+- headline_order_without_margin
+- preferred_bidder_without_final_contract
+- policy_support_without_project_cashflow
+- housing_supply_headline_without_starts
+- PF_liquidity_without_impairment_cleanup
+- construction_material_demand_assumption_only
+- large_project_without_legal_clearance
+- construction_quality_or_safety_hard_gate_active

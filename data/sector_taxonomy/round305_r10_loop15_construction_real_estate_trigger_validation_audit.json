@@ -1,0 +1,112 @@
+{
+  "green_blockers": [
+    "headline_order_without_margin",
+    "preferred_bidder_without_final_contract",
+    "policy_support_without_project_cashflow",
+    "housing_supply_headline_without_starts",
+    "PF_liquidity_without_impairment_cleanup",
+    "construction_material_demand_assumption_only",
+    "large_project_without_legal_clearance",
+    "construction_quality_or_safety_hard_gate_active"
+  ],
+  "hard_4c_gates": [
+    "fatal_construction_quality_or_safety_event",
+    "PF_default_workout_or_debt_rescheduling",
+    "project_cancellation_legal_block_or_final_contract_failure",
+    "cost_overrun_causing_margin_collapse",
+    "presale_failure_or_unsold_inventory_spike",
+    "building_material_ASP_or_spread_collapse"
+  ],
+  "large_sector": "CONSTRUCTION_REAL_ESTATE_BUILDING_MATERIALS",
+  "method": "trigger_level_backtest_v1",
+  "round_id": "round_233",
+  "score_down_axes": [
+    "headline_order_without_margin",
+    "preferred_bidder_without_final_contract",
+    "policy_support_without_project_cashflow",
+    "housing_supply_headline_without_starts",
+    "PF_liquidity_without_impairment_cleanup",
+    "construction_material_demand_assumption_only",
+    "large_project_without_legal_clearance"
+  ],
+  "score_up_axes": [
+    "contract_value_vs_annual_backlog",
+    "project_margin_visibility",
+    "cash_collection_schedule",
+    "cost_overrun_delay_control",
+    "final_contract_signed_not_preferred_bidder",
+    "legal_appeal_clearance",
+    "housing_starts_presale_rate",
+    "PF_restructuring_completion",
+    "construction_quality_safety_trust",
+    "building_material_spread_visibility"
+  ],
+  "source_round": "docs/round/round_305.md",
+  "stage2_actionable_rules": [
+    "contract_value_is_meaningful_vs_annual_wins_or_backlog",
+    "market_relative_event_return_exceeds_5pp_or_sector_basket_reacts",
+    "customer_scope_completion_schedule_or_policy_amount_is_specific",
+    "final_contract_or_award_is_preferred_over_preferred_bidder_only",
+    "reported_event_anchor_is_recorded_without_inventing_full_ohlc"
+  ],
+  "stage3_green_rules": [
+    "EPC_backlog_to_OP_cashflow_conversion_visible",
+    "project_margin_cash_collection_and_cost_overrun_risk_controlled",
+    "nuclear_final_contract_legal_clearance_work_split_and_payment_schedule_visible",
+    "housing_policy_converts_to_starts_presales_unsold_absorption_and_PF_repayment",
+    "PF_cleanup_refinancing_and_impairment_resolution_visible",
+    "construction_quality_safety_overhang_cleared",
+    "full_window_mfe_mae_is_available_and_supportive"
+  ],
+  "stage3_yellow_rules": [
+    "EPC_margin_cash_collection_or_cost_overrun_partially_visible",
+    "nuclear_contract_signed_but_work_allocation_or_legal_cleanup_pending",
+    "housing_permits_starts_or_presales_visible_but_PF_repayment_pending",
+    "PF_restructuring_terms_visible_but_impairment_or_cashflow_pending",
+    "building_material_ASP_or_spread_recovery_visible_but_demand_duration_pending"
+  ],
+  "stage4b_watch_triggers": [
+    "large_EPC_order_rally_before_margin_or_cash_collection",
+    "preferred_bidder_basket_rerating_before_final_contract",
+    "builder_liquidity_support_rally_before_PF_cleanup",
+    "housing_supply_policy_rally_before_starts_and_presales",
+    "construction_quality_relief_bounce_before_trust_repair"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "failed_rerating_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "large_sector": "CONSTRUCTION_REAL_ESTATE_BUILDING_MATERIALS",
+    "method": "trigger_level_backtest_v1",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_233",
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_305.md",
+    "stage2_actionable_candidate_count": 2,
+    "stage2_policy_or_relief_count": 3,
+    "stage3_green_candidate_count": 0,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 3,
+    "stage4b_watch_count": 5,
+    "stage4c_watch_count": 4,
+    "trigger_count": 9
+  },
+  "target_archetypes": {
+    "BUILDER_LIQUIDITY_SUPPORT_FALSE_POSITIVE_WATCH": "BUILDER_LIQUIDITY_SUPPORT_FALSE_POSITIVE_WATCH",
+    "BUILDING_MATERIAL_WEAK_DEMAND_FAILED_RERATING": "BUILDING_MATERIAL_WEAK_DEMAND_FAILED_RERATING",
+    "CONSTRUCTION_QUALITY_SAFETY_HARD_4C": "CONSTRUCTION_QUALITY_SAFETY_HARD_4C",
+    "HOUSING_SUPPLY_RECONSTRUCTION_STAGE2_POLICY": "HOUSING_SUPPLY_RECONSTRUCTION_STAGE2_POLICY",
+    "NUCLEAR_CONSTRUCTION_EXPORT_STAGE2_WITH_LEGAL_4B": "NUCLEAR_CONSTRUCTION_EXPORT_STAGE2_WITH_LEGAL_4B",
+    "OVERSEAS_EPC_MEGA_ORDER_STAGE2_ACTIONABLE": "OVERSEAS_EPC_MEGA_ORDER_STAGE2_ACTIONABLE",
+    "REAL_ESTATE_PF_RESTRUCTURING_4C_WATCH": "REAL_ESTATE_PF_RESTRUCTURING_4C_WATCH"
+  },
+  "what_not_to_change": [
+    "do_not_apply_round305_shadow_weights_to_production_scoring_yet",
+    "do_not_use_round305_cases_as_candidate_generation_input",
+    "do_not_treat_construction_policy_or_order_headline_as_green",
+    "do_not_downgrade_stage_candidate_only_because_full_ohlc_is_missing"
+  ]
+}
