@@ -1,0 +1,11 @@
+# Round 320 Row Separation Plan
+
+Life-service, agriculture, education, pet and demographic headlines must be separated from trigger anchors and full OHLC windows.
+
+Easy example: dog-meat ban can support a pet-welfare watch case, but it is not a listed pet-food Stage2 until revenue or vet-service conversion appears.
+
+- case_library_row_describes_stage_candidate_and_evidence_quality
+- trigger_calibration_row_stores_event_anchor_policy_deal_price_or_service_disruption_metrics
+- ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown
+- do_not_downgrade_valid_Stage2_or_Yellow_candidate_only_because_OHLC_backfill_is_missing
+- do_not_treat_life_service_agri_education_pet_or_demographic_headline_as_Green_without_final_approval_revenue_margin_ARPU_pass_through_or_service_normalization

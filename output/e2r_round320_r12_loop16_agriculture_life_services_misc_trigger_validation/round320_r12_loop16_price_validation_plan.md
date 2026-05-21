@@ -1,0 +1,12 @@
+# Round 320 Price Validation Plan
+
+Full adjusted OHLC was not available. Reported event anchors are retained without inventing full-window MFE/MAE.
+
+- r12_loop16_baemin_naver_uber_food_delivery_ma: r12l16_baemin_naver_uber_T1 / Stage2_food_delivery_platform_MA_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r12_loop16_coupang_everyday_delivery_share_shift: r12l16_coupang_delivery_shift_T0 / hard_4C_security_with_rival_stage2 / full_window=`price_data_unavailable_after_deep_search`
+- r12_loop16_food_price_inflation_import_quota: r12l16_food_price_inflation_T0 / food_price_policy_stage2_with_margin_4B / full_window=`price_data_unavailable_after_deep_search`
+- r12_loop16_feed_wheat_cost_shock: r12l16_feed_wheat_T0 / feed_cost_4B_not_actionable / full_window=`price_data_unavailable_after_deep_search`
+- r12_loop16_dog_meat_ban_pet_welfare_transition: r12l16_dog_meat_pet_T1 / pet_welfare_policy_stage2_reference_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r12_loop16_csat_education_service_demand: r12l16_csat_education_T0 / education_demand_stage2_reference_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r12_loop16_birthrate_childcare_pipeline: r12l16_birthrate_childcare_T0 / demographic_stage2_reference_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r12_loop16_medical_education_quota_freeze: r12l16_medical_quota_relief_T1 / medical_education_service_relief_not_Green / full_window=`price_data_unavailable_after_deep_search`

@@ -1,0 +1,45 @@
+# Round 320 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- final_MA_approval_or_financing_confirmed
+- event_return_at_least_5pct
+- user_shift_connects_to_GMV_spending_shipment_or_margin
+- food_agri_policy_connects_to_cost_decline_or_margin_recovery
+- demographic_or_education_demand_connects_to_listed_revenue_or_ARPU
+- pet_welfare_policy_connects_to_listed_pet_food_vet_or_service_revenue
+- no_data_breach_commodity_cost_shock_regulatory_backlash_or_service_disruption_4B_4C
+
+## Stage3-Yellow Rules
+- Stage2_signal_exists_after_EPS_OP_FCF_path_can_change
+- approval_revenue_conversion_margin_or_durability_remains_open
+- reported_event_anchor_exists_but_full_adjusted_OHLC_is_missing
+- date_and_source_context_are_visible_but_company_specific_bridge_is_incomplete
+
+## Stage3-Green Rules
+- life_service_MA_final_approved_and_GMV_take_rate_margin_connected
+- user_shift_confirmed_in_revenue_profit_and_retention
+- food_agri_cost_shock_eased_and_price_pass_through_succeeds
+- education_birthrate_or_pet_policy_converts_to_listed_company_revenue
+- no_commodity_cost_data_breach_regulation_or_subsidy_execution_4B
+- full_window_MFE_MAE_favorable
+
+## Green Blockers
+- MA_headline_without_approval
+- user_shift_without_revenue
+- food_policy_without_company_margin
+- commodity_cost_ignored
+- pet_policy_without_listed_beneficiary
+- education_cohort_spike_without_revenue
+- birthrate_rebound_one_year
+- medical_policy_relief_without_service_data
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## Hard 4C Gates
+- major_data_breach_in_everyday_service_platform
+- food_price_shock_causes_volume_decline_and_margin_squeeze
+- commodity_cost_spike_without_pass_through
+- failed_MA_or_antitrust_rejection
+- subsidy_execution_failure
+- service_system_disruption_such_as_medical_or_education_crisis

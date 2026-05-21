@@ -1034,6 +1034,14 @@ class E2RArchetype(str, Enum):
     AGRI_FOOD_INPUT_COST_4C_WATCH = "AGRI_FOOD_INPUT_COST_4C_WATCH"
     FRIED_CHICKEN_MEME_EVENT_PREMIUM = "FRIED_CHICKEN_MEME_EVENT_PREMIUM"
     FOOD_DELIVERY_CONSOLIDATION_STAGE2 = "FOOD_DELIVERY_CONSOLIDATION_STAGE2"
+    FOOD_DELIVERY_PLATFORM_MA_STAGE2_WITH_APPROVAL_4B = "FOOD_DELIVERY_PLATFORM_MA_STAGE2_WITH_APPROVAL_4B"
+    EVERYDAY_DELIVERY_SHARE_SHIFT_STAGE2_WITH_SECURITY_4C = "EVERYDAY_DELIVERY_SHARE_SHIFT_STAGE2_WITH_SECURITY_4C"
+    FOOD_PRICE_INFLATION_IMPORT_QUOTA_STAGE2_4B = "FOOD_PRICE_INFLATION_IMPORT_QUOTA_STAGE2_4B"
+    FEED_WHEAT_COST_SHOCK_4B = "FEED_WHEAT_COST_SHOCK_4B"
+    PET_WELFARE_POLICY_TRANSITION_STAGE2_NO_PRICE = "PET_WELFARE_POLICY_TRANSITION_STAGE2_NO_PRICE"
+    EDUCATION_EXAM_DEMAND_STAGE2_NO_PRICE = "EDUCATION_EXAM_DEMAND_STAGE2_NO_PRICE"
+    FERTILITY_CHILDCARE_POLICY_STAGE2_NO_PRICE = "FERTILITY_CHILDCARE_POLICY_STAGE2_NO_PRICE"
+    MEDICAL_EDUCATION_QUOTA_POLICY_4B_RELIEF = "MEDICAL_EDUCATION_QUOTA_POLICY_4B_RELIEF"
     DELIVERY_LABOR_SERVICE_CONTINUITY_REFERENCE = "DELIVERY_LABOR_SERVICE_CONTINUITY_REFERENCE"
     WASTE_RECYCLING_INFRA_STAGE2 = "WASTE_RECYCLING_INFRA_STAGE2"
     DEMOGRAPHIC_CHILDCARE_STAGE2 = "DEMOGRAPHIC_CHILDCARE_STAGE2"
@@ -7774,6 +7782,102 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("deal", "regulatory", "financial_actual", "news", "price", "red_team"),
             false_positive_patterns=("teaser letter treated as signed M&A", "GMV scale scored without fee economics"),
             preferred_score_weights=_weights(eps_fcf=10, visibility=16, bottleneck=6, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.FOOD_DELIVERY_PLATFORM_MA_STAGE2_WITH_APPROVAL_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.FOOD_DELIVERY_PLATFORM_MA_STAGE2_WITH_APPROVAL_4B,
+            stage1_radar_signals=("food-delivery M&A teaser", "Baemin consortium report", "platform consolidation bid"),
+            stage2_candidate_signals=("bid value, consortium ratio, final SPA status, financing, approval path, GMV, take-rate and rider-cost bridge are mapped",),
+            stage3_high_conviction_signals=("final SPA, KFTC approval, funding certainty, GMV retention, take-rate, merchant churn and delivery-cost margin synergy verified",),
+            stage4a_ongoing_signals=("approved deal converts into GMV, take-rate, rider-cost and merchant-retention economics",),
+            stage4b_graduation_overheat_signals=("M&A headline without approval", "teaser letter priced as final SPA", "scale premium before GMV and margin proof"),
+            stage4c_thesis_break_signals=("approval fails", "financing fails", "merchant fee cap", "GMV churn", "integration cost overrun"),
+            key_evidence_families=("deal", "regulatory", "platform", "financial_actual", "news", "price", "red_team"),
+            false_positive_patterns=("M&A headline treated as approved transaction", "GMV scale scored without take-rate or margin conversion"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=16, bottleneck=6, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.EVERYDAY_DELIVERY_SHARE_SHIFT_STAGE2_WITH_SECURITY_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.EVERYDAY_DELIVERY_SHARE_SHIFT_STAGE2_WITH_SECURITY_4C,
+            stage1_radar_signals=("large delivery or e-commerce data breach", "customer trust break", "rival delivery share shift"),
+            stage2_candidate_signals=("affected users, MAU change, spending decline, rival users, shipment volume, GMV, spending and margin conversion are mapped",),
+            stage3_high_conviction_signals=("rival GMV, delivery volume, spending retention and margin convert while the breached platform's trust remains impaired",),
+            stage4a_ongoing_signals=("rival share capture persists in GMV, spending and delivery margin",),
+            stage4b_graduation_overheat_signals=("rival relief rally before GMV and margin evidence", "breached platform relief bounce before churn recovery"),
+            stage4c_thesis_break_signals=("data breach", "customer exodus", "regulatory fine", "spending decline persists", "security trust moat breaks"),
+            key_evidence_families=("cybersecurity", "platform", "logistics", "financial_actual", "news", "price", "red_team"),
+            false_positive_patterns=("MAU shift treated as rival earnings without GMV", "user shift without revenue or margin bridge"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=14, bottleneck=4, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.FOOD_PRICE_INFLATION_IMPORT_QUOTA_STAGE2_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.FOOD_PRICE_INFLATION_IMPORT_QUOTA_STAGE2_4B,
+            stage1_radar_signals=("food price inflation", "rice price spike", "fruit price spike", "import quota policy relief"),
+            stage2_candidate_signals=("CPI basket, import quota, subsidy, pass-through, volume elasticity and gross margin bridge are mapped",),
+            stage3_high_conviction_signals=("food cost relief, pricing pass-through, volume retention, gross margin recovery and FCF conversion verified",),
+            stage4a_ongoing_signals=("gross margin and volume stay stable after import quota or subsidy relief",),
+            stage4b_graduation_overheat_signals=("food-policy rally before company margin proof", "inflation relief priced before volume elasticity"),
+            stage4c_thesis_break_signals=("food price shock persists", "volume decline", "pass-through fails", "gross margin compression", "weather or FX shock returns"),
+            key_evidence_families=("commodity", "policy", "financial_actual", "news", "price", "red_team"),
+            false_positive_patterns=("food CPI treated as pricing power", "import quota headline scored without company gross margin"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=10, bottleneck=14, mispricing=6, valuation=6),
+        ),
+        E2RArchetype.FEED_WHEAT_COST_SHOCK_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.FEED_WHEAT_COST_SHOCK_4B,
+            stage1_radar_signals=("feed wheat tender failure", "grain offer spike", "livestock feed cost shock"),
+            stage2_candidate_signals=("feed wheat price, corn or soy cost, inventory, hedge, pass-through and livestock output-price response are mapped",),
+            stage3_high_conviction_signals=("not from cost shock alone; feed price pass-through, volume retention, livestock margin and gross margin recovery verified",),
+            stage4a_ongoing_signals=("feed cost normalizes and livestock or processed-food margin remains healthy",),
+            stage4b_graduation_overheat_signals=("feed basket moves before pass-through proof", "commodity cost ignored during food-service scoring"),
+            stage4c_thesis_break_signals=("feed wheat cost shock", "high-price tender failure", "no pass-through", "livestock margin squeeze", "inventory buffer absent"),
+            key_evidence_families=("commodity", "agriculture", "financial_actual", "news", "price", "red_team"),
+            false_positive_patterns=("input-cost shock treated as demand growth", "grain tender failure ignored in margin scoring"),
+            preferred_score_weights=_weights(eps_fcf=4, visibility=6, bottleneck=12, mispricing=4, valuation=4),
+        ),
+        E2RArchetype.PET_WELFARE_POLICY_TRANSITION_STAGE2_NO_PRICE: ArchetypeDefinition(
+            archetype=E2RArchetype.PET_WELFARE_POLICY_TRANSITION_STAGE2_NO_PRICE,
+            stage1_radar_signals=("dog-meat ban", "pet welfare transition", "rehoming subsidy", "shelter and vet-service demand narrative"),
+            stage2_candidate_signals=("ban timetable, support budget, rehoming scale, listed pet-food, vet service and shelter capacity evidence are mapped",),
+            stage3_high_conviction_signals=("listed pet-food sales, vet service revenue, adoption monetization, shelter capacity, margin and subsidy independence verified",),
+            stage4a_ongoing_signals=("pet-food and vet-service demand converts without relying only on subsidy execution",),
+            stage4b_graduation_overheat_signals=("pet welfare basket rallies before listed pet-food or vet-service revenue conversion",),
+            stage4c_thesis_break_signals=("subsidy execution fails", "shelter capacity failure", "farmer transition resistance", "listed beneficiary absent"),
+            key_evidence_families=("policy", "pet_care", "financial_actual", "news", "price", "red_team"),
+            false_positive_patterns=("dog-meat ban policy treated as pet-food revenue", "rehoming count scored before listed-company conversion"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=12, bottleneck=4, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.EDUCATION_EXAM_DEMAND_STAGE2_NO_PRICE: ArchetypeDefinition(
+            archetype=E2RArchetype.EDUCATION_EXAM_DEMAND_STAGE2_NO_PRICE,
+            stage1_radar_signals=("CSAT applicant rebound", "exam cohort spike", "private education demand headline"),
+            stage2_candidate_signals=("CSAT applicants, cohort, ARPU, listed education revenue, online conversion, repeat enrolment and margin are mapped",),
+            stage3_high_conviction_signals=("enrolment, ARPU, online/offline conversion, retention, margin and FCF verified beyond one cohort",),
+            stage4a_ongoing_signals=("education demand, ARPU and retention remain visible after exam cohort effect",),
+            stage4b_graduation_overheat_signals=("education basket rally before revenue and ARPU proof", "one-year cohort spike priced as durable demand"),
+            stage4c_thesis_break_signals=("private education regulation", "household affordability pressure", "cohort spike fades", "ARPU or enrolment misses"),
+            key_evidence_families=("education", "demographic", "financial_actual", "research_report", "news", "price", "red_team"),
+            false_positive_patterns=("CSAT headline treated as listed education revenue", "cohort spike without ARPU or retention"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=14, bottleneck=2, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.FERTILITY_CHILDCARE_POLICY_STAGE2_NO_PRICE: ArchetypeDefinition(
+            archetype=E2RArchetype.FERTILITY_CHILDCARE_POLICY_STAGE2_NO_PRICE,
+            stage1_radar_signals=("fertility rebound", "births rebound", "marriage rebound", "childcare policy plan"),
+            stage2_candidate_signals=("fertility, births, marriages, multi-year durability, childcare revenue, baby goods sales, enrolment and subsidy execution are mapped",),
+            stage3_high_conviction_signals=("multi-year birthrate durability, listed childcare revenue, baby-goods sales, enrolment, ARPU, margin and cash conversion verified",),
+            stage4a_ongoing_signals=("childcare revenue and enrolment persist beyond a one-year rebound",),
+            stage4b_graduation_overheat_signals=("baby basket rallies before revenue conversion", "one-year birthrate rebound priced as durable trend"),
+            stage4c_thesis_break_signals=("birthrate rebound reverses", "policy budget execution fails", "enrolment or baby-goods sales misses", "demographic cohort fades"),
+            key_evidence_families=("demographic", "policy", "financial_actual", "research_report", "news", "price", "red_team"),
+            false_positive_patterns=("fertility headline treated as childcare revenue", "birthrate rebound one year without multi-year confirmation"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=14, bottleneck=2, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.MEDICAL_EDUCATION_QUOTA_POLICY_4B_RELIEF: ArchetypeDefinition(
+            archetype=E2RArchetype.MEDICAL_EDUCATION_QUOTA_POLICY_4B_RELIEF,
+            stage1_radar_signals=("medical student quota policy", "trainee doctor walkout", "hospital service disruption relief"),
+            stage2_candidate_signals=("medical student quota, trainee return, service normalization, hospital revenue recovery and education schedule normalization are mapped",),
+            stage3_high_conviction_signals=("trainee return, hospital service normalization, surgery recovery, medical school schedule and revenue margin recovery verified",),
+            stage4a_ongoing_signals=("service normalization and hospital education schedules stay stable after policy relief",),
+            stage4b_graduation_overheat_signals=("relief rally before trainee return or hospital revenue recovery", "quota freeze priced before service normalization"),
+            stage4c_thesis_break_signals=("medical student boycott persists", "trainee doctors do not return", "emergency-care stress", "surgery delay", "policy consensus fails"),
+            key_evidence_families=("policy", "healthcare_service", "education", "financial_actual", "news", "price", "red_team"),
+            false_positive_patterns=("medical quota relief treated as hospital revenue before service normalization", "policy freeze scored without trainee return"),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=12, bottleneck=2, mispricing=8, valuation=6),
         ),
         E2RArchetype.ECOMMERCE_DATA_BREACH_HARD_4C: ArchetypeDefinition(
             archetype=E2RArchetype.ECOMMERCE_DATA_BREACH_HARD_4C,

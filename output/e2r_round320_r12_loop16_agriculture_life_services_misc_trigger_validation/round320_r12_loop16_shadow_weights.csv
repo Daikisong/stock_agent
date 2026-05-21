@@ -1,0 +1,9 @@
+archetype,platform_MA_final_approval,delivery_GMV_take_rate_conversion,consumer_trust_security,food_price_pass_through,import_quota_margin_relief,feed_cost_sensitivity,pet_welfare_revenue_conversion,education_demand_ARPU,fertility_trend_durability,service_disruption_normalization,MA_headline_without_approval_penalty,user_shift_without_revenue_penalty,food_policy_without_company_margin_penalty,commodity_cost_ignored_penalty,stage2_actionable_promote,stage3_yellow_gate,stage3_green_gate,notes
+FOOD_DELIVERY_PLATFORM_MA_STAGE2_WITH_APPROVAL_4B,+5,+5,+0,+0,+0,+0,+0,+0,+0,+0,-5,-1,-1,-1,final SPA/approval/financing,GMV and take-rate pending,approval+GMV+margin,Baemin/Naver/Uber.
+EVERYDAY_DELIVERY_SHARE_SHIFT_STAGE2_WITH_SECURITY_4C,+0,+5,+5,+0,+0,+0,+0,+0,+0,+0,-1,-5,-1,-1,security 4C plus rival GMV conversion,rival margin pending,rival revenue+profit retention,Coupang breach.
+FOOD_PRICE_INFLATION_IMPORT_QUOTA_STAGE2_4B,+0,+0,+0,+5,+5,+2,+0,+0,+0,+0,-1,-1,-5,-3,policy to margin bridge,volume elasticity pending,pass-through+gross margin,food CPI/import quota.
+FEED_WHEAT_COST_SHOCK_4B,+0,+0,+0,+1,+0,+5,+0,+0,+0,+0,-1,-1,-2,-5,none without pass-through,margin recovery pending,N/A until pass-through,feed wheat.
+PET_WELFARE_POLICY_TRANSITION_STAGE2_NO_PRICE,+0,+0,+0,+0,+0,+0,+5,+0,+0,+0,-1,-1,-1,-1,listed pet-food/vet revenue,subsidy execution pending,listed revenue+margin,dog-meat ban.
+EDUCATION_EXAM_DEMAND_STAGE2_NO_PRICE,+0,+0,+0,+0,+0,+0,+0,+5,+1,+0,-1,-1,-1,-1,listed ARPU/revenue,retention/margin pending,ARPU+margin+retention,CSAT.
+FERTILITY_CHILDCARE_POLICY_STAGE2_NO_PRICE,+0,+0,+0,+0,+0,+0,+0,+2,+5,+0,-1,-1,-1,-1,childcare revenue bridge,multi-year durability pending,multi-year+listed revenue,birthrate.
+MEDICAL_EDUCATION_QUOTA_POLICY_4B_RELIEF,+0,+0,+0,+0,+0,+0,+0,+1,+0,+5,-1,-1,-1,-1,service normalization,hospital revenue recovery pending,trainee return+hospital revenue,medical quota.
