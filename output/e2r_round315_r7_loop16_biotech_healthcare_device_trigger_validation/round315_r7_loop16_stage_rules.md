@@ -1,0 +1,47 @@
+# Round 315 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- FDA_EMA_MFDS_approval_or_pivotal_trial_success_exists
+- partner_product_launch_or_sales_started
+- royalty_or_milestone_economics_confirmed
+- event_return_at_least_5pct
+- CDMO_or_MA_deal_value_and_capacity_are_specific
+- US_or_EU_facility_links_to_tariff_hedge_or_customer_proximity
+- no_patent_CRL_FDA_inspection_or_manufacturing_defect_overlay_for_positive_candidate
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- EPS_OP_FCF_path_can_change_materially
+- one_of_royalty_utilization_manufacturing_patent_or_launch_timing_gate_remains_open
+- reported_price_anchor_supports_trigger_but_full_adjusted_OHLC_is_missing
+- case_is_not_pure_policy_facility_buyout_or_filing_headline
+
+## Stage3-Green Rules
+- regulatory_approval_converts_to_revenue_royalty_or_milestone
+- partner_launch_and_adoption_are_visible
+- CDMO_facility_utilization_and_margin_are_visible
+- FDA_inspection_or_manufacturing_observations_are_resolved
+- patent_litigation_is_settled_or_launch_timing_is_clear
+- tariff_hedge_translates_into_protected_gross_margin
+- full_adjusted_OHLC_MFE_MAE_window_supports_stage_candidate
+
+## Green Blockers
+- approval_without_economics
+- facility_acquisition_without_utilization
+- policy_support_without_backlog
+- biotech_MA_without_ROIC
+- biosimilar_filing_without_patent_clearance
+- control_premium_delisting_without_public_forward_return
+- tariff_headline_without_margin_protection
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## 4C Watch Gates
+- FDA_complete_response_letter_from_efficacy_safety_or_data_integrity
+- manufacturing_inspection_observation_blocks_approval
+- patent_lawsuit_blocks_biosimilar_launch
+- trial_failure_or_endpoint_miss
+- product_recall_or_safety_event
+- CDMO_FDA_warning_letter_or_batch_failure
+- tariff_shock_not_offset_by_US_facility

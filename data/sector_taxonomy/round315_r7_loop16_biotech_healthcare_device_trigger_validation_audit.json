@@ -1,0 +1,126 @@
+{
+  "green_blockers": [
+    "approval_without_economics",
+    "facility_acquisition_without_utilization",
+    "policy_support_without_backlog",
+    "biotech_MA_without_ROIC",
+    "biosimilar_filing_without_patent_clearance",
+    "control_premium_delisting_without_public_forward_return",
+    "tariff_headline_without_margin_protection",
+    "full_adjusted_ohlc_missing_for_Green_confirmation"
+  ],
+  "large_sector": "BIO_HEALTHCARE_MEDICAL_DEVICE",
+  "method": "trigger_level_backtest_v1_after_redteam",
+  "required_target_aliases": {
+    "AESTHETIC_MEDICAL_DEVICE_PE_BUYOUT_STAGE2": "AESTHETIC_MEDICAL_DEVICE_PE_BUYOUT_STAGE2",
+    "BIOPHARMA_TARIFF_POLICY_SUPPORT_STAGE2": "BIOPHARMA_TARIFF_POLICY_SUPPORT_STAGE2",
+    "BIOPHARMA_US_LOCALIZATION_STAGE2_WITH_CAPEX_GATE": "BIOPHARMA_US_LOCALIZATION_STAGE2_WITH_CAPEX_GATE",
+    "BIOSIMILAR_PATENT_LITIGATION_4C_WATCH": "BIOSIMILAR_PATENT_LITIGATION_4C_WATCH",
+    "CDMO_US_FACILITY_EXPANSION_STAGE2_PRICE_MUTED": "CDMO_US_FACILITY_EXPANSION_STAGE2_PRICE_MUTED",
+    "ONCOLOGY_APPROVAL_STAGE2_WITH_MANUFACTURING_4B": "ONCOLOGY_APPROVAL_STAGE2_WITH_MANUFACTURING_4B",
+    "PHARMA_TARIFF_4B_4C_WATCH": "PHARMA_TARIFF_4B_4C_WATCH",
+    "SC_FORMULATION_PLATFORM_STAGE3_YELLOW": "SC_FORMULATION_PLATFORM_STAGE3_YELLOW",
+    "VACCINE_CDMO_MA_STAGE2_ACTIONABLE": "VACCINE_CDMO_MA_STAGE2_ACTIONABLE"
+  },
+  "round_id": "round_243",
+  "row_separation_rules": [
+    "case_library_row_describes_stage_candidate_and_evidence_quality",
+    "trigger_calibration_row_stores_event_anchor_approval_sales_facility_MA_litigation_or_tariff_metrics",
+    "ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown",
+    "do_not_downgrade_valid_Stage2_or_Yellow_candidate_only_because_OHLC_backfill_is_missing",
+    "do_not_treat_approval_facility_MA_filing_buyout_or_tariff_headline_as_Green_without_royalty_sales_utilization_patent_clearance_or_margin"
+  ],
+  "score_down_axes": [
+    "approval_without_economics",
+    "facility_acquisition_without_utilization",
+    "policy_support_without_backlog",
+    "biotech_MA_without_ROIC",
+    "biosimilar_filing_without_patent_clearance",
+    "control_premium_delisting_without_public_forward_return",
+    "tariff_headline_without_margin_protection"
+  ],
+  "score_up_axes": [
+    "regulatory_approval_to_sales_bridge",
+    "royalty_milestone_visibility",
+    "CDMO_capacity_utilization",
+    "US_localization_tariff_hedge",
+    "MA_price_reaction",
+    "partner_product_adoption",
+    "patent_litigation_resolution",
+    "manufacturing_inspection_cleanliness"
+  ],
+  "source_round": "docs/round/round_315.md",
+  "stage2_actionable_rules": [
+    "FDA_EMA_MFDS_approval_or_pivotal_trial_success_exists",
+    "partner_product_launch_or_sales_started",
+    "royalty_or_milestone_economics_confirmed",
+    "event_return_at_least_5pct",
+    "CDMO_or_MA_deal_value_and_capacity_are_specific",
+    "US_or_EU_facility_links_to_tariff_hedge_or_customer_proximity",
+    "no_patent_CRL_FDA_inspection_or_manufacturing_defect_overlay_for_positive_candidate"
+  ],
+  "stage3_green_rules": [
+    "regulatory_approval_converts_to_revenue_royalty_or_milestone",
+    "partner_launch_and_adoption_are_visible",
+    "CDMO_facility_utilization_and_margin_are_visible",
+    "FDA_inspection_or_manufacturing_observations_are_resolved",
+    "patent_litigation_is_settled_or_launch_timing_is_clear",
+    "tariff_hedge_translates_into_protected_gross_margin",
+    "full_adjusted_OHLC_MFE_MAE_window_supports_stage_candidate"
+  ],
+  "stage3_yellow_rules": [
+    "Stage2_Actionable_conditions_pass",
+    "EPS_OP_FCF_path_can_change_materially",
+    "one_of_royalty_utilization_manufacturing_patent_or_launch_timing_gate_remains_open",
+    "reported_price_anchor_supports_trigger_but_full_adjusted_OHLC_is_missing",
+    "case_is_not_pure_policy_facility_buyout_or_filing_headline"
+  ],
+  "stage4b_watch_triggers": [
+    "approval_headline_appears_before_royalty_or_sales_economics",
+    "CDMO_facility_is_acquired_before_utilization_and_client_transfer_are_known",
+    "MA_rally_appears_before_post_deal_backlog_and_ROIC",
+    "biosimilar_filing_appears_before_patent_clearance",
+    "FDA_CRL_appears_due_manufacturing_or_inspection_issue",
+    "tariff_policy_drives_localization_before_actual_margin_protection"
+  ],
+  "stage4c_watch_gates": [
+    "FDA_complete_response_letter_from_efficacy_safety_or_data_integrity",
+    "manufacturing_inspection_observation_blocks_approval",
+    "patent_lawsuit_blocks_biosimilar_launch",
+    "trial_failure_or_endpoint_miss",
+    "product_recall_or_safety_event",
+    "CDMO_FDA_warning_letter_or_batch_failure",
+    "tariff_shock_not_offset_by_US_facility"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 9,
+    "evidence_good_but_price_failed_or_muted_count": 3,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "large_sector": "BIO_HEALTHCARE_MEDICAL_DEVICE",
+    "method": "trigger_level_backtest_v1_after_redteam",
+    "next_round": "R8 Loop 16",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_243",
+    "row_separation_required": true,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_315.md",
+    "stage2_actionable_candidate_count": 3,
+    "stage2_policy_or_localization_candidate_count": 4,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 1,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 3,
+    "target_archetype_count": 9,
+    "trigger_count": 9
+  },
+  "what_not_to_change": [
+    "do_not_change_production_scoring",
+    "do_not_use_round315_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_approval_facility_MA_filing_buyout_or_tariff_headline_as_Green_without_royalty_sales_utilization_patent_clearance_or_margin",
+    "do_not_invent_full_mfe_mae_without_adjusted_ohlc"
+  ]
+}

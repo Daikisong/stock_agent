@@ -1,0 +1,29 @@
+# Round 315 Stage 4B / 4C Review
+
+## 4B Watch
+- approval_headline_appears_before_royalty_or_sales_economics
+- CDMO_facility_is_acquired_before_utilization_and_client_transfer_are_known
+- MA_rally_appears_before_post_deal_backlog_and_ROIC
+- biosimilar_filing_appears_before_patent_clearance
+- FDA_CRL_appears_due_manufacturing_or_inspection_issue
+- tariff_policy_drives_localization_before_actual_margin_protection
+
+## 4C Watch Gates
+- FDA_complete_response_letter_from_efficacy_safety_or_data_integrity
+- manufacturing_inspection_observation_blocks_approval
+- patent_lawsuit_blocks_biosimilar_launch
+- trial_failure_or_endpoint_miss
+- product_recall_or_safety_event
+- CDMO_FDA_warning_letter_or_batch_failure
+- tariff_shock_not_offset_by_US_facility
+
+## Case Review
+- r7_loop16_alteogen_keytruda_sc: Stage3-Yellow candidate / Stage3_Yellow_candidate_platform_to_product
+- r7_loop16_samsung_biologics_policy_support: Stage2 / Stage2_policy_support_not_Green
+- r7_loop16_samsung_biologics_gsk_us_facility: Stage2 / evidence_good_but_price_muted
+- r7_loop16_sk_bioscience_idt_biologika: Stage2-Actionable / excellent_stage2_actionable_MA
+- r7_loop16_celltrion_us_factory_localization: Stage2 / Stage2_US_localization_not_Green
+- r7_loop16_yuhan_lazertinib_jnj_rybrevant: Stage2 + 4B-watch / approval_stage2_with_manufacturing_4B
+- r7_loop16_samsung_bioepis_amgen_litigation: 4C-watch / biosimilar_patent_litigation_4C_watch
+- r7_loop16_jeisys_archimed_medical_device_buyout: Stage2 M&A / Stage2_MA_not_operating_Green
+- r7_loop16_pharma_tariff_localization: 4B/4C-watch + Stage2 hedge / pharma_tariff_4B_4C_with_localization_hedge

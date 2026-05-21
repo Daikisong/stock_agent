@@ -1,0 +1,16 @@
+direction,axis,production_scoring_changed
+up,regulatory_approval_to_sales_bridge,false
+up,royalty_milestone_visibility,false
+up,CDMO_capacity_utilization,false
+up,US_localization_tariff_hedge,false
+up,MA_price_reaction,false
+up,partner_product_adoption,false
+up,patent_litigation_resolution,false
+up,manufacturing_inspection_cleanliness,false
+down,approval_without_economics,false
+down,facility_acquisition_without_utilization,false
+down,policy_support_without_backlog,false
+down,biotech_MA_without_ROIC,false
+down,biosimilar_filing_without_patent_clearance,false
+down,control_premium_delisting_without_public_forward_return,false
+down,tariff_headline_without_margin_protection,false

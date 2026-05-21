@@ -1,0 +1,13 @@
+# Round 315 Price Validation Plan
+
+Full adjusted OHLC was not available. Reported event anchors are retained without inventing full-window MFE/MAE.
+
+- r7_loop16_alteogen_keytruda_sc: r7l16_alteogen_keytruda_T2 / Stage3_Yellow_candidate_platform_to_product / full_window=`price_data_unavailable_after_deep_search`
+- r7_loop16_samsung_biologics_policy_support: r7l16_samsungbio_policy_T0 / Stage2_policy_support_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r7_loop16_samsung_biologics_gsk_us_facility: r7l16_samsungbio_gsk_T0 / evidence_good_but_price_muted / full_window=`price_data_unavailable_after_deep_search`
+- r7_loop16_sk_bioscience_idt_biologika: r7l16_skbioscience_idt_T0 / excellent_stage2_actionable_MA / full_window=`price_data_unavailable_after_deep_search`
+- r7_loop16_celltrion_us_factory_localization: r7l16_celltrion_us_factory_T0 / Stage2_US_localization_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r7_loop16_yuhan_lazertinib_jnj_rybrevant: r7l16_yuhan_lazertinib_T0 / approval_stage2_with_manufacturing_4B / full_window=`price_data_unavailable_after_deep_search`
+- r7_loop16_samsung_bioepis_amgen_litigation: r7l16_samsung_bioepis_amgen_T1 / biosimilar_patent_litigation_4C_watch / full_window=`price_data_unavailable_after_deep_search`
+- r7_loop16_jeisys_archimed_medical_device_buyout: r7l16_jeisys_archimed_T0 / Stage2_MA_not_operating_Green / full_window=`price_data_unavailable_after_deep_search`
+- r7_loop16_pharma_tariff_localization: r7l16_pharma_tariff_T0 / pharma_tariff_4B_4C_with_localization_hedge / full_window=`price_data_unavailable_after_deep_search`
