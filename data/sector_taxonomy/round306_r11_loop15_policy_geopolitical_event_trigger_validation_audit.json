@@ -1,0 +1,112 @@
+{
+  "green_blockers": [
+    "geopolitical_theme_only",
+    "preferred_supplier_without_signed_contract",
+    "defense_order_without_delivery_margin",
+    "policy_relief_without_earnings",
+    "energy_supply_relief_as_growth",
+    "political_false_break_as_structural",
+    "technology_transfer_headline_only",
+    "full_adjusted_ohlc_missing_for_stage3_confirmation"
+  ],
+  "hard_4c_gates": [
+    "martial_law_or_political_system_shock",
+    "export_license_revocation_affecting_production_upgrade",
+    "labor_strike_threatening_core_national_export_output",
+    "energy_chokepoint_closure_oil_shock_or_circuit_breaker",
+    "defense_contract_cancellation_or_political_delay",
+    "disaster_causing_direct_economic_damage_and_recovery_cost"
+  ],
+  "large_sector": "POLICY_GEOPOLITICS_DISASTER_EVENT",
+  "method": "trigger_level_backtest_v1",
+  "required_target_aliases": {
+    "CHIP_EXPORT_CONTROL_4C_WATCH": "CHIP_EXPORT_CONTROL_4C_WATCH",
+    "DEFENSE_EXPORT_BACKLOG_STAGE2_ACTIONABLE": "DEFENSE_EXPORT_BACKLOG_STAGE2_ACTIONABLE",
+    "GROUND_WEAPON_EXPORT_DELIVERY_STAGE2_YELLOW": "GROUND_WEAPON_EXPORT_DELIVERY_STAGE2_YELLOW",
+    "HORMUZ_ENERGY_SECURITY_4C_WITH_POLICY_RELIEF": "HORMUZ_ENERGY_SECURITY_4C_WITH_POLICY_RELIEF",
+    "NATURAL_DISASTER_RECOVERY_STAGE2_REFERENCE": "NATURAL_DISASTER_RECOVERY_STAGE2_REFERENCE",
+    "NAVAL_SHIPBUILDING_GEOPOLITICAL_STAGE2_WITH_DILUTION_4B": "NAVAL_SHIPBUILDING_GEOPOLITICAL_STAGE2_WITH_DILUTION_4B",
+    "POLITICAL_SYSTEM_SHOCK_MARKET_4C": "POLITICAL_SYSTEM_SHOCK_MARKET_4C",
+    "SEMICONDUCTOR_LABOR_STRIKE_4C_WATCH": "SEMICONDUCTOR_LABOR_STRIKE_4C_WATCH"
+  },
+  "round_id": "round_234",
+  "score_down_axes": [
+    "geopolitical_theme_only",
+    "preferred_supplier_without_signed_contract",
+    "defense_order_without_delivery_margin",
+    "policy_relief_without_earnings",
+    "energy_supply_relief_as_growth",
+    "political_false_break_as_structural",
+    "technology_transfer_headline_only"
+  ],
+  "score_up_axes": [
+    "signed_defense_contract_value",
+    "delivery_to_revenue_conversion",
+    "defense_backlog_growth",
+    "local_production_technology_transfer_terms",
+    "trade_policy_license_risk",
+    "labor_disruption_output_risk",
+    "political_system_stability",
+    "energy_chokepoint_exposure",
+    "alternative_supply_route_relief",
+    "disaster_direct_cost_and_recovery"
+  ],
+  "source_round": "docs/round/round_306.md",
+  "stage2_actionable_rules": [
+    "policy_or_geopolitical_headline_closes_into_signed_contract_or_delivery",
+    "contract_value_or_delivery_revenue_is_meaningful_for_backlog_or_quarterly_revenue",
+    "market_relative_event_return_exceeds_5pp_or_record_high_is_reported",
+    "delivery_to_revenue_or_OP_estimate_revision_is_visible",
+    "defense_local_production_tech_transfer_or_service_package_is_specific",
+    "policy_relief_turns_into_supply_route_license_budget_or_procurement",
+    "political_labor_export_control_disaster_events_are_separated_as_4C_overlays"
+  ],
+  "stage3_green_rules": [
+    "defense_contract_delivers_into_revenue_margin_and_cash_collection",
+    "local_production_or_technology_transfer_terms_do_not_destroy_margin",
+    "policy_relief_becomes_recurring_procurement_budget_license_or_formal_contract",
+    "labor_export_control_political_and_energy_risks_are_cleared",
+    "full_window_mfe_mae_is_available_and_supportive"
+  ],
+  "stage3_yellow_rules": [
+    "defense_contract_can_change_OP_or_EPS_path_but_margin_or_cash_collection_is_pending",
+    "delivery_to_revenue_and_OP_revision_visible_but_multi_quarter_execution_pending",
+    "naval_shipbuilding_policy_optionality_visible_but_formal_contract_or_tech_transfer_pending"
+  ],
+  "stage4b_watch_triggers": [
+    "defense_stocks_rerate_on_geopolitics_before_signed_contract",
+    "naval_nuclear_sub_story_rises_before_formal_US_Navy_contract_or_tech_transfer_terms",
+    "policy_relief_after_energy_shock_is_treated_as_growth",
+    "political_shock_reverses_quickly_but_governance_risk_remains",
+    "labor_strike_threat_rises_or_fades_without_actual_output_data"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "disaster_reference_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 3,
+    "large_sector": "POLICY_GEOPOLITICS_DISASTER_EVENT",
+    "method": "trigger_level_backtest_v1",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_234",
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_306.md",
+    "stage2_actionable_candidate_count": 3,
+    "stage2_relief_count": 1,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 3,
+    "stage4b_watch_count": 2,
+    "stage4c_watch_count": 4,
+    "target_archetype_count": 8,
+    "trigger_count": 10
+  },
+  "what_not_to_change": [
+    "do_not_change_production_scoring",
+    "do_not_use_round306_cases_as_candidate_generation_input",
+    "do_not_treat_policy_geopolitics_or_disaster_headline_as_green",
+    "do_not_treat_energy_or_political_relief_as_growth",
+    "do_not_invent_full_mfe_mae_without_adjusted_ohlc"
+  ]
+}

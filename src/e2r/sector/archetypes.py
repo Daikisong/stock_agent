@@ -909,11 +909,16 @@ class E2RArchetype(str, Enum):
     MARKET_ACCESS_REFORM_STAGE2 = "MARKET_ACCESS_REFORM_STAGE2"
     MEDICAL_REFORM_SERVICE_DISRUPTION_4C_REFERENCE = "MEDICAL_REFORM_SERVICE_DISRUPTION_4C_REFERENCE"
     NATURAL_DISASTER_RECOVERY_POLICY_REFERENCE = "NATURAL_DISASTER_RECOVERY_POLICY_REFERENCE"
+    NATURAL_DISASTER_RECOVERY_STAGE2_REFERENCE = "NATURAL_DISASTER_RECOVERY_STAGE2_REFERENCE"
     GEOPOLITICAL_DEFENSE_ORDER_STAGE2 = "GEOPOLITICAL_DEFENSE_ORDER_STAGE2"
+    DEFENSE_EXPORT_BACKLOG_STAGE2_ACTIONABLE = "DEFENSE_EXPORT_BACKLOG_STAGE2_ACTIONABLE"
+    GROUND_WEAPON_EXPORT_DELIVERY_STAGE2_YELLOW = "GROUND_WEAPON_EXPORT_DELIVERY_STAGE2_YELLOW"
     LABOR_POLICY_SYSTEMIC_EXPORT_RISK_4C = "LABOR_POLICY_SYSTEMIC_EXPORT_RISK_4C"
     GEOPOLITICAL_ENERGY_SUPPLY_SHOCK = "GEOPOLITICAL_ENERGY_SUPPLY_SHOCK"
     GEOPOLITICAL_ENERGY_SECURITY_HARD_4C = "GEOPOLITICAL_ENERGY_SECURITY_HARD_4C"
+    HORMUZ_ENERGY_SECURITY_4C_WITH_POLICY_RELIEF = "HORMUZ_ENERGY_SECURITY_4C_WITH_POLICY_RELIEF"
     LABOR_DISRUPTION_SYSTEMIC_POLICY_4C = "LABOR_DISRUPTION_SYSTEMIC_POLICY_4C"
+    SEMICONDUCTOR_LABOR_STRIKE_4C_WATCH = "SEMICONDUCTOR_LABOR_STRIKE_4C_WATCH"
     SYSTEMIC_LABOR_SUPPLY_CHAIN_INTERVENTION = "SYSTEMIC_LABOR_SUPPLY_CHAIN_INTERVENTION"
     GEOPOLITICAL_ENERGY_MACRO_HARD_4C = "GEOPOLITICAL_ENERGY_MACRO_HARD_4C"
     MIDDLE_EAST_ENERGY_FX_MACRO_HARD_4C = "MIDDLE_EAST_ENERGY_FX_MACRO_HARD_4C"
@@ -935,6 +940,7 @@ class E2RArchetype(str, Enum):
     MARKET_STRUCTURE_SHORT_SELLING_POLICY = "MARKET_STRUCTURE_SHORT_SELLING_POLICY"
     SHORT_SELLING_RESUMPTION_RISK = "SHORT_SELLING_RESUMPTION_RISK"
     POLITICAL_SYSTEM_SHOCK_KOREA = "POLITICAL_SYSTEM_SHOCK_KOREA"
+    POLITICAL_SYSTEM_SHOCK_MARKET_4C = "POLITICAL_SYSTEM_SHOCK_MARKET_4C"
     POLITICAL_SHOCK_KOREA_DISCOUNT_HARD_GATE = "POLITICAL_SHOCK_KOREA_DISCOUNT_HARD_GATE"
     GEOPOLITICAL_ENERGY_IMPORT_SHOCK = "GEOPOLITICAL_ENERGY_IMPORT_SHOCK"
     US_KOREA_TARIFF_POLICY_4C_WATCH = "US_KOREA_TARIFF_POLICY_4C_WATCH"
@@ -1041,6 +1047,7 @@ class E2RArchetype(str, Enum):
     STATE_FOUNDRY_POLICY_RELIEF_NOT_GREEN = "STATE_FOUNDRY_POLICY_RELIEF_NOT_GREEN"
     NVIDIA_BLACKWELL_DOMESTIC_AI_INFRA_STAGE2 = "NVIDIA_BLACKWELL_DOMESTIC_AI_INFRA_STAGE2"
     CHINA_FAB_EXPORT_CONTROL_4C_WATCH = "CHINA_FAB_EXPORT_CONTROL_4C_WATCH"
+    CHIP_EXPORT_CONTROL_4C_WATCH = "CHIP_EXPORT_CONTROL_4C_WATCH"
     CHINA_FAB_EXPORT_LICENSE_RELIEF = "CHINA_FAB_EXPORT_LICENSE_RELIEF"
     CONTRACT_HEADLINE_STAGE2_NOT_GREEN = "CONTRACT_HEADLINE_STAGE2_NOT_GREEN"
     DIGITAL_POLICY_PRICE_ONLY = "DIGITAL_POLICY_PRICE_ONLY"
@@ -1093,6 +1100,7 @@ class E2RArchetype(str, Enum):
     HBM_CATCHUP_LATE_STAGE2 = "HBM_CATCHUP_LATE_STAGE2"
     OPENAI_STARGATE_MEMORY_4B_WATCH = "OPENAI_STARGATE_MEMORY_4B_WATCH"
     SEMICONDUCTOR_EXPORT_CONTROL_4C_WATCH = "SEMICONDUCTOR_EXPORT_CONTROL_4C_WATCH"
+    NAVAL_SHIPBUILDING_GEOPOLITICAL_STAGE2_WITH_DILUTION_4B = "NAVAL_SHIPBUILDING_GEOPOLITICAL_STAGE2_WITH_DILUTION_4B"
     AI_DEVICE_COMPONENT_STAGE2_ACTIONABLE = "AI_DEVICE_COMPONENT_STAGE2_ACTIONABLE"
     DISPLAY_OLED_APPLE_RECOVERY_STAGE2 = "DISPLAY_OLED_APPLE_RECOVERY_STAGE2"
     SEMICONDUCTOR_LABOR_SUPPLY_CHAIN_4C = "SEMICONDUCTOR_LABOR_SUPPLY_CHAIN_4C"
@@ -6095,6 +6103,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("recovery trade before claims/budget", "disaster headline treated as construction/material Green"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
+        E2RArchetype.NATURAL_DISASTER_RECOVERY_STAGE2_REFERENCE: ArchetypeDefinition(
+            archetype=E2RArchetype.NATURAL_DISASTER_RECOVERY_STAGE2_REFERENCE,
+            stage1_radar_signals=("major wildfire", "special disaster zone", "recovery budget headline"),
+            stage2_candidate_signals=("casualties, burned area, damaged structures and recovery response are mapped; listed-equity trigger is separate",),
+            stage3_high_conviction_signals=("not a Green source unless a listed company has verified orders, claims, margin and cashflow",),
+            stage4a_ongoing_signals=("recovery costs, claims and public budget remain funded without margin damage",),
+            stage4b_graduation_overheat_signals=("disaster-recovery basket rally before listed contracts or claims",),
+            stage4c_thesis_break_signals=("mass casualty disaster", "large uninsured loss", "operational disruption", "recovery cost overrun"),
+            key_evidence_families=("news", "policy", "disaster", "price", "red_team"),
+            false_positive_patterns=("disaster headline treated as direct equity Stage3", "recovery budget assumed without company beneficiary"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
         E2RArchetype.GEOPOLITICAL_DEFENSE_ORDER_STAGE2: ArchetypeDefinition(
             archetype=E2RArchetype.GEOPOLITICAL_DEFENSE_ORDER_STAGE2,
             stage1_radar_signals=("geopolitical rearmament", "defense export order", "government customer order"),
@@ -6105,6 +6125,30 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("delivery delay", "cost overrun", "export license problem", "dilution invalidates EPS bridge"),
             key_evidence_families=("news", "disclosure", "research_report", "financial_actual", "price"),
             false_positive_patterns=("defense order headline treated as Green without delivery/margin/cash collection"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=17, mispricing=14, valuation=14),
+        ),
+        E2RArchetype.DEFENSE_EXPORT_BACKLOG_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.DEFENSE_EXPORT_BACKLOG_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("Europe rearmament", "K9 export order", "defense backlog expansion"),
+            stage2_candidate_signals=("signed government contract, contract value, backlog growth, export share and relative price reaction are visible",),
+            stage3_high_conviction_signals=("delivery schedule, project margin, cash collection, localization terms and dilution absorption are confirmed",),
+            stage4a_ongoing_signals=("government order converts into revenue, OP margin and cash without new dilution shock",),
+            stage4b_graduation_overheat_signals=("large defense rally before delivery/margin proof", "share sale or dilution after backlog rerating"),
+            stage4c_thesis_break_signals=("delivery delay", "government funding failure", "export license issue", "margin or cash collection break"),
+            key_evidence_families=("news", "disclosure", "backlog", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("defense backlog headline treated as Green before delivery economics", "geopolitical beta treated as contract quality"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=17, mispricing=14, valuation=14),
+        ),
+        E2RArchetype.GROUND_WEAPON_EXPORT_DELIVERY_STAGE2_YELLOW: ArchetypeDefinition(
+            archetype=E2RArchetype.GROUND_WEAPON_EXPORT_DELIVERY_STAGE2_YELLOW,
+            stage1_radar_signals=("K2 tank export", "ground weapon delivery", "Poland defense shipment"),
+            stage2_candidate_signals=("shipments, delivery-to-revenue, OP estimate beat, government customer and relative price strength are visible",),
+            stage3_high_conviction_signals=("multi-quarter delivery revenue, gross margin, cash collection and local production execution support Yellow before Green",),
+            stage4a_ongoing_signals=("shipments and OP margin continue after the first delivery trigger",),
+            stage4b_graduation_overheat_signals=("defense export rerating before local production and margin close",),
+            stage4c_thesis_break_signals=("political delay", "local production execution break", "delivery delay", "margin or customer financing break"),
+            key_evidence_families=("news", "financial_actual", "delivery", "price", "research_report", "red_team"),
+            false_positive_patterns=("tank contract headline treated as revenue before shipment", "local production optionality treated as Green"),
             preferred_score_weights=_weights(eps_fcf=20, visibility=24, bottleneck=17, mispricing=14, valuation=14),
         ),
         E2RArchetype.LABOR_POLICY_SYSTEMIC_EXPORT_RISK_4C: ArchetypeDefinition(
@@ -6143,6 +6187,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("geopolitical headline treated as refiner, shipper, defense, or exporter Green"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
+        E2RArchetype.HORMUZ_ENERGY_SECURITY_4C_WITH_POLICY_RELIEF: ArchetypeDefinition(
+            archetype=E2RArchetype.HORMUZ_ENERGY_SECURITY_4C_WITH_POLICY_RELIEF,
+            stage1_radar_signals=("Hormuz chokepoint shock", "Middle East oil spike", "Korea energy import dependency"),
+            stage2_candidate_signals=("alternative crude or naphtha route, strategic supply response and shipping-security policy are visible as relief only",),
+            stage3_high_conviction_signals=("not a Green source unless company-level margin and EPS recovery are separately verified after energy costs stabilize",),
+            stage4a_ongoing_signals=("oil/LNG route security and FX stabilize before company candidates are rechecked",),
+            stage4b_graduation_overheat_signals=("energy-security relief treated as growth", "refiner or chemical rally before margin bridge"),
+            stage4c_thesis_break_signals=("Hormuz closure", "KOSPI circuit-breaker shock", "oil or LNG supply disruption", "KRW disorderly move"),
+            key_evidence_families=("energy", "policy", "fx", "price", "red_team"),
+            false_positive_patterns=("alternative supply routes relief treated as earnings growth", "energy shock beneficiary assumed without margin proof"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
         E2RArchetype.LABOR_DISRUPTION_SYSTEMIC_POLICY_4C: ArchetypeDefinition(
             archetype=E2RArchetype.LABOR_DISRUPTION_SYSTEMIC_POLICY_4C,
             stage1_radar_signals=("large semiconductor labor dispute", "national export supply-chain risk", "government emergency arbitration discussion"),
@@ -6153,6 +6209,18 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("national export production halt", "semiconductor fab disruption", "emergency arbitration", "customer supply-chain break"),
             key_evidence_families=("labor", "policy", "news", "price", "red_team"),
             false_positive_patterns=("AI semiconductor rerating treated as safe while strike risk is unresolved",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.SEMICONDUCTOR_LABOR_STRIKE_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.SEMICONDUCTOR_LABOR_STRIKE_4C_WATCH,
+            stage1_radar_signals=("semiconductor union strike threat", "memory production labor disruption", "government-mediated labor talks fail"),
+            stage2_candidate_signals=("settlement, emergency arbitration, minimum staffing and production-continuity plan are visible; relief only",),
+            stage3_high_conviction_signals=("not a Green source; labor-output continuity must clear before semiconductor rerating evidence is trusted",),
+            stage4a_ongoing_signals=("wafer output, delivery schedule and customer allocation remain intact after settlement",),
+            stage4b_graduation_overheat_signals=("AI memory rally ignores unresolved labor-output risk",),
+            stage4c_thesis_break_signals=("strike threatens national export output", "DRAM or NAND supply reduction", "customer delivery break", "government arbitration failure"),
+            key_evidence_families=("labor", "policy", "semiconductor_supply", "price", "red_team"),
+            false_positive_patterns=("strike relief treated as positive earnings evidence", "labor disruption ignored during memory rerating"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.SYSTEMIC_LABOR_SUPPLY_CHAIN_INTERVENTION: ArchetypeDefinition(
@@ -6273,6 +6341,18 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("martial law", "political crisis", "KRW disorderly move", "KOSPI drawdown", "foreign risk-premium spike"),
             key_evidence_families=("policy", "fx", "price", "foreign_flow", "red_team"),
             false_positive_patterns=("liquidity support treated as company Green", "political relief bounce treated as structural rerating"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.POLITICAL_SYSTEM_SHOCK_MARKET_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.POLITICAL_SYSTEM_SHOCK_MARKET_4C,
+            stage1_radar_signals=("martial law declaration", "political system shock", "Korea ETF drawdown"),
+            stage2_candidate_signals=("parliamentary reversal, order lift and market liquidity normalization are mapped as relief only",),
+            stage3_high_conviction_signals=("not a Green source; system shock must clear and company evidence must be rebuilt from fundamentals",),
+            stage4a_ongoing_signals=("FX, consumer sentiment, foreign flow and market access normalize after the shock",),
+            stage4b_graduation_overheat_signals=("fast false-break relief treated as structural rerating",),
+            stage4c_thesis_break_signals=("martial law", "political-system shock", "ETF drawdown", "won 15-year low", "consumer sentiment break"),
+            key_evidence_families=("policy", "fx", "price", "macro", "red_team"),
+            false_positive_patterns=("political false-break relief treated as growth", "broad market bounce treated as company Stage3"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.US_KOREA_TARIFF_POLICY_4C_WATCH: ArchetypeDefinition(
@@ -6827,6 +6907,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("MASGA or merger headline treated as Green before actual awards and FCF"),
             preferred_score_weights=_weights(eps_fcf=10, visibility=18, bottleneck=10, mispricing=8, valuation=8),
         ),
+        E2RArchetype.NAVAL_SHIPBUILDING_GEOPOLITICAL_STAGE2_WITH_DILUTION_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.NAVAL_SHIPBUILDING_GEOPOLITICAL_STAGE2_WITH_DILUTION_4B,
+            stage1_radar_signals=("U.S.-Korea naval cooperation", "frigate comment", "nuclear-submarine technology-sharing headline"),
+            stage2_candidate_signals=("policy optionality, U.S. shipyard context, event return and formal-contract path are visible",),
+            stage3_high_conviction_signals=("formal U.S. Navy contract, technology-transfer terms, shipyard capex, delivery schedule and program margin are confirmed",),
+            stage4a_ongoing_signals=("naval contract, tech transfer and shipyard economics remain intact",),
+            stage4b_graduation_overheat_signals=("large YTD shipbuilding rally before formal contract", "share sale or dilution after policy rerating"),
+            stage4c_thesis_break_signals=("technology-transfer block", "formal contract failure", "dilution overwhelms EPS bridge", "shipyard margin failure"),
+            key_evidence_families=("policy", "news", "shipbuilding", "price", "red_team"),
+            false_positive_patterns=("naval policy comment treated as signed contract", "nuclear-submarine headline treated as shipyard margin"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=18, bottleneck=10, mispricing=10, valuation=8),
+        ),
         E2RArchetype.SHIPBUILDING_GEOPOLITICAL_SANCTION_4C: ArchetypeDefinition(
             archetype=E2RArchetype.SHIPBUILDING_GEOPOLITICAL_SANCTION_4C,
             stage1_radar_signals=("U.S. Navy MRO option", "foreign shipyard acquisition", "geopolitical shipbuilding alliance"),
@@ -7005,6 +7097,18 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("license denial", "fab upgrade blocked", "production impairment", "customer shipment disruption"),
             key_evidence_families=("regulatory", "news", "price", "red_team"),
             false_positive_patterns=("HBM supercycle ignores China fab hard gate"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.CHIP_EXPORT_CONTROL_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.CHIP_EXPORT_CONTROL_4C_WATCH,
+            stage1_radar_signals=("U.S. chip export control", "China fab equipment authorization revoked", "memory fab upgrade ceiling"),
+            stage2_candidate_signals=("China output exposure, license scope, maintenance allowance and upgrade prohibition are mapped as risk overlay",),
+            stage3_high_conviction_signals=("not a Green source; license stability and capacity-upgrade path must clear before memory rerating is trusted",),
+            stage4a_ongoing_signals=("maintenance licenses remain active and non-China capacity offsets upgrade limits",),
+            stage4b_graduation_overheat_signals=("memory or equipment rerating ignores export-license ceiling",),
+            stage4c_thesis_break_signals=("export authorization revoked", "China fab upgrade blocked", "stranded capex", "market-share or margin loss"),
+            key_evidence_families=("policy", "trade", "semiconductor_supply", "price", "red_team"),
+            false_positive_patterns=("license maintenance treated as capacity expansion", "export-control relief treated as EPS growth"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.CHINA_FAB_EXPORT_LICENSE_RELIEF: ArchetypeDefinition(
