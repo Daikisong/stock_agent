@@ -1,0 +1,10 @@
+archetype,governance_reform_law,tax_policy_relief,political_liquidity_backstop,geopolitical_export_control_risk,industrial_policy_support,defense_export_backlog,labor_supply_chain_risk,disaster_hard_4c,policy_reform_without_company_action_penalty,tax_relief_without_stability_penalty,liquidity_backstop_without_political_resolution_penalty,AI_tax_noise_ignored_penalty,stage2_actionable_promote,stage3_yellow_gate,stage3_green_gate,notes
+COMMERCIAL_ACT_VALUEUP_STAGE2_ACTIONABLE,+5,+1,+0,+0,+0,+0,+0,+0,-5,-1,-1,-1,Commercial Act + KOSPI +1.34,company action missing,buyback/dividend/governance execution,Commercial Act.
+TAX_POLICY_RELIEF_STAGE2_WITH_TAX_4B,+2,+5,+0,+0,+0,+0,+0,+0,-2,-4,-1,-1,tax reversal after -3.9 shock,transaction tax remains,stable tax regime+flow recovery,tax policy.
+MARTIAL_LAW_POLITICAL_RISK_4B,+0,+0,+5,+1,+0,+0,+0,+1,-1,-1,-5,-1,martial law KOSPI -1.44 and liquidity relief,political resolution missing,FX/foreign-flow stabilization,martial law.
+AI_WINDFALL_TAX_POLICY_OVERHANG_4B,+0,+0,+0,+2,+0,+0,+0,+0,-1,-2,-1,-5,KOSPI -2.3 on AI tax comment,policy overhang,law risk removed and flow recovers,AI tax.
+CHIP_EXPORT_CONTROL_4B_WITH_POLICY_RELIEF,+0,+0,+1,+5,+2,+0,+0,+0,-1,-1,-1,-1,US VEU waiver removal hit Samsung/SK Hynix,license dependency,license stability+capex clarity,chip waivers.
+SEMICONDUCTOR_TARIFF_SUPPORT_STAGE2_RELIEF,+0,+1,+0,+3,+5,+0,+0,+0,-1,-1,-1,-1,33T won semiconductor package,no event price/order conversion,order/capex conversion,chip support.
+DEFENSE_GEOPOLITICAL_EXPORT_STAGE2_WITH_DILUTION_4B,+0,+0,+0,+3,+1,+5,+0,+0,-1,-1,-1,-1,Hanwha Romania order +5 but dilution -13,dilution and capex,margin+delivery+dilution absorption,Hanwha.
+NATIONAL_CHAMPION_LABOR_STRIKE_4B,+0,+0,+2,+1,+0,+0,+5,+0,-1,-1,-1,-1,Samsung strike threat -9.3,settlement missing,strike averted+cost reset contained,Samsung.
+WILDFIRE_DISASTER_HARD_4C_NO_PUBLIC_PRICE,+0,+0,+1,+0,+1,+0,+0,+5,-1,-1,-1,-1,wildfire fatalities and property damage,no public price anchor,rebuilding/insurance conversion,wildfires.
