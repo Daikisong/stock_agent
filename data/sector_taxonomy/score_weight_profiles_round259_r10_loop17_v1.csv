@@ -1,0 +1,8 @@
+archetype,overseas_EPC_contract_value,market_relative_contract_reaction,nuclear_infra_EPC_optionality,housing_supply_policy,PF_restructuring_recognition,liquidity_relief,capital_return_governance,construction_safety_risk,preferred_bidder_without_final_contract_penalty,policy_without_builder_price_penalty,liquidity_support_without_loss_cleanup_penalty,overseas_EPC_without_margin_visibility_penalty,stage2_actionable_promote,stage3_yellow_gate,stage3_green_gate,notes
+OVERSEAS_EPC_MEGA_CONTRACT_STAGE2_ACTIONABLE,+5,+5,+0,+0,+0,+0,+0,+1,-1,-1,-1,-4,Samsung E&A $6B +8.5 vs KOSPI -1.4,cost/schedule margin missing,progress billing+margin+cost control,Samsung E&A.
+NUCLEAR_INFRA_EPC_STAGE2_WITH_LEGAL_4B,+2,+3,+5,+0,+0,+1,+0,+1,-5,-1,-1,-3,Czech nuclear preferred bidder drove sector rerating,final contract/legal 4B,final contract+scope+margin,Doosan/KEPCO E&C.
+HOUSING_SUPPLY_RECONSTRUCTION_POLICY_STAGE2_NO_PRICE,+0,+0,+0,+5,+2,+2,+0,+1,-1,-4,-2,-1,Seoul supply/reconstruction policy,price/pre-sale missing,permits+pre-sales+backlog,builder basket.
+REAL_ESTATE_PF_RESTRUCTURING_4B,+0,+0,+0,+1,+5,+4,+0,+1,-1,-2,-5,-1,PF delinquency 2.70% and restructuring,relief not Green,bad-project cleanup+refinancing,PF basket.
+CONSTRUCTION_HOLDCO_VALUEUP_FAILED_RERATING,+0,+0,+0,+0,+1,+0,+5,+0,-1,-1,-1,-1,Samsung C&T activist failure -10,board action missing,board-approved return+cancellation,Samsung C&T.
+CONSTRUCTION_SITE_SAFETY_HARD_4C_NO_PUBLIC_PRICE,+0,+0,+0,+0,+1,+0,+0,+5,-1,-1,-1,-1,fatal construction collapse,listed price unavailable,regulatory closure+penalty visibility,sector safety.
+BUILDER_LIQUIDITY_SUPPORT_STAGE2_RELIEF,+0,+0,+0,+2,+4,+5,+0,+1,-1,-2,-5,-1,40.6T builder support,PF rollover/pre-sale missing,refinancing+cash conversion,builder basket.

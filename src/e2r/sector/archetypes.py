@@ -923,26 +923,33 @@ class E2RArchetype(str, Enum):
     OVERSEAS_EPC_MEGA_ORDER_STAGE2_ACTIONABLE = "OVERSEAS_EPC_MEGA_ORDER_STAGE2_ACTIONABLE"
     MIDDLE_EAST_EPC_BACKLOG_STAGE2_ACTIONABLE = "MIDDLE_EAST_EPC_BACKLOG_STAGE2_ACTIONABLE"
     MEGA_GAS_PIPELINE_EPC_STAGE2_WITH_MARGIN_GATE = "MEGA_GAS_PIPELINE_EPC_STAGE2_WITH_MARGIN_GATE"
+    OVERSEAS_EPC_MEGA_CONTRACT_STAGE2_ACTIONABLE = "OVERSEAS_EPC_MEGA_CONTRACT_STAGE2_ACTIONABLE"
     NUCLEAR_INFRA_PREFERRED_BIDDER_STAGE2 = "NUCLEAR_INFRA_PREFERRED_BIDDER_STAGE2"
     NUCLEAR_CONSTRUCTION_EXPORT_STAGE2_WITH_LEGAL_4B = "NUCLEAR_CONSTRUCTION_EXPORT_STAGE2_WITH_LEGAL_4B"
+    NUCLEAR_INFRA_EPC_STAGE2_WITH_LEGAL_4B = "NUCLEAR_INFRA_EPC_STAGE2_WITH_LEGAL_4B"
     CONSTRUCTION_MATERIAL_DEMAND_BREAK = "CONSTRUCTION_MATERIAL_DEMAND_BREAK"
     SEOUL_PROPERTY_POLICY_EVENT_PREMIUM = "SEOUL_PROPERTY_POLICY_EVENT_PREMIUM"
     STEEL_PLATE_CONSTRUCTION_RELIEF_AND_EXPORT_RISK = "STEEL_PLATE_CONSTRUCTION_RELIEF_AND_EXPORT_RISK"
     HOUSING_SUPPLY_RATE_CUT_POLICY_RELIEF = "HOUSING_SUPPLY_RATE_CUT_POLICY_RELIEF"
     HOUSING_SUPPLY_RECONSTRUCTION_STAGE2_POLICY = "HOUSING_SUPPLY_RECONSTRUCTION_STAGE2_POLICY"
     HOUSING_SUPPLY_RECONSTRUCTION_STAGE2_WITH_LTV_4B = "HOUSING_SUPPLY_RECONSTRUCTION_STAGE2_WITH_LTV_4B"
+    HOUSING_SUPPLY_RECONSTRUCTION_POLICY_STAGE2_NO_PRICE = "HOUSING_SUPPLY_RECONSTRUCTION_POLICY_STAGE2_NO_PRICE"
     PF_LIQUIDITY_HARD_4C_WATCH = "PF_LIQUIDITY_HARD_4C_WATCH"
     PF_LIQUIDITY_RESTRUCTURING_4C_AND_RELIEF = "PF_LIQUIDITY_RESTRUCTURING_4C_AND_RELIEF"
     REAL_ESTATE_PF_RESTRUCTURING_4C_WATCH = "REAL_ESTATE_PF_RESTRUCTURING_4C_WATCH"
+    REAL_ESTATE_PF_RESTRUCTURING_4B = "REAL_ESTATE_PF_RESTRUCTURING_4B"
     REAL_ESTATE_POLICY_STAGE2_NOT_GREEN = "REAL_ESTATE_POLICY_STAGE2_NOT_GREEN"
     CONSTRUCTION_SAFETY_HARD_4C = "CONSTRUCTION_SAFETY_HARD_4C"
     CONSTRUCTION_QUALITY_SAFETY_HARD_4C = "CONSTRUCTION_QUALITY_SAFETY_HARD_4C"
+    CONSTRUCTION_HOLDCO_VALUEUP_FAILED_RERATING = "CONSTRUCTION_HOLDCO_VALUEUP_FAILED_RERATING"
+    CONSTRUCTION_SITE_SAFETY_HARD_4C_NO_PUBLIC_PRICE = "CONSTRUCTION_SITE_SAFETY_HARD_4C_NO_PUBLIC_PRICE"
     OVERSEAS_EPC_ORDER_4B_WATCH = "OVERSEAS_EPC_ORDER_4B_WATCH"
     NUCLEAR_CONSTRUCTION_EXPORT_STAGE2 = "NUCLEAR_CONSTRUCTION_EXPORT_STAGE2"
     BUILDING_MATERIAL_WEAK_DEMAND_FAILED_RERATING = "BUILDING_MATERIAL_WEAK_DEMAND_FAILED_RERATING"
     BUILDING_MATERIAL_TARIFF_RELIEF_EVENT_PREMIUM = "BUILDING_MATERIAL_TARIFF_RELIEF_EVENT_PREMIUM"
     BUILDING_MATERIAL_INPUT_COST_STAGE2_4B = "BUILDING_MATERIAL_INPUT_COST_STAGE2_4B"
     BUILDER_LIQUIDITY_SUPPORT_FALSE_POSITIVE_WATCH = "BUILDER_LIQUIDITY_SUPPORT_FALSE_POSITIVE_WATCH"
+    BUILDER_LIQUIDITY_SUPPORT_STAGE2_RELIEF = "BUILDER_LIQUIDITY_SUPPORT_STAGE2_RELIEF"
     AI_FAB_CONSTRUCTION_STAGE2 = "AI_FAB_CONSTRUCTION_STAGE2"
     RATE_CUT_HOUSING_POLICY_MIXED_STAGE2_4B = "RATE_CUT_HOUSING_POLICY_MIXED_STAGE2_4B"
     US_LOCALIZATION_CAPEX_FALSE_POSITIVE = "US_LOCALIZATION_CAPEX_FALSE_POSITIVE"
@@ -10221,6 +10228,95 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("news", "M&A", "policy", "price", "financial_actual", "red_team"),
             false_positive_patterns=("shipbuilding policy headline treated as contract", "merger rally scored before contract and margin proof"),
             preferred_score_weights=_weights(eps_fcf=18, visibility=20, bottleneck=12, mispricing=13, valuation=10),
+        ),
+    }
+)
+
+ARCHETYPE_DEFINITIONS.update(
+    {
+        E2RArchetype.OVERSEAS_EPC_MEGA_CONTRACT_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.OVERSEAS_EPC_MEGA_CONTRACT_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("overseas EPC mega contract", "Saudi gas plant expansion", "large signed contract with event return"),
+            stage2_candidate_signals=("contract value and customer are explicit", "market-relative contract reaction is positive", "completion schedule is visible"),
+            stage3_high_conviction_signals=("progress billing", "EPC margin", "cost control", "working-capital and cash collection", "OP/EPS revision"),
+            stage4a_ongoing_signals=("progress revenue, margin and cash collection remain on schedule"),
+            stage4b_graduation_overheat_signals=("contract value priced before EPC margin and cash conversion", "schedule or change-order risk remains open"),
+            stage4c_thesis_break_signals=("cost overrun", "schedule delay", "payment delay", "low-margin EPC loss", "unbilled receivables stress"),
+            key_evidence_families=("contract", "news", "price", "financial_actual", "research_report"),
+            false_positive_patterns=("contract headline treated as Green before margin", "EPC backlog scored without progress billing and cash conversion"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=22, bottleneck=10, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.NUCLEAR_INFRA_EPC_STAGE2_WITH_LEGAL_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.NUCLEAR_INFRA_EPC_STAGE2_WITH_LEGAL_4B,
+            stage1_radar_signals=("preferred nuclear bidder", "overseas reactor EPC", "team Korea nuclear export"),
+            stage2_candidate_signals=("preferred bidder, reactor count, estimated unit cost and sector rerating are visible"),
+            stage3_high_conviction_signals=("final contract signed", "legal appeal clearance", "listed-company EPC scope", "payment schedule", "margin and funding"),
+            stage4a_ongoing_signals=("contract scope, legal clearance, schedule and margin remain intact"),
+            stage4b_graduation_overheat_signals=("preferred bidder premium before final contract", "legal appeal or competition-review delay"),
+            stage4c_thesis_break_signals=("final contract cancellation", "legal appeal blocks signing", "listed-company scope excluded", "EPC margin fails"),
+            key_evidence_families=("policy", "contract", "news", "price", "legal", "red_team"),
+            false_positive_patterns=("preferred bidder treated as signed EPC cash flow", "nuclear policy rally scored before legal clearance"),
+            preferred_score_weights=_weights(eps_fcf=15, visibility=20, bottleneck=10, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.HOUSING_SUPPLY_RECONSTRUCTION_POLICY_STAGE2_NO_PRICE: ArchetypeDefinition(
+            archetype=E2RArchetype.HOUSING_SUPPLY_RECONSTRUCTION_POLICY_STAGE2_NO_PRICE,
+            stage1_radar_signals=("Seoul housing price acceleration", "housing supply policy", "reconstruction streamlining"),
+            stage2_candidate_signals=("supply target, LTV policy and reconstruction easing are visible, but builder price anchor may be missing"),
+            stage3_high_conviction_signals=("permits", "pre-sales", "housing starts", "builder backlog", "margin and cash conversion"),
+            stage4a_ongoing_signals=("permits, pre-sales, backlog and cash conversion remain visible"),
+            stage4b_graduation_overheat_signals=("policy without builder price", "mortgage tightening", "PF funding still constrained"),
+            stage4c_thesis_break_signals=("policy fails to convert into starts", "pre-sale absorption weakens", "PF refinancing closes", "housing affordability shock"),
+            key_evidence_families=("policy", "macro", "financial_actual", "price", "research_report"),
+            false_positive_patterns=("housing price rally treated as builder earnings", "supply policy scored before permits and pre-sales"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=14, bottleneck=5, mispricing=8, valuation=8),
+        ),
+        E2RArchetype.REAL_ESTATE_PF_RESTRUCTURING_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.REAL_ESTATE_PF_RESTRUCTURING_4B,
+            stage1_radar_signals=("real-estate PF delinquency", "builder liquidity stress", "government support package"),
+            stage2_candidate_signals=("support size, delinquency rate and restructuring framework are quantified"),
+            stage3_high_conviction_signals=("bad-project cleanup", "PF rollover", "delinquency stabilization", "pre-sale cash recovery", "loss recognition complete"),
+            stage4a_ongoing_signals=("refinancing channels, pre-sales and delinquency continue to improve"),
+            stage4b_graduation_overheat_signals=("liquidity support without loss cleanup", "delinquency still rising", "syndicated loan treated as earnings relief"),
+            stage4c_thesis_break_signals=("PF default cascade", "builder workout or receivership", "equity impairment", "refinancing channel closes"),
+            key_evidence_families=("credit", "policy", "financial_actual", "news", "red_team"),
+            false_positive_patterns=("support package treated as Green", "liquidity bridge scored before bad-project writeoff"),
+            preferred_score_weights=_weights(eps_fcf=5, visibility=10, bottleneck=3, mispricing=6, valuation=5),
+        ),
+        E2RArchetype.CONSTRUCTION_HOLDCO_VALUEUP_FAILED_RERATING: ArchetypeDefinition(
+            archetype=E2RArchetype.CONSTRUCTION_HOLDCO_VALUEUP_FAILED_RERATING,
+            stage1_radar_signals=("construction holdco undervaluation", "activist value-up proposal", "dividend or buyback campaign"),
+            stage2_candidate_signals=("capital-return proposal exists, but board approval and treasury action must be verified"),
+            stage3_high_conviction_signals=("board-approved capital return", "share cancellation", "repeat dividend/buyback policy", "NAV discount narrows with FCF support"),
+            stage4a_ongoing_signals=("approved capital return and governance reform continue"),
+            stage4b_graduation_overheat_signals=("activist proposal failed", "almost -10% event reaction", "board action missing"),
+            stage4c_thesis_break_signals=("management blocks capital return", "governance discount persists", "asset-value thesis fails to convert to shareholder return"),
+            key_evidence_families=("governance", "capital_allocation", "price", "news", "red_team"),
+            false_positive_patterns=("undervaluation treated as rerating without board action", "activist support scored before vote outcome"),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=10, bottleneck=2, mispricing=15, valuation=18),
+        ),
+        E2RArchetype.CONSTRUCTION_SITE_SAFETY_HARD_4C_NO_PUBLIC_PRICE: ArchetypeDefinition(
+            archetype=E2RArchetype.CONSTRUCTION_SITE_SAFETY_HARD_4C_NO_PUBLIC_PRICE,
+            stage1_radar_signals=("construction site safety incident", "bridge or highway collapse", "site manager exposure"),
+            stage2_candidate_signals=("not a positive source; quantify fatalities, injuries, investigation and public-company exposure"),
+            stage3_high_conviction_signals=("not applicable while fatal construction collapse, investigation or bidding-risk remains unresolved"),
+            stage4a_ongoing_signals=("safety remediation, regulatory closure and penalty visibility are monitored"),
+            stage4b_graduation_overheat_signals=("listed-stock price anchor unavailable", "sector relief before investigation closure"),
+            stage4c_thesis_break_signals=("fatal construction collapse", "work suspension", "regulatory sanction", "bidding restriction", "brand or order damage"),
+            key_evidence_families=("news", "regulatory", "safety", "red_team"),
+            false_positive_patterns=("builder demand scored while fatal site-safety investigation is active", "private project failure mapped to public equity without price anchor"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.BUILDER_LIQUIDITY_SUPPORT_STAGE2_RELIEF: ArchetypeDefinition(
+            archetype=E2RArchetype.BUILDER_LIQUIDITY_SUPPORT_STAGE2_RELIEF,
+            stage1_radar_signals=("builder liquidity package", "rate-cut hope", "PF support guarantees and loans"),
+            stage2_candidate_signals=("support package, guarantee/loan terms and rate context are explicit"),
+            stage3_high_conviction_signals=("PF rollover", "pre-sale cash recovery", "funding cost stabilization", "bad-project cleanup", "builder backlog recovery"),
+            stage4a_ongoing_signals=("refinancing, pre-sales and cash conversion continue to improve"),
+            stage4b_graduation_overheat_signals=("rate-cut hope without refinancing", "liquidity support before PF cleanup", "housing overheating keeps rates tight"),
+            stage4c_thesis_break_signals=("support fails", "PF rollover failure", "pre-sales collapse", "credit spread widens"),
+            key_evidence_families=("policy", "credit", "macro", "financial_actual", "red_team"),
+            false_positive_patterns=("guarantee package treated as earnings recovery", "rate-cut hope scored before cash conversion"),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=12, bottleneck=4, mispricing=8, valuation=6),
         ),
     }
 )
