@@ -341,6 +341,9 @@ class E2RArchetype(str, Enum):
     AUTO_TARIFF_HYBRID_MIX_STAGE2 = "AUTO_TARIFF_HYBRID_MIX_STAGE2"
     AUTO_TARIFF_MARGIN_SHOCK = "AUTO_TARIFF_MARGIN_SHOCK"
     AUTO_TARIFF_MARGIN_4C_WATCH = "AUTO_TARIFF_MARGIN_4C_WATCH"
+    HYBRID_MIX_SHAREHOLDER_RETURN_STAGE2_YELLOW = "HYBRID_MIX_SHAREHOLDER_RETURN_STAGE2_YELLOW"
+    ROBOTICS_OPTIONALITY_STAGE2_WITH_4B = "ROBOTICS_OPTIONALITY_STAGE2_WITH_4B"
+    AUTO_LOCALIZATION_CAPEX_OPERATIONAL_4C = "AUTO_LOCALIZATION_CAPEX_OPERATIONAL_4C"
     INDIA_AUTO_IPO_CAPITAL_RECYCLING = "INDIA_AUTO_IPO_CAPITAL_RECYCLING"
     OVERSEAS_AUTO_IPO_FAILED_RERATING = "OVERSEAS_AUTO_IPO_FAILED_RERATING"
     AUTO_LOGISTICS_GEOPOLITICAL_DISRUPTION = "AUTO_LOGISTICS_GEOPOLITICAL_DISRUPTION"
@@ -348,6 +351,7 @@ class E2RArchetype(str, Enum):
     AIRLINE_CONSOLIDATION_INTEGRATION = "AIRLINE_CONSOLIDATION_INTEGRATION"
     AIRLINE_CONSOLIDATION_STAGE2 = "AIRLINE_CONSOLIDATION_STAGE2"
     AIRLINE_REMEDY_ROUTE_CARGO_STAGE2 = "AIRLINE_REMEDY_ROUTE_CARGO_STAGE2"
+    AIRLINE_SAFETY_HARD_4C = "AIRLINE_SAFETY_HARD_4C"
     AUTO_SUPPLIER_FACTORY_FIRE_HARD_4C = "AUTO_SUPPLIER_FACTORY_FIRE_HARD_4C"
     AUTO_PARTS_WORKPLACE_SAFETY_HARD_4C = "AUTO_PARTS_WORKPLACE_SAFETY_HARD_4C"
     AUTO_US_LOCALIZATION_LABOR_VISA_RISK = "AUTO_US_LOCALIZATION_LABOR_VISA_RISK"
@@ -367,6 +371,7 @@ class E2RArchetype(str, Enum):
     SHIPPING_GEOPOLITICAL_SECURITY_4C = "SHIPPING_GEOPOLITICAL_SECURITY_4C"
     SHIPPING_FREIGHT_NORMALIZATION_4C = "SHIPPING_FREIGHT_NORMALIZATION_4C"
     CONTAINER_SHIPPING_RATE_EVENT_PREMIUM = "CONTAINER_SHIPPING_RATE_EVENT_PREMIUM"
+    CONTAINER_FREIGHT_CYCLICAL_STAGE2_4B = "CONTAINER_FREIGHT_CYCLICAL_STAGE2_4B"
     SHIPPING_DRY_BULK_CYCLE = "SHIPPING_DRY_BULK_CYCLE"
     PARCEL_VOLUME_PRICE_COST_SPREAD = "PARCEL_VOLUME_PRICE_COST_SPREAD"
     TRAVEL_AGENCY_POLICY_EVENT = "TRAVEL_AGENCY_POLICY_EVENT"
@@ -383,6 +388,7 @@ class E2RArchetype(str, Enum):
     AUTONOMOUS_TRUCKING_PAID_FREIGHT_MILESTONE = "AUTONOMOUS_TRUCKING_PAID_FREIGHT_MILESTONE"
     AUTONOMOUS_TRUCKING_UNIT_ECONOMICS = "AUTONOMOUS_TRUCKING_UNIT_ECONOMICS"
     TOURISM_POLICY_EVENT = "TOURISM_POLICY_EVENT"
+    TOURISM_VISA_WAIVER_STAGE2_ACTIONABLE = "TOURISM_VISA_WAIVER_STAGE2_ACTIONABLE"
     TOURISM_REDIRECT_EVENT_PREMIUM = "TOURISM_REDIRECT_EVENT_PREMIUM"
     TOURISM_REDIRECT_POLICY_EVENT = "TOURISM_REDIRECT_POLICY_EVENT"
     TRAVEL_CASINO_DEMAND_CONVERSION = "TRAVEL_CASINO_DEMAND_CONVERSION"
@@ -3785,6 +3791,42 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("tariff relief headline treated as margin recovery", "EV or hybrid mix scored without OP margin"),
             preferred_score_weights=_weights(eps_fcf=20, visibility=18, bottleneck=10, mispricing=14, valuation=14),
         ),
+        E2RArchetype.HYBRID_MIX_SHAREHOLDER_RETURN_STAGE2_YELLOW: ArchetypeDefinition(
+            archetype=E2RArchetype.HYBRID_MIX_SHAREHOLDER_RETURN_STAGE2_YELLOW,
+            stage1_radar_signals=("hybrid target raise", "investor day shareholder return", "OP margin target", "buyback and dividend floor"),
+            stage2_candidate_signals=("hybrid model expansion", "hybrid sales target quantified", "shareholder return target", "reported positive event return"),
+            stage3_high_conviction_signals=("actual hybrid sales mix", "ASP and margin by powertrain", "buyback execution", "tariff absorption", "FCF after capex"),
+            stage4a_ongoing_signals=("hybrid mix, margin and shareholder return execution remain intact"),
+            stage4b_graduation_overheat_signals=("hybrid and buyback rerating before actual sales mix or FCF proof"),
+            stage4c_thesis_break_signals=("tariff cost not absorbed", "hybrid margin fails", "buyback execution misses", "US localization margin deteriorates"),
+            key_evidence_families=("news", "financial_actual", "research_report", "price", "capital_allocation"),
+            false_positive_patterns=("hybrid target treated as Green before margin", "buyback headline treated as FCF proof"),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=18, bottleneck=10, mispricing=15, valuation=17),
+        ),
+        E2RArchetype.ROBOTICS_OPTIONALITY_STAGE2_WITH_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.ROBOTICS_OPTIONALITY_STAGE2_WITH_4B,
+            stage1_radar_signals=("robotics strategy", "humanoid robot demo", "AI robot factory", "strategic robotics investment"),
+            stage2_candidate_signals=("factory deployment schedule", "commercialization leadership change", "robotics capex quantified", "event-day rerating"),
+            stage3_high_conviction_signals=("external customer orders", "robot unit economics", "factory deployment success", "recurring robot revenue", "valuation bridge to core business"),
+            stage4a_ongoing_signals=("deployment, orders and unit economics continue to improve"),
+            stage4b_graduation_overheat_signals=("robotics optionality priced before orders", "auto core multiple expands on robot demos alone"),
+            stage4c_thesis_break_signals=("deployment failure", "safety or regulatory block", "unit economics negative", "external orders absent after launch"),
+            key_evidence_families=("news", "price", "research_report", "financial_actual", "red_team"),
+            false_positive_patterns=("robot demo treated as revenue", "strategic capex treated as margin before deployment"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=15, bottleneck=10, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.AUTO_LOCALIZATION_CAPEX_OPERATIONAL_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.AUTO_LOCALIZATION_CAPEX_OPERATIONAL_4C,
+            stage1_radar_signals=("US localization capex", "battery joint venture", "plant capacity expansion", "tariff localization hedge"),
+            stage2_candidate_signals=("local capacity target", "capex and JV funding", "production start schedule", "tariff mitigation path"),
+            stage3_high_conviction_signals=("stable local production", "workforce compliance", "safety record", "utilization and local margin", "battery supply continuity"),
+            stage4a_ongoing_signals=("local production, compliance and margin remain on plan"),
+            stage4b_graduation_overheat_signals=("localization capex priced before production and compliance proof"),
+            stage4c_thesis_break_signals=("immigration raid", "workforce disruption", "fatal safety incidents", "plant delay", "diplomatic or compliance risk"),
+            key_evidence_families=("news", "regulatory", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("local capex treated as margin hedge while workforce and safety gates are open"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
         E2RArchetype.INDIA_AUTO_IPO_CAPITAL_RECYCLING: ArchetypeDefinition(
             archetype=E2RArchetype.INDIA_AUTO_IPO_CAPITAL_RECYCLING,
             stage1_radar_signals=("India subsidiary IPO", "capital recycling", "SUV portfolio growth"),
@@ -3856,6 +3898,18 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("news", "financial_actual", "research_report", "price", "regulatory"),
             false_positive_patterns=("merger completion treated as Green before integration margin", "fleet count treated as FCF before ROI"),
             preferred_score_weights=_weights(eps_fcf=18, visibility=18, bottleneck=8, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.AIRLINE_SAFETY_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.AIRLINE_SAFETY_HARD_4C,
+            stage1_radar_signals=("airline demand recovery", "route expansion", "travel basket recovery"),
+            stage2_candidate_signals=("not a positive source; quantify cancellations, safety inspection, compensation and booking shock"),
+            stage3_high_conviction_signals=("not applicable while fatal accident, investigation or consumer-trust break remains unresolved"),
+            stage4a_ongoing_signals=("safety remediation, booking recovery and regulatory clearance must be monitored"),
+            stage4b_graduation_overheat_signals=("relief rally before safety investigation and trust recovery"),
+            stage4c_thesis_break_signals=("fatal safety accident", "booking cancellations", "consumer trust collapse", "regulatory inspection", "market cap loss"),
+            key_evidence_families=("news", "price", "regulatory", "red_team"),
+            false_positive_patterns=("travel recovery scored while airline safety trust is broken"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.AIRLINE_REMEDY_ROUTE_CARGO_STAGE2: ArchetypeDefinition(
             archetype=E2RArchetype.AIRLINE_REMEDY_ROUTE_CARGO_STAGE2,
@@ -4001,6 +4055,18 @@ ARCHETYPE_DEFINITIONS.update(
             false_positive_patterns=("spot freight-rate rally treated as durable yield", "route-disruption premium scored without normalization risk"),
             preferred_score_weights=_weights(eps_fcf=12, visibility=8, bottleneck=12, mispricing=8, valuation=6),
         ),
+        E2RArchetype.CONTAINER_FREIGHT_CYCLICAL_STAGE2_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.CONTAINER_FREIGHT_CYCLICAL_STAGE2_4B,
+            stage1_radar_signals=("Red Sea rerouting", "Freightos index spike", "spot freight-rate shock", "container capacity tied up"),
+            stage2_candidate_signals=("freight-rate duration", "spot-to-contract bridge", "quarterly OP improvement", "shipping balance-sheet cash return"),
+            stage3_high_conviction_signals=("sustained contract rates", "spot/contract mix", "fuel and canal cost control", "FCF and cash return", "capacity discipline"),
+            stage4a_ongoing_signals=("contract freight, OP and FCF remain above cycle floor"),
+            stage4b_graduation_overheat_signals=("temporary Red Sea spot-rate spike annualized", "Suez normalization risk ignored", "overcapacity ignored"),
+            stage4c_thesis_break_signals=("Suez return capacity release", "overcapacity", "freight-rate collapse", "EBITDA guidance drop", "spot rate normalization"),
+            key_evidence_families=("news", "macro", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("freight-rate spike treated as structural Green", "event premium scored without contract mix"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=8, bottleneck=18, mispricing=8, valuation=8),
+        ),
         E2RArchetype.USED_CAR_EXPORT_LOGISTICS_4C_REFERENCE: ArchetypeDefinition(
             archetype=E2RArchetype.USED_CAR_EXPORT_LOGISTICS_4C_REFERENCE,
             stage1_radar_signals=("used-car export route disruption", "Middle East destination exposure", "port storage congestion", "Strait of Hormuz risk"),
@@ -4024,6 +4090,18 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("news", "financial_actual", "research_report"),
             false_positive_patterns=("visa headline treated as earnings", "arrival count without spend"),
             preferred_score_weights=_weights(eps_fcf=8, visibility=7, bottleneck=4, mispricing=10, valuation=6),
+        ),
+        E2RArchetype.TOURISM_VISA_WAIVER_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.TOURISM_VISA_WAIVER_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("China group-tour visa waiver", "tourism policy window", "travel/leisure basket rally", "flight capacity recovery"),
+            stage2_candidate_signals=("visa-free stay rule", "visitor share context", "multi-stock event reaction", "airline capacity above pre-pandemic"),
+            stage3_high_conviction_signals=("actual arrivals", "foreign-card spending", "hotel ADR", "duty-free sales", "casino drop", "airline yield"),
+            stage4a_ongoing_signals=("arrivals, spend, ADR, casino drop and airline yield convert to margin"),
+            stage4b_graduation_overheat_signals=("tourism basket prices policy before spend conversion", "arrival headline priced before ASP and yield"),
+            stage4c_thesis_break_signals=("policy reversal", "low-spend tourist mix", "hotel/duty-free/casino sales miss", "political or diplomatic risk"),
+            key_evidence_families=("news", "financial_actual", "price", "research_report", "macro"),
+            false_positive_patterns=("visa waiver treated as Green before spending data", "flight capacity treated as hotel/duty-free margin"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=8, bottleneck=4, mispricing=10, valuation=6),
         ),
         E2RArchetype.TOURISM_REDIRECT_EVENT_PREMIUM: ArchetypeDefinition(
             archetype=E2RArchetype.TOURISM_REDIRECT_EVENT_PREMIUM,

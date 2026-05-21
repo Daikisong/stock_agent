@@ -1,0 +1,18 @@
+axis,points,direction,reason
+hybrid_mix_margin_visibility,+5,raise,R9 mobility/transport/leisure trigger quality axis
+actual_vehicle_sales_mix,+5,raise,R9 mobility/transport/leisure trigger quality axis
+shareholder_return_execution,+4,raise,R9 mobility/transport/leisure trigger quality axis
+tariff_absorption_capacity,+5,raise,R9 mobility/transport/leisure trigger quality axis
+robotics_deployment_order_visibility,+5,raise,R9 mobility/transport/leisure trigger quality axis
+localization_workforce_compliance,+5,raise,R9 mobility/transport/leisure trigger quality axis
+airline_integration_synergy,+5,raise,R9 mobility/transport/leisure trigger quality axis
+aviation_safety_trust,+5,raise,R9 mobility/transport/leisure trigger quality axis
+tourism_spending_conversion,+5,raise,R9 mobility/transport/leisure trigger quality axis
+freight_rate_duration_contract_mix,+5,raise,R9 mobility/transport/leisure trigger quality axis
+ev_growth_headline_only,-5,lower,"R9 headline, safety, policy or cyclical false-positive blocker"
+localization_capex_headline_only,-5,lower,"R9 headline, safety, policy or cyclical false-positive blocker"
+robotics_optional_value_without_orders,-5,lower,"R9 headline, safety, policy or cyclical false-positive blocker"
+merger_closing_without_synergy,-4,lower,"R9 headline, safety, policy or cyclical false-positive blocker"
+fatal_safety_event,-5,lower,"R9 headline, safety, policy or cyclical false-positive blocker"
+visa_policy_without_spending,-4,lower,"R9 headline, safety, policy or cyclical false-positive blocker"
+freight_rate_spike_without_contract_mix,-5,lower,"R9 headline, safety, policy or cyclical false-positive blocker"

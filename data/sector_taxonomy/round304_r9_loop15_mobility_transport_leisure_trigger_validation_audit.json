@@ -1,0 +1,109 @@
+{
+  "green_blockers": [
+    "EV_growth_or_hybrid_target_headline_only",
+    "shareholder_return_announcement_without_execution",
+    "robotics_demo_or_factory_capex_without_orders",
+    "localization_capex_without_workforce_compliance_and_safety",
+    "airline_merger_closing_without_yield_load_factor_or_synergy",
+    "fatal_airline_safety_event",
+    "visa_policy_without_actual_spending_or_yield",
+    "freight_spot_spike_without_contract_mix_or_duration"
+  ],
+  "hard_4c_gates": [
+    "fatal_airline_safety_accident",
+    "booking_cancellations_and_consumer_trust_collapse",
+    "tariff_cost_crushing_OP_margin",
+    "localization_workforce_visa_safety_or_compliance_break",
+    "freight_normalization_and_overcapacity_after_spot_spike"
+  ],
+  "large_sector": "MOBILITY_TRANSPORT_LEISURE",
+  "method": "trigger_level_backtest_v1",
+  "round_id": "round_232",
+  "score_down_axes": [
+    "ev_growth_headline_only",
+    "localization_capex_headline_only",
+    "robotics_optional_value_without_orders",
+    "merger_closing_without_synergy",
+    "fatal_safety_event",
+    "visa_policy_without_spending",
+    "freight_rate_spike_without_contract_mix"
+  ],
+  "score_up_axes": [
+    "hybrid_mix_margin_visibility",
+    "actual_vehicle_sales_mix",
+    "shareholder_return_execution",
+    "tariff_absorption_capacity",
+    "robotics_deployment_order_visibility",
+    "localization_workforce_compliance",
+    "airline_integration_synergy",
+    "aviation_safety_trust",
+    "tourism_spending_conversion",
+    "freight_rate_duration_contract_mix"
+  ],
+  "source_round": "docs/round/round_304.md",
+  "stage2_actionable_rules": [
+    "hybrid_target_buyback_margin_target_or_tariff_pivot_is_quantified",
+    "robotics_deployment_schedule_or_factory_capex_is_visible",
+    "airline_merger_closing_has_integration_timeline_and_remedy_path",
+    "visa_policy_or_freight_rate_event_has_multi_stock_or_index_price_confirmation",
+    "event_day_or_reported_anchor_price_reaction_is_recorded_without_inventing_full_ohlc"
+  ],
+  "stage3_green_rules": [
+    "hybrid_mix_margin_tariff_absorption_and_buyback_execution_all_visible",
+    "robotics_external_orders_unit_economics_and_recurring_revenue_visible",
+    "airline_integration_synergy_load_factor_yield_and_safety_trust_visible",
+    "tourism_arrivals_spending_ADR_dutyfree_casino_and_airline_yield_convert_to_FCF",
+    "freight_rate_duration_contract_mix_FCF_cash_return_and_capacity_discipline_visible",
+    "full_window_mfe_mae_is_available_and_supportive"
+  ],
+  "stage3_yellow_rules": [
+    "actual_vehicle_sales_mix_margin_or_shareholder_return_execution_partially_visible",
+    "robotics_orders_or_factory_deployment_visible_but_unit_economics_pending",
+    "airline_synergy_yield_or_load_factor_visible_but_integration_risk_remains",
+    "tourism_arrivals_spending_or_yield_visible_but_policy_durability_pending",
+    "freight_rates_convert_to_earnings_but_contract_mix_or_normalization_risk_remains"
+  ],
+  "stage4b_watch_triggers": [
+    "robotics_optionality_rerates_before_orders_or_unit_economics",
+    "airline_consolidation_premium_priced_before_synergy",
+    "tourism_basket_prices_policy_before_spend_conversion",
+    "freight_rate_spike_annualized_before_contract_duration",
+    "hybrid_buyback_rerating_before_tariff_adjusted_margin"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "large_sector": "MOBILITY_TRANSPORT_LEISURE",
+    "method": "trigger_level_backtest_v1",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_232",
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_304.md",
+    "stage2_actionable_candidate_count": 5,
+    "stage3_green_candidate_count": 0,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 1,
+    "stage4b_watch_count": 4,
+    "stage4c_watch_count": 4,
+    "trigger_count": 10
+  },
+  "target_archetypes": {
+    "AIRLINE_CONSOLIDATION_STAGE2": "AIRLINE_CONSOLIDATION_STAGE2",
+    "AIRLINE_SAFETY_HARD_4C": "AIRLINE_SAFETY_HARD_4C",
+    "AUTO_LOCALIZATION_CAPEX_OPERATIONAL_4C": "AUTO_LOCALIZATION_CAPEX_OPERATIONAL_4C",
+    "AUTO_TARIFF_MARGIN_4C_WATCH": "AUTO_TARIFF_MARGIN_4C_WATCH",
+    "CONTAINER_FREIGHT_CYCLICAL_STAGE2_4B": "CONTAINER_FREIGHT_CYCLICAL_STAGE2_4B",
+    "HYBRID_MIX_SHAREHOLDER_RETURN_STAGE2_YELLOW": "HYBRID_MIX_SHAREHOLDER_RETURN_STAGE2_YELLOW",
+    "ROBOTICS_OPTIONALITY_STAGE2_WITH_4B": "ROBOTICS_OPTIONALITY_STAGE2_WITH_4B",
+    "TOURISM_VISA_WAIVER_STAGE2_ACTIONABLE": "TOURISM_VISA_WAIVER_STAGE2_ACTIONABLE"
+  },
+  "what_not_to_change": [
+    "do_not_apply_round304_shadow_weights_to_production_scoring_yet",
+    "do_not_use_round304_cases_as_candidate_generation_input",
+    "do_not_treat_mobility_transport_leisure_headline_as_green",
+    "do_not_downgrade_stage_candidate_only_because_full_ohlc_is_missing"
+  ]
+}
