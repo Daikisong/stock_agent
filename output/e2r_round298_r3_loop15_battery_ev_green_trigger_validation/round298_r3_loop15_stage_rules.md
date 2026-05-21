@@ -1,0 +1,36 @@
+# Round 298 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable
+
+- contract_value_and_delivery_schedule_are_visible
+- customer_application_and_chemistry_are_specific
+- ev_line_to_ess_conversion_execution_evidence_exists
+- trigger_day_market_relative_return_5pp_plus
+- ex_subsidy_margin_or_subsidy_durability_is_quantified
+- feoc_ira_compliance_risk_is_structurally_reduced
+
+## Stage3-Yellow
+
+- at_least_two_of_contract_demand_margin_are_numeric
+- delivery_calloff_subsidy_or_utilization_gate_still_pending
+- no_battery_safety_or_customer_cancellation_hard_gate_open
+
+## Stage3-Green
+
+- actual_customer_calloff_or_shipment_converts_to_revenue
+- ex_subsidy_operating_margin_is_healthy
+- plant_utilization_is_rising
+- customer_model_plan_survives
+- full_window_mfe_mae_is_available_and_supportive
+
+## Green Blockers
+
+- subsidy_included_op_without_ex_subsidy_margin
+- signed_contract_amount_without_actual_calloff
+- customer_name_without_model_survival
+- line_conversion_without_delivery_or_margin
+- lithium_price_event_without_durable_asp_margin
+- battery_safety_or_supplier_disclosure_trust_issue
+- full_adjusted_ohlc_window_missing_for_green_confirmation

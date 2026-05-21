@@ -1,0 +1,112 @@
+{
+  "green_blockers": [
+    "subsidy_included_op_without_ex_subsidy_margin",
+    "signed_contract_amount_without_actual_calloff",
+    "customer_name_without_model_survival",
+    "line_conversion_without_delivery_or_margin",
+    "lithium_price_event_without_durable_asp_margin",
+    "battery_safety_or_supplier_disclosure_trust_issue",
+    "full_adjusted_ohlc_window_missing_for_green_confirmation"
+  ],
+  "hard_4c_gates": [
+    "signed_contract_value_collapse",
+    "customer_model_cancellation_or_ev_program_halt",
+    "battery_jv_dissolution",
+    "plant_layoff_or_utilization_collapse",
+    "battery_fire_or_safety_failure",
+    "misleading_battery_supplier_disclosure",
+    "subsidy_rollback_that_destroys_economics",
+    "line_conversion_failure"
+  ],
+  "large_sector": "SECONDARY_BATTERY_EV_GREEN",
+  "method": "trigger_level_backtest_v1",
+  "round_id": "round_226",
+  "score_down_axes": [
+    "signed_contract_amount_only",
+    "ev_growth_headline_only",
+    "subsidy_included_op_only",
+    "lithium_price_event_only",
+    "upstream_stake_without_margin",
+    "line_conversion_without_delivery",
+    "customer_name_without_model_survival",
+    "battery_safety_ignored"
+  ],
+  "score_up_axes": [
+    "actual_customer_calloff",
+    "contract_cancellation_risk",
+    "ex_subsidy_operating_margin",
+    "ampc_subsidy_durability",
+    "ess_lfp_contract_quality",
+    "line_conversion_execution",
+    "customer_model_survival",
+    "battery_safety_disclosure_trust",
+    "raw_material_price_durability",
+    "feoc_ira_compliance_quality"
+  ],
+  "source_round": "docs/round/round_298.md",
+  "stage2_actionable_rules": [
+    "contract_value_and_delivery_schedule_are_visible",
+    "customer_application_and_chemistry_are_specific",
+    "ev_line_to_ess_conversion_execution_evidence_exists",
+    "trigger_day_market_relative_return_5pp_plus",
+    "ex_subsidy_margin_or_subsidy_durability_is_quantified",
+    "feoc_ira_compliance_risk_is_structurally_reduced"
+  ],
+  "stage3_green_rules": [
+    "actual_customer_calloff_or_shipment_converts_to_revenue",
+    "ex_subsidy_operating_margin_is_healthy",
+    "plant_utilization_is_rising",
+    "customer_model_plan_survives",
+    "full_window_mfe_mae_is_available_and_supportive"
+  ],
+  "stage3_yellow_rules": [
+    "at_least_two_of_contract_demand_margin_are_numeric",
+    "delivery_calloff_subsidy_or_utilization_gate_still_pending",
+    "no_battery_safety_or_customer_cancellation_hard_gate_open"
+  ],
+  "stage4b_watch_triggers": [
+    "lithium_event_rally_without_durable_price_or_margin",
+    "subsidy_included_op_beat_with_near_zero_ex_subsidy_op",
+    "ess_or_data_center_headline_before_line_conversion_execution",
+    "upstream_lithium_stake_priced_as_immediate_earnings"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 2,
+    "large_sector": "SECONDARY_BATTERY_EV_GREEN",
+    "method": "trigger_level_backtest_v1",
+    "missed_structural_count": 0,
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_226",
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_298.md",
+    "stage2_actionable_candidate_count": 4,
+    "stage3_green_candidate_count": 0,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 2,
+    "stage4b_watch_count": 3,
+    "stage4c_watch_count": 4,
+    "trigger_count": 9
+  },
+  "target_archetypes": {
+    "BATTERY_AMPC_PROFIT_STAGE2_YELLOW": "BATTERY_AMPC_PROFIT_STAGE2_YELLOW",
+    "BATTERY_SAFETY_TRUST_HARD_4C_REFERENCE": "BATTERY_SAFETY_TRUST_HARD_4C_REFERENCE",
+    "ESS_LFP_PIVOT_STAGE2_ACTIONABLE": "ESS_LFP_PIVOT_STAGE2_ACTIONABLE",
+    "EV_DEMAND_CONTRACT_CANCELLATION_4C": "EV_DEMAND_CONTRACT_CANCELLATION_4C",
+    "FEOC_CATHODE_OWNERSHIP_STAGE2": "FEOC_CATHODE_OWNERSHIP_STAGE2",
+    "LITHIUM_PRICE_EVENT_PREMIUM": "LITHIUM_PRICE_EVENT_PREMIUM",
+    "SIGNED_CATHODE_CONTRACT_COLLAPSE_HARD_4C": "SIGNED_CATHODE_CONTRACT_COLLAPSE_HARD_4C",
+    "UPSTREAM_LITHIUM_SUPPLY_STAGE2": "UPSTREAM_LITHIUM_SUPPLY_STAGE2"
+  },
+  "what_not_to_change": [
+    "do_not_apply_round298_shadow_weights_to_production_scoring_yet",
+    "do_not_use_round298_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds_for_battery_recall",
+    "do_not_treat_signed_contract_amount_as_actual_calloff",
+    "do_not_treat_subsidy_included_op_as_ex_subsidy_margin",
+    "do_not_ignore_battery_safety_or_supplier_disclosure_trust"
+  ]
+}

@@ -1,0 +1,15 @@
+axis,points,direction,reason
+actual_customer_calloff,5,raise,"계약 headline이 아니라 실제 call-off, shipment, revenue 전환을 우선한다."
+contract_cancellation_risk,5,raise,"Ford, Freudenberg, Tesla 사례처럼 cancellation은 배터리 4C 핵심이다."
+ex_subsidy_operating_margin,5,raise,AMPC 포함 OP가 좋아도 보조금 제외 margin이 약하면 Green을 막는다.
+ampc_subsidy_durability,4,raise,보조금이 반복 가능하고 정책 리스크가 낮아야 Stage3-Yellow 이상을 검토한다.
+ess_lfp_contract_quality,4,raise,EV 둔화 국면에서 ESS LFP 계약은 Stage2-Actionable pivot 증거다.
+line_conversion_execution,4,raise,EV line을 ESS로 바꾸는 실행 증거는 단순 수요 headline보다 강하다.
+customer_model_survival,5,raise,고객 EV 모델과 생산계획이 살아 있어야 계약 가치가 유지된다.
+battery_safety_disclosure_trust,5,raise,"화재, 품질, supplier disclosure는 배터리 업종 hard gate다."
+raw_material_price_durability,4,raise,lithium event는 지속 가격과 ASP/margin 확인 전에는 Stage3가 아니다.
+feoc_ira_compliance_quality,4,raise,FEOC/IRA risk reduction은 Stage2 evidence지만 고객 award와 margin 확인이 필요하다.
+signed_contract_amount_only,-5,lower,signed amount만으로 Green을 만들면 L&F/Tesla 같은 붕괴를 놓친다.
+ev_growth_headline_only,-5,lower,EV growth headline은 고객 모델 survival과 utilization 없이 약하다.
+subsidy_included_op_only,-5,lower,subsidy 포함 OP만 보면 margin quality를 과대평가한다.
+lithium_price_event_only,-4,lower,CATL mine suspension 같은 이벤트성 rally는 durable margin 전까지 premium이다.
