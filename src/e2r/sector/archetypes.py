@@ -978,6 +978,15 @@ class E2RArchetype(str, Enum):
     DEMOGRAPHIC_CHILDCARE_STAGE2 = "DEMOGRAPHIC_CHILDCARE_STAGE2"
     PRIVATE_EDUCATION_HAGWON_STAGE2_4C = "PRIVATE_EDUCATION_HAGWON_STAGE2_4C"
     FERTILIZER_INPUT_PRICE_COST_KOREA = "FERTILIZER_INPUT_PRICE_COST_KOREA"
+    FERTILIZER_EXPORT_CONTROL_STAGE2_EVENT = "FERTILIZER_EXPORT_CONTROL_STAGE2_EVENT"
+    AGRI_FEED_PRICE_INPUT_COST_4C_WATCH = "AGRI_FEED_PRICE_INPUT_COST_4C_WATCH"
+    AI_TEXTBOOK_POLICY_STAGE2_WITH_ROLLBACK_4C = "AI_TEXTBOOK_POLICY_STAGE2_WITH_ROLLBACK_4C"
+    HAGWON_PRIVATE_EDUCATION_STRUCTURAL_STAGE2 = "HAGWON_PRIVATE_EDUCATION_STRUCTURAL_STAGE2"
+    FOOD_DELIVERY_MA_STAGE2_WITH_REGULATORY_4B = "FOOD_DELIVERY_MA_STAGE2_WITH_REGULATORY_4B"
+    ECOMMERCE_DATA_BREACH_HARD_4C = "ECOMMERCE_DATA_BREACH_HARD_4C"
+    CHILDREN_IP_EDUTAINMENT_IPO_STAGE2_WITH_4B = "CHILDREN_IP_EDUTAINMENT_IPO_STAGE2_WITH_4B"
+    PLASTIC_RECYCLING_POLICY_FALSE_POSITIVE = "PLASTIC_RECYCLING_POLICY_FALSE_POSITIVE"
+    SHRINKFLATION_PRICE_REGULATION_4C_WATCH = "SHRINKFLATION_PRICE_REGULATION_4C_WATCH"
     LIVESTOCK_DISEASE_PRICE_EVENT_KOREA = "LIVESTOCK_DISEASE_PRICE_EVENT_KOREA"
     FEED_GRAIN_COST_PASS_THROUGH = "FEED_GRAIN_COST_PASS_THROUGH"
     TUNA_FISHERY_GLOBAL_BRAND_LEGAL_RISK = "TUNA_FISHERY_GLOBAL_BRAND_LEGAL_RISK"
@@ -6786,6 +6795,114 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("demographic", "policy", "financial_actual", "research_report", "price", "red_team"),
             false_positive_patterns=("hagwon demand treated as Green while demographic and policy burden are ignored"),
             preferred_score_weights=_weights(eps_fcf=12, visibility=16, bottleneck=4, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.FERTILIZER_EXPORT_CONTROL_STAGE2_EVENT: ArchetypeDefinition(
+            archetype=E2RArchetype.FERTILIZER_EXPORT_CONTROL_STAGE2_EVENT,
+            stage1_radar_signals=("fertilizer export restriction", "urea supply-chain memory", "phosphate or nitrogen-potassium export control"),
+            stage2_candidate_signals=("export-control scope, international fertilizer price, import mix and domestic inventory are mapped",),
+            stage3_high_conviction_signals=("domestic ASP, inventory availability, sales volume, margin pass-through and cash conversion verified",),
+            stage4a_ongoing_signals=("fertilizer ASP and margin remain visible after supply shock normalizes",),
+            stage4b_graduation_overheat_signals=("fertilizer basket rally before domestic ASP or margin bridge", "supply-shock premium without company evidence"),
+            stage4c_thesis_break_signals=("input-cost spike cannot pass through", "inventory shortage", "export restriction relief reverses price premium"),
+            key_evidence_families=("commodity", "policy", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("global supply shock treated as Korean listed-company Green", "urea memory scored without current ASP or margin"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=12, bottleneck=16, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.AGRI_FEED_PRICE_INPUT_COST_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.AGRI_FEED_PRICE_INPUT_COST_4C_WATCH,
+            stage1_radar_signals=("feed wheat tender failure", "grain offer spike", "livestock input-cost pressure"),
+            stage2_candidate_signals=("cost pass-through, hedge, inventory and output-price response are mapped",),
+            stage3_high_conviction_signals=("not by itself; feed price pressure needs pass-through, volume retention and margin resilience",),
+            stage4a_ongoing_signals=("feed cost and livestock or food-service margins stabilize",),
+            stage4b_graduation_overheat_signals=("feed or livestock basket rally before margin pass-through",),
+            stage4c_thesis_break_signals=("high-price tender failure", "grain import-cost shock", "margin compression", "no inventory buffer"),
+            key_evidence_families=("commodity", "news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("feed-cost spike treated as demand growth", "input-cost 4C ignored during food-service scoring"),
+            preferred_score_weights=_weights(eps_fcf=4, visibility=6, bottleneck=12, mispricing=4, valuation=4),
+        ),
+        E2RArchetype.AI_TEXTBOOK_POLICY_STAGE2_WITH_ROLLBACK_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.AI_TEXTBOOK_POLICY_STAGE2_WITH_ROLLBACK_4C,
+            stage1_radar_signals=("AI digital textbook rollout", "AI classroom policy", "edtech basket policy attention"),
+            stage2_candidate_signals=("school contract, paid adoption, budget, parent and teacher acceptance are mapped",),
+            stage3_high_conviction_signals=("paid school adoption, recurring contract, learning-outcome data, privacy safety and OPM verified",),
+            stage4a_ongoing_signals=("AI textbook adoption survives classroom policy and backlash",),
+            stage4b_graduation_overheat_signals=("AI textbook rally before school contracts or teacher acceptance",),
+            stage4c_thesis_break_signals=("official textbook status downgrade", "classroom device ban", "parent petition", "privacy or hallucination backlash"),
+            key_evidence_families=("policy", "education", "news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("policy rollout treated as guaranteed edtech revenue", "AI classroom headline scored without paid adoption"),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=10, bottleneck=2, mispricing=6, valuation=4),
+        ),
+        E2RArchetype.HAGWON_PRIVATE_EDUCATION_STRUCTURAL_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.HAGWON_PRIVATE_EDUCATION_STRUCTURAL_STAGE2,
+            stage1_radar_signals=("under-six hagwon enrolment", "preschool tuition ARPU", "English kindergarten demand"),
+            stage2_candidate_signals=("enrolment rate, tuition, ARPU, retention, teacher cost and social-regulatory pressure are mapped",),
+            stage3_high_conviction_signals=("listed-company enrolment growth, ARPU, OPM, retention, FCF and regulatory tolerance verified",),
+            stage4a_ongoing_signals=("enrolment and ARPU stay durable without policy backlash",),
+            stage4b_graduation_overheat_signals=("hagwon premium prices before listed-company margin and retention",),
+            stage4c_thesis_break_signals=("private education regulation", "household burden backlash", "low birthrate demand break", "teacher cost inflation"),
+            key_evidence_families=("demographic", "education", "financial_actual", "research_report", "price", "red_team"),
+            false_positive_patterns=("structural hagwon demand treated as Green before listed-company ARPU and margin",),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=18, bottleneck=4, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.FOOD_DELIVERY_MA_STAGE2_WITH_REGULATORY_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.FOOD_DELIVERY_MA_STAGE2_WITH_REGULATORY_4B,
+            stage1_radar_signals=("food-delivery M&A report", "delivery-app consolidation", "platform stake-building"),
+            stage2_candidate_signals=("reported bid value, consortium terms, financing, regulatory path and take-rate economics are mapped",),
+            stage3_high_conviction_signals=("binding offer, KFTC approval, funding, merchant churn, take-rate and delivery-cost synergy verified",),
+            stage4a_ongoing_signals=("approved acquisition converts into unit economics and cashflow",),
+            stage4b_graduation_overheat_signals=("M&A teaser priced as signed deal", "platform scale premium before take-rate economics"),
+            stage4c_thesis_break_signals=("regulatory block", "merchant fee cap", "customer churn", "integration cost overrun"),
+            key_evidence_families=("deal", "regulatory", "financial_actual", "news", "price", "red_team"),
+            false_positive_patterns=("teaser letter treated as signed M&A", "GMV scale scored without fee economics"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=16, bottleneck=6, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.ECOMMERCE_DATA_BREACH_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.ECOMMERCE_DATA_BREACH_HARD_4C,
+            stage1_radar_signals=("large customer data breach", "platform security incident", "life-service trust break"),
+            stage2_candidate_signals=("limited-data update or remediation plan is mapped as relief only",),
+            stage3_high_conviction_signals=("not a positive Green source; trust, churn, compensation and regulatory liability must clear first",),
+            stage4a_ongoing_signals=("trust recovery, churn, compensation and regulatory probes stabilize",),
+            stage4b_graduation_overheat_signals=("relief bounce before trust and churn recovery",),
+            stage4c_thesis_break_signals=("large-scale personal-info exposure", "CEO resignation", "police or tax probe", "customer exodus"),
+            key_evidence_families=("cybersecurity", "governance", "news", "price", "red_team"),
+            false_positive_patterns=("platform scale scored while security trust is broken", "relief bounce treated as growth"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.CHILDREN_IP_EDUTAINMENT_IPO_STAGE2_WITH_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.CHILDREN_IP_EDUTAINMENT_IPO_STAGE2_WITH_4B,
+            stage1_radar_signals=("children IP global hit", "edutainment IPO", "viral character monetization"),
+            stage2_candidate_signals=("IPO price, debut return, revenue, OP, subscribers and IP scale are mapped",),
+            stage3_high_conviction_signals=("recurring licensing, merchandise, next-IP revenue, global distribution and margin durability verified",),
+            stage4a_ongoing_signals=("franchise revenue remains broad beyond the first hit IP",),
+            stage4b_graduation_overheat_signals=("IPO pop before next-franchise proof", "one-hit-wonder valuation risk"),
+            stage4c_thesis_break_signals=("next-IP fails", "licensing revenue declines", "margin durability breaks", "post-IPO valuation compression"),
+            key_evidence_families=("ipo", "content_ip", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("viral view count treated as recurring franchise FCF", "IPO pop scored as Green"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=14, bottleneck=4, mispricing=8, valuation=8),
+        ),
+        E2RArchetype.PLASTIC_RECYCLING_POLICY_FALSE_POSITIVE: ArchetypeDefinition(
+            archetype=E2RArchetype.PLASTIC_RECYCLING_POLICY_FALSE_POSITIVE,
+            stage1_radar_signals=("plastic recycling policy", "global plastic treaty", "official recycling-rate headline"),
+            stage2_candidate_signals=("actual recycling yield, cleanup contract, tipping fee, utilization and liability are mapped",),
+            stage3_high_conviction_signals=("contracted treatment volume, tipping fee, facility utilization, pyrolysis margin and FCF verified",),
+            stage4a_ongoing_signals=("recycling economics and cleanup contracts remain profitable",),
+            stage4b_graduation_overheat_signals=("recycling theme prices before cleanup economics", "official recycling rate headline rally"),
+            stage4c_thesis_break_signals=("true recycling rate much lower", "untreated waste liability", "cleanup cost overrun", "facility underutilization"),
+            key_evidence_families=("policy", "environment", "financial_actual", "news", "price", "red_team"),
+            false_positive_patterns=("official recycling rate treated as company margin", "policy headline scored before tipping fee economics"),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=10, bottleneck=4, mispricing=6, valuation=4),
+        ),
+        E2RArchetype.SHRINKFLATION_PRICE_REGULATION_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.SHRINKFLATION_PRICE_REGULATION_4C_WATCH,
+            stage1_radar_signals=("shrinkflation regulation", "consumer price labeling", "price-control pressure"),
+            stage2_candidate_signals=("compliance cost, pricing-power evidence, margin bridge and demand elasticity are mapped",),
+            stage3_high_conviction_signals=("pricing power survives regulation with stable volume, margin and FCF",),
+            stage4a_ongoing_signals=("price labeling and consumer regulation remain manageable",),
+            stage4b_graduation_overheat_signals=("consumer pricing rally before regulatory and margin evidence",),
+            stage4c_thesis_break_signals=("price regulation blocks ASP", "labeling penalty", "consumer backlash", "margin compression"),
+            key_evidence_families=("policy", "consumer", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("price increase treated as pricing power while regulation removes it",),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=8, bottleneck=4, mispricing=6, valuation=4),
         ),
         E2RArchetype.OTHER_MANUFACTURING_TOOLS_IPO_QUALITY_GATE: ArchetypeDefinition(
             archetype=E2RArchetype.OTHER_MANUFACTURING_TOOLS_IPO_QUALITY_GATE,

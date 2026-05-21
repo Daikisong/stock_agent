@@ -1,0 +1,118 @@
+{
+  "green_blockers": [
+    "commodity_supply_shock_without_company_margin",
+    "edtech_policy_headline_without_school_contract",
+    "ai_textbook_without_teacher_parent_acceptance",
+    "hagwon_demand_without_listed_company_margin",
+    "ma_teaser_without_binding_offer",
+    "platform_scale_without_security",
+    "viral_ip_without_next_franchise",
+    "recycling_rate_headline_without_economics",
+    "full_adjusted_ohlc_missing_for_stage3_confirmation"
+  ],
+  "hard_4c_gates": [
+    "large_customer_data_breach",
+    "policy_rollback_or_official_status_downgrade",
+    "classroom_device_ban_reduces_edtech_adoption",
+    "input_cost_shock_cannot_pass_through",
+    "cleanup_liability_without_profitable_treatment_contract",
+    "social_backlash_against_education_or_childcare_burden",
+    "ma_blocked_by_regulator_or_merchant_fee_politics"
+  ],
+  "large_sector": "AGRICULTURE_LIFE_SERVICES_MISC",
+  "method": "trigger_level_backtest_v1",
+  "required_target_aliases": {
+    "AGRI_FEED_PRICE_INPUT_COST_4C_WATCH": "AGRI_FEED_PRICE_INPUT_COST_4C_WATCH",
+    "AI_TEXTBOOK_POLICY_STAGE2_WITH_ROLLBACK_4C": "AI_TEXTBOOK_POLICY_STAGE2_WITH_ROLLBACK_4C",
+    "CHILDREN_IP_EDUTAINMENT_IPO_STAGE2_WITH_4B": "CHILDREN_IP_EDUTAINMENT_IPO_STAGE2_WITH_4B",
+    "ECOMMERCE_DATA_BREACH_HARD_4C": "ECOMMERCE_DATA_BREACH_HARD_4C",
+    "FERTILIZER_EXPORT_CONTROL_STAGE2_EVENT": "FERTILIZER_EXPORT_CONTROL_STAGE2_EVENT",
+    "FOOD_DELIVERY_MA_STAGE2_WITH_REGULATORY_4B": "FOOD_DELIVERY_MA_STAGE2_WITH_REGULATORY_4B",
+    "HAGWON_PRIVATE_EDUCATION_STRUCTURAL_STAGE2": "HAGWON_PRIVATE_EDUCATION_STRUCTURAL_STAGE2",
+    "PLASTIC_RECYCLING_POLICY_FALSE_POSITIVE": "PLASTIC_RECYCLING_POLICY_FALSE_POSITIVE",
+    "SHRINKFLATION_PRICE_REGULATION_4C_WATCH": "SHRINKFLATION_PRICE_REGULATION_4C_WATCH"
+  },
+  "round_id": "round_235",
+  "score_down_axes": [
+    "commodity_supply_shock_without_company_margin",
+    "edtech_policy_headline_without_school_contract",
+    "AI_textbook_without_teacher_parent_acceptance",
+    "hagwon_structural_demand_without_margin",
+    "M&A_teaser_without_binding_offer",
+    "platform_scale_without_security",
+    "viral_IP_without_next_franchise",
+    "recycling_rate_headline_without_economics"
+  ],
+  "score_up_axes": [
+    "domestic_ASP_margin_pass_through",
+    "inventory_and_import_mix_visibility",
+    "school_contract_paid_adoption",
+    "policy_rollback_risk",
+    "listed_company_enrollment_ARPU",
+    "platform_data_security_trust",
+    "binding_MA_approval_take_rate",
+    "recurring_IP_revenue",
+    "cleanup_contract_tipping_fee_visibility"
+  ],
+  "source_round": "docs/round/round_307.md",
+  "stage2_actionable_rules": [
+    "policy_or_supply_shock_closes_into_domestic_asp_margin_contract_or_paid_adoption",
+    "education_policy_has_actual_contract_paid_adoption_and_teacher_parent_acceptance",
+    "life_service_ma_has_binding_offer_financing_approval_path_and_take_rate_economics",
+    "platform_life_service_keeps_data_security_trust_intact",
+    "ip_edutainment_has_recurring_licensing_merchandise_or_next_ip_evidence",
+    "waste_recycling_has_cleanup_contract_tipping_fee_utilization_or_carbon_pass_through",
+    "market_relative_event_reaction_exceeds_5pp_and_is_linked_to_public_evidence"
+  ],
+  "stage3_green_rules": [
+    "agriculture_input_shock_links_to_domestic_asp_margin_volume_and_cash_conversion",
+    "edtech_has_paid_adoption_school_contract_teacher_acceptance_and_privacy_safety",
+    "private_education_has_enrollment_arpu_margin_and_low_regulatory_risk",
+    "life_platform_has_ma_approval_take_rate_data_security_and_retention_closed",
+    "children_ip_has_recurring_franchise_revenue_not_one_hit_only",
+    "waste_recycling_has_contracts_tipping_fee_facility_utilization_and_margin",
+    "full_window_mfe_mae_is_available_and_supportive"
+  ],
+  "stage3_yellow_rules": [
+    "trigger_can_change_eps_op_fcf_path_but_one_core_gate_remains",
+    "pinkfong_next_ip_or_licensing_revenue_starts_to_confirm_but_durability_is_pending",
+    "hagwon_listed_company_enrollment_arpu_and_margin_confirm_despite_regulatory_risk",
+    "food_delivery_ma_has_binding_acquisition_but_integration_or_take_rate_is_pending",
+    "fertilizer_domestic_asp_or_margin_pass_through_appears_but_full_volume_cash_proof_is_pending"
+  ],
+  "stage4b_watch_triggers": [
+    "fertilizer_basket_rerates_on_china_export_controls_before_domestic_margin_evidence",
+    "edtech_policy_announcement_prices_before_school_adoption",
+    "ma_teaser_is_priced_as_binding_acquisition",
+    "platform_scale_ignores_data_security_or_customer_trust",
+    "viral_ip_ipo_prices_without_next_franchise_revenue",
+    "recycling_policy_headline_prices_without_cleanup_economics"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "large_sector": "AGRICULTURE_LIFE_SERVICES_MISC",
+    "method": "trigger_level_backtest_v1",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_235",
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_307.md",
+    "stage2_actionable_candidate_count": 1,
+    "stage2_event_candidate_count": 5,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 4,
+    "stage4b_watch_count": 5,
+    "stage4c_watch_count": 5,
+    "target_archetype_count": 9,
+    "trigger_count": 10
+  },
+  "what_not_to_change": [
+    "do_not_change_production_scoring",
+    "do_not_use_round307_cases_as_candidate_generation_input",
+    "do_not_treat_policy_supply_shock_ma_teaser_or_viral_ip_as_green",
+    "do_not_invent_full_mfe_mae_without_adjusted_ohlc"
+  ]
+}
