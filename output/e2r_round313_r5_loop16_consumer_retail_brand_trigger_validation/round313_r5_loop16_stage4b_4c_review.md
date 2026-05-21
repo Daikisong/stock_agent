@@ -1,0 +1,27 @@
+# Round 313 Stage 4B / 4C Review
+
+## 4B Watch
+- viral_beauty_or_device_stock_rises_before_repeat_sales_margin
+- tourism_policy_moves_stocks_before_visitor_spending
+- ecommerce_rival_stocks_move_before_GMV_conversion
+- JV_or_MA_announced_before_integration_economics
+- K_food_single_product_concentration_becomes_excessive
+- shrinkflation_or_price_regulation_limits_hidden_ASP_pass_through
+
+## 4C Watch Gates
+- ecommerce_data_breach_customer_trust_collapse
+- offline_retail_court_restructuring_liquidation_value_above_going_concern
+- hidden_price_increase_regulation_blocks_ASP_pass_through
+- food_safety_recall_or_contamination
+- tourism_demand_collapse_due_geopolitics_or_safety_image
+- brand_channel_saturation_and_inventory_write_down
+
+## Case Review
+- r5_loop16_samyang_buldak_export: Stage2-Actionable to Stage3-Yellow candidate / excellent_stage2_to_yellow_candidate
+- r5_loop16_kbeauty_us_channel: Stage2-Actionable / Stage2_Actionable_channel_expansion
+- r5_loop16_apr_medicube_beauty_device: Stage2 + 4B-watch / Stage2_structural_but_overheat_4B
+- r5_loop16_china_visa_free_tourism_retail: Stage2 event / Stage2_tourism_event_not_Green
+- r5_loop16_coupang_breach_rival_retail_shift: 4C + Stage2 rival opportunity / platform_security_4C_with_rival_stage2
+- r5_loop16_shinsegae_emart_alibaba_gmarket_jv: Stage2 JV / Stage2_platform_JV_not_Green
+- r5_loop16_homeplus_offline_grocery_restructuring: 4C / offline_grocery_hard_4C_reference
+- r5_loop16_shrinkflation_price_regulation: 4C-watch / consumer_price_regulation_4C_watch

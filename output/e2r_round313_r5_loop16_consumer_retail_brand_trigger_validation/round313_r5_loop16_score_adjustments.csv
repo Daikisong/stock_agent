@@ -1,0 +1,17 @@
+direction,axis,production_scoring_changed
+up,export_ASP_shipment_capacity,false
+up,US_physical_channel_sellthrough,false
+up,overseas_revenue_mix,false
+up,repeat_purchase_or_recurring_revenue,false
+up,tourist_arrival_spending_margin,false
+up,platform_security_trust,false
+up,rival_share_capture,false
+up,retail_restructuring_risk,false
+up,pricing_transparency_regulation,false
+down,brand_viral_without_margin,false
+down,tourism_policy_without_spend,false
+down,ecommerce_user_shift_without_GMV,false
+down,JV_without_integration_economics,false
+down,offline_retail_assets_without_cashflow,false
+down,hidden_price_increase_without_disclosure,false
+down,post_IPO_or_YTD_rally_without_trigger_OHLC,false

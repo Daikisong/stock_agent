@@ -1,0 +1,12 @@
+# Round 313 Price Validation Plan
+
+Full adjusted OHLC was not available. Reported event anchors are retained without inventing full-window MFE/MAE.
+
+- r5_loop16_samyang_buldak_export: r5l16_samyang_buldak_T1 / excellent_stage2_to_yellow_candidate / full_window=`price_data_unavailable_after_deep_search`
+- r5_loop16_kbeauty_us_channel: r5l16_kbeauty_us_channel_T1 / Stage2_Actionable_channel_expansion / full_window=`price_data_unavailable_after_deep_search`
+- r5_loop16_apr_medicube_beauty_device: r5l16_apr_medicube_T1 / Stage2_structural_but_overheat_4B / full_window=`price_data_unavailable_after_deep_search`
+- r5_loop16_china_visa_free_tourism_retail: r5l16_china_tourism_T1 / Stage2_tourism_event_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r5_loop16_coupang_breach_rival_retail_shift: r5l16_coupang_breach_T0/r5l16_coupang_rival_T2 / platform_security_4C_with_rival_stage2 / full_window=`price_data_unavailable_after_deep_search`
+- r5_loop16_shinsegae_emart_alibaba_gmarket_jv: r5l16_emart_alibaba_T0 / Stage2_platform_JV_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r5_loop16_homeplus_offline_grocery_restructuring: r5l16_homeplus_T1 / offline_grocery_hard_4C_reference / full_window=`price_data_unavailable_after_deep_search`
+- r5_loop16_shrinkflation_price_regulation: r5l16_shrinkflation_T0 / consumer_price_regulation_4C_watch / full_window=`price_data_unavailable_after_deep_search`

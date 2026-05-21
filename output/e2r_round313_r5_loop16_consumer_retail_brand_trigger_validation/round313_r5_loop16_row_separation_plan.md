@@ -1,0 +1,11 @@
+# Round 313 Row Separation Plan
+
+Case evidence, trigger anchors and full OHLC windows must be separate rows.
+
+Easy example: a Coupang breach can create a rival Stage2 opportunity. It is still not rival Green until GMV and logistics margin convert.
+
+- case_library_row_describes_stage_candidate_and_evidence_quality
+- trigger_calibration_row_stores_event_anchor_user_spending_channel_policy_or_regulation_metrics
+- ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown
+- do_not_downgrade_valid_Stage2_or_Yellow_candidate_only_because_OHLC_backfill_is_missing
+- do_not_treat_brand_channel_policy_JV_or_user_shift_headline_as_Green_without_margin_sellthrough_GMV_or_FCF
