@@ -1,0 +1,11 @@
+archetype,domestic_spread_protection,control_premium_detection,critical_minerals_strategic_value,upstream_resource_control,capacity_shutdown_discipline,refining_spread_recovery,rare_earth_export_control_risk,treatment_charge_sensitivity,control_premium_as_operating_growth_penalty,critical_capex_without_funding_clarity_penalty,anti_dumping_without_margin_recovery_penalty,tariff_export_risk_ignored_penalty,stage2_actionable_promote,stage3_yellow_gate,stage3_green_gate,notes
+CONTROL_PREMIUM_STRATEGIC_METALS_STAGE2_WITH_DILUTION_4B,+1,+5,+3,+1,+0,+0,+1,+2,-5,-3,-1,-1,control premium strong,operating margin not confirmed,governance+funding clarity,Korea Zinc.
+SMELTER_TC_SPREAD_4B,+0,+0,+2,+0,+0,+0,+1,+5,-1,-1,-1,-1,TC cut pressures smelter margin,relief missing,TC stabilization+zinc spread,Korea Zinc/Teck.
+CRITICAL_MINERALS_US_PROCESSING_STAGE2_WITH_CAPEX_4B,+0,+2,+5,+3,+0,+0,+4,+1,-2,-5,-1,-1,strategic minerals project,capex/funding/dilution missing,offtake+funding+construction,Korea Zinc Tennessee.
+STEEL_ANTIDUMPING_PROTECTION_STAGE2,+5,+0,+0,+0,+1,+0,+0,+0,-1,-1,-4,-4,anti-dumping and price reaction aligned,margin/export risk missing,spread+margin recovery,Hyundai Steel/POSCO.
+STEEL_TARIFF_AND_LOCALIZATION_HEDGE_STAGE2_4B,+2,+0,+1,+0,+0,+0,+0,+0,-1,-2,-2,-5,localization hedge vs tariff risk,MOU/ROI missing,FID+utilization+tariff clarity,Hyundai/POSCO.
+PETROCHEMICAL_RESTRUCTURING_STAGE2_RELIEF,+0,+0,+0,+0,+5,+1,+0,+0,-1,-1,-1,-2,capacity cut relief,spread recovery missing,naphtha spread+utilization,Lotte/LG Chem.
+PETROCHEMICAL_OVERSUPPLY_4B,+0,+0,+0,+0,+4,+0,+0,+0,-1,-1,-1,-2,global overcapacity loss,structural downturn,capacity closure+demand recovery,Lotte/LG Chem.
+REFINING_MARGIN_SPREAD_PRICE_FAILED,+0,+0,+0,+0,+0,+5,+0,+0,-1,-1,-1,-1,refining OP recovery candidate,segment quality missing,sustained margin+loss reduction,SK Innovation.
+UPSTREAM_LITHIUM_SUPPLY_STAGE2_NO_PRICE,+0,+0,+3,+5,+0,+0,+1,+0,-1,-4,-1,-1,upstream lithium stake,POSCO price/offtake missing,offtake+lithium margin,POSCO/MinRes.
+RARE_EARTH_EXPORT_CONTROL_4B,+0,+0,+5,+3,+0,+0,+5,+0,-1,-1,-1,-3,China export-control risk,stock-specific impact missing,license clarity+non-China supply,Korea downstream basket.

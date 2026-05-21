@@ -263,6 +263,15 @@ class E2RArchetype(str, Enum):
     STEEL_ANTIDUMPING_SPREAD_STAGE2_ACTIONABLE = "STEEL_ANTIDUMPING_SPREAD_STAGE2_ACTIONABLE"
     STEEL_WEAK_DEMAND_FAILED_RERATING = "STEEL_WEAK_DEMAND_FAILED_RERATING"
     KOREA_ZINC_CONTROL_PREMIUM_4B = "KOREA_ZINC_CONTROL_PREMIUM_4B"
+    CONTROL_PREMIUM_STRATEGIC_METALS_STAGE2_WITH_DILUTION_4B = "CONTROL_PREMIUM_STRATEGIC_METALS_STAGE2_WITH_DILUTION_4B"
+    SMELTER_TC_SPREAD_4B = "SMELTER_TC_SPREAD_4B"
+    CRITICAL_MINERALS_US_PROCESSING_STAGE2_WITH_CAPEX_4B = "CRITICAL_MINERALS_US_PROCESSING_STAGE2_WITH_CAPEX_4B"
+    STEEL_ANTIDUMPING_PROTECTION_STAGE2 = "STEEL_ANTIDUMPING_PROTECTION_STAGE2"
+    STEEL_TARIFF_AND_LOCALIZATION_HEDGE_STAGE2_4B = "STEEL_TARIFF_AND_LOCALIZATION_HEDGE_STAGE2_4B"
+    PETROCHEMICAL_RESTRUCTURING_STAGE2_RELIEF = "PETROCHEMICAL_RESTRUCTURING_STAGE2_RELIEF"
+    PETROCHEMICAL_OVERSUPPLY_4B = "PETROCHEMICAL_OVERSUPPLY_4B"
+    REFINING_MARGIN_SPREAD_PRICE_FAILED = "REFINING_MARGIN_SPREAD_PRICE_FAILED"
+    RARE_EARTH_EXPORT_CONTROL_4B = "RARE_EARTH_EXPORT_CONTROL_4B"
     CRITICAL_MINERALS_SMELTER_STAGE2_WITH_DILUTION_4B = "CRITICAL_MINERALS_SMELTER_STAGE2_WITH_DILUTION_4B"
     COPPER_TCRC_SPREAD_4C_WATCH = "COPPER_TCRC_SPREAD_4C_WATCH"
     CHINA_STRATEGIC_MINERAL_EXPORT_CONTROL_4C = "CHINA_STRATEGIC_MINERAL_EXPORT_CONTROL_4C"
@@ -3761,6 +3770,114 @@ ARCHETYPE_DEFINITIONS.update(
             stage4c_thesis_break_signals=("control premium disappears", "debt-funded buyback damages balance sheet", "share issuance or injunction risk", "governance fight disrupts operations"),
             key_evidence_families=("governance", "price", "news", "financial_actual", "red_team"),
             false_positive_patterns=("control premium treated as operating rerating", "strategic asset label scored without smelter margin"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.CONTROL_PREMIUM_STRATEGIC_METALS_STAGE2_WITH_DILUTION_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.CONTROL_PREMIUM_STRATEGIC_METALS_STAGE2_WITH_DILUTION_4B,
+            stage1_radar_signals=("MBK Young Poong tender offer", "control premium", "buyback battle", "strategic metals governance event"),
+            stage2_candidate_signals=("tender value, tender price, control-premium event return and court or buyback milestones are visible",),
+            stage3_high_conviction_signals=("not operating Green unless smelter margin, resource spread, FCF, debt load and governance stability confirm",),
+            stage4a_ongoing_signals=("control outcome stabilizes while operating spread and FCF remain intact",),
+            stage4b_graduation_overheat_signals=("control premium rally prices governance outcome before operating improvement",),
+            stage4c_thesis_break_signals=("share issuance dilution", "regulatory investigation", "debt-funded buyback damages balance sheet", "control premium reverses"),
+            key_evidence_families=("governance", "price", "news", "financial_actual", "red_team"),
+            false_positive_patterns=("control premium treated as operating Green", "strategic metals label scored without smelter spread"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=4, bottleneck=3, mispricing=6, valuation=4),
+        ),
+        E2RArchetype.SMELTER_TC_SPREAD_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.SMELTER_TC_SPREAD_4B,
+            stage1_radar_signals=("zinc treatment charge cut", "smelter TC compression", "concentrate scarcity"),
+            stage2_candidate_signals=("not a positive source until TC, concentrate supply and zinc spread stabilize",),
+            stage3_high_conviction_signals=("not applicable while treatment charge compression pressures smelter margin",),
+            stage4a_ongoing_signals=("TC stabilizes and smelter margin recovers",),
+            stage4b_graduation_overheat_signals=("metal or control-premium rally ignores treatment-charge pressure",),
+            stage4c_thesis_break_signals=("TC remains depressed", "concentrate scarcity persists", "smelter margin compresses", "working capital worsens"),
+            key_evidence_families=("commodity_price", "industry_data", "financial_actual", "news", "red_team"),
+            false_positive_patterns=("metal price or tender premium treated as smelter margin", "TC compression ignored"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.CRITICAL_MINERALS_US_PROCESSING_STAGE2_WITH_CAPEX_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.CRITICAL_MINERALS_US_PROCESSING_STAGE2_WITH_CAPEX_4B,
+            stage1_radar_signals=("U.S.-backed critical-minerals plant", "Tennessee strategic minerals processing", "antimony and gallium project"),
+            stage2_candidate_signals=("project value, target materials, U.S. backing, share issuance, funding and capex gates are visible",),
+            stage3_high_conviction_signals=("funding finality, construction timeline, offtake, ROI, dilution absorption and margin confirm",),
+            stage4a_ongoing_signals=("project remains funded, permitted, offtake-backed and dilution-contained",),
+            stage4b_graduation_overheat_signals=("strategic-resource capex rerates before funding, construction or offtake",),
+            stage4c_thesis_break_signals=("funding fails", "share issuance dilution overwhelms economics", "construction delayed", "offtake absent"),
+            key_evidence_families=("capex", "policy", "governance", "financial_actual", "news", "red_team"),
+            false_positive_patterns=("critical-minerals headline treated as FCF", "U.S. backing scored without funding and offtake"),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=18, bottleneck=18, mispricing=10, valuation=7),
+        ),
+        E2RArchetype.STEEL_ANTIDUMPING_PROTECTION_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.STEEL_ANTIDUMPING_PROTECTION_STAGE2,
+            stage1_radar_signals=("Chinese steel plate anti-dumping", "provisional tariff", "domestic steel spread protection"),
+            stage2_candidate_signals=("tariff rate, import share, event return and market-relative return are visible",),
+            stage3_high_conviction_signals=("domestic spread, ASP, utilization, raw-material cost and margin recovery confirm",),
+            stage4a_ongoing_signals=("anti-dumping relief converts into durable domestic spread and FCF",),
+            stage4b_graduation_overheat_signals=("anti-dumping headline is priced before margin recovery or export-risk mitigation",),
+            stage4c_thesis_break_signals=("U.S. tariff damages export margin", "domestic demand weakens", "raw-material spread worsens", "policy relief fails"),
+            key_evidence_families=("policy", "price", "industry_data", "financial_actual", "red_team"),
+            false_positive_patterns=("tariff headline treated as EPS without spread proof", "export tariff risk ignored"),
+            preferred_score_weights=_weights(eps_fcf=17, visibility=16, bottleneck=14, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.STEEL_TARIFF_AND_LOCALIZATION_HEDGE_STAGE2_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.STEEL_TARIFF_AND_LOCALIZATION_HEDGE_STAGE2_4B,
+            stage1_radar_signals=("U.S. steel tariff threat", "Louisiana steel plant", "localization hedge capex"),
+            stage2_candidate_signals=("tariff selloff, plant value, annual capacity, production target and offtake/MOU terms are visible",),
+            stage3_high_conviction_signals=("final investment decision, construction progress, utilization, tariff durability, offtake and capex ROI confirm",),
+            stage4a_ongoing_signals=("localized capacity ramps while tariff hedge and margin benefit remain visible",),
+            stage4b_graduation_overheat_signals=("localization capex rerates before ROI, construction and utilization",),
+            stage4c_thesis_break_signals=("tariff hedge fails", "capex burden rises", "plant delayed", "U.S. demand weakens"),
+            key_evidence_families=("policy", "capex", "price", "financial_actual", "customer"),
+            false_positive_patterns=("localization MOU treated as Green", "tariff risk counted as one-sided relief"),
+            preferred_score_weights=_weights(eps_fcf=14, visibility=16, bottleneck=12, mispricing=8, valuation=7),
+        ),
+        E2RArchetype.PETROCHEMICAL_RESTRUCTURING_STAGE2_RELIEF: ArchetypeDefinition(
+            archetype=E2RArchetype.PETROCHEMICAL_RESTRUCTURING_STAGE2_RELIEF,
+            stage1_radar_signals=("petrochemical oversupply", "Daesan restructuring", "NCC shutdown", "government support package"),
+            stage2_candidate_signals=("capacity shutdown, support size, capital increase and restructuring approval are visible",),
+            stage3_high_conviction_signals=("actual shutdown discipline, naphtha spread recovery, operating-loss reduction, working-capital relief and FCF confirm",),
+            stage4a_ongoing_signals=("capacity discipline holds and petrochemical spread continues improving",),
+            stage4b_graduation_overheat_signals=("restructuring relief rerates before spread and utilization recovery",),
+            stage4c_thesis_break_signals=("capacity cut not executed", "China or Middle East oversupply persists", "spread fails to recover", "credit risk worsens"),
+            key_evidence_families=("policy", "news", "financial_actual", "commodity_price", "red_team"),
+            false_positive_patterns=("restructuring support treated as spread recovery", "capacity-cut headline scored before execution"),
+            preferred_score_weights=_weights(eps_fcf=16, visibility=17, bottleneck=15, mispricing=8, valuation=7),
+        ),
+        E2RArchetype.PETROCHEMICAL_OVERSUPPLY_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.PETROCHEMICAL_OVERSUPPLY_4B,
+            stage1_radar_signals=("China Middle East oversupply", "NCC loss", "petrochemical operating loss"),
+            stage2_candidate_signals=("not a positive source until demand, spread and capacity discipline improve",),
+            stage3_high_conviction_signals=("not applicable while structural oversupply and losses persist",),
+            stage4a_ongoing_signals=("spread and utilization recover after prior oversupply pressure",),
+            stage4b_graduation_overheat_signals=("chemical recovery basket priced before naphtha spread recovery",),
+            stage4c_thesis_break_signals=("operating loss widens", "oversupply persists", "demand recovery fails", "credit support insufficient"),
+            key_evidence_families=("financial_actual", "commodity_price", "industry_data", "news", "red_team"),
+            false_positive_patterns=("policy support treated as demand recovery", "loss-making oversupply ignored"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.REFINING_MARGIN_SPREAD_PRICE_FAILED: ArchetypeDefinition(
+            archetype=E2RArchetype.REFINING_MARGIN_SPREAD_PRICE_FAILED,
+            stage1_radar_signals=("refining margin flat guide", "unexpected refining loss", "refining OP recovery"),
+            stage2_candidate_signals=("segment OP, refining margin, battery/petrochemical loss drag and normalization timing are visible",),
+            stage3_high_conviction_signals=("sustained refining margin, logistics normalization, inventory effect normalization and battery/petrochemical loss reduction confirm",),
+            stage4a_ongoing_signals=("refining spread remains healthy and non-refining losses narrow",),
+            stage4b_graduation_overheat_signals=("headline OP recovery priced before segment quality and normalization",),
+            stage4c_thesis_break_signals=("refining margin falls again", "battery losses widen", "petrochemical losses persist", "inventory effect reverses"),
+            key_evidence_families=("financial_actual", "commodity_price", "price", "management_commentary", "red_team"),
+            false_positive_patterns=("consolidated OP recovery scored without segment quality", "prior price failure ignored"),
+            preferred_score_weights=_weights(eps_fcf=16, visibility=12, bottleneck=14, mispricing=7, valuation=7),
+        ),
+        E2RArchetype.RARE_EARTH_EXPORT_CONTROL_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.RARE_EARTH_EXPORT_CONTROL_4B,
+            stage1_radar_signals=("China rare earth export control", "U.S. defense end-use restriction", "Korea downstream supply-chain risk"),
+            stage2_candidate_signals=("not a positive source; company-specific cost/order impact and alternative supply must be identified",),
+            stage3_high_conviction_signals=("not Green until non-China supply, export-license clarity, customer impact and margin protection confirm",),
+            stage4a_ongoing_signals=("alternative supply and compliance path remain verified",),
+            stage4b_graduation_overheat_signals=("rare-earth or strategic-material headline rerates before company-specific impact is known",),
+            stage4c_thesis_break_signals=("export-control sanction stops downstream shipments", "alternative supply unavailable", "customer orders disrupted"),
+            key_evidence_families=("policy", "news", "supply_chain", "red_team", "price"),
+            false_positive_patterns=("rare-earth headline treated as beneficiary evidence", "sector basket scored without cost or order impact"),
             preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.CRITICAL_MINERALS_SMELTER_STAGE2_WITH_DILUTION_4B: ArchetypeDefinition(

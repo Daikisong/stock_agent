@@ -1,0 +1,31 @@
+# Round 325 Stage 4B / 4C Review
+
+## 4B Watch
+- control_premium_rallies_without_operating_improvement
+- strategic_resource_capex_funded_by_large_share_issuance
+- zinc_TC_compression
+- US_steel_tariff_threat
+- anti_dumping_protection_without_margin_recovery
+- petrochemical_restructuring_without_demand_recovery
+- refining_OP_recovery_mixed_with_battery_petrochemical_losses
+- lithium_JV_without_offtake_economics
+- rare_earth_export_controls_without_alternative_supply
+
+## Hard 4C Gates
+- permanent_loss_of_resource_access
+- regulatory_block_or_criminal_investigation_materially_impairs_capital_plan
+- structural_spread_collapse_without_capacity_closure
+- large_dilution_spiral
+- export_control_sanction_stops_downstream_shipments
+- commodity_price_collapse_breaks_debt_or_capex_model
+
+## Case Review
+- r4_loop17_korea_zinc_control_premium: Stage2 + 4B-watch / control_premium_stage2_with_4B
+- r4_loop17_korea_zinc_teck_tc_cut: 4B-watch / smelter_margin_4B
+- r4_loop17_korea_zinc_us_critical_minerals: Stage2 + 4B-watch / strategic_resource_stage2_with_capex_4B
+- r4_loop17_hyundai_steel_posco_antidumping: Stage2-Actionable / good_stage2_domestic_steel_protection
+- r4_loop17_hyundai_posco_louisiana_steel_plant: Stage2 + 4B-watch / tariff_4B_with_localization_stage2
+- r4_loop17_petrochemical_oversupply_restructuring: failed_rerating + Stage2 relief / petrochemical_failed_rerating_with_restructuring_relief
+- r4_loop17_sk_innovation_refining_margin_spread: Stage2 recovery candidate + 4B-watch / refining_spread_recovery_candidate_with_4B
+- r4_loop17_posco_minres_lithium_jv: Stage2 / strategic_upstream_stage2_not_green
+- r4_loop17_china_rare_earth_export_control_korea: 4B-watch / rare_earth_export_control_4B

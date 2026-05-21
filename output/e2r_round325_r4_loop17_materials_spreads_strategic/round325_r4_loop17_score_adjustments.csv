@@ -1,0 +1,17 @@
+direction,axis,production_scoring_changed
+up,domestic_spread_protection,false
+up,control_premium_detection,false
+up,critical_minerals_strategic_value,false
+up,upstream_resource_control,false
+up,capacity_shutdown_discipline,false
+up,refining_spread_recovery,false
+up,rare_earth_export_control_risk,false
+up,treatment_charge_sensitivity,false
+down,control_premium_as_operating_growth,false
+down,critical_capex_without_funding_clarity,false
+down,anti_dumping_without_margin_recovery,false
+down,tariff_export_risk_ignored,false
+down,petrochemical_restructuring_without_spread,false
+down,refining_OP_without_segment_quality,false
+down,upstream_lithium_without_offtake_margin,false
+down,rare_earth_headline_without_company_impact,false

@@ -1,0 +1,47 @@
+# Round 325 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- event_return_at_least_5pct
+- market_relative_return_at_least_5pp
+- tariff_anti_dumping_tender_contract_capex_or_policy_value_is_clear
+- spread_treatment_charge_commodity_price_or_utilization_can_link_to_margin
+- strategic_resource_control_links_to_customer_offtake_or_capacity
+- dilution_export_tariff_regulatory_investigation_TC_compression_4B_is_identified
+- reported_price_reaction_matches_the_trigger_direction
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- sustained_spread_or_margin_recovery_visible
+- capacity_shutdown_or_utilization_improvement_visible
+- offtake_or_customer_contract_finality_visible
+- funding_clarity_without_excessive_dilution
+- export_tariff_risk_reduced
+- stock_specific_price_validation_with_MFE_MAE_available
+
+## Stage3-Green Rules
+- spread_improvement_visible_in_earnings
+- strategic_resource_capex_has_funding_offtake_construction_and_margin_clarity
+- commodity_price_rebound_is_durable
+- treatment_charge_or_raw_material_costs_are_stable
+- dilution_regulatory_tariff_4B_is_reduced
+- full_window_MFE_MAE_is_available_and_supportive
+
+## Green Blockers
+- control_premium_without_operating_margin
+- anti_dumping_without_margin_recovery
+- critical_capex_without_funding_offtake_or_dilution_clarity
+- petrochemical_restructuring_without_spread_recovery
+- refining_OP_without_segment_quality
+- upstream_lithium_without_POSCO_price_or_offtake_margin
+- rare_earth_headline_without_company_specific_cost_or_order_impact
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## Hard 4C Gates
+- permanent_loss_of_resource_access
+- regulatory_block_or_criminal_investigation_materially_impairs_capital_plan
+- structural_spread_collapse_without_capacity_closure
+- large_dilution_spiral
+- export_control_sanction_stops_downstream_shipments
+- commodity_price_collapse_breaks_debt_or_capex_model

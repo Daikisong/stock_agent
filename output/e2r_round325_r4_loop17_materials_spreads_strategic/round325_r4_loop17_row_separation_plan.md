@@ -1,0 +1,11 @@
+# Round 325 Row Separation Plan
+
+Materials rows must separate case evidence, trigger anchors and full adjusted OHLC backfill.
+
+Easy example: Korea Zinc can have a Stage2 control-premium row and a separate TC-compression 4B row. Combining them would falsely turn a governance event into operating Green.
+
+- case_library_row_describes_stage_candidate_and_evidence_quality
+- trigger_calibration_row_stores_reported_event_return_event_price_tender_tariff_TC_contract_capex_or_capacity_cut
+- ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown
+- do_not_create_MFE_MAE_without_full_adjusted_OHLC
+- do_not_treat_control_premium_anti_dumping_critical_capex_lithium_stake_or_restructuring_as_Green_without_margin_offtake_funding_and_risk_resolution
