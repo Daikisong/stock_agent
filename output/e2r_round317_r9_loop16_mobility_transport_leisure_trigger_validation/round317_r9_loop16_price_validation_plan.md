@@ -1,0 +1,12 @@
+# Round 317 Price Validation Plan
+
+Full adjusted OHLC was not available. Reported event anchors are retained without inventing full-window MFE/MAE.
+
+- r9_loop16_hyundai_hybrid_valueup: r9l16_hyundai_hybrid_valueup_T1 / excellent_stage2_actionable_hybrid_valueup / full_window=`price_data_unavailable_after_deep_search`
+- r9_loop16_hyundai_kia_tariff_localization: r9l16_hyundai_kia_tariff_T0 / tariff_4C_with_localization_hedge / full_window=`price_data_unavailable_after_deep_search`
+- r9_loop16_hyundai_boston_dynamics_robotics: r9l16_hyundai_robotics_T2 / Stage2_robotics_optionality_with_4B_labor_overlay / full_window=`price_data_unavailable_after_deep_search`
+- r9_loop16_hyundai_glovis_export_disruption: r9l16_hyundai_glovis_route_T0 / auto_export_logistics_4C_watch / full_window=`price_data_unavailable_after_deep_search`
+- r9_loop16_korean_air_asiana_consolidation: r9l16_korean_air_asiana_T1 / Stage2_airline_consolidation_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r9_loop16_jeju_air_crash_safety_4c: r9l16_jeju_air_crash_T0 / hard_4C_success_aviation_safety / full_window=`price_data_unavailable_after_deep_search`
+- r9_loop16_china_tourism_leisure_transport: r9l16_china_tourism_leisure_T1 / Stage2_leisure_event_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r9_loop16_hmm_red_sea_freight_beta: r9l16_hmm_redsea_T0 / cyclical_freight_beta_not_Green / full_window=`price_data_unavailable_after_deep_search`

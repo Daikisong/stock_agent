@@ -1,0 +1,11 @@
+# Round 317 Row Separation Plan
+
+Case evidence, trigger anchors and full OHLC windows must be separate rows.
+
+Easy example: Red Sea freight spike is Stage2 cyclical evidence. It is not Green until contract rates and route-normalization risk are visible.
+
+- case_library_row_describes_stage_candidate_and_evidence_quality
+- trigger_calibration_row_stores_event_anchor_tariff_hybrid_robotics_airline_tourism_or_freight_metrics
+- ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown
+- do_not_downgrade_valid_Stage2_or_Yellow_candidate_only_because_OHLC_backfill_is_missing
+- do_not_treat_hybrid_tariff_localization_robotics_airline_tourism_or_freight_headline_as_Green_without_margin_utilization_synergy_yield_or_contract_duration

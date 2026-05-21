@@ -1,0 +1,129 @@
+{
+  "green_blockers": [
+    "EV_or_hybrid_headline_without_margin",
+    "tariff_relief_without_actual_savings",
+    "localization_capex_without_utilization_or_ROI",
+    "robotics_hype_without_unit_economics_or_labor_agreement",
+    "airline_merger_without_integration_synergy",
+    "fatal_safety_incident_treated_as_one_off",
+    "tourism_policy_without_spending_yield_or_margin",
+    "freight_spike_without_contract_duration",
+    "full_adjusted_ohlc_missing_for_Green_confirmation"
+  ],
+  "large_sector": "MOBILITY_TRANSPORT_LEISURE",
+  "method": "trigger_level_backtest_v1_after_redteam",
+  "required_target_aliases": {
+    "AIRLINE_CONSOLIDATION_STAGE2_WITH_INTEGRATION_4B": "AIRLINE_CONSOLIDATION_STAGE2_WITH_INTEGRATION_4B",
+    "AUTO_EXPORT_LOGISTICS_DISRUPTION_4C_WATCH": "AUTO_EXPORT_LOGISTICS_DISRUPTION_4C_WATCH",
+    "AUTO_HYBRID_VALUEUP_STAGE2_ACTIONABLE": "AUTO_HYBRID_VALUEUP_STAGE2_ACTIONABLE",
+    "AUTO_ROBOTICS_OPTIONALITY_STAGE2_WITH_LABOR_4B": "AUTO_ROBOTICS_OPTIONALITY_STAGE2_WITH_LABOR_4B",
+    "AUTO_TARIFF_4C_AND_LOCALIZATION_HEDGE": "AUTO_TARIFF_4C_AND_LOCALIZATION_HEDGE",
+    "AVIATION_SAFETY_HARD_4C": "AVIATION_SAFETY_HARD_4C",
+    "CHINA_TOURISM_LEISURE_STAGE2_EVENT": "CHINA_TOURISM_LEISURE_STAGE2_EVENT",
+    "CONTAINER_SHIPPING_FREIGHT_BETA_STAGE2_WITH_NORMALIZATION_4B": "CONTAINER_SHIPPING_FREIGHT_BETA_STAGE2_WITH_NORMALIZATION_4B"
+  },
+  "round_id": "round_245",
+  "row_separation_rules": [
+    "case_library_row_describes_stage_candidate_and_evidence_quality",
+    "trigger_calibration_row_stores_event_anchor_tariff_hybrid_robotics_airline_tourism_or_freight_metrics",
+    "ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown",
+    "do_not_downgrade_valid_Stage2_or_Yellow_candidate_only_because_OHLC_backfill_is_missing",
+    "do_not_treat_hybrid_tariff_localization_robotics_airline_tourism_or_freight_headline_as_Green_without_margin_utilization_synergy_yield_or_contract_duration"
+  ],
+  "score_down_axes": [
+    "ev_headline_without_margin",
+    "tariff_relief_without_savings",
+    "robotics_hype_without_unit_economics",
+    "localization_capex_without_roi",
+    "airline_merger_without_integration",
+    "tourism_policy_without_yield",
+    "freight_spike_without_contract_duration",
+    "safety_incident_treated_as_one_off"
+  ],
+  "score_up_axes": [
+    "hybrid_mix_margin_conversion",
+    "shareholder_return_execution",
+    "tariff_absorption_localization",
+    "us_capacity_utilization",
+    "robotics_commercialization",
+    "logistics_route_resilience",
+    "airline_safety_trust",
+    "airline_integration_synergy",
+    "tourism_spend_margin",
+    "freight_rate_duration"
+  ],
+  "source_round": "docs/round/round_317.md",
+  "stage2_actionable_rules": [
+    "event_return_at_least_5pct_or_market_relative_return_at_least_5pp",
+    "sales_ASP_or_OP_margin_target_is_quantified",
+    "buyback_dividend_or_capital_return_is_quantified",
+    "US_local_capacity_directly_links_to_tariff_hedge",
+    "tourism_event_has_spending_yield_drop_or_RevPAR_evidence_before_Yellow",
+    "freight_event_has_rate_duration_or_contract_mix_before_Yellow",
+    "safety_accident_route_disruption_tariff_or_labor_4B_4C_overlay_is_not_dominant_for_positive_candidate"
+  ],
+  "stage3_green_rules": [
+    "hybrid_EREV_sales_mix_converts_to_OP_margin",
+    "tariff_exposure_is_offset_by_US_localization",
+    "robotics_optionality_converts_to_measurable_productivity_or_sales",
+    "airline_consolidation_produces_route_cost_and_yield_synergy",
+    "tourism_policy_converts_to_spending_yield_and_margin",
+    "freight_spike_converts_to_contract_rate_earnings_across_quarters",
+    "safety_regulatory_and_route_disruption_issues_are_resolved",
+    "full_adjusted_OHLC_MFE_MAE_window_supports_stage_candidate"
+  ],
+  "stage3_yellow_rules": [
+    "Stage2_Actionable_conditions_pass",
+    "EPS_OP_FCF_path_can_change_materially",
+    "one_of_tariff_utilization_safety_yield_labor_or_freight_duration_gate_remains_open",
+    "reported_price_anchor_supports_trigger_but_full_adjusted_OHLC_is_missing"
+  ],
+  "stage4b_watch_triggers": [
+    "tariff_rate_headline_looks_like_relief_but_stock_falls",
+    "localization_capex_rallies_before_ROI_is_proven",
+    "robotics_optionality_rallies_before_unit_economics_and_labor_agreement",
+    "airline_merger_completed_before_integration_synergy",
+    "tourism_policy_rallies_before_spending_yield",
+    "freight_rates_spike_before_contract_duration"
+  ],
+  "stage4c_watch_gates": [
+    "fatal_aviation_accident",
+    "national_safety_inspection_or_fleet_grounding",
+    "route_disruption_causing_delivery_delay_and_cost_spike",
+    "tariff_cost_directly_hitting_profit",
+    "logistics_route_closure_or_war_risk_insurance_surge",
+    "merger_blocked_or_fare_regulation_undermines_synergy",
+    "tourism_safety_or_image_shock"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "evidence_good_but_price_failed_or_unavailable_count": 2,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "large_sector": "MOBILITY_TRANSPORT_LEISURE",
+    "method": "trigger_level_backtest_v1_after_redteam",
+    "next_round": "R10 Loop 16",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_245",
+    "row_separation_required": true,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_317.md",
+    "stage2_actionable_candidate_count": 4,
+    "stage2_candidate_count": 6,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 6,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 4,
+    "target_archetype_count": 8,
+    "trigger_count": 9
+  },
+  "what_not_to_change": [
+    "do_not_change_production_scoring",
+    "do_not_use_round317_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_hybrid_tariff_localization_robotics_airline_tourism_or_freight_headline_as_Green_without_margin_utilization_synergy_yield_or_contract_duration",
+    "do_not_invent_full_mfe_mae_without_adjusted_ohlc"
+  ]
+}

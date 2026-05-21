@@ -1,0 +1,9 @@
+archetype,hybrid_mix_margin_conversion,shareholder_return_execution,tariff_absorption_localization,us_capacity_utilization,robotics_commercialization,logistics_route_resilience,airline_safety_trust,airline_integration_synergy,tourism_spend_margin,freight_rate_duration,ev_headline_without_margin_penalty,tariff_relief_without_savings_penalty,robotics_hype_without_unit_economics_penalty,localization_capex_without_roi_penalty,stage2_actionable_promote,stage3_yellow_gate,stage3_green_gate,notes
+AUTO_HYBRID_VALUEUP_STAGE2_ACTIONABLE,+5,+4,+2,+2,+1,+1,+1,+0,+0,+0,-4,-2,-1,-1,hybrid/value-up event,margin/tariff conversion pending,hybrid mix+OP margin+buyback execution,Hyundai investor day.
+AUTO_TARIFF_4C_AND_LOCALIZATION_HEDGE,+2,+1,+5,+5,+0,+3,+1,+0,+0,+0,-2,-5,-1,-4,tariff shock and localization hedge,actual savings missing,U.S. utilization+tariff savings,Hyundai/Kia.
+AUTO_ROBOTICS_OPTIONALITY_STAGE2_WITH_LABOR_4B,+1,+0,+1,+2,+5,+1,+1,+0,+0,+0,-1,-1,-5,-3,robotics commercialization optionality,unit economics/labor agreement missing,productivity gain+external sales,Hyundai/Boston Dynamics.
+AUTO_EXPORT_LOGISTICS_DISRUPTION_4C_WATCH,+0,+0,+2,+1,+0,+5,+1,+0,+0,+1,-1,-1,-1,-1,route disruption hits export margin,route normalization missing,N/A,Hyundai/Glovis.
+AIRLINE_CONSOLIDATION_STAGE2_WITH_INTEGRATION_4B,+0,+0,+0,+0,+0,+1,+3,+5,+2,+0,-1,-1,-1,-1,airline consolidation,synergy/fare/labor gates missing,route and LCC synergy,Korean Air/Asiana.
+AVIATION_SAFETY_HARD_4C,+0,+0,+0,+0,+0,+1,+5,+0,+1,+0,-1,-1,-1,-1,fatal crash/safety trust,remediation and booking recovery missing,N/A,Jeju Air.
+CHINA_TOURISM_LEISURE_STAGE2_EVENT,+0,+0,+0,+0,+0,+1,+1,+0,+5,+0,-1,-1,-1,-1,visa-free tourism event,spending/yield missing,arrivals+spending+margin,Paradise/Hotel Shilla.
+CONTAINER_SHIPPING_FREIGHT_BETA_STAGE2_WITH_NORMALIZATION_4B,+0,+0,+0,+0,+0,+4,+1,+0,+0,+5,-1,-1,-1,-1,freight-rate spike,contract duration/normalization missing,contract rates+duration,HMM/Red Sea.

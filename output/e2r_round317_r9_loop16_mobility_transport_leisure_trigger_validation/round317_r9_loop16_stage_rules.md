@@ -1,0 +1,48 @@
+# Round 317 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- event_return_at_least_5pct_or_market_relative_return_at_least_5pp
+- sales_ASP_or_OP_margin_target_is_quantified
+- buyback_dividend_or_capital_return_is_quantified
+- US_local_capacity_directly_links_to_tariff_hedge
+- tourism_event_has_spending_yield_drop_or_RevPAR_evidence_before_Yellow
+- freight_event_has_rate_duration_or_contract_mix_before_Yellow
+- safety_accident_route_disruption_tariff_or_labor_4B_4C_overlay_is_not_dominant_for_positive_candidate
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- EPS_OP_FCF_path_can_change_materially
+- one_of_tariff_utilization_safety_yield_labor_or_freight_duration_gate_remains_open
+- reported_price_anchor_supports_trigger_but_full_adjusted_OHLC_is_missing
+
+## Stage3-Green Rules
+- hybrid_EREV_sales_mix_converts_to_OP_margin
+- tariff_exposure_is_offset_by_US_localization
+- robotics_optionality_converts_to_measurable_productivity_or_sales
+- airline_consolidation_produces_route_cost_and_yield_synergy
+- tourism_policy_converts_to_spending_yield_and_margin
+- freight_spike_converts_to_contract_rate_earnings_across_quarters
+- safety_regulatory_and_route_disruption_issues_are_resolved
+- full_adjusted_OHLC_MFE_MAE_window_supports_stage_candidate
+
+## Green Blockers
+- EV_or_hybrid_headline_without_margin
+- tariff_relief_without_actual_savings
+- localization_capex_without_utilization_or_ROI
+- robotics_hype_without_unit_economics_or_labor_agreement
+- airline_merger_without_integration_synergy
+- fatal_safety_incident_treated_as_one_off
+- tourism_policy_without_spending_yield_or_margin
+- freight_spike_without_contract_duration
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## 4C Watch Gates
+- fatal_aviation_accident
+- national_safety_inspection_or_fleet_grounding
+- route_disruption_causing_delivery_delay_and_cost_spike
+- tariff_cost_directly_hitting_profit
+- logistics_route_closure_or_war_risk_insurance_surge
+- merger_blocked_or_fare_regulation_undermines_synergy
+- tourism_safety_or_image_shock

@@ -1,0 +1,27 @@
+# Round 317 Stage 4B / 4C Review
+
+## 4B Watch
+- tariff_rate_headline_looks_like_relief_but_stock_falls
+- localization_capex_rallies_before_ROI_is_proven
+- robotics_optionality_rallies_before_unit_economics_and_labor_agreement
+- airline_merger_completed_before_integration_synergy
+- tourism_policy_rallies_before_spending_yield
+- freight_rates_spike_before_contract_duration
+
+## 4C Watch Gates
+- fatal_aviation_accident
+- national_safety_inspection_or_fleet_grounding
+- route_disruption_causing_delivery_delay_and_cost_spike
+- tariff_cost_directly_hitting_profit
+- logistics_route_closure_or_war_risk_insurance_surge
+- merger_blocked_or_fare_regulation_undermines_synergy
+- tourism_safety_or_image_shock
+
+## Case Review
+- r9_loop16_hyundai_kia_tariff_localization: 4C-watch + Stage2 hedge / tariff_4C_with_localization_hedge
+- r9_loop16_hyundai_boston_dynamics_robotics: Stage2 + 4B-watch / Stage2_robotics_optionality_with_4B_labor_overlay
+- r9_loop16_hyundai_glovis_export_disruption: 4C-watch / auto_export_logistics_4C_watch
+- r9_loop16_korean_air_asiana_consolidation: Stage2 / Stage2_airline_consolidation_not_Green
+- r9_loop16_jeju_air_crash_safety_4c: 4C / hard_4C_success_aviation_safety
+- r9_loop16_china_tourism_leisure_transport: Stage2 event / Stage2_leisure_event_not_Green
+- r9_loop16_hmm_red_sea_freight_beta: cyclical Stage2 / cyclical_freight_beta_not_Green
