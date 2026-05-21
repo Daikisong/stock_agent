@@ -1,0 +1,15 @@
+# Round 329 R8 Loop 17 Price Validation Plan
+
+Full adjusted OHLC is not complete. Reported event anchors are retained, but MFE/MAE, peak and drawdown are not invented.
+
+| case_id | status | event anchor | next backfill |
+| --- | --- | --- | --- |
+| r8_loop17_kakao_openai_ai_partnership | price_data_unavailable_after_deep_search | {"context": "Stargate_adjacent_AI_partnership", "initial_event_return_pct": 9, "later_event_return_pct": -2, "trigger_date": "2025-02-04"} | adjusted OHLC backfill required |
+| r8_loop17_naver_sovereign_ai_blackwell | price_data_unavailable_after_deep_search | {"ai_cloud_investment_usd_mn": 690, "blackwell_chips_south_korea": 260000, "naver_chips": 60000, "trigger_date": "2025-10-31", "ytd_return_context_pct": 20} | adjusted OHLC backfill required |
+| r8_loop17_webtoon_naver_content_platform | price_data_unavailable_after_deep_search | {"disney_event_return_pct": 62, "holdco_discount_pct": 50, "ipo_event_return_intraday_pct": 14.3, "ipo_raise_usd_mn": 315, "naver_private_placement_usd_mn": 50, "q2_revenue_usd_mn": 348.3, "q2_revenue_yoy_pct": 8.5, "valuation_usd_bn": 2.71} | adjusted OHLC backfill required |
+| r8_loop17_shift_up_gaming_ip_ipo | price_data_unavailable_after_deep_search | {"ipo_raise_krw_bn": 435, "ipo_raise_usd_mn": 313, "nikke_revenue_krw_bn": 255, "trigger_date": "2024-06-27", "valuation_krw_trn": 3.5, "valuation_usd_bn": 2.52} | adjusted OHLC backfill required |
+| r8_loop17_krafton_subnautica_legal_4b | price_data_unavailable_after_deep_search | {"control_returned_to": "Ted_Gill", "earnout_usd_mn": 250, "trigger_date": "2026-03-16"} | adjusted OHLC backfill required |
+| r8_loop17_lg_cns_ai_cloud_ipo_price_failed | price_data_unavailable_after_deep_search | {"cloud_ai_sales_share_pct": 54, "ipo_raise_krw_trn": 1.2, "ipo_raise_usd_mn": 827.1, "issue_price_krw": 61900, "last_price_krw": 59700, "op_krw_bn": 313, "open_price_krw": 60500, "revenue_krw_trn": 4.0, "trigger_date": "2025-02-05"} | adjusted OHLC backfill required |
+| r8_loop17_sk_telecom_cyber_breach | price_data_unavailable_after_deep_search | {"affected_subscribers_mn": 23, "august_fee_discount_pct": 50, "close_event_return_pct": -6.7, "intraday_event_return_pct": -8.5, "kospi_same_context_pct": 0.1, "leaked_data_pieces_mn": 26.96, "market_relative_pp": -6.8, "possible_compensation_krw_trn": 2.3, "revenue_forecast_cut_krw_bn": 800, "security_capex_krw_bn": 700, "trigger_date": "2025-04-28"} | adjusted OHLC backfill required |
+| r8_loop17_hybe_ador_bang_governance_4b | price_data_unavailable_after_deep_search | {"ador_dispute_date": "2024-04-24", "ador_dispute_event_return_pct": "nearly_-8", "bang_warrant_date": "2026-04-21", "bang_warrant_event_return_pct": -2.4} | adjusted OHLC backfill required |
+| r8_loop17_kakao_founder_legal_governance | price_data_unavailable_after_deep_search | {"arrest_date": "2024-07-23", "arrest_event_return_pct": -3.4, "direct_relief_price_anchor": null, "relief_date": "2025-10-21", "ytd_return_context_pct": -24} | adjusted OHLC backfill required |
