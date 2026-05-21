@@ -1,0 +1,45 @@
+# Round 321 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- event_return_at_least_5pct
+- market_relative_return_at_least_5pp
+- contract_deal_or_funding_value_is_clear
+- trigger_source_is_hard_source_such_as_disclosure_reuters_court_or_government
+- trigger_can_connect_to_revenue_backlog_or_capital_allocation
+- 4B_overlay_is_identified_and_limited
+- price_beats_issue_price_or_prior_expectation
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- delivery_or_execution_schedule_is_realizing
+- margin_or_cash_conversion_visibility_improves
+- repeat_order_adoption_or_user_conversion_evidence_exists
+- legal_final_contract_or_dilution_absorption_gate_is_partly_closed
+- 4B_overlay_is_reduced_to_manageable_level
+
+## Stage3-Green Rules
+- margin_revenue_or_cash_conversion_confirmed_after_Stage2_Actionable
+- 4B_overlay_cleared_or_contained
+- legal_approval_contract_or_policy_finality_closed
+- price_holds_after_event_without_below_entry_break
+- full_OHLC_MFE_MAE_window_supports_candidate
+
+## Green Blockers
+- theme_label_without_price_validation
+- ipo_demand_without_post_listing_strength
+- preferred_bidder_without_contract
+- growth_with_dilution_ignored
+- contract_without_margin
+- user_shift_without_revenue
+- policy_or_trade_relief_headline
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## Hard 4C Gates
+- customer_trust_breach_with_user_or_spending_deterioration
+- fatal_accident_or_safety_collapse
+- political_crisis_or_market_wide_confidence_break
+- PF_default_or_liquidity_freeze
+- final_contract_legally_blocked_for_long_period
+- regulatory_sanction_that_changes_business_model

@@ -1,0 +1,16 @@
+direction,axis,production_scoring_changed
+up,reported_event_return,false
+up,market_relative_return,false
+up,contract_value_visibility,false
+up,strategic_capital_quality,false
+up,delivery_margin_conversion,false
+up,security_trust_break,false
+up,legal_finality,false
+up,tariff_margin_reality,false
+down,theme_label_without_price_validation,false
+down,ipo_demand_without_post_listing_strength,false
+down,preferred_bidder_without_contract,false
+down,growth_with_dilution_ignored,false
+down,contract_without_margin,false
+down,user_shift_without_revenue,false
+down,policy_or_trade_relief_headline,false

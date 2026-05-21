@@ -1,0 +1,125 @@
+{
+  "green_blockers": [
+    "theme_label_without_price_validation",
+    "ipo_demand_without_post_listing_strength",
+    "preferred_bidder_without_contract",
+    "growth_with_dilution_ignored",
+    "contract_without_margin",
+    "user_shift_without_revenue",
+    "policy_or_trade_relief_headline",
+    "full_adjusted_ohlc_missing_for_Green_confirmation"
+  ],
+  "hard_4c_gates": [
+    "customer_trust_breach_with_user_or_spending_deterioration",
+    "fatal_accident_or_safety_collapse",
+    "political_crisis_or_market_wide_confidence_break",
+    "PF_default_or_liquidity_freeze",
+    "final_contract_legally_blocked_for_long_period",
+    "regulatory_sanction_that_changes_business_model"
+  ],
+  "large_sector": "CROSS_ARCHETYPE_REDTEAM_4B_4C_ACCOUNTING_TRUST_PRICE_VALIDATION",
+  "method": "trigger_level_redteam_v1",
+  "required_target_aliases": {
+    "CONTRACT_VALUE_WITH_MARGIN_GATE": "CONTRACT_VALUE_WITH_MARGIN_GATE",
+    "CROSS_STAGE2_ACTIONABLE_CONFIRMED": "CROSS_STAGE2_ACTIONABLE_CONFIRMED",
+    "EXPORT_ORDER_TO_COMBAT_VALIDATION_YELLOW": "EXPORT_ORDER_TO_COMBAT_VALIDATION_YELLOW",
+    "FOREIGN_STRATEGIC_CAPITAL_WITH_CB_4B": "FOREIGN_STRATEGIC_CAPITAL_WITH_CB_4B",
+    "GOOD_EVIDENCE_PRICE_FAILED": "GOOD_EVIDENCE_PRICE_FAILED",
+    "GROWTH_WITH_DILUTION_4B": "GROWTH_WITH_DILUTION_4B",
+    "POLICY_OR_PREFERRED_BIDDER_WITH_LEGAL_4B": "POLICY_OR_PREFERRED_BIDDER_WITH_LEGAL_4B",
+    "SECURITY_TRUST_BREAK_HARD_4C": "SECURITY_TRUST_BREAK_HARD_4C",
+    "TARIFF_RELIEF_THAT_STILL_SELLOFF": "TARIFF_RELIEF_THAT_STILL_SELLOFF"
+  },
+  "round_id": "round_249",
+  "row_separation_rules": [
+    "case_library_row_describes_stage_candidate_and_evidence_quality",
+    "trigger_calibration_row_stores_event_anchor_return_contract_value_legal_or_selloff_metrics",
+    "ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown",
+    "do_not_downgrade_valid_Stage2_or_Yellow_candidate_only_because_OHLC_backfill_is_missing",
+    "do_not_treat_news_size_as_entry_quality_without_price_conversion_dilution_legal_margin_trust_or_tariff_gates"
+  ],
+  "score_down_axes": [
+    "theme_label_without_price_validation",
+    "ipo_demand_without_post_listing_strength",
+    "preferred_bidder_without_contract",
+    "growth_with_dilution_ignored",
+    "contract_without_margin",
+    "user_shift_without_revenue",
+    "policy_or_trade_relief_headline"
+  ],
+  "score_up_axes": [
+    "reported_event_return",
+    "market_relative_return",
+    "contract_value_visibility",
+    "strategic_capital_quality",
+    "delivery_margin_conversion",
+    "security_trust_break",
+    "legal_finality",
+    "tariff_margin_reality"
+  ],
+  "source_round": "docs/round/round_321.md",
+  "stage2_actionable_rules": [
+    "event_return_at_least_5pct",
+    "market_relative_return_at_least_5pp",
+    "contract_deal_or_funding_value_is_clear",
+    "trigger_source_is_hard_source_such_as_disclosure_reuters_court_or_government",
+    "trigger_can_connect_to_revenue_backlog_or_capital_allocation",
+    "4B_overlay_is_identified_and_limited",
+    "price_beats_issue_price_or_prior_expectation"
+  ],
+  "stage3_green_rules": [
+    "margin_revenue_or_cash_conversion_confirmed_after_Stage2_Actionable",
+    "4B_overlay_cleared_or_contained",
+    "legal_approval_contract_or_policy_finality_closed",
+    "price_holds_after_event_without_below_entry_break",
+    "full_OHLC_MFE_MAE_window_supports_candidate"
+  ],
+  "stage3_yellow_rules": [
+    "Stage2_Actionable_conditions_pass",
+    "delivery_or_execution_schedule_is_realizing",
+    "margin_or_cash_conversion_visibility_improves",
+    "repeat_order_adoption_or_user_conversion_evidence_exists",
+    "legal_final_contract_or_dilution_absorption_gate_is_partly_closed",
+    "4B_overlay_is_reduced_to_manageable_level"
+  ],
+  "stage4b_watch_triggers": [
+    "good_order_followed_by_large_dilution_or_CB",
+    "preferred_bidder_followed_by_legal_appeal_or_court_block",
+    "AI_cloud_headline_followed_by_below_issue_price",
+    "tariff_relief_headline_followed_by_stock_selloff",
+    "user_shift_without_revenue_or_margin_conversion",
+    "policy_reform_without_company_specific_action",
+    "contract_value_without_margin_or_cash_conversion"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "evidence_good_but_price_failed_or_unavailable_count": 5,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "large_sector": "CROSS_ARCHETYPE_REDTEAM_4B_4C_ACCOUNTING_TRUST_PRICE_VALIDATION",
+    "method": "trigger_level_redteam_v1",
+    "next_round": "R1 Loop 17",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_249",
+    "row_separation_required": true,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_321.md",
+    "stage2_actionable_candidate_count": 3,
+    "stage2_candidate_count": 5,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 5,
+    "stage4b_watch_count": 6,
+    "stage4c_watch_count": 4,
+    "target_archetype_count": 9,
+    "trigger_count": 9
+  },
+  "what_not_to_change": [
+    "do_not_change_production_scoring",
+    "do_not_use_round321_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_news_size_as_entry_quality_without_price_conversion_dilution_legal_margin_trust_or_tariff_gates",
+    "do_not_invent_full_mfe_mae_without_adjusted_ohlc"
+  ]
+}
