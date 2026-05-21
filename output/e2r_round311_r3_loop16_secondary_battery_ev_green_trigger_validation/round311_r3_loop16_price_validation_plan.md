@@ -1,0 +1,12 @@
+# Round 311 Price Validation Plan
+
+Full adjusted OHLC was not available. Reported event anchors are retained without inventing full-window MFE/MAE.
+
+- r3_loop16_samsung_sdi_lfp_ess: r3l16_samsungsdi_lfp_ess_T1 / excellent_stage2_actionable_ESS_conversion / full_window=`price_data_unavailable_after_deep_search`
+- r3_loop16_lges_rivian_tesla_lfp: r3l16_lges_rivian_T0/r3l16_lges_tesla_lfp_T1 / Stage2_contract_price_muted / full_window=`price_data_unavailable_after_deep_search`
+- r3_loop16_lges_ford_cancellation_ohio_loss: r3l16_lges_ford_cancel_T1 / demand_cancellation_4C_watch / full_window=`price_data_unavailable_after_deep_search`
+- r3_loop16_sk_innovation_skes_merger_skon_relief: r3l16_sk_inno_skes_T1 / Stage2_financial_relief_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r3_loop16_sk_battery_america_layoffs: r3l16_sk_georgia_layoff_T1 / customer_demand_utilization_4C_watch / full_window=`price_data_unavailable_after_deep_search`
+- r3_loop16_catl_yichun_lithium_beta_korea_materials: r3l16_catl_lithium_beta_T1 / cyclical_lithium_beta_event_premium / full_window=`price_data_unavailable_after_deep_search`
+- r3_loop16_samsung_sdi_share_sale_dilution: r3l16_samsungsdi_share_sale_T1 / capital_raise_dilution_4B / full_window=`price_data_unavailable_after_deep_search`
+- r3_loop16_aricell_battery_factory_fire: r3l16_aricell_fire_T0 / hard_4C_success_battery_safety / full_window=`price_data_unavailable_after_deep_search`

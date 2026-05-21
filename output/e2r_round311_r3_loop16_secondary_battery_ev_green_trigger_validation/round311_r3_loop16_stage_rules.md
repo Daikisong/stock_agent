@@ -1,0 +1,47 @@
+# Round 311 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- contract_value_or_GWh_scale_is_clear
+- delivery_period_and_production_facility_are_clear
+- event_return_at_least_5pct_or_market_relative_return_at_least_5pp
+- EV_line_to_ESS_line_conversion_or_utilization_defense_is_visible
+- customer_demand_links_to_model_platform_or_ESS_infrastructure_use_case
+- no_dilution_cancellation_safety_or_subsidy_4c_overlay
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- EPS_OP_FCF_path_can_change_materially
+- one_of_utilization_line_conversion_margin_subsidy_or_safety_remains_open
+- reported_price_anchor_or_relative_strength_supports_trigger
+- case_is_not_pure_lithium_beta_restructuring_relief_or_capex_funding
+
+## Stage3-Green Rules
+- GWh_contract_converts_to_utilization_and_margin
+- ESS_line_conversion_yield_is_stable
+- profit_survives_without_IRA_or_subsidy_credit
+- OEM_cancellation_risk_is_low
+- lithium_rebound_converts_to_inventory_reversal_and_ASP_margin
+- safety_quality_hard_gate_is_clear
+- full_adjusted_OHLC_MFE_MAE_path_supports_stage_candidate
+
+## Green Blockers
+- EV_growth_headline_without_utilization
+- large_GWh_contract_without_margin
+- ESS_pivot_without_line_yield
+- lithium_price_spike_without_margin
+- restructuring_relief_without_profit
+- capex_funding_with_dilution
+- OEM_contract_cancellation_or_plant_idling
+- battery_factory_fire_quality_or_death_event
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## 4C Watch Gates
+- OEM_battery_contract_cancellation
+- EV_model_cancellation_causing_plant_idling
+- subsidy_expiry_causing_demand_cliff_or_loss_exposure
+- factory_fire_deaths_or_quality_failure
+- line_utilization_collapse
+- capital_raise_under_falling_share_price
+- customer_concentration_loss

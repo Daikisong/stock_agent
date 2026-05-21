@@ -178,6 +178,14 @@ class E2RArchetype(str, Enum):
     SILICON_ANODE_SCALEUP_STAGE2 = "SILICON_ANODE_SCALEUP_STAGE2"
     BATTERY_DEMAND_POLICY_OVERHANG_CROSS_REFERENCE = "BATTERY_DEMAND_POLICY_OVERHANG_CROSS_REFERENCE"
     BATTERY_CONTRACT_DISCLOSURE_CONFIDENCE = "BATTERY_CONTRACT_DISCLOSURE_CONFIDENCE"
+    ESS_LFP_LINE_CONVERSION_STAGE2_ACTIONABLE = "ESS_LFP_LINE_CONVERSION_STAGE2_ACTIONABLE"
+    EV_BATTERY_OEM_SUPPLY_STAGE2_WITH_UTILIZATION_GATE = "EV_BATTERY_OEM_SUPPLY_STAGE2_WITH_UTILIZATION_GATE"
+    EV_DEMAND_SLOWDOWN_4C_WATCH = "EV_DEMAND_SLOWDOWN_4C_WATCH"
+    BATTERY_JV_RESTRUCTURING_RELIEF_STAGE2_WITH_FINANCIAL_4B = "BATTERY_JV_RESTRUCTURING_RELIEF_STAGE2_WITH_FINANCIAL_4B"
+    LITHIUM_SUPPLY_SHOCK_CYCLICAL_STAGE2 = "LITHIUM_SUPPLY_SHOCK_CYCLICAL_STAGE2"
+    BATTERY_MATERIAL_LITHIUM_BETA_EVENT_PREMIUM = "BATTERY_MATERIAL_LITHIUM_BETA_EVENT_PREMIUM"
+    BATTERY_FACTORY_SAFETY_HARD_4C = "BATTERY_FACTORY_SAFETY_HARD_4C"
+    CAPITAL_RAISE_DILUTION_4B = "CAPITAL_RAISE_DILUTION_4B"
     SECOND_LIFE_BATTERY_GRID_STORAGE = "SECOND_LIFE_BATTERY_GRID_STORAGE"
     EV_INFRASTRUCTURE = "EV_INFRASTRUCTURE"
     HYDROGEN_FUEL_CELL_INFRA = "HYDROGEN_FUEL_CELL_INFRA"
@@ -2888,6 +2896,102 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("news", "disclosure", "financial_actual", "price", "red_team"),
             false_positive_patterns=("asset split treated as structural success before utilization", "ESS pivot headline without contract value"),
             preferred_score_weights=_weights(eps_fcf=18, visibility=16, bottleneck=14, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.ESS_LFP_LINE_CONVERSION_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.ESS_LFP_LINE_CONVERSION_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("EV demand slowdown", "ESS pivot", "LFP grid-storage demand", "U.S. battery line conversion"),
+            stage2_candidate_signals=("contract value, delivery period, U.S. facility and EV-to-ESS line conversion are visible",),
+            stage3_high_conviction_signals=("ESS margin, retrofit yield, repeat orders, facility utilization and cash conversion are confirmed",),
+            stage4a_ongoing_signals=("converted ESS line runs at healthy utilization and LFP margin remains visible",),
+            stage4b_graduation_overheat_signals=("ESS pivot headline rerates before retrofit yield, margin and repeat orders",),
+            stage4c_thesis_break_signals=("line conversion fails", "ESS margin disappoints", "customer order delayed", "EV demand slump forces under-utilization"),
+            key_evidence_families=("disclosure", "news", "price", "financial_actual", "customer"),
+            false_positive_patterns=("ESS pivot treated as Green before line yield and margin",),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=22, bottleneck=12, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.EV_BATTERY_OEM_SUPPLY_STAGE2_WITH_UTILIZATION_GATE: ArchetypeDefinition(
+            archetype=E2RArchetype.EV_BATTERY_OEM_SUPPLY_STAGE2_WITH_UTILIZATION_GATE,
+            stage1_radar_signals=("OEM battery supply contract", "GWh contract", "EV platform or ESS customer supply"),
+            stage2_candidate_signals=("GWh, customer model or platform, supply period and production facility are visible",),
+            stage3_high_conviction_signals=("utilization, margin, customer take-or-pay terms, IRA-quality profit and production ramp are confirmed",),
+            stage4a_ongoing_signals=("contract call-off converts into shipment, utilization and operating profit recovery",),
+            stage4b_graduation_overheat_signals=("large GWh contract priced before utilization, margin and customer schedule",),
+            stage4c_thesis_break_signals=("OEM contract cancellation", "EV model cancellation", "plant idling", "IRA credit dependency exposes losses"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "price", "customer", "policy"),
+            false_positive_patterns=("GWh backlog treated as revenue before utilization", "contract headline scored without margin"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=18, bottleneck=10, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.EV_DEMAND_SLOWDOWN_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.EV_DEMAND_SLOWDOWN_4C_WATCH,
+            stage1_radar_signals=("EV demand slowdown", "OEM EV model cancellation", "plant idling", "battery layoffs"),
+            stage2_candidate_signals=("not a positive source; demand recovery, replacement customer or ESS conversion must be visible",),
+            stage3_high_conviction_signals=("not Green until utilization, margin and customer order recovery are rebuilt",),
+            stage4a_ongoing_signals=("demand shock is contained and battery plant utilization remains intact",),
+            stage4b_graduation_overheat_signals=("battery recovery narrative ignores OEM cancellation and plant idling",),
+            stage4c_thesis_break_signals=("contract cancellation", "plant idling", "large layoffs", "operating loss without subsidy", "customer model cancellation"),
+            key_evidence_families=("news", "financial_actual", "price", "customer", "red_team"),
+            false_positive_patterns=("EV slowdown framed as temporary despite contract cancellation and idle capacity",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.BATTERY_JV_RESTRUCTURING_RELIEF_STAGE2_WITH_FINANCIAL_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.BATTERY_JV_RESTRUCTURING_RELIEF_STAGE2_WITH_FINANCIAL_4B,
+            stage1_radar_signals=("battery JV restructuring", "affiliate merger", "loss-making battery unit support", "balance-sheet relief"),
+            stage2_candidate_signals=("shareholder approval, asset base, funding relief and loss context are visible",),
+            stage3_high_conviction_signals=("battery profitability, utilization, debt-ratio improvement and customer order recovery are confirmed",),
+            stage4a_ongoing_signals=("restructuring improves debt, utilization and operating profit without new dilution",),
+            stage4b_graduation_overheat_signals=("financial relief rerates before battery profit turnaround",),
+            stage4c_thesis_break_signals=("losses widen", "debt ratio worsens", "customer orders fail", "additional financing need emerges"),
+            key_evidence_families=("news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("merger relief treated as battery operating turnaround",),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=14, bottleneck=6, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.LITHIUM_SUPPLY_SHOCK_CYCLICAL_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.LITHIUM_SUPPLY_SHOCK_CYCLICAL_STAGE2,
+            stage1_radar_signals=("lithium mine suspension", "lithium price rebound", "battery-material basket rally"),
+            stage2_candidate_signals=("supply shock, lithium beta and material-company event returns are visible",),
+            stage3_high_conviction_signals=("sustained lithium rebound, cathode ASP pass-through, inventory write-down reversal and material margin recovery are confirmed",),
+            stage4a_ongoing_signals=("lithium price support converts into stable material margins",),
+            stage4b_graduation_overheat_signals=("materials rally prices lithium spike before margin confirmation",),
+            stage4c_thesis_break_signals=("license renewed and supply resumes", "lithium oversupply returns", "cathode margin fails", "inventory write-down continues"),
+            key_evidence_families=("commodity", "news", "price", "financial_actual"),
+            false_positive_patterns=("lithium beta treated as structural E2R without ASP or margin pass-through",),
+            preferred_score_weights=_weights(eps_fcf=12, visibility=8, bottleneck=16, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.BATTERY_MATERIAL_LITHIUM_BETA_EVENT_PREMIUM: ArchetypeDefinition(
+            archetype=E2RArchetype.BATTERY_MATERIAL_LITHIUM_BETA_EVENT_PREMIUM,
+            stage1_radar_signals=("battery-material basket moves with lithium", "cathode beta", "lithium supply headline"),
+            stage2_candidate_signals=("event premium is visible, but company margin and customer pass-through remain unconfirmed",),
+            stage3_high_conviction_signals=("not Green until company-specific ASP, margin, inventory and volume recovery are visible",),
+            stage4a_ongoing_signals=("lithium beta is supported by company-specific earnings recovery",),
+            stage4b_graduation_overheat_signals=("basket rally crowds before company-specific evidence",),
+            stage4c_thesis_break_signals=("lithium rebound reverses", "inventory loss persists", "customer volume remains weak"),
+            key_evidence_families=("commodity", "price", "news", "financial_actual"),
+            false_positive_patterns=("basket event premium treated as true rerating",),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=6, bottleneck=12, mispricing=6, valuation=5),
+        ),
+        E2RArchetype.BATTERY_FACTORY_SAFETY_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.BATTERY_FACTORY_SAFETY_HARD_4C,
+            stage1_radar_signals=("battery factory fire", "battery safety incident", "quality failure", "fatal accident"),
+            stage2_candidate_signals=("not a positive candidate; safety and remediation must be assessed",),
+            stage3_high_conviction_signals=("not Green until safety, quality, regulatory trust and customer retention are rebuilt",),
+            stage4a_ongoing_signals=("remediation, insurance, customer retention and regulator response are verified",),
+            stage4b_graduation_overheat_signals=("battery production story ignores safety trust break",),
+            stage4c_thesis_break_signals=("fatal factory fire", "quality failures", "rushed production", "untrained temporary workers", "regulatory trust break"),
+            key_evidence_families=("news", "safety", "red_team", "price", "regulatory"),
+            false_positive_patterns=("safety incident treated as one-off operational noise",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.CAPITAL_RAISE_DILUTION_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.CAPITAL_RAISE_DILUTION_4B,
+            stage1_radar_signals=("share issuance", "capex funding", "battery JV funding need", "offering price cut"),
+            stage2_candidate_signals=("capex use of proceeds and funding terms are visible; relief only",),
+            stage3_high_conviction_signals=("not Green until funded capex converts into utilization, margin and FCF without further dilution",),
+            stage4a_ongoing_signals=("funded capacity ramps and dilution is absorbed by earnings recovery",),
+            stage4b_graduation_overheat_signals=("capex funding is priced as growth despite dilution and demand uncertainty",),
+            stage4c_thesis_break_signals=("offering price cut", "large dilution", "falling share price", "funding stress", "demand weakness"),
+            key_evidence_families=("disclosure", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("capex funding treated as positive growth without dilution penalty",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.EV_BATTERY_CONTRACT_QUALITY_BREAK: ArchetypeDefinition(
             archetype=E2RArchetype.EV_BATTERY_CONTRACT_QUALITY_BREAK,

@@ -1,0 +1,14 @@
+direction,axis,production_scoring_changed
+up,ESS_LFP_contract_visibility,false
+up,US_line_conversion_utilization,false
+up,OEM_contract_cancellation_risk,false
+up,IRA_tax_credit_dependency,false
+up,battery_JV_financial_structure,false
+up,lithium_price_beta_duration,false
+up,battery_factory_safety_trust,false
+down,EV_growth_headline_without_utilization,false
+down,large_GWh_contract_without_margin,false
+down,ESS_pivot_without_line_yield,false
+down,lithium_price_spike_without_margin,false
+down,restructuring_relief_without_profit,false
+down,capex_funding_with_dilution,false
