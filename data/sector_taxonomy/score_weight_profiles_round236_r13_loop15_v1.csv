@@ -1,0 +1,11 @@
+archetype,evidence_to_earnings_bridge,market_relative_event_strength,delivery_to_revenue_conversion,actual_capacity_or_shipment,platform_security_trust,operational_safety_trust,governance_dilution_quality,price_evidence_disagreement,headline_only_penalty,control_premium_as_rerating_penalty,cb_capital_without_backlog_penalty,celebrity_meme_event_penalty,stage2_actionable_promote,stage3_yellow_gate,stage3_green_gate,notes
+EARLY_EVIDENCE_MISSED_STRUCTURAL,+5,+4,+3,+5,+0,+0,+1,+2,-4,-1,-1,-2,ASP+shipment+capacity+OP estimate,reported earnings confirmation pending,actual earnings+favorable OHLC,Samyang template.
+DELIVERY_TO_REVENUE_STAGE2_YELLOW,+5,+5,+5,+2,+0,+0,+1,+1,-3,-1,-1,-1,delivery+revenue+OP estimate,multi-quarter margin pending,cash collection+margin+OHLC,Hyundai Rotem template.
+STRATEGIC_CAPITAL_WITH_DILUTION_4B,+3,+5,+1,+1,+1,+0,+5,+2,-3,-2,-5,-1,strategic capital+price strength,order backlog/dilution pending,backlog+margin+conversion clarity,Samsung SDS template.
+CONTROL_BATTLE_GOVERNANCE_4B_4C,+1,+4,+0,+0,+0,+0,+5,+5,-2,-5,-3,-1,control premium,governance/dilution/regulator risk,clean governance+cashflow,Korea Zinc template.
+EVIDENCE_GOOD_BUT_PRICE_FAILED,+3,+0,+1,+2,+1,+0,+1,+5,-3,-1,-1,-1,good evidence but weak price,price confirmation missing,price recovery+earnings proof,LG CNS template.
+PLATFORM_SECURITY_HARD_4C,+0,+0,+0,+0,+5,+1,+3,+5,-1,-1,-1,-1,data breach,trust recovery pending,security restored+revenue stabilized,SKT/Coupang template.
+OPERATIONAL_SAFETY_HARD_4C,+0,+0,+0,+0,+1,+5,+2,+5,-1,-1,-1,-1,fatal safety incident,investigation/remediation pending,safety trust recovered,Jeju Air template.
+PRICE_MOVED_WITHOUT_EVIDENCE,+0,+3,+0,+0,+0,+0,+0,+5,-5,-1,-1,-5,price move without revenue evidence,no evidence,N/A,Jensen fried-chicken template.
+POLICY_THEME_OVERHEAT_4B,+0,+2,+0,+0,+0,+0,+1,+4,-5,-1,-1,-1,policy theme,license/revenue missing,license+revenue+contract,Stablecoin/AI-textbook policy template.
+OHLC_BACKFILL_SEPARATION_REQUIRED,+0,+0,+0,+0,+0,+0,+0,+5,+0,+0,+0,+0,stage row separate from OHLC row,backfill pending,full MFE/MAE calculated,Production architecture rule.

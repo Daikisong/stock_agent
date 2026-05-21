@@ -1,0 +1,43 @@
+# Round 308 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- OP_EPS_FCF_estimate_revision_exists
+- two_or_more_of_shipment_delivery_ASP_capacity_contract_value_close_together
+- event_return_at_least_5pct
+- market_relative_return_at_least_5pp
+- evidence_has_revenue_or_margin_bridge_not_only_narrative
+- evidence_publicly_available_on_trigger_date
+- no_hard_4c_overlay
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- EPS_OP_FCF_path_can_change_materially
+- only_one_core_gate_remains_open
+- delivery_or_shipment_to_revenue_bridge_is_explicit
+- price_reaction_agrees_with_evidence_or_disagreement_is_explained
+
+## Stage3-Green Rules
+- full_OHLC_backfill_supports_entry
+- actual_earnings_or_cashflow_confirms_the_bridge
+- 4B_overlay_is_cleared_or_contained
+- hard_4c_gate_absent
+- no_below_entry_break_in_key_validation_window
+
+## Green Blockers
+- CB_dilution_or_conversion_risk_unresolved
+- control_premium_without_operating_EPS_FCF_change
+- evidence_good_but_price_failed
+- platform_security_or_customer_data_breach
+- fatal_operational_safety_incident
+- celebrity_or_meme_event_without_direct_revenue
+- policy_theme_without_license_contract_or_revenue
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## Hard 4C Gates
+- customer_data_breach_or_platform_security_failure
+- fatal_safety_accident_or_nationwide_safety_inspection
+- regulator_intervention_after_governance_or_dilution_event
+- accounting_or_disclosure_control_failure
+- revenue_forecast_cut_from_trust_or_security_incident

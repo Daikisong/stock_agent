@@ -1,0 +1,16 @@
+direction,axis,production_scoring_changed
+up,evidence_to_earnings_bridge,false
+up,market_relative_event_strength,false
+up,delivery_to_revenue_conversion,false
+up,actual_capacity_or_shipment,false
+up,platform_security_trust,false
+up,operational_safety_trust,false
+up,governance_dilution_quality,false
+up,price_evidence_disagreement,false
+down,headline_only_score,false
+down,policy_theme_without_revenue,false
+down,control_premium_as_rerating,false
+down,CB_capital_without_backlog,false
+down,celebrity_meme_event,false
+down,IPO_pop_without_durability,false
+down,platform_scale_without_security,false

@@ -1118,7 +1118,14 @@ class E2RArchetype(str, Enum):
     CONTRACT_HEADLINE_NOT_STAGE3 = "CONTRACT_HEADLINE_NOT_STAGE3"
     SECTOR_SUCCESS_BUT_4B_WATCH = "SECTOR_SUCCESS_BUT_4B_WATCH"
     SECTOR_SUCCESS_BUT_POLICY_SHOCK_WATCH = "SECTOR_SUCCESS_BUT_POLICY_SHOCK_WATCH"
+    EARLY_EVIDENCE_MISSED_STRUCTURAL = "EARLY_EVIDENCE_MISSED_STRUCTURAL"
+    DELIVERY_TO_REVENUE_STAGE2_YELLOW = "DELIVERY_TO_REVENUE_STAGE2_YELLOW"
+    STRATEGIC_CAPITAL_WITH_DILUTION_4B = "STRATEGIC_CAPITAL_WITH_DILUTION_4B"
+    CONTROL_BATTLE_GOVERNANCE_4B_4C = "CONTROL_BATTLE_GOVERNANCE_4B_4C"
     EVIDENCE_GOOD_BUT_PRICE_FAILED = "EVIDENCE_GOOD_BUT_PRICE_FAILED"
+    PLATFORM_SECURITY_HARD_4C = "PLATFORM_SECURITY_HARD_4C"
+    POLICY_THEME_OVERHEAT_4B = "POLICY_THEME_OVERHEAT_4B"
+    OHLC_BACKFILL_SEPARATION_REQUIRED = "OHLC_BACKFILL_SEPARATION_REQUIRED"
     FALSE_POSITIVE_SCORE = "FALSE_POSITIVE_SCORE"
     CROWDED_RERATING_4B_WATCH = "CROWDED_RERATING_4B_WATCH"
     THESIS_BREAK_4C = "THESIS_BREAK_4C"
@@ -5236,6 +5243,102 @@ ARCHETYPE_DEFINITIONS.update(
 
 ARCHETYPE_DEFINITIONS.update(
     {
+        E2RArchetype.EARLY_EVIDENCE_MISSED_STRUCTURAL: ArchetypeDefinition(
+            archetype=E2RArchetype.EARLY_EVIDENCE_MISSED_STRUCTURAL,
+            stage1_radar_signals=("ASP increase", "shipment growth", "capacity expansion", "OP estimate revision"),
+            stage2_candidate_signals=("OP/EPS estimate revision, shipment, ASP, capacity and event price reaction are visible together",),
+            stage3_high_conviction_signals=("Stage3-Yellow candidate when the bridge from demand evidence to OP/FCF is public before the trigger date",),
+            stage4a_ongoing_signals=("reported earnings, export shipments and margin validate the early evidence bridge",),
+            stage4b_graduation_overheat_signals=("price rerates before reported earnings and full OHLC validation",),
+            stage4c_thesis_break_signals=("shipment reversal", "ASP reversal", "capacity ramp fails", "OP estimate cut"),
+            key_evidence_families=("research_report", "news", "price", "financial_actual", "capacity"),
+            false_positive_patterns=("viral product story without OP estimate", "capacity headline without shipment or ASP"),
+            preferred_score_weights=_weights(eps_fcf=22, visibility=22, bottleneck=12, mispricing=16, valuation=12),
+        ),
+        E2RArchetype.DELIVERY_TO_REVENUE_STAGE2_YELLOW: ArchetypeDefinition(
+            archetype=E2RArchetype.DELIVERY_TO_REVENUE_STAGE2_YELLOW,
+            stage1_radar_signals=("delivery trigger", "shipment to government customer", "revenue recognition estimate"),
+            stage2_candidate_signals=("delivery count, revenue contribution, OP estimate beat and market-relative strength are visible",),
+            stage3_high_conviction_signals=("multi-quarter delivery, margin, cash collection and follow-on contract support Stage3-Yellow before Green",),
+            stage4a_ongoing_signals=("delivery-to-revenue conversion continues with margin and cash collection",),
+            stage4b_graduation_overheat_signals=("delivery event rerates before margin and follow-on pipeline close",),
+            stage4c_thesis_break_signals=("delivery delay", "customer funding break", "local production failure", "margin reversal"),
+            key_evidence_families=("news", "delivery", "research_report", "price", "financial_actual"),
+            false_positive_patterns=("signed contract treated the same as delivered revenue", "shipment headline without OP bridge"),
+            preferred_score_weights=_weights(eps_fcf=21, visibility=24, bottleneck=16, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.STRATEGIC_CAPITAL_WITH_DILUTION_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.STRATEGIC_CAPITAL_WITH_DILUTION_4B,
+            stage1_radar_signals=("strategic capital", "convertible bond", "AI or M&A advisory headline"),
+            stage2_candidate_signals=("capital partner, use of proceeds, cash balance and event price reaction are visible",),
+            stage3_high_conviction_signals=("not Green until order backlog, revenue bridge, dilution-adjusted EPS and conversion risk are clear",),
+            stage4a_ongoing_signals=("capital deployment produces backlog, revenue and dilution-adjusted returns",),
+            stage4b_graduation_overheat_signals=("CB or strategic investor rally before backlog and conversion economics",),
+            stage4c_thesis_break_signals=("conversion dilution overwhelms EPS", "M&A execution fails", "backlog absent", "capital allocation destroys value"),
+            key_evidence_families=("disclosure", "news", "price", "capital_allocation", "red_team"),
+            false_positive_patterns=("strategic investor treated as revenue", "CB proceeds treated as non-dilutive capital"),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=12, bottleneck=6, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.CONTROL_BATTLE_GOVERNANCE_4B_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.CONTROL_BATTLE_GOVERNANCE_4B_4C,
+            stage1_radar_signals=("tender offer", "control battle", "hostile takeover premium"),
+            stage2_candidate_signals=("offer price, tender value, financing and control path are visible",),
+            stage3_high_conviction_signals=("not from control premium alone; operating EPS/FCF and clean governance must be separately proven",),
+            stage4a_ongoing_signals=("control outcome improves capital allocation without dilution or regulatory intervention",),
+            stage4b_graduation_overheat_signals=("control premium rally before operating evidence",),
+            stage4c_thesis_break_signals=("defensive share issuance", "regulator revision order", "dilution", "governance uncertainty"),
+            key_evidence_families=("news", "governance", "price", "disclosure", "red_team"),
+            false_positive_patterns=("control premium treated as operating rerating", "tender offer treated as FCF evidence"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.EVIDENCE_GOOD_BUT_PRICE_FAILED: ArchetypeDefinition(
+            archetype=E2RArchetype.EVIDENCE_GOOD_BUT_PRICE_FAILED,
+            stage1_radar_signals=("strong narrative", "strong prospectus evidence", "AI or cloud sales mix"),
+            stage2_candidate_signals=("business evidence exists but issue price, entry price or event close is rejected by market",),
+            stage3_high_conviction_signals=("Green is blocked until price, post-listing demand, margin and FCF validate the evidence",),
+            stage4a_ongoing_signals=("later earnings and price action reconcile the initial disagreement",),
+            stage4b_graduation_overheat_signals=("evidence story remains crowded while price refuses validation",),
+            stage4c_thesis_break_signals=("aftermarket demand failure", "below-entry trading", "estimate cut", "margin or FCF disappointment"),
+            key_evidence_families=("IPO", "research_report", "price", "financial_actual", "red_team"),
+            false_positive_patterns=("good story treated as Green while price rejects it",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.PLATFORM_SECURITY_HARD_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.PLATFORM_SECURITY_HARD_4C,
+            stage1_radar_signals=("data breach", "customer account leak", "security governance finding"),
+            stage2_candidate_signals=("not a positive candidate; scope, compensation, capex and revenue cut must be mapped",),
+            stage3_high_conviction_signals=("not Green until trust recovery, churn, liability, security capex and revenue impact are contained",),
+            stage4a_ongoing_signals=("customer trust and security remediation are proven after the incident",),
+            stage4b_graduation_overheat_signals=("platform scale or MAU rerates before security trust is repaired",),
+            stage4c_thesis_break_signals=("large customer data leak", "regulator finding", "revenue forecast cut", "compensation cost", "security capex shock"),
+            key_evidence_families=("news", "regulatory", "price", "financial_actual", "red_team"),
+            false_positive_patterns=("platform scale treated as moat while data breach multiplies damage",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.POLICY_THEME_OVERHEAT_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.POLICY_THEME_OVERHEAT_4B,
+            stage1_radar_signals=("policy headline", "regulatory theme basket", "policy-driven price spike"),
+            stage2_candidate_signals=("license, budget, contract, adoption or company-level revenue bridge is visible",),
+            stage3_high_conviction_signals=("not Green until policy converts into company revenue, EPS/FCF and durable economics",),
+            stage4a_ongoing_signals=("policy implementation converts into recurring company economics",),
+            stage4b_graduation_overheat_signals=("policy basket rerates before license, contract or revenue evidence",),
+            stage4c_thesis_break_signals=("policy rollback", "license denied", "budget delayed", "revenue bridge absent"),
+            key_evidence_families=("policy", "news", "price", "disclosure", "red_team"),
+            false_positive_patterns=("policy theme treated as company earnings",),
+            preferred_score_weights=_weights(eps_fcf=2, visibility=2, bottleneck=2, mispricing=2, valuation=2),
+        ),
+        E2RArchetype.OHLC_BACKFILL_SEPARATION_REQUIRED: ArchetypeDefinition(
+            archetype=E2RArchetype.OHLC_BACKFILL_SEPARATION_REQUIRED,
+            stage1_radar_signals=("reported event anchor", "entry price anchor", "partial price validation"),
+            stage2_candidate_signals=("case row and trigger row exist even when adjusted OHLC windows are missing",),
+            stage3_high_conviction_signals=("full MFE/MAE and below-entry flags are computed in a separate OHLC backfill row",),
+            stage4a_ongoing_signals=("price validation is reconciled without rewriting the original evidence timing",),
+            stage4b_graduation_overheat_signals=("reported event return mistaken for full forward path",),
+            stage4c_thesis_break_signals=("missing OHLC causes stage row and backtest row to be mixed or misread",),
+            key_evidence_families=("price", "trigger_calibration", "ohlc_backfill", "audit"),
+            false_positive_patterns=("Stage candidate downgraded only because full OHLC is not yet backfilled",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
         E2RArchetype.NUCLEAR_EPC_EXPORT_ORDER: ArchetypeDefinition(
             archetype=E2RArchetype.NUCLEAR_EPC_EXPORT_ORDER,
             stage1_radar_signals=("preferred nuclear bidder", "overseas reactor EPC project", "team Korea nuclear export"),
