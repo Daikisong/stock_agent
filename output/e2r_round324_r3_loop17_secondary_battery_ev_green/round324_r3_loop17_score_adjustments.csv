@@ -1,0 +1,16 @@
+direction,axis,production_scoring_changed
+up,ESS_LFP_contract_visibility,false
+up,line_conversion_utilization,false
+up,contract_cancellation_risk,false
+up,lithium_price_inventory_rebound,false
+up,solid_state_commercialization_timeline,false
+up,non_credit_operating_margin,false
+up,upstream_lithium_supply_control,false
+up,market_relative_return,false
+down,EV_contract_backlog_without_cancellation_check,false
+down,AMPC_credit_dependency_ignored,false
+down,ESS_headline_without_customer_margin,false
+down,solid_state_timeline_without_revenue,false
+down,lithium_rebound_without_durability,false
+down,capital_raise_dilution_ignored,false
+down,unlisted_subsidiary_readthrough_overstated,false

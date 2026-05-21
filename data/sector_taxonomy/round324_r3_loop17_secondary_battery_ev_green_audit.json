@@ -1,0 +1,128 @@
+{
+  "green_blockers": [
+    "ESS_headline_without_customer_margin_delivery",
+    "EV_contract_backlog_without_cancellation_check",
+    "AMPC_credit_dependency_ignored",
+    "solid_state_timeline_without_revenue",
+    "lithium_rebound_without_durability",
+    "capital_raise_dilution_ignored",
+    "unlisted_subsidiary_readthrough_overstated",
+    "full_adjusted_ohlc_missing_for_Green_confirmation"
+  ],
+  "hard_4c_gates": [
+    "large_OEM_contract_cancellation",
+    "repeated_contract_cancellation_across_customers",
+    "factory_utilization_thesis_break",
+    "EV_subsidy_rollback_causing_permanent_demand_reset",
+    "capex_or_dilution_spiral",
+    "safety_recall_or_fire_defect_with_compensation"
+  ],
+  "large_sector": "SECONDARY_BATTERY_EV_GREEN",
+  "loop_name": "R3 Loop 17",
+  "method": "trigger_level_backtest_v1_after_redteam",
+  "required_target_aliases": {
+    "CAPITAL_RAISE_DILUTION_4B": "CAPITAL_RAISE_DILUTION_4B",
+    "ESS_LFP_LINE_CONVERSION_STAGE2_ACTIONABLE": "ESS_LFP_LINE_CONVERSION_STAGE2_ACTIONABLE",
+    "EV_CONTRACT_CANCELLATION_4C": "EV_CONTRACT_CANCELLATION_4C",
+    "IRA_AMPC_EARNINGS_WITH_POLICY_4B": "IRA_AMPC_EARNINGS_WITH_POLICY_4B",
+    "LITHIUM_PRICE_REBOUND_CYCLICAL_STAGE2": "LITHIUM_PRICE_REBOUND_CYCLICAL_STAGE2",
+    "SK_ON_ESS_PIVOT_STAGE2_WITH_PARENT_READTHROUGH": "SK_ON_ESS_PIVOT_STAGE2_WITH_PARENT_READTHROUGH",
+    "SOLID_STATE_TIMELINE_STAGE2_YELLOW_CANDIDATE": "SOLID_STATE_TIMELINE_STAGE2_YELLOW_CANDIDATE",
+    "UPSTREAM_LITHIUM_SUPPLY_STAGE2_NO_PRICE": "UPSTREAM_LITHIUM_SUPPLY_STAGE2_NO_PRICE"
+  },
+  "round_id": "round_252",
+  "row_separation_rules": [
+    "case_library_row_describes_stage_candidate_and_evidence_quality",
+    "trigger_calibration_row_stores_reported_event_return_market_relative_return_contract_value_and_policy_metrics",
+    "ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown",
+    "do_not_create_MFE_MAE_without_full_adjusted_OHLC",
+    "do_not_treat_ESS_contract_AMPC_profit_lithium_rebound_solid_state_timeline_or_dilution_as_Green_without_customer_margin_utilization_revenue_and_risk_resolution"
+  ],
+  "score_down_axes": [
+    "EV_contract_backlog_without_cancellation_check",
+    "AMPC_credit_dependency_ignored",
+    "ESS_headline_without_customer_margin",
+    "solid_state_timeline_without_revenue",
+    "lithium_rebound_without_durability",
+    "capital_raise_dilution_ignored",
+    "unlisted_subsidiary_readthrough_overstated"
+  ],
+  "score_up_axes": [
+    "ESS_LFP_contract_visibility",
+    "line_conversion_utilization",
+    "contract_cancellation_risk",
+    "lithium_price_inventory_rebound",
+    "solid_state_commercialization_timeline",
+    "non_credit_operating_margin",
+    "upstream_lithium_supply_control",
+    "market_relative_return"
+  ],
+  "source_round": "docs/round/round_324.md",
+  "stage2_actionable_rules": [
+    "event_return_at_least_5pct",
+    "market_relative_return_at_least_5pp",
+    "contract_value_supply_volume_policy_credit_or_production_timeline_is_clear",
+    "EV_line_utilization_recovery_or_ESS_line_conversion_link_exists",
+    "customer_delivery_margin_gate_is_identified",
+    "contract_cancellation_subsidy_rollback_dilution_lithium_reversal_4B_absent",
+    "commodity_material_case_has_possible_ASP_or_margin_bridge"
+  ],
+  "stage3_green_rules": [
+    "ESS_or_EV_contract_is_final_and_delivery_starts",
+    "factory_utilization_and_margin_recover",
+    "non_credit_operating_margin_is_positive_and_durable",
+    "lithium_or_cathode_rebound_converts_to_ASP_and_margin",
+    "solid_state_moves_from_timeline_to_customer_revenue",
+    "capex_dilution_and_contract_cancellation_risks_are_resolved",
+    "full_window_MFE_MAE_is_available_and_supportive"
+  ],
+  "stage3_yellow_rules": [
+    "Stage2_Actionable_conditions_pass",
+    "binding_customer_and_delivery_schedule_visible",
+    "ESS_or_EV_line_utilization_recovery_visible",
+    "gross_margin_or_non_credit_operating_margin_improves",
+    "solid_state_pilot_yield_or_customer_adoption_visible",
+    "capex_dilution_or_policy_credit_overhang_partly_resolved"
+  ],
+  "stage4b_watch_triggers": [
+    "ESS_contract_before_customer_margin_delivery",
+    "AMPC_driven_profit_with_weak_underlying_margin",
+    "capital_raise_or_offering_price_cut",
+    "lithium_price_rebound_from_temporary_mine_license_event",
+    "unlisted_subsidiary_event_over_read_into_parent",
+    "solid_state_timeline_without_revenue"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "cyclical_stage2_count": 1,
+    "full_adjusted_ohlc_complete": false,
+    "large_sector": "SECONDARY_BATTERY_EV_GREEN",
+    "loop_name": "R3 Loop 17",
+    "method": "trigger_level_backtest_v1_after_redteam",
+    "next_round": "R4 Loop 17",
+    "policy_credit_4b_count": 1,
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_252",
+    "row_separation_required": true,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_324.md",
+    "stage2_actionable_candidate_count": 1,
+    "stage2_candidate_count": 5,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 4,
+    "stage4b_watch_count": 5,
+    "stage4c_watch_count": 1,
+    "strong_4c_case_count": 1,
+    "target_archetype_count": 8,
+    "trigger_count": 9
+  },
+  "what_not_to_change": [
+    "do_not_change_production_scoring",
+    "do_not_use_round324_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_invent_full_mfe_mae_without_adjusted_ohlc",
+    "do_not_treat_ESS_contract_AMPC_profit_lithium_rebound_solid_state_timeline_or_dilution_as_Green_without_customer_margin_utilization_revenue_and_risk_resolution"
+  ]
+}

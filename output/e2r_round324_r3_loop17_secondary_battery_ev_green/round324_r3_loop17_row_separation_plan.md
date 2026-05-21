@@ -1,0 +1,11 @@
+# Round 324 Row Separation Plan
+
+Battery rows must separate case evidence, trigger anchors and full adjusted OHLC backfill.
+
+Easy example: LGES AMPC earnings may look strong, but if ex-AMPC margin is 0.03%, the row must show policy-credit 4B instead of Green.
+
+- case_library_row_describes_stage_candidate_and_evidence_quality
+- trigger_calibration_row_stores_reported_event_return_market_relative_return_contract_value_and_policy_metrics
+- ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown
+- do_not_create_MFE_MAE_without_full_adjusted_OHLC
+- do_not_treat_ESS_contract_AMPC_profit_lithium_rebound_solid_state_timeline_or_dilution_as_Green_without_customer_margin_utilization_revenue_and_risk_resolution

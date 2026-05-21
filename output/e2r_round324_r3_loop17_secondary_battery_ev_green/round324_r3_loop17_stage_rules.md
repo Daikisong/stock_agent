@@ -1,0 +1,47 @@
+# Round 324 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- event_return_at_least_5pct
+- market_relative_return_at_least_5pp
+- contract_value_supply_volume_policy_credit_or_production_timeline_is_clear
+- EV_line_utilization_recovery_or_ESS_line_conversion_link_exists
+- customer_delivery_margin_gate_is_identified
+- contract_cancellation_subsidy_rollback_dilution_lithium_reversal_4B_absent
+- commodity_material_case_has_possible_ASP_or_margin_bridge
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- binding_customer_and_delivery_schedule_visible
+- ESS_or_EV_line_utilization_recovery_visible
+- gross_margin_or_non_credit_operating_margin_improves
+- solid_state_pilot_yield_or_customer_adoption_visible
+- capex_dilution_or_policy_credit_overhang_partly_resolved
+
+## Stage3-Green Rules
+- ESS_or_EV_contract_is_final_and_delivery_starts
+- factory_utilization_and_margin_recover
+- non_credit_operating_margin_is_positive_and_durable
+- lithium_or_cathode_rebound_converts_to_ASP_and_margin
+- solid_state_moves_from_timeline_to_customer_revenue
+- capex_dilution_and_contract_cancellation_risks_are_resolved
+- full_window_MFE_MAE_is_available_and_supportive
+
+## Green Blockers
+- ESS_headline_without_customer_margin_delivery
+- EV_contract_backlog_without_cancellation_check
+- AMPC_credit_dependency_ignored
+- solid_state_timeline_without_revenue
+- lithium_rebound_without_durability
+- capital_raise_dilution_ignored
+- unlisted_subsidiary_readthrough_overstated
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## Hard 4C Gates
+- large_OEM_contract_cancellation
+- repeated_contract_cancellation_across_customers
+- factory_utilization_thesis_break
+- EV_subsidy_rollback_causing_permanent_demand_reset
+- capex_or_dilution_spiral
+- safety_recall_or_fire_defect_with_compensation

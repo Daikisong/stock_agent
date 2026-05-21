@@ -1,0 +1,9 @@
+archetype,ess_lfp_contract_visibility,line_conversion_utilization,contract_cancellation_risk,lithium_price_inventory_rebound,solid_state_commercialization_timeline,non_credit_operating_margin,upstream_lithium_supply_control,market_relative_return,ev_contract_backlog_without_cancellation_check_penalty,ampc_credit_dependency_ignored_penalty,ess_headline_without_customer_margin_penalty,solid_state_timeline_without_revenue_penalty,stage2_actionable_promote,stage3_yellow_gate,stage3_green_gate,notes
+ESS_LFP_LINE_CONVERSION_STAGE2_ACTIONABLE,+5,+5,+1,+0,+1,+3,+0,+4,-2,-2,-4,-1,ESS LFP contract with +6.1% event return,customer/margin/delivery missing,customer+margin+delivery,Samsung SDI.
+EV_CONTRACT_CANCELLATION_4C,+0,+0,+5,+0,+0,+2,+0,+3,-5,-1,-1,-1,blocked by cancellation,utilization break,replacement orders+utilization recovery,LGES.
+SK_ON_ESS_PIVOT_STAGE2_WITH_PARENT_READTHROUGH,+4,+5,+2,+0,+0,+3,+0,+1,-2,-2,-4,-1,ESS pivot with unlisted subsidiary,parent readthrough missing,ESS revenue+margin+parent contribution,SK On.
+LITHIUM_PRICE_REBOUND_CYCLICAL_STAGE2,+0,+0,+1,+5,+0,+2,+3,+4,-1,-1,-1,-1,lithium mine suspension triggered materials rally,durability missing,lithium price sustained+cathode margin,POSCO Future M/L&F.
+SOLID_STATE_TIMELINE_STAGE2_YELLOW_CANDIDATE,+1,+1,+0,+0,+5,+2,+0,+5,-1,-1,-1,-5,strong technology timeline rally,revenue/yield missing,pilot yield+customer adoption,Samsung SDI.
+IRA_AMPC_EARNINGS_WITH_POLICY_4B,+0,+1,+1,+0,+0,+5,+0,+1,-2,-5,-1,-1,headline profit credit-dependent,underlying margin missing,non-credit margin+utilization,LGES.
+CAPITAL_RAISE_DILUTION_4B,+1,+2,+1,+0,+0,+2,+0,-2,-1,-1,-1,-1,blocked by dilution,dilution/capex ROI missing,capex ROI+utilization,Samsung SDI.
+UPSTREAM_LITHIUM_SUPPLY_STAGE2_NO_PRICE,+0,+0,+1,+3,+0,+2,+5,+1,-1,-1,-1,-1,upstream lithium stake,POSCO direct price unavailable,offtake+margin+lithium recovery,POSCO/MinRes.
