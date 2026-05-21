@@ -1,0 +1,43 @@
+# Round 303 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable
+
+- ai_partnership_connects_to_product_integration_or_infra_purchase
+- cloud_ai_revenue_share_or_enterprise_order_path_is_numeric
+- ipo_or_ma_has_mau_revenue_profit_ip_library_or_user_base
+- event_day_market_relative_price_reaction_exceeds_5pp
+- game_or_content_ip_has_sales_downloads_mau_retention_or_licensing
+- enterprise_sw_has_backlog_recurring_revenue_margin_or_customer_wins
+- security_or_data_risk_is_absent_or_controllable
+
+## Stage3-Yellow
+
+- ai_product_or_content_trigger_changes_eps_op_fcf_path_but_one_gate_remains
+- enterprise_order_backlog_or_cloud_margin_visible_but_durability_pending
+- content_ip_monetization_visible_but_retention_or_parent_bridge_pending
+- game_sellthrough_visible_but_live_service_retention_pending
+- artist_governance_or_data_security_gate_not_hard_failed
+
+## Stage3-Green
+
+- paid_ai_usage_api_revenue_or_ad_uplift_is_visible
+- cloud_ai_margin_and_enterprise_backlog_are_visible
+- content_ip_recurring_revenue_or_licensing_is_visible
+- game_retention_and_live_service_revenue_are_visible_after_launch
+- mna_integration_revenue_synergy_is_visible
+- artist_contract_governance_and_data_security_hard_gates_are_clear
+- full_window_mfe_mae_is_available_and_supportive
+
+## Green Blockers
+
+- ai_partnership_headline_only
+- dominant_mau_without_paid_ai_usage
+- ipo_pop_without_parent_monetization
+- cloud_ai_sales_mix_without_order_backlog_or_margin
+- cb_capital_injection_without_ai_order_backlog
+- ip_acquisition_without_revenue_synergy
+- game_ip_hype_without_retention
+- artist_name_without_contract_control
+- security_capex_after_breach_as_positive

@@ -1,0 +1,119 @@
+{
+  "green_blockers": [
+    "ai_partnership_headline_only",
+    "dominant_mau_without_paid_ai_usage",
+    "ipo_pop_without_parent_monetization",
+    "cloud_ai_sales_mix_without_order_backlog_or_margin",
+    "cb_capital_injection_without_ai_order_backlog",
+    "ip_acquisition_without_revenue_synergy",
+    "game_ip_hype_without_retention",
+    "artist_name_without_contract_control",
+    "security_capex_after_breach_as_positive"
+  ],
+  "hard_4c_gates": [
+    "data_breach_or_customer_data_leak",
+    "regulatory_negligence_finding",
+    "breach_related_revenue_forecast_cut",
+    "customer_compensation_or_large_remediation_cost",
+    "artist_contract_collapse_or_injunction_blocks_activity",
+    "ai_data_privacy_violation",
+    "cloud_or_security_failure_causes_enterprise_churn"
+  ],
+  "large_sector": "PLATFORM_CONTENT_SW_SECURITY",
+  "method": "trigger_level_backtest_v1",
+  "round_id": "round_231",
+  "score_down_axes": [
+    "AI_partnership_headline_only",
+    "IPO_pop_without_parent_monetization",
+    "cloud_AI_sales_mix_without_price_confirmation",
+    "CB_capital_injection_without_order_backlog",
+    "IP_acquisition_without_revenue_synergy",
+    "game_IP_hype_without_retention",
+    "artist_name_without_contract_control",
+    "security_capex_after_breach_as_positive"
+  ],
+  "score_up_axes": [
+    "paid_AI_usage_conversion",
+    "AI_cloud_margin_visibility",
+    "enterprise_order_backlog",
+    "content_IP_monetization",
+    "game_sellthrough_and_retention",
+    "global_IP_licensing",
+    "platform_user_data_security",
+    "artist_contract_governance",
+    "M&A_integration_revenue",
+    "AI_infra_capex_ROI"
+  ],
+  "source_round": "docs/round/round_303.md",
+  "stage2_actionable_rules": [
+    "ai_partnership_connects_to_product_integration_or_infra_purchase",
+    "cloud_ai_revenue_share_or_enterprise_order_path_is_numeric",
+    "ipo_or_ma_has_mau_revenue_profit_ip_library_or_user_base",
+    "event_day_market_relative_price_reaction_exceeds_5pp",
+    "game_or_content_ip_has_sales_downloads_mau_retention_or_licensing",
+    "enterprise_sw_has_backlog_recurring_revenue_margin_or_customer_wins",
+    "security_or_data_risk_is_absent_or_controllable"
+  ],
+  "stage3_green_rules": [
+    "paid_ai_usage_api_revenue_or_ad_uplift_is_visible",
+    "cloud_ai_margin_and_enterprise_backlog_are_visible",
+    "content_ip_recurring_revenue_or_licensing_is_visible",
+    "game_retention_and_live_service_revenue_are_visible_after_launch",
+    "mna_integration_revenue_synergy_is_visible",
+    "artist_contract_governance_and_data_security_hard_gates_are_clear",
+    "full_window_mfe_mae_is_available_and_supportive"
+  ],
+  "stage3_yellow_rules": [
+    "ai_product_or_content_trigger_changes_eps_op_fcf_path_but_one_gate_remains",
+    "enterprise_order_backlog_or_cloud_margin_visible_but_durability_pending",
+    "content_ip_monetization_visible_but_retention_or_parent_bridge_pending",
+    "game_sellthrough_visible_but_live_service_retention_pending",
+    "artist_governance_or_data_security_gate_not_hard_failed"
+  ],
+  "stage4b_watch_triggers": [
+    "ai_partnership_headline_rerates_before_paid_usage",
+    "ipo_pop_does_not_bridge_to_parent_eps_fcf",
+    "cb_or_strategic_capital_price_pop_before_order_backlog",
+    "game_or_ip_ma_is_priced_as_immediate_earnings",
+    "artist_or_ip_sentiment_moves_price_without_contract_control",
+    "security_remediation_capex_is_misread_as_growth_capex"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 1,
+    "large_sector": "PLATFORM_CONTENT_SW_SECURITY",
+    "method": "trigger_level_backtest_v1",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_231",
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_303.md",
+    "stage2_actionable_candidate_count": 5,
+    "stage2_only_candidate_count": 1,
+    "stage3_green_candidate_count": 0,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 0,
+    "stage4b_watch_count": 4,
+    "stage4c_watch_count": 2,
+    "trigger_count": 10
+  },
+  "target_archetypes": {
+    "AI_INFRA_PORTAL_STAGE2_ACTIONABLE": "AI_INFRA_PORTAL_STAGE2_ACTIONABLE",
+    "AI_MESSAGING_PARTNERSHIP_STAGE2_WITH_MONETIZATION_GATE": "AI_MESSAGING_PARTNERSHIP_STAGE2_WITH_MONETIZATION_GATE",
+    "AI_SOFTWARE_CB_STRATEGIC_CAPITAL_STAGE2_WITH_4B": "AI_SOFTWARE_CB_STRATEGIC_CAPITAL_STAGE2_WITH_4B",
+    "CLOUD_AI_IT_SERVICES_EVIDENCE_GOOD_PRICE_FAILED": "CLOUD_AI_IT_SERVICES_EVIDENCE_GOOD_PRICE_FAILED",
+    "CONTENT_MA_IP_EXPANSION_STAGE2": "CONTENT_MA_IP_EXPANSION_STAGE2",
+    "CYBERSECURITY_DATA_BREACH_HARD_4C": "CYBERSECURITY_DATA_BREACH_HARD_4C",
+    "GAME_IP_GLOBALIZATION_STAGE2_ACTIONABLE": "GAME_IP_GLOBALIZATION_STAGE2_ACTIONABLE",
+    "KPOP_ARTIST_GOVERNANCE_4C_WATCH": "KPOP_ARTIST_GOVERNANCE_4C_WATCH",
+    "WEBTOON_IPO_CONTENT_PLATFORM_STAGE2": "WEBTOON_IPO_CONTENT_PLATFORM_STAGE2"
+  },
+  "what_not_to_change": [
+    "do_not_apply_round303_shadow_weights_to_production_scoring_yet",
+    "do_not_use_round303_cases_as_candidate_generation_input",
+    "do_not_treat_ai_partnership_ipo_cb_ip_or_security_capex_headline_as_green",
+    "do_not_downgrade_stage_candidate_only_because_full_ohlc_is_missing"
+  ]
+}

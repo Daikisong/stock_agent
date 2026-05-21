@@ -1,0 +1,19 @@
+axis,points,direction,reason
+paid_AI_usage_conversion,+5,raise,R8 platform/content/SW/security trigger quality axis
+AI_cloud_margin_visibility,+5,raise,R8 platform/content/SW/security trigger quality axis
+enterprise_order_backlog,+5,raise,R8 platform/content/SW/security trigger quality axis
+content_IP_monetization,+5,raise,R8 platform/content/SW/security trigger quality axis
+game_sellthrough_and_retention,+5,raise,R8 platform/content/SW/security trigger quality axis
+global_IP_licensing,+4,raise,R8 platform/content/SW/security trigger quality axis
+platform_user_data_security,+5,raise,R8 platform/content/SW/security trigger quality axis
+artist_contract_governance,+5,raise,R8 platform/content/SW/security trigger quality axis
+M&A_integration_revenue,+4,raise,R8 platform/content/SW/security trigger quality axis
+AI_infra_capex_ROI,+5,raise,R8 platform/content/SW/security trigger quality axis
+AI_partnership_headline_only,-5,lower,"R8 headline, IPO, CB, IP or breach false-positive blocker"
+IPO_pop_without_parent_monetization,-4,lower,"R8 headline, IPO, CB, IP or breach false-positive blocker"
+cloud_AI_sales_mix_without_price_confirmation,-4,lower,"R8 headline, IPO, CB, IP or breach false-positive blocker"
+CB_capital_injection_without_order_backlog,-4,lower,"R8 headline, IPO, CB, IP or breach false-positive blocker"
+IP_acquisition_without_revenue_synergy,-4,lower,"R8 headline, IPO, CB, IP or breach false-positive blocker"
+game_IP_hype_without_retention,-5,lower,"R8 headline, IPO, CB, IP or breach false-positive blocker"
+artist_name_without_contract_control,-5,lower,"R8 headline, IPO, CB, IP or breach false-positive blocker"
+security_capex_after_breach_as_positive,-5,lower,"R8 headline, IPO, CB, IP or breach false-positive blocker"
