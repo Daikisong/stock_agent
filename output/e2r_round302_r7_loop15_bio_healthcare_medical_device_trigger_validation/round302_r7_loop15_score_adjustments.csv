@@ -1,0 +1,19 @@
+axis,points,direction,reason
+fda_approval_to_launch_conversion,+5,raise,R7 healthcare trigger quality axis
+actual_product_sales_after_approval,+5,raise,R7 healthcare trigger quality axis
+royalty_recognition_visibility,+5,raise,R7 healthcare trigger quality axis
+adoption_rate_guidance,+4,raise,R7 healthcare trigger quality axis
+patent_litigation_clearance,+5,raise,R7 healthcare trigger quality axis
+cdmo_order_backlog_utilization,+5,raise,R7 healthcare trigger quality axis
+tariff_localization_margin_benefit,+4,raise,R7 healthcare trigger quality axis
+ma_integration_and_utilization,+4,raise,R7 healthcare trigger quality axis
+biosimilar_launch_settlement,+5,raise,R7 healthcare trigger quality axis
+clinic_adoption_sellthrough,+4,raise,R7 healthcare trigger quality axis
+fda_trial_result_only,-4,lower,"R7 approval, capacity, LO, policy or launch headline blocker"
+product_approval_without_revenue,-3,lower,"R7 approval, capacity, LO, policy or launch headline blocker"
+cdmo_capacity_headline_only,-5,lower,"R7 approval, capacity, LO, policy or launch headline blocker"
+factory_acquisition_without_utilization,-4,lower,"R7 approval, capacity, LO, policy or launch headline blocker"
+total_lo_value_without_upfront,-5,lower,"R7 approval, capacity, LO, policy or launch headline blocker"
+biosimilar_approval_without_patent_clearance,-5,lower,"R7 approval, capacity, LO, policy or launch headline blocker"
+aesthetic_launch_without_sellthrough,-4,lower,"R7 approval, capacity, LO, policy or launch headline blocker"
+policy_support_without_company_order,-4,lower,"R7 approval, capacity, LO, policy or launch headline blocker"

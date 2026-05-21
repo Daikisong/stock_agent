@@ -646,6 +646,15 @@ class E2RArchetype(str, Enum):
     ONCOLOGY_LICENSE_ROYALTY_STAGE2 = "ONCOLOGY_LICENSE_ROYALTY_STAGE2"
     AESTHETIC_MEDICAL_DEVICE_US_LAUNCH_STAGE2 = "AESTHETIC_MEDICAL_DEVICE_US_LAUNCH_STAGE2"
     KOREAN_BIOTECH_TECH_EXPORT_STAGE2 = "KOREAN_BIOTECH_TECH_EXPORT_STAGE2"
+    SC_FORMULATION_ROYALTY_STAGE2_TO_GREEN = "SC_FORMULATION_ROYALTY_STAGE2_TO_GREEN"
+    SC_FORMULATION_PATENT_4C_WATCH = "SC_FORMULATION_PATENT_4C_WATCH"
+    BIOPHARMA_TARIFF_LOCALIZATION_STAGE2 = "BIOPHARMA_TARIFF_LOCALIZATION_STAGE2"
+    CDMO_LOCALIZATION_EVIDENCE_GOOD_PRICE_FAILED = "CDMO_LOCALIZATION_EVIDENCE_GOOD_PRICE_FAILED"
+    VACCINE_CDMO_MA_STAGE2_ACTIONABLE = "VACCINE_CDMO_MA_STAGE2_ACTIONABLE"
+    AESTHETIC_TOXIN_US_LAUNCH_STAGE2 = "AESTHETIC_TOXIN_US_LAUNCH_STAGE2"
+    AESTHETIC_DEVICE_MA_CONTROL_PREMIUM = "AESTHETIC_DEVICE_MA_CONTROL_PREMIUM"
+    BIOSIMILAR_PATENT_LITIGATION_4C_WATCH = "BIOSIMILAR_PATENT_LITIGATION_4C_WATCH"
+    PRIVATE_BIOTECH_LO_REFERENCE = "PRIVATE_BIOTECH_LO_REFERENCE"
     GLOBAL_CLINICAL_FAILURE_HARD_4C_REFERENCE = "GLOBAL_CLINICAL_FAILURE_HARD_4C_REFERENCE"
     ANIMAL_HEALTH_BIOSECURITY = "ANIMAL_HEALTH_BIOSECURITY"
     RETAIL_DOMESTIC_CONSUMER = "RETAIL_DOMESTIC_CONSUMER"
@@ -1822,6 +1831,114 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("clinical", "licensing", "financial_actual", "news", "price"),
             false_positive_patterns=("tech export upfront only", "early-stage deal without Phase2/3"),
             preferred_score_weights=_weights(eps_fcf=8, visibility=16, bottleneck=5, mispricing=12, valuation=8),
+        ),
+        E2RArchetype.SC_FORMULATION_ROYALTY_STAGE2_TO_GREEN: ArchetypeDefinition(
+            archetype=E2RArchetype.SC_FORMULATION_ROYALTY_STAGE2_TO_GREEN,
+            stage1_radar_signals=("blockbuster IV-to-SC formulation", "SC enzyme supplier role", "non-inferiority trial setup"),
+            stage2_candidate_signals=("non-inferiority or pivotal result", "FDA decision target", "launch timing", "adoption-rate guidance"),
+            stage3_high_conviction_signals=("FDA approval", "actual product launch", "early product sales", "royalty recognition", "patent risk cleared"),
+            stage4a_ongoing_signals=("adoption, product sales, partner launch execution and royalty recognition remain intact"),
+            stage4b_graduation_overheat_signals=("FDA approval headline rerates before royalty cashflow", "adoption forecast crowds before actual switch rate"),
+            stage4c_thesis_break_signals=("patent injunction", "launch delay", "royalty non-realization", "partner formulation failure", "commercial switch rate miss"),
+            key_evidence_families=("regulatory", "IP", "financial_actual", "research_report", "news", "price"),
+            false_positive_patterns=("clinical non-inferiority treated as Green", "FDA approval counted as issuer royalty before recognition"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=24, bottleneck=8, mispricing=14, valuation=12),
+        ),
+        E2RArchetype.SC_FORMULATION_PATENT_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.SC_FORMULATION_PATENT_4C_WATCH,
+            stage1_radar_signals=("SC formulation patent dispute", "enzyme IP challenge", "partner launch overhang"),
+            stage2_candidate_signals=("patent challenge identified", "partner states no launch delay", "litigation timeline visible"),
+            stage3_high_conviction_signals=("not a Green source; overlay must be cleared before Green confirmation",),
+            stage4a_ongoing_signals=("patent position remains clean and launch continues",),
+            stage4b_graduation_overheat_signals=("royalty platform rerates while patent challenge is unresolved",),
+            stage4c_thesis_break_signals=("injunction", "confirmed launch delay", "royalty block", "patent loss or adverse settlement"),
+            key_evidence_families=("IP", "regulatory", "news", "red_team"),
+            false_positive_patterns=("patent challenge ignored after approval", "partner confidence treated as legal clearance"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.BIOPHARMA_TARIFF_LOCALIZATION_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.BIOPHARMA_TARIFF_LOCALIZATION_STAGE2,
+            stage1_radar_signals=("U.S. pharma tariff risk", "biopharma policy support", "U.S. manufacturing footprint"),
+            stage2_candidate_signals=("policy support with company move", "U.S. facility acquisition", "preferred bidder status", "tariff hedge logic"),
+            stage3_high_conviction_signals=("customer transfer", "facility utilization", "incremental order backlog", "margin and FCF bridge", "tariff saving quantified"),
+            stage4a_ongoing_signals=("utilization, customer transfer, tariff benefit and margin remain visible"),
+            stage4b_graduation_overheat_signals=("policy support sector rally before company orders", "factory acquisition priced before utilization"),
+            stage4c_thesis_break_signals=("facility underutilization", "FDA inspection issue", "tariff economics fail", "capex burden", "margin benefit absent"),
+            key_evidence_families=("policy", "disclosure", "financial_actual", "news", "price"),
+            false_positive_patterns=("tariff policy support treated as Green", "factory localization headline without utilization"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=20, bottleneck=8, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.CDMO_LOCALIZATION_EVIDENCE_GOOD_PRICE_FAILED: ArchetypeDefinition(
+            archetype=E2RArchetype.CDMO_LOCALIZATION_EVIDENCE_GOOD_PRICE_FAILED,
+            stage1_radar_signals=("CDMO U.S. facility acquisition", "capacity localization", "policy/tariff hedge"),
+            stage2_candidate_signals=("facility value", "capacity liters", "customer transfer possibility", "event price reaction recorded"),
+            stage3_high_conviction_signals=("utilization", "new customer order", "batch margin", "tariff saving", "market-relative price recovery"),
+            stage4a_ongoing_signals=("orders, utilization and margin remain intact after localization"),
+            stage4b_graduation_overheat_signals=("capacity headline rerates before utilization", "localization story priced despite weak price confirmation"),
+            stage4c_thesis_break_signals=("evidence-good price failure persists", "underutilization", "customer transfer failure", "inspection or quality issue"),
+            key_evidence_families=("disclosure", "financial_actual", "news", "price", "regulatory"),
+            false_positive_patterns=("evidence quality treated as price validation", "capacity acquisition counted as backlog"),
+            preferred_score_weights=_weights(eps_fcf=16, visibility=18, bottleneck=8, mispricing=10, valuation=8),
+        ),
+        E2RArchetype.VACCINE_CDMO_MA_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.VACCINE_CDMO_MA_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("vaccine CDMO acquisition", "post-pandemic business-model reset", "European CDMO footprint"),
+            stage2_candidate_signals=("majority stake acquisition", "deal value", "first major M&A", "strong event return", "integration path"),
+            stage3_high_conviction_signals=("CDMO order backlog", "facility utilization", "customer wins", "margin contribution", "FCF after integration"),
+            stage4a_ongoing_signals=("integration, backlog, utilization and margin stay visible"),
+            stage4b_graduation_overheat_signals=("M&A announcement pop before utilization", "post-COVID reset narrative priced before orders"),
+            stage4c_thesis_break_signals=("integration failure", "facility underutilization", "new customer wins absent", "goodwill impairment", "post-COVID demand reset"),
+            key_evidence_families=("M&A", "financial_actual", "news", "price", "disclosure"),
+            false_positive_patterns=("M&A event treated as recurring CDMO revenue", "vaccine capacity treated as demand"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=20, bottleneck=8, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.AESTHETIC_TOXIN_US_LAUNCH_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.AESTHETIC_TOXIN_US_LAUNCH_STAGE2,
+            stage1_radar_signals=("FDA-approved aesthetic toxin", "U.S. launch", "lower-price Botox competitor narrative"),
+            stage2_candidate_signals=("U.S. availability", "unit-price advantage", "distributor channel", "provider adoption watch"),
+            stage3_high_conviction_signals=("clinic adoption", "repeat injection volume", "sell-through", "price realization", "margin after discount"),
+            stage4a_ongoing_signals=("repeat procedures, ASP, provider usage and safety compliance remain intact"),
+            stage4b_graduation_overheat_signals=("FDA approval and cheap Botox narrative rerate before sell-through"),
+            stage4c_thesis_break_signals=("clinic adoption failure", "price war", "margin after discount fails", "safety or counterfeit issue"),
+            key_evidence_families=("regulatory", "device_usage", "financial_actual", "news", "price"),
+            false_positive_patterns=("FDA approval treated as commercial revenue", "launch without clinic adoption"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=19, bottleneck=9, mispricing=13, valuation=10),
+        ),
+        E2RArchetype.AESTHETIC_DEVICE_MA_CONTROL_PREMIUM: ArchetypeDefinition(
+            archetype=E2RArchetype.AESTHETIC_DEVICE_MA_CONTROL_PREMIUM,
+            stage1_radar_signals=("energy-based aesthetic device growth", "private-equity takeout", "global EBD market expansion"),
+            stage2_candidate_signals=("takeout value", "revenue CAGR", "earnings CAGR", "global market growth", "prior close or tender context"),
+            stage3_high_conviction_signals=("not public operating Green unless listed trading and post-deal operating evidence remain available",),
+            stage4a_ongoing_signals=("installed-base growth and consumable/repeat economics remain visible before delisting"),
+            stage4b_graduation_overheat_signals=("control premium or tender/delisting dominates public price path", "takeout validation extrapolated to peers"),
+            stage4c_thesis_break_signals=("delisting closes public tracking", "post-buyout leverage or integration risk", "procedure slowdown"),
+            key_evidence_families=("M&A", "financial_actual", "news", "price"),
+            false_positive_patterns=("control premium treated as operating Stage 3-Green", "take-private benchmark used as tradable rerating"),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=20, bottleneck=12, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.BIOSIMILAR_PATENT_LITIGATION_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.BIOSIMILAR_PATENT_LITIGATION_4C_WATCH,
+            stage1_radar_signals=("biosimilar filing or approval path", "originator patent defense", "blockbuster reference product"),
+            stage2_candidate_signals=("patent lawsuit filed", "asserted patents identified", "product sales base visible", "launch date at risk"),
+            stage3_high_conviction_signals=("not Green until settlement, patent clearance, launch date and economics are visible"),
+            stage4a_ongoing_signals=("launch and settlement path remain intact"),
+            stage4b_graduation_overheat_signals=("biosimilar approval narrative rerates before patent clearance"),
+            stage4c_thesis_break_signals=("injunction", "launch blocked", "settlement economics weak", "damages or manufacturing/sales block"),
+            key_evidence_families=("IP", "regulatory", "news", "red_team"),
+            false_positive_patterns=("biosimilar approval treated as market share before patent clearance",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.PRIVATE_BIOTECH_LO_REFERENCE: ArchetypeDefinition(
+            archetype=E2RArchetype.PRIVATE_BIOTECH_LO_REFERENCE,
+            stage1_radar_signals=("private biotech license-out", "large headline deal value", "upfront payment disclosed"),
+            stage2_candidate_signals=("upfront separated from total deal value", "trial stage known", "milestone probability assessed"),
+            stage3_high_conviction_signals=("not applicable to listed candidate without public price, milestone progress and cashflow bridge",),
+            stage4a_ongoing_signals=("trial progress and partner execution remain intact as reference only",),
+            stage4b_graduation_overheat_signals=("total LO value headline extrapolated to public peers before upfront/probability",),
+            stage4c_thesis_break_signals=("trial failure", "partner termination", "milestone non-realization"),
+            key_evidence_families=("licensing", "clinical", "news"),
+            false_positive_patterns=("total deal value counted as realized revenue", "private reference used as public candidate evidence"),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
         ),
         E2RArchetype.GLOBAL_CLINICAL_FAILURE_HARD_4C_REFERENCE: ArchetypeDefinition(
             archetype=E2RArchetype.GLOBAL_CLINICAL_FAILURE_HARD_4C_REFERENCE,

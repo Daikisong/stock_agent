@@ -1,0 +1,115 @@
+{
+  "green_blockers": [
+    "trial_result_only",
+    "fda_approval_without_launch_or_revenue",
+    "factory_acquisition_without_utilization",
+    "cdmo_capacity_headline_only",
+    "total_lo_value_without_upfront_and_milestone_probability",
+    "biosimilar_approval_without_patent_clearance",
+    "aesthetic_launch_without_clinic_sellthrough",
+    "policy_support_without_company_order_or_margin",
+    "private_company_reference_used_as_public_candidate"
+  ],
+  "hard_4c_gates": [
+    "fda_crl_or_approval_rejection",
+    "patent_injunction_or_confirmed_launch_delay",
+    "biosimilar_litigation_blocks_launch",
+    "product_safety_issue_or_recall",
+    "cdmo_customer_cancellation",
+    "facility_utilization_collapse",
+    "clinical_trial_failure",
+    "reimbursement_failure"
+  ],
+  "large_sector": "BIO_HEALTHCARE_MEDICAL_DEVICE",
+  "method": "trigger_level_backtest_v1",
+  "round_id": "round_230",
+  "score_down_axes": [
+    "fda_trial_result_only",
+    "product_approval_without_revenue",
+    "cdmo_capacity_headline_only",
+    "factory_acquisition_without_utilization",
+    "total_lo_value_without_upfront",
+    "biosimilar_approval_without_patent_clearance",
+    "aesthetic_launch_without_sellthrough",
+    "policy_support_without_company_order"
+  ],
+  "score_up_axes": [
+    "fda_approval_to_launch_conversion",
+    "actual_product_sales_after_approval",
+    "royalty_recognition_visibility",
+    "adoption_rate_guidance",
+    "patent_litigation_clearance",
+    "cdmo_order_backlog_utilization",
+    "tariff_localization_margin_benefit",
+    "ma_integration_and_utilization",
+    "biosimilar_launch_settlement",
+    "clinic_adoption_sellthrough"
+  ],
+  "source_round": "docs/round/round_302.md",
+  "stage2_actionable_rules": [
+    "pivotal_or_noninferiority_result_is_public",
+    "fda_approval_or_launch_timing_is_visible",
+    "cdmo_or_vaccine_ma_has_capacity_and_price_reaction",
+    "biopharma_localization_has_company_specific_facility_or_policy_support",
+    "event_or_market_relative_price_reaction_is_recorded",
+    "private_license_total_value_is_separated_from_upfront"
+  ],
+  "stage3_green_rules": [
+    "actual_product_sales_after_approval_are_visible",
+    "issuer_royalty_or_revenue_recognition_is_visible",
+    "patent_litigation_or_launch_delay_risk_is_cleared",
+    "cdmo_customer_order_utilization_and_margin_are_visible",
+    "clinic_or_hospital_adoption_sellthrough_and_margin_are_visible",
+    "full_window_mfe_mae_is_available_and_supportive"
+  ],
+  "stage3_yellow_rules": [
+    "approval_launch_and_adoption_guidance_are_visible_but_one_gate_remains",
+    "early_sales_visible_but_issuer_royalty_or_margin_bridge_pending",
+    "cdmo_utilization_or_customer_transfer_partly_visible_but_margin_pending",
+    "aesthetic_launch_has_channel_data_but_sellthrough_or_margin_pending"
+  ],
+  "stage4b_watch_triggers": [
+    "fda_approval_headline_rerates_before_actual_sales_or_royalty",
+    "cdmo_capacity_or_factory_headline_rerates_before_utilization",
+    "ma_announcement_price_pop_before_integration_or_backlog",
+    "aesthetic_product_launch_without_clinic_sellthrough",
+    "lo_total_value_headline_without_upfront_or_probability"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 9,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "large_sector": "BIO_HEALTHCARE_MEDICAL_DEVICE",
+    "method": "trigger_level_backtest_v1",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_230",
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_302.md",
+    "stage2_actionable_candidate_count": 3,
+    "stage3_green_candidate_count": 1,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 1,
+    "stage4b_watch_count": 4,
+    "stage4c_watch_count": 3,
+    "trigger_count": 11
+  },
+  "target_archetypes": {
+    "AESTHETIC_DEVICE_MA_CONTROL_PREMIUM": "AESTHETIC_DEVICE_MA_CONTROL_PREMIUM",
+    "AESTHETIC_TOXIN_US_LAUNCH_STAGE2": "AESTHETIC_TOXIN_US_LAUNCH_STAGE2",
+    "BIOPHARMA_TARIFF_LOCALIZATION_STAGE2": "BIOPHARMA_TARIFF_LOCALIZATION_STAGE2",
+    "BIOSIMILAR_PATENT_LITIGATION_4C_WATCH": "BIOSIMILAR_PATENT_LITIGATION_4C_WATCH",
+    "CDMO_LOCALIZATION_EVIDENCE_GOOD_PRICE_FAILED": "CDMO_LOCALIZATION_EVIDENCE_GOOD_PRICE_FAILED",
+    "PRIVATE_BIOTECH_LO_REFERENCE": "PRIVATE_BIOTECH_LO_REFERENCE",
+    "SC_FORMULATION_PATENT_4C_WATCH": "SC_FORMULATION_PATENT_4C_WATCH",
+    "SC_FORMULATION_ROYALTY_STAGE2_TO_GREEN": "SC_FORMULATION_ROYALTY_STAGE2_TO_GREEN",
+    "VACCINE_CDMO_MA_STAGE2_ACTIONABLE": "VACCINE_CDMO_MA_STAGE2_ACTIONABLE"
+  },
+  "what_not_to_change": [
+    "do_not_apply_round302_shadow_weights_to_production_scoring_yet",
+    "do_not_use_round302_cases_as_candidate_generation_input",
+    "do_not_treat_fda_factory_lo_or_launch_headline_as_green",
+    "do_not_downgrade_stage_candidate_only_because_full_ohlc_is_missing"
+  ]
+}

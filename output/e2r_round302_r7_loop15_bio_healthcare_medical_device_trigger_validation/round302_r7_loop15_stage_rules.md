@@ -1,0 +1,40 @@
+# Round 302 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable
+
+- pivotal_or_noninferiority_result_is_public
+- fda_approval_or_launch_timing_is_visible
+- cdmo_or_vaccine_ma_has_capacity_and_price_reaction
+- biopharma_localization_has_company_specific_facility_or_policy_support
+- event_or_market_relative_price_reaction_is_recorded
+- private_license_total_value_is_separated_from_upfront
+
+## Stage3-Yellow
+
+- approval_launch_and_adoption_guidance_are_visible_but_one_gate_remains
+- early_sales_visible_but_issuer_royalty_or_margin_bridge_pending
+- cdmo_utilization_or_customer_transfer_partly_visible_but_margin_pending
+- aesthetic_launch_has_channel_data_but_sellthrough_or_margin_pending
+
+## Stage3-Green
+
+- actual_product_sales_after_approval_are_visible
+- issuer_royalty_or_revenue_recognition_is_visible
+- patent_litigation_or_launch_delay_risk_is_cleared
+- cdmo_customer_order_utilization_and_margin_are_visible
+- clinic_or_hospital_adoption_sellthrough_and_margin_are_visible
+- full_window_mfe_mae_is_available_and_supportive
+
+## Green Blockers
+
+- trial_result_only
+- fda_approval_without_launch_or_revenue
+- factory_acquisition_without_utilization
+- cdmo_capacity_headline_only
+- total_lo_value_without_upfront_and_milestone_probability
+- biosimilar_approval_without_patent_clearance
+- aesthetic_launch_without_clinic_sellthrough
+- policy_support_without_company_order_or_margin
+- private_company_reference_used_as_public_candidate
