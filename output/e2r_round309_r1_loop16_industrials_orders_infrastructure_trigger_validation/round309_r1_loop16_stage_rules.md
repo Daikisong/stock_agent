@@ -1,0 +1,47 @@
+# Round 309 Stage Rules
+
+Do not apply these weights to production scoring yet.
+
+## Stage2-Actionable Rules
+- signed_contract_value_large_vs_annual_order_wins_or_backlog
+- event_return_at_least_5pct
+- market_relative_return_at_least_5pp
+- buyer_scope_delivery_and_capacity_impact_specific
+- company_specific_order_or_backlog_not_only_demand_cycle
+- ASP_ship_price_or_transformer_price_pass_through_possible
+- no_4c_overlay_cancellation_sanction_or_legal_dispute
+
+## Stage3-Yellow Rules
+- Stage2_Actionable_conditions_pass
+- EPS_OP_FCF_path_can_change_materially
+- one_of_margin_cash_delivery_integration_capacity_still_open
+- price_reaction_or_relative_strength_supports_the_trigger
+- case_is_not_order_cancellation_sanction_or_price_muted_MA
+
+## Stage3-Green Rules
+- gross_margin_or_delivery_margin_confirmed
+- cash_collection_or_working_capital_confirmed
+- backlog_to_revenue_to_OP_conversion_confirmed
+- capacity_or_integration_synergy_confirmed
+- full_OHLC_backfill_supports_price_path
+- 4B_4C_overlay_cleared_or_contained
+
+## Green Blockers
+- headline_order_without_margin
+- transformer_demand_without_company_margin
+- shipbuilding_order_without_delivery_margin
+- merger_announcement_without_integration
+- strategic_stake_without_orders
+- MA_without_customer_orders
+- geopolitical_opportunity_without_sanction_check
+- full_adjusted_ohlc_missing_for_Green_confirmation
+
+## 4C Watch Gates
+- order_cancellation
+- customer_unilateral_termination
+- arbitration_or_legal_dispute
+- sanctions_blocking_business_with_key_market
+- cost_overrun_destroying_EPC_margin
+- ship_delivery_delay_or_cancellation
+- strategic_MA_integration_failure
+- transformer_capacity_expansion_failure_or_input_cost_squeeze

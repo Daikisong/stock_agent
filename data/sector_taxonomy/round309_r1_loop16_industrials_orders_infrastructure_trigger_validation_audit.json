@@ -1,0 +1,123 @@
+{
+  "green_blockers": [
+    "headline_order_without_margin",
+    "transformer_demand_without_company_margin",
+    "shipbuilding_order_without_delivery_margin",
+    "merger_announcement_without_integration",
+    "strategic_stake_without_orders",
+    "MA_without_customer_orders",
+    "geopolitical_opportunity_without_sanction_check",
+    "full_adjusted_ohlc_missing_for_Green_confirmation"
+  ],
+  "large_sector": "INDUSTRIALS_ORDERS_INFRASTRUCTURE",
+  "method": "trigger_level_backtest_v1_after_redteam",
+  "required_target_aliases": {
+    "AEROSPACE_EXPORT_CONTRACT_STAGE2": "AEROSPACE_EXPORT_CONTRACT_STAGE2",
+    "DATA_CENTER_COOLING_MA_STAGE2_PRICE_MUTED": "DATA_CENTER_COOLING_MA_STAGE2_PRICE_MUTED",
+    "GEOPOLITICAL_SANCTION_SHIPBUILDING_4C_WATCH": "GEOPOLITICAL_SANCTION_SHIPBUILDING_4C_WATCH",
+    "GRID_TRANSFORMER_DATA_CENTER_STAGE2": "GRID_TRANSFORMER_DATA_CENTER_STAGE2",
+    "OVERSEAS_EPC_BACKLOG_STAGE2_ACTIONABLE": "OVERSEAS_EPC_BACKLOG_STAGE2_ACTIONABLE",
+    "ROBOTICS_STRATEGIC_CONTROL_STAGE2_WITH_ORDER_GATE": "ROBOTICS_STRATEGIC_CONTROL_STAGE2_WITH_ORDER_GATE",
+    "SHIPBUILDING_CONTRACT_WIN_STAGE2_ACTIONABLE": "SHIPBUILDING_CONTRACT_WIN_STAGE2_ACTIONABLE",
+    "SHIPBUILDING_MERGER_SCALE_STAGE2_WITH_INTEGRATION_4B": "SHIPBUILDING_MERGER_SCALE_STAGE2_WITH_INTEGRATION_4B",
+    "SHIPBUILDING_ORDER_CANCELLATION_4C": "SHIPBUILDING_ORDER_CANCELLATION_4C"
+  },
+  "round_id": "round_237",
+  "row_separation_rules": [
+    "case_library_row_describes_what_happened_and_stage_candidate",
+    "trigger_calibration_row_stores_event_anchor_contract_value_and_reported_return",
+    "ohlc_backfill_row_stores_adjusted_OHLC_MFE_MAE_below_entry_peak_drawdown",
+    "do_not_downgrade_valid_Stage2_or_Yellow_candidate_only_because_OHLC_backfill_is_missing"
+  ],
+  "score_down_axes": [
+    "headline_order_without_margin",
+    "transformer_demand_without_company_margin",
+    "shipbuilding_order_without_delivery_margin",
+    "merger_announcement_without_integration",
+    "strategic_stake_without_orders",
+    "MA_without_customer_orders",
+    "geopolitical_opportunity_without_sanction_check"
+  ],
+  "score_up_axes": [
+    "signed_contract_value_vs_backlog",
+    "market_relative_event_strength",
+    "grid_transformer_backlog_capacity",
+    "shipbuilding_newbuilding_price_backlog",
+    "merger_integration_synergy",
+    "robotics_order_revenue_bridge",
+    "geopolitical_sanction_overlay",
+    "data_center_cooling_order_conversion"
+  ],
+  "source_round": "docs/round/round_309.md",
+  "stage2_actionable_rules": [
+    "signed_contract_value_large_vs_annual_order_wins_or_backlog",
+    "event_return_at_least_5pct",
+    "market_relative_return_at_least_5pp",
+    "buyer_scope_delivery_and_capacity_impact_specific",
+    "company_specific_order_or_backlog_not_only_demand_cycle",
+    "ASP_ship_price_or_transformer_price_pass_through_possible",
+    "no_4c_overlay_cancellation_sanction_or_legal_dispute"
+  ],
+  "stage3_green_rules": [
+    "gross_margin_or_delivery_margin_confirmed",
+    "cash_collection_or_working_capital_confirmed",
+    "backlog_to_revenue_to_OP_conversion_confirmed",
+    "capacity_or_integration_synergy_confirmed",
+    "full_OHLC_backfill_supports_price_path",
+    "4B_4C_overlay_cleared_or_contained"
+  ],
+  "stage3_yellow_rules": [
+    "Stage2_Actionable_conditions_pass",
+    "EPS_OP_FCF_path_can_change_materially",
+    "one_of_margin_cash_delivery_integration_capacity_still_open",
+    "price_reaction_or_relative_strength_supports_the_trigger",
+    "case_is_not_order_cancellation_sanction_or_price_muted_MA"
+  ],
+  "stage4b_watch_triggers": [
+    "mega_order_rally_before_margin_and_cash_proof",
+    "transformer_shortage_story_before_company_capacity_and_margin",
+    "shipbuilding_merger_or_contract_rally_before_delivery_margin",
+    "strategic_stake_or_MA_rerating_before_orders",
+    "geopolitical_optionalities_ignore_sanction_scope"
+  ],
+  "stage4c_watch_gates": [
+    "order_cancellation",
+    "customer_unilateral_termination",
+    "arbitration_or_legal_dispute",
+    "sanctions_blocking_business_with_key_market",
+    "cost_overrun_destroying_EPC_margin",
+    "ship_delivery_delay_or_cancellation",
+    "strategic_MA_integration_failure",
+    "transformer_capacity_expansion_failure_or_input_cost_squeeze"
+  ],
+  "summary": {
+    "candidate_generation_input": false,
+    "case_candidate_count": 8,
+    "evidence_good_but_price_muted_count": 2,
+    "full_adjusted_ohlc_complete": false,
+    "hard_4c_case_count": 0,
+    "large_sector": "INDUSTRIALS_ORDERS_INFRASTRUCTURE",
+    "method": "trigger_level_backtest_v1_after_redteam",
+    "price_validation_completed": "partial_with_reported_event_price_anchors",
+    "production_scoring_changed": false,
+    "round_id": "round_237",
+    "row_separation_required": true,
+    "shadow_weight_only": true,
+    "source_round": "docs/round/round_309.md",
+    "stage2_actionable_candidate_count": 3,
+    "stage2_event_candidate_count": 3,
+    "stage3_green_confirmed_count": 0,
+    "stage3_yellow_candidate_count": 4,
+    "stage4b_watch_count": 4,
+    "stage4c_watch_count": 2,
+    "target_archetype_count": 9,
+    "trigger_count": 8
+  },
+  "what_not_to_change": [
+    "do_not_change_production_scoring",
+    "do_not_use_round309_cases_as_candidate_generation_input",
+    "do_not_lower_stage3_green_thresholds",
+    "do_not_treat_order_merger_transformer_robotics_or_cooling_headline_as_green",
+    "do_not_invent_full_mfe_mae_without_adjusted_ohlc"
+  ]
+}

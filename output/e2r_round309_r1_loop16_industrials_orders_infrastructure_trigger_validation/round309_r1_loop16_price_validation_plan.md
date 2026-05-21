@@ -1,0 +1,12 @@
+# Round 309 Price Validation Plan
+
+Full adjusted OHLC was not available. Reported event anchors are retained without inventing full-window MFE/MAE.
+
+- r1_loop16_samsung_ea_fadhili: r1l16_samsungea_fadhili_T1 / excellent_stage2_actionable / full_window=`price_data_unavailable_after_deep_search`
+- r1_loop16_ls_electric_us_transformer: r1l16_lselectric_transformer_T1 / Stage2_grid_event_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r1_loop16_hd_hyundai_heavy_mipo_merger: r1l16_hhi_mipo_merger_T1 / Stage2_Actionable_with_4B_integration_overlay / full_window=`price_data_unavailable_after_deep_search`
+- r1_loop16_shipbuilding_contract_win_basket: r1l16_shipbuilding_basket_T1 / Stage2_promote_candidate_basket / full_window=`price_data_unavailable_after_deep_search`
+- r1_loop16_samsung_heavy_zvezda_cancellation: r1l16_samsungheavy_zvezda_T1 / order_cancellation_4C_watch / full_window=`price_data_unavailable_after_deep_search`
+- r1_loop16_hanwha_ocean_china_sanctions: r1l16_hanwhaocean_china_T1 / geopolitical_4C_watch / full_window=`price_data_unavailable_after_deep_search`
+- r1_loop16_rainbow_robotics_samsung_control: r1l16_rainbow_samsung_T1 / Stage2_strategic_control_not_Green / full_window=`price_data_unavailable_after_deep_search`
+- r1_loop16_samsung_flaktgroup_datacenter_cooling: r1l16_samsung_flakt_T1 / evidence_good_but_price_muted / full_window=`price_data_unavailable_after_deep_search`

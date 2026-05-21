@@ -1,0 +1,16 @@
+direction,axis,production_scoring_changed
+up,signed_contract_value_vs_backlog,false
+up,market_relative_event_strength,false
+up,grid_transformer_backlog_capacity,false
+up,shipbuilding_newbuilding_price_backlog,false
+up,merger_integration_synergy,false
+up,robotics_order_revenue_bridge,false
+up,geopolitical_sanction_overlay,false
+up,data_center_cooling_order_conversion,false
+down,headline_order_without_margin,false
+down,transformer_demand_without_company_margin,false
+down,shipbuilding_order_without_delivery_margin,false
+down,merger_announcement_without_integration,false
+down,strategic_stake_without_orders,false
+down,MA_without_customer_orders,false
+down,geopolitical_opportunity_without_sanction_check,false

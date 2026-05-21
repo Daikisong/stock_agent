@@ -1126,6 +1126,15 @@ class E2RArchetype(str, Enum):
     PLATFORM_SECURITY_HARD_4C = "PLATFORM_SECURITY_HARD_4C"
     POLICY_THEME_OVERHEAT_4B = "POLICY_THEME_OVERHEAT_4B"
     OHLC_BACKFILL_SEPARATION_REQUIRED = "OHLC_BACKFILL_SEPARATION_REQUIRED"
+    OVERSEAS_EPC_BACKLOG_STAGE2_ACTIONABLE = "OVERSEAS_EPC_BACKLOG_STAGE2_ACTIONABLE"
+    GRID_TRANSFORMER_DATA_CENTER_STAGE2 = "GRID_TRANSFORMER_DATA_CENTER_STAGE2"
+    SHIPBUILDING_MERGER_SCALE_STAGE2_WITH_INTEGRATION_4B = "SHIPBUILDING_MERGER_SCALE_STAGE2_WITH_INTEGRATION_4B"
+    SHIPBUILDING_CONTRACT_WIN_STAGE2_ACTIONABLE = "SHIPBUILDING_CONTRACT_WIN_STAGE2_ACTIONABLE"
+    SHIPBUILDING_ORDER_CANCELLATION_4C = "SHIPBUILDING_ORDER_CANCELLATION_4C"
+    GEOPOLITICAL_SANCTION_SHIPBUILDING_4C_WATCH = "GEOPOLITICAL_SANCTION_SHIPBUILDING_4C_WATCH"
+    ROBOTICS_STRATEGIC_CONTROL_STAGE2_WITH_ORDER_GATE = "ROBOTICS_STRATEGIC_CONTROL_STAGE2_WITH_ORDER_GATE"
+    DATA_CENTER_COOLING_MA_STAGE2_PRICE_MUTED = "DATA_CENTER_COOLING_MA_STAGE2_PRICE_MUTED"
+    AEROSPACE_EXPORT_CONTRACT_STAGE2 = "AEROSPACE_EXPORT_CONTRACT_STAGE2"
     FALSE_POSITIVE_SCORE = "FALSE_POSITIVE_SCORE"
     CROWDED_RERATING_4B_WATCH = "CROWDED_RERATING_4B_WATCH"
     THESIS_BREAK_4C = "THESIS_BREAK_4C"
@@ -7990,6 +7999,114 @@ ARCHETYPE_DEFINITIONS.update(
             key_evidence_families=("labor", "news", "red_team", "supply_chain"),
             false_positive_patterns=("AI memory upcycle scored without labor continuity", "court injunction treated as full settlement"),
             preferred_score_weights=_weights(eps_fcf=2, visibility=4, bottleneck=2, mispricing=2, valuation=2),
+        ),
+        E2RArchetype.OVERSEAS_EPC_BACKLOG_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.OVERSEAS_EPC_BACKLOG_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("overseas EPC award", "Saudi Aramco or LNG/gas expansion", "large contract headline"),
+            stage2_candidate_signals=("signed contract value is large versus annual order wins or backlog", "scope, buyer, completion date and relative price strength are visible"),
+            stage3_high_conviction_signals=("gross margin, cash collection, cost-overrun control, working capital and backlog-to-OP conversion are confirmed",),
+            stage4a_ongoing_signals=("project execution converts backlog into margin and cash without claims or collection stress",),
+            stage4b_graduation_overheat_signals=("mega-order rally before EPC margin, cash collection and cost-overrun evidence",),
+            stage4c_thesis_break_signals=("cost overrun", "cash collection failure", "Saudi execution delay", "working-capital stress", "project margin miss"),
+            key_evidence_families=("disclosure", "news", "price", "financial_actual", "red_team"),
+            false_positive_patterns=("large order value treated as Green before margin and cashflow",),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=22, bottleneck=10, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.GRID_TRANSFORMER_DATA_CENTER_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.GRID_TRANSFORMER_DATA_CENTER_STAGE2,
+            stage1_radar_signals=("U.S. transformer shortage", "data-center grid demand", "GSU or substation transformer demand growth"),
+            stage2_candidate_signals=("company-specific transformer order, voltage class, delivery window and end market are visible",),
+            stage3_high_conviction_signals=("order backlog, capacity, ASP/margin, input-cost pass-through, delivery execution and working capital confirm",),
+            stage4a_ongoing_signals=("transformer backlog converts into profitable delivery with long lead-time discipline",),
+            stage4b_graduation_overheat_signals=("grid shortage consensus crowds before company margin and capacity data",),
+            stage4c_thesis_break_signals=("capacity normalization", "copper or GOES cost squeeze", "delivery delay", "margin miss", "backlog fails to materialize"),
+            key_evidence_families=("news", "disclosure", "research_report", "price", "financial_actual"),
+            false_positive_patterns=("transformer demand headline treated as company margin",),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=23, bottleneck=22, mispricing=12, valuation=10),
+        ),
+        E2RArchetype.SHIPBUILDING_MERGER_SCALE_STAGE2_WITH_INTEGRATION_4B: ArchetypeDefinition(
+            archetype=E2RArchetype.SHIPBUILDING_MERGER_SCALE_STAGE2_WITH_INTEGRATION_4B,
+            stage1_radar_signals=("shipbuilding merger", "MASGA or U.S. shipbuilding cooperation", "large and mid-sized yard integration"),
+            stage2_candidate_signals=("merger terms, exchange ratio, strategic fit and event price reaction are visible",),
+            stage3_high_conviction_signals=("merger completion, integration synergy, U.S. contract awards, yard utilization, margin and FCF are confirmed",),
+            stage4a_ongoing_signals=("integrated yards turn order funnel into profitable deliveries",),
+            stage4b_graduation_overheat_signals=("record-high merger rally before integration and customer-order conversion",),
+            stage4c_thesis_break_signals=("integration failure", "no U.S. contract conversion", "labor or dock bottleneck", "merger terms destroy value"),
+            key_evidence_families=("news", "disclosure", "price", "financial_actual", "red_team"),
+            false_positive_patterns=("merger headline treated as shipbuilding Green before synergy and margin",),
+            preferred_score_weights=_weights(eps_fcf=16, visibility=18, bottleneck=15, mispricing=10, valuation=10),
+        ),
+        E2RArchetype.SHIPBUILDING_CONTRACT_WIN_STAGE2_ACTIONABLE: ArchetypeDefinition(
+            archetype=E2RArchetype.SHIPBUILDING_CONTRACT_WIN_STAGE2_ACTIONABLE,
+            stage1_radar_signals=("brisk shipbuilding contract wins", "newbuilding price index rising", "Korea order-share rebound"),
+            stage2_candidate_signals=("company or sector order wins, ship-price momentum and strong event return are visible",),
+            stage3_high_conviction_signals=("company-specific backlog quality, delivery schedule, steel cost pass-through, gross margin, working capital and cancellation risk are confirmed",),
+            stage4a_ongoing_signals=("higher-priced backlog converts into delivered margin and cash",),
+            stage4b_graduation_overheat_signals=("sector jumps on orders before delivery margin and steel-cost proof",),
+            stage4c_thesis_break_signals=("contract cancellation", "delivery delay", "steel or labor cost shock", "shipowner financing failure"),
+            key_evidence_families=("news", "price", "industry_data", "financial_actual", "red_team"),
+            false_positive_patterns=("contract wins treated as delivered margin",),
+            preferred_score_weights=_weights(eps_fcf=20, visibility=22, bottleneck=18, mispricing=13, valuation=13),
+        ),
+        E2RArchetype.SHIPBUILDING_ORDER_CANCELLATION_4C: ArchetypeDefinition(
+            archetype=E2RArchetype.SHIPBUILDING_ORDER_CANCELLATION_4C,
+            stage1_radar_signals=("large shipbuilding order", "LNG carrier or icebreaker backlog", "strategic customer project"),
+            stage2_candidate_signals=("backlog exists but counterparty, sanctions, prepayment and delivery gates remain open",),
+            stage3_high_conviction_signals=("not while cancellation, arbitration, war or sanctions risk remains unresolved",),
+            stage4a_ongoing_signals=("order executes without legal or sanction disruption",),
+            stage4b_graduation_overheat_signals=("backlog priced before counterparty quality and legal enforceability clear",),
+            stage4c_thesis_break_signals=("order cancellation", "shipowner unilateral termination", "Singapore arbitration", "war or sanctions make delivery impossible"),
+            key_evidence_families=("disclosure", "news", "legal", "red_team"),
+            false_positive_patterns=("cancelled backlog still counted as visibility",),
+            preferred_score_weights=_weights(eps_fcf=0, visibility=0, bottleneck=0, mispricing=0, valuation=0),
+        ),
+        E2RArchetype.GEOPOLITICAL_SANCTION_SHIPBUILDING_4C_WATCH: ArchetypeDefinition(
+            archetype=E2RArchetype.GEOPOLITICAL_SANCTION_SHIPBUILDING_4C_WATCH,
+            stage1_radar_signals=("U.S. shipbuilding optionality", "foreign shipyard acquisition", "maritime policy conflict"),
+            stage2_candidate_signals=("geopolitical opportunity is visible but sanction scope and contract protection are unresolved",),
+            stage3_high_conviction_signals=("contracts, delivery, margin and geopolitical clearance must be confirmed together",),
+            stage4a_ongoing_signals=("MRO or commercial revenue proceeds without sanction disruption",),
+            stage4b_graduation_overheat_signals=("U.S. shipbuilding optionality reprices before geopolitical risk is cleared",),
+            stage4c_thesis_break_signals=("sanctioned subsidiary", "cross-border retaliation", "port-fee retaliation", "export-control issue"),
+            key_evidence_families=("news", "regulatory", "price", "red_team"),
+            false_positive_patterns=("U.S. naval/MRO opportunity ignores China or Russia sanction overlay",),
+            preferred_score_weights=_weights(eps_fcf=6, visibility=10, bottleneck=6, mispricing=6, valuation=4),
+        ),
+        E2RArchetype.ROBOTICS_STRATEGIC_CONTROL_STAGE2_WITH_ORDER_GATE: ArchetypeDefinition(
+            archetype=E2RArchetype.ROBOTICS_STRATEGIC_CONTROL_STAGE2_WITH_ORDER_GATE,
+            stage1_radar_signals=("strategic shareholder becomes controlling or largest holder", "robotics office", "humanoid or factory automation theme"),
+            stage2_candidate_signals=("strategic control, governance path and deployment roadmap are visible",),
+            stage3_high_conviction_signals=("external robot orders, factory deployment, unit economics, recurring service revenue and supply-chain capacity are confirmed",),
+            stage4a_ongoing_signals=("orders and deployments convert into durable revenue and margin",),
+            stage4b_graduation_overheat_signals=("strategic stake rally before robot order and revenue bridge",),
+            stage4c_thesis_break_signals=("external orders fail", "factory deployment delayed", "unit economics disappoint", "strategic integration fails"),
+            key_evidence_families=("news", "price", "financial_actual", "research_report", "red_team"),
+            false_positive_patterns=("strategic stake treated as robot revenue",),
+            preferred_score_weights=_weights(eps_fcf=8, visibility=12, bottleneck=8, mispricing=8, valuation=6),
+        ),
+        E2RArchetype.DATA_CENTER_COOLING_MA_STAGE2_PRICE_MUTED: ArchetypeDefinition(
+            archetype=E2RArchetype.DATA_CENTER_COOLING_MA_STAGE2_PRICE_MUTED,
+            stage1_radar_signals=("data-center cooling M&A", "HVAC acquisition", "AI infrastructure cooling demand"),
+            stage2_candidate_signals=("acquisition value, strategic fit, global supply experience and AI data-center cooling exposure are visible",),
+            stage3_high_conviction_signals=("data-center cooling orders, integration margin, customer wins, capex ROI and recurring service revenue are confirmed",),
+            stage4a_ongoing_signals=("cooling acquisition converts into orders and service margin",),
+            stage4b_graduation_overheat_signals=("M&A headline before order conversion", "price muted despite good story"),
+            stage4c_thesis_break_signals=("integration margin fails", "customer orders fail", "M&A ROI disappoints", "appliance/HVAC story fails to reach data centers"),
+            key_evidence_families=("news", "price", "financial_actual", "customer_order", "red_team"),
+            false_positive_patterns=("cooling M&A treated as AI-chip rerating", "price muted ignored"),
+            preferred_score_weights=_weights(eps_fcf=10, visibility=14, bottleneck=12, mispricing=8, valuation=8),
+        ),
+        E2RArchetype.AEROSPACE_EXPORT_CONTRACT_STAGE2: ArchetypeDefinition(
+            archetype=E2RArchetype.AEROSPACE_EXPORT_CONTRACT_STAGE2,
+            stage1_radar_signals=("aerospace export contract", "aircraft or engine component order", "government or prime-customer aerospace demand"),
+            stage2_candidate_signals=("signed customer, contract value, delivery schedule and export approval path are visible",),
+            stage3_high_conviction_signals=("delivery revenue, margin, cash collection, repeat export and approval continuity are confirmed",),
+            stage4a_ongoing_signals=("aerospace deliveries convert into cash-generative backlog",),
+            stage4b_graduation_overheat_signals=("export contract rally before delivery and margin proof",),
+            stage4c_thesis_break_signals=("export approval failure", "delivery delay", "margin miss", "customer cancellation"),
+            key_evidence_families=("disclosure", "news", "financial_actual", "price", "red_team"),
+            false_positive_patterns=("aerospace export headline treated as delivered cashflow",),
+            preferred_score_weights=_weights(eps_fcf=18, visibility=22, bottleneck=10, mispricing=12, valuation=12),
         ),
         E2RArchetype.PRICE_ONLY_POLICY_RALLY: ArchetypeDefinition(
             archetype=E2RArchetype.PRICE_ONLY_POLICY_RALLY,
