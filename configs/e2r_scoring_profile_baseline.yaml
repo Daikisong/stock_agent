@@ -1,0 +1,19 @@
+profile_id: e2r_2_0_baseline
+profile_status: rollback_available
+profile_basis: pre_stock_web_calibration_default
+thresholds:
+  stage2_total_min: 65.0
+  stage2_eps_fcf_min: 10.0
+  stage2_valuation_min: 7.0
+  stage2_information_confidence_min: 3.0
+  stage3_yellow_total_min: 80.0
+  stage3_green_total_min: 85.0
+  stage3_green_eps_fcf_min: 17.0
+  stage3_green_visibility_min: 15.0
+  stage3_green_bottleneck_min: 15.0
+  stage3_green_mispricing_min: 10.0
+  stage3_green_valuation_min: 10.0
+  stage3_green_revision_min: 50.0
+  stage3_green_structural_visibility_min: 45.0
+adjustments:
+guardrails:

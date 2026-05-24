@@ -1,0 +1,27 @@
+profile_id: e2r_2_1_stock_web_calibrated
+profile_status: default_enabled
+previous_default_profile: e2r_2_0_baseline
+profile_basis: deduped_stock_web_historical_calibration_md
+thresholds:
+  stage2_total_min: 65.0
+  stage2_eps_fcf_min: 10.0
+  stage2_valuation_min: 7.0
+  stage2_information_confidence_min: 3.0
+  stage3_yellow_total_min: 75.0
+  stage3_green_total_min: 87.0
+  stage3_green_eps_fcf_min: 17.0
+  stage3_green_visibility_min: 15.0
+  stage3_green_bottleneck_min: 15.0
+  stage3_green_mispricing_min: 10.0
+  stage3_green_valuation_min: 10.0
+  stage3_green_revision_min: 55.0
+  stage3_green_structural_visibility_min: 45.0
+adjustments:
+  stage2_actionable_evidence_bonus: 2.0
+  stage3_cross_evidence_green_buffer: 1.5
+  stage2_actionable_volatility_guard_penalty: 2.0
+  high_mae_risk_guard_penalty: 2.0
+guardrails:
+  price_only_blowoff_blocks_positive_stage: true
+  full_4b_requires_non_price_evidence: true
+  hard_4c_thesis_break_routes_to_4c: true

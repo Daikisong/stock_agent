@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from datetime import date
 
+from .calibration.scoring_profile import get_active_scoring_profile
 from .models import ScoreSnapshot, Stage, StageSnapshot
 from .red_team import RedTeamAssessment, RedTeamRiskLevel, Soft4BStatus
 
@@ -120,6 +121,13 @@ class StageClassifier:
             reasons.append("Red Team hard thesis-break condition was present")
             return Stage.STAGE_4C, reasons
 
+        profile = get_active_scoring_profile()
+        if profile.guardrail_enabled("hard_4c_thesis_break_routes_to_4c") and _score_diagnostic(
+            score, "hard_4c_thesis_break_score"
+        ) >= 80.0:
+            reasons.append("calibrated hard 4C thesis-break guard was triggered")
+            return Stage.STAGE_4C, reasons
+
         if inputs.previous_stage in ACTIVE_RERATING_STAGES and red_team.soft_4b_score >= 60.0:
             reasons.append(f"Soft 4B {red_team.soft_4b_status.value} score reached {red_team.soft_4b_score:.1f}")
             return Stage.STAGE_4B, reasons
@@ -142,12 +150,18 @@ class StageClassifier:
             reasons.append("high-confidence rerating conditions were met with low Red Team risk")
             return Stage.STAGE_3_GREEN, reasons
 
-        if score.total_score >= 80.0:
+        if (
+            score.total_score >= profile.threshold("stage3_yellow_total_min", 80.0)
+            and not self._positive_stage_blocked_by_price_only(score)
+        ):
             reasons.append("Stage 3 score threshold was met, but Green conditions were incomplete")
             return Stage.STAGE_3_YELLOW, reasons
 
         if self._is_stage_2(score, red_team):
-            reasons.append("candidate threshold was met with required score components")
+            if self._is_stage_2_actionable(score):
+                reasons.append("calibrated Stage2-Actionable tier was met inside canonical Stage 2")
+            else:
+                reasons.append("candidate threshold was met with required score components")
             return Stage.STAGE_2, reasons
 
         if inputs.company_event_score >= 60.0 or inputs.high_quality_company_event:
@@ -162,17 +176,42 @@ class StageClassifier:
         return Stage.STAGE_0, reasons
 
     @staticmethod
-    def _is_stage_2(score: ScoreSnapshot, red_team: RedTeamAssessment) -> bool:
+    def _positive_stage_blocked_by_price_only(score: ScoreSnapshot) -> bool:
+        profile = get_active_scoring_profile()
         return (
-            score.total_score >= 65.0
-            and score.eps_fcf_explosion_score >= 10.0
-            and score.valuation_rerating_score >= 7.0
-            and score.information_confidence_score >= 3.0
+            profile.guardrail_enabled("price_only_blowoff_blocks_positive_stage")
+            and _score_diagnostic(score, "price_only_blowoff_score") >= 70.0
+        )
+
+    @staticmethod
+    def _is_stage_2(score: ScoreSnapshot, red_team: RedTeamAssessment) -> bool:
+        profile = get_active_scoring_profile()
+        if StageClassifier._positive_stage_blocked_by_price_only(score):
+            return False
+        return (
+            score.total_score >= profile.threshold("stage2_total_min", 65.0)
+            and score.eps_fcf_explosion_score >= profile.threshold("stage2_eps_fcf_min", 10.0)
+            and score.valuation_rerating_score >= profile.threshold("stage2_valuation_min", 7.0)
+            and score.information_confidence_score >= profile.threshold("stage2_information_confidence_min", 3.0)
             and not red_team.has_hard_break
         )
 
     @staticmethod
+    def _is_stage_2_actionable(score: ScoreSnapshot) -> bool:
+        return (
+            score.total_score >= 65.0
+            and (
+                _score_diagnostic(score, "calibration_stage2_actionable_evidence") > 0
+                or _score_diagnostic(score, "credible_order_or_policy_evidence") > 0
+            )
+            and _score_diagnostic(score, "price_only_blowoff_score") < 70.0
+        )
+
+    @staticmethod
     def _is_stage_3_green(score: ScoreSnapshot, red_team: RedTeamAssessment) -> bool:
+        profile = get_active_scoring_profile()
+        if StageClassifier._positive_stage_blocked_by_price_only(score):
+            return False
         revision_score = _score_diagnostic(score, "revision_score")
         structural_visibility_quality = _score_diagnostic(
             score,
@@ -183,14 +222,14 @@ class StageClassifier:
         contract_required_for_green = _score_diagnostic(score, "contract_required_for_green", 0.0)
         one_off_shortage_risk = _score_diagnostic(score, "one_off_shortage_risk")
         return (
-            score.total_score >= 85.0
-            and score.eps_fcf_explosion_score >= 17.0
-            and score.earnings_visibility_score >= 15.0
-            and score.bottleneck_pricing_score >= 15.0
-            and score.market_mispricing_score >= 10.0
-            and score.valuation_rerating_score >= 10.0
-            and revision_score >= STAGE_3_GREEN_MIN_REVISION_SCORE
-            and structural_visibility_quality >= 45.0
+            score.total_score >= profile.threshold("stage3_green_total_min", 85.0)
+            and score.eps_fcf_explosion_score >= profile.threshold("stage3_green_eps_fcf_min", 17.0)
+            and score.earnings_visibility_score >= profile.threshold("stage3_green_visibility_min", 15.0)
+            and score.bottleneck_pricing_score >= profile.threshold("stage3_green_bottleneck_min", 15.0)
+            and score.market_mispricing_score >= profile.threshold("stage3_green_mispricing_min", 10.0)
+            and score.valuation_rerating_score >= profile.threshold("stage3_green_valuation_min", 10.0)
+            and revision_score >= profile.threshold("stage3_green_revision_min", STAGE_3_GREEN_MIN_REVISION_SCORE)
+            and structural_visibility_quality >= profile.threshold("stage3_green_structural_visibility_min", 45.0)
             and (contract_required_for_green < 1.0 or contract_quality >= 45.0)
             and one_off_shortage_risk < 70.0
             and red_team.risk_level == RedTeamRiskLevel.LOW

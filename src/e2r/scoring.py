@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 from datetime import date
 from typing import Mapping, Protocol
 
+from .calibration.scoring_profile import get_active_scoring_profile
 from .models import IndustrialSubScores, ScoreSnapshot
 
 
@@ -94,9 +95,28 @@ class DeterministicScorer:
     """Canonical E2R 2.0 component scorer."""
 
     def score(self, payload: ScoringPayload) -> ScoreSnapshot:
-        raw_total = sum(payload.components.values()) - payload.risk_penalty
-        total_score = round(max(0.0, min(100.0, raw_total)), 4)
+        profile = get_active_scoring_profile()
         diagnostic_scores = dict(payload.diagnostic_scores)
+        calibration_bonus = 0.0
+        calibration_risk_penalty = 0.0
+
+        if diagnostic_scores.get("calibration_stage2_actionable_evidence", 0.0) > 0:
+            calibration_bonus += profile.adjustment("stage2_actionable_evidence_bonus")
+        if diagnostic_scores.get("credible_order_or_policy_evidence", 0.0) > 0:
+            calibration_bonus += profile.adjustment("stage2_actionable_evidence_bonus")
+        if diagnostic_scores.get("high_mae_risk", 0.0) > 0:
+            calibration_risk_penalty += profile.adjustment("high_mae_risk_guard_penalty")
+        if diagnostic_scores.get("stage2_actionable_volatility_risk", 0.0) > 0:
+            calibration_risk_penalty += profile.adjustment("stage2_actionable_volatility_guard_penalty")
+        if _has_stage3_cross_evidence_buffer(payload, diagnostic_scores, profile):
+            calibration_bonus += profile.adjustment("stage3_cross_evidence_green_buffer")
+            diagnostic_scores["stage3_cross_evidence_buffer_applied"] = 1.0
+
+        diagnostic_scores["active_scoring_profile"] = 1.0 if profile.profile_id.endswith("calibrated") else 0.0
+        diagnostic_scores["calibration_total_adjustment"] = round(calibration_bonus - calibration_risk_penalty, 4)
+
+        raw_total = sum(payload.components.values()) + calibration_bonus - payload.risk_penalty - calibration_risk_penalty
+        total_score = round(max(0.0, min(100.0, raw_total)), 4)
         if payload.industrial_sub_scores is not None:
             diagnostic_scores.update(payload.industrial_sub_scores.as_diagnostic_scores())
         evidence_ids = payload.evidence_ids + (
@@ -116,5 +136,30 @@ class DeterministicScorer:
             total_score=total_score,
             diagnostic_scores=diagnostic_scores,
             evidence_ids=tuple(dict.fromkeys(evidence_ids)),
-            scoring_version=payload.scoring_version,
+            scoring_version=f"{payload.scoring_version}:{profile.profile_id}",
         )
+
+
+def _has_stage3_cross_evidence_buffer(payload: ScoringPayload, diagnostics: Mapping[str, float], profile) -> bool:
+    """Allow a small calibrated buffer only for non-price, Green-like evidence stacks."""
+
+    if profile.adjustment("stage3_cross_evidence_green_buffer") <= 0:
+        return False
+    if diagnostics.get("price_only_blowoff_score", 0.0) >= 70.0:
+        return False
+    if diagnostics.get("one_off_shortage_risk", 0.0) >= 70.0:
+        return False
+    if diagnostics.get("theme_overheat_score", 0.0) >= 70.0:
+        return False
+    if diagnostics.get("revision_score", 0.0) < max(70.0, profile.threshold("stage3_green_revision_min", 55.0)):
+        return False
+    if len(payload.evidence_ids) < 2 and diagnostics.get("cross_evidence_family_count", 0.0) < 4.0:
+        return False
+    return (
+        payload.components["eps_fcf_explosion"] >= profile.threshold("stage3_green_eps_fcf_min", 17.0)
+        and payload.components["earnings_visibility"] >= profile.threshold("stage3_green_visibility_min", 15.0)
+        and payload.components["bottleneck_pricing"] >= profile.threshold("stage3_green_bottleneck_min", 15.0)
+        and payload.components["market_mispricing"] >= profile.threshold("stage3_green_mispricing_min", 10.0)
+        and payload.components["valuation_rerating"] >= profile.threshold("stage3_green_valuation_min", 10.0)
+        and payload.components["information_confidence"] >= profile.threshold("stage2_information_confidence_min", 3.0)
+    )

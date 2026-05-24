@@ -1,0 +1,86 @@
+[
+  {
+    "axis": "stage2_actionable_evidence_bonus",
+    "scope": "global",
+    "old_value": 0,
+    "new_value": 2.0,
+    "delta": 2.0,
+    "confidence": "medium",
+    "unique_case_count": 347,
+    "unique_round_count": 13,
+    "supporting_trigger_count": 508,
+    "reason": "Deduped Stage2/Stage2-Actionable rows repeatedly captured early non-price evidence before Green confirmation."
+  },
+  {
+    "axis": "stage3_yellow_total_min",
+    "scope": "global",
+    "old_value": 80.0,
+    "new_value": 75.0,
+    "delta": -5.0,
+    "confidence": "medium",
+    "unique_case_count": 183,
+    "unique_round_count": 13,
+    "supporting_trigger_count": 183,
+    "reason": "Stage3-Yellow is validated as an intermediate state when evidence is strong but Green gates remain open."
+  },
+  {
+    "axis": "stage3_green_total_min",
+    "scope": "global",
+    "old_value": 85.0,
+    "new_value": 87.0,
+    "delta": 2.0,
+    "confidence": "high",
+    "unique_case_count": 225,
+    "unique_round_count": 13,
+    "supporting_trigger_count": 225,
+    "reason": "Late/false Green evidence supports stricter Green confirmation rather than broad relaxation."
+  },
+  {
+    "axis": "stage3_green_revision_min",
+    "scope": "global",
+    "old_value": 50.0,
+    "new_value": 55.0,
+    "delta": 5.0,
+    "confidence": "high",
+    "unique_case_count": 225,
+    "unique_round_count": 13,
+    "supporting_trigger_count": 225,
+    "reason": "Green should require stronger EPS/OP/FCF revision confirmation after cumulative calibration."
+  },
+  {
+    "axis": "stage3_cross_evidence_green_buffer",
+    "scope": "global",
+    "old_value": 0,
+    "new_value": 1.5,
+    "delta": 1.5,
+    "confidence": "medium",
+    "unique_case_count": 225,
+    "unique_round_count": 13,
+    "supporting_trigger_count": 225,
+    "reason": "Strong multi-family evidence may bridge small total-score rounding gaps while stricter Green gates remain active."
+  },
+  {
+    "axis": "full_4b_requires_non_price_evidence",
+    "scope": "4B_guardrail",
+    "old_value": false,
+    "new_value": true,
+    "delta": 1.0,
+    "confidence": "high",
+    "unique_case_count": 282,
+    "unique_round_count": 13,
+    "supporting_trigger_count": 282,
+    "reason": "Price-only local peaks repeatedly failed as full 4B; full 4B now requires non-price evidence."
+  },
+  {
+    "axis": "hard_4c_thesis_break_routes_to_4c",
+    "scope": "4C_guardrail",
+    "old_value": false,
+    "new_value": true,
+    "delta": 1.0,
+    "confidence": "high",
+    "unique_case_count": 92,
+    "unique_round_count": 11,
+    "supporting_trigger_count": 102,
+    "reason": "4C rows are thesis-break/protection logic and must never train positive entry weights."
+  }
+]

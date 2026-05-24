@@ -11,6 +11,7 @@ from typing import Mapping
 from e2r.models import ScoreSnapshot, Stage
 from e2r.red_team import RedTeamAssessment, RedTeamRiskLevel
 from e2r.sector_profiles import profile_name_from_diagnostic
+from e2r.calibration.scoring_profile import get_active_scoring_profile
 from e2r.staging import STAGE_3_GREEN_MIN_REVISION_SCORE
 
 
@@ -50,9 +51,14 @@ def diagnose_stage_gates(score: ScoreSnapshot, red_team: RedTeamAssessment) -> S
     contract_quality_required = sector_profile in {"POWER_EQUIPMENT", "DEFENSE", "BATTERY_OVERHEAT"}
     present_families = _present_evidence_families(score)
     missing_families = tuple(family for family in _EVIDENCE_FAMILIES if family not in present_families)
+    profile = get_active_scoring_profile()
+    stage2_total_min = profile.threshold("stage2_total_min", 65.0)
+    stage3_yellow_min = profile.threshold("stage3_yellow_total_min", 80.0)
+    stage3_green_min = profile.threshold("stage3_green_total_min", 85.0)
+    stage3_revision_min = profile.threshold("stage3_green_revision_min", STAGE_3_GREEN_MIN_REVISION_SCORE)
 
     checks: dict[str, tuple[float | str | bool, float | str | bool, bool]] = {
-        "failed_stage2_total_score": (score.total_score, 65.0, score.total_score >= 65.0),
+        "failed_stage2_total_score": (score.total_score, stage2_total_min, score.total_score >= stage2_total_min),
         "failed_stage2_eps_fcf": (score.eps_fcf_explosion_score, 10.0, score.eps_fcf_explosion_score >= 10.0),
         "failed_stage2_valuation": (score.valuation_rerating_score, 7.0, score.valuation_rerating_score >= 7.0),
         "failed_stage2_information_confidence": (
@@ -60,7 +66,7 @@ def diagnose_stage_gates(score: ScoreSnapshot, red_team: RedTeamAssessment) -> S
             3.0,
             score.information_confidence_score >= 3.0,
         ),
-        "failed_stage3_total_score": (score.total_score, 85.0, score.total_score >= 85.0),
+        "failed_stage3_total_score": (score.total_score, stage3_green_min, score.total_score >= stage3_green_min),
         "failed_stage3_eps_fcf": (score.eps_fcf_explosion_score, 17.0, score.eps_fcf_explosion_score >= 17.0),
         "failed_stage3_visibility": (
             score.earnings_visibility_score,
@@ -84,8 +90,8 @@ def diagnose_stage_gates(score: ScoreSnapshot, red_team: RedTeamAssessment) -> S
         ),
         "failed_stage3_revision": (
             revision_score,
-            STAGE_3_GREEN_MIN_REVISION_SCORE,
-            revision_score >= STAGE_3_GREEN_MIN_REVISION_SCORE,
+            stage3_revision_min,
+            revision_score >= stage3_revision_min,
         ),
         "failed_stage3_contract_quality": (
             contract_quality,
@@ -131,6 +137,11 @@ def diagnose_stage_gates(score: ScoreSnapshot, red_team: RedTeamAssessment) -> S
             red_team.risk_level.value,
             RedTeamRiskLevel.LOW.value,
             red_team.risk_level == RedTeamRiskLevel.LOW,
+        ),
+        "failed_stage3_yellow_calibrated_total": (
+            score.total_score,
+            stage3_yellow_min,
+            score.total_score >= stage3_yellow_min,
         ),
     }
     checks["failed_stage2_red_team"] = (red_team.has_hard_break, False, not red_team.has_hard_break)
