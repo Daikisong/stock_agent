@@ -315,6 +315,148 @@ profile_comparison,baseline_current_proxy,1,10,-5
         self.assertNotEqual(calibrated_stage.stage, Stage.STAGE_3_GREEN)
         self.assertNotIn(price_only_stage.stage, {Stage.STAGE_2, Stage.STAGE_3_GREEN, Stage.STAGE_3_YELLOW})
 
+    def test_runtime_profile_sample_behaviors_are_explicit(self) -> None:
+        old = os.environ.get("E2R_SCORING_PROFILE")
+        try:
+            near_stage2_payload = ScoringPayload(
+                symbol="000011",
+                as_of_date=date(2024, 2, 1),
+                components={
+                    "eps_fcf_explosion": 12,
+                    "earnings_visibility": 13,
+                    "bottleneck_pricing": 11,
+                    "market_mispricing": 12,
+                    "valuation_rerating": 8,
+                    "capital_allocation": 4,
+                    "information_confidence": 4,
+                },
+                diagnostic_scores={"credible_order_or_policy_evidence": 1},
+            )
+            os.environ["E2R_SCORING_PROFILE"] = "baseline"
+            baseline_stage2_score = DeterministicScorer().score(near_stage2_payload)
+            baseline_stage2 = StageClassifier().classify(
+                StageClassificationInput(
+                    score=baseline_stage2_score,
+                    red_team=RedTeamAssessment.empty("000011", date(2024, 2, 1)),
+                )
+            )
+            os.environ["E2R_SCORING_PROFILE"] = "calibrated"
+            calibrated_stage2_score = DeterministicScorer().score(near_stage2_payload)
+            calibrated_stage2 = StageClassifier().classify(
+                StageClassificationInput(
+                    score=calibrated_stage2_score,
+                    red_team=RedTeamAssessment.empty("000011", date(2024, 2, 1)),
+                )
+            )
+            self.assertLess(baseline_stage2_score.total_score, 65)
+            self.assertGreaterEqual(calibrated_stage2_score.total_score, 65)
+            self.assertNotEqual(baseline_stage2.stage, Stage.STAGE_2)
+            self.assertEqual(calibrated_stage2.stage, Stage.STAGE_2)
+            self.assertIn("Stage2-Actionable", " ".join(calibrated_stage2.stage_reason))
+
+            yellow_payload = ScoringPayload(
+                symbol="000012",
+                as_of_date=date(2024, 2, 1),
+                components={
+                    "eps_fcf_explosion": 17,
+                    "earnings_visibility": 15,
+                    "bottleneck_pricing": 15,
+                    "market_mispricing": 11,
+                    "valuation_rerating": 10,
+                    "capital_allocation": 5,
+                    "information_confidence": 5,
+                },
+            )
+            os.environ["E2R_SCORING_PROFILE"] = "baseline"
+            baseline_yellow_score = DeterministicScorer().score(yellow_payload)
+            baseline_yellow = StageClassifier().classify(
+                StageClassificationInput(
+                    score=baseline_yellow_score,
+                    red_team=RedTeamAssessment.empty("000012", date(2024, 2, 1)),
+                )
+            )
+            os.environ["E2R_SCORING_PROFILE"] = "calibrated"
+            calibrated_yellow_score = DeterministicScorer().score(yellow_payload)
+            calibrated_yellow = StageClassifier().classify(
+                StageClassificationInput(
+                    score=calibrated_yellow_score,
+                    red_team=RedTeamAssessment.empty("000012", date(2024, 2, 1)),
+                )
+            )
+            self.assertEqual(baseline_yellow_score.total_score, 78)
+            self.assertEqual(calibrated_yellow_score.total_score, 78)
+            self.assertEqual(baseline_yellow.stage, Stage.STAGE_2)
+            self.assertEqual(calibrated_yellow.stage, Stage.STAGE_3_YELLOW)
+
+            revision_gate_score = ScoreSnapshot(
+                symbol="000013",
+                as_of_date=date(2024, 2, 1),
+                eps_fcf_explosion_score=18,
+                earnings_visibility_score=16,
+                bottleneck_pricing_score=16,
+                market_mispricing_score=11,
+                valuation_rerating_score=11,
+                capital_allocation_score=5,
+                information_confidence_score=5,
+                risk_penalty=0,
+                total_score=88,
+                diagnostic_scores={"revision_score": 52, "structural_visibility_quality": 70, "one_off_shortage_risk": 0},
+            )
+            os.environ["E2R_SCORING_PROFILE"] = "baseline"
+            baseline_revision = StageClassifier().classify(
+                StageClassificationInput(
+                    score=revision_gate_score,
+                    red_team=RedTeamAssessment.empty("000013", date(2024, 2, 1)),
+                )
+            )
+            os.environ["E2R_SCORING_PROFILE"] = "calibrated"
+            calibrated_revision = StageClassifier().classify(
+                StageClassificationInput(
+                    score=revision_gate_score,
+                    red_team=RedTeamAssessment.empty("000013", date(2024, 2, 1)),
+                )
+            )
+            self.assertEqual(baseline_revision.stage, Stage.STAGE_3_GREEN)
+            self.assertEqual(calibrated_revision.stage, Stage.STAGE_3_YELLOW)
+
+            price_only_score = ScoreSnapshot(
+                **{
+                    **revision_gate_score.__dict__,
+                    "diagnostic_scores": {"price_only_blowoff_score": 90, "revision_score": 100},
+                }
+            )
+            price_only_stage = StageClassifier().classify(
+                StageClassificationInput(
+                    score=price_only_score,
+                    red_team=RedTeamAssessment.empty("000013", date(2024, 2, 1)),
+                    company_event_score=80,
+                )
+            )
+            self.assertNotIn(price_only_stage.stage, {Stage.STAGE_2, Stage.STAGE_3_YELLOW, Stage.STAGE_3_GREEN})
+
+            hard_4c_score = ScoreSnapshot(
+                **{
+                    **revision_gate_score.__dict__,
+                    "diagnostic_scores": {
+                        "hard_4c_thesis_break_score": 80,
+                        "revision_score": 100,
+                        "structural_visibility_quality": 70,
+                    },
+                }
+            )
+            hard_4c_stage = StageClassifier().classify(
+                StageClassificationInput(
+                    score=hard_4c_score,
+                    red_team=RedTeamAssessment.empty("000013", date(2024, 2, 1)),
+                )
+            )
+            self.assertEqual(hard_4c_stage.stage, Stage.STAGE_4C)
+        finally:
+            if old is None:
+                os.environ.pop("E2R_SCORING_PROFILE", None)
+            else:
+                os.environ["E2R_SCORING_PROFILE"] = old
+
     def test_cli_argument_parsing(self) -> None:
         args = build_parser().parse_args(["--md-input-root", "docs/round", "--data-directory", "x", "--report-directory", "y"])
         self.assertEqual(args.md_input_root, "docs/round")
