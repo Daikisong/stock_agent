@@ -1,4 +1,3 @@
-````text
 # E2R Historical Calibration Prompt v12 — Stock-Web OHLC Atlas / Sector-Archetype Residual Expansion / MD Handoff
 
 이 프롬프트는 **가격경로 돌파 이후** 사용하는 historical calibration / backtest optimization 전용 프롬프트다.
@@ -11,7 +10,7 @@ primary_price_source_url = https://github.com/Songdaiki/stock-web
 source_basis = FinanceData/marcap transformed into assistant-readable symbol-year CSV shards
 price_basis = tradable_raw
 price_adjustment_status = raw_unadjusted_marcap
-````
+```
 
 이 프롬프트는 현재/live 종목 탐색용이 아니다.
 이 프롬프트는 `stock_agent` 레포 패치용도 아니다.
