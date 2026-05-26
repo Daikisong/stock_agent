@@ -110,7 +110,42 @@ Correct:
 
 Do not keep saying "collect more research" forever.
 
-This v12 task is an ingest/readiness task, but it must decide which scoring changes are ready for the next promotion patch.
+Do not wait for one giant final batch before scoring changes either.
+
+The intended architecture is rolling micro-calibration:
+
+```text
+new non-overlapping research MDs arrive
+-> source ledger is regenerated
+-> archetype evidence state is updated
+-> candidate score deltas are recomputed
+-> safe small patches are proposed
+-> accepted patches become the new calibrated state
+-> later research can strengthen, weaken, cap, or roll back that state
+```
+
+This v12 task is an ingest/readiness task, but it must decide which scoring changes are ready for the next promotion patch and which existing candidate axes should move up/down as new positives and counterexamples arrive.
+
+Simple example:
+
+```text
+Round A:
+  C20 K-beauty has 3 positives and 2 counterexamples.
+  It earns a bounded Stage2 bridge candidate.
+
+Patch A:
+  Add a small C20 Stage2 bridge only.
+  Do not change Green.
+
+Round B:
+  More C20 research adds two inventory/channel-stuffing counterexamples.
+
+Patch B:
+  Do not remove all C20 logic.
+  Keep the Stage2 bridge, but add a stronger inventory/receivable RedTeam guard.
+```
+
+So the system should behave like a calibration ledger, not a one-time thesis memo.
 
 After the current v12 batch is ingested, every candidate axis must be classified as one of:
 
@@ -130,6 +165,89 @@ If any axis is apply_next_patch:
 
 If no axis is apply_next_patch:
   fix the named blocker first, not blindly add more rounds.
+```
+
+This does not mean research stops.
+It means research and patching run in parallel cadence:
+
+```text
+research cadence:
+  keep adding non-overlapping sector/archetype cases.
+
+calibration cadence:
+  after each meaningful batch, recompute promotion decisions.
+
+patch cadence:
+  apply only the axes that clear the gate, in small reversible deltas.
+```
+
+Required rolling state files:
+
+```text
+data/e2r/calibration/v12/v12_archetype_evidence_state.json
+data/e2r/calibration/v12/v12_promotion_decisions.jsonl
+data/e2r/calibration/v12/v12_patch_specs.jsonl
+reports/e2r_calibration/v12/rolling_calibration_state.md
+reports/e2r_calibration/v12/apply_next_patch_plan.md
+```
+
+The evidence state must preserve:
+
+```text
+large_sector_id
+canonical_archetype_id
+unique_positive_symbols
+unique_success_candidate_symbols
+unique_counterexample_symbols
+unique_4b_cases
+unique_4c_cases
+latest_positive_case_ids
+latest_counterexample_case_ids
+common_positive_evidence_fields
+common_failure_evidence_fields
+current_patch_state
+last_patch_version
+next_delta_recommendation
+```
+
+Patch specs must be small and reversible:
+
+```text
+patch_id
+patch_type
+scope
+axis
+old_value
+new_value
+max_delta
+evidence_support_ids
+counterexample_guard_ids
+rollback_condition
+```
+
+Example patch spec:
+
+```text
+patch_id = e2r_2_2_C20_stage2_bridge_v1
+patch_type = Stage2 bridge
+scope = canonical_archetype:C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION
+axis = export_channel_reorder_stage2_bridge_bonus
+old_value = 0.0
+new_value = 1.0
+max_delta = 1.0
+rollback_condition = C20 false_positive_stage2_rate worsens or inventory counterexamples dominate
+```
+
+This is different from a one-shot global profile rewrite.
+
+```text
+Wrong:
+  "We gathered 300 files. Rewrite all Stage thresholds."
+
+Correct:
+  "C20 clears a Stage2 bridge gate. Add +1.0 only for C20 bridge evidence.
+   C14 battery overheat has counterexamples. Add a stricter Green guard.
+   C03 defense is still under-covered. Hold."
 ```
 
 Simple example:
@@ -289,6 +407,9 @@ and canonical_archetypes_covered >= 20
 and any axis is apply_next_patch,
 do not request more broad research before implementing the eligible patch.
 ```
+
+This rule does not mean "stop researching".
+It means "do not use more research as an excuse to avoid eligible micro-patches".
 
 In this repository's current batch, that means the 87-file v12 batch must produce promotion decisions.
 It is acceptable for many axes to remain blocked, but it is not acceptable to avoid the decision.
