@@ -3,821 +3,778 @@ You are Codex working inside:
 https://github.com/Songdaiki/stock_agent
 
 Repository local path:
- /home/eorb915/projects/stock_agent
+/home/eorb915/projects/stock_agent
 
 Primary MD input root:
- /home/eorb915/projects/stock_agent/docs/round
+/home/eorb915/projects/stock_agent/docs/round
 
 GOAL:
-Ingest all E2R Stock-Web historical calibration result Markdown files, deduplicate repeated loops, aggregate evidence→return calibration results, and APPLY the validated cumulative calibration to stock_agent's default E2R scoring/stage logic.
+Ingest the accumulated E2R Stock-Web v12 residual research Markdown files, validate them, deduplicate them, build stage-transition summaries, and generate sector/archetype shadow profiles plus an `e2r_2_2_candidate` profile.
 
-This is no longer a shadow-only archive task.
+This is a v12 residual-calibration task.
+It is not a v11 global promotion task.
 
-The historical MDs were generated with:
-- production_scoring_changed=false
-- shadow_weight_only=true
+Current observed v12 batch:
+- v12 result MD files in `docs/round`: 87
+- large sectors represented: 10
+- canonical archetypes represented: 27
+- primary schema family: `v12_sector_archetype_residual`
 
-That was correct for the research phase.
-
-But this implementation phase is explicitly authorized to promote validated cumulative calibration into the default stock_agent scoring configuration.
-
-Explicit authorization:
-apply_calibrated_profile_to_default = true
-production_default_scoring_patch_allowed = true
-production_default_scoring_changed_expected = true
-auto_trading_allowed = false
-brokerage_api_allowed = false
-current_stock_scan_allowed = false
+The expected outcome is:
+1. v12 files are discovered and parsed.
+2. v12 trigger rows are validated with explicit rejection reasons.
+3. repeated or duplicate rows are deduped without collapsing new symbols inside the same archetype.
+4. stage transition summaries are regenerated.
+5. sector shadow profile and archetype shadow profile are regenerated.
+6. `e2r_2_2_candidate_profile.json` is regenerated.
+7. promotion readiness is reported.
+8. the active default scoring profile remains `e2r_2_1_stock_web_calibrated`.
 
 Important:
-"production" here means stock_agent's default E2R scoring/stage classification logic.
-It does NOT mean brokerage order execution.
+Do NOT promote v12 to the default active profile in this task.
+Do NOT modify `configs/e2r_scoring_profile_active.yaml`.
+Do NOT overwrite `configs/e2r_scoring_profile_calibrated.yaml`.
+Do NOT demote or replace `e2r_2_1_stock_web_calibrated`.
 Do NOT implement auto-trading.
-Do NOT connect to Kiwoom/KIS/broker APIs.
-Do NOT generate live buy/sell recommendations.
-Do NOT scan current stocks.
+Do NOT connect to brokerage APIs.
+Do NOT scan current/live stocks.
+Do NOT fetch current market data.
+Do NOT output buy/sell recommendation wording.
 
-The goal is:
-1. Parse all historical calibration MDs.
-2. Exclude prompt/spec files.
-3. Validate machine-readable rows and Markdown table rows.
-4. Deduplicate repeated loop rematerializations.
-5. Aggregate valid evidence→return outcomes.
-6. Derive calibrated scoring/gate changes from the deduped cumulative ledger.
-7. Apply validated changes to the default E2R scoring/stage profile.
-8. Preserve the old baseline profile for rollback and comparison.
-9. Add tests proving default scoring intentionally changed and baseline is still available.
-10. Produce reports explaining what changed and why.
+Production/default scoring change is not authorized here:
 
-Do not stop at shadow_profile_current.json.
-That is insufficient.
-The final default E2R scoring config must be patched unless validation/coverage fails.
+```text
+production_default_scoring_changed = false
+active_default_profile_must_remain = e2r_2_1_stock_web_calibrated
+v12_shadow_profile_generation_required = true
+e2r_2_2_candidate_generation_required = true
+explicit_default_promotion_authorized = false
+```
 
-If validation is too weak to promote any axis, fail loudly and explain:
-- which axis lacked evidence
-- which rows were rejected
-- what minimum evidence is missing
+Simple example:
 
-Do not silently leave everything shadow-only.
+```text
+If a v12 file says C20 K-beauty needs a reorder/channel bridge,
+do not immediately change live scoring.
+Instead, store it as a C20 archetype shadow candidate,
+count supporting positives and counterexamples,
+and report whether it is ready for a future explicit promotion.
+```
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 0. Critical distinction
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-The v11 prompt/spec file is NOT an ingest target.
-Do NOT ingest prompt/spec files as calibration evidence.
+The old v11 calibration prompt asked the agent to apply a validated global calibration into the default profile.
 
-Exclude files whose names or titles contain:
-- prompt
-- 프롬프트
-- calibration_prompt
-- historical_calibration_prompt
-- 최종프롬프트
-- E2R Historical Calibration Prompt
-- E2R Post-OHLC Breakthrough Historical Calibration Prompt
-- 단일 프롬프트 시작
+That is not the current task.
 
-Ingest only generated research result MDs matching:
-- e2r_stock_web_historical_calibration_round_R*_loop_*_research*.md
-- e2r_stock_web_historical_calibration_round_*_loop_*_*.md
-- *stock_web_historical_calibration_round_R*_loop_*.md
+The current input files are v12 residual files. They repeatedly state:
 
-Expected input count:
-around 107 generated result MD files across R1~R13.
+```text
+production_scoring_changed = false
+shadow_weight_only = true
+not production; post-calibrated residual
+```
 
-Primary input folder:
- /home/eorb915/projects/stock_agent/docs/round
+So the correct behavior is:
 
-Search this folder recursively first.
-Only search the rest of the repository if this folder has fewer than 100 generated result MDs.
-Do not ask where the files are.
+```text
+v12 research MDs
+-> ingest / validate / dedupe / aggregate
+-> stage transition summary
+-> sector_shadow_profile
+-> archetype_shadow_profile
+-> e2r_2_2_candidate_profile
+-> promotion_readiness_report
+-> active profile unchanged
+```
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. Full coverage hard gate
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Do not treat v12 files as direct production scoring instructions.
 
-Before promotion:
-- discovered_result_md_count must be >= 100 unless the report explains the exact missing count.
-- rounds_covered must include R1 through R13.
-- every accepted MD must have a registry row.
-- every registry row must include:
-  file_path
-  sha256
-  round
-  loop
-  sector
-  extraction_status
-  parsed_trigger_row_count
-  rejected_row_count
-- every prompt/spec file must be listed separately with exclusion_reason=prompt_spec_file_excluded.
-- failed_document_count and metadata_only_document_count must be reported.
+Example:
 
-If discovered_result_md_count < 100, or if any of R1~R13 is missing:
-- do NOT promote calibrated scoring.
-- stop after ingest/validation.
-- write reports/e2r_calibration/coverage_failure_report.md.
-- final output must set:
-  production_default_scoring_changed=false
-  promotion_status=blocked_by_coverage_failure
+```text
+Wrong:
+  "C31 policy event bridge appeared in one loop, so patch Stage2 now."
 
-Do not partially read a few MDs and pretend the full calibration was applied.
-This task requires full-folder ingest coverage.
+Correct:
+  "C31 policy event bridge becomes a canonical_archetype shadow candidate.
+   It needs verified evidence URLs, enough positive/counterexample balance,
+   and a separate explicit promotion task before default scoring changes."
+```
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-2. Required phase model
+1. Input discovery
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Run these phases in order:
+Search recursively under:
 
-PHASE A — ingest
-- discover MD files
-- exclude prompt/spec files
-- build md registry with sha256
-- parse JSONL rows and Markdown tables
+```text
+docs/round
+```
 
-PHASE B — validate
-- validate price source, price basis, MFE/MAE, forward window, evidence type
-- reject invalid rows with explicit reasons
+Include v12 result files matching:
 
-PHASE C — dedupe
-- repeated loops are lab-notebook revisions, not independent samples
-- keep raw extracted rows
-- select aggregate representatives
+```text
+e2r_stock_web_v12_residual_round_*_loop_*_*_research*.md
+*stock_web_v12_residual_round_*_research*.md
+*v12_residual_round_*_research*.md
+```
 
-PHASE D — aggregate
-- aggregate valid representative rows by round, sector, archetype, trigger type, evidence family
-- compute score-return alignment and before/after effects
+Keep v11 discovery support intact, but do not mix v11 and v12 flows.
 
-PHASE E — promote
-- convert validated aggregate results into calibrated scoring/gate changes
-- apply accepted changes to the default E2R scoring/stage profile
-- preserve old baseline profile
+Exclude prompt/spec files whose names or document titles contain:
 
-PHASE F — test/report
-- tests must verify default scoring changed intentionally when promotion passes
-- tests must verify baseline rollback/comparison still exists
-- reports must explain changed axes, evidence, sample counts, and guardrails
+```text
+prompt
+프롬프트
+calibration_prompt
+historical_calibration_prompt
+최종프롬프트
+E2R Historical Calibration Prompt
+E2R Post-OHLC Breakthrough Historical Calibration Prompt
+단일 프롬프트 시작
+```
+
+For every discovered v12 result MD, write a registry row with:
+
+```text
+file_path
+filename
+sha256
+schema_family
+round
+loop
+large_sector_id
+canonical_archetype_id
+fine_archetype_id
+loop_objective
+loop_contribution_label
+extraction_status
+parsed_trigger_row_count
+rejected_row_count
+```
+
+Hard gate:
+- If zero v12 result MDs are found, fail loudly.
+- If v12 result MDs are found but no trigger rows are parsed, fail loudly.
+- Do not silently fall back to v11.
+- Do not require the old v11 `>=100 result MDs` coverage gate for v12.
+
+Current batch expectation:
+
+```text
+v12_result_md_count should be around 87 for the current docs/round batch.
+If the count differs, report the exact count and continue if files are valid.
+```
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-3. Input MD semantics
+2. Required command
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Generated MDs were historical calibration outputs using:
+Run the v12 pipeline with:
 
-price_source = Songdaiki/stock-web
-upstream_source = FinanceData/marcap
-price_basis = tradable_raw
-price_adjustment_status = raw_unadjusted_marcap
-calibration_shard_root = atlas/ohlcv_tradable_by_symbol_year
-raw_shard_root = atlas/ohlcv_raw_by_symbol_year
+```bash
+PYTHONPATH=src python -m e2r.calibration.cli run-v12-full \
+  --md-input-root docs/round \
+  --data-directory data/e2r/calibration/v12 \
+  --report-directory reports/e2r_calibration/v12 \
+  --preserve-global-profile
+```
 
-They are not live recommendations.
-They are historical trigger-level calibration experiments.
+The command must:
+1. discover v12 MDs
+2. parse v12 MDs
+3. validate v12 trigger rows
+4. dedupe v12 trigger rows
+5. aggregate v12 rows by sector and archetype
+6. build stage transition summaries
+7. build sector shadow profile
+8. build archetype shadow profile
+9. build `e2r_2_2_candidate_profile`
+10. write reports
+11. verify the active default profile did not change
 
-They often contain:
-- metadata
-- price_source_validation rows
-- case rows
-- trigger rows
-- score_simulation rows
-- profile_comparison rows
-- shadow_weight rows
-- optimization_decision rows
-- aggregate_metric rows
-- narrative_only rows
-- Markdown tables if JSONL is incomplete
+Expected summary fields:
+
+```text
+v12_result_md_count
+v12_parsed_document_count
+v12_failed_document_count
+v12_raw_trigger_rows
+v12_validated_trigger_rows
+v12_representative_trigger_rows
+v12_rejected_rows
+large_sectors_covered
+canonical_archetypes_covered
+stage_transition_summary_rows
+evidence_url_pending_count
+source_proxy_only_count
+default_promotion_ready
+active_default_profile_preserved = true
+production_default_scoring_changed = false
+auto_trading_changed = false
+brokerage_api_touched = false
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. V12 metadata and row semantics
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+V12 files may contain metadata in fenced text blocks, bullet lines, JSONL rows, CSV fences, and Markdown tables.
+
+Parse metadata fields when present:
+
+```text
+research_session
+mode
+round
+loop
+large_sector_id
+canonical_archetype_id
+fine_archetype_id
+loop_objective
+current_default_profile_proxy
+previous_baseline_reference
+new_independent_case_count
+reused_case_count
+new_symbol_count
+same_archetype_new_symbol_count
+same_archetype_new_trigger_family_count
+positive_case_count
+counterexample_count
+4B_case_count
+4C_case_count
+current_profile_error_count
+diversity_score_summary
+loop_contribution_label
+do_not_propose_new_weight_delta
+auto_selected_coverage_gap
+```
+
+Recognize row types:
+
+```text
+price_source_validation
+case
+trigger
+score_simulation
+profile_comparison
+shadow_weight
+optimization_decision
+aggregate_metric
+narrative_only
+residual_contribution
+stage_transition_summary
+coverage_matrix
+sector_rule_candidate
+canonical_archetype_rule_candidate
+```
 
 Parser priority:
 1. exact JSONL row_type rows
-2. Markdown tables with recognizable headers
-3. conservative metadata/prose fallback only for document registry
+2. CSV/TSV fenced tables
+3. Markdown tables with recognizable headers
+4. metadata fallback for registry/residual summary only
 
-Do not hallucinate missing fields.
-If required numeric fields are missing or unparseable, reject that row for promotion.
+Do not hallucinate missing numeric fields.
+If required fields are missing, reject the row for calibration and record why.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-4. Parse row types
+4. Trigger and alias normalization
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Inspect the existing repo structure first.
-Use the repo's existing conventions where possible.
+Normalize common aliases:
 
-If no calibration package exists, create:
+```text
+Stage3-Green comparison -> Stage3-Green
+Stage3-Green compare -> Stage3-Green
+Stage3_Yellow -> Stage3-Yellow
+Stage3_Green -> Stage3-Green
+Stage4B local overlay -> Stage4B
+Stage4B full-window overlay -> Stage4B
+price-only-local-4B-overlay -> Stage4B
+4B_false_positive_guardrail -> Stage4B
+Stage4C protection watch -> Stage4C
+Stage2 policy-only stress -> Stage2
+Stage1/weak-watch -> Stage1
+price-only-theme-breakout -> price_only_theme_breakout_guardrail
+```
 
-src/e2r/calibration/
-  __init__.py
-  md_discovery.py
-  md_parser.py
-  validation.py
-  dedupe.py
-  aggregate.py
-  promotion.py
-  scoring_profile.py
-  cli.py
-
-Create/update data outputs:
-
-data/e2r/calibration/
-  md_registry.jsonl
-  price_source_validations.jsonl
-  extracted_cases.jsonl
-  extracted_triggers_raw.jsonl
-  trigger_rows_validated.jsonl
-  trigger_rows_representative.jsonl
-  score_simulation_rows.jsonl
-  profile_comparison_rows.jsonl
-  shadow_weight_events.jsonl
-  optimization_decisions.jsonl
-  aggregate_metric_rows.jsonl
-  narrative_only_rows.jsonl
-  rejected_rows.jsonl
-  dedupe_map.jsonl
-  shadow_weight_aggregate.json
-  calibrated_weight_aggregate.json
-  applied_weight_changes.json
-  rejected_promotion_candidates.json
-
-Recognize row types:
-- price_source_validation
-- case
-- trigger
-- score_simulation
-- profile_comparison
-- shadow_weight
-- optimization_decision
-- aggregate_metric
-- narrative_only
-
-Normalize columns:
-- MFE90, MFE_90D, MFE_90D_pct -> MFE_90D_pct
-- MAE90, MAE_90D, MAE_90D_pct -> MAE_90D_pct
-- MFE180, MFE_180D, MFE_180D_pct -> MFE_180D_pct
-- MAE180, MAE_180D, MAE_180D_pct -> MAE_180D_pct
-- type, trigger_type -> trigger_type
-- entry, entry_date @ price -> entry_date and entry_price
-- price, entry_price -> entry_price
-- outcome, trigger_outcome_label -> trigger_outcome_label
-- dedupe, dedupe_for_aggregate -> dedupe_for_aggregate
-- agg_role, aggregate_role, group_role -> aggregate_group_role
-
-Preserve:
-- source_file
-- source_sha256
-- source_line_range if easy
-- raw_source_snippet for audit
-
-Parsing must tolerate:
-- Korean names
-- comma thousands separators
-- percentage symbols
-- unavailable
-- n/a
-- not_applicable
-- None
-- null
-- unavailable_not_needed_for_delta
-- insufficient_forward_window_in_stock_web
+Important:
+- `price-only-theme-breakout` is not a positive Stage2 signal.
+- price-only 4B rows can support a watch/guardrail, not full evidence-based 4B.
+- 4C rows are thesis-break/protection rows, not positive entry rows.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 5. Validation rules
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-A row is price_path_valid if:
-- price_source or price_data_source is Songdaiki/stock-web
-- price_basis is tradable_raw
-- price_adjustment_status is raw_unadjusted_marcap
-- entry_date exists
-- entry_price > 0
-- MFE_30D_pct, MFE_90D_pct, MFE_180D_pct are numeric
-- MAE_30D_pct, MAE_90D_pct, MAE_180D_pct are numeric
-- forward_window_trading_days >= 180 if field exists
-- no 180D corporate-action contamination is indicated
+A row is price-path valid only if:
 
-A row is usable_for_weight_calibration if:
-- price_path_valid
-- calibration_usable=true or inferred true from complete 30/90/180D MFE/MAE
-- aggregate_group_role=representative
-- dedupe_for_aggregate=true or inferred true for representative rows
-- trigger_type in Stage2, Stage2-Actionable, Stage3-Yellow, Stage3-Green
-- evidence source is non-price public evidence
-- not narrative_only
-- not label_comparison_only
-- not 4B_overlay_only
-- not 4C_overlay_only
-- not price_only_no_evidence_run
-- not false_positive_score unless used for negative guardrail
-- not blocked_by_corporate_action
+```text
+price_source or price_data_source is Songdaiki/stock-web
+price_basis is tradable_raw
+price_adjustment_status is raw_unadjusted_marcap
+entry_date exists
+entry_price > 0
+MFE_30D_pct / MFE_90D_pct / MFE_180D_pct are numeric
+MAE_30D_pct / MAE_90D_pct / MAE_180D_pct are numeric
+forward_window_trading_days >= 180 if present
+no 180D corporate-action contamination is indicated
+```
 
-Positive stage promotion rows:
-- Stage2
-- Stage2-Actionable
-- Stage3-Yellow
-- Stage3-Green
-- non-price evidence
-- no false_positive_score
-- clean 180D MFE/MAE
+V12 shadow-calibration rows also require:
 
-4B rows:
-- may calibrate overheat/risk overlays
-- must not train positive Stage2/Stage3 entry weights
+```text
+large_sector_id
+canonical_archetype_id
+```
 
-4C rows:
-- may calibrate thesis-break/protection logic
-- must not train positive entry weights
+Set these flags:
 
-Rejected reasons must be recorded:
-- duplicate_content
-- duplicate_loop_same_case
-- label_comparison_only
-- narrative_only
-- price_only_no_evidence
-- missing_required_mfe_mae
-- insufficient_forward_window
-- corporate_action_contaminated
-- raw_all_basis
-- 4b_overlay_only_not_entry
-- 4c_overlay_only_not_entry
-- false_positive_not_positive_promotion
-- unparseable_numeric
-- no_non_price_evidence
-- not_representative_for_aggregate
-- prompt_spec_file_excluded
+```text
+usable_for_global_promotion = false
+usable_for_v12_shadow_calibration
+usable_for_sector_shadow
+usable_for_archetype_shadow
+usable_for_new_weight_evidence
+evidence_url_pending
+source_proxy_only
+residual_counterexample
+current_profile_error
+current_profile_false_positive
+current_profile_missed_structural
+current_profile_too_late
+current_profile_4B_too_early
+current_profile_4C_too_late
+```
+
+Rules:
+- v12 rows are never usable for global default promotion in this task.
+- missing `large_sector_id` rejects the row from v12 shadow calibration.
+- missing `canonical_archetype_id` rejects the row from v12 shadow calibration.
+- `do_not_count_as_new_case=true` excludes the row from new evidence weight.
+- `independent_evidence_weight=0` excludes the row from new evidence weight.
+- `duplicate_low_value_loop` excludes the row from new evidence weight.
+- `schema_rematerialization_only` excludes the row from new evidence weight.
+- 4B and 4C rows do not train positive entry weights.
+- price-only rows do not train positive entry weights.
+- `evidence_url_pending` and `source_proxy_only` can support shadow analysis but block default promotion.
+
+Simple example:
+
+```text
+A Stage2 row with +80% MFE but evidence_source=price_only
+is not a good positive Stage2 row.
+It should become a guardrail example.
+```
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-6. Deduplication rules
+6. V12 dedupe rules
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Do NOT count repeated loops as fresh independent evidence.
+Do not collapse different symbols just because they share the same canonical archetype.
 
-Document dedupe:
-- exact sha256 duplicate -> keep one parsed copy, record duplicates
+V12 is meant to add more symbols, counterexamples, trigger families, and 4B/4C paths to the same archetype.
 
-Primary trigger dedupe:
-- same_entry_group_id if present
+Strict duplicate key:
 
-Fallback trigger dedupe:
-- round
-- sector_slug
-- symbol
-- primary_archetype
-- trigger_type
-- trigger_date
-- entry_date
-- rounded entry_price
-- normalized company_name
+```text
+symbol
+canonical_archetype_id
+trigger_type
+trigger_date
+entry_date
+rounded entry_price
+evidence_family or trigger_family or fine_archetype_id
+```
 
-Case dedupe fallback:
-- round
-- symbol
-- primary_archetype
-- canonical trigger family
+Rules:
+- same symbol + same archetype + same trigger + same entry = duplicate
+- same canonical archetype + new symbol = independent
+- same symbol + new trigger family may be retained with reduced independent weight
+- duplicate rows remain in raw outputs
+- only representative rows feed aggregate metrics
 
-When duplicate rows exist:
-- keep all raw extracted rows
-- select one aggregate representative
-- prefer latest loop if it has richer v11 fields
-- prefer exact JSONL over table parse
-- prefer explicit same_entry_group_id
-- prefer explicit dedupe_for_aggregate=true
-- prefer row with more complete MFE/MAE/component fields
-- record superseded_by_trigger_id and duplicate_reason
+Example:
 
-Repeated loop files can improve extraction confidence, but not independent sample count.
+```text
+C20 + 실리콘투 Stage2 2023-05-16 repeated twice = duplicate
+C20 + 실리콘투 Stage2 and C20 + 브이티 Stage2 = two independent rows
+```
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 7. Aggregation
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Build aggregates from deduped representative rows.
-
 Aggregate by:
-- global
-- round R1~R13
-- sector
-- sector_slug
-- primary_archetype
-- trigger_type
-- evidence family
-- case_type
-- outcome label
 
-For positive entry rows compute:
-- count
-- unique_case_count
-- unique_symbol_count
-- avg_MFE_30D_pct
-- avg_MFE_90D_pct
-- avg_MFE_180D_pct
-- median_MFE_90D_pct
-- median_MFE_180D_pct
-- avg_MAE_30D_pct
-- avg_MAE_90D_pct
-- avg_MAE_180D_pct
-- median_MAE_90D_pct
-- median_MAE_180D_pct
-- hit_rate_MFE90_ge_20
-- hit_rate_MFE180_ge_30
-- drawdown_risk_rate_MAE90_le_minus_20
-- drawdown_risk_rate_MAE180_le_minus_30
-- positive_asymmetry_score
-- green_lateness_ratio where available
-- Stage2 vs Stage3-Green paired comparison
-- Stage2-Actionable vs Stage3-Green paired comparison
-- Stage3-Yellow vs Stage3-Green paired comparison
+```text
+global_v12
+large_sector_id
+canonical_archetype_id
+large_sector_id + canonical_archetype_id
+fine_archetype_id
+loop_objective
+current_profile_verdict
+positive_or_counterexample
+loop_contribution_label
+```
 
-For 4B:
-- local_peak_proximity average
-- full_window_peak_proximity average
-- price_only_4B count
-- non_price_4B count
-- good_4B_timing rate
-- too_early_4B rate
-- post_4B_MAE/MFE
+Compute at least:
 
-For 4C:
-- thesis_break evidence count
-- late_4C count
-- useful_protection rate
-- post_trigger_MAE
+```text
+row_count
+unique_case_count
+unique_symbol_count
+unique_round_count
+new_independent_case_count
+reused_case_count
+same_archetype_new_symbol_count
+same_archetype_new_trigger_family_count
+positive_case_count
+counterexample_count
+4B_case_count
+4C_case_count
+current_profile_error_count
+source_proxy_only_count
+evidence_url_pending_count
+good_stage2_count
+bad_stage2_count
+stage2_high_mae_count
+avg_stage2_MFE90
+avg_stage2_MAE90
+stage2_hit_rate_MFE90_ge_20
+stage2_bad_entry_rate_MAE90_le_minus_20
+good_4b_timing_count
+too_early_4b_count
+price_only_4b_count
+non_price_4b_count
+4c_success_count
+4c_late_count
+watch_only_4c_count
+```
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-8. Promotion policy — apply to default scoring
+8. Stage transition summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-This is the key difference from shadow-only ingest.
+Build stage transition summaries by:
 
-Create a calibrated profile from aggregate results:
+```text
+case_id
+symbol
+large_sector_id
+canonical_archetype_id
+```
 
-profile_id = e2r_2_1_stock_web_calibrated
-profile_basis = deduped_stock_web_historical_calibration_md
-profile_status = default_enabled
-previous_default_profile = e2r_2_0_baseline or current existing default
+Select:
 
-Promotion rules:
+```text
+best Stage2 / Stage2-Actionable
+best Stage3-Yellow
+best Stage3-Green
+best Stage4B
+best Stage4C
+peak price/date inferred from MFE rows when explicit peak is unavailable
+```
 
-A. Apply to default scoring if:
-- unique_case_count >= 4
-- unique_round_count >= 2 OR sector-specific rule with strong same-sector evidence
-- before/after profile improvement is present
-- avg MFE improves or missed-structural count falls
-- MAE does not worsen beyond guardrail
-- false_positive rate does not rise materially
-- evidence is non-price
-- not driven by duplicate loops
-- at least one counterexample or guardrail case considered
+Compute:
 
-B. Apply sector-specific default scoring if:
-- evidence is strong but concentrated in one round/sector
-- unique_case_count >= 3
-- logic should not become global
+```text
+stage2_to_yellow_return_pct
+stage2_to_green_return_pct
+stage2_to_4b_return_pct
+stage2_to_peak_return_pct
+green_to_peak_remaining_upside_pct
+green_upside_capture_pct
+stage4b_peak_capture_pct
+stage4b_to_90d_low_return_pct
+peak_to_4c_drawdown_pct
+transition_verdict
+```
 
-C. Keep as shadow-only if:
-- unique_case_count < 3
-- one-off case
-- narrative-only
-- unclear evidence source
-- only price action
-- 4B/4C overlay not relevant to entry
-- missing before/after effect
+Important formula:
 
-D. Negative guardrails can be promoted if:
-- repeated false-positive evidence exists
-- price-only/no-evidence blowoff is identified
-- Stage3-Green false confirmation has poor MFE/MAE
-- 4B local/full split improves risk labeling
+```text
+stage4b_peak_capture_pct =
+  (stage4b_price - stage2_price) / (peak_price - stage2_price) * 100
+```
 
-Promotion targets may include:
-- Stage2-Actionable gate
-- Stage3-Yellow gate
-- Stage3-Green confirmation threshold
-- Green lateness penalty
-- relative strength confirmation gate
-- customer/capacity/order quality gate
-- backlog/margin bridge requirement
-- price-only blowoff rejection
-- false Green valuation/crowding guard
-- 4B non-price evidence requirement
-- 4B local-vs-full classification
-- 4C thesis-break guard
-- high-MAE position-size/risk guard
+Example:
 
-Do not apply:
-- one-off low-confidence axes
-- narrative-only axes
-- pure price-only positive axes
-- 4B rows as positive entry score
-- 4C rows as positive entry score
+```text
+Stage2 price = 1,000
+peak price = 1,400
+4B price = 1,350
 
-If no axis meets promotion threshold:
-- do not fabricate changes
-- set promotion_status=no_axis_met_promotion_threshold
-- production_default_scoring_changed=false
-- report exactly why no axis passed
+Stage2 -> 4B return = +35%
+4B peak capture = 87.5%
+```
+
+Do not confuse simple return with peak capture.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-9. Files to create or update
+9. Shadow profile generation
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Create data outputs:
+Generate:
 
-data/e2r/calibration/
-  md_registry.jsonl
-  price_source_validations.jsonl
-  extracted_cases.jsonl
-  extracted_triggers_raw.jsonl
-  trigger_rows_validated.jsonl
-  trigger_rows_representative.jsonl
-  score_simulation_rows.jsonl
-  profile_comparison_rows.jsonl
-  shadow_weight_events.jsonl
-  optimization_decisions.jsonl
-  aggregate_metric_rows.jsonl
-  narrative_only_rows.jsonl
-  rejected_rows.jsonl
-  dedupe_map.jsonl
-  shadow_weight_aggregate.json
-  calibrated_weight_aggregate.json
-  applied_weight_changes.json
-  rejected_promotion_candidates.json
+```text
+data/e2r/calibration/v12/sector_shadow_profile.json
+data/e2r/calibration/v12/archetype_shadow_profile.json
+data/e2r/calibration/v12/residual_error_ledger.jsonl
+data/e2r/calibration/v12/v12_shadow_weight_candidates.jsonl
+data/e2r/calibration/v12/e2r_2_2_candidate_profile.json
+```
 
-Create or update config:
+Candidate axes may include:
 
-configs/e2r_scoring_profile_baseline.yaml
-configs/e2r_scoring_profile_calibrated.yaml
-configs/e2r_scoring_profile_active.yaml
+```text
+stage2_bonus_candidate_delta
+stage2_required_bridge
+high_mae_guard_candidate
+bad_stage2_guard_candidate
+full_4b_overlay_candidate
+local_4b_watch_guard
+earlier_thesis_break_watch
+hard_4c_confirmation
+```
 
-Required behavior:
-- baseline file preserves previous/default scoring
-- calibrated file contains applied calibrated weights/gates
-- active file points to calibrated profile by default if promotion succeeds
-- rollback path is documented
+Promotion readiness must be conservative.
 
-If existing repo has a different config layout, adapt to it, but preserve these logical artifacts.
+Default promotion is blocked if:
 
-Patch code so stock_agent default scoring uses the calibrated profile unless a config/env override selects baseline.
+```text
+evidence_url_pending_count > 0
+source_proxy_only_count > 0
+positive/counterexample balance is weak
+stage transition coverage is insufficient
+rows are mostly duplicate/rematerialized
+explicit user approval is missing
+```
 
-Possible env/config:
-E2R_SCORING_PROFILE=calibrated
-E2R_SCORING_PROFILE=baseline
+The candidate profile must state:
 
-Default after successful promotion:
-calibrated
-
-Add optional comparison output:
-- default_calibrated_stage
-- baseline_stage
-- calibration_adjustments
-- historical_support_summary
-
-Do not require internet at runtime.
-Do not require stock-web at runtime.
-Do not require original MD folder after ingest.
+```text
+profile_status = candidate_not_active
+production_default_scoring_changed = false
+active_default_profile_must_remain = e2r_2_1_stock_web_calibrated
+```
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-10. Runtime scoring changes expected
+10. Required outputs
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Expected practical changes:
+Data outputs:
 
-1. Stage2 evidence is no longer underweighted when historical calibration supports early promotion.
-2. Stage2-Actionable becomes a real default stage/tier if not already supported.
-3. Stage3-Yellow can be selected before Green when evidence stack is strong but one gate remains.
-4. Stage3-Green threshold becomes stricter against late/false Green.
-5. Green lateness is explicitly penalized in sectors/archetypes where repeated.
-6. Price-only blowoff cannot promote positive Stage2/Stage3.
-7. 4B requires non-price evidence for full 4B unless explicitly marked price-only local watch.
-8. 4B local peak and full-window peak are split.
-9. 4C is thesis-break/protection only, not entry scoring.
-10. High-MAE archetypes get position-size/risk guard output rather than clean promotion.
+```text
+data/e2r/calibration/v12/v12_md_registry.jsonl
+data/e2r/calibration/v12/v12_extracted_cases.jsonl
+data/e2r/calibration/v12/v12_extracted_triggers_raw.jsonl
+data/e2r/calibration/v12/v12_trigger_rows_validated.jsonl
+data/e2r/calibration/v12/v12_trigger_rows_representative.jsonl
+data/e2r/calibration/v12/rejected_v12_rows.jsonl
+data/e2r/calibration/v12/v12_dedupe_map.jsonl
+data/e2r/calibration/v12/v12_aggregate_metrics.json
+data/e2r/calibration/v12/stage_transition_summary.jsonl
+data/e2r/calibration/v12/v12_residual_contribution_rows.jsonl
+data/e2r/calibration/v12/v12_coverage_matrix_rows.jsonl
+data/e2r/calibration/v12/sector_shadow_profile.json
+data/e2r/calibration/v12/archetype_shadow_profile.json
+data/e2r/calibration/v12/residual_error_ledger.jsonl
+data/e2r/calibration/v12/v12_shadow_weight_candidates.jsonl
+data/e2r/calibration/v12/e2r_2_2_candidate_profile.json
+```
 
-If current code lacks Stage2-Actionable or Stage3-Yellow enum support:
-- add them carefully
-- maintain backward compatibility
-- add tests
+Reports:
 
-If adding new enum values is too invasive:
-- map them as sublabels/overlays while preserving existing Stage enum
-- document this compromise in reports
+```text
+reports/e2r_calibration/v12/ingest_summary.md
+reports/e2r_calibration/v12/coverage_matrix.md
+reports/e2r_calibration/v12/sector_shadow_profile_report.md
+reports/e2r_calibration/v12/archetype_shadow_profile_report.md
+reports/e2r_calibration/v12/residual_error_report.md
+reports/e2r_calibration/v12/stage_transition_report.md
+reports/e2r_calibration/v12/evidence_url_pending_report.md
+reports/e2r_calibration/v12/promotion_readiness_report.md
+reports/e2r_calibration/v12/e2r_2_2_candidate_profile_report.md
+reports/e2r_calibration/v12/by_archetype_stage_transition/*.md
+```
+
+Reports must clearly say:
+- v12 is shadow-only.
+- `case_fixture` or historical research success is not proof of live discovery.
+- default scoring did not change.
+- exact evidence URL/source proxy limitations remain blockers if present.
+- future active promotion requires a separate explicit task.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-11. Tests
+11. Tests and verification
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Add tests proving:
+At minimum run:
 
-1. Prompt/spec files are excluded.
-2. Generated MD files are discovered.
-3. Full coverage hard gate works.
-4. Parser extracts price_source_validation.
-5. Parser extracts trigger rows from JSONL and Markdown tables.
-6. Six-digit symbols are preserved.
-7. MFE/MAE parser handles unavailable, n/a, None, not_applicable.
-8. Repeated loop rows dedupe into one representative.
-9. Stage2/Stage2-Actionable positive rows can contribute to default calibrated profile.
-10. label_comparison_only cannot contribute to aggregate.
-11. narrative_only cannot change scoring.
-12. price-only blowoff cannot promote Stage2/Stage3.
-13. 4B rows do not train positive entry score.
-14. 4C rows do not train positive entry score.
-15. corporate-action contaminated rows are rejected.
-16. missing 180D rows are rejected.
-17. false positive Green rows increase guardrail, not positive score.
-18. calibrated profile differs from baseline when promotion succeeds.
-19. active/default profile is calibrated after successful promotion.
-20. baseline profile remains loadable by override.
-21. calibrated profile loads without internet.
-22. existing default-stage calls still run.
-23. tests prove production/default scoring changed intentionally if promotion_status=applied.
-24. tests prove production/default scoring stays unchanged if coverage or validation fails.
-25. JSONL outputs are valid.
-26. no NaN/Infinity in outputs.
-27. compileall passes.
-
-Run:
+```bash
+PYTHONPATH=src python -m unittest tests.test_calibration_v12_pipeline -v
+PYTHONPATH=src python -m unittest tests.test_calibration_pipeline -v
 PYTHONPATH=src python -m pytest
+PYTHONPATH=src python -m unittest discover -s tests -v
 PYTHONPATH=src python -m compileall -q src tests
+```
 
-Also run the repository's standard checks if pyproject/tox/nox exists.
+Also run:
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-12. Reports
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```bash
+git diff --check
+```
 
-Create:
+Tests must cover:
 
-reports/e2r_calibration/ingest_summary.md
-reports/e2r_calibration/dedupe_report.md
-reports/e2r_calibration/validation_report.md
-reports/e2r_calibration/calibrated_profile_report.md
-reports/e2r_calibration/applied_scoring_diff.md
-reports/e2r_calibration/rejected_promotion_candidates.md
-reports/e2r_calibration/coverage_failure_report.md if needed
-reports/e2r_calibration/by_round/R1.md ... R13.md
+```text
+v12 file discovery
+v12 metadata parsing
+large sector / canonical archetype parsing
+trigger alias normalization
+same archetype + new symbol is not duplicate
+same symbol + same entry is duplicate
+evidence_url_pending blocks default promotion
+source_proxy_only blocks default promotion
+price-only row cannot train positive Stage2/Stage3
+4B rows do not train positive entry weights
+4C rows do not train positive entry weights
+stage transition summary computes peak capture correctly
+v12 full run preserves active default profile
+sector shadow profile is generated
+archetype shadow profile is generated
+e2r_2_2 candidate is generated but not active
+```
 
-ingest_summary.md must include:
-- md_input_root
-- discovered_md_count
-- discovered_result_md_count
-- excluded_prompt_spec_count
-- unique_document_count
-- duplicate_document_count
-- parsed_document_count
-- failed_document_count
-- metadata_only_document_count
-- raw_trigger_rows
-- validated_trigger_rows
-- aggregate_representative_trigger_rows
-- rejected_rows_by_reason
-- rounds covered
-- loops covered
-- sectors covered
-- price_source_validation_summary
+Hard verification:
 
-dedupe_report.md must explain:
-- why repeated loops are not independent samples
-- top repeated case families
-- representative selection rules
-- duplicate loop counts
-- same_entry_group_id usage
-- fallback dedupe keys
-
-applied_scoring_diff.md must include:
-- old baseline axis
-- new calibrated axis
-- delta
-- scope
-- confidence
-- supporting cases
-- rejected counterexamples
-- reason
-- test coverage
-
-calibrated_profile_report.md must include:
-- default profile now active if promotion succeeds
-- baseline rollback method
-- top applied Stage2/Stage2-Actionable changes
-- Stage3-Green lateness changes
-- 4B/4C guardrails
-- false positive guards
-- no auto-trading statement
-
-by_round/R*.md must include:
-- round-specific accepted axes
-- rejected axes
-- unique cases
-- representative triggers
-- sector profile recommendation
+```text
+active_default_profile_preserved must be true
+production_default_scoring_changed must be false
+auto_trading_changed must be false
+brokerage_api_touched must be false
+```
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-13. Hard guardrails
+12. Hard guardrails
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-A. Do not apply the last MD directly.
-Apply deduped cumulative aggregate.
+A. Do not apply the latest v12 MD directly.
+Use deduped aggregate evidence.
 
 B. Do not count repeated loop rematerializations as independent evidence.
 
-C. calibration_usable=true is not enough.
-Positive weighting requires representative, non-price, clean 180D, MFE/MAE rows.
+C. Do not treat same archetype/new symbol as duplicate.
 
-D. 4B and 4C rows must not train positive entry weights.
+D. Do not use case labels or benchmark labels as production candidate-generation input.
 
-E. Price-only blowoff rows must become rejection/guardrail logic, not positive promotion.
+E. Do not train positive entry weights from 4B/4C rows.
 
-F. Default scoring should change in this task, but only through the validated calibrated aggregate.
+F. Do not train positive entry weights from price-only rows.
 
-G. Brokerage/API/auto-trading must not be touched.
+G. Do not promote `e2r_2_2_candidate` to active default here.
 
-H. The final system must allow rollback to baseline.
+H. Do not touch brokerage/API/auto-trading code.
 
-I. Do not leave production/default scoring unchanged silently.
-If validation or coverage fails, explicitly report why promotion was blocked.
-If validation passes and promotion axes exist, production_default_scoring_changed must be true.
+I. Do not output investment recommendation wording.
+
+J. Do not silently ignore validation failures.
+Every rejection needs a reason.
+
+K. Do not confuse simple return with peak-capture ratio.
+
+Example:
+
+```text
+Stage2 -> 4B return and 4B peak capture are different metrics.
+Both can be useful, but they answer different questions.
+```
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-14. Implementation order
+13. Implementation order
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 1. Inspect repo structure.
-2. Search /home/eorb915/projects/stock_agent/docs/round recursively.
+2. Search `docs/round` recursively for v12 result MDs.
 3. Exclude prompt/spec files.
-4. Count generated result MD files.
-5. Enforce full coverage hard gate.
-6. Create parser tests against representative files from R1, R2, R3, R11.
-7. Parse all MDs.
-8. Build registry.
-9. Validate rows.
-10. Dedupe repeated loops.
-11. Aggregate by round/archetype/trigger type/evidence family.
-12. Derive calibrated profile.
-13. Apply promotion if coverage and validation pass.
-14. Preserve baseline profile and rollback.
-15. Patch runtime config/profile loading.
-16. Generate data outputs and reports.
-17. Add tests.
-18. Run tests and compile check.
-19. Commit changes if this /goal environment allows committing; otherwise leave patch ready and report changed files.
+4. Count v12 result MDs and report the count.
+5. Parse all v12 MDs.
+6. Build registry.
+7. Validate rows.
+8. Dedupe rows.
+9. Aggregate rows.
+10. Build stage transition summaries.
+11. Build sector shadow profile.
+12. Build archetype shadow profile.
+13. Build `e2r_2_2_candidate_profile`.
+14. Write data outputs and reports.
+15. Confirm active profile was preserved.
+16. Run tests and compile check.
+17. Commit and push if this environment allows it.
 
 Do not ask clarifying questions.
-Make reasonable assumptions and record them in the report.
+Make reasonable assumptions and record them in the reports.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-15. Final output
+14. Final output
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 When done, respond exactly:
 
-E2R_CALIBRATED_SCORING_PATCH_SUMMARY_BEGIN
+```text
+V12_FULL_INGEST_SHADOW_PROFILE_SUMMARY_BEGIN
 repo:
 md_input_root:
-discovered_md_count:
-discovered_result_md_count:
-excluded_prompt_spec_count:
-unique_document_count:
-duplicate_document_count:
-parsed_document_count:
-failed_document_count:
-metadata_only_document_count:
-raw_trigger_rows:
-validated_trigger_rows:
-aggregate_representative_trigger_rows:
-rejected_rows:
-rounds_covered:
-sectors_covered:
-applied_scoring_axes_count:
-shadow_only_axes_count:
-rejected_promotion_axes_count:
-baseline_profile_path:
-calibrated_profile_path:
-active_profile_path:
-promotion_status:
-production_default_scoring_changed: true/false
+v12_result_md_count:
+v12_parsed_document_count:
+v12_failed_document_count:
+v12_raw_trigger_rows:
+v12_validated_trigger_rows:
+v12_representative_trigger_rows:
+v12_rejected_rows:
+large_sectors_covered:
+canonical_archetypes_covered:
+stage_transition_summary_rows:
+sector_shadow_profile_path:
+archetype_shadow_profile_path:
+residual_error_ledger_path:
+e2r_2_2_candidate_profile_path:
+promotion_readiness_report_path:
+default_promotion_ready:
+active_default_profile_preserved: true
+production_default_scoring_changed: false
 auto_trading_changed: false
 brokerage_api_touched: false
 tests:
 compile_check:
-E2R_CALIBRATED_SCORING_PATCH_SUMMARY_END
+V12_FULL_INGEST_SHADOW_PROFILE_SUMMARY_END
 
-APPLIED_SCORING_AXES_BEGIN
-axis|scope|old_value|new_value|delta|confidence|unique_case_count|unique_round_count|reason
+TOP_SECTOR_SHADOW_CANDIDATES_BEGIN
+large_sector_id|axis|direction|confidence|positive_case_count|counterexample_count|reason
 ...
-APPLIED_SCORING_AXES_END
+TOP_SECTOR_SHADOW_CANDIDATES_END
 
-REJECTED_OR_SHADOW_ONLY_AXES_BEGIN
-axis|scope|reason|needed_for_promotion
+TOP_ARCHETYPE_SHADOW_CANDIDATES_BEGIN
+canonical_archetype_id|axis|direction|confidence|positive_case_count|counterexample_count|reason
 ...
-REJECTED_OR_SHADOW_ONLY_AXES_END
+TOP_ARCHETYPE_SHADOW_CANDIDATES_END
+
+PROMOTION_BLOCKERS_BEGIN
+blocker|count|reason|needed_to_clear
+...
+PROMOTION_BLOCKERS_END
 
 FILES_CHANGED_BEGIN
 ...
 FILES_CHANGED_END
-
-ROLLBACK_INSTRUCTIONS_BEGIN
-How to switch back to baseline scoring:
-...
-ROLLBACK_INSTRUCTIONS_END
+```
 
 Do not include investment recommendation language.
-Do not mention live trading.
-Do not say production/default scoring is unchanged silently.
-If unchanged, explain exact coverage/validation/promotion failure.
+Do not mention live trading as if it is enabled.
+If default scoring remains unchanged, that is correct for this v12 task.
