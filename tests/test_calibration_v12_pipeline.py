@@ -15,6 +15,7 @@ from e2r.calibration.scoring_profile import (
 )
 from e2r.calibration.transition import build_stage_transition_summary
 from e2r.calibration.validation import normalise_trigger_type, validate_v12_trigger_rows
+from e2r.calibration.v12_promotion_planner import build_v12_promotion_plan
 
 
 def _v12_md() -> str:
@@ -148,6 +149,12 @@ class V12CalibrationPipelineTests(unittest.TestCase):
                 data_dir / "sector_shadow_profile.json",
                 data_dir / "archetype_shadow_profile.json",
                 data_dir / "e2r_2_2_candidate_profile.json",
+                data_dir / "v12_archetype_evidence_state.json",
+                data_dir / "v12_promotion_decisions.jsonl",
+                data_dir / "v12_patch_specs.jsonl",
+                report_dir / "rolling_calibration_state.md",
+                report_dir / "apply_next_patch_plan.md",
+                report_dir / "blocked_axes_report.md",
                 report_dir / "promotion_readiness_report.md",
             ):
                 self.assertTrue(path.exists(), path)
@@ -155,6 +162,107 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             self.assertEqual(load_archetype_shadow_profile(data_dir / "archetype_shadow_profile.json")["profile_status"], "shadow_only_not_active")
             candidate = load_e2r_2_2_candidate_profile(data_dir / "e2r_2_2_candidate_profile.json")
             self.assertFalse(candidate["production_default_scoring_changed"])
+            self.assertIn("promotion_decision_counts", candidate)
+            decisions = (data_dir / "v12_promotion_decisions.jsonl").read_text(encoding="utf-8")
+            self.assertIn("apply_next_patch", decisions)
+            self.assertIn("source_proxy", (report_dir / "promotion_readiness_report.md").read_text(encoding="utf-8"))
+
+    def test_v12_promotion_planner_creates_apply_next_patch_for_clean_guardrail(self) -> None:
+        rows = [
+            {
+                "trigger_id": "T1",
+                "case_id": "C1",
+                "symbol": "A",
+                "large_sector_id": "L0_TEST",
+                "canonical_archetype_id": "C99_PRICE_ONLY_THEME",
+                "positive_or_counterexample": "counterexample",
+                "case_type": "overheat",
+                "trigger_type": "Stage4B",
+                "v12_4b_quality": "price_only_4b",
+                "evidence_source": "price_only",
+            },
+            {
+                "trigger_id": "T2",
+                "case_id": "C2",
+                "symbol": "B",
+                "large_sector_id": "L0_TEST",
+                "canonical_archetype_id": "C99_PRICE_ONLY_THEME",
+                "positive_or_counterexample": "counterexample",
+                "case_type": "overheat",
+                "trigger_type": "Stage2",
+                "v12_stage2_quality": "bad_stage2",
+                "MFE_90D_pct": 2,
+                "MAE_90D_pct": -28,
+                "evidence_source": "theme_overheat_report",
+            },
+            {
+                "trigger_id": "T3",
+                "case_id": "C3",
+                "symbol": "C",
+                "large_sector_id": "L0_TEST",
+                "canonical_archetype_id": "C99_PRICE_ONLY_THEME",
+                "positive_or_counterexample": "counterexample",
+                "case_type": "failed_rerating",
+                "trigger_type": "Stage4C",
+                "v12_4c_quality": "late_4c",
+                "evidence_source": "thesis_break_disclosure",
+            },
+        ]
+        candidates = [
+            {
+                "axis": "local_4b_watch_guard",
+                "scope": "canonical_archetype",
+                "large_sector_id": None,
+                "canonical_archetype_id": "C99_PRICE_ONLY_THEME",
+                "row_count": 3,
+                "unique_symbol_count": 3,
+                "positive_case_count": 0,
+                "counterexample_count": 3,
+                "good_stage2_count": 0,
+                "bad_stage2_count": 1,
+                "stage2_high_mae_count": 1,
+                "good_4b_timing_count": 0,
+                "too_early_4b_count": 0,
+                "price_only_4b_count": 1,
+                "4c_late_count": 1,
+                "hard_4c_count": 0,
+                "source_proxy_only_count": 0,
+                "evidence_url_pending_count": 0,
+                "confidence": "low_medium",
+                "reason": "Price-only rows should stay watch-only.",
+            }
+        ]
+        plan = build_v12_promotion_plan(rows, [], [], candidates)
+        self.assertEqual(plan["promotion_decisions"][0]["decision"], "apply_next_patch")
+        self.assertEqual(plan["promotion_decisions"][0]["promotion_type"], "Type1_safety_guardrail")
+        self.assertEqual(len(plan["patch_specs"]), 1)
+        self.assertEqual(plan["patch_specs"][0]["new_value"], "price_only_4b_watch_only_not_full_4b")
+
+    def test_v12_promotion_planner_blocks_positive_patch_with_proxy_data(self) -> None:
+        candidates = [
+            {
+                "axis": "stage2_bonus_candidate_delta",
+                "scope": "canonical_archetype",
+                "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+                "row_count": 8,
+                "unique_symbol_count": 5,
+                "positive_case_count": 3,
+                "counterexample_count": 2,
+                "good_stage2_count": 4,
+                "bad_stage2_count": 0,
+                "stage2_high_mae_count": 0,
+                "source_proxy_only_count": 3,
+                "evidence_url_pending_count": 0,
+            }
+        ]
+        transitions = [
+            {"canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION", "case_id": "A"},
+            {"canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION", "case_id": "B"},
+            {"canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION", "case_id": "C"},
+        ]
+        plan = build_v12_promotion_plan([], [], transitions, candidates)
+        self.assertEqual(plan["promotion_decisions"][0]["decision"], "blocked_by_data_quality")
+        self.assertEqual(plan["patch_specs"], [])
 
     def test_v12_cli_argument_parsing(self) -> None:
         args = build_parser().parse_args(

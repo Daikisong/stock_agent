@@ -7,6 +7,8 @@ from pathlib import Path
 from typing import Any
 import json
 
+from .v12_promotion_planner import build_v12_promotion_plan, write_v12_promotion_plan_outputs
+
 
 def _json_default(value: Any) -> Any:
     if isinstance(value, Path):
@@ -130,15 +132,19 @@ def _candidate(metric: dict[str, Any], scope: str, axis: str, direction: str, va
         "shadow_candidate_value": value,
         "direction": direction,
         "confidence": _confidence(metric),
+        "row_count": metric.get("row_count", metric.get("count", 0)),
         "unique_case_count": metric.get("unique_case_count", 0),
         "unique_symbol_count": metric.get("unique_symbol_count", 0),
         "positive_case_count": metric.get("positive_case_count", 0),
         "counterexample_count": metric.get("counterexample_count", 0),
         "good_stage2_count": metric.get("good_stage2_count", 0),
         "bad_stage2_count": metric.get("bad_stage2_count", 0),
+        "stage2_high_mae_count": metric.get("stage2_high_mae_count", 0),
         "good_4b_timing_count": metric.get("good_4b_timing_count", 0),
         "too_early_4b_count": metric.get("too_early_4b_count", 0),
+        "price_only_4b_count": metric.get("price_only_4b_count", 0),
         "4c_late_count": metric.get("4c_late_count", 0),
+        "hard_4c_count": metric.get("hard_4c_count", 0),
         "source_proxy_only_count": metric.get("source_proxy_only_count", 0),
         "evidence_url_pending_count": metric.get("evidence_url_pending_count", 0),
         "promotion_ready": _promotion_ready(metric),
@@ -285,6 +291,27 @@ def write_v12_shadow_outputs(
             data_dir / "e2r_2_2_candidate_profile.json", payloads["e2r_2_2_candidate_profile"]
         ),
     }
+    promotion_plan = build_v12_promotion_plan(
+        representative_rows,
+        aggregate_metrics,
+        stage_transition_rows,
+        payloads["v12_shadow_weight_candidates"],
+        rejected_rows or [],
+    )
+    payloads["v12_promotion_plan"] = promotion_plan
+    payloads["e2r_2_2_candidate_profile"].update(
+        {
+            "promotion_decision_counts": promotion_plan["decision_counts"],
+            "promotion_type_counts": promotion_plan["promotion_type_counts"],
+            "apply_next_patch_count": len(promotion_plan["patch_specs"]),
+            "next_patch_ready": promotion_plan["next_patch_ready"],
+        }
+    )
+    # Re-write after the decision counts are attached to the candidate profile.
+    paths["e2r_2_2_candidate_profile"] = _write_json(
+        data_dir / "e2r_2_2_candidate_profile.json", payloads["e2r_2_2_candidate_profile"]
+    )
+    paths.update(write_v12_promotion_plan_outputs(promotion_plan, data_dir, report_dir))
     paths.update(write_v12_shadow_reports(payloads, report_dir))
     return paths
 
@@ -308,7 +335,8 @@ def write_v12_shadow_reports(payloads: dict[str, Any], report_dir: Path) -> dict
     )
     reports["residual_error_report"].write_text(_render_residual_error_report(payloads["residual_error_ledger"]), encoding="utf-8")
     reports["promotion_readiness_report"].write_text(
-        _render_promotion_readiness(payloads["e2r_2_2_candidate_profile"]), encoding="utf-8"
+        _render_promotion_readiness(payloads["e2r_2_2_candidate_profile"], payloads.get("v12_promotion_plan")),
+        encoding="utf-8",
     )
     reports["e2r_2_2_candidate_profile_report"].write_text(
         _render_e2r_2_2_report(payloads["e2r_2_2_candidate_profile"]), encoding="utf-8"
@@ -361,17 +389,41 @@ def _render_residual_error_report(rows: list[dict[str, Any]], title: str = "V12 
     return "\n".join(lines) + "\n"
 
 
-def _render_promotion_readiness(profile: dict[str, Any]) -> str:
+def _render_promotion_readiness(profile: dict[str, Any], promotion_plan: dict[str, Any] | None = None) -> str:
     lines = [
         "# V12 Promotion Readiness Report",
         "",
         "- active_profile_preserved: `true`",
         "- production_default_scoring_changed: `false`",
         f"- default_promotion_ready: `{profile.get('promotion_ready')}`",
+        f"- next_patch_ready: `{profile.get('next_patch_ready')}`",
+        f"- apply_next_patch_count: `{profile.get('apply_next_patch_count')}`",
         f"- stage_transition_summary_rows: `{profile.get('stage_transition_summary_rows')}`",
         "",
-        "## Blockers",
+        "## Promotion Decisions",
+        "",
+        "| axis | scope | decision | promotion_type | ready_for_next_patch | missing_to_promote | recommended_next_action |",
+        "|---|---|---|---|---|---|---|",
     ]
+    for decision in (promotion_plan or {}).get("promotion_decisions", []):
+        scope = decision.get("canonical_archetype_id") or decision.get("large_sector_id") or decision.get("scope")
+        lines.append(
+            "| {axis} | {scope} | {decision} | {ptype} | {ready} | {missing} | {action} |".format(
+                axis=decision.get("axis"),
+                scope=scope,
+                decision=decision.get("decision"),
+                ptype=decision.get("promotion_type"),
+                ready=decision.get("ready_for_next_patch"),
+                missing=", ".join(decision.get("missing_to_promote", [])),
+                action=decision.get("recommended_next_action"),
+            )
+        )
+    lines.extend(
+        [
+            "",
+            "## Blockers",
+        ]
+    )
     for blocker in profile.get("promotion_blockers", []):
         lines.append(
             f"- {blocker['blocker']}: {blocker['count']} / {blocker['reason']} / needed: {blocker['needed_to_clear']}"
