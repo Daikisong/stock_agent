@@ -27,7 +27,7 @@ The expected outcome is:
 4. stage transition summaries are regenerated.
 5. sector shadow profile and archetype shadow profile are regenerated.
 6. `e2r_2_2_candidate_profile.json` is regenerated.
-7. promotion readiness is reported.
+7. promotion readiness is reported with explicit apply/hold/block decisions.
 8. the active default scoring profile remains `e2r_2_1_stock_web_calibrated`.
 
 Important:
@@ -103,6 +103,195 @@ Correct:
    It needs verified evidence URLs, enough positive/counterexample balance,
    and a separate explicit promotion task before default scoring changes."
 ```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+0A. When research becomes scoring
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Do not keep saying "collect more research" forever.
+
+This v12 task is an ingest/readiness task, but it must decide which scoring changes are ready for the next promotion patch.
+
+After the current v12 batch is ingested, every candidate axis must be classified as one of:
+
+```text
+apply_next_patch
+hold_for_more_evidence
+blocked_by_data_quality
+blocked_by_logic_risk
+```
+
+The next engineering task after this ingest should not be "run more research" by default.
+It should be:
+
+```text
+If any axis is apply_next_patch:
+  implement a limited E2R 2.2 scoring patch for those axes only.
+
+If no axis is apply_next_patch:
+  fix the named blocker first, not blindly add more rounds.
+```
+
+Simple example:
+
+```text
+Bad loop:
+  "C20 K-beauty has 87 more rows. Let's keep researching."
+
+Correct loop:
+  "C20 K-beauty has enough source-verified positives and counterexamples
+   for a Stage2/Yellow bridge. Patch that bridge next.
+   Do not wait for another 100 files."
+```
+
+Promotion is not all-or-nothing. Use three promotion types:
+
+```text
+Type 1. Safety guardrail promotion
+Type 2. Stage2 / Stage3-Yellow observation promotion
+Type 3. Stage3-Green conviction promotion
+```
+
+Type 1 safety guardrail promotion can move fastest.
+
+Examples:
+
+```text
+price-only rally cannot create Green
+full 4B requires non-price evidence
+hard 4C thesis break routes to 4C
+```
+
+Minimum gate:
+
+```text
+independent_bad_case_count >= 3
+counterexample_or_false_positive_rows >= 2
+source_proxy_only_support_rows = 0, unless the rule is purely defensive
+evidence_url_pending_support_rows = 0, unless the rule is purely defensive
+no known unsafe side effect in validation rows
+```
+
+Reason:
+
+```text
+A defensive rule blocks bad promotions.
+It does not create a new positive Stage3-Green candidate.
+So it can be applied earlier than a positive scoring bonus.
+```
+
+Type 2 Stage2 / Stage3-Yellow observation promotion is allowed when an archetype has enough balanced evidence.
+
+Examples:
+
+```text
+C20 K-beauty:
+  export channel expansion + reorder evidence + OPM/EPS support
+  may create a Stage2 bridge or Stage3-Yellow watch.
+
+C22 insurance:
+  reserve cycle + capital return + ROE/PBR support
+  may create a financial Stage2 bridge.
+```
+
+Minimum gate:
+
+```text
+positive_independent_symbol_count >= 3
+counterexample_independent_symbol_count >= 2
+representative_trigger_rows >= 8
+stage_transition_summary_rows >= 3
+source_proxy_only_support_rate <= 0.25
+evidence_url_pending_support_rate <= 0.25
+bad_stage2_rate is not worse than current baseline
+unsafe_green_count = 0
+```
+
+Allowed output:
+
+```text
+bounded Stage2/Stage3-Yellow bonus
+archetype-specific bridge condition
+report-facing sublabel or reason
+```
+
+Not allowed:
+
+```text
+lowering global Stage3-Green thresholds
+turning one-off/theme rows into Green
+stock-name-specific rule
+```
+
+Type 3 Stage3-Green conviction promotion is the strictest.
+
+Minimum gate:
+
+```text
+positive_independent_symbol_count >= 5
+counterexample_independent_symbol_count >= 3
+full_stage_path_count >= 3
+source_verified_support_rows >= 90%
+evidence_url_pending_support_rate <= 0.10
+source_proxy_only_support_rate <= 0.10
+Stage3-Green false_positive_count = 0
+one_off_or_theme_green_count = 0
+RedTeam/Audit guard still blocks unsafe cases
+```
+
+Allowed output:
+
+```text
+sector/archetype-specific structural visibility gate
+sector/archetype-specific score weights
+Stage3-Green eligibility for that archetype only
+```
+
+Not allowed:
+
+```text
+global Green threshold loosening
+case-library or benchmark-label leakage
+future-data leakage
+```
+
+If an axis misses the gate, the report must say exactly why:
+
+```text
+not enough counterexamples
+evidence_url_pending too high
+source_proxy_only too high
+stage transition missing
+high MAE risk
+false positive Green risk
+logic conflicts with E2R philosophy
+```
+
+The promotion readiness report must include a table:
+
+```text
+axis|scope|decision|promotion_type|ready_for_next_patch|missing_to_promote|recommended_next_action
+```
+
+Examples:
+
+```text
+C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION|Stage2 bridge|apply_next_patch|Type2|true|none|implement bounded archetype bridge
+C03_BATTERY_MATERIALS_CAPEX_OVERHEAT|Green bonus|blocked_by_logic_risk|Type3|false|unsafe Green risk|keep Green-restricted
+C99_PRICE_ONLY_THEME|price-only Green block|apply_next_patch|Type1|true|none|implement defensive guardrail
+```
+
+No-more-research rule:
+
+```text
+If v12_result_md_count >= 80
+and canonical_archetypes_covered >= 20
+and any axis is apply_next_patch,
+do not request more broad research before implementing the eligible patch.
+```
+
+In this repository's current batch, that means the 87-file v12 batch must produce promotion decisions.
+It is acceptable for many axes to remain blocked, but it is not acceptable to avoid the decision.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 1. Input discovery
