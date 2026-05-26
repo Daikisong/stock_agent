@@ -20,6 +20,10 @@ source proxy 또는 evidence URL 한계는 promotion blocker로 보고서에 남
 - source_proxy_only_count: `21`
 - active_default_profile_preserved: `False`
 - production_default_scoring_changed: `True`
+- archetype_weight_profile_path: `configs/e2r_archetype_weight_profile_v2_2.json`
+- archetype_weight_report_path: `reports/e2r_calibration/v12/archetype_weight_runtime_report.md`
+- archetype_weight_count: `27`
+- large_sector_weight_count: `10`
 
 ## Rejected Rows By Reason
 - insufficient_forward_window: 14

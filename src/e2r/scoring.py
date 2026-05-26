@@ -6,6 +6,11 @@ from dataclasses import dataclass, field
 from datetime import date
 from typing import Mapping, Protocol
 
+from .calibration.archetype_weight_profile import (
+    RUNTIME_WEIGHT_PROFILE_PATH,
+    WeightedComponents,
+    load_archetype_weight_profile,
+)
 from .calibration.scoring_profile import get_active_scoring_profile
 from .models import IndustrialSubScores, ScoreSnapshot
 
@@ -111,6 +116,8 @@ class DeterministicScorer:
     def score(self, payload: ScoringPayload) -> ScoreSnapshot:
         profile = get_active_scoring_profile()
         diagnostic_scores = dict(payload.diagnostic_scores)
+        weighted = _apply_archetype_runtime_weights(payload, profile)
+        diagnostic_scores.update(weighted.diagnostics)
         calibration_bonus = 0.0
         calibration_risk_penalty = 0.0
 
@@ -137,7 +144,7 @@ class DeterministicScorer:
         )
         diagnostic_scores["calibration_total_adjustment"] = round(calibration_bonus - calibration_risk_penalty, 4)
 
-        raw_total = sum(payload.components.values()) + calibration_bonus - payload.risk_penalty - calibration_risk_penalty
+        raw_total = sum(weighted.components.values()) + calibration_bonus - payload.risk_penalty - calibration_risk_penalty
         total_score = round(max(0.0, min(100.0, raw_total)), 4)
         if payload.industrial_sub_scores is not None:
             diagnostic_scores.update(payload.industrial_sub_scores.as_diagnostic_scores())
@@ -158,8 +165,43 @@ class DeterministicScorer:
             total_score=total_score,
             diagnostic_scores=diagnostic_scores,
             evidence_ids=tuple(dict.fromkeys(evidence_ids)),
-            scoring_version=f"{payload.scoring_version}:{profile.profile_id}",
+            scoring_version=_scoring_version(payload.scoring_version, profile.profile_id, weighted),
         )
+
+
+def _apply_archetype_runtime_weights(payload: ScoringPayload, profile) -> WeightedComponents:
+    if not profile.guardrail_enabled("archetype_weight_runtime_enabled"):
+        return WeightedComponents(components=dict(payload.components), diagnostics={}, match=None)
+    profile_path = profile.guardrail_text("archetype_weight_profile_path", str(RUNTIME_WEIGHT_PROFILE_PATH))
+    runtime_profile = load_archetype_weight_profile(profile_path)
+    weighted = runtime_profile.apply(
+        payload.components,
+        canonical_archetype_id=payload.canonical_archetype_id,
+        large_sector_id=payload.large_sector_id,
+    )
+    if weighted.match is None:
+        return weighted
+    diagnostics = dict(weighted.diagnostics)
+    diagnostics["archetype_green_restricted_by_profile"] = (
+        1.0
+        if any(
+            token in weighted.match.green_policy
+            for token in ("red_watch", "event_only", "green_restricted", "red_flag")
+        )
+        else 0.0
+    )
+    diagnostics["archetype_weight_support_row_count_capped"] = min(float(weighted.match.support.get("row_count", 0) or 0), 100.0)
+    diagnostics["archetype_weight_support_symbol_count_capped"] = min(
+        float(weighted.match.support.get("unique_symbol_count", 0) or 0),
+        100.0,
+    )
+    return WeightedComponents(components=weighted.components, diagnostics=diagnostics, match=weighted.match)
+
+
+def _scoring_version(base_version: str, profile_id: str, weighted: WeightedComponents) -> str:
+    if weighted.match is None:
+        return f"{base_version}:{profile_id}"
+    return f"{base_version}:{profile_id}:archetype_weight:{weighted.match.profile_key}"
 
 
 def _has_stage3_cross_evidence_buffer(payload: ScoringPayload, diagnostics: Mapping[str, float], profile) -> bool:

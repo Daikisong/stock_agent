@@ -20,6 +20,24 @@ ACTIVE_RERATING_STAGES = frozenset(
     }
 )
 STAGE_3_GREEN_MIN_REVISION_SCORE = 50.0
+_COMPONENT_SCORE_ATTRS = {
+    "eps_fcf_explosion": "eps_fcf_explosion_score",
+    "earnings_visibility": "earnings_visibility_score",
+    "bottleneck_pricing": "bottleneck_pricing_score",
+    "market_mispricing": "market_mispricing_score",
+    "valuation_rerating": "valuation_rerating_score",
+    "capital_allocation": "capital_allocation_score",
+    "information_confidence": "information_confidence_score",
+}
+_COMPONENT_CANONICAL_MAX = {
+    "eps_fcf_explosion": 20.0,
+    "earnings_visibility": 20.0,
+    "bottleneck_pricing": 20.0,
+    "market_mispricing": 15.0,
+    "valuation_rerating": 15.0,
+    "capital_allocation": 5.0,
+    "information_confidence": 5.0,
+}
 
 
 def _require_date(value: date, field_name: str) -> None:
@@ -212,9 +230,13 @@ class StageClassifier:
             return False
         return (
             score.total_score >= profile.threshold("stage2_total_min", 65.0)
-            and score.eps_fcf_explosion_score >= profile.threshold("stage2_eps_fcf_min", 10.0)
-            and score.valuation_rerating_score >= profile.threshold("stage2_valuation_min", 7.0)
-            and score.information_confidence_score >= profile.threshold("stage2_information_confidence_min", 3.0)
+            and _component_meets(score, "eps_fcf_explosion", profile.threshold("stage2_eps_fcf_min", 10.0))
+            and _component_meets(score, "valuation_rerating", profile.threshold("stage2_valuation_min", 7.0))
+            and _component_meets(
+                score,
+                "information_confidence",
+                profile.threshold("stage2_information_confidence_min", 3.0),
+            )
             and not red_team.has_hard_break
         )
 
@@ -245,11 +267,11 @@ class StageClassifier:
         one_off_shortage_risk = _score_diagnostic(score, "one_off_shortage_risk")
         return (
             score.total_score >= profile.threshold("stage3_green_total_min", 85.0)
-            and score.eps_fcf_explosion_score >= profile.threshold("stage3_green_eps_fcf_min", 17.0)
-            and score.earnings_visibility_score >= profile.threshold("stage3_green_visibility_min", 15.0)
-            and score.bottleneck_pricing_score >= profile.threshold("stage3_green_bottleneck_min", 15.0)
-            and score.market_mispricing_score >= profile.threshold("stage3_green_mispricing_min", 10.0)
-            and score.valuation_rerating_score >= profile.threshold("stage3_green_valuation_min", 10.0)
+            and _component_meets(score, "eps_fcf_explosion", profile.threshold("stage3_green_eps_fcf_min", 17.0))
+            and _component_meets(score, "earnings_visibility", profile.threshold("stage3_green_visibility_min", 15.0))
+            and _component_meets(score, "bottleneck_pricing", profile.threshold("stage3_green_bottleneck_min", 15.0))
+            and _component_meets(score, "market_mispricing", profile.threshold("stage3_green_mispricing_min", 10.0))
+            and _component_meets(score, "valuation_rerating", profile.threshold("stage3_green_valuation_min", 10.0))
             and revision_score >= profile.threshold("stage3_green_revision_min", STAGE_3_GREEN_MIN_REVISION_SCORE)
             and structural_visibility_quality >= profile.threshold("stage3_green_structural_visibility_min", 45.0)
             and (contract_required_for_green < 1.0 or contract_quality >= 45.0)
@@ -264,15 +286,15 @@ class StageClassifier:
         if score.total_score < 80.0:
             return (
                 one_off_shortage_risk >= 80.0
-                and score.eps_fcf_explosion_score >= 17.0
+                and _component_meets(score, "eps_fcf_explosion", 17.0)
                 and revision_score >= STAGE_3_GREEN_MIN_REVISION_SCORE
-                and score.information_confidence_score >= 2.0
+                and _component_meets(score, "information_confidence", 2.0)
             )
         return (
             red_team.risk_level in {RedTeamRiskLevel.HIGH, RedTeamRiskLevel.HARD_BREAK}
-            or score.valuation_rerating_score < 7.0
-            or score.earnings_visibility_score < 12.0
-            or score.bottleneck_pricing_score < 12.0
+            or _component_below(score, "valuation_rerating", 7.0)
+            or _component_below(score, "earnings_visibility", 12.0)
+            or _component_below(score, "bottleneck_pricing", 12.0)
             or _score_diagnostic(
                 score,
                 "structural_visibility_quality",
@@ -282,6 +304,28 @@ class StageClassifier:
             or one_off_shortage_risk >= 80.0
             or _score_diagnostic(score, "theme_overheat_score") >= 70.0
         )
+
+
+def _effective_component_score(score: ScoreSnapshot, key: str) -> float:
+    if _score_diagnostic(score, "archetype_weight_profile_applied") > 0:
+        return _score_diagnostic(score, f"archetype_component_{key}", getattr(score, _COMPONENT_SCORE_ATTRS[key]))
+    return float(getattr(score, _COMPONENT_SCORE_ATTRS[key]))
+
+
+def _effective_component_threshold(score: ScoreSnapshot, key: str, canonical_threshold: float) -> float:
+    if _score_diagnostic(score, "archetype_weight_profile_applied") <= 0:
+        return canonical_threshold
+    canonical_max = _COMPONENT_CANONICAL_MAX[key]
+    weight_max = _score_diagnostic(score, f"archetype_weight_{key}", canonical_max)
+    return round(weight_max * canonical_threshold / canonical_max, 4)
+
+
+def _component_meets(score: ScoreSnapshot, key: str, canonical_threshold: float) -> bool:
+    return _effective_component_score(score, key) >= _effective_component_threshold(score, key, canonical_threshold)
+
+
+def _component_below(score: ScoreSnapshot, key: str, canonical_threshold: float) -> bool:
+    return _effective_component_score(score, key) < _effective_component_threshold(score, key, canonical_threshold)
 
 
 def _has_non_price_stage2_bridge(score: ScoreSnapshot) -> bool:

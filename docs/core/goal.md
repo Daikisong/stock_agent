@@ -16,7 +16,7 @@ docs/round
 
 ```text
 v12 연구 MD를 한 번에 ingest하고,
-검증된 safe patch를 E2R 2.2 rolling scoring profile에 실제 반영한다.
+검증된 safe patch와 아키타입별 점수비중을 E2R 2.2 rolling scoring profile에 실제 반영한다.
 ```
 
 이 작업은 “연구를 쌓아두기만 하는 작업”이 아니다.
@@ -29,6 +29,7 @@ v12 연구 MD를 한 번에 ingest하고,
 -> apply / hold / block 결정
 -> safe patch 생성
 -> configs/e2r_scoring_profile_v2_2.yaml 반영
+-> configs/e2r_archetype_weight_profile_v2_2.json 반영
 -> configs/e2r_scoring_profile_active.yaml을 e2r_2_2로 유지
 ```
 
@@ -69,8 +70,9 @@ PYTHONPATH=src python -m e2r.calibration.cli run-v12-calibration \
 8. promotion decision 생성
 9. apply_next_patch spec 생성
 10. E2R 2.2 rolling profile 생성
-11. active profile을 e2r_2_2로 설정
-12. 보고서 생성
+11. archetype weight runtime profile 생성
+12. active profile을 e2r_2_2로 설정
+13. 보고서 생성
 ```
 
 `run-v12-full`은 감사용이다. active profile을 바꾸지 않는다.
@@ -93,6 +95,7 @@ raw row
 -> promotion decision
 -> patch spec
 -> v2.2 profile
+-> archetype weight profile
 ```
 
 예시:
@@ -106,7 +109,8 @@ raw row
   positive와 counterexample 균형이 맞고,
   stage transition이 충분하고,
   apply_next_patch가 나오면,
-  C20 scope에서만 최대 +1 Stage2 bridge를 적용한다.
+  C20 scope에서만 Stage2 bridge/guard를 적용하고,
+  C20 점수비중은 수출/채널/반복수요/OPM/EPS revision 중심으로 재합산한다.
 ```
 
 ## Promotion Decision
@@ -129,7 +133,7 @@ hold/block이면 왜 막혔는지 보고서에 명확히 남긴다.
 
 ## Safe Patch Axis
 
-현재 active profile에 들어갈 수 있는 v12 safe patch는 다음 여섯 종류다.
+현재 active profile에 들어갈 수 있는 v12 safe patch와 runtime weight는 다음 종류다.
 
 | axis | 의미 |
 |---|---|
@@ -139,6 +143,7 @@ hold/block이면 왜 막혔는지 보고서에 명확히 남긴다.
 | `full_4b_overlay_candidate` | full 4B는 비가격 증거 필요 |
 | `earlier_thesis_break_watch` | thesis-break watch를 더 일찍 표시 |
 | `hard_4c_confirmation` | 비가격 thesis-break 확인 시 4C 강화 |
+| `archetype_weight_runtime` | canonical archetype별 score component 비중을 다르게 적용 |
 
 Stage 3-Green은 쉽게 만들지 않는다.
 
@@ -147,6 +152,54 @@ v12는 Green 완화가 아니라
 Stage2/Yellow 관찰 개선,
 4B/4C 보호,
 price-only false positive 차단을 우선한다.
+```
+
+## 아키타입별 점수비중 반영
+
+`run-v12-calibration`은 이제 다음 파일도 생성한다.
+
+```text
+configs/e2r_archetype_weight_profile_v2_2.json
+reports/e2r_calibration/v12/archetype_weight_runtime_report.md
+```
+
+예시:
+
+```text
+C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION
+  EPS/FCF 22
+  visibility 23
+  bottleneck/pricing 12
+  mispricing 16
+  valuation 13
+  capital 4
+  information 10
+
+의미:
+  삼양식품/실리콘투 계열은 계약공시가 없어도
+  수출 증가, 채널 확장, 반복수요, OPM, EPS revision이 강하면 점수 기여가 커진다.
+```
+
+반대로:
+
+```text
+C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG
+  visibility 24
+  bottleneck/pricing 17
+
+의미:
+  전력기기/방산 계열은 계약금액, 수주잔고, 정부 고객, 납품 visibility가 약하면
+  가격이 먼저 올라도 Stage 3 쪽으로 쉽게 못 간다.
+```
+
+과거 가격경로는 다음 용도다.
+
+```text
+사용 가능:
+  과거 Stage2 이후 MFE/MAE, peak, 4B/4C 타이밍을 보고 weight profile을 보정한다.
+
+사용 금지:
+  as_of_date 당일 점수 계산에 미래 MFE/peak를 직접 넣는다.
 ```
 
 ## 런타임 연결 조건
@@ -198,6 +251,7 @@ data/e2r/calibration/v12/stage_transition_summary.jsonl
 data/e2r/calibration/v12/v12_promotion_decisions.jsonl
 data/e2r/calibration/v12/v12_patch_specs.jsonl
 configs/e2r_scoring_profile_v2_2.yaml
+configs/e2r_archetype_weight_profile_v2_2.json
 configs/e2r_scoring_profile_active.yaml
 ```
 
@@ -209,6 +263,7 @@ reports/e2r_calibration/v12/apply_next_patch_plan.md
 reports/e2r_calibration/v12/blocked_axes_report.md
 reports/e2r_calibration/v12/rolling_calibration_apply_report.md
 reports/e2r_calibration/v12/rolling_calibration_apply_summary.json
+reports/e2r_calibration/v12/archetype_weight_runtime_report.md
 ```
 
 ## 금지 사항
@@ -236,6 +291,8 @@ stage_transition_summary_rows: 410
 large_sectors_covered: 10
 canonical_archetypes_covered: 27
 applied_patch_count: 64
+archetype_weight_count: 27
+large_sector_weight_count: 10
 production_default_scoring_changed: true
 active_profile: e2r_2_2
 rollback_profile: calibrated
@@ -283,5 +340,6 @@ docs/core/goal.md가 run-v12-calibration 중심으로 정리되어 있다.
 run-v12-calibration이 기본 적용 플로우로 명시되어 있다.
 run-v12-full은 진단 플로우로만 설명되어 있다.
 active profile은 e2r_2_2, rollback은 calibrated로 설명되어 있다.
+archetype weight runtime profile이 점수비중 반영 흐름으로 명시되어 있다.
 Stage 3-Green 완화 금지와 price-only guard가 명시되어 있다.
 ```

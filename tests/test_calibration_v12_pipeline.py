@@ -512,9 +512,10 @@ class V12CalibrationPipelineTests(unittest.TestCase):
                 os.environ.pop("E2R_SCORING_PROFILE", None)
             else:
                 os.environ["E2R_SCORING_PROFILE"] = old
-        self.assertEqual(round(rolling.total_score - baseline.total_score, 4), 1.0)
+        self.assertGreater(rolling.total_score, baseline.total_score)
         self.assertEqual(unscoped.total_score, baseline.total_score)
         self.assertEqual(rolling.diagnostic_scores["v12_stage2_scope_bonus_applied"], 1.0)
+        self.assertEqual(rolling.diagnostic_scores["archetype_weight_profile_applied"], 1.0)
 
     def test_v12_required_bridge_blocks_scoped_price_only_stage2(self) -> None:
         old = os.environ.get("E2R_SCORING_PROFILE")

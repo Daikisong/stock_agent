@@ -1,0 +1,1126 @@
+{
+  "archetype_weights": {
+    "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": {
+      "basis": "defense government backlog: contract, delivery schedule, margin conversion",
+      "green_policy": "green_allowed_with_government_backlog_and_delivery_visibility",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -22.4233,
+        "avg_stage2_MFE90": 27.07,
+        "bad_stage2_count": 1,
+        "counterexample_count": 0,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 2,
+        "positive_case_count": 0,
+        "row_count": 4,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.6667,
+        "stage2_hit_rate_MFE90_ge_20": 0.6667,
+        "unique_case_count": 3,
+        "unique_symbol_count": 3
+      },
+      "weights": {
+        "bottleneck_pricing": 17.0,
+        "capital_allocation": 6.0,
+        "earnings_visibility": 24.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 14.0,
+        "valuation_rerating": 14.0
+      }
+    },
+    "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY": {
+      "basis": "nuclear policy events need final project economics before Green",
+      "green_policy": "watch_to_green_only_after_final_contract_and_legal_clarity",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -20.1933,
+        "avg_stage2_MFE90": 20.9067,
+        "bad_stage2_count": 2,
+        "counterexample_count": 1,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 1,
+        "good_stage2_count": 1,
+        "positive_case_count": 2,
+        "row_count": 5,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.6667,
+        "stage2_hit_rate_MFE90_ge_20": 0.3333,
+        "unique_case_count": 3,
+        "unique_symbol_count": 3
+      },
+      "weights": {
+        "bottleneck_pricing": 10.0,
+        "capital_allocation": 10.0,
+        "earnings_visibility": 22.0,
+        "eps_fcf_explosion": 15.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 18.0
+      }
+    },
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
+      "basis": "HBM/memory rerating: customer capacity, price discipline, multi-year revisions",
+      "green_policy": "green_allowed_with_hbm_capacity_customer_and_revision",
+      "support": {
+        "4c_late_count": 1,
+        "avg_stage2_MAE90": -22.53,
+        "avg_stage2_MFE90": 24.4,
+        "bad_stage2_count": 1,
+        "counterexample_count": 1,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 1,
+        "positive_case_count": 2,
+        "row_count": 10,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.5,
+        "stage2_hit_rate_MFE90_ge_20": 0.5,
+        "unique_case_count": 3,
+        "unique_symbol_count": 2
+      },
+      "weights": {
+        "bottleneck_pricing": 19.0,
+        "capital_allocation": 4.0,
+        "earnings_visibility": 21.0,
+        "eps_fcf_explosion": 24.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 12.0
+      }
+    },
+    "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH": {
+      "basis": "semi equipment: orders, backlog, customer capex, revenue conversion",
+      "green_policy": "green_allowed_with_orders_and_revenue_conversion",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -10.8,
+        "avg_stage2_MFE90": 152.4,
+        "bad_stage2_count": 0,
+        "counterexample_count": 2,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 2,
+        "positive_case_count": 3,
+        "row_count": 8,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.0,
+        "stage2_hit_rate_MFE90_ge_20": 1.0,
+        "unique_case_count": 5,
+        "unique_symbol_count": 5
+      },
+      "weights": {
+        "bottleneck_pricing": 19.0,
+        "capital_allocation": 6.0,
+        "earnings_visibility": 22.0,
+        "eps_fcf_explosion": 22.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 14.0,
+        "valuation_rerating": 12.0
+      }
+    },
+    "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF": {
+      "basis": "advanced equipment keeps bottleneck credit but raises valuation/4B guard attention",
+      "green_policy": "watch_to_green_with_valuation_blowoff_guard",
+      "support": {
+        "4c_late_count": 1,
+        "avg_stage2_MAE90": -15.3067,
+        "avg_stage2_MFE90": 137.4633,
+        "bad_stage2_count": 0,
+        "counterexample_count": 2,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 2,
+        "good_stage2_count": 4,
+        "positive_case_count": 3,
+        "row_count": 16,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.3333,
+        "stage2_hit_rate_MFE90_ge_20": 1.0,
+        "unique_case_count": 5,
+        "unique_symbol_count": 5
+      },
+      "weights": {
+        "bottleneck_pricing": 18.0,
+        "capital_allocation": 6.0,
+        "earnings_visibility": 20.0,
+        "eps_fcf_explosion": 22.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 13.0,
+        "valuation_rerating": 11.0
+      }
+    },
+    "C11_BATTERY_ORDERBOOK_RERATING": {
+      "basis": "battery orderbook needs contract margin, FCF, utilization and EV demand support",
+      "green_policy": "green_restricted_until_margin_and_fcf_after_capex",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -8.278,
+        "avg_stage2_MFE90": 115.8,
+        "bad_stage2_count": 0,
+        "counterexample_count": 0,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 5,
+        "positive_case_count": 0,
+        "row_count": 12,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2,
+        "stage2_hit_rate_MFE90_ge_20": 1.0,
+        "unique_case_count": 6,
+        "unique_symbol_count": 4
+      },
+      "weights": {
+        "bottleneck_pricing": 15.0,
+        "capital_allocation": 8.0,
+        "earnings_visibility": 20.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 15.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK": {
+      "basis": "battery contract call-off risk makes information confidence and red-team gates heavier",
+      "green_policy": "green_restricted_by_calloff_and_customer_demand_risk",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -6.57,
+        "avg_stage2_MFE90": 121.675,
+        "bad_stage2_count": 0,
+        "counterexample_count": 2,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 4,
+        "positive_case_count": 4,
+        "row_count": 15,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.0,
+        "stage2_hit_rate_MFE90_ge_20": 1.0,
+        "unique_case_count": 10,
+        "unique_symbol_count": 9
+      },
+      "weights": {
+        "bottleneck_pricing": 14.0,
+        "capital_allocation": 8.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 20.0,
+        "market_mispricing": 10.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    "C13_BATTERY_JV_UTILIZATION_AMPC_IRA": {
+      "basis": "battery JV/AMPC needs utilization and durable subsidy economics",
+      "green_policy": "watch_to_green_with_utilization_and_policy_durability",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -23.0683,
+        "avg_stage2_MFE90": 15.8108,
+        "bad_stage2_count": 9,
+        "counterexample_count": 0,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 1,
+        "good_stage2_count": 2,
+        "positive_case_count": 0,
+        "row_count": 16,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.5,
+        "stage2_hit_rate_MFE90_ge_20": 0.3333,
+        "unique_case_count": 10,
+        "unique_symbol_count": 3
+      },
+      "weights": {
+        "bottleneck_pricing": 14.0,
+        "capital_allocation": 10.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 16.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    "C14_EV_DEMAND_SLOWDOWN_4B_4C": {
+      "basis": "EV slowdown is primarily a 4B/4C protection archetype",
+      "green_policy": "red_watch",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": null,
+        "avg_stage2_MFE90": null,
+        "bad_stage2_count": 0,
+        "counterexample_count": 1,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 3,
+        "good_stage2_count": 0,
+        "positive_case_count": 3,
+        "row_count": 20,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": null,
+        "stage2_hit_rate_MFE90_ge_20": null,
+        "unique_case_count": 16,
+        "unique_symbol_count": 5
+      },
+      "weights": {
+        "bottleneck_pricing": 10.0,
+        "capital_allocation": 7.0,
+        "earnings_visibility": 12.0,
+        "eps_fcf_explosion": 15.0,
+        "information_confidence": 40.0,
+        "market_mispricing": 8.0,
+        "valuation_rerating": 8.0
+      }
+    },
+    "C15_MATERIAL_SPREAD_SUPERCYCLE": {
+      "basis": "spread supercycle needs cost-curve or supply-discipline proof, not price only",
+      "green_policy": "green_restricted_by_cycle_reversal",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -11.675,
+        "avg_stage2_MFE90": 68.52,
+        "bad_stage2_count": 0,
+        "counterexample_count": 0,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 2,
+        "positive_case_count": 0,
+        "row_count": 12,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.5,
+        "stage2_hit_rate_MFE90_ge_20": 1.0,
+        "unique_case_count": 4,
+        "unique_symbol_count": 4
+      },
+      "weights": {
+        "bottleneck_pricing": 20.0,
+        "capital_allocation": 8.0,
+        "earnings_visibility": 12.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 20.0,
+        "market_mispricing": 10.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY": {
+      "basis": "strategic resources need policy plus supply/contract economics",
+      "green_policy": "watch_to_green_with_supply_contract_and_policy_durability",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -14.215,
+        "avg_stage2_MFE90": 41.39,
+        "bad_stage2_count": 0,
+        "counterexample_count": 0,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 2,
+        "positive_case_count": 0,
+        "row_count": 7,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.0,
+        "stage2_hit_rate_MFE90_ge_20": 1.0,
+        "unique_case_count": 4,
+        "unique_symbol_count": 4
+      },
+      "weights": {
+        "bottleneck_pricing": 18.0,
+        "capital_allocation": 7.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 18.0,
+        "information_confidence": 15.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 12.0
+      }
+    },
+    "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": {
+      "basis": "chemical/commodity spread has high reversal risk",
+      "green_policy": "red_watch",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -7.26,
+        "avg_stage2_MFE90": 68.79,
+        "bad_stage2_count": 0,
+        "counterexample_count": 2,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 4,
+        "positive_case_count": 2,
+        "row_count": 28,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.0,
+        "stage2_hit_rate_MFE90_ge_20": 1.0,
+        "unique_case_count": 8,
+        "unique_symbol_count": 8
+      },
+      "weights": {
+        "bottleneck_pricing": 18.0,
+        "capital_allocation": 5.0,
+        "earnings_visibility": 12.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 25.0,
+        "market_mispricing": 10.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    "C18_CONSUMER_EXPORT_CHANNEL_REORDER": {
+      "basis": "consumer export: channel expansion, repeat demand, OPM and revision replace contract quality",
+      "green_policy": "green_allowed_with_export_channel_repeat_demand",
+      "support": {
+        "4c_late_count": 3,
+        "avg_stage2_MAE90": -17.8086,
+        "avg_stage2_MFE90": 44.1459,
+        "bad_stage2_count": 9,
+        "counterexample_count": 6,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 1,
+        "good_stage2_count": 12,
+        "positive_case_count": 8,
+        "row_count": 57,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.4091,
+        "stage2_hit_rate_MFE90_ge_20": 0.6818,
+        "unique_case_count": 22,
+        "unique_symbol_count": 10
+      },
+      "weights": {
+        "bottleneck_pricing": 12.0,
+        "capital_allocation": 4.0,
+        "earnings_visibility": 23.0,
+        "eps_fcf_explosion": 22.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 16.0,
+        "valuation_rerating": 13.0
+      }
+    },
+    "C19_BRAND_RETAIL_INVENTORY_MARGIN": {
+      "basis": "brand/retail needs sell-through, inventory and cash conversion checks",
+      "green_policy": "watch_to_green_with_inventory_and_margin_proof",
+      "support": {
+        "4c_late_count": 2,
+        "avg_stage2_MAE90": -14.2729,
+        "avg_stage2_MFE90": 38.7836,
+        "bad_stage2_count": 6,
+        "counterexample_count": 0,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 2,
+        "good_stage2_count": 6,
+        "positive_case_count": 0,
+        "row_count": 33,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.3571,
+        "stage2_hit_rate_MFE90_ge_20": 0.4286,
+        "unique_case_count": 13,
+        "unique_symbol_count": 7
+      },
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 7.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 18.0,
+        "information_confidence": 20.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 14.0
+      }
+    },
+    "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION": {
+      "basis": "K-food/K-beauty: export growth, global channel, recurring demand, OPM and EPS revision",
+      "green_policy": "green_allowed_with_global_distribution_and_repeat_sellthrough",
+      "support": {
+        "4c_late_count": 2,
+        "avg_stage2_MAE90": -13.9,
+        "avg_stage2_MFE90": 138.8914,
+        "bad_stage2_count": 3,
+        "counterexample_count": 6,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 6,
+        "good_stage2_count": 18,
+        "positive_case_count": 9,
+        "row_count": 77,
+        "source_proxy_only_count": 7,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2273,
+        "stage2_hit_rate_MFE90_ge_20": 0.9545,
+        "unique_case_count": 23,
+        "unique_symbol_count": 13
+      },
+      "weights": {
+        "bottleneck_pricing": 12.0,
+        "capital_allocation": 4.0,
+        "earnings_visibility": 23.0,
+        "eps_fcf_explosion": 22.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 16.0,
+        "valuation_rerating": 13.0
+      }
+    },
+    "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN": {
+      "basis": "financial value-up: ROE/PBR, capital return, credit cost and reserve quality",
+      "green_policy": "green_allowed_with_roe_pbr_and_executed_capital_return",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -9.0421,
+        "avg_stage2_MFE90": 27.9162,
+        "bad_stage2_count": 14,
+        "counterexample_count": 6,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 2,
+        "good_stage2_count": 31,
+        "positive_case_count": 8,
+        "row_count": 123,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.0943,
+        "stage2_hit_rate_MFE90_ge_20": 0.6415,
+        "unique_case_count": 48,
+        "unique_symbol_count": 18
+      },
+      "weights": {
+        "bottleneck_pricing": 5.0,
+        "capital_allocation": 15.0,
+        "earnings_visibility": 20.0,
+        "eps_fcf_explosion": 15.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 25.0
+      }
+    },
+    "C22_INSURANCE_RATE_CYCLE_RESERVE": {
+      "basis": "insurance rerating: reserve, rate cycle, ROE/PBR and shareholder return outrank contracts",
+      "green_policy": "green_allowed_with_reserve_rate_cycle_and_capital_return",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -14.0468,
+        "avg_stage2_MFE90": 19.8268,
+        "bad_stage2_count": 7,
+        "counterexample_count": 4,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 1,
+        "good_stage2_count": 14,
+        "positive_case_count": 4,
+        "row_count": 38,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1818,
+        "stage2_hit_rate_MFE90_ge_20": 0.5909,
+        "unique_case_count": 21,
+        "unique_symbol_count": 6
+      },
+      "weights": {
+        "bottleneck_pricing": 5.0,
+        "capital_allocation": 18.0,
+        "earnings_visibility": 22.0,
+        "eps_fcf_explosion": 12.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 14.0,
+        "valuation_rerating": 24.0
+      }
+    },
+    "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": {
+      "basis": "commercializing biotech needs approval and revenue/royalty conversion",
+      "green_policy": "watch_to_green_after_approval_revenue_or_royalty_conversion",
+      "support": {
+        "4c_late_count": 2,
+        "avg_stage2_MAE90": -13.3,
+        "avg_stage2_MFE90": 53.81,
+        "bad_stage2_count": 2,
+        "counterexample_count": 2,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 1,
+        "good_stage2_count": 6,
+        "positive_case_count": 2,
+        "row_count": 20,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.25,
+        "stage2_hit_rate_MFE90_ge_20": 0.75,
+        "unique_case_count": 8,
+        "unique_symbol_count": 6
+      },
+      "weights": {
+        "bottleneck_pricing": 5.0,
+        "capital_allocation": 7.0,
+        "earnings_visibility": 24.0,
+        "eps_fcf_explosion": 12.0,
+        "information_confidence": 30.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    "C24_BIO_TRIAL_DATA_EVENT_RISK": {
+      "basis": "trial data is event-risk-first until revenue and dilution risk are resolved",
+      "green_policy": "event_only_red_watch",
+      "support": {
+        "4c_late_count": 1,
+        "avg_stage2_MAE90": -15.7207,
+        "avg_stage2_MFE90": 74.7086,
+        "bad_stage2_count": 2,
+        "counterexample_count": 4,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 1,
+        "good_stage2_count": 11,
+        "positive_case_count": 5,
+        "row_count": 34,
+        "source_proxy_only_count": 14,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2143,
+        "stage2_hit_rate_MFE90_ge_20": 0.8571,
+        "unique_case_count": 17,
+        "unique_symbol_count": 13
+      },
+      "weights": {
+        "bottleneck_pricing": 5.0,
+        "capital_allocation": 5.0,
+        "earnings_visibility": 15.0,
+        "eps_fcf_explosion": 5.0,
+        "information_confidence": 55.0,
+        "market_mispricing": 10.0,
+        "valuation_rerating": 5.0
+      }
+    },
+    "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT": {
+      "basis": "medical device export: approval, channel, reimbursement, repeat consumables",
+      "green_policy": "green_allowed_with_export_reimbursement_and_repeat_consumable_revenue",
+      "support": {
+        "4c_late_count": 1,
+        "avg_stage2_MAE90": -16.4925,
+        "avg_stage2_MFE90": 82.7875,
+        "bad_stage2_count": 3,
+        "counterexample_count": 4,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 3,
+        "good_stage2_count": 13,
+        "positive_case_count": 5,
+        "row_count": 26,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.3125,
+        "stage2_hit_rate_MFE90_ge_20": 0.8125,
+        "unique_case_count": 17,
+        "unique_symbol_count": 10
+      },
+      "weights": {
+        "bottleneck_pricing": 13.0,
+        "capital_allocation": 9.0,
+        "earnings_visibility": 22.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 14.0,
+        "valuation_rerating": 12.0
+      }
+    },
+    "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE": {
+      "basis": "platform: traffic is insufficient without monetization and operating leverage",
+      "green_policy": "green_allowed_with_arpu_monetization_and_op_leverage",
+      "support": {
+        "4c_late_count": 1,
+        "avg_stage2_MAE90": -9.8553,
+        "avg_stage2_MFE90": 49.4747,
+        "bad_stage2_count": 4,
+        "counterexample_count": 9,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 4,
+        "good_stage2_count": 15,
+        "positive_case_count": 6,
+        "row_count": 52,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1579,
+        "stage2_hit_rate_MFE90_ge_20": 0.7368,
+        "unique_case_count": 22,
+        "unique_symbol_count": 10
+      },
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 10.0,
+        "earnings_visibility": 22.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 16.0,
+        "valuation_rerating": 14.0
+      }
+    },
+    "C27_CONTENT_IP_GLOBAL_MONETIZATION": {
+      "basis": "content/IP needs repeat monetization and hit-risk control",
+      "green_policy": "watch_to_green_with_repeat_ip_monetization",
+      "support": {
+        "4c_late_count": 4,
+        "avg_stage2_MAE90": -14.1846,
+        "avg_stage2_MFE90": 118.2554,
+        "bad_stage2_count": 2,
+        "counterexample_count": 5,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 3,
+        "good_stage2_count": 11,
+        "positive_case_count": 8,
+        "row_count": 33,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2308,
+        "stage2_hit_rate_MFE90_ge_20": 0.8462,
+        "unique_case_count": 18,
+        "unique_symbol_count": 17
+      },
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 8.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 20.0,
+        "market_mispricing": 14.0,
+        "valuation_rerating": 12.0
+      }
+    },
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": {
+      "basis": "software/security: recurring revenue, retention, ARR/RPO and OPM leverage",
+      "green_policy": "green_allowed_with_arr_retention_and_margin_leverage",
+      "support": {
+        "4c_late_count": 2,
+        "avg_stage2_MAE90": -9.7108,
+        "avg_stage2_MFE90": 66.1083,
+        "bad_stage2_count": 3,
+        "counterexample_count": 7,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 9,
+        "positive_case_count": 6,
+        "row_count": 44,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1667,
+        "stage2_hit_rate_MFE90_ge_20": 0.8333,
+        "unique_case_count": 18,
+        "unique_symbol_count": 11
+      },
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 8.0,
+        "earnings_visibility": 24.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 16.0,
+        "valuation_rerating": 14.0
+      }
+    },
+    "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": {
+      "basis": "mobility: volume/mix/margin plus valuation and capital return",
+      "green_policy": "watch_to_green_with_mix_margin_and_capital_return",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -3.295,
+        "avg_stage2_MFE90": 27.795,
+        "bad_stage2_count": 0,
+        "counterexample_count": 0,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 2,
+        "positive_case_count": 0,
+        "row_count": 8,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.0,
+        "stage2_hit_rate_MFE90_ge_20": 1.0,
+        "unique_case_count": 5,
+        "unique_symbol_count": 5
+      },
+      "weights": {
+        "bottleneck_pricing": 10.0,
+        "capital_allocation": 15.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 17.0
+      }
+    },
+    "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK": {
+      "basis": "construction/PF is credit-risk-first until balance sheet repair is proven",
+      "green_policy": "red_watch",
+      "support": {
+        "4c_late_count": 2,
+        "avg_stage2_MAE90": -6.35,
+        "avg_stage2_MFE90": 20.1,
+        "bad_stage2_count": 0,
+        "counterexample_count": 2,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 1,
+        "positive_case_count": 2,
+        "row_count": 7,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.0,
+        "stage2_hit_rate_MFE90_ge_20": 0.5,
+        "unique_case_count": 4,
+        "unique_symbol_count": 4
+      },
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 10.0,
+        "earnings_visibility": 12.0,
+        "eps_fcf_explosion": 18.0,
+        "information_confidence": 30.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": {
+      "basis": "policy/subsidy events need conversion into contract, margin or FCF",
+      "green_policy": "event_only_until_cashflow_conversion",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -15.525,
+        "avg_stage2_MFE90": 26.215,
+        "bad_stage2_count": 2,
+        "counterexample_count": 5,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 1,
+        "good_stage2_count": 4,
+        "positive_case_count": 4,
+        "row_count": 15,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.3333,
+        "stage2_hit_rate_MFE90_ge_20": 0.6667,
+        "unique_case_count": 9,
+        "unique_symbol_count": 7
+      },
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 10.0,
+        "earnings_visibility": 15.0,
+        "eps_fcf_explosion": 12.0,
+        "information_confidence": 25.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 15.0
+      }
+    },
+    "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP": {
+      "basis": "governance/tender premium is event rerating unless NAV/FCF/shareholder return improves",
+      "green_policy": "event_premium_not_structural_green_without_fcf_or_return",
+      "support": {
+        "4c_late_count": 2,
+        "avg_stage2_MAE90": -19.6611,
+        "avg_stage2_MFE90": 83.98,
+        "bad_stage2_count": 9,
+        "counterexample_count": 5,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 3,
+        "good_stage2_count": 8,
+        "positive_case_count": 4,
+        "row_count": 28,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.5556,
+        "stage2_hit_rate_MFE90_ge_20": 0.7778,
+        "unique_case_count": 9,
+        "unique_symbol_count": 5
+      },
+      "weights": {
+        "bottleneck_pricing": 5.0,
+        "capital_allocation": 15.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 12.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 20.0,
+        "valuation_rerating": 25.0
+      }
+    }
+  },
+  "default_weights": {
+    "bottleneck_pricing": 20.0,
+    "capital_allocation": 5.0,
+    "earnings_visibility": 20.0,
+    "eps_fcf_explosion": 20.0,
+    "information_confidence": 5.0,
+    "market_mispricing": 15.0,
+    "valuation_rerating": 15.0
+  },
+  "enabled": true,
+  "guardrails": {
+    "case_library_not_candidate_input": true,
+    "future_price_not_runtime_input": true,
+    "stage3_green_not_loosened_by_weight_profile": true,
+    "stock_name_rules_forbidden": true,
+    "weights_sum_to_100": true
+  },
+  "large_sector_weights": {
+    "L10_POLICY_EVENT_CROSS_REDTEAM_MISC": {
+      "green_policy": "green_restricted_without_contract_or_cashflow_conversion",
+      "support": {
+        "4c_late_count": 2,
+        "avg_stage2_MAE90": -18.6271,
+        "avg_stage2_MFE90": 69.5388,
+        "bad_stage2_count": 11,
+        "counterexample_count": 10,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 4,
+        "good_stage2_count": 12,
+        "positive_case_count": 8,
+        "row_count": 43,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.5,
+        "stage2_hit_rate_MFE90_ge_20": 0.75,
+        "unique_case_count": 18,
+        "unique_symbol_count": 12
+      },
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 10.0,
+        "earnings_visibility": 15.0,
+        "eps_fcf_explosion": 12.0,
+        "information_confidence": 25.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 15.0
+      }
+    },
+    "L1_INDUSTRIALS_INFRA_DEFENSE_GRID": {
+      "green_policy": "green_allowed_with_contract_or_backlog_visibility",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -21.3083,
+        "avg_stage2_MFE90": 23.9883,
+        "bad_stage2_count": 3,
+        "counterexample_count": 1,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 1,
+        "good_stage2_count": 3,
+        "positive_case_count": 2,
+        "row_count": 9,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.6667,
+        "stage2_hit_rate_MFE90_ge_20": 0.5,
+        "unique_case_count": 6,
+        "unique_symbol_count": 6
+      },
+      "weights": {
+        "bottleneck_pricing": 20.0,
+        "capital_allocation": 7.0,
+        "earnings_visibility": 24.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 12.0
+      }
+    },
+    "L2_AI_SEMICONDUCTOR_ELECTRONICS": {
+      "green_policy": "green_allowed_with_capacity_and_revision",
+      "support": {
+        "4c_late_count": 2,
+        "avg_stage2_MAE90": -15.85,
+        "avg_stage2_MFE90": 117.838,
+        "bad_stage2_count": 1,
+        "counterexample_count": 5,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 2,
+        "good_stage2_count": 7,
+        "positive_case_count": 8,
+        "row_count": 34,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.3,
+        "stage2_hit_rate_MFE90_ge_20": 0.9,
+        "unique_case_count": 13,
+        "unique_symbol_count": 7
+      },
+      "weights": {
+        "bottleneck_pricing": 19.0,
+        "capital_allocation": 5.0,
+        "earnings_visibility": 21.0,
+        "eps_fcf_explosion": 24.0,
+        "information_confidence": 7.0,
+        "market_mispricing": 14.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    "L3_BATTERY_EV_GREEN_MOBILITY": {
+      "green_policy": "green_restricted_by_capex_cycle",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -15.2643,
+        "avg_stage2_MFE90": 57.0009,
+        "bad_stage2_count": 9,
+        "counterexample_count": 3,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 4,
+        "good_stage2_count": 13,
+        "positive_case_count": 7,
+        "row_count": 71,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.3043,
+        "stage2_hit_rate_MFE90_ge_20": 0.6522,
+        "unique_case_count": 47,
+        "unique_symbol_count": 16
+      },
+      "weights": {
+        "bottleneck_pricing": 14.0,
+        "capital_allocation": 8.0,
+        "earnings_visibility": 16.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 22.0,
+        "market_mispricing": 10.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    "L4_MATERIALS_SPREAD_RESOURCE": {
+      "green_policy": "green_restricted_by_spread_cycle",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -10.1025,
+        "avg_stage2_MFE90": 61.8725,
+        "bad_stage2_count": 0,
+        "counterexample_count": 2,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 8,
+        "positive_case_count": 2,
+        "row_count": 47,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.125,
+        "stage2_hit_rate_MFE90_ge_20": 1.0,
+        "unique_case_count": 16,
+        "unique_symbol_count": 14
+      },
+      "weights": {
+        "bottleneck_pricing": 18.0,
+        "capital_allocation": 5.0,
+        "earnings_visibility": 12.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 25.0,
+        "market_mispricing": 10.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    "L5_CONSUMER_BRAND_DISTRIBUTION": {
+      "green_policy": "green_allowed_with_channel_and_repeat_demand",
+      "support": {
+        "4c_late_count": 7,
+        "avg_stage2_MAE90": -15.4726,
+        "avg_stage2_MFE90": 78.7895,
+        "bad_stage2_count": 18,
+        "counterexample_count": 12,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 9,
+        "good_stage2_count": 36,
+        "positive_case_count": 17,
+        "row_count": 167,
+        "source_proxy_only_count": 7,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.3276,
+        "stage2_hit_rate_MFE90_ge_20": 0.7241,
+        "unique_case_count": 58,
+        "unique_symbol_count": 24
+      },
+      "weights": {
+        "bottleneck_pricing": 12.0,
+        "capital_allocation": 4.0,
+        "earnings_visibility": 23.0,
+        "eps_fcf_explosion": 22.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 16.0,
+        "valuation_rerating": 13.0
+      }
+    },
+    "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL": {
+      "green_policy": "green_allowed_with_roe_capital_return_and_credit_guard",
+      "support": {
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -10.5101,
+        "avg_stage2_MFE90": 25.5433,
+        "bad_stage2_count": 21,
+        "counterexample_count": 10,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 3,
+        "good_stage2_count": 45,
+        "positive_case_count": 12,
+        "row_count": 161,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.12,
+        "stage2_hit_rate_MFE90_ge_20": 0.6267,
+        "unique_case_count": 69,
+        "unique_symbol_count": 20
+      },
+      "weights": {
+        "bottleneck_pricing": 5.0,
+        "capital_allocation": 15.0,
+        "earnings_visibility": 20.0,
+        "eps_fcf_explosion": 15.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 25.0
+      }
+    },
+    "L7_BIO_HEALTHCARE_MEDICAL": {
+      "green_policy": "green_restricted_until_revenue_or_approval_conversion",
+      "support": {
+        "4c_late_count": 4,
+        "avg_stage2_MAE90": -15.5361,
+        "avg_stage2_MFE90": 73.7105,
+        "bad_stage2_count": 7,
+        "counterexample_count": 10,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 5,
+        "good_stage2_count": 30,
+        "positive_case_count": 12,
+        "row_count": 80,
+        "source_proxy_only_count": 14,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2632,
+        "stage2_hit_rate_MFE90_ge_20": 0.8158,
+        "unique_case_count": 42,
+        "unique_symbol_count": 25
+      },
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 7.0,
+        "earnings_visibility": 22.0,
+        "eps_fcf_explosion": 14.0,
+        "information_confidence": 27.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    "L8_PLATFORM_CONTENT_SW_SECURITY": {
+      "green_policy": "green_allowed_with_monetization_and_margin_leverage",
+      "support": {
+        "4c_late_count": 7,
+        "avg_stage2_MAE90": -11.095,
+        "avg_stage2_MFE90": 74.3327,
+        "bad_stage2_count": 9,
+        "counterexample_count": 21,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 7,
+        "good_stage2_count": 35,
+        "positive_case_count": 20,
+        "row_count": 129,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1818,
+        "stage2_hit_rate_MFE90_ge_20": 0.7955,
+        "unique_case_count": 58,
+        "unique_symbol_count": 38
+      },
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 10.0,
+        "earnings_visibility": 22.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 16.0,
+        "valuation_rerating": 14.0
+      }
+    },
+    "L9_CONSTRUCTION_REALESTATE_HOUSING": {
+      "green_policy": "green_restricted_by_credit_pf_risk",
+      "support": {
+        "4c_late_count": 2,
+        "avg_stage2_MAE90": -6.35,
+        "avg_stage2_MFE90": 20.1,
+        "bad_stage2_count": 0,
+        "counterexample_count": 2,
+        "evidence_url_pending_count": 0,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 1,
+        "positive_case_count": 2,
+        "row_count": 7,
+        "source_proxy_only_count": 0,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.0,
+        "stage2_hit_rate_MFE90_ge_20": 0.5,
+        "unique_case_count": 4,
+        "unique_symbol_count": 4
+      },
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 10.0,
+        "earnings_visibility": 12.0,
+        "eps_fcf_explosion": 18.0,
+        "information_confidence": 30.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 10.0
+      }
+    }
+  },
+  "profile_basis": "v12_stage_transition_price_validation_plus_score_weight_research",
+  "profile_id": "e2r_2_2_archetype_weight_runtime",
+  "profile_status": "default_enabled"
+}

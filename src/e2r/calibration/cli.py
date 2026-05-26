@@ -9,6 +9,7 @@ from typing import Any
 import json
 
 from .aggregate import aggregate_v12_rows, aggregate_validated_rows
+from .archetype_weight_profile import write_archetype_weight_runtime_profile
 from .dedupe import dedupe_trigger_rows, dedupe_v12_trigger_rows
 from .md_discovery import discover_markdown_documents, prompt_spec_documents, v11_result_documents, v12_result_documents
 from .md_parser import ParsedMarkdown, parse_markdown_document
@@ -236,6 +237,10 @@ def run_v12_calibration_pipeline(
         report_directory=report_directory,
         activate=activate_profile,
     )
+    weight_result = write_archetype_weight_runtime_profile(
+        aggregate_metrics_path=Path(data_directory) / "v12_aggregate_metrics.json",
+        report_path=Path(report_directory) / "archetype_weight_runtime_report.md",
+    )
     result["summary"].update(
         {
             "active_default_profile": apply_result["summary"]["profile_id"],
@@ -244,11 +249,17 @@ def run_v12_calibration_pipeline(
             "rolling_calibration_profile_path": apply_result["summary"]["profile_path"],
             "rolling_calibration_applied_patch_count": apply_result["summary"]["applied_patch_count"],
             "rolling_calibration_axis_counts": apply_result["summary"]["applied_axis_counts"],
+            "archetype_weight_profile_path": weight_result["profile_path"],
+            "archetype_weight_report_path": weight_result["report_path"],
+            "archetype_weight_count": weight_result["archetype_count"],
+            "large_sector_weight_count": weight_result["large_sector_count"],
         }
     )
     result["data_outputs"]["rolling_calibration_profile"] = Path(apply_result["summary"]["profile_path"])
+    result["data_outputs"]["archetype_weight_profile"] = Path(weight_result["profile_path"])
     result["reports"]["rolling_calibration_apply_report"] = Path(report_directory) / "rolling_calibration_apply_report.md"
     result["reports"]["rolling_calibration_apply_summary"] = Path(report_directory) / "rolling_calibration_apply_summary.json"
+    result["reports"]["archetype_weight_runtime_report"] = Path(weight_result["report_path"])
     Path(report_directory).mkdir(parents=True, exist_ok=True)
     (Path(report_directory) / "ingest_summary.md").write_text(
         _render_v12_ingest_summary(result["summary"]),
@@ -479,6 +490,10 @@ def _render_v12_ingest_summary(summary: dict[str, Any]) -> str:
         "source_proxy_only_count",
         "active_default_profile_preserved",
         "production_default_scoring_changed",
+        "archetype_weight_profile_path",
+        "archetype_weight_report_path",
+        "archetype_weight_count",
+        "large_sector_weight_count",
     ):
         lines.append(f"- {key}: `{summary.get(key)}`")
     lines.extend(["", "## Rejected Rows By Reason"])

@@ -6,7 +6,7 @@
 
 ```text
 연구 MD를 쌓기만 하는 구조가 아니다.
-run-v12-calibration 한 번으로 검증, 중복제거, 전이분석, 패치생성, E2R 2.2 active profile 반영까지 간다.
+run-v12-calibration 한 번으로 검증, 중복제거, 전이분석, 패치생성, 아키타입별 점수비중 갱신, E2R 2.2 active profile 반영까지 간다.
 ```
 
 현재 기본 active profile은 다음과 같다.
@@ -43,11 +43,15 @@ flowchart TD
     H --> I[v12_promotion_planner.py<br/>apply, hold, block 결정]
     I --> J[data/e2r/calibration/v12/v12_patch_specs.jsonl]
     J --> K[v12_apply.py<br/>safe patch만 runtime profile로 변환]
+    F --> W[archetype_weight_profile.py<br/>아키타입별 점수비중 + 가격경로 support]
+    G --> W
+    W --> X[configs/e2r_archetype_weight_profile_v2_2.json]
     K --> L[configs/e2r_scoring_profile_v2_2.yaml]
     K --> M[configs/e2r_scoring_profile_active.yaml<br/>active_profile: e2r_2_2]
     L --> N[scoring_profile.py<br/>active profile loader]
+    X --> O
     M --> N
-    N --> O[scoring.py<br/>DeterministicScorer]
+    N --> O[scoring.py<br/>DeterministicScorer<br/>archetype weighted total]
     O --> P[staging.py<br/>StageClassifier]
 ```
 
@@ -76,9 +80,10 @@ flowchart TD
 | 후보장부 | `v12_shadow.py` | metrics, transitions | rolling ledger, candidate profile |
 | 패치결정 | `v12_promotion_planner.py` | candidate rows | promotion decisions, patch specs |
 | 반영 | `v12_apply.py` | patch specs | v2.2 profile, active profile |
+| 아키타입 점수비중 | `archetype_weight_profile.py` | v12 aggregate metrics, transition support | `configs/e2r_archetype_weight_profile_v2_2.json` |
 | 런타임 로드 | `scoring_profile.py` | active yaml | active `ScoringProfile` |
-| 점수 | `scoring.py` | `ScoringPayload` | `ScoreSnapshot` |
-| Stage | `staging.py` | `ScoreSnapshot`, RedTeam | `StageSnapshot` |
+| 점수 | `scoring.py` | `ScoringPayload` | 아키타입별 weighted total이 반영된 `ScoreSnapshot` |
+| Stage | `staging.py` | `ScoreSnapshot`, RedTeam | weighted component gate가 반영된 `StageSnapshot` |
 
 ## 데이터 산출물
 
@@ -96,6 +101,7 @@ flowchart TD
 | `data/e2r/calibration/v12/v12_promotion_decisions.jsonl` | apply, hold, block 판정 |
 | `data/e2r/calibration/v12/v12_patch_specs.jsonl` | 실제 적용 가능한 safe patch |
 | `configs/e2r_scoring_profile_v2_2.yaml` | E2R 2.2 rolling runtime profile |
+| `configs/e2r_archetype_weight_profile_v2_2.json` | 아키타입별 runtime 점수비중 profile |
 | `configs/e2r_scoring_profile_active.yaml` | active profile 선택 |
 
 보고서는 다음 위치에 쌓인다.
@@ -104,13 +110,56 @@ flowchart TD
 reports/e2r_calibration/v12/
 ```
 
-가장 먼저 볼 파일은 다음 네 개다.
+가장 먼저 볼 파일은 다음 다섯 개다.
 
 ```text
 ingest_summary.md
 apply_next_patch_plan.md
 rolling_calibration_apply_report.md
 blocked_axes_report.md
+archetype_weight_runtime_report.md
+```
+
+## Archetype Weight Runtime
+
+v12의 핵심 변경은 이제 safe patch만이 아니다. `canonical_archetype_id`별로 점수비중도 달라진다.
+
+```text
+기존:
+  모든 archetype이 EPS/FCF 20, visibility 20, bottleneck 20, mispricing 15, valuation 15, capital 5, info 5를 사용
+
+현재:
+  C20 K-food/K-beauty는 export/channel/repeat demand/OPM/EPS revision 비중을 크게 본다.
+  C03 Defense/Grid는 계약, 정부 고객, 수주잔고, 납품 visibility를 크게 본다.
+  C22 Insurance는 ROE/PBR, reserve/rate cycle, 자본환원을 크게 본다.
+```
+
+런타임 계산 방식은 이렇다.
+
+```text
+1. Feature Engineering이 기존 7개 component score를 만든다.
+2. ScoringPayload에 canonical_archetype_id 또는 large_sector_id가 붙는다.
+3. scoring.py가 configs/e2r_archetype_weight_profile_v2_2.json에서 해당 weight를 찾는다.
+4. 각 component를 "raw score / 기존 max * archetype weight"로 다시 합산한다.
+5. StageClassifier는 weighted component gate를 본다.
+```
+
+쉬운 예시는 다음과 같다.
+
+```text
+C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION
+  계약공시가 없어도 수출 증가, 채널 확장, 반복수요, OPM, EPS revision이 있으면 visibility/total 기여가 커진다.
+
+C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG
+  계약금액, 수주잔고, 정부 고객, 납품 visibility가 약하면 Stage 3 쪽으로 쉽게 못 간다.
+```
+
+중요한 제한:
+
+```text
+과거 가격경로는 weight를 보정하는 근거다.
+실전 runtime 판단에는 as_of_date 당시 보이는 가격과 증거만 쓴다.
+미래 MFE/MAE/peak는 그날 점수에 직접 들어가지 않는다.
 ```
 
 ## Patch Decision
@@ -149,6 +198,7 @@ price-only 테마 급등 row가 많다.
 | `full_4b_overlay_candidate` | full 4B는 비가격 증거가 있어야 인정 |
 | `earlier_thesis_break_watch` | hard 4C 전 단계의 thesis-break watch 강화 |
 | `hard_4c_confirmation` | 비가격 thesis-break 확인 시 4C 판정 강화 |
+| `archetype_weight_runtime` | archetype별 점수비중을 total score와 Stage gate에 반영 |
 
 Stage 3-Green 기준은 v12에서 낮추지 않는다.
 
@@ -170,10 +220,11 @@ sequenceDiagram
     S->>P: get_active_scoring_profile()
     P-->>S: e2r_2_2_rolling_calibrated
     S->>S: scope label 생성<br/>large_sector:L5..., canonical_archetype:C20...
+    S->>S: archetype weight profile 조회<br/>raw component를 weighted component로 재합산
     S->>S: scope가 profile에 있고 비가격 증거가 있으면 bounded bonus/diagnostic flag 적용
-    S-->>C: ScoreSnapshot(total_score, diagnostic_scores)
+    S-->>C: ScoreSnapshot(total_score, diagnostic_scores with weighted components)
     C->>P: active thresholds and guardrails 조회
-    C->>C: price-only guard, Stage2 bridge, 4B/4C guard 확인
+    C->>C: weighted component gate, price-only guard, Stage2 bridge, 4B/4C guard 확인
     C-->>FE: StageSnapshot
 ```
 
@@ -225,7 +276,7 @@ v12 적용은 scope 제한이다.
 ```text
 전역 Stage2 기준을 낮추는 것이 아니다.
 특정 대섹터 또는 archetype에 대해,
-검증된 증거 조건이 맞을 때만 작은 보정이나 guard가 작동한다.
+검증된 증거 조건이 맞을 때만 작은 보정, guard, archetype-specific weight가 작동한다.
 ```
 
 ## 운영 Cadence
@@ -260,6 +311,8 @@ stage_transition_summary_rows: 410
 large_sectors_covered: 10
 canonical_archetypes_covered: 27
 applied_patch_count: 64
+archetype_weight_count: 27
+large_sector_weight_count: 10
 active_profile: e2r_2_2
 rollback_profile: calibrated
 ```
@@ -311,4 +364,3 @@ git diff --check
 PYTHONPATH=src python -m pytest
 PYTHONPATH=src python -m unittest discover -s tests -v
 ```
-
