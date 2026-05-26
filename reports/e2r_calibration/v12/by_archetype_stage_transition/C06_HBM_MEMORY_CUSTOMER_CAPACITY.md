@@ -1,5 +1,8 @@
 # C06_HBM_MEMORY_CUSTOMER_CAPACITY Stage Transition Report
 
+v12 stage transition은 shadow-only 진단입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
+case_fixture나 historical research 성공은 live discovery 증명이 아니며, default scoring did not change.
+
 - stage_transition_summary_rows: `4`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |

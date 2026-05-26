@@ -351,6 +351,8 @@ def _render_candidate_report(title: str, candidates: list[dict[str, Any]]) -> st
         f"# {title}",
         "",
         "이 보고서는 v12 shadow-only 후보입니다. 기본 scoring profile을 바꾸지 않습니다.",
+        "case_fixture나 과거 연구 재현 성공은 live discovery 증명이 아닙니다.",
+        "정식 active promotion은 별도 명시적 작업과 승인 없이는 수행하지 않습니다.",
         "",
         "| scope | sector | archetype | axis | direction | confidence | positive | counterexample | ready | reason |",
         "|---|---|---|---|---|---|---:|---:|---|---|",
@@ -377,6 +379,9 @@ def _render_residual_error_report(rows: list[dict[str, Any]], title: str = "V12 
     lines = [
         f"# {title}",
         "",
+        "v12는 shadow-only 잔차 장부입니다. 이 보고서의 오류/제약은 기본 scoring을 직접 변경하지 않습니다.",
+        "source proxy 또는 evidence URL 한계는 future active promotion 전에 해소해야 할 blocker입니다.",
+        "",
         f"- residual_rows: `{len(rows)}`",
         "",
         "| trigger_id | symbol | archetype | verdict | source_proxy_only | evidence_url_pending |",
@@ -392,6 +397,10 @@ def _render_residual_error_report(rows: list[dict[str, Any]], title: str = "V12 
 def _render_promotion_readiness(profile: dict[str, Any], promotion_plan: dict[str, Any] | None = None) -> str:
     lines = [
         "# V12 Promotion Readiness Report",
+        "",
+        "v12는 shadow-only calibration입니다. case_fixture나 historical research 성공은 live discovery 증명이 아닙니다.",
+        "default scoring did not change. future active promotion requires a separate explicit task.",
+        "source proxy / evidence URL 한계가 있으면 기본 프로파일 승격 blocker로 남깁니다.",
         "",
         "- active_profile_preserved: `true`",
         "- production_default_scoring_changed: `false`",
@@ -435,6 +444,10 @@ def _render_e2r_2_2_report(profile: dict[str, Any]) -> str:
     return "\n".join(
         [
             "# E2R 2.2 Candidate Profile Report",
+            "",
+            "v12는 shadow-only 후보이며, case_fixture/과거 연구 성공은 live discovery 증명이 아닙니다.",
+            "default scoring did not change. active default promotion은 별도 명시적 작업 전까지 금지됩니다.",
+            "evidence URL/source proxy 한계는 blocker로 보고서에 남깁니다.",
             "",
             f"- profile_id: `{profile.get('profile_id')}`",
             f"- profile_status: `{profile.get('profile_status')}`",

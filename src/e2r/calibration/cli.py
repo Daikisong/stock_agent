@@ -415,7 +415,10 @@ def _render_v12_ingest_summary(summary: dict[str, Any]) -> str:
     lines = [
         "# V12 Residual Calibration Ingest Summary",
         "",
-        "v12는 sector/archetype shadow profile 생성용입니다. 기본 active profile은 변경하지 않습니다.",
+        "v12는 sector/archetype shadow-only profile 생성용입니다. 기본 active profile은 변경하지 않습니다.",
+        "case_fixture나 과거 연구 재현 성공은 live discovery 증명이 아닙니다.",
+        "default scoring did not change. future active promotion requires a separate explicit task.",
+        "source proxy 또는 evidence URL 한계는 promotion blocker로 보고서에 남깁니다.",
         "",
     ]
     for key in (
@@ -445,6 +448,8 @@ def _render_v12_ingest_summary(summary: dict[str, Any]) -> str:
 def _render_v12_coverage_matrix(aggregate_rows: list[dict[str, Any]]) -> str:
     lines = [
         "# V12 Coverage Matrix",
+        "",
+        "v12 coverage는 shadow-only 진단입니다. 이 표만으로 active default scoring을 바꾸지 않습니다.",
         "",
         "| group | value | rows | symbols | positives | counterexamples | evidence URL pending | source proxy | good Stage2 | bad Stage2 |",
         "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",

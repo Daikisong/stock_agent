@@ -225,6 +225,28 @@ def build_archetype_evidence_state(rows: list[dict[str, Any]]) -> dict[str, dict
     return state
 
 
+def _build_patch_support_state(rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """Build support case IDs for both archetype and large-sector patch scopes."""
+
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        large_sector = row.get("large_sector_id")
+        archetype = row.get("canonical_archetype_id")
+        if large_sector:
+            grouped[f"large_sector:{large_sector}"].append(row)
+        if archetype:
+            grouped[f"canonical_archetype:{archetype}"].append(row)
+
+    return {
+        scope: {
+            "latest_positive_case_ids": _unique_case_ids(members, _positive_row),
+            "latest_counterexample_case_ids": _unique_case_ids(members, _counterexample_row),
+            "latest_support_case_ids": _unique_case_ids(members, lambda row: True, limit=20),
+        }
+        for scope, members in grouped.items()
+    }
+
+
 def _transition_count_for_scope(
     stage_transition_rows: list[dict[str, Any]],
     *,
@@ -428,10 +450,19 @@ def _rollback_condition(axis: str) -> str:
     return "rollback_if_next_v12_batch_reverses_positive_counterexample_balance"
 
 
-def _patch_spec(decision: dict[str, Any], evidence_state: dict[str, dict[str, Any]]) -> dict[str, Any]:
+def _patch_spec(
+    decision: dict[str, Any],
+    evidence_state: dict[str, dict[str, Any]],
+    patch_support_state: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
     axis = str(decision.get("axis") or "unknown_axis")
     scope_value = decision.get("canonical_archetype_id") or decision.get("large_sector_id") or decision.get("scope")
-    state = evidence_state.get(str(decision.get("canonical_archetype_id") or ""), {})
+    state = patch_support_state.get(_scope_label(decision)) or evidence_state.get(str(decision.get("canonical_archetype_id") or ""), {})
+    support_ids = state.get("latest_positive_case_ids", [])[:8]
+    guard_ids = state.get("latest_counterexample_case_ids", [])[:8]
+    if _is_defensive_axis(axis):
+        support_ids = support_ids or guard_ids or state.get("latest_support_case_ids", [])[:8]
+        guard_ids = guard_ids or state.get("latest_support_case_ids", [])[:8] or support_ids
     patch_id = f"e2r_2_2_{_sanitize_id(scope_value)}_{_sanitize_id(axis)}_v1"
     return {
         "patch_id": patch_id,
@@ -441,8 +472,8 @@ def _patch_spec(decision: dict[str, Any], evidence_state: dict[str, dict[str, An
         "old_value": 0.0 if axis == "stage2_bonus_candidate_delta" else "not_configured",
         "new_value": _patch_new_value(axis, decision),
         "max_delta": 1.0 if axis == "stage2_bonus_candidate_delta" else "guardrail_only",
-        "evidence_support_ids": state.get("latest_positive_case_ids", [])[:8],
-        "counterexample_guard_ids": state.get("latest_counterexample_case_ids", [])[:8],
+        "evidence_support_ids": support_ids,
+        "counterexample_guard_ids": guard_ids,
         "rollback_condition": _rollback_condition(axis),
         "production_default_scoring_changed": False,
         "requires_explicit_future_patch_task": True,
@@ -469,7 +500,12 @@ def build_v12_promotion_plan(
         )
         decisions.append(_decision_for_candidate(candidate, transition_count))
 
-    patch_specs = [_patch_spec(decision, evidence_state) for decision in decisions if decision["decision"] == "apply_next_patch"]
+    patch_support_state = _build_patch_support_state(representative_rows)
+    patch_specs = [
+        _patch_spec(decision, evidence_state, patch_support_state)
+        for decision in decisions
+        if decision["decision"] == "apply_next_patch"
+    ]
     decision_counts = dict(Counter(decision["decision"] for decision in decisions))
     promotion_type_counts = dict(Counter(decision["promotion_type"] for decision in decisions))
 

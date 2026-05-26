@@ -1,5 +1,7 @@
 # V12 Coverage Matrix
 
+v12 coverage는 shadow-only 진단입니다. 이 표만으로 active default scoring을 바꾸지 않습니다.
+
 | group | value | rows | symbols | positives | counterexamples | evidence URL pending | source proxy | good Stage2 | bad Stage2 |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
 | global_v12 | all | 748 | 162 | 90 | 76 | 0 | 21 | 190 | 79 |

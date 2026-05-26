@@ -1,6 +1,8 @@
 # V12 Archetype Shadow Profile
 
 이 보고서는 v12 shadow-only 후보입니다. 기본 scoring profile을 바꾸지 않습니다.
+case_fixture나 과거 연구 재현 성공은 live discovery 증명이 아닙니다.
+정식 active promotion은 별도 명시적 작업과 승인 없이는 수행하지 않습니다.
 
 | scope | sector | archetype | axis | direction | confidence | positive | counterexample | ready | reason |
 |---|---|---|---|---|---|---:|---:|---|---|

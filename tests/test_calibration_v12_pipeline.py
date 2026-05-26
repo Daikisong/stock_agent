@@ -166,7 +166,11 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             self.assertIn("promotion_decision_counts", candidate)
             decisions = (data_dir / "v12_promotion_decisions.jsonl").read_text(encoding="utf-8")
             self.assertIn("apply_next_patch", decisions)
-            self.assertIn("source_proxy", (report_dir / "promotion_readiness_report.md").read_text(encoding="utf-8"))
+            readiness_report = (report_dir / "promotion_readiness_report.md").read_text(encoding="utf-8")
+            self.assertIn("source_proxy", readiness_report)
+            self.assertIn("shadow-only", readiness_report)
+            self.assertIn("live discovery", readiness_report)
+            self.assertIn("default scoring did not change", readiness_report)
 
     def test_v12_promotion_planner_creates_apply_next_patch_for_clean_guardrail(self) -> None:
         rows = [
@@ -238,6 +242,103 @@ class V12CalibrationPipelineTests(unittest.TestCase):
         self.assertEqual(plan["promotion_decisions"][0]["promotion_type"], "Type1_safety_guardrail")
         self.assertEqual(len(plan["patch_specs"]), 1)
         self.assertEqual(plan["patch_specs"][0]["new_value"], "price_only_4b_watch_only_not_full_4b")
+        self.assertEqual(plan["patch_specs"][0]["counterexample_guard_ids"], ["C3", "C2", "C1"])
+
+    def test_large_sector_apply_patch_specs_include_support_case_ids(self) -> None:
+        rows = [
+            {
+                "case_id": "P1",
+                "symbol": "A",
+                "large_sector_id": "L0_TEST",
+                "canonical_archetype_id": "C98_TEST_A",
+                "positive_or_counterexample": "positive",
+                "case_type": "structural_success",
+                "trigger_type": "Stage2",
+                "trigger_date": "2024-01-01",
+            },
+            {
+                "case_id": "N1",
+                "symbol": "B",
+                "large_sector_id": "L0_TEST",
+                "canonical_archetype_id": "C99_TEST_B",
+                "positive_or_counterexample": "counterexample",
+                "case_type": "overheat",
+                "trigger_type": "Stage2",
+                "trigger_date": "2024-02-01",
+            },
+            {
+                "case_id": "N2",
+                "symbol": "C",
+                "large_sector_id": "L0_TEST",
+                "canonical_archetype_id": "C99_TEST_B",
+                "positive_or_counterexample": "counterexample",
+                "case_type": "failed_rerating",
+                "trigger_type": "Stage4C",
+                "trigger_date": "2024-03-01",
+            },
+        ]
+        candidates = [
+            {
+                "axis": "stage2_required_bridge",
+                "scope": "large_sector",
+                "large_sector_id": "L0_TEST",
+                "canonical_archetype_id": None,
+                "row_count": 3,
+                "unique_symbol_count": 3,
+                "positive_case_count": 1,
+                "counterexample_count": 2,
+                "bad_stage2_count": 1,
+                "stage2_high_mae_count": 1,
+                "source_proxy_only_count": 0,
+                "evidence_url_pending_count": 0,
+            }
+        ]
+        plan = build_v12_promotion_plan(rows, [], [], candidates)
+        self.assertEqual(plan["promotion_decisions"][0]["decision"], "apply_next_patch")
+        self.assertEqual(plan["patch_specs"][0]["evidence_support_ids"], ["P1"])
+        self.assertEqual(plan["patch_specs"][0]["counterexample_guard_ids"], ["N2", "N1"])
+
+    def test_defensive_patch_specs_fallback_to_raw_support_case_ids(self) -> None:
+        rows = [
+            {
+                "case_id": "RAW_GUARD_1",
+                "symbol": "A",
+                "large_sector_id": "L0_TEST",
+                "canonical_archetype_id": "C19_TEST",
+                "trigger_type": "Stage4B",
+                "trigger_date": "2024-01-01",
+                "trigger_outcome_label": "4B_too_early",
+            },
+            {
+                "case_id": "RAW_GUARD_2",
+                "symbol": "B",
+                "large_sector_id": "L0_TEST",
+                "canonical_archetype_id": "C19_TEST",
+                "trigger_type": "Stage4C",
+                "trigger_date": "2024-02-01",
+                "trigger_outcome_label": "4C_success",
+            },
+        ]
+        candidates = [
+            {
+                "axis": "local_4b_watch_guard",
+                "scope": "canonical_archetype",
+                "large_sector_id": "L0_TEST",
+                "canonical_archetype_id": "C19_TEST",
+                "row_count": 2,
+                "unique_symbol_count": 2,
+                "counterexample_count": 2,
+                "good_4b_timing_count": 0,
+                "price_only_4b_count": 1,
+                "4c_late_count": 1,
+                "source_proxy_only_count": 0,
+                "evidence_url_pending_count": 0,
+            }
+        ]
+        plan = build_v12_promotion_plan(rows, [], [], candidates)
+        self.assertEqual(plan["promotion_decisions"][0]["decision"], "apply_next_patch")
+        self.assertEqual(plan["patch_specs"][0]["evidence_support_ids"], ["RAW_GUARD_2", "RAW_GUARD_1"])
+        self.assertEqual(plan["patch_specs"][0]["counterexample_guard_ids"], ["RAW_GUARD_2", "RAW_GUARD_1"])
 
     def test_v12_promotion_planner_blocks_positive_patch_with_proxy_data(self) -> None:
         candidates = [
