@@ -1,2 +1,2 @@
-active_profile: calibrated
-rollback_profile: baseline
+active_profile: e2r_2_2
+rollback_profile: calibrated

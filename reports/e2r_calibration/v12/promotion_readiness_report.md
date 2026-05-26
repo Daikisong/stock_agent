@@ -1,11 +1,11 @@
 # V12 Promotion Readiness Report
 
-v12는 shadow-only calibration입니다. case_fixture나 historical research 성공은 live discovery 증명이 아닙니다.
-default scoring did not change. future active promotion requires a separate explicit task.
-source proxy / evidence URL 한계가 있으면 기본 프로파일 승격 blocker로 남깁니다.
+v12는 rolling calibration입니다. case_fixture나 historical research 성공은 live discovery 증명이 아닙니다.
+`run-v12-calibration`은 safe patch만 scope 제한으로 기본 프로파일에 반영합니다.
+source proxy / evidence URL 한계가 있으면 positive patch는 막고 guardrail만 허용합니다.
 
-- active_profile_preserved: `true`
-- production_default_scoring_changed: `false`
+- active_profile_after_apply: `e2r_2_2_rolling_calibrated`
+- production_default_scoring_changed_after_apply: `true`
 - default_promotion_ready: `False`
 - next_patch_ready: `True`
 - apply_next_patch_count: `64`

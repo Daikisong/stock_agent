@@ -1,6 +1,6 @@
 # V12 Coverage Matrix
 
-v12 coverage는 shadow-only 진단입니다. 이 표만으로 active default scoring을 바꾸지 않습니다.
+v12 coverage는 rolling calibration의 근거 장부입니다. active 반영은 검증된 apply_next_patch만 scope 제한으로 적용합니다.
 
 | group | value | rows | symbols | positives | counterexamples | evidence URL pending | source proxy | good Stage2 | bad Stage2 |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|

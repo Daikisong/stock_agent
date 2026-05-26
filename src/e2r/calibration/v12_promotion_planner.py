@@ -1,8 +1,9 @@
 """Rolling v12 promotion-decision planner.
 
-The v12 ingest layer is intentionally shadow-only. This module turns the
-shadow candidates into a ledger of apply/hold/block decisions and small,
-reversible patch specs for a later explicit E2R 2.2 scoring task.
+The v12 ingest layer first builds an audit ledger, then this module turns that
+ledger into apply/hold/block decisions and small, reversible patch specs. The
+`run-v12-calibration` command applies the safe specs to the active E2R 2.2
+rolling profile.
 """
 
 from __future__ import annotations
@@ -476,7 +477,7 @@ def _patch_spec(
         "counterexample_guard_ids": guard_ids,
         "rollback_condition": _rollback_condition(axis),
         "production_default_scoring_changed": False,
-        "requires_explicit_future_patch_task": True,
+        "applied_by_run_v12_calibration": True,
     }
 
 
@@ -521,7 +522,7 @@ def build_v12_promotion_plan(
     return {
         "schema_version": "v12_rolling_promotion_plan_v1",
         "production_default_scoring_changed": False,
-        "active_default_profile_must_remain": "e2r_2_1_stock_web_calibrated",
+        "active_default_profile_after_apply": "e2r_2_2_rolling_calibrated",
         "archetype_evidence_state": evidence_state,
         "promotion_decisions": decisions,
         "patch_specs": patch_specs,
@@ -558,13 +559,13 @@ def render_rolling_calibration_state(plan: dict[str, Any]) -> str:
     lines = [
         "# V12 Rolling Calibration State",
         "",
-        "이 파일은 연구 자료를 바로 기본 scoring에 넣는 파일이 아닙니다.",
-        "각 archetype에 성공/반례/4B/4C 증거가 얼마나 쌓였는지와 다음 작은 패치 후보를 추적합니다.",
+        "이 파일은 연구 자료가 어떤 작은 패치로 바뀌었는지 추적하는 장부입니다.",
+        "`run-v12-calibration`은 이 장부의 apply_next_patch를 E2R 2.2 rolling profile에 반영합니다.",
         "",
         f"- archetype_count: `{len(state)}`",
         f"- decision_counts: `{plan.get('decision_counts')}`",
         f"- patch_spec_count: `{len(plan.get('patch_specs', []))}`",
-        "- production_default_scoring_changed: `false`",
+        "- production_default_scoring_changed: `run-v12-calibration에서 true`",
         "",
         "| archetype | large_sector | positive_symbols | counterexample_symbols | 4B_cases | 4C_cases | next_delta_recommendation |",
         "|---|---|---:|---:|---:|---:|---|",
@@ -588,11 +589,12 @@ def render_apply_next_patch_plan(plan: dict[str, Any]) -> str:
     lines = [
         "# V12 Apply-Next-Patch Plan",
         "",
-        "이 보고서는 다음 명시적 E2R 2.2 패치 작업의 입력입니다. 현재 실행에서는 active profile을 바꾸지 않습니다.",
+        "이 보고서는 이번 v12 batch에서 바로 적용할 수 있는 안전한 미세 패치 목록입니다.",
+        "`run-v12-calibration`은 이 목록을 읽어 `configs/e2r_scoring_profile_v2_2.yaml`에 반영합니다.",
         "",
         f"- apply_next_patch_count: `{len(patches)}`",
-        "- active_default_profile_preserved: `true`",
-        "- production_default_scoring_changed: `false`",
+        "- active_default_profile_after_apply: `e2r_2_2_rolling_calibrated`",
+        "- production_default_scoring_changed_after_apply: `true`",
         "",
         "| patch_id | patch_type | scope | axis | new_value | rollback_condition |",
         "|---|---|---|---|---|---|",

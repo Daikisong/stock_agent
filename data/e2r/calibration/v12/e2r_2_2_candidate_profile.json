@@ -1,9 +1,9 @@
 {
-  "profile_id": "e2r_2_2_sector_archetype_candidate",
-  "profile_status": "candidate_not_active",
+  "profile_id": "e2r_2_2_rolling_candidate",
+  "profile_status": "ready_for_run_v12_calibration_apply",
   "previous_default_profile": "e2r_2_1_stock_web_calibrated",
   "production_default_scoring_changed": false,
-  "active_default_profile_must_remain": "e2r_2_1_stock_web_calibrated",
+  "active_default_profile_after_apply": "e2r_2_2_rolling_calibrated",
   "sector_shadow_candidate_count": 24,
   "archetype_shadow_candidate_count": 57,
   "stage_transition_summary_rows": 410,

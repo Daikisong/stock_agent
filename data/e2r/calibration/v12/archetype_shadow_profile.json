@@ -1,6 +1,6 @@
 {
-  "profile_id": "v12_archetype_shadow_profile",
-  "profile_status": "shadow_only_not_active",
+  "profile_id": "v12_archetype_rolling_profile_ledger",
+  "profile_status": "rolling_calibration_ledger",
   "production_default_scoring_changed": false,
   "candidates": [
     {

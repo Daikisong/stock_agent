@@ -1,7 +1,7 @@
 # Evidence URL Pending Report
 
-v12는 shadow-only 잔차 장부입니다. 이 보고서의 오류/제약은 기본 scoring을 직접 변경하지 않습니다.
-source proxy 또는 evidence URL 한계는 future active promotion 전에 해소해야 할 blocker입니다.
+v12 잔차 장부입니다. 검증 통과 항목은 rolling calibration에 들어가고, 제약은 guardrail로 남깁니다.
+source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제한을 강화합니다.
 
 - residual_rows: `0`
 

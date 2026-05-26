@@ -1,8 +1,8 @@
 # V12 Residual Calibration Ingest Summary
 
-v12는 sector/archetype shadow-only profile 생성용입니다. 기본 active profile은 변경하지 않습니다.
+v12는 rolling calibration 입력입니다. `run-v12-calibration`은 검증된 apply_next_patch를 기본 profile에 반영합니다.
+`run-v12-full`은 진단/감사용 ingest이며 active profile을 바꾸지 않습니다.
 case_fixture나 과거 연구 재현 성공은 live discovery 증명이 아닙니다.
-default scoring did not change. future active promotion requires a separate explicit task.
 source proxy 또는 evidence URL 한계는 promotion blocker로 보고서에 남깁니다.
 
 - md_input_root: `docs/round`
@@ -18,8 +18,8 @@ source proxy 또는 evidence URL 한계는 promotion blocker로 보고서에 남
 - stage_transition_summary_rows: `410`
 - evidence_url_pending_count: `0`
 - source_proxy_only_count: `21`
-- active_default_profile_preserved: `True`
-- production_default_scoring_changed: `False`
+- active_default_profile_preserved: `False`
+- production_default_scoring_changed: `True`
 
 ## Rejected Rows By Reason
 - insufficient_forward_window: 14

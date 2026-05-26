@@ -1,10 +1,11 @@
 # V12 Apply-Next-Patch Plan
 
-이 보고서는 다음 명시적 E2R 2.2 패치 작업의 입력입니다. 현재 실행에서는 active profile을 바꾸지 않습니다.
+이 보고서는 이번 v12 batch에서 바로 적용할 수 있는 안전한 미세 패치 목록입니다.
+`run-v12-calibration`은 이 목록을 읽어 `configs/e2r_scoring_profile_v2_2.yaml`에 반영합니다.
 
 - apply_next_patch_count: `64`
-- active_default_profile_preserved: `true`
-- production_default_scoring_changed: `false`
+- active_default_profile_after_apply: `e2r_2_2_rolling_calibrated`
+- production_default_scoring_changed_after_apply: `true`
 
 | patch_id | patch_type | scope | axis | new_value | rollback_condition |
 |---|---|---|---|---|---|

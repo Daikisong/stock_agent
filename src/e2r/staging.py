@@ -127,10 +127,20 @@ class StageClassifier:
         ) >= 80.0:
             reasons.append("calibrated hard 4C thesis-break guard was triggered")
             return Stage.STAGE_4C, reasons
+        if (
+            profile.guardrail_enabled("rolling_calibration_enabled")
+            and _score_diagnostic(score, "v12_scope_hard_4c_confirmation_match") > 0
+            and _has_non_price_thesis_break_confirmation(score)
+        ):
+            reasons.append("rolling 4C confirmation guard found non-price thesis-break evidence")
+            return Stage.STAGE_4C, reasons
 
         if inputs.previous_stage in ACTIVE_RERATING_STAGES and red_team.soft_4b_score >= 60.0:
-            reasons.append(f"Soft 4B {red_team.soft_4b_status.value} score reached {red_team.soft_4b_score:.1f}")
-            return Stage.STAGE_4B, reasons
+            if not _full_4b_allowed_by_rolling_guard(score, red_team):
+                reasons.append("rolling 4B guard kept price-only or early 4B evidence as watch-only")
+            else:
+                reasons.append(f"Soft 4B {red_team.soft_4b_status.value} score reached {red_team.soft_4b_score:.1f}")
+                return Stage.STAGE_4B, reasons
 
         if (
             inputs.previous_stage in ACTIVE_RERATING_STAGES
@@ -178,15 +188,27 @@ class StageClassifier:
     @staticmethod
     def _positive_stage_blocked_by_price_only(score: ScoreSnapshot) -> bool:
         profile = get_active_scoring_profile()
+        threshold = 70.0
+        if (
+            profile.guardrail_enabled("rolling_calibration_enabled")
+            and _score_diagnostic(score, "v12_scope_local_4b_watch_guard_match") > 0
+        ):
+            threshold = 60.0
         return (
             profile.guardrail_enabled("price_only_blowoff_blocks_positive_stage")
-            and _score_diagnostic(score, "price_only_blowoff_score") >= 70.0
+            and _score_diagnostic(score, "price_only_blowoff_score") >= threshold
         )
 
     @staticmethod
     def _is_stage_2(score: ScoreSnapshot, red_team: RedTeamAssessment) -> bool:
         profile = get_active_scoring_profile()
         if StageClassifier._positive_stage_blocked_by_price_only(score):
+            return False
+        if (
+            profile.guardrail_enabled("rolling_calibration_enabled")
+            and _score_diagnostic(score, "v12_scope_stage2_required_bridge_match") > 0
+            and not _has_non_price_stage2_bridge(score)
+        ):
             return False
         return (
             score.total_score >= profile.threshold("stage2_total_min", 65.0)
@@ -260,3 +282,50 @@ class StageClassifier:
             or one_off_shortage_risk >= 80.0
             or _score_diagnostic(score, "theme_overheat_score") >= 70.0
         )
+
+
+def _has_non_price_stage2_bridge(score: ScoreSnapshot) -> bool:
+    if _score_diagnostic(score, "calibration_stage2_actionable_evidence") > 0:
+        return True
+    if _score_diagnostic(score, "credible_order_or_policy_evidence") > 0:
+        return True
+    non_price_families = (
+        "evidence_family_financial_actual",
+        "evidence_family_disclosure",
+        "evidence_family_research_report",
+        "evidence_family_consensus",
+        "evidence_family_consensus_revision",
+        "evidence_family_news",
+    )
+    non_price_count = sum(1 for key in non_price_families if _score_diagnostic(score, key) > 0)
+    return non_price_count >= 2 or _score_diagnostic(score, "cross_evidence_family_count") >= 3.0
+
+
+def _has_non_price_thesis_break_confirmation(score: ScoreSnapshot) -> bool:
+    if _score_diagnostic(score, "hard_4c_thesis_break_score") < 75.0:
+        return False
+    return any(
+        _score_diagnostic(score, key) > 0
+        for key in (
+            "thesis_break_non_price_evidence",
+            "evidence_family_disclosure",
+            "evidence_family_research_report",
+            "evidence_family_financial_actual",
+            "evidence_family_news",
+        )
+    )
+
+
+def _full_4b_allowed_by_rolling_guard(score: ScoreSnapshot, red_team: RedTeamAssessment) -> bool:
+    profile = get_active_scoring_profile()
+    if not profile.guardrail_enabled("rolling_calibration_enabled"):
+        return True
+    if _score_diagnostic(score, "v12_scope_local_4b_watch_guard_match") > 0 and _score_diagnostic(
+        score, "price_only_blowoff_score"
+    ) >= 60.0:
+        return False
+    if _score_diagnostic(score, "v12_scope_full_4b_overlay_match") <= 0:
+        return True
+    if profile.guardrail_enabled("full_4b_requires_non_price_evidence"):
+        return _has_non_price_stage2_bridge(score) or red_team.thesis_break_score >= 40.0
+    return True

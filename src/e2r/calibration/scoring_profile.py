@@ -12,6 +12,7 @@ import json
 CONFIG_DIR = Path("configs")
 BASELINE_PROFILE_PATH = CONFIG_DIR / "e2r_scoring_profile_baseline.yaml"
 CALIBRATED_PROFILE_PATH = CONFIG_DIR / "e2r_scoring_profile_calibrated.yaml"
+V2_2_PROFILE_PATH = CONFIG_DIR / "e2r_scoring_profile_v2_2.yaml"
 ACTIVE_PROFILE_PATH = CONFIG_DIR / "e2r_scoring_profile_active.yaml"
 
 
@@ -36,6 +37,23 @@ class ScoringProfile:
         if isinstance(value, bool):
             return value
         return str(value).strip().lower() in {"true", "yes", "1", "enabled"}
+
+    def guardrail_text(self, key: str, default: str = "") -> str:
+        value = self.guardrails.get(key, default)
+        return str(value).strip()
+
+    def scope_list(self, key: str) -> tuple[str, ...]:
+        value = self.guardrails.get(key, "")
+        if isinstance(value, bool) or value is None:
+            return ()
+        parts = [part.strip() for part in str(value).replace(",", "|").split("|")]
+        return tuple(part for part in parts if part)
+
+    def scope_enabled(self, key: str, scope_labels: tuple[str, ...] | list[str] | set[str]) -> bool:
+        configured = set(self.scope_list(key))
+        if not configured:
+            return False
+        return any(label in configured for label in scope_labels)
 
 
 def _parse_scalar(value: str) -> Any:
@@ -90,13 +108,19 @@ def active_profile_path() -> Path:
     override = os.environ.get("E2R_SCORING_PROFILE", "").strip().lower()
     if override == "baseline":
         return BASELINE_PROFILE_PATH
-    if override == "calibrated":
+    if override in {"calibrated", "e2r_2_1", "v2_1"}:
         return CALIBRATED_PROFILE_PATH
+    if override in {"e2r_2_2", "v2_2", "rolling", "rolling_calibration"}:
+        return V2_2_PROFILE_PATH if V2_2_PROFILE_PATH.exists() else CALIBRATED_PROFILE_PATH
     if ACTIVE_PROFILE_PATH.exists():
         payload = _load_simple_yaml(ACTIVE_PROFILE_PATH)
         active = str(payload.get("active_profile", "calibrated")).strip().lower()
         if active == "baseline":
             return BASELINE_PROFILE_PATH
+        if active in {"calibrated", "e2r_2_1", "v2_1"}:
+            return CALIBRATED_PROFILE_PATH
+        if active in {"e2r_2_2", "v2_2", "rolling", "rolling_calibration"}:
+            return V2_2_PROFILE_PATH if V2_2_PROFILE_PATH.exists() else CALIBRATED_PROFILE_PATH
     return CALIBRATED_PROFILE_PATH if CALIBRATED_PROFILE_PATH.exists() else BASELINE_PROFILE_PATH
 
 

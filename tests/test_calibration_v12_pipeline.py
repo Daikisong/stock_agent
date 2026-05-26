@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+from datetime import date
+import os
 from pathlib import Path
 import tempfile
 import unittest
 
-from e2r.calibration.cli import build_parser, run_v12_full_pipeline
+from e2r.calibration.cli import build_parser, run_v12_calibration_pipeline, run_v12_full_pipeline
 from e2r.calibration.dedupe import dedupe_v12_trigger_rows
 from e2r.calibration.md_discovery import discover_markdown_documents, v12_result_documents
 from e2r.calibration.md_parser import parse_markdown_document
@@ -16,7 +18,12 @@ from e2r.calibration.scoring_profile import (
 )
 from e2r.calibration.transition import build_stage_transition_summary
 from e2r.calibration.validation import normalise_trigger_type, validate_v12_trigger_rows
+from e2r.calibration.v12_apply import build_v12_rolling_profile_payload
 from e2r.calibration.v12_promotion_planner import build_v12_promotion_plan
+from e2r.models import Stage
+from e2r.red_team import RedTeamAssessment
+from e2r.scoring import DeterministicScorer, ScoringPayload
+from e2r.staging import StageClassificationInput, StageClassifier
 
 
 def _v12_md() -> str:
@@ -131,7 +138,7 @@ class V12CalibrationPipelineTests(unittest.TestCase):
         self.assertEqual(summary[0]["stage4b_to_90d_low_return_pct"], -12)
         self.assertEqual(summary[0]["transition_verdict"], "4b_good_peak_capture")
 
-    def test_v12_full_run_writes_shadow_outputs_and_preserves_active_profile(self) -> None:
+    def test_v12_full_run_writes_rolling_ledger_outputs_and_preserves_active_profile(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp) / "md"
             data_dir = Path(tmp) / "data"
@@ -159,8 +166,8 @@ class V12CalibrationPipelineTests(unittest.TestCase):
                 report_dir / "promotion_readiness_report.md",
             ):
                 self.assertTrue(path.exists(), path)
-            self.assertEqual(load_sector_shadow_profile(data_dir / "sector_shadow_profile.json")["profile_status"], "shadow_only_not_active")
-            self.assertEqual(load_archetype_shadow_profile(data_dir / "archetype_shadow_profile.json")["profile_status"], "shadow_only_not_active")
+            self.assertEqual(load_sector_shadow_profile(data_dir / "sector_shadow_profile.json")["profile_status"], "rolling_calibration_ledger")
+            self.assertEqual(load_archetype_shadow_profile(data_dir / "archetype_shadow_profile.json")["profile_status"], "rolling_calibration_ledger")
             candidate = load_e2r_2_2_candidate_profile(data_dir / "e2r_2_2_candidate_profile.json")
             self.assertFalse(candidate["production_default_scoring_changed"])
             self.assertIn("promotion_decision_counts", candidate)
@@ -168,9 +175,9 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             self.assertIn("apply_next_patch", decisions)
             readiness_report = (report_dir / "promotion_readiness_report.md").read_text(encoding="utf-8")
             self.assertIn("source_proxy", readiness_report)
-            self.assertIn("shadow-only", readiness_report)
+            self.assertIn("rolling calibration", readiness_report)
             self.assertIn("live discovery", readiness_report)
-            self.assertIn("default scoring did not change", readiness_report)
+            self.assertIn("safe patch", readiness_report)
 
     def test_v12_promotion_planner_creates_apply_next_patch_for_clean_guardrail(self) -> None:
         rows = [
@@ -428,20 +435,164 @@ class V12CalibrationPipelineTests(unittest.TestCase):
         self.assertIn("promotion_decision_counts", profile)
         self.assertEqual(profile["apply_next_patch_count"], 3)
 
+    def test_v12_rolling_profile_payload_turns_patch_specs_into_scoped_guards(self) -> None:
+        patch_specs = [
+            {
+                "axis": "stage2_bonus_candidate_delta",
+                "scope": "canonical_archetype:C22_INSURANCE_RATE_CYCLE_RESERVE",
+                "new_value": 1.0,
+            },
+            {
+                "axis": "stage2_required_bridge",
+                "scope": "large_sector:L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+                "new_value": "require_non_price_bridge",
+            },
+            {
+                "axis": "local_4b_watch_guard",
+                "scope": "canonical_archetype:C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+                "new_value": "price_only_4b_watch_only_not_full_4b",
+            },
+            {
+                "axis": "stage2_bonus_candidate_delta",
+                "scope": "canonical_archetype:C_BAD",
+                "new_value": 99,
+            },
+        ]
+        profile = build_v12_rolling_profile_payload(patch_specs=patch_specs)
+        self.assertEqual(profile["profile_id"], "e2r_2_2_rolling_calibrated")
+        self.assertEqual(profile["adjustments"]["v12_stage2_archetype_bonus"], 1.0)
+        self.assertIn("canonical_archetype:C22_INSURANCE_RATE_CYCLE_RESERVE", profile["guardrails"]["v12_stage2_bonus_scopes"])
+        self.assertNotIn("C_BAD", profile["guardrails"].get("v12_stage2_bonus_scopes", ""))
+        self.assertEqual(profile["thresholds"]["stage3_green_total_min"], 87.0)
+        self.assertTrue(profile["guardrails"]["stage3_green_not_loosened_by_v12"])
+
+    def test_v12_scoped_stage2_bonus_applies_only_with_non_price_bridge(self) -> None:
+        old = os.environ.get("E2R_SCORING_PROFILE")
+        components = {
+            "eps_fcf_explosion": 12,
+            "earnings_visibility": 13,
+            "bottleneck_pricing": 11,
+            "market_mispricing": 12,
+            "valuation_rerating": 8,
+            "capital_allocation": 3,
+            "information_confidence": 4,
+        }
+        try:
+            os.environ["E2R_SCORING_PROFILE"] = "calibrated"
+            baseline = DeterministicScorer().score(
+                ScoringPayload(
+                    symbol="000810",
+                    as_of_date=date(2024, 2, 23),
+                    components=components,
+                    diagnostic_scores={"credible_order_or_policy_evidence": 1},
+                    canonical_archetype_id="C22_INSURANCE_RATE_CYCLE_RESERVE",
+                )
+            )
+            os.environ["E2R_SCORING_PROFILE"] = "e2r_2_2"
+            rolling = DeterministicScorer().score(
+                ScoringPayload(
+                    symbol="000810",
+                    as_of_date=date(2024, 2, 23),
+                    components=components,
+                    diagnostic_scores={"credible_order_or_policy_evidence": 1},
+                    canonical_archetype_id="C22_INSURANCE_RATE_CYCLE_RESERVE",
+                )
+            )
+            unscoped = DeterministicScorer().score(
+                ScoringPayload(
+                    symbol="000810",
+                    as_of_date=date(2024, 2, 23),
+                    components=components,
+                    diagnostic_scores={"credible_order_or_policy_evidence": 1},
+                    canonical_archetype_id="C00_UNKNOWN",
+                )
+            )
+        finally:
+            if old is None:
+                os.environ.pop("E2R_SCORING_PROFILE", None)
+            else:
+                os.environ["E2R_SCORING_PROFILE"] = old
+        self.assertEqual(round(rolling.total_score - baseline.total_score, 4), 1.0)
+        self.assertEqual(unscoped.total_score, baseline.total_score)
+        self.assertEqual(rolling.diagnostic_scores["v12_stage2_scope_bonus_applied"], 1.0)
+
+    def test_v12_required_bridge_blocks_scoped_price_only_stage2(self) -> None:
+        old = os.environ.get("E2R_SCORING_PROFILE")
+        try:
+            os.environ["E2R_SCORING_PROFILE"] = "e2r_2_2"
+            score = DeterministicScorer().score(
+                ScoringPayload(
+                    symbol="POLICY",
+                    as_of_date=date(2024, 2, 23),
+                    components={
+                        "eps_fcf_explosion": 14,
+                        "earnings_visibility": 15,
+                        "bottleneck_pricing": 13,
+                        "market_mispricing": 12,
+                        "valuation_rerating": 9,
+                        "capital_allocation": 3,
+                        "information_confidence": 4,
+                    },
+                    diagnostic_scores={"evidence_family_price": 1, "cross_evidence_family_count": 1},
+                    large_sector_id="L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+                )
+            )
+            stage = StageClassifier().classify(
+                StageClassificationInput(score=score, red_team=RedTeamAssessment.empty("POLICY", date(2024, 2, 23)))
+            )
+        finally:
+            if old is None:
+                os.environ.pop("E2R_SCORING_PROFILE", None)
+            else:
+                os.environ["E2R_SCORING_PROFILE"] = old
+        self.assertGreaterEqual(score.total_score, 65)
+        self.assertEqual(score.diagnostic_scores["v12_scope_stage2_required_bridge_match"], 1.0)
+        self.assertNotEqual(stage.stage, Stage.STAGE_2)
+
+    def test_v12_calibration_pipeline_can_apply_profile_when_requested(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "md"
+            data_dir = Path(tmp) / "data"
+            report_dir = Path(tmp) / "reports"
+            active_path = Path("configs/e2r_scoring_profile_active.yaml")
+            profile_path = Path("configs/e2r_scoring_profile_v2_2.yaml")
+            active_before = active_path.read_text(encoding="utf-8")
+            profile_before = profile_path.read_text(encoding="utf-8") if profile_path.exists() else None
+            root.mkdir()
+            self._write_fixture(root)
+            try:
+                result = run_v12_calibration_pipeline(
+                    md_input_root=root,
+                    data_directory=data_dir,
+                    report_directory=report_dir,
+                    activate_profile=True,
+                )
+                self.assertTrue(result["summary"]["production_default_scoring_changed"])
+                self.assertTrue((report_dir / "rolling_calibration_apply_report.md").exists())
+                self.assertEqual(
+                    Path("configs/e2r_scoring_profile_active.yaml").read_text(encoding="utf-8"),
+                    "active_profile: e2r_2_2\nrollback_profile: calibrated\n",
+                )
+            finally:
+                active_path.write_text(active_before, encoding="utf-8")
+                if profile_before is None:
+                    profile_path.unlink(missing_ok=True)
+                else:
+                    profile_path.write_text(profile_before, encoding="utf-8")
+
     def test_v12_cli_argument_parsing(self) -> None:
         args = build_parser().parse_args(
             [
-                "run-v12-full",
+                "run-v12-calibration",
                 "--md-input-root",
                 "docs/example",
                 "--data-directory",
                 "data/e2r/calibration/v12",
                 "--report-directory",
                 "reports/e2r_calibration/v12",
-                "--preserve-global-profile",
             ]
         )
-        self.assertEqual(args.command, "run-v12-full")
+        self.assertEqual(args.command, "run-v12-calibration")
         self.assertEqual(args.md_input_root, "docs/example")
 
 

@@ -14,6 +14,7 @@ from .md_discovery import discover_markdown_documents, prompt_spec_documents, v1
 from .md_parser import ParsedMarkdown, parse_markdown_document
 from .promotion import PromotionResult, promote_calibrated_profile
 from .transition import build_stage_transition_summary, write_stage_transition_outputs
+from .v12_apply import write_v12_rolling_profile
 from .v12_shadow import write_v12_shadow_outputs
 from .validation import validate_trigger_rows, validate_v12_trigger_rows
 
@@ -213,6 +214,47 @@ def run_v12_full_pipeline(
         "data_outputs": {**output_paths, **transition_paths, **shadow_paths},
         "reports": {**report_paths, **transition_paths, **shadow_paths},
     }
+
+
+def run_v12_calibration_pipeline(
+    *,
+    md_input_root: str | Path = "docs/round",
+    data_directory: str | Path = V12_DATA_DIR,
+    report_directory: str | Path = V12_REPORT_DIR,
+    activate_profile: bool = True,
+) -> dict[str, Any]:
+    """One-command v12 flow: ingest, validate, derive patches, and apply safe runtime profile."""
+
+    result = run_v12_full_pipeline(
+        md_input_root=md_input_root,
+        data_directory=data_directory,
+        report_directory=report_directory,
+        preserve_global_profile=False,
+    )
+    apply_result = write_v12_rolling_profile(
+        patch_specs_path=Path(data_directory) / "v12_patch_specs.jsonl",
+        report_directory=report_directory,
+        activate=activate_profile,
+    )
+    result["summary"].update(
+        {
+            "active_default_profile": apply_result["summary"]["profile_id"],
+            "active_default_profile_preserved": not activate_profile,
+            "production_default_scoring_changed": activate_profile,
+            "rolling_calibration_profile_path": apply_result["summary"]["profile_path"],
+            "rolling_calibration_applied_patch_count": apply_result["summary"]["applied_patch_count"],
+            "rolling_calibration_axis_counts": apply_result["summary"]["applied_axis_counts"],
+        }
+    )
+    result["data_outputs"]["rolling_calibration_profile"] = Path(apply_result["summary"]["profile_path"])
+    result["reports"]["rolling_calibration_apply_report"] = Path(report_directory) / "rolling_calibration_apply_report.md"
+    result["reports"]["rolling_calibration_apply_summary"] = Path(report_directory) / "rolling_calibration_apply_summary.json"
+    Path(report_directory).mkdir(parents=True, exist_ok=True)
+    (Path(report_directory) / "ingest_summary.md").write_text(
+        _render_v12_ingest_summary(result["summary"]),
+        encoding="utf-8",
+    )
+    return result
 
 
 def _attach_case_context(all_rows: dict[str, list[dict[str, Any]]]) -> None:
@@ -415,9 +457,9 @@ def _render_v12_ingest_summary(summary: dict[str, Any]) -> str:
     lines = [
         "# V12 Residual Calibration Ingest Summary",
         "",
-        "v12는 sector/archetype shadow-only profile 생성용입니다. 기본 active profile은 변경하지 않습니다.",
+        "v12는 rolling calibration 입력입니다. `run-v12-calibration`은 검증된 apply_next_patch를 기본 profile에 반영합니다.",
+        "`run-v12-full`은 진단/감사용 ingest이며 active profile을 바꾸지 않습니다.",
         "case_fixture나 과거 연구 재현 성공은 live discovery 증명이 아닙니다.",
-        "default scoring did not change. future active promotion requires a separate explicit task.",
         "source proxy 또는 evidence URL 한계는 promotion blocker로 보고서에 남깁니다.",
         "",
     ]
@@ -449,7 +491,7 @@ def _render_v12_coverage_matrix(aggregate_rows: list[dict[str, Any]]) -> str:
     lines = [
         "# V12 Coverage Matrix",
         "",
-        "v12 coverage는 shadow-only 진단입니다. 이 표만으로 active default scoring을 바꾸지 않습니다.",
+        "v12 coverage는 rolling calibration의 근거 장부입니다. active 반영은 검증된 apply_next_patch만 scope 제한으로 적용합니다.",
         "",
         "| group | value | rows | symbols | positives | counterexamples | evidence URL pending | source proxy | good Stage2 | bad Stage2 |",
         "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
@@ -639,7 +681,7 @@ def _render_round_report(round_value: str, rows: list[dict[str, Any]], promotion
     lines.extend(["", "## Round-Specific Accepted Axes"])
     for axis in promotion.applied_axes:
         lines.append(f"- {axis['axis']}: cumulative axis applied; this round may be part of support if matching rows exist.")
-    lines.extend(["", "## Rejected Axes", "- See rejected_promotion_candidates.md for shadow-only axes and missing evidence."])
+    lines.extend(["", "## Rejected Axes", "- See rejected_promotion_candidates.md for held/rejected axes and missing evidence."])
     return "\n".join(lines) + "\n"
 
 
@@ -664,7 +706,16 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--data-directory", default=str(DATA_DIR))
     parser.add_argument("--report-directory", default=str(REPORT_DIR))
     subparsers = parser.add_subparsers(dest="command")
-    v12 = subparsers.add_parser("run-v12-full", help="Ingest v12 residual MDs and build shadow profiles without default promotion.")
+    v12_apply = subparsers.add_parser(
+        "run-v12-calibration",
+        help="Ingest v12 residual MDs, build stage transitions, and apply safe rolling calibration patches.",
+    )
+    v12_apply.add_argument("--md-input-root", default="docs/round")
+    v12_apply.add_argument("--data-directory", default=str(V12_DATA_DIR))
+    v12_apply.add_argument("--report-directory", default=str(V12_REPORT_DIR))
+    v12_apply.add_argument("--no-activate-profile", action="store_true", default=False)
+
+    v12 = subparsers.add_parser("run-v12-full", help="Diagnostic v12 ingest and patch-ledger generation.")
     v12.add_argument("--md-input-root", default="docs/round")
     v12.add_argument("--data-directory", default=str(V12_DATA_DIR))
     v12.add_argument("--report-directory", default=str(V12_REPORT_DIR))
@@ -680,7 +731,14 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
-    if args.command in {"run-v12-full", "ingest-v12", "build-stage-transitions", "build-v12-shadow", "report-v12-coverage"}:
+    if args.command == "run-v12-calibration":
+        result = run_v12_calibration_pipeline(
+            md_input_root=args.md_input_root,
+            data_directory=args.data_directory,
+            report_directory=args.report_directory,
+            activate_profile=not args.no_activate_profile,
+        )
+    elif args.command in {"run-v12-full", "ingest-v12", "build-stage-transitions", "build-v12-shadow", "report-v12-coverage"}:
         result = run_v12_full_pipeline(
             md_input_root=args.md_input_root,
             data_directory=args.data_directory,

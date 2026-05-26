@@ -225,13 +225,15 @@ profile_comparison,baseline_current_proxy,1,10,-5
                 payload = json.loads(line)
                 self.assertNotIn(float("inf"), payload.values())
 
-    def test_active_profile_is_calibrated_and_baseline_override_is_loadable(self) -> None:
+    def test_active_profile_is_v2_2_and_rollbacks_are_loadable(self) -> None:
         old = os.environ.get("E2R_SCORING_PROFILE")
         try:
             os.environ.pop("E2R_SCORING_PROFILE", None)
-            self.assertEqual(get_active_scoring_profile().profile_id, "e2r_2_1_stock_web_calibrated")
+            self.assertEqual(get_active_scoring_profile().profile_id, "e2r_2_2_rolling_calibrated")
             os.environ["E2R_SCORING_PROFILE"] = "baseline"
             self.assertEqual(get_active_scoring_profile().profile_id, "e2r_2_0_baseline")
+            os.environ["E2R_SCORING_PROFILE"] = "calibrated"
+            self.assertEqual(get_active_scoring_profile().profile_id, "e2r_2_1_stock_web_calibrated")
         finally:
             if old is None:
                 os.environ.pop("E2R_SCORING_PROFILE", None)

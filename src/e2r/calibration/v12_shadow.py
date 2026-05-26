@@ -189,23 +189,23 @@ def build_v12_shadow_payloads(
         if row.get("current_profile_error") or row.get("source_proxy_only") or row.get("evidence_url_pending")
     ]
     sector_profile = {
-        "profile_id": "v12_sector_shadow_profile",
-        "profile_status": "shadow_only_not_active",
+        "profile_id": "v12_sector_rolling_profile_ledger",
+        "profile_status": "rolling_calibration_ledger",
         "production_default_scoring_changed": False,
         "candidates": sector_candidates,
     }
     archetype_profile = {
-        "profile_id": "v12_archetype_shadow_profile",
-        "profile_status": "shadow_only_not_active",
+        "profile_id": "v12_archetype_rolling_profile_ledger",
+        "profile_status": "rolling_calibration_ledger",
         "production_default_scoring_changed": False,
         "candidates": archetype_candidates,
     }
     e2r_2_2_candidate = {
-        "profile_id": "e2r_2_2_sector_archetype_candidate",
-        "profile_status": "candidate_not_active",
+        "profile_id": "e2r_2_2_rolling_candidate",
+        "profile_status": "ready_for_run_v12_calibration_apply",
         "previous_default_profile": "e2r_2_1_stock_web_calibrated",
         "production_default_scoring_changed": False,
-        "active_default_profile_must_remain": "e2r_2_1_stock_web_calibrated",
+        "active_default_profile_after_apply": "e2r_2_2_rolling_calibrated",
         "sector_shadow_candidate_count": len(sector_candidates),
         "archetype_shadow_candidate_count": len(archetype_candidates),
         "stage_transition_summary_rows": len(stage_transition_rows),
@@ -350,9 +350,9 @@ def _render_candidate_report(title: str, candidates: list[dict[str, Any]]) -> st
     lines = [
         f"# {title}",
         "",
-        "이 보고서는 v12 shadow-only 후보입니다. 기본 scoring profile을 바꾸지 않습니다.",
+        "이 보고서는 v12 rolling calibration 후보 장부입니다.",
+        "`run-v12-calibration`은 여기서 검증된 apply_next_patch를 기본 scoring profile에 반영합니다.",
         "case_fixture나 과거 연구 재현 성공은 live discovery 증명이 아닙니다.",
-        "정식 active promotion은 별도 명시적 작업과 승인 없이는 수행하지 않습니다.",
         "",
         "| scope | sector | archetype | axis | direction | confidence | positive | counterexample | ready | reason |",
         "|---|---|---|---|---|---|---:|---:|---|---|",
@@ -379,8 +379,8 @@ def _render_residual_error_report(rows: list[dict[str, Any]], title: str = "V12 
     lines = [
         f"# {title}",
         "",
-        "v12는 shadow-only 잔차 장부입니다. 이 보고서의 오류/제약은 기본 scoring을 직접 변경하지 않습니다.",
-        "source proxy 또는 evidence URL 한계는 future active promotion 전에 해소해야 할 blocker입니다.",
+        "v12 잔차 장부입니다. 검증 통과 항목은 rolling calibration에 들어가고, 제약은 guardrail로 남깁니다.",
+        "source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제한을 강화합니다.",
         "",
         f"- residual_rows: `{len(rows)}`",
         "",
@@ -398,12 +398,12 @@ def _render_promotion_readiness(profile: dict[str, Any], promotion_plan: dict[st
     lines = [
         "# V12 Promotion Readiness Report",
         "",
-        "v12는 shadow-only calibration입니다. case_fixture나 historical research 성공은 live discovery 증명이 아닙니다.",
-        "default scoring did not change. future active promotion requires a separate explicit task.",
-        "source proxy / evidence URL 한계가 있으면 기본 프로파일 승격 blocker로 남깁니다.",
+        "v12는 rolling calibration입니다. case_fixture나 historical research 성공은 live discovery 증명이 아닙니다.",
+        "`run-v12-calibration`은 safe patch만 scope 제한으로 기본 프로파일에 반영합니다.",
+        "source proxy / evidence URL 한계가 있으면 positive patch는 막고 guardrail만 허용합니다.",
         "",
-        "- active_profile_preserved: `true`",
-        "- production_default_scoring_changed: `false`",
+        "- active_profile_after_apply: `e2r_2_2_rolling_calibrated`",
+        "- production_default_scoring_changed_after_apply: `true`",
         f"- default_promotion_ready: `{profile.get('promotion_ready')}`",
         f"- next_patch_ready: `{profile.get('next_patch_ready')}`",
         f"- apply_next_patch_count: `{profile.get('apply_next_patch_count')}`",
@@ -445,16 +445,16 @@ def _render_e2r_2_2_report(profile: dict[str, Any]) -> str:
         [
             "# E2R 2.2 Candidate Profile Report",
             "",
-            "v12는 shadow-only 후보이며, case_fixture/과거 연구 성공은 live discovery 증명이 아닙니다.",
-            "default scoring did not change. active default promotion은 별도 명시적 작업 전까지 금지됩니다.",
+            "v12 rolling candidate는 `run-v12-calibration`에서 active E2R 2.2 profile로 반영됩니다.",
+            "case_fixture/과거 연구 성공은 live discovery 증명이 아닙니다.",
             "evidence URL/source proxy 한계는 blocker로 보고서에 남깁니다.",
             "",
             f"- profile_id: `{profile.get('profile_id')}`",
             f"- profile_status: `{profile.get('profile_status')}`",
             f"- previous_default_profile: `{profile.get('previous_default_profile')}`",
-            f"- sector_shadow_candidate_count: `{profile.get('sector_shadow_candidate_count')}`",
-            f"- archetype_shadow_candidate_count: `{profile.get('archetype_shadow_candidate_count')}`",
+            f"- sector_candidate_count: `{profile.get('sector_shadow_candidate_count')}`",
+            f"- archetype_candidate_count: `{profile.get('archetype_shadow_candidate_count')}`",
             f"- production_default_scoring_changed: `{profile.get('production_default_scoring_changed')}`",
-            "- note: v12는 sector/archetype shadow 후보이며 별도 승인 없이는 active default가 아닙니다.",
+            "- note: active 반영은 safe apply_next_patch만 scope 제한으로 수행합니다.",
         ]
     ) + "\n"

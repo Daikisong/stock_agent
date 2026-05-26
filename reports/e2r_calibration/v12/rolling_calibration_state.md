@@ -1,12 +1,12 @@
 # V12 Rolling Calibration State
 
-이 파일은 연구 자료를 바로 기본 scoring에 넣는 파일이 아닙니다.
-각 archetype에 성공/반례/4B/4C 증거가 얼마나 쌓였는지와 다음 작은 패치 후보를 추적합니다.
+이 파일은 연구 자료가 어떤 작은 패치로 바뀌었는지 추적하는 장부입니다.
+`run-v12-calibration`은 이 장부의 apply_next_patch를 E2R 2.2 rolling profile에 반영합니다.
 
 - archetype_count: `27`
 - decision_counts: `{'apply_next_patch': 64, 'hold_for_more_evidence': 14, 'blocked_by_data_quality': 3}`
 - patch_spec_count: `64`
-- production_default_scoring_changed: `false`
+- production_default_scoring_changed: `run-v12-calibration에서 true`
 
 | archetype | large_sector | positive_symbols | counterexample_symbols | 4B_cases | 4C_cases | next_delta_recommendation |
 |---|---|---:|---:|---:|---:|---|

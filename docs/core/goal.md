@@ -9,7 +9,7 @@ Primary MD input root:
 /home/eorb915/projects/stock_agent/docs/round
 
 GOAL:
-Ingest the accumulated E2R Stock-Web v12 residual research Markdown files, validate them, deduplicate them, build stage-transition summaries, and generate sector/archetype shadow profiles plus an `e2r_2_2_candidate` profile.
+Run the accumulated E2R Stock-Web v12 residual research Markdown files through one command that validates the research, deduplicates it, builds stage-transition evidence, creates safe scope-limited patch specs, and applies those patches to the active E2R 2.2 rolling scoring profile.
 
 This is a v12 residual-calibration task.
 It is not a v11 global promotion task.
@@ -25,40 +25,39 @@ The expected outcome is:
 2. v12 trigger rows are validated with explicit rejection reasons.
 3. repeated or duplicate rows are deduped without collapsing new symbols inside the same archetype.
 4. stage transition summaries are regenerated.
-5. sector shadow profile and archetype shadow profile are regenerated.
-6. `e2r_2_2_candidate_profile.json` is regenerated.
+5. sector/archetype rolling calibration ledgers are regenerated.
+6. `e2r_2_2_candidate_profile.json` and `configs/e2r_scoring_profile_v2_2.yaml` are regenerated.
 7. promotion readiness is reported with explicit apply/hold/block decisions.
-8. the active default scoring profile remains `e2r_2_1_stock_web_calibrated`.
+8. the active default scoring profile becomes `e2r_2_2_rolling_calibrated` after run-v12-calibration.
 
 Important:
-Do NOT promote v12 to the default active profile in this task.
-Do NOT modify `configs/e2r_scoring_profile_active.yaml`.
+Do promote safe v12 `apply_next_patch` specs to the active E2R 2.2 rolling profile in this task.
+Do update `configs/e2r_scoring_profile_active.yaml` to `active_profile: e2r_2_2`.
 Do NOT overwrite `configs/e2r_scoring_profile_calibrated.yaml`.
-Do NOT demote or replace `e2r_2_1_stock_web_calibrated`.
+Do NOT delete `e2r_2_1_stock_web_calibrated`; keep it as rollback. The one-command default applies E2R 2.2 rolling calibration.
 Do NOT implement auto-trading.
 Do NOT connect to brokerage APIs.
 Do NOT scan current/live stocks.
 Do NOT fetch current market data.
 Do NOT output buy/sell recommendation wording.
 
-Production/default scoring change is not authorized here:
+Production/default scoring change is authorized here, but only through safe scope-limited v12 patches:
 
 ```text
-production_default_scoring_changed = false
-active_default_profile_must_remain = e2r_2_1_stock_web_calibrated
-v12_shadow_profile_generation_required = true
+production_default_scoring_changed = true
+active_default_profile_after_apply = e2r_2_2_rolling_calibrated
+v12_rolling_ledger_generation_required = true
 e2r_2_2_candidate_generation_required = true
-explicit_default_promotion_authorized = false
+explicit_default_promotion_authorized = true
 ```
 
 Simple example:
 
 ```text
 If a v12 file says C20 K-beauty needs a reorder/channel bridge,
-do not immediately change live scoring.
-Instead, store it as a C20 archetype shadow candidate,
-count supporting positives and counterexamples,
-and report whether it is ready for a future explicit promotion.
+do not globally lower every Stage2 or Stage3 threshold.
+Instead, create/apply a C20 scoped rolling patch:
+`canonical_archetype:C20...` gets a bounded bridge rule or small Stage2 bonus only when non-price evidence exists.
 ```
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -67,9 +66,9 @@ and report whether it is ready for a future explicit promotion.
 
 The old v11 calibration prompt asked the agent to apply a validated global calibration into the default profile.
 
-That is not the current task.
+The current task is not another passive ledger-only task.
 
-The current input files are v12 residual files. They repeatedly state:
+The current input files are v12 residual files. They may contain older wording such as:
 
 ```text
 production_scoring_changed = false
@@ -83,14 +82,14 @@ So the correct behavior is:
 v12 research MDs
 -> ingest / validate / dedupe / aggregate
 -> stage transition summary
--> sector_shadow_profile
--> archetype_shadow_profile
--> e2r_2_2_candidate_profile
--> promotion_readiness_report
--> active profile unchanged
+-> apply / hold / block decision
+-> safe patch specs
+-> configs/e2r_scoring_profile_v2_2.yaml
+-> configs/e2r_scoring_profile_active.yaml points to e2r_2_2
+-> tests and reports
 ```
 
-Do not treat v12 files as direct production scoring instructions.
+Do not treat raw v12 rows as direct production scoring instructions; only deduped, validated `apply_next_patch` specs can change scoring.
 
 Example:
 
@@ -99,9 +98,8 @@ Wrong:
   "C31 policy event bridge appeared in one loop, so patch Stage2 now."
 
 Correct:
-  "C31 policy event bridge becomes a canonical_archetype shadow candidate.
-   It needs verified evidence URLs, enough positive/counterexample balance,
-   and a separate explicit promotion task before default scoring changes."
+  "C31 policy event bridge becomes a scoped rolling patch only if validation says apply_next_patch.
+   If evidence is weak, it becomes a bridge guard or hold/block decision instead."
 ```
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -486,11 +484,10 @@ If the count differs, report the exact count and continue if files are valid.
 Run the v12 pipeline with:
 
 ```bash
-PYTHONPATH=src python -m e2r.calibration.cli run-v12-full \
+PYTHONPATH=src python -m e2r.calibration.cli run-v12-calibration \
   --md-input-root docs/round \
   --data-directory data/e2r/calibration/v12 \
-  --report-directory reports/e2r_calibration/v12 \
-  --preserve-global-profile
+  --report-directory reports/e2r_calibration/v12
 ```
 
 The command must:
@@ -500,11 +497,12 @@ The command must:
 4. dedupe v12 trigger rows
 5. aggregate v12 rows by sector and archetype
 6. build stage transition summaries
-7. build sector shadow profile
-8. build archetype shadow profile
+7. build sector rolling calibration ledger
+8. build archetype rolling calibration ledger
 9. build `e2r_2_2_candidate_profile`
 10. write reports
-11. verify the active default profile did not change
+11. write `configs/e2r_scoring_profile_v2_2.yaml`
+12. update active default profile to `e2r_2_2`
 
 Expected summary fields:
 
@@ -522,8 +520,8 @@ stage_transition_summary_rows
 evidence_url_pending_count
 source_proxy_only_count
 default_promotion_ready
-active_default_profile_preserved = true
-production_default_scoring_changed = false
+active_default_profile_preserved = false
+production_default_scoring_changed = true
 auto_trading_changed = false
 brokerage_api_touched = false
 ```
@@ -870,8 +868,8 @@ The candidate profile must state:
 
 ```text
 profile_status = candidate_not_active
-production_default_scoring_changed = false
-active_default_profile_must_remain = e2r_2_1_stock_web_calibrated
+production_default_scoring_changed = true
+active_default_profile_after_apply = e2r_2_2_rolling_calibrated
 ```
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -915,11 +913,11 @@ reports/e2r_calibration/v12/by_archetype_stage_transition/*.md
 ```
 
 Reports must clearly say:
-- v12 is shadow-only.
+- v12 is rolling calibration.
 - `case_fixture` or historical research success is not proof of live discovery.
-- default scoring did not change.
+- default scoring changed only through scope-limited safe patches.
 - exact evidence URL/source proxy limitations remain blockers if present.
-- future active promotion requires a separate explicit task.
+- `e2r_2_1_stock_web_calibrated` remains rollback.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 11. Tests and verification
@@ -956,17 +954,17 @@ price-only row cannot train positive Stage2/Stage3
 4B rows do not train positive entry weights
 4C rows do not train positive entry weights
 stage transition summary computes peak capture correctly
-v12 full run preserves active default profile
-sector shadow profile is generated
-archetype shadow profile is generated
-e2r_2_2 candidate is generated but not active
+v12 calibration run updates active default profile to e2r_2_2
+sector rolling ledger is generated
+archetype rolling ledger is generated
+e2r_2_2 rolling profile is generated and active after run-v12-calibration
 ```
 
 Hard verification:
 
 ```text
-active_default_profile_preserved must be true
-production_default_scoring_changed must be false
+active_default_profile_after_apply must be e2r_2_2_rolling_calibrated
+production_default_scoring_changed must be true
 auto_trading_changed must be false
 brokerage_api_touched must be false
 ```
@@ -988,7 +986,7 @@ E. Do not train positive entry weights from 4B/4C rows.
 
 F. Do not train positive entry weights from price-only rows.
 
-G. Do not promote `e2r_2_2_candidate` to active default here.
+G. Promote safe `e2r_2_2_candidate` patches to active default here.
 
 H. Do not touch brokerage/API/auto-trading code.
 
@@ -1023,10 +1021,11 @@ Both can be useful, but they answer different questions.
 11. Build sector shadow profile.
 12. Build archetype shadow profile.
 13. Build `e2r_2_2_candidate_profile`.
-14. Write data outputs and reports.
-15. Confirm active profile was preserved.
-16. Run tests and compile check.
-17. Commit and push if this environment allows it.
+14. Build `configs/e2r_scoring_profile_v2_2.yaml`.
+15. Write data outputs and reports.
+16. Confirm active profile was updated to e2r_2_2 and calibrated remains rollback.
+17. Run tests and compile check.
+18. Commit and push if this environment allows it.
 
 Do not ask clarifying questions.
 Make reasonable assumptions and record them in the reports.
@@ -1057,8 +1056,8 @@ residual_error_ledger_path:
 e2r_2_2_candidate_profile_path:
 promotion_readiness_report_path:
 default_promotion_ready:
-active_default_profile_preserved: true
-production_default_scoring_changed: false
+active_default_profile_after_apply: e2r_2_2_rolling_calibrated
+production_default_scoring_changed: true
 auto_trading_changed: false
 brokerage_api_touched: false
 tests:

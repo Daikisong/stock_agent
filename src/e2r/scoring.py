@@ -48,6 +48,8 @@ class ScoringPayload:
     industrial_sub_scores: IndustrialSubScores | None = None
     evidence_ids: tuple[str, ...] = field(default_factory=tuple)
     scoring_version: str = "e2r-2.0-cp1"
+    large_sector_id: str | None = None
+    canonical_archetype_id: str | None = None
 
     def __post_init__(self) -> None:
         if not isinstance(self.symbol, str) or not self.symbol.strip():
@@ -79,9 +81,21 @@ class ScoringPayload:
             raise ValueError("industrial_sub_scores must be an IndustrialSubScores instance")
         if not isinstance(self.scoring_version, str) or not self.scoring_version.strip():
             raise ValueError("scoring_version must be a non-empty string")
+        if self.large_sector_id is not None and (
+            not isinstance(self.large_sector_id, str) or not self.large_sector_id.strip()
+        ):
+            raise ValueError("large_sector_id must be a non-empty string when provided")
+        if self.canonical_archetype_id is not None and (
+            not isinstance(self.canonical_archetype_id, str) or not self.canonical_archetype_id.strip()
+        ):
+            raise ValueError("canonical_archetype_id must be a non-empty string when provided")
         object.__setattr__(self, "components", component_copy)
         object.__setattr__(self, "diagnostic_scores", diagnostic_copy)
         object.__setattr__(self, "evidence_ids", tuple(self.evidence_ids))
+        if self.large_sector_id is not None:
+            object.__setattr__(self, "large_sector_id", self.large_sector_id.strip())
+        if self.canonical_archetype_id is not None:
+            object.__setattr__(self, "canonical_archetype_id", self.canonical_archetype_id.strip())
 
 
 class Scorer(Protocol):
@@ -111,8 +125,16 @@ class DeterministicScorer:
         if _has_stage3_cross_evidence_buffer(payload, diagnostic_scores, profile):
             calibration_bonus += profile.adjustment("stage3_cross_evidence_green_buffer")
             diagnostic_scores["stage3_cross_evidence_buffer_applied"] = 1.0
+        scope_labels = _scope_labels(payload)
+        if _v12_stage2_bonus_applies(payload, diagnostic_scores, profile, scope_labels):
+            calibration_bonus += min(1.0, profile.adjustment("v12_stage2_archetype_bonus", 1.0))
+            diagnostic_scores["v12_stage2_scope_bonus_applied"] = 1.0
 
-        diagnostic_scores["active_scoring_profile"] = 1.0 if profile.profile_id.endswith("calibrated") else 0.0
+        _annotate_v12_scope_matches(diagnostic_scores, profile, scope_labels)
+
+        diagnostic_scores["active_scoring_profile"] = (
+            1.0 if profile.profile_id.endswith("calibrated") or "rolling" in profile.profile_id else 0.0
+        )
         diagnostic_scores["calibration_total_adjustment"] = round(calibration_bonus - calibration_risk_penalty, 4)
 
         raw_total = sum(payload.components.values()) + calibration_bonus - payload.risk_penalty - calibration_risk_penalty
@@ -163,3 +185,59 @@ def _has_stage3_cross_evidence_buffer(payload: ScoringPayload, diagnostics: Mapp
         and payload.components["valuation_rerating"] >= profile.threshold("stage3_green_valuation_min", 10.0)
         and payload.components["information_confidence"] >= profile.threshold("stage2_information_confidence_min", 3.0)
     )
+
+
+def _scope_labels(payload: ScoringPayload) -> tuple[str, ...]:
+    labels: list[str] = []
+    if payload.large_sector_id:
+        labels.append(f"large_sector:{payload.large_sector_id}")
+    if payload.canonical_archetype_id:
+        labels.append(f"canonical_archetype:{payload.canonical_archetype_id}")
+    return tuple(labels)
+
+
+def _has_non_price_stage2_bridge(diagnostics: Mapping[str, float]) -> bool:
+    if diagnostics.get("calibration_stage2_actionable_evidence", 0.0) > 0:
+        return True
+    if diagnostics.get("credible_order_or_policy_evidence", 0.0) > 0:
+        return True
+    non_price_families = (
+        "evidence_family_financial_actual",
+        "evidence_family_disclosure",
+        "evidence_family_research_report",
+        "evidence_family_consensus",
+        "evidence_family_consensus_revision",
+        "evidence_family_news",
+    )
+    non_price_count = sum(1 for key in non_price_families if diagnostics.get(key, 0.0) > 0)
+    return non_price_count >= 2 or diagnostics.get("cross_evidence_family_count", 0.0) >= 3.0
+
+
+def _v12_stage2_bonus_applies(payload: ScoringPayload, diagnostics: Mapping[str, float], profile, scope_labels: tuple[str, ...]) -> bool:
+    if not profile.guardrail_enabled("rolling_calibration_enabled"):
+        return False
+    if not profile.scope_enabled("v12_stage2_bonus_scopes", scope_labels):
+        return False
+    if diagnostics.get("price_only_blowoff_score", 0.0) >= 70.0:
+        return False
+    if diagnostics.get("one_off_shortage_risk", 0.0) >= 80.0:
+        return False
+    if not _has_non_price_stage2_bridge(diagnostics):
+        return False
+    return payload.components["eps_fcf_explosion"] >= profile.threshold("stage2_eps_fcf_min", 10.0)
+
+
+def _annotate_v12_scope_matches(diagnostics: dict[str, float], profile, scope_labels: tuple[str, ...]) -> None:
+    if not profile.guardrail_enabled("rolling_calibration_enabled"):
+        return
+    scope_keys = {
+        "v12_stage2_bonus_scopes": "v12_scope_stage2_bonus_match",
+        "v12_stage2_required_bridge_scopes": "v12_scope_stage2_required_bridge_match",
+        "v12_local_4b_watch_guard_scopes": "v12_scope_local_4b_watch_guard_match",
+        "v12_full_4b_overlay_scopes": "v12_scope_full_4b_overlay_match",
+        "v12_earlier_4c_watch_scopes": "v12_scope_earlier_4c_watch_match",
+        "v12_hard_4c_confirmation_scopes": "v12_scope_hard_4c_confirmation_match",
+    }
+    for profile_key, diagnostic_key in scope_keys.items():
+        if profile.scope_enabled(profile_key, scope_labels):
+            diagnostics[diagnostic_key] = 1.0
