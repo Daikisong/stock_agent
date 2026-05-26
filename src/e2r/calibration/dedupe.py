@@ -86,3 +86,56 @@ def dedupe_trigger_rows(rows: list[dict[str, Any]]) -> tuple[list[dict[str, Any]
                 }
             )
     return representatives, dedupe_map
+
+
+def _v12_dedupe_key(row: dict[str, Any]) -> tuple[Any, ...]:
+    return (
+        "v12_strict",
+        row.get("symbol"),
+        row.get("canonical_archetype_id"),
+        row.get("trigger_type"),
+        row.get("trigger_date"),
+        row.get("entry_date"),
+        _rounded_price(row.get("entry_price")),
+        row.get("evidence_family") or row.get("trigger_family") or row.get("fine_archetype_id"),
+    )
+
+
+def dedupe_v12_trigger_rows(rows: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Dedupe v12 rows without collapsing new symbols inside the same archetype.
+
+    v12 is meant to add more symbols to the same canonical archetype. Therefore
+    the strict key includes the symbol; only same-symbol/same-entry repeats are
+    collapsed.
+    """
+
+    grouped: dict[tuple[Any, ...], list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        grouped[_v12_dedupe_key(row)].append(row)
+
+    representatives: list[dict[str, Any]] = []
+    dedupe_map: list[dict[str, Any]] = []
+    for key, members in sorted(grouped.items(), key=lambda item: str(item[0])):
+        representative = sorted(members, key=_representative_sort_key, reverse=True)[0]
+        representative = dict(representative)
+        representative["dedupe_key"] = "|".join(str(part) for part in key)
+        representative["dedupe_member_count"] = len(members)
+        representative["is_aggregate_representative"] = True
+        representatives.append(representative)
+        rep_id = representative.get("trigger_id")
+        for member in members:
+            same_symbol_reuse = (
+                member.get("symbol") == representative.get("symbol")
+                and member.get("canonical_archetype_id") == representative.get("canonical_archetype_id")
+            )
+            dedupe_map.append(
+                {
+                    "dedupe_key": representative["dedupe_key"],
+                    "trigger_id": member.get("trigger_id"),
+                    "source_file": member.get("source_file"),
+                    "selected_representative_trigger_id": rep_id,
+                    "duplicate_reason": "same_symbol_same_trigger_entry" if same_symbol_reuse else "v12_independent_symbol",
+                    "is_representative": member.get("trigger_id") == rep_id,
+                }
+            )
+    return representatives, dedupe_map

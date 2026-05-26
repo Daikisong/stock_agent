@@ -71,13 +71,24 @@ def normalise_trigger_type(value: Any) -> str:
     text = str(value or "").strip()
     aliases = {
         "Stage1/weak watch": "Stage1",
+        "Stage1/weak-watch": "Stage1",
         "4B / false-positive guardrail": "Stage4B",
+        "4B_false_positive_guardrail": "Stage4B",
         "Stage4B-watch": "Stage4B",
+        "Stage4B local overlay": "Stage4B",
+        "Stage4B full-window overlay": "Stage4B",
+        "price-only-local-4B-overlay": "Stage4B",
+        "price-only local 4B overlay": "Stage4B",
         "4B-watch": "Stage4B",
         "Stage4B": "Stage4B",
         "Stage4C": "Stage4C",
+        "Stage4C protection watch": "Stage4C",
         "Stage3_Yellow": "Stage3-Yellow",
         "Stage3_Green": "Stage3-Green",
+        "Stage3-Green comparison": "Stage3-Green",
+        "Stage3-Green compare": "Stage3-Green",
+        "Stage2 policy-only stress": "Stage2",
+        "price-only-theme-breakout": "price_only_theme_breakout_guardrail",
     }
     return aliases.get(text, text)
 
@@ -238,6 +249,170 @@ def validate_trigger_rows(trigger_rows: list[dict[str, Any]]) -> ValidationBundl
         if price_path_valid and not (usable_for_weight or guardrail_usable):
             rejected = dict(validated)
             rejected["rejection_reasons"] = reasons or ["not_usable_for_promotion"]
+            rejected_rows.append(rejected)
+
+    return ValidationBundle(valid_rows=valid_rows, rejected_rows=rejected_rows)
+
+
+def _v12_bool_flag(row: dict[str, Any], key: str) -> bool:
+    parsed = parse_bool(row.get(key), None)
+    if parsed is not None:
+        return parsed
+    return _contains_any(row, (key.replace("_", " "), key))
+
+
+def _v12_non_price_evidence(row: dict[str, Any]) -> bool:
+    if not _non_price_evidence(row):
+        return False
+    trigger_text = str(row.get("trigger_type") or "").lower()
+    if "price_only" in trigger_text or "price-only" in trigger_text:
+        return False
+    return True
+
+
+def _classify_stage2_quality(row: dict[str, Any]) -> str | None:
+    if row.get("trigger_type") not in {"Stage2", "Stage2-Actionable"}:
+        return None
+    mfe90 = parse_number(row.get("MFE_90D_pct"))
+    mfe180 = parse_number(row.get("MFE_180D_pct"))
+    mae90 = parse_number(row.get("MAE_90D_pct"))
+    label = " ".join(str(row.get(key, "")) for key in ("trigger_outcome_label", "current_profile_verdict")).lower()
+    non_price = _v12_non_price_evidence(row)
+    if (
+        ((mfe90 is not None and mfe90 >= 20) or (mfe180 is not None and mfe180 >= 30))
+        and (mae90 is None or mae90 > -25 or "high_mae_success" in label)
+        and non_price
+    ):
+        return "good_stage2"
+    if (
+        (mfe90 is not None and mfe90 < 10)
+        or (mae90 is not None and mae90 <= -25)
+        or any(term in label for term in ("failed", "false_positive", "watch_only", "high_mae", "evidence_good_but_price_failed"))
+    ):
+        return "bad_stage2"
+    return "neutral_stage2"
+
+
+def _classify_4b_quality(row: dict[str, Any]) -> str | None:
+    if row.get("trigger_type") not in FOUR_B_TYPES:
+        return None
+    label = " ".join(str(row.get(key, "")) for key in ("trigger_outcome_label", "current_profile_verdict")).lower()
+    local = parse_number(row.get("four_b_local_peak_proximity"))
+    full = parse_number(row.get("four_b_full_window_peak_proximity"))
+    proximity = full if full is not None else local
+    if not _v12_non_price_evidence(row):
+        return "price_only_4b"
+    if (proximity is not None and 0.7 <= proximity <= 1.1) or any(
+        term in label for term in ("good_4b_timing", "4b_overlay_success")
+    ):
+        return "good_4b_timing"
+    if (proximity is not None and proximity < 0.5) or any(term in label for term in ("too_early", "price_only_local_4b_too_early")):
+        return "too_early_4b"
+    if "too_late" in label:
+        return "too_late_4b"
+    return "neutral_4b"
+
+
+def _classify_4c_quality(row: dict[str, Any]) -> str | None:
+    if row.get("trigger_type") not in FOUR_C_TYPES:
+        return None
+    label = " ".join(str(row.get(key, "")) for key in ("trigger_outcome_label", "current_profile_verdict")).lower()
+    if "current_profile_4c_too_late" in label or "thesis_break_late" in label or "4c_late" in label:
+        return "late_4c"
+    if "hard_4c" in label or "4c_success" in label:
+        return "hard_4c"
+    return "watch_only_4c"
+
+
+def validate_v12_trigger_rows(trigger_rows: list[dict[str, Any]]) -> ValidationBundle:
+    """Validate v12 residual rows for shadow calibration, not default promotion."""
+
+    base = validate_trigger_rows(trigger_rows)
+    valid_rows: list[dict[str, Any]] = []
+    rejected_rows: list[dict[str, Any]] = list(base.rejected_rows)
+
+    for row in base.valid_rows:
+        validated = dict(row)
+        reasons = list(validated.get("validation_reasons", []))
+        validated["schema_family"] = validated.get("schema_family") or "v12_sector_archetype_residual"
+        large_sector_id = validated.get("large_sector_id")
+        canonical_archetype_id = validated.get("canonical_archetype_id")
+        if not large_sector_id:
+            reasons.append("missing_large_sector_id")
+        if not canonical_archetype_id:
+            reasons.append("missing_canonical_archetype_id")
+
+        evidence_url_pending = _v12_bool_flag(validated, "evidence_url_pending") or _contains_any(
+            validated, ("evidence url pending", "url pending")
+        )
+        source_proxy_only = _v12_bool_flag(validated, "source_proxy_only") or _contains_any(
+            validated, ("source-name-level", "event proxies", "public-event proxies")
+        )
+        duplicate_low_value = _contains_any(validated, ("duplicate_low_value_loop",))
+        rematerialization = _contains_any(validated, ("schema_rematerialization_only",))
+        do_not_count = parse_bool(validated.get("do_not_count_as_new_case"), False) is True
+        independent_weight_zero = parse_number(validated.get("independent_evidence_weight")) == 0
+
+        trigger_type = validated.get("trigger_type")
+        is_positive = trigger_type in POSITIVE_TRIGGER_TYPES
+        is_4b_or_4c = trigger_type in FOUR_B_TYPES or trigger_type in FOUR_C_TYPES
+        is_price_only_theme_guard = trigger_type == "price_only_theme_breakout_guardrail"
+        non_price = _v12_non_price_evidence(validated)
+
+        validated["evidence_url_pending"] = evidence_url_pending
+        validated["source_proxy_only"] = source_proxy_only
+        validated["usable_for_global_promotion"] = False
+        validated["usable_for_v12_shadow_calibration"] = bool(large_sector_id) and bool(canonical_archetype_id)
+        validated["usable_for_sector_shadow"] = bool(large_sector_id) and not duplicate_low_value and not rematerialization
+        validated["usable_for_archetype_shadow"] = bool(canonical_archetype_id) and not duplicate_low_value and not rematerialization
+        validated["usable_for_new_weight_evidence"] = (
+            validated["usable_for_v12_shadow_calibration"]
+            and not duplicate_low_value
+            and not rematerialization
+            and not do_not_count
+            and not independent_weight_zero
+            and not is_4b_or_4c
+            and not is_price_only_theme_guard
+            and is_positive
+            and non_price
+        )
+        validated["residual_counterexample"] = str(validated.get("positive_or_counterexample", "")).lower() == "counterexample"
+        verdict_text = str(validated.get("current_profile_verdict") or "").lower()
+        outcome_text = str(validated.get("trigger_outcome_label") or "").lower()
+        combined_text = f"{verdict_text} {outcome_text}"
+        validated["current_profile_error"] = "current_profile_" in combined_text and "correct" not in combined_text
+        validated["current_profile_false_positive"] = "false_positive" in combined_text
+        validated["current_profile_missed_structural"] = "missed_structural" in combined_text
+        validated["current_profile_too_late"] = "too_late" in combined_text or "late_green" in combined_text
+        validated["current_profile_4B_too_early"] = "4b_too_early" in combined_text
+        validated["current_profile_4C_too_late"] = "4c_too_late" in combined_text
+        validated["v12_stage2_quality"] = _classify_stage2_quality(validated)
+        validated["v12_4b_quality"] = _classify_4b_quality(validated)
+        validated["v12_4c_quality"] = _classify_4c_quality(validated)
+        validated["validation_reasons"] = reasons
+
+        for numeric_key in (
+            "new_independent_case_count",
+            "reused_case_count",
+            "same_archetype_new_symbol_count",
+            "same_archetype_new_trigger_family_count",
+            "positive_case_count",
+            "counterexample_count",
+            "4B_case_count",
+            "4C_case_count",
+            "four_b_local_peak_proximity",
+            "four_b_full_window_peak_proximity",
+        ):
+            if numeric_key in validated:
+                parsed = parse_number(validated.get(numeric_key))
+                if parsed is not None:
+                    validated[numeric_key] = parsed
+
+        if large_sector_id and canonical_archetype_id:
+            valid_rows.append(validated)
+        else:
+            rejected = dict(validated)
+            rejected["rejection_reasons"] = reasons or ["not_usable_for_v12_shadow_calibration"]
             rejected_rows.append(rejected)
 
     return ValidationBundle(valid_rows=valid_rows, rejected_rows=rejected_rows)

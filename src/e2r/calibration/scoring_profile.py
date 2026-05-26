@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 import os
+import json
 
 
 CONFIG_DIR = Path("configs")
@@ -122,3 +123,27 @@ def get_active_scoring_profile() -> ScoringProfile:
             "stage3_green_structural_visibility_min": 45.0,
         },
     )
+
+
+def _load_json_profile(path: str | Path) -> dict[str, Any]:
+    path_obj = Path(path)
+    if not path_obj.exists():
+        return {}
+    return json.loads(path_obj.read_text(encoding="utf-8"))
+
+
+def load_sector_shadow_profile(path: str | Path = "data/e2r/calibration/v12/sector_shadow_profile.json") -> dict[str, Any]:
+    return _load_json_profile(path)
+
+
+def load_archetype_shadow_profile(path: str | Path = "data/e2r/calibration/v12/archetype_shadow_profile.json") -> dict[str, Any]:
+    return _load_json_profile(path)
+
+
+def load_e2r_2_2_candidate_profile(path: str | Path = "data/e2r/calibration/v12/e2r_2_2_candidate_profile.json") -> dict[str, Any]:
+    return _load_json_profile(path)
+
+
+def shadow_profile_mode() -> str:
+    mode = os.environ.get("E2R_SHADOW_PROFILE", "off").strip().lower()
+    return mode if mode in {"off", "sector", "archetype", "candidate"} else "off"

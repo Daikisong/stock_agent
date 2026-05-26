@@ -8,16 +8,20 @@ from pathlib import Path
 from typing import Any
 import json
 
-from .aggregate import aggregate_validated_rows
-from .dedupe import dedupe_trigger_rows
-from .md_discovery import discover_markdown_documents, prompt_spec_documents, result_documents
+from .aggregate import aggregate_v12_rows, aggregate_validated_rows
+from .dedupe import dedupe_trigger_rows, dedupe_v12_trigger_rows
+from .md_discovery import discover_markdown_documents, prompt_spec_documents, v11_result_documents, v12_result_documents
 from .md_parser import ParsedMarkdown, parse_markdown_document
 from .promotion import PromotionResult, promote_calibrated_profile
-from .validation import validate_trigger_rows
+from .transition import build_stage_transition_summary, write_stage_transition_outputs
+from .v12_shadow import write_v12_shadow_outputs
+from .validation import validate_trigger_rows, validate_v12_trigger_rows
 
 
 DATA_DIR = Path("data/e2r/calibration")
 REPORT_DIR = Path("reports/e2r_calibration")
+V12_DATA_DIR = DATA_DIR / "v12"
+V12_REPORT_DIR = REPORT_DIR / "v12"
 
 
 def _json_default(value: Any) -> Any:
@@ -58,7 +62,7 @@ def run_calibration_pipeline(
     data_dir = Path(data_directory)
     report_dir = Path(report_directory)
     documents = discover_markdown_documents(md_root)
-    results = result_documents(documents)
+    results = v11_result_documents(documents)
     prompts = prompt_spec_documents(documents)
 
     parsed_documents: list[ParsedMarkdown] = []
@@ -70,6 +74,7 @@ def run_calibration_pipeline(
         registry.append(parsed.registry_row)
         for row_type, rows in parsed.rows_by_type.items():
             all_rows[row_type].extend(rows)
+    _attach_case_context(all_rows)
 
     for prompt in prompts:
         registry.append(
@@ -127,6 +132,100 @@ def run_calibration_pipeline(
     return {"summary": summary, "data_outputs": output_paths, "reports": report_paths, "promotion": promotion}
 
 
+def run_v12_full_pipeline(
+    *,
+    md_input_root: str | Path = "docs/round",
+    data_directory: str | Path = V12_DATA_DIR,
+    report_directory: str | Path = V12_REPORT_DIR,
+    preserve_global_profile: bool = True,
+) -> dict[str, Any]:
+    md_root = Path(md_input_root)
+    data_dir = Path(data_directory)
+    report_dir = Path(report_directory)
+    active_before = Path("configs/e2r_scoring_profile_active.yaml").read_text(encoding="utf-8") if Path("configs/e2r_scoring_profile_active.yaml").exists() else ""
+    documents = discover_markdown_documents(md_root)
+    results = v12_result_documents(documents)
+    prompts = prompt_spec_documents(documents)
+    if not results:
+        raise RuntimeError(f"zero v12 result MDs found under {md_root}")
+
+    parsed_documents: list[ParsedMarkdown] = []
+    all_rows: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    registry: list[dict[str, Any]] = []
+    for document in results:
+        parsed = parse_markdown_document(document)
+        parsed_documents.append(parsed)
+        registry.append(parsed.registry_row)
+        for row_type, rows in parsed.rows_by_type.items():
+            all_rows[row_type].extend(rows)
+    _attach_case_context(all_rows)
+
+    if not any(parsed.rows_by_type.get("trigger") for parsed in parsed_documents):
+        raise RuntimeError("v12 result MDs were found, but none produced trigger rows")
+
+    validation = validate_v12_trigger_rows(all_rows["trigger"])
+    representative_rows, dedupe_map = dedupe_v12_trigger_rows(validation.valid_rows)
+    aggregate_rows = aggregate_v12_rows(representative_rows)
+    stage_transition_rows = build_stage_transition_summary(representative_rows)
+
+    output_paths = _write_v12_data_outputs(
+        data_dir,
+        registry,
+        all_rows,
+        validation,
+        representative_rows,
+        dedupe_map,
+        aggregate_rows,
+        stage_transition_rows,
+    )
+    transition_paths = write_stage_transition_outputs(
+        representative_rows,
+        data_directory=data_dir,
+        report_directory=report_dir,
+    )
+    shadow_paths = write_v12_shadow_outputs(
+        representative_rows,
+        aggregate_rows,
+        stage_transition_rows,
+        rejected_rows=validation.rejected_rows,
+        data_directory=data_dir,
+        report_directory=report_dir,
+    )
+    summary = _build_v12_summary(
+        md_root=md_root,
+        documents=documents,
+        results=results,
+        prompts=prompts,
+        parsed_documents=parsed_documents,
+        registry=registry,
+        all_rows=all_rows,
+        validation=validation,
+        representative_rows=representative_rows,
+        aggregate_rows=aggregate_rows,
+        stage_transition_rows=stage_transition_rows,
+    )
+    report_paths = _write_v12_reports(report_dir, summary, aggregate_rows, validation)
+    active_after = Path("configs/e2r_scoring_profile_active.yaml").read_text(encoding="utf-8") if Path("configs/e2r_scoring_profile_active.yaml").exists() else ""
+    if preserve_global_profile and active_before != active_after:
+        raise RuntimeError("v12 run changed configs/e2r_scoring_profile_active.yaml, which is not allowed")
+    return {
+        "summary": summary,
+        "data_outputs": {**output_paths, **transition_paths, **shadow_paths},
+        "reports": {**report_paths, **transition_paths, **shadow_paths},
+    }
+
+
+def _attach_case_context(all_rows: dict[str, list[dict[str, Any]]]) -> None:
+    cases_by_id = {row.get("case_id"): row for row in all_rows.get("case", []) if row.get("case_id")}
+    for row in all_rows.get("trigger", []):
+        case = cases_by_id.get(row.get("case_id"))
+        if not case:
+            continue
+        for key in ("positive_or_counterexample", "case_type", "company_name", "current_profile_verdict", "fine_archetype_id"):
+            if case.get(key) and not row.get(key):
+                row[key] = case[key]
+
+
 def _write_data_outputs(
     data_dir: Path,
     registry: list[dict[str, Any]],
@@ -151,6 +250,36 @@ def _write_data_outputs(
         "narrative_only_rows": _write_jsonl(data_dir / "narrative_only_rows.jsonl", all_rows["narrative_only"]),
         "rejected_rows": _write_jsonl(data_dir / "rejected_rows.jsonl", validation.rejected_rows),
         "dedupe_map": _write_jsonl(data_dir / "dedupe_map.jsonl", dedupe_map),
+    }
+    return outputs
+
+
+def _write_v12_data_outputs(
+    data_dir: Path,
+    registry: list[dict[str, Any]],
+    all_rows: dict[str, list[dict[str, Any]]],
+    validation,
+    representative_rows: list[dict[str, Any]],
+    dedupe_map: list[dict[str, Any]],
+    aggregate_rows: list[dict[str, Any]],
+    stage_transition_rows: list[dict[str, Any]],
+) -> dict[str, Path]:
+    outputs = {
+        "v12_md_registry": _write_jsonl(data_dir / "v12_md_registry.jsonl", registry),
+        "v12_extracted_cases": _write_jsonl(data_dir / "v12_extracted_cases.jsonl", all_rows["case"]),
+        "v12_extracted_triggers_raw": _write_jsonl(data_dir / "v12_extracted_triggers_raw.jsonl", all_rows["trigger"]),
+        "v12_trigger_rows_validated": _write_jsonl(data_dir / "v12_trigger_rows_validated.jsonl", validation.valid_rows),
+        "v12_trigger_rows_representative": _write_jsonl(
+            data_dir / "v12_trigger_rows_representative.jsonl", representative_rows
+        ),
+        "rejected_v12_rows": _write_jsonl(data_dir / "rejected_v12_rows.jsonl", validation.rejected_rows),
+        "v12_dedupe_map": _write_jsonl(data_dir / "v12_dedupe_map.jsonl", dedupe_map),
+        "v12_aggregate_metrics": _write_json(data_dir / "v12_aggregate_metrics.json", aggregate_rows),
+        "stage_transition_summary": _write_jsonl(data_dir / "stage_transition_summary.jsonl", stage_transition_rows),
+        "v12_residual_contribution_rows": _write_jsonl(
+            data_dir / "v12_residual_contribution_rows.jsonl", all_rows["residual_contribution"]
+        ),
+        "v12_coverage_matrix_rows": _write_jsonl(data_dir / "v12_coverage_matrix_rows.jsonl", all_rows["coverage_matrix"]),
     }
     return outputs
 
@@ -211,6 +340,145 @@ def _build_summary(
             row.get("validation_status", "unknown") for row in all_rows["price_source_validation"]
         ),
     }
+
+
+def _build_v12_summary(
+    *,
+    md_root: Path,
+    documents,
+    results,
+    prompts,
+    parsed_documents,
+    registry,
+    all_rows,
+    validation,
+    representative_rows,
+    aggregate_rows,
+    stage_transition_rows,
+) -> dict[str, Any]:
+    rejected_reasons = Counter(
+        reason
+        for row in validation.rejected_rows
+        for reason in row.get("rejection_reasons", row.get("validation_reasons", []))
+    )
+    failed_docs = [parsed for parsed in parsed_documents if parsed.failed]
+    metadata_only_docs = [parsed for parsed in parsed_documents if parsed.registry_row["extraction_status"] == "metadata_only"]
+    large_sectors = sorted({row.get("large_sector_id") for row in representative_rows if row.get("large_sector_id")})
+    archetypes = sorted({row.get("canonical_archetype_id") for row in representative_rows if row.get("canonical_archetype_id")})
+    global_metric = next((row for row in aggregate_rows if row.get("group_name") == "global_v12"), {})
+    return {
+        "repo": "https://github.com/Songdaiki/stock_agent",
+        "md_input_root": str(md_root),
+        "discovered_md_count": len(documents),
+        "v12_result_md_count": len(results),
+        "excluded_prompt_spec_count": len(prompts),
+        "v12_parsed_document_count": sum(1 for row in registry if row.get("extraction_status") == "parsed"),
+        "v12_failed_document_count": len(failed_docs),
+        "v12_metadata_only_document_count": len(metadata_only_docs),
+        "v12_raw_trigger_rows": len(all_rows["trigger"]),
+        "v12_validated_trigger_rows": len(validation.valid_rows),
+        "v12_representative_trigger_rows": len(representative_rows),
+        "v12_rejected_rows": len(validation.rejected_rows),
+        "rejected_rows_by_reason": dict(sorted(rejected_reasons.items())),
+        "large_sectors_covered": large_sectors,
+        "canonical_archetypes_covered": archetypes,
+        "stage_transition_summary_rows": len(stage_transition_rows),
+        "positive_case_count": global_metric.get("positive_case_count", 0),
+        "counterexample_count": global_metric.get("counterexample_count", 0),
+        "evidence_url_pending_count": global_metric.get("evidence_url_pending_count", 0),
+        "source_proxy_only_count": global_metric.get("source_proxy_only_count", 0),
+        "default_promotion_ready": False,
+        "active_default_profile_preserved": True,
+        "production_default_scoring_changed": False,
+        "auto_trading_changed": False,
+        "brokerage_api_touched": False,
+    }
+
+
+def _write_v12_reports(report_dir: Path, summary: dict[str, Any], aggregate_rows: list[dict[str, Any]], validation) -> dict[str, Path]:
+    report_dir.mkdir(parents=True, exist_ok=True)
+    reports = {
+        "ingest_summary": report_dir / "ingest_summary.md",
+        "coverage_matrix": report_dir / "coverage_matrix.md",
+    }
+    reports["ingest_summary"].write_text(_render_v12_ingest_summary(summary), encoding="utf-8")
+    reports["coverage_matrix"].write_text(_render_v12_coverage_matrix(aggregate_rows), encoding="utf-8")
+    # residual_error_report.md is also written by v12_shadow; this minimal write
+    # guarantees the file exists even if shadow generation changes later.
+    residual_path = report_dir / "residual_error_report.md"
+    if not residual_path.exists():
+        residual_path.write_text(_render_v12_validation_residuals(validation), encoding="utf-8")
+    return reports
+
+
+def _render_v12_ingest_summary(summary: dict[str, Any]) -> str:
+    lines = [
+        "# V12 Residual Calibration Ingest Summary",
+        "",
+        "v12는 sector/archetype shadow profile 생성용입니다. 기본 active profile은 변경하지 않습니다.",
+        "",
+    ]
+    for key in (
+        "md_input_root",
+        "v12_result_md_count",
+        "v12_parsed_document_count",
+        "v12_failed_document_count",
+        "v12_raw_trigger_rows",
+        "v12_validated_trigger_rows",
+        "v12_representative_trigger_rows",
+        "v12_rejected_rows",
+        "large_sectors_covered",
+        "canonical_archetypes_covered",
+        "stage_transition_summary_rows",
+        "evidence_url_pending_count",
+        "source_proxy_only_count",
+        "active_default_profile_preserved",
+        "production_default_scoring_changed",
+    ):
+        lines.append(f"- {key}: `{summary.get(key)}`")
+    lines.extend(["", "## Rejected Rows By Reason"])
+    for reason, count in summary["rejected_rows_by_reason"].items():
+        lines.append(f"- {reason}: {count}")
+    return "\n".join(lines) + "\n"
+
+
+def _render_v12_coverage_matrix(aggregate_rows: list[dict[str, Any]]) -> str:
+    lines = [
+        "# V12 Coverage Matrix",
+        "",
+        "| group | value | rows | symbols | positives | counterexamples | evidence URL pending | source proxy | good Stage2 | bad Stage2 |",
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
+    ]
+    for row in aggregate_rows:
+        if row.get("group_name") not in {"global_v12", "large_sector_id", "canonical_archetype_id"}:
+            continue
+        lines.append(
+            "| {group} | {value} | {rows} | {symbols} | {positive} | {counter} | {pending} | {proxy} | {good} | {bad} |".format(
+                group=row.get("group_name"),
+                value=row.get("group_value"),
+                rows=row.get("row_count"),
+                symbols=row.get("unique_symbol_count"),
+                positive=row.get("positive_case_count"),
+                counter=row.get("counterexample_count"),
+                pending=row.get("evidence_url_pending_count"),
+                proxy=row.get("source_proxy_only_count"),
+                good=row.get("good_stage2_count"),
+                bad=row.get("bad_stage2_count"),
+            )
+        )
+    return "\n".join(lines) + "\n"
+
+
+def _render_v12_validation_residuals(validation) -> str:
+    lines = [
+        "# V12 Residual Error Report",
+        "",
+        "| trigger_id | reasons |",
+        "|---|---|",
+    ]
+    for row in validation.rejected_rows:
+        lines.append(f"| {row.get('trigger_id')} | {row.get('rejection_reasons') or row.get('validation_reasons')} |")
+    return "\n".join(lines) + "\n"
 
 
 def _write_reports(
@@ -390,16 +658,36 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--md-input-root", default="docs/round")
     parser.add_argument("--data-directory", default=str(DATA_DIR))
     parser.add_argument("--report-directory", default=str(REPORT_DIR))
+    subparsers = parser.add_subparsers(dest="command")
+    v12 = subparsers.add_parser("run-v12-full", help="Ingest v12 residual MDs and build shadow profiles without default promotion.")
+    v12.add_argument("--md-input-root", default="docs/round")
+    v12.add_argument("--data-directory", default=str(V12_DATA_DIR))
+    v12.add_argument("--report-directory", default=str(V12_REPORT_DIR))
+    v12.add_argument("--preserve-global-profile", action="store_true", default=True)
+    for alias in ("ingest-v12", "build-stage-transitions", "build-v12-shadow", "report-v12-coverage"):
+        sub = subparsers.add_parser(alias, help=f"Alias for run-v12-full ({alias}).")
+        sub.add_argument("--md-input-root", default="docs/round")
+        sub.add_argument("--data-directory", default=str(V12_DATA_DIR))
+        sub.add_argument("--report-directory", default=str(V12_REPORT_DIR))
+        sub.add_argument("--preserve-global-profile", action="store_true", default=True)
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
-    result = run_calibration_pipeline(
-        md_input_root=args.md_input_root,
-        data_directory=args.data_directory,
-        report_directory=args.report_directory,
-    )
+    if args.command in {"run-v12-full", "ingest-v12", "build-stage-transitions", "build-v12-shadow", "report-v12-coverage"}:
+        result = run_v12_full_pipeline(
+            md_input_root=args.md_input_root,
+            data_directory=args.data_directory,
+            report_directory=args.report_directory,
+            preserve_global_profile=args.preserve_global_profile,
+        )
+    else:
+        result = run_calibration_pipeline(
+            md_input_root=args.md_input_root,
+            data_directory=args.data_directory,
+            report_directory=args.report_directory,
+        )
     print(json.dumps(result["summary"], ensure_ascii=False, indent=2, default=_json_default, allow_nan=False))
     return 0
 

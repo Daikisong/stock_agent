@@ -19,13 +19,25 @@ PROMPT_SPEC_TERMS = (
     "단일 프롬프트 시작",
 )
 
-RESULT_PATTERNS = (
+SCHEMA_V11 = "v11_global_calibration"
+SCHEMA_V12 = "v12_sector_archetype_residual"
+
+V11_RESULT_PATTERNS = (
     re.compile(r"e2r_stock_web_historical_calibration_round_R\d+_loop_\d+_.*\.md$", re.IGNORECASE),
     re.compile(r"e2r_stock_web_historical_calibration_round_.*_loop_.*_.*\.md$", re.IGNORECASE),
     re.compile(r".*stock_web_historical_calibration_round_R\d+_loop_.*\.md$", re.IGNORECASE),
 )
+V12_RESULT_PATTERNS = (
+    re.compile(r"e2r_stock_web_v12_residual_round_.*_loop_.*_.*_research.*\.md$", re.IGNORECASE),
+    re.compile(r".*stock_web_v12_residual_round_.*_research.*\.md$", re.IGNORECASE),
+    re.compile(r".*v12_residual_round_.*_research.*\.md$", re.IGNORECASE),
+)
 
 ROUND_LOOP_RE = re.compile(r"round[_-]?(R?\d+)_loop[_-]?(\d+)", re.IGNORECASE)
+V12_FILENAME_RE = re.compile(
+    r"v12_residual_round_(?P<round>R?\d+)_loop_(?P<loop>\d+)_(?P<large>L\d+_[A-Z0-9_]+?)_(?P<canonical>C\d+_[A-Z0-9_]+?)(?:_research.*)?\.md$",
+    re.IGNORECASE,
+)
 
 
 @dataclass(frozen=True)
@@ -37,6 +49,11 @@ class MarkdownDocument:
     exclusion_reason: str | None
     round: str | None
     loop: str | None
+    schema_family: str | None = None
+    filename: str | None = None
+    large_sector_id: str | None = None
+    canonical_archetype_id: str | None = None
+    fine_archetype_id: str | None = None
 
 
 def _sha256(path: Path) -> str:
@@ -68,7 +85,16 @@ def _contains_prompt_spec_marker(path: Path, text_head: str) -> bool:
 
 def _is_generated_result_file(path: Path) -> bool:
     name = path.name
-    return any(pattern.match(name) for pattern in RESULT_PATTERNS)
+    return any(pattern.match(name) for pattern in V11_RESULT_PATTERNS + V12_RESULT_PATTERNS)
+
+
+def _schema_family(path: Path) -> str | None:
+    name = path.name
+    if any(pattern.match(name) for pattern in V12_RESULT_PATTERNS):
+        return SCHEMA_V12
+    if any(pattern.match(name) for pattern in V11_RESULT_PATTERNS):
+        return SCHEMA_V11
+    return None
 
 
 def _parse_round_loop(path: Path, text_head: str) -> tuple[str | None, str | None]:
@@ -95,6 +121,21 @@ def _parse_round_loop(path: Path, text_head: str) -> tuple[str | None, str | Non
     return round_value, loop_value
 
 
+def _parse_v12_filename_ids(path: Path) -> tuple[str | None, str | None, str | None, str | None]:
+    match = V12_FILENAME_RE.search(path.name)
+    if not match:
+        return None, None, None, None
+    round_value = match.group("round").upper()
+    if not round_value.startswith("R"):
+        round_value = f"R{int(round_value)}"
+    return (
+        round_value,
+        str(int(match.group("loop"))),
+        match.group("large").upper(),
+        match.group("canonical").upper(),
+    )
+
+
 def discover_markdown_documents(root: str | Path) -> list[MarkdownDocument]:
     """Discover all MD files and classify generated calibration results.
 
@@ -108,6 +149,7 @@ def discover_markdown_documents(root: str | Path) -> list[MarkdownDocument]:
     for path in sorted(root_path.rglob("*.md")):
         text_head = path.read_text(encoding="utf-8", errors="replace")[:8192]
         is_prompt_spec = _contains_prompt_spec_marker(path, text_head)
+        schema_family = _schema_family(path)
         is_result = _is_generated_result_file(path) and not is_prompt_spec
         exclusion_reason = None
         if is_prompt_spec:
@@ -115,6 +157,9 @@ def discover_markdown_documents(root: str | Path) -> list[MarkdownDocument]:
         elif not is_result:
             exclusion_reason = "not_generated_stock_web_result_md"
         round_value, loop_value = _parse_round_loop(path, text_head)
+        v12_round, v12_loop, large_sector_id, canonical_archetype_id = _parse_v12_filename_ids(path)
+        round_value = v12_round or round_value
+        loop_value = v12_loop or loop_value
         documents.append(
             MarkdownDocument(
                 path=path,
@@ -124,6 +169,10 @@ def discover_markdown_documents(root: str | Path) -> list[MarkdownDocument]:
                 exclusion_reason=exclusion_reason,
                 round=round_value,
                 loop=loop_value,
+                schema_family=schema_family,
+                filename=path.name,
+                large_sector_id=large_sector_id,
+                canonical_archetype_id=canonical_archetype_id,
             )
         )
     return documents
@@ -135,3 +184,11 @@ def result_documents(documents: list[MarkdownDocument]) -> list[MarkdownDocument
 
 def prompt_spec_documents(documents: list[MarkdownDocument]) -> list[MarkdownDocument]:
     return [document for document in documents if document.is_prompt_spec]
+
+
+def v11_result_documents(documents: list[MarkdownDocument]) -> list[MarkdownDocument]:
+    return [document for document in documents if document.is_result and document.schema_family == SCHEMA_V11]
+
+
+def v12_result_documents(documents: list[MarkdownDocument]) -> list[MarkdownDocument]:
+    return [document for document in documents if document.is_result and document.schema_family == SCHEMA_V12]

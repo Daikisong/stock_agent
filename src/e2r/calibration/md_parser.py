@@ -36,7 +36,17 @@ COLUMN_ALIASES = {
     "trigger": "trigger_id",
     "entry": "entry_date",
     "price": "entry_price",
+    "current": "current_profile_verdict",
     "outcome": "trigger_outcome_label",
+    "verdict": "trigger_outcome_label",
+    "role": "case_type",
+    "fine": "fine_archetype_id",
+    "evidence family": "evidence_family",
+    "validation status": "validation_status",
+    "positive / counterexample": "positive_or_counterexample",
+    "positive_or_counterexample": "positive_or_counterexample",
+    "4b_case_count": "4B_case_count",
+    "4c_case_count": "4C_case_count",
     "dedupe": "dedupe_for_aggregate",
     "dedupe_for_aggregate": "dedupe_for_aggregate",
     "agg_role": "aggregate_group_role",
@@ -54,6 +64,11 @@ ROW_TYPES = {
     "optimization_decision",
     "aggregate_metric",
     "narrative_only",
+    "residual_contribution",
+    "stage_transition_summary",
+    "coverage_matrix",
+    "sector_rule_candidate",
+    "canonical_archetype_rule_candidate",
 }
 
 FENCE_RE = re.compile(r"```(?P<lang>[A-Za-z0-9_-]*)\n(?P<body>.*?)```", re.DOTALL)
@@ -69,7 +84,13 @@ class ParsedMarkdown:
 
 def _normalise_key(key: str) -> str:
     stripped = key.strip().strip("`")
-    return COLUMN_ALIASES.get(stripped, stripped)
+    if stripped in COLUMN_ALIASES:
+        return COLUMN_ALIASES[stripped]
+    for alias_key, alias_value in COLUMN_ALIASES.items():
+        if stripped.lower() == alias_key.lower():
+            return alias_value
+    lowered = re.sub(r"[^0-9A-Za-z가-힣_]+", "_", stripped.strip().lower()).strip("_")
+    return COLUMN_ALIASES.get(lowered, lowered or stripped)
 
 
 def _normalise_value(value: Any) -> Any:
@@ -108,6 +129,16 @@ def _append_row(
         return
     normalised.setdefault("round", document.round)
     normalised.setdefault("loop", document.loop)
+    normalised.setdefault("schema_family", document.schema_family)
+    normalised.setdefault("large_sector_id", document.large_sector_id)
+    normalised.setdefault("canonical_archetype_id", document.canonical_archetype_id)
+    normalised.setdefault("fine_archetype_id", document.fine_archetype_id)
+    if document.schema_family == "v12_sector_archetype_residual":
+        normalised.setdefault("price_data_source", "Songdaiki/stock-web")
+        normalised.setdefault("price_source", "Songdaiki/stock-web")
+        normalised.setdefault("source", "Songdaiki/stock-web")
+        normalised.setdefault("price_basis", "tradable_raw")
+        normalised.setdefault("price_adjustment_status", "raw_unadjusted_marcap")
     normalised["source_file"] = str(document.path)
     normalised["source_sha256"] = document.sha256
     normalised["source_line_range"] = f"{line_number}" if line_number else None
@@ -128,11 +159,36 @@ def _parse_metadata(text: str) -> dict[str, str]:
             key, value = [part.strip() for part in line.split("=", 1)]
             if key:
                 metadata[key] = value
+    for raw_line in text[:24000].splitlines():
+        line = raw_line.strip()
+        if line.startswith("- "):
+            line = line[2:].strip()
+        if ":" not in line:
+            continue
+        key, value = [part.strip() for part in line.split(":", 1)]
+        normalised_key = _normalise_key(key)
+        if not normalised_key or normalised_key in metadata:
+            continue
+        cleaned = value.strip().strip("`").strip()
+        if cleaned:
+            metadata[normalised_key] = cleaned
+    if "Songdaiki/stock-web" in text[:24000] and "price_source" not in metadata:
+        metadata["price_source"] = "Songdaiki/stock-web"
     return metadata
 
 
 def _line_number_for_offset(text: str, offset: int) -> int:
     return text.count("\n", 0, offset) + 1
+
+
+def _v12_document_flags(text: str) -> dict[str, bool]:
+    lower = text.lower()
+    return {
+        "evidence_url_pending": "evidence url pending" in lower or "url pending" in lower or "urls pending" in lower,
+        "source_proxy_only": "source-name-level" in lower
+        or "historical public-event proxies" in lower
+        or "event proxies" in lower,
+    }
 
 
 def _parse_json_lines(text: str, rows_by_type: dict[str, list[dict[str, Any]]], document: MarkdownDocument) -> None:
@@ -203,8 +259,17 @@ def _parse_markdown_tables(text: str, rows_by_type: dict[str, list[dict[str, Any
         data_lines = block[2:]
         has_row_type = "row_type" in headers
         looks_like_trigger = {"trigger_id", "entry_date", "entry_price"}.issubset(set(headers))
+        looks_like_case = {"case_id", "symbol"}.issubset(set(headers)) and (
+            "company_name" in headers or "positive_or_counterexample" in headers or "case_type" in headers
+        )
+        looks_like_coverage = {"large_sector_id", "canonical_archetype_id"}.issubset(set(headers)) and (
+            "calibration_usable_trigger_count" in headers or "representative_trigger_count" in headers
+        )
+        looks_like_rule_candidate = "rule_scope" in headers or (
+            "sector_rule_candidate" in headers or "canonical_rule_candidate" in headers
+        )
         looks_like_price_source = headers == ["field", "value"]
-        if not (has_row_type or looks_like_trigger or looks_like_price_source):
+        if not (has_row_type or looks_like_trigger or looks_like_case or looks_like_coverage or looks_like_rule_candidate or looks_like_price_source):
             continue
         if looks_like_price_source:
             values = {}
@@ -229,6 +294,12 @@ def _parse_markdown_tables(text: str, rows_by_type: dict[str, list[dict[str, Any
             row = dict(zip(headers, cells))
             if looks_like_trigger and "row_type" not in row:
                 row["row_type"] = "trigger"
+            elif looks_like_case and "row_type" not in row:
+                row["row_type"] = "case"
+            elif looks_like_coverage and "row_type" not in row:
+                row["row_type"] = "coverage_matrix"
+            elif looks_like_rule_candidate and "row_type" not in row:
+                row["row_type"] = "sector_rule_candidate"
             _append_row(
                 rows_by_type,
                 row,
@@ -242,6 +313,12 @@ def _parse_markdown_tables(text: str, rows_by_type: dict[str, list[dict[str, Any
 def parse_markdown_document(document: MarkdownDocument) -> ParsedMarkdown:
     text = document.path.read_text(encoding="utf-8", errors="replace")
     metadata = _parse_metadata(text)
+    if document.large_sector_id is None and metadata.get("large_sector_id"):
+        object.__setattr__(document, "large_sector_id", metadata.get("large_sector_id"))
+    if document.canonical_archetype_id is None and metadata.get("canonical_archetype_id"):
+        object.__setattr__(document, "canonical_archetype_id", metadata.get("canonical_archetype_id"))
+    if document.fine_archetype_id is None and metadata.get("fine_archetype_id"):
+        object.__setattr__(document, "fine_archetype_id", metadata.get("fine_archetype_id"))
     rows_by_type: dict[str, list[dict[str, Any]]] = {row_type: [] for row_type in ROW_TYPES}
 
     try:
@@ -252,8 +329,12 @@ def parse_markdown_document(document: MarkdownDocument) -> ParsedMarkdown:
             candidate = {
                 "row_type": "price_source_validation",
                 "source": metadata.get("price_source"),
-                "price_basis": metadata.get("price_basis"),
-                "price_adjustment_status": metadata.get("price_adjustment_status"),
+                "price_data_source": metadata.get("price_source"),
+                "price_basis": metadata.get("price_basis", "tradable_raw" if document.schema_family == "v12_sector_archetype_residual" else None),
+                "price_adjustment_status": metadata.get(
+                    "price_adjustment_status",
+                    "raw_unadjusted_marcap" if document.schema_family == "v12_sector_archetype_residual" else None,
+                ),
                 "validation_status": "metadata_fallback",
             }
             if candidate["source"]:
@@ -265,6 +346,46 @@ def parse_markdown_document(document: MarkdownDocument) -> ParsedMarkdown:
                     line_number=None,
                     raw_snippet=json.dumps(candidate, ensure_ascii=False),
                 )
+        if document.schema_family == "v12_sector_archetype_residual":
+            doc_flags = _v12_document_flags(text)
+            residual_row = {
+                "row_type": "residual_contribution",
+                "research_session": metadata.get("research_session"),
+                "mode": metadata.get("mode"),
+                "round": document.round or metadata.get("round"),
+                "loop": document.loop or metadata.get("loop"),
+                "large_sector_id": document.large_sector_id or metadata.get("large_sector_id"),
+                "canonical_archetype_id": document.canonical_archetype_id or metadata.get("canonical_archetype_id"),
+                "fine_archetype_id": document.fine_archetype_id or metadata.get("fine_archetype_id"),
+                "loop_objective": metadata.get("loop_objective"),
+                "current_default_profile_proxy": metadata.get("current_default_profile_proxy") or metadata.get("current_default_proxy"),
+                "previous_baseline_reference": metadata.get("previous_baseline_reference"),
+                "new_independent_case_count": metadata.get("new_independent_case_count"),
+                "reused_case_count": metadata.get("reused_case_count"),
+                "new_symbol_count": metadata.get("new_symbol_count"),
+                "same_archetype_new_symbol_count": metadata.get("same_archetype_new_symbol_count"),
+                "same_archetype_new_trigger_family_count": metadata.get("same_archetype_new_trigger_family_count"),
+                "positive_case_count": metadata.get("positive_case_count"),
+                "counterexample_count": metadata.get("counterexample_count"),
+                "4B_case_count": metadata.get("4B_case_count"),
+                "4C_case_count": metadata.get("4C_case_count"),
+                "loop_contribution_label": metadata.get("loop_contribution_label"),
+                "do_not_propose_new_weight_delta": metadata.get("do_not_propose_new_weight_delta"),
+                "auto_selected_coverage_gap": metadata.get("auto_selected_coverage_gap"),
+                **doc_flags,
+            }
+            _append_row(
+                rows_by_type,
+                residual_row,
+                document=document,
+                method="metadata_residual_summary",
+                line_number=None,
+                raw_snippet=json.dumps(residual_row, ensure_ascii=False),
+            )
+            for typed_rows in rows_by_type.values():
+                for row in typed_rows:
+                    row.setdefault("evidence_url_pending", doc_flags["evidence_url_pending"])
+                    row.setdefault("source_proxy_only", doc_flags["source_proxy_only"])
     except Exception as exc:  # pragma: no cover - defensive registry path
         return ParsedMarkdown(
             registry_row=_registry_row(document, metadata, rows_by_type, "failed", str(exc)),
@@ -292,9 +413,16 @@ def _registry_row(
     return {
         "file_path": str(document.path),
         "sha256": document.sha256,
+        "filename": document.filename or document.path.name,
+        "schema_family": document.schema_family,
         "round": document.round or metadata.get("round"),
         "loop": document.loop or metadata.get("loop"),
         "sector": metadata.get("sector"),
+        "large_sector_id": document.large_sector_id or metadata.get("large_sector_id"),
+        "canonical_archetype_id": document.canonical_archetype_id or metadata.get("canonical_archetype_id"),
+        "fine_archetype_id": document.fine_archetype_id or metadata.get("fine_archetype_id"),
+        "loop_objective": metadata.get("loop_objective"),
+        "loop_contribution_label": metadata.get("loop_contribution_label"),
         "extraction_status": status,
         "parsed_trigger_row_count": trigger_count,
         "rejected_row_count": rejected_count,

@@ -10,6 +10,7 @@ import json
 from .aggregate import aggregate_validated_rows
 from .scoring_profile import ACTIVE_PROFILE_PATH, BASELINE_PROFILE_PATH, CALIBRATED_PROFILE_PATH
 from .validation import FOUR_B_TYPES, FOUR_C_TYPES, POSITIVE_TRIGGER_TYPES
+from .v12_shadow import build_v12_shadow_payloads
 
 
 @dataclass(frozen=True)
@@ -375,3 +376,63 @@ def _write_promoted_profiles() -> None:
         },
     )
     _write_yaml(ACTIVE_PROFILE_PATH, {"active_profile": "calibrated", "rollback_profile": "baseline"})
+
+
+def build_v12_sector_archetype_shadow_profiles(
+    representative_rows: list[dict[str, Any]],
+    aggregate_metrics: list[dict[str, Any]],
+    stage_transition_rows: list[dict[str, Any]],
+    rejected_rows: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Build v12 shadow profiles without changing the active default profile."""
+
+    payloads = build_v12_shadow_payloads(representative_rows, aggregate_metrics, stage_transition_rows, rejected_rows or [])
+    return {
+        "sector_shadow_profile": payloads["sector_shadow_profile"],
+        "archetype_shadow_profile": payloads["archetype_shadow_profile"],
+    }
+
+
+def build_e2r_2_2_candidate_profile(
+    representative_rows: list[dict[str, Any]],
+    aggregate_metrics: list[dict[str, Any]],
+    stage_transition_rows: list[dict[str, Any]],
+    rejected_rows: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Build the e2r_2_2 candidate profile while leaving e2r_2_1 active."""
+
+    return build_v12_shadow_payloads(
+        representative_rows,
+        aggregate_metrics,
+        stage_transition_rows,
+        rejected_rows or [],
+    )["e2r_2_2_candidate_profile"]
+
+
+def promote_v12_candidate_to_default(
+    candidate_profile: dict[str, Any],
+    *,
+    explicit_user_approval: bool = False,
+) -> dict[str, Any]:
+    """Guarded placeholder for a future v12 default promotion task."""
+
+    if not explicit_user_approval:
+        return {
+            "promotion_status": "shadow_only_not_promoted",
+            "production_default_scoring_changed": False,
+            "active_profile_preserved": True,
+            "reason": "explicit_user_approval_required",
+        }
+    if not candidate_profile.get("promotion_ready"):
+        return {
+            "promotion_status": "blocked_by_promotion_readiness",
+            "production_default_scoring_changed": False,
+            "active_profile_preserved": True,
+            "reason": "promotion_readiness_report_not_clear",
+        }
+    return {
+        "promotion_status": "ready_for_future_patch_only",
+        "production_default_scoring_changed": False,
+        "active_profile_preserved": True,
+        "reason": "future_task_must_patch_runtime_scoring_explicitly",
+    }
