@@ -47,6 +47,7 @@ def runtime_profile(path: Path) -> ScoringProfile:
             "rolling_calibration_enabled": True,
             "archetype_weight_runtime_enabled": True,
             "archetype_weight_profile_path": str(path),
+            "archetype_weight_fallback_diagnostics_required": True,
             "price_only_blowoff_blocks_positive_stage": True,
             "full_4b_requires_non_price_evidence": True,
             "hard_4c_thesis_break_routes_to_4c": True,
@@ -188,7 +189,7 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
             self.assertEqual(kbeauty_stage.stage, Stage.STAGE_3_GREEN)
             self.assertNotEqual(industrial_stage.stage, Stage.STAGE_3_GREEN)
 
-    def test_missing_archetype_falls_back_to_canonical_total(self):
+    def test_missing_archetype_fallback_is_explicitly_diagnosed(self):
         with tempfile.TemporaryDirectory() as tmp:
             profile_path = Path(tmp) / "profile.json"
             profile_path.write_text(
@@ -207,6 +208,51 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
 
             self.assertEqual(score.total_score, sum(payload.components.values()))
             self.assertNotIn("archetype_weight_profile_applied", score.diagnostic_scores)
+            self.assertEqual(score.diagnostic_scores["archetype_weight_fallback_used"], 1.0)
+            self.assertEqual(score.diagnostic_scores["archetype_weight_fallback_unknown_archetype"], 1.0)
+            self.assertIn("archetype_weight:fallback", score.scoring_version)
+
+    def test_missing_archetype_scope_fallback_is_not_silent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            profile_path = Path(tmp) / "profile.json"
+            profile_path.write_text(
+                json.dumps(build_archetype_weight_profile_payload(), ensure_ascii=False),
+                encoding="utf-8",
+            )
+            payload = ScoringPayload(
+                symbol="NO_SCOPE",
+                as_of_date=date(2026, 5, 14),
+                components=complete_components(eps_fcf_explosion=10.0),
+            )
+
+            with patch("e2r.scoring.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
+                score = DeterministicScorer().score(payload)
+
+            self.assertEqual(score.total_score, sum(payload.components.values()))
+            self.assertEqual(score.diagnostic_scores["archetype_weight_fallback_used"], 1.0)
+            self.assertEqual(score.diagnostic_scores["archetype_weight_fallback_missing_scope"], 1.0)
+
+    def test_unknown_canonical_archetype_large_sector_fallback_is_explicit(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            profile_path = Path(tmp) / "profile.json"
+            profile_path.write_text(
+                json.dumps(build_archetype_weight_profile_payload(), ensure_ascii=False),
+                encoding="utf-8",
+            )
+            payload = ScoringPayload(
+                symbol="SECTOR_ONLY",
+                as_of_date=date(2026, 5, 14),
+                components=complete_components(eps_fcf_explosion=10.0),
+                large_sector_id="L5_CONSUMER_BRAND_DISTRIBUTION",
+                canonical_archetype_id="UNKNOWN_ARCHETYPE",
+            )
+
+            with patch("e2r.scoring.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
+                score = DeterministicScorer().score(payload)
+
+            self.assertIn("archetype_weight:L5_CONSUMER_BRAND_DISTRIBUTION", score.scoring_version)
+            self.assertEqual(score.diagnostic_scores["archetype_weight_match_is_large_sector"], 1.0)
+            self.assertEqual(score.diagnostic_scores["archetype_weight_canonical_missing_large_sector_fallback"], 1.0)
 
 
 if __name__ == "__main__":

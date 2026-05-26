@@ -180,8 +180,18 @@ def _apply_archetype_runtime_weights(payload: ScoringPayload, profile) -> Weight
         large_sector_id=payload.large_sector_id,
     )
     if weighted.match is None:
-        return weighted
+        return WeightedComponents(
+            components=weighted.components,
+            diagnostics=_archetype_weight_fallback_diagnostics(payload, runtime_profile),
+            match=None,
+        )
     diagnostics = dict(weighted.diagnostics)
+    if (
+        weighted.match.matched_scope == "large_sector"
+        and payload.canonical_archetype_id
+        and payload.canonical_archetype_id not in runtime_profile.archetype_weights
+    ):
+        diagnostics["archetype_weight_canonical_missing_large_sector_fallback"] = 1.0
     diagnostics["archetype_green_restricted_by_profile"] = (
         1.0
         if any(
@@ -198,8 +208,27 @@ def _apply_archetype_runtime_weights(payload: ScoringPayload, profile) -> Weight
     return WeightedComponents(components=weighted.components, diagnostics=diagnostics, match=weighted.match)
 
 
+def _archetype_weight_fallback_diagnostics(payload: ScoringPayload, runtime_profile) -> dict[str, float]:
+    diagnostics = {"archetype_weight_fallback_used": 1.0}
+    if not runtime_profile.enabled or not runtime_profile.archetype_weights or not runtime_profile.large_sector_weights:
+        diagnostics["archetype_weight_fallback_profile_unavailable"] = 1.0
+        return diagnostics
+    if not payload.canonical_archetype_id and not payload.large_sector_id:
+        diagnostics["archetype_weight_fallback_missing_scope"] = 1.0
+        return diagnostics
+    if payload.canonical_archetype_id and payload.canonical_archetype_id not in runtime_profile.archetype_weights:
+        diagnostics["archetype_weight_fallback_unknown_archetype"] = 1.0
+    if payload.large_sector_id and payload.large_sector_id not in runtime_profile.large_sector_weights:
+        diagnostics["archetype_weight_fallback_unknown_large_sector"] = 1.0
+    if len(diagnostics) == 1:
+        diagnostics["archetype_weight_fallback_no_match"] = 1.0
+    return diagnostics
+
+
 def _scoring_version(base_version: str, profile_id: str, weighted: WeightedComponents) -> str:
     if weighted.match is None:
+        if weighted.diagnostics.get("archetype_weight_fallback_used", 0.0) > 0:
+            return f"{base_version}:{profile_id}:archetype_weight:fallback"
         return f"{base_version}:{profile_id}"
     return f"{base_version}:{profile_id}:archetype_weight:{weighted.match.profile_key}"
 

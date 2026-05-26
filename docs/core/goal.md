@@ -43,7 +43,7 @@ rollback_profile: calibrated
 자세한 시각화 문서는 다음 파일을 먼저 본다.
 
 ```text
-docs/core/v12_rolling_calibration_architecture.md
+docs/core/Architecture.md
 ```
 
 ## 표준 명령
@@ -237,6 +237,38 @@ payload:
   positive Stage 승격도 price-only guard에 막힌다.
 ```
 
+fallback은 정상 성공으로 숨기지 않는다.
+
+```text
+payload:
+  canonical_archetype_id 없음
+  large_sector_id 없음
+
+결과:
+  archetype_weight_fallback_used = 1
+  archetype_weight_fallback_missing_scope = 1
+
+의미:
+  이 후보는 아키타입별 점수비중이 적용되지 않았다.
+  mapper 또는 feature pipeline의 sector/archetype 연결을 고쳐야 한다.
+```
+
+또 다른 예시:
+
+```text
+payload:
+  canonical_archetype_id = UNKNOWN_ARCHETYPE
+  large_sector_id = L5_CONSUMER_BRAND_DISTRIBUTION
+
+결과:
+  large sector weight는 적용될 수 있지만
+  archetype_weight_canonical_missing_large_sector_fallback = 1
+
+의미:
+  완전한 C20/C18/C19 같은 canonical archetype 매핑은 실패했고,
+  임시로 L5 대섹터 weight만 쓴 것이다.
+```
+
 ## 필수 산출물
 
 데이터:
@@ -335,7 +367,7 @@ PYTHONPATH=src python -m unittest discover -s tests -v
 ## 완료 기준
 
 ```text
-docs/core/v12_rolling_calibration_architecture.md가 최신 흐름을 설명한다.
+docs/core/Architecture.md가 최신 흐름을 설명한다.
 docs/core/goal.md가 run-v12-calibration 중심으로 정리되어 있다.
 run-v12-calibration이 기본 적용 플로우로 명시되어 있다.
 run-v12-full은 진단 플로우로만 설명되어 있다.

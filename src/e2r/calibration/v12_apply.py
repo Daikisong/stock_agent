@@ -123,6 +123,7 @@ def build_v12_rolling_profile_payload(
             "rolling_calibration_source": "v12_apply_next_patch_specs",
             "archetype_weight_runtime_enabled": True,
             "archetype_weight_profile_path": "configs/e2r_archetype_weight_profile_v2_2.json",
+            "archetype_weight_fallback_diagnostics_required": True,
             "stage3_green_not_loosened_by_v12": True,
             "case_library_not_candidate_input": True,
             "price_only_blowoff_blocks_positive_stage": True,
