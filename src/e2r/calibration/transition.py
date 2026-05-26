@@ -35,6 +35,18 @@ def _return_pct(from_price: Any, to_price: Any) -> float | None:
     return round((end / start - 1.0) * 100.0, 4)
 
 
+def _capture_pct(base_price: Any, marker_price: Any, peak_price: Any) -> float | None:
+    base = _num(base_price)
+    marker = _num(marker_price)
+    peak = _num(peak_price)
+    if base is None or marker is None or peak is None:
+        return None
+    denominator = peak - base
+    if denominator <= 0:
+        return None
+    return round(((marker - base) / denominator) * 100.0, 4)
+
+
 def _best_row(rows: list[dict[str, Any]], stage_types: set[str]) -> dict[str, Any] | None:
     candidates = [row for row in rows if row.get("trigger_type") in stage_types]
     if not candidates:
@@ -98,8 +110,10 @@ def build_stage_transition_summary(rows: list[dict[str, Any]]) -> list[dict[str,
         four_c = _best_row(members, {"Stage4C"})
         peak_price, peak_date = _peak_price(members)
         stage2_price = stage2.get("entry_price") if stage2 else None
+        yellow_price = yellow.get("entry_price") if yellow else None
         green_price = green.get("entry_price") if green else None
         four_b_price = four_b.get("entry_price") if four_b else None
+        four_b_mae90 = four_b.get("MAE_90D_pct") if four_b else None
         summary = {
             "case_id": case_id,
             "symbol": symbol,
@@ -110,6 +124,8 @@ def build_stage_transition_summary(rows: list[dict[str, Any]]) -> list[dict[str,
             "stage2_entry_date": stage2.get("entry_date") if stage2 else None,
             "stage2_entry_price": stage2_price,
             "stage3_yellow_trigger_id": yellow.get("trigger_id") if yellow else None,
+            "stage3_yellow_entry_date": yellow.get("entry_date") if yellow else None,
+            "stage3_yellow_entry_price": yellow_price,
             "stage3_green_trigger_id": green.get("trigger_id") if green else None,
             "stage3_green_entry_date": green.get("entry_date") if green else None,
             "stage3_green_entry_price": green_price,
@@ -120,11 +136,14 @@ def build_stage_transition_summary(rows: list[dict[str, Any]]) -> list[dict[str,
             "stage4c_entry_date": four_c.get("entry_date") if four_c else None,
             "peak_price": peak_price,
             "peak_date": peak_date,
+            "stage2_to_yellow_return_pct": _return_pct(stage2_price, yellow_price),
             "stage2_to_green_return_pct": _return_pct(stage2_price, green_price),
             "stage2_to_4b_return_pct": _return_pct(stage2_price, four_b_price),
             "stage2_to_peak_return_pct": _return_pct(stage2_price, peak_price),
             "green_to_peak_remaining_upside_pct": _return_pct(green_price, peak_price),
-            "stage4b_peak_capture_pct": _return_pct(stage2_price, four_b_price),
+            "green_upside_capture_pct": _capture_pct(stage2_price, green_price, peak_price),
+            "stage4b_peak_capture_pct": _capture_pct(stage2_price, four_b_price, peak_price),
+            "stage4b_to_90d_low_return_pct": four_b_mae90,
             "peak_to_4c_drawdown_pct": _return_pct(peak_price, four_c.get("entry_price") if four_c else None),
             "transition_verdict": _transition_verdict(stage2, green, four_b, four_c),
         }
@@ -168,12 +187,12 @@ def render_stage_transition_report(rows: list[dict[str, Any]], title: str = "V12
         "",
         f"- stage_transition_summary_rows: `{len(rows)}`",
         "",
-        "| case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | verdict |",
-        "|---|---|---|---:|---:|---:|---:|---|",
+        "| case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |",
+        "|---|---|---|---:|---:|---:|---:|---:|---|",
     ]
     for row in rows:
         lines.append(
-            "| {case_id} | {symbol} | {arch} | {s2} | {green} | {b4} | {peak} | {verdict} |".format(
+            "| {case_id} | {symbol} | {arch} | {s2} | {green} | {b4} | {peak} | {capture} | {verdict} |".format(
                 case_id=row.get("case_id"),
                 symbol=row.get("symbol"),
                 arch=row.get("canonical_archetype_id"),
@@ -181,6 +200,7 @@ def render_stage_transition_report(rows: list[dict[str, Any]], title: str = "V12
                 green=row.get("stage3_green_entry_price"),
                 b4=row.get("stage4b_entry_price"),
                 peak=row.get("stage2_to_peak_return_pct"),
+                capture=row.get("stage4b_peak_capture_pct"),
                 verdict=row.get("transition_verdict"),
             )
         )

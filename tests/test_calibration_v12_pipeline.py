@@ -116,12 +116,17 @@ class V12CalibrationPipelineTests(unittest.TestCase):
     def test_stage_transition_summary_generated(self) -> None:
         rows = [
             {"case_id": "case", "symbol": "000810", "trigger_type": "Stage2-Actionable", "entry_date": "2024-02-23", "entry_price": 1000, "MFE_180D_pct": 40},
-            {"case_id": "case", "symbol": "000810", "trigger_type": "Stage3-Green", "entry_date": "2024-05-16", "entry_price": 1200, "MFE_180D_pct": 18, "current_profile_too_late": True},
-            {"case_id": "case", "symbol": "000810", "trigger_type": "Stage4B", "entry_date": "2024-08-22", "entry_price": 1350, "v12_4b_quality": "good_4b_timing"},
+            {"case_id": "case", "symbol": "000810", "trigger_type": "Stage3-Yellow", "entry_date": "2024-04-01", "entry_price": 1100, "MFE_180D_pct": 25},
+            {"case_id": "case", "symbol": "000810", "trigger_type": "Stage3-Green", "entry_date": "2024-05-16", "entry_price": 1200, "MFE_180D_pct": 5, "current_profile_too_late": True},
+            {"case_id": "case", "symbol": "000810", "trigger_type": "Stage4B", "entry_date": "2024-08-22", "entry_price": 1350, "MFE_180D_pct": 1, "MAE_90D_pct": -12, "v12_4b_quality": "good_4b_timing"},
         ]
         summary = build_stage_transition_summary(rows)
         self.assertEqual(len(summary), 1)
+        self.assertEqual(summary[0]["stage2_to_yellow_return_pct"], 10.0)
         self.assertEqual(summary[0]["stage2_to_green_return_pct"], 20.0)
+        self.assertEqual(summary[0]["green_upside_capture_pct"], 50.0)
+        self.assertEqual(summary[0]["stage4b_peak_capture_pct"], 87.5)
+        self.assertEqual(summary[0]["stage4b_to_90d_low_return_pct"], -12)
         self.assertEqual(summary[0]["transition_verdict"], "4b_good_peak_capture")
 
     def test_v12_full_run_writes_shadow_outputs_and_preserves_active_profile(self) -> None:
