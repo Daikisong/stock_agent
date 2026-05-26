@@ -10,6 +10,7 @@ import json
 from .aggregate import aggregate_validated_rows
 from .scoring_profile import ACTIVE_PROFILE_PATH, BASELINE_PROFILE_PATH, CALIBRATED_PROFILE_PATH
 from .validation import FOUR_B_TYPES, FOUR_C_TYPES, POSITIVE_TRIGGER_TYPES
+from .v12_promotion_planner import build_v12_promotion_plan
 from .v12_shadow import build_v12_shadow_payloads
 
 
@@ -401,12 +402,29 @@ def build_e2r_2_2_candidate_profile(
 ) -> dict[str, Any]:
     """Build the e2r_2_2 candidate profile while leaving e2r_2_1 active."""
 
-    return build_v12_shadow_payloads(
+    payloads = build_v12_shadow_payloads(
         representative_rows,
         aggregate_metrics,
         stage_transition_rows,
         rejected_rows or [],
-    )["e2r_2_2_candidate_profile"]
+    )
+    promotion_plan = build_v12_promotion_plan(
+        representative_rows,
+        aggregate_metrics,
+        stage_transition_rows,
+        payloads["v12_shadow_weight_candidates"],
+        rejected_rows or [],
+    )
+    profile = dict(payloads["e2r_2_2_candidate_profile"])
+    profile.update(
+        {
+            "promotion_decision_counts": promotion_plan["decision_counts"],
+            "promotion_type_counts": promotion_plan["promotion_type_counts"],
+            "apply_next_patch_count": len(promotion_plan["patch_specs"]),
+            "next_patch_ready": promotion_plan["next_patch_ready"],
+        }
+    )
+    return profile
 
 
 def promote_v12_candidate_to_default(

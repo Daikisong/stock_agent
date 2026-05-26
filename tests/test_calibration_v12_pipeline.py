@@ -8,6 +8,7 @@ from e2r.calibration.cli import build_parser, run_v12_full_pipeline
 from e2r.calibration.dedupe import dedupe_v12_trigger_rows
 from e2r.calibration.md_discovery import discover_markdown_documents, v12_result_documents
 from e2r.calibration.md_parser import parse_markdown_document
+from e2r.calibration.promotion import build_e2r_2_2_candidate_profile
 from e2r.calibration.scoring_profile import (
     load_archetype_shadow_profile,
     load_e2r_2_2_candidate_profile,
@@ -263,6 +264,68 @@ class V12CalibrationPipelineTests(unittest.TestCase):
         plan = build_v12_promotion_plan([], [], transitions, candidates)
         self.assertEqual(plan["promotion_decisions"][0]["decision"], "blocked_by_data_quality")
         self.assertEqual(plan["patch_specs"], [])
+
+    def test_direct_e2r_2_2_candidate_profile_helper_includes_promotion_decisions(self) -> None:
+        rows = [
+            {
+                "trigger_id": "T1",
+                "case_id": "C1",
+                "symbol": "A",
+                "large_sector_id": "L0_TEST",
+                "canonical_archetype_id": "C99_PRICE_ONLY_THEME",
+                "positive_or_counterexample": "counterexample",
+                "case_type": "overheat",
+                "trigger_type": "Stage4B",
+                "v12_4b_quality": "price_only_4b",
+            },
+            {
+                "trigger_id": "T2",
+                "case_id": "C2",
+                "symbol": "B",
+                "large_sector_id": "L0_TEST",
+                "canonical_archetype_id": "C99_PRICE_ONLY_THEME",
+                "positive_or_counterexample": "counterexample",
+                "case_type": "overheat",
+                "trigger_type": "Stage2",
+                "v12_stage2_quality": "bad_stage2",
+                "MAE_90D_pct": -30,
+            },
+            {
+                "trigger_id": "T3",
+                "case_id": "C3",
+                "symbol": "C",
+                "large_sector_id": "L0_TEST",
+                "canonical_archetype_id": "C99_PRICE_ONLY_THEME",
+                "positive_or_counterexample": "counterexample",
+                "case_type": "failed_rerating",
+                "trigger_type": "Stage4C",
+                "v12_4c_quality": "late_4c",
+            },
+        ]
+        aggregate_metrics = [
+            {
+                "group_name": "canonical_archetype_id",
+                "group_value": "C99_PRICE_ONLY_THEME",
+                "row_count": 3,
+                "unique_symbol_count": 3,
+                "positive_case_count": 0,
+                "counterexample_count": 3,
+                "good_stage2_count": 0,
+                "bad_stage2_count": 1,
+                "stage2_high_mae_count": 1,
+                "good_4b_timing_count": 0,
+                "too_early_4b_count": 0,
+                "price_only_4b_count": 1,
+                "4c_late_count": 1,
+                "hard_4c_count": 0,
+                "source_proxy_only_count": 0,
+                "evidence_url_pending_count": 0,
+            }
+        ]
+        profile = build_e2r_2_2_candidate_profile(rows, aggregate_metrics, [])
+        self.assertFalse(profile["production_default_scoring_changed"])
+        self.assertIn("promotion_decision_counts", profile)
+        self.assertEqual(profile["apply_next_patch_count"], 3)
 
     def test_v12_cli_argument_parsing(self) -> None:
         args = build_parser().parse_args(
