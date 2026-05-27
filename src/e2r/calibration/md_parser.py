@@ -310,6 +310,55 @@ def _parse_markdown_tables(text: str, rows_by_type: dict[str, list[dict[str, Any
             )
 
 
+def _enrich_trigger_rows_by_trigger_id(rows_by_type: dict[str, list[dict[str, Any]]]) -> None:
+    """Merge trigger-grid metadata into OHLC trigger rows with the same id.
+
+    Several v12 research files separate the trigger grid from the price-path
+    table. The OHLC table is the row usable for validation because it has
+    MFE/MAE, but it may omit ``trigger_type`` and case verdict fields. Treating
+    that omission as a valid blank trigger silently weakens stage transition
+    aggregation, so we copy non-price metadata from the trigger-grid row.
+    """
+
+    trigger_rows = rows_by_type.get("trigger", [])
+    metadata_by_trigger_id: dict[str, dict[str, Any]] = {}
+    metadata_keys = (
+        "case_id",
+        "trigger_type",
+        "trigger_date",
+        "trigger_outcome_label",
+        "current_profile_verdict",
+        "aggregate_group_role",
+        "case_type",
+        "positive_or_counterexample",
+        "dedupe_for_aggregate",
+        "calibration_usable",
+        "evidence_source",
+        "evidence_available_at_that_date",
+    )
+    for row in trigger_rows:
+        trigger_id = str(row.get("trigger_id") or "").strip()
+        if not trigger_id:
+            continue
+        if not row.get("trigger_type") and not row.get("case_id"):
+            continue
+        metadata = metadata_by_trigger_id.setdefault(trigger_id, {})
+        for key in metadata_keys:
+            value = row.get(key)
+            if value not in (None, "") and key not in metadata:
+                metadata[key] = value
+    for row in trigger_rows:
+        trigger_id = str(row.get("trigger_id") or "").strip()
+        if not trigger_id:
+            continue
+        metadata = metadata_by_trigger_id.get(trigger_id)
+        if not metadata:
+            continue
+        for key, value in metadata.items():
+            if row.get(key) in (None, ""):
+                row[key] = value
+
+
 def parse_markdown_document(document: MarkdownDocument) -> ParsedMarkdown:
     text = document.path.read_text(encoding="utf-8", errors="replace")
     metadata = _parse_metadata(text)
@@ -325,6 +374,7 @@ def parse_markdown_document(document: MarkdownDocument) -> ParsedMarkdown:
         _parse_json_lines(text, rows_by_type, document)
         _parse_csv_fences(text, rows_by_type, document)
         _parse_markdown_tables(text, rows_by_type, document)
+        _enrich_trigger_rows_by_trigger_id(rows_by_type)
         if not rows_by_type["price_source_validation"]:
             candidate = {
                 "row_type": "price_source_validation",

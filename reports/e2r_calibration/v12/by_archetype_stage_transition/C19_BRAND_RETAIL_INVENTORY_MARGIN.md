@@ -3,15 +3,20 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `14`
+- stage_transition_summary_rows: `22`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
 | C19-036620-2023-SNOWPEAK-MARGIN-BRIDGE | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 3150.0 | None | None | 66.0476 | None | stage2_actionable_best_entry |
+| C19-036620-2023-SNOWPEAK-MARGIN-BRIDGE | None | C19_BRAND_RETAIL_INVENTORY_MARGIN | 3150.0 | None | None | 66.0476 | None | stage2_actionable_best_entry |
 | C19-110790-2022-GOLF-APPAREL-PEAK-INVENTORY | 110790 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19-110790-2022-GOLF-APPAREL-PEAK-INVENTORY | None | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
 | C19-111770-2022-OEM-BRAND-INVENTORY-DISCIPLINE | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 44000.0 | None | None | 24.0 | None | stage2_actionable_best_entry |
+| C19-111770-2022-OEM-BRAND-INVENTORY-DISCIPLINE | None | C19_BRAND_RETAIL_INVENTORY_MARGIN | 44000.0 | None | None | 24.0 | None | stage2_actionable_best_entry |
 | C19-298540-2022-NATIONALGEOGRAPHIC-INVENTORY-SLOWDOWN | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 32900.0 | None | None | 1.4 | None | stage2_actionable_best_entry |
+| C19-298540-2022-NATIONALGEOGRAPHIC-INVENTORY-SLOWDOWN | None | C19_BRAND_RETAIL_INVENTORY_MARGIN | 32900.0 | None | None | 1.4 | None | stage2_actionable_best_entry |
 | C19-383220-2023-FNF-CHINA-GROWTH-MULTIPLE-CAP | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19-383220-2023-FNF-CHINA-GROWTH-MULTIPLE-CAP | None | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
 | R13L42-C19-036620-GAMSUNG-2024-REORDER-MARGIN | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 3025.0 | 4505.0 | None | 55.0465 | None | green_too_late |
 | R13L42-C19-298540-NATURE-2024-INVENTORY-COUNTER | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 15550.0 | None | None | 3.79 | None | 4c_too_late |
 | R13L42-C19-337930-BRANDX-2024-ATHLEISURE-REORDER | 337930 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 5750.0 | None | 12540.0 | 132.7 | 88.9879 | 4b_good_peak_capture |
@@ -20,4 +25,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R13L45_C19_081660_FILA_TURNAROUND_FALSE_POSITIVE_4B | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 41900.0 | None | 44450.0 | 6.32 | 96.2962 | stage2_actionable_best_entry |
 | R13L45_C19_298540_NATURE_INVENTORY_FALSE_POSITIVE | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 15780.0 | None | None | 2.03 | None | stage2_actionable_best_entry |
 | R13L45_C19_337930_BRANDX_DTC_REORDER_SUCCESS_4B | 337930 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 5750.0 | 11430.0 | 12540.0 | 132.7 | 88.9879 | green_too_late |
-| None | None | C19_BRAND_RETAIL_INVENTORY_MARGIN | 44000.0 | None | None | 244.7452 | None | stage2_actionable_best_entry |
+| R5L31_C19_FNF_20230516_CHINA_INVENTORY_FALSE_GREEN | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 137900.0 | None | None | 2.76 | None | 4c_too_late |
+| R5L31_C19_HANSAE_20230616_OEM_INVENTORY_RESTOCK_SUCCESS | 105630 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 17880.0 | None | 22850.0 | 33.1128 | 83.9448 | 4b_good_peak_capture |
+| R5L31_C19_NATURE_20230516_OUTDOOR_INVENTORY_COUNTER | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 25850.0 | None | None | 7.16 | None | stage2_actionable_best_entry |
+| R5L31_C19_YOUNGONE_20230515_OEM_BRAND_MARGIN_SUCCESS | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 47500.0 | None | None | 42.95 | None | stage2_actionable_best_entry |

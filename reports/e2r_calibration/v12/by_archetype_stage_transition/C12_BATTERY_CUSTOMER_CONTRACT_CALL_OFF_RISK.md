@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `11`
+- stage_transition_summary_rows: `14`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -14,7 +14,10 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C12-R3L65-361610 | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C12-R3L65-373220 | 373220 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | R3L69_C12_CASE_001_POSCO_FUTURE_M_SDI_CATHODE_CONTRACT | 003670 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 224000.0 | None | None | 209.82 | None | stage2_actionable_best_entry |
+| R3L69_C12_CASE_001_POSCO_FUTURE_M_SDI_CATHODE_CONTRACT | None | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 224000.0 | None | None | 209.82 | None | stage2_actionable_best_entry |
 | R3L69_C12_CASE_002_COSMO_AMT_CATHODE_REORDER_CAPACITY | 005070 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 95200.0 | None | None | 154.73 | None | stage2_actionable_best_entry |
+| R3L69_C12_CASE_002_COSMO_AMT_CATHODE_REORDER_CAPACITY | None | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 95200.0 | None | None | 154.73 | None | stage2_actionable_best_entry |
 | R3L69_C12_CASE_003_CHUNBO_ELECTROLYTE_DESTOCKING | 278280 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
+| R3L69_C12_CASE_003_CHUNBO_ELECTROLYTE_DESTOCKING | None | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | R3L69_C12_CASE_004_SOLUS_COPPERFOIL_CUSTOMER_RAMP | 336370 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
-| None | None | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 224000.0 | None | None | 209.82 | None | stage2_actionable_best_entry |
+| R3L69_C12_CASE_004_SOLUS_COPPERFOIL_CUSTOMER_RAMP | None | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |

@@ -61,6 +61,7 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
 
         self.assertIn("C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION", payload["archetype_weights"])
         self.assertIn("C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG", payload["archetype_weights"])
+        self.assertIn("C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY", payload["archetype_weights"])
         for row in payload["archetype_weights"].values():
             self.assertAlmostEqual(sum(row["weights"].values()), 100.0, places=4)
 
@@ -132,6 +133,38 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
             self.assertEqual(score.diagnostic_scores["archetype_weight_profile_applied"], 1.0)
             self.assertEqual(score.diagnostic_scores["archetype_weight_match_is_archetype"], 1.0)
             self.assertIn("archetype_weight:C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION", score.scoring_version)
+
+    def test_c08_semiconductor_test_socket_uses_canonical_weight_without_fallback(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            profile_path = Path(tmp) / "profile.json"
+            profile_path.write_text(
+                json.dumps(build_archetype_weight_profile_payload(), ensure_ascii=False),
+                encoding="utf-8",
+            )
+            payload = ScoringPayload(
+                symbol="SEMI_SOCKET",
+                as_of_date=date(2026, 5, 14),
+                components=complete_components(
+                    eps_fcf_explosion=15.0,
+                    earnings_visibility=17.0,
+                    bottleneck_pricing=12.0,
+                    market_mispricing=10.0,
+                    valuation_rerating=9.0,
+                    capital_allocation=3.0,
+                    information_confidence=4.0,
+                ),
+                large_sector_id="L2_AI_SEMICONDUCTOR_ELECTRONICS",
+                canonical_archetype_id="C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+            )
+
+            with patch("e2r.scoring.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
+                score = DeterministicScorer().score(payload)
+
+            self.assertEqual(score.diagnostic_scores["archetype_weight_profile_applied"], 1.0)
+            self.assertEqual(score.diagnostic_scores["archetype_weight_match_is_archetype"], 1.0)
+            self.assertNotIn("archetype_weight_canonical_missing_large_sector_fallback", score.diagnostic_scores)
+            self.assertNotIn("archetype_weight_fallback_used", score.diagnostic_scores)
+            self.assertIn("archetype_weight:C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY", score.scoring_version)
 
     def test_kbeauty_green_can_use_non_contract_visibility_but_industrial_requires_contract_if_marked(self):
         with tempfile.TemporaryDirectory() as tmp:

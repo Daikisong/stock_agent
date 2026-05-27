@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `18`
+- stage_transition_summary_rows: `28`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -16,12 +16,22 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C27_263720_DNC_SOLO_LEVELING_2024 | 263720 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 29850.0 | None | 33400.0 | 29.3145 | 40.5697 | stage2_actionable_best_entry |
 | C27_293490_KAKAOGAMES_ODIN_2021 | 293490 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 59700.0 | None | 108700.0 | 94.3126 | 87.0266 | 4b_good_peak_capture |
 | C27_HYBE_20210618_WEVERSE_IP | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 313000.0 | None | None | 34.7 | None | stage2_actionable_best_entry |
+| C27_HYBE_2023_PORTFOLIO_MONETIZATION | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 174500.0 | 245000.0 | None | 79.0817 | None | green_good_but_late |
 | C27_JYP_20210517_GLOBAL_FANDOM | 035900 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 37650.0 | 48950.0 | None | 75.5179 | None | green_too_late |
+| C27_JYP_2023_GLOBAL_ALBUMS | 035900 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 63900.0 | 115400.0 | 141100.0 | 129.4275 | 93.3448 | green_too_late |
 | C27_SM_20230210_CONTROL_PREMIUM_EVENT | 041510 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
 | C27_STUDIO_DRAGON_20210120_COST_HEAVY_OTT | 253450 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| C27_STUDIO_DRAGON_2021_OTT_NARRATIVE | 253450 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 96400.0 | None | None | 2.59 | None | stage2_actionable_best_entry |
 | C27_YG_20230512_ARTIST_RENEWAL_RISK | 122870 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 78100.0 | None | None | 24.2 | None | stage2_actionable_best_entry |
 | R13L53_C27_063080_COM2US_HOLDINGS_2021_P2E_TOKEN_PLATFORM_BLOWOFF | 063080 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 88200.0 | None | None | 173.81 | None | stage2_actionable_best_entry |
 | R13L53_C27_078340_COM2US_SUMMONERS_CHRONICLES_GLOBAL_EXTENSION_FAILED_RERATING | 078340 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 68000.0 | None | None | 17.21 | None | stage2_actionable_best_entry |
 | R13L53_C27_095660_NEOWIZ_LIES_OF_P_LAUNCH_SELL_THE_NEWS | 095660 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
 | R13L53_C27_112040_WEMADE_MIR4_WEMIX_2021_TOKENIZED_IP_SUCCESS_4B | 112040 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 117200.0 | None | None | 109.64 | None | stage2_actionable_best_entry |
 | R13L53_C27_194480_DEV_COOKIE_RUN_KINGDOM_2021_GLOBAL_IP_SUCCESS | 194480 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 17250.0 | None | None | 1056.52 | None | stage2_actionable_best_entry |
+| R8L11-C27-HYBE-QC-20230210 | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 195300.0 | None | None | 60.01 | None | stage2_actionable_best_entry |
+| R8L11-C27-JYP-5STAR-20230531 | 035900 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 122000.0 | None | None | 20.1663 | None | stage2_actionable_best_entry |
+| R8L11-C27-STUDIODRAGON-GLORY-20230103 | 253450 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R8L11-C27-YG-BLACKPINK-20230512 | 122870 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R8L31_C27_112040_WEMADE_P2E_TOKENIZED_IP_4C_COUNTER | 112040 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R8L31_C27_251270_NETMARBLE_IP_LAUNCH_HIGH_MAE_COUNTER | 251270 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R8L31_C27_259960_KRAFTON_GLOBAL_LIVE_SERVICE_POS | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 190800.0 | 230000.0 | None | 58.2757 | None | green_good_but_late |

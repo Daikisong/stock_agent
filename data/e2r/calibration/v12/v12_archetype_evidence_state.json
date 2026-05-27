@@ -20,10 +20,13 @@
     "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
     "unique_positive_symbols": [
       "034020",
-      "051600"
+      "051600",
+      "052690",
+      "083650"
     ],
     "unique_success_candidate_symbols": [],
     "unique_counterexample_symbols": [
+      "000720",
       "052690"
     ],
     "unique_4b_cases": [
@@ -32,28 +35,34 @@
     "unique_4c_cases": [],
     "latest_positive_case_ids": [
       "C04_KEPCO_KPS_202407_CZECH_SERVICE_EXPOSURE_SMOOTHER_SUCCESS",
-      "C04_DOOSAN_202407_CZECH_PREFERRED_BIDDER_HIGH_MAE_DELAYED_SUCCESS"
+      "C04_DOOSAN_202407_CZECH_PREFERRED_BIDDER_HIGH_MAE_DELAYED_SUCCESS",
+      "R1L11_C04_083650_CZ_NUCLEAR_AUXILIARY_SUPPLIER",
+      "R1L11_C04_052690_CZ_NUCLEAR_ENGINEERING_DIRECT",
+      "R1L11_C04_034020_CZ_NUCLEAR_DIRECT_SUPPLIER"
     ],
     "latest_counterexample_case_ids": [
+      "R1L11_C04_000720_CZ_NUCLEAR_EPC_BETA_FALSE_GREEN",
       "C04_KEPCO_EC_202407_CZECH_PREFERRED_BIDDER_FAILED_RERATING"
     ],
     "common_positive_evidence_fields": [
       "reuters_2024-07-17",
+      "later_reuters_appeal",
+      "legal-block_reports_used_only_as_4b",
+      "4c_watch_overlays.",
+      "czech_government_selected_khnp_as_preferred_bidder_for_dukovany_nuclear_units",
+      "evidence_treated_as_next_krx_tradable_close.",
       "18_czech_preferred-bidder_coverage",
-      "reuters_2024-10-30_legal-delay_coverage",
-      "doosan_stock-web_2024-10-31_through_2025-04_window.",
-      "czech_anti-monopoly_office_temporarily_prohibited_signing_while_edf",
-      "westinghouse_appeals_proceeded",
-      "but_this_later_did_not_become_an_immediate_thesis_break.",
-      "stock-web_rows_for_2024-07-18_and_2025-02-19."
+      "reuters_2024-10-30_legal-delay_coverage"
     ],
     "common_failure_evidence_fields": [
       "reuters_2024-07-17",
+      "later_reuters_appeal",
+      "legal-block_reports_used_only_as_4b",
+      "4c_watch_overlays.",
+      "czech_government_selected_khnp_as_preferred_bidder_for_dukovany_nuclear_units",
+      "evidence_treated_as_next_krx_tradable_close.",
       "18_czech_preferred-bidder_coverage",
-      "kepco_e_c_stock-web_rows.",
-      "preferred-bidder_event_attached_to_engineering",
-      "design_exposure",
-      "but_no_enough_confirmed_revision_or_backlog_conversion_appeared_by_trigger_date."
+      "kepco_e_c_stock-web_rows."
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
@@ -154,6 +163,48 @@
     "last_patch_version": null,
     "next_delta_recommendation": "apply_limited_next_patch"
   },
+  "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
+    "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+    "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+    "unique_positive_symbols": [
+      "058470",
+      "131290"
+    ],
+    "unique_success_candidate_symbols": [],
+    "unique_counterexample_symbols": [
+      "095340"
+    ],
+    "unique_4b_cases": [],
+    "unique_4c_cases": [],
+    "latest_positive_case_ids": [
+      "R2L11_C08_131290_TSE_20240424",
+      "R2L11_C08_058470_LINO_20240308"
+    ],
+    "latest_counterexample_case_ids": [
+      "R2L11_C08_095340_ISC_20240308"
+    ],
+    "common_positive_evidence_fields": [
+      "public_market",
+      "report_narrative_proxy",
+      "point-in-time_research_proxy",
+      "not_live_recommendation",
+      "relative-strength_breakout_plus_public_ai",
+      "on-device_semiconductor_socket_demand_narrative",
+      "customer_quality_inferred_but_not_yet_fully_revision-confirmed.",
+      "follow-through_strength_after_march_breakout"
+    ],
+    "common_failure_evidence_fields": [
+      "public_market",
+      "report_narrative_proxy",
+      "point-in-time_research_proxy",
+      "socket",
+      "hbm_beta_and_strong_one-day_breakout",
+      "customer-quality_and_realized_revision_bridge_not_yet_durable_enough_for_green."
+    ],
+    "current_patch_state": "unpatched_shadow",
+    "last_patch_version": null,
+    "next_delta_recommendation": "apply_limited_next_patch"
+  },
   "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF": {
     "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
     "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
@@ -212,33 +263,47 @@
     "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
     "unique_positive_symbols": [
       "003670",
-      "247540"
+      "247540",
+      "348370"
     ],
     "unique_success_candidate_symbols": [],
-    "unique_counterexample_symbols": [],
+    "unique_counterexample_symbols": [
+      "373220"
+    ],
     "unique_4b_cases": [],
     "unique_4c_cases": [],
     "latest_positive_case_ids": [
+      "R3L11_C11_348370_ENCHEM",
       "C11_POSCOFUTUREM_2023_SDI_CATHODE_ORDERBOOK",
       "C11_ECOPROBM_2023_VERTICAL_ORDERBOOK_RERATING",
       "CASE_R3L66_247540_ECOPROBM_ORDERBOOK",
       "CASE_R3L66_003670_POSCOFUTUREM_ORDERBOOK"
     ],
-    "latest_counterexample_case_ids": [],
+    "latest_counterexample_case_ids": [
+      "R3L11_C11_373220_LGES"
+    ],
     "common_positive_evidence_fields": [
       "company_disclosure",
+      "news",
       "price_rows_from_songdaiki",
       "stock-web",
-      "news",
       "not_a_live_candidate_scan.",
       "stock-web_ohlc_path_only",
       "not_treated_as_full_4b_because_non-price_evidence_is_absent.",
       "local"
     ],
-    "common_failure_evidence_fields": [],
+    "common_failure_evidence_fields": [
+      "company_earnings",
+      "ampc_evidence_family",
+      "stock-web_ohlc_validated",
+      "ampc",
+      "jv_support_and_large-cap_battery_stabilization_narrative",
+      "but_utilization",
+      "revision_bridge_not_yet_closed"
+    ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
-    "next_delta_recommendation": "hold_for_more_non_overlapping_evidence"
+    "next_delta_recommendation": "apply_limited_next_patch"
   },
   "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK": {
     "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
@@ -341,35 +406,40 @@
     "unique_4c_cases": [
       "R3L71_C14_373220_20241028_LGES_CAPEX_CUT_4C",
       "R3L71_C14_247540_20241028_ECOPROBM_CATHODE_READTHROUGH",
+      "R13L10C14_POSCOFUTUREM_003670_20240726",
+      "R13L10C14_ECOPROBM_247540_20240726",
       "R3L71_C14_006400_20240625_SDI_EUROPE_EXPOSURE_4C"
     ],
     "latest_positive_case_ids": [
+      "R13L10C14_POSCOFUTUREM_003670_20240726",
+      "R13L10C14_ECOPROBM_247540_20240726",
       "R13L55_C14_247540_ECOPROBM_BLOWOFF_2023",
       "R13L55_C14_066970_LNF_BLOWOFF_2023",
       "R13L55_C14_003670_POSCO_FUTUREM_BLOWOFF_2023"
     ],
     "latest_counterexample_case_ids": [
+      "R13L10C14_LGES_373220_20240725",
       "R13L55_C14_373220_LGES_LARGECAP_GRADUAL_2023"
     ],
     "common_positive_evidence_fields": [
-      "historical_public_event_proxy_+_songdaiki",
       "stock-web_ohlc_validation",
+      "historical_public_event_proxy_+_songdaiki",
       "attach_primary_filing",
       "news_before_production_promotion",
       "late_demand",
       "inventory_thesis-break_watch_after_the_stock_had_already_drawn_down_sharply",
-      "orderbook",
-      "structural_cathode_narrative_remained_visible"
+      "public_quarterly",
+      "result_commentary_+_demand-slowdown_sector_evidence"
     ],
     "common_failure_evidence_fields": [
-      "historical_public_event_proxy_+_songdaiki",
       "stock-web_ohlc_validation",
-      "attach_primary_filing",
-      "news_before_production_promotion",
-      "large-cell_maker_slowdown_was_real_enough_for_watch",
-      "4b",
-      "but_without_explicit_customer_call-off_or_contract_break_the_hard-4c_label_would_be_too_blunt",
-      "the_path_was_a_long_de-rating"
+      "public_quarterly",
+      "result_commentary_+_demand-slowdown_sector_evidence",
+      "large-cap_battery_oem-cell_slowdown_headline",
+      "support_from_scale",
+      "ampc",
+      "customer_mix_made_hard-4c_routing_too_early.",
+      "historical_public_event_proxy_+_songdaiki"
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
@@ -378,14 +448,29 @@
   "C15_MATERIAL_SPREAD_SUPERCYCLE": {
     "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
     "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
-    "unique_positive_symbols": [],
+    "unique_positive_symbols": [
+      "011780",
+      "298020"
+    ],
     "unique_success_candidate_symbols": [],
     "unique_counterexample_symbols": [],
     "unique_4b_cases": [],
     "unique_4c_cases": [],
-    "latest_positive_case_ids": [],
+    "latest_positive_case_ids": [
+      "R4L9_C15_298020_SPANDEX_SPREAD_POSITIVE",
+      "R4L9_C15_011780_NB_LATEX_SPREAD_POSITIVE"
+    ],
     "latest_counterexample_case_ids": [],
-    "common_positive_evidence_fields": [],
+    "common_positive_evidence_fields": [
+      "company_quarterly-result",
+      "news-report_family",
+      "stock-web_ohlc_rows_2020-08-10_close_97200",
+      "2020-11-06_high_156500",
+      "2021-05-06_high_298500",
+      "covid-era_glove",
+      "nb_latex_demand",
+      "합성고무_제품_spread"
+    ],
     "common_failure_evidence_fields": [],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
@@ -412,20 +497,28 @@
     "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
     "unique_positive_symbols": [
       "004000",
-      "010060"
+      "010060",
+      "011780",
+      "298020"
     ],
     "unique_success_candidate_symbols": [],
     "unique_counterexample_symbols": [
+      "006650",
       "009830",
+      "011170",
       "011790"
     ],
     "unique_4b_cases": [],
     "unique_4c_cases": [],
     "latest_positive_case_ids": [
       "R13L28_C17_001",
-      "R13L28_C17_002"
+      "R13L28_C17_002",
+      "R4L18-C17-HYOTNC-2020-SPANDEX",
+      "R4L18-C17-KKPC-2020-NBLATEX"
     ],
     "latest_counterexample_case_ids": [
+      "R4L18-C17-LOTTECHEM-2023-REOPEN-FAILED",
+      "R4L18-C17-KPIC-2023-NCC-FAILED",
       "R13L28_C17_003",
       "R13L28_C17_004"
     ],
@@ -434,24 +527,24 @@
       "news",
       "research-note_class",
       "stock-web_ohlc_row_verified",
-      "peak-level_valuation",
-      "positioning_overlay_after_the_specialty_spread_move",
-      "caustic",
-      "ech"
+      "historical_public_earnings",
+      "sector-spread_note_family",
+      "stock-web_price_row_anchored",
+      "valuation"
     ],
     "common_failure_evidence_fields": [
+      "historical_public_petrochemical-spread_narrative_+_stock-web_price_row_anchored",
+      "ncc",
+      "pe_pp_spread_회복_기대와_리오프닝_beta는_있었으나",
+      "재고",
+      "수요",
+      "스프레드가_stage3의_margin_bridge로_닫히지_못한_반례.",
       "public_disclosure",
-      "news",
-      "research-note_class",
-      "stock-web_ohlc_row_verified",
-      "solar",
-      "chemical_headline_beta_without_product-specific_c17_spread_bridge",
-      "stock-web_009830_2022-09_2023-06_rows_verified",
-      "chemical"
+      "news"
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
-    "next_delta_recommendation": "hold_for_more_non_overlapping_evidence"
+    "next_delta_recommendation": "apply_limited_next_patch"
   },
   "C18_CONSUMER_EXPORT_CHANNEL_REORDER": {
     "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
@@ -474,12 +567,15 @@
       "R5L11-C18-002"
     ],
     "unique_4c_cases": [
-      "C18-R13L44-237880-CLIO"
+      "C18-R13L44-237880-CLIO",
+      "R5L39_C18_383220_FNF_CHINA_REOPENING_FALSE_REORDER",
+      "R13L41_C18_NONGSHIM_004370_GLOBAL_MATURE"
     ],
     "latest_positive_case_ids": [
-      "R13L41_C18_SAMYANG_003230_EXPORT_REORDER",
+      "R5L15-C18-003230-SAMYANG-EXPORT-REORDER",
       "R13L11_C18_SAMYANG_003230",
       "R12L10_C18_280360_LOTTE_WELLFOOD_2024_REORDER_AND_COST_RECOVERY",
+      "R5L13_C18_SAMYANG_003230_BULDAK_EXPORT_REORDER",
       "R5L11-C18-002",
       "R13L11_C18_BINGGRAE_005180",
       "R12L10_C18_005180_BINGGRAE_2024_EXPORT_MARGIN_REORDER",
@@ -488,10 +584,10 @@
       "R13L11_C18_NONGSHIM_004370"
     ],
     "latest_counterexample_case_ids": [
+      "R5L13_C18_NONGSHIM_004370_RAMEN_GLOBAL_NARRATIVE_FAILED_RERATING",
       "R5L11-C18-003",
       "R13L11_C18_LOTTEWELLFOOD_280360",
       "R5L11-C18-004",
-      "R13L41_C18_NONGSHIM_004370_GLOBAL_MATURE",
       "R13L11_C18_ORION_271560",
       "R12L10_C18_271560_ORION_2024_CHANNEL_REORDER_GROWTH_SLOWDOWN",
       "R12L10_C18_004370_NONGSHIM_2023_LATE_GREEN_DOMESTIC_PRICE_TAILWIND_CAP"
@@ -503,18 +599,18 @@
       "stock-web_ohlc_row_validation",
       "historical_public_evidence_proxy_available_by_trigger_date",
       "no_later-outcome_relabeling",
-      "public_earnings",
-      "disclosure"
+      "revision_proxy",
+      "company_disclosure"
     ],
     "common_failure_evidence_fields": [
       "earnings",
-      "public_earnings",
-      "disclosure",
-      "news_context_plus_stock-web_price_rows",
-      "no_live_scan_used",
       "company_disclosure",
       "earnings-window_evidence",
-      "historical_research_proxy"
+      "historical_research_proxy",
+      "historical_public_disclosure",
+      "report_narrative_proxy",
+      "stock-web_ohlc_row_validation",
+      "historical_public_evidence_proxy_available_by_trigger_date"
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
@@ -523,22 +619,50 @@
   "C19_BRAND_RETAIL_INVENTORY_MARGIN": {
     "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
     "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
-    "unique_positive_symbols": [],
+    "unique_positive_symbols": [
+      "111770"
+    ],
     "unique_success_candidate_symbols": [],
-    "unique_counterexample_symbols": [],
+    "unique_counterexample_symbols": [
+      "298540"
+    ],
     "unique_4b_cases": [
       "R13L45_C19_337930_BRANDX_DTC_REORDER_SUCCESS_4B",
       "R13L42-C19-337930-BRANDX-2024-ATHLEISURE-REORDER",
-      "R13L45_C19_081660_FILA_TURNAROUND_FALSE_POSITIVE_4B"
+      "R13L45_C19_081660_FILA_TURNAROUND_FALSE_POSITIVE_4B",
+      "R5L31_C19_HANSAE_20230616_OEM_INVENTORY_RESTOCK_SUCCESS"
     ],
     "unique_4c_cases": [
       "R13L42-C19-298540-NATURE-2024-INVENTORY-COUNTER",
-      "R13L42-C19-383220-FNF-2023-CHINA-INVENTORY-COUNTER"
+      "R13L42-C19-383220-FNF-2023-CHINA-INVENTORY-COUNTER",
+      "R5L31_C19_FNF_20230516_CHINA_INVENTORY_FALSE_GREEN"
     ],
-    "latest_positive_case_ids": [],
-    "latest_counterexample_case_ids": [],
-    "common_positive_evidence_fields": [],
-    "common_failure_evidence_fields": [],
+    "latest_positive_case_ids": [
+      "R5L31_C19_YOUNGONE_20230515_OEM_BRAND_MARGIN_SUCCESS"
+    ],
+    "latest_counterexample_case_ids": [
+      "R5L31_C19_NATURE_20230516_OUTDOOR_INVENTORY_COUNTER"
+    ],
+    "common_positive_evidence_fields": [
+      "company",
+      "dart",
+      "kind_earnings-disclosure_family",
+      "analyst",
+      "public_reporting_family",
+      "stock-web_ohlc_for_outcome_validation_only",
+      "quarterly_earnings",
+      "brand_retail_inventory_and_margin_bridge_signal_available_by_trigger_date"
+    ],
+    "common_failure_evidence_fields": [
+      "company",
+      "dart",
+      "kind_earnings-disclosure_family",
+      "analyst",
+      "public_reporting_family",
+      "stock-web_ohlc_for_outcome_validation_only",
+      "quarterly_earnings",
+      "brand_retail_inventory_and_margin_bridge_signal_available_by_trigger_date"
+    ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
     "next_delta_recommendation": "apply_limited_next_patch"
@@ -549,6 +673,8 @@
     "unique_positive_symbols": [
       "003230",
       "018290",
+      "161890",
+      "192820",
       "237880",
       "241710",
       "257720"
@@ -556,6 +682,8 @@
     "unique_success_candidate_symbols": [],
     "unique_counterexample_symbols": [
       "003350",
+      "051900",
+      "090430",
       "192820",
       "214420",
       "237880",
@@ -563,6 +691,7 @@
     ],
     "unique_4b_cases": [
       "R13L55_257720_SILICON2",
+      "R5L14_C20_257720_SILICONTWO_Q1_EXPORT_PLATFORM_REORDER",
       "R13L55_003230_SAMYANG",
       "R5L10_C20_214420_TONYMOLY_2024_PRICE_BLOWOFF_FADE",
       "R5L10_C20_003350_HANKOOK_COSMETICS_MFG_2024_THEME_EXTENSION",
@@ -572,46 +701,59 @@
       "C20_COSMECCA_2023_ODM_US_MARGIN"
     ],
     "unique_4c_cases": [
-      "R13L55_237880_CLIO"
+      "R5L42-C20-237880-CLIO-20240516",
+      "R13L55_237880_CLIO",
+      "R5L12-C20-AMORE-20240514",
+      "R5L10_C20_AMORE_2024_COSRX_CHINA_REVERSAL",
+      "R5L10_C20_362320_CHEONGDAM_GLOBAL_REOPENING_COUNTER_20230119"
     ],
     "latest_positive_case_ids": [
       "R13L55_257720_SILICON2",
+      "C20_SILICON2_2024Q1_REORDER",
+      "R5L42-C20-257720-SILICON2-20240516",
+      "R5L17_C20_SILICON2_2024Q1",
+      "R5L10_C20_SILICON2_2024Q1_REORDER",
       "R5L10_C20_257720_SILICON2_GLOBAL_PLATFORM_20230509",
       "R13L55_003230_SAMYANG",
       "C20_VT_2023_REEDLESHOT_REORDER",
       "C20_SILICONTWO_2023_GLOBAL_DISTRIBUTOR",
-      "R5L10_C20_018290_VT_2024_REEDLE_SHOT_GLOBAL_CHANNEL",
-      "R5L10_C20_257720_SILICON2_2023Q3_CHANNEL_REORDER",
-      "C20_COSMECCA_2023_ODM_US_MARGIN",
-      "R5L10_C20_237880_CLIO_GLOBAL_CHANNEL_20230810"
+      "R5L11_C20_257720_SILICON2_GLOBAL_KBEAUTY_20240516",
+      "R5L11_C20_003230_SAMYANG_EXPORT_RAMEN_20240517",
+      "R5L34_C20_257720_SILICON2_US_ECOM_DIST"
     ],
     "latest_counterexample_case_ids": [
       "R13L55_237880_CLIO",
+      "R5L12-C20-AMORE-20240514",
       "R5L10_C20_214420_TONYMOLY_2024_PRICE_BLOWOFF_FADE",
       "R5L10_C20_003350_HANKOOK_COSMETICS_MFG_2024_THEME_EXTENSION",
       "R13L55_192820_COSMAX",
+      "R5L34_C20_090430_AMORE_COSRX_CONSOLIDATION_FADE",
+      "R5L34_C20_051900_LGHNH_CHINA_RECOVERY_BETA",
+      "R5L11_C20_051900_LGHNH_REOPENING_FALSE_20240510",
+      "C20_LGHH_2024_REBOUND_FALSE_POSITIVE",
+      "C20_AMORE_2024_BRAND_REBOUND_FALSE_GREEN",
       "C20_CLIO_2023_CHANNEL_EXPANSION_COUNTER",
       "R5L10_C20_362320_CHEONGDAM_GLOBAL_REOPENING_COUNTER_20230119"
     ],
     "common_positive_evidence_fields": [
+      "dart",
+      "public_earnings",
+      "historical_public_filing",
       "historical_public_disclosure",
       "result-season_analyst_evidence_class",
       "stock-web_ohlc_rows_used_for_price_validation",
-      "historical_public_filing",
       "earnings_coverage",
-      "public_earnings",
-      "research-report_proxy",
-      "dart"
+      "news_narrative_+_songdaiki"
     ],
     "common_failure_evidence_fields": [
+      "public_earnings",
+      "news_narrative_+_songdaiki",
+      "stock-web_ohlc_validation",
+      "reuters_sector_backdrop_for_2024_k-beauty_us_e-commerce",
+      "dart",
       "historical_public_filing",
       "earnings_coverage",
-      "dart",
-      "kind_style_public_evidence_family",
-      "historical_public_disclosure",
-      "result-season_analyst_evidence_class",
-      "stock-web_ohlc_rows_used_for_price_validation",
-      "stock-web_price_action"
+      "kind_style_public_evidence_family"
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
@@ -621,8 +763,6 @@
     "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
     "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
     "unique_positive_symbols": [
-      "000810",
-      "005830",
       "005940",
       "016360",
       "024110",
@@ -630,6 +770,7 @@
       "055550",
       "086790",
       "105560",
+      "138040",
       "175330"
     ],
     "unique_success_candidate_symbols": [],
@@ -640,6 +781,7 @@
       "323410"
     ],
     "unique_4b_cases": [
+      "R6L60_C21_KBFG_2024_CAPITAL_RETURN",
       "R13L30_C21_KB_105560_VALUEUP_CET1_BUYBACK_2024",
       "C21_KB_2024_VALUEUP_CAPRETURN",
       "C21-L6-018-KB-4B-20241025",
@@ -652,18 +794,22 @@
       "R13L23_C21_IBK_024110_STATE_BANK_DIVIDEND_ROUTE",
       "R13L22_C21_SHINHAN_055550_2025_CAPITAL_RETURN_CONFIRMED",
       "R6L60_C21_KBFG_2024_CAPITAL_RETURN",
-      "C21_KB_2024_VALUEUP_CAPRETURN",
+      "R6L45_C21_KBFG_20240227_STAGE2",
+      "R6L35-C21-KB-20240227",
       "R6L10_C21_055550_VALUEUP_CAPITAL_RETURN_POS",
+      "R6L45_C21_HANA_20240227_STAGE2",
       "C21_BROKER_SAMSUNG_SEC_2024_DIVIDEND_ROE",
-      "C21_SAM_2024_IFRS17_CAPRETURN",
-      "C21_DB_2024_IFRS17_CAPRETURN",
-      "R6L10_C21_105560_VALUEUP_CAPITAL_RETURN_POS",
-      "C21_BROKER_NH_2024_DIVIDEND_CAPRETURN"
+      "R6L35-C21-HANA-20240227",
+      "R6L23_C21_KB_2024_VALUEUP_CAPITAL_RETURN"
     ],
     "latest_counterexample_case_ids": [
       "R6L10_C21_006220_PRICE_THEME_COUNTER",
       "R6L60_C21_KAKAOBANK_2024_POLICYONLY_COUNTEREXAMPLE",
+      "R6L45_C21_KAKAOBANK_20240227_FALSE_STAGE2",
+      "R6L35-C21-KAKAOBANK-20240227",
+      "R6L23_C21_KAKAOBANK_2024_VALUEUP_DIGITAL_BANK_COUNTER",
       "R6L12_C21_KAKAOBANK_20240227_POLICY_BETA_FAIL",
+      "R6L10_C21_KAKAOBANK_20240226",
       "R6L10_C21_323410_POLICY_THEME_COUNTER",
       "R6L10-C21-KBANK-003",
       "C21-L6-018-WOORI-20240226",
@@ -671,24 +817,24 @@
       "C21_BROKER_MIRAE_2024_POLICY_FALSEPOS"
     ],
     "common_positive_evidence_fields": [
-      "historical_public_disclosure",
-      "policy-event_proxy",
-      "price_verified_in_songdaiki",
-      "stock-web",
-      "historical_public_evidence_proxy_korea_value-up",
-      "low-pbr_capital-return_policy_context_plus_company-level_shareholder-return_or_ifrs17",
-      "roe_visibility._evidence_timing_is_treated_as_public_by_trigger_date",
-      "row_is_not_a_live_scan."
+      "company_ir",
+      "2024.csv",
+      "105560",
+      "earnings",
+      "value-up_materials",
+      "dart_earnings_and_shareholder-return_disclosure",
+      "fy2023",
+      "stock-web_shard_086"
     ],
     "common_failure_evidence_fields": [
       "policy",
       "fsc",
-      "reuters_corporate_value-up_policy_frame_+_stock-web_ohlc_validation",
-      "company-specific_capital-return_quality_treated_as_research_proxy",
-      "public_policy",
-      "news_map",
-      "stock-web_ohlc_for_price",
-      "the_stock_had_bank"
+      "date_context_plus_stock-web_shard_323",
+      "323410",
+      "2024.csv",
+      "no_company-specific_shareholder-return_disclosure_used_for_positive_promotion",
+      "value-up_narrative_applied_to_financial_names",
+      "but_company-specific_capital_return_and_roe-to-pbr_bridge_were_not_confirmed."
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
@@ -708,43 +854,58 @@
       "088350"
     ],
     "unique_4b_cases": [
+      "R6L41_C22_005830_DBI_CAPITAL_RETURN_ROE",
+      "R6L41_C22_000810_SFM_CAPITAL_RETURN_IFRS17",
       "R13L17_C22_032830_SAMSUNG_LIFE_BLOWOFF_2024"
     ],
-    "unique_4c_cases": [],
+    "unique_4c_cases": [
+      "R6L41_C22_088350_HWL_POLICY_ONLY_FALSE_POSITIVE"
+    ],
     "latest_positive_case_ids": [
       "R13L21_C22_000810_2025_PNC_RESERVE_CAPITAL_RETURN",
       "R13L21_C22_005830_2025_Q1_RESERVE_CAPITAL_RETURN",
+      "R6L41_C22_005830_DBI_CAPITAL_RETURN_ROE",
+      "R6L41_C22_000810_SFM_CAPITAL_RETURN_IFRS17",
+      "R6L19_C22_000810_SFMI_CAPITAL_RETURN_20240223",
+      "R6L33-C22-005830",
+      "R6L33-C22-000810",
       "R6L11_C22_005830",
       "R6L11_C22_000810",
-      "R13L17_C22_005830_DBI_RATE_RESERVE_2023Q1",
-      "R13L17_C22_000810_SFM_RATE_RESERVE_2023Q1"
+      "R6L46-C22-SFM-000810",
+      "R6L11_C22_SFM_20240226",
+      "R6L11_C22_DBINS_20240226"
     ],
     "latest_counterexample_case_ids": [
       "R13L21_C22_001450_2025_RESERVE_QUALITY_GUARD",
       "R13L21_C22_088350_2025_LIFE_RATE_BETA_WHIPSaw",
+      "R6L41_C22_088350_HWL_POLICY_ONLY_FALSE_POSITIVE",
       "R6L11_C22_000400",
+      "R6L33-C22-001450",
+      "R6L11_C22_HMF_20240226",
+      "R6L19_C22_001450_HYUNDAI_MARINE_RESERVE_QUALITY_GAP_20240223",
       "R6L11_C22_001450",
+      "R6L33-C22-088350",
       "R13L17_C22_001450_HYUNDAI_RESERVE_GAP_2023Q1"
     ],
     "common_positive_evidence_fields": [
+      "policy",
+      "stock-web_price_rows",
       "research_proxy_company_results_and_broker_review",
-      "price_validated_from_stock-web_rows.",
-      "historical_public_earnings",
-      "disclosure",
-      "news_summary",
-      "price_rows_validated_in_stock-web",
-      "confirmed_earnings",
-      "research_proxy_from_q1"
+      "company_ir",
+      "dart",
+      "news_event_proxy",
+      "price_verified_in_stock-web_rows",
+      "fy2023"
     ],
     "common_failure_evidence_fields": [
+      "policy",
+      "stock-web_price_rows",
       "research_proxy_event_premium_news_and_price_path",
+      "news_window",
       "research_proxy_from_fy",
       "q1_disclosure_season",
       "price_validated_from_stock-web_rows.",
-      "event",
-      "control-premium_repricing_reached_late_local_stage_without_reserve-cycle_confirmation",
-      "event_premium_broke",
-      "sharp_drawdown_from_prior_event_peak"
+      "event"
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
@@ -755,44 +916,60 @@
     "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
     "unique_positive_symbols": [
       "000100",
+      "145020",
       "196170"
     ],
     "unique_success_candidate_symbols": [],
     "unique_counterexample_symbols": [
       "028300",
+      "069620",
       "302440"
     ],
     "unique_4b_cases": [
+      "R7L26-C23-000100-RYBREVANT-SC-CRL",
+      "R7L26-C23-145020-LETYBO-US-APPROVAL",
+      "R7L10_C23_HUGEL_LETYBO_FDA_20240304",
       "R7L10_C23_000100_LAZCLUZE_FDA"
     ],
-    "unique_4c_cases": [],
+    "unique_4c_cases": [
+      "R7L26-C23-028300-CORE-APPROVAL-FAILURE"
+    ],
     "latest_positive_case_ids": [
       "R7L10_C23_000100_LAZCLUZE_FDA",
+      "C23_YUHAN_FDA_APPROVAL_2024",
+      "R7L37-C23-000100-YUHAN-LAZCLUZE",
+      "R7L12_C23_YUHAN_LAZERTINIB_FDA_APPROVAL",
+      "R7L16_C23_YUHAN_LAZCLUZE_FDA_APPROVAL",
+      "C23_HUGEL_LETYBO_FDA_2024",
+      "R7L37-C23-196170-ALTEOGEN-MSD",
       "R7L10_C23_196170_KEYTRUDA_SC_ROUTE"
     ],
     "latest_counterexample_case_ids": [
+      "R7L37-C23-028300-HLB-PDUFA",
       "R7L10_C23_028300_HLB_FDA_CRL",
-      "R7L10_C23_302440_SKY_COVIONE_DEMAND_FADE"
+      "C23_HLB_CRL_2024",
+      "R7L10_C23_302440_SKY_COVIONE_DEMAND_FADE",
+      "R7L16_C23_DAEWOONG_JEUVEAU_APPROVAL_FAILED_RERATING"
     ],
     "common_positive_evidence_fields": [
+      "reuters",
       "reuters_2024-08-20",
       "fda",
-      "j_j_approval_announcement",
-      "stock-web_000100_2024",
-      "2025_shards",
-      "us_fda_approval_of_j_j_rybrevant_+_lazertinib",
-      "lazcluze_combination",
-      "yuhan_royalty"
+      "stock-web_price_rows",
+      "barron_s_2024-08-20",
+      "us_fda_approval_of_rybrevant_plus_lazertinib_reported",
+      "actual_approval_label_and_partner_commercialization_bridge.",
+      "j_j_approval_coverage"
     ],
     "common_failure_evidence_fields": [
+      "source_validation_needed",
+      "news_family",
+      "stock-web_price_rows",
       "stock-web_028300_2024_shard",
-      "public_crl_event",
-      "complete_response_letter",
-      "approval_failure_breaks_the_approval-commercialization_thesis",
-      "fda_crl_public_event_on_2024-05-17",
-      "approval_expectation_and_event_premium_before_fda_decision",
-      "hard_approval_and_commercialization_not_yet_confirmed",
-      "mfds"
+      "stock-web_price_shock_verified",
+      "fda_crl",
+      "approval_failure_event",
+      "primary_url_not_retrieved_in_this_run"
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
@@ -812,50 +989,57 @@
     "unique_counterexample_symbols": [
       "019170",
       "028300",
+      "084990",
       "215600",
       "288330",
       "298380",
       "302440"
     ],
     "unique_4b_cases": [],
-    "unique_4c_cases": [],
+    "unique_4c_cases": [
+      "R7L27-C24-084990-ENGENSIS"
+    ],
     "latest_positive_case_ids": [
       "C24-ALTEOGEN-KEYTRUDA-SC-NONINFERIOR-20241120",
       "R7L11_C24_000100_YUHAN_20240821_POSITIVE",
       "R7L15-C24-310210-VORONOI-VRN11-DATA-20240524",
       "R7L11_C24_196170_ALTEOGEN_20240223_POSITIVE_4B",
       "R13L32_C24_009420_HANALL_20230927_PARTNER_DATA_POSITIVE",
+      "R7L27-C24-039200-MARIPOSA",
+      "R7L27-C24-000100-MARIPOSA",
       "C24-YUHAN-MARIPOSA-DATA-20231004",
       "C24-HANALL-IMVT1402-PH1-20230927",
       "R13L32_C24_039200_OSCOTEC_20200921_DATA_POSITIVE_HIGH_MAE"
     ],
     "latest_counterexample_case_ids": [
       "C24-HLB-RIVOCERANIB-CRL-20240517",
+      "R7L27-C24-084990-ENGENSIS",
       "R7L15-C24-288330-BRIDGEBIO-BBT877-RESET-20230623",
       "R7L11_C24_302440_SKBIO_20220706_FALSE_POSITIVE",
       "R13L32_C24_298380_ABL_20220112_LICENSE_EVENT_FALSE_POSITIVE",
       "C24-SHINPOONG-PYRAMAX-PH2-20210705",
+      "R7L27-C24-215600-PHOCUS",
       "R13L32_C24_215600_SILLAJEN_20190802_PHASE3_FUTILITY_4C"
     ],
     "common_positive_evidence_fields": [
+      "public_clinical_data",
+      "later_fda_evidence_summary",
+      "medical_press",
+      "mariposa_pivotal_trial_data_public_by_late_oct_2023",
+      "next-trading-day_entry_used_for_timing_conservatism",
       "stock-web_ohlc_comparison_row",
       "039200",
-      "j_j",
-      "mariposa_public_data_and_reuters_later_approval_summary",
-      "stock-web_2023",
-      "2024_shards.",
-      "mariposa",
-      "lazertinib-amivantamab_positive_data_event_was_available_during_korea_holiday_gap"
+      "partner_sensitivity"
     ],
     "common_failure_evidence_fields": [
+      "stock-web_immediate_repricing_row",
       "2022.csv",
       "korean_public_trial-readout_news",
       "stock-web_2021",
       "2022_shards.",
       "hlb",
       "fda_crl_news",
-      "stock-web_2024",
-      "2025_shards."
+      "stock-web_2024"
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
@@ -873,25 +1057,35 @@
     "unique_counterexample_symbols": [
       "060280",
       "099190",
+      "228670",
       "322510",
       "328130"
     ],
     "unique_4b_cases": [
+      "C25-R7L28-338220-VUNO-AI-REIMBURSEMENT",
       "R13L50_C25_338220_VUNO_2023_AI_REIMBURSEMENT_PREMIUM_HIGH_MAE",
       "R13L50_C25_228670_RAY_2023_DENTAL_DIGITAL_EXPORT_FALSE_POSITIVE"
     ],
-    "unique_4c_cases": [],
+    "unique_4c_cases": [
+      "C25-R7L28-228670-RAY-CHINA-DENTAL-CALL-OFF"
+    ],
     "latest_positive_case_ids": [
+      "R7L14-C25-001",
       "C25_R13L33_001_VUNO_DEEPCARS_REIMBURSEMENT",
       "C25_R7L16_VUNO_20230602",
       "C25_R7L16_CLASSYS_20230810",
+      "R7L14-C25-002",
+      "C25-R7L28-214150-CLASSYS-EXPORT-MARGIN",
       "C25_R13L33_002_CLASSYS_EXPORT_MARGIN",
+      "C25-R7L28-145720-DENTIUM-CHINA-IMPLANT",
       "C25_R13L33_003_DENTIUM_CHINA_EXPORT"
     ],
     "latest_counterexample_case_ids": [
+      "R7L14-C25-003",
       "C25_R13L33_004_ISENS_CGM_APPROVAL",
       "C25_R13L33_005_LUNIT_MNA_OVERHANG",
       "C25_R7L16_CUREXO_20230626",
+      "C25-R7L28-228670-RAY-CHINA-DENTAL-CALL-OFF",
       "C25_R7L16_JLK_20230810"
     ],
     "common_positive_evidence_fields": [
@@ -900,9 +1094,9 @@
       "quantitative_calibration_source_is_stock-web_ohlc",
       "no_later_outcome_relabeling",
       "relative_strength",
-      "policy_or_regulatory_optionality",
-      "stock-web_used_for_price_only",
-      "customer_or_order_quality"
+      "export_narrative",
+      "2023.csv_label-comparison_row",
+      "exact_url_should_be_rechecked_during_coding-agent_ingestion"
     ],
     "common_failure_evidence_fields": [
       "historical_public_disclosure",
@@ -924,7 +1118,9 @@
     "unique_positive_symbols": [
       "035420",
       "042000",
-      "067160"
+      "067160",
+      "089600",
+      "216050"
     ],
     "unique_success_candidate_symbols": [],
     "unique_counterexample_symbols": [
@@ -936,46 +1132,56 @@
       "216050",
       "237820"
     ],
-    "unique_4b_cases": [],
+    "unique_4b_cases": [
+      "R8L10_C26_KAKAO_20231109",
+      "R8L29_C26_FSN_20211110"
+    ],
     "unique_4c_cases": [],
     "latest_positive_case_ids": [
       "C26_SOOP_2023_TWITCH_EXIT_MIGRATION",
       "C26_CAFE24_202312_GOOGLE_YOUTUBE_COMMERCE_ROUTE",
+      "R8L10_C26_SOOP_20231207",
       "C26_SOOP_202312_TWITCH_EXIT_MIGRATION",
+      "R8L10_C26_NAVER_20231103",
       "C26_SOOP_2021_CREATOR_PLATFORM_OPERATING_LEVERAGE",
       "C26_NAVER_202101_Q4_SEARCH_COMMERCE",
+      "R8L29_C26_INCROSS_20201106",
+      "R8L29_C26_NASMEDIA_20201106",
       "C26_NAVER_2020_AD_COMMERCE_OPERATING_LEVERAGE"
     ],
     "latest_counterexample_case_ids": [
       "C26_NHNKCP_202402_PG_RELIEF_RALLY_NO_DURABLE_MARGIN",
       "C26_FSN_202402_AI_ADTECH_THEME_PASS_THROUGH",
+      "R8L10_C26_KAKAO_20231109",
       "C26_KAKAO_2023_TALKBIZ_RELIEF_RALLY",
+      "R8L29_C26_FSN_20211110",
       "C26_DANAL_202111_PAYCOIN_PAYMENT_THEME_BLOWOFF",
       "C26_KAKAO_202109_PLATFORM_REGULATORY_BREAK",
       "C26_NASMEDIA_2021_AD_AGENCY_FALSE_POSITIVE",
       "C26_INCROSS_202102_AD_TECH_PROXY",
       "C26_PLAYD_202102_AD_RECOVERY_AGENCY_PROXY",
-      "C26_NASMEDIA_202102_AD_SPEND_PROXY"
+      "C26_NASMEDIA_202102_AD_SPEND_PROXY",
+      "R8L29_C26_PLAYD_20200519"
     ],
     "common_positive_evidence_fields": [
+      "public_earnings",
       "ir",
-      "stock-web_tradable_shard",
       "afreecatv",
-      "naver_2q20_earnings",
-      "ir_and_dart_semiannual_filing_cross-check",
-      "2q20_public_earnings",
-      "ir_evidence_search",
-      "display_ad_resilience_plus_commerce"
+      "research-summary_evidence",
+      "stock-web_ohlc_validation_only",
+      "stock-web_tradable_shard",
+      "public_event",
+      "naver_2q20_earnings"
     ],
     "common_failure_evidence_fields": [
       "news_summary",
-      "stock-web_2024_shard",
       "public_sector-cycle_proxy",
+      "earnings",
       "public_regulatory_risk_event",
       "regulatory",
       "legal_pressure_hit_platform_monetization_premium_and_changed_the_thesis_from_growth_to_protectio",
-      "earnings",
-      "event_map"
+      "reuters_governance_source",
+      "stock-web_ohlc"
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
@@ -992,6 +1198,7 @@
       "200350",
       "241840",
       "253450",
+      "259960",
       "263720",
       "293490"
     ],
@@ -1001,10 +1208,12 @@
       "066410",
       "078340",
       "095660",
-      "160550"
+      "160550",
+      "251270"
     ],
     "unique_4b_cases": [
       "C27_263720_DNC_SOLO_LEVELING_2024",
+      "C27_JYP_2023_GLOBAL_ALBUMS",
       "C27_200350_RAEMONG_REBORN_RICH_2022",
       "C27_241840_ASTORY_WOOYOUNGWOO_2022",
       "C27_066410_BUCKET_SQUIDGAME_ASSOCIATION_2021",
@@ -1018,6 +1227,7 @@
     ],
     "latest_positive_case_ids": [
       "C27_263720_DNC_SOLO_LEVELING_2024",
+      "R8L31_C27_259960_KRAFTON_GLOBAL_LIVE_SERVICE_POS",
       "C27_200350_RAEMONG_REBORN_RICH_2022",
       "C27_241840_ASTORY_WOOYOUNGWOO_2022",
       "C27_036420_CONTENTREE_2021",
@@ -1028,6 +1238,7 @@
       "C27_253450_STUDIO_DRAGON_2020"
     ],
     "latest_counterexample_case_ids": [
+      "R8L31_C27_251270_NETMARBLE_IP_LAUNCH_HIGH_MAE_COUNTER",
       "R13L53_C27_095660_NEOWIZ_LIES_OF_P_LAUNCH_SELL_THE_NEWS",
       "R13L53_C27_078340_COM2US_SUMMONERS_CHRONICLES_GLOBAL_EXTENSION_FAILED_RERATING",
       "C27_066410_BUCKET_SQUIDGAME_ASSOCIATION_2021",
@@ -1073,6 +1284,7 @@
       "030520",
       "042510",
       "053800",
+      "131370",
       "136540",
       "203650",
       "356890"
@@ -1082,19 +1294,26 @@
       "R13L54_C28_203650_DREAM_QUANTUM_2023",
       "R13L54_C28_356890_CYBERONE_MSS_2023",
       "R13L39_C28_053800_AHNLAB_POLITICAL_SECURITY_ASSOCIATION",
+      "C28_AHNLAB_2022_PRICE_THEME_FALSE_POSITIVE",
+      "C28-053800-2022-THEME-GUARD",
       "R13L54_C28_184230_SGA_SOLUTIONS_2021",
-      "R13L39_C28_131370_RSUPPORT_REMOTE_WORK_DEMAND_SHOCK"
+      "R13L39_C28_131370_RSUPPORT_REMOTE_WORK_DEMAND_SHOCK",
+      "C28-131370-2020-REMOTE-SUPPORT"
     ],
     "unique_4c_cases": [
       "R13L54_C28_042510_RAON_IDENTITY_2022",
       "R13L39_C28_053800_AHNLAB_POLITICAL_SECURITY_ASSOCIATION"
     ],
     "latest_positive_case_ids": [
+      "C28-012510-2024-ERP-AI",
+      "C28_DUZON_2024_AI_ERP_RETENTION_POS",
+      "R8L21_C28_263860_GENIANS_NAC_EDR_ZERO_TRUST",
       "R13L39_C28_263860_GENIANS_ZERO_TRUST_EDR",
       "R8L12_C28_263860_GENIANS_EDR_2023",
       "R13L54_C28_184230_SGA_SOLUTIONS_2021",
       "R13L54_C28_067920_IGLOO_SECURITY_OPS_2021",
       "C28_WINS_2020_SECURITY_APPLIANCE_SERVICE_RETENTION",
+      "R8L21_C28_012510_DUZON_CLOUD_ERP_RETENTION",
       "R8L12_C28_012510_DUZON_CLOUD_2020",
       "C28_DOUZONE_2020_CLOUD_ERP_RETENTION",
       "R13L39_C28_012510_DOZON_CLOUD_ERP_RETENTION"
@@ -1104,13 +1323,16 @@
       "R13L54_C28_356890_CYBERONE_MSS_2023",
       "R13L54_C28_042510_RAON_IDENTITY_2022",
       "R13L39_C28_053800_AHNLAB_POLITICAL_SECURITY_ASSOCIATION",
+      "R8L21_C28_053800_AHNLAB_POLITICAL_AFFINITY_FALSE_POSITIVE",
+      "C28-053800-2022-THEME-GUARD",
       "R8L12_C28_053800_AHNLAB_POLITICAL_EVENT_2022",
       "R8L12_C28_030520_HANCOM_THEME_PREMIUM_2021",
+      "C28-131370-2020-REMOTE-SUPPORT",
       "R8L12_C28_136540_WINS_CONTRACT_RETENTION_NO_EXPLOSION_2020"
     ],
     "common_positive_evidence_fields": [
-      "historical_public_disclosure",
       "news",
+      "historical_public_disclosure",
       "industry_evidence",
       "price_rows_from_songdaiki",
       "stock-web",
@@ -1119,14 +1341,14 @@
       "news_summary"
     ],
     "common_failure_evidence_fields": [
+      "ohlc_verified_in_stock-web",
       "historical_public_filings",
       "reports",
       "news_summary",
       "stock-web_used_only_for_ohlcv",
       "public_evidence_available_at_or_before_trigger_date",
       "timing_treated_as_next-tradable-close_when_intraday_time_was_unclear",
-      "historical_public_event_proxy_plus_stock_web_row",
-      "historical_public_disclosure"
+      "historical_public_event_proxy_plus_stock_web_row"
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
@@ -1137,82 +1359,127 @@
     "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
     "unique_positive_symbols": [
       "000270",
-      "005380"
+      "005380",
+      "005850",
+      "011200",
+      "028670",
+      "086280"
     ],
     "unique_success_candidate_symbols": [],
     "unique_counterexample_symbols": [
-      "204320"
+      "003490",
+      "011210",
+      "089590",
+      "204320",
+      "272450"
     ],
-    "unique_4b_cases": [],
-    "unique_4c_cases": [],
+    "unique_4b_cases": [
+      "R9L10-C29-HYUNDAI-2024",
+      "R9L33-C29-204320-HLMANDO-2023-EV-ADAS-MARGIN-GAP",
+      "C29-KIA-2020-MIX-OPLEV",
+      "C29-HYUNDAIWIA-2021-THERMAL-MODULE"
+    ],
+    "unique_4c_cases": [
+      "R9L10-C29-HLMANDO-2024",
+      "R9L33-C29-011210-HYWIA-2023-THERMAL-MGMT-FALSE-POSITIVE"
+    ],
     "latest_positive_case_ids": [
+      "R9L10-C29-HYUNDAI-2024",
+      "C29-SL-2024-Q1-LAMP-MIX",
+      "R9L10-C29-KIA-2024",
       "R9L10_C29_000270_2023_VOLUME_MIX_MARGIN_SUCCESS",
-      "R9L10_C29_005380_2023_VOLUME_MIX_MARGIN_SUCCESS"
+      "R9L33-C29-000270-KIA-2023-FY22-VOLUME-MIX-MARGIN",
+      "R9L10_C29_005380_2023_VOLUME_MIX_MARGIN_SUCCESS",
+      "C29-KIA-2020-MIX-OPLEV",
+      "R9L31_C29_028670_PAN_OCEAN_DRYBULK_RATE_MARGIN",
+      "R9L12_C29_GLOVIS_20201008_AUTO_LOGISTICS_RECOVERY",
+      "R9L12_C29_HMM_20200814_CONTAINER_RATE_MARGIN"
     ],
     "latest_counterexample_case_ids": [
-      "R9L10_C29_204320_2023_VOLUME_WITH_MARGIN_GAP"
+      "R9L10-C29-HLMANDO-2024",
+      "R9L33-C29-204320-HLMANDO-2023-EV-ADAS-MARGIN-GAP",
+      "R9L10_C29_204320_2023_VOLUME_WITH_MARGIN_GAP",
+      "R9L12_C29_JINAIR_20230118_REOPENING_MARGIN_DELAY",
+      "R9L12_C29_JEJUAIR_20230118_REOPENING_VOLUME_FALSE_POSITIVE",
+      "R9L31_C29_003490_KOREANAIR_REOPENING_VOLUME_FALSE_POSITIVE",
+      "C29-HYUNDAIWIA-2021-THERMAL-MODULE",
+      "C29-HLMANDO-2021-EV-CHASSIS-THEME"
     ],
     "common_positive_evidence_fields": [
       "public_earnings",
+      "public_quarterly_earnings",
       "guidance_event_+_stock-web_ohlc_rows",
       "unknown_intraday_timing_uses_next_trading_date_close.",
-      "public_q1_result_confirmation_+_stock-web_ohlc_rows",
-      "2022",
-      "4q_result_and_2023_wholesale",
-      "mix_margin_guidance_available_by",
-      "after_2023-01-27"
+      "disclosure",
+      "news",
+      "research_narrative",
+      "price_via_stock-web"
     ],
     "common_failure_evidence_fields": [
-      "public_sector",
-      "customer_narrative_+_stock-web_ohlc_rows",
-      "auto_production_recovery_and_customer",
-      "adas_volume_route_narrative_without_confirmed_margin_pass-through."
+      "public_theme",
+      "company_filings",
+      "traffic_recovery_press_coverage",
+      "stock-web_ohlc_rows_directly_validated_in_atlas",
+      "ohlcv_tradable_by_symbol_year",
+      "2023.csv",
+      "ev",
+      "public_reopening"
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
-    "next_delta_recommendation": "hold_for_more_non_overlapping_evidence"
+    "next_delta_recommendation": "apply_limited_next_patch"
   },
   "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK": {
     "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
     "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
     "unique_positive_symbols": [
       "000720",
-      "028050"
+      "028050",
+      "294870"
     ],
     "unique_success_candidate_symbols": [],
     "unique_counterexample_symbols": [
       "006360",
-      "294870"
+      "047040",
+      "294870",
+      "375500"
     ],
     "unique_4b_cases": [],
-    "unique_4c_cases": [],
+    "unique_4c_cases": [
+      "R10L10_C30_DL_FALSE_GREEN"
+    ],
     "latest_positive_case_ids": [
+      "R10L10_C30_HDC_POS",
       "R10L10_C30_028050_SAMSUNG_EA_2023_OVERSEAS_EPC_NET_CASH_PF_ESCAPE",
-      "R10L10_C30_000720_HDEC_2023_OVERSEAS_BACKLOG_BALANCE_SHEET_SAFE_HAVEN"
+      "R10L10_C30_000720_HDEC_2023_OVERSEAS_BACKLOG_BALANCE_SHEET_SAFE_HAVEN",
+      "R10L12_C30_294870_HDC_GWANGJU_COLLAPSE_20220112"
     ],
     "latest_counterexample_case_ids": [
+      "R10L12_C30_375500_DLENC_PF_DISCOUNT_REVERSAL_20231010",
+      "R10L12_C30_006360_GS_GEOMDAN_REBUILD_20230706",
       "R10L10_C30_006360_GS_EC_2023_QUALITY_DEFECT_LEGAL_LOSS_BREAK",
+      "R10L12_C30_047040_DAEWOO_PF_PANIC_20221031",
       "R10L10_C30_294870_HDC_2022_COLLAPSE_LEGAL_THESIS_BREAK"
     ],
     "common_positive_evidence_fields": [
-      "price_verified_in_stock-web_000720_2023_tradable_shard.",
-      "historical_company",
-      "disclosure",
-      "news",
-      "analyst-note_proxy",
-      "price_verified_in_stock-web_028050_2023_tradable_shard.",
-      "historical_order",
-      "news_proxy"
+      "historical_public_event",
+      "disclosure_family",
+      "price_verified_by_stock-web",
+      "historical_public-event_evidence",
+      "stock-web_ohlc_shard_lines_show_entry_and_forward_path.",
+      "gwangju_hwajeong_i-park_collapse",
+      "fatal_construction-quality_event_publicly_visible_on_trigger_date",
+      "issuer-specific_project-quality_and_legal"
     ],
     "common_failure_evidence_fields": [
-      "historical_news",
-      "price_verified_in_stock-web_006360_2023_tradable_shard.",
-      "disclosure_proxy",
-      "hard_defect",
-      "legal-cost_evidence._this_is_a_protection_row_only",
-      "it_should_not_train_positive_entry_weights_even_if_a_later_rebound_occurs.",
-      "historical_company",
-      "news_proxy"
+      "historical_public-event_evidence",
+      "stock-web_ohlc_shard_lines_show_sharp_gap-down_then_recovery.",
+      "issuer-specific_project_defect",
+      "rebuild_cost_shock_and_legal",
+      "regulatory_overhang_visible_by_entry_date.",
+      "stock-web_ohlc_confirms_rebound_after_broad_panic_entry.",
+      "sector-wide_pf",
+      "credit-spread_stress"
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
@@ -1223,12 +1490,15 @@
     "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
     "unique_positive_symbols": [
       "009830",
+      "034020",
       "112610",
+      "322000",
       "336260"
     ],
     "unique_success_candidate_symbols": [],
     "unique_counterexample_symbols": [
       "001470",
+      "018000",
       "034020",
       "052690",
       "053290",
@@ -1239,37 +1509,43 @@
     ],
     "unique_4c_cases": [],
     "latest_positive_case_ids": [
+      "R11L10C31_034020_20240718",
       "C31_112610_202208",
       "C31-009830-IRA-SOLAR",
       "C31-112610-IRA-WIND",
+      "R11L13_C31_HD_ENERGY_IRA_SOLAR_POSITIVE_HIGH_MAE",
+      "R11L13_C31_CS_WIND_IRA_WIND_TOWER_POSITIVE",
       "C31_336260_202007"
     ],
     "latest_counterexample_case_ids": [
+      "R11L10C31_052690_20240718",
       "C31-001470-UKR-REBUILD",
       "C31-336260-HYDROGEN-POLICY",
+      "R11L13_C31_UNISON_IRA_WIND_THEME_COUNTEREX",
+      "R11L13_C31_DOOSAN_FUELCELL_HYDROGEN_POLICY_COUNTEREX",
       "C31_034020_202203",
       "C31_052690_202203",
       "C31-053290-POLICY-THEME"
     ],
     "common_positive_evidence_fields": [
-      "historical_public_policy_event_+_company_policy-to-capacity_narrative",
-      "ira_signed",
-      "solar_manufacturing",
-      "tax-credit_policy_route_visible",
-      "company_capacity",
-      "margin_bridge_plausible",
-      "historical_public_market",
-      "research_confirmation_proxy"
+      "reuters_2024-07-17_czech_nuclear_preferred_bidder_report",
+      "khnp_selected_preferred_bidder_for_czech_nuclear_project",
+      "related_korean_nuclear_names_moved.",
+      "public_legislation",
+      "news",
+      "stock-web_ohlc_atlas",
+      "see_source_notes",
+      "historical_public_policy_event_+_company_policy-to-capacity_narrative"
     ],
     "common_failure_evidence_fields": [
+      "public_legislation",
+      "news",
+      "stock-web_ohlc_atlas",
+      "see_source_notes",
       "public_election",
       "policy_event",
-      "historical_public_geopolitical_event_headline_proxy",
-      "ukraine_reconstruction",
-      "geopolitical_headline_+_relative_strength",
-      "no_funded_project",
-      "order_bridge_at_trigger",
-      "nuclear-policy_reversal_repriced_nuclear_equipment"
+      "reuters_2024-07-17_czech_nuclear_preferred_bidder_report",
+      "same_czech_preferred-bidder_event"
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,
@@ -1281,27 +1557,44 @@
     "unique_positive_symbols": [
       "000240",
       "000990",
-      "010130"
+      "010130",
+      "041510"
     ],
     "unique_success_candidate_symbols": [],
     "unique_counterexample_symbols": [
       "000240",
       "000990",
       "008930",
+      "010130",
+      "036560",
       "041510"
     ],
     "unique_4b_cases": [
+      "R13L20-C32-KZ-20240913",
+      "R13L44_C32_KZ_20241031_CAPITAL_RAISE_OVERHANG",
+      "R13L24_C32_KZ_010130_MBK_YP_20240913",
       "R13_C32_KOREAZINC_010130_2024_HOSTILE_TENDER_HOLDOUT",
-      "R13_C32_HANKOOK_000240_2023_MBK_CONTROL_PREMIUM_HOLDOUT"
+      "R13_C32_HANKOOK_000240_2023_MBK_CONTROL_PREMIUM_HOLDOUT",
+      "C32-SM-20230210-HYBE-KAKAO-TENDER-WAR",
+      "R13L44_C32_SM_20230210_TENDER_ESCALATION",
+      "R13L24_C32_SM_041510_HYBE_KAKAO_20230210",
+      "R13L20-C32-SM-20230213"
     ],
-    "unique_4c_cases": [],
+    "unique_4c_cases": [
+      "C32-HMM-20231219-HARIM-PREFERRED-BIDDER"
+    ],
     "latest_positive_case_ids": [
       "R11L11_C32_010130_KOREAZINC_2024_CONTROL_TENDER_BATTLE",
       "R13_C32_KOREAZINC_010130_2024_HOSTILE_TENDER_HOLDOUT",
+      "R13L44_C32_KZ_20240913_HOSTILE_TENDER",
       "R13_C32_HANKOOK_000240_2023_MBK_CONTROL_PREMIUM_HOLDOUT",
-      "R11L11_C32_000990_DBHITEK_2023_ACTIVIST_VALUE_UNLOCK"
+      "R11L11_C32_000990_DBHITEK_2023_ACTIVIST_VALUE_UNLOCK",
+      "R13L44_C32_SM_20230210_TENDER_ESCALATION",
+      "R13L24_C32_SM_041510_HYBE_KAKAO_20230210"
     ],
     "latest_counterexample_case_ids": [
+      "R13L44_C32_KZ_20241031_CAPITAL_RAISE_OVERHANG",
+      "R13L24_C32_KZP_036560_TENDER_CAP_20241011",
       "R13_C32_HANMI_008930_2024_OCI_FAMILY_CONTROL_DISPUTE",
       "R11L11_C32_008930_HANMISCIENCE_2024_FAMILY_GOVERNANCE_DISPUTE",
       "R11L11_C32_000240_HANKOOKANDCOMPANY_2023_TENDER_FAIL",
@@ -1309,24 +1602,24 @@
       "R11L11_C32_041510_SM_2023_TENDER_EVENT_CAP"
     ],
     "common_positive_evidence_fields": [
+      "stock-web_ohlc_path_atlas",
+      "ohlcv_tradable_by_symbol_year",
+      "2023.csv",
+      "010130",
       "historical_public-event_timeline",
       "price_row_verified_from_songdaiki",
       "stock-web_shard",
-      "stock-web_ohlc_path_atlas",
-      "ohlcv_tradable_by_symbol_year",
-      "control-premium",
-      "tender_battle_produced_an_explicit_event-price_anchor_and_a_fast_upside_window",
-      "but_did_not_establish_a_durable_eps"
+      "000"
     ],
     "common_failure_evidence_fields": [
       "stock-web_ohlc_path_atlas",
       "ohlcv_tradable_by_symbol_year",
-      "historical_public-event_timeline",
-      "price_row_verified_from_songdaiki",
-      "stock-web_shard",
+      "2024.csv",
       "000",
       "000240",
-      "2023.csv_and_2024.csv"
+      "2023.csv_and_2024.csv",
+      "tender",
+      "historical_public-event_timeline"
     ],
     "current_patch_state": "unpatched_shadow",
     "last_patch_version": null,

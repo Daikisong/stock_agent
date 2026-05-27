@@ -77,16 +77,23 @@ def normalise_trigger_type(value: Any) -> str:
         "Stage4B-watch": "Stage4B",
         "Stage4B local overlay": "Stage4B",
         "Stage4B full-window overlay": "Stage4B",
+        "Stage4B-overlay": "Stage4B",
+        "Stage4B overlay": "Stage4B",
         "price-only-local-4B-overlay": "Stage4B",
         "price-only local 4B overlay": "Stage4B",
         "4B-watch": "Stage4B",
         "Stage4B": "Stage4B",
         "Stage4C": "Stage4C",
         "Stage4C protection watch": "Stage4C",
+        "Stage4C watch": "Stage4C",
+        "4C-watch": "Stage4C",
         "Stage3_Yellow": "Stage3-Yellow",
         "Stage3_Green": "Stage3-Green",
         "Stage3-Green comparison": "Stage3-Green",
+        "Stage3-Green-comparison": "Stage3-Green",
         "Stage3-Green compare": "Stage3-Green",
+        "Stage2_Actionable": "Stage2-Actionable",
+        "S2A": "Stage2-Actionable",
         "Stage2 policy-only stress": "Stage2",
         "price-only-theme-breakout": "price_only_theme_breakout_guardrail",
     }
@@ -153,6 +160,8 @@ def validate_trigger_rows(trigger_rows: list[dict[str, Any]]) -> ValidationBundl
         trigger_type = normalise_trigger_type(validated.get("trigger_type"))
         validated["trigger_type"] = trigger_type
 
+        if not trigger_type:
+            reasons.append("missing_trigger_type")
         if not _price_source_valid(validated):
             reasons.append("invalid_price_source")
         if not _price_basis_valid(validated):

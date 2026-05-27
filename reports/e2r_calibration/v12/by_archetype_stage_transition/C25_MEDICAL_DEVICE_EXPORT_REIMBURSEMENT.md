@@ -3,10 +3,15 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `17`
+- stage_transition_summary_rows: `25`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| C25-R7L28-041830-INBODY-EXPORT-SPIKE | 041830 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 29000.0 | None | None | 12.24 | None | stage2_actionable_best_entry |
+| C25-R7L28-145720-DENTIUM-CHINA-IMPLANT | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 77000.0 | 139700.0 | None | 140.2659 | None | green_good_but_late |
+| C25-R7L28-214150-CLASSYS-EXPORT-MARGIN | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 25150.0 | 32900.0 | None | 71.1716 | None | green_too_late |
+| C25-R7L28-228670-RAY-CHINA-DENTAL-CALL-OFF | 228670 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 35550.0 | None | None | 18.57 | None | 4c_too_late |
+| C25-R7L28-338220-VUNO-AI-REIMBURSEMENT | 338220 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 14770.0 | None | 63600.0 | 370.5625 | 89.2164 | 4b_good_peak_capture |
 | C25_R13L33_001_VUNO_DEEPCARS_REIMBURSEMENT | 338220 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 23650.0 | None | None | 193.8777 | None | stage2_actionable_best_entry |
 | C25_R13L33_002_CLASSYS_EXPORT_MARGIN | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 26400.0 | None | None | 63.07 | None | stage2_actionable_best_entry |
 | C25_R13L33_003_DENTIUM_CHINA_EXPORT | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 94300.0 | None | None | 72.53 | None | stage2_actionable_best_entry |
@@ -24,3 +29,6 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R7L12_C25_214150_CLASSYS_2023_EXPORT_CONSUMABLE_RERATING | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 23900.0 | 40150.0 | None | 108.36 | None | green_too_late |
 | R7L12_C25_322510_JLK_2023_AI_REIMBURSEMENT_PREMIUM | 322510 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 7700.0 | None | None | 394.81 | None | stage2_actionable_best_entry |
 | R7L12_C25_328130_LUNIT_2024_MEDICAL_AI_EXPORT_REIMBURSEMENT_GAP | 328130 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 61700.0 | None | None | 14.26 | None | stage2_actionable_best_entry |
+| R7L14-C25-001 | 338220 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 23650.0 | None | None | 193.8777 | None | stage2_actionable_best_entry |
+| R7L14-C25-002 | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 26400.0 | 32900.0 | None | 63.07 | None | green_too_late |
+| R7L14-C25-003 | 328130 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |

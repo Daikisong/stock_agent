@@ -148,6 +148,11 @@ ARCHETYPE_WEIGHT_SEEDS: dict[str, dict[str, Any]] = {
         "green_policy": "green_allowed_with_orders_and_revenue_conversion",
         "basis": "semi equipment: orders, backlog, customer capex, revenue conversion",
     },
+    "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
+        "weights": _weights(22, 21, 16, 14, 12, 6, 9),
+        "green_policy": "green_allowed_with_customer_qualification_repeat_demand_and_margin_conversion",
+        "basis": "semi test/socket: customer qualification, quality lock-in, repeat consumables, revenue conversion and margin durability",
+    },
     "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF": {
         "weights": _weights(22, 20, 18, 13, 11, 6, 10),
         "green_policy": "watch_to_green_with_valuation_blowoff_guard",

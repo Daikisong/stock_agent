@@ -3,23 +3,10 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `62`
+- stage_transition_summary_rows: `96`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| 005940 | 005940 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 11290.0 | 12320.0 | None | 28.6998 | None | green_good_but_late |
-| 006220 | 006220 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
-| 006800 | 006800 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 8620.0 | None | None | 7.08 | None | stage2_actionable_best_entry |
-| 016360 | 016360 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 40550.0 | None | None | 25.0305 | None | stage2_actionable_best_entry |
-| 024110 | 024110 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 14970.0 | None | None | 49.63 | None | stage2_actionable_best_entry |
-| 039490 | 039490 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 112200.0 | None | None | 30.48 | None | stage2_actionable_best_entry |
-| 055550 | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 41350.0 | 58000.0 | None | 99.2767 | None | green_good_but_late |
-| 086790 | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 52000.0 | 60000.0 | None | 33.27 | None | green_good_but_late |
-| 105560 | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 61300.0 | 76000.0 | None | 178.1455 | None | green_good_but_late |
-| 138930 | 138930 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 10570.0 | None | None | 55.25 | None | stage2_actionable_best_entry |
-| 139130 | 139130 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 9710.0 | None | None | 64.37 | None | stage2_actionable_best_entry |
-| 175330 | 175330 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 17070.0 | None | None | 55.54 | None | stage2_actionable_best_entry |
-| 323410 | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
 | C21-L6-018-HANA-20240226 | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 55400.0 | None | None | 25.09 | None | stage2_actionable_best_entry |
 | C21-L6-018-KAKAOBANK-20240226 | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 30150.0 | None | None | 1.66 | None | stage2_actionable_best_entry |
 | C21-L6-018-KB-20240226 | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 62500.0 | None | None | 66.24 | None | stage2_actionable_best_entry |
@@ -39,21 +26,33 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C21_SAM_2024_IFRS17_CAPRETURN | 000810 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 299000.0 | 370000.0 | None | 45.488 | None | green_too_late |
 | C21_WOORI_2024_NONBANK_OVERHANG_CE | 316140 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 16330.0 | None | None | 7.16 | None | stage2_actionable_best_entry |
 | R13L22_C21_JEJUBANK_006220_2024_PRICE_ONLY_BANK_POLICY_THEME | 006220 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
+| R13L22_C21_JEJUBANK_006220_2024_PRICE_ONLY_BANK_POLICY_THEME | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
 | R13L22_C21_KAKAOBANK_323410_2024_DIGITAL_BANK_NO_DISTRIBUTION | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
+| R13L22_C21_KAKAOBANK_323410_2024_DIGITAL_BANK_NO_DISTRIBUTION | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
 | R13L22_C21_KBFG_105560_2025_CAPITAL_RETURN_CONFIRMED | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 86900.0 | 102000.0 | None | 96.2062 | None | green_good_but_late |
+| R13L22_C21_KBFG_105560_2025_CAPITAL_RETURN_CONFIRMED | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 86900.0 | 102000.0 | None | 96.2062 | None | green_good_but_late |
 | R13L22_C21_SHINHAN_055550_2025_CAPITAL_RETURN_CONFIRMED | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 49750.0 | None | None | 65.63 | None | stage2_actionable_best_entry |
+| R13L22_C21_SHINHAN_055550_2025_CAPITAL_RETURN_CONFIRMED | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 49750.0 | None | None | 65.63 | None | stage2_actionable_best_entry |
 | R13L23_C21_BNKFG_138930_LOCAL_4B_TOO_EARLY | 138930 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 10570.0 | None | None | 55.25 | None | stage2_actionable_best_entry |
+| R13L23_C21_BNKFG_138930_LOCAL_4B_TOO_EARLY | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 10570.0 | None | None | 55.25 | None | stage2_actionable_best_entry |
 | R13L23_C21_IBK_024110_STATE_BANK_DIVIDEND_ROUTE | 024110 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 14970.0 | None | None | 49.63 | None | stage2_actionable_best_entry |
+| R13L23_C21_IBK_024110_STATE_BANK_DIVIDEND_ROUTE | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 14970.0 | None | None | 49.63 | None | stage2_actionable_best_entry |
 | R13L23_C21_IMFG_139130_LOCAL_4B_TOO_EARLY | 139130 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 9710.0 | None | None | 64.37 | None | stage2_actionable_best_entry |
+| R13L23_C21_IMFG_139130_LOCAL_4B_TOO_EARLY | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 9710.0 | None | None | 64.37 | None | stage2_actionable_best_entry |
 | R13L23_C21_JBFG_175330_REGIONAL_BANK_CAPITAL_RETURN | 175330 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 17070.0 | None | None | 55.54 | None | stage2_actionable_best_entry |
+| R13L23_C21_JBFG_175330_REGIONAL_BANK_CAPITAL_RETURN | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 17070.0 | None | None | 55.54 | None | stage2_actionable_best_entry |
 | R13L25_C21_006220_JEJUBANK_PRICE_ONLY_FALSE_POSITIVE | 006220 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
 | R13L25_C21_055550_SHINHAN_VALUEUP_CAPRETURN | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 41350.0 | 58000.0 | None | 56.23 | None | green_too_late |
 | R13L25_C21_105560_KB_VALUEUP_CAPRETURN | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 62500.0 | 84600.0 | None | 66.24 | None | green_too_late |
 | R13L25_C21_323410_KAKAOBANK_DIGITAL_BANK_GROWTH_GUARD | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
 | R13L30_C21_BNK_138930_REGIONAL_POLICY_BETA_2024 | 138930 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 7820.0 | None | None | 52.1703 | None | stage2_captured_most_upside |
+| R13L30_C21_BNK_138930_REGIONAL_POLICY_BETA_2024 | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 7820.0 | None | None | 52.1703 | None | stage2_captured_most_upside |
 | R13L30_C21_JB_175330_ROE_SMALLBANK_RERATING_2024 | 175330 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 12330.0 | 14620.0 | None | 66.2625 | None | green_too_late |
+| R13L30_C21_JB_175330_ROE_SMALLBANK_RERATING_2024 | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 12330.0 | 14620.0 | None | 66.2625 | None | green_too_late |
 | R13L30_C21_KB_105560_VALUEUP_CET1_BUYBACK_2024 | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 67600.0 | 76000.0 | 101000.0 | 53.7 | 92.008 | 4b_good_peak_capture |
+| R13L30_C21_KB_105560_VALUEUP_CET1_BUYBACK_2024 | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 67600.0 | 76000.0 | 101000.0 | 53.7 | 92.008 | 4b_good_peak_capture |
 | R13L30_C21_WOORI_316140_POLICY_ONLY_CAPITAL_DRAG_2024 | 316140 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 14610.0 | None | None | 18.4097 | None | stage2_captured_most_upside |
+| R13L30_C21_WOORI_316140_POLICY_ONLY_CAPITAL_DRAG_2024 | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 14610.0 | None | None | 18.4097 | None | stage2_captured_most_upside |
 | R6L10-C21-KBANK-003 | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
 | R6L10-C21-KBFG-001 | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 62500.0 | None | None | 66.24 | None | stage2_actionable_best_entry |
 | R6L10-C21-SLIF-002 | 032830 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 92200.0 | None | None | 20.39 | None | stage2_actionable_best_entry |
@@ -61,11 +60,46 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R6L10_C21_055550_VALUEUP_CAPITAL_RETURN_POS | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 41350.0 | 58000.0 | None | 56.23 | None | green_too_late |
 | R6L10_C21_105560_VALUEUP_CAPITAL_RETURN_POS | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 62500.0 | 76000.0 | None | 66.24 | None | green_good_but_late |
 | R6L10_C21_323410_POLICY_THEME_COUNTER | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 30150.0 | None | None | 1.66 | None | stage2_actionable_best_entry |
+| R6L10_C21_HANA_20240226 | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 55400.0 | None | None | 25.09 | None | stage2_actionable_best_entry |
+| R6L10_C21_KAKAOBANK_20240226 | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
+| R6L10_C21_KB_20240226 | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 62500.0 | None | None | 66.24 | None | stage2_actionable_best_entry |
 | R6L12_C21_JEJUBANK_20240202_PRICE_ONLY_BLOWOFF | 006220 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
 | R6L12_C21_KAKAOBANK_20240227_POLICY_BETA_FAIL | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
 | R6L12_C21_KBFIN_20240208_CAPITAL_RETURN | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 67600.0 | None | None | 53.7 | None | stage2_actionable_best_entry |
 | R6L12_C21_SHINHAN_20240208_CAPITAL_RETURN | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 44150.0 | None | None | 46.32 | None | stage2_actionable_best_entry |
+| R6L15_C21_HANA_20240208_CAPITAL_RETURN_QUALITY | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 56600.0 | None | None | 22.44 | None | stage2_actionable_best_entry |
+| R6L15_C21_KAKAOBANK_20240227_POLICY_ONLY_FALSE_POSITIVE | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
+| R6L15_C21_KB_20240208_CAPITAL_RETURN_QUALITY | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 67600.0 | None | None | 80.4703 | None | stage2_actionable_best_entry |
+| R6L15_C21_SHINHAN_20240729_RETURN_SCALE_MAE_GUARD | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 60700.0 | None | None | 6.43 | None | stage2_actionable_best_entry |
+| R6L23_C21_HANA_2024_VALUEUP_CAPITAL_RETURN | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 55400.0 | None | None | 25.09 | None | stage2_actionable_best_entry |
+| R6L23_C21_KAKAOBANK_2024_VALUEUP_DIGITAL_BANK_COUNTER | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 30150.0 | None | None | 1.66 | None | stage2_actionable_best_entry |
+| R6L23_C21_KB_2024_VALUEUP_CAPITAL_RETURN | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 62500.0 | 76000.0 | None | 66.24 | None | green_good_but_late |
+| R6L32-C21-HANA-2024-CAPRETURN | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 44850.0 | None | None | 54.52 | None | stage2_actionable_best_entry |
+| R6L32-C21-JEJUBANK-2024-PRICEONLY | 006220 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
+| R6L32-C21-KAKAOBANK-2024-HIGHVALUATION | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
+| R6L32-C21-KBFG-2024-CAPRETURN | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 53800.0 | 78600.0 | None | 93.1252 | None | green_too_late |
+| R6L35-C21-HANA-20240227 | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 54700.0 | 60000.0 | None | 26.51 | None | green_good_but_late |
+| R6L35-C21-JEJUBANK-20240124 | 006220 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
+| R6L35-C21-KAKAOBANK-20240227 | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
+| R6L35-C21-KB-20240227 | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 62400.0 | 76000.0 | None | 66.51 | None | green_good_but_late |
+| R6L40_C21_HANA_086790 | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 54700.0 | 60000.0 | None | 26.691 | None | green_good_but_late |
+| R6L40_C21_KAKAO_323410 | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
+| R6L40_C21_KB_105560 | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 62400.0 | 76000.0 | None | 66.51 | None | green_good_but_late |
+| R6L44-C21-001-MERITZ | 138040 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 44450.0 | None | None | 40.16 | None | stage2_actionable_best_entry |
+| R6L44-C21-001-MERITZ | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 44450.0 | None | None | 40.16 | None | stage2_actionable_best_entry |
+| R6L44-C21-002-KBFG | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 67600.0 | None | None | 79.5888 | None | stage2_actionable_best_entry |
+| R6L44-C21-002-KBFG | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 67600.0 | None | None | 53.7 | None | stage2_actionable_best_entry |
+| R6L44-C21-003-KAKAOBANK | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
+| R6L44-C21-003-KAKAOBANK | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
+| R6L45_C21_HANA_20240227_STAGE2 | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 54700.0 | 64600.0 | None | 26.6963 | None | green_too_late |
+| R6L45_C21_KAKAOBANK_20240227_FALSE_STAGE2 | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
+| R6L45_C21_KBFG_20240227_STAGE2 | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 62400.0 | None | None | 95.5095 | None | stage2_actionable_best_entry |
+| R6L48_C21_HANA_2024_CAPITAL_RETURN_BRIDGE | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 55400.0 | None | None | 25.0903 | None | stage2_actionable_best_entry |
+| R6L48_C21_KAKAOBANK_2024_POLICY_ONLY_FALSE_POSITIVE | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 30150.0 | None | None | 1.0 | None | stage2_actionable_best_entry |
+| R6L48_C21_KB_2024_CAPITAL_RETURN_BRIDGE | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 62500.0 | 76000.0 | None | 66.24 | None | green_good_but_late |
 | R6L60_C21_HANA_2024_CAPITAL_RETURN | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 52000.0 | 60000.0 | None | 33.27 | None | green_too_late |
+| R6L60_C21_HANA_2024_CAPITAL_RETURN | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 52000.0 | None | None | 33.27 | None | stage2_actionable_best_entry |
 | R6L60_C21_KAKAOBANK_2024_POLICYONLY_COUNTEREXAMPLE | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
-| R6L60_C21_KBFG_2024_CAPITAL_RETURN | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 61300.0 | 76000.0 | None | 106.531 | None | green_too_late |
-| None | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
+| R6L60_C21_KAKAOBANK_2024_POLICYONLY_COUNTEREXAMPLE | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | None | None | None | None | no_valid_stage_transition |
+| R6L60_C21_KBFG_2024_CAPITAL_RETURN | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 61300.0 | 76000.0 | 101000.0 | 106.531 | 60.7931 | green_too_late |
+| R6L60_C21_KBFG_2024_CAPITAL_RETURN | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 61300.0 | None | None | 69.49 | None | stage2_actionable_best_entry |

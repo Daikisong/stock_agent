@@ -85,8 +85,48 @@ class V12CalibrationPipelineTests(unittest.TestCase):
 
     def test_v12_trigger_aliases_normalize(self) -> None:
         self.assertEqual(normalise_trigger_type("Stage3-Green comparison"), "Stage3-Green")
+        self.assertEqual(normalise_trigger_type("Stage3-Green-comparison"), "Stage3-Green")
+        self.assertEqual(normalise_trigger_type("Stage4B-overlay"), "Stage4B")
+        self.assertEqual(normalise_trigger_type("4C-watch"), "Stage4C")
         self.assertEqual(normalise_trigger_type("price-only-local-4B-overlay"), "Stage4B")
         self.assertEqual(normalise_trigger_type("Stage2 policy-only stress"), "Stage2")
+
+    def test_v12_ohlc_table_inherits_trigger_grid_stage_metadata(self) -> None:
+        markdown = """# Split trigger grid fixture
+
+- research_session: `post_calibrated_sector_archetype_residual_research`
+- mode: `historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12`
+- round: `R7`
+- loop: `27`
+- large_sector_id: `L7_BIO_HEALTHCARE_MEDICAL`
+- canonical_archetype_id: `C24_BIO_TRIAL_DATA_EVENT_RISK`
+
+| trigger_id | case_id | trigger_type | trigger_date | entry_date | entry_price | trigger_outcome_label | current_profile_verdict | aggregate role |
+|---|---|---|---:|---:|---:|---|---|---|
+| R7L27-T001 | CASE-A | Stage2-Actionable | 2023-10-23 | 2023-10-24 | 58000 | structural_success | current_profile_too_late | representative |
+
+| trigger_id | symbol | entry_date | entry_price | MFE_30D_pct | MAE_30D_pct | MFE_90D_pct | MAE_90D_pct | MFE_180D_pct | MAE_180D_pct |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| R7L27-T001 | 000100 | 2023-10-24 | 58000 | 10.69 | -5.34 | 23.45 | -5.34 | 73.10 | -5.34 |
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = (
+                Path(tmp)
+                / "e2r_stock_web_v12_residual_round_R7_loop_27_L7_BIO_HEALTHCARE_MEDICAL_C24_BIO_TRIAL_DATA_EVENT_RISK_research.md"
+            )
+            path.write_text(markdown, encoding="utf-8")
+            doc = v12_result_documents(discover_markdown_documents(path.parent))[0]
+            parsed = parse_markdown_document(doc)
+            ohlc_rows = [row for row in parsed.rows_by_type["trigger"] if row.get("MFE_90D_pct")]
+
+            self.assertEqual(len(ohlc_rows), 1)
+            self.assertEqual(ohlc_rows[0]["trigger_type"], "Stage2-Actionable")
+            self.assertEqual(ohlc_rows[0]["case_id"], "CASE-A")
+            self.assertEqual(ohlc_rows[0]["current_profile_verdict"], "current_profile_too_late")
+
+            bundle = validate_v12_trigger_rows(parsed.rows_by_type["trigger"])
+            self.assertTrue(any(row.get("trigger_type") == "Stage2-Actionable" for row in bundle.valid_rows))
+            self.assertFalse(any(row.get("trigger_type") == "" for row in bundle.valid_rows))
 
     def test_v12_validation_shadow_flags_and_promotion_block(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

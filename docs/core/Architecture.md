@@ -28,6 +28,40 @@ PYTHONPATH=src python -m e2r.calibration.cli run-v12-calibration \
 
 `run-v12-full`은 감사용 진단 명령이다. 기본 점수체계에 반영하려면 `run-v12-calibration`을 사용한다.
 
+## Preflight Gate
+
+`docs/round`에는 연구 결과 MD뿐 아니라 prompt txt, 과거 archive, 중복 파일이 같이 들어올 수 있다.
+그래서 표준 실행 전에 입력을 먼저 점검한다.
+
+```text
+root 새 MD
+archive MD
+prompt/spec 파일
+parser 실패 문서
+trigger 없는 문서
+unknown large sector
+unknown canonical archetype
+```
+
+이 중 가장 위험한 것은 `unknown canonical archetype`이다.
+
+```text
+예:
+  C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY 연구자료가 들어왔다.
+  그런데 runtime profile에는 C08 weight가 없다.
+
+그냥 진행하면:
+  L2_AI_SEMICONDUCTOR_ELECTRONICS 대섹터 weight로 fallback된다.
+  점수는 계산되지만, C08 전용 "고객 인증/품질/반복 소모품" 특성이 덜 반영된다.
+
+올바른 처리:
+  C08 seed를 추가하고 테스트로 canonical match를 확인한다.
+  그 다음 전체 v12 calibration을 실행한다.
+```
+
+fallback 자체는 실패 방지 장치다. 성공 신호가 아니다.
+보고서와 `ScoreSnapshot.diagnostic_scores`에 fallback 플래그가 남으면 mapper 또는 weight profile을 고쳐야 한다.
+
 ## 전체 흐름
 
 ```mermaid
@@ -152,6 +186,9 @@ C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION
 
 C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG
   계약금액, 수주잔고, 정부 고객, 납품 visibility가 약하면 Stage 3 쪽으로 쉽게 못 간다.
+
+C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY
+  단순 HBM 장비 CAPEX보다 고객 인증, 품질 lock-in, 반복 소모품 수요, 매출 전환, 마진 지속성을 더 본다.
 ```
 
 중요한 제한:
@@ -345,14 +382,14 @@ v12 적용은 scope 제한이다.
 최근 실행 기준:
 
 ```text
-v12_result_md_count: 87
-v12_validated_trigger_rows: 960
-v12_representative_trigger_rows: 748
-stage_transition_summary_rows: 410
+v12_result_md_count: 162
+v12_validated_trigger_rows: 1537
+v12_representative_trigger_rows: 1176
+stage_transition_summary_rows: 692
 large_sectors_covered: 10
-canonical_archetypes_covered: 27
-applied_patch_count: 64
-archetype_weight_count: 27
+canonical_archetypes_covered: 28
+applied_patch_count: 81
+archetype_weight_count: 28
 large_sector_weight_count: 10
 active_profile: e2r_2_2
 rollback_profile: calibrated
@@ -361,12 +398,12 @@ rollback_profile: calibrated
 적용 축:
 
 ```text
-stage2_bonus_candidate_delta: 5
-stage2_required_bridge: 22
-local_4b_watch_guard: 9
-full_4b_overlay_candidate: 9
-earlier_thesis_break_watch: 19
-hard_4c_confirmation: 0
+stage2_bonus_candidate_delta: 6
+stage2_required_bridge: 28
+local_4b_watch_guard: 12
+full_4b_overlay_candidate: 10
+earlier_thesis_break_watch: 24
+hard_4c_confirmation: 1
 ```
 
 ## Naming Note

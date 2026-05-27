@@ -57,6 +57,43 @@ PYTHONPATH=src python -m e2r.calibration.cli run-v12-calibration \
   --report-directory reports/e2r_calibration/v12
 ```
 
+## 실행 전 Preflight Gate
+
+새 연구 MD가 들어오면 `run-v12-calibration` 전에 입력 자체를 먼저 확인한다.
+
+```text
+확인할 것:
+1. 새 root v12 research MD가 실제로 존재한다.
+2. prompt/spec/txt 파일은 ingest 대상이 아니다.
+3. 모든 v12 research MD 파일명에서 round, loop, large_sector_id, canonical_archetype_id가 잡힌다.
+4. parser 실패 문서가 0개다.
+5. trigger row가 0개인 문서가 0개다.
+6. runtime weight profile에 없는 canonical archetype이 0개다.
+7. runtime weight profile에 없는 large sector가 0개다.
+```
+
+가장 중요한 gate는 6번이다.
+
+```text
+예:
+  새 연구자료에 C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY가 들어왔는데
+  configs/e2r_archetype_weight_profile_v2_2.json 또는 seed에 C08이 없다.
+
+잘못된 처리:
+  L2_AI_SEMICONDUCTOR_ELECTRONICS 대섹터 fallback으로 조용히 진행한다.
+
+올바른 처리:
+  C08 runtime weight seed를 먼저 추가한다.
+  그 다음 run-v12-calibration을 실행한다.
+```
+
+이유는 단순하다.
+
+```text
+대섹터 fallback은 안전한 임시 계산일 뿐이다.
+아키타입별 점수비중 조정이 됐다고 보려면 canonical archetype weight가 직접 매칭되어야 한다.
+```
+
 이 명령은 다음을 모두 수행해야 한다.
 
 ```text
@@ -313,24 +350,27 @@ Stage 3-Green 전역 기준 완화 금지
 
 ## 확인해야 할 핵심 결과
 
-최근 v12 배치 기준 정상 예시는 다음과 같다.
+정상 실행의 숫자는 배치마다 달라진다. 과거 87개 배치를 돌렸을 때와 새 75개를 추가한 뒤의 숫자는 당연히 다르다.
+
+고정값으로 외우지 말고 다음 조건을 본다.
 
 ```text
-v12_result_md_count: 87
-v12_validated_trigger_rows: 960
-v12_representative_trigger_rows: 748
-stage_transition_summary_rows: 410
-large_sectors_covered: 10
-canonical_archetypes_covered: 27
-applied_patch_count: 64
-archetype_weight_count: 27
-large_sector_weight_count: 10
-production_default_scoring_changed: true
-active_profile: e2r_2_2
-rollback_profile: calibrated
+v12_result_md_count > 0
+v12_validated_trigger_rows > 0
+v12_representative_trigger_rows > 0
+stage_transition_summary_rows > 0
+large_sectors_covered >= 1
+canonical_archetypes_covered >= 1
+unknown_archetypes_before_runtime_profile = 0
+unknown_large_sectors_before_runtime_profile = 0
+archetype_weight_count >= canonical_archetypes_covered 중 runtime 지원 대상
+large_sector_weight_count = 10
+production_default_scoring_changed = true
+active_profile = e2r_2_2
+rollback_profile = calibrated
 ```
 
-숫자는 새 배치가 들어오면 달라질 수 있다. 중요한 것은 다음이다.
+중요한 것은 다음이다.
 
 ```text
 1. v12 MD가 0개면 실패한다.
@@ -338,6 +378,7 @@ rollback_profile: calibrated
 3. rejected row는 이유를 남긴다.
 4. apply_next_patch는 active v2.2 profile에 반영된다.
 5. hold/block은 다음 연구 또는 데이터 보강 대상으로 남긴다.
+6. unknown canonical archetype은 fallback으로 숨기지 말고 seed 또는 mapper를 보강한다.
 ```
 
 ## 검증 명령

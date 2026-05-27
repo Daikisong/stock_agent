@@ -4,13 +4,14 @@
   "profile_id": "e2r_2_2_rolling_calibrated",
   "activate": true,
   "production_default_scoring_changed": true,
-  "applied_patch_count": 64,
+  "applied_patch_count": 81,
   "applied_axis_counts": {
-    "earlier_thesis_break_watch": 19,
-    "full_4b_overlay_candidate": 9,
-    "local_4b_watch_guard": 9,
-    "stage2_bonus_candidate_delta": 5,
-    "stage2_required_bridge": 22
+    "earlier_thesis_break_watch": 24,
+    "full_4b_overlay_candidate": 10,
+    "hard_4c_confirmation": 1,
+    "local_4b_watch_guard": 12,
+    "stage2_bonus_candidate_delta": 6,
+    "stage2_required_bridge": 28
   },
   "stage3_green_not_loosened": true,
   "rollback_profile": "calibrated"

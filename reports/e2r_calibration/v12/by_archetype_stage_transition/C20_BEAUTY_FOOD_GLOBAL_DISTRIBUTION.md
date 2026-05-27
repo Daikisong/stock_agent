@@ -3,23 +3,27 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `32`
+- stage_transition_summary_rows: `67`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| 003230 | 003230 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 188800.0 | 446500.0 | 712000.0 | 323.8814 | 85.5618 | 4b_too_early |
-| 003350 | 003350 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
-| 018250 | 018250 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
-| 018290 | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
-| 090430 | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
-| 192820 | 192820 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 161400.0 | None | None | 28.9 | None | stage2_actionable_best_entry |
-| 214420 | 214420 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
-| 237880 | 237880 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 36850.0 | None | None | 22.1 | None | 4c_too_late |
-| 257720 | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 10820.0 | 26250.0 | 52800.0 | 485.9427 | 79.8418 | green_too_late |
+| C20_AMORE_2024_BRAND_REBOUND_FALSE_GREEN | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
 | C20_CLIO_2023_CHANNEL_EXPANSION_COUNTER | 237880 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 23400.0 | None | 32200.0 | 43.2 | 87.0529 | stage2_actionable_best_entry |
 | C20_COSMECCA_2023_ODM_US_MARGIN | 241710 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 16450.0 | 34000.0 | 40250.0 | 149.8845 | 96.5282 | 4b_good_peak_capture |
+| C20_LGHH_2024_REBOUND_FALSE_POSITIVE | 051900 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
+| C20_LGHH_2024_REBOUND_FALSE_POSITIVE | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
+| C20_R5L25_003230 | 003230 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 446500.0 | None | None | 85.4 | None | stage2_actionable_best_entry |
+| C20_R5L25_018290 | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 25550.0 | None | None | 72.2 | None | stage2_actionable_best_entry |
+| C20_R5L25_257720 | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 28900.0 | None | None | 87.5 | None | stage2_actionable_best_entry |
+| C20_R5L25_439090 | 439090 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
+| C20_SAMYANG_2023_EXPORT_REORDER | 003230 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 199600.0 | None | None | 259.72 | None | stage2_actionable_best_entry |
+| C20_SILICON2_2024Q1_REORDER | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 27000.0 | None | None | 100.74 | None | stage2_actionable_best_entry |
+| C20_SILICON2_2024Q1_REORDER | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 27000.0 | None | None | 100.74 | None | stage2_actionable_best_entry |
+| C20_SILICONTU_2023_GLOBAL_DISTRIBUTOR | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 8670.0 | None | None | 525.14 | None | stage2_actionable_best_entry |
 | C20_SILICONTWO_2023_GLOBAL_DISTRIBUTOR | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 4885.0 | 26250.0 | 50300.0 | 1009.998 | 92.048 | 4b_good_peak_capture |
 | C20_VT_2023_REEDLESHOT_REORDER | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 11220.0 | 19400.0 | 38000.0 | 256.631 | 93.0055 | 4b_good_peak_capture |
+| C20_VT_2024Q2_REEDLE_SHOT_GLOBAL | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 25500.0 | None | None | 65.69 | None | stage2_actionable_best_entry |
+| C20_VT_2024Q2_REEDLE_SHOT_GLOBAL | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 25500.0 | None | None | 65.69 | None | stage2_actionable_best_entry |
 | R13L24_C20_001 | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 26250.0 | 50300.0 | None | 106.48 | None | green_too_late |
 | R13L24_C20_002 | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 25400.0 | 38000.0 | None | 71.6583 | None | green_too_late |
 | R13L24_C20_003 | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
@@ -38,4 +42,35 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R5L10_C20_237880_CLIO_GLOBAL_CHANNEL_20230810 | 237880 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 23400.0 | None | None | 64.74 | None | stage2_actionable_best_entry |
 | R5L10_C20_257720_SILICON2_2023Q3_CHANNEL_REORDER | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 8670.0 | 26250.0 | None | 631.2457 | None | green_good_but_late |
 | R5L10_C20_257720_SILICON2_GLOBAL_PLATFORM_20230509 | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 3855.0 | None | None | 1305.9222 | None | stage2_actionable_best_entry |
-| R5L10_C20_362320_CHEONGDAM_GLOBAL_REOPENING_COUNTER_20230119 | 362320 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
+| R5L10_C20_362320_CHEONGDAM_GLOBAL_REOPENING_COUNTER_20230119 | 362320 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | 4c_too_late |
+| R5L10_C20_AMORE_2024_COSRX_CHINA_REVERSAL | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 169500.0 | None | None | 18.29 | None | 4c_too_late |
+| R5L10_C20_CLIO_2024Q1_CHANNEL_STALL | 237880 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 34850.0 | None | None | 29.12 | None | stage2_captured_most_upside |
+| R5L10_C20_SILICON2_2024Q1_REORDER | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 26250.0 | None | None | 106.48 | None | stage2_actionable_best_entry |
+| R5L10_C20_VT_2024Q1_REEDLESHOT | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 25400.0 | None | None | 57.48 | None | stage2_actionable_best_entry |
+| R5L11_C20_003230_SAMYANG_EXPORT_RAMEN_20240517 | 003230 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 446500.0 | 587000.0 | None | 106.05 | None | green_good_but_late |
+| R5L11_C20_051900_LGHNH_REOPENING_FALSE_20240510 | 051900 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
+| R5L11_C20_257720_SILICON2_GLOBAL_KBEAUTY_20240516 | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 28900.0 | 43100.0 | None | 87.54 | None | green_good_but_late |
+| R5L12-C20-AMORE-20240514 | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | 4c_too_late |
+| R5L12-C20-COSMAX-20240514 | 192820 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 160500.0 | None | None | 29.6 | None | stage2_actionable_best_entry |
+| R5L12-C20-KOLMAR-20240514 | 161890 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 53600.0 | None | None | 46.8 | None | stage2_actionable_best_entry |
+| R5L14_C20_018290_VT_RIDDLE_SHOT_REPEAT_REORDER | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 25500.0 | None | None | 72.55 | None | stage2_actionable_best_entry |
+| R5L14_C20_018290_VT_RIDDLE_SHOT_REPEAT_REORDER | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 25500.0 | None | None | 72.55 | None | stage2_actionable_best_entry |
+| R5L14_C20_090430_AMOREPACIFIC_LEGACY_CHINA_REBOUND_FALSE_GREEN | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
+| R5L14_C20_090430_AMOREPACIFIC_LEGACY_CHINA_REBOUND_FALSE_GREEN | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
+| R5L14_C20_257720_SILICONTWO_Q1_EXPORT_PLATFORM_REORDER | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 27000.0 | None | 50700.0 | 100.74 | 87.133 | stage2_actionable_best_entry |
+| R5L14_C20_257720_SILICONTWO_Q1_EXPORT_PLATFORM_REORDER | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 27000.0 | None | 50700.0 | 100.74 | 87.133 | 4b_good_peak_capture |
+| R5L17_C20_CLIO_2023Q2 | 237880 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 21700.0 | None | None | 66.1 | None | stage2_actionable_best_entry |
+| R5L17_C20_LGHNH_2022_REOPEN | 051900 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
+| R5L17_C20_SILICON2_2024Q1 | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
+| R5L17_C20_VT_2023Q3 | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 20300.0 | None | None | 97.0 | None | stage2_actionable_best_entry |
+| R5L34_C20_018290_VT_REEDLE_SHOT_GLOBAL | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 18940.0 | 25550.0 | None | 111.1989 | None | green_too_late |
+| R5L34_C20_018290_VT_REEDLE_SHOT_GLOBAL | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 18940.0 | 25550.0 | None | 111.1989 | None | green_too_late |
+| R5L34_C20_051900_LGHNH_CHINA_RECOVERY_BETA | 051900 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 392000.0 | None | None | 22.4515 | None | stage2_actionable_best_entry |
+| R5L34_C20_051900_LGHNH_CHINA_RECOVERY_BETA | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 392000.0 | None | None | 22.4515 | None | stage2_actionable_best_entry |
+| R5L34_C20_090430_AMORE_COSRX_CONSOLIDATION_FADE | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 150600.0 | None | None | 33.13 | None | stage2_actionable_best_entry |
+| R5L34_C20_090430_AMORE_COSRX_CONSOLIDATION_FADE | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 150600.0 | None | None | 33.13 | None | stage2_actionable_best_entry |
+| R5L34_C20_257720_SILICON2_US_ECOM_DIST | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 10400.0 | 28900.0 | None | 421.15 | None | green_too_late |
+| R5L34_C20_257720_SILICON2_US_ECOM_DIST | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 10400.0 | 28900.0 | None | 421.15 | None | green_too_late |
+| R5L42-C20-018290-VT-20240516 | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 25550.0 | 38000.0 | None | 72.2121 | None | green_too_late |
+| R5L42-C20-237880-CLIO-20240516 | 237880 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 35950.0 | None | None | 25.17 | None | 4c_too_late |
+| R5L42-C20-257720-SILICON2-20240516 | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 28900.0 | 50300.0 | None | 87.54 | None | green_too_late |

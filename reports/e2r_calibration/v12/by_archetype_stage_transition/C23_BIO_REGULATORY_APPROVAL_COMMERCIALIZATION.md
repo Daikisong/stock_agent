@@ -3,10 +3,16 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `12`
+- stage_transition_summary_rows: `45`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| C23_HLB_CRL_2024 | 028300 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| C23_HLB_CRL_2024 | None | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| C23_HUGEL_LETYBO_FDA_2024 | 145020 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 202500.0 | 242000.0 | None | 60.99 | None | green_good_but_late |
+| C23_HUGEL_LETYBO_FDA_2024 | None | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 202500.0 | None | None | 60.99 | None | stage2_actionable_best_entry |
+| C23_YUHAN_FDA_APPROVAL_2024 | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 94300.0 | 135500.0 | None | 76.9974 | None | green_too_late |
+| C23_YUHAN_FDA_APPROVAL_2024 | None | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 94300.0 | None | None | 76.99 | None | stage2_actionable_best_entry |
 | R13L48_C23_000100_LAZCLUZE_US_APPROVAL | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 94300.0 | 135500.0 | None | 76.99 | None | green_too_late |
 | R13L48_C23_000100_LAZCLUZE_US_APPROVAL | None | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 94300.0 | 135500.0 | None | 76.99 | None | green_too_late |
 | R13L48_C23_028300_RIVO_CAMRELIZUMAB_CRL | 028300 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
@@ -19,3 +25,30 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R7L10_C23_028300_HLB_FDA_CRL | 028300 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
 | R7L10_C23_196170_KEYTRUDA_SC_ROUTE | 196170 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 131200.0 | None | None | 247.2 | None | stage2_actionable_best_entry |
 | R7L10_C23_302440_SKY_COVIONE_DEMAND_FADE | 302440 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R7L10_C23_HLB_PRE_PDUFA_FALSE_GREEN_20240430 | 028300 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R7L10_C23_HUGEL_LETYBO_FDA_20240304 | 145020 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 202500.0 | None | 321000.0 | 60.9914 | 95.9455 | 4b_good_peak_capture |
+| R7L10_C23_YUHAN_LAZCLUZE_FDA_20240821 | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 94300.0 | None | None | 76.9954 | None | stage2_actionable_best_entry |
+| R7L12_C23_OSKOTEC_LAZERTINIB_APPROVAL_HIGH_MAE | 039200 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 36900.0 | None | None | 24.25 | None | stage2_actionable_best_entry |
+| R7L12_C23_YUHAN_LAZERTINIB_FDA_APPROVAL | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 94300.0 | None | None | 76.99 | None | stage2_actionable_best_entry |
+| R7L12_C23_YUHAN_RYBREVANT_SC_CRL_WATCH | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R7L16_C23_DAEWOONG_JEUVEAU_APPROVAL_FAILED_RERATING | 069620 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R7L16_C23_HANMI_ROLVEDON_APPROVAL_DELAYED_RERATING | 128940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R7L16_C23_HLB_CRL_THESIS_BREAK | 028300 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R7L16_C23_YUHAN_LAZCLUZE_FDA_APPROVAL | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | 94300.0 | None | None | None | green_good_but_late |
+| R7L26-C23-000100-LAZERTINIB-US-APPROVAL | 000100 유한양행 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 94000.0 | 145400.0 | None | 77.5581 | None | green_too_late |
+| R7L26-C23-000100-LAZERTINIB-US-APPROVAL | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | 145400.0 | None | None | None | green_too_late |
+| R7L26-C23-000100-RYBREVANT-SC-CRL | 000100 유한양행 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | 112800.0 | None | None | no_valid_stage_transition |
+| R7L26-C23-000100-RYBREVANT-SC-CRL | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | 112800.0 | None | None | 4b_too_early |
+| R7L26-C23-028300-CORE-APPROVAL-FAILURE | 028300 HLB | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R7L26-C23-028300-CORE-APPROVAL-FAILURE | 028300 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R7L26-C23-145020-LETYBO-US-APPROVAL | 145020 휴젤 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 202500.0 | None | 321000.0 | 60.9914 | 95.9455 | 4b_good_peak_capture |
+| R7L26-C23-145020-LETYBO-US-APPROVAL | 145020 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 202500.0 | None | 321000.0 | 60.9914 | 95.9455 | stage2_actionable_best_entry |
+| R7L37-C23-000100-YUHAN-LAZCLUZE | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 94000.0 | None | None | 77.55 | None | stage2_actionable_best_entry |
+| R7L37-C23-028300-HLB-PDUFA | 028300 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R7L37-C23-196170-ALTEOGEN-MSD | 196170 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 131200.0 | None | None | 247.18 | None | stage2_actionable_best_entry |
+| R7L46-ALT-196170 | 196170 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 131200.0 | None | None | 247.18 | None | stage2_actionable_best_entry |
+| R7L46-ALT-196170 | None | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 131200.0 | None | None | 247.18 | None | stage2_actionable_best_entry |
+| R7L46-HLB-028300 | 028300 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R7L46-HLB-028300 | None | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R7L46-YH-000100 | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R7L46-YH-000100 | None | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
