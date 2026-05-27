@@ -46,6 +46,19 @@ rollback_profile: calibrated
 docs/core/Architecture.md
 ```
 
+새 자동연구 케이스를 고르기 전에는 중복 방지 장부도 먼저 본다.
+
+```text
+docs/core/V12_Research_No_Repeat_Index.md
+```
+
+이 문서의 목적은 단순하다.
+
+```text
+같은 canonical_archetype_id + 같은 종목 + 같은 trigger_type + 같은 entry_date 조합을
+새 연구에서 반복하지 않게 한다.
+```
+
 ## 표준 명령
 
 v12 연구 배치가 들어오면 이 명령을 실행한다.
@@ -70,6 +83,7 @@ PYTHONPATH=src python -m e2r.calibration.cli run-v12-calibration \
 5. trigger row가 0개인 문서가 0개다.
 6. runtime weight profile에 없는 canonical archetype이 0개다.
 7. runtime weight profile에 없는 large sector가 0개다.
+8. 새 연구가 No-Repeat Index의 hard duplicate 조합을 반복하지 않는다.
 ```
 
 가장 중요한 gate는 6번이다.

@@ -28,6 +28,15 @@ PYTHONPATH=src python -m e2r.calibration.cli run-v12-calibration \
 
 `run-v12-full`은 감사용 진단 명령이다. 기본 점수체계에 반영하려면 `run-v12-calibration`을 사용한다.
 
+새 연구 케이스를 고르기 전에는 다음 문서를 함께 본다.
+
+```text
+docs/core/V12_Research_No_Repeat_Index.md
+```
+
+이 문서는 이미 쌓인 v12 corpus에서 같은 `canonical_archetype_id + symbol + trigger_type + entry_date`가 반복되는지 확인하는 장부다.
+예를 들어 `C20 / 257720 / Stage3-Green / 2024-05-10`이 이미 여러 번 들어왔다면, 다음 연구는 같은 조합을 반복하지 말고 새 종목, 새 trigger family, 반례, 4B/4C, 또는 증거 URL 보강으로 가야 한다.
+
 ## Preflight Gate
 
 `docs/round`에는 연구 결과 MD뿐 아니라 prompt txt, 과거 archive, 중복 파일이 같이 들어올 수 있다.
