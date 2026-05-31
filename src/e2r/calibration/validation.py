@@ -81,6 +81,8 @@ def normalise_trigger_type(value: Any) -> str:
         "Stage4B overlay": "Stage4B",
         "price-only-local-4B-overlay": "Stage4B",
         "price-only local 4B overlay": "Stage4B",
+        "4B-local-price-only": "Stage4B",
+        "4B local price only": "Stage4B",
         "4B-watch": "Stage4B",
         "Stage4B": "Stage4B",
         "Stage4C": "Stage4C",

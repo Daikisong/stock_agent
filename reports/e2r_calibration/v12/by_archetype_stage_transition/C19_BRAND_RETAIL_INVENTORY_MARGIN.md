@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `22`
+- stage_transition_summary_rows: `47`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -17,6 +17,23 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C19-298540-2022-NATIONALGEOGRAPHIC-INVENTORY-SLOWDOWN | None | C19_BRAND_RETAIL_INVENTORY_MARGIN | 32900.0 | None | None | 1.4 | None | stage2_actionable_best_entry |
 | C19-383220-2023-FNF-CHINA-GROWTH-MULTIPLE-CAP | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
 | C19-383220-2023-FNF-CHINA-GROWTH-MULTIPLE-CAP | None | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_020000_HANDSOME_20220511_FASHION_REOPENING_INVENTORY_FALSE_GREEN | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_020000_HANSAEM_20220516_APPAREL_REOPENING_INVENTORY_FALSE_GREEN | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_020000_HANSOM_20220513_PREMIUM_APPAREL_MARKDOWN_FALSE_GREEN | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_081660_FILA_20230102_BRAND_INVENTORY_MARGIN_STAGE2 | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 33450.0 | None | None | 22.27 | None | stage2_actionable_best_entry |
+| C19_081660_FILA_20240801_BRAND_INVENTORY_PRICE_PREMIUM_4B | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 44450.0 | None | None | no_valid_stage_transition |
+| C19_081660_FILA_20240925_BRAND_INVENTORY_CLEANUP_PRICE_PREMIUM_4B | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 43550.0 | None | None | no_valid_stage_transition |
+| C19_093050_LF_20220516_APPAREL_CHANNEL_REOPENING_MARGIN_FADE | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_093050_LF_20220725_APPAREL_CHANNEL_INVENTORY_4B | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 17650.0 | None | None | no_valid_stage_transition |
+| C19_111770_YOUNGONE_20220630_APPAREL_OEM_MARGIN_STAGE2_RECOVERY | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 38400.0 | None | None | 30.73 | None | stage2_actionable_best_entry |
+| C19_111770_YOUNGONE_20230309_APPAREL_OEM_INVENTORY_MARGIN_STAGE2 | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 47450.0 | None | None | 43.1 | None | stage2_actionable_best_entry |
+| C19_111770_YOUNGONE_20230515_APPAREL_OEM_INVENTORY_MARGIN_STAGE2 | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 47500.0 | None | None | 40.42 | None | stage2_actionable_best_entry |
+| C19_241590_HSENTERPRISE_20241016_OEM_RESTOCK_MARGIN_FALSE_GREEN | 241590 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_FILA_2021_BRAND_REOPENING_PRICE_ONLY_LOCAL_4B | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 56800.0 | None | None | no_valid_stage_transition |
+| C19_FNF_2022_CHINA_BRAND_REORDER_HIGH_MAE_SUCCESS | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_GAMSUNG_2023_SNOWPEAK_STORE_PRODUCTIVITY | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 3150.0 | None | None | 56.8 | None | stage2_actionable_best_entry |
+| C19_HANSAE_2022_US_RETAIL_INVENTORY_DESTOCKING_4C | 105630 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 25800.0 | None | None | 0.8 | None | 4c_too_late |
+| C19_NATURE_2022_BRAND_EXPANSION_FAILED_RERATING | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 34700.0 | None | None | 1.7 | None | stage2_actionable_best_entry |
 | R13L42-C19-036620-GAMSUNG-2024-REORDER-MARGIN | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 3025.0 | 4505.0 | None | 55.0465 | None | green_too_late |
 | R13L42-C19-298540-NATURE-2024-INVENTORY-COUNTER | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 15550.0 | None | None | 3.79 | None | 4c_too_late |
 | R13L42-C19-337930-BRANDX-2024-ATHLEISURE-REORDER | 337930 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 5750.0 | None | 12540.0 | 132.7 | 88.9879 | 4b_good_peak_capture |
@@ -25,7 +42,15 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R13L45_C19_081660_FILA_TURNAROUND_FALSE_POSITIVE_4B | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 41900.0 | None | 44450.0 | 6.32 | 96.2962 | stage2_actionable_best_entry |
 | R13L45_C19_298540_NATURE_INVENTORY_FALSE_POSITIVE | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 15780.0 | None | None | 2.03 | None | stage2_actionable_best_entry |
 | R13L45_C19_337930_BRANDX_DTC_REORDER_SUCCESS_4B | 337930 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 5750.0 | 11430.0 | 12540.0 | 132.7 | 88.9879 | green_too_late |
+| R5L14_C19_NEG_EMART_202108_RETAIL_MARGIN_HEADLINE | 139480 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 177000.0 | None | None | 3.11 | None | stage2_actionable_best_entry |
+| R5L14_C19_NEG_HANSAE_202205_ORDER_HEADLINE_DESTOCKING | 105630 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 24800.0 | None | None | 4.64 | None | 4c_too_late |
+| R5L14_C19_POS_FNF_202205_Q1_BRAND_INVENTORY_MARGIN | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 131500.0 | None | None | 26.62 | None | stage2_actionable_best_entry |
+| R5L14_C19_POS_YOUNGONE_202208_Q2_ORDER_MARGIN_BRIDGE | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 46000.0 | None | None | 14.13 | None | stage2_actionable_best_entry |
 | R5L31_C19_FNF_20230516_CHINA_INVENTORY_FALSE_GREEN | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 137900.0 | None | None | 2.76 | None | 4c_too_late |
 | R5L31_C19_HANSAE_20230616_OEM_INVENTORY_RESTOCK_SUCCESS | 105630 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 17880.0 | None | 22850.0 | 33.1128 | 83.9448 | 4b_good_peak_capture |
 | R5L31_C19_NATURE_20230516_OUTDOOR_INVENTORY_COUNTER | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 25850.0 | None | None | 7.16 | None | stage2_actionable_best_entry |
 | R5L31_C19_YOUNGONE_20230515_OEM_BRAND_MARGIN_SUCCESS | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 47500.0 | None | None | 42.95 | None | stage2_actionable_best_entry |
+| R5L71-C19-001 | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 44550.0 | None | None | 52.41 | None | stage2_actionable_best_entry |
+| R5L71-C19-002 | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 18150.0 | None | None | 1.71 | None | stage2_captured_most_upside |
+| R5L71-C19-003 | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 26000.0 | None | None | 8.08 | None | stage2_captured_most_upside |
+| R5L71-C19-004 | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 61400.0 | None | None | 4b_good_peak_capture |

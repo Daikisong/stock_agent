@@ -11,6 +11,7 @@ import re
 from typing import Any
 
 from .md_discovery import MarkdownDocument
+from .taxonomy import normalise_canonical_archetype_id, normalise_large_sector_id
 
 
 COLUMN_ALIASES = {
@@ -52,6 +53,8 @@ COLUMN_ALIASES = {
     "agg_role": "aggregate_group_role",
     "aggregate_role": "aggregate_group_role",
     "group_role": "aggregate_group_role",
+    "selected_round": "round",
+    "tradable_shard_path": "price_shard_path",
 }
 
 ROW_TYPES = {
@@ -111,6 +114,10 @@ def _normalise_row(row: dict[str, Any]) -> dict[str, Any]:
             normalised[key] = value
             continue
         normalised[_normalise_key(str(key))] = _normalise_value(value)
+    if normalised.get("large_sector_id"):
+        normalised["large_sector_id"] = normalise_large_sector_id(normalised.get("large_sector_id"))
+    if normalised.get("canonical_archetype_id"):
+        normalised["canonical_archetype_id"] = normalise_canonical_archetype_id(normalised.get("canonical_archetype_id"))
     return normalised
 
 
@@ -158,7 +165,7 @@ def _parse_metadata(text: str) -> dict[str, str]:
                 continue
             key, value = [part.strip() for part in line.split("=", 1)]
             if key:
-                metadata[key] = value
+                metadata[_normalise_key(key)] = value.strip().strip("`")
     for raw_line in text[:24000].splitlines():
         line = raw_line.strip()
         if line.startswith("- "):
@@ -174,6 +181,14 @@ def _parse_metadata(text: str) -> dict[str, str]:
             metadata[normalised_key] = cleaned
     if "Songdaiki/stock-web" in text[:24000] and "price_source" not in metadata:
         metadata["price_source"] = "Songdaiki/stock-web"
+    if metadata.get("large_sector_id"):
+        normalised_large = normalise_large_sector_id(metadata.get("large_sector_id"))
+        if normalised_large:
+            metadata["large_sector_id"] = normalised_large
+    if metadata.get("canonical_archetype_id"):
+        normalised_canonical = normalise_canonical_archetype_id(metadata.get("canonical_archetype_id"))
+        if normalised_canonical:
+            metadata["canonical_archetype_id"] = normalised_canonical
     return metadata
 
 
@@ -200,7 +215,9 @@ def _parse_json_lines(text: str, rows_by_type: dict[str, list[dict[str, Any]]], 
             payload = json.loads(line)
         except json.JSONDecodeError:
             continue
-        if "row_type" not in payload and payload.get("source") == "Songdaiki/stock-web":
+        if "row_type" not in payload and _looks_like_no_repeat_trigger_row(payload):
+            payload = {"row_type": "trigger", **payload}
+        elif "row_type" not in payload and payload.get("source") == "Songdaiki/stock-web":
             payload = {"row_type": "price_source_validation", **payload}
         _append_row(
             rows_by_type,
@@ -210,6 +227,15 @@ def _parse_json_lines(text: str, rows_by_type: dict[str, list[dict[str, Any]]], 
             line_number=line_number,
             raw_snippet=raw_line,
         )
+
+
+def _looks_like_no_repeat_trigger_row(payload: dict[str, Any]) -> bool:
+    schema_version = str(payload.get("schema_version") or "")
+    if schema_version.startswith("v12_no_repeat_standalone_trigger_row"):
+        return True
+    required = {"trigger_type", "entry_date", "entry_price"}
+    price_path = {"MFE_30D_pct", "MFE_90D_pct", "MFE_180D_pct", "MAE_30D_pct", "MAE_90D_pct", "MAE_180D_pct"}
+    return required.issubset(payload) and len(price_path.intersection(payload)) >= 4
 
 
 def _parse_csv_fences(text: str, rows_by_type: dict[str, list[dict[str, Any]]], document: MarkdownDocument) -> None:
@@ -362,8 +388,20 @@ def _enrich_trigger_rows_by_trigger_id(rows_by_type: dict[str, list[dict[str, An
 def parse_markdown_document(document: MarkdownDocument) -> ParsedMarkdown:
     text = document.path.read_text(encoding="utf-8", errors="replace")
     metadata = _parse_metadata(text)
+    if document.round is None and metadata.get("round"):
+        round_value = str(metadata.get("round")).strip().upper()
+        if round_value and not round_value.startswith("R") and round_value.isdigit():
+            round_value = f"R{int(round_value)}"
+        object.__setattr__(document, "round", round_value)
+    if document.loop is None and metadata.get("loop"):
+        loop_value = str(metadata.get("loop")).strip()
+        object.__setattr__(document, "loop", str(int(loop_value)) if loop_value.isdigit() else loop_value)
+    if document.large_sector_id is not None:
+        object.__setattr__(document, "large_sector_id", normalise_large_sector_id(document.large_sector_id))
     if document.large_sector_id is None and metadata.get("large_sector_id"):
         object.__setattr__(document, "large_sector_id", metadata.get("large_sector_id"))
+    if document.canonical_archetype_id is not None:
+        object.__setattr__(document, "canonical_archetype_id", normalise_canonical_archetype_id(document.canonical_archetype_id))
     if document.canonical_archetype_id is None and metadata.get("canonical_archetype_id"):
         object.__setattr__(document, "canonical_archetype_id", metadata.get("canonical_archetype_id"))
     if document.fine_archetype_id is None and metadata.get("fine_archetype_id"):

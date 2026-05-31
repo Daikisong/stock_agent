@@ -7,6 +7,13 @@ from pathlib import Path
 import hashlib
 import re
 
+from .taxonomy import (
+    KNOWN_CANONICAL_ARCHETYPE_KEYS,
+    KNOWN_LARGE_SECTOR_KEYS,
+    normalise_canonical_archetype_id,
+    normalise_large_sector_id,
+)
+
 
 PROMPT_SPEC_TERMS = (
     "prompt",
@@ -31,13 +38,13 @@ V12_RESULT_PATTERNS = (
     re.compile(r"e2r_stock_web_v12_residual_round_.*_loop_.*_.*_research.*\.md$", re.IGNORECASE),
     re.compile(r".*stock_web_v12_residual_round_.*_research.*\.md$", re.IGNORECASE),
     re.compile(r".*v12_residual_round_.*_research.*\.md$", re.IGNORECASE),
+    re.compile(r"e2r_stock_web_v12_no_repeat_standalone_.*_research.*\.md$", re.IGNORECASE),
+    re.compile(r".*stock_web_v12_no_repeat_standalone_.*_research.*\.md$", re.IGNORECASE),
 )
 
 ROUND_LOOP_RE = re.compile(r"round[_-]?(R?\d+)_loop[_-]?(\d+)", re.IGNORECASE)
-V12_FILENAME_RE = re.compile(
-    r"v12_residual_round_(?P<round>R?\d+)_loop_(?P<loop>\d+)_(?P<large>L\d+_[A-Z0-9_]+?)_(?P<canonical>C\d+_[A-Z0-9_]+?)(?:_research.*)?\.md$",
-    re.IGNORECASE,
-)
+V12_RESIDUAL_RE = re.compile(r"v12_residual_round_(?P<round>R?\d+)_loop_(?P<loop>\d+)_(?P<tail>.*)\.md$", re.IGNORECASE)
+V12_STANDALONE_RE = re.compile(r"v12_no_repeat_standalone_(?P<tail>.*)\.md$", re.IGNORECASE)
 
 
 @dataclass(frozen=True)
@@ -107,33 +114,94 @@ def _parse_round_loop(path: Path, text_head: str) -> tuple[str | None, str | Non
 
     round_value: str | None = None
     loop_value: str | None = None
-    for raw_line in text_head.splitlines():
-        line = raw_line.strip()
-        if "=" not in line:
-            continue
-        key, value = [part.strip() for part in line.split("=", 1)]
-        if key == "round":
-            round_value = value.upper()
-            if round_value and not round_value.startswith("R") and round_value.isdigit():
-                round_value = f"R{int(round_value)}"
-        if key == "loop":
-            loop_value = str(int(value)) if value.isdigit() else value
+    metadata = _parse_v12_metadata_head(text_head)
+    if metadata.get("round"):
+        round_value = _normalise_round(metadata["round"])
+    if metadata.get("loop"):
+        loop_value = _normalise_loop(metadata["loop"])
     return round_value, loop_value
 
 
+def _normalise_metadata_key(key: str) -> str:
+    lowered = re.sub(r"[^0-9A-Za-z_]+", "_", key.strip().strip("`").lower()).strip("_")
+    if lowered == "selected_round":
+        return "round"
+    return lowered
+
+
+def _clean_metadata_value(value: str) -> str:
+    return value.strip().strip("`").strip().strip('"').strip("'").strip().rstrip(",").strip()
+
+
+def _parse_v12_metadata_head(text_head: str) -> dict[str, str]:
+    metadata: dict[str, str] = {}
+    wanted = {"round", "loop", "large_sector_id", "canonical_archetype_id", "fine_archetype_id"}
+    for raw_line in text_head.splitlines():
+        line = raw_line.strip()
+        if line.startswith("- "):
+            line = line[2:].strip()
+        if ":" in line:
+            key, value = [part.strip() for part in line.split(":", 1)]
+        elif "=" in line:
+            key, value = [part.strip() for part in line.split("=", 1)]
+        else:
+            continue
+        normalised_key = _normalise_metadata_key(key)
+        if normalised_key not in wanted:
+            continue
+        cleaned = _clean_metadata_value(value)
+        if cleaned and normalised_key not in metadata:
+            metadata[normalised_key] = cleaned
+    return metadata
+
+
+def _normalise_round(value: str | None) -> str | None:
+    if value is None:
+        return None
+    round_value = _clean_metadata_value(value).upper()
+    if not round_value:
+        return None
+    if not round_value.startswith("R") and round_value.isdigit():
+        return f"R{int(round_value)}"
+    return round_value
+
+
+def _normalise_loop(value: str | None) -> str | None:
+    if value is None:
+        return None
+    loop_value = _clean_metadata_value(value)
+    if not loop_value:
+        return None
+    return str(int(loop_value)) if loop_value.isdigit() else loop_value
+
+
+def _split_v12_tail_ids(tail: str) -> tuple[str | None, str | None]:
+    upper_tail = tail.upper()
+    for large_sector_id in KNOWN_LARGE_SECTOR_KEYS:
+        if upper_tail == large_sector_id or upper_tail.startswith(f"{large_sector_id}_"):
+            remainder = upper_tail[len(large_sector_id) :].lstrip("_")
+            for canonical_archetype_id in KNOWN_CANONICAL_ARCHETYPE_KEYS:
+                if remainder == canonical_archetype_id or remainder.startswith(f"{canonical_archetype_id}_"):
+                    return (
+                        normalise_large_sector_id(large_sector_id),
+                        normalise_canonical_archetype_id(canonical_archetype_id),
+                    )
+    return None, None
+
+
 def _parse_v12_filename_ids(path: Path) -> tuple[str | None, str | None, str | None, str | None]:
-    match = V12_FILENAME_RE.search(path.name)
-    if not match:
-        return None, None, None, None
-    round_value = match.group("round").upper()
-    if not round_value.startswith("R"):
-        round_value = f"R{int(round_value)}"
-    return (
-        round_value,
-        str(int(match.group("loop"))),
-        match.group("large").upper(),
-        match.group("canonical").upper(),
-    )
+    match = V12_RESIDUAL_RE.search(path.name)
+    if match:
+        return (
+            _normalise_round(match.group("round")),
+            _normalise_loop(match.group("loop")),
+            *_split_v12_tail_ids(match.group("tail")),
+        )
+    match = V12_STANDALONE_RE.search(path.name)
+    if match:
+        large_sector_id, canonical_archetype_id = _split_v12_tail_ids(match.group("tail"))
+        return None, "standalone", large_sector_id, canonical_archetype_id
+    return None, None, None, None
 
 
 def discover_markdown_documents(root: str | Path) -> list[MarkdownDocument]:
@@ -147,7 +215,7 @@ def discover_markdown_documents(root: str | Path) -> list[MarkdownDocument]:
     root_path = Path(root)
     documents: list[MarkdownDocument] = []
     for path in sorted(root_path.rglob("*.md")):
-        text_head = path.read_text(encoding="utf-8", errors="replace")[:8192]
+        text_head = path.read_text(encoding="utf-8", errors="replace")[:24000]
         is_prompt_spec = _contains_prompt_spec_marker(path, text_head)
         schema_family = _schema_family(path)
         is_result = _is_generated_result_file(path) and not is_prompt_spec
@@ -158,8 +226,15 @@ def discover_markdown_documents(root: str | Path) -> list[MarkdownDocument]:
             exclusion_reason = "not_generated_stock_web_result_md"
         round_value, loop_value = _parse_round_loop(path, text_head)
         v12_round, v12_loop, large_sector_id, canonical_archetype_id = _parse_v12_filename_ids(path)
-        round_value = v12_round or round_value
-        loop_value = v12_loop or loop_value
+        metadata = _parse_v12_metadata_head(text_head)
+        metadata_round = _normalise_round(metadata.get("round"))
+        metadata_loop = _normalise_loop(metadata.get("loop"))
+        metadata_large = normalise_large_sector_id(metadata.get("large_sector_id"))
+        metadata_canonical = normalise_canonical_archetype_id(metadata.get("canonical_archetype_id"))
+        round_value = v12_round or metadata_round or round_value
+        loop_value = v12_loop or metadata_loop or loop_value
+        large_sector_id = large_sector_id or metadata_large
+        canonical_archetype_id = canonical_archetype_id or metadata_canonical
         documents.append(
             MarkdownDocument(
                 path=path,
@@ -173,6 +248,7 @@ def discover_markdown_documents(root: str | Path) -> list[MarkdownDocument]:
                 filename=path.name,
                 large_sector_id=large_sector_id,
                 canonical_archetype_id=canonical_archetype_id,
+                fine_archetype_id=metadata.get("fine_archetype_id"),
             )
         )
     return documents

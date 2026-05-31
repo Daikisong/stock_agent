@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `31`
+- stage_transition_summary_rows: `55`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -11,6 +11,15 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C18-R13L44-192820-COSMAX | 192820 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 160500.0 | 184100.0 | None | 29.6 | None | green_too_late |
 | C18-R13L44-237880-CLIO | 237880 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 40100.0 | None | None | 12.2223 | None | 4c_too_late |
 | C18-R13L44-383220-FNF | 383220 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 74000.0 | None | None | 3.24 | None | stage2_actionable_best_entry |
+| C18_001680_DAESANG_20240612_SAUCE_EXPORT_REORDER_PRICE_PREMIUM_4B | 001680 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | 28400.0 | None | None | no_valid_stage_transition |
+| C18_001680_DAESANG_20240612_SAUCE_KFOOD_EXPORT_FALSE_GREEN | 001680 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
+| C18_003960_SAJO_20240201_KFOOD_EXPORT_REORDER_STAGE2 | 003960 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 37000.0 | None | None | 197.03 | None | stage2_actionable_best_entry |
+| C18_011150_CJSEAFOOD_20240614_KFOOD_SEAWEED_EXPORT_PRICE_PREMIUM_4B | 011150 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | 6320.0 | None | None | no_valid_stage_transition |
+| C18_017810_PULMUONE_20240628_FROZEN_FOOD_EXPORT_CHANNEL_4B | 017810 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | 15900.0 | None | None | no_valid_stage_transition |
+| C18_097950_CJFOOD_20240416_KFOOD_EXPORT_CHANNEL_MARGIN_STAGE2 | 097950 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 332500.0 | None | None | 22.56 | None | stage2_actionable_best_entry |
+| C18_271560_ORION_20221013_GLOBAL_SNACK_CHANNEL_REORDER_STAGE2 | 271560 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 97400.0 | None | None | 51.75 | None | stage2_actionable_best_entry |
+| C18_271560_ORION_20240617_GLOBAL_CHANNEL_REORDER_FALSE_GREEN | 271560 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
+| C18_280360_LOTTEWELLFOOD_20240604_KFOOD_EXPORT_PRICE_PREMIUM_4B | 280360 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | 156900.0 | None | None | no_valid_stage_transition |
 | R12L10_C18_003230_SAMYANG_2023_BULDAK_EXPORT_REORDER_MARGIN_BRIDGE | 003230 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 199600.0 | None | None | 259.7278 | None | stage2_actionable_best_entry |
 | R12L10_C18_004370_NONGSHIM_2023_LATE_GREEN_DOMESTIC_PRICE_TAILWIND_CAP | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
 | R12L10_C18_005180_BINGGRAE_2024_EXPORT_MARGIN_REORDER | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 58000.0 | None | None | 104.1405 | None | stage2_actionable_best_entry |
@@ -29,12 +38,27 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R5L11-C18-002 | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 88300.0 | None | 112100.0 | 34.09 | 79.0659 | stage2_actionable_best_entry |
 | R5L11-C18-003 | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 399000.0 | None | 547000.0 | 50.1303 | 73.9927 | stage2_actionable_best_entry |
 | R5L11-C18-004 | 097950 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 333500.0 | None | None | 22.19 | None | stage2_actionable_best_entry |
+| R5L12-C18-BINGGRAE-20240517-EXPORT-MARGIN-SURGE | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 88300.0 | None | 112100.0 | 34.09 | 79.0659 | stage2_actionable_best_entry |
+| R5L12-C18-BINGGRAE-20240517-EXPORT-MARGIN-SURGE | None | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 88300.0 | None | 112100.0 | 34.09 | 79.0659 | 4b_good_peak_capture |
+| R5L12-C18-CJFOOD-20230510-KFOOD-MARGIN-TRAP | 097950 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
+| R5L12-C18-CJFOOD-20230510-KFOOD-MARGIN-TRAP | None | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
+| R5L12-C18-NONGSHIM-20230516-US-CHANNEL-REORDER | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 426000.0 | 488000.0 | None | 17.37 | None | green_too_late |
+| R5L12-C18-NONGSHIM-20230516-US-CHANNEL-REORDER | None | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 426000.0 | 488000.0 | None | 17.37 | None | green_too_late |
+| R5L12-C18-ORION-20230428-CHINA-BRAND-BETA-FAILED | 271560 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
+| R5L12-C18-ORION-20230428-CHINA-BRAND-BETA-FAILED | None | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
+| R5L12_C18_105630_HANSAE_US_APPAREL_REORDER_20210208 | 105630 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 17450.0 | None | None | 56.45 | None | stage2_actionable_best_entry |
+| R5L12_C18_111770_YOUNGONE_PREMIUM_OUTDOOR_REORDER_20230515 | 111770 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 47500.0 | None | None | 42.95 | None | stage2_actionable_best_entry |
+| R5L12_C18_241590_HWASEUNG_FOOTWEAR_RESTOCK_FALSE_POSITIVE_20220516 | 241590 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 15350.0 | None | None | 12.05 | None | stage2_actionable_best_entry |
 | R5L13_C18_BINGGRAE_005180_ICECREAM_EXPORT_SEASONAL_HIGH_MAE | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 88300.0 | None | None | 34.09 | None | stage2_actionable_best_entry |
 | R5L13_C18_NONGSHIM_004370_RAMEN_GLOBAL_NARRATIVE_FAILED_RERATING | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
 | R5L13_C18_SAMYANG_003230_BULDAK_EXPORT_REORDER | 003230 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 446500.0 | 686000.0 | None | 106.05 | None | green_too_late |
 | R5L15-C18-003230-SAMYANG-EXPORT-REORDER | 003230 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 446500.0 | None | None | 176.1547 | None | stage2_actionable_best_entry |
 | R5L15-C18-004370-NONGSHIM-EXPORT-REORDER | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 399000.0 | None | None | 50.13 | None | stage2_actionable_best_entry |
 | R5L15-C18-097950-CJ-LEGACY-FOOD-FALSE-GREEN | 097950 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
+| R5L16-C18-003230-20231115 | 003230 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 199600.0 | None | None | 259.8046 | None | stage2_actionable_best_entry |
+| R5L16-C18-004370-20200317 | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 268000.0 | None | None | 36.57 | None | stage2_actionable_best_entry |
+| R5L16-C18-097950-20210809 | 097950 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
+| R5L16-C18-271560-20210818 | 271560 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
 | R5L39_C18_003230_SYF_EXPORT_REORDER | 003230 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 446500.0 | 647000.0 | None | 87.4634 | None | green_too_late |
 | R5L39_C18_005180_BINGGRAE_EXPORT_REORDER | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 88300.0 | None | None | 34.09 | None | stage2_actionable_best_entry |
 | R5L39_C18_383220_FNF_CHINA_REOPENING_FALSE_REORDER | 383220 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | 4c_too_late |

@@ -50,6 +50,21 @@ docs/core/Architecture.md
 
 v12 연구 배치가 들어오면 이 명령을 실행한다.
 
+`docs/round`의 ingest 대상은 두 종류다.
+
+```text
+1. e2r_stock_web_v12_residual_round_..._research.md
+2. e2r_stock_web_v12_no_repeat_standalone_..._research.md
+```
+
+`no_repeat_standalone`도 제외하지 않는다. 이것도 연구 데이터다.
+
+```text
+예:
+  파일명/본문에 L3_BATTERY_EV_STORAGE가 있으면
+  runtime 기준 canonical인 L3_BATTERY_EV_GREEN_MOBILITY로 정규화해서 ingest한다.
+```
+
 ```bash
 PYTHONPATH=src python -m e2r.calibration.cli run-v12-calibration \
   --md-input-root docs/round \
@@ -65,14 +80,18 @@ PYTHONPATH=src python -m e2r.calibration.cli run-v12-calibration \
 확인할 것:
 1. 새 root v12 research MD가 실제로 존재한다.
 2. prompt/spec/txt 파일은 ingest 대상이 아니다.
-3. 모든 v12 research MD 파일명에서 round, loop, large_sector_id, canonical_archetype_id가 잡힌다.
-4. parser 실패 문서가 0개다.
-5. trigger row가 0개인 문서가 0개다.
-6. runtime weight profile에 없는 canonical archetype이 0개다.
-7. runtime weight profile에 없는 large sector가 0개다.
+3. residual MD는 파일명에서 round, loop, large_sector_id, canonical_archetype_id가 잡힌다.
+4. no_repeat_standalone MD는 selected_round, standalone loop, large_sector_id, canonical_archetype_id가 잡힌다.
+   - round는 본문 `selected_round`에서 가져온다.
+   - loop는 `standalone`으로 둔다.
+   - sector/archetype 별칭은 canonical ID로 정규화한다.
+5. parser 실패 문서가 0개다.
+6. trigger row가 0개인 문서가 0개다.
+7. runtime weight profile에 없는 canonical archetype이 0개다.
+8. runtime weight profile에 없는 large sector가 0개다.
 ```
 
-가장 중요한 gate는 6번이다.
+가장 중요한 gate는 7번이다.
 
 ```text
 예:
@@ -415,4 +434,5 @@ run-v12-full은 진단 플로우로만 설명되어 있다.
 active profile은 e2r_2_2, rollback은 calibrated로 설명되어 있다.
 archetype weight runtime profile이 점수비중 반영 흐름으로 명시되어 있다.
 Stage 3-Green 완화 금지와 price-only guard가 명시되어 있다.
+docs/core/V12_Research_No_Repeat_Index.md 업데이트
 ```

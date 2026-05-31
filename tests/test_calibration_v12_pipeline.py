@@ -6,6 +6,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
+from e2r.calibration.archetype_weight_profile import ARCHETYPE_WEIGHT_SEEDS, LARGE_SECTOR_WEIGHT_SEEDS
 from e2r.calibration.cli import build_parser, run_v12_calibration_pipeline, run_v12_full_pipeline
 from e2r.calibration.dedupe import dedupe_v12_trigger_rows
 from e2r.calibration.md_discovery import discover_markdown_documents, v12_result_documents
@@ -17,6 +18,13 @@ from e2r.calibration.scoring_profile import (
     load_sector_shadow_profile,
 )
 from e2r.calibration.transition import build_stage_transition_summary
+from e2r.calibration.taxonomy import (
+    CANONICAL_ARCHETYPE_IDS,
+    LARGE_SECTOR_ALIASES,
+    LARGE_SECTOR_IDS,
+    normalise_canonical_archetype_id,
+    normalise_large_sector_id,
+)
 from e2r.calibration.validation import normalise_trigger_type, validate_v12_trigger_rows
 from e2r.calibration.v12_apply import build_v12_rolling_profile_payload
 from e2r.calibration.v12_promotion_planner import build_v12_promotion_plan
@@ -57,6 +65,26 @@ The non-price evidence is a source-name-level historical public-event proxy.
 """
 
 
+def _v12_no_repeat_standalone_md() -> str:
+    return """# E2R Stock-Web V12 No Repeat Standalone Research
+
+## Metadata
+
+- research_session: `post_calibrated_sector_archetype_residual_research`
+- mode: `historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12`
+- selected_round: `R3`
+- large_sector_id: `L3_BATTERY_EV_STORAGE`
+- canonical_archetype_id: `C02_POWER_GRID_TRANSFORMER_DATA_CENTER_CAPEX`
+- fine_archetype_id: `STANDALONE_ALIAS_FIXTURE`
+- price_source: `Songdaiki/stock-web`
+- shadow_weight_only: `true`
+
+```jsonl
+{"schema_version":"v12_no_repeat_standalone_trigger_row_v1","selected_round":"R3","large_sector_id":"L3_BATTERY_EV_STORAGE","canonical_archetype_id":"C02_POWER_GRID_TRANSFORMER_DATA_CENTER_CAPEX","fine_archetype_id":"STANDALONE_ALIAS_FIXTURE","trigger_id":"NR-T001","case_id":"NR-C001","symbol":"000001","trigger_type":"4B-local-price-only","trigger_date":"2024-01-02","entry_date":"2024-01-03","entry_price":1000,"MFE_30D_pct":2,"MFE_90D_pct":3,"MFE_180D_pct":4,"MAE_30D_pct":-8,"MAE_90D_pct":-12,"MAE_180D_pct":-18,"forward_window_trading_days":180,"calibration_usable":true,"dedupe_for_aggregate":true,"aggregate_group_role":"representative","evidence_source":"price_only_local"}
+```
+"""
+
+
 class V12CalibrationPipelineTests(unittest.TestCase):
     def _write_fixture(self, root: Path) -> Path:
         path = root / "e2r_stock_web_v12_residual_round_R6_loop_41_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_research.md"
@@ -72,6 +100,34 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             self.assertEqual(docs[0].loop, "41")
             self.assertEqual(docs[0].large_sector_id, "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL")
             self.assertEqual(docs[0].canonical_archetype_id, "C22_INSURANCE_RATE_CYCLE_RESERVE")
+
+    def test_v12_no_repeat_standalone_discovery_parse_and_normalize(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = (
+                Path(tmp)
+                / "e2r_stock_web_v12_no_repeat_standalone_L3_BATTERY_EV_STORAGE_C02_POWER_GRID_TRANSFORMER_DATA_CENTER_CAPEX_fixture_research.md"
+            )
+            path.write_text(_v12_no_repeat_standalone_md(), encoding="utf-8")
+
+            docs = v12_result_documents(discover_markdown_documents(tmp))
+            self.assertEqual(len(docs), 1)
+            self.assertEqual(docs[0].round, "R3")
+            self.assertEqual(docs[0].loop, "standalone")
+            self.assertEqual(docs[0].large_sector_id, "L3_BATTERY_EV_GREEN_MOBILITY")
+            self.assertEqual(docs[0].canonical_archetype_id, "C02_POWER_GRID_DATACENTER_CAPEX")
+
+            parsed = parse_markdown_document(docs[0])
+            trigger_rows = parsed.rows_by_type["trigger"]
+            self.assertEqual(len(trigger_rows), 1)
+            self.assertEqual(trigger_rows[0]["row_type"], "trigger")
+            self.assertEqual(trigger_rows[0]["round"], "R3")
+            self.assertEqual(trigger_rows[0]["loop"], "standalone")
+            self.assertEqual(trigger_rows[0]["large_sector_id"], "L3_BATTERY_EV_GREEN_MOBILITY")
+            self.assertEqual(trigger_rows[0]["canonical_archetype_id"], "C02_POWER_GRID_DATACENTER_CAPEX")
+
+            bundle = validate_v12_trigger_rows(trigger_rows)
+            self.assertEqual(len(bundle.valid_rows), 1)
+            self.assertEqual(bundle.valid_rows[0]["trigger_type"], "Stage4B")
 
     def test_v12_metadata_and_residual_contribution_parse(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -89,7 +145,18 @@ class V12CalibrationPipelineTests(unittest.TestCase):
         self.assertEqual(normalise_trigger_type("Stage4B-overlay"), "Stage4B")
         self.assertEqual(normalise_trigger_type("4C-watch"), "Stage4C")
         self.assertEqual(normalise_trigger_type("price-only-local-4B-overlay"), "Stage4B")
+        self.assertEqual(normalise_trigger_type("4B-local-price-only"), "Stage4B")
         self.assertEqual(normalise_trigger_type("Stage2 policy-only stress"), "Stage2")
+
+    def test_v12_runtime_weight_seed_covers_canonical_taxonomy(self) -> None:
+        self.assertTrue(all(key in ARCHETYPE_WEIGHT_SEEDS for key in CANONICAL_ARCHETYPE_IDS))
+        self.assertTrue(all(key in LARGE_SECTOR_WEIGHT_SEEDS for key in LARGE_SECTOR_IDS))
+        self.assertEqual(normalise_large_sector_id("L3_BATTERY_EV_STORAGE"), "L3_BATTERY_EV_GREEN_MOBILITY")
+        self.assertEqual(
+            normalise_canonical_archetype_id("C02_POWER_GRID_TRANSFORMER_DATA_CENTER_CAPEX"),
+            "C02_POWER_GRID_DATACENTER_CAPEX",
+        )
+        self.assertTrue(all(normalise_large_sector_id(alias) in LARGE_SECTOR_WEIGHT_SEEDS for alias in LARGE_SECTOR_ALIASES))
 
     def test_v12_ohlc_table_inherits_trigger_grid_stage_metadata(self) -> None:
         markdown = """# Split trigger grid fixture

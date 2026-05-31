@@ -128,6 +128,16 @@ LARGE_SECTOR_WEIGHT_SEEDS: dict[str, dict[str, Any]] = {
 
 
 ARCHETYPE_WEIGHT_SEEDS: dict[str, dict[str, Any]] = {
+    "C01_ORDER_BACKLOG_MARGIN_BRIDGE": {
+        "weights": _weights(20, 25, 18, 12, 12, 8, 5),
+        "green_policy": "green_allowed_with_order_backlog_margin_and_fcf_bridge",
+        "basis": "order/backlog rerating needs margin bridge, delivery visibility and cash conversion",
+    },
+    "C02_POWER_GRID_DATACENTER_CAPEX": {
+        "weights": _weights(21, 24, 20, 13, 12, 5, 5),
+        "green_policy": "green_allowed_with_grid_capex_backlog_capacity_and_margin_visibility",
+        "basis": "power grid/datacenter capex needs backlog, capacity lock-up, ASP and margin conversion",
+    },
     "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": {
         "weights": _weights(20, 24, 17, 14, 14, 6, 5),
         "green_policy": "green_allowed_with_government_backlog_and_delivery_visibility",
@@ -137,6 +147,11 @@ ARCHETYPE_WEIGHT_SEEDS: dict[str, dict[str, Any]] = {
         "weights": _weights(15, 22, 10, 15, 18, 10, 10),
         "green_policy": "watch_to_green_only_after_final_contract_and_legal_clarity",
         "basis": "nuclear policy events need final project economics before Green",
+    },
+    "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": {
+        "weights": _weights(18, 22, 10, 12, 10, 8, 20),
+        "green_policy": "watch_to_green_only_after_contract_margin_and_working_capital_clarity",
+        "basis": "EPC mega contracts need margin, cost overrun and working-capital checks before Green",
     },
     "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
         "weights": _weights(24, 21, 19, 15, 12, 4, 5),
@@ -157,6 +172,11 @@ ARCHETYPE_WEIGHT_SEEDS: dict[str, dict[str, Any]] = {
         "weights": _weights(22, 20, 18, 13, 11, 6, 10),
         "green_policy": "watch_to_green_with_valuation_blowoff_guard",
         "basis": "advanced equipment keeps bottleneck credit but raises valuation/4B guard attention",
+    },
+    "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": {
+        "weights": _weights(22, 18, 14, 12, 10, 5, 19),
+        "green_policy": "watch_to_green_with_memory_recovery_order_and_cycle_reversal_guard",
+        "basis": "memory recovery equipment needs order conversion plus cycle and inventory reversal guards",
     },
     "C11_BATTERY_ORDERBOOK_RERATING": {
         "weights": _weights(20, 20, 15, 12, 10, 8, 15),
@@ -267,6 +287,26 @@ ARCHETYPE_WEIGHT_SEEDS: dict[str, dict[str, Any]] = {
         "weights": _weights(12, 18, 5, 20, 25, 15, 5),
         "green_policy": "event_premium_not_structural_green_without_fcf_or_return",
         "basis": "governance/tender premium is event rerating unless NAV/FCF/shareholder return improves",
+    },
+    "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": {
+        "weights": _weights(10, 14, 8, 12, 10, 6, 40),
+        "green_policy": "redteam_guardrail_scope_not_green_unlock",
+        "basis": "cross-archetype Stage2 false-positive review is a guardrail scope, so information confidence dominates",
+    },
+    "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM": {
+        "weights": _weights(8, 12, 8, 10, 8, 4, 50),
+        "green_policy": "redteam_guardrail_scope_not_green_unlock",
+        "basis": "cross-archetype 4B/4C red-team focuses on thesis-break and price-only false-positive protection",
+    },
+    "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION": {
+        "weights": _weights(8, 12, 5, 10, 8, 20, 37),
+        "green_policy": "redteam_guardrail_scope_not_green_unlock",
+        "basis": "accounting/trust price validation emphasizes capital allocation, trust and evidence quality",
+    },
+    "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL": {
+        "weights": _weights(10, 14, 8, 12, 10, 6, 40),
+        "green_policy": "redteam_guardrail_scope_not_green_unlock",
+        "basis": "high-MAE guardrail scope raises drawdown and evidence-quality protection",
     },
 }
 

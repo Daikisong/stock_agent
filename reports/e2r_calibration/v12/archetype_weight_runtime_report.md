@@ -6,7 +6,7 @@ v12 연구와 가격경로 검증을 production scoring의 아키타입별 점�
 - profile_id: `e2r_2_2_archetype_weight_runtime`
 - enabled: `True`
 - large_sector_weight_count: `10`
-- canonical_archetype_weight_count: `28`
+- canonical_archetype_weight_count: `36`
 
 ## Runtime Example
 
@@ -18,34 +18,42 @@ v12 연구와 가격경로 검증을 production scoring의 아키타입별 점�
 
 | archetype | EPS/FCF | visibility | bottleneck | mispricing | valuation | capital | info | support | green_policy |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---|
-| C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 20.0 | 24.0 | 17.0 | 14.0 | 14.0 | 6.0 | 5.0 | 7 rows / 4 symbols | green_allowed_with_government_backlog_and_delivery_visibility |
-| C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 15.0 | 22.0 | 10.0 | 15.0 | 18.0 | 10.0 | 10.0 | 9 rows / 5 symbols | watch_to_green_only_after_final_contract_and_legal_clarity |
-| C06_HBM_MEMORY_CUSTOMER_CAPACITY | 24.0 | 21.0 | 19.0 | 15.0 | 12.0 | 4.0 | 5.0 | 10 rows / 2 symbols | green_allowed_with_hbm_capacity_customer_and_revision |
-| C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 22.0 | 22.0 | 19.0 | 14.0 | 12.0 | 6.0 | 5.0 | 8 rows / 5 symbols | green_allowed_with_orders_and_revenue_conversion |
-| C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 22.0 | 21.0 | 16.0 | 14.0 | 12.0 | 6.0 | 9.0 | 10 rows / 3 symbols | green_allowed_with_customer_qualification_repeat_demand_and_margin_conversion |
-| C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 22.0 | 20.0 | 18.0 | 13.0 | 11.0 | 6.0 | 10.0 | 16 rows / 5 symbols | watch_to_green_with_valuation_blowoff_guard |
-| C11_BATTERY_ORDERBOOK_RERATING | 20.0 | 20.0 | 15.0 | 12.0 | 10.0 | 8.0 | 15.0 | 14 rows / 6 symbols | green_restricted_until_margin_and_fcf_after_capex |
-| C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 20.0 | 18.0 | 14.0 | 10.0 | 10.0 | 8.0 | 20.0 | 15 rows / 9 symbols | green_restricted_by_calloff_and_customer_demand_risk |
-| C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 20.0 | 18.0 | 14.0 | 12.0 | 10.0 | 10.0 | 16.0 | 16 rows / 3 symbols | watch_to_green_with_utilization_and_policy_durability |
-| C14_EV_DEMAND_SLOWDOWN_4B_4C | 15.0 | 12.0 | 10.0 | 8.0 | 8.0 | 7.0 | 40.0 | 23 rows / 5 symbols | red_watch |
-| C15_MATERIAL_SPREAD_SUPERCYCLE | 20.0 | 12.0 | 20.0 | 10.0 | 10.0 | 8.0 | 20.0 | 10 rows / 7 symbols | green_restricted_by_cycle_reversal |
-| C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 18.0 | 18.0 | 18.0 | 12.0 | 12.0 | 7.0 | 15.0 | 7 rows / 4 symbols | watch_to_green_with_supply_contract_and_policy_durability |
-| C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 20.0 | 12.0 | 18.0 | 10.0 | 10.0 | 5.0 | 25.0 | 29 rows / 8 symbols | red_watch |
-| C18_CONSUMER_EXPORT_CHANNEL_REORDER | 22.0 | 23.0 | 12.0 | 16.0 | 13.0 | 4.0 | 10.0 | 74 rows / 10 symbols | green_allowed_with_export_channel_repeat_demand |
-| C19_BRAND_RETAIL_INVENTORY_MARGIN | 18.0 | 18.0 | 8.0 | 15.0 | 14.0 | 7.0 | 20.0 | 39 rows / 8 symbols | watch_to_green_with_inventory_and_margin_proof |
-| C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 22.0 | 23.0 | 12.0 | 16.0 | 13.0 | 4.0 | 10.0 | 133 rows / 16 symbols | green_allowed_with_global_distribution_and_repeat_sellthrough |
-| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 15.0 | 20.0 | 5.0 | 15.0 | 25.0 | 15.0 | 5.0 | 150 rows / 19 symbols | green_allowed_with_roe_pbr_and_executed_capital_return |
-| C22_INSURANCE_RATE_CYCLE_RESERVE | 12.0 | 22.0 | 5.0 | 14.0 | 24.0 | 18.0 | 5.0 | 103 rows / 8 symbols | green_allowed_with_reserve_rate_cycle_and_capital_return |
-| C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 12.0 | 24.0 | 5.0 | 12.0 | 10.0 | 7.0 | 30.0 | 68 rows / 11 symbols | watch_to_green_after_approval_revenue_or_royalty_conversion |
-| C24_BIO_TRIAL_DATA_EVENT_RISK | 5.0 | 15.0 | 5.0 | 10.0 | 5.0 | 5.0 | 55.0 | 39 rows / 14 symbols | event_only_red_watch |
-| C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 20.0 | 22.0 | 13.0 | 14.0 | 12.0 | 9.0 | 10.0 | 54 rows / 10 symbols | green_allowed_with_export_reimbursement_and_repeat_consumable_revenue |
-| C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 20.0 | 22.0 | 8.0 | 16.0 | 14.0 | 10.0 | 10.0 | 65 rows / 10 symbols | green_allowed_with_arpu_monetization_and_op_leverage |
-| C27_CONTENT_IP_GLOBAL_MONETIZATION | 20.0 | 18.0 | 8.0 | 14.0 | 12.0 | 8.0 | 20.0 | 51 rows / 19 symbols | watch_to_green_with_repeat_ip_monetization |
-| C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 20.0 | 24.0 | 8.0 | 16.0 | 14.0 | 8.0 | 10.0 | 64 rows / 12 symbols | green_allowed_with_arr_retention_and_margin_leverage |
-| C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 20.0 | 18.0 | 10.0 | 15.0 | 17.0 | 15.0 | 5.0 | 36 rows / 15 symbols | watch_to_green_with_mix_margin_and_capital_return |
-| C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 18.0 | 12.0 | 8.0 | 12.0 | 10.0 | 10.0 | 30.0 | 28 rows / 6 symbols | red_watch |
-| C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 12.0 | 15.0 | 8.0 | 15.0 | 15.0 | 10.0 | 25.0 | 34 rows / 14 symbols | event_only_until_cashflow_conversion |
-| C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 12.0 | 18.0 | 5.0 | 20.0 | 25.0 | 15.0 | 5.0 | 64 rows / 10 symbols | event_premium_not_structural_green_without_fcf_or_return |
+| C01_ORDER_BACKLOG_MARGIN_BRIDGE | 20.0 | 25.0 | 18.0 | 12.0 | 12.0 | 8.0 | 5.0 | 8 rows / 6 symbols | green_allowed_with_order_backlog_margin_and_fcf_bridge |
+| C02_POWER_GRID_DATACENTER_CAPEX | 21.0 | 24.0 | 20.0 | 13.0 | 12.0 | 5.0 | 5.0 | 49 rows / 7 symbols | green_allowed_with_grid_capex_backlog_capacity_and_margin_visibility |
+| C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 20.0 | 24.0 | 17.0 | 14.0 | 14.0 | 6.0 | 5.0 | 74 rows / 13 symbols | green_allowed_with_government_backlog_and_delivery_visibility |
+| C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 15.0 | 22.0 | 10.0 | 15.0 | 18.0 | 10.0 | 10.0 | 53 rows / 12 symbols | watch_to_green_only_after_final_contract_and_legal_clarity |
+| C05_EPC_MEGA_CONTRACT_MARGIN_GAP | 18.0 | 22.0 | 10.0 | 12.0 | 10.0 | 8.0 | 20.0 | 19 rows / 12 symbols | watch_to_green_only_after_contract_margin_and_working_capital_clarity |
+| C06_HBM_MEMORY_CUSTOMER_CAPACITY | 24.0 | 21.0 | 19.0 | 15.0 | 12.0 | 4.0 | 5.0 | 34 rows / 2 symbols | green_allowed_with_hbm_capacity_customer_and_revision |
+| C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 22.0 | 22.0 | 19.0 | 14.0 | 12.0 | 6.0 | 5.0 | 56 rows / 20 symbols | green_allowed_with_orders_and_revenue_conversion |
+| C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 22.0 | 21.0 | 16.0 | 14.0 | 12.0 | 6.0 | 9.0 | 66 rows / 10 symbols | green_allowed_with_customer_qualification_repeat_demand_and_margin_conversion |
+| C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 22.0 | 20.0 | 18.0 | 13.0 | 11.0 | 6.0 | 10.0 | 50 rows / 16 symbols | watch_to_green_with_valuation_blowoff_guard |
+| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 22.0 | 18.0 | 14.0 | 12.0 | 10.0 | 5.0 | 19.0 | 22 rows / 9 symbols | watch_to_green_with_memory_recovery_order_and_cycle_reversal_guard |
+| C11_BATTERY_ORDERBOOK_RERATING | 20.0 | 20.0 | 15.0 | 12.0 | 10.0 | 8.0 | 15.0 | 67 rows / 20 symbols | green_restricted_until_margin_and_fcf_after_capex |
+| C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 20.0 | 18.0 | 14.0 | 10.0 | 10.0 | 8.0 | 20.0 | 53 rows / 16 symbols | green_restricted_by_calloff_and_customer_demand_risk |
+| C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 20.0 | 18.0 | 14.0 | 12.0 | 10.0 | 10.0 | 16.0 | 37 rows / 7 symbols | watch_to_green_with_utilization_and_policy_durability |
+| C14_EV_DEMAND_SLOWDOWN_4B_4C | 15.0 | 12.0 | 10.0 | 8.0 | 8.0 | 7.0 | 40.0 | 70 rows / 15 symbols | red_watch |
+| C15_MATERIAL_SPREAD_SUPERCYCLE | 20.0 | 12.0 | 20.0 | 10.0 | 10.0 | 8.0 | 20.0 | 56 rows / 23 symbols | green_restricted_by_cycle_reversal |
+| C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 18.0 | 18.0 | 18.0 | 12.0 | 12.0 | 7.0 | 15.0 | 52 rows / 20 symbols | watch_to_green_with_supply_contract_and_policy_durability |
+| C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 20.0 | 12.0 | 18.0 | 10.0 | 10.0 | 5.0 | 25.0 | 125 rows / 21 symbols | red_watch |
+| C18_CONSUMER_EXPORT_CHANNEL_REORDER | 22.0 | 23.0 | 12.0 | 16.0 | 13.0 | 4.0 | 10.0 | 108 rows / 17 symbols | green_allowed_with_export_channel_repeat_demand |
+| C19_BRAND_RETAIL_INVENTORY_MARGIN | 18.0 | 18.0 | 8.0 | 15.0 | 14.0 | 7.0 | 20.0 | 68 rows / 12 symbols | watch_to_green_with_inventory_and_margin_proof |
+| C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 22.0 | 23.0 | 12.0 | 16.0 | 13.0 | 4.0 | 10.0 | 192 rows / 18 symbols | green_allowed_with_global_distribution_and_repeat_sellthrough |
+| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 15.0 | 20.0 | 5.0 | 15.0 | 25.0 | 15.0 | 5.0 | 209 rows / 22 symbols | green_allowed_with_roe_pbr_and_executed_capital_return |
+| C22_INSURANCE_RATE_CYCLE_RESERVE | 12.0 | 22.0 | 5.0 | 14.0 | 24.0 | 18.0 | 5.0 | 138 rows / 11 symbols | green_allowed_with_reserve_rate_cycle_and_capital_return |
+| C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 12.0 | 24.0 | 5.0 | 12.0 | 10.0 | 7.0 | 30.0 | 130 rows / 11 symbols | watch_to_green_after_approval_revenue_or_royalty_conversion |
+| C24_BIO_TRIAL_DATA_EVENT_RISK | 5.0 | 15.0 | 5.0 | 10.0 | 5.0 | 5.0 | 55.0 | 62 rows / 16 symbols | event_only_red_watch |
+| C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 20.0 | 22.0 | 13.0 | 14.0 | 12.0 | 9.0 | 10.0 | 83 rows / 17 symbols | green_allowed_with_export_reimbursement_and_repeat_consumable_revenue |
+| C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 20.0 | 22.0 | 8.0 | 16.0 | 14.0 | 10.0 | 10.0 | 125 rows / 13 symbols | green_allowed_with_arpu_monetization_and_op_leverage |
+| C27_CONTENT_IP_GLOBAL_MONETIZATION | 20.0 | 18.0 | 8.0 | 14.0 | 12.0 | 8.0 | 20.0 | 93 rows / 23 symbols | watch_to_green_with_repeat_ip_monetization |
+| C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 20.0 | 24.0 | 8.0 | 16.0 | 14.0 | 8.0 | 10.0 | 87 rows / 15 symbols | green_allowed_with_arr_retention_and_margin_leverage |
+| C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 20.0 | 18.0 | 10.0 | 15.0 | 17.0 | 15.0 | 5.0 | 157 rows / 27 symbols | watch_to_green_with_mix_margin_and_capital_return |
+| C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 18.0 | 12.0 | 8.0 | 12.0 | 10.0 | 10.0 | 30.0 | 113 rows / 29 symbols | red_watch |
+| C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 12.0 | 15.0 | 8.0 | 15.0 | 15.0 | 10.0 | 25.0 | 155 rows / 62 symbols | event_only_until_cashflow_conversion |
+| C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 12.0 | 18.0 | 5.0 | 20.0 | 25.0 | 15.0 | 5.0 | 122 rows / 14 symbols | event_premium_not_structural_green_without_fcf_or_return |
+| R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 8.0 | 12.0 | 8.0 | 10.0 | 8.0 | 4.0 | 50.0 | 368 rows / 137 symbols | redteam_guardrail_scope_not_green_unlock |
+| R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | 8.0 | 12.0 | 5.0 | 10.0 | 8.0 | 20.0 | 37.0 | 12 rows / 12 symbols | redteam_guardrail_scope_not_green_unlock |
+| R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | 10.0 | 14.0 | 8.0 | 12.0 | 10.0 | 6.0 | 40.0 | 23 rows / 21 symbols | redteam_guardrail_scope_not_green_unlock |
+| R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | 10.0 | 14.0 | 8.0 | 12.0 | 10.0 | 6.0 | 40.0 | 12 rows / 12 symbols | redteam_guardrail_scope_not_green_unlock |
 
 ## Guardrails
 

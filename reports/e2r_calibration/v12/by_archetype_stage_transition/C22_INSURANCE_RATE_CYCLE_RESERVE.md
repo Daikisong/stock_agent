@@ -3,23 +3,36 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `49`
+- stage_transition_summary_rows: `75`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| C22_003690_KOREANRE_20240201_REINSURANCE_RATE_CYCLE_STAGE2 | 003690 | C22_INSURANCE_RATE_CYCLE_RESERVE | 7810.0 | None | None | 20.87 | None | stage2_actionable_best_entry |
+| C22_032830_SAMSUNGLIFE_20240201_RATE_RESERVE_CSM_STAGE2 | 032830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 76000.0 | None | None | 42.76 | None | stage2_actionable_best_entry |
+| C22_082640_DONGLIFE_20241031_LIFE_RATE_RESERVE_PRICE_PREMIUM_4B | 082640 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | 6110.0 | None | None | no_valid_stage_transition |
 | R13L17_C22_000810_SFM_RATE_RESERVE_2023Q1 | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | 227500.0 | None | None | 20.66 | None | stage2_actionable_best_entry |
 | R13L17_C22_001450_HYUNDAI_RESERVE_GAP_2023Q1 | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | 34750.0 | None | None | 4.46 | None | stage2_actionable_best_entry |
 | R13L17_C22_005830_DBI_RATE_RESERVE_2023Q1 | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 76200.0 | None | None | 24.02 | None | stage2_actionable_best_entry |
 | R13L17_C22_032830_SAMSUNG_LIFE_BLOWOFF_2024 | 032830 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | 105100.0 | None | None | 4b_good_peak_capture |
 | R13L17_C22_088350_HANWHA_LIFE_EVENT_PREMIUM_2024 | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | 3355.0 | None | None | 13.71 | None | stage2_actionable_best_entry |
-| R13L20_C22_000810 | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | 308500.0 | None | None | 41.0025 | None | stage2_actionable_best_entry |
+| R13L20_C22_000810 | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | 308500.0 | None | 343000.0 | 41.0025 | 27.2743 | stage2_actionable_best_entry |
 | R13L20_C22_001450 | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | 34650.0 | None | None | 6.06 | None | stage2_actionable_best_entry |
-| R13L20_C22_005830 | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 97800.0 | None | None | 26.79 | None | stage2_actionable_best_entry |
+| R13L20_C22_005830 | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 97800.0 | None | 106200.0 | 26.79 | 32.0603 | stage2_actionable_best_entry |
 | R13L20_C22_088350 | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | 3385.0 | None | None | 3.84 | None | stage2_actionable_best_entry |
 | R13L21_C22_000810_2025_PNC_RESERVE_CAPITAL_RETURN | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | 392000.0 | 404500.0 | None | 60.7165 | None | green_good_but_late |
 | R13L21_C22_001450_2025_RESERVE_QUALITY_GUARD | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | 24400.0 | None | None | 25.82 | None | stage2_actionable_best_entry |
 | R13L21_C22_005830_2025_Q1_RESERVE_CAPITAL_RETURN | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 97300.0 | None | None | 52.42 | None | stage2_actionable_best_entry |
 | R13L21_C22_088350_2025_LIFE_RATE_BETA_WHIPSaw | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | 2700.0 | None | None | 61.3 | None | stage2_actionable_best_entry |
+| R6L10_C22_DBINS_20240223_IFRS17_CSM_CAPITAL_RETURN_SUCCESS | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 97800.0 | None | None | 23.42 | None | stage2_actionable_best_entry |
+| R6L10_C22_HYUNDAI_MARINE_20240514_RESERVE_RISK_FALSE_GREEN | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
+| R6L10_C22_LOTTEINS_20240423_CONTROL_PREMIUM_FALSE_POSITIVE | 000400 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
+| R6L10_C22_SFM_20240223_HIGH_QUALITY_CAPITAL_RETURN_SUCCESS | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | 308500.0 | None | None | 27.55 | None | stage2_actionable_best_entry |
+| R6L10_C22_SFM_20241203_4B_REUSE | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | 435000.0 | None | None | no_valid_stage_transition |
+| R6L11-C22-000370-20230515 | 000370 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
+| R6L11-C22-000400-20240201 | 000400 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
+| R6L11-C22-000810-20230515 | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | 227500.0 | None | 343000.0 | 90.3311 | 56.2035 | stage2_actionable_best_entry |
+| R6L11-C22-001450-20230515 | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
+| R6L11-C22-005830-20230515 | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 76200.0 | 99200.0 | None | 94.2211 | None | green_too_late |
 | R6L11_C22_000400 | 000400 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
 | R6L11_C22_000810 | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | 304000.0 | 370000.0 | None | 43.0951 | None | green_too_late |
 | R6L11_C22_001450 | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
@@ -27,10 +40,23 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R6L11_C22_DBINS_20240226 | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 95000.0 | None | None | 30.53 | None | stage2_actionable_best_entry |
 | R6L11_C22_HMF_20240226 | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
 | R6L11_C22_SFM_20240226 | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | 300000.0 | None | None | 31.17 | None | stage2_actionable_best_entry |
+| R6L12_C22_000810_SAMSUNGFIRE_IFRS17_CSM_KICS_CAPITAL_RETURN_20240202 | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | 299000.0 | None | None | 31.61 | None | stage2_actionable_best_entry |
+| R6L12_C22_001450_HYUNDAIMARINE_RATE_BETA_RESERVE_RISK_FALSEPOSITIVE_20240202 | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
+| R6L12_C22_005830_DBINSURANCE_IFRS17_CSM_CAPITALRETURN_20240202 | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 99200.0 | None | None | 21.67 | None | stage2_actionable_best_entry |
 | R6L13_C22_DBI_20240222_IFRS17_CAPITAL_RETURN | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 97800.0 | None | None | 26.79 | None | stage2_actionable_best_entry |
 | R6L13_C22_HANWHALIFE_20240222_POLICY_BETA_RESERVE_GAP | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
 | R6L13_C22_HYUNDAIMARINE_20240222_POLICY_BETA_RESERVE_GAP | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
 | R6L13_C22_SFMI_20240222_IFRS17_CAPITAL_RETURN | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | 308500.0 | None | None | 27.55 | None | stage2_actionable_best_entry |
+| R6L14_C22_032830_SAMSUNGLIFE_LIFE_CSM_KICS_CAPITAL_RETURN_20240202 | 032830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 78400.0 | None | None | 38.39 | None | stage2_actionable_best_entry |
+| R6L14_C22_082640_DONGLIFE_M_AND_A_LIFE_RESERVE_4B_20240202 | 082640 | C22_INSURANCE_RATE_CYCLE_RESERVE | 5220.0 | None | None | 80.84 | None | stage2_actionable_best_entry |
+| R6L14_C22_085620_MIRAEASSETLIFE_LOW_LIQUIDITY_LIFE_BETA_FALSEPOSITIVE_20240202 | 085620 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
+| R6L14_C22_088350_HANWHALIFE_RATE_BETA_NEGATIVE_SPREAD_FALSEPOSITIVE_20240202 | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
+| R6L15_C22_HANWHALIFE_BETA_REVERSAL_20240201 | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
+| R6L15_C22_HEUNGKUKFIRE_PRICEONLY_20240201 | 000540 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | 5570.0 | None | None | no_valid_stage_transition |
+| R6L15_C22_KOREANRE_REINSURANCE_RATE_20240201 | 003690 | C22_INSURANCE_RATE_CYCLE_RESERVE | 7810.0 | None | None | 15.24 | None | stage2_actionable_best_entry |
+| R6L15_C22_MIRAEASSETLIFE_PRICEBETA_20240201 | 085620 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | 4c_too_late |
+| R6L15_C22_SAMSUNGLIFE_CSM_VALUEUP_20240201 | 032830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 76000.0 | None | None | 42.76 | None | stage2_actionable_best_entry |
+| R6L15_C22_TONGYANGLIFE_CSM_EVENT_20240201 | 082640 | C22_INSURANCE_RATE_CYCLE_RESERVE | 5380.0 | None | 7970.0 | 75.46 | 63.7971 | 4b_good_peak_capture |
 | R6L19_C22_000400_LOTTE_INSURANCE_EVENT_PREMIUM_20230918 | 000400 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
 | R6L19_C22_000810_SFMI_CAPITAL_RETURN_20240223 | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | 308500.0 | None | None | 41.0109 | None | stage2_actionable_best_entry |
 | R6L19_C22_001450_HYUNDAI_MARINE_RESERVE_QUALITY_GAP_20240223 | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | 34650.0 | None | None | 6.06 | None | stage2_actionable_best_entry |

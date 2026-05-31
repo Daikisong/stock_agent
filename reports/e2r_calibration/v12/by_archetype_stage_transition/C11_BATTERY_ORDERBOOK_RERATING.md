@@ -3,16 +3,57 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `9`
+- stage_transition_summary_rows: `50`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| C11_002710_TCCSTEEL_20230323_BATTERY_CAN_STEEL_ORDERBOOK_STAGE2 | 002710 | C11_BATTERY_ORDERBOOK_RERATING | 22750.0 | None | None | 223.52 | None | stage2_actionable_best_entry |
+| C11_005070_COSMOAMT_20230331_CATHODE_ORDERBOOK_RERATING_STAGE2 | 005070 | C11_BATTERY_ORDERBOOK_RERATING | 153900.0 | None | None | 57.57 | None | stage2_actionable_best_entry |
+| C11_006110_SAMAAL_20230726_ALUMINUMFOIL_ORDERBOOK_FALSE_GREEN | 006110 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
+| C11_078600_DAEJOO_20230718_SILICON_ANODE_ORDERBOOK_PREMIUM_4B | 078600 | C11_BATTERY_ORDERBOOK_RERATING | None | None | 115800.0 | None | None | no_valid_stage_transition |
+| C11_121600_NANOMATERIAL_20230131_CNT_ORDERBOOK_RERATING_STAGE2 | 121600 | C11_BATTERY_ORDERBOOK_RERATING | 83700.0 | None | None | 131.42 | None | stage2_actionable_best_entry |
+| C11_121600_NANONEWMAT_20230209_CNT_ADDITIVE_ORDERBOOK_STAGE2 | 121600 | C11_BATTERY_ORDERBOOK_RERATING | 109200.0 | None | None | 77.38 | None | stage2_actionable_best_entry |
+| C11_121600_NANOSINSO_20230209_CNT_ORDERBOOK_RERATING_GREEN | 121600 | C11_BATTERY_ORDERBOOK_RERATING | None | 109200.0 | None | None | None | green_good_but_late |
+| C11_137400_PNT_20230403_BATTERY_EQUIPMENT_ORDERBOOK_STAGE2_SUCCESS | 137400 | C11_BATTERY_ORDERBOOK_RERATING | 51900.0 | None | None | 65.9 | None | stage2_actionable_best_entry |
+| C11_222080_CIS_20230228_BATTERY_EQUIPMENT_ORDERBOOK_STAGE2 | 222080 | C11_BATTERY_ORDERBOOK_RERATING | 10290.0 | None | None | 59.77 | None | stage2_actionable_best_entry |
+| C11_222080_CIS_20230329_BATTERY_EQUIPMENT_ORDERBOOK_FALSE_GREEN | 222080 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
+| C11_222080_CIS_20230329_ELECTRODE_EQUIPMENT_ORDERBOOK_FALSE_GREEN | 222080 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
+| C11_222080_CIS_20230330_BATTERY_EQUIPMENT_ORDERBOOK_FALSE_GREEN | 222080 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
+| C11_299030_HANATECH_20230724_BATTERY_EQUIPMENT_ORDERBOOK_PREMIUM_4B | 299030 | C11_BATTERY_ORDERBOOK_RERATING | None | None | 137900.0 | None | None | no_valid_stage_transition |
+| C11_336370_SOLUS_20230207_COPPERFOIL_ORDERBOOK_FALSE_GREEN | 336370 | C11_BATTERY_ORDERBOOK_RERATING | 42650.0 | None | None | 26.61 | None | stage2_actionable_best_entry |
+| C11_361610_SKIET_20240405_SEPARATOR_ORDERBOOK_FALSE_GREEN | 361610 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
+| C11_382480_GITECH_20230404_BATTERY_TOOLING_PRICE_PREMIUM_4B | 382480 | C11_BATTERY_ORDERBOOK_RERATING | None | None | 5290.0 | None | None | no_valid_stage_transition |
+| C11_382840_WONJOON_20230726_BATTERY_FURNACE_ORDERBOOK_4B | 382840 | C11_BATTERY_ORDERBOOK_RERATING | None | None | 25800.0 | None | None | no_valid_stage_transition |
+| C11_382840_WONJUN_20230323_CATHODE_EQUIPMENT_ORDERBOOK_BLOWOFF | 382840 | C11_BATTERY_ORDERBOOK_RERATING | None | None | 27950.0 | None | None | no_valid_stage_transition |
+| C11_393890_WCP_20230612_SEPARATOR_ORDERBOOK_LATE_FALSE_GREEN | 393890 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
+| C11_393890_WCP_20230726_SEPARATOR_ORDERBOOK_PREMIUM_4B | 393890 | C11_BATTERY_ORDERBOOK_RERATING | None | None | 75700.0 | None | None | no_valid_stage_transition |
+| C11_393890_WCP_20240307_SEPARATOR_ORDERBOOK_PRICE_PREMIUM_4B | 393890 | C11_BATTERY_ORDERBOOK_RERATING | None | None | 49500.0 | None | None | no_valid_stage_transition |
 | C11_ECOPROBM_2023_VERTICAL_ORDERBOOK_RERATING | 247540 | C11_BATTERY_ORDERBOOK_RERATING | 109200.0 | None | None | 434.8 | None | stage2_actionable_best_entry |
 | C11_LNF_2023_TESLA_SINGLE_CUSTOMER_CALLOFF_RISK | 066970 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
 | C11_POSCOFUTUREM_2023_SDI_CATHODE_ORDERBOOK | 003670 | C11_BATTERY_ORDERBOOK_RERATING | 224000.0 | None | None | 209.825 | None | stage2_actionable_best_entry |
 | CASE_R3L66_003670_POSCOFUTUREM_ORDERBOOK | 003670 | C11_BATTERY_ORDERBOOK_RERATING | 224000.0 | None | None | 209.82 | None | stage2_actionable_best_entry |
 | CASE_R3L66_247540_ECOPROBM_ORDERBOOK | 247540 | C11_BATTERY_ORDERBOOK_RERATING | 114100.0 | None | None | 411.8442 | None | stage2_actionable_best_entry |
 | CASE_R3L66_393890_WCP_SEPARATOR_COUNTER | 393890 | C11_BATTERY_ORDERBOOK_RERATING | 51200.0 | None | None | 70.9 | None | stage2_actionable_best_entry |
+| R3L10-C11-001 | 247540 | C11_BATTERY_ORDERBOOK_RERATING | 130700.0 | None | None | 346.82 | None | stage2_actionable_best_entry |
+| R3L10-C11-002 | 003670 | C11_BATTERY_ORDERBOOK_RERATING | 208500.0 | None | None | 232.85 | None | stage2_actionable_best_entry |
+| R3L10-C11-003 | 066970 | C11_BATTERY_ORDERBOOK_RERATING | None | 328000.0 | None | None | None | green_false_positive |
+| R3L10-C11-004 | 373220 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
+| R3L10-C11-005 | 247540 | C11_BATTERY_ORDERBOOK_RERATING | None | None | 455000.0 | None | None | 4b_good_peak_capture |
 | R3L11_C11_247540_ECOPROBM | 247540 | C11_BATTERY_ORDERBOOK_RERATING | 315000.0 | None | None | 2.54 | None | stage2_actionable_best_entry |
 | R3L11_C11_348370_ENCHEM | 348370 | C11_BATTERY_ORDERBOOK_RERATING | 84300.0 | None | None | 368.09 | None | stage2_actionable_best_entry |
 | R3L11_C11_373220_LGES | 373220 | C11_BATTERY_ORDERBOOK_RERATING | 372000.0 | None | None | 19.35 | None | stage2_actionable_best_entry |
+| R3L12_C11_ECOPROBM_202312 | 247540 | C11_BATTERY_ORDERBOOK_RERATING | 323000.0 | None | None | 9.6 | None | stage2_actionable_best_entry |
+| R3L12_C11_ECOPROBM_202312 | None | C11_BATTERY_ORDERBOOK_RERATING | 323000.0 | None | None | 9.6 | None | stage2_actionable_best_entry |
+| R3L12_C11_LNF_202302 | 066970 | C11_BATTERY_ORDERBOOK_RERATING | 250500.0 | None | None | 39.52 | None | stage2_actionable_best_entry |
+| R3L12_C11_LNF_202302 | None | C11_BATTERY_ORDERBOOK_RERATING | 250500.0 | None | None | 39.52 | None | stage2_actionable_best_entry |
+| R3L12_C11_POSCO_FUTURE_M_202301 | 003670 | C11_BATTERY_ORDERBOOK_RERATING | 224000.0 | None | None | 209.825 | None | stage2_actionable_best_entry |
+| R3L12_C11_POSCO_FUTURE_M_202301 | None | C11_BATTERY_ORDERBOOK_RERATING | 224000.0 | None | None | 209.82 | None | stage2_actionable_best_entry |
+| R3L13-C11-003670-POSCOFUTUREM-ORDERBOOK-20230403 | 003670 | C11_BATTERY_ORDERBOOK_RERATING | 288500.0 | None | None | 140.5546 | None | stage2_actionable_best_entry |
+| R3L13-C11-006400-SAMSUNGSDI-FUTURE-JV-ORDER-HEADLINE-20231012 | 006400 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
+| R3L13-C11-066970-LNF-TESLA-ORDERBOOK-CALLOFF-20230228 | 066970 | C11_BATTERY_ORDERBOOK_RERATING | 250500.0 | None | None | 39.52 | None | stage2_actionable_best_entry |
+| R3L13-C11-247540-ECOPROBM-ORDERBOOK-SLOWDOWN-4C-20240425 | 247540 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
+| R3L13-C11-373220-LGES-IRA-CAPACITY-ORDER-VISIBILITY-20220817 | 373220 | C11_BATTERY_ORDERBOOK_RERATING | 453500.0 | None | None | 38.7 | None | stage2_actionable_best_entry |
+| R3L16-C11-002710-TCCSTEEL-CAN-MATERIAL-ORDERBOOK-20230323 | 002710 | C11_BATTERY_ORDERBOOK_RERATING | 22750.0 | None | None | 230.99 | None | stage2_actionable_best_entry |
+| R3L16-C11-278280-CHUNBO-ELECTROLYTE-RECOVERY-FALSE-20240102 | 278280 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
+| R3L16-C11-348370-ENCHEM-US-ELECTROLYTE-ORDERBOOK-20240102 | 348370 | C11_BATTERY_ORDERBOOK_RERATING | 83100.0 | None | None | 374.7485 | None | stage2_actionable_best_entry |
+| R3L16-C11-393890-WCP-SEPARATOR-ORDERBOOK-THESIS-BREAK-20240102 | 393890 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
