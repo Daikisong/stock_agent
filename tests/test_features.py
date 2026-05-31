@@ -1,3 +1,4 @@
+from dataclasses import replace
 from datetime import date, datetime
 from pathlib import Path
 import unittest
@@ -191,6 +192,49 @@ class FeatureEngineeringTests(unittest.TestCase):
         self.assertEqual(result.shortage_type, ShortageType.STRUCTURAL)
         self.assertIn(stage.stage, {Stage.STAGE_3_GREEN, Stage.STAGE_3_YELLOW})
         self.assertTrue(zoom_news)
+
+    def test_unknown_archetype_metadata_is_reclassified_before_scoring(self):
+        feature_input = replace(
+            base_input(
+                {
+                    "contract_duration_months": 36,
+                    "contract_amount_to_prior_sales": 0.5,
+                    "order_backlog_to_sales": 1.4,
+                    "lead_time_months": 18,
+                    "capa_utilization_pct": 96,
+                    "asp_yoy_pct": 15,
+                    "pricing_power_confirmed": True,
+                    "shortage_type": "structural",
+                }
+            ),
+            sector_context="power_equipment",
+            canonical_archetype_id="C00_UNKNOWN",
+        )
+
+        result = DeterministicFeatureEngineer().engineer(feature_input)
+        score = result.score()
+
+        self.assertEqual(result.source_fields["canonical_archetype_id"], "C02_POWER_GRID_DATACENTER_CAPEX")
+        self.assertIn("reclassified_by_agent_context", result.source_fields["archetype_classification_reason"])
+        self.assertIn("archetype_weight:C02_POWER_GRID_DATACENTER_CAPEX", score.scoring_version)
+
+    def test_large_sector_mismatch_is_corrected_from_canonical_before_scoring(self):
+        feature_input = replace(
+            base_input({"export_channel_expansion": True, "recurring_consumer_demand": True}),
+            large_sector_id="L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+            canonical_archetype_id="C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+        )
+
+        result = DeterministicFeatureEngineer().engineer(feature_input)
+        score = result.score()
+
+        self.assertEqual(result.source_fields["large_sector_id"], "L5_CONSUMER_BRAND_DISTRIBUTION")
+        self.assertEqual(result.source_fields["canonical_archetype_id"], "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION")
+        self.assertEqual(
+            result.source_fields["archetype_classification_reason"],
+            "explicit_canonical_corrected_large_sector_mismatch",
+        )
+        self.assertIn("archetype_weight:C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION", score.scoring_version)
 
     def test_feature_input_rejects_future_as_of_financial_actual(self):
         with self.assertRaisesRegex(ValueError, "financial actual cannot be after feature as_of_date"):

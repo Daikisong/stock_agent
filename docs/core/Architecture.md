@@ -60,16 +60,18 @@ unknown canonical archetype
   그런데 runtime profile에는 C08 weight가 없다.
 
 그냥 진행하면:
-  L2_AI_SEMICONDUCTOR_ELECTRONICS 대섹터 weight로 fallback된다.
-  점수는 계산되지만, C08 전용 "고객 인증/품질/반복 소모품" 특성이 덜 반영된다.
+  rolling scoring은 ArchetypeClassificationError로 중단된다.
+  C08 전용 "고객 인증/품질/반복 소모품" 특성이 없으면 점수를 만들지 않는다.
 
 올바른 처리:
-  C08 seed를 추가하고 테스트로 canonical match를 확인한다.
-  그 다음 전체 v12 calibration을 실행한다.
+  1. agent/research layer가 검색, 공시, 리포트 텍스트로 C08이 맞는지 먼저 판별한다.
+  2. C08이 맞고 weight seed가 없으면 C08 seed를 추가한다.
+  3. 테스트로 canonical match를 확인하고 전체 v12 calibration을 실행한다.
 ```
 
-fallback 자체는 실패 방지 장치다. 성공 신호가 아니다.
-보고서와 `ScoreSnapshot.diagnostic_scores`에 fallback 플래그가 남으면 mapper 또는 weight profile을 고쳐야 한다.
+runtime scoring에서 대섹터 fallback은 허용하지 않는다.
+분류가 빠졌으면 에이전트가 검색/LLM/파싱 텍스트로 L/C를 확정한 뒤 scoring으로 넘겨야 한다.
+직접 scorer를 우회 호출한 payload만 예외로 막는다.
 
 ## 전체 흐름
 
@@ -267,7 +269,7 @@ sequenceDiagram
     P-->>S: e2r_2_2_rolling_calibrated
     S->>S: scope label 생성<br/>large_sector:L5..., canonical_archetype:C20...
     S->>S: archetype weight profile 조회<br/>raw component를 weighted component로 재합산
-    S->>S: weight 미적용 fallback이면 diagnostic flag 기록
+    S->>S: L/C 분류 없거나 unknown이면 예외로 중단
     S->>S: scope가 profile에 있고 비가격 증거가 있으면 bounded bonus/diagnostic flag 적용
     S-->>C: ScoreSnapshot(total_score, diagnostic_scores with weighted components)
     C->>P: active thresholds and guardrails 조회
@@ -281,44 +283,44 @@ sequenceDiagram
 payload에 canonical_archetype_id가 없으면 C20, C22 같은 scope patch가 작동할 수 없다.
 ```
 
-이 fallback은 조용히 숨기지 않는다. 점수는 안전하게 기존 canonical total로 계산하더라도,
-`ScoreSnapshot.diagnostic_scores`에 반드시 감사 플래그가 남는다.
+rolling scoring은 fallback을 조용히 숨기지 않는다. 표준 흐름에서는 agent/feature pipeline이 먼저
+분류 오류를 리서치로 보강해 L/C를 확정하고, 그 다음 rolling score를 만든다. 단, 이미 만들어진
+`ScoringPayload`가 L/C 없이 scorer로 직접 들어오면 계산하지 않고 예외로 막는다.
 
-| fallback flag | 의미 |
+| 직접 scorer 오류 조건 | agent pipeline의 올바른 처리 |
 |---|---|
-| `archetype_weight_fallback_used` | 아키타입별 weight를 못 쓰고 canonical total로 계산 |
-| `archetype_weight_fallback_missing_scope` | `canonical_archetype_id`와 `large_sector_id`가 둘 다 없음 |
-| `archetype_weight_fallback_unknown_archetype` | 들어온 canonical archetype이 runtime profile에 없음 |
-| `archetype_weight_fallback_unknown_large_sector` | 들어온 large sector가 runtime profile에 없음 |
-| `archetype_weight_fallback_profile_unavailable` | weight profile 파일이 없거나 비활성 |
-| `archetype_weight_canonical_missing_large_sector_fallback` | canonical archetype 매핑은 실패했고 large sector weight만 적용 |
+| missing `large_sector_id` | 검색/리포트/공시 텍스트로 L1~L10을 판별한 뒤 scoring |
+| missing `canonical_archetype_id` | C01~C32 또는 R13 archetype을 판별한 뒤 scoring |
+| unknown canonical archetype | 입력값을 그대로 쓰지 말고 agent mapper가 다시 분류, seed가 없으면 보강 |
+| unknown large sector | 지원 taxonomy로 다시 매핑 |
+| L/C mismatch | canonical 또는 evidence 기준으로 L/C를 정정 |
 
 쉬운 예시는 이렇다.
 
 ```text
-payload A:
+raw input A:
   canonical_archetype_id 없음
   large_sector_id 없음
 
 결과:
-  total score는 기존 7개 고정 비중으로 계산한다.
-  하지만 archetype_weight_fallback_missing_scope = 1이 남는다.
+  agent가 먼저 리서치한다.
+  예: 전력기기 + 수주잔고 + 리드타임이면 C02로 분류하고 C02 weight로 score를 만든다.
 
 의미:
-  정상 적용이 아니다. sector/archetype mapper 연결을 고쳐야 한다.
+  모른다고 기본형으로 계산하지 않는다. 먼저 판별하고 계산한다.
 ```
 
 ```text
-payload B:
+raw input B:
   canonical_archetype_id = UNKNOWN_ARCHETYPE
   large_sector_id = L5_CONSUMER_BRAND_DISTRIBUTION
 
 결과:
-  L5 대섹터 weight는 적용될 수 있다.
-  하지만 archetype_weight_canonical_missing_large_sector_fallback = 1이 남는다.
+  UNKNOWN_ARCHETYPE은 버리고, K-food/K-beauty/브랜드/재고 증거를 다시 본다.
+  글로벌 유통 반복수요면 C20, 재고/마진 문제면 C19, 수출채널 재주문이면 C18로 보낸다.
 
 의미:
-  소비재 큰 분류는 맞췄지만, C18/C19/C20 같은 세부 archetype 판정은 실패했다.
+  L5 weight로 내려가는 게 아니라 agent가 세부 archetype을 판정한다.
 ```
 
 쉬운 예시는 이렇다.

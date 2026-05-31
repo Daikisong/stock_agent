@@ -42,7 +42,7 @@ CANONICAL_COMPONENT_MAX_POINTS: dict[str, float] = {
     "information_confidence": 5.0,
 }
 
-DEFAULT_RUNTIME_WEIGHTS = dict(CANONICAL_COMPONENT_MAX_POINTS)
+RUNTIME_COMPONENT_MAX_POINTS = dict(CANONICAL_COMPONENT_MAX_POINTS)
 
 
 def _normalise_weights(weights: Mapping[str, float]) -> dict[str, float]:
@@ -333,7 +333,7 @@ class ArchetypeWeightProfile:
     profile_id: str
     profile_status: str
     enabled: bool
-    default_weights: Mapping[str, float]
+    component_max_points: Mapping[str, float]
     large_sector_weights: Mapping[str, Mapping[str, Any]]
     archetype_weights: Mapping[str, Mapping[str, Any]]
 
@@ -343,9 +343,6 @@ class ArchetypeWeightProfile:
         if canonical_archetype_id and canonical_archetype_id in self.archetype_weights:
             payload = self.archetype_weights[canonical_archetype_id]
             return _match_from_payload("canonical_archetype", canonical_archetype_id, payload)
-        if large_sector_id and large_sector_id in self.large_sector_weights:
-            payload = self.large_sector_weights[large_sector_id]
-            return _match_from_payload("large_sector", large_sector_id, payload)
         return None
 
     def apply(
@@ -394,16 +391,17 @@ def load_archetype_weight_profile(path: str | Path = RUNTIME_WEIGHT_PROFILE_PATH
             profile_id="e2r_archetype_weight_disabled_missing_profile",
             profile_status="missing_profile",
             enabled=False,
-            default_weights=DEFAULT_RUNTIME_WEIGHTS,
+            component_max_points=RUNTIME_COMPONENT_MAX_POINTS,
             large_sector_weights={},
             archetype_weights={},
         )
     payload = json.loads(path_obj.read_text(encoding="utf-8"))
+    component_max_points = payload.get("component_max_points", payload.get("default_weights", RUNTIME_COMPONENT_MAX_POINTS))
     return ArchetypeWeightProfile(
         profile_id=str(payload.get("profile_id", path_obj.stem)),
         profile_status=str(payload.get("profile_status", "unknown")),
         enabled=bool(payload.get("enabled", False)),
-        default_weights=_normalise_weights(payload.get("default_weights", DEFAULT_RUNTIME_WEIGHTS)),
+        component_max_points=_normalise_weights(component_max_points),
         large_sector_weights=dict(payload.get("large_sector_weights", {})),
         archetype_weights=dict(payload.get("archetype_weights", {})),
     )
@@ -456,7 +454,7 @@ def build_archetype_weight_profile_payload(
         "profile_status": "default_enabled",
         "enabled": True,
         "profile_basis": "v12_stage_transition_price_validation_plus_score_weight_research",
-        "default_weights": DEFAULT_RUNTIME_WEIGHTS,
+        "component_max_points": RUNTIME_COMPONENT_MAX_POINTS,
         "large_sector_weights": large_sector_weights,
         "archetype_weights": archetype_weights,
         "guardrails": {
@@ -534,6 +532,8 @@ def render_archetype_weight_runtime_report(payload: Mapping[str, Any]) -> str:
             "- 종목명은 weight 선택에 쓰지 않습니다.",
             "- benchmark label과 case library는 후보 생성 input이 아닙니다.",
             "- 미래 MFE/MAE/peak는 runtime 판단에 쓰지 않고, weight 보정 근거로만 사용합니다.",
+            "- rolling scoring은 large_sector_id와 canonical_archetype_id가 모두 직접 매칭될 때만 실행합니다.",
+            "- unknown canonical archetype을 large sector weight로 fallback하지 않습니다.",
             "- Stage 3-Green 전역 total/revision 기준은 낮추지 않습니다.",
         ]
     )
@@ -543,9 +543,9 @@ def render_archetype_weight_runtime_report(payload: Mapping[str, Any]) -> str:
 __all__ = [
     "ARCHETYPE_WEIGHT_SEEDS",
     "CANONICAL_COMPONENT_MAX_POINTS",
-    "DEFAULT_RUNTIME_WEIGHTS",
     "LARGE_SECTOR_WEIGHT_SEEDS",
     "RUNTIME_WEIGHT_PROFILE_PATH",
+    "RUNTIME_COMPONENT_MAX_POINTS",
     "ArchetypeWeightProfile",
     "RuntimeWeightMatch",
     "WeightedComponents",

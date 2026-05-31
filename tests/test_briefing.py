@@ -23,6 +23,8 @@ def stage2_payload():
         },
         diagnostic_scores={"revision_score": 45, "price_stage_score": 60},
         evidence_ids=("KR-STAGE2-numbers",),
+        large_sector_id="L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+        canonical_archetype_id="C22_INSURANCE_RATE_CYCLE_RESERVE",
     )
 
 
@@ -144,4 +146,3 @@ class MorningBriefingTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

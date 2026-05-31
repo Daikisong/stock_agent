@@ -159,6 +159,8 @@ class FreeWebResearchRunner:
         feature_input = FeatureEngineeringInput(
             symbol=inputs.symbol,
             as_of_date=inputs.as_of_date,
+            company_name=inputs.company_name,
+            sector_context=inputs.sector,
             disclosures=web_result.parsed_disclosures,
             research_reports=proxy.reports,
             news_items=web_result.parsed_news,

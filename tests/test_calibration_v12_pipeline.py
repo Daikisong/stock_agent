@@ -592,6 +592,7 @@ class V12CalibrationPipelineTests(unittest.TestCase):
                     as_of_date=date(2024, 2, 23),
                     components=components,
                     diagnostic_scores={"credible_order_or_policy_evidence": 1},
+                    large_sector_id="L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
                     canonical_archetype_id="C22_INSURANCE_RATE_CYCLE_RESERVE",
                 )
             )
@@ -602,25 +603,27 @@ class V12CalibrationPipelineTests(unittest.TestCase):
                     as_of_date=date(2024, 2, 23),
                     components=components,
                     diagnostic_scores={"credible_order_or_policy_evidence": 1},
+                    large_sector_id="L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
                     canonical_archetype_id="C22_INSURANCE_RATE_CYCLE_RESERVE",
                 )
             )
-            unscoped = DeterministicScorer().score(
-                ScoringPayload(
-                    symbol="000810",
-                    as_of_date=date(2024, 2, 23),
-                    components=components,
-                    diagnostic_scores={"credible_order_or_policy_evidence": 1},
-                    canonical_archetype_id="C00_UNKNOWN",
+            with self.assertRaisesRegex(ValueError, "unknown canonical_archetype_id"):
+                DeterministicScorer().score(
+                    ScoringPayload(
+                        symbol="000810",
+                        as_of_date=date(2024, 2, 23),
+                        components=components,
+                        diagnostic_scores={"credible_order_or_policy_evidence": 1},
+                        large_sector_id="L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+                        canonical_archetype_id="C00_UNKNOWN",
+                    )
                 )
-            )
         finally:
             if old is None:
                 os.environ.pop("E2R_SCORING_PROFILE", None)
             else:
                 os.environ["E2R_SCORING_PROFILE"] = old
         self.assertGreater(rolling.total_score, baseline.total_score)
-        self.assertEqual(unscoped.total_score, baseline.total_score)
         self.assertEqual(rolling.diagnostic_scores["v12_stage2_scope_bonus_applied"], 1.0)
         self.assertEqual(rolling.diagnostic_scores["archetype_weight_profile_applied"], 1.0)
 
@@ -643,6 +646,7 @@ class V12CalibrationPipelineTests(unittest.TestCase):
                     },
                     diagnostic_scores={"evidence_family_price": 1, "cross_evidence_family_count": 1},
                     large_sector_id="L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+                    canonical_archetype_id="C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
                 )
             )
             stage = StageClassifier().classify(

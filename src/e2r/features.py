@@ -6,12 +6,16 @@ from dataclasses import dataclass, field
 from datetime import date, timedelta
 from typing import Any, Mapping, Protocol, Sequence
 
+from .archetype_classifier import classify_v12_archetype
+from .calibration.taxonomy import normalise_canonical_archetype_id, normalise_large_sector_id
 from .models import (
     ConsensusRevision,
     ConsensusSnapshot,
     DisclosureEvent,
     FinancialActual,
     IndustrialSubScores,
+    Instrument,
+    Market,
     NewsItem,
     PriceBar,
     ResearchReport,
@@ -120,6 +124,10 @@ class FeatureEngineeringInput:
 
     symbol: str
     as_of_date: date
+    company_name: str | None = None
+    sector_context: str | None = None
+    large_sector_id: str | None = None
+    canonical_archetype_id: str | None = None
     price_bars: Sequence[PriceBar] = field(default_factory=tuple)
     financial_actuals: Sequence[FinancialActual] = field(default_factory=tuple)
     consensus: Sequence[ConsensusSnapshot] = field(default_factory=tuple)
@@ -131,6 +139,14 @@ class FeatureEngineeringInput:
     def __post_init__(self) -> None:
         _require_text(self.symbol, "symbol")
         _require_date(self.as_of_date, "as_of_date")
+        if self.company_name is not None:
+            object.__setattr__(self, "company_name", self.company_name.strip() or None)
+        if self.sector_context is not None:
+            object.__setattr__(self, "sector_context", self.sector_context.strip() or None)
+        if self.large_sector_id is not None:
+            object.__setattr__(self, "large_sector_id", normalise_large_sector_id(self.large_sector_id))
+        if self.canonical_archetype_id is not None:
+            object.__setattr__(self, "canonical_archetype_id", normalise_canonical_archetype_id(self.canonical_archetype_id))
         object.__setattr__(self, "price_bars", tuple(self.price_bars))
         object.__setattr__(self, "financial_actuals", tuple(self.financial_actuals))
         object.__setattr__(self, "consensus", tuple(self.consensus))
@@ -211,6 +227,8 @@ class DeterministicFeatureEngineer:
         field_source = _ParsedFieldSource(inputs)
         sector_profile = infer_sector_profile(
             symbol=inputs.symbol,
+            company_name=inputs.company_name,
+            sector_custom=inputs.sector_context,
             text=field_source.text_blob(),
             parsed_fields=field_source.combined_fields(),
         )
@@ -231,6 +249,19 @@ class DeterministicFeatureEngineer:
             diagnostic_scores["theme_overheat_score"] = _round(min(100.0, price_stage_score))
 
         red_team_signals = self._red_team_signals(inputs, field_source, sub_scores)
+        classification = classify_v12_archetype(
+            symbol=inputs.symbol,
+            sector_profile=sector_profile,
+            parsed_fields=field_source.combined_fields(),
+            text=field_source.text_blob(),
+            company_name=inputs.company_name,
+            sector_context=inputs.sector_context,
+            large_sector_id=inputs.large_sector_id,
+            canonical_archetype_id=inputs.canonical_archetype_id,
+            price_stage_score=price_stage_score,
+            revision_score=revision_score,
+        )
+        diagnostic_scores["archetype_classifier_confidence"] = _round(classification.confidence * 100.0)
         payload = ScoringPayload(
             symbol=inputs.symbol,
             as_of_date=inputs.as_of_date,
@@ -240,12 +271,17 @@ class DeterministicFeatureEngineer:
             industrial_sub_scores=sub_scores,
             evidence_ids=evidence_ids,
             scoring_version=self.scoring_version,
+            large_sector_id=classification.large_sector_id,
+            canonical_archetype_id=classification.canonical_archetype_id,
         )
         source_fields: dict[str, float | str] = {
             "shortage_type": sub_scores.shortage_type.value,
             "revision_score": revision_score,
             "price_stage_score": price_stage_score,
             "sector_profile": sector_profile.value,
+            "large_sector_id": classification.large_sector_id,
+            "canonical_archetype_id": classification.canonical_archetype_id,
+            "archetype_classification_reason": classification.reason,
             **{key: _round(value) for key, value in sector_metrics.items()},
         }
         return FeatureEngineeringResult(
@@ -1035,9 +1071,12 @@ def build_feature_input_from_connector(
     _require_text(symbol, "symbol")
     _require_date(as_of_date, "as_of_date")
     start = as_of_date - timedelta(days=lookback_days)
+    instrument = _find_instrument(connector, symbol=symbol, as_of_date=as_of_date)
     return FeatureEngineeringInput(
         symbol=symbol,
         as_of_date=as_of_date,
+        company_name=instrument.name if instrument is not None else None,
+        sector_context=_instrument_sector_context(instrument),
         price_bars=connector.get_price_bars(symbol, start, as_of_date, as_of_date),
         financial_actuals=connector.get_financial_actuals(symbol, as_of_date),
         consensus=connector.get_consensus(symbol, as_of_date),
@@ -1046,6 +1085,28 @@ def build_feature_input_from_connector(
         research_reports=connector.get_research_reports(symbol, start, as_of_date, as_of_date),
         news_items=connector.get_news(symbol, start, as_of_date, as_of_date),
     )
+
+
+def _find_instrument(connector, *, symbol: str, as_of_date: date) -> Instrument | None:
+    list_instruments = getattr(connector, "list_instruments", None)
+    if not callable(list_instruments):
+        return None
+    for market in (Market.KR, Market.US):
+        try:
+            instruments = list_instruments(market, as_of_date)
+        except Exception:
+            continue
+        for instrument in instruments:
+            if instrument.symbol == symbol:
+                return instrument
+    return None
+
+
+def _instrument_sector_context(instrument: Instrument | None) -> str | None:
+    if instrument is None:
+        return None
+    parts = [instrument.sector_custom, instrument.sector_exchange]
+    return " ".join(part for part in parts if part) or None
 
 
 def engineer_score_from_connector(

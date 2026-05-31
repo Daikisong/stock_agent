@@ -13,7 +13,7 @@ from e2r.calibration.archetype_weight_profile import (
 from e2r.calibration.scoring_profile import ScoringProfile
 from e2r.models import Stage
 from e2r.red_team import RedTeamAssessment
-from e2r.scoring import CANONICAL_SCORE_COMPONENTS, DeterministicScorer, ScoringPayload
+from e2r.scoring import ArchetypeClassificationError, CANONICAL_SCORE_COMPONENTS, DeterministicScorer, ScoringPayload
 from e2r.staging import StageClassificationInput, StageClassifier
 
 
@@ -47,7 +47,8 @@ def runtime_profile(path: Path) -> ScoringProfile:
             "rolling_calibration_enabled": True,
             "archetype_weight_runtime_enabled": True,
             "archetype_weight_profile_path": str(path),
-            "archetype_weight_fallback_diagnostics_required": True,
+            "archetype_classification_required": True,
+            "archetype_large_sector_fallback_allowed": False,
             "price_only_blowoff_blocks_positive_stage": True,
             "full_4b_requires_non_price_evidence": True,
             "hard_4c_thesis_break_routes_to_4c": True,
@@ -123,6 +124,7 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
                     capital_allocation=2.0,
                     information_confidence=4.0,
                 ),
+                large_sector_id="L5_CONSUMER_BRAND_DISTRIBUTION",
                 canonical_archetype_id="C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
             )
 
@@ -191,6 +193,7 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
                     "contract_quality": 0.0,
                     "contract_required_for_green": 0.0,
                 },
+                large_sector_id="L5_CONSUMER_BRAND_DISTRIBUTION",
                 canonical_archetype_id="C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
             )
             industrial_payload = ScoringPayload(
@@ -203,6 +206,7 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
                     "contract_quality": 20.0,
                     "contract_required_for_green": 1.0,
                 },
+                large_sector_id="L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
                 canonical_archetype_id="C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
             )
             red_team_low = RedTeamAssessment.empty("KBEAUTY", date(2026, 5, 14))
@@ -222,7 +226,7 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
             self.assertEqual(kbeauty_stage.stage, Stage.STAGE_3_GREEN)
             self.assertNotEqual(industrial_stage.stage, Stage.STAGE_3_GREEN)
 
-    def test_missing_archetype_fallback_is_explicitly_diagnosed(self):
+    def test_unknown_archetype_is_rejected_instead_of_fallback(self):
         with tempfile.TemporaryDirectory() as tmp:
             profile_path = Path(tmp) / "profile.json"
             profile_path.write_text(
@@ -233,19 +237,15 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
                 symbol="UNKNOWN",
                 as_of_date=date(2026, 5, 14),
                 components=complete_components(eps_fcf_explosion=10.0),
+                large_sector_id="L5_CONSUMER_BRAND_DISTRIBUTION",
                 canonical_archetype_id="UNKNOWN_ARCHETYPE",
             )
 
             with patch("e2r.scoring.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
-                score = DeterministicScorer().score(payload)
+                with self.assertRaisesRegex(ArchetypeClassificationError, "unknown canonical_archetype_id"):
+                    DeterministicScorer().score(payload)
 
-            self.assertEqual(score.total_score, sum(payload.components.values()))
-            self.assertNotIn("archetype_weight_profile_applied", score.diagnostic_scores)
-            self.assertEqual(score.diagnostic_scores["archetype_weight_fallback_used"], 1.0)
-            self.assertEqual(score.diagnostic_scores["archetype_weight_fallback_unknown_archetype"], 1.0)
-            self.assertIn("archetype_weight:fallback", score.scoring_version)
-
-    def test_missing_archetype_scope_fallback_is_not_silent(self):
+    def test_missing_archetype_scope_is_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             profile_path = Path(tmp) / "profile.json"
             profile_path.write_text(
@@ -259,13 +259,10 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
             )
 
             with patch("e2r.scoring.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
-                score = DeterministicScorer().score(payload)
+                with self.assertRaisesRegex(ArchetypeClassificationError, "large_sector_id is required"):
+                    DeterministicScorer().score(payload)
 
-            self.assertEqual(score.total_score, sum(payload.components.values()))
-            self.assertEqual(score.diagnostic_scores["archetype_weight_fallback_used"], 1.0)
-            self.assertEqual(score.diagnostic_scores["archetype_weight_fallback_missing_scope"], 1.0)
-
-    def test_unknown_canonical_archetype_large_sector_fallback_is_explicit(self):
+    def test_unknown_canonical_archetype_does_not_fallback_to_large_sector(self):
         with tempfile.TemporaryDirectory() as tmp:
             profile_path = Path(tmp) / "profile.json"
             profile_path.write_text(
@@ -281,11 +278,27 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
             )
 
             with patch("e2r.scoring.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
-                score = DeterministicScorer().score(payload)
+                with self.assertRaisesRegex(ArchetypeClassificationError, "unknown canonical_archetype_id"):
+                    DeterministicScorer().score(payload)
 
-            self.assertIn("archetype_weight:L5_CONSUMER_BRAND_DISTRIBUTION", score.scoring_version)
-            self.assertEqual(score.diagnostic_scores["archetype_weight_match_is_large_sector"], 1.0)
-            self.assertEqual(score.diagnostic_scores["archetype_weight_canonical_missing_large_sector_fallback"], 1.0)
+    def test_large_sector_must_match_canonical_archetype(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            profile_path = Path(tmp) / "profile.json"
+            profile_path.write_text(
+                json.dumps(build_archetype_weight_profile_payload(), ensure_ascii=False),
+                encoding="utf-8",
+            )
+            payload = ScoringPayload(
+                symbol="MISMATCH",
+                as_of_date=date(2026, 5, 14),
+                components=complete_components(eps_fcf_explosion=10.0),
+                large_sector_id="L5_CONSUMER_BRAND_DISTRIBUTION",
+                canonical_archetype_id="C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+            )
+
+            with patch("e2r.scoring.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
+                with self.assertRaisesRegex(ArchetypeClassificationError, "does not match"):
+                    DeterministicScorer().score(payload)
 
 
 if __name__ == "__main__":

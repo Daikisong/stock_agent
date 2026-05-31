@@ -99,7 +99,7 @@ PYTHONPATH=src python -m e2r.calibration.cli run-v12-calibration \
   configs/e2r_archetype_weight_profile_v2_2.json 또는 seed에 C08이 없다.
 
 잘못된 처리:
-  L2_AI_SEMICONDUCTOR_ELECTRONICS 대섹터 fallback으로 조용히 진행한다.
+  C08 seed 없이 L2_AI_SEMICONDUCTOR_ELECTRONICS 대섹터 weight로 진행하려고 한다.
 
 올바른 처리:
   C08 runtime weight seed를 먼저 추가한다.
@@ -109,7 +109,7 @@ PYTHONPATH=src python -m e2r.calibration.cli run-v12-calibration \
 이유는 단순하다.
 
 ```text
-대섹터 fallback은 안전한 임시 계산일 뿐이다.
+대섹터 임시 계산도 runtime scoring에서는 허용하지 않는다.
 아키타입별 점수비중 조정이 됐다고 보려면 canonical archetype weight가 직접 매칭되어야 한다.
 ```
 
@@ -293,36 +293,41 @@ payload:
   positive Stage 승격도 price-only guard에 막힌다.
 ```
 
-fallback은 정상 성공으로 숨기지 않는다.
+rolling scoring에서는 fallback을 쓰지 않는다.
 
 ```text
-payload:
+raw input:
   canonical_archetype_id 없음
   large_sector_id 없음
 
-결과:
-  archetype_weight_fallback_used = 1
-  archetype_weight_fallback_missing_scope = 1
+표준 agent 흐름:
+  1. 검색/리포트/공시/뉴스/섹터 텍스트를 모은다.
+  2. feature pipeline이 L1~L10과 C/R archetype을 판별한다.
+  3. 확정된 L/C로 rolling score를 계산한다.
+
+예:
+  power_equipment + 수주잔고 + 리드타임 -> C02_POWER_GRID_DATACENTER_CAPEX
 
 의미:
-  이 후보는 아키타입별 점수비중이 적용되지 않았다.
-  mapper 또는 feature pipeline의 sector/archetype 연결을 고쳐야 한다.
+  모른다고 기본형이나 대섹터 weight를 쓰지 않는다.
+  에이전트가 먼저 분류한 뒤 그 아키타입 점수로 이어간다.
 ```
 
 또 다른 예시:
 
 ```text
-payload:
+raw input:
   canonical_archetype_id = UNKNOWN_ARCHETYPE
   large_sector_id = L5_CONSUMER_BRAND_DISTRIBUTION
 
-결과:
-  large sector weight는 적용될 수 있지만
-  archetype_weight_canonical_missing_large_sector_fallback = 1
+표준 agent 흐름:
+  1. UNKNOWN_ARCHETYPE을 그대로 믿지 않는다.
+  2. 회사 설명/검색 결과/파싱 필드로 C18/C19/C20/R13 중 하나를 다시 판별한다.
+  3. 예를 들어 K-beauty 글로벌 유통 증거면 C20으로 정정하고 C20 weight로 계산한다.
 
 의미:
-  완전한 C20/C18/C19 같은 canonical archetype 매핑은 실패했고,
-  임시로 L5 대섹터 weight만 쓴 것이다.
+  직접 ScoringPayload를 잘못 만들어 scorer를 우회 호출하면 에러가 맞다.
+  하지만 정상 agent pipeline은 그 전에 리서치/분류를 보강해서 score까지 진행한다.
 ```
 
 ## 필수 산출물
@@ -397,7 +402,7 @@ rollback_profile = calibrated
 3. rejected row는 이유를 남긴다.
 4. apply_next_patch는 active v2.2 profile에 반영된다.
 5. hold/block은 다음 연구 또는 데이터 보강 대상으로 남긴다.
-6. unknown canonical archetype은 fallback으로 숨기지 말고 seed 또는 mapper를 보강한다.
+6. unknown canonical archetype은 fallback으로 숨기지 말고 agent mapper/검색 리서치 또는 seed를 보강한다.
 ```
 
 ## 검증 명령

@@ -1,5 +1,6 @@
 from datetime import date
 import unittest
+from unittest.mock import patch
 
 from e2r.scoring import CANONICAL_SCORE_COMPONENTS, DeterministicScorer, ScoringPayload
 
@@ -50,7 +51,8 @@ class DeterministicScorerTests(unittest.TestCase):
             evidence_ids=("ev-1", "ev-2"),
         )
 
-        snapshot = DeterministicScorer().score(payload)
+        with patch.dict("os.environ", {"E2R_SCORING_PROFILE": "calibrated"}):
+            snapshot = DeterministicScorer().score(payload)
 
         self.assertEqual(snapshot.symbol, "103590")
         self.assertEqual(snapshot.as_of_date, date(2024, 3, 27))
@@ -75,9 +77,9 @@ class DeterministicScorerTests(unittest.TestCase):
             risk_penalty=99.0,
         )
 
-        self.assertEqual(DeterministicScorer().score(payload).total_score, 0.0)
+        with patch.dict("os.environ", {"E2R_SCORING_PROFILE": "calibrated"}):
+            self.assertEqual(DeterministicScorer().score(payload).total_score, 0.0)
 
 
 if __name__ == "__main__":
     unittest.main()
-

@@ -90,6 +90,8 @@ class HistoricalCase:
         return FeatureEngineeringInput(
             symbol=self.symbol,
             as_of_date=self.stage3_date,
+            company_name=self.company_name,
+            sector_context=self.instrument.sector_custom if self.instrument is not None else None,
             price_bars=tuple(bar for bar in self.price_bars if bar.as_of_date <= self.stage3_date),
             financial_actuals=tuple(item for item in self.financial_actuals if item.as_of_date <= self.stage3_date),
             consensus=tuple(item for item in self.consensus if item.as_of_date <= self.stage3_date),

@@ -12,6 +12,7 @@ from .calibration.archetype_weight_profile import (
     load_archetype_weight_profile,
 )
 from .calibration.scoring_profile import get_active_scoring_profile
+from .calibration.taxonomy import large_sector_for_archetype, normalise_canonical_archetype_id, normalise_large_sector_id
 from .models import IndustrialSubScores, ScoreSnapshot
 
 
@@ -98,9 +99,9 @@ class ScoringPayload:
         object.__setattr__(self, "diagnostic_scores", diagnostic_copy)
         object.__setattr__(self, "evidence_ids", tuple(self.evidence_ids))
         if self.large_sector_id is not None:
-            object.__setattr__(self, "large_sector_id", self.large_sector_id.strip())
+            object.__setattr__(self, "large_sector_id", normalise_large_sector_id(self.large_sector_id))
         if self.canonical_archetype_id is not None:
-            object.__setattr__(self, "canonical_archetype_id", self.canonical_archetype_id.strip())
+            object.__setattr__(self, "canonical_archetype_id", normalise_canonical_archetype_id(self.canonical_archetype_id))
 
 
 class Scorer(Protocol):
@@ -108,6 +109,10 @@ class Scorer(Protocol):
 
     def score(self, payload: ScoringPayload) -> ScoreSnapshot:
         """Return a deterministic score snapshot."""
+
+
+class ArchetypeClassificationError(ValueError):
+    """Raised when rolling scoring is requested without a resolved v12 taxonomy."""
 
 
 class DeterministicScorer:
@@ -174,24 +179,15 @@ def _apply_archetype_runtime_weights(payload: ScoringPayload, profile) -> Weight
         return WeightedComponents(components=dict(payload.components), diagnostics={}, match=None)
     profile_path = profile.guardrail_text("archetype_weight_profile_path", str(RUNTIME_WEIGHT_PROFILE_PATH))
     runtime_profile = load_archetype_weight_profile(profile_path)
+    _require_runtime_archetype_classification(payload, runtime_profile)
     weighted = runtime_profile.apply(
         payload.components,
         canonical_archetype_id=payload.canonical_archetype_id,
         large_sector_id=payload.large_sector_id,
     )
     if weighted.match is None:
-        return WeightedComponents(
-            components=weighted.components,
-            diagnostics=_archetype_weight_fallback_diagnostics(payload, runtime_profile),
-            match=None,
-        )
+        raise ArchetypeClassificationError("canonical_archetype_id did not resolve to a runtime weight profile")
     diagnostics = dict(weighted.diagnostics)
-    if (
-        weighted.match.matched_scope == "large_sector"
-        and payload.canonical_archetype_id
-        and payload.canonical_archetype_id not in runtime_profile.archetype_weights
-    ):
-        diagnostics["archetype_weight_canonical_missing_large_sector_fallback"] = 1.0
     diagnostics["archetype_green_restricted_by_profile"] = (
         1.0
         if any(
@@ -208,27 +204,31 @@ def _apply_archetype_runtime_weights(payload: ScoringPayload, profile) -> Weight
     return WeightedComponents(components=weighted.components, diagnostics=diagnostics, match=weighted.match)
 
 
-def _archetype_weight_fallback_diagnostics(payload: ScoringPayload, runtime_profile) -> dict[str, float]:
-    diagnostics = {"archetype_weight_fallback_used": 1.0}
+def _require_runtime_archetype_classification(payload: ScoringPayload, runtime_profile) -> None:
     if not runtime_profile.enabled or not runtime_profile.archetype_weights or not runtime_profile.large_sector_weights:
-        diagnostics["archetype_weight_fallback_profile_unavailable"] = 1.0
-        return diagnostics
-    if not payload.canonical_archetype_id and not payload.large_sector_id:
-        diagnostics["archetype_weight_fallback_missing_scope"] = 1.0
-        return diagnostics
-    if payload.canonical_archetype_id and payload.canonical_archetype_id not in runtime_profile.archetype_weights:
-        diagnostics["archetype_weight_fallback_unknown_archetype"] = 1.0
-    if payload.large_sector_id and payload.large_sector_id not in runtime_profile.large_sector_weights:
-        diagnostics["archetype_weight_fallback_unknown_large_sector"] = 1.0
-    if len(diagnostics) == 1:
-        diagnostics["archetype_weight_fallback_no_match"] = 1.0
-    return diagnostics
+        raise ArchetypeClassificationError("runtime archetype weight profile is unavailable")
+    if not payload.large_sector_id:
+        raise ArchetypeClassificationError("large_sector_id is required before scoring with rolling archetype weights")
+    if not payload.canonical_archetype_id:
+        raise ArchetypeClassificationError(
+            "canonical_archetype_id is required before scoring with rolling archetype weights"
+        )
+    if payload.large_sector_id not in runtime_profile.large_sector_weights:
+        raise ArchetypeClassificationError(f"unknown large_sector_id for rolling scoring: {payload.large_sector_id}")
+    if payload.canonical_archetype_id not in runtime_profile.archetype_weights:
+        raise ArchetypeClassificationError(
+            f"unknown canonical_archetype_id for rolling scoring: {payload.canonical_archetype_id}"
+        )
+    expected_large_sector = large_sector_for_archetype(payload.canonical_archetype_id)
+    if expected_large_sector and payload.large_sector_id != expected_large_sector:
+        raise ArchetypeClassificationError(
+            "large_sector_id does not match canonical_archetype_id: "
+            f"{payload.large_sector_id} != {expected_large_sector}"
+        )
 
 
 def _scoring_version(base_version: str, profile_id: str, weighted: WeightedComponents) -> str:
     if weighted.match is None:
-        if weighted.diagnostics.get("archetype_weight_fallback_used", 0.0) > 0:
-            return f"{base_version}:{profile_id}:archetype_weight:fallback"
         return f"{base_version}:{profile_id}"
     return f"{base_version}:{profile_id}:archetype_weight:{weighted.match.profile_key}"
 

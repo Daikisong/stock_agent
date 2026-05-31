@@ -37,6 +37,7 @@ class AsOfEvidenceBundle:
     symbol: str
     company_name: str
     as_of_date: date
+    sector_context: str | None = None
     price_bars: tuple[PriceBar, ...] = ()
     financial_actuals: tuple[FinancialActual, ...] = ()
     official_disclosures: tuple[DisclosureEvent, ...] = ()
@@ -52,6 +53,8 @@ class AsOfEvidenceBundle:
         return FeatureEngineeringInput(
             symbol=self.symbol,
             as_of_date=self.as_of_date,
+            company_name=self.company_name,
+            sector_context=self.sector_context,
             price_bars=self.price_bars,
             financial_actuals=self.financial_actuals,
             consensus=self.consensus,
@@ -127,6 +130,7 @@ def build_asof_evidence_bundle(
         symbol=candidate.symbol,
         company_name=candidate.company_name,
         as_of_date=candidate.as_of_date,
+        sector_context=" ".join(candidate.reason_codes) or None,
         price_bars=price_bars,
         financial_actuals=financial_actuals,
         official_disclosures=official_disclosures,

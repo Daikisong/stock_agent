@@ -135,6 +135,8 @@ class CompanyResearchPipeline:
         feature_input = FeatureEngineeringInput(
             symbol=instrument.symbol,
             as_of_date=as_of_date,
+            company_name=instrument.name,
+            sector_context=" ".join(part for part in (instrument.sector_custom, instrument.sector_exchange) if part) or None,
             price_bars=price_bars,
             financial_actuals=financial_actuals,
             consensus=consensus,

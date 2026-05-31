@@ -1,5 +1,6 @@
 from datetime import date
 import unittest
+from unittest.mock import patch
 
 from e2r.models import Stage
 from e2r.red_team import RedTeamEngine, RedTeamSignals
@@ -18,15 +19,16 @@ def make_score(symbol="CASE", as_of_date=date(2026, 5, 13), diagnostic_scores=No
         "information_confidence": 5.0,
     }
     defaults.update(components)
-    return DeterministicScorer().score(
-        ScoringPayload(
-            symbol=symbol,
-            as_of_date=as_of_date,
-            components=defaults,
-            diagnostic_scores=diagnostic_scores or {},
-            evidence_ids=("ev-score",),
+    with patch.dict("os.environ", {"E2R_SCORING_PROFILE": "calibrated"}):
+        return DeterministicScorer().score(
+            ScoringPayload(
+                symbol=symbol,
+                as_of_date=as_of_date,
+                components=defaults,
+                diagnostic_scores=diagnostic_scores or {},
+                evidence_ids=("ev-score",),
+            )
         )
-    )
 
 
 class StageClassifierTests(unittest.TestCase):

@@ -136,6 +136,8 @@ def _payload(
     components: dict[str, float],
     diagnostic_scores: dict[str, float] | None = None,
     evidence_ids: tuple[str, ...] = (),
+    large_sector_id: str,
+    canonical_archetype_id: str,
 ) -> ScoringPayload:
     return ScoringPayload(
         symbol=symbol,
@@ -143,6 +145,8 @@ def _payload(
         components=components,
         diagnostic_scores=diagnostic_scores or {},
         evidence_ids=evidence_ids,
+        large_sector_id=large_sector_id,
+        canonical_archetype_id=canonical_archetype_id,
     )
 
 
@@ -240,6 +244,8 @@ def build_fixture_cases() -> tuple[FixtureCase, ...]:
                 },
                 diagnostic_scores={"revision_score": 85, "price_stage_score": 70},
                 evidence_ids=tuple(evidence.evidence_id for evidence in pwr_evidence),
+                large_sector_id="L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+                canonical_archetype_id="C02_POWER_GRID_DATACENTER_CAPEX",
             ),
             expected_stage=Stage.STAGE_3_GREEN,
             red_team_signals=RedTeamSignals(symbol="KR-PWR-GREEN", as_of_date=stage3_date),
@@ -270,6 +276,8 @@ def build_fixture_cases() -> tuple[FixtureCase, ...]:
                 },
                 diagnostic_scores={"revision_score": 78, "price_stage_score": 82},
                 evidence_ids=tuple(evidence.evidence_id for evidence in mem_evidence),
+                large_sector_id="L2_AI_SEMICONDUCTOR_ELECTRONICS",
+                canonical_archetype_id="C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
             ),
             expected_stage=Stage.STAGE_3_GREEN,
             red_team_signals=RedTeamSignals(symbol="KR-MEM-TURN", as_of_date=stage3_date),
@@ -299,6 +307,8 @@ def build_fixture_cases() -> tuple[FixtureCase, ...]:
                 },
                 diagnostic_scores={"revision_score": 74, "price_stage_score": 76},
                 evidence_ids=tuple(evidence.evidence_id for evidence in non_power_evidence),
+                large_sector_id="L5_CONSUMER_BRAND_DISTRIBUTION",
+                canonical_archetype_id="C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
             ),
             expected_stage=Stage.STAGE_3_GREEN,
             red_team_signals=RedTeamSignals(symbol="KR-NONPWR-GREEN", as_of_date=stage3_date),
@@ -328,6 +338,8 @@ def build_fixture_cases() -> tuple[FixtureCase, ...]:
                 },
                 diagnostic_scores={"revision_score": 60, "theme_overheat_score": 75},
                 evidence_ids=tuple(evidence.evidence_id for evidence in momentum_evidence),
+                large_sector_id="L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+                canonical_archetype_id="C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
             ),
             expected_stage=Stage.STAGE_3_RED,
             red_team_signals=RedTeamSignals(symbol="KR-THEME-RED", as_of_date=stage3_date),
@@ -357,6 +369,8 @@ def build_fixture_cases() -> tuple[FixtureCase, ...]:
                 },
                 diagnostic_scores={"revision_score": 65},
                 evidence_ids=tuple(evidence.evidence_id for evidence in peak_evidence),
+                large_sector_id="L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+                canonical_archetype_id="C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
             ),
             expected_stage=Stage.STAGE_4C,
             red_team_signals=RedTeamSignals(
@@ -392,6 +406,8 @@ def build_fixture_cases() -> tuple[FixtureCase, ...]:
                 },
                 diagnostic_scores={"revision_score": 85, "theme_overheat_score": 85},
                 evidence_ids=tuple(evidence.evidence_id for evidence in overheat_evidence),
+                large_sector_id="L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+                canonical_archetype_id="R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
             ),
             expected_stage=Stage.STAGE_3_RED,
             red_team_signals=RedTeamSignals(symbol="US-OVERHEAT-3R", as_of_date=stage3_date),
@@ -421,6 +437,8 @@ def build_fixture_cases() -> tuple[FixtureCase, ...]:
                 },
                 diagnostic_scores={"revision_score": 70},
                 evidence_ids=tuple(evidence.evidence_id for evidence in boom_evidence),
+                large_sector_id="L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+                canonical_archetype_id="R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
             ),
             expected_stage=Stage.STAGE_4B,
             red_team_signals=RedTeamSignals(
@@ -454,4 +472,3 @@ def fixture_cases_by_category(category: FixtureCategory) -> tuple[FixtureCase, .
     """Return fixture cases in a category."""
 
     return tuple(case for case in FIXTURE_CASES if case.category == category)
-

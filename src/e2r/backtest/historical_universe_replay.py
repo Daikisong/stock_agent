@@ -505,6 +505,8 @@ def _score_view(case: HistoricalCase, replay_date: date) -> _ScoredView:
     feature_input = FeatureEngineeringInput(
         symbol=case.symbol,
         as_of_date=replay_date,
+        company_name=case.company_name,
+        sector_context=case.instrument.sector_custom if case.instrument is not None else None,
         price_bars=case.price_bars,
         financial_actuals=case.financial_actuals,
         consensus=case.consensus,

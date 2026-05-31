@@ -3,23 +3,7 @@
     "C01_ORDER_BACKLOG_MARGIN_BRIDGE": {
       "basis": "order/backlog rerating needs margin bridge, delivery visibility and cash conversion",
       "green_policy": "green_allowed_with_order_backlog_margin_and_fcf_bridge",
-      "support": {
-        "4c_late_count": 0,
-        "avg_stage2_MAE90": -15.06,
-        "avg_stage2_MFE90": 49.9683,
-        "bad_stage2_count": 1,
-        "counterexample_count": 3,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 0,
-        "good_stage2_count": 5,
-        "positive_case_count": 5,
-        "row_count": 8,
-        "source_proxy_only_count": 3,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1667,
-        "stage2_hit_rate_MFE90_ge_20": 0.8333,
-        "unique_case_count": 8,
-        "unique_symbol_count": 6
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 18.0,
         "capital_allocation": 8.0,
@@ -33,23 +17,7 @@
     "C02_POWER_GRID_DATACENTER_CAPEX": {
       "basis": "power grid/datacenter capex needs backlog, capacity lock-up, ASP and margin conversion",
       "green_policy": "green_allowed_with_grid_capex_backlog_capacity_and_margin_visibility",
-      "support": {
-        "4c_late_count": 0,
-        "avg_stage2_MAE90": -11.5801,
-        "avg_stage2_MFE90": 135.4122,
-        "bad_stage2_count": 1,
-        "counterexample_count": 19,
-        "evidence_url_pending_count": 4,
-        "good_4b_timing_count": 2,
-        "good_stage2_count": 24,
-        "positive_case_count": 21,
-        "row_count": 49,
-        "source_proxy_only_count": 4,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.0769,
-        "stage2_hit_rate_MFE90_ge_20": 1.0,
-        "unique_case_count": 44,
-        "unique_symbol_count": 7
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 20.0,
         "capital_allocation": 5.0,
@@ -63,23 +31,7 @@
     "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": {
       "basis": "defense government backlog: contract, delivery schedule, margin conversion",
       "green_policy": "green_allowed_with_government_backlog_and_delivery_visibility",
-      "support": {
-        "4c_late_count": 0,
-        "avg_stage2_MAE90": -15.0416,
-        "avg_stage2_MFE90": 27.755,
-        "bad_stage2_count": 7,
-        "counterexample_count": 27,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 7,
-        "good_stage2_count": 30,
-        "positive_case_count": 23,
-        "row_count": 74,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2368,
-        "stage2_hit_rate_MFE90_ge_20": 0.7632,
-        "unique_case_count": 59,
-        "unique_symbol_count": 13
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 17.0,
         "capital_allocation": 6.0,
@@ -93,23 +45,7 @@
     "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY": {
       "basis": "nuclear policy events need final project economics before Green",
       "green_policy": "watch_to_green_only_after_final_contract_and_legal_clarity",
-      "support": {
-        "4c_late_count": 0,
-        "avg_stage2_MAE90": -18.9889,
-        "avg_stage2_MFE90": 31.0617,
-        "bad_stage2_count": 9,
-        "counterexample_count": 26,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 1,
-        "good_stage2_count": 5,
-        "positive_case_count": 19,
-        "row_count": 53,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.5556,
-        "stage2_hit_rate_MFE90_ge_20": 0.4444,
-        "unique_case_count": 48,
-        "unique_symbol_count": 12
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 10.0,
         "capital_allocation": 10.0,
@@ -123,23 +59,7 @@
     "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": {
       "basis": "EPC mega contracts need margin, cost overrun and working-capital checks before Green",
       "green_policy": "watch_to_green_only_after_contract_margin_and_working_capital_clarity",
-      "support": {
-        "4c_late_count": 4,
-        "avg_stage2_MAE90": -11.055,
-        "avg_stage2_MFE90": 17.1155,
-        "bad_stage2_count": 7,
-        "counterexample_count": 5,
-        "evidence_url_pending_count": 3,
-        "good_4b_timing_count": 0,
-        "good_stage2_count": 3,
-        "positive_case_count": 3,
-        "row_count": 19,
-        "source_proxy_only_count": 3,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2143,
-        "stage2_hit_rate_MFE90_ge_20": 0.2857,
-        "unique_case_count": 14,
-        "unique_symbol_count": 12
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 10.0,
         "capital_allocation": 8.0,
@@ -153,23 +73,7 @@
     "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
       "basis": "HBM/memory rerating: customer capacity, price discipline, multi-year revisions",
       "green_policy": "green_allowed_with_hbm_capacity_customer_and_revision",
-      "support": {
-        "4c_late_count": 2,
-        "avg_stage2_MAE90": -12.3918,
-        "avg_stage2_MFE90": 31.7527,
-        "bad_stage2_count": 2,
-        "counterexample_count": 7,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 0,
-        "good_stage2_count": 9,
-        "positive_case_count": 6,
-        "row_count": 34,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1818,
-        "stage2_hit_rate_MFE90_ge_20": 0.6364,
-        "unique_case_count": 24,
-        "unique_symbol_count": 2
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 19.0,
         "capital_allocation": 4.0,
@@ -183,23 +87,7 @@
     "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH": {
       "basis": "semi equipment: orders, backlog, customer capex, revenue conversion",
       "green_policy": "green_allowed_with_orders_and_revenue_conversion",
-      "support": {
-        "4c_late_count": 0,
-        "avg_stage2_MAE90": -12.2796,
-        "avg_stage2_MFE90": 112.1513,
-        "bad_stage2_count": 4,
-        "counterexample_count": 20,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 8,
-        "good_stage2_count": 20,
-        "positive_case_count": 19,
-        "row_count": 56,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1667,
-        "stage2_hit_rate_MFE90_ge_20": 1.0,
-        "unique_case_count": 39,
-        "unique_symbol_count": 20
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 19.0,
         "capital_allocation": 6.0,
@@ -213,23 +101,7 @@
     "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
       "basis": "semi test/socket: customer qualification, quality lock-in, repeat consumables, revenue conversion and margin durability",
       "green_policy": "green_allowed_with_customer_qualification_repeat_demand_and_margin_conversion",
-      "support": {
-        "4c_late_count": 0,
-        "avg_stage2_MAE90": -19.1571,
-        "avg_stage2_MFE90": 37.5171,
-        "bad_stage2_count": 7,
-        "counterexample_count": 21,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 1,
-        "good_stage2_count": 21,
-        "positive_case_count": 12,
-        "row_count": 66,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.3214,
-        "stage2_hit_rate_MFE90_ge_20": 0.7857,
-        "unique_case_count": 49,
-        "unique_symbol_count": 10
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 16.0,
         "capital_allocation": 6.0,
@@ -243,23 +115,7 @@
     "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF": {
       "basis": "advanced equipment keeps bottleneck credit but raises valuation/4B guard attention",
       "green_policy": "watch_to_green_with_valuation_blowoff_guard",
-      "support": {
-        "4c_late_count": 2,
-        "avg_stage2_MAE90": -14.144,
-        "avg_stage2_MFE90": 95.891,
-        "bad_stage2_count": 0,
-        "counterexample_count": 22,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 2,
-        "good_stage2_count": 6,
-        "positive_case_count": 17,
-        "row_count": 50,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.3,
-        "stage2_hit_rate_MFE90_ge_20": 0.9,
-        "unique_case_count": 39,
-        "unique_symbol_count": 16
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 18.0,
         "capital_allocation": 6.0,
@@ -273,23 +129,7 @@
     "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": {
       "basis": "memory recovery equipment needs order conversion plus cycle and inventory reversal guards",
       "green_policy": "watch_to_green_with_memory_recovery_order_and_cycle_reversal_guard",
-      "support": {
-        "4c_late_count": 0,
-        "avg_stage2_MAE90": -10.8936,
-        "avg_stage2_MFE90": 31.9114,
-        "bad_stage2_count": 4,
-        "counterexample_count": 6,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 0,
-        "good_stage2_count": 9,
-        "positive_case_count": 6,
-        "row_count": 22,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2143,
-        "stage2_hit_rate_MFE90_ge_20": 0.7143,
-        "unique_case_count": 16,
-        "unique_symbol_count": 9
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 14.0,
         "capital_allocation": 5.0,
@@ -303,23 +143,7 @@
     "C11_BATTERY_ORDERBOOK_RERATING": {
       "basis": "battery orderbook needs contract margin, FCF, utilization and EV demand support",
       "green_policy": "green_restricted_until_margin_and_fcf_after_capex",
-      "support": {
-        "4c_late_count": 1,
-        "avg_stage2_MAE90": -11.6947,
-        "avg_stage2_MFE90": 116.2113,
-        "bad_stage2_count": 5,
-        "counterexample_count": 16,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 1,
-        "good_stage2_count": 24,
-        "positive_case_count": 8,
-        "row_count": 67,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1667,
-        "stage2_hit_rate_MFE90_ge_20": 0.8667,
-        "unique_case_count": 47,
-        "unique_symbol_count": 20
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 15.0,
         "capital_allocation": 8.0,
@@ -333,23 +157,7 @@
     "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK": {
       "basis": "battery contract call-off risk makes information confidence and red-team gates heavier",
       "green_policy": "green_restricted_by_calloff_and_customer_demand_risk",
-      "support": {
-        "4c_late_count": 1,
-        "avg_stage2_MAE90": -10.7775,
-        "avg_stage2_MFE90": 135.485,
-        "bad_stage2_count": 2,
-        "counterexample_count": 20,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 0,
-        "good_stage2_count": 13,
-        "positive_case_count": 15,
-        "row_count": 53,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.0625,
-        "stage2_hit_rate_MFE90_ge_20": 0.9375,
-        "unique_case_count": 42,
-        "unique_symbol_count": 16
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 14.0,
         "capital_allocation": 8.0,
@@ -363,23 +171,7 @@
     "C13_BATTERY_JV_UTILIZATION_AMPC_IRA": {
       "basis": "battery JV/AMPC needs utilization and durable subsidy economics",
       "green_policy": "watch_to_green_with_utilization_and_policy_durability",
-      "support": {
-        "4c_late_count": 0,
-        "avg_stage2_MAE90": -18.2789,
-        "avg_stage2_MFE90": 33.2017,
-        "bad_stage2_count": 9,
-        "counterexample_count": 10,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 2,
-        "good_stage2_count": 8,
-        "positive_case_count": 4,
-        "row_count": 37,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.3333,
-        "stage2_hit_rate_MFE90_ge_20": 0.5556,
-        "unique_case_count": 27,
-        "unique_symbol_count": 7
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 14.0,
         "capital_allocation": 10.0,
@@ -393,23 +185,7 @@
     "C14_EV_DEMAND_SLOWDOWN_4B_4C": {
       "basis": "EV slowdown is primarily a 4B/4C protection archetype",
       "green_policy": "red_watch",
-      "support": {
-        "4c_late_count": 1,
-        "avg_stage2_MAE90": null,
-        "avg_stage2_MFE90": null,
-        "bad_stage2_count": 0,
-        "counterexample_count": 18,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 3,
-        "good_stage2_count": 0,
-        "positive_case_count": 17,
-        "row_count": 70,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": null,
-        "stage2_hit_rate_MFE90_ge_20": null,
-        "unique_case_count": 61,
-        "unique_symbol_count": 15
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 10.0,
         "capital_allocation": 7.0,
@@ -423,23 +199,7 @@
     "C15_MATERIAL_SPREAD_SUPERCYCLE": {
       "basis": "spread supercycle needs cost-curve or supply-discipline proof, not price only",
       "green_policy": "green_restricted_by_cycle_reversal",
-      "support": {
-        "4c_late_count": 0,
-        "avg_stage2_MAE90": -7.1385,
-        "avg_stage2_MFE90": 86.055,
-        "bad_stage2_count": 3,
-        "counterexample_count": 18,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 0,
-        "good_stage2_count": 20,
-        "positive_case_count": 18,
-        "row_count": 56,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.0769,
-        "stage2_hit_rate_MFE90_ge_20": 0.8846,
-        "unique_case_count": 48,
-        "unique_symbol_count": 23
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 20.0,
         "capital_allocation": 8.0,
@@ -453,23 +213,7 @@
     "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY": {
       "basis": "strategic resources need policy plus supply/contract economics",
       "green_policy": "watch_to_green_with_supply_contract_and_policy_durability",
-      "support": {
-        "4c_late_count": 0,
-        "avg_stage2_MAE90": -13.4745,
-        "avg_stage2_MFE90": 111.6245,
-        "bad_stage2_count": 5,
-        "counterexample_count": 26,
-        "evidence_url_pending_count": 4,
-        "good_4b_timing_count": 0,
-        "good_stage2_count": 14,
-        "positive_case_count": 12,
-        "row_count": 52,
-        "source_proxy_only_count": 4,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2273,
-        "stage2_hit_rate_MFE90_ge_20": 0.8636,
-        "unique_case_count": 48,
-        "unique_symbol_count": 20
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 18.0,
         "capital_allocation": 7.0,
@@ -483,23 +227,7 @@
     "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": {
       "basis": "chemical/commodity spread has high reversal risk",
       "green_policy": "red_watch",
-      "support": {
-        "4c_late_count": 3,
-        "avg_stage2_MAE90": -9.494,
-        "avg_stage2_MFE90": 83.6648,
-        "bad_stage2_count": 15,
-        "counterexample_count": 26,
-        "evidence_url_pending_count": 4,
-        "good_4b_timing_count": 3,
-        "good_stage2_count": 46,
-        "positive_case_count": 17,
-        "row_count": 125,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.127,
-        "stage2_hit_rate_MFE90_ge_20": 0.7302,
-        "unique_case_count": 76,
-        "unique_symbol_count": 21
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 18.0,
         "capital_allocation": 5.0,
@@ -513,23 +241,7 @@
     "C18_CONSUMER_EXPORT_CHANNEL_REORDER": {
       "basis": "consumer export: channel expansion, repeat demand, OPM and revision replace contract quality",
       "green_policy": "green_allowed_with_export_channel_repeat_demand",
-      "support": {
-        "4c_late_count": 5,
-        "avg_stage2_MAE90": -14.3467,
-        "avg_stage2_MFE90": 42.5938,
-        "bad_stage2_count": 11,
-        "counterexample_count": 14,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 2,
-        "good_stage2_count": 31,
-        "positive_case_count": 13,
-        "row_count": 108,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2889,
-        "stage2_hit_rate_MFE90_ge_20": 0.7333,
-        "unique_case_count": 51,
-        "unique_symbol_count": 17
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 12.0,
         "capital_allocation": 4.0,
@@ -543,23 +255,7 @@
     "C19_BRAND_RETAIL_INVENTORY_MARGIN": {
       "basis": "brand/retail needs sell-through, inventory and cash conversion checks",
       "green_policy": "watch_to_green_with_inventory_and_margin_proof",
-      "support": {
-        "4c_late_count": 5,
-        "avg_stage2_MAE90": -14.1709,
-        "avg_stage2_MFE90": 27.4719,
-        "bad_stage2_count": 14,
-        "counterexample_count": 12,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 6,
-        "good_stage2_count": 15,
-        "positive_case_count": 7,
-        "row_count": 68,
-        "source_proxy_only_count": 4,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.3125,
-        "stage2_hit_rate_MFE90_ge_20": 0.4375,
-        "unique_case_count": 42,
-        "unique_symbol_count": 12
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 8.0,
         "capital_allocation": 7.0,
@@ -573,23 +269,7 @@
     "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION": {
       "basis": "K-food/K-beauty: export growth, global channel, recurring demand, OPM and EPS revision",
       "green_policy": "green_allowed_with_global_distribution_and_repeat_sellthrough",
-      "support": {
-        "4c_late_count": 10,
-        "avg_stage2_MAE90": -14.1392,
-        "avg_stage2_MFE90": 79.3259,
-        "bad_stage2_count": 20,
-        "counterexample_count": 16,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 12,
-        "good_stage2_count": 63,
-        "positive_case_count": 26,
-        "row_count": 192,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2667,
-        "stage2_hit_rate_MFE90_ge_20": 0.8333,
-        "unique_case_count": 94,
-        "unique_symbol_count": 18
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 12.0,
         "capital_allocation": 4.0,
@@ -603,23 +283,7 @@
     "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN": {
       "basis": "financial value-up: ROE/PBR, capital return, credit cost and reserve quality",
       "green_policy": "green_allowed_with_roe_pbr_and_executed_capital_return",
-      "support": {
-        "4c_late_count": 2,
-        "avg_stage2_MAE90": -9.289,
-        "avg_stage2_MFE90": 27.5929,
-        "bad_stage2_count": 20,
-        "counterexample_count": 13,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 8,
-        "good_stage2_count": 73,
-        "positive_case_count": 18,
-        "row_count": 209,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.0962,
-        "stage2_hit_rate_MFE90_ge_20": 0.7212,
-        "unique_case_count": 117,
-        "unique_symbol_count": 22
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 5.0,
         "capital_allocation": 15.0,
@@ -634,21 +298,21 @@
       "basis": "insurance rerating: reserve, rate cycle, ROE/PBR and shareholder return outrank contracts",
       "green_policy": "green_allowed_with_reserve_rate_cycle_and_capital_return",
       "support": {
-        "4c_late_count": 2,
-        "avg_stage2_MAE90": -11.3906,
-        "avg_stage2_MFE90": 24.3915,
-        "bad_stage2_count": 20,
-        "counterexample_count": 12,
-        "evidence_url_pending_count": 8,
-        "good_4b_timing_count": 3,
-        "good_stage2_count": 45,
-        "positive_case_count": 14,
-        "row_count": 138,
-        "source_proxy_only_count": 8,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1343,
-        "stage2_hit_rate_MFE90_ge_20": 0.6716,
-        "unique_case_count": 75,
-        "unique_symbol_count": 11
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -16.5,
+        "avg_stage2_MFE90": 15.5,
+        "bad_stage2_count": 1,
+        "counterexample_count": 1,
+        "evidence_url_pending_count": 4,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 1,
+        "positive_case_count": 1,
+        "row_count": 4,
+        "source_proxy_only_count": 4,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.5,
+        "stage2_hit_rate_MFE90_ge_20": 0.5,
+        "unique_case_count": 2,
+        "unique_symbol_count": 2
       },
       "weights": {
         "bottleneck_pricing": 5.0,
@@ -663,23 +327,7 @@
     "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": {
       "basis": "commercializing biotech needs approval and revenue/royalty conversion",
       "green_policy": "watch_to_green_after_approval_revenue_or_royalty_conversion",
-      "support": {
-        "4c_late_count": 13,
-        "avg_stage2_MAE90": -12.833,
-        "avg_stage2_MFE90": 62.9395,
-        "bad_stage2_count": 5,
-        "counterexample_count": 7,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 6,
-        "good_stage2_count": 36,
-        "positive_case_count": 12,
-        "row_count": 130,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1163,
-        "stage2_hit_rate_MFE90_ge_20": 0.8605,
-        "unique_case_count": 57,
-        "unique_symbol_count": 11
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 5.0,
         "capital_allocation": 7.0,
@@ -693,23 +341,7 @@
     "C24_BIO_TRIAL_DATA_EVENT_RISK": {
       "basis": "trial data is event-risk-first until revenue and dilution risk are resolved",
       "green_policy": "event_only_red_watch",
-      "support": {
-        "4c_late_count": 6,
-        "avg_stage2_MAE90": -15.7392,
-        "avg_stage2_MFE90": 55.0631,
-        "bad_stage2_count": 3,
-        "counterexample_count": 11,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 1,
-        "good_stage2_count": 22,
-        "positive_case_count": 12,
-        "row_count": 62,
-        "source_proxy_only_count": 7,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2308,
-        "stage2_hit_rate_MFE90_ge_20": 0.8077,
-        "unique_case_count": 38,
-        "unique_symbol_count": 16
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 5.0,
         "capital_allocation": 5.0,
@@ -723,23 +355,7 @@
     "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT": {
       "basis": "medical device export: approval, channel, reimbursement, repeat consumables",
       "green_policy": "green_allowed_with_export_reimbursement_and_repeat_consumable_revenue",
-      "support": {
-        "4c_late_count": 3,
-        "avg_stage2_MAE90": -13.8828,
-        "avg_stage2_MFE90": 89.1416,
-        "bad_stage2_count": 8,
-        "counterexample_count": 15,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 5,
-        "good_stage2_count": 35,
-        "positive_case_count": 15,
-        "row_count": 83,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.186,
-        "stage2_hit_rate_MFE90_ge_20": 0.8372,
-        "unique_case_count": 52,
-        "unique_symbol_count": 17
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 13.0,
         "capital_allocation": 9.0,
@@ -753,23 +369,7 @@
     "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE": {
       "basis": "platform: traffic is insufficient without monetization and operating leverage",
       "green_policy": "green_allowed_with_arpu_monetization_and_op_leverage",
-      "support": {
-        "4c_late_count": 3,
-        "avg_stage2_MAE90": -9.0524,
-        "avg_stage2_MFE90": 46.8955,
-        "bad_stage2_count": 17,
-        "counterexample_count": 22,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 8,
-        "good_stage2_count": 47,
-        "positive_case_count": 18,
-        "row_count": 125,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1667,
-        "stage2_hit_rate_MFE90_ge_20": 0.6364,
-        "unique_case_count": 51,
-        "unique_symbol_count": 13
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 8.0,
         "capital_allocation": 10.0,
@@ -783,23 +383,7 @@
     "C27_CONTENT_IP_GLOBAL_MONETIZATION": {
       "basis": "content/IP needs repeat monetization and hit-risk control",
       "green_policy": "watch_to_green_with_repeat_ip_monetization",
-      "support": {
-        "4c_late_count": 6,
-        "avg_stage2_MAE90": -13.4313,
-        "avg_stage2_MFE90": 109.9764,
-        "bad_stage2_count": 8,
-        "counterexample_count": 16,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 6,
-        "good_stage2_count": 31,
-        "positive_case_count": 17,
-        "row_count": 93,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2051,
-        "stage2_hit_rate_MFE90_ge_20": 0.8205,
-        "unique_case_count": 60,
-        "unique_symbol_count": 23
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 8.0,
         "capital_allocation": 8.0,
@@ -813,23 +397,7 @@
     "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": {
       "basis": "software/security: recurring revenue, retention, ARR/RPO and OPM leverage",
       "green_policy": "green_allowed_with_arr_retention_and_margin_leverage",
-      "support": {
-        "4c_late_count": 2,
-        "avg_stage2_MAE90": -9.5194,
-        "avg_stage2_MFE90": 80.3019,
-        "bad_stage2_count": 6,
-        "counterexample_count": 17,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 2,
-        "good_stage2_count": 26,
-        "positive_case_count": 13,
-        "row_count": 87,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1562,
-        "stage2_hit_rate_MFE90_ge_20": 0.9375,
-        "unique_case_count": 45,
-        "unique_symbol_count": 15
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 8.0,
         "capital_allocation": 8.0,
@@ -843,23 +411,7 @@
     "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": {
       "basis": "mobility: volume/mix/margin plus valuation and capital return",
       "green_policy": "watch_to_green_with_mix_margin_and_capital_return",
-      "support": {
-        "4c_late_count": 4,
-        "avg_stage2_MAE90": -10.3879,
-        "avg_stage2_MFE90": 36.6336,
-        "bad_stage2_count": 40,
-        "counterexample_count": 22,
-        "evidence_url_pending_count": 4,
-        "good_4b_timing_count": 11,
-        "good_stage2_count": 51,
-        "positive_case_count": 22,
-        "row_count": 157,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1649,
-        "stage2_hit_rate_MFE90_ge_20": 0.5876,
-        "unique_case_count": 91,
-        "unique_symbol_count": 27
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 10.0,
         "capital_allocation": 15.0,
@@ -873,23 +425,7 @@
     "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK": {
       "basis": "construction/PF is credit-risk-first until balance sheet repair is proven",
       "green_policy": "red_watch",
-      "support": {
-        "4c_late_count": 11,
-        "avg_stage2_MAE90": -11.2195,
-        "avg_stage2_MFE90": 22.0876,
-        "bad_stage2_count": 18,
-        "counterexample_count": 26,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 0,
-        "good_stage2_count": 15,
-        "positive_case_count": 16,
-        "row_count": 113,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1667,
-        "stage2_hit_rate_MFE90_ge_20": 0.4048,
-        "unique_case_count": 82,
-        "unique_symbol_count": 29
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 8.0,
         "capital_allocation": 10.0,
@@ -903,23 +439,7 @@
     "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": {
       "basis": "policy/subsidy events need conversion into contract, margin or FCF",
       "green_policy": "event_only_until_cashflow_conversion",
-      "support": {
-        "4c_late_count": 0,
-        "avg_stage2_MAE90": -16.3501,
-        "avg_stage2_MFE90": 81.0336,
-        "bad_stage2_count": 32,
-        "counterexample_count": 37,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 6,
-        "good_stage2_count": 38,
-        "positive_case_count": 29,
-        "row_count": 155,
-        "source_proxy_only_count": 7,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.4125,
-        "stage2_hit_rate_MFE90_ge_20": 0.7375,
-        "unique_case_count": 107,
-        "unique_symbol_count": 62
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 8.0,
         "capital_allocation": 10.0,
@@ -933,23 +453,7 @@
     "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP": {
       "basis": "governance/tender premium is event rerating unless NAV/FCF/shareholder return improves",
       "green_policy": "event_premium_not_structural_green_without_fcf_or_return",
-      "support": {
-        "4c_late_count": 8,
-        "avg_stage2_MAE90": -18.3464,
-        "avg_stage2_MFE90": 91.8087,
-        "bad_stage2_count": 23,
-        "counterexample_count": 14,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 13,
-        "good_stage2_count": 45,
-        "positive_case_count": 13,
-        "row_count": 122,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.5507,
-        "stage2_hit_rate_MFE90_ge_20": 0.8261,
-        "unique_case_count": 69,
-        "unique_symbol_count": 14
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 5.0,
         "capital_allocation": 15.0,
@@ -963,23 +467,7 @@
     "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM": {
       "basis": "cross-archetype 4B/4C red-team focuses on thesis-break and price-only false-positive protection",
       "green_policy": "redteam_guardrail_scope_not_green_unlock",
-      "support": {
-        "4c_late_count": 23,
-        "avg_stage2_MAE90": -15.9432,
-        "avg_stage2_MFE90": 69.7697,
-        "bad_stage2_count": 63,
-        "counterexample_count": 41,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 4,
-        "good_stage2_count": 104,
-        "positive_case_count": 42,
-        "row_count": 368,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.3068,
-        "stage2_hit_rate_MFE90_ge_20": 0.7159,
-        "unique_case_count": 213,
-        "unique_symbol_count": 137
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 8.0,
         "capital_allocation": 4.0,
@@ -993,23 +481,7 @@
     "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION": {
       "basis": "accounting/trust price validation emphasizes capital allocation, trust and evidence quality",
       "green_policy": "redteam_guardrail_scope_not_green_unlock",
-      "support": {
-        "4c_late_count": 0,
-        "avg_stage2_MAE90": -15.62,
-        "avg_stage2_MFE90": 26.35,
-        "bad_stage2_count": 3,
-        "counterexample_count": 8,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 0,
-        "good_stage2_count": 5,
-        "positive_case_count": 4,
-        "row_count": 12,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.375,
-        "stage2_hit_rate_MFE90_ge_20": 0.625,
-        "unique_case_count": 12,
-        "unique_symbol_count": 12
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 5.0,
         "capital_allocation": 20.0,
@@ -1023,23 +495,7 @@
     "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL": {
       "basis": "high-MAE guardrail scope raises drawdown and evidence-quality protection",
       "green_policy": "redteam_guardrail_scope_not_green_unlock",
-      "support": {
-        "4c_late_count": 2,
-        "avg_stage2_MAE90": -25.5344,
-        "avg_stage2_MFE90": 37.8489,
-        "bad_stage2_count": 5,
-        "counterexample_count": 5,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 1,
-        "good_stage2_count": 3,
-        "positive_case_count": 1,
-        "row_count": 23,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.5556,
-        "stage2_hit_rate_MFE90_ge_20": 0.6667,
-        "unique_case_count": 14,
-        "unique_symbol_count": 21
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 8.0,
         "capital_allocation": 6.0,
@@ -1053,23 +509,7 @@
     "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": {
       "basis": "cross-archetype Stage2 false-positive review is a guardrail scope, so information confidence dominates",
       "green_policy": "redteam_guardrail_scope_not_green_unlock",
-      "support": {
-        "4c_late_count": 1,
-        "avg_stage2_MAE90": -13.6,
-        "avg_stage2_MFE90": 75.95,
-        "bad_stage2_count": 3,
-        "counterexample_count": 0,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 1,
-        "good_stage2_count": 3,
-        "positive_case_count": 0,
-        "row_count": 12,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1429,
-        "stage2_hit_rate_MFE90_ge_20": 0.7143,
-        "unique_case_count": 12,
-        "unique_symbol_count": 12
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 8.0,
         "capital_allocation": 6.0,
@@ -1081,7 +521,7 @@
       }
     }
   },
-  "default_weights": {
+  "component_max_points": {
     "bottleneck_pricing": 20.0,
     "capital_allocation": 5.0,
     "earnings_visibility": 20.0,
@@ -1101,23 +541,7 @@
   "large_sector_weights": {
     "L10_POLICY_EVENT_CROSS_REDTEAM_MISC": {
       "green_policy": "green_restricted_without_contract_or_cashflow_conversion",
-      "support": {
-        "4c_late_count": 34,
-        "avg_stage2_MAE90": -16.7045,
-        "avg_stage2_MFE90": 75.0145,
-        "bad_stage2_count": 129,
-        "counterexample_count": 108,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 25,
-        "good_stage2_count": 198,
-        "positive_case_count": 92,
-        "row_count": 698,
-        "source_proxy_only_count": 7,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.384,
-        "stage2_hit_rate_MFE90_ge_20": 0.7393,
-        "unique_case_count": 433,
-        "unique_symbol_count": 190
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 8.0,
         "capital_allocation": 10.0,
@@ -1130,23 +554,7 @@
     },
     "L1_INDUSTRIALS_INFRA_DEFENSE_GRID": {
       "green_policy": "green_allowed_with_contract_or_backlog_visibility",
-      "support": {
-        "4c_late_count": 4,
-        "avg_stage2_MAE90": -14.3097,
-        "avg_stage2_MFE90": 55.6269,
-        "bad_stage2_count": 25,
-        "counterexample_count": 80,
-        "evidence_url_pending_count": 7,
-        "good_4b_timing_count": 10,
-        "good_stage2_count": 67,
-        "positive_case_count": 71,
-        "row_count": 203,
-        "source_proxy_only_count": 10,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2451,
-        "stage2_hit_rate_MFE90_ge_20": 0.7059,
-        "unique_case_count": 173,
-        "unique_symbol_count": 46
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 20.0,
         "capital_allocation": 7.0,
@@ -1159,23 +567,7 @@
     },
     "L2_AI_SEMICONDUCTOR_ELECTRONICS": {
       "green_policy": "green_allowed_with_capacity_and_revision",
-      "support": {
-        "4c_late_count": 4,
-        "avg_stage2_MAE90": -14.4985,
-        "avg_stage2_MFE90": 63.1846,
-        "bad_stage2_count": 17,
-        "counterexample_count": 76,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 11,
-        "good_stage2_count": 65,
-        "positive_case_count": 60,
-        "row_count": 228,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2414,
-        "stage2_hit_rate_MFE90_ge_20": 0.8276,
-        "unique_case_count": 167,
-        "unique_symbol_count": 34
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 19.0,
         "capital_allocation": 5.0,
@@ -1188,23 +580,7 @@
     },
     "L3_BATTERY_EV_GREEN_MOBILITY": {
       "green_policy": "green_restricted_by_capex_cycle",
-      "support": {
-        "4c_late_count": 7,
-        "avg_stage2_MAE90": -11.5524,
-        "avg_stage2_MFE90": 60.9018,
-        "bad_stage2_count": 56,
-        "counterexample_count": 85,
-        "evidence_url_pending_count": 4,
-        "good_4b_timing_count": 17,
-        "good_stage2_count": 96,
-        "positive_case_count": 64,
-        "row_count": 381,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1739,
-        "stage2_hit_rate_MFE90_ge_20": 0.6708,
-        "unique_case_count": 265,
-        "unique_symbol_count": 51
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 14.0,
         "capital_allocation": 8.0,
@@ -1217,23 +593,7 @@
     },
     "L4_MATERIALS_SPREAD_RESOURCE": {
       "green_policy": "green_restricted_by_spread_cycle",
-      "support": {
-        "4c_late_count": 3,
-        "avg_stage2_MAE90": -9.7312,
-        "avg_stage2_MFE90": 89.7662,
-        "bad_stage2_count": 23,
-        "counterexample_count": 70,
-        "evidence_url_pending_count": 8,
-        "good_4b_timing_count": 3,
-        "good_stage2_count": 80,
-        "positive_case_count": 47,
-        "row_count": 233,
-        "source_proxy_only_count": 4,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1351,
-        "stage2_hit_rate_MFE90_ge_20": 0.7928,
-        "unique_case_count": 172,
-        "unique_symbol_count": 52
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 18.0,
         "capital_allocation": 5.0,
@@ -1246,23 +606,7 @@
     },
     "L5_CONSUMER_BRAND_DISTRIBUTION": {
       "green_policy": "green_allowed_with_channel_and_repeat_demand",
-      "support": {
-        "4c_late_count": 20,
-        "avg_stage2_MAE90": -14.2012,
-        "avg_stage2_MFE90": 59.4919,
-        "bad_stage2_count": 45,
-        "counterexample_count": 42,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 20,
-        "good_stage2_count": 109,
-        "positive_case_count": 46,
-        "row_count": 368,
-        "source_proxy_only_count": 4,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.2814,
-        "stage2_hit_rate_MFE90_ge_20": 0.7305,
-        "unique_case_count": 187,
-        "unique_symbol_count": 36
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 12.0,
         "capital_allocation": 4.0,
@@ -1276,21 +620,21 @@
     "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL": {
       "green_policy": "green_allowed_with_roe_capital_return_and_credit_guard",
       "support": {
-        "4c_late_count": 4,
-        "avg_stage2_MAE90": -10.1125,
-        "avg_stage2_MFE90": 26.3385,
-        "bad_stage2_count": 40,
-        "counterexample_count": 25,
-        "evidence_url_pending_count": 8,
-        "good_4b_timing_count": 11,
-        "good_stage2_count": 118,
-        "positive_case_count": 32,
-        "row_count": 347,
-        "source_proxy_only_count": 8,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1111,
-        "stage2_hit_rate_MFE90_ge_20": 0.7018,
-        "unique_case_count": 192,
-        "unique_symbol_count": 29
+        "4c_late_count": 0,
+        "avg_stage2_MAE90": -16.5,
+        "avg_stage2_MFE90": 15.5,
+        "bad_stage2_count": 1,
+        "counterexample_count": 1,
+        "evidence_url_pending_count": 4,
+        "good_4b_timing_count": 0,
+        "good_stage2_count": 1,
+        "positive_case_count": 1,
+        "row_count": 4,
+        "source_proxy_only_count": 4,
+        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.5,
+        "stage2_hit_rate_MFE90_ge_20": 0.5,
+        "unique_case_count": 2,
+        "unique_symbol_count": 2
       },
       "weights": {
         "bottleneck_pricing": 5.0,
@@ -1304,23 +648,7 @@
     },
     "L7_BIO_HEALTHCARE_MEDICAL": {
       "green_policy": "green_restricted_until_revenue_or_approval_conversion",
-      "support": {
-        "4c_late_count": 22,
-        "avg_stage2_MAE90": -13.9107,
-        "avg_stage2_MFE90": 71.1708,
-        "bad_stage2_count": 16,
-        "counterexample_count": 33,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 12,
-        "good_stage2_count": 93,
-        "positive_case_count": 39,
-        "row_count": 275,
-        "source_proxy_only_count": 7,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1696,
-        "stage2_hit_rate_MFE90_ge_20": 0.8393,
-        "unique_case_count": 147,
-        "unique_symbol_count": 39
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 8.0,
         "capital_allocation": 7.0,
@@ -1333,23 +661,7 @@
     },
     "L8_PLATFORM_CONTENT_SW_SECURITY": {
       "green_policy": "green_allowed_with_monetization_and_margin_leverage",
-      "support": {
-        "4c_late_count": 11,
-        "avg_stage2_MAE90": -10.408,
-        "avg_stage2_MFE90": 72.6558,
-        "bad_stage2_count": 31,
-        "counterexample_count": 55,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 16,
-        "good_stage2_count": 104,
-        "positive_case_count": 48,
-        "row_count": 305,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1752,
-        "stage2_hit_rate_MFE90_ge_20": 0.7591,
-        "unique_case_count": 156,
-        "unique_symbol_count": 51
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 8.0,
         "capital_allocation": 10.0,
@@ -1362,23 +674,7 @@
     },
     "L9_CONSTRUCTION_REALESTATE_HOUSING": {
       "green_policy": "green_restricted_by_credit_pf_risk",
-      "support": {
-        "4c_late_count": 11,
-        "avg_stage2_MAE90": -11.2195,
-        "avg_stage2_MFE90": 22.0876,
-        "bad_stage2_count": 18,
-        "counterexample_count": 24,
-        "evidence_url_pending_count": 0,
-        "good_4b_timing_count": 0,
-        "good_stage2_count": 15,
-        "positive_case_count": 15,
-        "row_count": 110,
-        "source_proxy_only_count": 0,
-        "stage2_bad_entry_rate_MAE90_le_minus_20": 0.1667,
-        "stage2_hit_rate_MFE90_ge_20": 0.4048,
-        "unique_case_count": 79,
-        "unique_symbol_count": 29
-      },
+      "support": {},
       "weights": {
         "bottleneck_pricing": 8.0,
         "capital_allocation": 10.0,
