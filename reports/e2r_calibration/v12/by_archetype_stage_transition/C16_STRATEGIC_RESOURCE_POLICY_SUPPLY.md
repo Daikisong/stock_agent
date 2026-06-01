@@ -3,10 +3,13 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `48`
+- stage_transition_summary_rows: `63`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| 003670 | 003670 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 298500.0 | None | None | no_valid_stage_transition |
+| 005490 | 005490 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| 010130 | 010130 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 463000.0 | None | None | 419.87 | None | stage2_actionable_best_entry |
 | C16_000910_UNION_20230327_RARE_EARTH_SUPPLY_POLICY_STAGE2 | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 6060.0 | None | None | 98.68 | None | stage2_actionable_best_entry |
 | C16_000910_UNION_20230425_RARE_EARTH_POLICY_PRICE_ONLY_4B | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 9800.0 | None | None | no_valid_stage_transition |
 | C16_001570_GEUMYANG_20230711_LITHIUM_RESOURCE_OPTIONALITY_FALSE_GREEN | 001570 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
@@ -41,17 +44,29 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C16_R4L71_KDINV_012320_20221020 | 012320 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 37550.0 | None | None | 272.84 | None | stage2_captured_most_upside |
 | C16_R4L71_POSCO_005490_20230410 | 005490 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 398500.0 | None | None | 91.72 | None | stage2_actionable_best_entry |
 | C16_R4L71_UNION_000910_20230217 | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 6280.0 | None | None | 38.69 | None | stage2_captured_most_upside |
-| R13L27_C16_005290_JAPAN_EXPORT_CONTROL_LOCALIZATION | 005290 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 11850.0 | None | None | 86.5027 | None | stage2_actionable_best_entry |
-| R13L27_C16_027580_GRAPHITE_CONTROL_THEME_TRAP | 027580 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
-| R13L27_C16_047400_RARE_EARTH_THEME_TRAP | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| R13L27_C16_005290_JAPAN_EXPORT_CONTROL_LOCALIZATION | 005290 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 11850.0 | None | 16450.0 | 86.5027 | 44.8755 | stage2_actionable_best_entry |
+| R13L27_C16_027580_GRAPHITE_CONTROL_THEME_TRAP | 027580 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 1940.0 | None | None | no_valid_stage_transition |
+| R13L27_C16_047400_RARE_EARTH_THEME_TRAP | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 3340.0 | None | None | no_valid_stage_transition |
 | R13L27_C16_093370_HF_LOCALIZATION | 093370 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 7460.0 | None | None | 38.34 | None | stage2_actionable_best_entry |
 | R4L14_C16_KOREAZINC_20220915_BATTERY_METALS_JV_FALSE_START | 010130 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 634000.0 | None | None | 8.04 | None | stage2_actionable_best_entry |
-| R4L14_C16_KUMYANG_20230726_LITHIUM_OPTIONALITY_BLOWOFF | 001570 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| R4L14_C16_KUMYANG_20230726_LITHIUM_OPTIONALITY_BLOWOFF | 001570 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 152200.0 | None | None | 27.46 | None | stage2_actionable_best_entry |
 | R4L14_C16_POSCOHOLD_20230712_LITHIUM_RESOURCE_RERATING | 005490 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 417500.0 | None | None | 83.0 | None | stage2_actionable_best_entry |
-| R4L14_C16_POSCOMTECH_20230726_RESOURCE_PROXY_BLOWOFF | 009520 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| R4L14_C16_POSCOMTECH_20230726_RESOURCE_PROXY_BLOWOFF | 009520 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 39150.0 | None | None | 20.05 | None | stage2_actionable_best_entry |
 | R4L15_C16_CASE_001_NAMHAE_FERTILIZER_SUPPLY_20220304 | 025860 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 10500.0 | None | None | 61.9 | None | stage2_actionable_best_entry |
 | R4L15_C16_CASE_002_UNION_MATERIALS_GALLIUM_GERMANIUM_FALSE_BREAK_20230704 | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 4070.0 | None | None | 12.04 | None | stage2_actionable_best_entry |
 | R4L15_C16_CASE_003_UNION_RARE_EARTH_TECH_BAN_FALSE_BREAK_20231222 | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 5500.0 | None | None | 19.64 | None | stage2_actionable_best_entry |
 | R4L71_C16_000910_RARE_EARTH_POLICY_PRICE_ONLY_COUNTER | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 6440.0 | None | None | 21.74 | None | stage2_captured_most_upside |
 | R4L71_C16_005290_LOCALIZATION_REUSED_HOLDOUT | 005290 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 11850.0 | None | 18800.0 | 68.78 | 85.2716 | stage2_actionable_best_entry |
 | R4L71_C16_036830_LOCALIZATION_SUPPLY_SUCCESS | 036830 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 49450.0 | None | None | 121.03 | None | stage2_actionable_best_entry |
+| R4L72-C16-003670-POSCOFUTUREM-GRAPHITE-ANODE-SUPPLY-RISK | 003670 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 298500.0 | None | None | no_valid_stage_transition |
+| R4L72-C16-005490-POSCOHOLDINGS-CHINA-GRAPHITE-CONTROL-LITHIUM-BETA | 005490 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| R4L72-C16-010130-KOREAZINC-ZINC-SMELTER-CHARGE-SUPPLY-SQUEEZE | 010130 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 463000.0 | None | None | 419.87 | None | stage2_actionable_best_entry |
+| R4L75-C16-000910-UNION-RARE-EARTH-POLICY-PROXY-FADE | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| R4L75-C16-011810-STX-RESOURCE-TRADING-POLICY-BETA-FADE | 011810 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| R4L75-C16-081150-TFLEX-RARE-METAL-PROCESSING-SUPPLY-BRIDGE | 081150 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 2700.0 | None | None | 36.11 | None | stage2_actionable_best_entry |
+| R4L78-C16-000910-UNION-RAREEARTH-RESOURCE-THEME-FADE | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| R4L78-C16-004090-KOREA-PETROLEUM-OIL-SUPPLY-SECURITY-LIFECYCLE | 004090 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| R4L78-C16-075970-DONGKUK-RNS-RAREEARTH-REFRACTORY-THEME-FADE | 075970 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| R4L81-C16-001570-KUMYANG-LITHIUM-RESOURCE-POLICY-THEME-FADE | 001570 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| R4L81-C16-005420-COSMO-CHEMICAL-COBALT-LITHIUM-RECOVERY-LIFECYCLE | 005420 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| R4L81-C16-006110-SAMA-ALUMINUM-FOIL-STRATEGIC-SUPPLY-FADE | 006110 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |

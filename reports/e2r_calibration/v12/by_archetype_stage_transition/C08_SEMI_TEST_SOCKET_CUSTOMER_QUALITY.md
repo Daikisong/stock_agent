@@ -3,10 +3,13 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `56`
+- stage_transition_summary_rows: `68`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| 064760 | 064760 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
+| 067310 | 067310 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
+| 092870 | 092870 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 10720.0 | None | None | 47.01 | None | stage2_actionable_best_entry |
 | C08_080580_OKINS_20240122_CXL_SOCKET_PRICE_ONLY_BLOWOFF | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
 | C08_080580_OKINS_20240122_TEST_SOCKET_THEME_PRICE_PREMIUM_4B | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 12930.0 | None | None | no_valid_stage_transition |
 | C08_080580_OKINS_20240123_SOCKET_THEME_FALSE_GREEN | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
@@ -38,20 +41,20 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C08_425420_TFE_20240208_TEST_SOCKET_THEME_FALSE_GREEN | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 35200.0 | None | None | 24.57 | None | stage2_actionable_best_entry |
 | C08_425420_TFE_20240320_TEST_SOCKET_QUALITY_THEME_LOCAL_4B | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 43100.0 | None | None | no_valid_stage_transition |
 | R2L10_C08_ISC_20240103_STAGE2 | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 79400.0 | None | None | 36.02 | None | stage2_actionable_best_entry |
-| R2L10_C08_ISC_20240328_4B_LOCAL | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
-| R2L10_C08_MICROCONTACT_20240103_STAGE2 | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
+| R2L10_C08_ISC_20240328_4B_LOCAL | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 99400.0 | None | None | no_valid_stage_transition |
+| R2L10_C08_MICROCONTACT_20240103_STAGE2 | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 14400.0 | None | None | 3.13 | None | stage2_actionable_best_entry |
 | R2L10_C08_RINO_20240103_STAGE2 | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 214000.0 | None | None | 44.39 | None | stage2_actionable_best_entry |
-| R2L10_C08_TFE_20240103_STAGE2 | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
+| R2L10_C08_TFE_20240103_STAGE2 | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 36800.0 | None | None | 19.16 | None | stage2_actionable_best_entry |
 | R2L11_C08_058470_LINO_20240308 | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 215500.0 | 274500.0 | None | 43.39 | None | green_too_late |
 | R2L11_C08_058470_LINO_20240308 | None | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 215500.0 | 274500.0 | None | 43.39 | None | green_too_late |
-| R2L11_C08_058470_RINO_AI_TEST_SOCKET | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 209000.0 | None | None | 47.85 | None | stage2_actionable_best_entry |
-| R2L11_C08_095340_ISC_20240308 | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
-| R2L11_C08_095340_ISC_20240308 | None | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
-| R2L11_C08_095340_ISC_SOCKET_BLOWOFF | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
-| R2L11_C08_131290_TSE_20240424 | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 64200.0 | None | None | 36.7611 | None | stage2_actionable_best_entry |
-| R2L11_C08_131290_TSE_20240424 | None | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 64200.0 | None | None | 36.7611 | None | stage2_actionable_best_entry |
-| R2L11_C08_131290_TSE_HBM_PROBE_CARD | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 57000.0 | None | None | 54.04 | None | stage2_actionable_best_entry |
-| R2L13_C08_058470_STAGE2 | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 209500.0 | None | None | 47.4922 | None | stage2_actionable_best_entry |
+| R2L11_C08_058470_RINO_AI_TEST_SOCKET | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 209000.0 | None | 298000.0 | 47.85 | 88.9942 | stage2_actionable_best_entry |
+| R2L11_C08_095340_ISC_20240308 | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | 95000.0 | None | None | None | green_false_positive |
+| R2L11_C08_095340_ISC_20240308 | None | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | 95000.0 | None | None | None | green_false_positive |
+| R2L11_C08_095340_ISC_SOCKET_BLOWOFF | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | 95000.0 | None | None | None | 4c_too_late |
+| R2L11_C08_131290_TSE_20240424 | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 64200.0 | 79000.0 | None | 36.7611 | None | green_good_but_late |
+| R2L11_C08_131290_TSE_20240424 | None | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 64200.0 | 79000.0 | None | 36.7611 | None | green_good_but_late |
+| R2L11_C08_131290_TSE_HBM_PROBE_CARD | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 57000.0 | 79000.0 | None | 54.04 | None | green_too_late |
+| R2L13_C08_058470_STAGE2 | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 209500.0 | None | 298000.0 | 47.4922 | 88.9481 | stage2_actionable_best_entry |
 | R2L13_C08_064290_FP | 064290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 40200.0 | None | None | 1.74 | None | stage2_actionable_best_entry |
 | R2L13_C08_095340_FP | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 95000.0 | None | None | 13.68 | None | stage2_actionable_best_entry |
 | R2L13_C08_131290_STAGE2 | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 53500.0 | None | None | 64.11 | None | stage2_actionable_best_entry |
@@ -63,3 +66,12 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R2L14_C08_098120_MICROCONTACT_20240122 | None | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 12770.0 | None | None | 3.37 | None | stage2_actionable_best_entry |
 | R2L14_C08_131290_TSE_20240222 | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 61300.0 | None | 80000.0 | 43.23 | 70.566 | stage2_actionable_best_entry |
 | R2L14_C08_131290_TSE_20240222 | None | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 61300.0 | None | 80000.0 | 43.23 | 70.566 | 4b_good_peak_capture |
+| R2L73-C08-064760-TCK-SIC-CONSUMABLE-CUSTOMER-QUALITY-LOCAL4B | 064760 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
+| R2L73-C08-067310-HANAMICRON-OSAT-HBM-BETA-WEAK-UTILIZATION | 067310 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
+| R2L73-C08-092870-EXICON-HBM-TESTER-POST-CA-ADOPTION-BRIDGE | 092870 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 10720.0 | None | None | 47.01 | None | stage2_actionable_best_entry |
+| R2L78-C08-080580-OKINS-TEST-SOCKET-THEME-FADE | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
+| R2L78-C08-098120-MICROCONTACTSOL-IC-SOCKET-CUSTOMER-QUALITY-FADE | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
+| R2L78-C08-425420-TFE-TEST-SOCKET-CUSTOMER-QUALITY-LIFECYCLE | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 29500.0 | None | None | 48.98 | None | stage2_actionable_best_entry |
+| R2L81-C08-080580-OKINS-ELECTRONICS-SOCKET-THEME-FADE | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
+| R2L81-C08-098120-MICROCONTACTSOL-TEST-SOCKET-THEME-FADE | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
+| R2L81-C08-425420-TFE-TEST-SOCKET-CUSTOMER-QUALITY-LIFECYCLE | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |

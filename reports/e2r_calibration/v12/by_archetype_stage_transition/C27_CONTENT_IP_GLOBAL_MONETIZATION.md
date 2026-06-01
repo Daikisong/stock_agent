@@ -3,10 +3,13 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `60`
+- stage_transition_summary_rows: `78`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| 225570 | 225570 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 18610.0 | None | None | 66.58 | None | stage2_actionable_best_entry |
+| 259960 | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 219500.0 | None | None | 61.73 | None | stage2_actionable_best_entry |
+| 263750 | 263750 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
 | C27_036420_CONTENTREE_2021 | 036420 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 46700.0 | None | 71900.0 | 83.94 | 64.2857 | 4c_too_late |
 | C27_066410_BUCKET_SQUIDGAME_ASSOCIATION_2021 | 066410 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | 4665.0 | 7320.0 | None | None | 4c_too_late |
 | C27_078340_COM2US_20211110_METAVERSE_NFT_IP_BLOWOFF_FALSE_GREEN | 078340 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | 169300.0 | None | None | no_valid_stage_transition |
@@ -44,9 +47,9 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R8L10_C27_JYP_20230222 | 035900 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 76000.0 | None | 141100.0 | 92.8986 | 92.2058 | stage2_actionable_best_entry |
 | R8L10_C27_STUDIODRAGON_20230210 | 253450 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 81400.0 | None | None | 2.58 | None | stage2_actionable_best_entry |
 | R8L11-C27-HYBE-QC-20230210 | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 195300.0 | None | None | 60.01 | None | stage2_actionable_best_entry |
-| R8L11-C27-JYP-5STAR-20230531 | 035900 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 122000.0 | None | None | 20.1663 | None | stage2_actionable_best_entry |
+| R8L11-C27-JYP-5STAR-20230531 | 035900 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 122000.0 | None | 141100.0 | 20.1663 | 77.6331 | 4b_good_peak_capture |
 | R8L11-C27-STUDIODRAGON-GLORY-20230103 | 253450 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
-| R8L11-C27-YG-BLACKPINK-20230512 | 122870 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R8L11-C27-YG-BLACKPINK-20230512 | 122870 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | 66400.0 | None | None | 4b_good_peak_capture |
 | R8L11_C27_CASE_001_JYP_2023_GLOBAL_ALBUM_TOUR_CONVERSION | 035900 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 95500.0 | None | None | 53.51 | None | stage2_actionable_best_entry |
 | R8L11_C27_CASE_002_HYBE_2023_WEVERSE_MULTI_ARTIST_IP_SCALE | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 184000.0 | None | None | 69.84 | None | stage2_actionable_best_entry |
 | R8L11_C27_CASE_003_SM_2023_CONTROL_PREMIUM_FALSE_C27 | 041510 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | 158500.0 | None | None | 4b_good_peak_capture |
@@ -56,14 +59,29 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R8L13_C27_KRAFTON_BGMI_OPERATING_LEVERAGE_2023Q3 | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 190800.0 | 230000.0 | None | 86.0613 | None | green_too_late |
 | R8L13_C27_NETMARBLE_SOLOLEVELING_LAUNCH_2024 | 251270 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 60700.0 | None | None | 19.28 | None | stage2_actionable_best_entry |
 | R8L14_C27_095660_LIES_OF_P_RELEASE_20230919 | 095660 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 34500.0 | None | None | 3.04 | None | 4c_too_late |
-| R8L14_C27_194480_COOKIE_RUN_KINGDOM_20210121 | 194480 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 17250.0 | None | None | 1056.5426 | None | stage2_actionable_best_entry |
-| R8L14_C27_263750_DOKEV_TRAILER_20210825 | 263750 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R8L14_C27_194480_COOKIE_RUN_KINGDOM_20210121 | 194480 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 17250.0 | None | 186000.0 | 1056.5426 | 92.5908 | stage2_actionable_best_entry |
+| R8L14_C27_263750_DOKEV_TRAILER_20210825 | 263750 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | 141000.0 | None | None | no_valid_stage_transition |
 | R8L14_C27_CUBE_IFEEL_QUEENCARD_20230516 | 182360 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 22900.0 | None | None | 23.14 | None | stage2_actionable_best_entry |
 | R8L14_C27_SM_3_0_MULTIPRODUCTION_20230413 | 041510 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 101700.0 | None | None | 40.41 | None | stage2_actionable_best_entry |
 | R8L14_C27_YG_BORN_PINK_BABYMONSTER_20230512 | 122870 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 78100.0 | None | 69200.0 | 24.2 | -47.0894 | 4b_good_peak_capture |
 | R8L15_C27_HYBE_ITHACA_202104 | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 248000.0 | None | None | 69.9616 | None | stage2_actionable_best_entry |
 | R8L15_C27_JYP_MAXIDENT_202211 | 035900 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 59500.0 | 115400.0 | None | 146.3935 | None | green_too_late |
 | R8L15_C27_PEARLABYSS_DOKEV_202108 | 263750 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 87900.0 | None | None | 65.19 | None | stage2_actionable_best_entry |
-| R8L31_C27_112040_WEMADE_P2E_TOKENIZED_IP_4C_COUNTER | 112040 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
-| R8L31_C27_251270_NETMARBLE_IP_LAUNCH_HIGH_MAE_COUNTER | 251270 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R8L31_C27_112040_WEMADE_P2E_TOKENIZED_IP_4C_COUNTER | 112040 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | 4c_too_late |
+| R8L31_C27_251270_NETMARBLE_IP_LAUNCH_HIGH_MAE_COUNTER | 251270 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 60700.0 | None | 69400.0 | 19.28 | 74.3402 | stage2_actionable_best_entry |
 | R8L31_C27_259960_KRAFTON_GLOBAL_LIVE_SERVICE_POS | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 190800.0 | 230000.0 | None | 58.2757 | None | green_good_but_late |
+| R8L71_C27_095660_LIES_OF_P_PRICED_IN_LAUNCH_GUARD | 095660 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 34500.0 | None | None | 3.04 | None | stage2_actionable_best_entry |
+| R8L71_C27_225570_FIRST_DESCENDANT_LAUNCH_RETENTION_4B | 225570 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 17900.0 | None | 28800.0 | 72.9126 | 83.5162 | stage2_actionable_best_entry |
+| R8L71_C27_259960_PUBG_BGMI_LIVE_SERVICE_MONETIZATION | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 230000.0 | None | None | 54.35 | None | stage2_actionable_best_entry |
+| R8L74-C27-225570-NEXONGAMES-GLOBAL-LAUNCH-RETENTION-LIFECYCLE | 225570 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 18610.0 | None | None | 66.58 | None | stage2_actionable_best_entry |
+| R8L74-C27-259960-KRAFTON-PUBG-GLOBAL-MONETIZATION | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 219500.0 | None | None | 61.73 | None | stage2_actionable_best_entry |
+| R8L74-C27-263750-PEARLABYSS-TRAILER-ANTICIPATION-BETA-FADE | 263750 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R8L76-C27-194480-DEVSISTERS-GAME-IP-GLOBAL-LAUNCH-MONETIZATION | 194480 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 42550.0 | None | None | 79.32 | None | stage2_actionable_best_entry |
+| R8L76-C27-206560-DEXTER-VFX-CONTENT-PRODUCTION-PIPELINE | 206560 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R8L76-C27-207760-MRBLUE-WEBTOON-IP-THEME-SPIKE-FADE | 207760 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R8L78-C27-095660-NEOWIZ-GAME-IP-THEME-FADE | 095660 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R8L78-C27-194480-DEVSISTERS-GAME-IP-GLOBAL-MONETIZATION | 194480 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 39750.0 | None | None | 91.95 | None | stage2_actionable_best_entry |
+| R8L78-C27-225570-NEXON-GAMES-GLOBAL-LAUNCH-LIVEOPS | 225570 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 18610.0 | None | None | 66.31 | None | stage2_actionable_best_entry |
+| R8L80-C27-194480-DEVSISTERS-COOKIE-IP-GLOBAL-LAUNCH-MARGIN | 194480 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| R8L80-C27-259960-KRAFTON-GAME-IP-GLOBAL-LIVEOPS-MONETIZATION | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 212000.0 | None | None | 67.45 | None | stage2_actionable_best_entry |
+| R8L80-C27-293490-KAKAOGAMES-GAME-PORTFOLIO-THEME-FADE | 293490 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |

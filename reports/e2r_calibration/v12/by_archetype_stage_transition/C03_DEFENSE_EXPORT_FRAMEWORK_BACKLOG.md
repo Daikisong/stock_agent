@@ -3,10 +3,13 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `65`
+- stage_transition_summary_rows: `80`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| 003570 | 003570 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 14610.0 | None | None | 93.02 | None | stage2_actionable_best_entry |
+| 010820 | 010820 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
+| 064350 | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 30900.0 | None | None | 124.92 | None | stage2_actionable_best_entry |
 | C03_000880_HANWHA_20220729_DEFENSE_GROUP_THEME_4B | 000880 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | 27550.0 | None | None | no_valid_stage_transition |
 | C03_003570_SNTDYNAMICS_20220727_DEFENSE_DRIVETRAIN_COMPONENT_STAGE2 | 003570 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 8080.0 | None | None | 58.42 | None | stage2_actionable_best_entry |
 | C03_003570_SNTDYNAMICS_20240228_POWERPACK_BACKLOG_STAGE2 | 003570 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 18340.0 | None | None | 45.86 | None | stage2_actionable_best_entry |
@@ -46,11 +49,17 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C03_272210_HANWHASYSTEMS_20230420_DEFENSE_ELECTRONICS_FOLLOWTHROUGH_FALSE_GREEN | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
 | C03_272210_HANWHASYSTEMS_20241107_DEFENSE_ELECTRONICS_BACKLOG_STAGE2 | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 21200.0 | None | None | 192.45 | None | stage2_actionable_best_entry |
 | C03_272210_HANWHASYSTEM_20220729_DEFENSE_C4I_FRAMEWORK_FALSE_GREEN | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
-| R13L59-C03-012450-HANWHA-AERO-CHUNMOO-POLAND | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 235000.0 | None | None | 278.7308 | None | stage2_actionable_best_entry |
+| R11L77-C03-003570-SNT-DYNAMICS-DEFENSE-DRIVETRAIN-EXPORT-BACKLOG | 003570 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 14610.0 | None | None | 93.02 | None | stage2_actionable_best_entry |
+| R11L77-C03-010820-FIRSTEC-DEFENSE-UNMANNED-THEME-BETA-FADE | 010820 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
+| R11L77-C03-272210-HANWHA-SYSTEMS-DEFENSE-ELECTRONICS-BACKLOG | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 15350.0 | None | None | 52.44 | None | stage2_actionable_best_entry |
+| R11L79-C03-010820-FIRSTEC-DEFENSE-DRONE-THEME-BACKLOG-GAP | 010820 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
+| R11L79-C03-064350-HYUNDAI-ROTEM-GROUND-SYSTEM-EXPORT-BACKLOG | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 28100.0 | None | None | 141.99 | None | stage2_actionable_best_entry |
+| R11L79-C03-103140-POONGSAN-AMMO-EXPORT-DEMAND-BACKLOG | 103140 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 38650.0 | None | None | 104.14 | None | stage2_actionable_best_entry |
+| R13L59-C03-012450-HANWHA-AERO-CHUNMOO-POLAND | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 235000.0 | None | 413500.0 | 278.7308 | 27.2512 | stage2_actionable_best_entry |
 | R13L59-C03-047810-KAI-FA50-POLAND-MARGIN-GAP | 047810 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 57000.0 | None | None | 12.11 | None | stage2_actionable_best_entry |
 | R13L59-C03-079550-LIG-NEX1-IRAQ-CHEONGUNG | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 211000.0 | None | None | 98.82 | None | stage2_actionable_best_entry |
-| R1L11_C03_012450_POLAND_K9_HANWHA | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 64400.0 | None | None | 84.4743 | None | stage2_actionable_best_entry |
-| R1L11_C03_047810_POLAND_FA50_KAI | 047810 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 57000.0 | None | None | 12.11 | None | stage2_actionable_best_entry |
+| R1L11_C03_012450_POLAND_K9_HANWHA | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 64400.0 | None | 117300.0 | 84.4743 | 97.2401 | stage2_actionable_best_entry |
+| R1L11_C03_047810_POLAND_FA50_KAI | 047810 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 57000.0 | None | None | 12.11 | None | 4c_too_late |
 | R1L11_C03_064350_POLAND_K2_HYUNDAI_ROTEM | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 26550.0 | None | None | 23.73 | None | stage2_actionable_best_entry |
 | R1L13-C03-012450-HANWHA-POLAND-CHUNMOO-20240425 | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 241000.0 | None | None | 76.35 | None | stage2_actionable_best_entry |
 | R1L13-C03-065450-VICTEK-BALLOON-TENSION-20240529 | 065450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
@@ -68,7 +77,13 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R1L13_C03_VICTEK_GEOPOLITICAL_PRICE_ONLY_20220224 | 065450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
 | R1L13_C03_VICTEK_GEOPOLITICAL_PRICE_ONLY_20220224 | None | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
 | R1L14-C03-HANWHA-20220829-POLAND-K9 | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 79600.0 | None | None | 50.88 | None | stage2_actionable_best_entry |
-| R1L14-C03-KAI-20220916-POLAND-FA50-LATE-CONFIRM | 047810 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
+| R1L14-C03-KAI-20220916-POLAND-FA50-LATE-CONFIRM | 047810 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | 50300.0 | None | None | None | green_false_positive |
 | R1L14-C03-LIG-20220117-UAE-MSAM | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 68100.0 | None | None | 40.53 | None | stage2_actionable_best_entry |
 | R1L14-C03-ROTEM-20220727-POLAND-K2 | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 25000.0 | None | None | 31.4 | None | stage2_actionable_best_entry |
 | R1L14-C03-VICTEK-20221004-GEOPOLITICAL-THEME | 065450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
+| R1L74-C03-003570-SNT-DYNAMICS-POWERTRAIN-EXPORT-BACKLOG | 003570 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 14610.0 | None | None | 93.02 | None | stage2_actionable_best_entry |
+| R1L74-C03-010820-FIRSTEC-DEFENSE-ELECTRONICS-PRICE-BETA | 010820 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
+| R1L74-C03-064350-HYUNDAI-ROTEM-K2-GROUND-SYSTEMS-BACKLOG | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 30900.0 | None | None | 124.92 | None | stage2_actionable_best_entry |
+| R1L82-C03-010820-FIRSTEC-DEFENSE-COMPONENT-THEME-WHIPSAW | 010820 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
+| R1L82-C03-103140-POONGSAN-AMMO-EXPORT-BACKLOG-MARGIN | 103140 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 38650.0 | None | None | 104.14 | None | stage2_actionable_best_entry |
+| R1L82-C03-272210-HANWHA-SYSTEMS-DEFENSE-ELECTRONICS-BACKLOG | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 15350.0 | None | None | 52.44 | None | stage2_actionable_best_entry |

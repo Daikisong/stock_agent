@@ -328,9 +328,15 @@ def _write_v12_data_outputs(
         "rejected_v12_rows": _write_jsonl(data_dir / "rejected_v12_rows.jsonl", validation.rejected_rows),
         "v12_dedupe_map": _write_jsonl(data_dir / "v12_dedupe_map.jsonl", dedupe_map),
         "v12_aggregate_metrics": _write_json(data_dir / "v12_aggregate_metrics.json", aggregate_rows),
+        "v12_raw_aggregate_metric_rows": _write_jsonl(
+            data_dir / "v12_raw_aggregate_metric_rows.jsonl", all_rows["aggregate_metric"]
+        ),
         "stage_transition_summary": _write_jsonl(data_dir / "stage_transition_summary.jsonl", stage_transition_rows),
         "v12_residual_contribution_rows": _write_jsonl(
             data_dir / "v12_residual_contribution_rows.jsonl", all_rows["residual_contribution"]
+        ),
+        "v12_raw_shadow_weight_rows": _write_jsonl(
+            data_dir / "v12_raw_shadow_weight_rows.jsonl", all_rows["shadow_weight"]
         ),
         "v12_coverage_matrix_rows": _write_jsonl(data_dir / "v12_coverage_matrix_rows.jsonl", all_rows["coverage_matrix"]),
     }
@@ -432,6 +438,8 @@ def _build_v12_summary(
         "v12_validated_trigger_rows": len(validation.valid_rows),
         "v12_representative_trigger_rows": len(representative_rows),
         "v12_rejected_rows": len(validation.rejected_rows),
+        "v12_raw_aggregate_metric_rows": len(all_rows["aggregate_metric"]),
+        "v12_raw_shadow_weight_rows": len(all_rows["shadow_weight"]),
         "rejected_rows_by_reason": dict(sorted(rejected_reasons.items())),
         "large_sectors_covered": large_sectors,
         "canonical_archetypes_covered": archetypes,
@@ -483,6 +491,8 @@ def _render_v12_ingest_summary(summary: dict[str, Any]) -> str:
         "v12_validated_trigger_rows",
         "v12_representative_trigger_rows",
         "v12_rejected_rows",
+        "v12_raw_aggregate_metric_rows",
+        "v12_raw_shadow_weight_rows",
         "large_sectors_covered",
         "canonical_archetypes_covered",
         "stage_transition_summary_rows",

@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `48`
+- stage_transition_summary_rows: `57`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -43,15 +43,24 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C04_DOOSAN_202407_CZECH_PREFERRED_BIDDER_HIGH_MAE_DELAYED_SUCCESS | 034020 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 21000.0 | None | None | 47.14 | None | stage2_actionable_best_entry |
 | C04_KEPCO_EC_202407_CZECH_PREFERRED_BIDDER_FAILED_RERATING | 052690 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 82000.0 | None | None | 19.63 | None | stage2_actionable_best_entry |
 | C04_KEPCO_KPS_202407_CZECH_SERVICE_EXPOSURE_SMOOTHER_SUCCESS | 051600 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 38900.0 | None | 48600.0 | 26.22 | 95.102 | 4b_good_peak_capture |
+| R11L78-C04-006910-BOSEONG-POWERTEC-NUCLEAR-POLICY-EQUIPMENT-LIFECYCLE | 006910 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | None | None | None | None | None | no_valid_stage_transition |
+| R11L78-C04-032820-WOORI-TECH-NUCLEAR-IANDC-PROJECT-LIFECYCLE | 032820 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 1294.0 | None | None | 104.79 | None | stage2_actionable_best_entry |
+| R11L78-C04-046120-ORBITEC-NUCLEAR-INSPECTION-THEME-DELAY-FADE | 046120 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | None | None | None | None | None | no_valid_stage_transition |
 | R1L11_C04_000720_CZ_NUCLEAR_EPC_BETA_FALSE_GREEN | 000720 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 33400.0 | None | None | 14.37 | None | stage2_actionable_best_entry |
 | R1L11_C04_034020_CZ_NUCLEAR_DIRECT_SUPPLIER | 034020 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 21000.0 | None | None | 47.14 | None | stage2_actionable_best_entry |
 | R1L11_C04_052690_CZ_NUCLEAR_ENGINEERING_DIRECT | 052690 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 82000.0 | None | None | 19.63 | None | stage2_actionable_best_entry |
 | R1L11_C04_083650_CZ_NUCLEAR_AUXILIARY_SUPPLIER | 083650 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 8810.0 | None | None | 181.5 | None | stage2_actionable_best_entry |
-| R1L12_C04_034020_CZECH_NSSS_HIGH_MAE | 034020 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 21000.0 | None | None | 45.48 | None | stage2_actionable_best_entry |
+| R1L12_C04_034020_CZECH_NSSS_HIGH_MAE | 034020 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 21000.0 | None | 21000.0 | 45.48 | 0.0 | stage2_actionable_best_entry |
 | R1L12_C04_051600_CZECH_MAINTENANCE_BRIDGE | 051600 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 38900.0 | None | None | 23.65 | None | stage2_actionable_best_entry |
-| R1L12_C04_052690_CZECH_DESIGN_PURE_PLAY_SPIKE | 052690 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 82000.0 | None | None | 19.63 | None | stage2_actionable_best_entry |
+| R1L12_C04_052690_CZECH_DESIGN_PURE_PLAY_SPIKE | 052690 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 82000.0 | None | 82000.0 | 19.63 | 0.0 | stage2_actionable_best_entry |
 | R1L12_C04_083650_CZECH_BOILER_EQUIPMENT_HIGH_BETA | 083650 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 8810.0 | None | None | 181.5 | None | stage2_actionable_best_entry |
-| R1L12_C04_100840_CZECH_HEAT_EXCHANGER_SUPPLY_CHAIN | 100840 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 12030.0 | None | None | 219.2 | None | stage2_actionable_best_entry |
+| R1L12_C04_100840_CZECH_HEAT_EXCHANGER_SUPPLY_CHAIN | 100840 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 12030.0 | None | 12030.0 | 219.2 | 0.0 | stage2_actionable_best_entry |
 | R1L16_C04_034020_CZECH_PREF_HIGH_MAE | 034020 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 21000.0 | None | None | 47.14 | None | stage2_actionable_best_entry |
 | R1L16_C04_051600_CZECH_PREF_OM_BRIDGE | 051600 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 38900.0 | None | None | 26.22 | None | stage2_actionable_best_entry |
 | R1L16_C04_052690_CZECH_PREF_DESIGN_PROXY_FALSE_GREEN | 052690 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 82000.0 | None | None | 19.63 | None | stage2_actionable_best_entry |
+| R1L75-C04-032820-WOORI-TECH-NUCLEAR-CONTROL-SYSTEM-BRIDGE | 032820 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 1493.0 | None | None | 95.24 | None | stage2_actionable_best_entry |
+| R1L75-C04-105840-WOOJIN-INSTRUMENTATION-POLICY-PROXY-FADE | 105840 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | None | None | None | None | None | no_valid_stage_transition |
+| R1L75-C04-130660-KEPCO-INDUSTRIAL-NUCLEAR-SERVICE-PROJECT-BRIDGE | 130660 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 8800.0 | None | None | 121.59 | None | stage2_actionable_best_entry |
+| R1L81-C04-032820-WOORITECH-NUCLEAR-CONTROL-SYSTEM-RS-SHARECOUNT | 032820 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 1263.0 | None | None | 103.48 | None | stage2_actionable_best_entry |
+| R1L81-C04-046120-ORBITECH-NUCLEAR-INSPECTION-THEME-FADE | 046120 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | None | None | None | None | None | no_valid_stage_transition |
+| R1L81-C04-126720-SUSAN-INDUSTRIES-NUCLEAR-OM-PROJECT-BRIDGE | 126720 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | None | None | None | None | None | no_valid_stage_transition |

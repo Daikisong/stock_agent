@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `44`
+- stage_transition_summary_rows: `50`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -20,10 +20,10 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C09_084370_EUGENETECH_20240528_ADV_EQUIP_ORDER_PREMIUM_FALSE_GREEN | 084370 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
 | C09_084370_EUGENETECH_20240528_DEPOSITION_EQUIPMENT_VALUATION_BLOWOFF_4B | 084370 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 56500.0 | None | None | no_valid_stage_transition |
 | C09_095610_TES_20240402_VALUATION_BETA_FALSE_GREEN_COUNTER | 095610 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
-| C09_232140_YC_20240613_ADVANCED_TESTER_VALUATION_BLOWOFF_4B_PROTECTIVE | 232140 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
+| C09_232140_YC_20240613_ADVANCED_TESTER_VALUATION_BLOWOFF_4B_PROTECTIVE | 232140 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 21900.0 | None | None | no_valid_stage_transition |
 | C09_232140_YC_20240613_HBM_TESTER_ORDER_OPTION_BLOWOFF | 232140 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
 | C09_232140_YC_20240613_HBM_TESTER_VALUATION_BLOWOFF_4B | 232140 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 21900.0 | None | None | no_valid_stage_transition |
-| C09_240810_WONIKIPS_20240229_ADVANCED_MEMORY_EQUIPMENT_BLOWOFF_4B | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
+| C09_240810_WONIKIPS_20240229_ADVANCED_MEMORY_EQUIPMENT_BLOWOFF_4B | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 32800.0 | None | None | no_valid_stage_transition |
 | C09_240810_WONIKIPS_20240408_ADVANCED_EQUIPMENT_BLOWOFF_FALSE_GREEN | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
 | C09_240810_WONIKIPS_20240408_MEMORY_EQUIPMENT_PRICE_RUN_FALSE_GREEN | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
 | C09_240810_WONIKIPS_20240408_PROCESS_EQUIPMENT_BLOWOFF_4B | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 41650.0 | None | None | no_valid_stage_transition |
@@ -39,15 +39,21 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R13L13_C09_095340_VALUATION_FALSE_GREEN | 095340 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | 4c_too_late |
 | R13L13_C09_095340_VALUATION_FALSE_GREEN | None | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | 4c_too_late |
 | R2L14_C09_003160_DI_TESTER_THEME_BLOWOFF_COUNTEREXAMPLE | 003160 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
-| R2L14_C09_042700_HANMI_VALUATION_BLOWOFF_4B | 042700 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
-| R2L14_C09_058470_RINO_TEST_SOCKET_BLOWOFF_4B | 058470 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
+| R2L14_C09_042700_HANMI_VALUATION_BLOWOFF_4B | 042700 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 196200.0 | None | None | no_valid_stage_transition |
+| R2L14_C09_058470_RINO_TEST_SOCKET_BLOWOFF_4B | 058470 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 298000.0 | None | None | no_valid_stage_transition |
 | R2L14_C09_064290_INTEKPLUS_INSPECTION_FAILED_RERATING | 064290 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
-| R2L14_C09_089030_TECHWING_VALUATION_BLOWOFF_4B | 089030 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
+| R2L14_C09_089030_TECHWING_VALUATION_BLOWOFF_4B | 089030 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 70800.0 | None | None | no_valid_stage_transition |
 | R2L14_C09_095340_ISC_SOCKET_BLOWOFF_FALSE_GREEN | 095340 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
-| R2L14_C09_131290_TSE_LATE_GREEN_VALUATION_BLOWOFF | 131290 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
+| R2L14_C09_131290_TSE_LATE_GREEN_VALUATION_BLOWOFF | 131290 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | 79000.0 | None | None | None | green_too_late |
 | R2L15_C09_EOTECH_LATE_GREEN_20240412 | 039030 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | 273000.0 | None | None | None | green_too_late |
 | R2L15_C09_EOTECH_STAGE2A_20240119 | 039030 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 183900.0 | None | None | 52.8 | None | stage2_actionable_best_entry |
 | R2L15_C09_HPSP_LATE_GREEN_20240214 | 403870 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | 61600.0 | None | None | None | green_false_positive |
 | R2L15_C09_HPSP_STAGE2A_20240119 | 403870 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 47800.0 | None | None | 33.68 | None | stage2_actionable_best_entry |
 | R2L15_C09_WONIKIPS_PRICEONLY_20240704 | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
 | R2L15_C09_WONIKIPS_STAGE2A_20240320 | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 37400.0 | None | None | 19.92 | None | stage2_actionable_best_entry |
+| R2L79-C09-036930-JUSUNG-ADVANCED-EQUIPMENT-THEME-BLOWOFF-FADE | 036930 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
+| R2L79-C09-240810-WONIKIPS-ADVANCED-EQUIPMENT-ORDER-QUALITY-POSITIVE | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 30300.0 | None | None | 48.02 | None | stage2_actionable_best_entry |
+| R2L79-C09-403870-HPSP-ADVANCED-EQUIPMENT-VALUATION-BLOWOFF | 403870 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 44950.0 | None | None | no_valid_stage_transition |
+| R2L82-C09-036930-JUSUNG-ALD-EQUIPMENT-VALUATION-BLOWOFF-SHARECOUNT | 036930 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
+| R2L82-C09-240810-WONIK-IPS-SEMICAP-ORDER-BRIDGE-LIFECYCLE | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
+| R2L82-C09-322310-AUROS-METROLOGY-VALUATION-BLOWOFF | 322310 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |

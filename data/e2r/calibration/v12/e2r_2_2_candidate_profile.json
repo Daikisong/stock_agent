@@ -5,38 +5,39 @@
   "production_default_scoring_changed": false,
   "active_default_profile_after_apply": "e2r_2_2_rolling_calibrated",
   "sector_shadow_candidate_count": 30,
-  "archetype_shadow_candidate_count": 89,
-  "stage_transition_summary_rows": 2251,
+  "archetype_shadow_candidate_count": 95,
+  "stage_transition_summary_rows": 2778,
   "promotion_ready": false,
   "promotion_blockers": [
     {
       "blocker": "evidence_url_pending",
-      "count": 27,
+      "count": 525,
       "reason": "v12 rows can support shadow analysis but need exact public evidence URLs before default promotion.",
       "needed_to_clear": "Attach verified DART/IR/report/news URLs or mark rows as evidence-verified."
     },
     {
       "blocker": "source_proxy_only",
-      "count": 40,
+      "count": 523,
       "reason": "Some evidence is source-name-level historical event proxy, not verified production evidence.",
       "needed_to_clear": "Replace proxy rows with verified as-of evidence records."
     },
     {
       "blocker": "rejected_rows",
-      "count": 2886,
+      "count": 2956,
       "reason": "Some rows failed validation or were not usable for shadow calibration.",
       "needed_to_clear": "Fix missing sector/archetype IDs, price fields, or evidence flags."
     }
   ],
   "promotion_decision_counts": {
-    "apply_next_patch": 111,
-    "blocked_by_data_quality": 5,
-    "hold_for_more_evidence": 3
+    "apply_next_patch": 112,
+    "blocked_by_data_quality": 11,
+    "blocked_by_logic_risk": 1,
+    "hold_for_more_evidence": 1
   },
   "promotion_type_counts": {
-    "Type1_safety_guardrail": 117,
-    "Type2_stage2_yellow_observation": 2
+    "Type1_safety_guardrail": 124,
+    "Type2_stage2_yellow_observation": 1
   },
-  "apply_next_patch_count": 111,
+  "apply_next_patch_count": 112,
   "next_patch_ready": true
 }

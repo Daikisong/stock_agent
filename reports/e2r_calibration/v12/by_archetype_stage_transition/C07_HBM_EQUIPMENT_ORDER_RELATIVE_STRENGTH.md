@@ -3,10 +3,13 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `45`
+- stage_transition_summary_rows: `57`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| 036810 | 036810 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 25100.0 | None | None | 66.73 | None | stage2_actionable_best_entry |
+| 084370 | 084370 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 37750.0 | None | None | 58.94 | None | stage2_actionable_best_entry |
+| 095610 | 095610 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |
 | C07_003160_DI_20240305_HBM_TESTER_ORDER_RS_STAGE2 | 003160 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 11740.0 | None | None | 162.35 | None | stage2_actionable_best_entry |
 | C07_003160_DI_20240329_HBM_TESTER_ORDER_RELATIVE_STRENGTH_STAGE2 | 003160 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 12750.0 | None | None | 141.57 | None | stage2_actionable_best_entry |
 | C07_003160_DI_20240621_HBM_TESTER_PRICE_PREMIUM_4B | 003160 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | 25900.0 | None | None | no_valid_stage_transition |
@@ -36,7 +39,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R13L12_C07_ISC_095340 | 095340 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |
 | R13L12_C07_LEENO_058470 | 058470 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |
 | R13L12_C07_TECHWING_089030 | 089030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 14600.0 | None | None | 384.9 | None | stage2_actionable_best_entry |
-| R2L12_C07_003160_DI_TESTER_THEME_COUNTEREXAMPLE | 003160 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |
+| R2L12_C07_003160_DI_TESTER_THEME_COUNTEREXAMPLE | 003160 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | 22650.0 | None | None | None | green_false_positive |
 | R2L12_C07_042700_HANMI_TCBONDER | 042700 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 78500.0 | None | None | 150.0 | None | stage2_actionable_best_entry |
 | R2L12_C07_089030_TECHWING_HBM_HANDLER | 089030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 18690.0 | None | None | 278.81 | None | stage2_actionable_best_entry |
 | R2L12_C07_232140_YC_TESTER_HIGH_MAE | 232140 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 9460.0 | None | None | 142.6 | None | stage2_actionable_best_entry |
@@ -52,3 +55,12 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R2L13_C07_TECHWING_HBM_TEST_HANDLER_20240119 | None | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 14600.0 | None | 68700.0 | 384.9467 | 96.2595 | 4b_good_peak_capture |
 | R2L13_C07_YEST_PRICEONLY_BLOWOFF_20240327 | 122640 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |
 | R2L13_C07_YEST_PRICEONLY_BLOWOFF_20240327 | None | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |
+| R2L74-C07-036810-FST-EUV-CHILLER-ANCILLARY-EQUIPMENT-RS | 036810 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 25100.0 | None | None | 66.73 | None | stage2_actionable_best_entry |
+| R2L74-C07-084370-EUGENE-TECH-DEPOSITION-EQUIPMENT-RS | 084370 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 37750.0 | None | None | 58.94 | None | stage2_actionable_best_entry |
+| R2L74-C07-095610-TES-HBM-EQUIPMENT-BETA-BRIDGE-FADE | 095610 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |
+| R2L77-C07-084370-EUGENE-TECH-DEPOSITION-EQUIPMENT-RS | 084370 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 34500.0 | None | None | 73.91 | None | stage2_actionable_best_entry |
+| R2L77-C07-232140-YC-HBM-TESTER-ORDER-RS-LIFECYCLE | 232140 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 6300.0 | None | None | 264.29 | None | stage2_actionable_best_entry |
+| R2L77-C07-322310-AUROS-METROLOGY-EQUIPMENT-THEME-FADE | 322310 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |
+| R2L80-C07-003160-DI-HBM-TEST-EQUIPMENT-RS-ORDER-BRIDGE | 003160 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 5950.0 | None | None | 252.94 | None | stage2_actionable_best_entry |
+| R2L80-C07-232140-YC-HBM-TEST-EQUIPMENT-CUSTOMER-ORDER-RS | 232140 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 5490.0 | None | None | 318.03 | None | stage2_actionable_best_entry |
+| R2L80-C07-348210-NEXTIN-INSPECTION-METROLOGY-THEME-FADE | 348210 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |

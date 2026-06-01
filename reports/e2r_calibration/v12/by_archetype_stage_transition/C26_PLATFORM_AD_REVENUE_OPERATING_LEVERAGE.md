@@ -3,10 +3,13 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `72`
+- stage_transition_summary_rows: `84`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| 214270 | 214270 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
+| 214320 | 214320 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
+| 376300 | 376300 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 24100.0 | None | None | 108.71 | None | stage2_actionable_best_entry |
 | C26_030000_CHEIL_20210312_AD_SPEND_REOPENING_OPERATING_LEVERAGE_STAGE2 | 030000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 21250.0 | None | None | 24.71 | None | stage2_actionable_best_entry |
 | C26_030000_CHEIL_20220715_AD_AGENCY_OPERATING_LEVERAGE_STAGE2 | 030000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 21750.0 | None | None | 14.71 | None | stage2_actionable_best_entry |
 | C26_214270_FSN_20220103_DIGITAL_ADTECH_PRICE_PREMIUM_4B | 214270 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | 13800.0 | None | None | no_valid_stage_transition |
@@ -44,15 +47,15 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C26_SOOP_2023_TWITCH_EXIT_MIGRATION | None | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 76600.0 | None | None | 87.73 | None | stage2_actionable_best_entry |
 | R8L10_C26_035420_NAVER_2020_owned_search_commerce_ad_leverage | 035420 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 197500.0 | None | None | 75.7 | None | stage2_actionable_best_entry |
 | R8L10_C26_035720_KAKAO_2020_talkbiz_ad_commerce_leverage | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 206000.0 | None | None | 104.13 | None | stage2_actionable_best_entry |
-| R8L10_C26_067160_SOOP_2021_streaming_ad_donation_operating_leverage | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 89500.0 | None | None | 178.32 | None | stage2_actionable_best_entry |
+| R8L10_C26_067160_SOOP_2021_streaming_ad_donation_operating_leverage | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 89500.0 | None | 237000.0 | 178.32 | 92.4206 | stage2_actionable_best_entry |
 | R8L10_C26_089600_NASMEDIA_2021_ad_recovery_reseller_false_positive | 089600 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
 | R8L10_C26_216050_INCROSS_2021_adtech_reseller_no_durable_platform_leverage | 216050 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
 | R8L10_C26_KAKAO_20231109 | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 45600.0 | None | 60800.0 | 35.75 | 93.2401 | 4b_good_peak_capture |
 | R8L10_C26_NAVER_20231103 | 035420 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 200500.0 | None | None | 17.46 | None | stage2_actionable_best_entry |
-| R8L10_C26_SOOP_20231207 | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 76600.0 | None | None | 87.73 | None | stage2_actionable_best_entry |
-| R8L11_C26_KAKAO_PLATFORM_REGULATION_2021 | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
+| R8L10_C26_SOOP_20231207 | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 76600.0 | None | 129900.0 | 87.73 | 79.3141 | stage2_actionable_best_entry |
+| R8L11_C26_KAKAO_PLATFORM_REGULATION_2021 | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | 4c_too_late |
 | R8L11_C26_NAVER_Q1_2024_EARNINGS_COUNTEREXAMPLE | 035420 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 194600.0 | None | None | 2.0 | None | stage2_actionable_best_entry |
-| R8L11_C26_SOOP_TWITCH_EXIT_MIGRATION_2023 | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 76600.0 | 122200.0 | None | 87.7349 | None | green_too_late |
+| R8L11_C26_SOOP_TWITCH_EXIT_MIGRATION_2023 | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 76600.0 | 122200.0 | 129900.0 | 87.7349 | 79.3096 | 4b_good_peak_capture |
 | R8L12_C26_CASE_001_NAVER_2020_COMMERCE_SEARCH_AD_OPERATING_LEVERAGE | 035420 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 294000.0 | 403500.0 | None | 56.8023 | None | green_too_late |
 | R8L12_C26_CASE_002_KAKAO_2020_TALKBIZ_AD_COMMERCE_LEVERAGE | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 206000.0 | None | None | 151.94 | None | stage2_actionable_best_entry |
 | R8L12_C26_CASE_003_SOOP_2023_TWITCH_EXIT_USER_MIGRATION | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 76600.0 | None | 134600.0 | 87.73 | 86.308 | stage2_actionable_best_entry |
@@ -68,8 +71,8 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R8L13_C26_NAVER_3Q_MARGIN | None | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 200500.0 | 231000.0 | None | 17.46 | None | green_too_late |
 | R8L13_C26_SOOP_TWITCH_EXIT | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 76600.0 | None | 134600.0 | 87.7371 | 86.301 | stage2_actionable_best_entry |
 | R8L13_C26_SOOP_TWITCH_EXIT | None | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 76600.0 | None | 134600.0 | 87.7371 | 86.301 | 4b_good_peak_capture |
-| R8L15_C26_KAKAO_2021_REG_CAP | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
-| R8L15_C26_KAKAO_2021_REG_CAP | None | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
+| R8L15_C26_KAKAO_2021_REG_CAP | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | 157000.0 | None | None | None | green_false_positive |
+| R8L15_C26_KAKAO_2021_REG_CAP | None | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | 157000.0 | None | None | None | green_false_positive |
 | R8L15_C26_NAVER_2020_OPLEV | 035420 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 192500.0 | 299000.0 | None | 80.26 | None | green_too_late |
 | R8L15_C26_NAVER_2020_OPLEV | None | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 192500.0 | None | None | 80.26 | None | stage2_actionable_best_entry |
 | R8L15_C26_SOOP_2021_CREATOR | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 89300.0 | 167200.0 | None | 178.95 | None | green_too_late |
@@ -78,4 +81,13 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R8L29_C26_INCROSS_20201106 | 216050 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 42700.0 | 56500.0 | None | 48.7128 | None | green_too_late |
 | R8L29_C26_NASMEDIA_20201106 | 089600 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 30750.0 | 38900.0 | None | 46.02 | None | green_too_late |
 | R8L29_C26_PLAYD_20200519 | 237820 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
+| R8L73-C26-214270-FSN-DIGITAL-ADTECH-PRICE-BETA-LOCAL4B | 214270 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
+| R8L73-C26-214320-INNOCEAN-AD-AGENCY-OPERATING-LEVERAGE-WEAK | 214320 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
+| R8L73-C26-376300-DEARU-SUBSCRIPTION-PLATFORM-OPERATING-LEVERAGE | 376300 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 24100.0 | None | None | 108.71 | None | stage2_actionable_best_entry |
+| R8L77-C26-237820-PLAYD-ADTECH-ROAS-BUDGET-OPERATING-LEVERAGE | 237820 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 5600.0 | None | None | 90.36 | None | stage2_actionable_best_entry |
+| R8L77-C26-273060-WISEBIRDS-AD-PLATFORM-THEME-FADE | 273060 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
+| R8L77-C26-363260-MOBIDAYS-POST-CA-ADTECH-THEME-FADE | 363260 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
+| R8L81-C26-030000-CHEIL-WORLDWIDE-AD-AGENCY-BOUNDED-RISKWATCH | 030000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
+| R8L81-C26-236810-NBT-REWARD-AD-PLATFORM-THEME-FADE | 236810 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
+| R8L81-C26-237820-PLAYD-PERFORMANCE-AD-AI-MARKETING-LIFECYCLE | 237820 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
 | None | None | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 206000.0 | 403500.0 | 134600.0 | 151.94 | -22.8118 | green_good_but_late |

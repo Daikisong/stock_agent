@@ -3,12 +3,15 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `46`
+- stage_transition_summary_rows: `61`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| 003670 | 003670 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 290000.0 | None | None | no_valid_stage_transition |
+| 006400 | 006400 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 359000.0 | None | None | no_valid_stage_transition |
+| 373220 | 373220 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C12-R3L62-066970 | 066970 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
-| C12-R3L62-247540 | 247540 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C12-R3L62-247540 | 247540 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 455000.0 | None | None | no_valid_stage_transition |
 | C12-R3L62-278280 | 278280 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C12-R3L65-006400 | 006400 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C12-R3L65-361610 | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
@@ -25,7 +28,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C12_336370_SOLUS_20240701_COPPERFOIL_REBOUND_PREMIUM_4B | 336370 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 23050.0 | None | None | no_valid_stage_transition |
 | C12_348370_ENCHEM_20240115_CUSTOMER_CONTRACT_CALLOFF_STAGE2 | 348370 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 107000.0 | None | None | 268.69 | None | stage2_actionable_best_entry |
 | C12_361610_SKIET_20230126_SEPARATOR_STAGE2_SUCCESS_WITH_CUSTOMER_RISK | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 69400.0 | None | None | 49.71 | None | stage2_actionable_best_entry |
-| C12_361610_SKIET_20230404_SEPARATOR_CUSTOMER_CALLOFF_4B_PROTECTIVE | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C12_361610_SKIET_20230404_SEPARATOR_CUSTOMER_CALLOFF_4B_PROTECTIVE | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 85600.0 | None | None | no_valid_stage_transition |
 | C12_361610_SKIET_20230726_SEPARATOR_CALLOFF_FALSE_GREEN | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C12_361610_SKIET_20230726_SEPARATOR_CALLOFF_PREMIUM_4B | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 108600.0 | None | None | no_valid_stage_transition |
 | C12_361610_SKIET_20230726_SEPARATOR_FALSE_RECOVERY | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
@@ -53,3 +56,15 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R3L69_C12_CASE_003_CHUNBO_ELECTROLYTE_DESTOCKING | None | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | R3L69_C12_CASE_004_SOLUS_COPPERFOIL_CUSTOMER_RAMP | 336370 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | R3L69_C12_CASE_004_SOLUS_COPPERFOIL_CUSTOMER_RAMP | None | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
+| R3L72-C12-003670-POSCOFUTUREM-CATHODE-CUSTOMER-CAPEX-CUT-RISK | 003670 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 290000.0 | None | None | no_valid_stage_transition |
+| R3L72-C12-006400-SAMSUNGSDI-RIVIAN-EUROPE-SLOW-EV-DEMAND | 006400 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 359000.0 | None | None | no_valid_stage_transition |
+| R3L72-C12-373220-LGES-Q1-SLOW-EV-DEMAND-CAPEX-CUT-NOT-4C | 373220 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
+| R3L75-C12-006110-SAMA-ALUMINIUM-ALFOIL-CONTRACT-BETA-FADE | 006110 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
+| R3L75-C12-020150-LOTTE-ENERGY-MATERIALS-COPPER-FOIL-CONTRACT-BRIDGE | 020150 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 31250.0 | None | None | 57.44 | None | stage2_actionable_best_entry |
+| R3L75-C12-361610-SK-IET-SEPARATOR-CUSTOMER-CALLOFF-RISK | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
+| R3L78-C12-121600-NANO-CNT-CUSTOMER-CALLOFF-LIFECYCLE | 121600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 95600.0 | None | None | 65.06 | None | stage2_actionable_best_entry |
+| R3L78-C12-361610-SKIET-SEPARATOR-CALLOFF-LOCAL4B | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
+| R3L78-C12-393890-WCP-SEPARATOR-CUSTOMER-CALLOFF-FADE | 393890 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
+| R3L80-C12-336370-SOLUS-COPPERFOIL-POSTCA-CALLOFF-LIFECYCLE | 336370 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
+| R3L80-C12-361610-SKIET-SEPARATOR-CALLOFF-UTILIZATION-LOCAL4B | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 73400.0 | None | None | no_valid_stage_transition |
+| R3L80-C12-450080-ECOPRO-MATERIALS-PRECURSOR-CALLOFF-FADE | 450080 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |

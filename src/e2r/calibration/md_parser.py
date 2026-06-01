@@ -24,6 +24,9 @@ COLUMN_ALIASES = {
     "MFE180": "MFE_180D_pct",
     "MFE_180D": "MFE_180D_pct",
     "MFE_180D_pct": "MFE_180D_pct",
+    "mfe_30_pct": "MFE_30D_pct",
+    "mfe_90_pct": "MFE_90D_pct",
+    "mfe_180_pct": "MFE_180D_pct",
     "MAE30": "MAE_30D_pct",
     "MAE_30D": "MAE_30D_pct",
     "MAE_30D_pct": "MAE_30D_pct",
@@ -33,6 +36,9 @@ COLUMN_ALIASES = {
     "MAE180": "MAE_180D_pct",
     "MAE_180D": "MAE_180D_pct",
     "MAE_180D_pct": "MAE_180D_pct",
+    "mae_30_pct": "MAE_30D_pct",
+    "mae_90_pct": "MAE_90D_pct",
+    "mae_180_pct": "MAE_180D_pct",
     "type": "trigger_type",
     "trigger": "trigger_id",
     "entry": "entry_date",
@@ -74,6 +80,13 @@ ROW_TYPES = {
     "canonical_archetype_rule_candidate",
 }
 
+ROW_TYPE_ALIASES = {
+    "aggregate": "aggregate_metric",
+    "r13_cross_case": "trigger",
+    "r13_cross_summary": "residual_contribution",
+    "r13_guardrail_candidate": "shadow_weight",
+}
+
 FENCE_RE = re.compile(r"```(?P<lang>[A-Za-z0-9_-]*)\n(?P<body>.*?)```", re.DOTALL)
 
 
@@ -96,6 +109,11 @@ def _normalise_key(key: str) -> str:
     return COLUMN_ALIASES.get(lowered, lowered or stripped)
 
 
+def _normalise_row_type(value: Any) -> str:
+    row_type = str(value or "").strip()
+    return ROW_TYPE_ALIASES.get(row_type, ROW_TYPE_ALIASES.get(row_type.lower(), row_type))
+
+
 def _normalise_value(value: Any) -> Any:
     if isinstance(value, str):
         stripped = value.strip()
@@ -114,6 +132,31 @@ def _normalise_row(row: dict[str, Any]) -> dict[str, Any]:
             normalised[key] = value
             continue
         normalised[_normalise_key(str(key))] = _normalise_value(value)
+    original_row_type = str(normalised.get("row_type") or "").strip()
+    row_type = _normalise_row_type(original_row_type)
+    if row_type:
+        normalised["row_type"] = row_type
+    if original_row_type and row_type != original_row_type:
+        normalised["source_row_type"] = original_row_type
+    if original_row_type == "r13_cross_case":
+        if not normalised.get("round") and normalised.get("source_round"):
+            normalised["round"] = normalised.get("source_round")
+        if not normalised.get("loop") and normalised.get("source_loop"):
+            normalised["loop"] = normalised.get("source_loop")
+        if not normalised.get("trigger_id"):
+            if normalised.get("source_trigger_id"):
+                normalised["trigger_id"] = normalised.get("source_trigger_id")
+            else:
+                trigger_parts = [
+                    normalised.get("case_id"),
+                    normalised.get("symbol"),
+                    normalised.get("entry_date"),
+                    normalised.get("trigger_type"),
+                ]
+                trigger_suffix = "_".join(str(part).strip().replace(" ", "_") for part in trigger_parts if part not in (None, ""))
+                normalised["trigger_id"] = f"R13_CROSS_{trigger_suffix}" if trigger_suffix else "R13_CROSS_TRIGGER"
+        normalised["do_not_count_as_new_case"] = True
+        normalised.setdefault("independent_evidence_weight", 0)
     if normalised.get("large_sector_id"):
         normalised["large_sector_id"] = normalise_large_sector_id(normalised.get("large_sector_id"))
     if normalised.get("canonical_archetype_id"):

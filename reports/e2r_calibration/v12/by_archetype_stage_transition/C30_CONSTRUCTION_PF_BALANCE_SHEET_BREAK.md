@@ -3,14 +3,26 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `97`
+- stage_transition_summary_rows: `142`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| 001470 | 001470 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| 002410 | 002410 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 1767.0 | None | None | no_valid_stage_transition |
+| 002990 | 002990 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 5250.0 | None | None | no_valid_stage_transition |
+| 004960 | 004960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 7370.0 | None | None | no_valid_stage_transition |
+| 005960 | 005960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 5350.0 | None | None | no_valid_stage_transition |
+| 013580 | 013580 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| 021320 | 021320 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| 034300 | 034300 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| 047040 | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
 | C30-R10L12-000720 | 000720 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 40800.0 | None | None | 8.82 | None | stage2_actionable_best_entry |
 | C30-R10L12-006360 | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | 4c_too_late |
 | C30-R10L12-047040 | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 4165.0 | None | None | 15.01 | None | stage2_actionable_best_entry |
 | C30-R10L12-294870 | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | 4c_too_late |
+| C30-R10L71-002990-PF-DRAG | 002990 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 5110.0 | None | None | 3.3 | None | stage2_actionable_best_entry |
+| C30-R10L71-014790-FALSEBREAK | 014790 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| C30-R10L71-034300-RECAP | 034300 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
 | C30_002410_BUMYANG_20231208_PF_SMALLCAP_RELIEF_RALLY_LOCAL_4B | 002410 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 2445.0 | None | None | no_valid_stage_transition |
 | C30_004960_HANSHIN_20230915_PF_CREDIT_PRICE_PREMIUM_4B | 004960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 7770.0 | None | None | no_valid_stage_transition |
 | C30_005960_DONGBU_20220112_MIDSIZE_BUILDER_PF_LIQUIDITY_4C | 005960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
@@ -37,18 +49,18 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R10L10-C30-GS-20230706 | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | 4c_too_late |
 | R10L10-C30-HDC-20240125 | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 16180.0 | None | None | 52.04 | None | stage2_actionable_best_entry |
 | R10L10-C30-HDCON-20240125 | 000720 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 32050.0 | None | None | 12.32 | None | stage2_actionable_best_entry |
-| R10L10_C30_000720_HDEC_2023_OVERSEAS_BACKLOG_BALANCE_SHEET_SAFE_HAVEN | 000720 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 38650.0 | None | None | 14.9 | None | stage2_actionable_best_entry |
+| R10L10_C30_000720_HDEC_2023_OVERSEAS_BACKLOG_BALANCE_SHEET_SAFE_HAVEN | 000720 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 38650.0 | None | 40800.0 | 14.9 | 37.3338 | stage2_actionable_best_entry |
 | R10L10_C30_006360_GS_EC_2023_QUALITY_DEFECT_LEGAL_LOSS_BREAK | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
-| R10L10_C30_028050_SAMSUNG_EA_2023_OVERSEAS_EPC_NET_CASH_PF_ESCAPE | 028050 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 25850.0 | None | None | 45.1373 | None | stage2_actionable_best_entry |
+| R10L10_C30_028050_SAMSUNG_EA_2023_OVERSEAS_EPC_NET_CASH_PF_ESCAPE | 028050 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 25850.0 | 37000.0 | None | 45.1373 | None | green_too_late |
 | R10L10_C30_294870_HDC_2022_COLLAPSE_LEGAL_THESIS_BREAK | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
 | R10L10_C30_DL_FALSE_GREEN | 375500 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | 4c_too_late |
 | R10L10_C30_DL_FALSE_GREEN | None | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
-| R10L10_C30_GS_2023_QUALITY_INCIDENT_FALSE_PROMOTION | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
-| R10L10_C30_GS_POS_4B | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 16210.0 | None | None | 34.18 | None | stage2_actionable_best_entry |
+| R10L10_C30_GS_2023_QUALITY_INCIDENT_FALSE_PROMOTION | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 18600.0 | None | None | 2.53 | None | stage2_actionable_best_entry |
+| R10L10_C30_GS_POS_4B | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 16210.0 | None | 21550.0 | 34.18 | 96.3798 | 4b_good_peak_capture |
 | R10L10_C30_GS_POS_4B | None | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 16210.0 | None | None | 34.18 | None | stage2_actionable_best_entry |
 | R10L10_C30_HDC_2022_HARD_4C_QUALITY_BALANCE_BREAK | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
 | R10L10_C30_HDC_2024_BALANCE_REPAIR_RERATING | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 14210.0 | None | None | 98.45 | None | stage2_actionable_best_entry |
-| R10L10_C30_HDC_POS | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 17530.0 | None | None | 60.8702 | None | stage2_actionable_best_entry |
+| R10L10_C30_HDC_POS | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 17530.0 | None | 26700.0 | 60.8702 | 85.9375 | 4b_good_peak_capture |
 | R10L10_C30_HDC_POS | None | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 17530.0 | None | None | 60.87 | None | stage2_actionable_best_entry |
 | R10L11-C30-DAEWOO-20240125 | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 3925.0 | None | None | 26.5 | None | stage2_actionable_best_entry |
 | R10L11-C30-DONGBU-20240125 | 005960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 5250.0 | None | None | 4.76 | None | stage2_actionable_best_entry |
@@ -64,15 +76,15 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R10L11_C30_KYERYONG_202403_POLICY_REVALUE_FALSE_POSITIVE | 013580 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
 | R10L11_C30_KYERYONG_202403_POLICY_REVALUE_FALSE_POSITIVE | None | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
 | R10L11_C30_SHINSEGAE_202403_PARENT_SUPPORT_EVENT_PREMIUM | 034300 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 10630.0 | None | None | 75.45 | None | stage2_actionable_best_entry |
-| R10L11_C30_SHINSEGAE_202403_PARENT_SUPPORT_EVENT_PREMIUM | None | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 10630.0 | None | None | 75.45 | None | stage2_actionable_best_entry |
+| R10L11_C30_SHINSEGAE_202403_PARENT_SUPPORT_EVENT_PREMIUM | None | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 10630.0 | None | 18160.0 | 75.45 | 93.8864 | 4b_good_peak_capture |
 | R10L12-C30-HANSHIN-20240327 | 004960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 6720.0 | None | None | 18.6 | None | stage2_actionable_best_entry |
 | R10L12-C30-HLDNI-20240327 | 014790 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 2010.0 | None | None | 43.28 | None | stage2_actionable_best_entry |
 | R10L12-C30-HS-20240327 | 002460 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 10030.0 | None | None | 0.7 | None | stage2_actionable_best_entry |
 | R10L12-C30-KCCCON-20240327 | 021320 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 4625.0 | None | None | 24.32 | None | stage2_actionable_best_entry |
-| R10L12-C30-SAMBU-20240327 | 001470 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L12-C30-SAMBU-20240327 | 001470 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | 4c_too_late |
 | R10L12-C30-SEOHEE-20240327 | 035890 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 1336.0 | None | None | 25.75 | None | stage2_actionable_best_entry |
-| R10L12_C30_006360_GS_GEOMDAN_REBUILD_20230706 | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
-| R10L12_C30_006360_GS_GEOMDAN_REBUILD_20230706 | None | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L12_C30_006360_GS_GEOMDAN_REBUILD_20230706 | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 14520.0 | None | None | 4b_too_early |
+| R10L12_C30_006360_GS_GEOMDAN_REBUILD_20230706 | None | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 14520.0 | None | None | 4b_too_early |
 | R10L12_C30_047040_DAEWOO_PF_PANIC_20221031 | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
 | R10L12_C30_047040_DAEWOO_PF_PANIC_20221031 | None | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
 | R10L12_C30_294870_HDC_GWANGJU_COLLAPSE_20220112 | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
@@ -80,9 +92,9 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R10L12_C30_375500_DLENC_PF_DISCOUNT_REVERSAL_20231010 | 375500 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
 | R10L12_C30_375500_DLENC_PF_DISCOUNT_REVERSAL_20231010 | None | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
 | R10L13-C30-DAEWOO-047040-20210311 | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 5720.0 | None | None | 66.78 | None | stage2_actionable_best_entry |
-| R10L13-C30-GS-006360-20230706 | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L13-C30-GS-006360-20230706 | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 14520.0 | None | None | 4b_too_early |
 | R10L13-C30-HDC-294870-20220112 | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
-| R10L13-C30-HDEC-000720-20230626 | 000720 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L13-C30-HDEC-000720-20230626 | 000720 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 40800.0 | None | None | 8.82 | None | stage2_actionable_best_entry |
 | R10L13_C30_001260_POLICY_THEME_HIGH_MFE | 001260 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 6380.0 | None | None | 64.58 | None | stage2_actionable_best_entry |
 | R10L13_C30_002410_POLICY_THEME_THIN_FLOAT | 002410 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 1611.0 | None | None | 160.4 | None | stage2_actionable_best_entry |
 | R10L13_C30_002780_NO_CONVERSION_DRIFT_DOWN | 002780 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 1004.0 | None | None | 0.5 | None | stage2_actionable_best_entry |
@@ -101,6 +113,39 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R10L15_C30_294870_NEG_20220112 | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
 | R10L15_C30_294870_NEG_20220112 | None | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
 | R10L15_C30_HANSHIN_202407_PUBLIC_WORKS_HIGH_MAE_SUCCESS | 004960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 6790.0 | None | None | 17.38 | None | stage2_actionable_best_entry |
-| R10L15_C30_KOLON_202406_PRICE_ONLY_PROPERTY_THEME_BLOWOFF | 003070 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L15_C30_KOLON_202406_PRICE_ONLY_PROPERTY_THEME_BLOWOFF | 003070 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 15740.0 | None | None | no_valid_stage_transition |
 | R10L15_C30_KUMHO_202403_POLICY_BETA_FALSE_POSITIVE | 002990 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 4520.0 | None | None | 5.75 | None | stage2_actionable_best_entry |
 | R10L15_C30_SEOHEE_202408_H1_SURVIVOR_MARGIN_REPAIR | 035890 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 1377.0 | None | None | 30.07 | None | stage2_actionable_best_entry |
+| R10L72-C30-001470-SAMBU-HARD-BALANCE-SHEET-BREAK | 001470 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L72-C30-005960-DONGBU-CONSTRUCTION-PF-RISK-LOCAL4B | 005960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 5350.0 | None | None | no_valid_stage_transition |
+| R10L72-C30-013580-KYERYONG-ORDERBOOK-BUFFER-OVERBEARISH | 013580 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L73-C30-004960-HANSHIN-PF-ORDERBOOK-LOCAL4B | 004960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 7370.0 | None | None | no_valid_stage_transition |
+| R10L73-C30-034300-SHINSEGAE-CONSTRUCTION-PF-RECAP-BUFFER | 034300 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L73-C30-047040-DAEWOO-LARGE-BUILDER-BUFFER-NOFULL4B | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L74-C30-002410-BUMYANG-PF-LIQUIDITY-LOCAL4B-SEVERE | 002410 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 1767.0 | None | None | no_valid_stage_transition |
+| R10L74-C30-002990-KUMHO-PF-LIQUIDITY-ORDERBOOK-LOCAL4B | 002990 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 5250.0 | None | None | no_valid_stage_transition |
+| R10L74-C30-021320-KCC-CONSTRUCTION-RISKWATCH-NO-HARD4C | 021320 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L75-C30-004960-HANSHIN-BUILDER-RISKWATCH-NO-HARD4C | 004960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L75-C30-005960-DONGBU-PF-LIQUIDITY-LOCAL4B | 005960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 5350.0 | None | None | no_valid_stage_transition |
+| R10L75-C30-013580-KYERYONG-BUFFERED-BUILDER-NO-HARD4C | 013580 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L76-C30-001470-SAMBU-CONSTRUCTION-FINANCING-RISK-LOCAL4B | 001470 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 2155.0 | None | None | no_valid_stage_transition |
+| R10L76-C30-034300-SHINSEGAE-CONSTRUCTION-POST-CA-SUPPORT-NO-HARD4C | 034300 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L76-C30-035890-SEOHEE-CONSTRUCTION-ORDERBOOK-BUFFER-NO-HARD4C | 035890 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L77-C30-002410-BEOMYANG-BUILDER-FINANCING-HIGH-MAE-LOCAL4B | 002410 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 1767.0 | None | None | no_valid_stage_transition |
+| R10L77-C30-003070-KOLON-GLOBAL-PF-RISKWATCH-RECOVERY-NO-HARD4C | 003070 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L77-C30-047040-DAEWOO-E&C-LARGECAP-PF-RISKWATCH-NO-HARD4C | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L78-C30-002990-KUMHO-E&C-SMALLBUILDER-HIGH-MAE-LOCAL4B | 002990 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 5250.0 | None | None | no_valid_stage_transition |
+| R10L78-C30-004960-HANSHIN-E&C-PF-RISKWATCH-BOUNDED-NO-HARD4C | 004960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L78-C30-010780-ISDONGSEO-PF-RECOVERY-SPIKE-NO-HARD4C | 010780 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L79-C30-003070-KOLON-GLOBAL-PF-RECOVERY-SPIKE-NO-HARD4C | 003070 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L79-C30-005960-DONGBU-E&C-PF-HIGHMAE-LOCAL4B | 005960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 5350.0 | None | None | no_valid_stage_transition |
+| R10L79-C30-021320-KCC-E&C-PF-BOUNDED-RISKWATCH-NO-FORCED4B | 021320 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L80-C30-002410-BEOMYANG-E&C-PF-HIGHMAE-LOCAL4B | 002410 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 1767.0 | None | None | no_valid_stage_transition |
+| R10L80-C30-013360-ILSEONG-E&C-RECOVERY-SPIKE-NO-HARD4C | 013360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L80-C30-013580-KYERYONG-E&C-BOUNDED-RISKWATCH-NO-FORCED4B | 013580 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L81-C30-002780-JINHEUNG-SMALL-BUILDER-HIGHMAE-LOCAL4B | 002780 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 1029.0 | None | None | no_valid_stage_transition |
+| R10L81-C30-014790-HL-DNI-MID-BUILDER-ORDERBOOK-RECOVERY | 014790 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L81-C30-047040-DAEWOO-E&C-BOUNDED-BUILDER-NO-FORCED4B | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L82-C30-001470-SAMBU-SMALL-BUILDER-HIGHMAE-SHARECOUNT-STATUS | 001470 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 1990.0 | None | None | no_valid_stage_transition |
+| R10L82-C30-004960-HANSHIN-BUILDER-BOUNDED-PF-RISKWATCH | 004960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
+| R10L82-C30-010780-ISDONGSEO-PF-HOUSING-RECOVERY-SHARECOUNT | 010780 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |

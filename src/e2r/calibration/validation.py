@@ -99,7 +99,19 @@ def normalise_trigger_type(value: Any) -> str:
         "Stage2 policy-only stress": "Stage2",
         "price-only-theme-breakout": "price_only_theme_breakout_guardrail",
     }
-    return aliases.get(text, text)
+    if text in aliases:
+        return aliases[text]
+    if text.startswith("Stage2-Actionable"):
+        return "Stage2-Actionable"
+    if text.startswith("Stage3-Green"):
+        return "Stage3-Green"
+    if text.startswith("Stage3-Yellow"):
+        return "Stage3-Yellow"
+    if text.startswith("Stage4B") or text.startswith("4B-") or text.startswith("4B_"):
+        return "Stage4B"
+    if text.startswith("Stage4C") or text.startswith("4C-") or text.startswith("4C_"):
+        return "Stage4C"
+    return text
 
 
 def _contains_any(row: dict[str, Any], terms: tuple[str, ...]) -> bool:
@@ -121,6 +133,16 @@ def _adjustment_valid(row: dict[str, Any]) -> bool:
 
 
 def _has_required_mfe_mae(row: dict[str, Any]) -> bool:
+    if row.get("source_row_type") == "r13_cross_case":
+        return all(
+            parse_number(row.get(key)) is not None
+            for key in (
+                "MFE_30D_pct",
+                "MFE_180D_pct",
+                "MAE_30D_pct",
+                "MAE_180D_pct",
+            )
+        )
     return all(
         parse_number(row.get(key)) is not None
         for key in (

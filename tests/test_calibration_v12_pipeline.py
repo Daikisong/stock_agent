@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from e2r.calibration.archetype_weight_profile import ARCHETYPE_WEIGHT_SEEDS, LARGE_SECTOR_WEIGHT_SEEDS
 from e2r.calibration.cli import build_parser, run_v12_calibration_pipeline, run_v12_full_pipeline
@@ -129,6 +130,51 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             self.assertEqual(len(bundle.valid_rows), 1)
             self.assertEqual(bundle.valid_rows[0]["trigger_type"], "Stage4B")
 
+    def test_v12_r13_cross_case_rows_parse_as_guardrail_triggers(self) -> None:
+        markdown = """# E2R Stock-Web Historical Calibration / Sector-Archetype Residual Research Round
+
+- research_session: `post_calibrated_sector_archetype_residual_research`
+- mode: `historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12`
+- round: `R13`
+- loop: `71`
+- large_sector_id: `L10_POLICY_EVENT_CROSS_REDTEAM_MISC`
+- canonical_archetype_id: `R13_CROSS_ARCHETYPE_4B_4C_REDTEAM`
+
+```jsonl
+{"row_type":"r13_cross_case","source_round":"R12","source_loop":"71","large_sector_id":"L10_POLICY_EVENT_CROSS_REDTEAM_MISC","canonical_archetype_id":"C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP","source_trigger_id":"SRC-T1","case_id":"R12L71-C32-003920","symbol":"003920","trigger_type":"Stage4B-GovernanceExecutionRisk","entry_date":"2021-05-28","entry_price":570000,"mfe_30_pct":42.63,"mae_30_pct":-5.26,"mfe_180_pct":42.63,"mae_180_pct":-34.91,"calibration_usable":true,"source_proxy_only":true,"evidence_url_pending":true}
+{"row_type":"aggregate","axis":"stage2_required_bridge","row_count":1}
+{"row_type":"r13_cross_summary","selected_cross_case_count":1,"do_not_propose_new_weight_delta":true}
+{"row_type":"r13_guardrail_candidate","axis":"local_4b_watch","decision":"hold_for_more_evidence"}
+```
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = (
+                Path(tmp)
+                / "e2r_stock_web_v12_residual_round_R13_loop_71_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_research.md"
+            )
+            path.write_text(markdown, encoding="utf-8")
+            doc = v12_result_documents(discover_markdown_documents(path.parent))[0]
+            parsed = parse_markdown_document(doc)
+            trigger_rows = parsed.rows_by_type["trigger"]
+
+            self.assertEqual(len(trigger_rows), 1)
+            self.assertEqual(len(parsed.rows_by_type["aggregate_metric"]), 1)
+            self.assertEqual(len(parsed.rows_by_type["shadow_weight"]), 1)
+            self.assertEqual(trigger_rows[0]["row_type"], "trigger")
+            self.assertEqual(trigger_rows[0]["source_row_type"], "r13_cross_case")
+            self.assertEqual(trigger_rows[0]["round"], "R12")
+            self.assertEqual(trigger_rows[0]["loop"], "71")
+            self.assertEqual(trigger_rows[0]["trigger_id"], "SRC-T1")
+            self.assertEqual(trigger_rows[0]["MFE_30D_pct"], 42.63)
+            self.assertEqual(trigger_rows[0]["MAE_180D_pct"], -34.91)
+            self.assertTrue(trigger_rows[0]["do_not_count_as_new_case"])
+
+            bundle = validate_v12_trigger_rows(trigger_rows)
+            self.assertEqual(len(bundle.valid_rows), 1)
+            self.assertEqual(bundle.valid_rows[0]["trigger_type"], "Stage4B")
+            self.assertTrue(bundle.valid_rows[0]["guardrail_usable"])
+            self.assertFalse(bundle.valid_rows[0]["usable_for_new_weight_evidence"])
+
     def test_v12_metadata_and_residual_contribution_parse(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             path = self._write_fixture(Path(tmp))
@@ -147,6 +193,9 @@ class V12CalibrationPipelineTests(unittest.TestCase):
         self.assertEqual(normalise_trigger_type("price-only-local-4B-overlay"), "Stage4B")
         self.assertEqual(normalise_trigger_type("4B-local-price-only"), "Stage4B")
         self.assertEqual(normalise_trigger_type("Stage2 policy-only stress"), "Stage2")
+        self.assertEqual(normalise_trigger_type("Stage2-Actionable-GovernanceOverhangRelease"), "Stage2-Actionable")
+        self.assertEqual(normalise_trigger_type("Stage4B-GovernanceExecutionRisk"), "Stage4B")
+        self.assertEqual(normalise_trigger_type("4C-thesis-break"), "Stage4C")
 
     def test_v12_runtime_weight_seed_covers_canonical_taxonomy(self) -> None:
         self.assertTrue(all(key in ARCHETYPE_WEIGHT_SEEDS for key in CANONICAL_ARCHETYPE_IDS))
@@ -261,6 +310,8 @@ class V12CalibrationPipelineTests(unittest.TestCase):
                 data_dir / "v12_md_registry.jsonl",
                 data_dir / "v12_trigger_rows_representative.jsonl",
                 data_dir / "stage_transition_summary.jsonl",
+                data_dir / "v12_raw_aggregate_metric_rows.jsonl",
+                data_dir / "v12_raw_shadow_weight_rows.jsonl",
                 data_dir / "sector_shadow_profile.json",
                 data_dir / "archetype_shadow_profile.json",
                 data_dir / "e2r_2_2_candidate_profile.json",
@@ -585,39 +636,69 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             "information_confidence": 4,
         }
         try:
-            os.environ["E2R_SCORING_PROFILE"] = "calibrated"
-            baseline = DeterministicScorer().score(
-                ScoringPayload(
-                    symbol="000810",
-                    as_of_date=date(2024, 2, 23),
-                    components=components,
-                    diagnostic_scores={"credible_order_or_policy_evidence": 1},
-                    large_sector_id="L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
-                    canonical_archetype_id="C22_INSURANCE_RATE_CYCLE_RESERVE",
+            with tempfile.TemporaryDirectory() as tmp:
+                profile_payload = build_v12_rolling_profile_payload(
+                    patch_specs=[
+                        {
+                            "axis": "stage2_bonus_candidate_delta",
+                            "scope": "canonical_archetype:C22_INSURANCE_RATE_CYCLE_RESERVE",
+                            "new_value": 1.0,
+                        }
+                    ]
                 )
-            )
-            os.environ["E2R_SCORING_PROFILE"] = "e2r_2_2"
-            rolling = DeterministicScorer().score(
-                ScoringPayload(
-                    symbol="000810",
-                    as_of_date=date(2024, 2, 23),
-                    components=components,
-                    diagnostic_scores={"credible_order_or_policy_evidence": 1},
-                    large_sector_id="L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
-                    canonical_archetype_id="C22_INSURANCE_RATE_CYCLE_RESERVE",
+                profile_path = Path(tmp) / "e2r_scoring_profile_v2_2.yaml"
+                profile_path.write_text(
+                    "\n".join(
+                        [
+                            f"profile_id: {profile_payload['profile_id']}",
+                            f"profile_status: {profile_payload['profile_status']}",
+                            f"previous_default_profile: {profile_payload['previous_default_profile']}",
+                            f"profile_basis: {profile_payload['profile_basis']}",
+                            "thresholds:",
+                            *[f"  {key}: {value}" for key, value in profile_payload["thresholds"].items()],
+                            "adjustments:",
+                            *[f"  {key}: {value}" for key, value in profile_payload["adjustments"].items()],
+                            "guardrails:",
+                            *[f"  {key}: {value}" for key, value in profile_payload["guardrails"].items()],
+                        ]
+                    )
+                    + "\n",
+                    encoding="utf-8",
                 )
-            )
-            with self.assertRaisesRegex(ValueError, "unknown canonical_archetype_id"):
-                DeterministicScorer().score(
+                os.environ["E2R_SCORING_PROFILE"] = "calibrated"
+                baseline = DeterministicScorer().score(
                     ScoringPayload(
                         symbol="000810",
                         as_of_date=date(2024, 2, 23),
                         components=components,
                         diagnostic_scores={"credible_order_or_policy_evidence": 1},
                         large_sector_id="L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
-                        canonical_archetype_id="C00_UNKNOWN",
+                        canonical_archetype_id="C22_INSURANCE_RATE_CYCLE_RESERVE",
                     )
                 )
+                os.environ["E2R_SCORING_PROFILE"] = "e2r_2_2"
+                with patch("e2r.calibration.scoring_profile.V2_2_PROFILE_PATH", profile_path):
+                    rolling = DeterministicScorer().score(
+                        ScoringPayload(
+                            symbol="000810",
+                            as_of_date=date(2024, 2, 23),
+                            components=components,
+                            diagnostic_scores={"credible_order_or_policy_evidence": 1},
+                            large_sector_id="L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+                            canonical_archetype_id="C22_INSURANCE_RATE_CYCLE_RESERVE",
+                        )
+                    )
+                    with self.assertRaisesRegex(ValueError, "unknown canonical_archetype_id"):
+                        DeterministicScorer().score(
+                            ScoringPayload(
+                                symbol="000810",
+                                as_of_date=date(2024, 2, 23),
+                                components=components,
+                                diagnostic_scores={"credible_order_or_policy_evidence": 1},
+                                large_sector_id="L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+                                canonical_archetype_id="C00_UNKNOWN",
+                            )
+                        )
         finally:
             if old is None:
                 os.environ.pop("E2R_SCORING_PROFILE", None)

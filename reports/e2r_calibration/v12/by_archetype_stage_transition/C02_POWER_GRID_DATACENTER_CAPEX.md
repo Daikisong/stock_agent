@@ -3,10 +3,13 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `47`
+- stage_transition_summary_rows: `62`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| 010120 | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 218000.0 | None | None | no_valid_stage_transition |
+| 267260 | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | 229000.0 | None | None | 82.31 | None | stage2_actionable_best_entry |
+| 298040 | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | 289000.0 | None | None | 69.55 | None | stage2_actionable_best_entry |
 | C02_010120_LSELECTRIC_20240524_GRID_CAPEX_PRICE_PREMIUM_4B | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 231000.0 | None | None | no_valid_stage_transition |
 | C02_010120_LSELECTRIC_20240724_GRID_EQUIPMENT_SECOND_WAVE_FALSE_GREEN | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
 | C02_103590_ILJINELEC_20240529_TRANSFORMER_CABLE_FALSE_GREEN | 103590 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
@@ -30,13 +33,13 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R1L12_C02_HDHE_267260_20240131 | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | 102700.0 | None | None | 264.65 | None | stage2_actionable_best_entry |
 | R1L12_C02_HSHEAVY_298040_20240305 | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | 230000.0 | None | None | 103.91 | None | stage2_actionable_best_entry |
 | R1L12_C02_LSE_010120_20240305 | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | 77800.0 | None | 231500.0 | 252.83 | 78.1386 | 4b_good_peak_capture |
-| R1L13_C02_HDHE_PRICE_ONLY_4B_20240724 | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
+| R1L13_C02_HDHE_PRICE_ONLY_4B_20240724 | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 365500.0 | None | None | no_valid_stage_transition |
 | R1L13_C02_HDHE_STAGE2_20240103 | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | 85800.0 | None | None | 336.48 | None | stage2_actionable_best_entry |
-| R1L13_C02_HYOSUNG_PRICE_ONLY_4B_20240528 | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
+| R1L13_C02_HYOSUNG_PRICE_ONLY_4B_20240528 | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 449500.0 | None | None | no_valid_stage_transition |
 | R1L13_C02_HYOSUNG_STAGE2_20240103 | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | 167900.0 | None | None | 179.33 | None | stage2_actionable_best_entry |
 | R1L13_C02_ILJIN_POST_CA_STAGE2_20240214 | 103590 | C02_POWER_GRID_DATACENTER_CAPEX | 11780.0 | None | None | 156.79 | None | stage2_actionable_best_entry |
-| R1L13_C02_ILJIN_PRICE_ONLY_4B_20240529 | 103590 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
-| R1L13_C02_LSE_PRICE_ONLY_4B_20240724 | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
+| R1L13_C02_ILJIN_PRICE_ONLY_4B_20240529 | 103590 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 28600.0 | None | None | no_valid_stage_transition |
+| R1L13_C02_LSE_PRICE_ONLY_4B_20240724 | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 260000.0 | None | None | no_valid_stage_transition |
 | R1L13_C02_LSE_STAGE2_20240103 | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | 73500.0 | None | None | 273.47 | None | stage2_actionable_best_entry |
 | R1L15_C02_DAEWON_20240513 | 006340 | C02_POWER_GRID_DATACENTER_CAPEX | None | 4885.0 | None | None | None | green_false_positive |
 | R1L15_C02_HDHE_2024 | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | 85800.0 | None | None | 336.48 | None | stage2_actionable_best_entry |
@@ -54,3 +57,15 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R1L1C02_LSE_20240701 | None | C02_POWER_GRID_DATACENTER_CAPEX | 204500.0 | None | None | 34.23 | None | stage2_actionable_best_entry |
 | R1L1C02_LSE_20240723_4B | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 259000.0 | None | None | no_valid_stage_transition |
 | R1L1C02_LSE_20240723_4B | None | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 259000.0 | None | None | 4b_too_early |
+| R1L72-C02-010120-LS-ELECTRIC-US-DATACENTER-GROWTH-PRICE-ONLY-4B | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 218000.0 | None | None | no_valid_stage_transition |
+| R1L72-C02-267260-HDHE-US-TRANSFORMER-BACKLOG-MARGIN-BRIDGE | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | 229000.0 | None | None | 82.31 | None | stage2_actionable_best_entry |
+| R1L72-C02-298040-HYOSUNG-US-TRANSFORMER-HICO-BRIDGE | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | 289000.0 | None | None | 69.55 | None | stage2_actionable_best_entry |
+| R1L76-C02-000500-GAON-CABLE-GRID-CAPEX-LIFECYCLE | 000500 | C02_POWER_GRID_DATACENTER_CAPEX | 21700.0 | None | None | 243.32 | None | stage2_actionable_best_entry |
+| R1L76-C02-006340-DAEWON-CABLE-COPPER-GRID-THEME-FADE | 006340 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
+| R1L76-C02-033100-JERYONG-TRANSFORMER-GRID-CAPEX-BACKLOG | 033100 | C02_POWER_GRID_DATACENTER_CAPEX | 21750.0 | None | None | 363.0 | None | stage2_actionable_best_entry |
+| R1L78-C02-000500-GAON-CABLE-DATACENTER-GRID-CABLE-BACKLOG | 000500 | C02_POWER_GRID_DATACENTER_CAPEX | 22400.0 | None | None | 232.59 | None | stage2_actionable_best_entry |
+| R1L78-C02-017040-KWANGMYUNG-ELECTRIC-SWITCHGEAR-THEME-FADE | 017040 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
+| R1L78-C02-103590-ILJIN-ELECTRIC-POWER-CABLE-TRANSFORMER-POST-CA | 103590 | C02_POWER_GRID_DATACENTER_CAPEX | 11790.0 | None | None | 156.57 | None | stage2_actionable_best_entry |
+| R1L80-C02-001440-DAEHAN-CABLE-POST-CA-GRID-CAPEX-BACKLOG | 001440 | C02_POWER_GRID_DATACENTER_CAPEX | 10830.0 | None | None | 93.44 | None | stage2_actionable_best_entry |
+| R1L80-C02-189860-SEOJEON-ELECTRIC-SWITCHGEAR-THEME-BACKLOG-GAP | 189860 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
+| R1L80-C02-199820-CHEIL-ELECTRIC-POST-CA-SWITCHGEAR-FADE | 199820 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |

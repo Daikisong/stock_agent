@@ -3,10 +3,13 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `52`
+- stage_transition_summary_rows: `70`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| 043150 | 043150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | 32500.0 | None | None | no_valid_stage_transition |
+| 099190 | 099190 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| 226400 | 226400 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 4580.0 | None | None | 93.89 | None | stage2_actionable_best_entry |
 | C25-R7L28-041830-INBODY-EXPORT-SPIKE | 041830 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 29000.0 | None | None | 12.24 | None | stage2_actionable_best_entry |
 | C25-R7L28-145720-DENTIUM-CHINA-IMPLANT | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 77000.0 | 139700.0 | None | 140.2659 | None | green_good_but_late |
 | C25-R7L28-214150-CLASSYS-EXPORT-MARGIN | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 25150.0 | 32900.0 | None | 71.1716 | None | green_too_late |
@@ -36,8 +39,8 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C25_R13L33_004_ISENS_CGM_APPROVAL | 099190 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 32000.0 | None | None | 24.06 | None | stage2_actionable_best_entry |
 | C25_R13L33_005_LUNIT_MNA_OVERHANG | 328130 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 79400.0 | None | None | 4.28 | None | stage2_actionable_best_entry |
 | C25_R7L16_CLASSYS_20230810 | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 34900.0 | None | None | 45.56 | None | stage2_actionable_best_entry |
-| C25_R7L16_CUREXO_20230626 | 060280 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 17500.0 | None | None | 47.14 | None | stage2_actionable_best_entry |
-| C25_R7L16_JLK_20230810 | 322510 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| C25_R7L16_CUREXO_20230626 | 060280 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 17500.0 | None | 24400.0 | 47.14 | 83.6414 | stage2_actionable_best_entry |
+| C25_R7L16_JLK_20230810 | 322510 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | 35900.0 | None | None | None | green_false_positive |
 | C25_R7L16_VUNO_20230602 | 338220 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 23650.0 | 50100.0 | None | 193.87 | None | green_too_late |
 | R13L50_C25_041830_INBODY_2023_GLOBAL_DEVICE_CHANNEL_MODERATE_SUCCESS | 041830 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 24200.0 | None | None | 34.5 | None | stage2_actionable_best_entry |
 | R13L50_C25_228670_RAY_2023_DENTAL_DIGITAL_EXPORT_FALSE_POSITIVE | 228670 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 30950.0 | None | 37700.0 | 36.19 | 60.2635 | 4b_good_peak_capture |
@@ -48,7 +51,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R7L10_C25_DENTIUM_2023_CHINA_VBP_HIGH_MAE | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
 | R7L10_C25_DIO_2023_DENTAL_FALSE_POSITIVE | 039840 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
 | R7L10_C25_PHARMARESEARCH_2023_REJURAN_EXPORT | 214450 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 102900.0 | None | None | 53.74 | None | stage2_actionable_best_entry |
-| R7L12_C25_145720_DENTIUM_2022_EXPORT_IMPLANT_RERATING | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 70300.0 | None | None | 163.1501 | None | stage2_actionable_best_entry |
+| R7L12_C25_145720_DENTIUM_2022_EXPORT_IMPLANT_RERATING | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 70300.0 | None | 175500.0 | 163.1501 | 91.7219 | 4b_good_peak_capture |
 | R7L12_C25_214150_CLASSYS_2023_EXPORT_CONSUMABLE_RERATING | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 23900.0 | 40150.0 | None | 108.36 | None | green_too_late |
 | R7L12_C25_322510_JLK_2023_AI_REIMBURSEMENT_PREMIUM | 322510 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 7700.0 | None | None | 394.81 | None | stage2_actionable_best_entry |
 | R7L12_C25_328130_LUNIT_2024_MEDICAL_AI_EXPORT_REIMBURSEMENT_GAP | 328130 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 61700.0 | None | None | 14.26 | None | stage2_actionable_best_entry |
@@ -56,6 +59,21 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R7L13-C25-099190-ISENS-CGM-LAUNCH-FAILED-RERATING | 099190 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 32000.0 | None | None | 24.06 | None | stage2_captured_most_upside |
 | R7L13-C25-322510-JLK-STROKE-AI-REIMBURSEMENT-HIGH-MAE | 322510 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 7700.0 | None | 37000.0 | 402.6 | 94.5155 | stage2_actionable_best_entry |
 | R7L13-C25-338220-VUNO-MEDICAL-AI-REIMBURSEMENT-RERATING | 338220 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 23650.0 | None | 65500.0 | 193.8776 | 91.2718 | 4b_good_peak_capture |
-| R7L14-C25-001 | 338220 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 23650.0 | None | None | 193.8777 | None | stage2_actionable_best_entry |
+| R7L14-C25-001 | 338220 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 23650.0 | None | 63600.0 | 193.8777 | 87.128 | stage2_actionable_best_entry |
 | R7L14-C25-002 | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 26400.0 | 32900.0 | None | 63.07 | None | green_too_late |
 | R7L14-C25-003 | 328130 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| R7L72-C25-043150-VATECH-DENTAL-IMAGING-EXPORT-SLOWDOWN | 043150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | 32500.0 | None | None | no_valid_stage_transition |
+| R7L72-C25-099190-ISENS-CGM-REIMBURSEMENT-LAUNCH-BETA-FAIL | 099190 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| R7L72-C25-226400-OSTEONIC-ORTHOPEDIC-EXPORT-IMPLANT-BRIDGE | 226400 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 4580.0 | None | None | 93.89 | None | stage2_actionable_best_entry |
+| R7L75-C25-099190-ISENS-CGM-REIMBURSEMENT-ADOPTION-BETA-FADE | 099190 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| R7L75-C25-206640-BODITECH-IVD-EXPORT-CHANNEL-MARGIN-BRIDGE | 206640 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 14000.0 | None | None | 50.36 | None | stage2_actionable_best_entry |
+| R7L75-C25-214680-DRTECH-XRAY-DETECTOR-EXPORT-ORDER-BETA-FADE | 214680 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| R7L77-C25-043150-VATECH-DENTAL-IMAGING-EXPORT-BETA-FADE | 043150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| R7L77-C25-099190-ISENS-CGM-REIMBURSEMENT-EXPORT-BETA-FADE | 099190 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| R7L77-C25-214450-PHARMARESEARCH-AESTHETIC-MEDDEVICE-EXPORT-MARGIN | 214450 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 99700.0 | None | None | 138.72 | None | stage2_actionable_best_entry |
+| R7L79-C25-099190-ISENS-CGM-REIMBURSEMENT-EXPORT-THEME-FADE | 099190 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| R7L79-C25-287410-JEISYS-MEDICAL-AESTHETIC-DEVICE-STRATEGIC-EVENT | 287410 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 8550.0 | None | None | 61.4 | None | stage2_actionable_best_entry |
+| R7L79-C25-336570-WONTECH-AESTHETIC-DEVICE-EXPORT-MARGIN-LIFECYCLE | 336570 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 7830.0 | None | None | 53.26 | None | stage2_actionable_best_entry |
+| R7L82-C25-041830-INBODY-DIAGNOSTIC-DEVICE-EXPORT-BOUNDED | 041830 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| R7L82-C25-043150-VATECH-DENTAL-IMAGING-EXPORT-FADE | 043150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| R7L82-C25-065510-HUVITZ-OPHTHALMIC-DEVICE-SHARECOUNT-FADE | 065510 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
