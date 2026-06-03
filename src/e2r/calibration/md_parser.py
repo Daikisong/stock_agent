@@ -83,7 +83,9 @@ ROW_TYPES = {
 ROW_TYPE_ALIASES = {
     "aggregate": "aggregate_metric",
     "r13_cross_case": "trigger",
+    "r13_review_trigger": "trigger",
     "r13_cross_summary": "residual_contribution",
+    "r13_cross_archetype_rule_candidate": "canonical_archetype_rule_candidate",
     "r13_guardrail_candidate": "shadow_weight",
 }
 
@@ -138,7 +140,7 @@ def _normalise_row(row: dict[str, Any]) -> dict[str, Any]:
         normalised["row_type"] = row_type
     if original_row_type and row_type != original_row_type:
         normalised["source_row_type"] = original_row_type
-    if original_row_type == "r13_cross_case":
+    if original_row_type in {"r13_cross_case", "r13_review_trigger"}:
         if not normalised.get("round") and normalised.get("source_round"):
             normalised["round"] = normalised.get("source_round")
         if not normalised.get("loop") and normalised.get("source_loop"):
@@ -154,7 +156,7 @@ def _normalise_row(row: dict[str, Any]) -> dict[str, Any]:
                     normalised.get("trigger_type"),
                 ]
                 trigger_suffix = "_".join(str(part).strip().replace(" ", "_") for part in trigger_parts if part not in (None, ""))
-                normalised["trigger_id"] = f"R13_CROSS_{trigger_suffix}" if trigger_suffix else "R13_CROSS_TRIGGER"
+                normalised["trigger_id"] = f"R13_CROSS_{trigger_suffix}" if trigger_suffix else "R13_REVIEW_TRIGGER"
         normalised["do_not_count_as_new_case"] = True
         normalised.setdefault("independent_evidence_weight", 0)
     if normalised.get("large_sector_id"):

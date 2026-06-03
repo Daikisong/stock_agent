@@ -45,6 +45,7 @@ V12_RESULT_PATTERNS = (
 ROUND_LOOP_RE = re.compile(r"round[_-]?(R?\d+)_loop[_-]?(\d+)", re.IGNORECASE)
 V12_RESIDUAL_RE = re.compile(r"v12_residual_round_(?P<round>R?\d+)_loop_(?P<loop>\d+)_(?P<tail>.*)\.md$", re.IGNORECASE)
 V12_STANDALONE_RE = re.compile(r"v12_no_repeat_standalone_(?P<tail>.*)\.md$", re.IGNORECASE)
+ARCHIVE_DIR_NAMES = {"achieve", "achieve_v12"}
 
 
 @dataclass(frozen=True)
@@ -215,6 +216,12 @@ def discover_markdown_documents(root: str | Path) -> list[MarkdownDocument]:
     root_path = Path(root)
     documents: list[MarkdownDocument] = []
     for path in sorted(root_path.rglob("*.md")):
+        try:
+            relative_parts = path.relative_to(root_path).parts
+        except ValueError:
+            relative_parts = path.parts
+        if any(part in ARCHIVE_DIR_NAMES for part in relative_parts[:-1]):
+            continue
         text_head = path.read_text(encoding="utf-8", errors="replace")[:24000]
         is_prompt_spec = _contains_prompt_spec_marker(path, text_head)
         schema_family = _schema_family(path)

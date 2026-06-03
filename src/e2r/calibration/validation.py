@@ -11,6 +11,7 @@ import re
 POSITIVE_TRIGGER_TYPES = {"Stage2", "Stage2-Actionable", "Stage3-Yellow", "Stage3-Green"}
 FOUR_B_TYPES = {"Stage4B", "4B", "4B-watch", "Stage4B-watch"}
 FOUR_C_TYPES = {"Stage4C", "4C", "Stage4C-hard", "hard_4C"}
+R13_PARTIAL_PRICE_PATH_ROW_TYPES = {"r13_cross_case", "r13_review_trigger"}
 
 UNAVAILABLE_MARKERS = {
     "",
@@ -133,15 +134,11 @@ def _adjustment_valid(row: dict[str, Any]) -> bool:
 
 
 def _has_required_mfe_mae(row: dict[str, Any]) -> bool:
-    if row.get("source_row_type") == "r13_cross_case":
-        return all(
-            parse_number(row.get(key)) is not None
-            for key in (
-                "MFE_30D_pct",
-                "MFE_180D_pct",
-                "MAE_30D_pct",
-                "MAE_180D_pct",
-            )
+    if row.get("source_row_type") in R13_PARTIAL_PRICE_PATH_ROW_TYPES:
+        return any(
+            parse_number(row.get(f"MFE_{horizon}D_pct")) is not None
+            and parse_number(row.get(f"MAE_{horizon}D_pct")) is not None
+            for horizon in (30, 90, 180)
         )
     return all(
         parse_number(row.get(key)) is not None

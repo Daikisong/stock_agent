@@ -3,37 +3,14 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `30`
+- stage_transition_summary_rows: `7`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| C06_000660_SKHYNIX_20230525_HBM_CUSTOMER_CAPACITY_STAGE2 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 103500.0 | None | None | 38.84 | None | stage2_actionable_best_entry |
-| C06_000660_SKHYNIX_20230526_HBM_CUSTOMER_CAPACITY_STAGE2 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 109200.0 | None | None | 52.84 | None | stage2_actionable_best_entry |
-| C06_000660_SKHYNIX_20240119_HBM_CUSTOMER_CAPACITY_STAGE2 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 141300.0 | None | None | 75.87 | None | stage2_actionable_best_entry |
-| C06_000660_SKHYNIX_20240711_HBM_CAPACITY_LOCAL_4B | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | 241000.0 | None | None | no_valid_stage_transition |
-| C06_000660_SKHYNIX_20240711_HBM_CAPACITY_PREMIUM_LOCAL_4B | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | 241000.0 | None | None | no_valid_stage_transition |
-| C06_000660_SKHYNIX_20240711_HBM_CAPACITY_PRICE_PREMIUM_4B | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | 241000.0 | None | None | no_valid_stage_transition |
-| C06_005930_SAMSUNG_20240402_HBM_LAGGARD_FALSE_GREEN | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
-| C06_005930_SAMSUNG_20240405_HBM_CATCHUP_FALSE_GREEN | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
-| C06_005930_SAMSUNG_20240705_HBM_CUSTOMER_CAPACITY_FALSE_GREEN | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
-| C06_005930_SAMSUNG_20240711_HBM_QUALIFICATION_LAG_FALSE_GREEN | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
-| C06_SEC_202407_Q2_MEMORY_RECOVERY_NO_HBM_QUAL_FALSE_POSITIVE | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 87100.0 | None | None | 1.95 | None | 4c_too_late |
-| C06_SEC_202407_Q2_MEMORY_RECOVERY_NO_HBM_QUAL_FALSE_POSITIVE | None | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 87100.0 | None | None | 1.95 | None | 4c_too_late |
-| C06_SKH_202310_Q3_HBM_CUSTOMER_TRACTION | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 119100.0 | None | None | 108.65 | None | stage2_actionable_best_entry |
-| C06_SKH_202310_Q3_HBM_CUSTOMER_TRACTION | None | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 119100.0 | None | None | 108.65 | None | stage2_actionable_best_entry |
-| C06_SKH_202404_Q1_HBM_SOLD_OUT_REVISION_GREEN | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | 177800.0 | 241000.0 | None | None | green_good_but_late |
-| C06_SKH_202404_Q1_HBM_SOLD_OUT_REVISION_GREEN | None | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | 177800.0 | 241000.0 | None | None | green_good_but_late |
-| R2L10_C06_000660_HBM3E_SOLDOUT_CAPACITY | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 173200.0 | None | None | 43.48 | None | stage2_actionable_best_entry |
-| R2L10_C06_000660_PRICE_ONLY_LOCAL_4B_TOO_EARLY | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | 241000.0 | None | None | no_valid_stage_transition |
-| R2L10_C06_005930_CUSTOMER_TESTING_OPTIONALITY_FALSE_POSITIVE | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
-| R2L10_C06_005930_HBM_QUALIFICATION_FAILURE_4C | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
-| R2L12_C06_SAMSUNG_20240320_HBM_OPTIMISM_FALSE_GREEN | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
-| R2L12_C06_SAMSUNG_20240524_QUALIFICATION_BREAK_4C | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | 4c_too_late |
-| R2L12_C06_SKHYNIX_20240424_CAPACITY_HBM_STAGE2 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 179800.0 | None | None | 38.21 | None | stage2_actionable_best_entry |
-| R2L12_C06_SKHYNIX_20240613_GREEN_HIGH_MAE | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | 222000.0 | None | None | None | green_too_late |
-| R2L15_C06_000660_DIRECT_HBM_CAPACITY_SUCCESS | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 136000.0 | 173200.0 | None | 82.726 | None | green_too_late |
-| R2L15_C06_000660_PRICE_ONLY_LOCAL_4B_WATCH | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | 241000.0 | None | None | no_valid_stage_transition |
-| R2L15_C06_005930_GENERIC_MEMORY_HBM_LAG_COUNTER | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
-| R2L75-C06-007660-ISU-PETASYS-AI-SERVER-MEMORY-SUBSTRATE-CAPACITY | 007660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 31350.0 | None | None | 58.53 | None | stage2_actionable_best_entry |
-| R2L75-C06-222800-SIMMTECH-DDR5-HBM-SUBSTRATE-CYCLE-FADE | 222800 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
-| R2L75-C06-353200-DAEDUCK-FCBGA-MEMORY-PACKAGE-SUBSTRATE-BETA-FADE | 353200 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
+| R2L76_C06_000660_HBM3E_20240213 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 150000.0 | None | None | 65.67 | None | stage2_actionable_best_entry |
+| R2L76_C06_000660_HBM3_20231027 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 119100.0 | None | None | 108.65 | None | stage2_actionable_best_entry |
+| R2L76_C06_005930_HBM_QUALIFICATION_FALSE_POSITIVE_20240705 | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 87100.0 | None | None | 1.95 | None | stage2_actionable_best_entry |
+| R2L76_C06_067310_OSAT_CAPACITY_THEME_20230914 | 067310 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
+| R2L87-C06-01 | 402340 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 65700.0 | None | None | 65.91 | None | stage2_actionable_best_entry |
+| R2L87-C06-02 | 009150 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 139200.0 | None | None | 26.8 | None | stage2_actionable_best_entry |
+| R2L87-C06-03 | 014680 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |

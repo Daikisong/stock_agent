@@ -6,17 +6,17 @@
 쉬운 예시:
 
 ```text
-이미 C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION / 257720 / Stage3-Green / 2024-05-10 이 여러 번 들어왔다.
-다음 연구는 같은 조합을 다시 쓰지 말고,
-새 종목, 새 날짜, 새 trigger family, 또는 4B/4C/반례를 찾아야 한다.
+이미 C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION / 257720 / Stage3-Green / 2024-05-10 이 들어왔다.
+다음 연구는 같은 조합을 다시 쓰지 말고, 새 종목, 새 날짜, 새 trigger family, 또는 4B/4C/반례를 찾아야 한다.
 ```
 
-last_updated: `2026-06-01`
+last_updated: `2026-06-03`
 
 ## 원본 데이터
 
 | source | role |
 |---|---|
+| `data/e2r/calibration/v12/v12_md_registry.jsonl` | 이번 실행에 실제 ingest된 연구 MD 목록 |
 | `data/e2r/calibration/v12/v12_trigger_rows_representative.jsonl` | 중복제거 후 대표 trigger row |
 | `data/e2r/calibration/v12/v12_trigger_rows_validated.jsonl` | 검증 통과 raw row. 반복 조합 확인용 |
 | `data/e2r/calibration/v12/v12_aggregate_metrics.json` | 대섹터/아키타입 집계 |
@@ -29,51 +29,67 @@ last_updated: `2026-06-01`
 | item | result |
 |---|---|
 | run command | `run-v12-calibration --md-input-root docs/round` |
-| v12 result MD | 648 |
+| v12 result MD | 284 |
 | parser failures | 0 |
-| representative rows | 3699 |
-| validated rows | 4334 |
-| raw aggregate metric rows | 219 |
-| raw shadow weight rows | 1569 |
-| active profile | `e2r_2_2_rolling_calibrated` |
-| R13 cross checkpoint rows | `r13_cross_case`는 `trigger`로 수용하되 `do_not_count_as_new_case=true`로 중복 가중치 차단 |
+| metadata missing docs | 0 |
+| unknown large sector docs | 0 |
+| unknown archetype docs | 0 |
+| archive docs included | 0 |
+| suffix-named docs included | 131 |
+| representative rows | 1121 |
+| validated rows | 1216 |
+| raw trigger rows | 1915 |
+| raw aggregate metric rows | 3 |
+| raw shadow weight rows | 646 |
+| active profile selector | `e2r_2_2` |
+| rolling profile id | `e2r_2_2_rolling_calibrated` |
+| rollback profile | `calibrated` |
+| production default scoring changed | `true` |
+| archive policy | `docs/round/achieve`와 `docs/round/achieve_v12`는 완료 보관분으로 제외 |
+| suffix policy | 파일명 `(1)`, `(2)`, `(3)`은 제외 기준이 아님. 내용이 다르면 각각 ingest |
+| R13 review rows | `r13_cross_case`, `r13_review_trigger`는 `trigger`로 수용하되 `do_not_count_as_new_case=true`로 중복 가중치 차단 |
 
-R13 교차검증 row는 새 독립 케이스로 세지 않는다. 예를 들어 R5에서 이미 다룬 코스맥스 row가 R13 guardrail 검증에 다시 나오면, "검증 근거"로는 읽지만 "새 C20 positive 1개"로 중복 계산하지 않는다.
+예를 들어 같은 loop에 `research.md`, `research(1).md`, `research(2).md`가 있어도 파일명만 보고 버리지 않는다. 실제 중복 여부는 row의 `canonical_archetype_id + symbol + trigger_type + entry_date`와 dedupe 결과로 판단한다.
+
+R13 교차검증 row는 새 독립 케이스로 세지 않는다. 예를 들어 R5에서 이미 다룬 코스맥스 row가 R13 guardrail 검증에 다시 나오면, 검증 근거로는 읽지만 새 C20 positive 1개로 중복 계산하지 않는다.
 
 ## 현재 Corpus Snapshot
 
 | metric | value |
 |---|---:|
-| representative row_count | 3699 |
-| validated row_count | 4334 |
-| stage_transition_summary rows | 2778 |
-| aggregate metric rows | 2442 |
-| raw aggregate metric rows | 219 |
-| raw shadow weight rows | 1569 |
-| unique_case_count | 2391 |
-| unique_symbol_count | 492 |
+| representative row_count | 1121 |
+| validated row_count | 1216 |
+| stage_transition_summary rows | 963 |
+| aggregate metric rows | 787 |
+| raw aggregate metric rows | 3 |
+| raw shadow weight rows | 646 |
+| unique_case_count | 705 |
+| unique_symbol_count | 448 |
 | unique_round_count | 13 |
-| positive_case_count | 670 |
-| counterexample_count | 754 |
-| 4B_case_count | 721 |
-| 4C_case_count | 254 |
-| good_stage2_count | 1112 |
-| bad_stage2_count | 463 |
-| source_proxy_only_count | 523 |
-| evidence_url_pending_count | 525 |
-| exact duplicate key count in validated rows | 976 |
-| extra repeated raw rows before dedupe | 1555 |
-| apply_next_patch decisions | 112 |
-| hold/block decisions | 13 |
-
+| large_sectors_covered | 10 |
+| canonical_archetypes_covered | 36 |
+| positive_case_count | 221 |
+| counterexample_count | 269 |
+| 4B_case_count | 70 |
+| 4C_case_count | 18 |
+| good_stage2_count | 428 |
+| bad_stage2_count | 250 |
+| source_proxy_only_count | 303 |
+| evidence_url_pending_count | 327 |
+| exact duplicate key count in validated rows | 159 |
+| extra repeated raw rows before dedupe | 173 |
+| apply_next_patch decisions | 89 |
+| hold/block decisions | 4 |
 
 ## 반영된 safe patch 축
 
 | axis | applied decisions |
 |---|---:|
-| earlier_thesis_break_watch | 36 |
-| local_4b_watch_guard | 32 |
-| stage2_required_bridge | 44 |
+| earlier_thesis_break_watch | 10 |
+| hard_4c_confirmation | 2 |
+| local_4b_watch_guard | 31 |
+| stage2_bonus_candidate_delta | 1 |
+| stage2_required_bridge | 45 |
 
 ## 주요 rejected reason
 
@@ -81,15 +97,16 @@ Rejected row는 버리는 데이터가 아니라 다음 정규화 TODO다. 예�
 
 | reason | rows |
 |---|---:|
-| not_representative_for_aggregate | 1773 |
-| missing_required_mfe_mae | 1510 |
-| not_usable_for_promotion | 663 |
-| price_only_no_evidence | 303 |
-| missing_entry_price | 182 |
-| missing_entry_date | 180 |
-| missing_trigger_type | 136 |
-| insufficient_forward_window | 34 |
-| corporate_action_contaminated | 5 |
+| missing_required_mfe_mae | 467 |
+| missing_trigger_type | 465 |
+| not_usable_for_promotion | 272 |
+| not_representative_for_aggregate | 208 |
+| price_only_no_evidence | 97 |
+| missing_entry_price | 28 |
+| invalid_price_source | 24 |
+| missing_entry_date | 24 |
+| insufficient_forward_window | 4 |
+| corporate_action_contaminated | 1 |
 
 ## 연구 시작 전 중복 판정 규칙
 
@@ -101,47 +118,48 @@ Rejected row는 버리는 데이터가 아니라 다음 정규화 TODO다. 예�
 | Data-quality repair | 기존 row가 `evidence_url_pending` 또는 `source_proxy_only` | 같은 케이스라도 URL/공시/리포트 검증 보강이면 허용 |
 | Bad expansion | 가격만 있고 비가격 증거가 없음 | Stage2/Green 연구로 쓰지 말고 4B watch/반례 목적만 허용 |
 | Unknown symbol | symbol이 `UNKNOWN_SYMBOL` 또는 비어 있음 | 새 연구보다 먼저 symbol 정규화 보강 |
+| Filename suffix | `(1)`, `(2)`, `(3)` suffix만으로 중복 취급하지 않음 | 내용/row key 기준으로 판정 |
 
 ## 아키타입별 현재 커버리지
 
-| archetype | rows | symbols | date range | good/bad S2 | 4B/4C | URL/proxy | top covered symbols |
+| archetype | rows | symbols | date range | good/bad S2 | 4B/4C | URL pending/proxy | top covered symbols |
 |---|---:|---:|---|---|---|---|---|
-| C01_ORDER_BACKLOG_MARGIN_BRIDGE | 23 | 12 | 2023-01-04~2024-07-31 | 14/1 | 2/0 | 15/18 | 010620(4), 329180(3), 009540(2), 010140(2), 077970(2), 082740(2) |
-| C02_POWER_GRID_DATACENTER_CAPEX | 64 | 11 | 2023-01-27~2024-07-24 | 33/1 | 17/0 | 17/17 | 010120(18), 267260(14), 298040(9), 006340(5), 103590(5), 017040(3) |
-| C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 89 | 13 | 2022-01-17~2024-11-12 | 40/7 | 20/1 | 15/15 | 064350(22), 272210(11), UNKNOWN_SYMBOL(9), 012450(8), 010820(7), 003570(6) |
-| C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 62 | 14 | 2022-02-28~2025-01-10 | 9/9 | 21/1 | 9/9 | 032820(10), 094820(9), 105840(9), 006910(7), 034020(6), 052690(5) |
-| C05_EPC_MEGA_CONTRACT_MARGIN_GAP | 19 | 12 | 2022-01-12~2024-03-27 | 3/7 | 0/5 | 3/3 | 006360(4), 047040(4), 000720(3), 028050(3), 375500(3), 034300(1) |
-| C06_HBM_MEMORY_CUSTOMER_CAPACITY | 37 | 5 | 2023-05-25~2024-10-08 | 10/2 | 8/4 | 3/3 | 000660(18), 005930(11), UNKNOWN_SYMBOL(5), 007660(1), 222800(1), 353200(1) |
-| C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 68 | 22 | 2023-09-25~2024-10-17 | 28/4 | 16/0 | 12/12 | UNKNOWN_SYMBOL(10), 232140(8), 031980(6), 042700(6), 003160(5), 089030(5) |
-| C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 78 | 13 | 2023-03-30~2024-09-26 | 24/9 | 16/1 | 12/12 | 098120(13), 080580(9), 058470(8), 095340(7), 131290(7), 219130(6) |
-| C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 56 | 17 | 2024-01-19~2024-07-11 | 7/0 | 19/2 | 6/6 | 240810(8), 036930(7), 039030(4), 403870(4), 003160(3), 042700(3) |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 31 | 10 | 2023-03-17~2024-06-07 | 15/4 | 2/0 | 9/9 | 036930(6), 240810(6), 084370(4), 095610(4), 테스(2), 000660(1) |
-| C11_BATTERY_ORDERBOOK_RERATING | 79 | 21 | 2022-08-17~2024-07-22 | 31/9 | 17/5 | 12/12 | 247540(11), 003670(8), 393890(8), 222080(6), 348370(6), 066970(5) |
-| C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 68 | 18 | 2023-01-26~2024-07-25 | 15/2 | 15/5 | 11/11 | 361610(10), 393890(10), 336370(6), 006110(5), 011790(5), 003670(4) |
-| C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 43 | 11 | 2022-05-25~2025-04-08 | 10/9 | 7/2 | 6/6 | 373220(14), 006400(13), 096770(5), 003670(2), 020150(2), 051910(2) |
-| C14_EV_DEMAND_SLOWDOWN_4B_4C | 76 | 15 | 2023-02-22~2024-12-20 | 0/0 | 33/29 | 6/6 | 247540(13), 003670(10), 066970(10), 361610(8), 373220(7), 393890(6) |
-| C15_MATERIAL_SPREAD_SUPERCYCLE | 71 | 25 | 2020-08-10~2025-02-21 | 21/8 | 15/0 | 12/12 | 005490(12), 004020(9), 012800(5), 025820(5), 001430(4), 018470(4) |
-| C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 67 | 23 | 2019-05-20~2024-10-10 | 17/7 | 19/0 | 13/13 | 001570(8), 005490(8), 000910(7), 075970(5), 005290(4), 081150(4) |
-| C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 140 | 23 | 2020-08-03~2024-07-15 | 51/18 | 25/3 | 19/15 | 298020(23), 011780(21), 006650(15), 011170(12), 014830(9), 010950(7) |
-| C18_CONSUMER_EXPORT_CHANNEL_REORDER | 126 | 20 | 2020-03-17~2024-12-16 | 41/14 | 25/8 | 18/18 | 003230(20), 005180(14), 004370(13), 192820(9), 097950(8), 271560(8) |
-| C19_BRAND_RETAIL_INVENTORY_MARGIN | 89 | 17 | 2021-05-17~2024-10-16 | 17/14 | 18/7 | 21/25 | 111770(11), 081660(10), 383220(9), UNKNOWN_SYMBOL(8), 020000(7), 036620(7) |
-| C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 200 | 18 | 2021-05-10~2025-06-25 | 67/20 | 40/12 | 3/3 | 257720(48), 090430(21), 003230(19), 018290(19), 051900(14), 192820(14) |
-| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 235 | 24 | 2021-08-06~2025-06-24 | 86/24 | 29/5 | 26/23 | 105560(56), 323410(34), 086790(26), UNKNOWN_SYMBOL(21), 006220(16), 055550(10) |
-| C22_INSURANCE_RATE_CYCLE_RESERVE | 162 | 11 | 2023-05-15~2025-05-30 | 53/29 | 22/5 | 32/32 | 000810(34), 005830(33), 088350(17), 001450(16), 032830(13), 085620(13) |
-| C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 139 | 15 | 2019-02-07~2025-03-27 | 39/7 | 22/23 | 9/9 | 000100(35), 028300(34), UNKNOWN_SYMBOL(20), 145020(16), 196170(13), 068270(3) |
-| C24_BIO_TRIAL_DATA_EVENT_RISK | 83 | 19 | 2019-08-01~2024-11-20 | 30/7 | 6/20 | 15/22 | 000100(10), 215600(9), 009420(8), 298380(8), 028300(7), 039200(7) |
-| C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 101 | 21 | 2022-05-11~2024-07-01 | 41/8 | 17/4 | 18/18 | 338220(17), 214150(14), 099190(11), 145720(8), 228670(6), 043150(5) |
-| C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 137 | 16 | 2020-04-24~2024-10-28 | 50/17 | 20/6 | 12/12 | 067160(24), 035420(17), 035720(16), 089600(8), SOOP(8), NAVER(8) |
-| C27_CONTENT_IP_GLOBAL_MONETIZATION | 114 | 25 | 2016-03-24~2024-08-21 | 42/11 | 24/7 | 15/15 | 035900(12), 194480(10), 259960(10), 352820(9), 225570(7), 253450(7) |
-| C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 102 | 22 | 2019-05-27~2024-08-13 | 28/6 | 20/2 | 15/15 | 012510(20), 053800(16), 263860(12), 030520(7), 131370(6), 136540(6) |
-| C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 203 | 36 | 2020-08-14~2024-09-09 | 68/46 | 32/10 | 46/42 | UNKNOWN_SYMBOL(20), 000270(19), 161390(14), 012330(13), 005380(12), 018880(12) |
-| C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 159 | 29 | 2021-03-11~2024-09-30 | 15/21 | 29/29 | 42/42 | 047040(15), 006360(13), UNKNOWN_SYMBOL(13), 294870(12), 005960(9), 000720(8) |
-| C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 206 | 77 | 2020-01-20~2024-07-31 | 41/38 | 43/0 | 39/40 | UNKNOWN_SYMBOL(15), 004090(8), 036460(8), 112610(7), 005860(6), 008970(6) |
-| C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 157 | 23 | 2020-03-27~2025-04-29 | 51/23 | 42/11 | 34/28 | 010130(30), 041510(26), 008930(13), 011200(11), UNKNOWN_SYMBOL(8), 003920(7) |
-| R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 368 | 137 | 2019-08-01~2025-03-27 | 104/68 | 74/42 | 0/0 | 247540(10), 028300(9), 105560(8), 000100(7), 003670(7), 006360(7) |
-| R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | 12 | 12 | 2021-02-23~2024-06-28 | 5/3 | 0/1 | 0/0 | 003230(1), 005490(1), 010780(1), 011200(1), 011790(1), 025950(1) |
-| R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | 23 | 21 | 2020-11-06~2024-07-22 | 3/7 | 5/3 | 0/0 | 028300(3), 001390(1), 001570(1), 003070(1), 003310(1), 006220(1) |
-| R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | 12 | 12 | 2021-07-06~2024-05-29 | 3/3 | 1/1 | 0/0 | 005930(1), 006340(1), 010120(1), 011170(1), 019170(1), 021320(1) |
+| C01_ORDER_BACKLOG_MARGIN_BRIDGE | 25 | 14 | 2023-01-31~2024-08-30 | 16/4 | 1/0 | 8/8 | 042660(5), 071970(3), 100090(3), 329180(3), 010140(2), 009540(1) |
+| C02_POWER_GRID_DATACENTER_CAPEX | 22 | 12 | 2024-01-03~2024-07-09 | 11/4 | 2/0 | 6/6 | 000500(3), 006340(3), 033100(3), 001440(2), 017040(2), 189860(2) |
+| C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 21 | 12 | 2022-07-28~2024-09-20 | 11/3 | 0/0 | 7/7 | 079550(4), 047810(3), 065450(3), 005870(2), 103140(2), 003570(1) |
+| C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 12 | 7 | 2022-03-10~2025-01-17 | 5/3 | 1/0 | 0/0 | 011700(4), 083650(3), 006910(1), 034020(1), 042370(1), 046120(1) |
+| C05_EPC_MEGA_CONTRACT_MARGIN_GAP | 10 | 9 | 2023-03-31~2024-07-12 | 3/4 | 0/0 | 0/0 | 053690(2), 002150(1), 011560(1), 023350(1), 023960(1), 054930(1) |
+| C06_HBM_MEMORY_CUSTOMER_CAPACITY | 7 | 6 | 2023-09-14~2024-07-05 | 4/1 | 0/0 | 3/0 | 000660(2), 005930(1), 009150(1), 014680(1), 067310(1), 402340(1) |
+| C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 11 | 9 | 2024-02-13~2024-06-14 | 7/0 | 1/0 | 0/0 | 042700(2), 064760(2), 003160(1), 036200(1), 036540(1), 039440(1) |
+| C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 21 | 11 | 2024-01-23~2024-08-01 | 9/5 | 2/0 | 3/3 | UNKNOWN_SYMBOL(6), 089030(2), 095340(2), 131290(2), 252990(2), 058470(1) |
+| C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 17 | 11 | 2023-07-14~2024-09-24 | 7/3 | 1/0 | 7/7 | 322310(3), 348210(3), 089030(2), 140860(2), 031980(1), 064290(1) |
+| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 29 | 18 | 2023-03-31~2024-06-14 | 15/5 | 1/0 | 16/10 | 089970(3), 281820(3), 319660(3), 042700(2), 064290(2), 079370(2) |
+| C11_BATTERY_ORDERBOOK_RERATING | 21 | 14 | 2023-01-31~2024-06-21 | 8/4 | 1/0 | 10/10 | 137400(4), 299030(3), 003670(2), 302430(2), 001570(1), 005070(1) |
+| C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 28 | 11 | 2022-01-13~2024-07-02 | 9/6 | 0/0 | 13/9 | 121600(7), 278280(5), 020150(4), 348370(3), 091580(2), 137400(2) |
+| C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 23 | 16 | 2023-01-31~2024-07-16 | 9/2 | 2/0 | 10/10 | 005070(3), 020150(3), 003670(2), 025900(2), 348370(2), 002710(1) |
+| C14_EV_DEMAND_SLOWDOWN_4B_4C | 21 | 14 | 2023-01-31~2025-03-05 | 3/3 | 6/4 | 3/3 | 006400(3), 373220(3), 095500(2), 247540(2), 278280(2), 003670(1) |
+| C15_MATERIAL_SPREAD_SUPERCYCLE | 28 | 11 | 2024-01-10~2024-05-21 | 13/0 | 3/0 | 9/9 | 103140(6), 012800(5), 025820(5), 004560(3), 021050(3), 001780(1) |
+| C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 36 | 23 | 2022-10-20~2024-10-11 | 14/9 | 2/0 | 17/17 | 047400(6), 005490(3), 012320(3), 001570(2), 081150(2), 101670(2) |
+| C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 21 | 15 | 2020-08-07~2024-03-21 | 8/3 | 4/0 | 0/0 | 004000(3), 006650(2), 011780(2), 014680(2), 298020(2), 001390(1) |
+| C18_CONSUMER_EXPORT_CHANNEL_REORDER | 38 | 19 | 2023-01-18~2024-06-26 | 17/9 | 0/0 | 10/10 | 001680(4), 280360(4), UNKNOWN_SYMBOL(4), 049770(3), 271560(3), 003960(2) |
+| C19_BRAND_RETAIL_INVENTORY_MARGIN | 38 | 13 | 2022-02-11~2024-09-27 | 8/9 | 3/0 | 23/17 | 282330(9), 004170(4), 007070(4), 093050(4), 337930(4), 139480(3) |
+| C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 19 | 11 | 2023-01-30~2024-06-14 | 8/2 | 4/0 | 7/0 | 226320(3), 161890(2), 192820(2), 214420(2), 241710(2), 439090(2) |
+| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 51 | 19 | 2021-08-06~2024-09-26 | 22/11 | 7/0 | 11/14 | 006220(5), 016360(5), 071050(4), 105560(4), 138040(4), 139130(4) |
+| C22_INSURANCE_RATE_CYCLE_RESERVE | 37 | 12 | 2024-01-24~2024-08-22 | 10/11 | 2/0 | 10/10 | 000370(7), 003690(7), 082640(6), 000540(4), 000810(3), 005830(3) |
+| C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 26 | 14 | 2022-06-29~2024-08-21 | 8/5 | 0/2 | 0/0 | UNKNOWN_SYMBOL(6), 028300(4), 000100(2), 039200(2), 195940(2), 003850(1) |
+| C24_BIO_TRIAL_DATA_EVENT_RISK | 30 | 20 | 2022-01-12~2024-08-26 | 13/9 | 0/2 | 10/10 | 298380(3), 323990(3), 007390(2), 087010(2), 141080(2), 226950(2) |
+| C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 33 | 16 | 2023-02-13~2024-07-16 | 13/6 | 3/2 | 13/7 | 336570(6), 100120(3), 060280(2), 099190(2), 145720(2), 214150(2) |
+| C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 13 | 10 | 2023-12-06~2024-07-23 | 2/6 | 0/1 | 0/0 | 042000(2), 214270(2), 237820(2), 030000(1), 035420(1), 035720(1) |
+| C27_CONTENT_IP_GLOBAL_MONETIZATION | 39 | 15 | 2021-01-22~2024-09-26 | 20/6 | 3/1 | 6/6 | 263750(5), 112040(4), 122870(4), 293490(4), 259960(3), 376300(3) |
+| C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 26 | 19 | 2022-03-23~2024-09-04 | 10/4 | 0/0 | 10/10 | 058970(3), 150900(3), 042510(2), 203650(2), 307950(2), 012510(1) |
+| C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 60 | 27 | 2021-01-08~2024-08-26 | 26/13 | 6/0 | 3/3 | 011210(7), 000270(5), 005380(5), 005850(5), 010690(5), 018880(3) |
+| C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 81 | 31 | 2022-01-12~2024-08-26 | 16/29 | 3/4 | 20/25 | 002990(6), 294870(6), 375500(6), 004960(5), 013580(5), 006360(4) |
+| C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 97 | 70 | 2020-01-23~2025-01-17 | 35/25 | 5/0 | 25/25 | 013990(4), 003550(3), 015760(3), 032350(3), 114090(3), 000270(2) |
+| C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 41 | 22 | 2020-02-12~2024-10-31 | 16/12 | 3/0 | 8/8 | 010130(4), 036560(4), 000150(3), 041510(3), 241560(3), 000990(2) |
+| R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 35 | 29 | 2020-02-26~2025-01-17 | 10/18 | 4/2 | 0/0 | 263750(3), 007390(2), 136480(2), 294870(2), 950140(2), 000990(1) |
+| R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | 19 | 16 | 2022-10-11~2024-10-31 | 8/5 | 2/0 | 0/0 | 006220(2), 010130(2), 041510(2), 005380(1), 017040(1), 025820(1) |
+| R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | 30 | 29 | 2022-03-10~2024-10-14 | 9/9 | 0/0 | 8/8 | 014790(2), 000670(1), 002780(1), 002990(1), 003230(1), 006910(1) |
+| R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | 55 | 47 | 2024-01-03~2024-09-12 | 25/2 | 0/0 | 51/51 | 000150(3), 001040(2), 001470(2), 003550(2), 013990(2), 034730(2) |
 
 ## 반복 위험이 높은 symbol/archetype 조합
 
@@ -149,51 +167,56 @@ Rejected row는 버리는 데이터가 아니라 다음 정규화 TODO다. 예�
 
 | archetype | symbol | representative rows | date range | main trigger types |
 |---|---|---:|---|---|
-| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 105560 | 56 | 2024-01-26~2025-05-26 | Stage2-Actionable(28), Stage3-Green(15), Stage4B(11), 4B(1), Stage3-Yellow(1) |
-| C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 257720 | 48 | 2023-05-09~2024-11-14 | Stage2-Actionable(20), Stage4B(15), Stage3-Green(11), 4B overlay(1), 4B(1) |
-| C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 000100 | 35 | 2024-08-20~2024-12-17 | Stage3-Green(12), Stage2-Actionable(11), Stage4B(10), 4B(1), Stage3-Yellow(1) |
-| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 323410 | 34 | 2021-08-06~2025-06-24 | Stage2-Actionable(12), Stage4B(4), 4C(2), Stage2-FalsePositive(2), Stage2-PolicyOnly(2) |
-| C22_INSURANCE_RATE_CYCLE_RESERVE | 000810 | 34 | 2023-05-15~2025-05-30 | Stage2-Actionable(19), Stage3-Green(9), Stage4B(6) |
-| C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 028300 | 34 | 2024-03-08~2024-05-20 | Stage3-Green(9), Stage4C(9), 4C(9), Stage2-Actionable(2), Stage3-Yellow(2) |
-| C22_INSURANCE_RATE_CYCLE_RESERVE | 005830 | 33 | 2023-05-15~2025-05-15 | Stage2-Actionable(19), Stage3-Green(9), Stage4B(5) |
-| C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 010130 | 30 | 2024-09-13~2024-12-06 | Stage2-Actionable(16), Stage4B(11), 4B(3) |
-| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 086790 | 26 | 2024-01-26~2024-10-25 | Stage2-Actionable(17), Stage3-Green(7), Stage3-Yellow(1), Stage4B(1) |
-| C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 041510 | 26 | 2023-02-10~2023-03-08 | Stage2-Actionable(14), Stage4B(9), 4B(2), Stage2-CapGuard(1) |
-| C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 067160 | 24 | 2021-04-30~2024-07-11 | Stage2-Actionable(11), Stage4B(6), Stage3-Green(4), 4B(2), Stage3-Yellow(1) |
-| C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 298020 | 23 | 2020-10-30~2024-05-17 | Stage2-Actionable(10), Stage4B(9), Stage3-Green(4) |
-| C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 064350 | 22 | 2022-07-27~2024-02-22 | Stage2-Actionable(16), Stage4B(5), Stage3-Yellow(1) |
-| C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 011780 | 21 | 2020-08-03~2024-07-15 | Stage2-Actionable(11), Stage3-Green(5), Stage4B(5) |
-| C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 090430 | 21 | 2021-05-10~2025-06-05 | Stage2-Actionable(5), Stage3-Yellow(3), Stage4C(3), Stage2(2), Stage4B(2) |
-| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | UNKNOWN_SYMBOL | 21 | 2021-08-06~2025-05-26 | Stage2-Actionable(10), Stage3-Green(3), Stage2(2), Stage3-Yellow(2), Price-only / IPO platform-bank rerating(1) |
-| C18_CONSUMER_EXPORT_CHANNEL_REORDER | 003230 | 20 | 2023-11-15~2024-12-16 | Stage2-Actionable(9), Stage3-Green(5), Stage4B(5), 4B(1) |
-| C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | UNKNOWN_SYMBOL | 20 | 2019-02-07~2024-11-06 | Stage2-Actionable(9), 4C(3), Stage3-Green(3), Stage3-Yellow(2), 4B(1) |
-| C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 012510 | 20 | 2019-05-27~2024-07-08 | Stage2-Actionable(10), Stage3-Green(6), Stage4B(3), Stage3-Yellow(1) |
-| C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | UNKNOWN_SYMBOL | 20 | 2020-08-14~2024-06-27 | Stage2-Actionable(13), Stage4B(5), Stage4C(2) |
-| C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 003230 | 19 | 2023-11-15~2024-12-17 | Stage2-Actionable(10), Stage3-Green(4), Stage4B(3), 4B(2) |
-| C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 018290 | 19 | 2023-08-14~2024-09-20 | Stage2-Actionable(11), Stage3-Green(7), Stage4B(1) |
-| C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 000270 | 19 | 2020-10-26~2024-06-19 | Stage2-Actionable(9), Stage3-Green(4), Stage4B(4), Stage2-rumor-redteam(1), Stage4C(1) |
-| C02_POWER_GRID_DATACENTER_CAPEX | 010120 | 18 | 2024-01-03~2024-07-24 | Stage4B(8), Stage2-Actionable(7), 4B(1), Stage3-Green(1), Stage3-Yellow(1) |
-| C06_HBM_MEMORY_CUSTOMER_CAPACITY | 000660 | 18 | 2023-05-25~2024-07-11 | Stage2-Actionable(8), Stage4B(7), Stage3-Green(3) |
-| C22_INSURANCE_RATE_CYCLE_RESERVE | 088350 | 17 | 2024-01-24~2025-02-13 | Stage2-Actionable(10), 4B(2), 4B overlay(1), Stage2(1), Stage2-FalsePositive(1) |
-| C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 338220 | 17 | 2023-02-24~2023-09-07 | Stage2-Actionable(8), Stage4B(6), 4B(1), Stage3-Green(1), Stage3-Yellow(1) |
-| C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 035420 | 17 | 2020-04-24~2024-05-03 | Stage2-Actionable(11), Stage3-Green(4), Stage2-Watch(1), Stage3-Yellow(1) |
-| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 006220 | 16 | 2023-01-17~2024-04-19 | Stage4B(5), 4B(2), Price-only-blowoff / blocked Stage2 candidate(2), Stage2-Actionable(2), Price-only Stage2 Candidate(1) |
-| C22_INSURANCE_RATE_CYCLE_RESERVE | 001450 | 16 | 2023-05-15~2025-02-14 | Stage2-Actionable(11), 4C protection(1), Stage2-candidate-rejected(1), Stage2-or-Yellow stress(1), Stage3-Green(1) |
-| C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 145020 | 16 | 2024-03-04~2024-11-06 | Stage2-Actionable(10), Stage4B(5), Stage3-Green(1) |
-| C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 035720 | 16 | 2020-05-07~2024-01-11 | Stage2-Actionable(7), Stage4C(3), Stage3-Green(2), 4B overlay(1), 4B(1) |
-| C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 053800 | 16 | 2022-01-05~2022-04-15 | Stage4B(6), False-Stage2-Actionable(2), Stage2-FalsePositiveCandidate(2), Price-only Stage2-blocked(1), Stage2-Actionable(1) |
-| C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 006650 | 15 | 2021-01-06~2024-01-25 | Stage2-Actionable(5), Stage4C(3), Stage3-Yellow(3), Stage3-Green(2), Stage2(1) |
-| C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 047040 | 15 | 2021-03-11~2024-07-18 | Stage2-Actionable(4), Stage3-Yellow(3), Stage2-RiskWatch / LargeBuilderNoFull4B(2), Stage2-risk-watch(2), RiskWatch-BoundedLargeBuilderPFNoForced4BNoHard4C(1) |
-| C31_POLICY_SUBSIDY_LEGISLATION_EVENT | UNKNOWN_SYMBOL | 15 | 2020-01-21~2024-02-27 | Stage2-Actionable(11), Stage4B(3), Stage3-Green(1) |
-| C02_POWER_GRID_DATACENTER_CAPEX | 267260 | 14 | 2023-01-27~2024-07-24 | Stage2-Actionable(11), Stage4B(3) |
-| C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 373220 | 14 | 2022-08-12~2025-04-08 | Stage2-Actionable(9), Stage4B(2), Stage4C(2), Stage3-Yellow(1) |
-| C18_CONSUMER_EXPORT_CHANNEL_REORDER | 005180 | 14 | 2024-04-01~2024-06-11 | Stage2-Actionable(7), Stage4B(5), 4B(1), Stage3-Green(1) |
-| C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 051900 | 14 | 2021-06-24~2024-05-23 | Stage2-Actionable(4), 4C(2), Stage4C(2), RiskWatch-ChinaBeautyBrandRecoveryBoundedNoForced4BNoDurableStage2(1), Stage2 false reopen(1) |
-| C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 192820 | 14 | 2023-05-15~2025-06-25 | Stage2-Actionable(9), Stage3-Yellow(3), Stage4B(2) |
-| C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 214150 | 14 | 2023-05-02~2024-05-09 | Stage2-Actionable(8), Stage3-Green(5), Stage4B(1) |
-| C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 161390 | 14 | 2023-04-12~2024-04-16 | Stage2-Actionable(10), Stage4B(2), Stage2-FalsePositive / TireOEMReplacementMixMarginFade(1), Stage2-Lifecycle-TireVolumeMixCostSpreadMarginBridgeWithLocal4B(1) |
-| C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 098120 | 13 | 2023-03-30~2024-09-26 | Stage3-Yellow(5), Stage2-Actionable(4), Stage4B(2), Stage2-FalsePositive / ICSocketCustomerQualityFade(1), Stage2-FalsePositive / TestSocketCustomerQualityBridgeFade(1) |
-| C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 006400 | 13 | 2022-05-25~2024-12-03 | Stage2-Actionable(5), 4B(2), Stage2-Headline-JV(2), Stage3-Yellow(2), Stage2-Theme-Watch(1) |
+| C19_BRAND_RETAIL_INVENTORY_MARGIN | 282330 | 9 | 2022-02-11~2024-07-12 | Stage2-Actionable(5), Stage3-Yellow(2), Stage2-FalsePositive-Candidate(1), Stage4B(1) |
+| C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 121600 | 7 | 2024-02-13~2024-07-02 | Stage2-Actionable(4), Stage2-FalsePositive(1), Stage2-FalsePositive-Candidate(1), Stage3-Yellow(1) |
+| C22_INSURANCE_RATE_CYCLE_RESERVE | 000370 | 7 | 2024-01-25~2024-02-27 | Stage2-Actionable(5), Stage2-FalsePositive(1), Stage4B(1) |
+| C22_INSURANCE_RATE_CYCLE_RESERVE | 003690 | 7 | 2024-01-24~2024-02-27 | Stage2-Actionable(7) |
+| C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 011210 | 7 | 2021-01-21~2024-02-02 | Stage2-Actionable(5), Stage2 theme candidate(1), Stage2-FalsePositive(1) |
+| C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | UNKNOWN_SYMBOL | 6 | 2024-02-13~2024-04-26 | Stage2-Actionable(4), Stage4B(2) |
+| C15_MATERIAL_SPREAD_SUPERCYCLE | 103140 | 6 | 2024-02-22~2024-04-26 | Stage2-Actionable(6) |
+| C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 047400 | 6 | 2023-04-10~2024-07-15 | Stage2-Actionable(3), Stage2-FalsePositive-Candidate(2), Stage2-FalsePositive(1) |
+| C22_INSURANCE_RATE_CYCLE_RESERVE | 082640 | 6 | 2024-01-29~2024-06-27 | Stage2-Actionable(4), Stage2-FalsePositive(1), Stage2-FalsePositive-Candidate(1) |
+| C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | UNKNOWN_SYMBOL | 6 | 2024-02-21~2024-08-21 | Stage2-Actionable(3), Stage3-Green(2), Stage4C(1) |
+| C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 336570 | 6 | 2023-02-13~2024-03-26 | Stage2-Actionable(5), Stage2-FalsePositive(1) |
+| C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 002990 | 6 | 2024-01-02~2024-03-15 | Stage2-Actionable(2), Stage2-FalsePositive(2), Stage2-FalsePositive-Candidate(1), Stage2-FalsePositive-PF-Overhang-NoRepairBridge(1) |
+| C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 294870 | 6 | 2022-01-12~2024-08-26 | Stage2-Actionable(2), Stage4C(2), Stage3-Green(1), Stage4B(1) |
+| C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 375500 | 6 | 2022-10-24~2024-07-12 | Stage2-Actionable(3), Stage2-FalsePositive(1), Stage2-Watch(1), Stage4B(1) |
+| C01_ORDER_BACKLOG_MARGIN_BRIDGE | 042660 | 5 | 2024-02-27~2024-08-30 | Stage2-Actionable(4), Stage4B(1) |
+| C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 278280 | 5 | 2024-01-03~2024-04-25 | Stage2-FalsePositive / CustomerCallOffRisk(2), Stage2-FalsePositive(2), Stage2-Actionable(1) |
+| C15_MATERIAL_SPREAD_SUPERCYCLE | 012800 | 5 | 2024-03-15~2024-05-21 | Stage4B(2), Stage2-Actionable(1), Stage2-FalsePositive(1), Stage2-PriceOnlyWatch(1) |
+| C15_MATERIAL_SPREAD_SUPERCYCLE | 025820 | 5 | 2024-03-15~2024-05-20 | Stage2-Actionable(2), Stage2-FalsePositive(1), Stage2-PriceOnlyWatch(1), Stage4B(1) |
+| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 006220 | 5 | 2022-12-16~2024-02-01 | Stage4B(3), Stage2-Actionable(2) |
+| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 016360 | 5 | 2024-01-29~2024-02-13 | Stage2-Actionable(5) |
+| C27_CONTENT_IP_GLOBAL_MONETIZATION | 263750 | 5 | 2021-08-26~2024-03-25 | Stage2-Actionable(3), Stage2-WatchOnly(1), Stage4B(1) |
+| C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 000270 | 5 | 2023-01-26~2024-06-19 | Stage2-Actionable(3), Stage4B(2) |
+| C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 005380 | 5 | 2023-01-26~2024-06-27 | Stage2-Actionable(3), Stage4B(2) |
+| C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 005850 | 5 | 2023-03-23~2024-04-29 | Stage2-Actionable(5) |
+| C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 010690 | 5 | 2023-03-09~2024-02-13 | Stage2-Actionable(4), Stage2-FalsePositive(1) |
+| C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 004960 | 5 | 2024-01-02~2024-07-12 | Stage2-Actionable(5) |
+| C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 013580 | 5 | 2024-01-02~2024-07-15 | Stage2-Actionable(5) |
+| C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 079550 | 4 | 2024-02-14~2024-09-20 | Stage2-Actionable(4) |
+| C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 011700 | 4 | 2022-03-10~2024-07-18 | Stage2-Actionable(1), Stage2-FalsePositive(1), Stage2-ThemeSpike(1), Stage4B(1) |
+| C11_BATTERY_ORDERBOOK_RERATING | 137400 | 4 | 2024-02-21~2024-05-29 | Stage2-Actionable(4) |
+| C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 020150 | 4 | 2024-02-13~2024-04-25 | Stage2-Actionable(2), Stage2-RiskWatch / Local4B(2) |
+| C18_CONSUMER_EXPORT_CHANNEL_REORDER | 001680 | 4 | 2024-04-22~2024-06-10 | Stage2-Actionable(3), Stage2-Watch(1) |
+| C18_CONSUMER_EXPORT_CHANNEL_REORDER | 280360 | 4 | 2024-04-22~2024-06-04 | Stage2-Actionable(4) |
+| C18_CONSUMER_EXPORT_CHANNEL_REORDER | UNKNOWN_SYMBOL | 4 | 2023-01-18~2024-05-17 | Stage2-Actionable(4) |
+| C19_BRAND_RETAIL_INVENTORY_MARGIN | 004170 | 4 | 2024-01-29~2024-09-27 | Stage2-Actionable(3), Stage2-FalsePositive(1) |
+| C19_BRAND_RETAIL_INVENTORY_MARGIN | 007070 | 4 | 2023-02-08~2024-04-18 | Stage2-Actionable(4) |
+| C19_BRAND_RETAIL_INVENTORY_MARGIN | 093050 | 4 | 2024-01-29~2024-03-22 | Stage2-Actionable(3), Stage2-FalsePositive(1) |
+| C19_BRAND_RETAIL_INVENTORY_MARGIN | 337930 | 4 | 2024-05-16~2024-07-10 | Stage2-Actionable(3), Stage4B(1) |
+| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 071050 | 4 | 2024-01-29~2024-02-13 | Stage2-Actionable(4) |
+| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 105560 | 4 | 2024-02-08~2024-02-08 | Stage2-Actionable(3), Stage4B(1) |
+| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 138040 | 4 | 2023-04-26~2024-09-26 | Stage2-Actionable(2), Stage4B(2) |
+| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 139130 | 4 | 2024-01-26~2024-02-27 | Stage2-Actionable(3), Stage2-FalsePositive(1) |
+| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 175330 | 4 | 2024-01-26~2024-02-27 | Stage2-Actionable(4) |
+| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 323410 | 4 | 2021-08-06~2024-02-08 | Stage2-Actionable(3), Stage4B(1) |
+| C22_INSURANCE_RATE_CYCLE_RESERVE | 000540 | 4 | 2024-02-13~2024-02-14 | Stage2-Actionable(2), Stage2-FalsePositive(2) |
+| C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 028300 | 4 | 2024-02-21~2024-05-17 | Stage4C(2), Stage2-Actionable(1), Stage2-PreApprovalBinaryEvent(1) |
+| C27_CONTENT_IP_GLOBAL_MONETIZATION | 112040 | 4 | 2024-02-13~2024-03-12 | Stage2-Actionable(3), Stage2-FalsePositive-Candidate(1) |
+| C27_CONTENT_IP_GLOBAL_MONETIZATION | 122870 | 4 | 2023-05-12~2024-02-13 | Stage2-Actionable(2), Stage2-FalsePositive(1), Stage4B(1) |
+| C27_CONTENT_IP_GLOBAL_MONETIZATION | 293490 | 4 | 2021-06-29~2024-01-29 | Stage2-Actionable(4) |
+| C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 006360 | 4 | 2023-07-05~2024-07-17 | Stage4C(2), Stage2-Actionable(1), Stage4B(1) |
 
 ## 이미 많이 반복된 exact key 예시
 
@@ -201,51 +224,51 @@ Rejected row는 버리는 데이터가 아니라 다음 정규화 TODO다. 예�
 
 | count | archetype | symbol | trigger_type | date | sample files |
 |---:|---|---|---|---|---|
-| 21 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 010130 | Stage2-Actionable | 2024-09-13 | e2r_stock_web_v12_residual_round_R11_loop_10_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVERNANCE_CONTROL_PREMIUM_TEN..., e2r_stock_web_v12_residual_round_R11_loop_12_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVERNANCE_CONTROL_PREMIUM_TEN... |
-| 16 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 041510 | Stage2-Actionable | 2023-02-10 | e2r_stock_web_v12_residual_round_R11_loop_10_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVERNANCE_CONTROL_PREMIUM_TEN..., e2r_stock_web_v12_residual_round_R11_loop_12_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVERNANCE_CONTROL_PREMIUM_TEN... |
-| 14 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 028300 | 4C | 2024-05-17 | e2r_stock_web_v12_residual_round_R7_loop_14_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION..., e2r_stock_web_v12_residual_round_R13_loop_31_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATIO... |
-| 14 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 145020 | Stage2-Actionable | 2024-03-04 | e2r_stock_web_v12_residual_round_R13_loop_31_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATIO..., e2r_stock_web_v12_residual_round_R7_loop_10_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION... |
-| 13 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 000100 | Stage2-Actionable | 2024-08-21 | e2r_stock_web_v12_residual_round_R7_loop_10_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION..., e2r_stock_web_v12_residual_round_R13_loop_31_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATIO... |
-| 12 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 105560 | Stage2-Actionable | 2024-02-26 | e2r_stock_web_v12_residual_round_R6_loop_10_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETUR..., e2r_stock_web_v12_residual_round_R13_loop_25_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETU... |
-| 11 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 257720 | Stage4B | 2024-06-19 | e2r_stock_web_v12_residual_round_R5_loop_10_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_rese..., e2r_stock_web_v12_residual_round_R13_loop_24_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_res... |
-| 11 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 105560 | Stage3-Green | 2024-04-26 | e2r_stock_web_v12_residual_round_R6_loop_15_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETUR..., e2r_stock_web_v12_residual_round_R6_loop_60_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETUR... |
-| 11 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 105560 | Stage4B | 2024-10-25 | e2r_stock_web_v12_residual_round_R6_loop_45_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETUR..., e2r_stock_web_v12_residual_round_R6_loop_60_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETUR... |
-| 11 | C22_INSURANCE_RATE_CYCLE_RESERVE | 000810 | Stage2-Actionable | 2024-02-23 | e2r_stock_web_v12_residual_round_R13_loop_20_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_r..., e2r_stock_web_v12_residual_round_R6_loop_10_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_re... |
-| 10 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 257720 | Stage3-Green | 2024-05-10 | e2r_stock_web_v12_residual_round_R13_loop_46_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_res..., e2r_stock_web_v12_residual_round_R13_loop_55_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_res... |
-| 10 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 105560 | Stage2-Actionable | 2024-02-08 | e2r_stock_web_v12_residual_round_R6_loop_15_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETUR..., e2r_stock_web_v12_residual_round_R6_loop_16_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETUR... |
-| 10 | C22_INSURANCE_RATE_CYCLE_RESERVE | 000810 | Stage3-Green | 2024-05-16 | e2r_stock_web_v12_residual_round_R6_loop_36_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_re..., e2r_stock_web_v12_residual_round_R6_loop_41_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_re... |
-| 10 | C22_INSURANCE_RATE_CYCLE_RESERVE | 005830 | Stage2-Actionable | 2024-02-23 | e2r_stock_web_v12_residual_round_R13_loop_20_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_r..., e2r_stock_web_v12_residual_round_R6_loop_10_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_re... |
-| 10 | C22_INSURANCE_RATE_CYCLE_RESERVE | 005830 | Stage3-Green | 2024-05-16 | e2r_stock_web_v12_residual_round_R6_loop_36_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_re..., e2r_stock_web_v12_residual_round_R6_loop_41_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_re... |
-| 9 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 067160 | Stage2-Actionable | 2023-12-07 | e2r_stock_web_v12_residual_round_R8_loop_11_L8_PLATFORM_CONTENT_SW_SECURITY_C26_PLATFORM_AD_REVENUE_OPERATING_LEVER..., e2r_stock_web_v12_residual_round_R8_loop_13_L8_PLATFORM_CONTENT_SW_SECURITY_C26_PLATFORM_AD_REVENUE_OPERATING_LEVER... |
-| 8 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 000660 | Stage4B | 2024-07-11 | e2r_stock_web_v12_residual_round_R2_loop_15_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_resear..., e2r_stock_web_v12_no_repeat_standalone_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_hbm_custome... |
-| 8 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 298020 | Stage4B | 2021-07-16 | e2r_stock_web_v12_residual_round_R13_loop_26_L4_MATERIALS_SPREAD_RESOURCE_C17_CHEMICAL_COMMODITY_MARGIN_SPREAD_rese..., e2r_stock_web_v12_residual_round_R4_loop_13_L4_MATERIALS_SPREAD_RESOURCE_C17_CHEMICAL_COMMODITY_MARGIN_SPREAD_resea... |
-| 8 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 028300 | Stage4C | 2024-05-17 | e2r_stock_web_v12_residual_round_R7_loop_11_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION..., e2r_stock_web_v12_residual_round_R7_loop_14_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION... |
-| 8 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 008930 | Stage2-Actionable | 2024-01-15 | e2r_stock_web_v12_residual_round_R11_loop_12_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVERNANCE_CONTROL_PREMIUM_TEN..., e2r_stock_web_v12_residual_round_R13_loop_10_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVERNANCE_CONTROL_PREMIUM_TEN... |
-| 8 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 041510 | Stage4B | 2023-03-07 | e2r_stock_web_v12_residual_round_R12_loop_1_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVERNANCE_CONTROL_PREMIUM_TEND..., e2r_stock_web_v12_residual_round_R11_loop_10_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVERNANCE_CONTROL_PREMIUM_TEN... |
-| 7 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 064350 | Stage2-Actionable | 2022-07-29 | e2r_stock_web_v12_no_repeat_standalone_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG_defen..., e2r_stock_web_v12_no_repeat_standalone_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG_armor... |
-| 7 | C22_INSURANCE_RATE_CYCLE_RESERVE | 000370 | Stage2-Actionable | 2024-02-01 | e2r_stock_web_v12_residual_round_R13_loop_72_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_..., e2r_stock_web_v12_residual_round_R13_loop_74_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_HIGH_MAE_GUARD... |
-| 7 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 196170 | Stage2-Actionable | 2024-02-23 | e2r_stock_web_v12_residual_round_R7_loop_14_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION..., e2r_stock_web_v12_residual_round_R13_loop_14_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C31_POLICY_SUBSIDY_LEGISLATION_EVE... |
-| 7 | C24_BIO_TRIAL_DATA_EVENT_RISK | 009420 | Stage2-Actionable | 2023-09-27 | e2r_stock_web_v12_residual_round_R13_loop_32_L7_BIO_HEALTHCARE_MEDICAL_C24_BIO_TRIAL_DATA_EVENT_RISK_research.md, e2r_stock_web_v12_residual_round_R7_loop_15_L7_BIO_HEALTHCARE_MEDICAL_C24_BIO_TRIAL_DATA_EVENT_RISK_research(1).md |
-| 6 | C14_EV_DEMAND_SLOWDOWN_4B_4C | 247540 | Stage4B | 2023-07-26 | e2r_stock_web_v12_residual_round_R3_loop_11_L3_BATTERY_EV_GREEN_MOBILITY_C14_EV_DEMAND_SLOWDOWN_4B_4C_research.md, e2r_stock_web_v12_residual_round_R13_loop_55_L3_BATTERY_EV_GREEN_MOBILITY_C14_EV_DEMAND_SLOWDOWN_4B_4C_research.md |
-| 6 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 257720 | Stage4B | 2024-06-21 | e2r_stock_web_v12_residual_round_R13_loop_46_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_res..., e2r_stock_web_v12_residual_round_R13_loop_55_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_res... |
-| 6 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 086790 | Stage2-Actionable | 2024-02-26 | e2r_stock_web_v12_residual_round_R6_loop_10_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETUR..., e2r_stock_web_v12_residual_round_R13_loop_18_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETU... |
-| 6 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 323410 | Stage2-Actionable | 2024-02-26 | e2r_stock_web_v12_residual_round_R6_loop_10_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETUR..., e2r_stock_web_v12_residual_round_R13_loop_18_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETU... |
-| 6 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | UNKNOWN_SYMBOL | Stage2-Actionable | 2025-04-25 | e2r_stock_web_v12_residual_round_R13_loop_23_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETU..., e2r_stock_web_v12_residual_round_R13_loop_22_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETU... |
-| 6 | C22_INSURANCE_RATE_CYCLE_RESERVE | 003690 | Stage2-Actionable | 2024-02-01 | e2r_stock_web_v12_no_repeat_standalone_L6_FINANCIALS_CAPITAL_RETURN_C22_INSURANCE_RATE_CYCLE_RESERVE_life_reinsuran..., e2r_stock_web_v12_residual_round_R6_loop_15_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_re... |
-| 6 | C22_INSURANCE_RATE_CYCLE_RESERVE | 088350 | Stage2-Actionable | 2024-02-23 | e2r_stock_web_v12_residual_round_R13_loop_20_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_r..., e2r_stock_web_v12_residual_round_R6_loop_13_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_re... |
-| 6 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 000100 | Stage3-Green | 2024-08-28 | e2r_stock_web_v12_residual_round_R13_loop_31_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATIO..., e2r_stock_web_v12_residual_round_R7_loop_14_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION... |
-| 6 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 000100 | Stage4B | 2024-10-15 | e2r_stock_web_v12_residual_round_R7_loop_14_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION..., e2r_stock_web_v12_residual_round_R13_loop_14_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C31_POLICY_SUBSIDY_LEGISLATION_EVE... |
-| 6 | C24_BIO_TRIAL_DATA_EVENT_RISK | 215600 | Stage4C | 2019-08-02 | e2r_stock_web_v12_residual_round_R13_loop_32_L7_BIO_HEALTHCARE_MEDICAL_C24_BIO_TRIAL_DATA_EVENT_RISK_research.md, e2r_stock_web_v12_residual_round_R7_loop_15_L7_BIO_HEALTHCARE_MEDICAL_C24_BIO_TRIAL_DATA_EVENT_RISK_research(1).md |
-| 6 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 225570 | Stage2-Actionable | 2024-07-03 | e2r_stock_web_v12_residual_round_R8_loop_71_L8_PLATFORM_CONTENT_SW_SECURITY_C27_CONTENT_IP_GLOBAL_MONETIZATION_rese..., e2r_stock_web_v12_residual_round_R13_loop_71_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_... |
-| 6 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 294870 | 4C | 2022-01-12 | e2r_stock_web_v12_residual_round_R10_loop_10_L9_CONSTRUCTION_REALESTATE_HOUSING_C30_CONSTRUCTION_PF_BALANCE_SHEET_B..., e2r_stock_web_v12_residual_round_R10_loop_12_L9_CONSTRUCTION_REALESTATE_HOUSING_C30_CONSTRUCTION_PF_BALANCE_SHEET_B... |
-| 5 | C02_POWER_GRID_DATACENTER_CAPEX | 267260 | Stage2-Actionable | 2024-01-03 | e2r_stock_web_v12_residual_round_R1_loop_15_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C02_POWER_GRID_DATACENTER_CAPEX_resea..., e2r_stock_web_v12_residual_round_R1_loop_10_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C02_POWER_GRID_DATACENTER_CAPEX_resea... |
-| 5 | C02_POWER_GRID_DATACENTER_CAPEX | 298040 | Stage2-Actionable | 2024-01-03 | e2r_stock_web_v12_residual_round_R1_loop_15_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C02_POWER_GRID_DATACENTER_CAPEX_resea..., e2r_stock_web_v12_residual_round_R1_loop_10_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C02_POWER_GRID_DATACENTER_CAPEX_resea... |
-| 5 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 272210 | Stage3-Yellow | 2022-07-29 | e2r_stock_web_v12_no_repeat_standalone_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG_snt_h..., e2r_stock_web_v12_no_repeat_standalone_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG_defen... |
-| 5 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 240810 | Stage2-Actionable | 2024-02-29 | e2r_stock_web_v12_no_repeat_standalone_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_memory_r..., e2r_stock_web_v12_residual_round_R13_loop_72_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_... |
-| 5 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 003230 | Stage2-Actionable | 2023-11-15 | e2r_stock_web_v12_residual_round_R5_loop_11_L5_CONSUMER_BRAND_DISTRIBUTION_C18_CONSUMER_EXPORT_CHANNEL_REORDER_rese..., e2r_stock_web_v12_residual_round_R12_loop_10_L5_CONSUMER_BRAND_DISTRIBUTION_C18_CONSUMER_EXPORT_CHANNEL_REORDER_res... |
-| 5 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 005180 | Stage2-Actionable | 2024-05-17 | e2r_stock_web_v12_residual_round_R5_loop_11_L5_CONSUMER_BRAND_DISTRIBUTION_C18_CONSUMER_EXPORT_CHANNEL_REORDER_rese..., e2r_stock_web_v12_residual_round_R5_loop_12_L5_CONSUMER_BRAND_DISTRIBUTION_C18_CONSUMER_EXPORT_CHANNEL_REORDER_rese... |
-| 5 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 003230 | Stage2-Actionable | 2024-05-17 | e2r_stock_web_v12_residual_round_R5_loop_10_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_rese..., e2r_stock_web_v12_residual_round_R5_loop_11_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_rese... |
-| 5 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 003230 | Stage4B | 2024-06-18 | e2r_stock_web_v12_residual_round_R13_loop_46_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_res..., e2r_stock_web_v12_residual_round_R13_loop_55_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_res... |
+| 4 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 013990 | Stage2-Actionable | 2024-01-03 | e2r_stock_web_v12_residual_round_R11_loop_72_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C31_POLI..., e2r_stock_web_v12_residual_round_R11_loop_72_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C31_POLI..., e2r_stock_web_v12_residual_round_R12_loop_73_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C31_POLI... |
+| 3 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 003160 | Stage2-Actionable | 2024-02-13 | e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP..., e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP..., e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP... |
+| 3 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 036540 | Stage2-Theme | 2024-02-13 | e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP..., e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP..., e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP... |
+| 3 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 042700 | Stage2-Actionable | 2024-02-13 | e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP..., e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP..., e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP... |
+| 3 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 042700 | Stage4B | 2024-06-14 | e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP..., e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP..., e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP... |
+| 3 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 089030 | Stage2-Actionable | 2024-02-13 | e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP..., e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP..., e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIP... |
+| 3 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 281820 | Stage2-Actionable | 2024-02-27 | e2r_stock_web_v12_residual_round_R2_loop_72_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE..., e2r_stock_web_v12_residual_round_R2_loop_74_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE..., e2r_stock_web_v12_residual_round_R2_loop_76_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE... |
+| 3 | C11_BATTERY_ORDERBOOK_RERATING | 137400 | Stage2-Actionable | 2024-05-29 | e2r_stock_web_v12_residual_round_R3_loop_73_L3_BATTERY_EV_GREEN_MOBILITY_C11_BATTERY_ORDE..., e2r_stock_web_v12_residual_round_R3_loop_75_L3_BATTERY_EV_GREEN_MOBILITY_C11_BATTERY_ORDE..., e2r_stock_web_v12_residual_round_R9_loop_76_L3_BATTERY_EV_GREEN_MOBILITY_C11_BATTERY_ORDE... |
+| 3 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 105560 | Stage2-Actionable | 2024-02-08 | e2r_stock_web_v12_residual_round_R6_loop_72_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINAN..., e2r_stock_web_v12_residual_round_R6_loop_73_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINAN..., e2r_stock_web_v12_residual_round_R6_loop_76_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINAN... |
+| 3 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | UNKNOWN_SYMBOL | Stage2-Actionable | 2024-02-21 | e2r_stock_web_v12_residual_round_R7_loop_72_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_..., e2r_stock_web_v12_residual_round_R7_loop_72_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_..., e2r_stock_web_v12_residual_round_R7_loop_72_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_... |
+| 3 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 294870 | Stage4C | 2022-01-12 | e2r_stock_web_v12_residual_round_R10_loop_72_L9_CONSTRUCTION_REALESTATE_HOUSING_C30_CONST..., e2r_stock_web_v12_residual_round_R10_loop_72_L9_CONSTRUCTION_REALESTATE_HOUSING_C30_CONST..., e2r_stock_web_v12_residual_round_R10_loop_75_L9_CONSTRUCTION_REALESTATE_HOUSING_C30_CONST... |
+| 3 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 003550 | Stage2-FalsePositive-Candidate | 2024-02-27 | e2r_stock_web_v12_residual_round_R11_loop_72_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C31_POLI..., e2r_stock_web_v12_residual_round_R11_loop_76_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C31_POLI..., e2r_stock_web_v12_residual_round_R12_loop_74_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C31_POLI... |
+| 3 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 036560 | Stage2-Actionable | 2024-09-13 | e2r_stock_web_v12_residual_round_R11_loop_74_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVE..., e2r_stock_web_v12_residual_round_R11_loop_84_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVE..., e2r_stock_web_v12_residual_round_R11_loop_86_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVE... |
+| 2 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | 014620 | Stage2-Actionable | 2024-07-12 | e2r_stock_web_v12_residual_round_R1_loop_85_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C01_ORDER_B..., e2r_stock_web_v12_residual_round_R1_loop_85_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C01_ORDER_B... |
+| 2 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | 023160 | Stage2-Actionable | 2024-07-12 | e2r_stock_web_v12_residual_round_R1_loop_85_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C01_ORDER_B..., e2r_stock_web_v12_residual_round_R1_loop_85_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C01_ORDER_B... |
+| 2 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | 042660 | Stage2-Actionable | 2024-02-27 | e2r_stock_web_v12_residual_round_R1_loop_73_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C01_ORDER_B..., e2r_stock_web_v12_residual_round_R1_loop_76_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C01_ORDER_B... |
+| 2 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | 100090 | Stage2-FalsePositive | 2024-07-12 | e2r_stock_web_v12_residual_round_R1_loop_85_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C01_ORDER_B..., e2r_stock_web_v12_residual_round_R1_loop_85_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C01_ORDER_B... |
+| 2 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 010820 | Stage2-Theme / high-MAE guard | 2022-10-04 | e2r_stock_web_v12_residual_round_R11_loop_73_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENS..., e2r_stock_web_v12_residual_round_R11_loop_73_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENS... |
+| 2 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 012450 | Stage2-Actionable | 2022-07-28 | e2r_stock_web_v12_residual_round_R11_loop_73_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENS..., e2r_stock_web_v12_residual_round_R11_loop_73_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENS... |
+| 2 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 064350 | Stage2-Actionable | 2022-07-28 | e2r_stock_web_v12_residual_round_R11_loop_73_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENS..., e2r_stock_web_v12_residual_round_R11_loop_73_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENS... |
+| 2 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 065450 | Stage2-Theme / not Stage2-Actionable | 2022-10-04 | e2r_stock_web_v12_residual_round_R11_loop_73_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENS..., e2r_stock_web_v12_residual_round_R11_loop_73_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENS... |
+| 2 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 079550 | Stage2-Actionable | 2024-02-14 | e2r_stock_web_v12_residual_round_R11_loop_73_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENS..., e2r_stock_web_v12_residual_round_R11_loop_76_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENS... |
+| 2 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 011700 | Stage2-FalsePositive | 2024-07-18 | e2r_stock_web_v12_residual_round_R1_loop_86_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C04_NUCLEAR..., e2r_stock_web_v12_residual_round_R1_loop_86_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C04_NUCLEAR... |
+| 2 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 046120 | Stage2-FalsePositive | 2024-07-18 | e2r_stock_web_v12_residual_round_R1_loop_86_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C04_NUCLEAR..., e2r_stock_web_v12_residual_round_R1_loop_86_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C04_NUCLEAR... |
+| 2 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 083650 | Stage2-Actionable | 2024-07-18 | e2r_stock_web_v12_residual_round_R1_loop_86_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C04_NUCLEAR..., e2r_stock_web_v12_residual_round_R1_loop_86_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C04_NUCLEAR... |
+| 2 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 000660 | Stage2-Actionable | 2023-10-27 | e2r_stock_web_v12_residual_round_R2_loop_76_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMOR..., e2r_stock_web_v12_residual_round_R2_loop_76_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMOR... |
+| 2 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 000660 | Stage2-Actionable | 2024-02-13 | e2r_stock_web_v12_residual_round_R2_loop_76_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMOR..., e2r_stock_web_v12_residual_round_R2_loop_76_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMOR... |
+| 2 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 005930 | Stage2-Actionable | 2024-07-05 | e2r_stock_web_v12_residual_round_R2_loop_76_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMOR..., e2r_stock_web_v12_residual_round_R2_loop_76_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMOR... |
+| 2 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 009150 | Stage2-Actionable | 2024-02-13 | e2r_stock_web_v12_residual_round_R2_loop_87_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMOR..., e2r_stock_web_v12_residual_round_R2_loop_87_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMOR... |
+| 2 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 014680 | Stage2-FalsePositive | 2024-02-13 | e2r_stock_web_v12_residual_round_R2_loop_87_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMOR..., e2r_stock_web_v12_residual_round_R2_loop_87_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMOR... |
+| 2 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 067310 | Stage2-Theme | 2023-09-14 | e2r_stock_web_v12_residual_round_R2_loop_76_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMOR..., e2r_stock_web_v12_residual_round_R2_loop_76_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMOR... |
+| 2 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 402340 | Stage2-Actionable | 2024-02-13 | e2r_stock_web_v12_residual_round_R2_loop_87_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMOR..., e2r_stock_web_v12_residual_round_R2_loop_87_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMOR... |
+| 2 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 089030 | Stage2-Actionable | 2024-02-13 | e2r_stock_web_v12_residual_round_R2_loop_73_L2_AI_SEMICONDUCTOR_ELECTRONICS_C08_SEMI_TEST..., e2r_stock_web_v12_residual_round_R2_loop_85_L2_AI_SEMICONDUCTOR_ELECTRONICS_C08_SEMI_TEST... |
+| 2 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 003160 | Stage2-Actionable | 2024-02-13 | e2r_stock_web_v12_residual_round_R2_loop_75_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE..., e2r_stock_web_v12_residual_round_R2_loop_75_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE... |
+| 2 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 031980 | Stage2-Actionable | 2024-02-22 | e2r_stock_web_v12_residual_round_R2_loop_75_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE..., e2r_stock_web_v12_residual_round_R2_loop_75_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE... |
+| 2 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 036540 | Stage2-Theme | 2024-02-13 | e2r_stock_web_v12_residual_round_R2_loop_75_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE..., e2r_stock_web_v12_residual_round_R2_loop_75_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE... |
+| 2 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 042700 | Stage2-Actionable | 2024-02-13 | e2r_stock_web_v12_residual_round_R2_loop_75_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE..., e2r_stock_web_v12_residual_round_R2_loop_75_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE... |
+| 2 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 042700 | Stage4B | 2024-06-14 | e2r_stock_web_v12_residual_round_R2_loop_75_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE..., e2r_stock_web_v12_residual_round_R2_loop_75_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE... |
+| 2 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 064290 | Stage2-FalsePositive | 2024-02-20 | e2r_stock_web_v12_residual_round_R2_loop_83_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE..., e2r_stock_web_v12_residual_round_R2_loop_83_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE... |
+| 2 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 079370 | Stage2-FalsePositive | 2024-02-22 | e2r_stock_web_v12_residual_round_R2_loop_83_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE..., e2r_stock_web_v12_residual_round_R2_loop_83_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE... |
+| 2 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 080220 | Stage2-Actionable | 2024-01-24 | e2r_stock_web_v12_residual_round_R2_loop_75_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE..., e2r_stock_web_v12_residual_round_R2_loop_75_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE... |
+| 2 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 089030 | Stage2-Actionable | 2024-02-13 | e2r_stock_web_v12_residual_round_R2_loop_75_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE..., e2r_stock_web_v12_residual_round_R2_loop_75_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE... |
+| 2 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 319660 | Stage2-Actionable | 2024-02-29 | e2r_stock_web_v12_residual_round_R2_loop_83_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE..., e2r_stock_web_v12_residual_round_R2_loop_83_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RE... |
+| 2 | C11_BATTERY_ORDERBOOK_RERATING | 302430 | Stage2-FalsePositive-Candidate | 2024-03-11 | e2r_stock_web_v12_residual_round_R3_loop_75_L3_BATTERY_EV_GREEN_MOBILITY_C11_BATTERY_ORDE..., e2r_stock_web_v12_residual_round_R9_loop_76_L3_BATTERY_EV_GREEN_MOBILITY_C11_BATTERY_ORDE... |
+| 2 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 020150 | Stage2-RiskWatch / Local4B | 2024-04-25 | e2r_stock_web_v12_residual_round_R3_loop_83_L3_BATTERY_EV_GREEN_MOBILITY_C12_BATTERY_CUST..., e2r_stock_web_v12_residual_round_R3_loop_83_L3_BATTERY_EV_GREEN_MOBILITY_C12_BATTERY_CUST... |
 
 ## 다음 연구 우선순위
 
@@ -261,19 +284,10 @@ Rejected row는 버리는 데이터가 아니라 다음 정규화 TODO다. 예�
 
 | scope | axis | decision | missing_to_promote | recommended action |
 |---|---|---|---|---|
-| L7_BIO_HEALTHCARE_MEDICAL | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| C13_BATTERY_JV_UTILIZATION_AMPC_IRA | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| C19_BRAND_RETAIL_INVENTORY_MARGIN | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| C22_INSURANCE_RATE_CYCLE_RESERVE | stage2_bonus_candidate_delta | blocked_by_logic_risk | bad_stage2_or_high_mae_rate_too_high | keep_green_restricted_and_add_red_team_guard |
-| C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | full_4b_overlay_candidate | hold_for_more_evidence | need_more_good_non_price_4b_timing_cases | collect_non_overlapping_cases |
+| canonical_archetype:C11_BATTERY_ORDERBOOK_RERATING | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
+| canonical_archetype:C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
+| canonical_archetype:C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
+| canonical_archetype:C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | full_4b_overlay_candidate | blocked_by_data_quality | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
 
 ## 새 연구 MD 작성 지침
 
@@ -295,7 +309,20 @@ evidence_url_pending
 source_proxy_only
 ```
 
-R13 cross checkpoint처럼 원천 row를 재검증하는 경우에도 가능하면 `entry_date`, `entry_price`, `MFE_30D_pct`, `MFE_90D_pct`, `MFE_180D_pct`, `MAE_30D_pct`, `MAE_90D_pct`, `MAE_180D_pct`를 같이 남긴다. 값이 빠지면 parser는 row를 읽어도 가격경로 검증에는 제한된다.
+가능하면 다음 운영 지표도 같이 남긴다. 지금 점수 엔진이 모든 항목을 즉시 직접 쓰는 것은 아니지만, 일주일 단위로 정규화할 때 “성장 재고”와 “채널스터핑/마진 훼손”을 구분하는 근거가 된다.
+
+```text
+inventory_growth_yoy_pct
+revenue_growth_yoy_pct
+opm_margin_yoy_delta_ppt
+receivables_growth_yoy_pct
+export_growth_yoy_pct
+channel_inventory_comment
+```
+
+예를 들어 재고가 +10%인데 매출 +40%, OPM 상승이면 성장 재고일 수 있다. 반대로 재고 +45%, 매출 둔화, OPM 하락, 매출채권 증가가 같이 나오면 채널스터핑 또는 마진 훼손 위험으로 별도 guardrail 후보가 된다.
+
+R13 cross/review checkpoint처럼 원천 row를 재검증하는 경우에도 가능하면 `entry_date`, `entry_price`, `MFE_30D_pct`, `MFE_90D_pct`, `MFE_180D_pct`, `MAE_30D_pct`, `MAE_90D_pct`, `MAE_180D_pct`를 같이 남긴다. 값이 일부만 있어도 parser는 row를 읽지만, 가격경로 검증 강도는 낮아진다.
 
 그리고 새 연구 프롬프트에는 이 문장을 넣는다.
 
@@ -303,6 +330,7 @@ R13 cross checkpoint처럼 원천 row를 재검증하는 경우에도 가능하�
 Before selecting cases, read docs/core/V12_Research_No_Repeat_Index.md.
 Do not reuse the same canonical_archetype_id + symbol + trigger_type + entry_date combination.
 Prefer new symbols, new trigger families, counterexamples, 4B/4C paths, or data-quality repairs.
+Do not treat filename suffixes like (1), (2), or (3) as duplicates by themselves; inspect row keys and evidence content.
 ```
 
 ## 빠른 중복 확인 명령

@@ -3,36 +3,30 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `29`
+- stage_transition_summary_rows: `23`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| 036930 | 036930 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | None | None | None | no_valid_stage_transition |
-| 084370 | 084370 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 34500.0 | None | None | 73.91 | None | stage2_actionable_best_entry |
-| 240810 | 240810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 28700.0 | None | None | 56.27 | None | stage2_actionable_best_entry |
-| C10_036930_JUSUNG_20240228_MEMORY_RECOVERY_BETA_REVISION_GAP | 036930 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | None | None | None | no_valid_stage_transition |
-| C10_095610_TES_20240229_GENERIC_MEMORY_EQUIP_FALSE_GREEN | 095610 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 19980.0 | None | None | 32.13 | None | stage2_actionable_best_entry |
-| C10_240810_WONIKIPS_20240229_MEMORY_EQUIP_STAGE2_HIGH_MAE | 240810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 32800.0 | None | None | 36.74 | None | stage2_actionable_best_entry |
-| R2L11-C10-JUSUNG-20230324 | 036930 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 15240.0 | None | None | 149.3 | None | stage2_actionable_best_entry |
-| R2L11-C10-SEC-20230407 | 005930 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 65000.0 | None | None | 20.0 | None | stage2_captured_most_upside |
-| R2L11-C10-SKHU-20230525 | 000660 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 103500.0 | None | None | 61.3 | None | stage2_actionable_best_entry |
-| R2L11-C10-TES-20230324 | 095610 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 22100.0 | None | None | 5.4 | None | stage2_captured_most_upside |
-| R2L11-C10-WIPS-20230317 | 240810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 34250.0 | None | None | 7.4 | None | stage2_captured_most_upside |
-| R2L16_C10_036930_JUSUNG_PRICE_SPIKE_FALSE_POSITIVE | 036930 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R2L16_C10_036930_JUSUNG_PRICE_SPIKE_FALSE_POSITIVE | None | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R2L16_C10_074600_WONIKQNC_LATE_PRICE_ONLY | 074600 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R2L16_C10_084370_EUGENETECH_MEMORY_RECOVERY_DELAYED_SUCCESS | 084370 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 43300.0 | None | None | 38.57 | None | stage2_actionable_best_entry |
-| R2L16_C10_084370_EUGENETECH_MEMORY_RECOVERY_DELAYED_SUCCESS | None | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 43300.0 | None | None | 38.57 | None | stage2_actionable_best_entry |
-| R2L16_C10_084370_EUGENE_ALD_HIGH_MAE | 084370 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 43650.0 | None | None | 37.46 | None | stage2_actionable_best_entry |
-| R2L16_C10_095610_TES_PRICE_ONLY_MEMORY_RECOVERY_BLOWOFF | 095610 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | 29300.0 | None | None | no_valid_stage_transition |
-| R2L16_C10_095610_TES_PRICE_ONLY_MEMORY_RECOVERY_BLOWOFF | None | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | 29300.0 | None | None | 4b_good_peak_capture |
-| R2L16_C10_166090_HANA_PARTS_UTILIZATION | 166090 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 53000.0 | None | None | 30.75 | None | stage2_actionable_best_entry |
-| R2L16_C10_240810_WONIKIPS_MEMORY_RECOVERY_STAGE2A | 240810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 33200.0 | None | None | 35.09 | None | stage2_actionable_best_entry |
-| R2L16_C10_240810_WONIKIPS_MEMORY_RECOVERY_STAGE2A | None | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 33200.0 | None | None | 35.09 | None | stage2_actionable_best_entry |
-| R2L16_C10_319660_PSK_SECOND_WAVE_CONVERSION | 319660 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 21200.0 | None | None | 84.43 | None | stage2_actionable_best_entry |
-| R2L72-C10-036930-JUSUNG-MEMORY-EQUIPMENT-PRICE-ONLY-BETA | 036930 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R2L72-C10-084370-EUGENETECH-MEMORY-RECOVERY-LP-CVD-ORDER-BRIDGE | 084370 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 34500.0 | None | None | 73.91 | None | stage2_actionable_best_entry |
-| R2L72-C10-240810-WONIKIPS-MEMORY-RECOVERY-EQUIPMENT-BRIDGE | 240810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 28700.0 | None | None | 56.27 | None | stage2_actionable_best_entry |
-| R2L76-C10-031980-PSK-HOLDINGS-ADVANCED-PACKAGING-EQUIPMENT-CYCLE | 031980 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 35650.0 | None | None | 72.23 | None | stage2_actionable_best_entry |
-| R2L76-C10-036930-JUSUNG-EQUIPMENT-CYCLE-BETA-FADE | 036930 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R2L76-C10-240810-WONIK-IPS-MEMORY-PROCESS-EQUIPMENT-CYCLE | 240810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 28700.0 | None | None | 56.27 | None | stage2_actionable_best_entry |
+| 039440 | 039440 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | None | None | None | no_valid_stage_transition |
+| 089030 | 089030 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 26000.0 | None | None | 172.31 | None | stage2_actionable_best_entry |
+| 089970 | 089970 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | None | None | None | no_valid_stage_transition |
+| 101160 | 101160 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 24600.0 | None | None | 6.3 | None | stage2_actionable_best_entry |
+| 183300 | 183300 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 66500.0 | None | None | 47.97 | None | stage2_actionable_best_entry |
+| 281820 | 281820 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 38050.0 | None | None | 55.06 | None | stage2_actionable_best_entry |
+| 319660 | 319660 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 30800.0 | None | None | 26.95 | None | stage2_actionable_best_entry |
+| R2L72_C10_036200_20230331_CHILLER_SCRUBBER_RECOVERY_WEAK_BRIDGE | 036200 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 9090.0 | None | None | 15.95 | None | stage2_actionable_best_entry |
+| R2L72_C10_086390_20230331_MEMORY_TESTER_RECOVERY_FALSE_START | 086390 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 14080.0 | None | None | 11.01 | None | stage2_actionable_best_entry |
+| R2L72_C10_089970_20230519_MEMORY_ETCH_EQUIPMENT_ORDER_RECOVERY | 089970 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 11980.0 | None | None | 75.29 | None | stage2_actionable_best_entry |
+| R2L75_C10_003160_POSITIVE_20240213 | 003160 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 6160.0 | None | None | 400.0 | None | stage2_actionable_best_entry |
+| R2L75_C10_031980_POSITIVE_20240222 | 031980 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 41900.0 | None | None | 103.58 | None | stage2_actionable_best_entry |
+| R2L75_C10_036540_COUNTEREXAMPLE_20240213 | 036540 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | None | None | None | no_valid_stage_transition |
+| R2L75_C10_042700_4B_20240614 | 042700 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | 179900.0 | None | None | no_valid_stage_transition |
+| R2L75_C10_042700_POSITIVE_20240213 | 042700 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 81000.0 | None | None | 142.22 | None | stage2_actionable_best_entry |
+| R2L75_C10_080220_COUNTEREXAMPLE_20240124 | 080220 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 33800.0 | None | None | 14.05 | None | stage2_actionable_best_entry |
+| R2L75_C10_083310_20240222_VACUUM_EQUIPMENT_THEME_NO_ORDER_MARGIN_BRIDGE | 083310 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 23350.0 | None | None | 4.71 | None | stage2_actionable_best_entry |
+| R2L75_C10_089030_POSITIVE_20240213 | 089030 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 18690.0 | None | None | 278.81 | None | stage2_actionable_best_entry |
+| R2L75_C10_089970_20240229_ETCH_EQUIPMENT_MEMORY_RECOVERY_MFE_NO_DURABLE_BRIDGE | 089970 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 14060.0 | None | None | 25.82 | None | stage2_actionable_best_entry |
+| R2L75_C10_114810_20240220_PARTS_CLEANING_MEMORY_RECOVERY_MARGIN_BRIDGE | 114810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 10820.0 | None | None | 41.96 | None | stage2_actionable_best_entry |
+| R2L83-C10-01 | 319660 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 25400.0 | None | None | 53.94 | None | stage2_actionable_best_entry |
+| R2L83-C10-02 | 079370 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | None | None | None | no_valid_stage_transition |
+| R2L83-C10-03 | 064290 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | None | None | None | no_valid_stage_transition |

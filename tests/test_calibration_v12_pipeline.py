@@ -102,6 +102,29 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             self.assertEqual(docs[0].large_sector_id, "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL")
             self.assertEqual(docs[0].canonical_archetype_id, "C22_INSURANCE_RATE_CYCLE_RESERVE")
 
+    def test_v12_file_discovery_skips_achieve_archive_by_default(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._write_fixture(root)
+            suffix_path = (
+                root
+                / "e2r_stock_web_v12_residual_round_R6_loop_42_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_research (1).md"
+            )
+            suffix_path.write_text(_v12_md(), encoding="utf-8")
+            for archive_name in ("achieve", "achieve_v12"):
+                archive = root / archive_name
+                archive.mkdir()
+                archived_path = (
+                    archive
+                    / "e2r_stock_web_v12_residual_round_R6_loop_43_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_research.md"
+                )
+                archived_path.write_text(_v12_md(), encoding="utf-8")
+
+            docs = v12_result_documents(discover_markdown_documents(root))
+            self.assertEqual(len(docs), 2)
+            self.assertEqual({doc.path.parent for doc in docs}, {root})
+            self.assertIn(suffix_path, {doc.path for doc in docs})
+
     def test_v12_no_repeat_standalone_discovery_parse_and_normalize(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             path = (
@@ -173,6 +196,43 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             self.assertEqual(len(bundle.valid_rows), 1)
             self.assertEqual(bundle.valid_rows[0]["trigger_type"], "Stage4B")
             self.assertTrue(bundle.valid_rows[0]["guardrail_usable"])
+            self.assertFalse(bundle.valid_rows[0]["usable_for_new_weight_evidence"])
+
+    def test_v12_r13_review_trigger_rows_parse_as_guardrail_triggers(self) -> None:
+        markdown = """# E2R Stock-Web v12 Residual Research — R13 Loop 71
+
+- research_session: `post_calibrated_sector_archetype_residual_research`
+- mode: `historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12`
+- round: `R13`
+- loop: `71`
+- large_sector_id: `L10_POLICY_EVENT_CROSS_REDTEAM_MISC`
+- canonical_archetype_id: `R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL`
+
+```jsonl
+{"row_type":"r13_review_trigger","research_id":"R13L71_HIGH_MAE_GUARDRAIL","round":"R13","loop":71,"large_sector_id":"L10_POLICY_EVENT_CROSS_REDTEAM_MISC","canonical_archetype_id":"R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL","source_large_sector_id":"L9_CONSTRUCTION_REALESTATE_HOUSING","source_canonical_archetype_id":"C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK","symbol":"002990","trigger_type":"Stage2-FalsePositive-PF-Overhang-NoRepairBridge","entry_date":"2024-01-31","entry_price":5210.0,"mfe_180d_pct":1.34,"mae_180d_pct":-45.30,"calibration_usable":true,"price_source":"Songdaiki/stock-web","price_basis":"tradable_raw","price_adjustment_status":"raw_unadjusted_marcap","do_not_count_as_new_sector_case":true}
+{"row_type":"r13_cross_archetype_rule_candidate","rule_name":"R13_high_mfe_high_mae_bridge_governor","large_sector_id":"L10_POLICY_EVENT_CROSS_REDTEAM_MISC","canonical_archetype_id":"R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"}
+```
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = (
+                Path(tmp)
+                / "e2r_stock_web_v12_residual_round_R13_loop_71_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_research.md"
+            )
+            path.write_text(markdown, encoding="utf-8")
+            doc = v12_result_documents(discover_markdown_documents(path.parent))[0]
+            parsed = parse_markdown_document(doc)
+            trigger_rows = parsed.rows_by_type["trigger"]
+
+            self.assertEqual(len(trigger_rows), 1)
+            self.assertEqual(trigger_rows[0]["row_type"], "trigger")
+            self.assertEqual(trigger_rows[0]["source_row_type"], "r13_review_trigger")
+            self.assertEqual(trigger_rows[0]["MFE_180D_pct"], 1.34)
+            self.assertEqual(trigger_rows[0]["MAE_180D_pct"], -45.30)
+            self.assertTrue(trigger_rows[0]["do_not_count_as_new_case"])
+            self.assertEqual(len(parsed.rows_by_type["canonical_archetype_rule_candidate"]), 1)
+
+            bundle = validate_v12_trigger_rows(trigger_rows)
+            self.assertEqual(len(bundle.valid_rows), 1)
             self.assertFalse(bundle.valid_rows[0]["usable_for_new_weight_evidence"])
 
     def test_v12_metadata_and_residual_contribution_parse(self) -> None:

@@ -3,69 +3,29 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `62`
+- stage_transition_summary_rows: `22`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| 001780 | 001780 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| 012800 | 012800 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| 025820 | 025820 | C15_MATERIAL_SPREAD_SUPERCYCLE | 5690.0 | None | None | 47.98 | None | stage2_actionable_best_entry |
-| C15_001120_LXINTL_20220211_COAL_TRADING_SPREAD_STAGE2 | 001120 | C15_MATERIAL_SPREAD_SUPERCYCLE | 27750.0 | None | None | 78.92 | None | stage2_actionable_best_entry |
-| C15_001230_DONGKUKSTEEL_20210427_REBAR_STEEL_SPREAD_BLOWOFF_4B | 001230 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 25300.0 | None | None | no_valid_stage_transition |
-| C15_001230_DONGKUKSTEEL_20210427_STEEL_SPREAD_PRICE_PREMIUM_4B | 001230 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 25300.0 | None | None | no_valid_stage_transition |
-| C15_001230_DONGKUKSTEEL_20210908_STEEL_SPREAD_FALSE_GREEN | 001230 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| C15_001430_SEAHBESTEEL_20210416_SPECIAL_STEEL_SPREAD_STAGE2 | 001430 | C15_MATERIAL_SPREAD_SUPERCYCLE | 20650.0 | None | None | 76.51 | None | stage2_actionable_best_entry |
-| C15_001430_SEAHBESTEEL_20210511_SPECIAL_STEEL_SPREAD_FALSE_GREEN | 001430 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| C15_001570_KEUMYANG_20230726_LITHIUM_MATERIAL_SPREAD_PREMIUM_4B | 001570 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 152200.0 | None | None | no_valid_stage_transition |
-| C15_003030_SEAHHOLDINGS_20220225_STEELPIPE_OCTG_SPREAD_STAGE2 | 003030 | C15_MATERIAL_SPREAD_SUPERCYCLE | 127000.0 | None | None | 59.84 | None | stage2_actionable_best_entry |
-| C15_004020_HYUNDAISTEEL_20210329_STEEL_PLATE_SPREAD_STAGE2 | 004020 | C15_MATERIAL_SPREAD_SUPERCYCLE | 48400.0 | None | None | 30.17 | None | stage2_actionable_best_entry |
-| C15_004020_HYUNDAISTEEL_20210510_STEEL_SPREAD_PRICE_PREMIUM_4B | 004020 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 60100.0 | None | None | no_valid_stage_transition |
-| C15_004020_HYUNDAISTEEL_20210511_STEEL_SPREAD_LATE_4B | 004020 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 61900.0 | None | None | no_valid_stage_transition |
-| C15_004020_HYUNDAISTEEL_20210511_STEEL_SPREAD_LATE_FALSE_GREEN | 004020 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| C15_004020_HYUNDAISTEEL_20210511_STEEL_SPREAD_PREMIUM_4B_REFRESH | 004020 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 61900.0 | None | None | no_valid_stage_transition |
-| C15_004020_HYUNDAISTEEL_20210624_STEEL_SPREAD_FALSE_GREEN | 004020 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| C15_005420_COSMOCHEM_20230726_BATTERY_MATERIAL_SPREAD_FALSE_GREEN | 005420 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| C15_005490_POSCOHOLDINGS_20230331_LITHIUM_MATERIAL_SPREAD_STAGE2 | 005490 | C15_MATERIAL_SPREAD_SUPERCYCLE | 368000.0 | None | None | 107.61 | None | stage2_actionable_best_entry |
-| C15_005490_POSCO_20201102_STEEL_SPREAD_SUPERCYCLE_STAGE2 | 005490 | C15_MATERIAL_SPREAD_SUPERCYCLE | 216000.0 | None | None | 91.44 | None | stage2_actionable_best_entry |
-| C15_005490_POSCO_20210215_STEEL_SPREAD_SUPERCYCLE_STAGE2 | 005490 | C15_MATERIAL_SPREAD_SUPERCYCLE | 268000.0 | None | None | 54.29 | None | stage2_actionable_best_entry |
-| C15_005490_POSCO_20210305_STEEL_SPREAD_SUPERCYCLE_STAGE2_SUCCESS | 005490 | C15_MATERIAL_SPREAD_SUPERCYCLE | 314500.0 | None | None | 31.48 | None | stage2_actionable_best_entry |
-| C15_005490_POSCO_20210405_INTEGRATED_STEEL_SPREAD_STAGE2 | 005490 | C15_MATERIAL_SPREAD_SUPERCYCLE | 334500.0 | None | None | 23.62 | None | stage2_actionable_best_entry |
-| C15_005490_POSCO_20210510_STEEL_SPREAD_PREMIUM_4B | 005490 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 407000.0 | None | None | no_valid_stage_transition |
-| C15_005490_POSCO_20210511_INTEGRATED_STEEL_SPREAD_PREMIUM_4B | 005490 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 409500.0 | None | None | no_valid_stage_transition |
-| C15_010130_KOREAZINC_20211018_NONFERROUS_SPREAD_LATE_4B | 010130 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 607000.0 | None | None | no_valid_stage_transition |
-| C15_014830_UNID_20210419_CAUSTIC_POTASH_SPREAD_LOCAL_4B | 014830 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 75700.0 | None | None | no_valid_stage_transition |
-| C15_025860_NAMHAE_20220419_FERTILIZER_SPREAD_PRICE_PREMIUM_4B | 025860 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 16450.0 | None | None | no_valid_stage_transition |
-| C15_298020_HYOSUNG_TNC_20210114_SPANDEX_SPREAD_SUPERCYCLE | 298020 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | 228000.0 | None | None | None | green_good_but_late |
-| C15_298050_HYOSUNG_ADVANCED_20210122_TIRECORD_ARACHID_SPREAD_HIGH_MAE_SUCCESS | 298050 | C15_MATERIAL_SPREAD_SUPERCYCLE | 187000.0 | None | None | 368.98 | None | stage2_actionable_best_entry |
-| R13L26_C15_001 | 103140 | C15_MATERIAL_SPREAD_SUPERCYCLE | 44450.0 | None | 76300.0 | 77.5069 | 92.4479 | stage2_actionable_best_entry |
-| R13L26_C15_002 | 006260 | C15_MATERIAL_SPREAD_SUPERCYCLE | 122100.0 | None | 179300.0 | 59.54 | 78.6813 | stage2_actionable_best_entry |
-| R13L26_C15_003 | 006650 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R13L26_C15_004 | 011170 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R4L12_C15_004020_HYUNDAI_STEEL_SPREAD_20210426 | 004020 | C15_MATERIAL_SPREAD_SUPERCYCLE | 52000.0 | None | None | 21.15 | None | stage2_actionable_best_entry |
-| R4L12_C15_005490_POSCO_STEEL_SPREAD_20210426 | 005490 | C15_MATERIAL_SPREAD_SUPERCYCLE | 362500.0 | None | None | 14.07 | None | stage2_actionable_best_entry |
-| R4L12_C15_010130_KOREA_ZINC_EVENT_PREMIUM_20240913 | 010130 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R4L12_C15_103140_POONGSAN_COPPER_SPREAD_20240329 | 103140 | C15_MATERIAL_SPREAD_SUPERCYCLE | 50500.0 | None | None | 56.24 | None | stage2_actionable_best_entry |
-| R4L13_C15_DAEHAN_20210210_BASIC_PETROCHEM_HIGH_MAE | 006650 | C15_MATERIAL_SPREAD_SUPERCYCLE | 373500.0 | None | None | 8.57 | None | stage2_actionable_best_entry |
-| R4L13_C15_KUMHO_20201005_NBLATEX_SPREAD | 011780 | C15_MATERIAL_SPREAD_SUPERCYCLE | 118500.0 | None | None | 147.68 | None | stage2_actionable_best_entry |
-| R4L13_C15_LOTTECHEM_20210223_NAPHTHA_ETHYLENE_FALSE_POSITIVE | 011170 | C15_MATERIAL_SPREAD_SUPERCYCLE | 326000.0 | None | None | 3.68 | None | stage2_actionable_best_entry |
-| R4L13_C15_OCI_20210210_POLYSILICON_SPREAD | 010060 | C15_MATERIAL_SPREAD_SUPERCYCLE | 114000.0 | None | None | 48.25 | None | stage2_actionable_best_entry |
-| R4L13_C15_POSCO_20210223_STEEL_SPREAD | 005490 | C15_MATERIAL_SPREAD_SUPERCYCLE | 279500.0 | None | None | 47.94 | None | stage2_actionable_best_entry |
-| R4L16_C15_001430_SEAHBESTEEL_LATE_SPECIAL_STEEL_20210511 | 001430 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | 34350.0 | None | None | None | green_false_positive |
-| R4L16_C15_012800_DAECHANG_LATE_COPPER_BETA_20210511 | 012800 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | 2910.0 | None | None | None | green_false_positive |
-| R4L16_C15_018470_CHOIL_ALUMINUM_SUPERCYCLE_20210713 | 018470 | C15_MATERIAL_SPREAD_SUPERCYCLE | 1045.0 | None | 3605.0 | 264.1222 | 92.751 | stage2_actionable_best_entry |
-| R4L16_C15_025820_LEECU_COPPER_SPREAD_20210415 | 025820 | C15_MATERIAL_SPREAD_SUPERCYCLE | 3255.0 | None | None | 69.59 | None | stage2_actionable_best_entry |
-| R4L71-C15-STEEL-ANTIDUMPING-004020-20250221 | 004020 | C15_MATERIAL_SPREAD_SUPERCYCLE | 26450.0 | None | None | 45.4 | None | stage2_actionable_best_entry |
-| R4L71-C15-STEEL-ANTIDUMPING-005490-20250221 | 005490 | C15_MATERIAL_SPREAD_SUPERCYCLE | 282000.0 | None | None | 21.3 | None | stage2_actionable_best_entry |
-| R4L74-C15-001780-ALUKO-ALUMINUM-PRICE-BETA-LOCAL4B | 001780 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R4L74-C15-012800-DAECHANG-COPPER-BRASS-PRICE-BETA-FADE | 012800 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R4L74-C15-025820-IGU-COPPER-FABRICATOR-SPREAD-BRIDGE | 025820 | C15_MATERIAL_SPREAD_SUPERCYCLE | 5690.0 | None | None | 47.98 | None | stage2_actionable_best_entry |
-| R4L77-C15-012800-DAECHANG-COPPER-BRASS-SPREAD-THEME-FADE | 012800 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R4L77-C15-021050-SEOWON-COPPER-ALLOY-SPREAD-THEME-FADE | 021050 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R4L77-C15-025820-IGOO-COPPER-SPREAD-INVENTORY-MARGIN-LIFECYCLE | 025820 | C15_MATERIAL_SPREAD_SUPERCYCLE | 5690.0 | None | None | 47.98 | None | stage2_actionable_best_entry |
-| R4L80-C15-004020-HYUNDAI-STEEL-SPREAD-MARGIN-FADE | 004020 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R4L80-C15-005490-POSCO-HOLDINGS-STEEL-LITHIUM-SPREAD-FADE | 005490 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R4L80-C15-010130-KOREA-ZINC-NONFERROUS-SPREAD-EVENT-LIFECYCLE | 010130 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
-| R4L9_C15_011170_NCC_SPREAD_FALSE_GREEN | 011170 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | 323500.0 | None | None | None | green_false_positive |
-| R4L9_C15_011780_NB_LATEX_SPREAD_POSITIVE | 011780 | C15_MATERIAL_SPREAD_SUPERCYCLE | 97200.0 | None | None | 207.1 | None | stage2_actionable_best_entry |
-| R4L9_C15_298000_PDH_PP_LATE_FALSE_GREEN | 298000 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | 446500.0 | None | None | None | green_false_positive |
-| R4L9_C15_298020_SPANDEX_SPREAD_POSITIVE | 298020 | C15_MATERIAL_SPREAD_SUPERCYCLE | 155500.0 | None | None | 519.29 | None | stage2_actionable_best_entry |
+| 004560 | 004560 | C15_MATERIAL_SPREAD_SUPERCYCLE | 18100.0 | None | None | 27.9 | None | stage2_actionable_best_entry |
+| 012800 | 012800 | C15_MATERIAL_SPREAD_SUPERCYCLE | 1399.0 | None | 2185.0 | 65.8351 | 85.339 | stage2_actionable_best_entry |
+| 021050 | 021050 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
+| 025820 | 025820 | C15_MATERIAL_SPREAD_SUPERCYCLE | 4265.0 | None | None | 97.42 | None | stage2_actionable_best_entry |
+| 032560 | 032560 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
+| 103140 | 103140 | C15_MATERIAL_SPREAD_SUPERCYCLE | 46400.0 | None | None | 70.0459 | None | stage2_actionable_best_entry |
+| CASE_R4L71_C15_012800_DAECHANG_COPPER_4B_OVERLAY | 012800 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 2080.0 | None | None | no_valid_stage_transition |
+| CASE_R4L71_C15_021050_SEOWON_COPPER_4B_OVERLAY | 021050 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 1916.0 | None | None | no_valid_stage_transition |
+| CASE_R4L71_C15_025820_IGUSANDUP_COPPER_PRICE_ONLY | 025820 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 7880.0 | None | None | no_valid_stage_transition |
+| CASE_R4L71_C15_103140_POONGSAN_STRUCTURAL_HIGH_MAE | 103140 | C15_MATERIAL_SPREAD_SUPERCYCLE | 62900.0 | None | None | 25.44 | None | stage2_actionable_best_entry |
+| R4L74_C15_001780_20240119_ALUMINUM_THEME_NO_DEMAND_MARGIN_BRIDGE | 001780 | C15_MATERIAL_SPREAD_SUPERCYCLE | 3400.0 | None | None | 32.94 | None | stage2_actionable_best_entry |
+| R4L74_C15_004560_20240110_STAINLESS_NICKEL_THEME_WEAK_MARGIN_BRIDGE | 004560 | C15_MATERIAL_SPREAD_SUPERCYCLE | 19110.0 | None | None | 21.14 | None | stage2_actionable_best_entry |
+| R4L74_C15_012800_20240404_COPPER_PROXY_SMALLCAP_SPIKE | 012800 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
+| R4L74_C15_025820_20240404_COPPER_PROXY_PRICE_ONLY_SPIKE | 025820 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
+| R4L74_C15_103140_20240222_COPPER_DEFENSE_MARGIN_BRIDGE | 103140 | C15_MATERIAL_SPREAD_SUPERCYCLE | 42200.0 | None | None | 86.97 | None | stage2_actionable_best_entry |
+| R4L74_C15_103140_20240305_COPPER_SPREAD_DEFENSE_MARGIN_BRIDGE | 103140 | C15_MATERIAL_SPREAD_SUPERCYCLE | 43200.0 | None | None | 82.64 | None | stage2_actionable_best_entry |
+| R4L84-C15-01 | 103140 | C15_MATERIAL_SPREAD_SUPERCYCLE | 46100.0 | None | None | 54.23 | None | stage2_actionable_best_entry |
+| R4L84-C15-02 | 004560 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
+| R4L84-C15-03 | 008350 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
+| R4L87-C15-01 | 104700 | C15_MATERIAL_SPREAD_SUPERCYCLE | 6890.0 | None | None | 66.04 | None | stage2_actionable_best_entry |
+| R4L87-C15-02 | 306200 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
+| R4L87-C15-03 | 008260 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |

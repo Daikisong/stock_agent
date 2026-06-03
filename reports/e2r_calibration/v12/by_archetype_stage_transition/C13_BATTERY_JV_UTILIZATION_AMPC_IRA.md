@@ -3,40 +3,26 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `33`
+- stage_transition_summary_rows: `19`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| C13-LGES-2024Q2-AMPC-CAPACITY-PACING | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | 332500.0 | None | None | 4b_too_early |
-| C13-SDI-2024-STARPLUS-DOE-LOAN | 006400 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 261000.0 | None | None | 2.68 | None | stage2_actionable_best_entry |
-| C13-SKI-2024-BLUEOVAL-FINAL-LOAN | 096770 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 121400.0 | None | None | 15.49 | None | stage2_actionable_best_entry |
-| C13_003670_POSCOFUTUREM_20230331_CATHODE_JV_IRA_STAGE2 | 003670 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 272500.0 | None | None | 154.68 | None | stage2_actionable_best_entry |
-| C13_005070_COSMOAMT_20230726_CATHODE_MATERIAL_UTILIZATION_4B | 005070 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | 190400.0 | None | None | no_valid_stage_transition |
-| C13_006400_SAMSUNGSDI_20230411_AMPC_JV_UTILIZATION_FALSE_GREEN | 006400 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
-| C13_006400_SDI_20230307_AMPC_JV_UTILIZATION_FALSE_GREEN | 006400 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
-| C13_051910_LGCHEM_20230726_CATHODE_IRA_FALSE_GREEN | 051910 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
-| C13_096770_SKINNOV_20230726_AMPC_JV_UTILIZATION_PRICE_PREMIUM_4B | 096770 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | 204500.0 | None | None | no_valid_stage_transition |
-| C13_096770_SKINNO_20230330_SKON_AMPC_UTILIZATION_COUNTEREXAMPLE | 096770 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
-| C13_373220_LGES_20220812_IRA_AMPC_JV_STAGE2_SUCCESS | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 460500.0 | None | None | 36.59 | None | stage2_actionable_best_entry |
-| C13_373220_LGES_20220816_IRA_AMPC_JV_CAPACITY_STAGE2 | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 460500.0 | None | None | 36.59 | None | stage2_actionable_best_entry |
-| R3L10-C13-006400-STELLANTIS-KOKOMO-20231012 | 006400 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | 535000.0 | None | None | no_valid_stage_transition |
-| R3L10-C13-373220-IRA-AMPC-20220817 | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 453500.0 | None | None | 38.7 | None | stage2_actionable_best_entry |
-| R3L10-C13-373220-SLOW-EV-CAPEX-20240425 | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
-| R3L14_C13_LGES_20230411_AMPC_UTILIZATION_LAG | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
-| R3L14_C13_LOTTEEM_20230726_COPPERFOIL_LOCALIZATION_CAPEX | 020150 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
-| R3L14_C13_POSCO_FUTURE_M_20230126_IRA_LOCALIZATION | 003670 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 208500.0 | None | None | 232.85 | None | stage2_actionable_best_entry |
-| R3L14_C13_SAMSUNGSDI_20230425_GM_JV_LONG_LEAD | 006400 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
-| R3L14_C13_SKINNOVATION_20230726_AMPC_CAPEX_PARENT_OVERHANG | 096770 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
-| R3L67_LGES_2024_Q1_AMPC_CAPEX_GUARD | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 372500.0 | None | None | 19.19 | None | stage2_actionable_best_entry |
-| R3L67_LGES_2025_Q1_AMPC_MARGIN_BRIDGE | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 318000.0 | None | None | 65.72 | None | stage2_actionable_best_entry |
-| R3L67_SDI_2024_GM_JV_DELAYED_RERATING | 006400 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 339500.0 | None | None | 15.91 | None | stage2_actionable_best_entry |
-| R3L70_C13_006400_STELLANTIS_FIRST_KOKOMO | 006400 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 588000.0 | None | None | 33.16 | None | stage2_actionable_best_entry |
-| R3L70_C13_006400_STELLANTIS_SECOND_KOKOMO | 006400 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 535000.0 | None | None | 0.75 | None | stage2_actionable_best_entry |
-| R3L70_C13_096770_BLUEOVAL_SK_DOE_LOAN | 096770 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 182600.0 | None | None | 25.68 | None | stage2_actionable_best_entry |
-| R3L70_C13_373220_IRA_ENACTMENT_STAGE2 | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 453500.0 | None | None | 38.7 | None | stage2_actionable_best_entry |
-| R3L76-C13-121600-NANOSIN-CNT-CONDUCTIVE-ADDITIVE-US-UTILIZATION | 121600 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 105000.0 | None | None | 50.29 | None | stage2_actionable_best_entry |
-| R3L76-C13-278280-CHUNBO-ELECTROLYTE-ADDITIVE-UTILIZATION-FADE | 278280 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
-| R3L76-C13-348370-ENCHEM-US-ELECTROLYTE-IRA-LOCAL-SUPPLY-LIFECYCLE | 348370 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 91000.0 | None | None | 333.52 | None | stage2_actionable_best_entry |
-| R3L81-C13-011790-SKC-COPPERFOIL-AMPC-IRA-EVENT-SEPARATION | 011790 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
-| R3L81-C13-020150-LOTTE-ENERGY-MATERIALS-COPPERFOIL-UTILIZATION-RECOVERY | 020150 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
-| R3L81-C13-051910-LG-CHEM-CATHODE-AMPC-IRA-THEME-FADE | 051910 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
+| 005070 | 005070 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 161600.0 | None | None | 20.24 | None | stage2_actionable_best_entry |
+| 006110 | 006110 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
+| 011790 | 011790 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 104500.0 | None | None | 91.39 | None | stage2_actionable_best_entry |
+| 020150 | 020150 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 43000.0 | None | None | 37.67 | None | stage2_actionable_best_entry |
+| 051910 | 051910 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 451000.0 | None | None | 15.3 | None | stage2_actionable_best_entry |
+| 278280 | 278280 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
+| 361610 | 361610 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
+| R3L73_C13_002710_20230323_BATTERY_STEEL_CAPACITY_CUSTOMER_UTILIZATION_BRIDGE | 002710 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 22750.0 | None | None | 230.99 | None | stage2_actionable_best_entry |
+| R3L73_C13_025900_20230303_ELECTROLYTE_JV_UTILIZATION_FALSE_START | 025900 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 62500.0 | None | None | 2.56 | None | stage2_actionable_best_entry |
+| R3L73_C13_336370_20230222_COPPER_FOIL_UTILIZATION_FALSE_START | 336370 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 52200.0 | None | None | 3.45 | None | stage2_actionable_best_entry |
+| R3L75_C13_003670_20230131_IRA_ORDERBOOK_UTILIZATION_SUCCESS | 003670 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 224000.0 | None | 560000.0 | 209.825 | 71.4881 | 4b_good_peak_capture |
+| R3L75_C13_006400_20240131_CELL_JV_REBOUND_HIGH_MAE_SUCCESS | 006400 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 372500.0 | None | None | 32.75 | None | stage2_actionable_best_entry |
+| R3L75_C13_247540_20231204_CAPACITY_CONTRACT_NO_UTILIZATION_COUNTER | 247540 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
+| R3L75_C13_348370_20240110_US_CAPACITY_IRA_SUCCESS | 348370 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 88200.0 | None | None | 347.28 | None | stage2_actionable_best_entry |
+| R3L75_C13_373220_20240430_AMPC_JV_HEADLINE_FALSE_BREAK | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | 389000.0 | None | None | no_valid_stage_transition |
+| R3L75_C13_393890_20240105_SEPARATOR_CAPACITY_UTILIZATION_COUNTER | 393890 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
+| R3L84-C13-01 | 348370 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 107000.0 | None | None | 268.69 | None | stage2_actionable_best_entry |
+| R3L84-C13-02 | 005070 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
+| R3L84-C13-03 | 025900 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
