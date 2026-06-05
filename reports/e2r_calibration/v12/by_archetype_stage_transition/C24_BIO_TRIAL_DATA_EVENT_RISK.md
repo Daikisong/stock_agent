@@ -3,35 +3,34 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `28`
+- stage_transition_summary_rows: `27`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| 087010 | 087010 | C24_BIO_TRIAL_DATA_EVENT_RISK | 37500.0 | None | None | 252.0 | None | stage2_actionable_best_entry |
-| 206650 | 206650 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
-| 226950 | 226950 | C24_BIO_TRIAL_DATA_EVENT_RISK | 9300.0 | None | None | 252.15 | None | stage2_actionable_best_entry |
-| 293780 | 293780 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
-| 298380 | 298380 | C24_BIO_TRIAL_DATA_EVENT_RISK | 24550.0 | None | None | 56.82 | None | stage2_actionable_best_entry |
-| 323990 | 323990 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | 19400.0 | None | None | no_valid_stage_transition |
-| 358570 | 358570 | C24_BIO_TRIAL_DATA_EVENT_RISK | 11740.0 | None | None | 39.18 | None | stage2_actionable_best_entry |
-| 397030 | 397030 | C24_BIO_TRIAL_DATA_EVENT_RISK | 15790.0 | None | None | 61.81 | None | stage2_actionable_best_entry |
-| R7L71_C24_028300_20240517 | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | 4c_too_late |
-| R7L71_C24_087010_20240627 | 087010 | C24_BIO_TRIAL_DATA_EVENT_RISK | 46500.0 | None | None | 124.73 | None | stage2_actionable_best_entry |
-| R7L71_C24_196170_20240222 | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | 131200.0 | None | None | 177.06 | None | stage2_actionable_best_entry |
-| R7L71_C24_323990_20240325 | 323990 | C24_BIO_TRIAL_DATA_EVENT_RISK | 23350.0 | None | None | 3.85 | None | stage2_actionable_best_entry |
-| R7L72_C24_007390_20230331_CELL_THERAPY_APPROVAL_EVENT_HARD_BREAK | 007390 | C24_BIO_TRIAL_DATA_EVENT_RISK | 18000.0 | None | None | 41.67 | None | stage2_actionable_best_entry |
-| R7L72_C24_220100_20240423_PROSTATE_RADIOLIGAND_DATA_BRIDGE | 220100 | C24_BIO_TRIAL_DATA_EVENT_RISK | 11240.0 | None | None | 178.02 | None | stage2_actionable_best_entry |
-| R7L72_C24_226950_20240227_RNAI_PLATFORM_DATA_FALSE_START | 226950 | C24_BIO_TRIAL_DATA_EVENT_RISK | 16810.0 | None | None | 9.99 | None | stage2_actionable_best_entry |
-| R7L75_C24_007390_NATURECELL_JOINTSTEM_REJECTION_4C | 007390 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | 4c_too_late |
-| R7L75_C24_141080_20240620_ADC_PLATFORM_DATA_LICENSING_BRIDGE | 141080 | C24_BIO_TRIAL_DATA_EVENT_RISK | 75500.0 | None | None | 90.2 | None | stage2_actionable_best_entry |
-| R7L75_C24_298380_ABL_SANOFI_LICENSEOUT_HIGH_MAE_SUCCESS | 298380 | C24_BIO_TRIAL_DATA_EVENT_RISK | 26150.0 | None | None | 33.08 | None | stage2_actionable_best_entry |
-| R7L75_C24_299660_20240826_VACCINE_TRIAL_EVENT_SPIKE_NO_DURABLE_DATA_BRIDGE | 299660 | C24_BIO_TRIAL_DATA_EVENT_RISK | 7720.0 | None | None | 18.13 | None | stage2_actionable_best_entry |
-| R7L75_C24_310210_BORONOI_CLINICAL_OPTIONALITY_SUCCESS | 310210 | C24_BIO_TRIAL_DATA_EVENT_RISK | 49350.0 | None | None | 210.03 | None | stage2_actionable_best_entry |
-| R7L75_C24_397030_APRILBIO_EVENT_SPIKE_FAILED_RERATING | 397030 | C24_BIO_TRIAL_DATA_EVENT_RISK | 19470.0 | None | None | 33.02 | None | stage2_actionable_best_entry |
-| R7L75_C24_950220_20240129_IMMUNO_ONCOLOGY_TRIAL_OPTIONALITY_NO_DATA_BRIDGE | 950220 | C24_BIO_TRIAL_DATA_EVENT_RISK | 1696.0 | None | None | 16.57 | None | stage2_actionable_best_entry |
-| R7L83-C24-01 | 237690 | C24_BIO_TRIAL_DATA_EVENT_RISK | 77600.0 | None | None | 55.67 | None | stage2_actionable_best_entry |
-| R7L83-C24-02 | 310210 | C24_BIO_TRIAL_DATA_EVENT_RISK | 53000.0 | None | None | 188.68 | None | stage2_actionable_best_entry |
-| R7L83-C24-03 | 235980 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
-| R7L86-C24-01 | 000250 | C24_BIO_TRIAL_DATA_EVENT_RISK | 86500.0 | None | None | 165.9 | None | stage2_actionable_best_entry |
-| R7L86-C24-02 | 141080 | C24_BIO_TRIAL_DATA_EVENT_RISK | 75500.0 | None | None | 74.17 | None | stage2_actionable_best_entry |
-| R7L86-C24-03 | 174900 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_R7L84_095700_GENEXINE_TRIAL_REBOUND_NO_DATA_BRIDGE | 095700 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_R7L84_196170_ALTEOGEN_PLATFORM_EVENT_VALIDATION_BRIDGE | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | 105000.0 | None | None | 333.81 | None | stage2_actionable_best_entry |
+| C24_R7L84_206650_EUBIOLOGICS_VACCINE_THEME_SPIKE_NO_COMMERCIAL_BRIDGE | 206650 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_R7L87_196170_ALTEOGEN_PLATFORM_EVENT_BRIDGE | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | 131200.0 | None | None | 247.18 | None | stage2_actionable_best_entry |
+| C24_R7L87_206650_EUBIO_VACCINE_EVENT_NO_DURABLE_BRIDGE | 206650 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_R7L87_950220_NEOIMMUNETECH_DATA_THEME_DECAY | 950220 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_R7L90_028300_2024_05_16 | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_R7L90_039200_2024_08_21 | 039200 | C24_BIO_TRIAL_DATA_EVENT_RISK | 36900.0 | None | None | 17.1 | None | stage2_captured_most_upside |
+| C24_R7L90_196170_2024_11_20 | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | 350500.0 | None | None | 31.1 | None | stage2_actionable_best_entry |
+| C24_R7L90_237690_STPHARM_RNA_PLATFORM_BRIDGE | 237690 | C24_BIO_TRIAL_DATA_EVENT_RISK | 66300.0 | None | None | 71.19 | None | stage2_actionable_best_entry |
+| C24_R7L90_256840_KOREA_BNC_THERAPEUTIC_EVENT_MOMENTUM | 256840 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_R7L90_365270_CURACLE_VASCULAR_EVENT_SPIKE | 365270 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_R7L93_196170_2024_02_22 | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | 105000.0 | None | None | 282.9 | None | stage2_captured_most_upside |
+| C24_R7L93_235980_2024_02_21 | 235980 | C24_BIO_TRIAL_DATA_EVENT_RISK | 11920.0 | None | None | 44.6 | None | stage2_captured_most_upside |
+| C24_R7L93_950220_2024_03_22 | 950220 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_R7L96_196170_2024_02_01 | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | 71400.0 | None | None | 463.0 | None | stage2_captured_most_upside |
+| C24_R7L96_217730_2024_04_25 | 217730 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_R7L96_235980_2024_02_01 | 235980 | C24_BIO_TRIAL_DATA_EVENT_RISK | 10750.0 | None | None | 60.4 | None | stage2_captured_most_upside |
+| R7L90_C24_APRILBIO_2024_TRIAL_DATA_LICENSING_BRIDGE_POSITIVE | 397030 | C24_BIO_TRIAL_DATA_EVENT_RISK | 14260.0 | None | None | 81.63 | None | stage2_actionable_best_entry |
+| R7L90_C24_CURACLE_2024_TRIAL_DATA_FAILURE_FALSE_STAGE2 | 365270 | C24_BIO_TRIAL_DATA_EVENT_RISK | 18630.0 | None | None | 14.6 | None | stage2_actionable_best_entry |
+| R7L90_C24_HLBBIO_2024_REGULATORY_TRIAL_EVENT_CAP_4B | 067630 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | 24300.0 | None | None | 4b_good_peak_capture |
+| R7L93_C24_ABCLON_2024_CART_TRIAL_DATA_EVENT_CAP_4B | 174900 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | 21100.0 | None | None | 4b_good_peak_capture |
+| R7L93_C24_NEOIMMUNETECH_2024_IMMUNO_ONCOLOGY_TRIAL_FALSE_STAGE2 | 950220 | C24_BIO_TRIAL_DATA_EVENT_RISK | 1665.0 | None | None | 18.74 | None | stage2_actionable_best_entry |
+| R7L93_C24_OSCOTEC_2024_KINASE_PIPELINE_TRIAL_DATA_DURABILITY_POSITIVE | 039200 | C24_BIO_TRIAL_DATA_EVENT_RISK | 22050.0 | None | None | 102.27 | None | stage2_actionable_best_entry |
+| R7L96_C24_ABION_2024_CLINICAL_DATA_EVENT_FALSE_STAGE2 | 203400 | C24_BIO_TRIAL_DATA_EVENT_RISK | 12390.0 | None | None | 4.92 | None | stage2_actionable_best_entry |
+| R7L96_C24_HELIXMITH_2024_GENE_THERAPY_EVENT_CAP_4B | 084990 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | 5850.0 | None | None | 4b_good_peak_capture |
+| R7L96_C24_VORONOI_2024_TARGETED_ONCOLOGY_PIPELINE_DATA_BRIDGE_POSITIVE | 310210 | C24_BIO_TRIAL_DATA_EVENT_RISK | 35050.0 | None | None | 239.23 | None | stage2_actionable_best_entry |

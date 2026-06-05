@@ -3,32 +3,34 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `25`
+- stage_transition_summary_rows: `27`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| 041020 | 041020 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
-| 042510 | 042510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
-| 047560 | 047560 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 23000.0 | None | None | 116.52 | None | stage2_actionable_best_entry |
-| 053300 | 053300 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
-| 058970 | 058970 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 59500.0 | None | None | 28.24 | None | stage2_actionable_best_entry |
-| 136540 | 136540 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 12750.0 | None | None | 17.25 | None | stage2_actionable_best_entry |
-| 192250 | 192250 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | 1721.0 | None | None | no_valid_stage_transition |
-| 203650 | 203650 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
-| 307950 | 307950 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 143200.0 | None | None | 27.03 | None | stage2_actionable_best_entry |
-| R8L71_C28_042510_20240126_MOBILE_ID_PRICE_ONLY_NO_RETENTION | 042510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 2940.0 | None | None | 4.25 | None | stage2_actionable_best_entry |
-| R8L71_C28_058970_20230227_SUPPLYCHAIN_SAAS_STRATEGIC_CUSTOMER | 058970 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 22400.0 | None | None | 336.61 | None | stage2_actionable_best_entry |
-| R8L71_C28_150900_20240108_DATA_SECURITY_RETENTION_WEAK | 150900 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 9750.0 | None | None | 3.59 | None | stage2_actionable_best_entry |
-| R8L73_C28_012510_DUZON_AI_ERP_CLOUD_CONTRACT_RETENTION | 012510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 40800.0 | None | None | 91.91 | None | stage2_actionable_best_entry |
-| R8L73_C28_030520_HANCOM_AI_THEME_WITHOUT_RETENTION | 030520 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
-| R8L73_C28_053800_AHNLAB_POLITICAL_SECURITY_THEME | 053800 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
-| R8L73_C28_263860_GENIANS_ZERO_TRUST_CONTRACT_RETENTION | 263860 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 11770.0 | None | None | 49.87 | None | stage2_actionable_best_entry |
-| R8L74_C28_058970_20230315_PROCUREMENT_SAAS_STRATEGIC_CUSTOMER_CONTRACT_BRIDGE | 058970 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 30200.0 | None | None | 223.84 | None | stage2_actionable_best_entry |
-| R8L74_C28_150900_20240129_SECURITY_DRM_THEME_NO_RETENTION_RENEWAL_BRIDGE | 150900 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 9000.0 | None | None | 9.78 | None | stage2_actionable_best_entry |
-| R8L74_C28_357880_20240129_GRAPH_DATABASE_AI_THEME_NO_CONTRACT_RETENTION_BRIDGE | 357880 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 6440.0 | None | None | 6.52 | None | stage2_actionable_best_entry |
-| R8L84-C28-01 | 060850 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 8850.0 | None | None | 27.34 | None | stage2_actionable_best_entry |
-| R8L84-C28-02 | 064480 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
-| R8L84-C28-03 | 053350 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
-| R8L86-C28-01 | 150900 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 6710.0 | None | None | 101.94 | None | stage2_actionable_best_entry |
-| R8L86-C28-02 | 203650 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
-| R8L86-C28-03 | 411080 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| C28_R8L84_030520_HNC_OFFICE_AI_RETENTION_BRIDGE | 030520 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 22250.0 | None | None | 50.11 | None | stage2_actionable_best_entry |
+| C28_R8L84_041020_POLARIS_AI_OFFICE_THEME_SPIKE | 041020 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| C28_R8L84_047560_ESTSOFT_AI_AVATAR_THEME_SPIKE | 047560 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| C28_R8L86_030520_HANCOM_AI_SOFTWARE_CONTRACT_RETENTION | 030520 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 24750.0 | None | None | 55.35 | None | stage2_actionable_best_entry |
+| C28_R8L86_049480_OPENBASE_SECURITY_AI_THEME_NO_ARR | 049480 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| C28_R8L86_053800_AHNLAB_SECURITY_THEME_NO_FRESH_RETENTION | 053800 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| C28_R8L89_060850_YOUNGLIMWON_ERP_SAAS_RETENTION | 060850 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 9000.0 | None | None | 25.22 | None | stage2_actionable_best_entry |
+| C28_R8L89_067920_IGLOO_SECURITY_THEME_SPIKE | 067920 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| C28_R8L89_304100_SALTUX_AI_SOFTWARE_BLOWOFF | 304100 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| C28_R8L92_053800_2024_04_11 | 053800 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 64800.0 | None | None | 16.7 | None | stage2_captured_most_upside |
+| C28_R8L92_136540_2024_05_03 | 136540 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 12850.0 | None | None | 22.6 | None | stage2_captured_most_upside |
+| C28_R8L92_356680_2024_03_26 | 356680 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| C28_R8L96_053800_2024_02_01 | 053800 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| C28_R8L96_060850_2024_02_01 | 060850 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 9250.0 | None | None | 21.8 | None | stage2_actionable_best_entry |
+| C28_R8L96_136540_2024_02_01 | 136540 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 12990.0 | None | None | 21.2 | None | stage2_captured_most_upside |
+| R8L88_C28_AHNLAB_2024_SECURITY_QUALITY_FALSE_STAGE2 | 053800 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 72500.0 | None | None | 4.28 | None | stage2_actionable_best_entry |
+| R8L88_C28_DATASOLUTION_2024_DATA_AI_THEME_EVENT_CAP_4B | 263800 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | 7630.0 | None | None | 4b_good_peak_capture |
+| R8L88_C28_HAANSOFT_2024_AI_OFFICE_SOFTWARE_RERATING_POSITIVE | 030520 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 14970.0 | None | None | 156.85 | None | stage2_actionable_best_entry |
+| R8L91_C28_CYBERONE_2024_MSS_SECURITY_THEME_EVENT_CAP_4B | 356890 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | 3695.0 | None | None | 4b_good_peak_capture |
+| R8L91_C28_PIOLINK_2024_NETWORK_SECURITY_ADC_MAINTENANCE_CONTRACT_POSITIVE | 170790 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 11420.0 | None | None | 33.1 | None | stage2_actionable_best_entry |
+| R8L91_C28_WINS_2024_SECURITY_RETENTION_FALSE_STAGE2 | 136540 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 14720.0 | None | None | 6.99 | None | stage2_actionable_best_entry |
+| R8L94_C28_AHNLAB_2024_CYBERSECURITY_RETENTION_FALSE_STAGE2 | 053800 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 72500.0 | None | None | 4.55 | None | stage2_actionable_best_entry |
+| R8L94_C28_HANCOM_2024_AI_OFFICE_SOFTWARE_CONTRACT_RETENTION_POSITIVE | 030520 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 14970.0 | None | None | 156.85 | None | stage2_actionable_best_entry |
+| R8L94_C28_MONITORLAB_2024_WAF_CLOUD_SECURITY_EVENT_CAP_4B | 434480 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | 7700.0 | None | None | 4b_good_peak_capture |
+| R8L97_C28_ESTSOFT_2024_AI_SOFTWARE_LICENSE_CONTRACT_RETENTION_POSITIVE | 047560 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 25650.0 | None | None | 94.15 | None | stage2_actionable_best_entry |
+| R8L97_C28_GENIANS_2024_ENDPOINT_SECURITY_CONTRACT_FALSE_STAGE2 | 263860 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 15550.0 | None | None | 2.89 | None | stage2_actionable_best_entry |
+| R8L97_C28_XGATE_2024_NETWORK_SECURITY_GATEWAY_EVENT_CAP_4B | 356680 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | 6780.0 | None | None | 4b_good_peak_capture |

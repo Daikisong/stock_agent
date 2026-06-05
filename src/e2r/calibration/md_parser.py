@@ -25,8 +25,12 @@ COLUMN_ALIASES = {
     "MFE_180D": "MFE_180D_pct",
     "MFE_180D_pct": "MFE_180D_pct",
     "mfe_30_pct": "MFE_30D_pct",
+    "mfe_30d_pct": "MFE_30D_pct",
     "mfe_90_pct": "MFE_90D_pct",
+    "mfe_90d_pct": "MFE_90D_pct",
     "mfe_180_pct": "MFE_180D_pct",
+    "mfe_180d_pct": "MFE_180D_pct",
+    "mfe_pct": "MFE_180D_pct",
     "MAE30": "MAE_30D_pct",
     "MAE_30D": "MAE_30D_pct",
     "MAE_30D_pct": "MAE_30D_pct",
@@ -37,12 +41,24 @@ COLUMN_ALIASES = {
     "MAE_180D": "MAE_180D_pct",
     "MAE_180D_pct": "MAE_180D_pct",
     "mae_30_pct": "MAE_30D_pct",
+    "mae_30d_pct": "MAE_30D_pct",
     "mae_90_pct": "MAE_90D_pct",
+    "mae_90d_pct": "MAE_90D_pct",
     "mae_180_pct": "MAE_180D_pct",
+    "mae_180d_pct": "MAE_180D_pct",
+    "mae_pct": "MAE_180D_pct",
     "type": "trigger_type",
     "trigger": "trigger_id",
     "entry": "entry_date",
     "price": "entry_price",
+    "entry_close": "entry_price",
+    "entry close": "entry_price",
+    "entry_close_price": "entry_price",
+    "ticker": "symbol",
+    "name": "company_name",
+    "review_id": "trigger_id",
+    "research_id": "trigger_id",
+    "original_trigger_type": "trigger_family",
     "current": "current_profile_verdict",
     "outcome": "trigger_outcome_label",
     "verdict": "trigger_outcome_label",
@@ -84,9 +100,13 @@ ROW_TYPE_ALIASES = {
     "aggregate": "aggregate_metric",
     "r13_cross_case": "trigger",
     "r13_review_trigger": "trigger",
+    "cross_review_trigger": "trigger",
+    "review_case": "trigger",
+    "trigger_case": "trigger",
     "r13_cross_summary": "residual_contribution",
     "r13_cross_archetype_rule_candidate": "canonical_archetype_rule_candidate",
     "r13_guardrail_candidate": "shadow_weight",
+    "shadow_rule_candidate": "shadow_weight",
 }
 
 FENCE_RE = re.compile(r"```(?P<lang>[A-Za-z0-9_-]*)\n(?P<body>.*?)```", re.DOTALL)
@@ -125,6 +145,150 @@ def _normalise_value(value: Any) -> Any:
     return value
 
 
+def _text_has_any(text: str, terms: tuple[str, ...]) -> bool:
+    return any(term in text for term in terms)
+
+
+def _canonical_stage_trigger_type(value: Any) -> str | None:
+    text = str(value or "").strip()
+    if not text:
+        return None
+    if text.startswith("Stage2-Actionable") or text == "S2A":
+        return "Stage2-Actionable"
+    if text.startswith("Stage3-Yellow"):
+        return "Stage3-Yellow"
+    if text.startswith("Stage3-Green"):
+        return "Stage3-Green"
+    if text.startswith("Stage4B") or text.startswith("4B"):
+        return "Stage4B"
+    if text.startswith("Stage4C") or text.startswith("4C"):
+        return "Stage4C"
+    if text.startswith("Stage2"):
+        return "Stage2"
+    return None
+
+
+def _derive_v12_compact_semantics(normalised: dict[str, Any]) -> None:
+    """Preserve compact v12 research rows as stage-aware trigger rows.
+
+    Some recent research files emitted calibration rows as ``case`` /
+    ``trigger_case`` / ``review_case`` instead of canonical ``trigger`` rows.
+    These rows still carry entry date, price path and classification. We map
+    only the stage bucket needed for calibration and keep the original label in
+    ``trigger_family`` so runtime scoring never depends on stock names.
+    """
+
+    if normalised.get("row_type") != "trigger":
+        return
+    source_row_type = str(normalised.get("source_row_type") or "").strip()
+    v12_source_types = {
+        "v12_compact_case",
+        "trigger_case",
+        "cross_review_trigger",
+        "review_case",
+        "r13_cross_case",
+        "r13_review_trigger",
+    }
+    label_fields = (
+        "classification",
+        "path_label",
+        "r13_route",
+        "polarity",
+        "bridge_status",
+        "r13_verdict",
+        "stage_judgment",
+        "score_alignment",
+        "trigger_outcome_label",
+        "current_profile_verdict",
+        "trigger_type",
+        "trigger_family",
+    )
+    label_text = " ".join(str(normalised.get(key) or "") for key in label_fields).lower()
+    if source_row_type not in v12_source_types and not any(
+        normalised.get(key) not in (None, "") for key in ("classification", "path_label", "r13_route", "polarity")
+    ):
+        return
+
+    original_trigger = normalised.get("trigger_type") or normalised.get("trigger_family")
+    if original_trigger and not normalised.get("trigger_family"):
+        normalised["trigger_family"] = original_trigger
+
+    if not normalised.get("trigger_id"):
+        trigger_parts = [
+            normalised.get("case_id"),
+            normalised.get("symbol"),
+            normalised.get("entry_date"),
+            normalised.get("trigger_family") or normalised.get("classification") or normalised.get("r13_route"),
+        ]
+        suffix = "_".join(str(part).strip().replace(" ", "_") for part in trigger_parts if part not in (None, ""))
+        normalised["trigger_id"] = f"V12_COMPACT_{suffix}" if suffix else "V12_COMPACT_TRIGGER"
+    if not normalised.get("trigger_date") and normalised.get("entry_date"):
+        normalised["trigger_date"] = normalised.get("entry_date")
+    if not normalised.get("evidence_source"):
+        normalised["evidence_source"] = (
+            normalised.get("evidence_summary")
+            or normalised.get("evidence_family")
+            or normalised.get("classification")
+            or normalised.get("r13_route")
+            or normalised.get("trigger_family")
+        )
+    if not normalised.get("trigger_outcome_label"):
+        normalised["trigger_outcome_label"] = (
+            normalised.get("classification")
+            or normalised.get("path_label")
+            or normalised.get("r13_route")
+            or normalised.get("polarity")
+        )
+
+    hard_4c = _text_has_any(label_text, ("hard_4c", "4c_candidate", "route_to_4c", "thesis_break"))
+    negative = hard_4c or _text_has_any(
+        label_text,
+        (
+            "counterexample",
+            "false_positive",
+            "failed",
+            "failure",
+            "high_mae",
+            "weak_bridge",
+            "bridge_missing",
+            "without_",
+            "without ",
+            "no_bridge",
+            "blocked",
+            "not_green",
+            "green_blocked",
+        ),
+    )
+    positive = (
+        str(normalised.get("polarity") or "").lower() in {"positive", "positive_control"}
+        or _text_has_any(label_text, ("positive_with", "local_positive", "positive_control", "approved", "bridge_present"))
+    ) and not negative
+
+    if not normalised.get("positive_or_counterexample"):
+        normalised["positive_or_counterexample"] = "counterexample" if negative else "positive" if positive else "counterexample"
+    if not normalised.get("case_type"):
+        if hard_4c:
+            normalised["case_type"] = "4c_thesis_break"
+        elif normalised["positive_or_counterexample"] == "positive":
+            normalised["case_type"] = "structural_success"
+        else:
+            normalised["case_type"] = "failed_rerating"
+    if not normalised.get("current_profile_verdict"):
+        normalised["current_profile_verdict"] = (
+            "current_profile_correct" if normalised["positive_or_counterexample"] == "positive" else "current_profile_false_positive"
+        )
+
+    canonical_stage = _canonical_stage_trigger_type(normalised.get("trigger_type"))
+    if canonical_stage is None:
+        if hard_4c:
+            canonical_stage = "Stage4C"
+        elif normalised["positive_or_counterexample"] == "positive":
+            canonical_stage = "Stage2-Actionable"
+        else:
+            canonical_stage = "Stage2"
+    normalised["trigger_type"] = canonical_stage
+
+
 def _normalise_row(row: dict[str, Any]) -> dict[str, Any]:
     normalised: dict[str, Any] = {}
     for key, value in row.items():
@@ -140,11 +304,19 @@ def _normalise_row(row: dict[str, Any]) -> dict[str, Any]:
         normalised["row_type"] = row_type
     if original_row_type and row_type != original_row_type:
         normalised["source_row_type"] = original_row_type
-    if original_row_type in {"r13_cross_case", "r13_review_trigger"}:
+    if original_row_type in {"r13_cross_case", "r13_review_trigger", "cross_review_trigger", "review_case", "trigger_case"}:
         if not normalised.get("round") and normalised.get("source_round"):
             normalised["round"] = normalised.get("source_round")
         if not normalised.get("loop") and normalised.get("source_loop"):
             normalised["loop"] = normalised.get("source_loop")
+        if not normalised.get("round") and normalised.get("scheduled_round"):
+            normalised["round"] = normalised.get("scheduled_round")
+        if not normalised.get("loop") and normalised.get("scheduled_loop"):
+            normalised["loop"] = normalised.get("scheduled_loop")
+        if not normalised.get("large_sector_id") and normalised.get("original_large_sector_id"):
+            normalised["large_sector_id"] = normalised.get("original_large_sector_id")
+        if not normalised.get("canonical_archetype_id") and normalised.get("original_canonical_archetype_id"):
+            normalised["canonical_archetype_id"] = normalised.get("original_canonical_archetype_id")
         if not normalised.get("trigger_id"):
             if normalised.get("source_trigger_id"):
                 normalised["trigger_id"] = normalised.get("source_trigger_id")
@@ -157,8 +329,10 @@ def _normalise_row(row: dict[str, Any]) -> dict[str, Any]:
                 ]
                 trigger_suffix = "_".join(str(part).strip().replace(" ", "_") for part in trigger_parts if part not in (None, ""))
                 normalised["trigger_id"] = f"R13_CROSS_{trigger_suffix}" if trigger_suffix else "R13_REVIEW_TRIGGER"
-        normalised["do_not_count_as_new_case"] = True
-        normalised.setdefault("independent_evidence_weight", 0)
+        if original_row_type in {"r13_cross_case", "r13_review_trigger", "cross_review_trigger", "review_case"}:
+            normalised["do_not_count_as_new_case"] = True
+            normalised.setdefault("independent_evidence_weight", 0)
+    _derive_v12_compact_semantics(normalised)
     if normalised.get("large_sector_id"):
         normalised["large_sector_id"] = normalise_large_sector_id(normalised.get("large_sector_id"))
     if normalised.get("canonical_archetype_id"):
@@ -278,9 +452,10 @@ def _looks_like_no_repeat_trigger_row(payload: dict[str, Any]) -> bool:
     schema_version = str(payload.get("schema_version") or "")
     if schema_version.startswith("v12_no_repeat_standalone_trigger_row"):
         return True
+    normalised_keys = {_normalise_key(str(key)) for key in payload}
     required = {"trigger_type", "entry_date", "entry_price"}
     price_path = {"MFE_30D_pct", "MFE_90D_pct", "MFE_180D_pct", "MAE_30D_pct", "MAE_90D_pct", "MAE_180D_pct"}
-    return required.issubset(payload) and len(price_path.intersection(payload)) >= 4
+    return required.issubset(normalised_keys) and len(price_path.intersection(normalised_keys)) >= 2
 
 
 def _parse_csv_fences(text: str, rows_by_type: dict[str, list[dict[str, Any]]], document: MarkdownDocument) -> None:
@@ -430,6 +605,122 @@ def _enrich_trigger_rows_by_trigger_id(rows_by_type: dict[str, list[dict[str, An
                 row[key] = value
 
 
+def _has_price_path_fragment(row: dict[str, Any]) -> bool:
+    return any(
+        row.get(key) not in (None, "")
+        for key in (
+            "MFE_30D_pct",
+            "MFE_90D_pct",
+            "MFE_180D_pct",
+            "MAE_30D_pct",
+            "MAE_90D_pct",
+            "MAE_180D_pct",
+            "mfe_pct",
+            "mae_pct",
+        )
+    )
+
+
+def _looks_like_compact_v12_case_trigger(row: dict[str, Any]) -> bool:
+    if row.get("row_type") != "case":
+        return False
+    if not (row.get("case_id") and row.get("symbol") and row.get("entry_date") and row.get("entry_price")):
+        return False
+    has_label = any(
+        row.get(key) not in (None, "")
+        for key in ("trigger_type", "classification", "path_label", "stage_judgment", "evidence_summary")
+    )
+    return has_label and _has_price_path_fragment(row)
+
+
+def _synthesise_v12_case_triggers(rows_by_type: dict[str, list[dict[str, Any]]], document: MarkdownDocument) -> None:
+    """Create trigger rows from compact v12 case rows.
+
+    Newer research output sometimes wrote the calibration datum as a case row:
+    symbol, entry date, entry price, price path and classification are present,
+    but ``row_type`` is still ``case``. Without this synthesis the document is
+    parsed but contributes zero trigger rows.
+    """
+
+    if document.schema_family != "v12_sector_archetype_residual":
+        return
+    existing_case_ids = {row.get("case_id") for row in rows_by_type.get("trigger", []) if row.get("case_id")}
+    for case_row in list(rows_by_type.get("case", [])):
+        if not _looks_like_compact_v12_case_trigger(case_row):
+            continue
+        if case_row.get("case_id") in existing_case_ids:
+            continue
+        trigger_row = dict(case_row)
+        trigger_row["row_type"] = "trigger"
+        trigger_row["source_row_type"] = "v12_compact_case"
+        trigger_row.setdefault("trigger_id", f"{case_row.get('case_id')}_TRIGGER")
+        trigger_row.setdefault("trigger_date", case_row.get("trigger_date") or case_row.get("entry_date"))
+        _append_row(
+            rows_by_type,
+            trigger_row,
+            document=document,
+            method="compact_case_synthesis",
+            line_number=None,
+            raw_snippet=str(case_row.get("raw_source_snippet") or case_row)[:1000],
+        )
+        existing_case_ids.add(case_row.get("case_id"))
+
+
+def _synthesise_v12_review_only_audit_trigger(rows_by_type: dict[str, list[dict[str, Any]]], document: MarkdownDocument) -> None:
+    """Keep review-only v12 files visible in the trigger rejection ledger.
+
+    A few R13 red-team files intentionally contain only aggregate, coverage or
+    shadow-weight rows. They should not become valid calibration cases, but a
+    zero-trigger document makes preflight look like parser loss. We add one
+    audit-only trigger row that validation will reject for missing price path.
+    """
+
+    if document.schema_family != "v12_sector_archetype_residual":
+        return
+    if rows_by_type.get("trigger"):
+        return
+    support_row_types = (
+        "aggregate_metric",
+        "coverage_matrix",
+        "shadow_weight",
+        "residual_contribution",
+        "narrative_only",
+        "profile_comparison",
+        "score_simulation",
+    )
+    if not any(rows_by_type.get(row_type) for row_type in support_row_types):
+        return
+    trigger_id = "V12_REVIEW_ONLY_{round}_{loop}_{arch}".format(
+        round=document.round or "unknown_round",
+        loop=document.loop or "unknown_loop",
+        arch=document.canonical_archetype_id or "unknown_archetype",
+    )
+    audit_row = {
+        "row_type": "trigger",
+        "source_row_type": "v12_review_only_audit",
+        "trigger_id": trigger_id,
+        "case_id": trigger_id,
+        "trigger_type": "review_only_no_price_path",
+        "calibration_usable": False,
+        "dedupe_for_aggregate": False,
+        "aggregate_group_role": "audit_only",
+        "do_not_count_as_new_case": True,
+        "independent_evidence_weight": 0,
+        "calibration_block_reasons": ["review_only_document_without_symbol_entry_price_path"],
+        "positive_or_counterexample": "counterexample",
+        "case_type": "review_only",
+        "current_profile_verdict": "review_only_not_calibration_case",
+    }
+    _append_row(
+        rows_by_type,
+        audit_row,
+        document=document,
+        method="review_only_audit_synthesis",
+        line_number=None,
+        raw_snippet=json.dumps(audit_row, ensure_ascii=False),
+    )
+
+
 def parse_markdown_document(document: MarkdownDocument) -> ParsedMarkdown:
     text = document.path.read_text(encoding="utf-8", errors="replace")
     metadata = _parse_metadata(text)
@@ -457,6 +748,8 @@ def parse_markdown_document(document: MarkdownDocument) -> ParsedMarkdown:
         _parse_json_lines(text, rows_by_type, document)
         _parse_csv_fences(text, rows_by_type, document)
         _parse_markdown_tables(text, rows_by_type, document)
+        _synthesise_v12_case_triggers(rows_by_type, document)
+        _synthesise_v12_review_only_audit_trigger(rows_by_type, document)
         _enrich_trigger_rows_by_trigger_id(rows_by_type)
         if not rows_by_type["price_source_validation"]:
             candidate = {

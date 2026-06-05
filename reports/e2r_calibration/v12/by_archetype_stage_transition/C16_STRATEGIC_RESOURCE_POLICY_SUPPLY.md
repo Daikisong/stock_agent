@@ -3,40 +3,37 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `33`
+- stage_transition_summary_rows: `30`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| 004090 | 004090 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
-| 011810 | 011810 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
-| 012320 | 012320 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 95500.0 | None | None | no_valid_stage_transition |
+| 004090 | 004090 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 23300.0 | None | None | 20.6 | None | stage2_captured_most_upside |
 | 024060 | 024060 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
-| 036460 | 036460 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 40800.0 | None | None | 58.09 | None | stage2_actionable_best_entry |
-| 039610 | 039610 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 8630.0 | None | None | 56.08 | None | stage2_actionable_best_entry |
-| 047400 | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
-| 081150 | 081150 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 2805.0 | None | None | 31.0106 | None | stage2_actionable_best_entry |
-| R4L71_C16_021050_20240412 | 021050 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 1308.0 | None | None | 53.29 | None | stage2_actionable_best_entry |
-| R4L71_C16_047400_20230410 | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 3640.0 | None | None | 116.76 | None | stage2_actionable_best_entry |
-| R4L71_C16_101670_20240214 | 101670 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 5090.0 | None | None | 54.22 | None | stage2_actionable_best_entry |
-| R4L73_C16_012320_20221020_TITANIUM_RESOURCE_DISCOVERY_4B_BRIDGE | 012320 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 37550.0 | None | None | 272.84 | None | stage2_actionable_best_entry |
-| R4L73_C16_014580_20230323_CALCINED_COKE_GRAPHITE_SUPPLY_THEME_WEAK_BRIDGE | 014580 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 8890.0 | None | None | 20.13 | None | stage2_actionable_best_entry |
-| R4L73_C16_900250_20230410_GRAPHITE_GRAPHENE_SUPPLY_THEME_NO_DURABLE_BRIDGE | 900250 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 1615.0 | None | None | 69.04 | None | stage2_actionable_best_entry |
-| R4L73_C16_GEUMYANG_20230726_LITHIUM_RESOURCE_BLOWOFF | 001570 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 152200.0 | None | None | 4b_good_peak_capture |
-| R4L73_C16_IGUINDUSTRY_20240314_COPPER_SUPPLY_TIGHTNESS | 025820 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 4220.0 | None | None | 99.53 | None | stage2_actionable_best_entry |
-| R4L73_C16_POSCOHOLDINGS_20230331_LITHIUM_RESOURCE_BRIDGE | 005490 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 368000.0 | None | 642000.0 | 107.61 | 69.1911 | 4b_good_peak_capture |
-| R4L73_C16_UNIONMATERIAL_20230419_RARE_EARTH_POLICY_SPIKE | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 3935.0 | None | None | 100.51 | None | stage2_actionable_best_entry |
-| R4L75_C16_001570_KUMYANG_LATE_RESOURCE_THEME_20230901 | 001570 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 125800.0 | None | None | 12.88 | None | stage2_actionable_best_entry |
-| R4L75_C16_003670_POSCOFUTUREM_SDI_CATHODE_SUPPLY_20230130 | 003670 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 218000.0 | None | None | 218.35 | None | stage2_actionable_best_entry |
-| R4L75_C16_005490_POSCOHOLDINGS_LITHIUM_VALUECHAIN_20230331 | 005490 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 368000.0 | None | None | 107.61 | None | stage2_actionable_best_entry |
-| R4L75_C16_012320_20240321_DOMESTIC_TITANIUM_RESOURCE_POLICY_SUPPLY_BRIDGE | 012320 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 80400.0 | None | None | 54.1 | None | stage2_actionable_best_entry |
-| R4L75_C16_037950_20240115_GOLD_RESOURCE_THEME_NO_PRODUCTION_CASHFLOW_BRIDGE | 037950 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 1403.0 | None | None | 24.59 | None | stage2_actionable_best_entry |
-| R4L75_C16_047400_20240118_RARE_EARTH_MAGNET_THEME_WITHOUT_OFFTAKE_MARGIN_BRIDGE | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 3535.0 | None | None | 3.96 | None | stage2_actionable_best_entry |
-| R4L75_C16_095500_MIRAE_NANOTECH_LITHIUM_PROCESSING_THEME_20230403 | 095500 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 35850.0 | None | None | 2.93 | None | stage2_actionable_best_entry |
-| R4L75_C16_101670_HYDROLITHIUM_RESOURCE_NARRATIVE_20230403 | 101670 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 49750.0 | None | None | 22.41 | None | stage2_actionable_best_entry |
-| R4L83-C16-01 | 103140 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 42200.0 | None | None | 68.48 | None | stage2_actionable_best_entry |
-| R4L83-C16-02 | 020150 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 37650.0 | None | None | 57.24 | None | stage2_actionable_best_entry |
-| R4L83-C16-03 | 121600 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
-| R4L83-C16-04 | 278280 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
-| R4L86-C16-01 | 103140 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 46100.0 | None | None | 68.33 | None | stage2_actionable_best_entry |
-| R4L86-C16-02 | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
-| R4L86-C16-03 | 032560 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| 036460 | 036460 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 39400.0 | None | None | 63.71 | None | stage2_actionable_best_entry |
+| C16_R4L85_006260_LS_COPPER_ELECTRIFICATION_SUPPLY_BRIDGE | 006260 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 114900.0 | None | None | 69.54 | None | stage2_actionable_best_entry |
+| C16_R4L85_021050_SEOWON_COPPER_THEME_SPIKE | 021050 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_R4L85_025820_LEEGU_SMALLCAP_COPPER_THEME | 025820 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_R4L87_006260_LS_COPPER_GRID_STRATEGIC_SUPPLY | 006260 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 101300.0 | None | None | 92.3 | None | stage2_actionable_best_entry |
+| C16_R4L87_073570_LITHIUMFORCE_POLICY_THEME_DECAY | 073570 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_R4L87_131400_EVADV_LITHIUM_THEME_DECAY | 131400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_R4L90_009520_POSCO_MTECH_LITHIUM_THEME | 009520 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_R4L90_018470_CHOIL_ALUMINUM_SHEET_REBOUND | 018470 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_R4L90_128660_PJ_METAL_ALUMINUM_SUPPLY | 128660 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 3315.0 | None | None | 62.59 | None | stage2_actionable_best_entry |
+| C16_R4L93_005420_2024_09_02 | 005420 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 21450.0 | None | None | 20.0 | None | stage2_actionable_best_entry |
+| C16_R4L93_009520_2024_02_21 | 009520 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_R4L93_014580_2024_05_17 | 014580 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_R4L96_000670_2024_02_01 | 000670 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_R4L96_006260_2024_02_01 | 006260 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 96000.0 | None | None | 54.3 | None | stage2_captured_most_upside |
+| C16_R4L96_011810_2024_02_16 | 011810 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_R4L99_000910_2024_02_01 | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_R4L99_009520_2024_02_01 | 009520 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_R4L99_036460_2024_02_01 | 036460 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 27550.0 | None | None | 95.3 | None | stage2_captured_most_upside |
+| R4L89_C16_EG_2024_RARE_EARTH_POLICY_THEME_EVENT_CAP_4B | 037370 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 9420.0 | None | None | 4b_good_peak_capture |
+| R4L89_C16_POSCOMTECH_2023_LITHIUM_RESOURCE_SUPPLY_POLICY_POSITIVE | 009520 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 8890.0 | None | None | 345.44 | None | stage2_actionable_best_entry |
+| R4L89_C16_STX_2024_RESOURCE_TRADING_FALSE_STAGE2 | 011810 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 11600.0 | None | None | 5.95 | None | stage2_actionable_best_entry |
+| R4L92_C16_DAECHANG_2024_COPPER_THEME_FALSE_STAGE2 | 012800 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 1676.0 | None | None | 9.67 | None | stage2_actionable_best_entry |
+| R4L92_C16_EGU_2024_COPPER_RESOURCE_EVENT_CAP_4B | 025820 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 5700.0 | None | None | 4b_good_peak_capture |
+| R4L92_C16_LS_2024_COPPER_STRATEGIC_RESOURCE_SUPPLY_CHAIN_POSITIVE | 006260 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 80000.0 | None | None | 143.5 | None | stage2_actionable_best_entry |
+| R4L95_C16_DONGKUKRNS_2024_RARE_EARTH_POLICY_FALSE_STAGE2 | 075970 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 3605.0 | None | None | 13.18 | None | stage2_actionable_best_entry |
+| R4L95_C16_POONGSAN_2024_COPPER_DEFENSE_MATERIAL_SUPPLY_MARGIN_POSITIVE | 103140 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 46100.0 | None | None | 71.15 | None | stage2_actionable_best_entry |
+| R4L95_C16_STX_2024_LITHIUM_NICKEL_TRADING_RESOURCE_EVENT_CAP_4B | 011810 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 10950.0 | None | None | 4b_good_peak_capture |

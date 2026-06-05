@@ -7,7 +7,7 @@ evidence URL/source proxy 한계는 blocker로 보고서에 남깁니다.
 - profile_id: `e2r_2_2_rolling_candidate`
 - profile_status: `ready_for_run_v12_calibration_apply`
 - previous_default_profile: `e2r_2_1_stock_web_calibrated`
-- sector_candidate_count: `25`
-- archetype_candidate_count: `68`
+- sector_candidate_count: `30`
+- archetype_candidate_count: `104`
 - production_default_scoring_changed: `False`
 - note: active 반영은 safe apply_next_patch만 scope 제한으로 수행합니다.

@@ -11,7 +11,14 @@ import re
 POSITIVE_TRIGGER_TYPES = {"Stage2", "Stage2-Actionable", "Stage3-Yellow", "Stage3-Green"}
 FOUR_B_TYPES = {"Stage4B", "4B", "4B-watch", "Stage4B-watch"}
 FOUR_C_TYPES = {"Stage4C", "4C", "Stage4C-hard", "hard_4C"}
-R13_PARTIAL_PRICE_PATH_ROW_TYPES = {"r13_cross_case", "r13_review_trigger"}
+PARTIAL_PRICE_PATH_ROW_TYPES = {
+    "r13_cross_case",
+    "r13_review_trigger",
+    "cross_review_trigger",
+    "review_case",
+    "trigger_case",
+    "v12_compact_case",
+}
 
 UNAVAILABLE_MARKERS = {
     "",
@@ -134,7 +141,7 @@ def _adjustment_valid(row: dict[str, Any]) -> bool:
 
 
 def _has_required_mfe_mae(row: dict[str, Any]) -> bool:
-    if row.get("source_row_type") in R13_PARTIAL_PRICE_PATH_ROW_TYPES:
+    if row.get("source_row_type") in PARTIAL_PRICE_PATH_ROW_TYPES:
         return any(
             parse_number(row.get(f"MFE_{horizon}D_pct")) is not None
             and parse_number(row.get(f"MAE_{horizon}D_pct")) is not None
@@ -395,18 +402,20 @@ def validate_v12_trigger_rows(trigger_rows: list[dict[str, Any]]) -> ValidationB
         validated["usable_for_v12_shadow_calibration"] = bool(large_sector_id) and bool(canonical_archetype_id)
         validated["usable_for_sector_shadow"] = bool(large_sector_id) and not duplicate_low_value and not rematerialization
         validated["usable_for_archetype_shadow"] = bool(canonical_archetype_id) and not duplicate_low_value and not rematerialization
+        residual_counterexample = str(validated.get("positive_or_counterexample", "")).lower() == "counterexample"
         validated["usable_for_new_weight_evidence"] = (
             validated["usable_for_v12_shadow_calibration"]
             and not duplicate_low_value
             and not rematerialization
             and not do_not_count
             and not independent_weight_zero
+            and not residual_counterexample
             and not is_4b_or_4c
             and not is_price_only_theme_guard
             and is_positive
             and non_price
         )
-        validated["residual_counterexample"] = str(validated.get("positive_or_counterexample", "")).lower() == "counterexample"
+        validated["residual_counterexample"] = residual_counterexample
         verdict_text = str(validated.get("current_profile_verdict") or "").lower()
         outcome_text = str(validated.get("trigger_outcome_label") or "").lower()
         combined_text = f"{verdict_text} {outcome_text}"

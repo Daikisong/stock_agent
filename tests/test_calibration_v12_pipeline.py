@@ -235,6 +235,120 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             self.assertEqual(len(bundle.valid_rows), 1)
             self.assertFalse(bundle.valid_rows[0]["usable_for_new_weight_evidence"])
 
+    def test_v12_compact_case_rows_synthesise_trigger_rows(self) -> None:
+        markdown = """# E2R v12 compact case fixture
+
+- research_session: `post_calibrated_sector_archetype_residual_research`
+- mode: `historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12`
+- round: `R7`
+- loop: `89`
+- large_sector_id: `L7_BIO_HEALTHCARE_MEDICAL`
+- canonical_archetype_id: `C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION`
+
+```jsonl
+{"row_type":"case","case_id":"POS","symbol":"326030","entry_date":"2024-07-12","entry_close":83000,"trigger_type":"approved_drug_sales_bridge","classification":"positive_with_local_4b_overlay","mfe_30d_pct":34.58,"mae_30d_pct":-12.53,"mfe_90d_pct":43.98,"mae_90d_pct":-12.53,"mfe_180d_pct":56.39,"mae_180d_pct":-12.53,"calibration_usable":true}
+{"row_type":"case","case_id":"NEG","symbol":"128940","entry_date":"2024-03-25","entry_close":347000,"trigger_type":"pipeline_headline_without_revenue_bridge","classification":"counterexample_high_mae","mfe_30d_pct":0.86,"mae_30d_pct":-14.55,"mfe_90d_pct":0.86,"mae_90d_pct":-25.65,"mfe_180d_pct":0.86,"mae_180d_pct":-25.65,"calibration_usable":true}
+```
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = (
+                Path(tmp)
+                / "e2r_stock_web_v12_residual_round_R7_loop_89_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION_research.md"
+            )
+            path.write_text(markdown, encoding="utf-8")
+            doc = v12_result_documents(discover_markdown_documents(path.parent))[0]
+            parsed = parse_markdown_document(doc)
+            trigger_rows = parsed.rows_by_type["trigger"]
+
+            self.assertEqual(len(trigger_rows), 2)
+            self.assertTrue(all(row["source_row_type"] == "v12_compact_case" for row in trigger_rows))
+            positive = next(row for row in trigger_rows if row["case_id"] == "POS")
+            counter = next(row for row in trigger_rows if row["case_id"] == "NEG")
+            self.assertEqual(positive["entry_price"], 83000)
+            self.assertEqual(positive["trigger_type"], "Stage2-Actionable")
+            self.assertEqual(positive["positive_or_counterexample"], "positive")
+            self.assertEqual(counter["trigger_type"], "Stage2")
+            self.assertEqual(counter["positive_or_counterexample"], "counterexample")
+
+            bundle = validate_v12_trigger_rows(trigger_rows)
+            self.assertEqual(len(bundle.valid_rows), 2)
+            by_case = {row["case_id"]: row for row in bundle.valid_rows}
+            self.assertTrue(by_case["POS"]["usable_for_new_weight_evidence"])
+            self.assertFalse(by_case["NEG"]["usable_for_new_weight_evidence"])
+
+    def test_v12_trigger_case_and_cross_review_aliases_parse_as_triggers(self) -> None:
+        markdown = """# E2R v12 trigger aliases
+
+- research_session: `post_calibrated_sector_archetype_residual_research`
+- mode: `historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12`
+- round: `R13`
+- loop: `84`
+- large_sector_id: `L10_POLICY_EVENT_CROSS_REDTEAM_MISC`
+- canonical_archetype_id: `R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL`
+
+```jsonl
+{"row_type":"trigger_case","case_id":"C16_POS","ticker":"036460","trigger_type":"east_sea_policy_cashflow_bridge","trigger_date":"2024-06-03","entry_date":"2024-06-04","entry_price":39400,"mfe_pct":63.71,"mae_pct":-4.19,"classification":"positive_with_local_4B_watch","calibration_usable":true}
+{"row_type":"cross_review_trigger","review_id":"R13_REVIEW_NEG","original_trigger_type":"Stage2-FalsePositive-NoBridge","symbol":"004090","entry_date":"2024-06-04","entry_price":23300,"MFE_90D_pct":20.60,"MAE_90D_pct":-33.30,"polarity":"counterexample","bridge_status":"bridge_missing_or_unverified","calibration_usable":true}
+```
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = (
+                Path(tmp)
+                / "e2r_stock_web_v12_residual_round_R13_loop_84_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_research.md"
+            )
+            path.write_text(markdown, encoding="utf-8")
+            doc = v12_result_documents(discover_markdown_documents(path.parent))[0]
+            parsed = parse_markdown_document(doc)
+            trigger_rows = parsed.rows_by_type["trigger"]
+
+            self.assertEqual(len(trigger_rows), 2)
+            by_source = {row["source_row_type"]: row for row in trigger_rows}
+            self.assertEqual(by_source["trigger_case"]["symbol"], "036460")
+            self.assertEqual(by_source["trigger_case"]["MFE_180D_pct"], 63.71)
+            self.assertEqual(by_source["trigger_case"]["trigger_type"], "Stage2-Actionable")
+            self.assertEqual(by_source["cross_review_trigger"]["trigger_id"], "R13_REVIEW_NEG")
+            self.assertEqual(by_source["cross_review_trigger"]["trigger_type"], "Stage2")
+
+            bundle = validate_v12_trigger_rows(trigger_rows)
+            self.assertEqual(len(bundle.valid_rows), 2)
+            self.assertFalse(
+                next(row for row in bundle.valid_rows if row["source_row_type"] == "cross_review_trigger")[
+                    "usable_for_new_weight_evidence"
+                ]
+            )
+
+    def test_v12_review_only_file_gets_rejected_audit_trigger(self) -> None:
+        markdown = """# E2R v12 review-only fixture
+
+- research_session: `post_calibrated_sector_archetype_residual_research`
+- mode: `historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12`
+- round: `R13`
+- loop: `97`
+- large_sector_id: `L10_POLICY_EVENT_CROSS_REDTEAM_MISC`
+- canonical_archetype_id: `R13_CROSS_ARCHETYPE_4B_4C_REDTEAM`
+
+```jsonl
+{"row_type":"shadow_weight","axis":"stage2_required_bridge","counterexample_count":12,"new_independent_case_count":0}
+{"row_type":"residual_contribution","new_independent_case_count":0,"loop_contribution_label":"axis_stress_test_passed","do_not_propose_new_weight_delta":true}
+```
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = (
+                Path(tmp)
+                / "e2r_stock_web_v12_residual_round_R13_loop_97_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_research.md"
+            )
+            path.write_text(markdown, encoding="utf-8")
+            doc = v12_result_documents(discover_markdown_documents(path.parent))[0]
+            parsed = parse_markdown_document(doc)
+            trigger_rows = parsed.rows_by_type["trigger"]
+
+            self.assertEqual(len(trigger_rows), 1)
+            self.assertEqual(trigger_rows[0]["source_row_type"], "v12_review_only_audit")
+            bundle = validate_v12_trigger_rows(trigger_rows)
+            self.assertEqual(len(bundle.valid_rows), 0)
+            self.assertEqual(len(bundle.rejected_rows), 1)
+            self.assertIn("missing_entry_price", bundle.rejected_rows[0]["validation_reasons"])
+
     def test_v12_metadata_and_residual_contribution_parse(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             path = self._write_fixture(Path(tmp))
