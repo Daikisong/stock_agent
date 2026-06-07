@@ -164,7 +164,7 @@ class V12CalibrationPipelineTests(unittest.TestCase):
 - canonical_archetype_id: `R13_CROSS_ARCHETYPE_4B_4C_REDTEAM`
 
 ```jsonl
-{"row_type":"r13_cross_case","source_round":"R12","source_loop":"71","large_sector_id":"L10_POLICY_EVENT_CROSS_REDTEAM_MISC","canonical_archetype_id":"C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP","source_trigger_id":"SRC-T1","case_id":"R12L71-C32-003920","symbol":"003920","trigger_type":"Stage4B-GovernanceExecutionRisk","entry_date":"2021-05-28","entry_price":570000,"mfe_30_pct":42.63,"mae_30_pct":-5.26,"mfe_180_pct":42.63,"mae_180_pct":-34.91,"calibration_usable":true,"source_proxy_only":true,"evidence_url_pending":true}
+{"row_type":"r13_cross_case","source_round":"R12","source_loop":"71","large_sector_id":"L10_POLICY_EVENT_CROSS_REDTEAM_MISC","canonical_archetype_id":"C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP","source_trigger_id":"SRC-T1","case_id":"R12L71-C32-003920","symbol":"003920","trigger_type":"Stage4B-GovernanceExecutionRisk","entry_date":"2021-05-28","entry_price":570000,"mfe_30_pct":42.63,"mae_30_pct":-5.26,"mfe_90_pct":42.63,"mae_90_pct":-20.14,"mfe_180_pct":42.63,"mae_180_pct":-34.91,"calibration_usable":true,"source_proxy_only":true,"evidence_url_pending":true}
 {"row_type":"aggregate","axis":"stage2_required_bridge","row_count":1}
 {"row_type":"r13_cross_summary","selected_cross_case_count":1,"do_not_propose_new_weight_delta":true}
 {"row_type":"r13_guardrail_candidate","axis":"local_4b_watch","decision":"hold_for_more_evidence"}
@@ -232,8 +232,9 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             self.assertEqual(len(parsed.rows_by_type["canonical_archetype_rule_candidate"]), 1)
 
             bundle = validate_v12_trigger_rows(trigger_rows)
-            self.assertEqual(len(bundle.valid_rows), 1)
-            self.assertFalse(bundle.valid_rows[0]["usable_for_new_weight_evidence"])
+            self.assertEqual(len(bundle.valid_rows), 0)
+            self.assertEqual(len(bundle.rejected_rows), 1)
+            self.assertIn("missing_required_mfe_mae", bundle.rejected_rows[0]["validation_reasons"])
 
     def test_v12_compact_case_rows_synthesise_trigger_rows(self) -> None:
         markdown = """# E2R v12 compact case fixture
@@ -310,11 +311,10 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             self.assertEqual(by_source["cross_review_trigger"]["trigger_type"], "Stage2")
 
             bundle = validate_v12_trigger_rows(trigger_rows)
-            self.assertEqual(len(bundle.valid_rows), 2)
-            self.assertFalse(
-                next(row for row in bundle.valid_rows if row["source_row_type"] == "cross_review_trigger")[
-                    "usable_for_new_weight_evidence"
-                ]
+            self.assertEqual(len(bundle.valid_rows), 0)
+            self.assertEqual(len(bundle.rejected_rows), 2)
+            self.assertTrue(
+                all("missing_required_mfe_mae" in row["validation_reasons"] for row in bundle.rejected_rows)
             )
 
     def test_v12_review_only_file_gets_rejected_audit_trigger(self) -> None:
@@ -888,7 +888,7 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             os.environ["E2R_SCORING_PROFILE"] = "e2r_2_2"
             score = DeterministicScorer().score(
                 ScoringPayload(
-                    symbol="POLICY",
+                    symbol="GRID",
                     as_of_date=date(2024, 2, 23),
                     components={
                         "eps_fcf_explosion": 14,
@@ -900,12 +900,12 @@ class V12CalibrationPipelineTests(unittest.TestCase):
                         "information_confidence": 4,
                     },
                     diagnostic_scores={"evidence_family_price": 1, "cross_evidence_family_count": 1},
-                    large_sector_id="L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
-                    canonical_archetype_id="C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+                    large_sector_id="L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+                    canonical_archetype_id="C02_POWER_GRID_DATACENTER_CAPEX",
                 )
             )
             stage = StageClassifier().classify(
-                StageClassificationInput(score=score, red_team=RedTeamAssessment.empty("POLICY", date(2024, 2, 23)))
+                StageClassificationInput(score=score, red_team=RedTeamAssessment.empty("GRID", date(2024, 2, 23)))
             )
         finally:
             if old is None:

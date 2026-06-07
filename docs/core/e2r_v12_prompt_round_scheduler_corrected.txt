@@ -65,6 +65,11 @@ must_deduplicate_same_entry_triggers_for_aggregate = true
 must_split_4b_local_vs_full_window_proximity = true
 must_include_raw_component_score_breakdown = true
 must_include_validation_scope = true
+must_use_standard_v12_result_filename = true
+must_never_use_compact_filename = true
+must_include_complete_30_90_180_mfe_mae_in_every_trigger_row = true
+trigger_rows_missing_required_price_fields_are_forbidden = true
+trigger_type_must_be_canonical_stage_label = true
 ```
 
 ---
@@ -617,6 +622,30 @@ e2r_stock_web_v12_residual_round_R13_loop_41_L5_CONSUMER_BRAND_DISTRIBUTION_C20_
 e2r_stock_web_v12_residual_round_<selected_round>_loop_<selected_loop>_<large_sector_id>_<canonical_archetype_id>_research.md
 ```
 
+파일명은 위 패턴과 정확히 맞아야 한다.
+
+```text
+required_filename_regex = ^e2r_stock_web_v12_residual_round_R[0-9]+_loop_[0-9]+_[A-Z0-9_]+_[A-Z0-9_]+_research\.md$
+compact_filename_forbidden = true
+```
+
+금지 파일명 예시:
+
+```text
+c01_r1_loop97_shipbuilding_backlog_margin_bridge_1be59adb.md
+c07_r2_loop96_hbm_equipment_order_relative_strength_974b1d7b.md
+round_R1_loop_100_C01_research.md
+```
+
+위처럼 짧은 파일명이나 해시형 파일명은 사람이 보기에는 연구자료처럼 보여도 batch ingest에서 V12 result로 색인되지 않을 수 있다.
+
+쉬운 예:
+
+```text
+좋음: e2r_stock_web_v12_residual_round_R1_loop_116_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C01_ORDER_BACKLOG_MARGIN_BRIDGE_research.md
+나쁨: c01_r1_loop116_backlog.md
+```
+
 파일명, metadata, final response의 round/loop가 서로 다르면 실패다.
 
 ```text
@@ -631,6 +660,10 @@ if metadata_round != selected_round:
 
 if metadata_loop != selected_loop:
     output_invalid = true
+
+if filename does not match required_filename_regex:
+    output_invalid = true
+    do_not_write_md = true
 ```
 
 ### 4.8 다음 research state 필수 출력
@@ -1201,6 +1234,90 @@ loop_contribution_label = scope_consistency_violation
 do_not_propose_new_weight_delta = true
 ```
 
+### 6.5.12 Batch ingest self-audit gate
+
+MD를 쓰기 직전, 연구원은 자기 산출물이 batch ingest에서 대표 정규화 샘플로 들어갈 수 있는지 반드시 자체 검수한다.
+
+```text
+batch_ingest_self_audit_required = true
+```
+
+대표 샘플 후보인 모든 `row_type="trigger"`는 아래를 모두 통과해야 한다.
+
+```text
+filename_matches_standard_v12_pattern = true
+metadata_round_loop_matches_filename = true
+row_type = trigger
+trigger_type in Stage2 | Stage2-Actionable | Stage3-Yellow | Stage3-Green | Stage4B | Stage4C
+entry_date present
+entry_price > 0
+price_data_source or price_source = Songdaiki/stock-web
+price_basis = tradable_raw
+price_adjustment_status = raw_unadjusted_marcap
+forward_window_trading_days >= 180
+MFE_30D_pct present
+MFE_90D_pct present
+MFE_180D_pct present
+MAE_30D_pct present
+MAE_90D_pct present
+MAE_180D_pct present
+large_sector_id present
+canonical_archetype_id present
+corporate_action_window_status not contaminated
+same_entry_group_id present
+dedupe_for_aggregate present
+aggregate_group_role present
+calibration_usable present
+```
+
+위 조건 중 하나라도 빠진 row는 `row_type="trigger"`로 내지 않는다.
+그 대신 `row_type="narrative_only"` 또는 `calibration_usable=false`와 명확한 `calibration_block_reasons`를 붙인다.
+
+쉬운 예:
+
+```text
+정규화 대표 샘플 후보: 30D/90D/180D MFE·MAE가 모두 있고, entry_price와 stock-web shard가 확인된 Stage2-Actionable row
+연구 메모 전용: 사건 설명과 180D 수익률만 있고 30D/90D 경로가 없는 row
+```
+
+최종 MD에는 아래 자체 검수 요약을 반드시 남긴다.
+
+```text
+## Batch Ingest Self-Audit
+
+expected_v12_result_file: true
+filename_pattern_pass: true
+metadata_filename_consistency: pass
+jsonl_trigger_row_count:
+calibration_usable_trigger_count:
+representative_trigger_count:
+new_weight_evidence_candidate_count:
+guardrail_candidate_count:
+narrative_only_or_rejected_count:
+rows_missing_required_mfe_mae: 0
+rows_missing_entry_price_or_date: 0
+rows_with_noncanonical_trigger_type: 0
+rows_with_compact_mfe_mae_alias_only: 0
+ready_for_batch_ingest: true
+```
+
+Hard stop:
+
+```text
+if rows_missing_required_mfe_mae > 0:
+    do_not_write_trigger_rows_until_fixed = true
+
+if rows_with_noncanonical_trigger_type > 0:
+    do_not_write_trigger_rows_until_fixed = true
+
+if filename_pattern_pass != true:
+    do_not_write_md = true
+
+if representative_trigger_count < minimum_calibration_usable_case_count:
+    loop_contribution_label = schema_rematerialization_only
+    do_not_propose_new_weight_delta = true
+```
+
 ---
 ## 8. Case 구성 규칙
 
@@ -1375,6 +1492,52 @@ calibration_usable = false
 row_validation_status = reject_for_weight_calibration
 ```
 
+Trigger row hard gate:
+
+```text
+valid_trigger_row_requires_all_required_price_path_fields = true
+horizon_explicit_aliases_may_be_normalized = true
+ambiguous_or_horizonless_aliases_do_not_count = true
+```
+
+모든 `row_type="trigger"` JSONL row는 아래 6개 필드를 canonical key 이름으로 모두 가져야 한다.
+연구원 출력은 canonical key를 직접 쓰는 것을 원칙으로 한다.
+
+```text
+MFE_30D_pct
+MFE_90D_pct
+MFE_180D_pct
+MAE_30D_pct
+MAE_90D_pct
+MAE_180D_pct
+```
+
+batch parser는 `mfe_30_pct`, `mfe_90_pct`, `mfe_180_pct`, `mae_30_pct`, `mae_90_pct`, `mae_180_pct`처럼 기간이 명확한 alias는 canonical key로 정규화할 수 있다.
+하지만 이 alias들도 30D/90D/180D 여섯 칸이 모두 있을 때만 valid다.
+
+아래는 trigger row로 쓰면 안 된다.
+
+```text
+mfe_pct
+mae_pct
+MFE
+MAE
+peak_return_pct
+drawdown_pct
+only MFE_180D_pct / MAE_180D_pct
+only MFE_90D_pct / MAE_90D_pct
+```
+
+위 축약 필드만 있으면 사람이 읽기에는 수익률이 있어 보이지만, batch ingest는 30D/90D/180D 경로 검증을 할 수 없다. 그런 경우 `row_type="trigger"`를 만들지 말고 `row_type="narrative_only"`로 내려라.
+
+쉬운 예:
+
+```text
+좋음: MFE_30D_pct=12.1, MFE_90D_pct=31.4, MFE_180D_pct=44.5, MAE_30D_pct=-3.2, MAE_90D_pct=-8.1, MAE_180D_pct=-11.0
+허용 가능하지만 비권장: mfe_30_pct=12.1, mfe_90_pct=31.4, mfe_180_pct=44.5, mae_30_pct=-3.2, mae_90_pct=-8.1, mae_180_pct=-11.0
+나쁨: mfe_pct=44.5, mae_pct=-11.0
+```
+
 필수 price fields:
 
 ```text
@@ -1426,6 +1589,36 @@ N 기준:
 ## 14. Trigger row 필드
 
 모든 trigger row는 본문 table과 machine-readable JSONL에 동일하게 포함한다.
+
+`trigger_type`은 세부 테마명이 아니라 canonical Stage label이어야 한다.
+
+허용:
+
+```text
+Stage2
+Stage2-Actionable
+Stage3-Yellow
+Stage3-Green
+Stage4B
+Stage4C
+```
+
+금지:
+
+```text
+hbm_customer_capacity_mix_asp_bridge
+shipbuilding_holding_order_backlog_margin_bridge
+Stage2-FalsePositive-LongFreeText...
+```
+
+세부 trigger family, false-positive 이유, evidence family는 `trigger_outcome_label`, `current_profile_verdict`, `stage2_evidence_fields`, `stage3_evidence_fields`, `fine_archetype_id`, `residual_contribution`에 적는다. `trigger_type`에 넣지 않는다.
+
+쉬운 예:
+
+```text
+좋음: trigger_type = Stage2-Actionable, trigger_outcome_label = hbm_customer_capacity_mix_asp_bridge_positive
+나쁨: trigger_type = hbm_customer_capacity_mix_asp_bridge
+```
 
 ```text
 row_type
@@ -1897,7 +2090,22 @@ coverage_gap_after_this_loop
 
 ## 25. Machine-readable rows
 
-반드시 JSONL 또는 CSV 형태로 아래 row를 출력한다.
+반드시 JSONL 형태로 아래 row를 출력한다. CSV는 shadow_weight 같은 보조 표에만 허용한다.
+
+```text
+jsonl_machine_rows_required = true
+markdown_table_only_is_invalid = true
+compact_case_synthesis_is_not_target_output = true
+```
+
+본문 markdown table은 사람이 읽는 보조 자료일 뿐이다. 대표 정규화 샘플은 JSONL `row_type="trigger"`에서 필수 필드가 모두 있을 때만 만들어진다.
+
+쉬운 예:
+
+```text
+좋음: 본문 표 + 같은 내용의 JSONL trigger row
+나쁨: 본문 표에는 MFE/MAE가 있지만 JSONL trigger row가 없음
+```
 
 ### 25.1 price_source_validation
 

@@ -8,149 +8,98 @@ source proxy / evidence URL 한계가 있으면 positive patch는 막고 guardra
 - production_default_scoring_changed_after_apply: `true`
 - default_promotion_ready: `False`
 - next_patch_ready: `True`
-- apply_next_patch_count: `82`
-- stage_transition_summary_rows: `1591`
+- apply_next_patch_count: `44`
+- stage_transition_summary_rows: `515`
 
 ## Promotion Decisions
 
 | axis | scope | decision | promotion_type | ready_for_next_patch | missing_to_promote | recommended_next_action |
 |---|---|---|---|---|---|---|
-| stage2_required_bridge | L10_POLICY_EVENT_CROSS_REDTEAM_MISC | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| full_4b_overlay_candidate | L10_POLICY_EVENT_CROSS_REDTEAM_MISC | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | L10_POLICY_EVENT_CROSS_REDTEAM_MISC | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| stage2_bonus_candidate_delta | L10_POLICY_EVENT_CROSS_REDTEAM_MISC | blocked_by_data_quality | Type2_stage2_yellow_observation | False | evidence_url_pending_or_source_proxy_rate_above_25pct | verify_evidence_urls_or_replace_source_proxy_rows |
 | stage2_required_bridge | L1_INDUSTRIALS_INFRA_DEFENSE_GRID | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | L1_INDUSTRIALS_INFRA_DEFENSE_GRID | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | L1_INDUSTRIALS_INFRA_DEFENSE_GRID | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | L2_AI_SEMICONDUCTOR_ELECTRONICS | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | L2_AI_SEMICONDUCTOR_ELECTRONICS | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | L2_AI_SEMICONDUCTOR_ELECTRONICS | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | L3_BATTERY_EV_GREEN_MOBILITY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | L3_BATTERY_EV_GREEN_MOBILITY | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | L3_BATTERY_EV_GREEN_MOBILITY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| earlier_thesis_break_watch | L3_BATTERY_EV_GREEN_MOBILITY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | L4_MATERIALS_SPREAD_RESOURCE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | L4_MATERIALS_SPREAD_RESOURCE | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | L4_MATERIALS_SPREAD_RESOURCE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| earlier_thesis_break_watch | L4_MATERIALS_SPREAD_RESOURCE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | L5_CONSUMER_BRAND_DISTRIBUTION | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | L5_CONSUMER_BRAND_DISTRIBUTION | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | L5_CONSUMER_BRAND_DISTRIBUTION | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | L6_FINANCIAL_CAPITAL_RETURN_DIGITAL | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | L6_FINANCIAL_CAPITAL_RETURN_DIGITAL | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | L6_FINANCIAL_CAPITAL_RETURN_DIGITAL | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | L7_BIO_HEALTHCARE_MEDICAL | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | L7_BIO_HEALTHCARE_MEDICAL | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | L7_BIO_HEALTHCARE_MEDICAL | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| earlier_thesis_break_watch | L7_BIO_HEALTHCARE_MEDICAL | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | L8_PLATFORM_CONTENT_SW_SECURITY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | L8_PLATFORM_CONTENT_SW_SECURITY | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | L8_PLATFORM_CONTENT_SW_SECURITY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_required_bridge | L9_CONSTRUCTION_REALESTATE_HOUSING | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| full_4b_overlay_candidate | L9_CONSTRUCTION_REALESTATE_HOUSING | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | L9_CONSTRUCTION_REALESTATE_HOUSING | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_bonus_candidate_delta | C01_ORDER_BACKLOG_MARGIN_BRIDGE | blocked_by_data_quality | Type2_stage2_yellow_observation | False | evidence_url_pending_or_source_proxy_rate_above_25pct | verify_evidence_urls_or_replace_source_proxy_rows |
-| full_4b_overlay_candidate | C01_ORDER_BACKLOG_MARGIN_BRIDGE | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C01_ORDER_BACKLOG_MARGIN_BRIDGE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C02_POWER_GRID_DATACENTER_CAPEX | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C02_POWER_GRID_DATACENTER_CAPEX | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C02_POWER_GRID_DATACENTER_CAPEX | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_bonus_candidate_delta | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | blocked_by_data_quality | Type2_stage2_yellow_observation | False | evidence_url_pending_or_source_proxy_rate_above_25pct | verify_evidence_urls_or_replace_source_proxy_rows |
+| stage2_required_bridge | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_bonus_candidate_delta | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | blocked_by_data_quality | Type2_stage2_yellow_observation | False | evidence_url_pending_or_source_proxy_rate_above_25pct | verify_evidence_urls_or_replace_source_proxy_rows |
+| stage2_required_bridge | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C06_HBM_MEMORY_CUSTOMER_CAPACITY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C06_HBM_MEMORY_CUSTOMER_CAPACITY | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C06_HBM_MEMORY_CUSTOMER_CAPACITY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| full_4b_overlay_candidate | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_bonus_candidate_delta | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | blocked_by_data_quality | Type2_stage2_yellow_observation | False | evidence_url_pending_or_source_proxy_rate_above_25pct | verify_evidence_urls_or_replace_source_proxy_rows |
-| full_4b_overlay_candidate | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| local_4b_watch_guard | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| stage2_required_bridge | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| local_4b_watch_guard | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| full_4b_overlay_candidate | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| local_4b_watch_guard | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C11_BATTERY_ORDERBOOK_RERATING | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C11_BATTERY_ORDERBOOK_RERATING | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C11_BATTERY_ORDERBOOK_RERATING | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| earlier_thesis_break_watch | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| earlier_thesis_break_watch | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C14_EV_DEMAND_SLOWDOWN_4B_4C | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C14_EV_DEMAND_SLOWDOWN_4B_4C | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C14_EV_DEMAND_SLOWDOWN_4B_4C | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_required_bridge | C15_MATERIAL_SPREAD_SUPERCYCLE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| earlier_thesis_break_watch | C14_EV_DEMAND_SLOWDOWN_4B_4C | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| stage2_bonus_candidate_delta | C15_MATERIAL_SPREAD_SUPERCYCLE | blocked_by_data_quality | Type2_stage2_yellow_observation | False | evidence_url_pending_or_source_proxy_rate_above_25pct | verify_evidence_urls_or_replace_source_proxy_rows |
 | full_4b_overlay_candidate | C15_MATERIAL_SPREAD_SUPERCYCLE | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C15_MATERIAL_SPREAD_SUPERCYCLE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_bonus_candidate_delta | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | blocked_by_data_quality | Type2_stage2_yellow_observation | False | evidence_url_pending_or_source_proxy_rate_above_25pct | verify_evidence_urls_or_replace_source_proxy_rows |
+| stage2_required_bridge | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_required_bridge | C18_CONSUMER_EXPORT_CHANNEL_REORDER | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| earlier_thesis_break_watch | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| stage2_required_bridge | C18_CONSUMER_EXPORT_CHANNEL_REORDER | hold_for_more_evidence | Type1_safety_guardrail | False | guardrail_support_below_minimum | collect_non_overlapping_cases |
 | full_4b_overlay_candidate | C18_CONSUMER_EXPORT_CHANNEL_REORDER | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C18_CONSUMER_EXPORT_CHANNEL_REORDER | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_bonus_candidate_delta | C19_BRAND_RETAIL_INVENTORY_MARGIN | blocked_by_data_quality | Type2_stage2_yellow_observation | False | evidence_url_pending_or_source_proxy_rate_above_25pct | verify_evidence_urls_or_replace_source_proxy_rows |
-| full_4b_overlay_candidate | C19_BRAND_RETAIL_INVENTORY_MARGIN | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C19_BRAND_RETAIL_INVENTORY_MARGIN | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| stage2_required_bridge | C19_BRAND_RETAIL_INVENTORY_MARGIN | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| local_4b_watch_guard | C19_BRAND_RETAIL_INVENTORY_MARGIN | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_bonus_candidate_delta | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | blocked_by_data_quality | Type2_stage2_yellow_observation | False | evidence_url_pending_or_source_proxy_rate_above_25pct | verify_evidence_urls_or_replace_source_proxy_rows |
+| stage2_required_bridge | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C22_INSURANCE_RATE_CYCLE_RESERVE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C22_INSURANCE_RATE_CYCLE_RESERVE | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C22_INSURANCE_RATE_CYCLE_RESERVE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C24_BIO_TRIAL_DATA_EVENT_RISK | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C24_BIO_TRIAL_DATA_EVENT_RISK | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C24_BIO_TRIAL_DATA_EVENT_RISK | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| earlier_thesis_break_watch | C24_BIO_TRIAL_DATA_EVENT_RISK | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_required_bridge | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| stage2_required_bridge | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | hold_for_more_evidence | Type1_safety_guardrail | False | guardrail_support_below_minimum | collect_non_overlapping_cases |
 | full_4b_overlay_candidate | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C27_CONTENT_IP_GLOBAL_MONETIZATION | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C27_CONTENT_IP_GLOBAL_MONETIZATION | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C27_CONTENT_IP_GLOBAL_MONETIZATION | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_required_bridge | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| full_4b_overlay_candidate | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_required_bridge | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| full_4b_overlay_candidate | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_required_bridge | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| full_4b_overlay_candidate | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_required_bridge | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| full_4b_overlay_candidate | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_required_bridge | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| full_4b_overlay_candidate | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_required_bridge | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| full_4b_overlay_candidate | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| hard_4c_confirmation | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| stage2_required_bridge | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| full_4b_overlay_candidate | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
+| stage2_bonus_candidate_delta | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | blocked_by_data_quality | Type2_stage2_yellow_observation | False | evidence_url_pending_or_source_proxy_rate_above_25pct | verify_evidence_urls_or_replace_source_proxy_rows |
+| stage2_bonus_candidate_delta | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | blocked_by_data_quality | Type2_stage2_yellow_observation | False | evidence_url_pending_or_source_proxy_rate_above_25pct | verify_evidence_urls_or_replace_source_proxy_rows |
+| stage2_bonus_candidate_delta | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | blocked_by_data_quality | Type2_stage2_yellow_observation | False | evidence_url_pending_or_source_proxy_rate_above_25pct | verify_evidence_urls_or_replace_source_proxy_rows |
 
 ## Blockers
-- evidence_url_pending: 1390 / v12 rows can support shadow analysis but need exact public evidence URLs before default promotion. / needed: Attach verified DART/IR/report/news URLs or mark rows as evidence-verified.
-- source_proxy_only: 1066 / Some evidence is source-name-level historical event proxy, not verified production evidence. / needed: Replace proxy rows with verified as-of evidence records.
-- rejected_rows: 936 / Some rows failed validation or were not usable for shadow calibration. / needed: Fix missing sector/archetype IDs, price fields, or evidence flags.
+- evidence_url_pending: 390 / v12 rows can support shadow analysis but need exact public evidence URLs before default promotion. / needed: Attach verified DART/IR/report/news URLs or mark rows as evidence-verified.
+- source_proxy_only: 258 / Some evidence is source-name-level historical event proxy, not verified production evidence. / needed: Replace proxy rows with verified as-of evidence records.
+- rejected_rows: 981 / Some rows failed validation or were not usable for shadow calibration. / needed: Fix missing sector/archetype IDs, price fields, or evidence flags.
