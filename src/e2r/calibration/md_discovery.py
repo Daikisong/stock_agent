@@ -86,8 +86,14 @@ def _document_title_head(text_head: str) -> str:
 def _contains_prompt_spec_marker(path: Path, text_head: str) -> bool:
     # The generated result MDs often contain a later "Deferred Coding Agent
     # Handoff Prompt" section. The goal excludes prompt/spec files by filename
-    # or document title, not by any later section heading.
+    # or document title, not by any later section heading. Standard generated
+    # result filenames can still override prompt-like titles in discovery.
     haystack = f"{path.name}\n{_document_title_head(text_head)}".lower()
+    return any(term.lower() in haystack for term in PROMPT_SPEC_TERMS)
+
+
+def _filename_contains_prompt_spec_marker(path: Path) -> bool:
+    haystack = path.name.lower()
     return any(term.lower() in haystack for term in PROMPT_SPEC_TERMS)
 
 
@@ -223,9 +229,12 @@ def discover_markdown_documents(root: str | Path) -> list[MarkdownDocument]:
         if any(part in ARCHIVE_DIR_NAMES for part in relative_parts[:-1]):
             continue
         text_head = path.read_text(encoding="utf-8", errors="replace")[:24000]
-        is_prompt_spec = _contains_prompt_spec_marker(path, text_head)
         schema_family = _schema_family(path)
-        is_result = _is_generated_result_file(path) and not is_prompt_spec
+        is_generated_result = _is_generated_result_file(path)
+        is_prompt_spec = _contains_prompt_spec_marker(path, text_head)
+        if is_generated_result and is_prompt_spec and not _filename_contains_prompt_spec_marker(path):
+            is_prompt_spec = False
+        is_result = is_generated_result and not is_prompt_spec
         exclusion_reason = None
         if is_prompt_spec:
             exclusion_reason = "prompt_spec_file_excluded"

@@ -808,6 +808,7 @@ def parse_markdown_document(document: MarkdownDocument) -> ParsedMarkdown:
                 line_number=None,
                 raw_snippet=json.dumps(residual_row, ensure_ascii=False),
             )
+            _synthesise_v12_review_only_audit_trigger(rows_by_type, document)
             for typed_rows in rows_by_type.values():
                 for row in typed_rows:
                     row.setdefault("evidence_url_pending", doc_flags["evidence_url_pending"])

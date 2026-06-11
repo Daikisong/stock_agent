@@ -102,6 +102,27 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             self.assertEqual(docs[0].large_sector_id, "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL")
             self.assertEqual(docs[0].canonical_archetype_id, "C22_INSURANCE_RATE_CYCLE_RESERVE")
 
+    def test_v12_result_filename_wins_over_prompt_title(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = (
+                root
+                / "e2r_stock_web_v12_residual_round_R6_loop_41_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_research.md"
+            )
+            markdown = _v12_md().replace(
+                "# E2R Stock-Web Historical Calibration / Sector-Archetype Residual Research Round",
+                "# E2R Historical Calibration Prompt v12",
+                1,
+            )
+            path.write_text(markdown, encoding="utf-8")
+
+            docs = discover_markdown_documents(root)
+            v12_docs = v12_result_documents(docs)
+
+            self.assertEqual(len(v12_docs), 1)
+            self.assertFalse(v12_docs[0].is_prompt_spec)
+            self.assertIsNone(v12_docs[0].exclusion_reason)
+
     def test_v12_file_discovery_skips_achieve_archive_by_default(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -349,6 +370,41 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             self.assertEqual(len(bundle.rejected_rows), 1)
             self.assertIn("missing_entry_price", bundle.rejected_rows[0]["validation_reasons"])
 
+    def test_v12_metadata_only_result_gets_rejected_audit_trigger(self) -> None:
+        markdown = """---
+research_mode: stock_web_v12_sector_archetype_residual_calibration
+selected_round: R8
+selected_loop: 104
+large_sector_id: L8_PLATFORM_CONTENT_SW_SECURITY
+canonical_archetype_id: C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE
+price_source: Songdaiki/stock-web
+price_basis: tradable_raw
+price_adjustment_status: raw_unadjusted_marcap
+---
+
+# C26 narrative-only residual note
+
+This file records a C26 split, but it has no structured MFE/MAE trigger rows.
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = (
+                Path(tmp)
+                / "e2r_stock_web_v12_residual_round_R8_loop_104_L8_PLATFORM_CONTENT_SW_SECURITY_C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE_research.md"
+            )
+            path.write_text(markdown, encoding="utf-8")
+            doc = v12_result_documents(discover_markdown_documents(path.parent))[0]
+            parsed = parse_markdown_document(doc)
+            trigger_rows = parsed.rows_by_type["trigger"]
+
+            self.assertEqual(len(trigger_rows), 1)
+            self.assertEqual(trigger_rows[0]["source_row_type"], "v12_review_only_audit")
+            self.assertEqual(parsed.registry_row["parsed_trigger_row_count"], 1)
+
+            bundle = validate_v12_trigger_rows(trigger_rows)
+            self.assertEqual(len(bundle.valid_rows), 0)
+            self.assertEqual(len(bundle.rejected_rows), 1)
+            self.assertIn("missing_entry_price", bundle.rejected_rows[0]["validation_reasons"])
+
     def test_v12_metadata_and_residual_contribution_parse(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             path = self._write_fixture(Path(tmp))
@@ -375,6 +431,7 @@ class V12CalibrationPipelineTests(unittest.TestCase):
         self.assertTrue(all(key in ARCHETYPE_WEIGHT_SEEDS for key in CANONICAL_ARCHETYPE_IDS))
         self.assertTrue(all(key in LARGE_SECTOR_WEIGHT_SEEDS for key in LARGE_SECTOR_IDS))
         self.assertEqual(normalise_large_sector_id("L3_BATTERY_EV_STORAGE"), "L3_BATTERY_EV_GREEN_MOBILITY")
+        self.assertEqual(normalise_large_sector_id("L9_CONSTRUCTION_REAL_ESTATE"), "L9_CONSTRUCTION_REALESTATE_HOUSING")
         self.assertEqual(
             normalise_canonical_archetype_id("C02_POWER_GRID_TRANSFORMER_DATA_CENTER_CAPEX"),
             "C02_POWER_GRID_DATACENTER_CAPEX",
@@ -923,8 +980,12 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             report_dir = Path(tmp) / "reports"
             active_path = Path("configs/e2r_scoring_profile_active.yaml")
             profile_path = Path("configs/e2r_scoring_profile_v2_2.yaml")
+            weight_profile_path = Path("configs/e2r_archetype_weight_profile_v2_2.json")
             active_before = active_path.read_text(encoding="utf-8")
             profile_before = profile_path.read_text(encoding="utf-8") if profile_path.exists() else None
+            weight_profile_before = (
+                weight_profile_path.read_text(encoding="utf-8") if weight_profile_path.exists() else None
+            )
             root.mkdir()
             self._write_fixture(root)
             try:
@@ -946,6 +1007,10 @@ class V12CalibrationPipelineTests(unittest.TestCase):
                     profile_path.unlink(missing_ok=True)
                 else:
                     profile_path.write_text(profile_before, encoding="utf-8")
+                if weight_profile_before is None:
+                    weight_profile_path.unlink(missing_ok=True)
+                else:
+                    weight_profile_path.write_text(weight_profile_before, encoding="utf-8")
 
     def test_v12_cli_argument_parsing(self) -> None:
         args = build_parser().parse_args(

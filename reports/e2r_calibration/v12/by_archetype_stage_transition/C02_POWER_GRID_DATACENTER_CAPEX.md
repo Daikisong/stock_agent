@@ -3,31 +3,17 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `24`
+- stage_transition_summary_rows: `10`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| C02_010120_2024-03-05_GRID_SWITCHGEAR_POSITIVE | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | 77800.0 | None | None | 213.62 | None | stage2_captured_most_upside |
-| C02_103590_2024-03-18_CABLE_GRID_ORDER_BRIDGE_POSITIVE | 103590 | C02_POWER_GRID_DATACENTER_CAPEX | 17200.0 | None | None | 75.87 | None | stage2_captured_most_upside |
-| C02_267260_2024-02-20_GRID_CAPEX_BACKLOG_POSITIVE | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | 134400.0 | None | None | 178.65 | None | stage2_captured_most_upside |
-| C02_267260_2024-07-24_GRID_PRICE_ONLY_LATE_EXTENSION_COUNTER | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | 365500.0 | None | None | 2.46 | None | stage2_captured_most_upside |
-| C02_298040_2024-03-04_GRID_TRANSFORMER_CAPACITY_POSITIVE | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | 222500.0 | None | None | 110.79 | None | stage2_captured_most_upside |
-| C02_DAEHANCABLE_001440_2024_04_04_CABLE_CAPEX_RERATING_AFTER_CAPITAL_EVENT_GREEN_BLOCK | 001440 | C02_POWER_GRID_DATACENTER_CAPEX | 11420.0 | None | None | 83.45 | None | stage2_captured_most_upside |
-| C02_DAEWONCABLE_006340_2024_04_05_GRID_CABLE_SMALLCAP_BETA_4B | 006340 | C02_POWER_GRID_DATACENTER_CAPEX | 2095.0 | None | None | 160.14 | None | stage2_actionable_best_entry |
-| C02_GAONCABLE_000500_2024_03_06_WIRE_CABLE_CAPEX_BETA_BLOWOFF_COUNTEREXAMPLE | 000500 | C02_POWER_GRID_DATACENTER_CAPEX | 27150.0 | None | None | 174.4 | None | stage2_captured_most_upside |
-| C02_HDHE_267260_2024_03_06_TRANSFORMER_DATACENTER_CAPEX_BACKLOG_RERATING_4B | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | 136000.0 | None | None | 204.04 | None | stage2_actionable_best_entry |
-| C02_HYOSUNGHEAVY_298040_2024_03_06_POWER_EQUIPMENT_US_GRID_BACKLOG_RERATING_4B | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | 232000.0 | None | None | 123.28 | None | stage2_actionable_best_entry |
-| C02_ILJIN_103590_2024_03_06_WIRE_TRANSFORMER_GRID_CAPEX_BACKLOG_RERATING_4B | 103590 | C02_POWER_GRID_DATACENTER_CAPEX | 12930.0 | None | None | 133.95 | None | stage2_actionable_best_entry |
-| C02_JERYONG_033100_2024_03_06_DISTRIBUTION_TRANSFORMER_EXPORT_BACKLOG_EXTREME_4B | 033100 | C02_POWER_GRID_DATACENTER_CAPEX | 30700.0 | None | None | 228.01 | None | stage2_actionable_best_entry |
-| C02_JERYONG_033100_2024_03_06_TRANSFORMER_DATACENTER_EXPORT_RERATING | 033100 | C02_POWER_GRID_DATACENTER_CAPEX | 30700.0 | None | None | 228.01 | None | stage2_actionable_best_entry |
-| C02_KWANGMYUNG_017040_2024_05_07_SWITCHGEAR_EVENT_PREMIUM_FALSE_POSITIVE | 017040 | C02_POWER_GRID_DATACENTER_CAPEX | 3185.0 | None | None | 4.24 | None | stage2_captured_most_upside |
-| C02_LSELECTRIC_010120_2024_03_06_DATACENTER_GRID_CAPEX_EXTREME_4B_BLOWOFF | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | 79100.0 | None | None | 208.47 | None | stage2_actionable_best_entry |
-| C02_LS_006260_2024_03_14_GRID_CABLE_DATACENTER_CAPEX_RERATING | 006260 | C02_POWER_GRID_DATACENTER_CAPEX | 101300.0 | None | None | 92.3 | None | stage2_actionable_best_entry |
-| C02_R1L92_037030_POWERNET_POWER_SUPPLY_DECAY | 037030 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
-| C02_R1L92_237750_PNC_DIGITAL_GRID_PRICE_MFE | 237750 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
-| C02_R1L92_267260_HDHE_TRANSFORMER_DATACENTER | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | 101200.0 | None | None | 308.6 | None | stage2_actionable_best_entry |
-| C02_SEMYUNG_017510_2024_04_05_GRID_COMPONENT_ORDER_BETA_4B | 017510 | C02_POWER_GRID_DATACENTER_CAPEX | 3710.0 | None | None | 169.54 | None | stage2_actionable_best_entry |
-| C02_SEOJUN_189860_2024_07_09_SWITCHGEAR_LATE_BETA_FALSE_POSITIVE | 189860 | C02_POWER_GRID_DATACENTER_CAPEX | 7130.0 | None | None | 15.99 | None | stage2_captured_most_upside |
-| R1L98_C02_KBIMETAL_2024_CABLE_COPPER_GRID_EVENT_CAP_4B | 024840 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 4040.0 | None | None | 4b_good_peak_capture |
-| R1L98_C02_LSELECTRIC_2024_GRID_AUTOMATION_DATACENTER_CAPEX_DELIVERY_POSITIVE | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | 65500.0 | None | None | 272.52 | None | stage2_actionable_best_entry |
-| R1L98_C02_POWERNET_2024_POWER_SUPPLY_DATACENTER_CAPEX_FALSE_STAGE2 | 037030 | C02_POWER_GRID_DATACENTER_CAPEX | 3125.0 | None | None | 8.0 | None | stage2_actionable_best_entry |
+| 000500 | 000500 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 33000.0 | None | None | no_valid_stage_transition |
+| 001440 | 001440 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 12600.0 | None | None | no_valid_stage_transition |
+| 006260 | 006260 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
+| 010120 | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | 121000.0 | None | None | 156.2 | None | stage2_actionable_best_entry |
+| 017510 | 017510 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
+| 024840 | 024840 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
+| 033100 | 033100 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 39200.0 | None | None | no_valid_stage_transition |
+| 103590 | 103590 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 19000.0 | None | None | no_valid_stage_transition |
+| 267260 | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | 96000.0 | None | None | 210.42 | None | stage2_actionable_best_entry |
+| 298040 | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | 177000.0 | None | None | 190.96 | None | stage2_actionable_best_entry |

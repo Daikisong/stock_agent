@@ -393,13 +393,13 @@ v12 적용은 scope 제한이다.
 최근 실행 기준:
 
 ```text
-v12_result_md_count: 284
-v12_validated_trigger_rows: 1216
-v12_representative_trigger_rows: 1121
-stage_transition_summary_rows: 963
+v12_result_md_count: 373
+v12_validated_trigger_rows: 2988
+v12_representative_trigger_rows: 2416
+stage_transition_summary_rows: 1990
 large_sectors_covered: 10
 canonical_archetypes_covered: 36
-applied_patch_count: 89
+applied_patch_count: 52
 archetype_weight_count: 36
 large_sector_weight_count: 10
 active_profile: e2r_2_2
@@ -409,11 +409,10 @@ rollback_profile: calibrated
 적용 축:
 
 ```text
-stage2_bonus_candidate_delta: 1
-stage2_required_bridge: 45
-local_4b_watch_guard: 31
-earlier_thesis_break_watch: 10
-hard_4c_confirmation: 2
+stage2_required_bridge: 36
+local_4b_watch_guard: 13
+earlier_thesis_break_watch: 2
+hard_4c_confirmation: 1
 ```
 
 ## Naming Note

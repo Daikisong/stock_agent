@@ -225,7 +225,8 @@ def _render_apply_report(summary: dict[str, Any], payload: dict[str, Any]) -> st
             "## Simple Example",
             "",
             "- 예전: C22 보험 archetype 연구가 쌓여도 보고서에만 남고 기본 점수는 바뀌지 않았습니다.",
-            "- 지금: payload에 `canonical_archetype_id=C22_INSURANCE_RATE_CYCLE_RESERVE`가 붙고 비가격 증거가 있으면 Stage2 근처 점수에 최대 +1 보정이 실제 적용됩니다.",
+            "- 지금: payload에 `canonical_archetype_id`가 직접 매칭될 때만 해당 scope의 bridge/guard와 runtime weight가 실제 적용됩니다.",
+            "- 이번 배치처럼 `v12_stage2_bonus_scopes`가 0이면 Stage2 +1 보정은 적용하지 않습니다.",
             "- 반대로 price-only 4B scope에서는 주가 급등만으로 Stage2/Stage3 또는 full 4B가 되지 않도록 더 강하게 막습니다.",
         ]
     )
