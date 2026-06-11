@@ -8,6 +8,7 @@ from datetime import date
 from pathlib import Path
 from typing import Any, Mapping
 
+from e2r.evidence_ids import stable_news_evidence_id
 from e2r.models import Evidence, Market, NewsItem, RedTeamFinding, SourceTier
 from e2r.sources.source_errors import (
     SourceRequest,
@@ -151,10 +152,25 @@ class NaverNewsConnector:
         parsed = {key: _coerce_news_value(key, value) for key, value in parsed.items()}
         for key, value in parse_news_event(title=title, body=body or "").items():
             parsed.setdefault(key, value)
+        source_url = text_or_none(row.get("originallink") or row.get("link"))
+        published = datetime_value(row.get("published_at") or row.get("pubDate"))
+        symbol = text_or_none(row.get("symbol"))
+        parsed.setdefault("source_url", source_url)
+        parsed.setdefault(
+            "evidence_id",
+            stable_news_evidence_id(
+                symbol=symbol or text_or_none(row.get("sector")) or "SECTOR",
+                published_date=published.date(),
+                source=str(row.get("source") or "Naver News"),
+                source_url=source_url,
+                title=title,
+                prefix="naver-news",
+            ),
+        )
         parsed.setdefault("confidence", _news_confidence(parsed, body))
         parsed.setdefault("source_tier", int(source_tier_value(parsed.get("source_tier"), SourceTier.TIER_2)))
         return NewsItem(
-            symbol=text_or_none(row.get("symbol")),
+            symbol=symbol,
             sector=text_or_none(row.get("sector")),
             published_at=published,
             source=str(row.get("source") or "Naver News"),
@@ -171,8 +187,18 @@ class NaverNewsConnector:
     def to_evidence(news: NewsItem, market: Market = Market.KR) -> Evidence:
         parsed = dict(news.parsed_fields)
         confidence = float_or_none(parsed.get("confidence")) or 0.5
+        symbol = news.symbol or news.sector or "SECTOR"
+        source_url = str(parsed.get("source_url") or parsed.get("originallink") or parsed.get("link") or "").strip() or None
+        evidence_id = str(parsed.get("evidence_id") or "").strip() or stable_news_evidence_id(
+            symbol=symbol,
+            published_date=news.published_at.date(),
+            source=news.source,
+            source_url=source_url,
+            title=news.title,
+            prefix="naver-news",
+        )
         return Evidence(
-            evidence_id=f"naver-news:{news.symbol or news.sector or 'sector'}:{news.published_at.date().isoformat()}:{abs(hash(news.title))}",
+            evidence_id=evidence_id,
             source_type="news",
             source_name=news.source,
             source_tier=news.source_tier,
@@ -181,8 +207,9 @@ class NaverNewsConnector:
             available_at=news.published_at,
             as_of_date=news.as_of_date,
             market=market,
-            symbol=news.symbol or news.sector or "SECTOR",
+            symbol=symbol,
             title=news.title,
+            url_or_identifier=source_url,
             excerpt_or_value=(news.body or "")[:240] if news.body else None,
             parsed_fields=parsed,
             confidence=confidence,
@@ -196,14 +223,24 @@ class NaverNewsConnector:
             return None
         risk_type = "accounting_or_trust_issue" if parsed.get("accounting_or_trust_issue") else "news_negative_event"
         severity = 80.0 if risk_type == "accounting_or_trust_issue" else 45.0
+        symbol = news.symbol or "UNKNOWN"
+        source_url = str(parsed.get("source_url") or parsed.get("originallink") or parsed.get("link") or "").strip() or None
+        evidence_id = str(parsed.get("evidence_id") or "").strip() or stable_news_evidence_id(
+            symbol=symbol,
+            published_date=news.published_at.date(),
+            source=news.source,
+            source_url=source_url,
+            title=news.title,
+            prefix="naver-news",
+        )
         return RedTeamFinding(
-            symbol=news.symbol or "UNKNOWN",
+            symbol=symbol,
             as_of_date=news.as_of_date,
             risk_type=risk_type,
             severity=severity,
             is_hard_break=risk_type == "accounting_or_trust_issue",
             description=risk_comment or "negative event surfaced in news",
-            evidence_ids=(f"naver-news:{news.symbol or 'UNKNOWN'}:{news.published_at.date().isoformat()}",),
+            evidence_ids=(evidence_id,),
         )
 
 

@@ -1,6 +1,7 @@
 """Source collection connectors for E2R 2.0."""
 
 from .consensus import ConsensusCSVConnector
+from .company_guide import BrokerTargetRow, CompanyGuideConnector, CompanyGuideConsensusResult
 from .http_client import HttpClient, HttpClientStats, HttpResult
 from .kind import KINDConnector, KINDRiskRecord
 from .krx import KRXConnector
@@ -20,6 +21,9 @@ from .source_errors import (
 
 __all__ = [
     "COMPANY_NEWS_QUERY_TEMPLATES",
+    "BrokerTargetRow",
+    "CompanyGuideConnector",
+    "CompanyGuideConsensusResult",
     "ConsensusCSVConnector",
     "DISCLOSURE_PARSED_FIELDS",
     "DISCLOSURE_WATCH_TYPES",

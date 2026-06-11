@@ -3,12 +3,16 @@
 from __future__ import annotations
 
 import json
+import signal
+import threading
 import time
 import urllib.parse
 import urllib.request
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Callable
+from types import FrameType
+from typing import Callable, Iterator
 
 from e2r.sources.rate_limit import RateLimiter, source_name_for_request
 from e2r.sources.source_errors import SourceRequest
@@ -105,9 +109,10 @@ class HttpClient:
                 try:
                     _increment(self.stats.actual_http_requests_by_source, source_name)
                     http_request = urllib.request.Request(_url_with_params(request), headers=dict(request.headers), method=request.method)
-                    with urllib.request.urlopen(http_request, timeout=self.timeout_seconds) as response:  # nosec - live mode is explicit
-                        status_code = int(getattr(response, "status", 200))
-                        text = response.read().decode("utf-8")
+                    with _hard_timeout(self.timeout_seconds):
+                        with urllib.request.urlopen(http_request, timeout=self.timeout_seconds) as response:  # nosec - live mode is explicit
+                            status_code = int(getattr(response, "status", 200))
+                            text = response.read().decode("utf-8")
                     self.stats.live_requests_executed += 1
                     self._write_cache(cache_path, text)
                     return HttpResult(ok=True, status_code=status_code, text=text, cache_path=str(cache_path) if cache_path else None)
@@ -152,6 +157,28 @@ def _url_with_params(request: SourceRequest) -> str:
 
 def _increment(mapping: dict[str, int], key: str, amount: int = 1) -> None:
     mapping[key] = mapping.get(key, 0) + amount
+
+
+@contextmanager
+def _hard_timeout(timeout_seconds: float) -> Iterator[None]:
+    if threading.current_thread() is not threading.main_thread() or not hasattr(signal, "SIGALRM"):
+        yield
+        return
+
+    def _raise_timeout(signum: int, frame: FrameType | None) -> None:
+        raise TimeoutError(f"http_hard_timeout:{timeout_seconds:g}s")
+
+    old_handler = signal.getsignal(signal.SIGALRM)
+    old_timer = signal.setitimer(signal.ITIMER_REAL, 0.0)
+    signal.signal(signal.SIGALRM, _raise_timeout)
+    signal.setitimer(signal.ITIMER_REAL, timeout_seconds)
+    try:
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0.0)
+        signal.signal(signal.SIGALRM, old_handler)
+        if old_timer[0] > 0:
+            signal.setitimer(signal.ITIMER_REAL, old_timer[0], old_timer[1])
 
 
 __all__ = ["HttpClient", "HttpClientStats", "HttpResult"]

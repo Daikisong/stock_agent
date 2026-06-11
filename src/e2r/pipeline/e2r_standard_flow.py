@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
@@ -10,7 +11,8 @@ from typing import Mapping, Sequence
 from e2r.audit import AuditFinding, audit_parser_outputs
 from e2r.cheap_scan import KoreaCheapScanConfig, KoreaCheapScanResult, KoreaCheapScanSources, KoreaCheapScanner
 from e2r.cheap_scan.models import CheapScanCandidate, RecommendedNextLayer
-from e2r.llm import LLMAnalystInput, LLMAnalystOutput, LLMProvider, LLMResearchAnalyst
+from e2r.llm import LLMAnalystInput, LLMAnalystOutput, LLMProvider, LLMResearchAnalyst, build_theme_route_provider_from_env
+from e2r.llm.theme_provider import ThemeRouteProvider
 from e2r.models import Evidence, Market, RedTeamFinding, ScoreSnapshot, StageSnapshot
 from e2r.research.free_web_research_runner import FreeWebResearchInput, FreeWebResearchRunner, WebResearchPipelineResult
 from e2r.research.report_radar import ReportRadar, ReportRadarCandidate
@@ -41,14 +43,27 @@ class E2RStandardConfig:
     browser_provider: SearchProvider | None = None
     free_search_provider: SearchProvider | None = None
     fixture_text_by_url: Mapping[str, str | Path] = field(default_factory=dict)
+    live_page_fetch_enabled: bool = False
+    page_fetch_timeout_seconds: float = 10.0
+    page_fetch_cache_directory: str | Path | None = None
     llm_enabled: bool = False
     llm_provider: LLMProvider | None = None
+    theme_rebalance_enabled: bool | None = None
+    theme_route_provider: ThemeRouteProvider | None = None
+    max_theme_expansion_rounds: int = 3
+    theme_evidence_review_enabled: bool = False
 
     def __post_init__(self) -> None:
         if type(self.as_of_date) is not date:
             raise ValueError("as_of_date must be a date")
         if not isinstance(self.market, Market):
             object.__setattr__(self, "market", Market(self.market))
+        if self.page_fetch_timeout_seconds <= 0:
+            raise ValueError("page_fetch_timeout_seconds must be positive")
+        if self.theme_rebalance_enabled is None:
+            object.__setattr__(self, "theme_rebalance_enabled", _default_theme_rebalance_enabled(self))
+        if self.max_theme_expansion_rounds < 0:
+            raise ValueError("max_theme_expansion_rounds must be non-negative")
 
 
 @dataclass(frozen=True)
@@ -100,10 +115,10 @@ class E2RStandardFlow:
         evidence = tuple(item for result in web_results for item in result.web_result.evidence)
         scores = tuple(result.score for result in web_results)
         stages = tuple(result.stage for result in web_results)
-        red_team_findings = tuple(
+        red_team_findings = _dedupe_red_team_findings(
             finding
             for result in web_results
-            for finding in (tuple(result.red_team.findings) + tuple(result.red_team_findings))
+            for finding in result.red_team_findings
         )
         audit_findings = audit_parser_outputs(evidence=evidence, scores=scores, stages=stages)
         llm_outputs = self._run_llm(config, web_results)
@@ -152,6 +167,14 @@ class E2RStandardFlow:
             browser_provider=config.browser_provider or EmptySearchProvider(),
             free_search_provider=config.free_search_provider or EmptySearchProvider(),
         )
+        theme_route_provider = config.theme_route_provider
+        if theme_route_provider is None and config.theme_rebalance_enabled:
+            theme_route_provider = build_theme_route_provider_from_env(working_directory=Path.cwd())
+        if theme_route_provider is None and _should_default_to_codex_theme_provider(config):
+            theme_route_provider = build_theme_route_provider_from_env(
+                {"E2R_THEME_ROUTE_PROVIDER": "codex"},
+                working_directory=Path.cwd(),
+            )
         results: list[WebResearchPipelineResult] = []
         for candidate in candidates:
             if candidate.recommended_next_layer not in {RecommendedNextLayer.EVENT_SEARCH, RecommendedNextLayer.DEEP_RESEARCH}:
@@ -164,8 +187,17 @@ class E2RStandardFlow:
                         sector=None,
                         market=candidate.market,
                         as_of_date=candidate.as_of_date,
+                        company_aliases=(candidate.company_name, candidate.symbol),
+                        candidate_reason_codes=candidate.reason_codes,
                         budget=config.search_budget,
                         fixture_text_by_url=config.fixture_text_by_url,
+                        live_page_fetch_enabled=config.live_page_fetch_enabled,
+                        page_fetch_timeout_seconds=config.page_fetch_timeout_seconds,
+                        page_fetch_cache_directory=config.page_fetch_cache_directory,
+                        theme_rebalance_enabled=config.theme_rebalance_enabled,
+                        theme_route_provider=theme_route_provider,
+                        max_theme_expansion_rounds=config.max_theme_expansion_rounds,
+                        theme_evidence_review_enabled=config.theme_evidence_review_enabled,
                     )
                 )
             )
@@ -207,6 +239,26 @@ def _merge_candidates(
         if existing is None or item.cheap_scan_total_score > existing.cheap_scan_total_score:
             by_key[key] = item
     return tuple(sorted(by_key.values(), key=lambda item: (-item.cheap_scan_total_score, item.symbol)))
+
+
+def _default_theme_rebalance_enabled(config: E2RStandardConfig) -> bool:
+    return bool(
+        config.theme_route_provider is not None
+        or os.environ.get("E2R_THEME_ROUTE_PROVIDER")
+        or not config.fixture_mode
+    )
+
+
+def _should_default_to_codex_theme_provider(config: E2RStandardConfig) -> bool:
+    return bool(config.theme_rebalance_enabled and not config.fixture_mode)
+
+
+def _dedupe_red_team_findings(findings) -> tuple[RedTeamFinding, ...]:
+    unique: dict[tuple[str, str, str, tuple[str, ...]], RedTeamFinding] = {}
+    for finding in findings:
+        key = (finding.symbol, finding.as_of_date.isoformat(), finding.risk_type, tuple(finding.evidence_ids))
+        unique.setdefault(key, finding)
+    return tuple(unique.values())
 
 
 __all__ = [

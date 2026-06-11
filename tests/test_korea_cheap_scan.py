@@ -75,6 +75,15 @@ class KoreaCheapScanTests(unittest.TestCase):
         self.assertIn("한전변압기 단일판매 공급계약 계약기간", queries)
         self.assertIn("한전변압기 신규시설투자 CAPA 증설", queries)
 
+    def test_targeted_smoke_queries_cover_multiple_score_axes(self):
+        queries = queries_for_reason_codes("테스트전자", ("TARGETED_SMOKE",))
+
+        self.assertIn("테스트전자 수주잔고", queries)
+        self.assertIn("테스트전자 영업이익 컨센서스 상회", queries)
+        self.assertIn("테스트전자 목표주가 상향 EPS 상향", queries)
+        self.assertIn("테스트전자 매출 성장 마진 OPM", queries)
+        self.assertGreaterEqual(len(queries), 5)
+
     def test_dilution_risk_queries_include_red_team_fallback_terms(self):
         queries = queries_for_reason_codes("희석테크", ("DISC_RIGHTS_OFFERING", "DISC_CONVERTIBLE_BOND", "DISC_BOND_WITH_WARRANT"))
 

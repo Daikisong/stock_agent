@@ -52,6 +52,30 @@ def audit_parser_outputs(
 def _audit_evidence(evidence: Evidence) -> tuple[AuditFinding, ...]:
     fields = evidence.parsed_fields
     findings: list[AuditFinding] = []
+    if fields.get("search_snippet_only"):
+        findings.append(
+            _finding(
+                evidence,
+                "warning",
+                "search_snippet_only_evidence",
+                "evidence was built from a search snippet without fetched document text",
+                "manual_review",
+                "search_snippet_only",
+                1.0,
+            )
+        )
+    if fields.get("search_snippet_date_unverified"):
+        findings.append(
+            _finding(
+                evidence,
+                "hard",
+                "search_snippet_date_unverified",
+                "search snippet date was not verified and cannot support Stage 3-Green",
+                "block_green",
+                "search_snippet_date_unverified",
+                1.0,
+            )
+        )
     checks: tuple[tuple[str, str, float, str, str, str], ...] = (
         ("contract_amount_to_prior_sales", "contract_ratio_too_high", 5.0, "hard", "block_green", "contract amount to prior sales is above 500%"),
         ("contract_duration_months", "contract_duration_too_long", 120.0, "warning", "manual_review", "contract duration is above 120 months"),
@@ -59,6 +83,9 @@ def _audit_evidence(evidence: Evidence) -> tuple[AuditFinding, ...]:
         ("est_per", "est_per_too_high", 300.0, "warning", "manual_review", "estimated PER is above 300"),
         ("est_pbr", "est_pbr_too_high", 50.0, "warning", "manual_review", "estimated PBR is above 50"),
         ("target_revision_pct", "target_revision_too_high", 300.0, "warning", "manual_review", "target price revision is above 300%"),
+        ("target_price_revision_1m", "target_price_revision_too_high", 300.0, "hard", "score_exclude", "target price revision is above 300%"),
+        ("eps_revision_1m", "eps_revision_too_high", 300.0, "warning", "score_exclude", "EPS revision is above 300%"),
+        ("op_revision_1m", "op_revision_too_high", 300.0, "warning", "score_exclude", "OP revision is above 300%"),
     )
     for field_name, code, threshold, severity, action, message in checks:
         value = _num(fields.get(field_name))
@@ -88,7 +115,7 @@ def _audit_evidence(evidence: Evidence) -> tuple[AuditFinding, ...]:
         )
 
     confidence = _confidence(evidence)
-    if confidence < 0.5 and not _skip_low_confidence_noise(evidence):
+    if confidence < 0.5 and not fields.get("search_snippet_only") and not _skip_low_confidence_noise(evidence):
         findings.append(
             _finding(
                 evidence,
@@ -162,6 +189,19 @@ def _audit_stage_confidence(
                 suggested_action="block_green",
             ),
         )
+    if any(item.parsed_fields.get("search_snippet_only") for item in linked) and not any(
+        item.source_type != "news" or not item.parsed_fields.get("search_snippet_only") for item in linked
+    ):
+        return (
+            AuditFinding(
+                finding_id=f"parser-audit:{stage.symbol}:stage3_green_snippet_only",
+                symbol=stage.symbol,
+                severity="hard",
+                code="stage3_green_snippet_only",
+                message="Stage 3-Green is supported only by search-snippet evidence",
+                suggested_action="block_green",
+            ),
+        )
     if all(_confidence(item) < 0.5 for item in linked):
         return (
             AuditFinding(
@@ -170,6 +210,17 @@ def _audit_stage_confidence(
                 severity="hard",
                 code="stage3_green_low_confidence_only",
                 message="Stage 3-Green is supported only by low-confidence evidence",
+                suggested_action="block_green",
+            ),
+        )
+    if any(item.parsed_fields.get("green_allowed_by_date", True) is False for item in linked):
+        return (
+            AuditFinding(
+                finding_id=f"parser-audit:{stage.symbol}:stage3_green_date_unverified_snippet",
+                symbol=stage.symbol,
+                severity="hard",
+                code="stage3_green_date_unverified_snippet",
+                message="Stage 3-Green has date-unverified snippet evidence",
                 suggested_action="block_green",
             ),
         )

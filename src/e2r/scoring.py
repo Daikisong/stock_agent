@@ -244,6 +244,8 @@ def _has_stage3_cross_evidence_buffer(payload: ScoringPayload, diagnostics: Mapp
         return False
     if diagnostics.get("theme_overheat_score", 0.0) >= 70.0:
         return False
+    if diagnostics.get("snippet_only_green_block", 0.0) > 0:
+        return False
     if diagnostics.get("revision_score", 0.0) < max(70.0, profile.threshold("stage3_green_revision_min", 55.0)):
         return False
     if len(payload.evidence_ids) < 2 and diagnostics.get("cross_evidence_family_count", 0.0) < 4.0:

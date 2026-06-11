@@ -99,6 +99,18 @@ REASON_CODE_QUERY_TEMPLATES: dict[str, tuple[str, ...]] = {
     ),
     "TARGETED_SMOKE": (
         "{company} 수주잔고",
+        "{company} 최근 뉴스 실적 전망",
+        "{company} 영업이익 컨센서스 상회",
+        "{company} 목표주가 상향 EPS 상향",
+        "{company} 매출 성장 마진 OPM",
+        "{company} AI 데이터센터 HBM 반도체 클라우드",
+    ),
+    "TOP_TRADING_VALUE_PROBE": (
+        "{company} 최근 뉴스 실적 전망",
+        "{company} 공시 계약 수주 투자",
+        "{company} 목표주가 상향 컨센서스 상회",
+        "{company} 매출 성장 마진 OPM",
+        "{company} AI 데이터센터 클라우드 반도체 배터리 정책",
     ),
 }
 

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -234,11 +234,12 @@ class DataGoKrFSCConnector:
 
         if not self.enable_stock_issuance_source:
             return ()
+        normalized_symbol = _kr_short_symbol(symbol)
         rows = load_fixture_records(self.fixture_root, "stock_issuance")
         return tuple(
             row
             for row in rows
-            if str(row.get("symbol") or row.get("srtnCd") or row.get("isinCd")) == symbol
+            if _kr_short_symbol(row.get("symbol") or row.get("srtnCd") or row.get("isinCd")) == normalized_symbol
             and date_value(row.get("as_of_date") or row.get("basDt") or as_of_date) <= as_of_date
         )
 
@@ -273,7 +274,7 @@ class DataGoKrFSCConnector:
             low = close
         market_cap = _positive_float(row.get("market_cap") or row.get("mrktTotAmt"))
         mapped = {
-            "symbol": row.get("symbol") or row.get("srtnCd") or row.get("isinCd"),
+            "symbol": _kr_short_symbol(row.get("symbol") or row.get("srtnCd") or row.get("isinCd")),
             "date": row.get("date") or row.get("basDt"),
             "open": open_price,
             "high": high,
@@ -299,6 +300,56 @@ class DataGoKrFSCConnector:
             market_cap=mapped["market_cap"],
             source=str(mapped["source"]),
             as_of_date=date_value(mapped["as_of_date"]),
+        )
+
+    @staticmethod
+    def normalize_financial_actual(
+        row: Mapping[str, Any],
+        *,
+        as_of_date: date,
+        fallback_symbol: str | None = None,
+    ) -> FinancialActual:
+        fiscal_year_value = (
+            row.get("fiscal_year")
+            or row.get("bizYear")
+            or row.get("bsnsYear")
+            or row.get("stacYy")
+            or row.get("basDt")
+            or as_of_date.year - 1
+        )
+        fiscal_year_text = str(fiscal_year_value)
+        fiscal_year = int(float(fiscal_year_text[:4])) if len(fiscal_year_text) >= 4 else int(float(fiscal_year_text))
+        period_end = date_value(row.get("period_end") or row.get("basDt") or f"{fiscal_year}1231")
+        reported_at = row.get("reported_at") or row.get("rceptDt") or row.get("basDt")
+        if reported_at:
+            reported_date = date_value(reported_at)
+            reported_datetime = datetime(reported_date.year, reported_date.month, reported_date.day)
+        else:
+            reported_datetime = datetime(as_of_date.year, as_of_date.month, as_of_date.day)
+        if reported_datetime.date() > as_of_date:
+            reported_datetime = datetime(as_of_date.year, as_of_date.month, as_of_date.day)
+        return FinancialActual(
+            symbol=_kr_short_symbol(row.get("symbol") or row.get("srtnCd") or row.get("isinCd") or fallback_symbol or row.get("crno") or row.get("corpNm")),
+            fiscal_year=fiscal_year,
+            fiscal_quarter=int(float(row["fiscal_quarter"])) if row.get("fiscal_quarter") not in (None, "") else None,
+            period_end=period_end,
+            reported_at=reported_datetime,
+            as_of_date=as_of_date,
+            source=str(row.get("source") or "data.go.kr FSC financial-stat"),
+            sales=float_or_none(row.get("sales") or row.get("saleAmt") or row.get("revenue") or row.get("enpSaleAmt")),
+            operating_profit=float_or_none(row.get("operating_profit") or row.get("op") or row.get("enpBzopPft") or row.get("bzopPft") or row.get("operatingProfit")),
+            net_income=float_or_none(row.get("net_income") or row.get("enpCrtmNpf") or row.get("crtmNpf") or row.get("netProfit")),
+            eps=float_or_none(row.get("eps") or row.get("earningsPerShare")),
+            bps=float_or_none(row.get("bps") or row.get("bookValuePerShare")),
+            equity=float_or_none(row.get("equity") or row.get("total_equity") or row.get("capital_total")),
+            roe=float_or_none(row.get("roe") or row.get("fnclRoe")),
+            opm=float_or_none(row.get("opm") or row.get("operatingMargin")),
+            debt_ratio=float_or_none(row.get("debt_ratio") or row.get("fnclDebtRto")),
+            cashflow_from_operations=float_or_none(row.get("cashflow_from_operations") or row.get("cfo")),
+            capex=float_or_none(row.get("capex")),
+            fcf=float_or_none(row.get("fcf")),
+            receivables=float_or_none(row.get("receivables")),
+            inventory=float_or_none(row.get("inventory")),
         )
 
 
@@ -375,11 +426,12 @@ class KoreaCheapScanSources:
 
 def _instrument_from_fsc(row: Mapping[str, Any]) -> Instrument:
     return Instrument(
-        symbol=str(row.get("symbol") or row.get("srtnCd") or row.get("isinCd")),
+        symbol=_kr_short_symbol(row.get("symbol") or row.get("srtnCd") or row.get("isinCd")),
         name=str(row.get("name") or row.get("itmsNm") or row.get("corpNm")),
         market=Market(str(row.get("market") or "KR")),
         exchange=str(row.get("exchange") or row.get("mrktCtg") or "KRX"),
         sector_exchange=str(row.get("sector_exchange")) if row.get("sector_exchange") else None,
+        corp_code=str(row.get("corp_code") or row.get("crno")) if row.get("corp_code") or row.get("crno") else None,
         listed_date=date_value(row["listed_date"]) if row.get("listed_date") else None,
         currency=str(row.get("currency") or "KRW"),
     )
@@ -401,6 +453,7 @@ def _financial_actual(row: Mapping[str, Any]) -> FinancialActual:
         net_income=float_or_none(row.get("net_income")),
         eps=float_or_none(row.get("eps")),
         bps=float_or_none(row.get("bps")),
+        equity=float_or_none(row.get("equity") or row.get("total_equity")),
         roe=float_or_none(row.get("roe")),
         opm=float_or_none(row.get("opm")),
         cashflow_from_operations=float_or_none(row.get("cashflow_from_operations")),
@@ -416,6 +469,13 @@ def _positive_float(value: Any) -> float | None:
     if parsed is None or parsed <= 0:
         return None
     return parsed
+
+
+def _kr_short_symbol(value: Any) -> str:
+    text = str(value or "").strip()
+    if len(text) == 7 and text[:1].upper() == "A" and text[1:].isdigit():
+        return text[1:]
+    return text
 
 
 __all__ = ["DataGoKrFSCConnector", "KoreaCheapScanSources"]

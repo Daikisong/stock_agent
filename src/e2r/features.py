@@ -8,6 +8,14 @@ from typing import Any, Mapping, Protocol, Sequence
 
 from .archetype_classifier import classify_v12_archetype
 from .calibration.taxonomy import normalise_canonical_archetype_id, normalise_large_sector_id
+from .estimate_quality import (
+    EstimateQualityContext,
+    REVISION_OUTLIER_ABS_PCT,
+    build_estimate_quality_context,
+    is_independent_consensus,
+    is_report_derived_estimate,
+)
+from .evidence_ids import stable_consensus_evidence_id, stable_news_evidence_id, stable_revision_evidence_id
 from .models import (
     ConsensusRevision,
     ConsensusSnapshot,
@@ -35,6 +43,21 @@ EVIDENCE_FAMILIES: tuple[str, ...] = (
     "consensus_revision",
     "news",
 )
+
+_REVISION_NUMERIC_FIELD_KEYS = {
+    "eps_revision_pct",
+    "eps_revision_1m_pct",
+    "eps_revision_1m",
+    "op_revision_pct",
+    "op_revision_1m_pct",
+    "op_revision_1m",
+    "fcf_revision_pct",
+    "fcf_revision_1m_pct",
+    "fcf_revision_1m",
+    "target_price_revision_pct",
+    "target_revision_pct",
+    "target_price_revision_1m",
+}
 
 
 def _require_date(value: date, field_name: str) -> None:
@@ -82,6 +105,24 @@ def _percent_value(value: float | None) -> float | None:
     if -2.0 <= value <= 2.0:
         return value * 100.0
     return value
+
+
+def _news_source_url(item: NewsItem) -> str | None:
+    return str(item.parsed_fields.get("source_url") or item.parsed_fields.get("url") or "").strip() or None
+
+
+def _news_evidence_id(item: NewsItem, fallback_symbol: str) -> str:
+    return str(item.parsed_fields.get("evidence_id") or "").strip() or stable_news_evidence_id(
+        symbol=item.symbol or fallback_symbol,
+        published_date=item.published_at.date(),
+        source=item.source,
+        source_url=_news_source_url(item),
+        title=item.title,
+    )
+
+
+def _is_search_snippet_only_news(item: NewsItem) -> bool:
+    return bool(item.parsed_fields.get("search_snippet_only"))
 
 
 def _max_or_none(values: Sequence[float | None]) -> float | None:
@@ -135,6 +176,7 @@ class FeatureEngineeringInput:
     disclosures: Sequence[DisclosureEvent] = field(default_factory=tuple)
     research_reports: Sequence[ResearchReport] = field(default_factory=tuple)
     news_items: Sequence[NewsItem] = field(default_factory=tuple)
+    agent_extracted_fields: Mapping[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         _require_text(self.symbol, "symbol")
@@ -154,6 +196,7 @@ class FeatureEngineeringInput:
         object.__setattr__(self, "disclosures", tuple(self.disclosures))
         object.__setattr__(self, "research_reports", tuple(self.research_reports))
         object.__setattr__(self, "news_items", tuple(self.news_items))
+        object.__setattr__(self, "agent_extracted_fields", dict(self.agent_extracted_fields))
         self._validate_point_in_time()
 
     def _validate_point_in_time(self) -> None:
@@ -225,6 +268,7 @@ class DeterministicFeatureEngineer:
     def engineer(self, inputs: FeatureEngineeringInput) -> FeatureEngineeringResult:
         evidence_ids = self._evidence_ids(inputs)
         field_source = _ParsedFieldSource(inputs)
+        estimate_quality = build_estimate_quality_context(inputs)
         sector_profile = infer_sector_profile(
             symbol=inputs.symbol,
             company_name=inputs.company_name,
@@ -233,18 +277,24 @@ class DeterministicFeatureEngineer:
             parsed_fields=field_source.combined_fields(),
         )
         sub_scores = self._industrial_sub_scores(field_source, evidence_ids)
-        sector_metrics = self._sector_metrics(inputs, field_source, sub_scores, sector_profile)
-        components = self._components(inputs, field_source, sub_scores, sector_metrics)
+        sector_metrics = self._sector_metrics(inputs, field_source, sub_scores, sector_profile, estimate_quality)
+        components = self._components(inputs, field_source, sub_scores, sector_metrics, estimate_quality)
         risk_penalty = self._risk_penalty(sub_scores, sector_metrics["structural_visibility_quality"], sector_profile)
-        revision_score = self._revision_score(inputs, field_source)
+        revision_score = self._revision_score(inputs, field_source, estimate_quality)
         price_stage_score = self._price_stage_score(inputs.price_bars)
         diagnostic_scores = {
             "revision_score": revision_score,
             "price_stage_score": price_stage_score,
             "sector_profile_id": profile_id(sector_profile),
             **{key: _round(value) for key, value in sector_metrics.items()},
+            **estimate_quality.diagnostic_scores,
             **self._evidence_family_diagnostics(inputs),
         }
+        if inputs.agent_extracted_fields:
+            diagnostic_scores["agent_extracted_field_count_capped"] = min(float(len(inputs.agent_extracted_fields)), 100.0)
+        if field_source.any_bool("emerging_theme_active", "theme_transition_detected"):
+            diagnostic_scores["emerging_theme_active"] = 100.0
+            diagnostic_scores["theme_transition_detected"] = 100.0
         if price_stage_score >= 90.0 and revision_score < 50.0:
             diagnostic_scores["theme_overheat_score"] = _round(min(100.0, price_stage_score))
 
@@ -282,6 +332,7 @@ class DeterministicFeatureEngineer:
             "large_sector_id": classification.large_sector_id,
             "canonical_archetype_id": classification.canonical_archetype_id,
             "archetype_classification_reason": classification.reason,
+            **estimate_quality.source_fields,
             **{key: _round(value) for key, value in sector_metrics.items()},
         }
         return FeatureEngineeringResult(
@@ -298,9 +349,11 @@ class DeterministicFeatureEngineer:
         fields: "_ParsedFieldSource",
         sub_scores: IndustrialSubScores,
         sector_metrics: Mapping[str, float],
+        estimate_quality: EstimateQualityContext,
     ) -> dict[str, float]:
-        eps_fcf = self._eps_fcf_explosion(inputs, fields)
+        eps_fcf = self._eps_fcf_explosion(inputs, fields, estimate_quality)
         fcf_quality = self._fcf_quality(inputs, fields)
+        actual_conversion = sector_metrics["actual_profit_conversion_score"]
         industrial_visibility_raw = (
             sub_scores.contract_quality * 0.35
             + sub_scores.backlog_rpo_visibility * 0.45
@@ -313,6 +366,14 @@ class DeterministicFeatureEngineer:
             + sub_scores.backlog_rpo_visibility * 0.10
         )
         visibility_raw = max(industrial_visibility_raw, sector_visibility_raw)
+        if self._has_actual_conversion_bridge(fields, sub_scores, sector_metrics):
+            visibility_raw = max(
+                visibility_raw,
+                actual_conversion * 0.35
+                + sector_metrics["structural_visibility_quality"] * 0.35
+                + fcf_quality * 0.20
+                + sub_scores.backlog_rpo_visibility * 0.10,
+            )
         earnings_visibility = visibility_raw / 100.0 * 20.0 - sub_scores.one_off_shortage_risk / 100.0 * 3.0
         industrial_bottleneck_raw = (
             sub_scores.capa_constraint * 0.35
@@ -325,16 +386,49 @@ class DeterministicFeatureEngineer:
             + sub_scores.structural_shortage * 0.15
         )
         bottleneck_raw = max(industrial_bottleneck_raw, sector_bottleneck_raw)
+        if self._has_actual_conversion_bridge(fields, sub_scores, sector_metrics):
+            bottleneck_raw = max(
+                bottleneck_raw,
+                actual_conversion * 0.25
+                + sector_metrics["sector_bottleneck_score"] * 0.35
+                + sub_scores.structural_shortage * 0.25
+                + sub_scores.asp_pricing_power * 0.15,
+            )
         bottleneck_pricing = bottleneck_raw / 100.0 * 20.0 - sub_scores.one_off_shortage_risk / 100.0 * 4.0
-        revision_score = self._revision_score(inputs, fields)
-        valuation_score = self._valuation_score(inputs, fields)
+        revision_score = self._revision_score(inputs, fields, estimate_quality)
+        valuation_score = self._valuation_score(inputs, fields, estimate_quality)
         market_mispricing = (
             revision_score * 0.40 + valuation_score * 0.40 + sub_scores.structural_shortage * 0.20
         ) / 100.0 * 15.0
         price_stage_score = self._price_stage_score(inputs.price_bars)
+        if self._has_actual_conversion_bridge(fields, sub_scores, sector_metrics):
+            underreaction_score = _clamp(100.0 - price_stage_score)
+            market_mispricing = max(
+                market_mispricing,
+                (
+                    valuation_score * 0.35
+                    + actual_conversion * 0.35
+                    + sub_scores.structural_shortage * 0.20
+                    + underreaction_score * 0.10
+                )
+                / 100.0
+                * 15.0,
+            )
         if price_stage_score >= 90.0 and revision_score < 50.0:
             market_mispricing -= 3.0
         valuation_rerating = (valuation_score * 0.65 + revision_score * 0.20 + sub_scores.structural_shortage * 0.15) / 100.0 * 15.0
+        if self._has_actual_conversion_bridge(fields, sub_scores, sector_metrics):
+            valuation_rerating = max(
+                valuation_rerating,
+                (
+                    valuation_score * 0.50
+                    + actual_conversion * 0.20
+                    + sub_scores.structural_shortage * 0.15
+                    + sector_metrics["medium_term_revision_visibility"] * 0.15
+                )
+                / 100.0
+                * 15.0,
+            )
         capital_allocation = self._capital_allocation_score(fields)
         information_confidence = self._information_confidence_score(inputs)
         return {
@@ -379,11 +473,13 @@ class DeterministicFeatureEngineer:
         fields: "_ParsedFieldSource",
         sub_scores: IndustrialSubScores,
         sector_profile: SectorProfile,
+        estimate_quality: EstimateQualityContext,
     ) -> dict[str, float]:
         recurring = self._recurring_demand_visibility_score(fields)
         export_channel = self._export_channel_visibility_score(fields)
-        medium_revision = self._medium_term_revision_visibility_score(inputs, fields)
+        medium_revision = self._medium_term_revision_visibility_score(inputs, fields, estimate_quality)
         domain_evidence = self._domain_specific_evidence_score(fields, sector_profile)
+        actual_conversion = self._actual_profit_conversion_score(inputs, fields)
         if sector_profile in {SectorProfile.POWER_EQUIPMENT, SectorProfile.DEFENSE, SectorProfile.BATTERY_OVERHEAT}:
             sector_visibility = (
                 sub_scores.contract_quality * 0.28
@@ -427,19 +523,39 @@ class DeterministicFeatureEngineer:
             sector_visibility = (
                 domain_evidence * 0.36
                 + medium_revision * 0.28
-                + sub_scores.asp_pricing_power * 0.18
+                + max(sub_scores.asp_pricing_power, actual_conversion) * 0.18
                 + sub_scores.capa_constraint * 0.18
             )
             sector_bottleneck = (
                 domain_evidence * 0.40
                 + sub_scores.capa_constraint * 0.30
-                + sub_scores.asp_pricing_power * 0.20
+                + max(sub_scores.asp_pricing_power, actual_conversion * 0.60) * 0.20
                 + medium_revision * 0.10
             )
             structural_visibility = (
                 sector_visibility * 0.45
                 + medium_revision * 0.25
                 + sector_bottleneck * 0.20
+                + max(sub_scores.backlog_rpo_visibility, actual_conversion * 0.50) * 0.10
+            )
+        elif sector_profile == SectorProfile.AI_INFRA_PLATFORM:
+            sector_visibility = (
+                domain_evidence * 0.34
+                + medium_revision * 0.26
+                + sub_scores.backlog_rpo_visibility * 0.18
+                + sub_scores.capa_constraint * 0.12
+                + sub_scores.asp_pricing_power * 0.10
+            )
+            sector_bottleneck = (
+                domain_evidence * 0.36
+                + sub_scores.capa_constraint * 0.28
+                + sub_scores.asp_pricing_power * 0.18
+                + sub_scores.structural_shortage * 0.18
+            )
+            structural_visibility = (
+                sector_visibility * 0.44
+                + medium_revision * 0.24
+                + domain_evidence * 0.22
                 + sub_scores.backlog_rpo_visibility * 0.10
             )
         else:
@@ -456,6 +572,7 @@ class DeterministicFeatureEngineer:
             "export_channel_visibility": _round(_clamp(export_channel)),
             "medium_term_revision_visibility": _round(_clamp(medium_revision)),
             "domain_specific_evidence_score": _round(_clamp(domain_evidence)),
+            "actual_profit_conversion_score": _round(_clamp(actual_conversion)),
             "sector_visibility_score": _round(_clamp(sector_visibility)),
             "sector_bottleneck_score": _round(_clamp(sector_bottleneck)),
             "structural_visibility_quality": _round(_clamp(structural_visibility)),
@@ -516,17 +633,46 @@ class DeterministicFeatureEngineer:
         return _clamp(score)
 
     @staticmethod
-    def _medium_term_revision_visibility_score(inputs: FeatureEngineeringInput, fields: "_ParsedFieldSource") -> float:
-        revision_score = DeterministicFeatureEngineer._revision_score(inputs, fields)
-        fy1_op = fields.max_number("fy1_op")
-        fy2_op = fields.max_number("fy2_op")
-        fy1_eps = fields.max_number("fy1_eps")
-        fy2_eps = fields.max_number("fy2_eps")
+    def _medium_term_revision_visibility_score(
+        inputs: FeatureEngineeringInput,
+        fields: "_ParsedFieldSource",
+        estimate_quality: EstimateQualityContext,
+    ) -> float:
+        revision_score = DeterministicFeatureEngineer._revision_score(inputs, fields, estimate_quality)
+        fy1_op = fields.max_number_for_scoring("fy1_op")
+        fy2_op = fields.max_number_for_scoring("fy2_op")
+        fy1_eps = fields.max_number_for_scoring("fy1_eps")
+        fy2_eps = fields.max_number_for_scoring("fy2_eps")
         op_growth = _growth_pct(fy2_op, fy1_op)
         eps_growth = _growth_pct(fy2_eps, fy1_eps)
         score = revision_score * 0.50
         score += _score_percent(op_growth, 60.0) * 0.25
         score += _score_percent(eps_growth, 60.0) * 0.25
+        actual_growth = DeterministicFeatureEngineer._actual_growths(inputs.financial_actuals)
+        best_actual_growth = _max_or_none(
+            (
+                actual_growth.get("op_yoy_pct"),
+                actual_growth.get("eps_yoy_pct"),
+                actual_growth.get("fcf_yoy_pct"),
+                actual_growth.get("sales_yoy_pct"),
+            )
+        )
+        if best_actual_growth is not None:
+            score = max(score, _score_percent(best_actual_growth, 100.0) * 0.65)
+        field_actual_growth = _max_or_none(
+            (
+                fields.max_percent_for_scoring("actual_op_yoy_pct", "op_yoy_pct", "operating_profit_yoy_pct"),
+                fields.max_percent_for_scoring("actual_eps_yoy_pct", "eps_yoy_pct"),
+                fields.max_percent_for_scoring("actual_fcf_yoy_pct", "fcf_growth_pct"),
+                fields.max_percent_for_scoring("actual_sales_yoy_pct", "sales_yoy_pct"),
+            )
+        )
+        if field_actual_growth is not None:
+            score = max(score, _score_percent(field_actual_growth, 100.0) * 0.65)
+        if fields.any_bool("estimate_upgrade_mentioned"):
+            score = max(score, 55.0)
+        if fields.any_bool("earnings_beat_mentioned", "consensus_beat_mentioned"):
+            score = max(score, 35.0)
         return _clamp(score)
 
     @staticmethod
@@ -537,10 +683,26 @@ class DeterministicFeatureEngineer:
                 "memory_price_increase_mentioned",
                 "supply_discipline_mentioned",
                 "customer_preorder_or_allocation",
+                "minimum_revenue_guarantee",
                 "hbm_capacity_constraint",
                 "advanced_packaging_bottleneck",
             )
             return _clamp(sum(20.0 for key in keys if fields.any_bool(key)))
+        if sector_profile == SectorProfile.AI_INFRA_PLATFORM:
+            keys = (
+                "gpu_cloud_revenue_visible",
+                "cloud_revenue_growth_visible",
+                "ai_infra_backlog_or_rpo",
+                "hyperscaler_customer",
+                "data_center_contract",
+                "theme_business_link_mentioned",
+                "ai_infra_capacity_or_gpu_mentioned",
+                "gpu_allocation_mentioned",
+                "datacenter_capacity_constraint",
+                "power_capacity_constraint",
+                "nvidia_momentum_mentioned",
+            )
+            return _clamp(sum(13.0 for key in keys if fields.any_bool(key)))
         if sector_profile in {SectorProfile.K_FOOD_EXPORT, SectorProfile.K_BEAUTY_EXPORT}:
             keys = (
                 "export_channel_expansion",
@@ -586,6 +748,16 @@ class DeterministicFeatureEngineer:
         score = _score_ratio(ratio, 1.5) * 0.70 + _score_percent(growth, 80.0) * 0.30
         if record_backlog:
             score += 15.0
+        if fields.any_bool("minimum_revenue_guarantee", "minimum_sales_guarantee", "take_or_pay"):
+            score += 25.0
+        if fields.any_bool("customer_preorder_or_allocation"):
+            score += 15.0
+        if fields.any_bool("capacity_precommitted", "hbm_capacity_pre_sold"):
+            score += 12.0
+        if fields.any_bool("revenue_visibility_contract") or (
+            fields.any_bool("prepayment_exists", "customer_prepayment") and fields.any_bool("multi_year_contract")
+        ):
+            score += 10.0
         return _clamp(score)
 
     @staticmethod
@@ -600,8 +772,18 @@ class DeterministicFeatureEngineer:
         score += _score_ratio(locked_years, 3.0) * 0.15
         if fields.any_bool("lead_time_mentioned", "lead_time_extended"):
             score += 8.0
-        if fields.any_bool("capacity_constraint", "capa_shortage", "hbm_capacity_constraint", "advanced_packaging_bottleneck"):
+        if fields.any_bool(
+            "capacity_constraint",
+            "capa_shortage",
+            "hbm_capacity_constraint",
+            "advanced_packaging_bottleneck",
+            "datacenter_capacity_constraint",
+            "gpu_allocation_mentioned",
+            "power_capacity_constraint",
+        ):
             score += 15.0
+        if fields.any_bool("capacity_precommitted", "hbm_capacity_pre_sold"):
+            score += 10.0
         return _clamp(score)
 
     @staticmethod
@@ -638,6 +820,9 @@ class DeterministicFeatureEngineer:
             "supply_shortage_mentioned",
             "hbm_demand_mentioned",
             "supply_discipline_mentioned",
+            "ai_infra_capacity_or_gpu_mentioned",
+            "gpu_allocation_mentioned",
+            "datacenter_capacity_constraint",
         ):
             return ShortageType.STRUCTURAL
         structural_blend = contract_quality * 0.25 + backlog_rpo_visibility * 0.30 + capa_constraint * 0.25 + asp_pricing_power * 0.20
@@ -685,38 +870,51 @@ class DeterministicFeatureEngineer:
         score -= one_off_shortage_risk * 0.20
         return _clamp(score)
 
-    def _eps_fcf_explosion(self, inputs: FeatureEngineeringInput, fields: "_ParsedFieldSource") -> float:
+    def _eps_fcf_explosion(
+        self,
+        inputs: FeatureEngineeringInput,
+        fields: "_ParsedFieldSource",
+        estimate_quality: EstimateQualityContext,
+    ) -> float:
         latest_actual = self._latest_actual(inputs.financial_actuals)
-        latest_consensus = self._latest_consensus(inputs.consensus)
+        actual_growth = self._actual_growths(inputs.financial_actuals)
         op_growth = _growth_pct(
-            latest_consensus.op_e if latest_consensus else None,
+            estimate_quality.value("op_e"),
             latest_actual.operating_profit if latest_actual else None,
         )
         eps_growth = _growth_pct(
-            latest_consensus.eps_e if latest_consensus else None,
+            estimate_quality.value("eps_e"),
             latest_actual.eps if latest_actual else None,
         )
-        fcf_growth = fields.max_percent("fy1_fcf_growth_pct", "fy2_fcf_growth_pct", "fcf_growth_pct")
+        fcf_growth = fields.max_percent_for_scoring("fy1_fcf_growth_pct", "fy2_fcf_growth_pct", "fcf_growth_pct")
         fcf_growth = _max_or_none(
             (
                 fcf_growth,
                 _growth_pct(
-                    latest_consensus.fcf_e if latest_consensus else None,
+                    estimate_quality.value("fcf_e"),
                     latest_actual.fcf if latest_actual else None,
                 ),
             )
         )
-        op_yoy = fields.max_percent("op_yoy_pct", "operating_profit_yoy_pct")
-        eps_yoy = fields.max_percent("eps_yoy_pct")
+        op_yoy = fields.max_percent_for_scoring("actual_op_yoy_pct", "op_yoy_pct", "operating_profit_yoy_pct")
+        eps_yoy = fields.max_percent_for_scoring("actual_eps_yoy_pct", "eps_yoy_pct")
         best_growth_score = max(
             _score_percent(op_growth, 200.0),
             _score_percent(eps_growth, 200.0),
             _score_percent(fcf_growth, 150.0),
             _score_percent(op_yoy, 200.0),
             _score_percent(eps_yoy, 200.0),
+            _score_percent(actual_growth.get("op_yoy_pct"), 200.0),
+            _score_percent(actual_growth.get("eps_yoy_pct"), 200.0),
+            _score_percent(actual_growth.get("fcf_yoy_pct"), 150.0),
         )
-        op_delta_to_market_cap = fields.max_number("op_delta_to_market_cap")
-        opm_expansion = fields.max_percent("opm_expansion_pctp", "opm_expansion")
+        op_delta_to_market_cap = fields.max_number_for_scoring("op_delta_to_market_cap")
+        opm_expansion = _max_or_none(
+            (
+                fields.max_percent_for_scoring("opm_expansion_pctp", "opm_expansion"),
+                actual_growth.get("opm_expansion_pctp"),
+            )
+        )
         add_on = _score_ratio(op_delta_to_market_cap, 0.30) * 0.20 + _score_percent(opm_expansion, 10.0) * 0.15
         return _clamp(best_growth_score * 0.20 + add_on, 0.0, 20.0)
 
@@ -728,7 +926,7 @@ class DeterministicFeatureEngineer:
             conversion = _safe_divide(latest_actual.fcf, latest_actual.net_income)
             if conversion is None and latest_actual.cashflow_from_operations is not None:
                 conversion = _safe_divide(latest_actual.cashflow_from_operations, latest_actual.net_income)
-        explicit = fields.max_percent("fcf_quality_score")
+        explicit = fields.max_percent_for_scoring("fcf_quality_score")
         if explicit is not None:
             return _clamp(explicit)
         score = _score_ratio(conversion, 1.0)
@@ -737,26 +935,30 @@ class DeterministicFeatureEngineer:
         return _clamp(score)
 
     @staticmethod
-    def _revision_score(inputs: FeatureEngineeringInput, fields: "_ParsedFieldSource") -> float:
+    def _revision_score(
+        inputs: FeatureEngineeringInput,
+        fields: "_ParsedFieldSource",
+        estimate_quality: EstimateQualityContext,
+    ) -> float:
         revision_values: list[float | None] = []
-        for revision in inputs.consensus_revisions:
-            revision_values.extend(
-                [
-                    _percent_value(revision.eps_revision_1m),
-                    _percent_value(revision.op_revision_1m),
-                    _percent_value(revision.fcf_revision_1m),
-                    _percent_value(revision.target_price_revision_1m),
-                ]
-            )
+        revision_values.append(estimate_quality.revision_selection.selected_value)
         revision_values.extend(
             [
-                fields.max_percent("eps_revision_pct", "eps_revision_1m_pct"),
-                fields.max_percent("op_revision_pct", "op_revision_1m_pct"),
-                fields.max_percent("fcf_revision_pct", "target_revision_pct"),
+                fields.max_percent_for_scoring("eps_revision_pct", "eps_revision_1m_pct"),
+                fields.max_percent_for_scoring("op_revision_pct", "op_revision_1m_pct"),
+                fields.max_percent_for_scoring("fcf_revision_pct"),
+                fields.max_percent_for_scoring("target_price_revision_pct", "target_revision_pct", "target_price_revision_1m"),
             ]
         )
-        best_revision = _max_or_none(revision_values)
-        return _round(_score_percent(best_revision, 30.0))
+        best_revision = _max_or_none(tuple(value for value in revision_values if value is None or abs(value) <= REVISION_OUTLIER_ABS_PCT))
+        score = _score_percent(best_revision, 30.0)
+        if fields.any_bool("estimate_upgrade_mentioned"):
+            score = max(score, 55.0)
+        if fields.any_bool("target_price_upgrade_mentioned"):
+            score = max(score, 30.0)
+        if fields.any_bool("earnings_beat_mentioned", "consensus_beat_mentioned"):
+            score = max(score, 35.0)
+        return _round(score)
 
     @staticmethod
     def _price_stage_score(price_bars: Sequence[PriceBar]) -> float:
@@ -771,16 +973,30 @@ class DeterministicFeatureEngineer:
         return _round(_clamp(runup / 3.0 * 100.0))
 
     @staticmethod
-    def _valuation_score(inputs: FeatureEngineeringInput, fields: "_ParsedFieldSource") -> float:
-        latest_consensus = DeterministicFeatureEngineer._latest_consensus(inputs.consensus)
-        per = latest_consensus.per_e if latest_consensus else None
-        pbr = latest_consensus.pbr_e if latest_consensus else None
+    def _valuation_score(
+        inputs: FeatureEngineeringInput,
+        fields: "_ParsedFieldSource",
+        estimate_quality: EstimateQualityContext,
+    ) -> float:
+        latest_actual = DeterministicFeatureEngineer._latest_actual(inputs.financial_actuals)
+        latest_price = DeterministicFeatureEngineer._latest_price_bar(inputs.price_bars)
+        per = estimate_quality.value("per_e")
+        pbr = estimate_quality.value("pbr_e")
         if per is None:
-            per = fields.max_number("est_per", "per_e")
+            per = fields.max_number_for_scoring("est_per", "per_e")
         if pbr is None:
-            pbr = fields.max_number("est_pbr", "pbr_e")
-        target_multiple_before = fields.max_number("target_multiple_before")
-        target_multiple_after = fields.max_number("target_multiple_after")
+            pbr = fields.max_number_for_scoring("est_pbr", "pbr_e")
+        if per is None and latest_actual is not None and latest_price is not None and latest_price.market_cap:
+            earnings = latest_actual.net_income if latest_actual.net_income not in (None, 0) else latest_actual.operating_profit
+            if earnings and earnings > 0:
+                per = latest_price.market_cap / earnings
+        if pbr is None and latest_actual is not None and latest_price is not None and latest_price.market_cap:
+            if latest_actual.bps:
+                pbr = latest_price.close / latest_actual.bps
+            elif latest_actual.equity and latest_actual.equity > 0:
+                pbr = latest_price.market_cap / latest_actual.equity
+        target_multiple_before = fields.max_number_for_scoring("target_multiple_before")
+        target_multiple_after = fields.max_number_for_scoring("target_multiple_after")
         score = 0.0
         if per is not None:
             if per <= 8:
@@ -806,13 +1022,92 @@ class DeterministicFeatureEngineer:
 
     @staticmethod
     def _capital_allocation_score(fields: "_ParsedFieldSource") -> float:
-        capa_expansion = fields.max_percent("capa_expansion_pct", "capacity_expansion_pct")
-        capex_to_sales = fields.max_number("capex_to_sales")
+        capa_expansion = fields.max_percent_for_scoring("capa_expansion_pct", "capacity_expansion_pct")
+        capex_to_sales = fields.max_number_for_scoring("capex_to_sales")
+        if capex_to_sales is None:
+            capex_amount = fields.max_number_for_scoring("capex_amount", "capex")
+            sales = fields.max_number_for_scoring("actual_sales", "sales", "fy1_sales")
+            if capex_amount is not None and sales is not None and sales > 0:
+                capex_to_sales = capex_amount / sales
         score = _score_percent(capa_expansion, 50.0) * 3.5 / 100.0
         score += _score_ratio(capex_to_sales, 0.20) * 1.5 / 100.0
         if fields.any_bool("disciplined_capex", "capacity_precommitted"):
             score += 1.0
         return _clamp(score, 0.0, 5.0)
+
+    @staticmethod
+    def _actual_profit_conversion_score(inputs: FeatureEngineeringInput, fields: "_ParsedFieldSource") -> float:
+        if not fields.any_bool("financial_actuals_present") and not fields.values_for_scoring(
+            "actual_sales_yoy_pct",
+            "actual_op_yoy_pct",
+            "actual_eps_yoy_pct",
+            "actual_fcf_yoy_pct",
+            "actual_opm",
+            "opm_expansion_pctp",
+        ):
+            return 0.0
+        actual_growth = DeterministicFeatureEngineer._actual_growths(inputs.financial_actuals)
+        best_profit_growth = _max_or_none(
+            (
+                actual_growth.get("op_yoy_pct"),
+                actual_growth.get("eps_yoy_pct"),
+                actual_growth.get("fcf_yoy_pct"),
+                fields.max_percent_for_scoring("actual_op_yoy_pct", "op_yoy_pct", "operating_profit_yoy_pct"),
+                fields.max_percent_for_scoring("actual_eps_yoy_pct", "eps_yoy_pct"),
+                fields.max_percent_for_scoring("actual_fcf_yoy_pct", "fcf_growth_pct"),
+            )
+        )
+        sales_growth = _max_or_none(
+            (
+                actual_growth.get("sales_yoy_pct"),
+                fields.max_percent_for_scoring("actual_sales_yoy_pct", "sales_yoy_pct"),
+            )
+        )
+        opm_expansion = _max_or_none(
+            (
+                actual_growth.get("opm_expansion_pctp"),
+                fields.max_percent_for_scoring("opm_expansion_pctp", "opm_expansion"),
+            )
+        )
+        opm_level = fields.max_percent_for_scoring("actual_opm", "opm")
+        fcf_quality = DeterministicFeatureEngineer._fcf_quality(inputs, fields)
+        score = 0.0
+        score += _score_percent(best_profit_growth, 120.0) * 0.35
+        score += _score_percent(sales_growth, 60.0) * 0.15
+        score += _score_percent(opm_expansion, 12.0) * 0.20
+        score += _score_percent(opm_level, 30.0) * 0.15
+        score += fcf_quality * 0.15
+        return _clamp(score)
+
+    @staticmethod
+    def _has_actual_conversion_bridge(
+        fields: "_ParsedFieldSource",
+        sub_scores: IndustrialSubScores,
+        sector_metrics: Mapping[str, float],
+    ) -> bool:
+        if sector_metrics.get("actual_profit_conversion_score", 0.0) <= 0:
+            return False
+        if sub_scores.one_off_shortage_risk >= 60.0:
+            return False
+        if sub_scores.structural_shortage < 50.0 and sector_metrics.get("domain_specific_evidence_score", 0.0) < 35.0:
+            return False
+        return fields.any_bool(
+            "supply_shortage_mentioned",
+            "structural_shortage_mentioned",
+            "hbm_demand_mentioned",
+            "memory_price_increase_mentioned",
+            "customer_preorder_or_allocation",
+            "minimum_revenue_guarantee",
+            "minimum_sales_guarantee",
+            "revenue_visibility_contract",
+            "capacity_constraint",
+            "capa_shortage",
+            "hbm_capacity_constraint",
+            "capacity_precommitted",
+            "hbm_capacity_pre_sold",
+            "pricing_power_mentioned",
+            "market_frame_shift",
+        )
 
     @staticmethod
     def _information_confidence_score(inputs: FeatureEngineeringInput) -> float:
@@ -821,17 +1116,19 @@ class DeterministicFeatureEngineer:
             source_count += 1
         if inputs.financial_actuals:
             source_count += 1
-        if inputs.consensus:
+        independent_consensus = tuple(item for item in inputs.consensus if is_independent_consensus(item))
+        independent_revisions = tuple(item for item in inputs.consensus_revisions if is_independent_consensus(item))
+        if independent_consensus:
             source_count += 1
-        if inputs.consensus_revisions:
+        if independent_revisions:
             source_count += 1
         if inputs.disclosures:
             source_count += 1
         if inputs.research_reports:
             source_count += 1
-        if inputs.news_items:
+        if any(not _is_search_snippet_only_news(item) for item in inputs.news_items):
             source_count += 1
-        analyst_counts = [item.analyst_count for item in inputs.consensus if item.analyst_count is not None]
+        analyst_counts = [item.analyst_count for item in independent_consensus if item.analyst_count is not None]
         analyst_bonus = 1.0 if analyst_counts and max(analyst_counts) >= 3 else 0.0
         return _clamp(source_count * 0.75 + analyst_bonus, 0.0, 5.0)
 
@@ -850,17 +1147,38 @@ class DeterministicFeatureEngineer:
 
     @staticmethod
     def _evidence_family_diagnostics(inputs: FeatureEngineeringInput) -> dict[str, float]:
+        full_news = tuple(item for item in inputs.news_items if not _is_search_snippet_only_news(item))
+        snippet_news = tuple(item for item in inputs.news_items if _is_search_snippet_only_news(item))
+        date_unverified_snippet = tuple(item for item in snippet_news if item.parsed_fields.get("search_snippet_date_unverified"))
+        independent_consensus = tuple(item for item in inputs.consensus if is_independent_consensus(item))
+        proxy_consensus = tuple(
+            item for item in inputs.consensus if is_report_derived_estimate(item.source, item.parsed_fields)
+        )
+        independent_revisions = tuple(item for item in inputs.consensus_revisions if is_independent_consensus(item))
+        proxy_revisions = tuple(
+            item for item in inputs.consensus_revisions if is_report_derived_estimate(item.source, item.parsed_fields)
+        )
         flags = {
             "price": bool(inputs.price_bars),
             "financial_actual": bool(inputs.financial_actuals),
             "disclosure": bool(inputs.disclosures),
             "research_report": bool(inputs.research_reports),
-            "consensus": bool(inputs.consensus),
-            "consensus_revision": bool(inputs.consensus_revisions),
-            "news": bool(inputs.news_items),
+            "consensus": bool(independent_consensus),
+            "consensus_revision": bool(independent_revisions),
+            "news": bool(full_news),
         }
         diagnostics = {f"evidence_family_{key}": 1.0 if present else 0.0 for key, present in flags.items()}
         diagnostics["cross_evidence_family_count"] = float(sum(1 for present in flags.values() if present))
+        diagnostics["evidence_family_consensus_proxy"] = 1.0 if proxy_consensus else 0.0
+        diagnostics["evidence_family_consensus_structured"] = 1.0 if independent_consensus else 0.0
+        diagnostics["evidence_family_consensus_revision_proxy"] = 1.0 if proxy_revisions else 0.0
+        diagnostics["evidence_family_search_snippet_news"] = 1.0 if snippet_news else 0.0
+        diagnostics["full_news_family"] = 1.0 if full_news else 0.0
+        diagnostics["snippet_only_news_family"] = 1.0 if snippet_news else 0.0
+        diagnostics["snippet_only_news_count_capped"] = min(float(len(snippet_news)), 100.0)
+        diagnostics["date_unverified_snippet_news_count_capped"] = min(float(len(date_unverified_snippet)), 100.0)
+        if snippet_news and not full_news:
+            diagnostics["snippet_only_green_block"] = 100.0
         diagnostics["report_date_confidence"] = 100.0
         return diagnostics
 
@@ -932,11 +1250,73 @@ class DeterministicFeatureEngineer:
         return sorted(consensus, key=lambda item: (item.date, item.fiscal_year))[-1]
 
     @staticmethod
+    def _latest_price_bar(price_bars: Sequence[PriceBar]) -> PriceBar | None:
+        if not price_bars:
+            return None
+        return sorted(price_bars, key=lambda item: item.date)[-1]
+
+    @staticmethod
+    def _actual_growths(actuals: Sequence[FinancialActual]) -> dict[str, float]:
+        if len(actuals) < 2:
+            return {}
+        latest = DeterministicFeatureEngineer._latest_actual(actuals)
+        if latest is None:
+            return {}
+        if latest.fiscal_quarter is None:
+            comparable = tuple(
+                item
+                for item in actuals
+                if item.period_end < latest.period_end and item.fiscal_year < latest.fiscal_year and item.fiscal_quarter is None
+            )
+        else:
+            comparable = tuple(
+                item
+                for item in actuals
+                if item.period_end < latest.period_end
+                and item.fiscal_year < latest.fiscal_year
+                and item.fiscal_quarter == latest.fiscal_quarter
+            )
+        if not comparable:
+            return {}
+        prior = sorted(comparable, key=lambda item: (item.period_end, item.reported_at))[-1]
+        result: dict[str, float] = {}
+        for key, latest_value, prior_value in (
+            ("sales_yoy_pct", latest.sales, prior.sales),
+            ("op_yoy_pct", latest.operating_profit, prior.operating_profit),
+            ("eps_yoy_pct", latest.eps, prior.eps),
+            ("fcf_yoy_pct", latest.fcf, prior.fcf),
+        ):
+            growth = _growth_pct(latest_value, prior_value)
+            if growth is not None:
+                result[key] = growth
+        latest_opm = _percent_value(latest.opm)
+        prior_opm = _percent_value(prior.opm)
+        if latest_opm is not None and prior_opm is not None:
+            result["opm_expansion_pctp"] = latest_opm - prior_opm
+        return result
+
+    @staticmethod
     def _evidence_ids(inputs: FeatureEngineeringInput) -> tuple[str, ...]:
         evidence_ids: list[str] = []
         evidence_ids.extend(f"actual:{item.symbol}:{item.period_end.isoformat()}" for item in inputs.financial_actuals)
-        evidence_ids.extend(f"consensus:{item.symbol}:{item.date.isoformat()}:{item.fiscal_year}" for item in inputs.consensus)
-        evidence_ids.extend(f"revision:{item.symbol}:{item.date.isoformat()}:{item.fiscal_year}" for item in inputs.consensus_revisions)
+        evidence_ids.extend(
+            stable_consensus_evidence_id(
+                symbol=item.symbol,
+                estimate_date=item.date,
+                fiscal_year=item.fiscal_year,
+                source=item.source,
+            )
+            for item in inputs.consensus
+        )
+        evidence_ids.extend(
+            stable_revision_evidence_id(
+                symbol=item.symbol,
+                estimate_date=item.date,
+                fiscal_year=item.fiscal_year,
+                source=item.source,
+            )
+            for item in inputs.consensus_revisions
+        )
         evidence_ids.extend(
             f"disclosure:{item.symbol}:{item.published_at.date().isoformat()}:{item.report_type}"
             for item in inputs.disclosures
@@ -945,10 +1325,7 @@ class DeterministicFeatureEngineer:
             f"research:{item.symbol}:{item.publish_date.isoformat()}:{item.broker}"
             for item in inputs.research_reports
         )
-        evidence_ids.extend(
-            f"news:{item.symbol or inputs.symbol}:{item.published_at.date().isoformat()}:{item.source}"
-            for item in inputs.news_items
-        )
+        evidence_ids.extend(_news_evidence_id(item, inputs.symbol) for item in inputs.news_items)
         return tuple(dict.fromkeys(evidence_ids))
 
 
@@ -958,6 +1335,61 @@ class _ParsedFieldSource:
     def __init__(self, inputs: FeatureEngineeringInput) -> None:
         mappings: list[Mapping[str, Any]] = []
         text_parts: list[str] = []
+        if inputs.agent_extracted_fields:
+            mappings.append(inputs.agent_extracted_fields)
+            text_parts.append(
+                " ".join(
+                    str(key)
+                    for key, value in inputs.agent_extracted_fields.items()
+                    if value not in (None, "", False, 0)
+                )
+            )
+        if inputs.financial_actuals:
+            latest_actual = DeterministicFeatureEngineer._latest_actual(inputs.financial_actuals)
+            actual_growth = DeterministicFeatureEngineer._actual_growths(inputs.financial_actuals)
+            actual_fields: dict[str, Any] = {"financial_actuals_present": True}
+            if latest_actual is not None:
+                for source_key, value in (
+                    ("actual_sales", latest_actual.sales),
+                    ("sales", latest_actual.sales),
+                    ("actual_operating_profit", latest_actual.operating_profit),
+                    ("operating_profit", latest_actual.operating_profit),
+                    ("actual_net_income", latest_actual.net_income),
+                    ("net_income", latest_actual.net_income),
+                    ("actual_eps", latest_actual.eps),
+                    ("eps", latest_actual.eps),
+                    ("actual_bps", latest_actual.bps),
+                    ("bps", latest_actual.bps),
+                    ("actual_equity", latest_actual.equity),
+                    ("equity", latest_actual.equity),
+                    ("book_value", latest_actual.equity),
+                    ("actual_cashflow_from_operations", latest_actual.cashflow_from_operations),
+                    ("cashflow_from_operations", latest_actual.cashflow_from_operations),
+                    ("actual_capex", latest_actual.capex),
+                    ("capex", latest_actual.capex),
+                    ("capex_amount", latest_actual.capex),
+                    ("actual_fcf", latest_actual.fcf),
+                    ("fcf", latest_actual.fcf),
+                    ("actual_opm", latest_actual.opm),
+                    ("opm", latest_actual.opm),
+                    ("actual_receivables", latest_actual.receivables),
+                    ("receivables", latest_actual.receivables),
+                    ("actual_inventory", latest_actual.inventory),
+                    ("inventory", latest_actual.inventory),
+                ):
+                    if value is not None:
+                        actual_fields[source_key] = value
+            for source_key, target_key in (
+                ("sales_yoy_pct", "actual_sales_yoy_pct"),
+                ("op_yoy_pct", "actual_op_yoy_pct"),
+                ("eps_yoy_pct", "actual_eps_yoy_pct"),
+                ("fcf_yoy_pct", "actual_fcf_yoy_pct"),
+                ("opm_expansion_pctp", "opm_expansion_pctp"),
+            ):
+                if source_key in actual_growth:
+                    actual_fields[target_key] = actual_growth[source_key]
+            mappings.append(actual_fields)
+            text_parts.append("financial_actuals_present actual_sales operating_profit net_income")
         mappings.extend(item.parsed_fields for item in inputs.disclosures)
         for item in inputs.disclosures:
             text_parts.extend(part for part in (item.title, item.raw_text or "") if part)
@@ -965,6 +1397,7 @@ class _ParsedFieldSource:
             report_fields = dict(report.parsed_fields)
             for key in (
                 "target_revision_pct",
+                "target_price",
                 "target_multiple_before",
                 "target_multiple_after",
                 "fy1_sales",
@@ -1037,6 +1470,39 @@ class _ParsedFieldSource:
 
     def max_percent(self, *keys: str) -> float | None:
         return _max_or_none(tuple(_percent_value(_to_float(value)) for value in self.values(*keys)))
+
+    def values_for_scoring(self, *keys: str) -> tuple[Any, ...]:
+        values: list[Any] = []
+        for mapping in self._mappings:
+            if not self._mapping_score_eligible(mapping):
+                continue
+            for key in keys:
+                if key not in mapping or mapping[key] in (None, ""):
+                    continue
+                value = mapping[key]
+                numeric = _percent_value(_to_float(value)) if key in _REVISION_NUMERIC_FIELD_KEYS else _to_float(value)
+                if key in _REVISION_NUMERIC_FIELD_KEYS and numeric is not None and abs(numeric) > REVISION_OUTLIER_ABS_PCT:
+                    continue
+                values.append(value)
+        return tuple(values)
+
+    def max_number_for_scoring(self, *keys: str) -> float | None:
+        return _max_or_none(tuple(_to_float(value) for value in self.values_for_scoring(*keys)))
+
+    def max_percent_for_scoring(self, *keys: str) -> float | None:
+        return _max_or_none(tuple(_percent_value(_to_float(value)) for value in self.values_for_scoring(*keys)))
+
+    @staticmethod
+    def _mapping_score_eligible(mapping: Mapping[str, Any]) -> bool:
+        if _to_bool(mapping.get("search_snippet_only")):
+            return False
+        if _to_bool(mapping.get("search_snippet_date_unverified")):
+            return False
+        if mapping.get("green_allowed_by_date") is False:
+            return False
+        if mapping.get("consensus_proxy_score_eligible") is False:
+            return False
+        return True
 
     def any_bool(self, *keys: str) -> bool:
         return any(_to_bool(value) for value in self.values(*keys))

@@ -256,6 +256,8 @@ class StageClassifier:
         profile = get_active_scoring_profile()
         if StageClassifier._positive_stage_blocked_by_price_only(score):
             return False
+        if not _emerging_theme_green_allowed(score):
+            return False
         revision_score = _score_diagnostic(score, "revision_score")
         structural_visibility_quality = _score_diagnostic(
             score,
@@ -326,6 +328,18 @@ def _component_meets(score: ScoreSnapshot, key: str, canonical_threshold: float)
 
 def _component_below(score: ScoreSnapshot, key: str, canonical_threshold: float) -> bool:
     return _effective_component_score(score, key) < _effective_component_threshold(score, key, canonical_threshold)
+
+
+def _emerging_theme_green_allowed(score: ScoreSnapshot) -> bool:
+    if _score_diagnostic(score, "snippet_only_green_block") > 0:
+        return False
+    if _score_diagnostic(score, "emerging_theme_active") <= 0:
+        return True
+    return (
+        _score_diagnostic(score, "llm_deep_research_completed") >= 100.0
+        and _score_diagnostic(score, "green_unlock_evidence_score") >= 60.0
+        and _score_diagnostic(score, "date_unverified_snippet_news_count_capped") <= 0.0
+    )
 
 
 def _has_non_price_stage2_bridge(score: ScoreSnapshot) -> bool:

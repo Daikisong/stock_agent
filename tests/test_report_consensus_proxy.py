@@ -3,6 +3,7 @@ import unittest
 
 from e2r.models import ResearchReport
 from e2r.research.report_consensus_proxy import build_report_consensus_proxy
+from e2r.research.report_parser import parse_research_report_text
 
 
 class ReportConsensusProxyTests(unittest.TestCase):
@@ -49,6 +50,56 @@ class ReportConsensusProxyTests(unittest.TestCase):
         self.assertFalse(result.consensus)
         self.assertFalse(result.consensus_revisions)
         self.assertNotIn("consensus_proxy_created", result.reports[0].parsed_fields)
+
+    def test_parsed_forward_estimate_report_creates_consensus_not_actuals(self):
+        parsed = parse_research_report_text(
+            symbol="123456",
+            text="테스트전자 종목분석 - 2026년 영업이익 70조원 예상. 실적 전망치 상향.",
+            metadata={"publish_date": date(2026, 6, 8), "as_of_date": date(2026, 6, 8)},
+        )
+
+        result = build_report_consensus_proxy((parsed.report,), as_of_date=date(2026, 6, 8))
+
+        self.assertEqual(len(result.consensus), 1)
+        self.assertEqual(result.consensus[0].fiscal_year, 2026)
+        self.assertEqual(result.consensus[0].op_e, 70_000_000_000_000.0)
+        self.assertFalse(result.consensus_revisions)
+        self.assertTrue(result.reports[0].parsed_fields["consensus_proxy_created"])
+        self.assertNotIn("actual_operating_profit", result.reports[0].parsed_fields)
+
+    def test_target_price_only_report_creates_consensus_without_revision_pct(self):
+        parsed = parse_research_report_text(
+            symbol="123456",
+            text="테스트전자 목표주가 87만원으로 상향. AI 수요를 반영했다.",
+            metadata={"publish_date": date(2026, 6, 8), "as_of_date": date(2026, 6, 8)},
+        )
+
+        result = build_report_consensus_proxy((parsed.report,), as_of_date=date(2026, 6, 8))
+
+        self.assertEqual(len(result.consensus), 1)
+        self.assertEqual(result.consensus[0].target_price, 870000)
+        self.assertFalse(result.consensus_revisions)
+        self.assertTrue(result.reports[0].parsed_fields["target_price_upgrade_mentioned"])
+
+    def test_power_equipment_forward_estimate_creates_consensus_proxy(self):
+        parsed = parse_research_report_text(
+            symbol="654321",
+            text=(
+                "테스트전력 종목분석 - 2027년 영업이익 2,400억원 전망. "
+                "목표주가 12만원으로 상향. 북미 변압기 수주잔고와 리드타임 장기화."
+            ),
+            metadata={"publish_date": date(2026, 6, 8), "as_of_date": date(2026, 6, 8)},
+        )
+
+        result = build_report_consensus_proxy((parsed.report,), as_of_date=date(2026, 6, 8))
+
+        self.assertEqual(len(result.consensus), 1)
+        self.assertEqual(result.consensus[0].fiscal_year, 2027)
+        self.assertEqual(result.consensus[0].op_e, 240_000_000_000.0)
+        self.assertEqual(result.consensus[0].target_price, 120000)
+        self.assertFalse(result.consensus_revisions)
+        self.assertTrue(result.reports[0].parsed_fields["consensus_proxy_created"])
+        self.assertNotIn("hbm_context_mentioned", result.reports[0].parsed_fields)
 
 
 if __name__ == "__main__":

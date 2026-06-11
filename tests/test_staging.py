@@ -92,6 +92,43 @@ class StageClassifierTests(unittest.TestCase):
         self.assertEqual(snapshot.stage, Stage.STAGE_3_GREEN)
         self.assertEqual(snapshot.red_team_status, "low")
 
+    def test_emerging_theme_blocks_green_until_deep_research_is_complete(self):
+        score = make_score(
+            diagnostic_scores={"revision_score": 82.0, "emerging_theme_active": 100.0},
+            eps_fcf_explosion=20,
+            earnings_visibility=18,
+            bottleneck_pricing=18,
+            market_mispricing=13,
+            valuation_rerating=12,
+            capital_allocation=4,
+            information_confidence=4,
+        )
+
+        snapshot = StageClassifier().classify(StageClassificationInput(score=score))
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_3_YELLOW)
+
+    def test_emerging_theme_can_be_green_after_deep_research_and_unlock_evidence(self):
+        score = make_score(
+            diagnostic_scores={
+                "revision_score": 82.0,
+                "emerging_theme_active": 100.0,
+                "llm_deep_research_completed": 100.0,
+                "green_unlock_evidence_score": 80.0,
+            },
+            eps_fcf_explosion=20,
+            earnings_visibility=18,
+            bottleneck_pricing=18,
+            market_mispricing=13,
+            valuation_rerating=12,
+            capital_allocation=4,
+            information_confidence=4,
+        )
+
+        snapshot = StageClassifier().classify(StageClassificationInput(score=score))
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_3_GREEN)
+
     def test_stage_3_yellow_when_score_is_high_but_green_is_incomplete(self):
         score = make_score(
             eps_fcf_explosion=20,

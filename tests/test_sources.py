@@ -5,6 +5,7 @@ import unittest
 from e2r.models import Market, SourceTier
 from e2r.sources import (
     COMPANY_NEWS_QUERY_TEMPLATES,
+    CompanyGuideConnector,
     ConsensusCSVConnector,
     KRXConnector,
     MissingCredentialError,
@@ -91,6 +92,212 @@ class SourceConnectorTests(unittest.TestCase):
         self.assertEqual(consensus[0].fcf_e, 430000)
         self.assertEqual(revisions[0].street_high_eps_revision_1m, 40)
         self.assertEqual(revisions[0].street_low_eps_revision_1m, 20)
+
+    def test_company_guide_parses_samsung_and_hynix_consensus_snapshot(self):
+        connector = CompanyGuideConnector()
+        as_of = date(2026, 6, 11)
+
+        samsung = connector.parse_consensus_snapshot_html(
+            _company_guide_consensus_html(
+                opinion="4.04",
+                target_price="437,500",
+                eps="43,833",
+                per="6.90",
+                analyst_count="24",
+                broker_rows=(
+                    ("KB", "26/06/10", "530,000", "530,000", "0.00", "BUY", "BUY"),
+                    ("현대차", "26/06/10", "440,000", "340,000", "29.41", "BUY", "BUY"),
+                ),
+            ),
+            symbol="005930",
+            as_of_date=as_of,
+        )
+        hynix = connector.parse_consensus_snapshot_html(
+            _company_guide_consensus_html(
+                opinion="4.00",
+                target_price="2,751,667",
+                eps="301,732",
+                per="6.79",
+                analyst_count="24",
+                broker_rows=(
+                    ("메리츠", "26/06/10", "2,950,000", "2,000,000", "47.50", "Buy", "Buy"),
+                    ("신한투자", "26/06/09", "3,800,000", "3,800,000", "0.00", "매수", "매수"),
+                ),
+            ),
+            symbol="000660",
+            as_of_date=as_of,
+        )
+
+        self.assertEqual(samsung.consensus.target_price, 437500)
+        self.assertEqual(samsung.consensus.eps_e, 43833)
+        self.assertEqual(samsung.consensus.analyst_count, 24)
+        self.assertEqual(samsung.broker_targets[1].broker, "현대차")
+        self.assertEqual(samsung.broker_targets[1].target_price_revision_pct, 29.41)
+
+        self.assertEqual(hynix.consensus.target_price, 2751667)
+        self.assertEqual(hynix.consensus.eps_e, 301732)
+        self.assertEqual(hynix.consensus.per_e, 6.79)
+        self.assertEqual(hynix.broker_targets[0].target_price, 2950000)
+        self.assertEqual(hynix.broker_targets[0].target_price_revision_pct, 47.50)
+
+    def test_company_guide_recent_report_payloads_normalize_for_samsung_and_hynix(self):
+        connector = CompanyGuideConnector()
+        as_of = date(2026, 6, 11)
+
+        samsung = connector.parse_recent_reports_payload(
+            {
+                "lists": [
+                    {
+                        "RPT_ID": 1104820,
+                        "ANL_DT": "26/06/11",
+                        "IDX": "20260611.046265",
+                        "RPT_TITLE": "사이클을 넘어 구조적 확장으로, 역대급 레벨업의 시작",
+                        "TARGET_PRC": "",
+                        "RECOMM": None,
+                        "COMMENT": "HBM 출하량 3배 급증<br/>선수주 후증설 패러다임 변화",
+                        "PAGE_CNT": 5,
+                        "FILE_NM": "1F18420260611_005930_a.pdf",
+                        "CLOSE_PRC": "299,000",
+                        "EPS": None,
+                        "BRK_NM_SHORT_KOR": "스터닝밸류리서치",
+                        "ANL_NM_KOR": "전영대",
+                        "PRC_ACTION_TYP_NM": "목표주가 없음",
+                        "EPS_ACTION_TYP_NM": "추정EPS 없음",
+                        "RECOMM_ACTION_TYP_NM": "투자의견 없음",
+                    },
+                    {
+                        "RPT_ID": 1104600,
+                        "ANL_DT": "26/06/10",
+                        "IDX": "20260610.046168",
+                        "RPT_TITLE": "어닝파워 입증 및 주주환원을 통한 재평가 예상",
+                        "TARGET_PRC": "420,000",
+                        "RECOMM": "Buy",
+                        "COMMENT": "메모리 선두업체<br/>투자의견 Buy, 적정주가 42만원",
+                        "PAGE_CNT": 5,
+                        "FILE_NM": "1F02220260610_005930.pdf",
+                        "CLOSE_PRC": "299,000",
+                        "EPS": 48448.0,
+                        "BRK_NM_SHORT_KOR": "메리츠",
+                        "ANL_NM_KOR": "김선우",
+                        "PRC_ACTION_TYP_NM": "목표주가 상향",
+                        "EPS_ACTION_TYP_NM": "추정EPS 상향",
+                        "RECOMM_ACTION_TYP_NM": "변동없음",
+                    },
+                    {
+                        "RPT_ID": 9999999,
+                        "ANL_DT": "26/06/12",
+                        "RPT_TITLE": "미래 날짜 리포트",
+                    },
+                ]
+            },
+            symbol="005930",
+            as_of_date=as_of,
+        )
+        hynix = connector.parse_recent_reports_payload(
+            {
+                "lists": [
+                    {
+                        "RPT_ID": 1104601,
+                        "ANL_DT": "26/06/10",
+                        "IDX": "20260610.046169",
+                        "RPT_TITLE": "끝 없는 재평가 (feat. ADR, 주주환원)",
+                        "TARGET_PRC": "2,950,000",
+                        "RECOMM": "Buy",
+                        "COMMENT": "업사이클의 최대 Pure Player<br/>27년 초거대 주주환원",
+                        "PAGE_CNT": 5,
+                        "FILE_NM": "1F02220260610_000660.pdf",
+                        "CLOSE_PRC": "2,101,000",
+                        "EPS": 325071.0,
+                        "BRK_NM_SHORT_KOR": "메리츠",
+                        "ANL_NM_KOR": "김선우",
+                        "PRC_ACTION_TYP_NM": "목표주가 상향",
+                        "EPS_ACTION_TYP_NM": "추정EPS 상향",
+                        "RECOMM_ACTION_TYP_NM": "변동없음",
+                    },
+                    {
+                        "RPT_ID": 1104231,
+                        "ANL_DT": "26/06/09",
+                        "IDX": "20260609.045867",
+                        "RPT_TITLE": "(깐부)치킨게임 시작",
+                        "TARGET_PRC": "3,800,000",
+                        "RECOMM": "매수",
+                        "COMMENT": "본격적인 장기공급계약 체결 시작<br/>27년 HBM 수요 확대와 고객 다변화",
+                        "PAGE_CNT": 10,
+                        "FILE_NM": "1F01420260609_000660_c.pdf",
+                        "CLOSE_PRC": "2,101,000",
+                        "EPS": 329372.0,
+                        "BRK_NM_SHORT_KOR": "미래에셋",
+                        "ANL_NM_KOR": "김영건",
+                        "PRC_ACTION_TYP_NM": "변동없음",
+                        "EPS_ACTION_TYP_NM": "추정EPS 상향",
+                        "RECOMM_ACTION_TYP_NM": "변동없음",
+                    },
+                ]
+            },
+            symbol="000660",
+            as_of_date=as_of,
+        )
+
+        self.assertEqual(len(samsung), 2)
+        self.assertEqual(samsung[1].target_price, 420000)
+        self.assertEqual(samsung[1].fy1_eps, 48448)
+        self.assertEqual(samsung[1].parsed_fields["target_price_action"], "목표주가 상향")
+
+        self.assertEqual(hynix[0].target_price, 2950000)
+        self.assertEqual(hynix[0].fy1_eps, 325071)
+        self.assertEqual(hynix[1].broker, "미래에셋")
+        self.assertIn("장기공급계약", hynix[1].raw_text or "")
+
+    def test_company_guide_request_metadata_stays_fixture_first(self):
+        connector = CompanyGuideConnector()
+
+        snapshot = connector.build_snapshot_request("005930", date(2026, 6, 11))
+        reports = connector.build_recent_reports_request("000660", date(2026, 6, 11), per_page=3, cur_page=1)
+
+        self.assertTrue(snapshot.fixture_mode)
+        self.assertEqual(snapshot.params["cmp_cd"], "005930")
+        self.assertEqual(reports.url, "https://comp.wisereport.co.kr/company/ajax/c1080001_data.aspx")
+        self.assertEqual(reports.params["cmp_cd"], "000660")
+        self.assertEqual(reports.params["perPage"], 3)
+
+
+def _company_guide_consensus_html(
+    *,
+    opinion: str,
+    target_price: str,
+    eps: str,
+    per: str,
+    analyst_count: str,
+    broker_rows: tuple[tuple[str, str, str, str, str, str, str], ...],
+) -> str:
+    broker_html = "\n".join(
+        f"""
+        <tr>
+          <td>{broker}</td><td>{final_date}</td><td>{target}</td><td>{previous_target}</td>
+          <td><span>{revision}</span></td><td>{rating}</td><td>{previous_rating}</td>
+        </tr>
+        """
+        for broker, final_date, target, previous_target, revision, rating, previous_rating in broker_rows
+    )
+    return f"""
+    <p class="disc table">[기준:2026.06.10]</p>
+    <table id="cTB15">
+      <tr>
+        <td rowspan="2"><span>{opinion}</span></td>
+        <th>투자의견</th><th>목표주가<span>(원)</span></th><th>EPS<span>(원)</span></th>
+        <th>PER<span>(배)</span></th><th>추정기관수</th>
+      </tr>
+      <tr>
+        <td><b>{opinion}</b></td><td>{target_price}</td><td>{eps}</td><td>{per}</td><td>{analyst_count}</td>
+      </tr>
+    </table>
+    <table id="cTB24">
+      <thead>
+        <tr><th>제공처</th><th>최종일자</th><th>목표가</th><th>직전목표가</th><th>변동률<span>(%)</span></th><th>투자의견</th><th>직전투자의견</th></tr>
+      </thead>
+      <tbody>{broker_html}</tbody>
+    </table>
+    """
 
 
 if __name__ == "__main__":

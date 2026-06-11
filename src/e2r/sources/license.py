@@ -61,6 +61,14 @@ DEFAULT_SOURCE_LICENSE_METADATA: tuple[SourceLicenseMetadata, ...] = (
         non_commercial_only="unknown",
         notes="Used for targeted event/search evidence only under explicit credentials and budgets.",
     ),
+    SourceLicenseMetadata(
+        source_name="company_guide",
+        license_label="CompanyGuide/WiseReport/FnGuide page terms, verify before production",
+        commercial_allowed="unknown",
+        attribution_required="unknown",
+        non_commercial_only="unknown",
+        notes="Operator-review comment only. Used to enrich consensus and broker report metadata; verify WiseReport/FnGuide terms before any non-personal or commercial operation.",
+    ),
 )
 
 

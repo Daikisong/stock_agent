@@ -169,6 +169,8 @@ class AsOfWebResearchRunner:
                 sector=None,
                 market=candidate.market,
                 as_of_date=config.as_of_date,
+                company_aliases=(candidate.company_name, candidate.symbol),
+                candidate_reason_codes=candidate.reason_codes,
                 budget=budget,
                 max_results_per_query=config.max_results_per_query,
                 fixture_text_by_url=fixture_text_by_url or {},

@@ -503,6 +503,27 @@ class CSVJSONDataConnector(MockDataConnector):
 
     @staticmethod
     def _consensus(row: Mapping[str, Any]) -> ConsensusSnapshot:
+        known = {
+            "symbol",
+            "date",
+            "fiscal_year",
+            "as_of_date",
+            "source",
+            "sales_e",
+            "op_e",
+            "net_income_e",
+            "eps_e",
+            "fcf_e",
+            "bps_e",
+            "roe_e",
+            "per_e",
+            "pbr_e",
+            "analyst_count",
+            "target_price",
+            "target_multiple_type",
+            "target_multiple",
+            "parsed_fields",
+        }
         return ConsensusSnapshot(
             symbol=str(row["symbol"]),
             date=_date_value(row["date"]),
@@ -522,10 +543,30 @@ class CSVJSONDataConnector(MockDataConnector):
             target_price=_float_or_none(row.get("target_price")),
             target_multiple_type=_text_or_none(row.get("target_multiple_type")),
             target_multiple=_float_or_none(row.get("target_multiple")),
+            parsed_fields=_parsed_fields_with_unknowns(row, known),
         )
 
     @staticmethod
     def _consensus_revision(row: Mapping[str, Any]) -> ConsensusRevision:
+        known = {
+            "symbol",
+            "date",
+            "fiscal_year",
+            "as_of_date",
+            "source",
+            "eps_revision_1w",
+            "eps_revision_1m",
+            "eps_revision_3m",
+            "op_revision_1w",
+            "op_revision_1m",
+            "op_revision_3m",
+            "fcf_revision_1m",
+            "target_price_revision_1m",
+            "analyst_count_change",
+            "street_high_eps_revision_1m",
+            "street_low_eps_revision_1m",
+            "parsed_fields",
+        }
         return ConsensusRevision(
             symbol=str(row["symbol"]),
             date=_date_value(row["date"]),
@@ -542,6 +583,8 @@ class CSVJSONDataConnector(MockDataConnector):
             analyst_count_change=_int_or_none(row.get("analyst_count_change")),
             street_high_eps_revision_1m=_float_or_none(row.get("street_high_eps_revision_1m")),
             street_low_eps_revision_1m=_float_or_none(row.get("street_low_eps_revision_1m")),
+            source=str(row.get("source") or "file"),
+            parsed_fields=_parsed_fields_with_unknowns(row, known),
         )
 
     @staticmethod

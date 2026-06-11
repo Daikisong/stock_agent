@@ -121,6 +121,8 @@ def source_name_for_request(request: SourceRequest) -> str:
         return "data_go_kr"
     if "KRX" in credential or "krx.co.kr" in url:
         return "krx"
+    if "COMPANY_GUIDE" in credential or "comp.wisereport.co.kr" in url:
+        return "company_guide"
     return "unknown"
 
 

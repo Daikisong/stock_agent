@@ -1,3 +1,4 @@
+import time
 import unittest
 from unittest.mock import patch
 
@@ -50,6 +51,17 @@ class RateLimitTests(unittest.TestCase):
         limit = SourceRateLimit("naver_search")
 
         self.assertEqual(limit.max_concurrency, 1)
+
+    def test_http_client_hard_timeout_returns_failure(self):
+        def slow_urlopen(*args, **kwargs):
+            time.sleep(1.0)
+            return _FakeResponse("{}")
+
+        with patch("urllib.request.urlopen", side_effect=slow_urlopen):
+            result = HttpClient(timeout_seconds=0.05, retries=0).get_text(_opendart_request())
+
+        self.assertFalse(result.ok)
+        self.assertTrue(result.error.startswith("TimeoutError:http_hard_timeout"))
 
 
 def _opendart_request():

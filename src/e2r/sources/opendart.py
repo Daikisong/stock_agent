@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Mapping, Sequence
 
 from e2r.models import DisclosureEvent, Evidence, FinancialActual, Market, SourceTier
 from e2r.sources.source_errors import (
@@ -125,6 +125,36 @@ class OpenDARTConnector:
         return SourceRequest(
             method="GET",
             url=f"{self.base_url}/document.xml",
+            params=params,
+            fixture_mode=self.fixture_mode,
+            credential_name="OPENDART_API_KEY",
+        )
+
+    def build_single_account_request(
+        self,
+        corp_code: str,
+        fiscal_year: int,
+        as_of_date: date,
+        *,
+        report_code: str = "11011",
+        full_accounts: bool = False,
+        fs_div: str = "CFS",
+    ) -> SourceRequest:
+        params: dict[str, Any] = {
+            "corp_code": corp_code,
+            "bsns_year": str(fiscal_year),
+            "reprt_code": report_code,
+            "as_of_date": as_of_date.isoformat(),
+        }
+        endpoint = "fnlttSinglAcnt.json"
+        if full_accounts:
+            endpoint = "fnlttSinglAcntAll.json"
+            params["fs_div"] = fs_div
+        if self.api_key:
+            params["crtfc_key"] = self.api_key
+        return SourceRequest(
+            method="GET",
+            url=f"{self.base_url}/{endpoint}",
             params=params,
             fixture_mode=self.fixture_mode,
             credential_name="OPENDART_API_KEY",
@@ -248,6 +278,54 @@ class OpenDARTConnector:
             confidence=float(event.parsed_fields.get("parser_confidence", 0.5)),
         )
 
+    @staticmethod
+    def normalize_single_account_actuals(
+        payload: Mapping[str, Any],
+        *,
+        symbol: str,
+        fiscal_year: int,
+        as_of_date: date,
+        reported_at: date,
+        fiscal_quarter: int | None = None,
+        period_end: date | None = None,
+    ) -> tuple[FinancialActual, ...]:
+        rows = payload.get("list") or payload.get("items") or payload.get("data") or ()
+        if not isinstance(rows, (list, tuple)):
+            return ()
+        selected = _single_account_values(rows)
+        if not selected:
+            return ()
+        operating_profit = selected.get("operating_profit")
+        net_income = selected.get("net_income")
+        sales = selected.get("sales")
+        cfo = selected.get("cashflow_from_operations")
+        capex = selected.get("capex")
+        fcf = selected.get("fcf")
+        if fcf is None and cfo is not None and capex is not None:
+            fcf = cfo - abs(capex)
+        opm = operating_profit / sales * 100.0 if sales is not None and sales > 0 and operating_profit is not None else None
+        return (
+            FinancialActual(
+                symbol=symbol,
+                fiscal_year=fiscal_year,
+                fiscal_quarter=fiscal_quarter,
+                period_end=period_end or date(fiscal_year, 12, 31),
+                reported_at=datetime_value(reported_at),
+                as_of_date=as_of_date,
+                source="OpenDART single account",
+                sales=sales,
+                operating_profit=operating_profit,
+                net_income=net_income,
+                eps=selected.get("eps"),
+                bps=selected.get("bps"),
+                equity=selected.get("equity"),
+                opm=opm,
+                cashflow_from_operations=cfo,
+                capex=capex,
+                fcf=fcf,
+            ),
+        )
+
 
 def parse_disclosure_text(raw_text: str, *, title: str = "") -> dict[str, Any]:
     """Extract explicit disclosure fields without fabricating missing values."""
@@ -290,6 +368,13 @@ def parse_disclosure_text(raw_text: str, *, title: str = "") -> dict[str, Any]:
         parsed["is_cancellable"] = False
     if "선수금" in text or "선급금" in text or "prepayment" in text.lower():
         parsed["prepayment_exists"] = True
+    lowered = text.lower()
+    if any(token in text for token in ("최소 매출 보장", "최소매출 보장", "최소 물량 보장", "최소 구매 보장")) or any(
+        token in lowered for token in ("minimum revenue guarantee", "minimum sales guarantee", "minimum purchase commitment")
+    ):
+        parsed["minimum_revenue_guarantee"] = True
+        parsed["minimum_sales_guarantee"] = True
+        parsed["revenue_visibility_contract"] = True
     if "RPO" in text or "remaining performance obligation" in text.lower():
         parsed["rpo_mentioned"] = True
     if "수주잔고" in text or "backlog" in text.lower():
@@ -355,7 +440,7 @@ def parse_disclosure_text(raw_text: str, *, title: str = "") -> dict[str, Any]:
         parsed["memory_price_increase_mentioned"] = True
     if any(token in text for token in ("공급조절", "감산")) or "supply discipline" in text.lower():
         parsed["supply_discipline_mentioned"] = True
-    if any(token in text for token in ("장기계약", "장기 공급계약", "다년 계약")) or "multi-year" in text.lower():
+    if any(token in text for token in ("장기계약", "장기 공급계약", "장기공급계약", "다년 계약")) or any(token in lowered for token in ("multi-year", "lta", "long-term agreement")):
         parsed["multi_year_contract"] = True
     if any(token in text for token in ("정부 고객", "정부향", "폴란드", "방산")):
         parsed["government_customer"] = True
@@ -587,6 +672,96 @@ def _dilution_type(text: str) -> str | None:
     return None
 
 
+def _single_account_values(rows: Sequence[Mapping[str, Any]]) -> dict[str, float]:
+    values: dict[str, tuple[int, float]] = {}
+    capex_by_priority: dict[int, float] = {}
+    for row in rows:
+        if not isinstance(row, Mapping):
+            continue
+        key = _single_account_component(row)
+        if key is None:
+            continue
+        amount = _single_account_amount(row)
+        if amount is None:
+            continue
+        priority = _single_account_priority(row)
+        if key == "capex":
+            capex_by_priority[priority] = capex_by_priority.get(priority, 0.0) + abs(amount)
+            continue
+        existing = values.get(key)
+        if existing is None or priority > existing[0]:
+            values[key] = (priority, amount)
+    result = {key: amount for key, (_, amount) in values.items()}
+    if capex_by_priority:
+        best_priority = max(capex_by_priority)
+        result["capex"] = capex_by_priority[best_priority]
+    return result
+
+
+def _single_account_component(row: Mapping[str, Any]) -> str | None:
+    account_name = str(row.get("account_nm") or row.get("account_name") or "").replace(" ", "")
+    statement = str(row.get("sj_div") or row.get("statement") or "")
+    if account_name in {"매출액", "수익(매출액)", "영업수익"}:
+        return "sales"
+    if account_name.startswith("영업이익"):
+        return "operating_profit"
+    if account_name in {"당기순이익", "당기순이익(손실)", "연결당기순이익", "분기순이익", "반기순이익"}:
+        return "net_income"
+    if "기본주당" in account_name and "이익" in account_name:
+        return "eps"
+    if account_name in {"주당순자산", "BPS"}:
+        return "bps"
+    if statement == "BS" and account_name in {"자본총계", "자본"}:
+        return "equity"
+    if statement == "CF" and account_name in {
+        "영업활동현금흐름",
+        "영업활동으로인한현금흐름",
+        "영업활동으로부터의현금흐름",
+        "영업활동순현금흐름",
+        "영업활동으로인한순현금흐름",
+    }:
+        return "cashflow_from_operations"
+    if "잉여현금흐름" in account_name or account_name.upper() == "FREECASHFLOW":
+        return "fcf"
+    if statement == "CF" and "취득" in account_name and any(token in account_name for token in ("유형자산", "무형자산")):
+        return "capex"
+    return None
+
+
+def _single_account_priority(row: Mapping[str, Any]) -> int:
+    priority = 0
+    fs_div = str(row.get("fs_div") or "")
+    fs_name = str(row.get("fs_nm") or "")
+    if fs_div == "CFS" or "연결" in fs_name:
+        priority += 10
+    if str(row.get("sj_div") or "") in {"IS", "CIS", "BS", "CF"}:
+        priority += 1
+    return priority
+
+
+def _single_account_amount(row: Mapping[str, Any]) -> float | None:
+    for key in ("thstrm_amount", "amount", "current_amount"):
+        value = row.get(key)
+        parsed = _amount_float(value)
+        if parsed is not None:
+            return parsed
+    return None
+
+
+def _amount_float(value: Any) -> float | None:
+    text = str(value or "").strip().replace(",", "")
+    if not text or text in {"-", "nan", "NaN"}:
+        return None
+    negative = text.startswith("(") and text.endswith(")")
+    if negative:
+        text = text[1:-1]
+    try:
+        parsed = float(text)
+    except ValueError:
+        return None
+    return -parsed if negative else parsed
+
+
 def _financial_actual(row: Mapping[str, Any]) -> FinancialActual:
     return FinancialActual(
         symbol=str(row["symbol"]),
@@ -601,6 +776,7 @@ def _financial_actual(row: Mapping[str, Any]) -> FinancialActual:
         net_income=float_or_none(row.get("net_income")),
         eps=float_or_none(row.get("eps")),
         bps=float_or_none(row.get("bps")),
+        equity=float_or_none(row.get("equity") or row.get("total_equity")),
         roe=float_or_none(row.get("roe")),
         opm=float_or_none(row.get("opm")),
         debt_ratio=float_or_none(row.get("debt_ratio")),

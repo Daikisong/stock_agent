@@ -158,6 +158,7 @@ class Instrument:
     exchange: str
     sector_exchange: str | None = None
     sector_custom: str | None = None
+    corp_code: str | None = None
     listed_date: date | None = None
     currency: str = "KRW"
     is_preferred: bool = False
@@ -228,6 +229,7 @@ class FinancialActual:
     net_income: float | None = None
     eps: float | None = None
     bps: float | None = None
+    equity: float | None = None
     roe: float | None = None
     opm: float | None = None
     debt_ratio: float | None = None
@@ -247,7 +249,7 @@ class FinancialActual:
             raise ValueError("fiscal_quarter must be 1, 2, 3, 4, or None")
         if self.reported_at.date() > self.as_of_date:
             raise ValueError("reported_at cannot be after as_of_date")
-        for field_name in ("sales", "bps", "receivables", "inventory"):
+        for field_name in ("sales", "bps", "equity", "receivables", "inventory"):
             _require_non_negative(getattr(self, field_name), field_name)
 
 
@@ -273,6 +275,7 @@ class ConsensusSnapshot:
     target_price: float | None = None
     target_multiple_type: str | None = None
     target_multiple: float | None = None
+    parsed_fields: Mapping[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         _require_text(self.symbol, "symbol")
@@ -284,6 +287,7 @@ class ConsensusSnapshot:
         for field_name in ("sales_e", "fcf_e", "bps_e", "per_e", "pbr_e", "target_price", "target_multiple"):
             _require_non_negative(getattr(self, field_name), field_name)
         _require_non_negative(self.analyst_count, "analyst_count")
+        object.__setattr__(self, "parsed_fields", _copy_mapping(self.parsed_fields))
 
 
 @dataclass(frozen=True)
@@ -305,13 +309,17 @@ class ConsensusRevision:
     analyst_count_change: int | None = None
     street_high_eps_revision_1m: float | None = None
     street_low_eps_revision_1m: float | None = None
+    source: str = "unknown"
+    parsed_fields: Mapping[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         _require_text(self.symbol, "symbol")
+        _require_text(self.source, "source")
         _require_date(self.date, "date")
         _require_date(self.as_of_date, "as_of_date")
         if self.date > self.as_of_date:
             raise ValueError("revision date cannot be after as_of_date")
+        object.__setattr__(self, "parsed_fields", _copy_mapping(self.parsed_fields))
 
 
 @dataclass(frozen=True)
