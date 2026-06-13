@@ -17,12 +17,16 @@ class ResearchLayer(str, Enum):
 
 @dataclass(frozen=True)
 class SearchBudget:
-    """Daily query and symbol caps for free search mode."""
+    """Search accounting for free search mode.
 
-    max_total_queries_per_day: int = 25_000
-    max_queries_per_symbol: int = 40
-    max_deep_research_symbols: int = 50
-    max_active_monitoring_symbols: int = 100
+    ``None`` means the layer is not stopped by accounting caps. Tests may still
+    pass explicit small numbers to exercise skip handling.
+    """
+
+    max_total_queries_per_day: int | None = None
+    max_queries_per_symbol: int | None = None
+    max_deep_research_symbols: int | None = None
+    max_active_monitoring_symbols: int | None = None
     sleep_seconds_between_queries: float = 0.0
     stop_on_captcha_or_block: bool = True
 
@@ -33,7 +37,8 @@ class SearchBudget:
             "max_deep_research_symbols",
             "max_active_monitoring_symbols",
         ):
-            if getattr(self, field_name) < 0:
+            value = getattr(self, field_name)
+            if value is not None and value < 0:
                 raise ValueError(f"{field_name} must be non-negative")
         if self.sleep_seconds_between_queries < 0:
             raise ValueError("sleep_seconds_between_queries must be non-negative")
@@ -62,19 +67,21 @@ class SearchBudgetTracker:
         layer_value = ResearchLayer(layer)
         if self.stopped_reason:
             return SearchBudgetDecision(False, self.stopped_reason)
-        if self.total_queries_used >= self.budget.max_total_queries_per_day:
+        if self.budget.max_total_queries_per_day is not None and self.total_queries_used >= self.budget.max_total_queries_per_day:
             return SearchBudgetDecision(False, "daily_query_budget_exhausted")
-        if self.queries_by_symbol.get(symbol, 0) >= self.budget.max_queries_per_symbol:
+        if self.budget.max_queries_per_symbol is not None and self.queries_by_symbol.get(symbol, 0) >= self.budget.max_queries_per_symbol:
             return SearchBudgetDecision(False, "symbol_query_budget_exhausted")
         if (
             layer_value == ResearchLayer.DEEP_RESEARCH
             and symbol not in self.deep_research_symbols
+            and self.budget.max_deep_research_symbols is not None
             and len(self.deep_research_symbols) >= self.budget.max_deep_research_symbols
         ):
             return SearchBudgetDecision(False, "deep_research_symbol_budget_exhausted")
         if (
             layer_value == ResearchLayer.ACTIVE_MONITORING
             and symbol not in self.active_monitoring_symbols
+            and self.budget.max_active_monitoring_symbols is not None
             and len(self.active_monitoring_symbols) >= self.budget.max_active_monitoring_symbols
         ):
             return SearchBudgetDecision(False, "active_monitoring_symbol_budget_exhausted")

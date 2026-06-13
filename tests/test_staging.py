@@ -69,6 +69,75 @@ class StageClassifierTests(unittest.TestCase):
 
         self.assertEqual(snapshot.stage, Stage.STAGE_1)
 
+    def test_invalid_score_cannot_be_promoted_by_company_event(self):
+        snapshot = StageClassifier().classify(
+            StageClassificationInput(
+                score=make_score(
+                    diagnostic_scores={
+                        "score_valid": 0.0,
+                        "score_blocked_by_theme_route": 100.0,
+                    },
+                    eps_fcf_explosion=20,
+                    earnings_visibility=20,
+                    bottleneck_pricing=20,
+                    market_mispricing=15,
+                    valuation_rerating=15,
+                    capital_allocation=5,
+                    information_confidence=5,
+                ),
+                company_event_score=80.0,
+                high_quality_company_event=True,
+            )
+        )
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_0)
+        self.assertEqual(snapshot.grade, "Watch")
+        self.assertIn("score was marked invalid", snapshot.stage_reason[0])
+
+    def test_block_flag_without_score_valid_still_cannot_be_promoted(self):
+        snapshot = StageClassifier().classify(
+            StageClassificationInput(
+                score=make_score(
+                    diagnostic_scores={
+                        "score_blocked_by_score_gap": 100.0,
+                        "raw_score_total_before_score_gap_block": 83.0,
+                    },
+                    eps_fcf_explosion=20,
+                    earnings_visibility=20,
+                    bottleneck_pricing=20,
+                    market_mispricing=15,
+                    valuation_rerating=15,
+                    capital_allocation=5,
+                    information_confidence=5,
+                ),
+                company_event_score=90.0,
+                high_quality_company_event=True,
+            )
+        )
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_0)
+        self.assertEqual(snapshot.grade, "Watch")
+        self.assertIn("score was marked invalid", snapshot.stage_reason[0])
+
+    def test_archive_stage_uses_archive_grade_not_raw_score_grade(self):
+        snapshot = StageClassifier().classify(
+            StageClassificationInput(
+                score=make_score(
+                    eps_fcf_explosion=20,
+                    earnings_visibility=20,
+                    bottleneck_pricing=20,
+                    market_mispricing=15,
+                    valuation_rerating=15,
+                    capital_allocation=5,
+                    information_confidence=5,
+                ),
+                archive_requested=True,
+            )
+        )
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_5)
+        self.assertEqual(snapshot.grade, "Archive")
+
     def test_stage_2_candidate_threshold(self):
         snapshot = StageClassifier().classify(StageClassificationInput(score=make_score()))
 

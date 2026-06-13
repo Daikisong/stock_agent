@@ -26,6 +26,7 @@ from e2r.models import (
 from e2r.red_team import RedTeamAssessment, RedTeamEngine
 from e2r.research.asof_web_research import AsOfWebResearchResult
 from e2r.research.report_consensus_proxy import build_report_consensus_proxy
+from e2r.score_validity import is_score_valid, score_block_reason
 from e2r.sources.opendart import OpenDARTConnector
 from e2r.staging import StageClassificationInput, StageClassifier
 
@@ -157,6 +158,18 @@ def score_asof_evidence_bundle(
     feature_result = DeterministicFeatureEngineer().engineer(feature_input)
     score = feature_result.score()
     red_team = RedTeamEngine().assess(feature_result.red_team_signals)
+    if _web_score_invalid(web_result):
+        score = _invalidate_merged_score_for_web_block(score, web_result)
+        stage = _blocked_stage_for_invalid_web_score(score, web_result, previous_stage)
+        return AsOfEvidenceBundleScore(
+            bundle=bundle,
+            feature_input=feature_input,
+            feature_result=feature_result,
+            score=score,
+            red_team=red_team,
+            stage=stage,
+            audit_findings=(),
+        )
     stage = StageClassifier().classify(
         StageClassificationInput(
             score=score,
@@ -186,6 +199,88 @@ def score_asof_evidence_bundle(
         stage=stage,
         audit_findings=audit_findings,
     )
+
+
+def _web_score_invalid(web_result: AsOfWebResearchResult | None) -> bool:
+    if web_result is None or web_result.pipeline_result is None:
+        return False
+    return not is_score_valid(web_result.pipeline_result.score)
+
+
+def _invalidate_merged_score_for_web_block(
+    score: ScoreSnapshot,
+    web_result: AsOfWebResearchResult | None,
+) -> ScoreSnapshot:
+    upstream_score = web_result.pipeline_result.score if web_result is not None and web_result.pipeline_result is not None else None
+    upstream_reason = score_block_reason(upstream_score) or "score_invalid"
+    diagnostics = dict(score.diagnostic_scores)
+    diagnostics.update(
+        {
+            "raw_eps_fcf_before_asof_web_block": score.eps_fcf_explosion_score,
+            "raw_earnings_visibility_before_asof_web_block": score.earnings_visibility_score,
+            "raw_bottleneck_pricing_before_asof_web_block": score.bottleneck_pricing_score,
+            "raw_market_mispricing_before_asof_web_block": score.market_mispricing_score,
+            "raw_valuation_rerating_before_asof_web_block": score.valuation_rerating_score,
+            "raw_capital_allocation_before_asof_web_block": score.capital_allocation_score,
+            "raw_information_confidence_before_asof_web_block": score.information_confidence_score,
+            "raw_score_total_before_asof_web_block": score.total_score,
+            "raw_risk_penalty_before_asof_web_block": min(100.0, score.risk_penalty),
+            "score_valid": 0.0,
+            "score_blocked_by_asof_web": 100.0,
+            "asof_web_score_required_for_merged_scoring": 100.0,
+        }
+    )
+    if upstream_score is not None:
+        diagnostics["upstream_invalid_score_total_capped"] = min(100.0, upstream_score.total_score)
+    diagnostics["asof_web_block_reason_code"] = _asof_web_block_reason_code(upstream_reason)
+    return replace(
+        score,
+        eps_fcf_explosion_score=0.0,
+        earnings_visibility_score=0.0,
+        bottleneck_pricing_score=0.0,
+        market_mispricing_score=0.0,
+        valuation_rerating_score=0.0,
+        capital_allocation_score=0.0,
+        information_confidence_score=0.0,
+        risk_penalty=0.0,
+        total_score=0.0,
+        diagnostic_scores=diagnostics,
+        scoring_version=f"{score.scoring_version}:asof-web-block",
+    )
+
+
+def _blocked_stage_for_invalid_web_score(
+    score: ScoreSnapshot,
+    web_result: AsOfWebResearchResult | None,
+    previous_stage: Stage | None,
+) -> StageSnapshot:
+    upstream_score = web_result.pipeline_result.score if web_result is not None and web_result.pipeline_result is not None else None
+    reason = score_block_reason(upstream_score) or "score_invalid"
+    evidence_ids = score.evidence_ids
+    if web_result is not None and web_result.pipeline_result is not None:
+        evidence_ids = tuple(dict.fromkeys(evidence_ids + web_result.pipeline_result.stage.evidence_ids))
+    return StageSnapshot(
+        symbol=score.symbol,
+        as_of_date=score.as_of_date,
+        stage=Stage.STAGE_0,
+        previous_stage=previous_stage,
+        stage_changed=previous_stage is not None and previous_stage != Stage.STAGE_0,
+        grade="Watch",
+        stage_reason=(f"as-of merged scoring blocked because web score is invalid: {reason}",),
+        red_team_status="Watch",
+        evidence_ids=evidence_ids,
+        classifier_version=f"{StageClassifier.version}:asof-web-block",
+    )
+
+
+def _asof_web_block_reason_code(reason: str) -> float:
+    codes = {
+        "theme_route_unresolved": 20.0,
+        "score_gap_unresolved": 40.0,
+        "asof_web_score_unresolved": 60.0,
+        "score_invalid": 80.0,
+    }
+    return codes.get(reason, 90.0)
 
 
 def _downgrade_green_if_date_unverified(

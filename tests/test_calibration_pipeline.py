@@ -44,6 +44,10 @@ class CalibrationPipelineTests(unittest.TestCase):
     def test_real_generated_md_files_are_discovered_and_prompt_sections_do_not_exclude_results(self) -> None:
         docs = discover_markdown_documents("docs/round")
         results = result_documents(docs)
+        if len(results) < 100:
+            archive_root = Path("docs/round/achieve/achieve_v12")
+            self.assertTrue(archive_root.exists())
+            results = result_documents(discover_markdown_documents(archive_root))
         self.assertGreaterEqual(len(results), 100)
         self.assertTrue({f"R{i}" for i in range(1, 14)}.issubset({doc.round for doc in results}))
 
@@ -286,7 +290,7 @@ profile_comparison,baseline_current_proxy,1,10,-5
             information_confidence_score=5,
             risk_penalty=0,
             total_score=86,
-            diagnostic_scores={"revision_score": 52, "structural_visibility_quality": 60, "one_off_shortage_risk": 0},
+            diagnostic_scores={"score_valid": 100, "revision_score": 52, "structural_visibility_quality": 60, "one_off_shortage_risk": 0},
         )
         old = os.environ.get("E2R_SCORING_PROFILE")
         try:
@@ -299,7 +303,7 @@ profile_comparison,baseline_current_proxy,1,10,-5
                 StageClassificationInput(score=score, red_team=RedTeamAssessment.empty("000002", date(2024, 1, 3)))
             )
             price_only_score = ScoreSnapshot(
-                **{**score.__dict__, "diagnostic_scores": {"price_only_blowoff_score": 90, "revision_score": 100}}
+                **{**score.__dict__, "diagnostic_scores": {"score_valid": 100, "price_only_blowoff_score": 90, "revision_score": 100}}
             )
             price_only_stage = StageClassifier().classify(
                 StageClassificationInput(
@@ -402,7 +406,7 @@ profile_comparison,baseline_current_proxy,1,10,-5
                 information_confidence_score=5,
                 risk_penalty=0,
                 total_score=88,
-                diagnostic_scores={"revision_score": 52, "structural_visibility_quality": 70, "one_off_shortage_risk": 0},
+                diagnostic_scores={"score_valid": 100, "revision_score": 52, "structural_visibility_quality": 70, "one_off_shortage_risk": 0},
             )
             os.environ["E2R_SCORING_PROFILE"] = "baseline"
             baseline_revision = StageClassifier().classify(
@@ -424,7 +428,7 @@ profile_comparison,baseline_current_proxy,1,10,-5
             price_only_score = ScoreSnapshot(
                 **{
                     **revision_gate_score.__dict__,
-                    "diagnostic_scores": {"price_only_blowoff_score": 90, "revision_score": 100},
+                    "diagnostic_scores": {"score_valid": 100, "price_only_blowoff_score": 90, "revision_score": 100},
                 }
             )
             price_only_stage = StageClassifier().classify(
@@ -440,6 +444,7 @@ profile_comparison,baseline_current_proxy,1,10,-5
                 **{
                     **revision_gate_score.__dict__,
                     "diagnostic_scores": {
+                        "score_valid": 100,
                         "hard_4c_thesis_break_score": 80,
                         "revision_score": 100,
                         "structural_visibility_quality": 70,

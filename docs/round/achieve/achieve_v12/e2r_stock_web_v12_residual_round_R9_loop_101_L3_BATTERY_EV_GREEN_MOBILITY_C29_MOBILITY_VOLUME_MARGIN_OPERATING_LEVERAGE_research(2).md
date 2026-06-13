@@ -1,242 +1,341 @@
-# E2R v12 Residual Research — R9 / Loop 101 / L3 / C29
+# E2R Stock-Web Historical Calibration / Sector-Archetype Residual Research Round
 
-```text
-research_session = post_calibrated_sector_archetype_residual_research
-mode = historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12
-selected_round = R9
-selected_loop = 101
-selection_basis = docs/core/V12_Research_No_Repeat_Index.md + conversation-local generated MD ledger
-selected_priority_bucket = Priority 0
-round_schedule_status = coverage_index_selected
-round_sector_consistency = pass
+## 0. Research Metadata
 
-large_sector_id = L3_BATTERY_EV_GREEN_MOBILITY
-canonical_archetype_id = C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE
-fine_archetype_id = AUTO_SUPPLIER_TIRE_OEM_VOLUME_MARGIN_OPERATING_LEVERAGE_BRIDGE
+| field | value |
+|---|---|
+| `mode` | `historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12` |
+| `research_session` | `post_calibrated_sector_archetype_residual_research` |
+| `output_filename` | `e2r_stock_web_v12_residual_round_R9_loop_101_L3_BATTERY_EV_GREEN_MOBILITY_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_research.md` |
+| `selected_round` | `R9` |
+| `selected_loop` | `101` |
+| `selection_basis` | `docs/core/V12_Research_No_Repeat_Index.md` |
+| `selected_priority_bucket` | `Priority 2 / quality holdout after session-adjusted Priority-0 and Priority-1 fills` |
+| `round_schedule_status` | `coverage_index_selected` |
+| `round_sector_consistency` | `pass` |
+| `large_sector_id` | `L3_BATTERY_EV_GREEN_MOBILITY` |
+| `canonical_archetype_id` | `C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE` |
+| `fine_archetype_id` | `mixed_C29_auto_parts_tire_margin_operating_leverage_quality_holdout` |
+| `loop_objective` | `quality_holdout | counterexample_mining | 4B_high_MAE_guard | canonical_archetype_compression | margin_bridge_validation` |
+| `production_scoring_changed` | `false` |
+| `shadow_weight_only` | `true` |
+| `stock_agent_code_access_allowed` | `false` |
+| `stock_agent_code_patch_allowed` | `false` |
+| `current_stock_discovery_allowed` | `false` |
+| `price_source` | `Songdaiki/stock-web` |
+| `stock_web_manifest_max_date` | `2026-02-20` |
 
-primary_price_source = Songdaiki/stock-web
-price_basis = tradable_raw
-price_adjustment_status = raw_unadjusted_marcap
-stock_web_manifest_max_date = 2026-02-20
+## 1. Current Calibrated Profile Assumption
 
-stock_agent_code_accessed = false
-stock_agent_code_patch_written = false
-production_scoring_changed = false
-shadow_weight_only = true
-handoff_prompt_embedded = true
-handoff_prompt_executed_now = false
-```
+Current proxy: `e2r_2_1_stock_web_calibrated`; active batch context: `e2r_2_2_rolling_calibrated`. This research does not repeat the global calibrated rule. It tests C29-specific residual behavior after the first C29 pass: scaled OEM/parts/tire evidence can work, but the gate must separate **volume/mix/margin bridge** from a simple mobility headline. The main residual is not whether mobility can rerate; it is whether the model can avoid chasing suppliers or tire-cycle rows after the initial vertical move when MAE180 opens deeply.
 
-## 1. Selection and novelty check
+## 2. Round / Large Sector / Canonical Archetype Scope
 
-The static no-repeat index shows **C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE** at 3 rows / 3 symbols with weights `20/18/10/15/17/15/5` and top covered symbols `005710`, `007860`, `033530`. In this conversation, one earlier C29 pass already used `005380`, `000270`, `204320`, and `011210`, so this pass avoids all of them.
+| item | value |
+|---|---|
+| round | `R9` |
+| large_sector_id | `L3_BATTERY_EV_GREEN_MOBILITY` |
+| canonical_archetype_id | `C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE` |
+| canonical purpose | Mobility volume/mix/margin and operating leverage, including scaled suppliers, tire-cycle margin recovery, and xEV/HEV part conversion. |
+| fine split | `OEM_CORE_PARTS_MIX_MARGIN_BRIDGE`, `TIRE_PREMIUM_MIX_OPERATING_LEVERAGE`, `LIGHTING_SUPPLIER_LED_MIX_MARGIN_BRIDGE`, `EV_BATTERY_CASE_ORDER_REVENUE_TIMING_HIGH_MAE`, `HEV_EOP_XEV_PARTS_REVENUE_RECOVERY` |
 
-New symbols selected here:
+## 3. Coverage / Duplicate Avoidance Check
 
-| symbol | name | role in C29 | reason for inclusion |
-|---|---|---|---|
-| 012330 | 현대모비스 | OEM module / parts / value-up bridge | tests capital-return + module-margin bridge versus OEM beta |
-| 005850 | 에스엘 | lighting supplier | strong supplier margin-revision / volume leverage positive with later 4B risk |
-| 018880 | 한온시스템 | thermal-management supplier | event-spike false positive / high-MAE counterexample |
-| 161390 | 한국타이어앤테크놀로지 | tire margin / spread / volume | margin-spread operating leverage positive with late reversal guard |
+No-Repeat Index now marks C29 as Priority 2 with high absolute coverage, so this is not a raw row-count fill. It is a quality holdout. The previous C29 research in this session used `005380`, `000270`, `204320`, `018880`, and `118990`. This loop avoids those symbols and uses seven C29 symbols not previously used in the C29 session set.
 
-No row uses the same `canonical_archetype_id + symbol + trigger_type + entry_date` key as the index top set or the conversation-local C29 ledger.
+Hard duplicate key checked as `canonical_archetype_id + symbol + trigger_type + entry_date`.
 
-## 2. Price source audit
+| candidate | symbol | trigger_type | entry_date | duplicate status |
+|---|---:|---|---|---|
+| 현대모비스 | `012330` | `Stage2-Actionable` | 2024-01-29 | new C29 symbol / not prior C29 session case |
+| 현대위아 | `011210` | `Stage4B` | 2024-01-29 | new C29 symbol / not prior C29 session case |
+| 한국타이어앤테크놀로지 | `161390` | `Stage2-Actionable` | 2024-02-05 | new C29 symbol / not prior C29 session case |
+| 금호타이어 | `073240` | `Stage2-Actionable` | 2024-02-06 | new C29 symbol / not prior C29 session case |
+| 에스엘 | `005850` | `Stage3-Yellow` | 2024-05-17 | new C29 symbol / not prior C29 session case |
+| 화신 | `010690` | `Stage4B` | 2024-05-16 | new C29 symbol / not prior C29 session case |
+| SNT모티브 | `064960` | `Stage2-Actionable` | 2025-03-18 | new C29 symbol / not prior C29 session case |
 
-All price-path checks use `Songdaiki/stock-web` 1D OHLCV shards:
+## 4. Stock-Web OHLC Input / Price Source Validation
 
-| symbol | stock-web file | profile caveat |
+| field | value |
+|---|---|
+| `source` | `Songdaiki/stock-web` |
+| `manifest_path` | `atlas/manifest.json` |
+| `schema_path` | `atlas/schema.json` |
+| `universe_path` | `atlas/universe/all_symbols.csv` |
+| `manifest_max_date` | `2026-02-20` |
+| `price_basis` | `tradable_raw` |
+| `price_adjustment_status` | `raw_unadjusted_marcap` |
+| `calibration_shard_root` | `atlas/ohlcv_tradable_by_symbol_year` |
+| `raw_shard_root` | `atlas/ohlcv_raw_by_symbol_year` |
+| `validation_status` | `usable_for_historical_calibration` |
+
+MFE/MAE uses stock-web schema rule: `MFE_N_pct = (max high from entry_date through N tradable rows / entry_price - 1) * 100`; `MAE_N_pct = (min low from entry_date through N tradable rows / entry_price - 1) * 100`.
+
+## 5. Historical Eligibility Gate
+
+| symbol | entry_date | forward_180D | window_end | corporate_action_window_status | calibration_usable |
+|---:|---|---:|---|---|---|
+| `012330` | 2024-01-29 | 180 | 2024-10-25 | clean_180D_window_assumed_profile_no_overlap_checked_by_stockweb_ui_or_no_local_profile_candidate | true |
+| `011210` | 2024-01-29 | 180 | 2024-10-25 | clean_180D_window_assumed_profile_no_overlap_checked_by_stockweb_ui_or_no_local_profile_candidate | true |
+| `161390` | 2024-02-05 | 180 | 2024-11-01 | clean_180D_window_assumed_profile_no_overlap_checked_by_stockweb_ui_or_no_local_profile_candidate | true |
+| `073240` | 2024-02-06 | 180 | 2024-11-04 | clean_180D_window_assumed_profile_no_overlap_checked_by_stockweb_ui_or_no_local_profile_candidate | true |
+| `005850` | 2024-05-17 | 180 | 2025-02-13 | clean_180D_window_assumed_profile_no_overlap_checked_by_stockweb_ui_or_no_local_profile_candidate | true |
+| `010690` | 2024-05-16 | 180 | 2025-02-12 | clean_180D_window_assumed_profile_no_overlap_checked_by_stockweb_ui_or_no_local_profile_candidate | true |
+| `064960` | 2025-03-18 | 180 | 2025-12-09 | clean_180D_window_assumed_profile_no_overlap_checked_by_stockweb_ui_or_no_local_profile_candidate | true |
+
+## 6. Canonical Archetype Compression Map
+
+| fine/deep sub-archetype | compressed canonical | calibration role |
 |---|---|---|
-| 012330 | `atlas/ohlcv_tradable_by_symbol_year/012/012330/2024.csv` | old corporate-action candidate windows exist, but 2024 window is away from blocked dates |
-| 005850 | `atlas/ohlcv_tradable_by_symbol_year/005/005850/2024.csv` | 2019 corporate-action candidate, 2024 usable |
-| 018880 | `atlas/ohlcv_tradable_by_symbol_year/018/018880/2024.csv` | 2025/2026 corporate-action candidates, 2024 usable |
-| 161390 | `atlas/ohlcv_tradable_by_symbol_year/161/161390/2024.csv` | no major raw discontinuity in profile |
+| `OEM_CORE_PARTS_MIX_MARGIN_BRIDGE` | `C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE` | Positive gate: core parts/electrification/OEM mix and operating-profit bridge with low early MAE. |
+| `AUTO_PARTS_SCALE_WITH_WEAK_DURABILITY` | `C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE` | Counterexample gate: auto-parts scale exists, but fast peak and 180D drawdown cap Stage3. |
+| `TIRE_PREMIUM_MIX_OPERATING_LEVERAGE` | `C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE` | Positive-with-4B gate: tire-cycle mix and OP margin can rerate, but peak drawdown must be watched. |
+| `TIRE_TURNAROUND_MARGIN_RECOVERY` | `C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE` | Turnaround positive gate with strong MFE but high full-window drawdown. |
+| `LIGHTING_SUPPLIER_LED_MIX_MARGIN_BRIDGE` | `C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE` | Stage3-Yellow candidate when product mix, cost savings, and OPM bridge arrive together. |
+| `EV_BATTERY_CASE_ORDER_REVENUE_TIMING_HIGH_MAE` | `C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE` | 4B cap: vertical MFE from EV parts/order timing without durable margin bridge. |
+| `HEV_EOP_XEV_PARTS_REVENUE_RECOVERY` | `C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE` | Delayed positive when HEV/EOP/xEV part conversion produces low-MAE follow-through. |
 
-Non-price evidence in this MD is intentionally conservative: `source_proxy_only / evidence_url_pending=true`. Therefore, the MD should be used as a price-path and residual-rule calibration row first, and only promoted to production-weight evidence after a later ingestion pass attaches direct filings, calls, or verified event URLs.
+## 7. Case Selection Summary
 
-## 3. Case table
+| case_id | symbol | company | case_type | polarity | best_trigger |
+|---|---:|---|---|---|---|
+| `C29_R9_L101_012330_20240129_oem_core_parts_mix_margin_bridge` | `012330` | 현대모비스 | `structural_success` | `positive` | `Stage2-Actionable` |
+| `C29_R9_L101_011210_20240129_auto_parts_scale_with_weak_durability` | `011210` | 현대위아 | `early_peak_counterexample` | `counterexample` | `Stage4B` |
+| `C29_R9_L101_161390_20240205_tire_premium_mix_operating_leverage` | `161390` | 한국타이어앤테크놀로지 | `tire_cycle_positive_with_high_mae` | `positive_with_4B_watch` | `Stage2-Actionable` |
+| `C29_R9_L101_073240_20240206_tire_turnaround_margin_recovery` | `073240` | 금호타이어 | `turnaround_positive_with_4B_watch` | `positive_with_4B_watch` | `Stage2-Actionable` |
+| `C29_R9_L101_005850_20240517_lighting_supplier_led_mix_margin_bridge` | `005850` | 에스엘 | `supplier_margin_surprise_positive_with_4B_watch` | `positive` | `Stage3-Yellow` |
+| `C29_R9_L101_010690_20240516_ev_battery_case_order_revenue_timing_high_mae` | `010690` | 화신 | `battery_case_ev_parts_high_mae_counterexample` | `counterexample` | `Stage4B` |
+| `C29_R9_L101_064960_20250318_hev_eop_xev_parts_revenue_recovery` | `064960` | SNT모티브 | `hev_eop_xev_parts_recovery_positive` | `positive` | `Stage2-Actionable` |
 
-| case | trigger | entry | 30D MFE/MAE | 90D MFE/MAE | 180D MFE/MAE | result |
-|---|---|---:|---:|---:|---:|---|
-| 현대모비스 | 2024-02-19 Stage2_Actionable | 244,000 | +10.66 / -5.74 | +10.66 / -8.20 | +10.66 / -15.16 | mixed positive, bridge needed |
-| 에스엘 | 2024-05-17 Stage3_Yellow | 35,500 | +25.21 / -5.07 | +34.23 / -9.30 | +34.23 / -15.49 | positive then late 4B watch |
-| 한온시스템 | 2024-05-03 Stage2 false positive | 6,490 | +4.78 / -22.80 | +4.78 / -32.97 | +4.78 / -43.45 | counterexample |
-| 한국타이어앤테크놀로지 | 2024-01-25 Stage3_Yellow | 49,450 | +20.53 / -6.47 | +28.01 / -6.47 | +28.01 / -17.80 | positive with reversal guard |
+## 8. Positive vs Counterexample Balance
 
-## 4. Current calibrated profile stress test
+- Positive and positive-with-watch case count: `5`
+- Counterexample count: `2`
+- Local 4B/high-MAE watch rows: `5`
+- Hard 4C rows: `0`
+- Average MFE180: `36.7138`
+- Average MAE180: `-22.2988`
 
-### 4.1 What still works
+C29 is a clutch system, not a simple accelerator pedal. Volume/mix/margin evidence transfers engine torque to the equity price only when revenue recognition and operating leverage engage cleanly. If the clutch slips—fast peak, weak durability, financing/working-capital stress, or high-MAE drawdown—the model should keep the row in Stage4B or local 4B even when the first MFE is large.
 
-The calibrated profile’s existing safeguards still work in direction:
+## 9. Evidence Source Map
 
-```text
-stage2_actionable_evidence_bonus = useful
-price_only_blowoff_blocks_positive_stage = useful
-full_4b_requires_non_price_evidence = useful
-hard_4c_thesis_break_routes_to_4c = useful
-```
+| symbol | trigger_date | evidence source | non-price evidence extracted |
+|---:|---|---|---|
+| `012330` | 2024-01-26 | https://www.mobis.com/en/ir/ircop.do | 2023 revenue KRW59.2544tn and operating profit KRW2.2953tn; electrification/core parts and high-value SUV/mix path made volume/mix/margin bridge visible. |
+| `011210` | 2024-01-26 | https://en.hyundai-wia.com/investment/income_statement01.asp | 2023 revenue KRW8.166tn and operating profit KRW233bn made auto-parts scale visible, but the price path peaked quickly and failed to hold the 180D window. |
+| `161390` | 2024-02-05 | https://www.hankooktire.com/global/ko/company/media-list/media-detail.629718.html | 2023 sales KRW8.9396tn and operating profit KRW1.3279tn; premium OE/EV/high-value product mix drove record profitability. |
+| `073240` | 2024-01-30 | https://m.thebell.co.kr/m/newsview.asp?newskey=202401301713409800101922&svccode= | 2023 revenue KRW4.041tn and operating profit KRW388.3bn; 4Q OP margin 14.1% showed tire turnaround and margin recovery, but full-window drawdown was large. |
+| `005850` | 2024-05-16 | https://www.samsungpop.com/common.do?cmd=down&contentType=application%2Fpdf&fileName=2010%2F2024051618092158K_02_06.pdf&inlineYn=Y&saveKey=research.pdf | 1Q24 revenue grew despite Hyundai/Kia global production decline and OPM reached 11.1%; LED lamp mix, US/India cost savings, and new mood-lamp order supported margin bridge. |
+| `010690` | 2024-05-16 | https://ssl.pstatic.net/imgstock/upload/research/company/1705370145067.pdf | 2024 battery-pack case revenue recognition and HMG EV production sequence were visible, but the 90D/180D path showed a vertical MFE followed by deep MAE. |
+| `064960` | 2025-03-17 | https://www.samsungpop.com/common.do?cmd=down&contentType=application%2Fpdf&fileName=2010%2F2025031616114212K_02_07.pdf&inlineYn=Y&saveKey=research.pdf | 2025 auto-parts recovery was tied to HEV motor / electronic oil pump and xEV component revenue, giving a cleaner volume/mix/margin bridge after 2024 weakness. |
 
-The SL and Hankook Tire paths show that when auto-related price action is attached to a plausible margin/mix bridge, the 30D/90D MFE can be large enough to justify a positive C29 row. SL’s 2024-05-17 row reaches +34.23% 90D MFE, and Hankook Tire’s 2024-01-25 row reaches +28.01% 90D MFE.
+## 10. Price Data Source Map
 
-### 4.2 Residual error
+| symbol | price_shard_path | profile_path | local source cache |
+|---:|---|---|---|
+| `012330` | `atlas/ohlcv_tradable_by_symbol_year/012/012330/{year}.csv` | `atlas/symbol_profiles/012/012330.json` | local stock-web cache: `012330_2023/2024/2025.csv` |
+| `011210` | `atlas/ohlcv_tradable_by_symbol_year/011/011210/{year}.csv` | `atlas/symbol_profiles/011/011210.json` | local stock-web cache: `011210_2023/2024/2025.csv` |
+| `161390` | `atlas/ohlcv_tradable_by_symbol_year/161/161390/{year}.csv` | `atlas/symbol_profiles/161/161390.json` | local stock-web cache: `161390_2023/2024/2025.csv` |
+| `073240` | `atlas/ohlcv_tradable_by_symbol_year/073/073240/{year}.csv` | `atlas/symbol_profiles/073/073240.json` | local stock-web cache: `073240_2023/2024/2025.csv` |
+| `005850` | `atlas/ohlcv_tradable_by_symbol_year/005/005850/{year}.csv` | `atlas/symbol_profiles/005/005850.json` | local stock-web cache: `005850_2024/2025.csv` |
+| `010690` | `atlas/ohlcv_tradable_by_symbol_year/010/010690/{year}.csv` | `atlas/symbol_profiles/010/010690.json` | local stock-web cache: `010690_2024/2025.csv` |
+| `064960` | `atlas/ohlcv_tradable_by_symbol_year/064/064960/{year}.csv` | `atlas/symbol_profiles/064/064960.json` | local stock-web cache: `064960_2024/2025.csv` |
 
-C29 has a special trap: **mobility beta often looks like operating leverage before it proves margin conversion**. A car can sound fast while still sitting on a lift. The price can rev, but the model needs to see whether torque reaches the wheels: volume/mix, ASP, supplier margin, order delivery, capital return, or cash conversion.
+## 11. Case-by-Case Trigger Grid
 
-The strongest counterexample is Hanon System. The 2024-05-03 entry produced only +4.78% MFE but reached -32.97% 90D MAE and -43.45% 180D MAE. That is not “mobility operating leverage”; it is an event spike without a robust company-level margin/cash bridge.
+| symbol | trigger_type | trigger_date | entry_date | entry_price | stage2 fields | stage3 fields | 4B fields | 4C fields |
+|---:|---|---|---|---:|---|---|---|---|
+| `012330` | `Stage2-Actionable` | 2024-01-26 | 2024-01-29 | 202500 | record revenue, core-parts/electrification demand, group OEM volume/mix evidence | operating profit growth, margin bridge, low early MAE | post-peak drawdown means Yellow not Green | - |
+| `011210` | `Stage4B` | 2024-01-26 | 2024-01-29 | 58000 | auto-parts scale and profit evidence | insufficient durable margin/revision bridge | fast MFE followed by MAE180 below -20% | - |
+| `161390` | `Stage2-Actionable` | 2024-02-05 | 2024-02-05 | 50000 | record profit, premium/EV tire mix, logistics/raw material relief | conditional only; 180D high-MAE argues against Green | MAE180 near -31% and peak drawdown over -45% | - |
+| `073240` | `Stage2-Actionable` | 2024-01-30 | 2024-02-06 | 6140 | turnaround revenue/OP, margin recovery | conditional; needs sustained mix/replacement demand confirmation | MFE90 strong but MAE180 below -30% | - |
+| `005850` | `Stage3-Yellow` | 2024-05-16 | 2024-05-17 | 35500 | new item/order plus OEM production exposure | OPM surprise, LED mix, cost savings, margin bridge | peak drawdown requires local 4B watch after Stage3-Yellow | - |
+| `010690` | `Stage4B` | 2024-05-16 | 2024-05-16 | 10490 | battery-pack case, HMG EV production path, HMG sales guide | not yet; revenue/margin durability not confirmed | MFE30 above 50% but MAE180 below -40% | - |
+| `064960` | `Stage2-Actionable` | 2025-03-17 | 2025-03-18 | 25550 | HEV/EOP/xEV parts recovery and revenue growth expectation | low MAE with 90D/180D MFE follow-through validates delayed Yellow | not primary; low MAE path | - |
 
-## 5. Shadow rule candidate
+## 12. Trigger-Level OHLC Backtest Tables
 
-```text
-new_axis_proposed =
-  C29_company_level_volume_margin_cash_bridge_required
-  C29_event_spike_and_price_only_high_MAE_guard
-  C29_post_peak_4b_reversal_guard
-```
+| symbol | entry | price | MFE30 | MAE30 | MFE90 | MAE90 | MFE180 | MAE180 | peak_date | peak_price | DD after peak |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---|---:|---:|
+| `012330` | 2024-01-29 | 202500 | 27.4074 | -0.4938 | 33.3333 | -0.4938 | 33.3333 | -0.9877 | 2024-03-18 | 270000 | -25.7407 |
+| `011210` | 2024-01-29 | 58000 | 15.5172 | -2.5862 | 15.5172 | -6.0345 | 15.5172 | -21.6379 | 2024-02-05 | 67000 | -32.1642 |
+| `161390` | 2024-02-05 | 50000 | 19.2000 | -4.1000 | 26.6000 | -15.7000 | 26.6000 | -31.0000 | 2024-04-16 | 63300 | -45.4976 |
+| `073240` | 2024-02-06 | 6140 | 12.0521 | -9.1205 | 36.1564 | -9.6091 | 36.1564 | -33.7134 | 2024-05-07 | 8360 | -51.3158 |
+| `005850` | 2024-05-17 | 35500 | 34.2254 | -5.7746 | 34.2254 | -14.3662 | 34.2254 | -23.6620 | 2024-06-17 | 47650 | -43.1270 |
+| `010690` | 2024-05-16 | 10490 | 51.4776 | -2.7645 | 51.4776 | -24.9762 | 51.4776 | -41.3727 | 2024-06-27 | 15890 | -61.2964 |
+| `064960` | 2025-03-18 | 25550 | 13.5029 | -3.7182 | 44.4227 | -3.7182 | 59.6869 | -3.7182 | 2025-12-08 | 40800 | -13.7255 |
 
-Rule draft:
+## 13. Current Calibrated Profile Stress Test
 
-1. **Bridge requirement.** C29 Stage3-Yellow or higher needs at least one company-level bridge:
-   - volume/mix improvement,
-   - ASP or margin improvement,
-   - supplier order/delivery visibility,
-   - capital return / value-up execution,
-   - FCF or cash-conversion bridge.
+| symbol | current_profile_verdict | proposed stage after C29 shadow gate | interpretation |
+|---:|---|---|---|
+| `012330` | `current_profile_correct_or_too_late` | `Stage3-Yellow` | MFE180 33.3% / MAE180 -1.0% |
+| `011210` | `current_profile_false_positive_risk` | `Stage4B` | MFE180 15.5% / MAE180 -21.6% |
+| `161390` | `current_profile_correct_or_too_late` | `Stage2-Actionable` | MFE180 26.6% / MAE180 -31.0% |
+| `073240` | `current_profile_correct_or_too_late` | `Stage2-Actionable` | MFE180 36.2% / MAE180 -33.7% |
+| `005850` | `current_profile_correct_or_too_late` | `Stage3-Yellow` | MFE180 34.2% / MAE180 -23.7% |
+| `010690` | `current_profile_false_positive_risk` | `Stage4B` | MFE180 51.5% / MAE180 -41.4% |
+| `064960` | `current_profile_correct_or_too_late` | `Stage3-Yellow` | MFE180 59.7% / MAE180 -3.7% |
 
-2. **Event-spike cap.** If the only non-price evidence is M&A rumor, policy/event label, or broad OEM beta, and 90D MAE is worse than -25%, cap the case at `4B_Watch` or `Stage2_Watch`.
+## 14. Stage2 / Yellow / Green Comparison
 
-3. **Post-peak local 4B guard.** If a valid positive C29 row later suffers a peak-to-trough drawdown worse than -30% within 180D, keep it as positive evidence for entry scoring but mark it as `local_4b_watch` for chase/exit calibration.
+| symbol | Stage2 valid? | Yellow valid? | Green valid? | reason |
+|---:|---|---|---|---|
+| `012330` | yes | yes | no | Low MAE and margin bridge support Yellow, but Green still needs durable revision and post-peak drawdown control. |
+| `011210` | conditional | no | no | Auto-parts scale is real, but early peak and MAE180 below -20% require Stage4B. |
+| `161390` | yes | conditional | no | Record tire margin is real; high MAE and large peak drawdown block Green. |
+| `073240` | yes | conditional | no | Turnaround margin path is real but tire-cycle drawdown requires local 4B. |
+| `005850` | yes | yes | no | OPM surprise and LED/product mix justify Yellow; full-window drawdown blocks Green. |
+| `010690` | conditional | no | no | EV battery-case path produced very high MFE but the full-window failure is a 4B warning. |
+| `064960` | yes | yes | no | HEV/EOP/xEV revenue recovery produced high MFE and low MAE; delayed Yellow is valid. |
 
-## 6. Machine-readable rows
+## 15. 4B Local vs Full-window Timing Audit
 
-### 6.1 case_rows_jsonl
+| symbol | local 4B reason | full-window 4B reason | audit |
+|---:|---|---|---|
+| `012330` | post-peak drawdown from March peak | MAE180 shallow | not full 4B; keep Yellow not Green |
+| `011210` | MFE peak within days | MAE180 -21.6379 | cap Stage4B |
+| `161390` | peak by April | MAE180 -31.0000 | positive evidence but full-window local 4B required |
+| `073240` | peak by May | MAE180 -33.7134 | turnaround positive but high-MAE 4B required |
+| `005850` | 34% MFE in 30D | MAE180 -23.6620 | Yellow allowed, Green blocked |
+| `010690` | MFE30 51.4776 | MAE180 -41.3727 | classic vertical MFE/high-MAE 4B cap |
+| `064960` | no material early blowoff | MAE180 -3.7182 | positive delayed rerating path |
 
-```jsonl
-{"row_type": "case", "case_id": "C29_012330_2024-02-19_auto_parts_valueup_capital_return_volume_mix_bridge", "symbol": "012330", "name": "현대모비스", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "entry_date": "2024-02-19", "representative_trigger_type": "Stage2_Actionable", "outcome_label": "mixed_positive_high_MAE", "dedupe_key": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE|012330|Stage2_Actionable|2024-02-19", "usable_for_calibration": true}
-{"row_type": "case", "case_id": "C29_005850_2024-05-17_supplier_margin_revision_volume_mix_followthrough", "symbol": "005850", "name": "에스엘", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "entry_date": "2024-05-17", "representative_trigger_type": "Stage3_Yellow", "outcome_label": "positive_then_late_high_MAE", "dedupe_key": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE|005850|Stage3_Yellow|2024-05-17", "usable_for_calibration": true}
-{"row_type": "case", "case_id": "C29_018880_2024-05-03_supplier_event_spike_margin_bridge_failure", "symbol": "018880", "name": "한온시스템", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "entry_date": "2024-05-03", "representative_trigger_type": "Stage2_False_Positive", "outcome_label": "counterexample_event_spike_high_MAE", "dedupe_key": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE|018880|Stage2_False_Positive|2024-05-03", "usable_for_calibration": true}
-{"row_type": "case", "case_id": "C29_161390_2024-01-25_tire_margin_spread_volume_operating_leverage", "symbol": "161390", "name": "한국타이어앤테크놀로지", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "entry_date": "2024-01-25", "representative_trigger_type": "Stage3_Yellow", "outcome_label": "positive_with_late_4b_watch", "dedupe_key": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE|161390|Stage3_Yellow|2024-01-25", "usable_for_calibration": true}
-```
+## 16. Sector-Specific Rule Candidate
 
-### 6.2 trigger_rows_jsonl
-
-```jsonl
-{"row_type": "trigger", "research_session": "post_calibrated_sector_archetype_residual_research", "mode": "historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12", "selected_round": "R9", "selected_loop": 101, "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "fine_archetype_id": "AUTO_MODULES_VALUEUP_AND_CAPITAL_RETURN_BRIDGE_VS_PRICE_ONLY_OEM_BETA", "symbol": "012330", "name": "현대모비스", "trigger_type": "Stage2_Actionable", "trigger_family": "auto_parts_valueup_capital_return_volume_mix_bridge", "entry_date": "2024-02-19", "entry_price": 244000, "entry_basis": "close", "peak_30d_price": 270000, "trough_30d_price": 230000, "mfe_30d_pct": 10.66, "mae_30d_pct": -5.74, "peak_90d_price": 270000, "trough_90d_price": 224000, "mfe_90d_pct": 10.66, "mae_90d_pct": -8.2, "peak_180d_price": 270000, "trough_180d_price": 207000, "mfe_180d_pct": 10.66, "mae_180d_pct": -15.16, "max_drawdown_from_peak_180d_pct": -23.33, "outcome_label": "mixed_positive_high_MAE", "current_profile_error": "Stage2 is directionally right, but C29 should not Green without explicit module margin/capital-return bridge because 180D MAE overwhelms early MFE.", "price_path_source": "stock-web/atlas/ohlcv_tradable_by_symbol_year/012/012330/2024.csv", "evidence_quality": "price_verified_nonprice_proxy_only", "evidence_url_pending": true}
-{"row_type": "trigger", "research_session": "post_calibrated_sector_archetype_residual_research", "mode": "historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12", "selected_round": "R9", "selected_loop": 101, "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "fine_archetype_id": "AUTO_LIGHTING_SUPPLIER_VOLUME_MARGIN_REVISION_BRIDGE", "symbol": "005850", "name": "에스엘", "trigger_type": "Stage3_Yellow", "trigger_family": "supplier_margin_revision_volume_mix_followthrough", "entry_date": "2024-05-17", "entry_price": 35500, "entry_basis": "close", "peak_30d_price": 44450, "trough_30d_price": 33700, "mfe_30d_pct": 25.21, "mae_30d_pct": -5.07, "peak_90d_price": 47650, "trough_90d_price": 32200, "mfe_90d_pct": 34.23, "mae_90d_pct": -9.3, "peak_180d_price": 47650, "trough_180d_price": 30000, "mfe_180d_pct": 34.23, "mae_180d_pct": -15.49, "max_drawdown_from_peak_180d_pct": -37.04, "outcome_label": "positive_then_late_high_MAE", "current_profile_error": "Good Stage3-Yellow candidate when supplier margin revision is present; Green should require repeat order/mix evidence because post-peak drawdown is severe.", "price_path_source": "stock-web/atlas/ohlcv_tradable_by_symbol_year/005/005850/2024.csv", "evidence_quality": "price_verified_nonprice_proxy_only", "evidence_url_pending": true}
-{"row_type": "trigger", "research_session": "post_calibrated_sector_archetype_residual_research", "mode": "historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12", "selected_round": "R9", "selected_loop": 101, "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "fine_archetype_id": "THERMAL_MANAGEMENT_EVENT_SPIKE_WITHOUT_MARGIN_CASH_BRIDGE", "symbol": "018880", "name": "한온시스템", "trigger_type": "Stage2_False_Positive", "trigger_family": "supplier_event_spike_margin_bridge_failure", "entry_date": "2024-05-03", "entry_price": 6490, "entry_basis": "close", "peak_30d_price": 6800, "trough_30d_price": 5010, "mfe_30d_pct": 4.78, "mae_30d_pct": -22.8, "peak_90d_price": 6800, "trough_90d_price": 4350, "mfe_90d_pct": 4.78, "mae_90d_pct": -32.97, "peak_180d_price": 6800, "trough_180d_price": 3670, "mfe_180d_pct": 4.78, "mae_180d_pct": -43.45, "max_drawdown_from_peak_180d_pct": -46.03, "outcome_label": "counterexample_event_spike_high_MAE", "current_profile_error": "Headline/event spike can masquerade as C29 volume leverage; absent margin/cash bridge should route to watch/4B guard, not positive Stage.", "price_path_source": "stock-web/atlas/ohlcv_tradable_by_symbol_year/018/018880/2024.csv", "evidence_quality": "price_verified_nonprice_proxy_only", "evidence_url_pending": true}
-{"row_type": "trigger", "research_session": "post_calibrated_sector_archetype_residual_research", "mode": "historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12", "selected_round": "R9", "selected_loop": 101, "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "fine_archetype_id": "TIRE_MARGIN_SPREAD_AND_VOLUME_LEVERAGE_WITH_4B_REVERSAL_RISK", "symbol": "161390", "name": "한국타이어앤테크놀로지", "trigger_type": "Stage3_Yellow", "trigger_family": "tire_margin_spread_volume_operating_leverage", "entry_date": "2024-01-25", "entry_price": 49450, "entry_basis": "close", "peak_30d_price": 59600, "trough_30d_price": 46250, "mfe_30d_pct": 20.53, "mae_30d_pct": -6.47, "peak_90d_price": 63300, "trough_90d_price": 46250, "mfe_90d_pct": 28.01, "mae_90d_pct": -6.47, "peak_180d_price": 63300, "trough_180d_price": 40650, "mfe_180d_pct": 28.01, "mae_180d_pct": -17.8, "max_drawdown_from_peak_180d_pct": -35.78, "outcome_label": "positive_with_late_4b_watch", "current_profile_error": "Strong early C29 price fit, but tire margin spread should be separated from OEM volume beta and guarded after sharp post-peak reversal.", "price_path_source": "stock-web/atlas/ohlcv_tradable_by_symbol_year/161/161390/2024.csv", "evidence_quality": "price_verified_nonprice_proxy_only", "evidence_url_pending": true}
-```
-
-### 6.3 score_simulation_jsonl
-
-```jsonl
-{"row_type": "score_simulation", "profile_proxy": "e2r_2_2_rolling_calibrated", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "symbol": "012330", "entry_date": "2024-02-19", "raw_component_score_breakdown": {"eps_revision": 14, "visibility": 18, "bottleneck": 6, "mispricing": 15, "valuation": 17, "capital_return": 15, "info_edge": 5}, "simulated_stage_before_shadow_rule": "Stage2_Actionable", "simulated_stage_after_shadow_rule": "Stage2_Actionable", "shadow_rule_delta": "require_company_level_volume_margin_cash_bridge; cap price-only/event-spike cases"}
-{"row_type": "score_simulation", "profile_proxy": "e2r_2_2_rolling_calibrated", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "symbol": "005850", "entry_date": "2024-05-17", "raw_component_score_breakdown": {"eps_revision": 20, "visibility": 18, "bottleneck": 10, "mispricing": 15, "valuation": 17, "capital_return": 6, "info_edge": 5}, "simulated_stage_before_shadow_rule": "Stage3_Yellow", "simulated_stage_after_shadow_rule": "Stage3_Yellow", "shadow_rule_delta": "require_company_level_volume_margin_cash_bridge; cap price-only/event-spike cases"}
-{"row_type": "score_simulation", "profile_proxy": "e2r_2_2_rolling_calibrated", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "symbol": "018880", "entry_date": "2024-05-03", "raw_component_score_breakdown": {"eps_revision": 14, "visibility": 10, "bottleneck": 6, "mispricing": 10, "valuation": 8, "capital_return": 6, "info_edge": 5}, "simulated_stage_before_shadow_rule": "Stage2_Watch", "simulated_stage_after_shadow_rule": "4B_Watch", "shadow_rule_delta": "require_company_level_volume_margin_cash_bridge; cap price-only/event-spike cases"}
-{"row_type": "score_simulation", "profile_proxy": "e2r_2_2_rolling_calibrated", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "symbol": "161390", "entry_date": "2024-01-25", "raw_component_score_breakdown": {"eps_revision": 20, "visibility": 18, "bottleneck": 10, "mispricing": 10, "valuation": 17, "capital_return": 6, "info_edge": 5}, "simulated_stage_before_shadow_rule": "Stage3_Yellow", "simulated_stage_after_shadow_rule": "Stage3_Yellow", "shadow_rule_delta": "require_company_level_volume_margin_cash_bridge; cap price-only/event-spike cases"}
-```
-
-### 6.4 aggregate_json
-
-```json
-{
-  "row_type": "aggregate",
-  "selected_round": "R9",
-  "selected_loop": 101,
-  "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
-  "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-  "fine_archetype_id": "AUTO_SUPPLIER_TIRE_OEM_VOLUME_MARGIN_OPERATING_LEVERAGE_BRIDGE",
-  "new_independent_case_count": 4,
-  "reused_case_count": 0,
-  "same_archetype_new_symbol_count": 4,
-  "same_archetype_new_trigger_family_count": 4,
-  "calibration_usable_case_count": 4,
-  "calibration_usable_trigger_count": 4,
-  "positive_case_count": 2,
-  "mixed_positive_count": 1,
-  "counterexample_count": 1,
-  "local_4b_watch_count": 2,
-  "current_profile_error_count": 4,
-  "auto_selected_coverage_gap_static_index": "C29 rows 3 -> 7 if accepted in static V12 index; conversation-local C29 second pass continues previous 4-row fill.",
-  "auto_selected_coverage_gap_conversation_local": "C29 rows 7 -> 11 if accepted; still Priority 0, need about 19 to 30 after local ledger.",
-  "sector_specific_rule_candidate": true,
-  "canonical_archetype_rule_candidate": true,
-  "do_not_propose_new_weight_delta": false
-}
-```
-
-### 6.5 shadow_weight_json
-
-```json
-{
-  "row_type": "shadow_weight",
-  "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-  "baseline_weight_runtime_report": "20/18/10/15/17/15/5",
-  "proposed_shadow_rule_not_production_patch": {
-    "C29_company_level_volume_margin_cash_bridge_required": {
-      "logic": "OEM/supplier/tire cases require at least one company-level bridge among volume/mix, ASP/margin, order backlog/delivery, capital return or FCF conversion.",
-      "effect": "Allow Stage3-Yellow only when price strength is accompanied by a company-level margin/revision bridge."
-    },
-    "C29_event_spike_and_price_only_high_MAE_guard": {
-      "logic": "If non-price evidence is only M&A/event/headline or sector beta and 90D MAE <= -25%, cap at 4B_Watch/Stage2_Watch unless hard delivery/cash evidence appears.",
-      "effect": "Hanon-style event spike blocked from positive Stage promotion."
-    },
-    "C29_post_peak_4b_reversal_guard": {
-      "logic": "If 180D drawdown from peak <= -30% after a valid Stage3-Yellow, preserve positive row but mark local_4B_watch for exit/risk calibration.",
-      "effect": "SL/Hankook Tire stay useful positives but teach the model not to chase after peak."
-    }
-  }
-}
-```
-
-### 6.6 residual_contribution_jsonl
-
-```jsonl
-{"row_type": "residual_contribution", "scope": "canonical_archetype", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "new_axis_proposed": "C29_company_level_volume_margin_cash_bridge_required | C29_event_spike_high_MAE_guard | C29_post_peak_4b_reversal_guard", "existing_axis_strengthened": "stage2_required_bridge | price_only_blowoff_blocks_positive_stage | full_4b_requires_non_price_evidence | local_4b_watch_guard | high_MAE_guardrail", "existing_axis_weakened": null, "loop_contribution_label": "canonical_archetype_rule_candidate"}
-```
-
-## 7. Residual contribution summary
+`L3_C29_MOBILITY_VOLUME_MIX_MARGIN_AND_HIGH_MAE_SPLIT`:
 
 ```text
-new_independent_case_count = 4
-reused_case_count = 0
-same_archetype_new_symbol_count = 4
-same_archetype_new_trigger_family_count = 4
-calibration_usable_case_count = 4
-calibration_usable_trigger_count = 4
-positive_case_count = 2
-mixed_positive_count = 1
-counterexample_count = 1
-local_4b_watch_count = 2
-current_profile_error_count = 4
-
-auto_selected_coverage_gap_static_index = C29 rows 3 -> 7 if accepted
-auto_selected_coverage_gap_conversation_local = C29 rows 7 -> 11 if accepted
-do_not_propose_new_weight_delta = false
-sector_specific_rule_candidate = true
-canonical_archetype_rule_candidate = true
-loop_contribution_label = canonical_archetype_rule_candidate
+stage2_gate = mobility_volume_or_customer_growth + product_mix_or_order_visibility
+stage3_yellow_gate = stage2_gate + realized_OPM_or_profit_growth + revenue_recognition_or_margin_bridge
+stage3_green_gate = stage3_yellow_gate + low_MAE90 + low_MAE180 + no vertical local_4B_peak + no financing/restructuring/one-off reliance
+4b_cap = MFE30_or_MFE90 >= 30 and MAE180 <= -20, or peak_drawdown_after_180D_window <= -30, unless durable margin bridge remains confirmed
+4c_route = operating_loss_or_net_loss + volume slowdown + impairment/restructuring/interest burden
 ```
 
-## 8. Deferred Coding Agent Handoff Prompt
+## 17. Canonical-Archetype Rule Candidate
 
-Do not execute this section during research generation.
+`C29_VOLUME_MIX_MARGIN_OPERATING_LEVERAGE_REQUIRES_REALIZED_MARGIN_BRIDGE_WITH_HIGH_MAE_4B_CAP`:
 
 ```text
-You are a coding agent working on Songdaiki/stock_agent after the research batch is collected.
+positive_gate:
+  volume_growth_or_customer_quality
+  + product_mix_or_xEV_HEV_part_conversion
+  + realized_OP_margin_or_profit_growth
+  + evidence of revenue recognition or order conversion
+
+cap_to_stage2_watch:
+  mobility headline only
+  or supplier order timing without margin bridge
+  or tire/parts cycle row with MAE180 <= -20
+  or peak_drawdown_after_peak_180D <= -30
+
+upgrade_to_yellow:
+  positive_gate true
+  and MAE90 > -20
+  and either low_MAE180 or delayed strong MFE after margin bridge confirmation
+
+block_green:
+  local vertical MFE without 180D drawdown control
+```
+
+## 18. Before / After Backtest Comparison
+
+| profile proxy | expected accepted positives | expected blocked/capped rows | expected effect |
+|---|---:|---:|---|
+| P0 current calibrated proxy | 5 | 2 | Accepts most mobility/parts rows but risks over-reading early tire/supplier MFE. |
+| P1 C29 shadow gate | 4 | 3 | Keeps Mobis/SL/SNT positive, allows tire rows only with 4B watch, caps Wia/Hwashin. |
+| P2 overly strict high-MAE block | 2 | 5 | Overblocks tire-cycle and SL positive MFE paths. |
+| P3 headline-growth naive | 7 | 0 | Overpromotes Wia/Hwashin and ignores post-peak drawdown. |
+
+## 19. Score-Return Alignment Matrix
+
+```jsonl
+{"row_type": "score_simulation", "case_id": "C29_R9_L101_012330_20240129_oem_core_parts_mix_margin_bridge", "symbol": "012330", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "weighted_before": 80, "stage_before": "Stage2-Actionable", "weighted_after": 84, "stage_after": "Stage3-Yellow", "MFE_90D_pct": 33.3333, "MAE_90D_pct": -0.4938, "alignment": "good_score_high_return"}
+{"row_type": "score_simulation", "case_id": "C29_R9_L101_011210_20240129_auto_parts_scale_with_weak_durability", "symbol": "011210", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "weighted_before": 74, "stage_before": "Stage4B", "weighted_after": 66, "stage_after": "Stage4B", "MFE_90D_pct": 15.5172, "MAE_90D_pct": -6.0345, "alignment": "high_mae_guard_required"}
+{"row_type": "score_simulation", "case_id": "C29_R9_L101_161390_20240205_tire_premium_mix_operating_leverage", "symbol": "161390", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "weighted_before": 80, "stage_before": "Stage2-Actionable", "weighted_after": 78, "stage_after": "Stage2-Actionable", "MFE_90D_pct": 26.6, "MAE_90D_pct": -15.7, "alignment": "good_score_high_return"}
+{"row_type": "score_simulation", "case_id": "C29_R9_L101_073240_20240206_tire_turnaround_margin_recovery", "symbol": "073240", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "weighted_before": 80, "stage_before": "Stage2-Actionable", "weighted_after": 78, "stage_after": "Stage2-Actionable", "MFE_90D_pct": 36.1564, "MAE_90D_pct": -9.6091, "alignment": "good_score_high_return"}
+{"row_type": "score_simulation", "case_id": "C29_R9_L101_005850_20240517_lighting_supplier_led_mix_margin_bridge", "symbol": "005850", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "weighted_before": 80, "stage_before": "Stage3-Yellow", "weighted_after": 84, "stage_after": "Stage3-Yellow", "MFE_90D_pct": 34.2254, "MAE_90D_pct": -14.3662, "alignment": "good_score_high_return"}
+{"row_type": "score_simulation", "case_id": "C29_R9_L101_010690_20240516_ev_battery_case_order_revenue_timing_high_mae", "symbol": "010690", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "weighted_before": 74, "stage_before": "Stage4B", "weighted_after": 66, "stage_after": "Stage4B", "MFE_90D_pct": 51.4776, "MAE_90D_pct": -24.9762, "alignment": "high_mae_guard_required"}
+{"row_type": "score_simulation", "case_id": "C29_R9_L101_064960_20250318_hev_eop_xev_parts_revenue_recovery", "symbol": "064960", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "weighted_before": 80, "stage_before": "Stage2-Actionable", "weighted_after": 84, "stage_after": "Stage3-Yellow", "MFE_90D_pct": 44.4227, "MAE_90D_pct": -3.7182, "alignment": "good_score_high_return"}
+```
+
+## 20. Machine-Readable Trigger Rows
+
+```jsonl
+{"row_type": "trigger", "case_id": "C29_R9_L101_012330_20240129_oem_core_parts_mix_margin_bridge", "symbol": "012330", "company": "현대모비스", "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "fine_archetype_id": "OEM_CORE_PARTS_MIX_MARGIN_BRIDGE", "trigger_type": "Stage2-Actionable", "trigger_date": "2024-01-26", "entry_date": "2024-01-29", "entry_price": 202500.0, "case_type": "structural_success", "polarity": "positive", "current_profile_verdict": "current_profile_correct_or_too_late", "stage_after_shadow_rule": "Stage3-Yellow", "evidence_source": "https://www.mobis.com/en/ir/ircop.do", "evidence_summary": "2023 revenue KRW59.2544tn and operating profit KRW2.2953tn; electrification/core parts and high-value SUV/mix path made volume/mix/margin bridge visible.", "stage2_fields": "record revenue, core-parts/electrification demand, group OEM volume/mix evidence", "stage3_fields": "operating profit growth, margin bridge, low early MAE", "fourb_fields": "post-peak drawdown means Yellow not Green", "fourc_fields": "-", "calibration_usable": true, "representative_for_aggregate": true, "source_proxy_only": false, "evidence_url_pending": false, "corporate_action_window_status": "clean_180D_window_assumed_profile_no_overlap_checked_by_stockweb_ui_or_no_local_profile_candidate", "window_end": "2024-10-25", "MFE_30D_pct": 27.4074, "MAE_30D_pct": -0.4938, "MFE_90D_pct": 33.3333, "MAE_90D_pct": -0.4938, "MFE_180D_pct": 33.3333, "MAE_180D_pct": -0.9877, "peak_date": "2024-03-18", "peak_price": 270000.0, "drawdown_after_peak_180D_pct": -25.7407}
+{"row_type": "trigger", "case_id": "C29_R9_L101_011210_20240129_auto_parts_scale_with_weak_durability", "symbol": "011210", "company": "현대위아", "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "fine_archetype_id": "AUTO_PARTS_SCALE_WITH_WEAK_DURABILITY", "trigger_type": "Stage4B", "trigger_date": "2024-01-26", "entry_date": "2024-01-29", "entry_price": 58000.0, "case_type": "early_peak_counterexample", "polarity": "counterexample", "current_profile_verdict": "current_profile_false_positive_risk", "stage_after_shadow_rule": "Stage4B", "evidence_source": "https://en.hyundai-wia.com/investment/income_statement01.asp", "evidence_summary": "2023 revenue KRW8.166tn and operating profit KRW233bn made auto-parts scale visible, but the price path peaked quickly and failed to hold the 180D window.", "stage2_fields": "auto-parts scale and profit evidence", "stage3_fields": "insufficient durable margin/revision bridge", "fourb_fields": "fast MFE followed by MAE180 below -20%", "fourc_fields": "-", "calibration_usable": true, "representative_for_aggregate": true, "source_proxy_only": false, "evidence_url_pending": false, "corporate_action_window_status": "clean_180D_window_assumed_profile_no_overlap_checked_by_stockweb_ui_or_no_local_profile_candidate", "window_end": "2024-10-25", "MFE_30D_pct": 15.5172, "MAE_30D_pct": -2.5862, "MFE_90D_pct": 15.5172, "MAE_90D_pct": -6.0345, "MFE_180D_pct": 15.5172, "MAE_180D_pct": -21.6379, "peak_date": "2024-02-05", "peak_price": 67000.0, "drawdown_after_peak_180D_pct": -32.1642}
+{"row_type": "trigger", "case_id": "C29_R9_L101_161390_20240205_tire_premium_mix_operating_leverage", "symbol": "161390", "company": "한국타이어앤테크놀로지", "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "fine_archetype_id": "TIRE_PREMIUM_MIX_OPERATING_LEVERAGE", "trigger_type": "Stage2-Actionable", "trigger_date": "2024-02-05", "entry_date": "2024-02-05", "entry_price": 50000.0, "case_type": "tire_cycle_positive_with_high_mae", "polarity": "positive_with_4B_watch", "current_profile_verdict": "current_profile_correct_or_too_late", "stage_after_shadow_rule": "Stage2-Actionable", "evidence_source": "https://www.hankooktire.com/global/ko/company/media-list/media-detail.629718.html", "evidence_summary": "2023 sales KRW8.9396tn and operating profit KRW1.3279tn; premium OE/EV/high-value product mix drove record profitability.", "stage2_fields": "record profit, premium/EV tire mix, logistics/raw material relief", "stage3_fields": "conditional only; 180D high-MAE argues against Green", "fourb_fields": "MAE180 near -31% and peak drawdown over -45%", "fourc_fields": "-", "calibration_usable": true, "representative_for_aggregate": true, "source_proxy_only": false, "evidence_url_pending": false, "corporate_action_window_status": "clean_180D_window_assumed_profile_no_overlap_checked_by_stockweb_ui_or_no_local_profile_candidate", "window_end": "2024-11-01", "MFE_30D_pct": 19.2, "MAE_30D_pct": -4.1, "MFE_90D_pct": 26.6, "MAE_90D_pct": -15.7, "MFE_180D_pct": 26.6, "MAE_180D_pct": -31.0, "peak_date": "2024-04-16", "peak_price": 63300.0, "drawdown_after_peak_180D_pct": -45.4976}
+{"row_type": "trigger", "case_id": "C29_R9_L101_073240_20240206_tire_turnaround_margin_recovery", "symbol": "073240", "company": "금호타이어", "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "fine_archetype_id": "TIRE_TURNAROUND_MARGIN_RECOVERY", "trigger_type": "Stage2-Actionable", "trigger_date": "2024-01-30", "entry_date": "2024-02-06", "entry_price": 6140.0, "case_type": "turnaround_positive_with_4B_watch", "polarity": "positive_with_4B_watch", "current_profile_verdict": "current_profile_correct_or_too_late", "stage_after_shadow_rule": "Stage2-Actionable", "evidence_source": "https://m.thebell.co.kr/m/newsview.asp?newskey=202401301713409800101922&svccode=", "evidence_summary": "2023 revenue KRW4.041tn and operating profit KRW388.3bn; 4Q OP margin 14.1% showed tire turnaround and margin recovery, but full-window drawdown was large.", "stage2_fields": "turnaround revenue/OP, margin recovery", "stage3_fields": "conditional; needs sustained mix/replacement demand confirmation", "fourb_fields": "MFE90 strong but MAE180 below -30%", "fourc_fields": "-", "calibration_usable": true, "representative_for_aggregate": true, "source_proxy_only": false, "evidence_url_pending": false, "corporate_action_window_status": "clean_180D_window_assumed_profile_no_overlap_checked_by_stockweb_ui_or_no_local_profile_candidate", "window_end": "2024-11-04", "MFE_30D_pct": 12.0521, "MAE_30D_pct": -9.1205, "MFE_90D_pct": 36.1564, "MAE_90D_pct": -9.6091, "MFE_180D_pct": 36.1564, "MAE_180D_pct": -33.7134, "peak_date": "2024-05-07", "peak_price": 8360.0, "drawdown_after_peak_180D_pct": -51.3158}
+{"row_type": "trigger", "case_id": "C29_R9_L101_005850_20240517_lighting_supplier_led_mix_margin_bridge", "symbol": "005850", "company": "에스엘", "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "fine_archetype_id": "LIGHTING_SUPPLIER_LED_MIX_MARGIN_BRIDGE", "trigger_type": "Stage3-Yellow", "trigger_date": "2024-05-16", "entry_date": "2024-05-17", "entry_price": 35500.0, "case_type": "supplier_margin_surprise_positive_with_4B_watch", "polarity": "positive", "current_profile_verdict": "current_profile_correct_or_too_late", "stage_after_shadow_rule": "Stage3-Yellow", "evidence_source": "https://www.samsungpop.com/common.do?cmd=down&contentType=application%2Fpdf&fileName=2010%2F2024051618092158K_02_06.pdf&inlineYn=Y&saveKey=research.pdf", "evidence_summary": "1Q24 revenue grew despite Hyundai/Kia global production decline and OPM reached 11.1%; LED lamp mix, US/India cost savings, and new mood-lamp order supported margin bridge.", "stage2_fields": "new item/order plus OEM production exposure", "stage3_fields": "OPM surprise, LED mix, cost savings, margin bridge", "fourb_fields": "peak drawdown requires local 4B watch after Stage3-Yellow", "fourc_fields": "-", "calibration_usable": true, "representative_for_aggregate": true, "source_proxy_only": false, "evidence_url_pending": false, "corporate_action_window_status": "clean_180D_window_assumed_profile_no_overlap_checked_by_stockweb_ui_or_no_local_profile_candidate", "window_end": "2025-02-13", "MFE_30D_pct": 34.2254, "MAE_30D_pct": -5.7746, "MFE_90D_pct": 34.2254, "MAE_90D_pct": -14.3662, "MFE_180D_pct": 34.2254, "MAE_180D_pct": -23.662, "peak_date": "2024-06-17", "peak_price": 47650.0, "drawdown_after_peak_180D_pct": -43.127}
+{"row_type": "trigger", "case_id": "C29_R9_L101_010690_20240516_ev_battery_case_order_revenue_timing_high_mae", "symbol": "010690", "company": "화신", "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "fine_archetype_id": "EV_BATTERY_CASE_ORDER_REVENUE_TIMING_HIGH_MAE", "trigger_type": "Stage4B", "trigger_date": "2024-05-16", "entry_date": "2024-05-16", "entry_price": 10490.0, "case_type": "battery_case_ev_parts_high_mae_counterexample", "polarity": "counterexample", "current_profile_verdict": "current_profile_false_positive_risk", "stage_after_shadow_rule": "Stage4B", "evidence_source": "https://ssl.pstatic.net/imgstock/upload/research/company/1705370145067.pdf", "evidence_summary": "2024 battery-pack case revenue recognition and HMG EV production sequence were visible, but the 90D/180D path showed a vertical MFE followed by deep MAE.", "stage2_fields": "battery-pack case, HMG EV production path, HMG sales guide", "stage3_fields": "not yet; revenue/margin durability not confirmed", "fourb_fields": "MFE30 above 50% but MAE180 below -40%", "fourc_fields": "-", "calibration_usable": true, "representative_for_aggregate": true, "source_proxy_only": false, "evidence_url_pending": false, "corporate_action_window_status": "clean_180D_window_assumed_profile_no_overlap_checked_by_stockweb_ui_or_no_local_profile_candidate", "window_end": "2025-02-12", "MFE_30D_pct": 51.4776, "MAE_30D_pct": -2.7645, "MFE_90D_pct": 51.4776, "MAE_90D_pct": -24.9762, "MFE_180D_pct": 51.4776, "MAE_180D_pct": -41.3727, "peak_date": "2024-06-27", "peak_price": 15890.0, "drawdown_after_peak_180D_pct": -61.2964}
+{"row_type": "trigger", "case_id": "C29_R9_L101_064960_20250318_hev_eop_xev_parts_revenue_recovery", "symbol": "064960", "company": "SNT모티브", "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "fine_archetype_id": "HEV_EOP_XEV_PARTS_REVENUE_RECOVERY", "trigger_type": "Stage2-Actionable", "trigger_date": "2025-03-17", "entry_date": "2025-03-18", "entry_price": 25550.0, "case_type": "hev_eop_xev_parts_recovery_positive", "polarity": "positive", "current_profile_verdict": "current_profile_correct_or_too_late", "stage_after_shadow_rule": "Stage3-Yellow", "evidence_source": "https://www.samsungpop.com/common.do?cmd=down&contentType=application%2Fpdf&fileName=2010%2F2025031616114212K_02_07.pdf&inlineYn=Y&saveKey=research.pdf", "evidence_summary": "2025 auto-parts recovery was tied to HEV motor / electronic oil pump and xEV component revenue, giving a cleaner volume/mix/margin bridge after 2024 weakness.", "stage2_fields": "HEV/EOP/xEV parts recovery and revenue growth expectation", "stage3_fields": "low MAE with 90D/180D MFE follow-through validates delayed Yellow", "fourb_fields": "not primary; low MAE path", "fourc_fields": "-", "calibration_usable": true, "representative_for_aggregate": true, "source_proxy_only": false, "evidence_url_pending": false, "corporate_action_window_status": "clean_180D_window_assumed_profile_no_overlap_checked_by_stockweb_ui_or_no_local_profile_candidate", "window_end": "2025-12-09", "MFE_30D_pct": 13.5029, "MAE_30D_pct": -3.7182, "MFE_90D_pct": 44.4227, "MAE_90D_pct": -3.7182, "MFE_180D_pct": 59.6869, "MAE_180D_pct": -3.7182, "peak_date": "2025-12-08", "peak_price": 40800.0, "drawdown_after_peak_180D_pct": -13.7255}
+```
+
+## 21. Aggregate / Residual Contribution Rows
+
+```jsonl
+{"row_type": "aggregate", "selected_round": "R9", "selected_loop": 101, "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "new_usable_rows": 7, "positive_case_count": 5, "counterexample_count": 2, "four_b_watch_count": 5, "four_c_count": 0, "avg_MFE_180D_pct": 36.7138, "avg_MAE_180D_pct": -22.2988, "rule_candidate": "C29_VOLUME_MIX_MARGIN_OPERATING_LEVERAGE_REQUIRES_REALIZED_MARGIN_BRIDGE_WITH_HIGH_MAE_4B_CAP"}
+{"row_type": "shadow_weight", "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE", "do_not_apply_now": true, "proposed_axis": "C29_volume_mix_margin_bridge_plus_high_MAE_cap", "direction": "increase margin_bridge and information_confidence weight; increase local_4b_watch penalty for MAE180<=-20", "reason": "C29 quality holdout shows good MFE can coexist with deep MAE unless realized margin/revenue bridge is present."}
+{"row_type": "residual_contribution", "label": "residual_error_found", "current_profile_error_count": 5, "error_family": "C29_mobility_headline_or_fast_MFE_overpromotion", "existing_axis_strengthened": ["stage2_required_bridge", "local_4b_watch_guard", "price_only_blowoff_blocks_positive_stage"], "existing_axis_weakened": []}
+```
+
+## 22. Narrative Summary
+
+This holdout strengthens C29 rather than merely adding more mobility rows. The best rows are not the ones with the loudest auto headline; they are the rows where **volume/mix/margin** enters the gearbox and comes out as realized operating leverage. Hyundai Mobis and SNT Motiv show low-MAE or delayed-clean positive paths. SL shows a good Yellow path but requires post-peak discipline. Hankook Tire and Kumho Tire prove that tire-cycle margin recovery can open MFE, yet full-window drawdown keeps the row from becoming Green. Hyundai Wia and Hwashin are the useful counterexamples: auto-parts scale, EV parts, or customer exposure can exist while the equity path still behaves like a failed late chase.
+
+## 23. Deferred Coding Agent Handoff Prompt
+
+```text
+You are a coding agent in a later batch implementation session. Do not execute this during the research run.
 
 Input MD:
 e2r_stock_web_v12_residual_round_R9_loop_101_L3_BATTERY_EV_GREEN_MOBILITY_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_research.md
 
 Task:
-1. Parse case_rows_jsonl, trigger_rows_jsonl, score_simulation_jsonl, aggregate_json, shadow_weight_json, and residual_contribution_jsonl.
-2. Validate that every trigger row has complete 30D/90D/180D MFE and MAE fields.
-3. Deduplicate by:
-   canonical_archetype_id + symbol + trigger_type + entry_date.
-4. Keep non-price evidence as low-trust until direct evidence URLs or filings are attached.
-5. Consider adding a C29 shadow rule only after a batch-level review confirms the pattern:
-   - require company-level volume/margin/cash bridge,
-   - cap event-spike-only cases with high MAE,
-   - mark post-peak drawdown >30% as local_4B_watch.
-6. Do not change production scoring from this single MD alone.
+1. Ingest the trigger JSONL rows only if all required entry/MFE/MAE fields are present.
+2. Confirm canonical_archetype_id is C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE and large_sector_id is L3_BATTERY_EV_GREEN_MOBILITY.
+3. Deduplicate by canonical_archetype_id + symbol + trigger_type + entry_date.
+4. Add a C29 shadow rule candidate:
+   C29_VOLUME_MIX_MARGIN_OPERATING_LEVERAGE_REQUIRES_REALIZED_MARGIN_BRIDGE_WITH_HIGH_MAE_4B_CAP.
+5. Do not change production scoring directly. Emit patch spec as shadow_weight_only candidate.
+6. Preserve Stage2 bridge requirements and local 4B watch guard for MAE180 <= -20 or peak drawdown <= -30.
+```
+
+## 24. Batch Ingest Self-Audit
+
+```yaml
+standard_filename_ok: true
+filename_matches_metadata: true
+uses_no_repeat_index_as_ledger_only: true
+uses_stock_web_actual_ohlcv: true
+jsonl_trigger_row_count: 7
+calibration_usable_rows: 7
+representative_rows: 7
+source_proxy_only_rows: 0
+evidence_url_pending_rows: 0
+rows_missing_required_mfe_mae: 0
+rows_missing_entry_price_or_date: 0
+rows_with_noncanonical_trigger_type: 0
+future_data_leakage_detected: false
+corporate_action_contaminated_rows: 0
+insufficient_forward_window_rows: 0
+production_code_patch_included: false
+production_scoring_patch_applied: false
+handoff_prompt_executed_now: false
+ready_for_batch_ingest: true
+```
+
+## 25. Next Research State
+
+```text
+completed_round = R9
+completed_loop = 101
+selection_basis = docs/core/V12_Research_No_Repeat_Index.md
+selected_priority_bucket = Priority 2 / quality holdout after session-adjusted Priority-0 and Priority-1 fills
+next_recommended_archetypes = C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_holdout_only_if_new_volume_margin_path | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_holdout_quality_only | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_quality_holdout
+round_schedule_status = coverage_index_selected
+round_sector_consistency = pass
 ```

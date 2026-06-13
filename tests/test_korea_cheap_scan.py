@@ -10,6 +10,7 @@ from e2r.cheap_scan import (
     RecommendedNextLayer,
 )
 from e2r.cheap_scan.query_escalation import queries_for_candidate, queries_for_reason_codes
+from e2r.llm import FakeThemeRouteProvider, ThemeRouteOutput
 from e2r.models import Market
 from e2r.research.search_budget import SearchBudget
 from e2r.research.search_provider import EmptySearchProvider
@@ -191,6 +192,25 @@ class KoreaCheapScanTests(unittest.TestCase):
         self.assertIn("케이전력 장기공급계약 매출액 대비", results[0].web_result.queries_run)
         self.assertIn("케이전력 단일판매 공급계약 계약기간", queries_for_candidate(candidate).queries)
         self.assertIn(candidate.symbol, results[0].budget_tracker.deep_research_symbols)
+
+    def test_escalate_candidates_to_web_research_passes_theme_provider(self):
+        scanner = KoreaCheapScanner(_sources())
+        candidate = _candidate(_run_scan(), "222222")
+        route_provider = FakeThemeRouteProvider(output=ThemeRouteOutput(status="no_transition"))
+
+        results = scanner.escalate_candidates_to_web_research(
+            [candidate],
+            SearchBudget(),
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=EmptySearchProvider(),
+            theme_rebalance_enabled=True,
+            theme_route_provider=route_provider,
+            max_theme_expansion_rounds=0,
+        )
+
+        self.assertEqual(len(results), 1)
+        self.assertGreater(len(route_provider.calls), 0)
+        self.assertEqual(results[0].score.diagnostic_scores["theme_rebalance_enabled"], 100.0)
 
 
 def _sources() -> KoreaCheapScanSources:

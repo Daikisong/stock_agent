@@ -92,6 +92,7 @@ def parse_research_report_text(
     for key in ("asp_increase_mentioned", "lead_time_mentioned", "shortage_mentioned"):
         if metadata.get(key) not in (None, ""):
             parsed.setdefault(key, bool(metadata[key]))
+    _drop_invalid_non_negative_fields(parsed)
 
     investment_points = tuple_value(metadata.get("investment_points")) or _points_after(parse_context, ("투자포인트", "투자 포인트", "Investment points"))
     risk_points = tuple_value(metadata.get("risk_points")) or _points_after(parse_context, ("리스크", "Risk"))
@@ -268,6 +269,37 @@ def _extract_fields(text: str) -> dict[str, Any]:
         fields["backlog_record_high"] = True
     _add_qualitative_e2r_fields(text, fields)
     return fields
+
+
+_NON_NEGATIVE_REPORT_FIELDS = frozenset(
+    (
+        "current_price",
+        "target_price",
+        "target_multiple_before",
+        "target_multiple_after",
+        "fy1_sales",
+        "fy2_sales",
+        "fy3_sales",
+        "est_per",
+        "est_pbr",
+        "fifty_two_week_high",
+        "fifty_two_week_low",
+        "backlog",
+        "new_orders",
+        "order_backlog_to_sales",
+    )
+)
+
+
+def _drop_invalid_non_negative_fields(fields: dict[str, Any]) -> None:
+    dropped: list[str] = []
+    for key in _NON_NEGATIVE_REPORT_FIELDS:
+        value = fields.get(key)
+        if isinstance(value, (int, float)) and value < 0:
+            fields.pop(key, None)
+            dropped.append(key)
+    if dropped:
+        fields["invalid_non_negative_fields"] = tuple(sorted(dropped))
 
 
 def _parse_context_text(*, text: str, metadata: Mapping[str, Any], title: str) -> str:

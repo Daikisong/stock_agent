@@ -25,12 +25,12 @@ ALLOWED_ROUTE_STATUSES = {
 }
 DISALLOWED_STAGE_FIELDS = {"stage", "deterministic_stage", "stage_override", "attempted_stage_override"}
 ROUTE_STATUS_ALIASES = {
-    "insufficient_evidence": "no_transition",
-    "insufficient-evidence": "no_transition",
-    "need_more_evidence": "no_transition",
-    "blocked": "no_transition",
-    "uncertain": "no_transition",
-    "unknown": "no_transition",
+    "insufficient_evidence": "needs_more_evidence",
+    "insufficient-evidence": "needs_more_evidence",
+    "need_more_evidence": "needs_more_evidence",
+    "blocked": "needs_more_evidence",
+    "uncertain": "needs_more_evidence",
+    "unknown": "needs_more_evidence",
     "mixed": "mixed_route",
     "transition": "transition_detected",
     "theme_transition": "transition_detected",
@@ -117,11 +117,13 @@ class ThemeRouteInput:
     current_canonical_archetype_id: str | None = None
     search_results: tuple[ThemeRouteSearchResult, ...] = field(default_factory=tuple)
     documents: tuple[ThemeRouteDocument, ...] = field(default_factory=tuple)
+    score_gap_context: tuple[str, ...] = field(default_factory=tuple)
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "candidate_reason_codes", tuple(str(item) for item in self.candidate_reason_codes))
         object.__setattr__(self, "search_results", tuple(self.search_results))
         object.__setattr__(self, "documents", tuple(self.documents))
+        object.__setattr__(self, "score_gap_context", tuple(str(item) for item in self.score_gap_context if str(item).strip()))
 
 
 @dataclass(frozen=True)

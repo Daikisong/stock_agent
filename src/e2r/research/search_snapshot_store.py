@@ -100,7 +100,7 @@ class SearchSnapshotStore:
         *,
         query: str,
         as_of_date: date,
-        max_results: int = 10,
+        max_results: int = 100,
         symbol: str | None = None,
         company_name: str | None = None,
     ) -> tuple[SearchResult, ...]:

@@ -37,6 +37,7 @@ class BackfillOfficialHistoryTests(unittest.TestCase):
         self.assertFalse(plan["network_calls_executed"])
         self.assertFalse(plan["benchmark_labels_used"])
         self.assertFalse(plan["snapshot_derived_universe_used"])
+        self.assertIsNone(plan["max_opendart_detail_fetches_per_day"])
 
 
 if __name__ == "__main__":

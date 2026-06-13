@@ -18,6 +18,7 @@ from e2r.research import (
     WebResearchInput,
     WebResearchRunner,
 )
+from e2r.research.query_planner import QueryPlan, QuerySpec
 from e2r.staging import StageClassificationInput, StageClassifier
 
 
@@ -88,6 +89,31 @@ HD현대일렉트릭은 북미 전력기기 공급 부족과 변압기 리드타
 
 
 class WebResearchRunnerTests(unittest.TestCase):
+    def test_default_selection_does_not_cap_ranked_results(self):
+        query = "테스트전자 리포트"
+        results = tuple(
+            SearchResult(
+                title=f"테스트전자 성장 리포트 {index}",
+                url=f"https://example.com/test-{index}",
+                snippet="테스트전자 매출 성장과 FCF 개선",
+                query=query,
+                rank=index,
+                is_news=True,
+                confidence=0.8,
+            )
+            for index in range(1, 13)
+        )
+        runner = WebResearchRunner(
+            query_planner=_SingleQueryPlanner(query),
+            search_provider=FixtureSearchProvider(results_by_query={query: results}),
+        )
+
+        output = runner.run(WebResearchInput("테스트전자", "123456", "semiconductor", Market.KR, date(2026, 6, 8)))
+
+        self.assertEqual(len(output.search_results), 12)
+        self.assertEqual(len(output.selected_results), 12)
+        self.assertFalse(any(item.reason == "not_selected" for item in output.dropped_results))
+
     def test_query_planner_search_rank_fetch_parse_hd_like_report(self):
         result = _run_hd_web_research()
 
@@ -397,6 +423,37 @@ OPM 개선폭 6%
         self.assertEqual(ranked[0].result.url, relevant_news.url)
         self.assertIn("query_intent_match", ranked[0].positive_reasons)
         self.assertIn("query_intent_mismatch", ranked[1].negative_reasons)
+
+    def test_ranker_tie_breaks_by_url_not_provider_order(self):
+        query = "테스트전자 목표주가 상향"
+        first = SearchResult(
+            title="테스트전자 목표주가 상향 Review",
+            url="https://research.example.com/b.pdf",
+            snippet="테스트전자 목표주가 상향",
+            source="fixture-research",
+            published_at=datetime(2026, 6, 8, 8),
+            query=query,
+            rank=1,
+            is_report_domain=True,
+            confidence=0.8,
+        )
+        second = SearchResult(
+            title="테스트전자 목표주가 상향 Review",
+            url="https://research.example.com/a.pdf",
+            snippet="테스트전자 목표주가 상향",
+            source="fixture-research",
+            published_at=datetime(2026, 6, 8, 8),
+            query=query,
+            rank=1,
+            is_report_domain=True,
+            confidence=0.8,
+        )
+
+        ranked_forward = SearchResultRanker().rank((first, second), company_name="테스트전자", as_of_date=date(2026, 6, 8))
+        ranked_reversed = SearchResultRanker().rank((second, first), company_name="테스트전자", as_of_date=date(2026, 6, 8))
+
+        self.assertEqual([item.result.url for item in ranked_forward], [item.result.url for item in ranked_reversed])
+        self.assertEqual(ranked_forward[0].result.url, "https://research.example.com/a.pdf")
 
     def test_selection_keeps_query_axis_coverage(self):
         runner = _runner(
@@ -1197,6 +1254,32 @@ def _runner(results_by_query, fixture_text_by_url):
         search_provider=FixtureSearchProvider(results_by_query=results_by_query),
         page_fetcher=PageFetcher(fixture_text_by_url=fixture_text_by_url),
     )
+
+
+class _SingleQueryPlanner:
+    def __init__(self, query: str) -> None:
+        self.query = query
+
+    def plan(self, company_name, symbol, sector, market, as_of_date, stage_context=None):
+        return QueryPlan(
+            company_name=company_name,
+            symbol=symbol,
+            sector=sector,
+            market=market,
+            as_of_date=as_of_date,
+            queries=(
+                QuerySpec(
+                    group="deep_research",
+                    query=self.query,
+                    priority=1,
+                    company_name=company_name,
+                    symbol=symbol,
+                    sector=sector,
+                    market=market,
+                    as_of_date=as_of_date,
+                ),
+            ),
+        )
 
 
 class _FakeHTTPResponse:

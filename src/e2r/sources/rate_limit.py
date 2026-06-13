@@ -14,7 +14,7 @@ class SourceRateLimit:
     """Rate and concurrency rules for one source."""
 
     source_name: str
-    max_requests_per_day: int = 1_000
+    max_requests_per_day: int | None = None
     max_requests_per_second: float | None = None
     min_interval_seconds: float = 0.0
     max_concurrency: int = 1
@@ -22,7 +22,7 @@ class SourceRateLimit:
     def __post_init__(self) -> None:
         if not self.source_name.strip():
             raise ValueError("source_name must be non-empty")
-        if self.max_requests_per_day < 0:
+        if self.max_requests_per_day is not None and self.max_requests_per_day < 0:
             raise ValueError("max_requests_per_day must be non-negative")
         if self.max_requests_per_second is not None and self.max_requests_per_second <= 0:
             raise ValueError("max_requests_per_second must be positive when set")
@@ -78,7 +78,7 @@ class RateLimiter:
         if limit is None:
             return RateLimitDecision(allowed=True)
         state = self._states.setdefault(source_name, RateLimitState())
-        if state.requests_today >= limit.max_requests_per_day:
+        if limit.max_requests_per_day is not None and state.requests_today >= limit.max_requests_per_day:
             return RateLimitDecision(allowed=False, reason="rate_limit_exceeded")
         if state.in_flight >= limit.max_concurrency:
             return RateLimitDecision(allowed=False, reason="max_concurrency_exceeded")

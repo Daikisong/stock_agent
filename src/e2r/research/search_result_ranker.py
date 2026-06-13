@@ -82,7 +82,18 @@ class SearchResultRanker:
             is_duplicate = result.url in seen_urls
             seen_urls.add(result.url)
             ranked.append(self.score_result(result, company_name=company_name, as_of_date=as_of_date, is_duplicate=is_duplicate))
-        return tuple(sorted(ranked, key=lambda item: (-item.score, item.result.rank or 9999, item.result.title)))
+        return tuple(
+            sorted(
+                ranked,
+                key=lambda item: (
+                    -item.score,
+                    item.result.rank or 9999,
+                    item.result.title,
+                    item.result.source,
+                    item.result.url,
+                ),
+            )
+        )
 
     def score_result(
         self,

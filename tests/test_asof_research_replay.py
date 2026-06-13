@@ -1,10 +1,12 @@
 from datetime import date, datetime
 from pathlib import Path
+import csv
 import json
 import tempfile
 import unittest
+from unittest.mock import patch
 
-from e2r.backtest.asof_research_replay import AsOfResearchReplay, AsOfResearchReplayConfig
+from e2r.backtest.asof_research_replay import AsOfReplayCandidate, AsOfResearchReplay, AsOfResearchReplayConfig, _theme_route_provider_for_config, _write_candidates
 from e2r.cli.run_asof_research_replay import build_parser, config_from_args
 from e2r.models import Stage
 from e2r.research.report_snapshot_store import ReportSnapshotStore
@@ -20,6 +22,39 @@ class AsOfResearchReplayTests(unittest.TestCase):
         self.assertTrue(config.fixture_search)
         self.assertFalse(config.allow_snapshot_derived_universe)
         self.assertEqual(str(config.official_root), "data/historical_official")
+        self.assertIsNone(config.max_queries_per_candidate)
+        self.assertIsNone(config.max_candidates_per_date)
+        self.assertIsNone(config.max_web_research_candidates_per_date)
+        self.assertIsNone(config.theme_rebalance_enabled)
+
+    def test_cli_can_enable_asof_theme_rebalance_without_query_cap(self):
+        args = build_parser().parse_args(
+            [
+                "--start-date",
+                "2023-07-01",
+                "--end-date",
+                "2023-08-01",
+                "--theme-rebalance",
+            ]
+        )
+        config = config_from_args(args)
+
+        self.assertTrue(config.theme_rebalance_enabled)
+        self.assertIsNone(config.max_queries_per_candidate)
+        self.assertIsNone(config.max_candidates_per_date)
+        self.assertIsNone(config.max_web_research_candidates_per_date)
+
+    def test_asof_theme_rebalance_flag_defaults_to_codex_provider_without_env(self):
+        with patch.dict("os.environ", {}, clear=True):
+            provider = _theme_route_provider_for_config(
+                AsOfResearchReplayConfig(
+                    start_date=date(2023, 7, 1),
+                    end_date=date(2023, 8, 1),
+                    theme_rebalance_enabled=True,
+                )
+            )
+
+        self.assertIsNotNone(provider)
 
     def test_universe_is_not_derived_from_search_snapshots(self):
         with tempfile.TemporaryDirectory() as root:
@@ -88,10 +123,66 @@ class AsOfResearchReplayTests(unittest.TestCase):
             summary_exists = (result.output_root / "asof_replay_summary.md").exists()
             failure_exists = (result.output_root / "failure_stage_report.md").exists()
             candidates_exists = (result.output_root / "discovered_candidates.csv").exists()
+            candidates_json = json.loads((result.output_root / "discovered_candidates.json").read_text(encoding="utf-8"))
+            candidates_csv = (result.output_root / "discovered_candidates.csv").read_text(encoding="utf-8")
 
         self.assertTrue(summary_exists)
         self.assertTrue(failure_exists)
         self.assertTrue(candidates_exists)
+        self.assertIn("score_valid", candidates_json[0])
+        self.assertIn("visible_score", candidates_json[0])
+        self.assertIn("score_fingerprint", candidates_json[0])
+        self.assertIn("research_input_fingerprint", candidates_json[0])
+        self.assertIn("score_variability_drivers", candidates_json[0])
+        self.assertIn("web_only_research_input_fingerprint", candidates_json[0])
+        self.assertIn("web_only_score_variability_drivers", candidates_json[0])
+        self.assertIn("visible_score", candidates_csv)
+        self.assertIn("research_input_fingerprint", candidates_csv)
+        self.assertIn("score_variability_drivers", candidates_csv)
+
+    def test_asof_writer_normalizes_invalid_non_null_score(self):
+        rows = (
+            AsOfReplayCandidate(
+                symbol="000003",
+                company_name="잘못된보류점수",
+                as_of_date=date(2026, 6, 1),
+                layer="deep_research",
+                stage=Stage.STAGE_0,
+                rank=1,
+                score=83.0,
+                evidence_types_seen=("research_report",),
+                reason_codes=("score_pending",),
+                candidate_source_path="fixture",
+                web_only_score=77.0,
+                merged_score=83.0,
+                score_valid=False,
+                score_blocked_reason="score_gap_unresolved",
+                score_fingerprint="blocked-fingerprint",
+                research_input_fingerprint="blocked-input-fingerprint",
+                score_variability_drivers=("score_invalid:score_gap_unresolved", "raw_score_before_block:83"),
+                web_only_score_valid=None,
+                web_only_score_blocked_reason=None,
+                web_only_score_fingerprint="blocked-web-only-fingerprint",
+                web_only_research_input_fingerprint="blocked-web-only-input-fingerprint",
+                web_only_score_variability_drivers=("score_invalid:theme_route_unresolved", "raw_score_before_block:77"),
+            ),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            csv_path = Path(directory) / "candidates.csv"
+            json_path = Path(directory) / "candidates.json"
+            _write_candidates(csv_path, json_path, rows)
+            with csv_path.open(encoding="utf-8") as handle:
+                csv_rows = list(csv.DictReader(handle))
+            json_rows = json.loads(json_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(csv_rows[0]["score"], "")
+        self.assertEqual(csv_rows[0]["visible_score"], "")
+        self.assertEqual(csv_rows[0]["merged_score"], "")
+        self.assertEqual(csv_rows[0]["web_only_score"], "")
+        self.assertIsNone(json_rows[0]["score"])
+        self.assertIsNone(json_rows[0]["visible_score"])
+        self.assertIsNone(json_rows[0]["merged_score"])
+        self.assertIsNone(json_rows[0]["web_only_score"])
 
     def test_one_off_label_is_not_forced_green(self):
         with tempfile.TemporaryDirectory() as root:

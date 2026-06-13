@@ -6,6 +6,7 @@ import unittest
 from e2r.backtest.asof_evidence_bundle import build_asof_evidence_bundle, score_asof_evidence_bundle
 from e2r.backtest.historical_official_store import HistoricalOfficialStore
 from e2r.cheap_scan.models import CheapScanCandidate, RecommendedNextLayer
+from e2r.llm import FakeThemeRouteProvider, ThemeRouteOutput
 from e2r.models import Market, Stage
 from e2r.research.asof_web_research import AsOfWebResearchConfig, AsOfWebResearchRunner
 from e2r.research.search_provider import SearchResult
@@ -56,6 +57,45 @@ class AsOfEvidenceBundleTests(unittest.TestCase):
         self.assertGreater(scored.score.information_confidence_score, web_only)
         self.assertIn("price", bundle.source_types)
         self.assertIn("consensus_revision", bundle.source_types)
+
+    def test_invalid_web_score_blocks_merged_asof_score(self):
+        with tempfile.TemporaryDirectory() as root:
+            official_root = Path(root) / "official"
+            _write_official(official_root)
+            report_path = Path(root) / "report.txt"
+            report_path.write_text(_strong_report_text(), encoding="utf-8")
+            candidate = _candidate()
+            web_result = AsOfWebResearchRunner().run(
+                candidate=candidate,
+                search_provider=_Provider(
+                    SearchResult(
+                        title="테스트 수주잔고 OPM Review PDF",
+                        url="https://example.com/report.pdf",
+                        published_at=datetime(2023, 7, 27, 8, 0),
+                        is_pdf=True,
+                        is_report_domain=True,
+                        confidence=0.9,
+                    )
+                ),
+                fixture_text_by_url={"https://example.com/report.pdf": report_path},
+                config=AsOfWebResearchConfig(
+                    as_of_date=date(2023, 8, 1),
+                    theme_rebalance_enabled=True,
+                    theme_route_provider=FakeThemeRouteProvider(
+                        output=ThemeRouteOutput(status="provider_error", blocked_reason="codex_cli_timeout")
+                    ),
+                    theme_evidence_review_enabled=False,
+                ),
+            )
+            bundle = build_asof_evidence_bundle(candidate=candidate, store=HistoricalOfficialStore(official_root), web_result=web_result)
+            scored = score_asof_evidence_bundle(bundle, candidate=candidate, web_result=web_result)
+
+        self.assertEqual(web_result.pipeline_result.score.diagnostic_scores["score_valid"], 0.0)
+        self.assertEqual(scored.stage.stage, Stage.STAGE_0)
+        self.assertEqual(scored.score.total_score, 0.0)
+        self.assertEqual(scored.score.diagnostic_scores["score_valid"], 0.0)
+        self.assertEqual(scored.score.diagnostic_scores["score_blocked_by_asof_web"], 100.0)
+        self.assertIn("raw_score_total_before_asof_web_block", scored.score.diagnostic_scores)
 
     def test_date_unverified_report_cannot_create_green_alone(self):
         with tempfile.TemporaryDirectory() as root:

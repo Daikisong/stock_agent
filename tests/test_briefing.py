@@ -4,7 +4,7 @@ import unittest
 from e2r.briefing import MorningBrief, ScheduledEvent, generate_morning_briefing
 from e2r.connectors import MockDataConnector
 from e2r.fixtures import FIXTURE_CASES, FixtureCategory, fixture_cases_by_category
-from e2r.models import Evidence, Instrument, Market, SectorRegime, SourceTier, Stage, StageSnapshot
+from e2r.models import Evidence, Instrument, Market, ScoreSnapshot, SectorRegime, SourceTier, Stage, StageSnapshot
 from e2r.scoring import DeterministicScorer, ScoringPayload
 
 
@@ -118,6 +118,9 @@ class MorningBriefingTests(unittest.TestCase):
         self.assertIn("5. 섹터 레짐 변화", brief.text)
         self.assertIn("6. 오늘 확인할 공시, 실적, 리포트 일정", brief.text)
         self.assertIn("Synthetic Stage2 / KR-STAGE2 / KR / synthetic", brief.text)
+        self.assertIn("표시점수와 주요 점수", brief.text)
+        self.assertIn("상태 valid fp", brief.text)
+        self.assertNotIn("총점과 주요 점수", brief.text)
         self.assertIn("근거:", brief.text)
         self.assertIn("as_of 2024-01-06", brief.text)
         self.assertIn("PreRunUp252D", brief.text)
@@ -138,6 +141,52 @@ class MorningBriefingTests(unittest.TestCase):
 
         for term in ("매" + "수", "매" + "도", "비중 " + "축소", "오늘 " + "사야 함", "b" + "uy", "s" + "ell"):
             self.assertNotIn(term, brief.text.lower())
+
+    def test_briefing_marks_invalid_score_as_pending_not_zero(self):
+        score = ScoreSnapshot(
+            symbol="KR-BLOCKED",
+            as_of_date=date(2026, 6, 8),
+            eps_fcf_explosion_score=0.0,
+            earnings_visibility_score=0.0,
+            bottleneck_pricing_score=0.0,
+            market_mispricing_score=0.0,
+            valuation_rerating_score=0.0,
+            capital_allocation_score=0.0,
+            information_confidence_score=0.0,
+            risk_penalty=0.0,
+            total_score=0.0,
+            diagnostic_scores={
+                "score_valid": 0.0,
+                "score_blocked_by_theme_route": 100.0,
+                "raw_score_total_before_theme_route_block": 67.5,
+            },
+        )
+        stage = StageSnapshot(
+            symbol="KR-BLOCKED",
+            as_of_date=date(2026, 6, 8),
+            stage=Stage.STAGE_2,
+            previous_stage=Stage.STAGE_1,
+            stage_changed=True,
+            stage_reason=("theme route unresolved; scoring blocked before stage classification",),
+        )
+        instrument = Instrument(
+            symbol="KR-BLOCKED",
+            name="Blocked Score",
+            market=Market.KR,
+            exchange="KRX",
+        )
+
+        brief = generate_morning_briefing(
+            as_of_date=date(2026, 6, 8),
+            instruments=(instrument,),
+            scores=(score,),
+            stages=(stage,),
+        )
+
+        self.assertIn("점수 산출 보류", brief.text)
+        self.assertIn("참고 raw 67.5", brief.text)
+        self.assertIn("상태 pending fp", brief.text)
+        self.assertNotIn("총점 0.0", brief.text)
 
     def test_briefing_rejects_disallowed_terms(self):
         with self.assertRaisesRegex(ValueError, "disallowed recommendation wording"):

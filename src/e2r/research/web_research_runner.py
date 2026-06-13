@@ -52,8 +52,8 @@ class WebResearchInput:
     as_of_date: date
     stage_context: str | None = None
     company_aliases: tuple[str, ...] = field(default_factory=tuple)
-    max_results_per_query: int = 5
-    top_results: int = 8
+    max_results_per_query: int = 100
+    top_results: int | None = None
 
 
 @dataclass(frozen=True)
@@ -261,7 +261,7 @@ class WebResearchRunner:
     @staticmethod
     def _select_results(
         ranked: Sequence[RankedSearchResult],
-        top_results: int,
+        top_results: int | None,
     ) -> tuple[list[RankedSearchResult], list[DroppedSearchResult]]:
         selected: list[RankedSearchResult] = []
         dropped: list[DroppedSearchResult] = []
@@ -280,7 +280,7 @@ class WebResearchRunner:
         selected_ids: set[str] = set()
         covered_queries: set[str] = set()
         for item in eligible:
-            if len(selected) >= top_results:
+            if top_results is not None and len(selected) >= top_results:
                 break
             query = (item.result.query or "").strip()
             if query and query in covered_queries:
@@ -290,7 +290,7 @@ class WebResearchRunner:
             if query:
                 covered_queries.add(query)
         for item in eligible:
-            if len(selected) >= top_results:
+            if top_results is not None and len(selected) >= top_results:
                 break
             if item.result.url in selected_ids:
                 continue
@@ -346,12 +346,14 @@ class WebResearchRunner:
             merged_fields[key] = value
         merged_fields.setdefault("source_url", result.url)
         merged_fields.setdefault("parser_confidence", parsed.parsed_fields.get("parser_confidence", 0.65))
+        _apply_result_date_fields(merged_fields, result)
         return replace(parsed.report, parsed_fields=merged_fields, raw_text=text)
 
     @staticmethod
     def _parse_disclosure(inputs: WebResearchInput, result: SearchResult, text: str) -> DisclosureEvent:
         published = result.published_at or datetime(inputs.as_of_date.year, inputs.as_of_date.month, inputs.as_of_date.day, 8, 0)
         parsed_fields = extract_e2r_text_fields(text, as_of_date=inputs.as_of_date)
+        _apply_result_date_fields(parsed_fields, result)
         # OpenDART-style date ranges are more reliable than generic number
         # extraction for contract duration.
         parsed_fields.pop("contract_duration_months", None)
@@ -377,10 +379,11 @@ class WebResearchRunner:
         parsed_fields.update(extract_e2r_text_fields(f"{result.title}\n{text}", as_of_date=inputs.as_of_date))
         parsed_fields.setdefault("source_url", result.url)
         parsed_fields.setdefault("source_query", result.query)
-        parsed_fields.setdefault("date_verified", result.published_at is not None)
+        parsed_fields.setdefault("date_verified", _result_date_verified(result))
         parsed_fields.setdefault("search_snippet_only", False)
         parsed_fields.setdefault("search_snippet_date_unverified", False)
-        parsed_fields.setdefault("green_allowed_by_date", True)
+        parsed_fields.setdefault("green_allowed_by_date", _result_green_allowed_by_date(result))
+        _apply_result_date_fields(parsed_fields, result)
         parsed_fields.setdefault(
             "evidence_id",
             stable_news_evidence_id(
@@ -408,6 +411,25 @@ class WebResearchRunner:
         merged = dict(news.parsed_fields)
         merged.update(parsed_fields)
         return replace(news, parsed_fields=merged)
+
+
+def _result_date_verified(result: SearchResult) -> bool:
+    return True if result.date_verified is None else bool(result.date_verified)
+
+
+def _result_green_allowed_by_date(result: SearchResult) -> bool:
+    return True if result.green_allowed_by_date is None else bool(result.green_allowed_by_date)
+
+
+def _apply_result_date_fields(parsed_fields: dict[str, Any], result: SearchResult) -> None:
+    date_verified = _result_date_verified(result)
+    green_allowed = _result_green_allowed_by_date(result)
+    parsed_fields.setdefault("date_verified", date_verified)
+    parsed_fields.setdefault("green_allowed_by_date", green_allowed)
+    if not date_verified:
+        parsed_fields.setdefault("date_unverified_document", True)
+    if not green_allowed:
+        parsed_fields.setdefault("date_verification_green_block", True)
 
 
 def classify_search_result(result: SearchResult) -> str:

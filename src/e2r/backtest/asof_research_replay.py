@@ -30,6 +30,8 @@ from e2r.backtest.historical_official_store import (
 from e2r.backtest.historical_universe_replay import ReplayFrequency
 from e2r.cheap_scan import KoreaCheapScanConfig, KoreaCheapScanner
 from e2r.cheap_scan.models import CheapScanCandidate, RecommendedNextLayer
+from e2r.llm import build_default_codex_theme_route_provider, build_theme_route_provider_from_env
+from e2r.llm.theme_provider import ThemeRouteProvider
 from e2r.models import Market, Stage
 from e2r.research.asof_web_research import (
     AsOfWebResearchConfig,
@@ -41,6 +43,16 @@ from e2r.research.asof_web_research import (
 from e2r.research.report_snapshot_store import ReportSnapshotStore
 from e2r.research.search_provider import EmptySearchProvider, SearchProvider
 from e2r.research.search_snapshot_store import SearchSnapshotStore
+from e2r.score_validity import (
+    is_score_valid,
+    normalized_score_state_mapping_if_present,
+    normalized_score_state_payload,
+    research_input_fingerprint,
+    score_block_reason,
+    score_fingerprint,
+    score_variability_drivers,
+    visible_score_total,
+)
 from e2r.stage_gate_diagnostics import promotion_band
 
 
@@ -61,10 +73,10 @@ class AsOfResearchReplayConfig:
     search_snapshot_root: str | Path = "data/search_snapshots"
     report_snapshot_root: str | Path = "data/report_snapshots"
     universe_limit: int | None = None
-    max_candidates_per_date: int = 50
-    max_web_research_candidates_per_date: int = 20
-    max_queries_per_candidate: int = 8
-    max_results_per_query: int = 5
+    max_candidates_per_date: int | None = None
+    max_web_research_candidates_per_date: int | None = None
+    max_queries_per_candidate: int | None = None
+    max_results_per_query: int = 100
     require_date_verified_for_green: bool = True
     allow_undated_docs_for_yellow_only: bool = True
     save_reconstructed_snapshots: bool = False
@@ -74,6 +86,10 @@ class AsOfResearchReplayConfig:
     allow_snapshot_derived_universe: bool = False
     allow_live_historical_official_fetch: bool = False
     save_official_history_cache: bool = False
+    theme_rebalance_enabled: bool | None = None
+    theme_route_provider: ThemeRouteProvider | None = None
+    max_theme_expansion_rounds: int | None = None
+    theme_evidence_review_enabled: bool = True
 
     def __post_init__(self) -> None:
         if not isinstance(self.frequency, ReplayFrequency):
@@ -82,10 +98,14 @@ class AsOfResearchReplayConfig:
             object.__setattr__(self, "market", Market(str(self.market)))
         if self.end_date < self.start_date:
             raise ValueError("end_date cannot be before start_date")
-        if self.max_candidates_per_date <= 0:
+        if self.max_candidates_per_date is not None and self.max_candidates_per_date <= 0:
             raise ValueError("max_candidates_per_date must be positive")
-        if self.max_web_research_candidates_per_date < 0:
+        if self.max_web_research_candidates_per_date is not None and self.max_web_research_candidates_per_date < 0:
             raise ValueError("max_web_research_candidates_per_date cannot be negative")
+        if self.max_queries_per_candidate is not None and self.max_queries_per_candidate < 0:
+            raise ValueError("max_queries_per_candidate cannot be negative")
+        if self.max_theme_expansion_rounds is not None and self.max_theme_expansion_rounds < 0:
+            raise ValueError("max_theme_expansion_rounds must be non-negative")
 
 
 @dataclass(frozen=True)
@@ -121,7 +141,7 @@ class AsOfReplayCandidate:
     layer: str
     stage: Stage
     rank: int
-    score: float
+    score: float | None
     evidence_types_seen: tuple[str, ...]
     reason_codes: tuple[str, ...]
     candidate_source_path: str
@@ -132,6 +152,16 @@ class AsOfReplayCandidate:
     merged_stage: Stage | None = None
     web_only_score: float | None = None
     merged_score: float | None = None
+    score_valid: bool | None = None
+    score_blocked_reason: str | None = None
+    score_fingerprint: str | None = None
+    research_input_fingerprint: str | None = None
+    score_variability_drivers: tuple[str, ...] = field(default_factory=tuple)
+    web_only_score_valid: bool | None = None
+    web_only_score_blocked_reason: str | None = None
+    web_only_score_fingerprint: str | None = None
+    web_only_research_input_fingerprint: str | None = None
+    web_only_score_variability_drivers: tuple[str, ...] = field(default_factory=tuple)
     promotion_delta: str = "none"
     promotion_band: str = "Stage 1"
 
@@ -251,7 +281,8 @@ class AsOfResearchReplay:
         web_results: list[AsOfWebResearchResult] = []
         traces: list[FlowTrace] = []
         candidate_rows: list[AsOfReplayCandidate] = []
-        web_research_slice = layer1[: config.max_web_research_candidates_per_date]
+        web_research_slice = layer1 if config.max_web_research_candidates_per_date is None else layer1[: config.max_web_research_candidates_per_date]
+        theme_route_provider = _theme_route_provider_for_config(config)
         for rank, candidate in enumerate(layer1, start=1):
             should_research = candidate in web_research_slice and not config.dry_run
             web_result: AsOfWebResearchResult | None = None
@@ -273,6 +304,10 @@ class AsOfResearchReplay:
                         require_date_verified_for_green=config.require_date_verified_for_green,
                         allow_undated_docs_for_yellow_only=config.allow_undated_docs_for_yellow_only,
                         save_reconstructed_snapshots=config.save_reconstructed_snapshots,
+                        theme_rebalance_enabled=config.theme_rebalance_enabled,
+                        theme_route_provider=theme_route_provider,
+                        max_theme_expansion_rounds=config.max_theme_expansion_rounds,
+                        theme_evidence_review_enabled=config.theme_evidence_review_enabled,
                     ),
                 )
                 web_results.append(web_result)
@@ -313,6 +348,19 @@ def _provider_for_candidate(
     return EmptySearchProvider()
 
 
+def _theme_route_provider_for_config(config: AsOfResearchReplayConfig) -> ThemeRouteProvider | None:
+    if config.theme_rebalance_enabled is False:
+        return None
+    if config.theme_route_provider is not None:
+        return config.theme_route_provider
+    if config.theme_rebalance_enabled:
+        provider = build_theme_route_provider_from_env(working_directory=Path.cwd())
+        if provider is not None:
+            return provider
+        return build_default_codex_theme_route_provider(working_directory=Path.cwd())
+    return None
+
+
 def _candidate_row(
     candidate: CheapScanCandidate,
     rank: int,
@@ -321,10 +369,34 @@ def _candidate_row(
 ) -> AsOfReplayCandidate:
     pipeline = web_result.pipeline_result if web_result is not None else None
     web_only_stage = pipeline.stage.stage if pipeline is not None else None
-    web_only_score = pipeline.score.total_score if pipeline is not None else None
+    web_only_score = visible_score_total(pipeline.score) if pipeline is not None else None
     evidence_types = merged_scoring.bundle.source_types or ("official_cheap_scan",)
     merged_stage = merged_scoring.stage.stage
-    merged_score = merged_scoring.score.total_score
+    merged_score = visible_score_total(merged_scoring.score)
+    web_score = pipeline.score if pipeline is not None else None
+    merged_input_counts = merged_scoring.bundle.coverage()
+    merged_input_fingerprint = research_input_fingerprint(
+        score=merged_scoring.score,
+        evidence=merged_scoring.bundle.evidence,
+        queries=pipeline.web_result.queries_run if pipeline is not None else (),
+        route_diagnostics=pipeline.theme_route_diagnostics if pipeline is not None else None,
+        input_counts=_normalized_bundle_counts(merged_input_counts),
+        source_fields=merged_scoring.feature_result.source_fields,
+        extra={"expansion_queries": tuple(pipeline.expansion_queries_run) if pipeline is not None else ()},
+    )
+    web_only_input_fingerprint = (
+        research_input_fingerprint(
+            score=web_score,
+            evidence=pipeline.web_result.evidence,
+            queries=pipeline.web_result.queries_run,
+            route_diagnostics=pipeline.theme_route_diagnostics,
+            input_counts=_feature_input_count_row(pipeline.feature_input),
+            source_fields=pipeline.feature_result.source_fields,
+            extra={"expansion_queries": tuple(pipeline.expansion_queries_run)},
+        )
+        if pipeline is not None
+        else None
+    )
     return AsOfReplayCandidate(
         symbol=candidate.symbol,
         company_name=candidate.company_name,
@@ -343,9 +415,58 @@ def _candidate_row(
         merged_stage=merged_stage,
         web_only_score=web_only_score,
         merged_score=merged_score,
+        score_valid=is_score_valid(merged_scoring.score),
+        score_blocked_reason=score_block_reason(merged_scoring.score),
+        score_fingerprint=score_fingerprint(merged_scoring.score),
+        research_input_fingerprint=merged_input_fingerprint,
+        score_variability_drivers=score_variability_drivers(
+            merged_scoring.score,
+            input_counts=_normalized_bundle_counts(merged_input_counts),
+            evidence_count=len(merged_scoring.bundle.evidence),
+            input_fingerprint=merged_input_fingerprint,
+        ),
+        web_only_score_valid=is_score_valid(web_score) if web_score is not None else None,
+        web_only_score_blocked_reason=score_block_reason(web_score) if web_score is not None else None,
+        web_only_score_fingerprint=score_fingerprint(web_score) if web_score is not None else None,
+        web_only_research_input_fingerprint=web_only_input_fingerprint,
+        web_only_score_variability_drivers=score_variability_drivers(
+            web_score,
+            route_diagnostics=pipeline.theme_route_diagnostics if pipeline is not None else None,
+            evidence_count=len(pipeline.web_result.evidence) if pipeline is not None else None,
+            expansion_query_count=len(pipeline.expansion_queries_run) if pipeline is not None else None,
+            scoring_canonical_archetype_id=pipeline.feature_result.payload.canonical_archetype_id if pipeline is not None else None,
+            input_fingerprint=web_only_input_fingerprint,
+        )
+        if web_score is not None
+        else (),
         promotion_delta=_promotion_delta(web_only_stage, merged_stage),
         promotion_band=promotion_band(merged_scoring.score, merged_stage),
     )
+
+
+def _normalized_bundle_counts(counts: Mapping[str, int]) -> Mapping[str, int]:
+    return {
+        "price_bars": int(counts.get("price_bars_count", 0)),
+        "financial_actuals": int(counts.get("financial_actuals_count", 0)),
+        "disclosures": int(counts.get("disclosures_count", 0)),
+        "research_reports": int(counts.get("research_reports_count", 0)),
+        "news_items": int(counts.get("news_items_count", 0)),
+        "consensus": int(counts.get("consensus_count", 0)),
+        "consensus_revisions": int(counts.get("consensus_revisions_count", 0)),
+    }
+
+
+def _feature_input_count_row(feature_input: Any) -> Mapping[str, int]:
+    return {
+        "price_bars": len(feature_input.price_bars),
+        "financial_actuals": len(feature_input.financial_actuals),
+        "consensus": len(feature_input.consensus),
+        "consensus_revisions": len(feature_input.consensus_revisions),
+        "disclosures": len(feature_input.disclosures),
+        "research_reports": len(feature_input.research_reports),
+        "news_items": len(feature_input.news_items),
+        "agent_extracted_fields": len(feature_input.agent_extracted_fields),
+    }
 
 
 def _promotion_delta(web_only_stage: Stage | None, merged_stage: Stage) -> str:
@@ -686,6 +807,7 @@ def _write_candidates(csv_path: Path, json_path: Path, rows: Sequence[AsOfReplay
                 "stage",
                 "rank",
                 "score",
+                "visible_score",
                 "candidate_source_path",
                 "date_verified_documents",
                 "date_unverified_documents",
@@ -694,12 +816,45 @@ def _write_candidates(csv_path: Path, json_path: Path, rows: Sequence[AsOfReplay
                 "merged_stage",
                 "web_only_score",
                 "merged_score",
+                "score_valid",
+                "score_blocked_reason",
+                "score_fingerprint",
+                "research_input_fingerprint",
+                "score_variability_drivers",
+                "web_only_score_valid",
+                "web_only_score_blocked_reason",
+                "web_only_score_fingerprint",
+                "web_only_research_input_fingerprint",
+                "web_only_score_variability_drivers",
                 "promotion_delta",
                 "promotion_band",
             ),
         )
         writer.writeheader()
         for item in rows:
+            score_payload = normalized_score_state_payload(
+                {
+                    "score": item.score,
+                    "merged_score": item.merged_score,
+                    "score_valid": item.score_valid,
+                    "score_blocked_reason": item.score_blocked_reason,
+                }
+            )
+            score = score_payload.get("score")
+            visible_score = score_payload.get("visible_score")
+            merged_score = score_payload.get("merged_score")
+            web_only_payload = (
+                normalized_score_state_payload(
+                    {
+                        "score": item.web_only_score,
+                        "score_valid": item.web_only_score_valid,
+                        "score_blocked_reason": item.web_only_score_blocked_reason,
+                    }
+                )
+                if item.web_only_score is not None or item.web_only_score_valid is not None or item.web_only_score_blocked_reason
+                else {}
+            )
+            web_only_score = web_only_payload.get("score")
             writer.writerow(
                 {
                     "symbol": item.symbol,
@@ -708,15 +863,26 @@ def _write_candidates(csv_path: Path, json_path: Path, rows: Sequence[AsOfReplay
                     "layer": item.layer,
                     "stage": item.stage.value,
                     "rank": item.rank,
-                    "score": item.score,
+                    "score": score if score is not None else "",
+                    "visible_score": visible_score if visible_score is not None else "",
                     "candidate_source_path": item.candidate_source_path,
                     "date_verified_documents": item.date_verified_documents,
                     "date_unverified_documents": item.date_unverified_documents,
                     "rejected_future_documents": item.rejected_future_documents,
                     "web_only_stage": item.web_only_stage.value if item.web_only_stage else "",
                     "merged_stage": item.merged_stage.value if item.merged_stage else "",
-                    "web_only_score": item.web_only_score if item.web_only_score is not None else "",
-                    "merged_score": item.merged_score if item.merged_score is not None else "",
+                    "web_only_score": web_only_score if web_only_score is not None else "",
+                    "merged_score": merged_score if merged_score is not None else "",
+                    "score_valid": score_payload.get("score_valid") if score_payload.get("score_valid") is not None else "",
+                    "score_blocked_reason": score_payload.get("score_blocked_reason") or "",
+                    "score_fingerprint": item.score_fingerprint or "",
+                    "research_input_fingerprint": item.research_input_fingerprint or "",
+                    "score_variability_drivers": "|".join(item.score_variability_drivers),
+                    "web_only_score_valid": web_only_payload.get("score_valid") if web_only_payload.get("score_valid") is not None else "",
+                    "web_only_score_blocked_reason": web_only_payload.get("score_blocked_reason") or "",
+                    "web_only_score_fingerprint": item.web_only_score_fingerprint or "",
+                    "web_only_research_input_fingerprint": item.web_only_research_input_fingerprint or "",
+                    "web_only_score_variability_drivers": "|".join(item.web_only_score_variability_drivers),
                     "promotion_delta": item.promotion_delta,
                     "promotion_band": item.promotion_band,
                 }
@@ -747,9 +913,30 @@ def _jsonable(value: Any) -> Any:
     if isinstance(value, Path):
         return str(value)
     if is_dataclass(value):
-        return {field.name: _jsonable(getattr(value, field.name)) for field in fields(value)}
+        payload = {field.name: _jsonable(getattr(value, field.name)) for field in fields(value)}
+        if "score" in payload and "score_valid" in payload:
+            payload = normalized_score_state_payload(payload)
+        if "web_only_score" in payload and "web_only_score_valid" in payload:
+            web_only_payload = (
+                normalized_score_state_payload(
+                    {
+                        "score": payload.get("web_only_score"),
+                        "score_valid": payload.get("web_only_score_valid"),
+                        "score_blocked_reason": payload.get("web_only_score_blocked_reason"),
+                    }
+                )
+                if payload.get("web_only_score") is not None
+                or payload.get("web_only_score_valid") is not None
+                or payload.get("web_only_score_blocked_reason")
+                else {}
+            )
+            if web_only_payload:
+                payload["web_only_score"] = web_only_payload.get("score")
+                payload["web_only_score_valid"] = web_only_payload.get("score_valid")
+                payload["web_only_score_blocked_reason"] = web_only_payload.get("score_blocked_reason")
+        return payload
     if isinstance(value, Mapping):
-        return {str(key): _jsonable(item) for key, item in value.items()}
+        return normalized_score_state_mapping_if_present({str(key): _jsonable(item) for key, item in value.items()})
     if isinstance(value, (list, tuple, set, frozenset)):
         return [_jsonable(item) for item in value]
     return value

@@ -3,54 +3,29 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `47`
+- stage_transition_summary_rows: `22`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| 004170 | 004170 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| 007070 | 007070 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| 008770 | 008770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| 023530 | 023530 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 74900.0 | None | None | no_valid_stage_transition |
-| 069960 | 069960 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 51200.0 | None | None | 20.9 | None | stage2_actionable_best_entry |
-| 090430 | 090430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| 139480 | 139480 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| 282330 | 282330 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| 383220 | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_115_001 | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_115_002 | 105630 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_115_003 | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_115_004 | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_116_001 | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_116_002 | 031430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_116_003 | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_116_004 | 005390 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_116_005 | 007980 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_R5L119_01_093050 | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 15620.0 | None | None | 6.98 | None | stage2_actionable_best_entry |
-| C19_R5L119_02_031430 | 031430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_R5L119_03_081660 | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 41900.0 | None | None | no_valid_stage_transition |
-| C19_R5L119_04_005390 | 005390 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 1957.0 | None | None | 45.12 | None | stage2_actionable_best_entry |
-| C19_R5L119_05_007980 | 007980 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 2015.0 | None | None | 4.96 | None | stage2_actionable_best_entry |
-| C19_R5L119_06_049770 | 049770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 34500.0 | None | None | 27.6 | None | stage2_actionable_best_entry |
-| C19_R5L119_07_006040 | 006040 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 33000.0 | None | None | 21.3 | None | stage2_actionable_best_entry |
-| C19_R5L119_08_248170 | 248170 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 32950.0 | None | None | no_valid_stage_transition |
-| C19_R5L119_09_264900 | 264900 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_R5L119_10_136480 | 136480 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_R5L119_11_014710 | 014710 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 4800.0 | None | None | no_valid_stage_transition |
-| C19_R5L119_12_145990 | 145990 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 42000.0 | None | None | 30.7 | None | stage2_actionable_best_entry |
-| C19_R5L119_13_005610 | 005610 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 60300.0 | None | None | 13.4 | None | stage2_captured_most_upside |
-| C19_R5L119_14_003960 | 003960 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 47680.0 | None | None | no_valid_stage_transition |
-| C19_R5L119_15_007310 | 007310 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_R5L119_16_145990 | 145990 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 45200.0 | None | None | 25.5 | None | stage2_actionable_best_entry |
-| C19_R5L119_17_036620 | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 3025.0 | None | None | 39.67 | None | stage2_actionable_best_entry |
-| C19_R5L119_18_111770 | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_R5L119_19_105630 | 105630 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 21450.0 | None | None | 3.73 | None | stage2_actionable_best_entry |
-| C19_R5L119_20_383220 | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 74000.0 | None | None | no_valid_stage_transition |
-| C19_R5L120_01_005180 | 005180 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
-| C19_R5L120_02_271560 | 271560 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 96500.0 | None | None | 10.6 | None | stage2_actionable_best_entry |
-| C19_R5L120_03_192820 | 192820 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 133000.0 | None | None | 49.0 | None | stage2_actionable_best_entry |
-| C19_R5L120_04_161890 | 161890 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 63600.0 | None | None | 42.6 | None | stage2_actionable_best_entry |
-| C19_R5L120_05_214420 | 214420 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 8950.0 | None | None | no_valid_stage_transition |
-| C19_R5L120_06_090430 | 090430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 194200.0 | None | None | -18.6 | None | stage2_captured_most_upside |
-| C19_R5L120_07_161000 | 161000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 13700.0 | None | None | 26.0 | None | stage2_actionable_best_entry |
-| C19_R5L120_08_069960 | 069960 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 51200.0 | None | None | 20.9 | None | stage2_actionable_best_entry |
-| C19_R5L120_09_020000 | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 21550.0 | None | None | 0.46 | None | stage2_captured_most_upside |
+| C19_187_001 | 004170 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 177100.0 | None | None | 0.96 | None | stage2_captured_most_upside |
+| C19_187_002 | 008770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_187_003 | 031430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 18260.0 | None | None | 0.0 | None | stage2_captured_most_upside |
+| C19_187_004 | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_187_005 | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 14520.0 | None | None | 15.5 | None | stage2_captured_most_upside |
+| C19_187_006 | 071840 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 9780.0 | None | None | 11.55 | None | stage2_captured_most_upside |
+| C19_187_007 | 028260 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 150100.0 | None | None | 5.0 | None | stage2_captured_most_upside |
+| C19_187_008 | 078520 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 7740.0 | None | None | 92.89 | None | stage2_captured_most_upside |
+| C19_L159_01 | 139480 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 75800.0 | None | None | no_valid_stage_transition |
+| C19_L159_02 | 139480 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 84800.0 | None | None | 20.05 | None | stage2_actionable_best_entry |
+| C19_L159_03 | 023530 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_L159_04 | 337930 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 10780.0 | None | None | 24.12 | None | stage2_actionable_best_entry |
+| C19_L159_05 | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_L159_06 | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_L159_07 | 282330 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_L159_08 | 069960 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_R5L114_004170_SHINSEGAE_DUTYFREE_SURPRISE_WEAK_DEPTSTORE | 004170 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 210000.0 | None | None | no_valid_stage_transition |
+| C19_R5L114_020000_HANDSOME_APPAREL_SLOWDOWN_OUTLET_INVENTORY | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 26100.0 | None | None | no_valid_stage_transition |
+| C19_R5L114_023530_LOTTE_MART_SUPER_ECOMMERCE_LOSS_NARROWING | 023530 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 76800.0 | None | None | 19.9219 | None | stage2_actionable_best_entry |
+| C19_R5L114_031430_SI_BRAND_EXIT_FASHION_MARGIN_GAP | 031430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 19290.0 | None | None | no_valid_stage_transition |
+| C19_R5L114_069960_HYUNDAI_DEPTSTORE_DUTYFREE_GINUS_MIX | 069960 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19_R5L114_383220_FNF_DISCOVERY_CHINA_PLAN_MLB_SLOWDOWN | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 59000.0 | None | None | 26.7797 | None | stage2_actionable_best_entry |

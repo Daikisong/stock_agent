@@ -4,8 +4,10 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
 
-from e2r.models import Market, Stage
+from e2r.models import Market, ScoreSnapshot, Stage
 from e2r.pipeline import ConnectorBundle, DailyScanConfig, DailyScanRunner
+from e2r.pipeline.daily_scan import _score_output_row
+from e2r.score_validity import score_state_contract_violations
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,6 +38,15 @@ class DailyScanRunnerTests(unittest.TestCase):
             payload = json.loads(result.json_path.read_text(encoding="utf-8"))
             self.assertEqual(payload["as_of_date"], "2026-05-14")
             self.assertTrue(payload["company_results"])
+            self.assertTrue(payload["scores"])
+            self.assertIn("score_valid", payload["scores"][0])
+            self.assertIn("visible_score", payload["scores"][0])
+            self.assertIn("research_input_fingerprint", payload["scores"][0])
+            self.assertIn("score_variability_drivers", payload["scores"][0])
+            self.assertIn("visible_score", payload["company_results"][0])
+            self.assertIn("research_input_fingerprint", payload["company_results"][0])
+            self.assertIn("score_variability_drivers", payload["company_results"][0])
+            self.assertIn("feature_input_counts", payload["company_results"][0])
 
     def test_hd_and_zoom_appear_with_expected_stages_in_generated_brief(self):
         with TemporaryDirectory() as output_dir:
@@ -113,6 +124,60 @@ class DailyScanRunnerTests(unittest.TestCase):
 
             self.assertIn(Stage.STAGE_3_GREEN, stages)
             self.assertIn(Stage.STAGE_3_RED, stages)
+
+    def test_score_output_row_hides_invalid_component_scores_and_keeps_raw_reference(self):
+        score = ScoreSnapshot(
+            symbol="005930",
+            as_of_date=date(2026, 6, 12),
+            eps_fcf_explosion_score=0,
+            earnings_visibility_score=0,
+            bottleneck_pricing_score=0,
+            market_mispricing_score=0,
+            valuation_rerating_score=0,
+            capital_allocation_score=0,
+            information_confidence_score=0,
+            risk_penalty=0,
+            total_score=0,
+            diagnostic_scores={
+                "score_blocked_by_score_gap": 100.0,
+                "raw_score_total_before_score_gap_block": 83.0,
+            },
+        )
+
+        row = _score_output_row(score)
+
+        self.assertFalse(row["score_valid"])
+        self.assertEqual(row["score_blocked_reason"], "score_gap_unresolved")
+        self.assertIsInstance(row["score_fingerprint"], str)
+        self.assertIn("score_invalid:score_gap_unresolved", row["score_variability_drivers"])
+        self.assertIn("raw_score_before_block:83", row["score_variability_drivers"])
+        self.assertIsNone(row["visible_score"])
+        self.assertIsNone(row["total_score"])
+        self.assertIsNone(row["research_input_fingerprint"])
+        self.assertEqual(row["raw_score_before_block"], 83.0)
+        self.assertIsNone(row["component_scores"])
+        self.assertEqual(score_state_contract_violations(row), ())
+
+    def test_company_result_output_includes_research_input_fingerprint(self):
+        with TemporaryDirectory() as directory:
+            config = DailyScanConfig(
+                as_of_date=date(2024, 3, 27),
+                output_directory=directory,
+                universe_limit=1,
+            )
+            scan = DailyScanRunner().run(config)
+            payload = json.loads(scan.json_path.read_text(encoding="utf-8"))
+
+        result = payload["company_results"][0]
+        score_row = payload["scores"][0]
+        self.assertEqual(result["visible_score"], result["score"])
+        self.assertIsInstance(result["research_input_fingerprint"], str)
+        self.assertTrue(any(item.startswith("research_input_fingerprint:") for item in result["score_variability_drivers"]))
+        self.assertEqual(score_row["research_input_fingerprint"], result["research_input_fingerprint"])
+        self.assertEqual(score_row["visible_score"], score_row["total_score"])
+        self.assertTrue(any(item.startswith("research_input_fingerprint:") for item in score_row["score_variability_drivers"]))
+        self.assertEqual(score_state_contract_violations(result), ())
+        self.assertEqual(score_state_contract_violations(score_row), ())
 
 
 if __name__ == "__main__":

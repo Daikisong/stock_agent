@@ -7,7 +7,7 @@ from dataclasses import dataclass, field, fields, is_dataclass
 from datetime import date, datetime, timedelta
 from enum import Enum
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Mapping, Sequence
 
 from e2r.backtest.historical_source_adapter import (
     HistoricalPointInTimeSourceAdapter,
@@ -27,6 +27,16 @@ from e2r.backtest.stage_lifecycle_detector import (
 from e2r.models import Market, Stage
 from e2r.pipeline.e2r_standard_flow import E2R_STANDARD, E2RStandardConfig, E2RStandardFlow
 from e2r.research.search_budget import SearchBudget
+from e2r.score_validity import (
+    is_score_valid,
+    normalized_score_state_mapping_if_present,
+    normalized_score_state_payload,
+    research_input_fingerprint,
+    score_block_reason,
+    score_fingerprint,
+    score_variability_drivers,
+    visible_score_total,
+)
 
 
 @dataclass(frozen=True)
@@ -39,7 +49,7 @@ class E2RStandardReplayConfig:
     market: Market | str = Market.KR
     output_directory: str | Path = "output/backtests/blind_discovery"
     universe_limit: int | None = None
-    max_candidates_per_date: int = 50
+    max_candidates_per_date: int | None = None
     case_root: str | Path = "data/historical_cases"
     search_snapshot_root: str | Path = "data/search_snapshots"
     report_snapshot_root: str | Path = "data/report_snapshots"
@@ -55,7 +65,7 @@ class E2RStandardReplayConfig:
             object.__setattr__(self, "market", Market(str(self.market)))
         if self.end_date < self.start_date:
             raise ValueError("end_date cannot be before start_date")
-        if self.max_candidates_per_date <= 0:
+        if self.max_candidates_per_date is not None and self.max_candidates_per_date <= 0:
             raise ValueError("max_candidates_per_date must be positive")
 
 
@@ -69,10 +79,16 @@ class E2RStandardReplayCandidate:
     layer: str
     stage: Stage
     rank: int
-    score: float
+    score: float | None
     evidence_types_seen: tuple[str, ...]
     reason_codes: tuple[str, ...]
     candidate_source_path: str
+    visible_score: float | None = None
+    score_valid: bool | None = None
+    score_blocked_reason: str | None = None
+    score_fingerprint: str | None = None
+    research_input_fingerprint: str | None = None
+    score_variability_drivers: tuple[str, ...] = field(default_factory=tuple)
     lifecycle_status: str = "unknown_insufficient_evidence"
     lifecycle_stage: Stage | None = None
     missing_evidence_warnings: tuple[str, ...] = field(default_factory=tuple)
@@ -80,6 +96,7 @@ class E2RStandardReplayCandidate:
     def __post_init__(self) -> None:
         object.__setattr__(self, "evidence_types_seen", tuple(dict.fromkeys(self.evidence_types_seen)))
         object.__setattr__(self, "reason_codes", tuple(dict.fromkeys(self.reason_codes)))
+        object.__setattr__(self, "score_variability_drivers", tuple(dict.fromkeys(self.score_variability_drivers)))
         object.__setattr__(self, "missing_evidence_warnings", tuple(dict.fromkeys(self.missing_evidence_warnings)))
 
 
@@ -146,12 +163,8 @@ class E2RStandardReplay:
                     top_candidates=config.max_candidates_per_date,
                     fixture_mode=True,
                     report_radar_enabled=True,
-                    report_radar_universe_limit=config.max_candidates_per_date,
-                    search_budget=SearchBudget(
-                        max_total_queries_per_day=max(200, config.max_candidates_per_date * 20),
-                        max_queries_per_symbol=40,
-                        max_deep_research_symbols=config.max_candidates_per_date,
-                    ),
+                    report_radar_universe_limit=None,
+                    search_budget=SearchBudget(),
                     browser_provider=bundle.search_provider,
                     free_search_provider=bundle.search_provider,
                     fixture_text_by_url=bundle.fixture_text_by_url,
@@ -159,10 +172,11 @@ class E2RStandardReplay:
                 )
             )
             rows = _candidate_rows(flow_result, bundle.coverage)
+            selected_rows = tuple(rows) if config.max_candidates_per_date is None else tuple(rows[: config.max_candidates_per_date])
             snapshots.append(
                 E2RStandardReplaySnapshot(
                     as_of_date=replay_date,
-                    candidates=tuple(rows[: config.max_candidates_per_date]),
+                    candidates=selected_rows,
                     source_coverage=bundle.coverage,
                     limitations=bundle.coverage.limitations(),
                 )
@@ -208,7 +222,7 @@ def _run_fixture_proxy(config: E2RStandardReplayConfig) -> E2RStandardReplayResu
     snapshots: list[E2RStandardReplaySnapshot] = []
     for proxy_snapshot in proxy.snapshots:
         candidates: list[E2RStandardReplayCandidate] = []
-        ranked = sorted(proxy_snapshot.candidates, key=lambda item: (-item.layer1_score, -item.total_score, item.symbol))
+        ranked = sorted(proxy_snapshot.candidates, key=lambda item: (-item.layer1_score, -_candidate_score_sort_value(item.total_score), item.symbol))
         for rank, item in enumerate(ranked, start=1):
             candidates.append(
                 E2RStandardReplayCandidate(
@@ -222,6 +236,11 @@ def _run_fixture_proxy(config: E2RStandardReplayConfig) -> E2RStandardReplayResu
                     evidence_types_seen=tuple(item.evidence_types_seen),
                     reason_codes=tuple(item.reason_codes),
                     candidate_source_path=item.candidate_source_path,
+                    score_valid=item.score_valid,
+                    score_blocked_reason=item.score_blocked_reason,
+                    score_fingerprint=item.score_fingerprint,
+                    research_input_fingerprint=item.research_input_fingerprint,
+                    score_variability_drivers=tuple(item.score_variability_drivers),
                     missing_evidence_warnings=("fixture_proxy_mode",) + tuple(item.missing_evidence_warnings),
                 )
             )
@@ -250,16 +269,26 @@ def _run_fixture_proxy(config: E2RStandardReplayConfig) -> E2RStandardReplayResu
 def _candidate_rows(flow_result, coverage: HistoricalSourceCoverage) -> tuple[E2RStandardReplayCandidate, ...]:
     scores_by_symbol = {item.symbol: item for item in flow_result.scores}
     stages_by_symbol = {item.symbol: item for item in flow_result.stages}
+    web_result_by_symbol = {item.score.symbol: item for item in flow_result.web_results}
     evidence_by_symbol: dict[str, set[str]] = {}
+    evidence_items_by_symbol: dict[str, list[Any]] = {}
     for item in flow_result.evidence:
         evidence_by_symbol.setdefault(item.symbol, set()).add(item.source_type)
+        evidence_items_by_symbol.setdefault(item.symbol, []).append(item)
     rows: list[E2RStandardReplayCandidate] = []
     ranked = sorted(flow_result.candidates, key=lambda item: (-item.cheap_scan_total_score, item.symbol))
     for rank, candidate in enumerate(ranked, start=1):
         stage_snapshot = stages_by_symbol.get(candidate.symbol)
         score = scores_by_symbol.get(candidate.symbol)
+        web_result = web_result_by_symbol.get(candidate.symbol)
+        input_fingerprint = _standard_candidate_input_fingerprint(
+            score,
+            web_result,
+            tuple(evidence_items_by_symbol.get(candidate.symbol, ())),
+        )
         stage = stage_snapshot.stage if stage_snapshot is not None else Stage.STAGE_1
         lifecycle = _detect_lifecycle(candidate.symbol, candidate.as_of_date, stage, score)
+        visible_score = visible_score_total(score)
         rows.append(
             E2RStandardReplayCandidate(
                 symbol=candidate.symbol,
@@ -268,7 +297,21 @@ def _candidate_rows(flow_result, coverage: HistoricalSourceCoverage) -> tuple[E2
                 layer=candidate.recommended_next_layer.value,
                 stage=stage,
                 rank=rank,
-                score=score.total_score if score is not None else candidate.cheap_scan_total_score,
+                score=visible_score,
+                visible_score=visible_score,
+                score_valid=is_score_valid(score),
+                score_blocked_reason=score_block_reason(score),
+                score_fingerprint=score_fingerprint(score),
+                research_input_fingerprint=input_fingerprint,
+                score_variability_drivers=score_variability_drivers(
+                    score,
+                    route_diagnostics=web_result.theme_route_diagnostics if web_result is not None else None,
+                    input_counts=_feature_input_count_row(web_result.feature_input) if web_result is not None else None,
+                    evidence_count=len(evidence_by_symbol.get(candidate.symbol, ())),
+                    expansion_query_count=len(web_result.expansion_queries_run) if web_result is not None else None,
+                    scoring_canonical_archetype_id=web_result.feature_result.payload.canonical_archetype_id if web_result is not None else None,
+                    input_fingerprint=input_fingerprint,
+                ),
                 evidence_types_seen=tuple(sorted(evidence_by_symbol.get(candidate.symbol, ()))) or ("search_snapshot",),
                 reason_codes=tuple(candidate.reason_codes),
                 candidate_source_path=candidate.candidate_source_path,
@@ -278,6 +321,35 @@ def _candidate_rows(flow_result, coverage: HistoricalSourceCoverage) -> tuple[E2
             )
         )
     return tuple(rows)
+
+
+def _feature_input_count_row(feature_input: Any) -> Mapping[str, int]:
+    return {
+        "price_bars": len(feature_input.price_bars),
+        "financial_actuals": len(feature_input.financial_actuals),
+        "consensus": len(feature_input.consensus),
+        "consensus_revisions": len(feature_input.consensus_revisions),
+        "disclosures": len(feature_input.disclosures),
+        "research_reports": len(feature_input.research_reports),
+        "news_items": len(feature_input.news_items),
+        "agent_extracted_fields": len(feature_input.agent_extracted_fields),
+    }
+
+
+def _standard_candidate_input_fingerprint(score: Any, web_result: Any, evidence: Sequence[Any]) -> str:
+    feature_input = getattr(web_result, "feature_input", None)
+    return research_input_fingerprint(
+        score=score,
+        evidence=evidence or tuple(getattr(getattr(web_result, "web_result", None), "evidence", ())),
+        queries=tuple(getattr(getattr(web_result, "web_result", None), "queries_run", ())),
+        route_diagnostics=getattr(web_result, "theme_route_diagnostics", None),
+        input_counts=_feature_input_count_row(feature_input) if feature_input is not None else None,
+        source_fields=getattr(getattr(web_result, "feature_result", None), "source_fields", None),
+        extra={
+            "expansion_queries": tuple(getattr(web_result, "expansion_queries_run", ())) if web_result is not None else (),
+            "coverage_available": bool(evidence),
+        },
+    )
 
 
 def _detect_lifecycle(symbol: str, as_of_date: date, stage: Stage, score) -> StageLifecycleDetection:
@@ -301,6 +373,10 @@ def _detect_lifecycle(symbol: str, as_of_date: date, stage: Stage, score) -> Sta
             eps_fcf_visibility_strong=True,
         )
     )
+
+
+def _candidate_score_sort_value(score: float | None) -> float:
+    return float(score) if score is not None else -1.0
 
 
 def _replay_dates(start: date, end: date, frequency: ReplayFrequency) -> tuple[date, ...]:
@@ -364,9 +440,12 @@ def jsonable(value: Any) -> Any:
     if isinstance(value, Path):
         return str(value)
     if is_dataclass(value):
-        return {field.name: jsonable(getattr(value, field.name)) for field in fields(value)}
+        payload = {field.name: jsonable(getattr(value, field.name)) for field in fields(value)}
+        if "score" in payload and "score_valid" in payload:
+            payload = normalized_score_state_payload(payload)
+        return payload
     if isinstance(value, Mapping):
-        return {str(key): jsonable(item) for key, item in value.items()}
+        return normalized_score_state_mapping_if_present({str(key): jsonable(item) for key, item in value.items()})
     if isinstance(value, (list, tuple, set, frozenset)):
         return [jsonable(item) for item in value]
     return value

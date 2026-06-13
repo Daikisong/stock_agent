@@ -2,13 +2,17 @@
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass, field
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
+from pathlib import Path
 from typing import Any, Callable, Sequence
 
 from e2r.backtesting import BacktestEngine, Stage3BacktestInput
 from e2r.features import DeterministicFeatureEngineer, FeatureEngineeringInput, FeatureEngineeringResult
 from e2r.historical_cases import HistoricalCase
+from e2r.llm.codex_theme_provider import build_default_codex_theme_route_provider, build_theme_route_provider_from_env
+from e2r.llm.theme_provider import ThemeRouteProvider
 from e2r.models import (
     BacktestResult,
     DisclosureEvent,
@@ -26,7 +30,11 @@ from e2r.models import (
 from e2r.pipeline.evidence_builder import evidence_from_feature_domains
 from e2r.pipeline.stage_update import StageUpdateEngine, StageUpdateInput
 from e2r.red_team import RedTeamAssessment, RedTeamEngine
+from e2r.research.free_web_research_runner import FreeWebResearchInput, FreeWebResearchRunner
 from e2r.research.report_parser import parse_research_report_text
+from e2r.research.search_budget import SearchBudget
+from e2r.research.search_provider import EmptySearchProvider, SearchProvider, SearchResult
+from e2r.score_validity import is_score_valid
 from e2r.sources import (
     ConsensusCSVConnector,
     KINDConnector,
@@ -79,6 +87,12 @@ class CompanyResearchInput:
     stage3_price: float | None = None
     backtest_price_bars: Sequence[PriceBar] = field(default_factory=tuple)
     historical_evidence: Sequence[Evidence] = field(default_factory=tuple)
+    fixture_mode: bool = True
+    theme_rebalance_enabled: bool | None = None
+    theme_route_provider: ThemeRouteProvider | None = None
+    theme_evidence_review_enabled: bool = True
+    max_theme_expansion_rounds: int | None = None
+    free_search_provider: SearchProvider | None = None
 
 
 @dataclass(frozen=True)
@@ -161,19 +175,37 @@ class CompanyResearchPipeline:
                 news_items=news_items,
             )
         )
-        stage = self._stage_engine.classify(
-            StageUpdateInput(
-                score=score,
-                red_team=red_team,
-                previous_stage=inputs.previous_stage,
-                theme_regime_score=80.0 if self._has_regime_context(feature_input) else 0.0,
-                company_event_score=80.0 if self._has_company_event(feature_input) else 0.0,
-                high_quality_company_event=bool(disclosures or parsed_reports),
-                evidence_ids=tuple(item.evidence_id for item in evidence if item.as_of_date <= as_of_date),
-            )
+        expanded = self._expanded_web_research(
+            inputs=inputs,
+            base_feature_input=feature_input,
+            base_evidence=evidence,
+            report_results=report_results,
+            errors=errors,
         )
+        if expanded is not None:
+            feature_input = expanded.feature_input
+            feature_result = expanded.feature_result
+            score = expanded.score
+            red_team = expanded.red_team
+            evidence = _dedupe_evidence(tuple(evidence) + tuple(expanded.web_result.evidence))
+        if expanded is not None and not is_score_valid(score):
+            stage = expanded.stage
+        else:
+            stage = self._stage_engine.classify(
+                StageUpdateInput(
+                    score=score,
+                    red_team=red_team,
+                    previous_stage=inputs.previous_stage,
+                    theme_regime_score=80.0 if self._has_regime_context(feature_input) else 0.0,
+                    company_event_score=80.0 if self._has_company_event(feature_input) else 0.0,
+                    high_quality_company_event=bool(feature_input.disclosures or feature_input.research_reports),
+                    evidence_ids=tuple(item.evidence_id for item in evidence if item.as_of_date <= as_of_date),
+                )
+            )
         backtest = self._backtest(inputs, stage, price_bars, errors)
         findings = tuple(red_team.findings) + tuple(source_findings)
+        if expanded is not None:
+            findings = _dedupe_findings(tuple(expanded.red_team_findings) + findings)
         return CompanyResearchResult(
             instrument=instrument,
             as_of_date=as_of_date,
@@ -188,6 +220,52 @@ class CompanyResearchPipeline:
             report_search_results=report_results,
             errors=tuple(errors),
         )
+
+    def _expanded_web_research(
+        self,
+        *,
+        inputs: CompanyResearchInput,
+        base_feature_input: FeatureEngineeringInput,
+        base_evidence: Sequence[Evidence],
+        report_results: Sequence[ReportSearchResult],
+        errors: list[str],
+    ):
+        theme_provider = _effective_theme_route_provider(inputs)
+        if theme_provider is None:
+            return None
+        searchable_reports = _dedupe_report_results(
+            tuple(report_results)
+            + self._report_search_results(
+                inputs.instrument,
+                inputs.as_of_date,
+                inputs.connectors,
+                errors,
+            )
+        )
+        search_provider = inputs.free_search_provider or _StaticReportSearchProvider(searchable_reports)
+        fixture_text_by_url = _report_text_by_url(searchable_reports)
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=search_provider,
+        ).run(
+            FreeWebResearchInput(
+                company_name=inputs.instrument.name,
+                symbol=inputs.instrument.symbol,
+                sector=" ".join(part for part in (inputs.instrument.sector_custom, inputs.instrument.sector_exchange) if part) or None,
+                market=inputs.instrument.market,
+                as_of_date=inputs.as_of_date,
+                previous_stage=inputs.previous_stage,
+                company_aliases=(inputs.instrument.name, inputs.instrument.symbol),
+                budget=SearchBudget(),
+                fixture_text_by_url=fixture_text_by_url,
+                theme_rebalance_enabled=True,
+                theme_route_provider=theme_provider,
+                max_theme_expansion_rounds=inputs.max_theme_expansion_rounds,
+                theme_evidence_review_enabled=inputs.theme_evidence_review_enabled,
+                base_feature_input=base_feature_input,
+            )
+        )
+        return result
 
     def run_historical_case(self, case: HistoricalCase) -> CompanyResearchResult:
         instrument = case.instrument or Instrument(
@@ -412,8 +490,93 @@ def _safe_tuple(errors: list[str], label: str, loader: Callable[[], Sequence[Any
         return ()
 
 
+def _effective_theme_route_provider(inputs: CompanyResearchInput) -> ThemeRouteProvider | None:
+    if inputs.theme_rebalance_enabled is False:
+        return None
+    if inputs.theme_route_provider is not None:
+        return inputs.theme_route_provider
+    if os.environ.get("E2R_THEME_ROUTE_PROVIDER"):
+        return build_theme_route_provider_from_env(working_directory=Path.cwd())
+    if inputs.theme_rebalance_enabled or not inputs.fixture_mode:
+        return build_default_codex_theme_route_provider(working_directory=Path.cwd())
+    return None
+
+
+@dataclass(frozen=True)
+class _StaticReportSearchProvider:
+    """Expose connector report results through the FreeWebResearch search API."""
+
+    report_results: Sequence[ReportSearchResult]
+
+    def search(self, query: str, as_of_date: date, max_results: int = 100) -> tuple[SearchResult, ...]:
+        rows: list[SearchResult] = []
+        for rank, item in enumerate(self.report_results, start=1):
+            if item.publish_date is not None and item.publish_date > as_of_date:
+                continue
+            if not _report_result_matches_query(item, query):
+                continue
+            rows.append(
+                SearchResult(
+                    title=item.title,
+                    url=item.url,
+                    snippet=item.snippet,
+                    source=item.source,
+                    published_at=datetime(item.publish_date.year, item.publish_date.month, item.publish_date.day, 8, 0)
+                    if item.publish_date
+                    else None,
+                    query=query,
+                    rank=rank,
+                    is_pdf=item.is_pdf,
+                    is_report_domain=item.is_recognized_report_domain,
+                    confidence=0.9 if item.is_recognized_report_domain or item.is_pdf else 0.7,
+                )
+            )
+        return tuple(rows[:max_results])
+
+
+def _report_result_matches_query(item: ReportSearchResult, query: str) -> bool:
+    if item.query:
+        return _clean_query(item.query) == _clean_query(query)
+    query_tokens = _query_tokens(query)
+    if not query_tokens:
+        return False
+    haystack = _clean_query(" ".join(part for part in (item.title, item.snippet or "") if part))
+    return all(token in haystack for token in query_tokens[:3])
+
+
+def _query_tokens(query: str) -> tuple[str, ...]:
+    return tuple(token for token in _clean_query(query).split() if len(token) >= 2)
+
+
+def _clean_query(value: str) -> str:
+    return " ".join(str(value or "").lower().split())
+
+
+def _report_text_by_url(results: Sequence[ReportSearchResult]) -> dict[str, str]:
+    text_by_url: dict[str, str] = {}
+    for item in results:
+        text = item.parsed_fields.get("extracted_text")
+        if text:
+            text_by_url[item.url] = str(text)
+    return text_by_url
+
+
+def _dedupe_report_results(items: Sequence[ReportSearchResult]) -> tuple[ReportSearchResult, ...]:
+    by_url: dict[str, ReportSearchResult] = {}
+    for item in items:
+        by_url.setdefault(item.url, item)
+    return tuple(by_url.values())
+
+
 def _dedupe_evidence(items: Sequence[Evidence]) -> tuple[Evidence, ...]:
     unique: dict[str, Evidence] = {}
     for item in items:
         unique.setdefault(item.evidence_id, item)
+    return tuple(unique.values())
+
+
+def _dedupe_findings(items: Sequence[RedTeamFinding]) -> tuple[RedTeamFinding, ...]:
+    unique: dict[tuple[str, str, tuple[str, ...]], RedTeamFinding] = {}
+    for item in items:
+        unique.setdefault((item.symbol, item.risk_type, item.evidence_ids), item)
     return tuple(unique.values())

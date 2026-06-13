@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import signal
 import shlex
 import subprocess
 import tempfile
@@ -12,6 +13,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Mapping, Sequence
 
+from e2r.env import load_project_env
 from e2r.llm.theme_provider import build_theme_route_messages
 from e2r.llm.theme_schemas import ThemeRouteInput, ThemeRouteOutput, validate_theme_route_output
 
@@ -131,26 +133,23 @@ class CodexCLIThemeRouteProvider:
             schema_path.write_text(json.dumps(THEME_ROUTE_OUTPUT_JSON_SCHEMA, ensure_ascii=False), encoding="utf-8")
             command = self._command(schema_path=schema_path, output_path=output_path)
             try:
-                completed = subprocess.run(
+                completed = _run_codex_command(
                     command,
-                    input=_codex_theme_prompt(inputs),
-                    text=True,
-                    capture_output=True,
+                    prompt=_codex_theme_prompt(inputs),
                     timeout=self.timeout_seconds,
-                    check=False,
                 )
             except subprocess.TimeoutExpired:
                 return ThemeRouteOutput(status="provider_error", blocked_reason="codex_cli_timeout")
             except OSError as exc:
                 return ThemeRouteOutput(status="provider_error", blocked_reason=f"codex_cli_os_error:{type(exc).__name__}")
-            if completed.returncode != 0:
-                reason = _clean_error(completed.stderr or completed.stdout or f"codex_cli_exit_{completed.returncode}")
-                return ThemeRouteOutput(status="provider_error", blocked_reason=reason)
             raw = output_path.read_text(encoding="utf-8") if output_path.exists() else completed.stdout
         data = _json_object_from_text(raw)
-        if data is None:
-            return ThemeRouteOutput(status="invalid_provider_output", blocked_reason="codex_cli_output_not_json")
-        return validate_theme_route_output(_normalise_schema_maps(data))
+        if data is not None:
+            return validate_theme_route_output(_normalise_schema_maps(data))
+        if completed.returncode != 0:
+            reason = _clean_error(completed.stderr or completed.stdout or f"codex_cli_exit_{completed.returncode}")
+            return ThemeRouteOutput(status="provider_error", blocked_reason=reason)
+        return ThemeRouteOutput(status="invalid_provider_output", blocked_reason="codex_cli_output_not_json")
 
     def _command(self, *, schema_path: Path, output_path: Path) -> list[str]:
         command = [
@@ -179,6 +178,45 @@ class CodexCLIThemeRouteProvider:
         return command
 
 
+def _run_codex_command(command: Sequence[str], *, prompt: str, timeout: float) -> subprocess.CompletedProcess[str]:
+    process = subprocess.Popen(
+        list(command),
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        start_new_session=(os.name == "posix"),
+    )
+    try:
+        stdout, stderr = process.communicate(prompt, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        _terminate_process_tree(process)
+        raise
+    return subprocess.CompletedProcess(list(command), process.returncode, stdout, stderr)
+
+
+def _terminate_process_tree(process: subprocess.Popen[str]) -> None:
+    if process.poll() is not None:
+        return
+    if os.name == "posix":
+        try:
+            os.killpg(process.pid, signal.SIGTERM)
+        except ProcessLookupError:
+            return
+        try:
+            process.wait(timeout=5)
+            return
+        except subprocess.TimeoutExpired:
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                return
+            process.wait(timeout=5)
+            return
+    process.kill()
+    process.wait(timeout=5)
+
+
 def build_theme_route_provider_from_env(
     environ: Mapping[str, str] | None = None,
     *,
@@ -186,7 +224,11 @@ def build_theme_route_provider_from_env(
 ) -> CodexCLIThemeRouteProvider | None:
     """Build the optional route provider selected by environment variables."""
 
-    env = environ or os.environ
+    if environ is None:
+        load_project_env()
+        env = os.environ
+    else:
+        env = environ
     mode = (env.get("E2R_THEME_ROUTE_PROVIDER") or "").strip().lower()
     if mode not in {"codex", "codex-cli", "codex_cli"}:
         return None
@@ -200,6 +242,18 @@ def build_theme_route_provider_from_env(
         approval_policy=(env.get("E2R_CODEX_THEME_APPROVAL_POLICY") or "never").strip() or "never",
         extra_args=tuple(shlex.split(env.get("E2R_CODEX_THEME_EXTRA_ARGS") or "")),
     )
+
+
+def build_default_codex_theme_route_provider(
+    *,
+    working_directory: str | Path | None = None,
+) -> CodexCLIThemeRouteProvider | None:
+    """Build the operational Codex route provider while preserving env config."""
+
+    load_project_env()
+    env = dict(os.environ)
+    env["E2R_THEME_ROUTE_PROVIDER"] = "codex"
+    return build_theme_route_provider_from_env(env, working_directory=working_directory)
 
 
 def _codex_theme_prompt(inputs: ThemeRouteInput) -> str:
@@ -269,5 +323,6 @@ def _float_env(env: Mapping[str, str], key: str, default: float) -> float:
 __all__ = [
     "CodexCLIThemeRouteProvider",
     "THEME_ROUTE_OUTPUT_JSON_SCHEMA",
+    "build_default_codex_theme_route_provider",
     "build_theme_route_provider_from_env",
 ]

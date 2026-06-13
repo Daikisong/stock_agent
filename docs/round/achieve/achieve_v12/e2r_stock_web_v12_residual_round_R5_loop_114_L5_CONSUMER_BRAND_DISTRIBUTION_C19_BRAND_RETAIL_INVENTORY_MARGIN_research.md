@@ -1,223 +1,241 @@
-# E2R v12 residual research — R5 / Loop 114 / L5_CONSUMER_BRAND_DISTRIBUTION / C19_BRAND_RETAIL_INVENTORY_MARGIN
-
-## Execution metadata
+# E2R Stock-Web V12 Residual Research — R5 / C19 Brand Retail Inventory Margin Holdout
 
 ```yaml
-schema_family: v12_sector_archetype_residual
-mode: historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12
 research_session: post_calibrated_sector_archetype_residual_research
+mode: historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12
+output_file: e2r_stock_web_v12_residual_round_R5_loop_114_L5_CONSUMER_BRAND_DISTRIBUTION_C19_BRAND_RETAIL_INVENTORY_MARGIN_research.md
 selected_round: R5
 selected_loop: 114
 large_sector_id: L5_CONSUMER_BRAND_DISTRIBUTION
 canonical_archetype_id: C19_BRAND_RETAIL_INVENTORY_MARGIN
-fine_archetype_id: APPAREL_OEM_BRAND_INVENTORY_CLEARANCE_AND_CONVENIENCE_RETAIL_TURNOVER_MARGIN_BRIDGE_VS_RESTOCKING_LABEL_FALSE_POSITIVE
+fine_archetype_id: mixed_C19_department_store_fashion_inventory_margin_holdout_pass
 selection_basis: docs/core/V12_Research_No_Repeat_Index.md
-selected_priority_bucket: Priority 0
+selected_priority_bucket: Priority 2 / quality holdout after session-adjusted Priority 0 and Priority 1 fills
 round_schedule_status: coverage_index_selected
 round_sector_consistency: pass
+price_source: Songdaiki/stock-web
+stock_web_manifest_max_date: 2026-02-20
+price_basis: tradable_raw
+price_adjustment_status: raw_unadjusted_marcap
 stock_agent_code_access_allowed: false
 stock_agent_code_patch_allowed: false
-stock_agent_live_scan_allowed: false
 production_scoring_changed: false
 shadow_weight_only: true
-stock_web_price_atlas_access_required: true
+handoff_prompt_embedded: true
+handoff_prompt_executed_now: false
 ```
 
 ## 1. Selection rationale
 
-`C19_BRAND_RETAIL_INVENTORY_MARGIN` is a Priority 0 archetype. The coverage table shows 24 rows, 12 symbols, 2024-01-22~2024-04-12 date range, and 6 rows still needed to reach the 30-row minimum-stability zone. Its most-covered symbols are already `008770`, `023530`, `031430`, `069960`, `383220`, and `020000`, so this loop intentionally avoids those and shifts the evidence axis to apparel OEM / sportswear brand / convenience retail turnover.
+The main prompt requires `coverage_index_first` selection, canonical-first round derivation, standard v12 filename, and complete 30D/90D/180D MFE/MAE fields. The static No-Repeat ledger places C19 at 50 representative rows, so this is not a raw quantity-fill loop. In this current session, the static under-30 and under-50 backlog has already been reinforced across C02/C09/C14/C10/C06/C07/C11/C01/C28/C12/C05/C23/C27 and R13 guardrails. This file therefore uses C19 as a **quality holdout** with new symbols and trigger families.
 
-Core question:
+C19 is the correct canonical because each case sits in department-store, fashion/apparel, brand-retail, duty-free/retail mix, or inventory-margin repair. The research question is whether brand power, revenue headlines, or channel recovery can be promoted into Stage3 without explicit inventory normalization, sell-through, and margin bridge.
 
-> Does a brand/retail/inventory headline convert into real sell-through, inventory normalization, OPM/revision, and margin durability, or is it just a restocking / brand-label / retail-defensive price spike?
+## 2. Stock-Web manifest and schema check
 
-This loop is not a live scan, not a recommendation list, and not a code patch. It is a standalone historical calibration note for later batch ingestion.
+- `source_name`: FinanceData/marcap
+- `price_adjustment_status`: raw_unadjusted_marcap
+- `calibration_shard_root`: atlas/ohlcv_tradable_by_symbol_year
+- `max_date`: 2026-02-20
+- `MFE_N_pct`: max high from entry_date through N tradable rows / entry_price - 1
+- `MAE_N_pct`: min low from entry_date through N tradable rows / entry_price - 1
+- All six rows have at least 180 forward tradable rows in the local Stock-Web shards used for this run.
+- Corporate-action candidate dates from the checked profiles are outside each row's 180D forward window.
 
-## 2. Price source validation
+## 3. Case table
 
-```yaml
-price_source_repo: Songdaiki/stock-web
-price_basis: tradable_raw
-source_name: FinanceData/marcap
-price_adjustment_status: raw_unadjusted_marcap
-calibration_shard_root: atlas/ohlcv_tradable_by_symbol_year
-max_date: 2026-02-20
-zero_volume_rows_excluded_from_calibration: true
-corporate_action_contaminated_windows_blocked_by_default: true
-```
+| symbol | name | trigger_type | role | entry_date | entry_price | MFE30 | MAE30 | MFE90 | MAE90 | MFE180 | MAE180 | peak-DD |
+|---|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 004170 | 신세계 | Stage4B | counterexample | 2023-05-10 | 210,000 | 1.6667 | -12.7619 | 3.3333 | -17.7619 | 3.3333 | -26.0476 | -28.4332 |
+| 069960 | 현대백화점 | Stage3-Yellow | positive | 2023-05-10 | 52,400 | 2.6718 | -6.8702 | 36.8321 | -9.2557 | 36.8321 | -12.9771 | -36.4017 |
+| 023530 | 롯데쇼핑 | Stage2-Actionable | positive | 2023-08-10 | 76,800 | 1.1719 | -9.8958 | 5.3385 | -11.3281 | 19.9219 | -16.7969 | -30.6189 |
+| 020000 | 한섬 | Stage4B | counterexample | 2023-05-10 | 26,100 | 3.0651 | -11.8774 | 3.0651 | -31.4176 | 3.0651 | -34.2146 | -36.171 |
+| 031430 | 신세계인터내셔날 | Stage4B | counterexample | 2023-05-11 | 19,290 | 5.4951 | -12.0788 | 5.4951 | -23.1208 | 5.4951 | -23.1208 | -27.1253 |
+| 383220 | F&F | Stage2-Actionable | positive | 2024-07-29 | 59,000 | 5.4237 | -20.0847 | 22.2034 | -20.0847 | 26.7797 | -20.0847 | -24.8663 |
 
-Case-level profile checks:
+## 4. Case notes
 
-```jsonl
-{"row_type":"price_source_validation","symbol":"105630","name":"한세실업","profile_path":"atlas/symbol_profiles/105/105630.json","tradable_ohlcv_rows":4172,"corporate_action_candidate_dates":["2011-11-30"],"trigger_window_blocked":false,"price_adjustment_status":"raw_unadjusted_marcap"}
-{"row_type":"price_source_validation","symbol":"111770","name":"영원무역","profile_path":"atlas/symbol_profiles/111/111770.json","tradable_ohlcv_rows":4080,"corporate_action_candidate_dates":[],"trigger_window_blocked":false,"price_adjustment_status":"raw_unadjusted_marcap"}
-{"row_type":"price_source_validation","symbol":"081660","name_at_trigger":"휠라홀딩스","current_or_latest_name":"미스토홀딩스","profile_path":"atlas/symbol_profiles/081/081660.json","tradable_ohlcv_rows":3786,"corporate_action_candidate_dates":["2018-05-09"],"trigger_window_blocked":false,"price_adjustment_status":"raw_unadjusted_marcap"}
-{"row_type":"price_source_validation","symbol":"282330","name":"BGF리테일","profile_path":"atlas/symbol_profiles/282/282330.json","tradable_ohlcv_rows":2010,"corporate_action_candidate_dates":[],"trigger_window_blocked":false,"price_adjustment_status":"raw_unadjusted_marcap"}
-```
+### 004170 신세계 — counterexample / Stage4B
 
-## 3. External evidence spine
+Evidence date: `2023-05-10`. 2023-05-10 report described 1Q23 duty-free profit surprise and raised target price, but also noted weak domestic consumption momentum for department-store/luxury discretionary affiliates and weak near-term 2Q momentum.
 
-### 3.1 Apparel / sportswear inventory overhang
+Stock-Web path: entry `2023-05-10` at `210,000`, 180D MFE `3.3333%`, 180D MAE `-26.0476%`, peak `2023-08-11` at `217,000`, post-peak drawdown `-28.4332%`. Duty-free recovery improved reported profit, but C19 brand/retail inventory-margin rerating was not confirmed; Stock-Web path had low MFE and deep 180D MAE.
 
-The global apparel/sportswear spine is the March 2024 Adidas inventory and North America weakness event. Reuters reported that Adidas posted its first annual loss in more than 30 years and warned North America sales would fall again because sportswear retailers were still battling high inventories. It also described brand discounting to clear stock and a hoped-for second-half improvement.
+### 069960 현대백화점 — positive / Stage3-Yellow
 
-For C19, this is a clean test condition: a restocking or inventory-normalization narrative can open the door, but the score should not rise unless it is tied to company-level sell-through, order quality, receivables/inventory turn, OPM/revision, and margin durability.
+Evidence date: `2023-05-09`. 2023-05-09 review separated department-store category trends, duty-free commission improvement, and G-NUS order restriction. The row tests whether mixed retail subsidiaries need decontamination before Stage3.
 
-### 3.2 Convenience retail turnover / defensive retail
+Stock-Web path: entry `2023-05-10` at `52,400`, 180D MFE `36.8321%`, 180D MAE `-12.9771%`, peak `2023-08-14` at `71,700`, post-peak drawdown `-36.4017%`. The entry path produced large 90D/180D MFE with moderate MAE, but peak-to-window drawdown remained large; positive C19 evidence should carry a local 4B overlay.
 
-BGF Retail is tested as a separate retail-turnover branch. CU is a South Korean convenience-store chain owned by BGF Retail, so it is closer to fast-moving inventory turnover than long-cycle apparel inventory. Still, the same C19 rule applies: store count, retail defensiveness, and category label are not enough. The positive route needs same-store sales, franchise economics, inventory turns, private-label mix, and OPM/revision.
+### 023530 롯데쇼핑 — positive / Stage2-Actionable
 
-## 4. Case table
+Evidence date: `2023-08-10`. 2023-08-10 report stated mart/super profit improvement, super turning profitable for a second quarter, e-commerce loss narrowing, and selling/admin efficiency; this is a retail margin repair path rather than pure headline sales.
 
-| case_id | symbol | company | trigger_date | entry_price | peak/high used | trough/low used | MFE | MAE | classification |
-|---|---:|---|---:|---:|---:|---:|---:|---:|---|
-| C19-114-01 | 105630 | 한세실업 | 2024-03-13 | 19,340 | 20,850 | 14,430 | +7.81% | -25.39% | counterexample |
-| C19-114-02 | 111770 | 영원무역 | 2024-03-13 | 42,650 | 44,450 | 33,800 | +4.22% | -20.75% | counterexample |
-| C19-114-03 | 081660 | 휠라홀딩스 / 미스토홀딩스 | 2024-03-13 | 40,050 | 44,950 | 37,400 | +12.23% | -6.62% | boundary positive / 4B watch |
-| C19-114-04 | 282330 | BGF리테일 | 2024-08-01 | 108,300 | 125,000 | 98,000 | +15.42% | -9.51% | positive watch |
+Stock-Web path: entry `2023-08-10` at `76,800`, 180D MFE `19.9219%`, 180D MAE `-16.7969%`, peak `2024-02-13` at `92,100`, post-peak drawdown `-30.6189%`. Operational repair was real, but MFE was not strong enough for unguarded Green and peak drawdown required 4B overlay.
 
-## 5. Case notes
+### 020000 한섬 — counterexample / Stage4B
 
-### 5.1 `105630` 한세실업 — apparel OEM restocking label false positive
+Evidence date: `2023-05-09`. 2023-05-09 review described 1Q23 revenue growth but operating-profit decline, online weakness, slowing market growth, weakening consumption, and limited short-term investment momentum.
 
-The March 2024 Adidas inventory headline was not enough for Hansae Industrial. The stock-web path from 2024-03-13 close 19,340 to 2024-03-21 high 20,850 produced only +7.81% MFE, while the later low of 14,430 on 2024-09-11 produced -25.39% MAE.
+Stock-Web path: entry `2023-05-10` at `26,100`, 180D MFE `3.0651%`, 180D MAE `-34.2146%`, peak `2023-05-11` at `26,900`, post-peak drawdown `-36.171%`. Brand quality was not enough. The stock path shows Stage2/3 should be blocked when inventory/outlet mix and weak traffic prevent margin bridge.
 
-Interpretation:
+### 031430 신세계인터내셔날 — counterexample / Stage4B
 
-- Apparel OEM label can look like a clean inventory-normalization beta.
-- The actual equity path says the bridge was weak.
-- C19 should not reward apparel OEM exposure without customer reorder evidence, shipment recovery, gross margin, inventory days, receivables, and revision bridge.
-- This is a `Stage2-FalsePositive-ApparelRestockingNoMarginBridge` candidate.
+Evidence date: `2023-05-11`. 2023-05-11 review showed 1Q23 revenue -11%, operating profit -69%, brand exits, fashion weakness, and cost burden despite cosmetics growth.
 
-### 5.2 `111770` 영원무역 — outdoor/apparel OEM restocking beta weak bridge
+Stock-Web path: entry `2023-05-11` at `19,290`, 180D MFE `5.4951%`, 180D MAE `-23.1208%`, peak `2023-05-11` at `20,350`, post-peak drawdown `-27.1253%`. Cosmetics growth was not enough to rescue the fashion/brand-exit margin bridge; deep MAE makes Stage3 inappropriate.
 
-Youngone’s price path was even weaker. From 2024-03-13 close 42,650, the stock only reached 44,450 by 2024-03-21, for +4.22% MFE, and later fell to 33,800 by 2024-06-26, for -20.75% MAE.
+### 383220 F&F — positive / Stage2-Actionable
 
-Interpretation:
+Evidence date: `2024-07-29`. 2024-07-29 report kept BUY while noting MLB growth slowing and Discovery China launch plan becoming concrete; the issue is whether a new brand-rollout path offsets inventory/channel slowdown.
 
-- Outdoor/apparel OEM quality alone is not a C19 positive.
-- If customers are still managing inventory or delaying orders, the beta is fragile.
-- This belongs in the counterexample stack: high-quality apparel supply chain, but no proven C19 sell-through / inventory-turn / margin bridge.
+Stock-Web path: entry `2024-07-29` at `59,000`, 180D MFE `26.7797%`, 180D MAE `-20.0847%`, peak `2025-02-20` at `74,800`, post-peak drawdown `-24.8663%`. Discovery China optionality was real enough for positive MFE, but 90D MAE below -20% means C19 needs an inventory/channel sell-through gate before Stage3.
 
-### 5.3 `081660` 휠라홀딩스 / 미스토홀딩스 — brand turnaround 4B watch, not Green
+## 5. Residual error and shadow rule
 
-FILA is a brand-repositioning / sportswear-retail inventory case rather than an OEM case. From 2024-03-13 close 40,050, the path reached 44,950 on 2024-09-25, giving +12.23% MFE; the relevant low of 37,400 on 2024-08-06 implies -6.62% MAE.
+C19 has a repeating failure mode: **brand/retail headlines are promoted before inventory normalization, sell-through, margin bridge, and subsidiary/channel decontamination are visible**. The price paths split into three states.
 
-Interpretation:
+1. Clean or partially clean retail-margin repair: margin and channel repair are visible, but local 4B overlay may still be needed when post-peak drawdown is large.
 
-- This is not a hard failure.
-- The path supports a modest 4B watch: brand cleanup and inventory/mix repair can work.
-- But +12.23% MFE is not enough for Stage3-Green without evidence of lower markdowns, better sell-through, fewer inventory reserves, and OPM/revision durability.
-- Rename caveat: 2024 name was `휠라홀딩스`; profile current/latest name is `미스토홀딩스`.
+2. Mixed-conglomerate retail rerating: department store, duty-free, G-NUS, hotel, e-commerce, or fashion units pull in opposite directions; Stage3 needs segment decontamination.
 
-### 5.4 `282330` BGF리테일 — convenience retail turnover positive watch
-
-BGF Retail offers the separate branch of C19: fast-turning convenience retail rather than apparel inventory. From 2024-08-01 close 108,300, the stock reached 125,000 on 2024-09-25, for +15.42% MFE, with the later low of 98,000 on 2024-12-09 giving -9.51% MAE.
-
-Interpretation:
-
-- This is the cleanest positive watch in this loop.
-- Convenience retail can be more resilient because inventory turns faster than apparel and product-mix changes can flow through more quickly.
-- Still, this is not automatic Green. It needs same-store sales, franchise mix, private-label margin, labor/rent cost pressure, inventory turn, and OPM/revision evidence.
-- It is a C19 positive watch rather than a confirmed Stage3-Green.
-
-## 6. Machine-readable rows
-
-```jsonl
-{"row_type":"case","case_id":"C19-114-01","canonical_archetype_id":"C19_BRAND_RETAIL_INVENTORY_MARGIN","large_sector_id":"L5_CONSUMER_BRAND_DISTRIBUTION","symbol":"105630","name":"한세실업","entry_date":"2024-03-13","entry_price":19340,"peak_date":"2024-03-21","peak_price":20850,"trough_date":"2024-09-11","trough_price":14430,"mfe_pct":7.81,"mae_pct":-25.39,"classification":"counterexample","profile_error_type":"Stage2_FalsePositive_ApparelOEMRestocking_NoSellthroughMarginBridge","usable_for_calibration":true}
-{"row_type":"case","case_id":"C19-114-02","canonical_archetype_id":"C19_BRAND_RETAIL_INVENTORY_MARGIN","large_sector_id":"L5_CONSUMER_BRAND_DISTRIBUTION","symbol":"111770","name":"영원무역","entry_date":"2024-03-13","entry_price":42650,"peak_date":"2024-03-21","peak_price":44450,"trough_date":"2024-06-26","trough_price":33800,"mfe_pct":4.22,"mae_pct":-20.75,"classification":"counterexample","profile_error_type":"Stage2_FalsePositive_ApparelOEMQualityLabel_NoOrderRevisionBridge","usable_for_calibration":true}
-{"row_type":"case","case_id":"C19-114-03","canonical_archetype_id":"C19_BRAND_RETAIL_INVENTORY_MARGIN","large_sector_id":"L5_CONSUMER_BRAND_DISTRIBUTION","symbol":"081660","name_at_trigger":"휠라홀딩스","current_or_latest_name":"미스토홀딩스","entry_date":"2024-03-13","entry_price":40050,"peak_date":"2024-09-25","peak_price":44950,"trough_date":"2024-08-06","trough_price":37400,"mfe_pct":12.23,"mae_pct":-6.62,"classification":"boundary_positive_4B_watch","profile_error_type":"BrandInventoryTurnaroundNeedsMarkdownOPMBridge","usable_for_calibration":true}
-{"row_type":"case","case_id":"C19-114-04","canonical_archetype_id":"C19_BRAND_RETAIL_INVENTORY_MARGIN","large_sector_id":"L5_CONSUMER_BRAND_DISTRIBUTION","symbol":"282330","name":"BGF리테일","entry_date":"2024-08-01","entry_price":108300,"peak_date":"2024-09-25","peak_price":125000,"trough_date":"2024-12-09","trough_price":98000,"mfe_pct":15.42,"mae_pct":-9.51,"classification":"positive_watch","profile_error_type":"RetailTurnoverPositiveButNeedsSSSInventoryTurnOPMBridge","usable_for_calibration":true}
-{"row_type":"trigger","trigger_id":"C19-114-T1","trigger_family":"global_apparel_inventory_overhang_and_restocking_hope","external_event_date":"2024-03-13","source_proxy":"Reuters Adidas inventory/North America weakness","linked_cases":["C19-114-01","C19-114-02","C19-114-03"],"bridge_required":["sell_through","inventory_days","customer_reorder","gross_margin","opm_revision"]}
-{"row_type":"trigger","trigger_id":"C19-114-T2","trigger_family":"convenience_retail_fast_turn_inventory_margin","external_event_date":"2024-08-01","source_proxy":"CU/BGF convenience-store structure plus price-path test","linked_cases":["C19-114-04"],"bridge_required":["same_store_sales","inventory_turn","private_label_mix","franchise_economics","opm_revision"]}
-{"row_type":"score_simulation","canonical_archetype_id":"C19_BRAND_RETAIL_INVENTORY_MARGIN","rule_candidate":"brand_retail_inventory_margin_bridge_required","without_rule_false_positive_count":3,"with_rule_expected_block_count":2,"with_rule_expected_watch_count":2,"stage3_green_auto_promotion_allowed":false}
-{"row_type":"shadow_weight","canonical_archetype_id":"C19_BRAND_RETAIL_INVENTORY_MARGIN","axis":"c19_inventory_sellthrough_opm_revision_bridge_required","direction":"add_guardrail","proposed_delta":"shadow_only","rationale":"Apparel/brand/retail labels show repeated high-MAE or low-MFE unless sell-through, inventory turn, markdown, and OPM/revision bridge are present."}
-{"row_type":"aggregate_metric","canonical_archetype_id":"C19_BRAND_RETAIL_INVENTORY_MARGIN","new_independent_case_count":4,"positive_case_count":2,"counterexample_count":2,"boundary_case_count":2,"verified_url_repair_needed_count":4,"current_profile_error_count":4}
-{"row_type":"residual_contribution","canonical_archetype_id":"C19_BRAND_RETAIL_INVENTORY_MARGIN","loop":"114","large_sector_id":"L5_CONSUMER_BRAND_DISTRIBUTION","contribution_label":"canonical_archetype_rule_candidate","new_axis_proposed":"c19_inventory_sellthrough_opm_revision_bridge_required","existing_axis_strengthened":"full_4b_requires_non_price_evidence scoped to apparel OEM, sportswear brand, and retail-turnover rallies"}
-{"row_type":"narrative_only","canonical_archetype_id":"C19_BRAND_RETAIL_INVENTORY_MARGIN","summary":"C19 should distinguish fast-turning retail inventory and confirmed margin repair from generic apparel restocking or brand cleanup labels. Hansae/Youngone show low-MFE high-MAE restocking false positives; FILA is modest 4B brand-turnaround watch; BGF Retail is a convenience-retail positive watch but still requires same-store-sales, inventory-turn, and OPM/revision bridge."}
-```
-
-## 7. Shadow rule candidate
-
-```yaml
-rule_id: c19_inventory_sellthrough_opm_revision_bridge_required
-scope:
-  large_sector_id: L5_CONSUMER_BRAND_DISTRIBUTION
-  canonical_archetype_id: C19_BRAND_RETAIL_INVENTORY_MARGIN
-rule_type: stage2_actionable_guardrail
-logic:
-  positive_bridge_requires:
-    - category-level inventory normalization is not enough
-    - company-level sell-through evidence
-    - inventory days or inventory turnover improvement
-    - markdown / discount pressure easing
-    - receivables not expanding faster than sales
-    - gross margin and OPM/revision bridge
-    - for retailers: same-store sales / franchise economics / private-label mix
-  downgrade_conditions:
-    - apparel OEM or brand label without customer reorder evidence
-    - positive MFE under 10% with MAE worse than -20%
-    - brand cleanup narrative without markdown or inventory evidence
-    - retail-defensive narrative without OPM/revision bridge
-expected_stage_effect:
-  - block false Stage2 for apparel restocking labels
-  - keep modest brand-turnaround cases in 4B watch
-  - allow convenience-retail positive watch only with retail-turnover evidence
-production_scoring_changed_now: false
-shadow_weight_only: true
-```
-
-## 8. Deferred Coding Agent Handoff Prompt
-
-Do not execute this prompt in the current research session.
+3. Brand-quality false positive: premium apparel/fashion/cosmetics brand power exists, but inventory/outlet/brand-exit or weak sell-through blocks Stage3.
 
 ```text
-You are a coding agent working on Songdaiki/stock_agent. Use this MD as one batch input for v12 calibration ingestion.
-
-Task:
-1. Parse the JSONL rows embedded in this file.
-2. Add cases/triggers to the v12 calibration registry if they do not duplicate existing keys.
-3. Use duplicate key = canonical_archetype_id + symbol + trigger_family + entry_date.
-4. Do not alter production scoring directly.
-5. Register the shadow rule candidate only as a proposed guardrail:
-   c19_inventory_sellthrough_opm_revision_bridge_required
-6. Mark all four cases as verified_url_repair_needed=true until firm-specific evidence URLs are attached.
-7. Treat 081660 name_at_trigger as 휠라홀딩스 and current/latest name as 미스토홀딩스.
-8. Preserve the distinction between:
-   - apparel OEM restocking label false positive
-   - brand inventory turnaround 4B watch
-   - convenience retail turnover positive watch
-9. Emit applied_weight_changes only if a separate human-approved calibration promotion step exists.
+rule_candidate =
+C19_BRAND_RETAIL_REQUIRES_INVENTORY_NORMALIZATION_SELLTHROUGH_AND_MARGIN_BRIDGE_WITH_CHANNEL_DECONTAMINATION
 ```
 
-## 9. Final execution summary
+Proposed C19 gate:
+
+```text
+Stage3-Yellow allowed only if at least two are present:
+- inventory normalization or clear markdown/outlet burden improvement
+- sell-through / SSSG / channel re-order proof
+- margin bridge by segment, not only consolidated profit surprise
+- subsidiary/channel decontamination for department-store/duty-free/GINUS/e-commerce mix
+- low MAE90/MAE180 after entry or explicit later non-price confirmation
+
+Stage3-Green blocked if:
+- profit surprise comes mainly from duty-free accounting or one-off cost/tax/commission effects
+- fashion brand exit or inventory burden remains unresolved
+- MAE90 <= -20% or MAE180 <= -30% without a later non-price margin bridge
+- post-peak drawdown exceeds -30% before sell-through and inventory margin are confirmed
+```
+
+## 6. Current calibrated profile stress test
+
+| profile | hypothesis | eligible rows | avg MFE90 | avg MAE90 | avg MFE180 | avg MAE180 | verdict |
+|---|---|---:|---:|---:|---:|---:|---|
+| P0 e2r_2_1_stock_web_calibrated_proxy | current calibrated profile | 6 | 12.7112 | -18.8281 | 15.9045 | -22.207 | residual false positives remain in brand/retail margin bridge |
+| P0b e2r_2_0_baseline_reference | older, looser evidence bridge | 6 | 12.7112 | -18.8281 | 15.9045 | -22.207 | would over-promote duty-free/apparel brand headlines |
+| P1 L5 sector candidate | require sell-through + inventory margin bridge | 6 | 12.7112 | -18.8281 | 15.9045 | -22.207 | better Stage2/4B split |
+| P2 C19 candidate | channel decontamination + MAE guard | 6 | 12.7112 | -18.8281 | 15.9045 | -22.207 | strongest C19 compression |
+| P3 counterexample guard | cap Stage3 when MAE180 <= -30 without bridge | 6 | 12.7112 | -18.8281 | 15.9045 | -22.207 | prevents apparel/brand-exit false positives |
+
+## 7. Coverage Matrix
+
+| large_sector_id | canonical_archetype_id | fine_archetype_id | positive_case_count | counterexample_count | 4B_case_count | 4C_case_count | new_independent_case_count | reused_case_count | calibration_usable_trigger_count | representative_trigger_count | current_profile_error_count | sector_rule_candidate | canonical_rule_candidate | coverage_gap_after_this_loop |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|
+| L5_CONSUMER_BRAND_DISTRIBUTION | C19_BRAND_RETAIL_INVENTORY_MARGIN | mixed_C19_department_store_fashion_inventory_margin_holdout_pass | 3 | 3 | 6 | 0 | 6 | 0 | 6 | 6 | 4 | L5_BRAND_RETAIL_CHANNEL_DECONTAMINATION_GATE | C19_BRAND_RETAIL_REQUIRES_INVENTORY_NORMALIZATION_SELLTHROUGH_AND_MARGIN_BRIDGE | C19 static 50 -> session holdout +6 quality rows |
+
+## 8. Machine-readable rows
+
+```jsonl
+{"row_type": "price_source_validation", "source": "Songdaiki/stock-web", "source_url": "https://github.com/Songdaiki/stock-web", "manifest_path": "atlas/manifest.json", "schema_path": "atlas/schema.json", "universe_path": "atlas/universe/all_symbols.csv", "manifest_max_date": "2026-02-20", "price_basis": "tradable_raw", "price_adjustment_status": "raw_unadjusted_marcap", "calibration_shard_root": "atlas/ohlcv_tradable_by_symbol_year", "raw_shard_root": "atlas/ohlcv_raw_by_symbol_year", "validation_status": "usable_for_historical_calibration"}
+{"row_type": "case", "case_id": "C19_R5L114_004170_SHINSEGAE_DUTYFREE_SURPRISE_WEAK_DEPTSTORE", "symbol": "004170", "company_name": "신세계", "round": "R5", "loop": 114, "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "fine_archetype_id": "mixed_C19_department_store_fashion_inventory_margin_holdout_pass", "case_type": "failed_rerating", "positive_or_counterexample": "counterexample", "best_trigger": "TRG_C19_R5L114_004170_20230510", "calibration_usable": true, "is_new_independent_case": true, "reuse_reason": null, "independent_evidence_weight": 1.0, "score_price_alignment": "dutyfree_profit_surprise_not_enough_for_brand_retail_margin_rerating", "current_profile_verdict": "current_profile_false_positive", "price_source": "Songdaiki/stock-web", "notes": "Duty-free recovery improved reported profit, but C19 brand/retail inventory-margin rerating was not confirmed; Stock-Web path had low MFE and deep 180D MAE."}
+{"row_type": "trigger", "trigger_id": "TRG_C19_R5L114_004170_20230510", "case_id": "C19_R5L114_004170_SHINSEGAE_DUTYFREE_SURPRISE_WEAK_DEPTSTORE", "symbol": "004170", "company_name": "신세계", "round": "R5", "loop": 114, "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "fine_archetype_id": "mixed_C19_department_store_fashion_inventory_margin_holdout_pass", "sector": "consumer_brand_distribution", "primary_archetype": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "loop_objective": "holdout_validation | counterexample_mining | canonical_archetype_compression | sector_specific_rule_discovery", "trigger_type": "Stage4B", "trigger_date": "2023-05-10", "entry_date": "2023-05-10", "entry_price": 210000.0, "evidence_available_at_that_date": "2023-05-10 report described 1Q23 duty-free profit surprise and raised target price, but also noted weak domestic consumption momentum for department-store/luxury discretionary affiliates and weak near-term 2Q momentum.", "evidence_source": "https://www.samsungpop.com/common.do?cmd=down&contentType=application%2Fpdf&fileName=2010%2F2023051016495834K_02_02.pdf&inlineYn=Y&saveKey=research.pdf", "source_title": "신세계 1Q23 Review — 면세점 실적 서프라이즈, 내수 소비 둔화", "stage2_evidence_fields": ["public_event_or_disclosure", "financial_visibility", "early_revision_signal"], "stage3_evidence_fields": ["financial_visibility"], "stage4b_evidence_fields": ["margin_or_backlog_slowdown", "explicit_event_cap", "price_only_local_peak"], "stage4c_evidence_fields": [], "price_data_source": "Songdaiki/stock-web", "price_data_repo": "https://github.com/Songdaiki/stock-web", "price_shard_path": "atlas/ohlcv_tradable_by_symbol_year/004/004170/2023.csv", "profile_path": "atlas/symbol_profiles/004/004170.json", "price_basis": "tradable_raw", "price_adjustment_status": "raw_unadjusted_marcap", "stock_web_manifest_max_date": "2026-02-20", "MFE_30D_pct": 1.6667, "MFE_90D_pct": 3.3333, "MFE_180D_pct": 3.3333, "MFE_1Y_pct": 3.3333, "MFE_2Y_pct": null, "MAE_30D_pct": -12.7619, "MAE_90D_pct": -17.7619, "MAE_180D_pct": -26.0476, "MAE_1Y_pct": -26.0476, "MAE_2Y_pct": null, "below_entry_price_flag_30D": true, "below_entry_price_flag_90D": true, "peak_date": "2023-08-11", "peak_price": 217000.0, "drawdown_after_peak_pct": -28.4332, "green_lateness_ratio": null, "four_b_local_peak_proximity": null, "four_b_full_window_peak_proximity": null, "four_b_timing_verdict": "good_local_4B_watch_or_failed_stage2_prevention", "four_b_evidence_type": ["margin_or_backlog_slowdown", "explicit_event_cap", "price_only_local_peak"], "four_c_protection_label": "not_applicable_no_4c", "trigger_outcome_label": "dutyfree_profit_surprise_not_enough_for_brand_retail_margin_rerating", "current_profile_verdict": "current_profile_false_positive", "calibration_usable": true, "forward_window_trading_days": 180, "calibration_block_reasons": [], "corporate_action_window_status": "clean_180D_window", "same_entry_group_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN:004170:2023-05-10", "dedupe_for_aggregate": true, "aggregate_group_role": "representative", "is_new_independent_case": true, "reuse_reason": null, "independent_evidence_weight": 1.0, "do_not_count_as_new_case": false, "raw_component_scores_before": {"contract_score": 28, "backlog_visibility_score": 22, "margin_bridge_score": 34, "revision_score": 30, "relative_strength_score": 35, "customer_quality_score": 38, "policy_or_regulatory_score": 15, "valuation_repricing_score": 42, "execution_risk_score": 75, "legal_or_contract_risk_score": 22, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 25, "inventory_normalization_score": 28, "channel_sellthrough_score": 31, "brand_power_score": 52, "retail_margin_repair_score": 30}, "weighted_score_before": 43.33, "stage_label_before": "Stage4B", "raw_component_scores_after": {"contract_score": 28, "backlog_visibility_score": 22, "margin_bridge_score": 34, "revision_score": 30, "relative_strength_score": 35, "customer_quality_score": 38, "policy_or_regulatory_score": 15, "valuation_repricing_score": 42, "execution_risk_score": 75, "legal_or_contract_risk_score": 22, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 25, "inventory_normalization_score": 28, "channel_sellthrough_score": 31, "brand_power_score": 52, "retail_margin_repair_score": 30}, "weighted_score_after": 43.33, "stage_label_after": "Stage4B"}
+{"row_type": "score_simulation", "profile_id": "C19_brand_retail_inventory_margin_candidate_profile", "case_id": "C19_R5L114_004170_SHINSEGAE_DUTYFREE_SURPRISE_WEAK_DEPTSTORE", "trigger_id": "TRG_C19_R5L114_004170_20230510", "symbol": "004170", "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "raw_component_scores_before": {"contract_score": 28, "backlog_visibility_score": 22, "margin_bridge_score": 34, "revision_score": 30, "relative_strength_score": 35, "customer_quality_score": 38, "policy_or_regulatory_score": 15, "valuation_repricing_score": 42, "execution_risk_score": 75, "legal_or_contract_risk_score": 22, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 25, "inventory_normalization_score": 28, "channel_sellthrough_score": 31, "brand_power_score": 52, "retail_margin_repair_score": 30}, "weighted_score_before": 43.33, "stage_label_before": "Stage4B", "raw_component_scores_after": {"contract_score": 28, "backlog_visibility_score": 22, "margin_bridge_score": 34, "revision_score": 30, "relative_strength_score": 35, "customer_quality_score": 38, "policy_or_regulatory_score": 15, "valuation_repricing_score": 42, "execution_risk_score": 75, "legal_or_contract_risk_score": 22, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 25, "inventory_normalization_score": 28, "channel_sellthrough_score": 31, "brand_power_score": 52, "retail_margin_repair_score": 30}, "weighted_score_after": 43.33, "stage_label_after": "Stage4B", "changed_components": ["inventory_normalization_score", "channel_sellthrough_score", "retail_margin_repair_score"], "component_delta_explanation": "C19 candidate gate emphasizes inventory normalization, sell-through/channel proof, margin bridge, and segment decontamination before Stage3.", "MFE_90D_pct": 3.3333, "MAE_90D_pct": -17.7619, "score_return_alignment_label": "dutyfree_profit_surprise_not_enough_for_brand_retail_margin_rerating", "current_profile_verdict": "current_profile_false_positive"}
+{"row_type": "case", "case_id": "C19_R5L114_069960_HYUNDAI_DEPTSTORE_DUTYFREE_GINUS_MIX", "symbol": "069960", "company_name": "현대백화점", "round": "R5", "loop": 114, "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "fine_archetype_id": "mixed_C19_department_store_fashion_inventory_margin_holdout_pass", "case_type": "high_mae_success", "positive_or_counterexample": "positive", "best_trigger": "TRG_C19_R5L114_069960_20230510", "calibration_usable": true, "is_new_independent_case": true, "reuse_reason": null, "independent_evidence_weight": 1.0, "score_price_alignment": "department_store_value_recovery_positive_but_subsidiary_mix_needs_gate", "current_profile_verdict": "current_profile_missed_structural", "price_source": "Songdaiki/stock-web", "notes": "The entry path produced large 90D/180D MFE with moderate MAE, but peak-to-window drawdown remained large; positive C19 evidence should carry a local 4B overlay."}
+{"row_type": "trigger", "trigger_id": "TRG_C19_R5L114_069960_20230510", "case_id": "C19_R5L114_069960_HYUNDAI_DEPTSTORE_DUTYFREE_GINUS_MIX", "symbol": "069960", "company_name": "현대백화점", "round": "R5", "loop": 114, "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "fine_archetype_id": "mixed_C19_department_store_fashion_inventory_margin_holdout_pass", "sector": "consumer_brand_distribution", "primary_archetype": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "loop_objective": "holdout_validation | counterexample_mining | canonical_archetype_compression | sector_specific_rule_discovery", "trigger_type": "Stage3-Yellow", "trigger_date": "2023-05-09", "entry_date": "2023-05-10", "entry_price": 52400.0, "evidence_available_at_that_date": "2023-05-09 review separated department-store category trends, duty-free commission improvement, and G-NUS order restriction. The row tests whether mixed retail subsidiaries need decontamination before Stage3.", "evidence_source": "https://home.imeritz.com/include/resource/research/WorkFlow/20230509192814489K_02.pdf", "source_title": "현대백화점 1Q23 Review — 백화점/면세점/지누스 mix", "stage2_evidence_fields": ["public_event_or_disclosure", "financial_visibility", "margin_bridge", "early_revision_signal"], "stage3_evidence_fields": ["margin_bridge", "multiple_public_sources", "financial_visibility", "low_red_team_risk"], "stage4b_evidence_fields": ["positioning_overheat", "price_only_local_peak"], "stage4c_evidence_fields": [], "price_data_source": "Songdaiki/stock-web", "price_data_repo": "https://github.com/Songdaiki/stock-web", "price_shard_path": "atlas/ohlcv_tradable_by_symbol_year/069/069960/2023.csv", "profile_path": "atlas/symbol_profiles/069/069960.json", "price_basis": "tradable_raw", "price_adjustment_status": "raw_unadjusted_marcap", "stock_web_manifest_max_date": "2026-02-20", "MFE_30D_pct": 2.6718, "MFE_90D_pct": 36.8321, "MFE_180D_pct": 36.8321, "MFE_1Y_pct": 36.8321, "MFE_2Y_pct": 39.6947, "MAE_30D_pct": -6.8702, "MAE_90D_pct": -9.2557, "MAE_180D_pct": -12.9771, "MAE_1Y_pct": -12.9771, "MAE_2Y_pct": -20.8015, "below_entry_price_flag_30D": true, "below_entry_price_flag_90D": true, "peak_date": "2023-08-14", "peak_price": 71700.0, "drawdown_after_peak_pct": -36.4017, "green_lateness_ratio": null, "four_b_local_peak_proximity": null, "four_b_full_window_peak_proximity": null, "four_b_timing_verdict": "positive_but_local_4B_overlay_required", "four_b_evidence_type": ["positioning_overheat", "price_only_local_peak"], "four_c_protection_label": "not_applicable_no_4c", "trigger_outcome_label": "department_store_value_recovery_positive_but_subsidiary_mix_needs_gate", "current_profile_verdict": "current_profile_missed_structural", "calibration_usable": true, "forward_window_trading_days": 180, "calibration_block_reasons": [], "corporate_action_window_status": "clean_180D_window", "same_entry_group_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN:069960:2023-05-10", "dedupe_for_aggregate": true, "aggregate_group_role": "representative", "is_new_independent_case": true, "reuse_reason": null, "independent_evidence_weight": 1.0, "do_not_count_as_new_case": false, "raw_component_scores_before": {"contract_score": 42, "backlog_visibility_score": 40, "margin_bridge_score": 62, "revision_score": 54, "relative_strength_score": 66, "customer_quality_score": 55, "policy_or_regulatory_score": 20, "valuation_repricing_score": 62, "execution_risk_score": 42, "legal_or_contract_risk_score": 18, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 18, "inventory_normalization_score": 62, "channel_sellthrough_score": 60, "brand_power_score": 64, "retail_margin_repair_score": 64}, "weighted_score_before": 74.12, "stage_label_before": "Stage2-Actionable", "raw_component_scores_after": {"contract_score": 42, "backlog_visibility_score": 40, "margin_bridge_score": 62, "revision_score": 54, "relative_strength_score": 66, "customer_quality_score": 55, "policy_or_regulatory_score": 20, "valuation_repricing_score": 62, "execution_risk_score": 42, "legal_or_contract_risk_score": 18, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 18, "inventory_normalization_score": 62, "channel_sellthrough_score": 60, "brand_power_score": 64, "retail_margin_repair_score": 64}, "weighted_score_after": 77.12, "stage_label_after": "Stage3-Yellow"}
+{"row_type": "score_simulation", "profile_id": "C19_brand_retail_inventory_margin_candidate_profile", "case_id": "C19_R5L114_069960_HYUNDAI_DEPTSTORE_DUTYFREE_GINUS_MIX", "trigger_id": "TRG_C19_R5L114_069960_20230510", "symbol": "069960", "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "raw_component_scores_before": {"contract_score": 42, "backlog_visibility_score": 40, "margin_bridge_score": 62, "revision_score": 54, "relative_strength_score": 66, "customer_quality_score": 55, "policy_or_regulatory_score": 20, "valuation_repricing_score": 62, "execution_risk_score": 42, "legal_or_contract_risk_score": 18, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 18, "inventory_normalization_score": 62, "channel_sellthrough_score": 60, "brand_power_score": 64, "retail_margin_repair_score": 64}, "weighted_score_before": 74.12, "stage_label_before": "Stage2-Actionable", "raw_component_scores_after": {"contract_score": 42, "backlog_visibility_score": 40, "margin_bridge_score": 62, "revision_score": 54, "relative_strength_score": 66, "customer_quality_score": 55, "policy_or_regulatory_score": 20, "valuation_repricing_score": 62, "execution_risk_score": 42, "legal_or_contract_risk_score": 18, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 18, "inventory_normalization_score": 62, "channel_sellthrough_score": 60, "brand_power_score": 64, "retail_margin_repair_score": 64}, "weighted_score_after": 77.12, "stage_label_after": "Stage3-Yellow", "changed_components": ["inventory_normalization_score", "channel_sellthrough_score", "retail_margin_repair_score"], "component_delta_explanation": "C19 candidate gate emphasizes inventory normalization, sell-through/channel proof, margin bridge, and segment decontamination before Stage3.", "MFE_90D_pct": 36.8321, "MAE_90D_pct": -9.2557, "score_return_alignment_label": "department_store_value_recovery_positive_but_subsidiary_mix_needs_gate", "current_profile_verdict": "current_profile_missed_structural"}
+{"row_type": "case", "case_id": "C19_R5L114_023530_LOTTE_MART_SUPER_ECOMMERCE_LOSS_NARROWING", "symbol": "023530", "company_name": "롯데쇼핑", "round": "R5", "loop": 114, "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "fine_archetype_id": "mixed_C19_department_store_fashion_inventory_margin_holdout_pass", "case_type": "stage2_promote_candidate", "positive_or_counterexample": "positive", "best_trigger": "TRG_C19_R5L114_023530_20230810", "calibration_usable": true, "is_new_independent_case": true, "reuse_reason": null, "independent_evidence_weight": 1.0, "score_price_alignment": "retail_margin_repair_positive_stage2_but_not_full_green", "current_profile_verdict": "current_profile_correct_but_local_4B_watch_needed", "price_source": "Songdaiki/stock-web", "notes": "Operational repair was real, but MFE was not strong enough for unguarded Green and peak drawdown required 4B overlay."}
+{"row_type": "trigger", "trigger_id": "TRG_C19_R5L114_023530_20230810", "case_id": "C19_R5L114_023530_LOTTE_MART_SUPER_ECOMMERCE_LOSS_NARROWING", "symbol": "023530", "company_name": "롯데쇼핑", "round": "R5", "loop": 114, "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "fine_archetype_id": "mixed_C19_department_store_fashion_inventory_margin_holdout_pass", "sector": "consumer_brand_distribution", "primary_archetype": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "loop_objective": "holdout_validation | counterexample_mining | canonical_archetype_compression | sector_specific_rule_discovery", "trigger_type": "Stage2-Actionable", "trigger_date": "2023-08-10", "entry_date": "2023-08-10", "entry_price": 76800.0, "evidence_available_at_that_date": "2023-08-10 report stated mart/super profit improvement, super turning profitable for a second quarter, e-commerce loss narrowing, and selling/admin efficiency; this is a retail margin repair path rather than pure headline sales.", "evidence_source": "https://www.yna.co.kr/view/AKR20230810126400003", "source_title": "롯데쇼핑 2Q23 — 마트·슈퍼 개선, 이커머스 적자 축소", "stage2_evidence_fields": ["public_event_or_disclosure", "margin_bridge", "financial_visibility", "capacity_or_volume_route"], "stage3_evidence_fields": ["margin_bridge", "financial_visibility"], "stage4b_evidence_fields": ["positioning_overheat", "price_only_local_peak"], "stage4c_evidence_fields": [], "price_data_source": "Songdaiki/stock-web", "price_data_repo": "https://github.com/Songdaiki/stock-web", "price_shard_path": "atlas/ohlcv_tradable_by_symbol_year/023/023530/2023.csv", "profile_path": "atlas/symbol_profiles/023/023530.json", "price_basis": "tradable_raw", "price_adjustment_status": "raw_unadjusted_marcap", "stock_web_manifest_max_date": "2026-02-20", "MFE_30D_pct": 1.1719, "MFE_90D_pct": 5.3385, "MFE_180D_pct": 19.9219, "MFE_1Y_pct": 19.9219, "MFE_2Y_pct": null, "MAE_30D_pct": -9.8958, "MAE_90D_pct": -11.3281, "MAE_180D_pct": -16.7969, "MAE_1Y_pct": -24.6094, "MAE_2Y_pct": null, "below_entry_price_flag_30D": true, "below_entry_price_flag_90D": true, "peak_date": "2024-02-13", "peak_price": 92100.0, "drawdown_after_peak_pct": -30.6189, "green_lateness_ratio": null, "four_b_local_peak_proximity": null, "four_b_full_window_peak_proximity": null, "four_b_timing_verdict": "positive_but_local_4B_overlay_required", "four_b_evidence_type": ["positioning_overheat", "price_only_local_peak"], "four_c_protection_label": "not_applicable_no_4c", "trigger_outcome_label": "retail_margin_repair_positive_stage2_but_not_full_green", "current_profile_verdict": "current_profile_correct_but_local_4B_watch_needed", "calibration_usable": true, "forward_window_trading_days": 180, "calibration_block_reasons": [], "corporate_action_window_status": "clean_180D_window", "same_entry_group_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN:023530:2023-08-10", "dedupe_for_aggregate": true, "aggregate_group_role": "representative", "is_new_independent_case": true, "reuse_reason": null, "independent_evidence_weight": 1.0, "do_not_count_as_new_case": false, "raw_component_scores_before": {"contract_score": 42, "backlog_visibility_score": 40, "margin_bridge_score": 62, "revision_score": 54, "relative_strength_score": 55, "customer_quality_score": 55, "policy_or_regulatory_score": 20, "valuation_repricing_score": 58, "execution_risk_score": 42, "legal_or_contract_risk_score": 18, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 18, "inventory_normalization_score": 62, "channel_sellthrough_score": 60, "brand_power_score": 64, "retail_margin_repair_score": 64}, "weighted_score_before": 72.25, "stage_label_before": "Stage2-Actionable", "raw_component_scores_after": {"contract_score": 42, "backlog_visibility_score": 40, "margin_bridge_score": 62, "revision_score": 54, "relative_strength_score": 55, "customer_quality_score": 55, "policy_or_regulatory_score": 20, "valuation_repricing_score": 58, "execution_risk_score": 42, "legal_or_contract_risk_score": 18, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 18, "inventory_normalization_score": 62, "channel_sellthrough_score": 60, "brand_power_score": 64, "retail_margin_repair_score": 64}, "weighted_score_after": 75.25, "stage_label_after": "Stage3-Yellow"}
+{"row_type": "score_simulation", "profile_id": "C19_brand_retail_inventory_margin_candidate_profile", "case_id": "C19_R5L114_023530_LOTTE_MART_SUPER_ECOMMERCE_LOSS_NARROWING", "trigger_id": "TRG_C19_R5L114_023530_20230810", "symbol": "023530", "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "raw_component_scores_before": {"contract_score": 42, "backlog_visibility_score": 40, "margin_bridge_score": 62, "revision_score": 54, "relative_strength_score": 55, "customer_quality_score": 55, "policy_or_regulatory_score": 20, "valuation_repricing_score": 58, "execution_risk_score": 42, "legal_or_contract_risk_score": 18, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 18, "inventory_normalization_score": 62, "channel_sellthrough_score": 60, "brand_power_score": 64, "retail_margin_repair_score": 64}, "weighted_score_before": 72.25, "stage_label_before": "Stage2-Actionable", "raw_component_scores_after": {"contract_score": 42, "backlog_visibility_score": 40, "margin_bridge_score": 62, "revision_score": 54, "relative_strength_score": 55, "customer_quality_score": 55, "policy_or_regulatory_score": 20, "valuation_repricing_score": 58, "execution_risk_score": 42, "legal_or_contract_risk_score": 18, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 18, "inventory_normalization_score": 62, "channel_sellthrough_score": 60, "brand_power_score": 64, "retail_margin_repair_score": 64}, "weighted_score_after": 75.25, "stage_label_after": "Stage3-Yellow", "changed_components": ["inventory_normalization_score", "channel_sellthrough_score", "retail_margin_repair_score"], "component_delta_explanation": "C19 candidate gate emphasizes inventory normalization, sell-through/channel proof, margin bridge, and segment decontamination before Stage3.", "MFE_90D_pct": 5.3385, "MAE_90D_pct": -11.3281, "score_return_alignment_label": "retail_margin_repair_positive_stage2_but_not_full_green", "current_profile_verdict": "current_profile_correct_but_local_4B_watch_needed"}
+{"row_type": "case", "case_id": "C19_R5L114_020000_HANDSOME_APPAREL_SLOWDOWN_OUTLET_INVENTORY", "symbol": "020000", "company_name": "한섬", "round": "R5", "loop": 114, "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "fine_archetype_id": "mixed_C19_department_store_fashion_inventory_margin_holdout_pass", "case_type": "failed_rerating", "positive_or_counterexample": "counterexample", "best_trigger": "TRG_C19_R5L114_020000_20230510", "calibration_usable": true, "is_new_independent_case": true, "reuse_reason": null, "independent_evidence_weight": 1.0, "score_price_alignment": "premium_apparel_brand_quality_without_near_term_inventory_margin_bridge", "current_profile_verdict": "current_profile_false_positive", "price_source": "Songdaiki/stock-web", "notes": "Brand quality was not enough. The stock path shows Stage2/3 should be blocked when inventory/outlet mix and weak traffic prevent margin bridge."}
+{"row_type": "trigger", "trigger_id": "TRG_C19_R5L114_020000_20230510", "case_id": "C19_R5L114_020000_HANDSOME_APPAREL_SLOWDOWN_OUTLET_INVENTORY", "symbol": "020000", "company_name": "한섬", "round": "R5", "loop": 114, "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "fine_archetype_id": "mixed_C19_department_store_fashion_inventory_margin_holdout_pass", "sector": "consumer_brand_distribution", "primary_archetype": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "loop_objective": "holdout_validation | counterexample_mining | canonical_archetype_compression | sector_specific_rule_discovery", "trigger_type": "Stage4B", "trigger_date": "2023-05-09", "entry_date": "2023-05-10", "entry_price": 26100.0, "evidence_available_at_that_date": "2023-05-09 review described 1Q23 revenue growth but operating-profit decline, online weakness, slowing market growth, weakening consumption, and limited short-term investment momentum.", "evidence_source": "https://home.imeritz.com/include/resource/research/WorkFlow/20230508080702871K_02.pdf", "source_title": "한섬 1Q23 Review — 때를 기다리자", "stage2_evidence_fields": ["public_event_or_disclosure", "financial_visibility"], "stage3_evidence_fields": [], "stage4b_evidence_fields": ["margin_or_backlog_slowdown", "positioning_overheat", "explicit_event_cap"], "stage4c_evidence_fields": [], "price_data_source": "Songdaiki/stock-web", "price_data_repo": "https://github.com/Songdaiki/stock-web", "price_shard_path": "atlas/ohlcv_tradable_by_symbol_year/020/020000/2023.csv", "profile_path": "atlas/symbol_profiles/020/020000.json", "price_basis": "tradable_raw", "price_adjustment_status": "raw_unadjusted_marcap", "stock_web_manifest_max_date": "2026-02-20", "MFE_30D_pct": 3.0651, "MFE_90D_pct": 3.0651, "MFE_180D_pct": 3.0651, "MFE_1Y_pct": 3.0651, "MFE_2Y_pct": 3.0651, "MAE_30D_pct": -11.8774, "MAE_90D_pct": -31.4176, "MAE_180D_pct": -34.2146, "MAE_1Y_pct": -34.2146, "MAE_2Y_pct": -47.7011, "below_entry_price_flag_30D": true, "below_entry_price_flag_90D": true, "peak_date": "2023-05-11", "peak_price": 26900.0, "drawdown_after_peak_pct": -36.171, "green_lateness_ratio": null, "four_b_local_peak_proximity": null, "four_b_full_window_peak_proximity": null, "four_b_timing_verdict": "good_local_4B_watch_or_failed_stage2_prevention", "four_b_evidence_type": ["margin_or_backlog_slowdown", "positioning_overheat", "explicit_event_cap"], "four_c_protection_label": "not_applicable_no_4c", "trigger_outcome_label": "premium_apparel_brand_quality_without_near_term_inventory_margin_bridge", "current_profile_verdict": "current_profile_false_positive", "calibration_usable": true, "forward_window_trading_days": 180, "calibration_block_reasons": [], "corporate_action_window_status": "clean_180D_window", "same_entry_group_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN:020000:2023-05-10", "dedupe_for_aggregate": true, "aggregate_group_role": "representative", "is_new_independent_case": true, "reuse_reason": null, "independent_evidence_weight": 1.0, "do_not_count_as_new_case": false, "raw_component_scores_before": {"contract_score": 28, "backlog_visibility_score": 22, "margin_bridge_score": 34, "revision_score": 30, "relative_strength_score": 35, "customer_quality_score": 38, "policy_or_regulatory_score": 15, "valuation_repricing_score": 42, "execution_risk_score": 75, "legal_or_contract_risk_score": 22, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 25, "inventory_normalization_score": 28, "channel_sellthrough_score": 31, "brand_power_score": 52, "retail_margin_repair_score": 30}, "weighted_score_before": 43.33, "stage_label_before": "Stage4B", "raw_component_scores_after": {"contract_score": 28, "backlog_visibility_score": 22, "margin_bridge_score": 34, "revision_score": 30, "relative_strength_score": 35, "customer_quality_score": 38, "policy_or_regulatory_score": 15, "valuation_repricing_score": 42, "execution_risk_score": 75, "legal_or_contract_risk_score": 22, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 25, "inventory_normalization_score": 28, "channel_sellthrough_score": 31, "brand_power_score": 52, "retail_margin_repair_score": 30}, "weighted_score_after": 43.33, "stage_label_after": "Stage4B"}
+{"row_type": "score_simulation", "profile_id": "C19_brand_retail_inventory_margin_candidate_profile", "case_id": "C19_R5L114_020000_HANDSOME_APPAREL_SLOWDOWN_OUTLET_INVENTORY", "trigger_id": "TRG_C19_R5L114_020000_20230510", "symbol": "020000", "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "raw_component_scores_before": {"contract_score": 28, "backlog_visibility_score": 22, "margin_bridge_score": 34, "revision_score": 30, "relative_strength_score": 35, "customer_quality_score": 38, "policy_or_regulatory_score": 15, "valuation_repricing_score": 42, "execution_risk_score": 75, "legal_or_contract_risk_score": 22, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 25, "inventory_normalization_score": 28, "channel_sellthrough_score": 31, "brand_power_score": 52, "retail_margin_repair_score": 30}, "weighted_score_before": 43.33, "stage_label_before": "Stage4B", "raw_component_scores_after": {"contract_score": 28, "backlog_visibility_score": 22, "margin_bridge_score": 34, "revision_score": 30, "relative_strength_score": 35, "customer_quality_score": 38, "policy_or_regulatory_score": 15, "valuation_repricing_score": 42, "execution_risk_score": 75, "legal_or_contract_risk_score": 22, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 25, "inventory_normalization_score": 28, "channel_sellthrough_score": 31, "brand_power_score": 52, "retail_margin_repair_score": 30}, "weighted_score_after": 43.33, "stage_label_after": "Stage4B", "changed_components": ["inventory_normalization_score", "channel_sellthrough_score", "retail_margin_repair_score"], "component_delta_explanation": "C19 candidate gate emphasizes inventory normalization, sell-through/channel proof, margin bridge, and segment decontamination before Stage3.", "MFE_90D_pct": 3.0651, "MAE_90D_pct": -31.4176, "score_return_alignment_label": "premium_apparel_brand_quality_without_near_term_inventory_margin_bridge", "current_profile_verdict": "current_profile_false_positive"}
+{"row_type": "case", "case_id": "C19_R5L114_031430_SI_BRAND_EXIT_FASHION_MARGIN_GAP", "symbol": "031430", "company_name": "신세계인터내셔날", "round": "R5", "loop": 114, "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "fine_archetype_id": "mixed_C19_department_store_fashion_inventory_margin_holdout_pass", "case_type": "failed_rerating", "positive_or_counterexample": "counterexample", "best_trigger": "TRG_C19_R5L114_031430_20230511", "calibration_usable": true, "is_new_independent_case": true, "reuse_reason": null, "independent_evidence_weight": 1.0, "score_price_alignment": "brand_exit_and_fashion_margin_gap_counterexample", "current_profile_verdict": "current_profile_false_positive", "price_source": "Songdaiki/stock-web", "notes": "Cosmetics growth was not enough to rescue the fashion/brand-exit margin bridge; deep MAE makes Stage3 inappropriate."}
+{"row_type": "trigger", "trigger_id": "TRG_C19_R5L114_031430_20230511", "case_id": "C19_R5L114_031430_SI_BRAND_EXIT_FASHION_MARGIN_GAP", "symbol": "031430", "company_name": "신세계인터내셔날", "round": "R5", "loop": 114, "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "fine_archetype_id": "mixed_C19_department_store_fashion_inventory_margin_holdout_pass", "sector": "consumer_brand_distribution", "primary_archetype": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "loop_objective": "holdout_validation | counterexample_mining | canonical_archetype_compression | sector_specific_rule_discovery", "trigger_type": "Stage4B", "trigger_date": "2023-05-11", "entry_date": "2023-05-11", "entry_price": 19290.0, "evidence_available_at_that_date": "2023-05-11 review showed 1Q23 revenue -11%, operating profit -69%, brand exits, fashion weakness, and cost burden despite cosmetics growth.", "evidence_source": "https://home.imeritz.com/include/resource/research/WorkFlow/20230509131547019K_02.pdf", "source_title": "신세계인터내셔날 1Q23 Review — 지나갈 바람", "stage2_evidence_fields": ["public_event_or_disclosure", "financial_visibility"], "stage3_evidence_fields": [], "stage4b_evidence_fields": ["margin_or_backlog_slowdown", "explicit_event_cap", "price_only_local_peak"], "stage4c_evidence_fields": [], "price_data_source": "Songdaiki/stock-web", "price_data_repo": "https://github.com/Songdaiki/stock-web", "price_shard_path": "atlas/ohlcv_tradable_by_symbol_year/031/031430/2023.csv", "profile_path": "atlas/symbol_profiles/031/031430.json", "price_basis": "tradable_raw", "price_adjustment_status": "raw_unadjusted_marcap", "stock_web_manifest_max_date": "2026-02-20", "MFE_30D_pct": 5.4951, "MFE_90D_pct": 5.4951, "MFE_180D_pct": 5.4951, "MFE_1Y_pct": 5.4951, "MFE_2Y_pct": null, "MAE_30D_pct": -12.0788, "MAE_90D_pct": -23.1208, "MAE_180D_pct": -23.1208, "MAE_1Y_pct": -23.1208, "MAE_2Y_pct": null, "below_entry_price_flag_30D": true, "below_entry_price_flag_90D": true, "peak_date": "2023-05-11", "peak_price": 20350.0, "drawdown_after_peak_pct": -27.1253, "green_lateness_ratio": null, "four_b_local_peak_proximity": null, "four_b_full_window_peak_proximity": null, "four_b_timing_verdict": "good_local_4B_watch_or_failed_stage2_prevention", "four_b_evidence_type": ["margin_or_backlog_slowdown", "explicit_event_cap", "price_only_local_peak"], "four_c_protection_label": "not_applicable_no_4c", "trigger_outcome_label": "brand_exit_and_fashion_margin_gap_counterexample", "current_profile_verdict": "current_profile_false_positive", "calibration_usable": true, "forward_window_trading_days": 180, "calibration_block_reasons": [], "corporate_action_window_status": "clean_180D_window", "same_entry_group_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN:031430:2023-05-11", "dedupe_for_aggregate": true, "aggregate_group_role": "representative", "is_new_independent_case": true, "reuse_reason": null, "independent_evidence_weight": 1.0, "do_not_count_as_new_case": false, "raw_component_scores_before": {"contract_score": 28, "backlog_visibility_score": 22, "margin_bridge_score": 34, "revision_score": 30, "relative_strength_score": 35, "customer_quality_score": 38, "policy_or_regulatory_score": 15, "valuation_repricing_score": 42, "execution_risk_score": 68, "legal_or_contract_risk_score": 22, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 25, "inventory_normalization_score": 28, "channel_sellthrough_score": 31, "brand_power_score": 52, "retail_margin_repair_score": 30}, "weighted_score_before": 43.92, "stage_label_before": "Stage4B", "raw_component_scores_after": {"contract_score": 28, "backlog_visibility_score": 22, "margin_bridge_score": 34, "revision_score": 30, "relative_strength_score": 35, "customer_quality_score": 38, "policy_or_regulatory_score": 15, "valuation_repricing_score": 42, "execution_risk_score": 68, "legal_or_contract_risk_score": 22, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 25, "inventory_normalization_score": 28, "channel_sellthrough_score": 31, "brand_power_score": 52, "retail_margin_repair_score": 30}, "weighted_score_after": 43.92, "stage_label_after": "Stage4B"}
+{"row_type": "score_simulation", "profile_id": "C19_brand_retail_inventory_margin_candidate_profile", "case_id": "C19_R5L114_031430_SI_BRAND_EXIT_FASHION_MARGIN_GAP", "trigger_id": "TRG_C19_R5L114_031430_20230511", "symbol": "031430", "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "raw_component_scores_before": {"contract_score": 28, "backlog_visibility_score": 22, "margin_bridge_score": 34, "revision_score": 30, "relative_strength_score": 35, "customer_quality_score": 38, "policy_or_regulatory_score": 15, "valuation_repricing_score": 42, "execution_risk_score": 68, "legal_or_contract_risk_score": 22, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 25, "inventory_normalization_score": 28, "channel_sellthrough_score": 31, "brand_power_score": 52, "retail_margin_repair_score": 30}, "weighted_score_before": 43.92, "stage_label_before": "Stage4B", "raw_component_scores_after": {"contract_score": 28, "backlog_visibility_score": 22, "margin_bridge_score": 34, "revision_score": 30, "relative_strength_score": 35, "customer_quality_score": 38, "policy_or_regulatory_score": 15, "valuation_repricing_score": 42, "execution_risk_score": 68, "legal_or_contract_risk_score": 22, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 25, "inventory_normalization_score": 28, "channel_sellthrough_score": 31, "brand_power_score": 52, "retail_margin_repair_score": 30}, "weighted_score_after": 43.92, "stage_label_after": "Stage4B", "changed_components": ["inventory_normalization_score", "channel_sellthrough_score", "retail_margin_repair_score"], "component_delta_explanation": "C19 candidate gate emphasizes inventory normalization, sell-through/channel proof, margin bridge, and segment decontamination before Stage3.", "MFE_90D_pct": 5.4951, "MAE_90D_pct": -23.1208, "score_return_alignment_label": "brand_exit_and_fashion_margin_gap_counterexample", "current_profile_verdict": "current_profile_false_positive"}
+{"row_type": "case", "case_id": "C19_R5L114_383220_FNF_DISCOVERY_CHINA_PLAN_MLB_SLOWDOWN", "symbol": "383220", "company_name": "F&F", "round": "R5", "loop": 114, "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "fine_archetype_id": "mixed_C19_department_store_fashion_inventory_margin_holdout_pass", "case_type": "high_mae_success", "positive_or_counterexample": "positive", "best_trigger": "TRG_C19_R5L114_383220_20240729", "calibration_usable": true, "is_new_independent_case": true, "reuse_reason": null, "independent_evidence_weight": 1.0, "score_price_alignment": "new_brand_global_rollout_positive_but_existing_brand_slowdown_requires_4B_buffer", "current_profile_verdict": "current_profile_correct_but_local_4B_watch_needed", "price_source": "Songdaiki/stock-web", "notes": "Discovery China optionality was real enough for positive MFE, but 90D MAE below -20% means C19 needs an inventory/channel sell-through gate before Stage3."}
+{"row_type": "trigger", "trigger_id": "TRG_C19_R5L114_383220_20240729", "case_id": "C19_R5L114_383220_FNF_DISCOVERY_CHINA_PLAN_MLB_SLOWDOWN", "symbol": "383220", "company_name": "F&F", "round": "R5", "loop": 114, "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "fine_archetype_id": "mixed_C19_department_store_fashion_inventory_margin_holdout_pass", "sector": "consumer_brand_distribution", "primary_archetype": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "loop_objective": "holdout_validation | counterexample_mining | canonical_archetype_compression | sector_specific_rule_discovery", "trigger_type": "Stage2-Actionable", "trigger_date": "2024-07-29", "entry_date": "2024-07-29", "entry_price": 59000.0, "evidence_available_at_that_date": "2024-07-29 report kept BUY while noting MLB growth slowing and Discovery China launch plan becoming concrete; the issue is whether a new brand-rollout path offsets inventory/channel slowdown.", "evidence_source": "https://www.hanwhawm.com/main/common/common_file/fileView.cmd?bldid=bbs10031&category=2&depth3_id=anls1&key1=62474&key2=1", "source_title": "F&F — 구체화된 디스커버리 중국 진출 계획", "stage2_evidence_fields": ["public_event_or_disclosure", "capacity_or_volume_route", "customer_or_order_quality", "early_revision_signal"], "stage3_evidence_fields": ["financial_visibility", "repeat_order_or_conversion"], "stage4b_evidence_fields": ["positioning_overheat", "margin_or_backlog_slowdown", "price_only_local_peak"], "stage4c_evidence_fields": [], "price_data_source": "Songdaiki/stock-web", "price_data_repo": "https://github.com/Songdaiki/stock-web", "price_shard_path": "atlas/ohlcv_tradable_by_symbol_year/383/383220/2024.csv", "profile_path": "atlas/symbol_profiles/383/383220.json", "price_basis": "tradable_raw", "price_adjustment_status": "raw_unadjusted_marcap", "stock_web_manifest_max_date": "2026-02-20", "MFE_30D_pct": 5.4237, "MFE_90D_pct": 22.2034, "MFE_180D_pct": 26.7797, "MFE_1Y_pct": 41.5254, "MFE_2Y_pct": null, "MAE_30D_pct": -20.0847, "MAE_90D_pct": -20.0847, "MAE_180D_pct": -20.0847, "MAE_1Y_pct": -20.0847, "MAE_2Y_pct": null, "below_entry_price_flag_30D": true, "below_entry_price_flag_90D": true, "peak_date": "2025-02-20", "peak_price": 74800.0, "drawdown_after_peak_pct": -24.8663, "green_lateness_ratio": null, "four_b_local_peak_proximity": null, "four_b_full_window_peak_proximity": null, "four_b_timing_verdict": "not_applicable_or_watch_only", "four_b_evidence_type": ["positioning_overheat", "margin_or_backlog_slowdown", "price_only_local_peak"], "four_c_protection_label": "not_applicable_no_4c", "trigger_outcome_label": "new_brand_global_rollout_positive_but_existing_brand_slowdown_requires_4B_buffer", "current_profile_verdict": "current_profile_correct_but_local_4B_watch_needed", "calibration_usable": true, "forward_window_trading_days": 180, "calibration_block_reasons": [], "corporate_action_window_status": "clean_180D_window", "same_entry_group_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN:383220:2024-07-29", "dedupe_for_aggregate": true, "aggregate_group_role": "representative", "is_new_independent_case": true, "reuse_reason": null, "independent_evidence_weight": 1.0, "do_not_count_as_new_case": false, "raw_component_scores_before": {"contract_score": 42, "backlog_visibility_score": 40, "margin_bridge_score": 62, "revision_score": 54, "relative_strength_score": 66, "customer_quality_score": 55, "policy_or_regulatory_score": 20, "valuation_repricing_score": 62, "execution_risk_score": 42, "legal_or_contract_risk_score": 18, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 18, "inventory_normalization_score": 62, "channel_sellthrough_score": 60, "brand_power_score": 64, "retail_margin_repair_score": 64}, "weighted_score_before": 74.12, "stage_label_before": "Stage2-Actionable", "raw_component_scores_after": {"contract_score": 42, "backlog_visibility_score": 40, "margin_bridge_score": 62, "revision_score": 54, "relative_strength_score": 66, "customer_quality_score": 55, "policy_or_regulatory_score": 20, "valuation_repricing_score": 62, "execution_risk_score": 42, "legal_or_contract_risk_score": 18, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 18, "inventory_normalization_score": 62, "channel_sellthrough_score": 60, "brand_power_score": 64, "retail_margin_repair_score": 64}, "weighted_score_after": 77.12, "stage_label_after": "Stage3-Yellow"}
+{"row_type": "score_simulation", "profile_id": "C19_brand_retail_inventory_margin_candidate_profile", "case_id": "C19_R5L114_383220_FNF_DISCOVERY_CHINA_PLAN_MLB_SLOWDOWN", "trigger_id": "TRG_C19_R5L114_383220_20240729", "symbol": "383220", "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "raw_component_scores_before": {"contract_score": 42, "backlog_visibility_score": 40, "margin_bridge_score": 62, "revision_score": 54, "relative_strength_score": 66, "customer_quality_score": 55, "policy_or_regulatory_score": 20, "valuation_repricing_score": 62, "execution_risk_score": 42, "legal_or_contract_risk_score": 18, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 18, "inventory_normalization_score": 62, "channel_sellthrough_score": 60, "brand_power_score": 64, "retail_margin_repair_score": 64}, "weighted_score_before": 74.12, "stage_label_before": "Stage2-Actionable", "raw_component_scores_after": {"contract_score": 42, "backlog_visibility_score": 40, "margin_bridge_score": 62, "revision_score": 54, "relative_strength_score": 66, "customer_quality_score": 55, "policy_or_regulatory_score": 20, "valuation_repricing_score": 62, "execution_risk_score": 42, "legal_or_contract_risk_score": 18, "dilution_cb_risk_score": 10, "accounting_trust_risk_score": 18, "inventory_normalization_score": 62, "channel_sellthrough_score": 60, "brand_power_score": 64, "retail_margin_repair_score": 64}, "weighted_score_after": 77.12, "stage_label_after": "Stage3-Yellow", "changed_components": ["inventory_normalization_score", "channel_sellthrough_score", "retail_margin_repair_score"], "component_delta_explanation": "C19 candidate gate emphasizes inventory normalization, sell-through/channel proof, margin bridge, and segment decontamination before Stage3.", "MFE_90D_pct": 22.2034, "MAE_90D_pct": -20.0847, "score_return_alignment_label": "new_brand_global_rollout_positive_but_existing_brand_slowdown_requires_4B_buffer", "current_profile_verdict": "current_profile_correct_but_local_4B_watch_needed"}
+{"row_type": "aggregate", "round": "R5", "loop": 114, "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "fine_archetype_id": "mixed_C19_department_store_fashion_inventory_margin_holdout_pass", "trigger_row_count": 6, "calibration_usable_rows": 6, "representative_rows": 6, "positive_case_count": 3, "counterexample_count": 3, "stage4b_or_watch_count": 6, "stage4c_count": 0, "current_profile_error_count": 4, "avg_MFE_90D_pct": 12.7112, "avg_MAE_90D_pct": -18.8281, "avg_MFE_180D_pct": 15.9045, "avg_MAE_180D_pct": -22.207, "rows_with_MAE180_below_minus_30pct": 1, "rows_with_MFE180_above_20pct": 2}
+{"row_type": "shadow_rule_candidate", "rule_id": "C19_BRAND_RETAIL_REQUIRES_INVENTORY_NORMALIZATION_SELLTHROUGH_AND_MARGIN_BRIDGE_WITH_CHANNEL_DECONTAMINATION", "rule_scope": "canonical_archetype_specific", "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "production_scoring_changed": false, "shadow_weight_only": true, "rule_summary": "Brand/retail Stage3 should require inventory normalization, sell-through/channel proof, segment-level margin bridge, and decontamination of duty-free, G-NUS, e-commerce, or brand-exit effects; high-MAE paths get local 4B overlay."}
+{"row_type": "residual_contribution", "round": "R5", "loop": 114, "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION", "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN", "new_independent_case_count": 6, "reused_case_count": 0, "new_symbol_count": 6, "new_trigger_family_count": 6, "tested_existing_calibrated_axes": ["stage2_required_bridge", "local_4b_watch_guard", "price_only_blowoff_blocks_positive_stage", "full_4b_requires_non_price_evidence"], "residual_error_types_found": ["brand_power_without_inventory_margin_bridge_false_positive", "dutyfree_consolidated_profit_decontamination_required", "fashion_brand_exit_and_outlet_inventory_high_MAE", "retail_margin_repair_positive_with_local_4B_watch"], "loop_contribution_label": "holdout_validation_passed", "do_not_propose_new_weight_delta": false}
+```
+
+## 9. Source references
+
+- 004170 신세계: 신세계 1Q23 Review — 면세점 실적 서프라이즈, 내수 소비 둔화 — https://www.samsungpop.com/common.do?cmd=down&contentType=application%2Fpdf&fileName=2010%2F2023051016495834K_02_02.pdf&inlineYn=Y&saveKey=research.pdf
+- 069960 현대백화점: 현대백화점 1Q23 Review — 백화점/면세점/지누스 mix — https://home.imeritz.com/include/resource/research/WorkFlow/20230509192814489K_02.pdf
+- 023530 롯데쇼핑: 롯데쇼핑 2Q23 — 마트·슈퍼 개선, 이커머스 적자 축소 — https://www.yna.co.kr/view/AKR20230810126400003
+- 020000 한섬: 한섬 1Q23 Review — 때를 기다리자 — https://home.imeritz.com/include/resource/research/WorkFlow/20230508080702871K_02.pdf
+- 031430 신세계인터내셔날: 신세계인터내셔날 1Q23 Review — 지나갈 바람 — https://home.imeritz.com/include/resource/research/WorkFlow/20230509131547019K_02.pdf
+- 383220 F&F: F&F — 구체화된 디스커버리 중국 진출 계획 — https://www.hanwhawm.com/main/common/common_file/fileView.cmd?bldid=bbs10031&category=2&depth3_id=anls1&key1=62474&key2=1
+
+## 10. Residual Contribution Summary
+
+new_independent_case_count: 6
+reused_case_count: 0
+reused_case_ids: []
+new_symbol_count: 6
+new_canonical_archetype_count: 0
+new_fine_archetype_count: 1
+new_trigger_family_count: 6
+tested_existing_calibrated_axes: stage2_required_bridge | local_4b_watch_guard | price_only_blowoff_blocks_positive_stage | full_4b_requires_non_price_evidence
+residual_error_types_found: brand_power_without_inventory_margin_bridge_false_positive | dutyfree_consolidated_profit_decontamination_required | fashion_brand_exit_and_outlet_inventory_high_MAE | retail_margin_repair_positive_with_local_4B_watch
+new_axis_proposed: C19_BRAND_RETAIL_REQUIRES_INVENTORY_NORMALIZATION_SELLTHROUGH_AND_MARGIN_BRIDGE_WITH_CHANNEL_DECONTAMINATION
+existing_axis_strengthened: stage2_required_bridge | local_4b_watch_guard | price_only_blowoff_blocks_positive_stage
+existing_axis_weakened: null
+existing_axis_kept: full_4b_requires_non_price_evidence
+sector_specific_rule_candidate: L5_BRAND_RETAIL_CHANNEL_DECONTAMINATION_GATE
+canonical_archetype_rule_candidate: C19_BRAND_RETAIL_REQUIRES_INVENTORY_NORMALIZATION_SELLTHROUGH_AND_MARGIN_BRIDGE
+no_new_signal_reason: null
+loop_contribution_label: holdout_validation_passed
+do_not_propose_new_weight_delta: false
+
+## 11. Batch Ingest Self-Audit
 
 ```yaml
-selected_round: R5
-selected_loop: 114
-large_sector_id: L5_CONSUMER_BRAND_DISTRIBUTION
-canonical_archetype_id: C19_BRAND_RETAIL_INVENTORY_MARGIN
-fine_archetype_id: APPAREL_OEM_BRAND_INVENTORY_CLEARANCE_AND_CONVENIENCE_RETAIL_TURNOVER_MARGIN_BRIDGE_VS_RESTOCKING_LABEL_FALSE_POSITIVE
-new_independent_case_count: 4
-reused_case_count: 0
-same_archetype_new_symbol_count: 4
-same_archetype_new_trigger_family_count: 2
-calibration_usable_case_count: 4
-positive_case_count: 2
-counterexample_count: 2
-boundary_case_count: 2
-current_profile_error_count: 4
-verified_url_repair_needed_count: 4
-do_not_propose_new_weight_delta: false
-auto_selected_coverage_gap: C19 rows 24, 30-row target까지 6 부족, 50-row target까지 26 부족
-sector_specific_rule_candidate: true
-canonical_archetype_rule_candidate: true
-loop_contribution_label: canonical_archetype_rule_candidate
-new_axis_proposed: c19_inventory_sellthrough_opm_revision_bridge_required
-existing_axis_strengthened: full_4b_requires_non_price_evidence scoped to C19 apparel OEM / sportswear brand / convenience retail rallies
-existing_axis_weakened: null
-next_recommended_archetypes:
-  - C27_CONTENT_IP_GLOBAL_MONETIZATION
-  - C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK
-  - C13_BATTERY_JV_UTILIZATION_AMPC_IRA
+standard_filename_ok: true
+filename_matches_metadata: true
+uses_no_repeat_index_as_ledger_only: true
+uses_stock_web_actual_ohlcv: true
+jsonl_trigger_row_count: 6
+calibration_usable_rows: 6
+representative_rows: 6
+new_weight_evidence_candidate_count: 6
+guardrail_candidate_count: 6
+narrative_only_or_rejected_count: 0
+rows_missing_required_mfe_mae: 0
+rows_missing_entry_price_or_date: 0
+rows_with_noncanonical_trigger_type: 0
+rows_with_compact_mfe_mae_alias_only: 0
+source_proxy_only_rows: 0
+evidence_url_pending_rows: 0
+future_data_leakage_detected: false
+corporate_action_contaminated_rows: 0
+insufficient_forward_window_rows: 0
+production_code_patch_included: false
+production_scoring_patch_applied: false
+handoff_prompt_executed_now: false
+ready_for_batch_ingest: true
 ```
+
+## 12. Deferred Coding Agent Handoff Prompt
+
+```text
+Do not execute during research session. In a later coding-agent batch session, ingest this MD with the other V12 result files. Validate JSONL trigger rows, dedupe by canonical_archetype_id + symbol + trigger_type + entry_date, and test the shadow C19 rule candidate against data/e2r/calibration/v12. If promotion is considered, keep it canonical-archetype scoped; do not alter production scoring directly from this single MD.
+```
+
+## 13. Next research state
+
+completed_round = R5
+completed_loop = 114
+selection_basis = docs/core/V12_Research_No_Repeat_Index.md
+selected_priority_bucket = Priority 2 / quality holdout after session-adjusted Priority 0 and Priority 1 fills
+next_recommended_archetypes = C19_BRAND_RETAIL_INVENTORY_MARGIN_holdout_only_if_new_inventory_or_sellthrough_path | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_holdout_quality_only | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT_quality_holdout
+round_schedule_status = coverage_index_selected
+round_sector_consistency = pass

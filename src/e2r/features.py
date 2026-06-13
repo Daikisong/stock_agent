@@ -125,6 +125,10 @@ def _is_search_snippet_only_news(item: NewsItem) -> bool:
     return bool(item.parsed_fields.get("search_snippet_only"))
 
 
+def _green_allowed_by_date(fields: Mapping[str, Any]) -> bool:
+    return fields.get("green_allowed_by_date") is not False and not _to_bool(fields.get("date_unverified_document"))
+
+
 def _max_or_none(values: Sequence[float | None]) -> float | None:
     clean = [value for value in values if value is not None]
     return max(clean) if clean else None
@@ -282,9 +286,13 @@ class DeterministicFeatureEngineer:
         risk_penalty = self._risk_penalty(sub_scores, sector_metrics["structural_visibility_quality"], sector_profile)
         revision_score = self._revision_score(inputs, field_source, estimate_quality)
         price_stage_score = self._price_stage_score(inputs.price_bars)
+        fcf_quality = self._fcf_quality(inputs, field_source)
+        valuation_score = self._valuation_score(inputs, field_source, estimate_quality)
         diagnostic_scores = {
             "revision_score": revision_score,
             "price_stage_score": price_stage_score,
+            "fcf_quality_score": _round(fcf_quality),
+            "valuation_score": _round(valuation_score),
             "sector_profile_id": profile_id(sector_profile),
             **{key: _round(value) for key, value in sector_metrics.items()},
             **estimate_quality.diagnostic_scores,
@@ -328,6 +336,8 @@ class DeterministicFeatureEngineer:
             "shortage_type": sub_scores.shortage_type.value,
             "revision_score": revision_score,
             "price_stage_score": price_stage_score,
+            "fcf_quality_score": _round(fcf_quality),
+            "valuation_score": _round(valuation_score),
             "sector_profile": sector_profile.value,
             "large_sector_id": classification.large_sector_id,
             "canonical_archetype_id": classification.canonical_archetype_id,
@@ -1147,9 +1157,20 @@ class DeterministicFeatureEngineer:
 
     @staticmethod
     def _evidence_family_diagnostics(inputs: FeatureEngineeringInput) -> dict[str, float]:
-        full_news = tuple(item for item in inputs.news_items if not _is_search_snippet_only_news(item))
+        date_verified_disclosures = tuple(item for item in inputs.disclosures if _green_allowed_by_date(item.parsed_fields))
+        date_verified_reports = tuple(item for item in inputs.research_reports if _green_allowed_by_date(item.parsed_fields))
+        full_news = tuple(
+            item
+            for item in inputs.news_items
+            if not _is_search_snippet_only_news(item) and _green_allowed_by_date(item.parsed_fields)
+        )
         snippet_news = tuple(item for item in inputs.news_items if _is_search_snippet_only_news(item))
         date_unverified_snippet = tuple(item for item in snippet_news if item.parsed_fields.get("search_snippet_date_unverified"))
+        date_unverified_documents = tuple(
+            item.parsed_fields
+            for item in (*inputs.disclosures, *inputs.research_reports, *inputs.news_items)
+            if not _green_allowed_by_date(item.parsed_fields)
+        )
         independent_consensus = tuple(item for item in inputs.consensus if is_independent_consensus(item))
         proxy_consensus = tuple(
             item for item in inputs.consensus if is_report_derived_estimate(item.source, item.parsed_fields)
@@ -1161,8 +1182,8 @@ class DeterministicFeatureEngineer:
         flags = {
             "price": bool(inputs.price_bars),
             "financial_actual": bool(inputs.financial_actuals),
-            "disclosure": bool(inputs.disclosures),
-            "research_report": bool(inputs.research_reports),
+            "disclosure": bool(date_verified_disclosures),
+            "research_report": bool(date_verified_reports),
             "consensus": bool(independent_consensus),
             "consensus_revision": bool(independent_revisions),
             "news": bool(full_news),
@@ -1177,9 +1198,12 @@ class DeterministicFeatureEngineer:
         diagnostics["snippet_only_news_family"] = 1.0 if snippet_news else 0.0
         diagnostics["snippet_only_news_count_capped"] = min(float(len(snippet_news)), 100.0)
         diagnostics["date_unverified_snippet_news_count_capped"] = min(float(len(date_unverified_snippet)), 100.0)
+        diagnostics["date_unverified_document_count_capped"] = min(float(len(date_unverified_documents)), 100.0)
         if snippet_news and not full_news:
             diagnostics["snippet_only_green_block"] = 100.0
-        diagnostics["report_date_confidence"] = 100.0
+        diagnostics["report_date_confidence"] = 0.0 if date_unverified_documents and not (
+            date_verified_disclosures or date_verified_reports or full_news
+        ) else 100.0
         return diagnostics
 
     @staticmethod

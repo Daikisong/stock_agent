@@ -74,6 +74,8 @@ class EstimateQualityTests(unittest.TestCase):
 
         self.assertIsNone(context.value("eps_e"))
         self.assertGreaterEqual(context.diagnostic_scores["estimate_proxy_quarantined_count_capped"], 1)
+        self.assertEqual(context.diagnostic_scores["estimate_missing_eps_source"], 100.0)
+        self.assertEqual(context.diagnostic_scores["estimate_missing_revision_source"], 100.0)
         self.assertNotIn("estimate_selected_eps_source", context.source_fields)
 
     def test_unknown_structured_source_is_low_quality_but_not_dropped(self):
@@ -133,6 +135,7 @@ class EstimateQualityTests(unittest.TestCase):
         self.assertEqual(context.revision_selection.selected_value, 20)
         self.assertEqual(context.source_fields["estimate_selected_revision_source"], "consensus-csv")
         self.assertEqual(context.diagnostic_scores["estimate_revision_outlier_count_capped"], 1.0)
+        self.assertEqual(context.diagnostic_scores["estimate_missing_fcf_source"], 100.0)
 
 
 if __name__ == "__main__":

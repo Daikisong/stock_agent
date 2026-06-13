@@ -19,9 +19,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--official-root", default="data/historical_official")
     parser.add_argument("--search-snapshot-root", default="data/search_snapshots")
     parser.add_argument("--report-snapshot-root", default="data/report_snapshots")
-    parser.add_argument("--top-candidates", type=int, default=50)
-    parser.add_argument("--max-queries-per-candidate", type=int, default=8)
-    parser.add_argument("--max-results-per-query", type=int, default=5)
+    parser.add_argument("--top-candidates", type=int)
+    parser.add_argument("--max-queries-per-candidate", type=int)
+    parser.add_argument("--max-results-per-query", type=int, default=100)
     parser.add_argument("--report-date", type=date.fromisoformat)
     return parser
 

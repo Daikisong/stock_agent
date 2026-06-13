@@ -8,6 +8,7 @@ from datetime import date
 from .calibration.scoring_profile import get_active_scoring_profile
 from .models import ScoreSnapshot, Stage, StageSnapshot
 from .red_team import RedTeamAssessment, RedTeamRiskLevel, Soft4BStatus
+from .score_validity import is_score_valid
 
 
 ACTIVE_RERATING_STAGES = frozenset(
@@ -55,6 +56,10 @@ def _score_diagnostic(score: ScoreSnapshot, key: str, default: float = 0.0) -> f
 
 
 def _grade_from_score(total_score: float, stage: Stage, soft_4b_status: Soft4BStatus = Soft4BStatus.NONE) -> str:
+    if stage == Stage.STAGE_0:
+        return "Watch"
+    if stage == Stage.STAGE_5:
+        return "Archive"
     if stage == Stage.STAGE_4C:
         return "Thesis Break"
     if stage == Stage.STAGE_4B:
@@ -135,6 +140,10 @@ class StageClassifier:
             reasons.append("archive condition was present as of the decision date")
             return Stage.STAGE_5, reasons
 
+        if not is_score_valid(score):
+            reasons.append("score was marked invalid before stage classification")
+            return Stage.STAGE_0, reasons
+
         if red_team.has_hard_break:
             reasons.append("Red Team hard thesis-break condition was present")
             return Stage.STAGE_4C, reasons
@@ -182,7 +191,7 @@ class StageClassifier:
             score.total_score >= profile.threshold("stage3_yellow_total_min", 80.0)
             and not self._positive_stage_blocked_by_price_only(score)
         ):
-            reasons.append("Stage 3 score threshold was met, but Green conditions were incomplete")
+            reasons.append("Stage 3 score threshold was met; Green promotion gates remained unmet")
             return Stage.STAGE_3_YELLOW, reasons
 
         if self._is_stage_2(score, red_team):
@@ -193,14 +202,14 @@ class StageClassifier:
             return Stage.STAGE_2, reasons
 
         if inputs.company_event_score >= 60.0 or inputs.high_quality_company_event:
-            reasons.append("company-level event was present, but candidate score threshold was not met")
+            reasons.append("company-level event was present; candidate promotion gates remained unmet")
             return Stage.STAGE_1, reasons
 
         if inputs.theme_regime_score >= 60.0:
-            reasons.append("industry regime was present without sufficient company-level confirmation")
+            reasons.append("industry regime was present; company-level promotion gates remained unmet")
             return Stage.STAGE_0, reasons
 
-        reasons.append("insufficient point-in-time evidence for a higher stage")
+        reasons.append("higher-stage promotion gates remained unmet in point-in-time evaluation")
         return Stage.STAGE_0, reasons
 
     @staticmethod
@@ -339,6 +348,7 @@ def _emerging_theme_green_allowed(score: ScoreSnapshot) -> bool:
         _score_diagnostic(score, "llm_deep_research_completed") >= 100.0
         and _score_diagnostic(score, "green_unlock_evidence_score") >= 60.0
         and _score_diagnostic(score, "date_unverified_snippet_news_count_capped") <= 0.0
+        and _score_diagnostic(score, "report_date_confidence", 100.0) >= 1.0
     )
 
 

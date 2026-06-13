@@ -148,6 +148,7 @@ class DeterministicScorer:
             1.0 if profile.profile_id.endswith("calibrated") or "rolling" in profile.profile_id else 0.0
         )
         diagnostic_scores["calibration_total_adjustment"] = round(calibration_bonus - calibration_risk_penalty, 4)
+        diagnostic_scores.setdefault("score_valid", 100.0)
 
         raw_total = sum(weighted.components.values()) + calibration_bonus - payload.risk_penalty - calibration_risk_penalty
         total_score = round(max(0.0, min(100.0, raw_total)), 4)

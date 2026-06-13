@@ -123,6 +123,8 @@ def consensus_source_quality(source: str | None, parsed_fields: Mapping[str, Any
     if lowered == "company_guide_recent_report":
         return 75
     if lowered == "report_proxy":
+        if proxy_quality == "source_backed_revision" and fields.get("consensus_proxy_score_eligible") is not False:
+            return 60
         if proxy_quality == "full_text_report" and fields.get("consensus_proxy_score_eligible") is not False:
             return 60
         return 35
@@ -226,12 +228,16 @@ def estimate_quality_diagnostics(
             diagnostics[f"estimate_selected_{label}_source_quality"] = float(min(selection.selected_quality, 100))
         if selection.selected_source:
             source_fields[f"estimate_selected_{label}_source"] = selection.selected_source
+        else:
+            diagnostics[f"estimate_missing_{label}_source"] = 100.0
         if selection.selected_evidence_id:
             source_fields[f"estimate_selected_{label}_evidence_id"] = selection.selected_evidence_id
     if revision_selection.selected_quality is not None:
         diagnostics["estimate_selected_revision_source_quality"] = float(min(revision_selection.selected_quality, 100))
     if revision_selection.selected_source:
         source_fields["estimate_selected_revision_source"] = revision_selection.selected_source
+    else:
+        diagnostics["estimate_missing_revision_source"] = 100.0
     return diagnostics, source_fields
 
 

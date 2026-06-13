@@ -123,6 +123,13 @@ def _revision_from_report(
     if not any(value is not None for value in values.values()):
         return None
     parsed_fields = dict(proxy_metadata)
+    parsed_fields["explicit_revision_proxy"] = True
+    for key, value in values.items():
+        if value is not None:
+            parsed_fields[key] = value
+    if _source_backed_revision_values_are_usable(report, parsed_fields):
+        parsed_fields["consensus_proxy_quality"] = "source_backed_revision"
+        parsed_fields["consensus_proxy_score_eligible"] = True
     for key, value in values.items():
         if value is not None and abs(value) > _REVISION_OUTLIER_ABS_PCT:
             parsed_fields[f"{key}_outlier"] = True
@@ -139,11 +146,26 @@ def _revision_from_report(
     )
 
 
+def _source_backed_revision_values_are_usable(report: ResearchReport, fields: Mapping[str, Any]) -> bool:
+    if report.parsed_fields.get("search_snippet_only"):
+        return False
+    if not (report.parsed_fields.get("source_url") or report.parsed_fields.get("url")):
+        return False
+    parser_confidence = _first_number(fields, "parser_confidence")
+    if parser_confidence is not None and parser_confidence < _MIN_PROXY_PARSER_CONFIDENCE:
+        return False
+    return True
+
+
 def _report_proxy_metadata(report: ResearchReport, as_of_date: date) -> tuple[bool, dict[str, Any]]:
     fields = report.parsed_fields
     if report.publish_date > as_of_date:
         return False, {}
     if fields.get("search_snippet_only"):
+        return False, {}
+    if fields.get("search_snippet_date_unverified") or fields.get("date_unverified_document"):
+        return False, {}
+    if fields.get("green_allowed_by_date") is False:
         return False, {}
     parser_confidence = _first_number(fields, "parser_confidence")
     weak_reasons: list[str] = []

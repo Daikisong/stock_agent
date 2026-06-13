@@ -84,7 +84,8 @@ def news_item_from_search_snippet(
     if not _has_research_signal(haystack):
         return None
 
-    date_verified = result.published_at is not None
+    date_verified = bool(result.date_verified) if result.date_verified is not None else result.published_at is not None
+    green_allowed = bool(result.green_allowed_by_date) if result.green_allowed_by_date is not None else date_verified
     published = result.published_at or datetime(as_of_date.year, as_of_date.month, as_of_date.day, 8, 0)
     parsed = _snippet_parsed_fields(
         title=title,
@@ -92,6 +93,7 @@ def news_item_from_search_snippet(
         result=result,
         as_of_date=as_of_date,
         date_verified=date_verified,
+        green_allowed=green_allowed,
     )
     parsed["evidence_id"] = stable_news_evidence_id(
         symbol=symbol,
@@ -126,6 +128,7 @@ def _snippet_parsed_fields(
     result: SearchResult,
     as_of_date: date,
     date_verified: bool,
+    green_allowed: bool,
 ) -> dict[str, Any]:
     text = f"{title}\n{snippet}"
     parsed = dict(parse_news_event(title=title, body=snippet))
@@ -143,7 +146,7 @@ def _snippet_parsed_fields(
             "source_published_at": result.published_at.isoformat() if result.published_at else None,
             "date_verified": date_verified,
             "search_snippet_date_unverified": not date_verified,
-            "green_allowed_by_date": date_verified,
+            "green_allowed_by_date": green_allowed,
             "confidence": 0.35 if date_verified else 0.25,
             "parser_confidence": 0.35 if date_verified else 0.25,
             "as_of_date": as_of_date.isoformat(),

@@ -1,6 +1,6 @@
 """Optional LLM analyst layer for E2R evidence review."""
 
-from e2r.llm.codex_theme_provider import CodexCLIThemeRouteProvider, build_theme_route_provider_from_env
+from e2r.llm.codex_theme_provider import CodexCLIThemeRouteProvider, build_default_codex_theme_route_provider, build_theme_route_provider_from_env
 from e2r.llm.provider import FakeLLMProvider, LLMProvider
 from e2r.llm.research_analyst import LLMResearchAnalyst
 from e2r.llm.schemas import LLMAnalystInput, LLMAnalystOutput
@@ -31,6 +31,7 @@ __all__ = [
     "ThemeRouteOutput",
     "ThemeRouteProvider",
     "ThemeRouteSearchResult",
+    "build_default_codex_theme_route_provider",
     "build_theme_route_provider_from_env",
     "build_theme_route_messages",
     "route_diagnostics",

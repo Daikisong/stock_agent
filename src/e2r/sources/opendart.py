@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import io
 import re
 import xml.etree.ElementTree as ET
+import zipfile
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
@@ -74,6 +76,16 @@ DISCLOSURE_SIGNAL_HIGH = "high_signal"
 DISCLOSURE_SIGNAL_RISK = "risk_signal"
 DISCLOSURE_SIGNAL_ROUTINE = "routine"
 DISCLOSURE_SIGNAL_UNKNOWN = "unknown"
+
+
+@dataclass(frozen=True)
+class OpenDARTCompanyCode:
+    """OpenDART listed company identifier mapping row."""
+
+    corp_code: str
+    corp_name: str
+    stock_code: str
+    modify_date: date | None = None
 
 
 @dataclass(frozen=True)
@@ -196,6 +208,37 @@ class OpenDARTConnector:
                 key=lambda item: (item.period_end, item.reported_at),
             )
         )
+
+    @staticmethod
+    def normalize_company_code_archive(payload: bytes | str) -> tuple[OpenDARTCompanyCode, ...]:
+        """Parse OpenDART corpCode.xml zip or raw XML into listed mappings."""
+
+        xml_text = _company_code_xml_text(payload)
+        if not xml_text.strip():
+            return ()
+        root = ET.fromstring(xml_text)
+        records: list[OpenDARTCompanyCode] = []
+        for element in root.findall(".//list"):
+            corp_code = _element_text(element, "corp_code")
+            corp_name = _element_text(element, "corp_name")
+            stock_code = _element_text(element, "stock_code")
+            if not corp_code or not stock_code:
+                continue
+            records.append(
+                OpenDARTCompanyCode(
+                    corp_code=corp_code,
+                    corp_name=corp_name,
+                    stock_code=stock_code,
+                    modify_date=_date_or_none(_element_text(element, "modify_date")),
+                )
+            )
+        return tuple(records)
+
+    @staticmethod
+    def company_codes_by_stock_code(payload: bytes | str) -> dict[str, str]:
+        """Return stock-code keyed OpenDART corp codes without ticker special cases."""
+
+        return {item.stock_code: item.corp_code for item in OpenDARTConnector.normalize_company_code_archive(payload)}
 
     @classmethod
     def normalize_disclosure(cls, row: Mapping[str, Any]) -> DisclosureEvent:
@@ -484,6 +527,45 @@ def normalize_disclosure_detail(
         raw_text=raw_text,
         parsed_fields=parsed,
     )
+
+
+def _company_code_xml_text(payload: bytes | str) -> str:
+    if isinstance(payload, str):
+        return payload
+    if not payload:
+        return ""
+    if zipfile.is_zipfile(io.BytesIO(payload)):
+        with zipfile.ZipFile(io.BytesIO(payload)) as archive:
+            names = [name for name in archive.namelist() if not name.endswith("/")]
+            xml_names = [name for name in names if name.lower().endswith(".xml")]
+            target = xml_names[0] if xml_names else names[0]
+            return _decode_company_code_xml(archive.read(target))
+    return _decode_company_code_xml(payload)
+
+
+def _decode_company_code_xml(payload: bytes) -> str:
+    for encoding in ("utf-8-sig", "utf-8", "cp949", "euc-kr"):
+        try:
+            return payload.decode(encoding)
+        except UnicodeDecodeError:
+            continue
+    return payload.decode("utf-8", errors="replace")
+
+
+def _element_text(element: ET.Element, name: str) -> str:
+    child = element.find(name)
+    if child is None or child.text is None:
+        return ""
+    return child.text.strip()
+
+
+def _date_or_none(value: str) -> date | None:
+    if not value:
+        return None
+    try:
+        return date_value(value)
+    except (TypeError, ValueError):
+        return None
 
 
 def extract_document_text(raw_document: str) -> str:

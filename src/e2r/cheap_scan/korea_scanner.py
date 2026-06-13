@@ -2,15 +2,19 @@
 
 from __future__ import annotations
 
+import os
 from collections import Counter
 from dataclasses import dataclass, field
 from datetime import date
+from pathlib import Path
 from typing import Mapping, Sequence
 
 from e2r.cheap_scan.event_rules import cheap_scan_total_score, evaluate_cheap_scan_rules
 from e2r.cheap_scan.models import CheapScanCandidate, RecommendedNextLayer
 from e2r.cheap_scan.query_escalation import EscalationQueryPlanner, queries_for_candidate
 from e2r.cheap_scan.korea_sources import KoreaCheapScanSources
+from e2r.llm import build_default_codex_theme_route_provider, build_theme_route_provider_from_env
+from e2r.llm.theme_provider import ThemeRouteProvider
 from e2r.models import Instrument, Market, PriceBar
 from e2r.research.free_web_research_runner import FreeWebResearchInput, FreeWebResearchRunner, WebResearchPipelineResult
 from e2r.research.search_budget import SearchBudget
@@ -186,9 +190,20 @@ class KoreaCheapScanner:
         browser_provider: SearchProvider | None = None,
         free_search_provider: SearchProvider | None = None,
         fixture_text_by_url=None,
+        theme_rebalance_enabled: bool | None = None,
+        theme_route_provider: ThemeRouteProvider | None = None,
+        max_theme_expansion_rounds: int | None = None,
+        theme_evidence_review_enabled: bool = True,
     ) -> tuple[WebResearchPipelineResult, ...]:
         """Run targeted free web research for event/deep candidates only."""
 
+        effective_theme_provider = _effective_theme_route_provider(
+            theme_rebalance_enabled=theme_rebalance_enabled,
+            theme_route_provider=theme_route_provider,
+        )
+        effective_theme_enabled = bool(
+            theme_rebalance_enabled if theme_rebalance_enabled is not None else effective_theme_provider is not None
+        )
         results: list[WebResearchPipelineResult] = []
         for candidate in candidates:
             if candidate.recommended_next_layer not in {RecommendedNextLayer.EVENT_SEARCH, RecommendedNextLayer.DEEP_RESEARCH}:
@@ -212,6 +227,10 @@ class KoreaCheapScanner:
                         candidate_reason_codes=candidate.reason_codes,
                         budget=budget,
                         fixture_text_by_url=fixture_text_by_url or {},
+                        theme_rebalance_enabled=effective_theme_enabled,
+                        theme_route_provider=effective_theme_provider,
+                        max_theme_expansion_rounds=max_theme_expansion_rounds,
+                        theme_evidence_review_enabled=theme_evidence_review_enabled,
                     )
                 )
             )
@@ -256,6 +275,22 @@ def _recommended_next_layer(rule_result, total_score: float, config: KoreaCheapS
     if total_score < config.event_search_min_score:
         return RecommendedNextLayer.NONE
     return RecommendedNextLayer.NONE
+
+
+def _effective_theme_route_provider(
+    *,
+    theme_rebalance_enabled: bool | None,
+    theme_route_provider: ThemeRouteProvider | None,
+) -> ThemeRouteProvider | None:
+    if theme_rebalance_enabled is False:
+        return None
+    if theme_route_provider is not None:
+        return theme_route_provider
+    if os.environ.get("E2R_THEME_ROUTE_PROVIDER"):
+        return build_theme_route_provider_from_env(working_directory=Path.cwd())
+    if theme_rebalance_enabled:
+        return build_default_codex_theme_route_provider(working_directory=Path.cwd())
+    return None
 
 
 def _diagnostic_reasons(

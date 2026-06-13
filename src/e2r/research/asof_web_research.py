@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from e2r.cheap_scan.models import CheapScanCandidate
+from e2r.llm.theme_provider import ThemeRouteProvider
 from e2r.models import Stage
 from e2r.research.free_web_research_runner import FreeWebResearchInput, FreeWebResearchRunner, WebResearchPipelineResult
 from e2r.research.report_snapshot_store import ReportSnapshotStore
@@ -43,12 +44,24 @@ class AsOfWebResearchConfig:
     """Configuration for one candidate's as-of web research."""
 
     as_of_date: date
-    max_queries_per_candidate: int = 8
-    max_results_per_query: int = 5
+    max_queries_per_candidate: int | None = None
+    max_results_per_query: int = 100
     require_date_verified_for_green: bool = True
     allow_undated_docs_for_yellow_only: bool = True
     save_reconstructed_snapshots: bool = False
     reconstructed_snapshot_root: str | Path = "data/reconstructed_snapshots"
+    theme_rebalance_enabled: bool | None = None
+    theme_route_provider: ThemeRouteProvider | None = None
+    max_theme_expansion_rounds: int | None = None
+    theme_evidence_review_enabled: bool = True
+
+    def __post_init__(self) -> None:
+        if self.max_queries_per_candidate is not None and self.max_queries_per_candidate < 0:
+            raise ValueError("max_queries_per_candidate cannot be negative")
+        if self.theme_rebalance_enabled is None:
+            object.__setattr__(self, "theme_rebalance_enabled", self.theme_route_provider is not None)
+        if self.max_theme_expansion_rounds is not None and self.max_theme_expansion_rounds < 0:
+            raise ValueError("max_theme_expansion_rounds must be non-negative")
 
 
 @dataclass(frozen=True)
@@ -83,7 +96,7 @@ class RetrospectiveSnapshotSearchProvider:
         self.symbol = symbol
         self.company_name = company_name
 
-    def search(self, query: str, as_of_date: date, max_results: int = 10) -> tuple[SearchResult, ...]:
+    def search(self, query: str, as_of_date: date, max_results: int = 100) -> tuple[SearchResult, ...]:
         snapshots = self.store.load_snapshots(symbol=self.symbol, company_name=self.company_name)
         if not snapshots and (self.symbol or self.company_name):
             snapshots = self.store.load_snapshots()
@@ -100,7 +113,7 @@ class AsOfDateFilteredSearchProvider:
         self.as_of_date = as_of_date
         self.decisions: list[AsOfDocumentDecision] = []
 
-    def search(self, query: str, as_of_date: date, max_results: int = 10) -> tuple[SearchResult, ...]:
+    def search(self, query: str, as_of_date: date, max_results: int = 100) -> tuple[SearchResult, ...]:
         rows: list[SearchResult] = []
         for result in self.provider.search(query, as_of_date, max_results):
             if result.published_at is not None and result.published_at.date() > self.as_of_date:
@@ -131,13 +144,20 @@ class AsOfDateFilteredSearchProvider:
                 )
             )
             if date_verified:
-                rows.append(result)
+                rows.append(replace(result, date_verified=True, green_allowed_by_date=True))
             else:
                 # Downstream parsers need a date to preserve model invariants.
                 # The separate decision record keeps the document date-unverified
                 # so it cannot create Stage 3-Green by itself.
                 synthetic = datetime(self.as_of_date.year, self.as_of_date.month, self.as_of_date.day, 8, 0)
-                rows.append(replace(result, published_at=synthetic))
+                rows.append(
+                    replace(
+                        result,
+                        published_at=synthetic,
+                        date_verified=False,
+                        green_allowed_by_date=False,
+                    )
+                )
         return tuple(rows)
 
 
@@ -156,8 +176,8 @@ class AsOfWebResearchRunner:
         budget = SearchBudget(
             max_total_queries_per_day=config.max_queries_per_candidate,
             max_queries_per_symbol=config.max_queries_per_candidate,
-            max_deep_research_symbols=1,
-            max_active_monitoring_symbols=1,
+            max_deep_research_symbols=None if config.max_queries_per_candidate is None else 1,
+            max_active_monitoring_symbols=None if config.max_queries_per_candidate is None else 1,
         )
         pipeline = FreeWebResearchRunner(
             browser_provider=filtered,
@@ -174,6 +194,10 @@ class AsOfWebResearchRunner:
                 budget=budget,
                 max_results_per_query=config.max_results_per_query,
                 fixture_text_by_url=fixture_text_by_url or {},
+                theme_rebalance_enabled=config.theme_rebalance_enabled,
+                theme_route_provider=config.theme_route_provider,
+                max_theme_expansion_rounds=config.max_theme_expansion_rounds,
+                theme_evidence_review_enabled=config.theme_evidence_review_enabled,
             )
         )
         pipeline = _downgrade_green_if_date_unverified_only(pipeline, filtered.decisions, config)

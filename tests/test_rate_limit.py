@@ -52,6 +52,13 @@ class RateLimitTests(unittest.TestCase):
 
         self.assertEqual(limit.max_concurrency, 1)
 
+    def test_source_rate_limit_default_has_no_daily_cap(self):
+        limiter = RateLimiter((SourceRateLimit("naver_search"),))
+
+        self.assertTrue(limiter.acquire("naver_search").allowed)
+        limiter.release("naver_search")
+        self.assertTrue(limiter.acquire("naver_search").allowed)
+
     def test_http_client_hard_timeout_returns_failure(self):
         def slow_urlopen(*args, **kwargs):
             time.sleep(1.0)

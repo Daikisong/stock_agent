@@ -7,9 +7,10 @@ from dataclasses import dataclass, field, replace
 from datetime import date
 from pathlib import Path
 from time import sleep
-from typing import Any, Mapping, Protocol, Sequence
+from typing import Any, Callable, Mapping, Protocol, Sequence
 
 from e2r.features import DeterministicFeatureEngineer, FeatureEngineeringInput, FeatureEngineeringResult
+from e2r.llm.codex_theme_provider import build_default_codex_theme_route_provider
 from e2r.llm.theme_provider import ThemeRouteProvider
 from e2r.llm.theme_router import LLMThemeRebalanceAgent
 from e2r.llm.theme_schemas import ThemeRouteDocument, ThemeRouteInput, ThemeRouteOutput, ThemeRouteSearchResult, route_diagnostics
@@ -25,9 +26,14 @@ from e2r.research.query_planner import QueryPlan, QueryPlanner, QuerySpec
 from e2r.research.report_consensus_proxy import build_report_consensus_proxy
 from e2r.research.search_budget import ResearchLayer, SearchBudget, SearchBudgetTracker
 from e2r.research.search_provider import FixtureSearchProvider, SearchProvider, SearchResult
-from e2r.research.search_result_ranker import SearchResultRanker
+from e2r.research.search_result_ranker import RankedSearchResult, SearchResultRanker
 from e2r.research.web_research_runner import WebResearchInput, WebResearchResult, WebResearchRunner
+from e2r.stage_gate_diagnostics import diagnose_stage_gates
 from e2r.staging import StageClassificationInput, StageClassifier
+
+
+_SCORE_GAP_QUERY_RETRY_MAX: int | None = None
+_LLM_QUERY_RETRY_MAX: int | None = None
 
 
 class _SearchProviderWithDiagnostics(Protocol):
@@ -58,8 +64,8 @@ class FreeWebResearchInput:
     company_aliases: tuple[str, ...] = field(default_factory=tuple)
     candidate_reason_codes: tuple[str, ...] = field(default_factory=tuple)
     budget: SearchBudget = field(default_factory=SearchBudget)
-    max_results_per_query: int = 5
-    top_results: int = 8
+    max_results_per_query: int = 100
+    top_results: int | None = None
     fixture_text_by_url: Mapping[str, str | Path] = field(default_factory=dict)
     include_manual_sources: bool = True
     live_page_fetch_enabled: bool = False
@@ -67,22 +73,59 @@ class FreeWebResearchInput:
     page_fetch_cache_directory: str | Path | None = None
     theme_rebalance_enabled: bool | None = None
     theme_route_provider: ThemeRouteProvider | None = None
-    max_theme_expansion_rounds: int = 3
+    max_theme_expansion_rounds: int | None = 2
+    max_score_gap_expansion_rounds: int | None = 2
+    theme_route_search_result_limit: int | None = 80
+    theme_route_document_limit: int | None = 32
+    theme_route_document_excerpt_chars: int = 1_200
     theme_expansion_reserve_queries: int = 10
-    theme_evidence_review_enabled: bool = False
+    theme_evidence_review_enabled: bool = True
     post_parse_gap_expansion_enabled: bool = True
-    post_parse_gap_expansion_max_queries: int = 12
+    post_parse_gap_expansion_max_queries: int | None = 10
+    llm_query_retry_max: int | None = _LLM_QUERY_RETRY_MAX
+    score_gap_query_retry_max: int | None = _SCORE_GAP_QUERY_RETRY_MAX
+    require_valid_theme_route_for_scoring: bool | None = None
+    require_resolved_score_gaps_for_scoring: bool | None = None
     base_feature_input: FeatureEngineeringInput | None = None
+    phase_event_sink: Callable[[Mapping[str, Any]], None] | None = None
 
     def __post_init__(self) -> None:
         if self.theme_rebalance_enabled is None:
             object.__setattr__(self, "theme_rebalance_enabled", self.theme_route_provider is not None)
-        if self.max_theme_expansion_rounds < 0:
+        if self.theme_rebalance_enabled is True and self.theme_route_provider is None:
+            object.__setattr__(self, "theme_route_provider", build_default_codex_theme_route_provider(working_directory=Path.cwd()))
+        if self.require_valid_theme_route_for_scoring is None:
+            object.__setattr__(
+                self,
+                "require_valid_theme_route_for_scoring",
+                self.theme_rebalance_enabled is True and self.theme_route_provider is not None,
+            )
+        if self.require_resolved_score_gaps_for_scoring is None:
+            object.__setattr__(
+                self,
+                "require_resolved_score_gaps_for_scoring",
+                self.theme_rebalance_enabled is True
+                and self.theme_route_provider is not None
+                and self.post_parse_gap_expansion_enabled is True,
+            )
+        if self.max_theme_expansion_rounds is not None and self.max_theme_expansion_rounds < 0:
             raise ValueError("max_theme_expansion_rounds must be non-negative")
+        if self.max_score_gap_expansion_rounds is not None and self.max_score_gap_expansion_rounds < 0:
+            raise ValueError("max_score_gap_expansion_rounds must be non-negative")
+        if self.theme_route_search_result_limit is not None and self.theme_route_search_result_limit < 0:
+            raise ValueError("theme_route_search_result_limit must be non-negative")
+        if self.theme_route_document_limit is not None and self.theme_route_document_limit < 0:
+            raise ValueError("theme_route_document_limit must be non-negative")
+        if self.theme_route_document_excerpt_chars <= 0:
+            raise ValueError("theme_route_document_excerpt_chars must be positive")
         if self.theme_expansion_reserve_queries < 0:
             raise ValueError("theme_expansion_reserve_queries must be non-negative")
-        if self.post_parse_gap_expansion_max_queries < 0:
+        if self.post_parse_gap_expansion_max_queries is not None and self.post_parse_gap_expansion_max_queries < 0:
             raise ValueError("post_parse_gap_expansion_max_queries must be non-negative")
+        if self.llm_query_retry_max is not None and self.llm_query_retry_max < 0:
+            raise ValueError("llm_query_retry_max must be non-negative")
+        if self.score_gap_query_retry_max is not None and self.score_gap_query_retry_max < 0:
+            raise ValueError("score_gap_query_retry_max must be non-negative")
 
 
 @dataclass(frozen=True)
@@ -102,6 +145,16 @@ class WebResearchPipelineResult:
     theme_route: ThemeRouteOutput | None = None
     expansion_queries_run: tuple[str, ...] = field(default_factory=tuple)
     theme_route_diagnostics: Mapping[str, object] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class _ScoreGapExpansionResult:
+    specs: tuple[QuerySpec, ...] = ()
+    queries_run: tuple[str, ...] = ()
+    status: str = "not_attempted"
+    unresolved_gaps: tuple[str, ...] = ()
+    rejection_reasons: tuple[str, ...] = ()
+    blocked_reason: str | None = None
 
 
 class FreeWebResearchRunner:
@@ -135,6 +188,7 @@ class FreeWebResearchRunner:
             as_of_date=inputs.as_of_date,
             stage_context=inputs.stage_context,
         )
+        _emit_phase_event(inputs, "start", initial_query_count=len(query_plan.queries))
         tracker = SearchBudgetTracker(inputs.budget)
         results_by_query: dict[str, tuple[SearchResult, ...]] = {}
         skipped: list[SkippedQuery] = []
@@ -167,6 +221,13 @@ class FreeWebResearchRunner:
                 break
             if inputs.budget.sleep_seconds_between_queries:
                 sleep(inputs.budget.sleep_seconds_between_queries)
+        _emit_phase_event(
+            inputs,
+            "initial_search_complete",
+            query_count=len(results_by_query),
+            search_result_count=sum(len(items) for items in results_by_query.values()),
+            stopped_reason=tracker.stopped_reason,
+        )
 
         theme_route, theme_route_diagnostics, expansion_specs, expansion_queries_run = self._run_theme_rebalance(
             inputs=inputs,
@@ -182,12 +243,19 @@ class FreeWebResearchRunner:
         if inputs.include_manual_sources and self._manual_provider is not None:
             text_mapping.update(self._manual_provider.fixture_text_by_url())
 
+        _emit_phase_event(
+            inputs,
+            "web_research_initial_start",
+            query_count=len(final_query_plan.queries),
+            top_results=inputs.top_results,
+        )
         web_result = self._run_web_research(
             inputs=inputs,
             query_plan=final_query_plan,
             results_by_query=results_by_query,
             text_mapping=text_mapping,
         )
+        _emit_web_result_phase(inputs, "web_research_initial_complete", web_result)
         theme_route, theme_route_diagnostics = self._run_theme_evidence_review(
             inputs=inputs,
             web_result=web_result,
@@ -208,6 +276,13 @@ class FreeWebResearchRunner:
             final_query_specs.extend(gap_specs)
             expansion_queries_run = tuple(dict.fromkeys((*expansion_queries_run, *gap_queries)))
             final_query_plan = replace(query_plan, queries=tuple(dict.fromkeys(final_query_specs)))
+            _emit_phase_event(
+                inputs,
+                "post_parse_gap_web_research_start",
+                new_query_count=len(gap_specs),
+                total_query_count=len(final_query_plan.queries),
+                top_results_override=_post_gap_top_results(inputs, gap_specs),
+            )
             web_result = self._run_web_research(
                 inputs=inputs,
                 query_plan=final_query_plan,
@@ -215,6 +290,7 @@ class FreeWebResearchRunner:
                 text_mapping=text_mapping,
                 top_results_override=_post_gap_top_results(inputs, gap_specs),
             )
+            _emit_web_result_phase(inputs, "post_parse_gap_web_research_complete", web_result)
             theme_route, theme_route_diagnostics = self._run_theme_evidence_review(
                 inputs=inputs,
                 web_result=web_result,
@@ -246,17 +322,210 @@ class FreeWebResearchRunner:
         feature_result = _with_theme_route_diagnostics(feature_result, theme_route, theme_route_diagnostics)
         score = feature_result.score()
         red_team = RedTeamEngine().assess(feature_result.red_team_signals)
-        stage = StageClassifier().classify(
-            StageClassificationInput(
+        score_gap_queries: tuple[str, ...] = ()
+        score_gap_specs_total: list[QuerySpec] = []
+        score_gap_expansion_result = _ScoreGapExpansionResult(status="not_attempted")
+        score_gap_round_index = 0
+        seen_score_gap_signatures: set[tuple[str, ...]] = set()
+        theme_route_diagnostics = dict(theme_route_diagnostics)
+        theme_route_diagnostics["post_score_gap_expansion_count"] = 0
+        theme_route_diagnostics["post_score_gap_expansion_queries"] = ()
+        theme_route_diagnostics["post_score_gap_expansion_status"] = "not_attempted"
+        theme_route_diagnostics["post_score_gap_unresolved_gaps"] = ()
+        theme_route_diagnostics["post_score_gap_rejection_reasons"] = ()
+        while True:
+            if (
+                inputs.max_score_gap_expansion_rounds is not None
+                and score_gap_round_index >= inputs.max_score_gap_expansion_rounds
+            ):
+                score_gap_expansion_result = _ScoreGapExpansionResult(
+                    status="round_limit_reached",
+                    unresolved_gaps=tuple(dict.fromkeys((*_score_gap_missing_information(score), *_stage_gate_missing_information(score, red_team)))),
+                    rejection_reasons=("max_score_gap_expansion_rounds_reached",),
+                )
+                theme_route_diagnostics = _with_score_gap_expansion_diagnostics(
+                    theme_route_diagnostics,
+                    score_gap_expansion_result,
+                    score_gap_queries,
+                )
+                _emit_phase_event(
+                    inputs,
+                    "post_score_gap_stop_round_limit",
+                    round_index=score_gap_round_index,
+                    score_gap_query_count=len(score_gap_queries),
+                    unresolved_gap_count=len(score_gap_expansion_result.unresolved_gaps),
+                )
+                break
+            gap_signature = _score_gap_state_signature(score, red_team)
+            if gap_signature in seen_score_gap_signatures:
+                score_gap_expansion_result = _ScoreGapExpansionResult(
+                    status="no_progress",
+                    unresolved_gaps=tuple(dict.fromkeys((*_score_gap_missing_information(score), *_stage_gate_missing_information(score, red_team)))),
+                    rejection_reasons=("score_gap_state_repeated",),
+                )
+                theme_route_diagnostics = _with_score_gap_expansion_diagnostics(
+                    theme_route_diagnostics,
+                    score_gap_expansion_result,
+                    score_gap_queries,
+                )
+                _emit_phase_event(
+                    inputs,
+                    "post_score_gap_stop_no_progress",
+                    round_index=score_gap_round_index,
+                    score_gap_query_count=len(score_gap_queries),
+                    unresolved_gap_count=len(score_gap_expansion_result.unresolved_gaps),
+                )
+                break
+            seen_score_gap_signatures.add(gap_signature)
+            _emit_phase_event(
+                inputs,
+                "post_score_gap_round_start",
+                round_index=score_gap_round_index,
+                score_total=score.total_score,
+                score_gap_query_count=len(score_gap_queries),
+            )
+            score_gap_expansion_result = self._run_post_score_gap_expansion(
+                inputs=inputs,
+                tracker=tracker,
+                results_by_query=results_by_query,
+                skipped=skipped,
+                provider_errors=provider_errors,
                 score=score,
                 red_team=red_team,
-                previous_stage=inputs.previous_stage,
-                theme_regime_score=_theme_regime_score(web_result, feature_input),
-                company_event_score=_company_event_score(web_result, feature_input),
-                high_quality_company_event=_high_quality_company_event(web_result, feature_input),
-                evidence_ids=tuple(item.evidence_id for item in web_result.evidence),
+                web_result=web_result,
+                theme_route=theme_route,
             )
+            theme_route_diagnostics = _with_score_gap_expansion_diagnostics(
+                theme_route_diagnostics,
+                score_gap_expansion_result,
+                score_gap_queries,
+            )
+            if not score_gap_expansion_result.specs:
+                break
+            score_gap_specs_total.extend(score_gap_expansion_result.specs)
+            score_gap_queries = tuple(dict.fromkeys((*score_gap_queries, *score_gap_expansion_result.queries_run)))
+            final_query_specs.extend(score_gap_expansion_result.specs)
+            expansion_queries_run = tuple(dict.fromkeys((*expansion_queries_run, *score_gap_queries)))
+            final_query_plan = replace(query_plan, queries=tuple(dict.fromkeys(final_query_specs)))
+            _emit_phase_event(
+                inputs,
+                "post_score_gap_web_research_start",
+                round_index=score_gap_round_index,
+                new_query_count=len(score_gap_expansion_result.specs),
+                total_score_gap_query_count=len(score_gap_queries),
+                top_results_override=_post_gap_top_results(inputs, (*gap_specs, *tuple(score_gap_specs_total))),
+            )
+            web_result = self._run_web_research(
+                inputs=inputs,
+                query_plan=final_query_plan,
+                results_by_query=results_by_query,
+                text_mapping=text_mapping,
+                top_results_override=_post_gap_top_results(inputs, (*gap_specs, *tuple(score_gap_specs_total))),
+            )
+            _emit_web_result_phase(inputs, "post_score_gap_web_research_complete", web_result)
+            theme_route, theme_route_diagnostics = self._run_theme_evidence_review(
+                inputs=inputs,
+                web_result=web_result,
+                existing_route=theme_route,
+                existing_diagnostics=theme_route_diagnostics,
+                expansion_queries_run=expansion_queries_run,
+            )
+            theme_route_diagnostics = dict(theme_route_diagnostics)
+            theme_route_diagnostics["post_parse_gap_expansion_count"] = len(gap_queries)
+            theme_route_diagnostics["post_parse_gap_expansion_queries"] = tuple(gap_queries)
+            theme_route_diagnostics["post_score_gap_expansion_count"] = len(score_gap_queries)
+            theme_route_diagnostics["post_score_gap_expansion_queries"] = tuple(score_gap_queries)
+            theme_route_diagnostics["post_score_gap_expansion_status"] = score_gap_expansion_result.status
+            theme_route_diagnostics["post_score_gap_unresolved_gaps"] = tuple(score_gap_expansion_result.unresolved_gaps)
+            theme_route_diagnostics["post_score_gap_rejection_reasons"] = tuple(score_gap_expansion_result.rejection_reasons)
+            if score_gap_expansion_result.blocked_reason:
+                theme_route_diagnostics["post_score_gap_blocked_reason"] = score_gap_expansion_result.blocked_reason
+            theme_route, theme_route_diagnostics = _gate_theme_route_to_web_evidence(
+                route=theme_route,
+                diagnostics=theme_route_diagnostics,
+                web_result=web_result,
+            )
+            route_large_sector_id, route_canonical_archetype_id = _theme_route_scoring_ids(theme_route)
+            agent_extracted_fields = _theme_route_agent_extracted_fields(theme_route)
+            proxy = build_report_consensus_proxy(web_result.parsed_reports, as_of_date=inputs.as_of_date)
+            web_result = _with_report_consensus_proxy_evidence(inputs=inputs, web_result=web_result, proxy=proxy)
+            feature_input = _merge_feature_input(
+                inputs=inputs,
+                web_result=web_result,
+                proxy=proxy,
+                route_large_sector_id=route_large_sector_id,
+                route_canonical_archetype_id=route_canonical_archetype_id,
+                agent_extracted_fields=agent_extracted_fields,
+            )
+            feature_result = self._engineer.engineer(feature_input)
+            feature_result = _with_theme_route_diagnostics(feature_result, theme_route, theme_route_diagnostics)
+            score = feature_result.score()
+            red_team = RedTeamEngine().assess(feature_result.red_team_signals)
+            score_gap_round_index += 1
+        route_block_reason = _theme_route_score_block_reason(
+            inputs=inputs,
+            route=theme_route,
+            diagnostics=theme_route_diagnostics,
+            route_large_sector_id=route_large_sector_id,
+            route_canonical_archetype_id=route_canonical_archetype_id,
         )
+        score_gap_block_reason = _score_gap_score_block_reason(
+            inputs=inputs,
+            expansion=score_gap_expansion_result,
+            queries_run_count=len(score_gap_queries),
+        )
+        if route_block_reason:
+            feature_result = _clear_unconfirmed_theme_route_classification(feature_result)
+            score, theme_route_diagnostics = _invalidate_score_for_theme_route(
+                score=score,
+                diagnostics=theme_route_diagnostics,
+                reason=route_block_reason,
+            )
+            stage = _blocked_stage_for_theme_route(
+                inputs=inputs,
+                score=score,
+                red_team=red_team,
+                web_result=web_result,
+                reason=route_block_reason,
+            )
+        elif score_gap_block_reason:
+            score, theme_route_diagnostics = _invalidate_score_for_score_gap(
+                score=score,
+                diagnostics=theme_route_diagnostics,
+                reason=score_gap_block_reason,
+                expansion=score_gap_expansion_result,
+            )
+            stage = _blocked_stage_for_score_gap(
+                inputs=inputs,
+                score=score,
+                red_team=red_team,
+                web_result=web_result,
+                reason=score_gap_block_reason,
+            )
+        else:
+            score, theme_route_diagnostics = _mark_score_gap_warning_if_any(
+                inputs=inputs,
+                score=score,
+                diagnostics=theme_route_diagnostics,
+                expansion=score_gap_expansion_result,
+                queries_run_count=len(score_gap_queries),
+            )
+            score, theme_route_diagnostics = _mark_score_valid_for_theme_route(
+                inputs=inputs,
+                score=score,
+                diagnostics=theme_route_diagnostics,
+            )
+            stage = StageClassifier().classify(
+                StageClassificationInput(
+                    score=score,
+                    red_team=red_team,
+                    previous_stage=inputs.previous_stage,
+                    theme_regime_score=_theme_regime_score(web_result, feature_input),
+                    company_event_score=_company_event_score(web_result, feature_input),
+                    high_quality_company_event=_high_quality_company_event(web_result, feature_input),
+                    evidence_ids=tuple(item.evidence_id for item in web_result.evidence),
+                )
+            )
         return WebResearchPipelineResult(
             web_result=web_result,
             feature_input=feature_input,
@@ -304,7 +573,7 @@ class FreeWebResearchRunner:
                 stage_context=inputs.stage_context,
                 company_aliases=inputs.company_aliases,
                 max_results_per_query=inputs.max_results_per_query,
-                top_results=top_results_override or inputs.top_results,
+                top_results=top_results_override if top_results_override is not None else inputs.top_results,
             )
         )
 
@@ -357,9 +626,22 @@ class FreeWebResearchRunner:
         seen_urls = {result.url for results in results_by_query.values() for result in results}
         route: ThemeRouteOutput | None = None
         status = "completed"
-        rounds = max(1, inputs.max_theme_expansion_rounds)
-
-        for round_index in range(rounds):
+        round_index = 0
+        retry_index = 0
+        previous_rejections: tuple[str, ...] = ()
+        seen_retry_failures: set[tuple[str, ...]] = set()
+        while True:
+            if inputs.max_theme_expansion_rounds is not None and round_index >= max(1, inputs.max_theme_expansion_rounds):
+                break
+            route_search_results = self._theme_route_search_results_from_queries(inputs, results_by_query)
+            _emit_phase_event(
+                inputs,
+                "theme_rebalance_route_start",
+                round_index=round_index,
+                retry_index=retry_index,
+                raw_search_result_count=len(_flatten_results(results_by_query)),
+                llm_search_result_count=len(route_search_results),
+            )
             route = agent.route(
                 ThemeRouteInput(
                     company_name=inputs.company_name,
@@ -369,13 +651,20 @@ class FreeWebResearchRunner:
                     as_of_date=inputs.as_of_date,
                     stage_context=inputs.stage_context,
                     candidate_reason_codes=inputs.candidate_reason_codes,
-                    search_results=tuple(ThemeRouteSearchResult.from_search_result(item) for item in _flatten_results(results_by_query)),
+                    search_results=route_search_results,
+                    score_gap_context=_llm_query_retry_context(
+                        phase="theme_expansion",
+                        retry_index=retry_index,
+                        previous_rejections=previous_rejections,
+                    ),
                 )
             )
             if route.status in {"provider_error", "invalid_provider_output", "disabled_no_provider"}:
                 status = route.status
                 break
-            if inputs.max_theme_expansion_rounds <= 0:
+            if route.status == "no_transition" and not route.suggested_queries:
+                break
+            if inputs.max_theme_expansion_rounds is not None and inputs.max_theme_expansion_rounds <= 0:
                 break
 
             query_specs = tuple(
@@ -390,13 +679,17 @@ class FreeWebResearchRunner:
             )
             runnable_specs: list[QuerySpec] = []
             planned_queries = set(seen_queries)
+            rejections: list[str] = []
             for spec in query_specs:
                 safe_query = _asof_safe_theme_query(spec.query, inputs.as_of_date)
                 if safe_query is None:
                     skipped.append(SkippedQuery(query=spec.query, layer=ResearchLayer.DEEP_RESEARCH, reason="future_query_rejected"))
+                    rejections.append("future_query_rejected")
                     continue
                 safe_query = _company_scoped_query(safe_query, inputs)
                 if safe_query in planned_queries:
+                    skipped.append(SkippedQuery(query=safe_query, layer=ResearchLayer.DEEP_RESEARCH, reason="duplicate_theme_query"))
+                    rejections.append("duplicate_theme_query")
                     continue
                 planned_queries.add(safe_query)
                 runnable_specs.append(replace(spec, query=safe_query))
@@ -405,8 +698,10 @@ class FreeWebResearchRunner:
             for spec in runnable_specs:
                 decision = tracker.can_run(inputs.symbol, ResearchLayer.DEEP_RESEARCH)
                 if not decision.allowed:
-                    skipped.append(SkippedQuery(query=spec.query, layer=ResearchLayer.DEEP_RESEARCH, reason=decision.reason or "budget_denied"))
-                    status = decision.reason or "budget_denied"
+                    reason = decision.reason or "budget_denied"
+                    skipped.append(SkippedQuery(query=spec.query, layer=ResearchLayer.DEEP_RESEARCH, reason=reason))
+                    rejections.append(reason)
+                    status = reason
                     continue
                 tracker.record_query(inputs.symbol, ResearchLayer.DEEP_RESEARCH)
                 results = self._search_providers(spec, inputs, tracker, provider_errors)
@@ -423,7 +718,24 @@ class FreeWebResearchRunner:
                     sleep(inputs.budget.sleep_seconds_between_queries)
 
             if tracker.stopped_reason or ran_this_round == 0:
-                break
+                if tracker.stopped_reason:
+                    break
+                if route.status == "no_transition":
+                    break
+                previous_rejections = tuple(dict.fromkeys(rejections or ("llm_returned_no_suggested_queries",)))
+                if _only_budget_rejections(previous_rejections) or _retry_should_stop(
+                    retry_index=retry_index,
+                    max_retries=inputs.llm_query_retry_max,
+                    previous_rejections=previous_rejections,
+                    seen_failures=seen_retry_failures,
+                ):
+                    break
+                retry_index += 1
+                status = "needs_more_evidence"
+                continue
+            round_index += 1
+            retry_index = 0
+            previous_rejections = ()
 
         if route is None:
             route = ThemeRouteOutput(status="no_transition")
@@ -442,13 +754,26 @@ class FreeWebResearchRunner:
             return existing_route, existing_diagnostics
         if not inputs.theme_rebalance_enabled or inputs.theme_route_provider is None:
             return existing_route, existing_diagnostics
-        documents = _theme_route_documents(web_result)
+        documents = _theme_route_documents(
+            web_result,
+            limit=inputs.theme_route_document_limit,
+            excerpt_chars=inputs.theme_route_document_excerpt_chars,
+        )
         diagnostics = dict(existing_diagnostics)
         if not documents:
             diagnostics["theme_evidence_review_status"] = "no_fetched_documents"
             return existing_route, diagnostics
 
         agent = LLMThemeRebalanceAgent(inputs.theme_route_provider)
+        route_search_results = self._theme_route_search_results_from_web_result(inputs, web_result)
+        _emit_phase_event(
+            inputs,
+            "theme_evidence_review_start",
+            raw_ranked_result_count=len(web_result.ranked_results),
+            llm_search_result_count=len(route_search_results),
+            raw_document_count=len(web_result.fetched_documents),
+            llm_document_count=len(documents),
+        )
         review = agent.route(
             ThemeRouteInput(
                 company_name=inputs.company_name,
@@ -460,7 +785,7 @@ class FreeWebResearchRunner:
                 candidate_reason_codes=inputs.candidate_reason_codes,
                 current_large_sector_id=existing_route.large_sector_id if existing_route else None,
                 current_canonical_archetype_id=existing_route.canonical_archetype_id if existing_route else None,
-                search_results=tuple(ThemeRouteSearchResult.from_search_result(item.result) for item in web_result.ranked_results),
+                search_results=route_search_results,
                 documents=documents,
             )
         )
@@ -476,6 +801,31 @@ class FreeWebResearchRunner:
         diagnostics["theme_evidence_document_count"] = len(documents)
         return merged, diagnostics
 
+    def _theme_route_search_results_from_queries(
+        self,
+        inputs: FreeWebResearchInput,
+        results_by_query: Mapping[str, Sequence[SearchResult]],
+    ) -> tuple[ThemeRouteSearchResult, ...]:
+        ranked = self._ranker.rank(
+            _flatten_results(results_by_query),
+            company_name=inputs.company_name,
+            as_of_date=inputs.as_of_date,
+        )
+        return tuple(
+            ThemeRouteSearchResult.from_search_result(item.result)
+            for item in _select_ranked_for_llm(ranked, inputs.theme_route_search_result_limit)
+        )
+
+    def _theme_route_search_results_from_web_result(
+        self,
+        inputs: FreeWebResearchInput,
+        web_result: WebResearchResult,
+    ) -> tuple[ThemeRouteSearchResult, ...]:
+        return tuple(
+            ThemeRouteSearchResult.from_search_result(item.result)
+            for item in _select_ranked_for_llm(web_result.ranked_results, inputs.theme_route_search_result_limit)
+        )
+
     def _run_post_parse_gap_expansion(
         self,
         *,
@@ -489,40 +839,188 @@ class FreeWebResearchRunner:
     ) -> tuple[tuple[QuerySpec, ...], tuple[str, ...]]:
         if not _post_parse_gap_expansion_allowed(inputs, theme_route):
             return (), ()
-        query_texts = _post_parse_gap_queries(
-            inputs=inputs,
-            route=theme_route,
-        )
-        if not query_texts:
-            return (), ()
-
+        route = theme_route
         seen_queries = set(results_by_query)
-        specs: list[QuerySpec] = []
-        queries_run: list[str] = []
-        for query_index, query in enumerate(query_texts):
-            safe_query = _asof_safe_theme_query(query, inputs.as_of_date)
-            if safe_query is None:
-                skipped.append(SkippedQuery(query=query, layer=ResearchLayer.DEEP_RESEARCH, reason="future_query_rejected"))
-                continue
-            safe_query = _company_scoped_query(safe_query, inputs)
-            if safe_query in seen_queries:
-                continue
-            decision = tracker.can_run(inputs.symbol, ResearchLayer.DEEP_RESEARCH)
-            if not decision.allowed:
-                skipped.append(SkippedQuery(query=safe_query, layer=ResearchLayer.DEEP_RESEARCH, reason=decision.reason or "budget_denied"))
-                continue
-            spec = _post_parse_gap_query_spec(query=safe_query, inputs=inputs, query_index=query_index)
-            tracker.record_query(inputs.symbol, ResearchLayer.DEEP_RESEARCH)
-            results = self._search_providers(spec, inputs, tracker, provider_errors)
-            results_by_query[spec.query] = results
-            seen_queries.add(spec.query)
-            specs.append(spec)
-            queries_run.append(spec.query)
-            if tracker.stopped_reason:
+        previous_rejections: tuple[str, ...] = ()
+        seen_retry_failures: set[tuple[str, ...]] = set()
+        retry_index = 0
+        while True:
+            query_texts = _post_parse_gap_queries(
+                inputs=inputs,
+                route=route,
+            )
+            if not query_texts:
+                previous_rejections = ("llm_returned_no_suggested_queries",)
+            else:
+                specs: list[QuerySpec] = []
+                queries_run: list[str] = []
+                rejections: list[str] = []
+                for query_index, query in enumerate(query_texts):
+                    safe_query = _asof_safe_theme_query(query, inputs.as_of_date)
+                    if safe_query is None:
+                        skipped.append(SkippedQuery(query=query, layer=ResearchLayer.DEEP_RESEARCH, reason="future_query_rejected"))
+                        rejections.append("future_query_rejected")
+                        continue
+                    safe_query = _company_scoped_query(safe_query, inputs)
+                    if safe_query in seen_queries:
+                        skipped.append(SkippedQuery(query=safe_query, layer=ResearchLayer.DEEP_RESEARCH, reason="duplicate_post_parse_gap_query"))
+                        rejections.append("duplicate_post_parse_gap_query")
+                        continue
+                    decision = tracker.can_run(inputs.symbol, ResearchLayer.DEEP_RESEARCH)
+                    if not decision.allowed:
+                        reason = decision.reason or "budget_denied"
+                        skipped.append(SkippedQuery(query=safe_query, layer=ResearchLayer.DEEP_RESEARCH, reason=reason))
+                        rejections.append(reason)
+                        continue
+                    spec = _post_parse_gap_query_spec(query=safe_query, inputs=inputs, query_index=query_index)
+                    tracker.record_query(inputs.symbol, ResearchLayer.DEEP_RESEARCH)
+                    results = self._search_providers(spec, inputs, tracker, provider_errors)
+                    results_by_query[spec.query] = results
+                    seen_queries.add(spec.query)
+                    specs.append(spec)
+                    queries_run.append(spec.query)
+                    if tracker.stopped_reason:
+                        break
+                    if inputs.budget.sleep_seconds_between_queries:
+                        sleep(inputs.budget.sleep_seconds_between_queries)
+                if specs or tracker.stopped_reason:
+                    return tuple(specs), tuple(queries_run)
+                previous_rejections = tuple(dict.fromkeys(rejections or ("suggested_queries_produced_no_new_searches",)))
+                if _only_budget_rejections(previous_rejections):
+                    break
+            if _retry_should_stop(
+                retry_index=retry_index,
+                max_retries=inputs.llm_query_retry_max,
+                previous_rejections=previous_rejections,
+                seen_failures=seen_retry_failures,
+            ):
                 break
-            if inputs.budget.sleep_seconds_between_queries:
-                sleep(inputs.budget.sleep_seconds_between_queries)
-        return tuple(specs), tuple(queries_run)
+            route = _post_parse_gap_retry_route(
+                inputs=inputs,
+                web_result=web_result,
+                existing_route=route,
+                retry_index=retry_index + 1,
+                previous_rejections=previous_rejections,
+            )
+            retry_index += 1
+            if route.status in {"provider_error", "invalid_provider_output", "disabled_no_provider"}:
+                break
+        return (), ()
+
+    def _run_post_score_gap_expansion(
+        self,
+        *,
+        inputs: FreeWebResearchInput,
+        tracker: SearchBudgetTracker,
+        results_by_query: dict[str, tuple[SearchResult, ...]],
+        skipped: list[SkippedQuery],
+        provider_errors: list[str],
+        score: ScoreSnapshot,
+        red_team: RedTeamAssessment,
+        web_result: WebResearchResult,
+        theme_route: ThemeRouteOutput | None,
+    ) -> _ScoreGapExpansionResult:
+        if not _post_score_gap_expansion_allowed(inputs, score):
+            return _ScoreGapExpansionResult(status="disabled")
+        score_gaps = tuple(dict.fromkeys((*_score_gap_missing_information(score), *_stage_gate_missing_information(score, red_team))))
+        if not score_gaps:
+            return _ScoreGapExpansionResult(status="no_gaps")
+        seen_queries = set(results_by_query)
+        previous_rejections: tuple[str, ...] = ()
+        seen_retry_failures: set[tuple[str, ...]] = set()
+        retry_index = 0
+        while True:
+            route = _score_gap_route(
+                inputs=inputs,
+                score=score,
+                score_gaps=_score_gap_context_for_retry(score_gaps, retry_index, previous_rejections),
+                web_result=web_result,
+                theme_route=theme_route,
+            )
+            query_texts = _post_parse_gap_queries(inputs=inputs, route=route)
+            if route.status in {"provider_error", "invalid_provider_output", "disabled_no_provider"}:
+                return _ScoreGapExpansionResult(
+                    status=route.status,
+                    unresolved_gaps=tuple(score_gaps),
+                    blocked_reason=route.blocked_reason,
+                )
+            if not query_texts:
+                previous_rejections = ("llm_returned_no_suggested_queries",)
+                if _retry_should_stop(
+                    retry_index=retry_index,
+                    max_retries=inputs.score_gap_query_retry_max,
+                    previous_rejections=previous_rejections,
+                    seen_failures=seen_retry_failures,
+                ):
+                    return _ScoreGapExpansionResult(
+                        status="llm_no_suggested_queries",
+                        unresolved_gaps=tuple(score_gaps),
+                        rejection_reasons=previous_rejections,
+                    )
+                retry_index += 1
+                continue
+
+            specs: list[QuerySpec] = []
+            queries_run: list[str] = []
+            rejections: list[str] = []
+            for query_index, query in enumerate(query_texts):
+                safe_query = _asof_safe_theme_query(query, inputs.as_of_date)
+                if safe_query is None:
+                    skipped.append(SkippedQuery(query=query, layer=ResearchLayer.DEEP_RESEARCH, reason="future_query_rejected"))
+                    rejections.append("future_query_rejected")
+                    continue
+                safe_query = _company_scoped_query(safe_query, inputs)
+                if safe_query in seen_queries:
+                    skipped.append(SkippedQuery(query=safe_query, layer=ResearchLayer.DEEP_RESEARCH, reason="duplicate_score_gap_query"))
+                    rejections.append("duplicate_score_gap_query")
+                    continue
+                decision = tracker.can_run(inputs.symbol, ResearchLayer.DEEP_RESEARCH)
+                if not decision.allowed:
+                    reason = decision.reason or "budget_denied"
+                    skipped.append(SkippedQuery(query=safe_query, layer=ResearchLayer.DEEP_RESEARCH, reason=reason))
+                    rejections.append(reason)
+                    continue
+                spec = _post_score_gap_query_spec(query=safe_query, inputs=inputs, query_index=query_index)
+                tracker.record_query(inputs.symbol, ResearchLayer.DEEP_RESEARCH)
+                results = self._search_providers(spec, inputs, tracker, provider_errors)
+                results_by_query[spec.query] = results
+                seen_queries.add(spec.query)
+                specs.append(spec)
+                queries_run.append(spec.query)
+                if tracker.stopped_reason:
+                    break
+                if inputs.budget.sleep_seconds_between_queries:
+                    sleep(inputs.budget.sleep_seconds_between_queries)
+            if specs or tracker.stopped_reason:
+                status = "executed" if specs else (tracker.stopped_reason or "stopped")
+                return _ScoreGapExpansionResult(
+                    specs=tuple(specs),
+                    queries_run=tuple(queries_run),
+                    status=status,
+                    unresolved_gaps=tuple(score_gaps),
+                    rejection_reasons=tuple(dict.fromkeys(rejections)),
+                    blocked_reason=tracker.stopped_reason,
+                )
+            previous_rejections = tuple(dict.fromkeys(rejections or ("suggested_queries_produced_no_new_searches",)))
+            if _only_budget_rejections(previous_rejections):
+                return _ScoreGapExpansionResult(
+                    status="budget_blocked",
+                    unresolved_gaps=tuple(score_gaps),
+                    rejection_reasons=previous_rejections,
+                )
+            if _retry_should_stop(
+                retry_index=retry_index,
+                max_retries=inputs.score_gap_query_retry_max,
+                previous_rejections=previous_rejections,
+                seen_failures=seen_retry_failures,
+            ):
+                return _ScoreGapExpansionResult(
+                    status="no_executable_searches",
+                    unresolved_gaps=tuple(score_gaps),
+                    rejection_reasons=previous_rejections,
+                )
+            retry_index += 1
+        return _ScoreGapExpansionResult(status="stopped", unresolved_gaps=tuple(score_gaps), rejection_reasons=previous_rejections)
 
 
 class _FixedQueryPlanner:
@@ -533,6 +1031,83 @@ class _FixedQueryPlanner:
 
     def plan(self, **kwargs) -> QueryPlan:
         return self._query_plan
+
+
+def _emit_phase_event(inputs: FreeWebResearchInput, phase: str, **payload: Any) -> None:
+    sink = inputs.phase_event_sink
+    if sink is None:
+        return
+    event = {
+        "symbol": inputs.symbol,
+        "company_name": inputs.company_name,
+        "as_of_date": inputs.as_of_date.isoformat(),
+        "phase": phase,
+        **payload,
+    }
+    sink(event)
+
+
+def _emit_web_result_phase(inputs: FreeWebResearchInput, phase: str, web_result: WebResearchResult) -> None:
+    _emit_phase_event(
+        inputs,
+        phase,
+        query_count=len(web_result.queries_run),
+        search_result_count=len(web_result.search_results),
+        ranked_result_count=len(web_result.ranked_results),
+        selected_result_count=len(web_result.selected_results),
+        fetched_document_count=len(web_result.fetched_documents),
+        parsed_report_count=len(web_result.parsed_reports),
+        parsed_news_count=len(web_result.parsed_news),
+        parsed_disclosure_count=len(web_result.parsed_disclosures),
+        evidence_count=len(web_result.evidence),
+    )
+
+
+def _theme_route_search_results_from_ranked(
+    inputs: FreeWebResearchInput,
+    ranked: Sequence[RankedSearchResult],
+) -> tuple[ThemeRouteSearchResult, ...]:
+    return tuple(
+        ThemeRouteSearchResult.from_search_result(item.result)
+        for item in _select_ranked_for_llm(ranked, inputs.theme_route_search_result_limit)
+    )
+
+
+def _select_ranked_for_llm(
+    ranked: Sequence[RankedSearchResult],
+    limit: int | None,
+) -> tuple[RankedSearchResult, ...]:
+    eligible = tuple(
+        item
+        for item in ranked
+        if item.score > 0
+        and "duplicate_url" not in item.negative_reasons
+        and "future_result" not in item.negative_reasons
+    )
+    if limit is None:
+        return eligible
+    if limit <= 0:
+        return ()
+    selected: list[RankedSearchResult] = []
+    selected_urls: set[str] = set()
+    covered_queries: set[str] = set()
+    for item in eligible:
+        query = (item.result.query or "").strip()
+        if not query or query in covered_queries:
+            continue
+        selected.append(item)
+        selected_urls.add(item.result.url)
+        covered_queries.add(query)
+        if len(selected) >= limit:
+            return tuple(selected)
+    for item in eligible:
+        if item.result.url in selected_urls:
+            continue
+        selected.append(item)
+        selected_urls.add(item.result.url)
+        if len(selected) >= limit:
+            break
+    return tuple(selected)
 
 
 _POST_PARSE_GAP_ROUTE_STATUSES = {
@@ -546,12 +1121,21 @@ _POST_PARSE_GAP_ROUTE_STATUSES = {
 def _post_parse_gap_expansion_allowed(inputs: FreeWebResearchInput, route: ThemeRouteOutput | None) -> bool:
     return bool(
         inputs.post_parse_gap_expansion_enabled
-        and inputs.post_parse_gap_expansion_max_queries > 0
+        and (inputs.post_parse_gap_expansion_max_queries is None or inputs.post_parse_gap_expansion_max_queries > 0)
         and inputs.theme_evidence_review_enabled
         and inputs.theme_rebalance_enabled
         and inputs.theme_route_provider is not None
         and route is not None
         and route.status in _POST_PARSE_GAP_ROUTE_STATUSES
+    )
+
+
+def _post_score_gap_expansion_allowed(inputs: FreeWebResearchInput, score: ScoreSnapshot) -> bool:
+    return bool(
+        inputs.post_parse_gap_expansion_enabled
+        and (inputs.post_parse_gap_expansion_max_queries is None or inputs.post_parse_gap_expansion_max_queries > 0)
+        and inputs.theme_evidence_review_enabled
+        and inputs.theme_rebalance_enabled
     )
 
 
@@ -569,9 +1153,361 @@ def _post_parse_gap_queries(
         if not clean:
             continue
         normalized.append(clean)
-        if len(tuple(dict.fromkeys(normalized))) >= inputs.post_parse_gap_expansion_max_queries:
+        if _query_limit_reached(normalized, inputs.post_parse_gap_expansion_max_queries):
             break
-    return tuple(dict.fromkeys(normalized))[: inputs.post_parse_gap_expansion_max_queries]
+    unique = tuple(dict.fromkeys(normalized))
+    if inputs.post_parse_gap_expansion_max_queries is None:
+        return unique
+    return unique[: inputs.post_parse_gap_expansion_max_queries]
+
+
+def _post_parse_gap_retry_route(
+    *,
+    inputs: FreeWebResearchInput,
+    web_result: WebResearchResult,
+    existing_route: ThemeRouteOutput | None,
+    retry_index: int,
+    previous_rejections: Sequence[str],
+) -> ThemeRouteOutput:
+    if inputs.theme_route_provider is None:
+        return ThemeRouteOutput(status="disabled_no_provider", blocked_reason="post_parse_gap_retry_without_provider")
+    agent = LLMThemeRebalanceAgent(inputs.theme_route_provider)
+    search_results = _theme_route_search_results_from_ranked(inputs, web_result.ranked_results)
+    documents = _theme_route_documents(
+        web_result,
+        limit=inputs.theme_route_document_limit,
+        excerpt_chars=inputs.theme_route_document_excerpt_chars,
+    )
+    _emit_phase_event(
+        inputs,
+        "post_parse_gap_retry_route_start",
+        retry_index=retry_index,
+        raw_ranked_result_count=len(web_result.ranked_results),
+        llm_search_result_count=len(search_results),
+        raw_document_count=len(web_result.fetched_documents),
+        llm_document_count=len(documents),
+    )
+    return agent.route(
+        ThemeRouteInput(
+            company_name=inputs.company_name,
+            symbol=inputs.symbol,
+            sector=inputs.sector,
+            market=inputs.market.value,
+            as_of_date=inputs.as_of_date,
+            stage_context=inputs.stage_context,
+            candidate_reason_codes=inputs.candidate_reason_codes,
+            current_large_sector_id=existing_route.large_sector_id if existing_route else None,
+            current_canonical_archetype_id=existing_route.canonical_archetype_id if existing_route else None,
+            search_results=search_results,
+            documents=documents,
+            score_gap_context=_llm_query_retry_context(
+                phase="post_parse_gap",
+                retry_index=retry_index,
+                previous_rejections=previous_rejections,
+                missing_information=existing_route.missing_information if existing_route else (),
+            ),
+        )
+    )
+
+
+def _score_gap_route(
+    *,
+    inputs: FreeWebResearchInput,
+    score: ScoreSnapshot,
+    score_gaps: Sequence[str],
+    web_result: WebResearchResult,
+    theme_route: ThemeRouteOutput | None,
+) -> ThemeRouteOutput:
+    if inputs.theme_route_provider is None:
+        return ThemeRouteOutput(status="disabled_no_provider", blocked_reason="score_gap_expansion_without_provider")
+    agent = LLMThemeRebalanceAgent(inputs.theme_route_provider)
+    search_results = _theme_route_search_results_from_ranked(inputs, web_result.ranked_results)
+    documents = _theme_route_documents(
+        web_result,
+        limit=inputs.theme_route_document_limit,
+        excerpt_chars=inputs.theme_route_document_excerpt_chars,
+    )
+    _emit_phase_event(
+        inputs,
+        "score_gap_route_start",
+        raw_ranked_result_count=len(web_result.ranked_results),
+        llm_search_result_count=len(search_results),
+        raw_document_count=len(web_result.fetched_documents),
+        llm_document_count=len(documents),
+        score_gap_count=len(score_gaps),
+    )
+    return agent.route(
+        ThemeRouteInput(
+            company_name=inputs.company_name,
+            symbol=inputs.symbol,
+            sector=inputs.sector,
+            market=inputs.market.value,
+            as_of_date=inputs.as_of_date,
+            stage_context=inputs.stage_context,
+            candidate_reason_codes=tuple(dict.fromkeys((*inputs.candidate_reason_codes, *_score_gap_reason_codes(score, score_gaps)))),
+            current_large_sector_id=theme_route.large_sector_id if theme_route else None,
+            current_canonical_archetype_id=theme_route.canonical_archetype_id if theme_route else None,
+            search_results=search_results,
+            documents=documents,
+            score_gap_context=tuple(score_gaps),
+        )
+    )
+
+
+def _score_gap_reason_codes(score: ScoreSnapshot, gaps: Sequence[str]) -> tuple[str, ...]:
+    codes = [f"SCORE_GAP:{item}" for item in gaps]
+    codes.append(f"RAW_SCORE_TOTAL_BEFORE_GAP:{round(float(score.total_score), 4)}")
+    return tuple(codes)
+
+
+def _llm_query_retry_context(
+    *,
+    phase: str,
+    retry_index: int,
+    previous_rejections: Sequence[str],
+    missing_information: Sequence[str] = (),
+) -> tuple[str, ...]:
+    if retry_index <= 0 and not previous_rejections:
+        return ()
+    rejection_text = ""
+    if previous_rejections:
+        rejection_text = f" Previous suggested queries were not executable because: {', '.join(previous_rejections)}."
+    missing_text = ""
+    if missing_information:
+        missing_text = f" Missing information still unresolved: {', '.join(str(item) for item in missing_information)}."
+    return (
+        (
+            f"{phase}_retry_{retry_index}: previous LLM suggested_queries did not produce new executable searches."
+            f"{rejection_text}{missing_text} Produce different concrete company-scoped queries for the unresolved evidence gaps."
+        ),
+    )
+
+
+def _score_gap_context_for_retry(
+    gaps: Sequence[str],
+    retry_index: int,
+    previous_rejections: Sequence[str] = (),
+) -> tuple[str, ...]:
+    if retry_index <= 0 and not previous_rejections:
+        return tuple(gaps)
+    rejection_text = ""
+    if previous_rejections:
+        rejection_text = f" Previous suggested queries were not executable because: {', '.join(previous_rejections)}."
+    retry_reason = "previous score-gap route did not produce new executable searches"
+    if "llm_returned_no_suggested_queries" in set(previous_rejections):
+        retry_reason = "previous score-gap route returned no suggested_queries and did not produce new executable searches"
+    return tuple(
+        dict.fromkeys(
+            (
+                *gaps,
+                (
+                    f"retry_{retry_index}: {retry_reason}."
+                    f"{rejection_text} Produce different concrete company-scoped queries for the unresolved score gaps."
+                ),
+            )
+        )
+    )
+
+
+def _only_budget_rejections(rejections: Sequence[str]) -> bool:
+    budget_reasons = {
+        "budget_denied",
+        "daily_query_budget_exhausted",
+        "symbol_query_budget_exhausted",
+        "deep_research_symbol_budget_exhausted",
+        "active_monitoring_symbol_budget_exhausted",
+    }
+    return bool(rejections) and all(item in budget_reasons for item in rejections)
+
+
+def _retry_should_stop(
+    *,
+    retry_index: int,
+    max_retries: int | None,
+    previous_rejections: Sequence[str],
+    seen_failures: set[tuple[str, ...]],
+) -> bool:
+    if max_retries is not None:
+        return retry_index >= max_retries
+    signature = tuple(dict.fromkeys(previous_rejections)) or ("no_executable_searches",)
+    if signature in seen_failures:
+        return True
+    seen_failures.add(signature)
+    return False
+
+
+def _score_gap_missing_information(score: ScoreSnapshot) -> tuple[str, ...]:
+    gaps: list[str] = []
+    diagnostics = score.diagnostic_scores
+    if _diagnostic_value(diagnostics, "estimate_missing_eps_source") > 0.0:
+        gaps.append("score_gap:selected_eps_source_missing; evidence_need: source-backed EPS estimate, consensus, guidance, or report bridge")
+    if _diagnostic_value(diagnostics, "estimate_missing_revision_source") > 0.0:
+        gaps.append("score_gap:selected_revision_source_missing; evidence_need: source-backed estimate/revision bridge for EPS OP FCF target-price or analyst-consensus changes")
+    if _diagnostic_value(diagnostics, "estimate_missing_fcf_source") > 0.0:
+        gaps.append("score_gap:selected_fcf_source_missing; evidence_need: source-backed FCF, operating-cash-flow, conversion, guidance, or consensus bridge")
+    if _diagnostic_value(diagnostics, "estimate_missing_op_source") > 0.0:
+        gaps.append("score_gap:selected_operating_profit_source_missing; evidence_need: source-backed operating-profit estimate, consensus, guidance, or report bridge")
+    if _diagnostic_value(diagnostics, "revision_score") < 80.0:
+        gaps.append("revision estimate consensus target price EPS OP FCF")
+    if score.eps_fcf_explosion_score < 12.0:
+        gaps.append("earnings profit sales FCF margin actual forecast visibility")
+    if score.earnings_visibility_score < 14.0 or _diagnostic_value(diagnostics, "structural_visibility_quality") < 60.0:
+        gaps.append("visibility earnings profit revenue FCF margin guidance backlog RPO")
+    if score.bottleneck_pricing_score < 14.0:
+        gaps.append("pricing bottleneck shortage capacity CAPA ASP supply")
+    if _diagnostic_value(diagnostics, "contract_required_for_green") >= 1.0 and _diagnostic_value(diagnostics, "contract_quality") < 45.0:
+        gaps.append("contract backlog RPO prepayment order allocation")
+    if _diagnostic_value(diagnostics, "backlog_rpo_visibility") < 45.0:
+        gaps.append("backlog RPO order allocation revenue visibility contract")
+    if _diagnostic_value(diagnostics, "capa_constraint") < 45.0:
+        gaps.append("capacity CAPA utilization lead time allocation bottleneck")
+    if _diagnostic_value(diagnostics, "asp_pricing_power") < 45.0:
+        gaps.append("ASP pricing power price increase premium mix")
+    if score.market_mispricing_score < 9.0:
+        gaps.append("mispricing valuation revision target price consensus")
+    if score.valuation_rerating_score < 9.0:
+        gaps.append("valuation rerating multiple PER PBR target price")
+    if _diagnostic_value(diagnostics, "valuation_score") < 45.0:
+        gaps.append("valuation PER PBR EV EBITDA market cap earnings target multiple")
+    if score.capital_allocation_score < 2.5:
+        gaps.append("capital CAPEX investment buyback dividend shareholder")
+    if score.information_confidence_score < 4.0:
+        gaps.append("report disclosure news consensus source confidence")
+    if _diagnostic_value(diagnostics, "fcf_quality_score") < 50.0:
+        gaps.append("FCF conversion operating cash flow free cash flow net income cashflow quality")
+    if _diagnostic_value(diagnostics, "actual_profit_conversion_score") < 50.0:
+        gaps.append("actual sales growth OPM change FCF operating profit margin inventory receivables working capital")
+    if _diagnostic_value(diagnostics, "domain_specific_evidence_score") < 35.0:
+        gaps.append("domain-specific operating KPI revenue conversion customer demand unit economics product mix")
+    if _diagnostic_value(diagnostics, "recurring_demand_visibility") < 35.0:
+        gaps.append("recurring demand repeat purchase retention channel sell-through customer renewal")
+    if _diagnostic_value(diagnostics, "export_channel_visibility") < 35.0:
+        gaps.append("export mix export growth regional sales overseas channel US Europe customer")
+    if _diagnostic_value(diagnostics, "medium_term_revision_visibility") < 50.0:
+        gaps.append("medium-term guidance FY1 FY2 revenue OP EPS FCF estimate visibility")
+    if _diagnostic_value(diagnostics, "sector_visibility_score") < 45.0:
+        gaps.append("sector visibility customer demand orders sell-through backlog guidance")
+    if _diagnostic_value(diagnostics, "sector_bottleneck_score") < 45.0:
+        gaps.append("sector bottleneck capacity utilization lead time pricing shortage supply")
+    if _diagnostic_value(diagnostics, "price_only_blowoff_score") >= 60.0:
+        gaps.append("price-only blowoff guard: expand non-price evidence for earnings, FCF, orders, backlog, disclosures, reports, and company catalyst confirmation")
+    if _diagnostic_value(diagnostics, "theme_overheat_score") >= 60.0:
+        gaps.append("theme overheat guard: expand source-backed revenue EPS FCF valuation bridge and contradiction evidence before treating price/theme momentum as rerating")
+    if _diagnostic_value(diagnostics, "snippet_only_green_block") > 0.0:
+        gaps.append("snippet-only Green block: expand full article report disclosure or primary-source document with date-verified evidence")
+    if _diagnostic_value(diagnostics, "emerging_theme_active") > 0.0 and _diagnostic_value(diagnostics, "llm_deep_research_completed") < 100.0:
+        gaps.append("emerging theme requires completed deep research: expand company-specific theme-to-revenue EPS FCF RPO backlog margin bridge")
+    if _diagnostic_value(diagnostics, "emerging_theme_active") > 0.0 and _diagnostic_value(diagnostics, "green_unlock_evidence_score") < 60.0:
+        gaps.append("emerging theme Green unlock evidence: expand source-backed company revenue bridge, FCF bridge, customer contract, capacity, pricing, and valuation runway")
+    if _diagnostic_value(diagnostics, "date_unverified_snippet_news_count_capped") > 0.0:
+        gaps.append("date-unverified snippet evidence: expand date-verified full news report disclosure or filing visible by as_of_date")
+    if _diagnostic_value(diagnostics, "report_date_confidence") < 1.0:
+        gaps.append("date-unverified document evidence: expand date-verified full report disclosure news filing or primary-source document visible by as_of_date")
+    if _diagnostic_value(diagnostics, "v12_scope_stage2_required_bridge_match") > 0.0 and _diagnostic_value(diagnostics, "cross_evidence_family_count") < 3.0:
+        gaps.append("stage2 non-price bridge: expand financial actual disclosure research report consensus revision and full news evidence beyond price-only signal")
+    if _diagnostic_value(diagnostics, "evidence_family_price") <= 0.0:
+        gaps.append("price history market cap close shares valuation price path")
+    if _diagnostic_value(diagnostics, "evidence_family_financial_actual") <= 0.0:
+        gaps.append("financial actual quarterly sales operating profit net income FCF OPM inventory receivables")
+    if _diagnostic_value(diagnostics, "evidence_family_disclosure") <= 0.0:
+        gaps.append("filing disclosure contract investment order capacity customer allocation")
+    if _diagnostic_value(diagnostics, "evidence_family_research_report") <= 0.0:
+        gaps.append("research report analyst report target price earnings estimate thesis")
+    if (
+        _diagnostic_value(diagnostics, "evidence_family_consensus") <= 0.0
+        and _diagnostic_value(diagnostics, "evidence_family_consensus_proxy") <= 0.0
+    ):
+        gaps.append("consensus FY1 FY2 estimates PER PBR target price analyst count")
+    if (
+        _diagnostic_value(diagnostics, "evidence_family_consensus_revision") <= 0.0
+        and _diagnostic_value(diagnostics, "evidence_family_consensus_revision_proxy") <= 0.0
+    ):
+        gaps.append("consensus revision EPS OP FCF target price change estimate upgrade downgrade")
+    if _diagnostic_value(diagnostics, "evidence_family_news") <= 0.0 and _diagnostic_value(diagnostics, "evidence_family_search_snippet_news") <= 0.0:
+        gaps.append("news catalyst company event order customer demand margin change")
+    if _diagnostic_value(diagnostics, "one_off_shortage_risk") >= 60.0:
+        gaps.append("risk slowdown decline inventory receivable demand normalization")
+    return tuple(dict.fromkeys(gaps))
+
+
+def _score_gap_state_signature(score: ScoreSnapshot, red_team: RedTeamAssessment) -> tuple[str, ...]:
+    gaps = tuple(dict.fromkeys((*_score_gap_missing_information(score), *_stage_gate_missing_information(score, red_team))))
+    components = (
+        f"total={round(float(score.total_score), 4)}",
+        f"eps={round(float(score.eps_fcf_explosion_score), 4)}",
+        f"visibility={round(float(score.earnings_visibility_score), 4)}",
+        f"bottleneck={round(float(score.bottleneck_pricing_score), 4)}",
+        f"mispricing={round(float(score.market_mispricing_score), 4)}",
+        f"valuation={round(float(score.valuation_rerating_score), 4)}",
+        f"capital={round(float(score.capital_allocation_score), 4)}",
+        f"info={round(float(score.information_confidence_score), 4)}",
+        f"risk={round(float(score.risk_penalty), 4)}",
+    )
+    return tuple((*components, *gaps))
+
+
+_STAGE_GATE_GAP_CONTEXT = {
+    "failed_stage2_total_score": "stage2 total score gate failed; expand source-backed company evidence for actual earnings, FCF, valuation, and catalyst conversion",
+    "failed_stage2_eps_fcf": "stage2 EPS/FCF gate failed; expand actual and forward EPS, OP, FCF, cashflow, and margin evidence",
+    "failed_stage2_valuation": "stage2 valuation gate failed; expand valuation, PER, PBR, EV EBITDA, market cap, target price, and earnings estimate evidence",
+    "failed_stage2_information_confidence": "stage2 information-confidence gate failed; expand independent report, disclosure, news, consensus, and source confidence evidence",
+    "failed_stage2_red_team": "stage2 red-team gate failed; expand source-backed thesis-break, accounting, legal, slowdown, cancellation, and risk-reversal evidence",
+    "failed_stage2_non_price_bridge": "stage2 non-price bridge gate failed; expand financial actual, disclosure, research report, consensus revision, and full news evidence beyond price-only movement",
+    "failed_stage3_total_score": "stage3 Green total score gate failed; expand the weakest source-backed score components before final stage classification",
+    "failed_stage3_eps_fcf": "stage3 Green EPS/FCF gate failed; expand EPS, OP, FCF, sales growth, OPM, conversion, and forward estimate evidence",
+    "failed_stage3_visibility": "stage3 Green earnings visibility gate failed; expand guidance, backlog, RPO, contract duration, customer demand, and revenue visibility evidence",
+    "failed_stage3_bottleneck": "stage3 Green bottleneck/pricing gate failed; expand shortage, capacity, utilization, lead time, ASP, pricing power, allocation, and supply evidence",
+    "failed_stage3_market_mispricing": "stage3 Green mispricing gate failed; expand consensus revision, target price, valuation runway, market expectation, and estimate-change evidence",
+    "failed_stage3_valuation": "stage3 Green valuation gate failed; expand PER, PBR, EV EBITDA, market cap, target multiple, earnings, and rerating runway evidence",
+    "failed_stage3_revision": "stage3 Green revision gate failed; expand EPS, OP, FCF, target price, consensus revision, analyst upgrade, and estimate-change evidence",
+    "failed_stage3_contract_quality": "stage3 Green contract-quality gate failed; expand source-backed contract amount, duration, customer, cancellation terms, prepayment, backlog, and RPO evidence",
+    "failed_structural_visibility_quality": "stage3 Green structural visibility gate failed; expand source-backed recurring demand, backlog, RPO, guidance, contract, utilization, and multi-quarter visibility evidence",
+    "failed_sector_visibility": "stage3 sector visibility gate failed; expand source-backed sector demand, customer orders, sell-through, backlog, and guidance evidence",
+    "failed_sector_bottleneck": "stage3 sector bottleneck gate failed; expand source-backed sector capacity, utilization, lead time, price increase, shortage, and supply evidence",
+    "failed_green_cross_evidence": "stage3 Green cross-evidence gate failed; expand missing independent evidence families rather than relying on one source type",
+    "failed_report_date_confidence": "stage3 Green report-date confidence gate failed; expand date-verified report, disclosure, news, or filing evidence visible by as_of_date",
+    "failed_domain_specific_evidence": "stage3 domain-specific evidence gate failed; expand operating KPI, customer demand, unit economics, product mix, paid conversion, and revenue conversion evidence",
+    "failed_stage3_one_off_shortage_risk": "stage3 Green one-off shortage risk gate failed; expand evidence distinguishing structural demand from one-off cost, temporary shortage, inventory, receivables, and demand normalization",
+    "failed_stage3_red_team": "stage3 Green red-team gate failed; expand source-backed accounting, legal, customer cancellation, slowdown, valuation crowding, thesis-break, and risk mitigation evidence",
+    "failed_stage3_yellow_calibrated_total": "stage3 Yellow total gate failed; expand source-backed evidence for candidate promotion before final stage classification",
+    "failed_positive_stage_price_only_blowoff": "positive-stage price-only blowoff guard failed; expand non-price evidence that ties price movement to target-company earnings, FCF, orders, backlog, disclosures, reports, or durable catalyst conversion",
+    "failed_snippet_only_green_block": "snippet-only Green guard failed; expand full-text date-verified news, report, disclosure, filing, or primary-source evidence before Green promotion",
+    "failed_emerging_theme_deep_research": "emerging-theme deep research gate failed; expand company-specific theme-to-revenue, EPS, FCF, RPO, backlog, margin, customer, capacity, and valuation evidence",
+    "failed_emerging_theme_green_unlock_evidence": "emerging-theme Green unlock gate failed; expand source-backed revenue bridge, FCF bridge, contract/customer bridge, capacity/pricing bridge, and valuation runway evidence",
+    "failed_emerging_theme_date_verified_evidence": "emerging-theme date verification gate failed; expand date-verified documents visible by as_of_date rather than undated snippets",
+    "failed_theme_overheat_risk": "theme-overheat guard failed; expand source-backed fundamental bridge and contradiction evidence so theme momentum is not treated as unsupported rerating",
+}
+
+
+def _stage_gate_missing_information(score: ScoreSnapshot, red_team: RedTeamAssessment) -> tuple[str, ...]:
+    diagnostics = diagnose_stage_gates(score, red_team)
+    gaps: list[str] = []
+    for gate_name in diagnostics.failed_gate_names:
+        context = _STAGE_GATE_GAP_CONTEXT.get(gate_name)
+        if context:
+            value = diagnostics.values_vs_thresholds.get(gate_name, {}).get("value")
+            threshold = diagnostics.values_vs_thresholds.get(gate_name, {}).get("threshold")
+            gaps.append(f"{context}; gate={gate_name}; value={value}; threshold={threshold}")
+    if diagnostics.missing_evidence_families:
+        gaps.append(
+            "missing independent evidence families for stage gate: "
+            + ", ".join(diagnostics.missing_evidence_families)
+            + "; expand source-backed evidence for these families"
+        )
+    return tuple(dict.fromkeys(gaps))
+
+
+def _diagnostic_value(diagnostics: Mapping[str, Any], key: str) -> float:
+    value = diagnostics.get(key, 0.0)
+    if isinstance(value, bool):
+        return 100.0 if value else 0.0
+    if isinstance(value, (int, float)):
+        return float(value)
+    return 0.0
+
+
+def _query_limit_reached(queries: Sequence[str], limit: int | None) -> bool:
+    return limit is not None and len(tuple(dict.fromkeys(queries))) >= limit
 
 
 def _post_parse_gap_query_spec(
@@ -592,8 +1528,28 @@ def _post_parse_gap_query_spec(
     )
 
 
-def _post_gap_top_results(inputs: FreeWebResearchInput, gap_specs: Sequence[QuerySpec]) -> int:
-    return min(40, max(inputs.top_results, inputs.top_results + min(len(gap_specs), inputs.post_parse_gap_expansion_max_queries)))
+def _post_score_gap_query_spec(
+    *,
+    query: str,
+    inputs: FreeWebResearchInput,
+    query_index: int,
+) -> QuerySpec:
+    return QuerySpec(
+        group="post_score_gap",
+        query=query.strip(),
+        priority=170 + query_index,
+        company_name=inputs.company_name,
+        symbol=inputs.symbol,
+        sector=inputs.sector,
+        market=inputs.market,
+        as_of_date=inputs.as_of_date,
+    )
+
+
+def _post_gap_top_results(inputs: FreeWebResearchInput, gap_specs: Sequence[QuerySpec]) -> int | None:
+    if inputs.top_results is None:
+        return None
+    return max(inputs.top_results, inputs.top_results + len(gap_specs))
 
 
 def _merge_feature_input(
@@ -695,10 +1651,17 @@ def _dedupe_news(items):
     return tuple(sorted(by_key.values(), key=lambda item: (item.published_at, item.source, item.title)))
 
 
-def _theme_route_documents(web_result: WebResearchResult) -> tuple[ThemeRouteDocument, ...]:
+def _theme_route_documents(
+    web_result: WebResearchResult,
+    *,
+    limit: int | None = None,
+    excerpt_chars: int = 2_400,
+) -> tuple[ThemeRouteDocument, ...]:
     evidence_by_url = _evidence_by_url(web_result)
     documents: list[ThemeRouteDocument] = []
     for ranked_result, fetch in zip(web_result.selected_results, web_result.fetched_documents):
+        if limit is not None and len(documents) >= limit:
+            break
         result = ranked_result.result
         evidence_items = evidence_by_url.get(result.url, ())
         parsed_fields: dict[str, bool | float | str] = {}
@@ -715,7 +1678,7 @@ def _theme_route_documents(web_result: WebResearchResult) -> tuple[ThemeRouteDoc
                 query=result.query,
                 fetch_ok=fetch.ok,
                 fetch_reason=fetch.reason,
-                text_excerpt=_theme_text_excerpt(fetch.text),
+                text_excerpt=_theme_text_excerpt(fetch.text, limit=excerpt_chars),
                 evidence_ids=tuple(dict.fromkeys(evidence_ids)),
                 parsed_fields=parsed_fields,
             )
@@ -854,6 +1817,8 @@ def _initial_query_limit(inputs: FreeWebResearchInput) -> int | None:
     if not inputs.theme_rebalance_enabled or inputs.theme_route_provider is None:
         return None
     max_queries = inputs.budget.max_queries_per_symbol
+    if max_queries is None:
+        return None
     if max_queries <= 0:
         return 0
     reserve = min(max(0, inputs.theme_expansion_reserve_queries), max_queries)
@@ -1009,6 +1974,423 @@ _THEME_STATUS_CODES = {
     "symbol_query_budget_exhausted": 80.0,
     "deep_research_symbol_budget_exhausted": 90.0,
 }
+
+_THEME_ROUTE_SCORE_BLOCK_REASON_CODES = {
+    "theme_route_missing": 10.0,
+    "theme_route_provider_error": 20.0,
+    "theme_route_invalid_provider_output": 25.0,
+    "theme_route_disabled_no_provider": 30.0,
+    "theme_route_needs_more_evidence": 40.0,
+    "theme_route_budget_denied": 50.0,
+    "theme_route_search_blocked": 60.0,
+    "theme_route_low_confidence": 70.0,
+    "theme_route_missing_canonical_archetype_id": 80.0,
+    "theme_route_not_source_backed": 90.0,
+    "theme_route_unapplied_to_scoring": 95.0,
+}
+
+_SCORE_GAP_BLOCK_REASON_CODES = {
+    "score_gap_provider_error": 10.0,
+    "score_gap_invalid_provider_output": 20.0,
+    "score_gap_disabled_no_provider": 30.0,
+    "score_gap_llm_no_suggested_queries": 40.0,
+    "score_gap_no_executable_searches": 50.0,
+    "score_gap_budget_blocked": 60.0,
+    "score_gap_search_blocked": 70.0,
+    "score_gap_unresolved": 80.0,
+    "score_gap_round_limit": 85.0,
+    "score_gap_no_progress": 90.0,
+}
+
+_SCORE_GAP_FAILURE_STATUSES = {
+    "provider_error",
+    "invalid_provider_output",
+    "disabled_no_provider",
+    "llm_no_suggested_queries",
+    "no_executable_searches",
+    "budget_blocked",
+    "round_limit_reached",
+    "no_progress",
+    "daily_query_budget_exhausted",
+    "symbol_query_budget_exhausted",
+    "deep_research_symbol_budget_exhausted",
+    "active_monitoring_symbol_budget_exhausted",
+    "captcha_or_block_detected",
+    "stopped",
+}
+
+_MATERIAL_SCORE_GAP_MARKERS = (
+    "selected_eps_source_missing",
+    "selected_revision_source_missing",
+    "selected_fcf_source_missing",
+    "selected_operating_profit_source_missing",
+    "missing independent evidence families",
+    "stage2 non-price bridge",
+    "stage3 green cross-evidence gate failed",
+    "price-only blowoff guard",
+    "theme overheat guard",
+    "date-unverified",
+    "snippet-only",
+    "emerging theme requires completed deep research",
+    "emerging theme Green unlock evidence",
+)
+
+
+def _theme_route_score_block_reason(
+    *,
+    inputs: FreeWebResearchInput,
+    route: ThemeRouteOutput | None,
+    diagnostics: Mapping[str, object],
+    route_large_sector_id: str | None,
+    route_canonical_archetype_id: str | None,
+) -> str | None:
+    if not inputs.require_valid_theme_route_for_scoring:
+        return None
+    if not inputs.theme_rebalance_enabled or inputs.theme_route_provider is None:
+        return None
+    if route_canonical_archetype_id:
+        return None
+    base = inputs.base_feature_input
+    if base is not None and base.large_sector_id and base.canonical_archetype_id:
+        return None
+    if route is None:
+        return "theme_route_missing"
+    status = str(diagnostics.get("theme_rebalance_status") or route.status or "").strip()
+    if status == "provider_error" or route.status == "provider_error":
+        return "theme_route_provider_error"
+    if status == "invalid_provider_output" or route.status == "invalid_provider_output":
+        return "theme_route_invalid_provider_output"
+    if status == "disabled_no_provider" or route.status == "disabled_no_provider":
+        return "theme_route_disabled_no_provider"
+    if status in {"budget_denied", "daily_query_budget_exhausted", "symbol_query_budget_exhausted", "deep_research_symbol_budget_exhausted"}:
+        return "theme_route_budget_denied"
+    if status == "captcha_or_block_detected":
+        return "theme_route_search_blocked"
+    if route.status in {"needs_more_evidence", "more_evidence_needed"}:
+        return "theme_route_needs_more_evidence"
+    if route.status in {"transition_detected", "mixed_route"}:
+        if route.route_confidence < 0.55:
+            return "theme_route_low_confidence"
+        if not route.canonical_archetype_id:
+            return "theme_route_missing_canonical_archetype_id"
+        if not _has_source_backed_theme_slot(route):
+            return "theme_route_not_source_backed"
+        if not route_large_sector_id:
+            return "theme_route_missing_canonical_archetype_id"
+        return "theme_route_unapplied_to_scoring"
+    return None
+
+
+def _with_score_gap_expansion_diagnostics(
+    diagnostics: Mapping[str, object],
+    expansion: _ScoreGapExpansionResult,
+    queries_run_so_far: Sequence[str],
+) -> Mapping[str, object]:
+    updated = dict(diagnostics)
+    updated["post_score_gap_expansion_count"] = len(tuple(queries_run_so_far))
+    updated["post_score_gap_expansion_queries"] = tuple(queries_run_so_far)
+    updated["post_score_gap_expansion_status"] = expansion.status
+    updated["post_score_gap_unresolved_gaps"] = tuple(expansion.unresolved_gaps)
+    updated["post_score_gap_rejection_reasons"] = tuple(expansion.rejection_reasons)
+    if expansion.blocked_reason:
+        updated["post_score_gap_blocked_reason"] = expansion.blocked_reason
+    return updated
+
+
+def _score_gap_score_block_reason(
+    *,
+    inputs: FreeWebResearchInput,
+    expansion: _ScoreGapExpansionResult,
+    queries_run_count: int = 0,
+) -> str | None:
+    if not inputs.require_resolved_score_gaps_for_scoring:
+        return None
+    if not _material_score_gaps(expansion.unresolved_gaps):
+        return None
+    status = expansion.status
+    if status == "no_gaps" or status == "executed":
+        return None
+    if status == "provider_error":
+        if _score_gap_warning_reason(inputs=inputs, expansion=expansion, queries_run_count=queries_run_count):
+            return None
+        return "score_gap_provider_error"
+    if status == "invalid_provider_output":
+        if _score_gap_warning_reason(inputs=inputs, expansion=expansion, queries_run_count=queries_run_count):
+            return None
+        return "score_gap_invalid_provider_output"
+    if status == "disabled_no_provider":
+        return "score_gap_disabled_no_provider"
+    if status == "llm_no_suggested_queries":
+        return "score_gap_llm_no_suggested_queries"
+    if status == "no_executable_searches":
+        return "score_gap_no_executable_searches"
+    if status == "budget_blocked":
+        return "score_gap_budget_blocked"
+    if status == "round_limit_reached":
+        if _score_gap_warning_reason(inputs=inputs, expansion=expansion, queries_run_count=queries_run_count):
+            return None
+        return "score_gap_round_limit"
+    if status == "no_progress":
+        if _score_gap_warning_reason(inputs=inputs, expansion=expansion, queries_run_count=queries_run_count):
+            return None
+        return "score_gap_no_progress"
+    if status in {"captcha_or_block_detected", "daily_query_budget_exhausted", "symbol_query_budget_exhausted", "deep_research_symbol_budget_exhausted", "active_monitoring_symbol_budget_exhausted"}:
+        return "score_gap_search_blocked"
+    if status in _SCORE_GAP_FAILURE_STATUSES:
+        return "score_gap_unresolved"
+    return None
+
+
+def _score_gap_warning_reason(
+    *,
+    inputs: FreeWebResearchInput,
+    expansion: _ScoreGapExpansionResult,
+    queries_run_count: int,
+) -> str | None:
+    if not inputs.require_resolved_score_gaps_for_scoring:
+        return None
+    if not _material_score_gaps(expansion.unresolved_gaps):
+        return None
+    if expansion.status == "provider_error":
+        return "score_gap_provider_error"
+    if expansion.status == "invalid_provider_output":
+        return "score_gap_invalid_provider_output"
+    if queries_run_count <= 0:
+        return None
+    if expansion.status == "round_limit_reached":
+        return "score_gap_round_limit"
+    if expansion.status == "no_progress":
+        return "score_gap_no_progress"
+    return None
+
+
+def _material_score_gaps(gaps: Sequence[str]) -> tuple[str, ...]:
+    material: list[str] = []
+    for gap in gaps:
+        text = str(gap)
+        lowered = text.lower()
+        if any(marker.lower() in lowered for marker in _MATERIAL_SCORE_GAP_MARKERS):
+            material.append(text)
+    return tuple(dict.fromkeys(material))
+
+
+def _mark_score_valid_for_theme_route(
+    *,
+    inputs: FreeWebResearchInput,
+    score: ScoreSnapshot,
+    diagnostics: Mapping[str, object],
+) -> tuple[ScoreSnapshot, Mapping[str, object]]:
+    if not inputs.require_valid_theme_route_for_scoring:
+        return score, diagnostics
+    numeric = dict(score.diagnostic_scores)
+    numeric.setdefault("score_valid", 100.0)
+    numeric.setdefault("score_blocked_by_theme_route", 0.0)
+    numeric.setdefault("theme_route_required_for_scoring", 100.0)
+    updated = dict(diagnostics)
+    updated.setdefault("score_valid", True)
+    updated.setdefault("score_blocked_by_theme_route", False)
+    return replace(score, diagnostic_scores=numeric), updated
+
+
+def _mark_score_gap_warning_if_any(
+    *,
+    inputs: FreeWebResearchInput,
+    score: ScoreSnapshot,
+    diagnostics: Mapping[str, object],
+    expansion: _ScoreGapExpansionResult,
+    queries_run_count: int,
+) -> tuple[ScoreSnapshot, Mapping[str, object]]:
+    reason = _score_gap_warning_reason(
+        inputs=inputs,
+        expansion=expansion,
+        queries_run_count=queries_run_count,
+    )
+    if reason is None:
+        return score, diagnostics
+    numeric = dict(score.diagnostic_scores)
+    numeric.setdefault("score_gap_required_for_scoring", 100.0)
+    numeric["score_blocked_by_score_gap"] = 0.0
+    numeric["score_gap_unresolved_warning"] = 100.0
+    numeric["score_gap_warning_reason_code"] = _SCORE_GAP_BLOCK_REASON_CODES.get(reason, 99.0)
+    existing_queries = diagnostics.get("post_score_gap_expansion_queries", ())
+    if isinstance(existing_queries, str):
+        existing_query_tuple: tuple[str, ...] = (existing_queries,)
+    else:
+        existing_query_tuple = tuple(str(item) for item in existing_queries) if isinstance(existing_queries, Sequence) else ()
+    updated = dict(_with_score_gap_expansion_diagnostics(diagnostics, expansion, existing_query_tuple))
+    updated["score_gap_unresolved_warning"] = True
+    updated["post_score_gap_warning_reason"] = reason
+    updated["material_score_gap_unresolved_gaps"] = _material_score_gaps(expansion.unresolved_gaps)
+    return replace(score, diagnostic_scores=numeric), updated
+
+
+def _invalidate_score_for_theme_route(
+    *,
+    score: ScoreSnapshot,
+    diagnostics: Mapping[str, object],
+    reason: str,
+) -> tuple[ScoreSnapshot, Mapping[str, object]]:
+    raw_components = {
+        "raw_eps_fcf_before_theme_route_block": score.eps_fcf_explosion_score,
+        "raw_earnings_visibility_before_theme_route_block": score.earnings_visibility_score,
+        "raw_bottleneck_pricing_before_theme_route_block": score.bottleneck_pricing_score,
+        "raw_market_mispricing_before_theme_route_block": score.market_mispricing_score,
+        "raw_valuation_rerating_before_theme_route_block": score.valuation_rerating_score,
+        "raw_capital_allocation_before_theme_route_block": score.capital_allocation_score,
+        "raw_information_confidence_before_theme_route_block": score.information_confidence_score,
+        "raw_score_total_before_theme_route_block": score.total_score,
+        "raw_risk_penalty_before_theme_route_block": min(100.0, score.risk_penalty),
+    }
+    numeric = dict(score.diagnostic_scores)
+    numeric.update(raw_components)
+    numeric["score_valid"] = 0.0
+    numeric["score_blocked_by_theme_route"] = 100.0
+    numeric["theme_route_required_for_scoring"] = 100.0
+    numeric["theme_route_block_reason_code"] = _THEME_ROUTE_SCORE_BLOCK_REASON_CODES.get(reason, 100.0)
+    updated = dict(diagnostics)
+    updated["score_valid"] = False
+    updated["score_blocked_by_theme_route"] = True
+    updated["score_blocked_reason"] = reason
+    updated["raw_score_total_before_theme_route_block"] = score.total_score
+    return (
+        replace(
+            score,
+            eps_fcf_explosion_score=0.0,
+            earnings_visibility_score=0.0,
+            bottleneck_pricing_score=0.0,
+            market_mispricing_score=0.0,
+            valuation_rerating_score=0.0,
+            capital_allocation_score=0.0,
+            information_confidence_score=0.0,
+            risk_penalty=0.0,
+            total_score=0.0,
+            diagnostic_scores=numeric,
+            scoring_version=f"{score.scoring_version}:theme-route-block",
+        ),
+        updated,
+    )
+
+
+def _invalidate_score_for_score_gap(
+    *,
+    score: ScoreSnapshot,
+    diagnostics: Mapping[str, object],
+    reason: str,
+    expansion: _ScoreGapExpansionResult,
+) -> tuple[ScoreSnapshot, Mapping[str, object]]:
+    raw_components = {
+        "raw_eps_fcf_before_score_gap_block": score.eps_fcf_explosion_score,
+        "raw_earnings_visibility_before_score_gap_block": score.earnings_visibility_score,
+        "raw_bottleneck_pricing_before_score_gap_block": score.bottleneck_pricing_score,
+        "raw_market_mispricing_before_score_gap_block": score.market_mispricing_score,
+        "raw_valuation_rerating_before_score_gap_block": score.valuation_rerating_score,
+        "raw_capital_allocation_before_score_gap_block": score.capital_allocation_score,
+        "raw_information_confidence_before_score_gap_block": score.information_confidence_score,
+        "raw_score_total_before_score_gap_block": score.total_score,
+        "raw_risk_penalty_before_score_gap_block": min(100.0, score.risk_penalty),
+    }
+    numeric = dict(score.diagnostic_scores)
+    numeric.update(raw_components)
+    numeric["score_valid"] = 0.0
+    numeric["score_blocked_by_score_gap"] = 100.0
+    numeric["score_gap_required_for_scoring"] = 100.0
+    numeric["score_gap_block_reason_code"] = _SCORE_GAP_BLOCK_REASON_CODES.get(reason, 99.0)
+    existing_queries = diagnostics.get("post_score_gap_expansion_queries", ())
+    if isinstance(existing_queries, str):
+        existing_query_tuple: tuple[str, ...] = (existing_queries,)
+    else:
+        existing_query_tuple = tuple(str(item) for item in existing_queries) if isinstance(existing_queries, Sequence) else ()
+    updated = _with_score_gap_expansion_diagnostics(diagnostics, expansion, existing_query_tuple)
+    updated = dict(updated)
+    updated["score_valid"] = False
+    updated["score_blocked_by_score_gap"] = True
+    updated["score_blocked_reason"] = reason
+    updated["raw_score_total_before_score_gap_block"] = score.total_score
+    updated["material_score_gap_unresolved_gaps"] = _material_score_gaps(expansion.unresolved_gaps)
+    return (
+        replace(
+            score,
+            eps_fcf_explosion_score=0.0,
+            earnings_visibility_score=0.0,
+            bottleneck_pricing_score=0.0,
+            market_mispricing_score=0.0,
+            valuation_rerating_score=0.0,
+            capital_allocation_score=0.0,
+            information_confidence_score=0.0,
+            risk_penalty=0.0,
+            total_score=0.0,
+            diagnostic_scores=numeric,
+            scoring_version=f"{score.scoring_version}:score-gap-block",
+        ),
+        updated,
+    )
+
+
+def _clear_unconfirmed_theme_route_classification(feature_result: FeatureEngineeringResult) -> FeatureEngineeringResult:
+    payload = replace(
+        feature_result.payload,
+        large_sector_id=None,
+        canonical_archetype_id=None,
+    )
+    return replace(feature_result, payload=payload)
+
+
+def _blocked_stage_for_theme_route(
+    *,
+    inputs: FreeWebResearchInput,
+    score: ScoreSnapshot,
+    red_team: RedTeamAssessment,
+    web_result: WebResearchResult,
+    reason: str,
+) -> StageSnapshot:
+    evidence_ids = tuple(
+        dict.fromkeys(
+            score.evidence_ids
+            + red_team.evidence_ids
+            + tuple(item.evidence_id for item in web_result.evidence)
+        )
+    )
+    return StageSnapshot(
+        symbol=score.symbol,
+        as_of_date=score.as_of_date,
+        stage=Stage.STAGE_0,
+        previous_stage=inputs.previous_stage,
+        stage_changed=inputs.previous_stage is not None and inputs.previous_stage != Stage.STAGE_0,
+        grade="Watch",
+        stage_reason=(f"theme route unresolved; scoring blocked before stage classification: {reason}",),
+        red_team_status=red_team.risk_level.value,
+        evidence_ids=evidence_ids,
+        classifier_version=f"{StageClassifier.version}:theme-route-block",
+    )
+
+
+def _blocked_stage_for_score_gap(
+    *,
+    inputs: FreeWebResearchInput,
+    score: ScoreSnapshot,
+    red_team: RedTeamAssessment,
+    web_result: WebResearchResult,
+    reason: str,
+) -> StageSnapshot:
+    evidence_ids = tuple(
+        dict.fromkeys(
+            score.evidence_ids
+            + red_team.evidence_ids
+            + tuple(item.evidence_id for item in web_result.evidence)
+        )
+    )
+    return StageSnapshot(
+        symbol=score.symbol,
+        as_of_date=score.as_of_date,
+        stage=Stage.STAGE_0,
+        previous_stage=inputs.previous_stage,
+        stage_changed=inputs.previous_stage is not None and inputs.previous_stage != Stage.STAGE_0,
+        grade="Watch",
+        stage_reason=(f"score-gap expansion unresolved; scoring blocked before stage classification: {reason}",),
+        red_team_status=red_team.risk_level.value,
+        evidence_ids=evidence_ids,
+        classifier_version=f"{StageClassifier.version}:score-gap-block",
+    )
 
 
 def _with_theme_route_diagnostics(

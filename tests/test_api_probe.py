@@ -122,6 +122,7 @@ class APIProbeTests(unittest.TestCase):
                     output_directory=output_dir,
                     fixture_mode=False,
                     live_enabled=True,
+                    env_file=None,
                 )
             )
 

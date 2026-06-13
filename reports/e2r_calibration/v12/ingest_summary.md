@@ -6,20 +6,20 @@ case_fixture나 과거 연구 재현 성공은 live discovery 증명이 아닙�
 source proxy 또는 evidence URL 한계는 promotion blocker로 보고서에 남깁니다.
 
 - md_input_root: `docs/round`
-- v12_result_md_count: `373`
-- v12_parsed_document_count: `373`
+- v12_result_md_count: `230`
+- v12_parsed_document_count: `230`
 - v12_failed_document_count: `0`
-- v12_raw_trigger_rows: `3248`
-- v12_validated_trigger_rows: `2988`
-- v12_representative_trigger_rows: `2416`
-- v12_rejected_rows: `1059`
-- v12_raw_aggregate_metric_rows: `65`
-- v12_raw_shadow_weight_rows: `191`
+- v12_raw_trigger_rows: `2548`
+- v12_validated_trigger_rows: `2245`
+- v12_representative_trigger_rows: `2222`
+- v12_rejected_rows: `721`
+- v12_raw_aggregate_metric_rows: `115`
+- v12_raw_shadow_weight_rows: `203`
 - large_sectors_covered: `['L10_POLICY_EVENT_CROSS_REDTEAM_MISC', 'L1_INDUSTRIALS_INFRA_DEFENSE_GRID', 'L2_AI_SEMICONDUCTOR_ELECTRONICS', 'L3_BATTERY_EV_GREEN_MOBILITY', 'L4_MATERIALS_SPREAD_RESOURCE', 'L5_CONSUMER_BRAND_DISTRIBUTION', 'L6_FINANCIAL_CAPITAL_RETURN_DIGITAL', 'L7_BIO_HEALTHCARE_MEDICAL', 'L8_PLATFORM_CONTENT_SW_SECURITY', 'L9_CONSTRUCTION_REALESTATE_HOUSING']`
 - canonical_archetypes_covered: `['C01_ORDER_BACKLOG_MARGIN_BRIDGE', 'C02_POWER_GRID_DATACENTER_CAPEX', 'C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG', 'C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY', 'C05_EPC_MEGA_CONTRACT_MARGIN_GAP', 'C06_HBM_MEMORY_CUSTOMER_CAPACITY', 'C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH', 'C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY', 'C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF', 'C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE', 'C11_BATTERY_ORDERBOOK_RERATING', 'C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK', 'C13_BATTERY_JV_UTILIZATION_AMPC_IRA', 'C14_EV_DEMAND_SLOWDOWN_4B_4C', 'C15_MATERIAL_SPREAD_SUPERCYCLE', 'C16_STRATEGIC_RESOURCE_POLICY_SUPPLY', 'C17_CHEMICAL_COMMODITY_MARGIN_SPREAD', 'C18_CONSUMER_EXPORT_CHANNEL_REORDER', 'C19_BRAND_RETAIL_INVENTORY_MARGIN', 'C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION', 'C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN', 'C22_INSURANCE_RATE_CYCLE_RESERVE', 'C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION', 'C24_BIO_TRIAL_DATA_EVENT_RISK', 'C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT', 'C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE', 'C27_CONTENT_IP_GLOBAL_MONETIZATION', 'C28_SOFTWARE_SECURITY_CONTRACT_RETENTION', 'C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE', 'C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK', 'C31_POLICY_SUBSIDY_LEGISLATION_EVENT', 'C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP', 'R13_CROSS_ARCHETYPE_4B_4C_REDTEAM', 'R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION', 'R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL', 'R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW']`
-- stage_transition_summary_rows: `1990`
-- evidence_url_pending_count: `1506`
-- source_proxy_only_count: `1340`
+- stage_transition_summary_rows: `2127`
+- evidence_url_pending_count: `34`
+- source_proxy_only_count: `36`
 - active_default_profile_preserved: `False`
 - production_default_scoring_changed: `True`
 - archetype_weight_profile_path: `configs/e2r_archetype_weight_profile_v2_2.json`
@@ -28,12 +28,14 @@ source proxy 또는 evidence URL 한계는 promotion blocker로 보고서에 남
 - large_sector_weight_count: `10`
 
 ## Rejected Rows By Reason
-- corporate_action_contaminated: 36
-- insufficient_forward_window: 4
-- missing_entry_date: 13
-- missing_entry_price: 10
-- missing_required_mfe_mae: 217
-- missing_trigger_type: 184
-- not_representative_for_aggregate: 490
-- not_usable_for_promotion: 315
-- price_only_no_evidence: 20
+- corporate_action_contaminated: 19
+- insufficient_forward_window: 1
+- invalid_price_source: 5
+- missing_entry_date: 12
+- missing_entry_price: 12
+- missing_required_mfe_mae: 154
+- missing_trigger_type: 224
+- not_representative_for_aggregate: 29
+- not_usable_for_promotion: 335
+- price_only_no_evidence: 81
+- raw_all_basis: 12

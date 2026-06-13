@@ -6,15 +6,28 @@ import unittest
 from unittest.mock import patch
 
 from e2r.evidence_ids import stable_consensus_evidence_id, stable_news_evidence_id
-from e2r.models import Market, Stage
+from e2r.models import Market, ScoreSnapshot, Stage
 from e2r.llm import EvidenceSlotStatus, FakeThemeRouteProvider, ThemeRouteOutput
 from e2r.research import EmptySearchProvider
 from e2r.research.browser_search_provider import BrowserSearchProvider
-from e2r.research.free_web_research_runner import FreeWebResearchInput, FreeWebResearchRunner
+from e2r.research.free_web_research_runner import (
+    FreeWebResearchInput,
+    FreeWebResearchRunner,
+    _ScoreGapExpansionResult,
+    _FixedQueryPlanner,
+    _material_score_gaps,
+    _post_score_gap_expansion_allowed,
+    _score_gap_reason_codes,
+    _score_gap_score_block_reason,
+    _score_gap_missing_information,
+    _stage_gate_missing_information,
+)
 from e2r.research.manual_source_provider import ManualSource, ManualSourceProvider
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
+from e2r.research.query_planner import QueryPlan, QuerySpec
 from e2r.research.search_budget import SearchBudget
 from e2r.research.search_provider import FixtureSearchProvider, SearchResult
+from e2r.red_team import RedTeamAssessment
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +46,265 @@ SMCI_ACCOUNTING_URL = "https://news.example.com/smci-accounting-issue"
 
 
 class FreeWebResearchRunnerTests(unittest.TestCase):
+    def test_score_gap_reason_code_marks_score_as_raw_reference(self):
+        score = ScoreSnapshot(
+            symbol="123456",
+            as_of_date=date(2026, 6, 12),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=15.0,
+            bottleneck_pricing_score=15.0,
+            market_mispricing_score=10.0,
+            valuation_rerating_score=10.0,
+            capital_allocation_score=4.0,
+            information_confidence_score=4.0,
+            risk_penalty=0.0,
+            total_score=78.0,
+        )
+
+        codes = _score_gap_reason_codes(score, ("missing_revision_source",))
+
+        self.assertIn("RAW_SCORE_TOTAL_BEFORE_GAP:78.0", codes)
+        self.assertFalse(any(item.startswith("SCORE_TOTAL:") for item in codes))
+
+    def test_free_web_research_defaults_evidence_review_on_for_gap_expansion(self):
+        inputs = FreeWebResearchInput(
+            company_name="테스트",
+            symbol="123456",
+            sector=None,
+            market=Market.KR,
+            as_of_date=date(2024, 1, 1),
+            theme_route_provider=FakeThemeRouteProvider(),
+        )
+
+        self.assertTrue(inputs.theme_rebalance_enabled)
+        self.assertTrue(inputs.theme_evidence_review_enabled)
+        self.assertEqual(inputs.max_theme_expansion_rounds, 2)
+        self.assertEqual(inputs.post_parse_gap_expansion_max_queries, 10)
+        self.assertIsNone(inputs.llm_query_retry_max)
+        self.assertIsNone(inputs.score_gap_query_retry_max)
+        self.assertEqual(inputs.max_score_gap_expansion_rounds, 2)
+        self.assertEqual(inputs.theme_route_search_result_limit, 80)
+        self.assertEqual(inputs.theme_route_document_limit, 32)
+        self.assertEqual(inputs.theme_route_document_excerpt_chars, 1200)
+        self.assertTrue(inputs.require_valid_theme_route_for_scoring)
+        self.assertTrue(inputs.require_resolved_score_gaps_for_scoring)
+
+    def test_llm_route_input_is_compacted_with_query_coverage(self):
+        as_of = date(2026, 6, 8)
+        queries = tuple(
+            QuerySpec(
+                group="test",
+                query=f"테스트압축 쿼리{i}",
+                priority=i,
+                company_name="테스트압축",
+                symbol="123450",
+                sector=None,
+                market=Market.KR,
+                as_of_date=as_of,
+            )
+            for i in range(3)
+        )
+        plan = QueryPlan(
+            company_name="테스트압축",
+            symbol="123450",
+            sector=None,
+            market=Market.KR,
+            as_of_date=as_of,
+            queries=queries,
+        )
+        results_by_query = {
+            query.query: tuple(
+                SearchResult(
+                    title=f"테스트압축 {query.query} 리포트 {index}",
+                    url=f"https://example.com/{query.priority}/{index}",
+                    snippet="테스트압축 목표주가 상향 EPS 상향 HBM 수요",
+                    source="fixture-research",
+                    published_at=datetime(2026, 6, 8, 8),
+                    query=query.query,
+                    is_report_domain=True,
+                    confidence=0.9,
+                )
+                for index in range(8)
+            )
+            for query in queries
+        }
+        route_provider = FakeThemeRouteProvider(output=ThemeRouteOutput(status="no_transition"))
+
+        FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=FixtureSearchProvider(results_by_query=results_by_query),
+            query_planner=_FixedQueryPlanner(plan),
+        ).run(
+            FreeWebResearchInput(
+                company_name="테스트압축",
+                symbol="123450",
+                sector=None,
+                market=Market.KR,
+                as_of_date=as_of,
+                top_results=3,
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                theme_evidence_review_enabled=False,
+                theme_route_search_result_limit=5,
+                require_valid_theme_route_for_scoring=False,
+                require_resolved_score_gaps_for_scoring=False,
+            )
+        )
+
+        self.assertEqual(len(route_provider.calls), 1)
+        llm_results = route_provider.calls[0].search_results
+        self.assertEqual(len(llm_results), 5)
+        self.assertEqual({item.query for item in llm_results}, {query.query for query in queries})
+
+    def test_score_gap_expansion_stops_at_round_limit_with_warning_after_search(self):
+        as_of = date(2026, 6, 8)
+        query = QuerySpec(
+            group="test",
+            query="테스트라운드 최초",
+            priority=1,
+            company_name="테스트라운드",
+            symbol="123451",
+            sector=None,
+            market=Market.KR,
+            as_of_date=as_of,
+        )
+        plan = QueryPlan(
+            company_name="테스트라운드",
+            symbol="123451",
+            sector=None,
+            market=Market.KR,
+            as_of_date=as_of,
+            queries=(query,),
+        )
+        gap_query = "테스트라운드 EPS FCF 컨센서스 상향 리포트"
+        route_provider = FakeThemeRouteProvider(
+            outputs=[
+                ThemeRouteOutput(status="no_transition"),
+                ThemeRouteOutput(status="needs_more_evidence", suggested_queries=(gap_query,)),
+            ]
+        )
+        phase_events: list[dict] = []
+
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=FixtureSearchProvider(results_by_query={gap_query: ()}),
+            query_planner=_FixedQueryPlanner(plan),
+        ).run(
+            FreeWebResearchInput(
+                company_name="테스트라운드",
+                symbol="123451",
+                sector=None,
+                market=Market.KR,
+                as_of_date=as_of,
+                top_results=3,
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                max_theme_expansion_rounds=0,
+                max_score_gap_expansion_rounds=1,
+                require_valid_theme_route_for_scoring=True,
+                require_resolved_score_gaps_for_scoring=True,
+                phase_event_sink=phase_events.append,
+            )
+        )
+
+        self.assertEqual(result.stage.stage, Stage.STAGE_0)
+        self.assertTrue(result.theme_route_diagnostics["score_valid"])
+        self.assertNotIn("score_blocked_reason", result.theme_route_diagnostics)
+        self.assertEqual(result.score.diagnostic_scores["score_valid"], 100.0)
+        self.assertEqual(result.score.diagnostic_scores["score_blocked_by_score_gap"], 0.0)
+        self.assertEqual(result.score.diagnostic_scores["score_gap_unresolved_warning"], 100.0)
+        self.assertEqual(result.theme_route_diagnostics["post_score_gap_warning_reason"], "score_gap_round_limit")
+        self.assertEqual(result.theme_route_diagnostics["post_score_gap_expansion_status"], "round_limit_reached")
+        self.assertEqual(result.theme_route_diagnostics["post_score_gap_expansion_count"], 1)
+        self.assertTrue(any(event["phase"] == "post_score_gap_stop_round_limit" for event in phase_events))
+
+    def test_provider_error_theme_route_blocks_score_and_stage(self):
+        route_provider = FakeThemeRouteProvider(
+            output=ThemeRouteOutput(
+                status="provider_error",
+                blocked_reason="codex cli returned no valid route json",
+            )
+        )
+
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=EmptySearchProvider(),
+        ).run(
+            FreeWebResearchInput(
+                company_name="테스트",
+                symbol="123456",
+                sector=None,
+                market=Market.KR,
+                as_of_date=date(2026, 6, 8),
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                theme_evidence_review_enabled=False,
+            )
+        )
+
+        self.assertEqual(result.stage.stage, Stage.STAGE_0)
+        self.assertEqual(result.score.total_score, 0.0)
+        self.assertFalse(result.theme_route_diagnostics["score_valid"])
+        self.assertEqual(result.theme_route_diagnostics["score_blocked_reason"], "theme_route_provider_error")
+        self.assertEqual(result.score.diagnostic_scores["score_valid"], 0.0)
+        self.assertEqual(result.score.diagnostic_scores["score_blocked_by_theme_route"], 100.0)
+        self.assertIn("raw_score_total_before_theme_route_block", result.score.diagnostic_scores)
+
+    def test_uncapped_llm_retry_stops_on_repeated_non_executable_queries(self):
+        route_provider = FakeThemeRouteProvider(
+            output=ThemeRouteOutput(
+                status="needs_more_evidence",
+                suggested_queries=("테스트 2027 미래 실적 리포트",),
+            )
+        )
+
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=EmptySearchProvider(),
+        ).run(
+            FreeWebResearchInput(
+                company_name="테스트",
+                symbol="123456",
+                sector=None,
+                market=Market.KR,
+                as_of_date=date(2026, 6, 8),
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                theme_evidence_review_enabled=False,
+            )
+        )
+
+        self.assertGreaterEqual(len(route_provider.calls), 2)
+        self.assertTrue(any(item.reason == "future_query_rejected" for item in result.skipped_queries))
+        self.assertEqual(result.expansion_queries_run, ())
+
+    def test_llm_retry_can_be_capped_explicitly_for_fixtures(self):
+        route_provider = FakeThemeRouteProvider(
+            output=ThemeRouteOutput(
+                status="needs_more_evidence",
+                suggested_queries=("테스트 2027 미래 실적 리포트",),
+            )
+        )
+
+        FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=EmptySearchProvider(),
+        ).run(
+            FreeWebResearchInput(
+                company_name="테스트",
+                symbol="123456",
+                sector=None,
+                market=Market.KR,
+                as_of_date=date(2026, 6, 8),
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                theme_evidence_review_enabled=False,
+                llm_query_retry_max=0,
+            )
+        )
+
+        self.assertEqual(len(route_provider.calls), 1)
+
     def test_browser_search_provider_parses_fixture_html(self):
         provider = BrowserSearchProvider(
             fixture_html_by_query={
@@ -190,6 +462,13 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertEqual(results, ())
         self.assertIn("missing_naver_credentials", provider.errors)
         self.assertEqual({request.params["display"] for request in provider.built_requests}, {3})
+
+    def test_naver_free_provider_default_display_uses_api_maximum(self):
+        provider = NaverFreeSearchProvider(client_id="", client_secret="", fixture_mode=False, live_enabled=True)
+
+        provider.search("테스트전자 컨센서스 리포트", date(2026, 6, 8))
+
+        self.assertEqual({request.params["display"] for request in provider.built_requests}, {100})
 
     def test_naver_response_normalizer_filters_future_results(self):
         payload = {
@@ -456,24 +735,29 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertGreater(result.score.diagnostic_scores["evidence_family_news"], 0.0)
         self.assertEqual(result.score.diagnostic_scores.get("snippet_only_green_block", 0.0), 0.0)
 
-    def test_theme_rebalance_enabled_without_provider_records_status(self):
-        result = FreeWebResearchRunner(
-            browser_provider=EmptySearchProvider(),
-            free_search_provider=EmptySearchProvider(),
-        ).run(
-            FreeWebResearchInput(
-                company_name="NAVER",
-                symbol="035420",
-                sector="platform",
-                market=Market.KR,
-                as_of_date=date(2026, 6, 8),
-                theme_rebalance_enabled=True,
+    def test_theme_rebalance_enabled_without_provider_uses_default_codex_provider(self):
+        with patch(
+            "e2r.llm.codex_theme_provider.CodexCLIThemeRouteProvider.route",
+            return_value=ThemeRouteOutput(status="no_transition"),
+        ) as route:
+            result = FreeWebResearchRunner(
+                browser_provider=EmptySearchProvider(),
+                free_search_provider=EmptySearchProvider(),
+            ).run(
+                FreeWebResearchInput(
+                    company_name="NAVER",
+                    symbol="035420",
+                    sector="platform",
+                    market=Market.KR,
+                    as_of_date=date(2026, 6, 8),
+                    theme_rebalance_enabled=True,
+                )
             )
-        )
 
         self.assertIsNotNone(result.theme_route)
-        self.assertEqual(result.theme_route.status, "disabled_no_provider")
-        self.assertEqual(result.theme_route_diagnostics["theme_rebalance_status"], "disabled_no_provider")
+        self.assertEqual(result.theme_route.status, "no_transition")
+        self.assertGreater(route.call_count, 0)
+        self.assertEqual(result.theme_route_diagnostics["theme_rebalance_status"], "completed")
         self.assertEqual(result.expansion_queries_run, ())
 
     def test_theme_route_provider_auto_enables_rebalance(self):
@@ -493,7 +777,9 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
             )
         )
 
-        self.assertEqual(len(route_provider.calls), 1)
+        self.assertGreaterEqual(len(route_provider.calls), 2)
+        self.assertFalse(route_provider.calls[0].score_gap_context)
+        self.assertTrue(any(call.score_gap_context for call in route_provider.calls[1:]))
         self.assertEqual(result.theme_route.status, "no_transition")
         self.assertEqual(result.theme_route_diagnostics["theme_rebalance_status"], "completed")
 
@@ -563,6 +849,67 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertEqual(result.score.diagnostic_scores["theme_rebalance_enabled"], 100.0)
         self.assertEqual(result.score.diagnostic_scores["llm_deep_research_completed"], 100.0)
 
+    def test_theme_route_reasks_llm_when_expansion_query_is_duplicate(self):
+        retry_url = "https://news.example.com/test-initial-theme-retry"
+        duplicate_query = "테스트초기 수주잔고"
+        retry_query = "테스트초기 클라우드 매출 성장률"
+        route_provider = FakeThemeRouteProvider(
+            outputs=[
+                ThemeRouteOutput(
+                    status="transition_detected",
+                    transition_detected=True,
+                    route_confidence=0.7,
+                    emerging_theme_id="AI_INFRA_PLATFORM_DATACENTER",
+                    suggested_queries=(duplicate_query,),
+                ),
+                ThemeRouteOutput(
+                    status="transition_detected",
+                    transition_detected=True,
+                    route_confidence=0.8,
+                    emerging_theme_id="AI_INFRA_PLATFORM_DATACENTER",
+                    suggested_queries=(retry_query,),
+                ),
+                ThemeRouteOutput(status="no_transition"),
+            ]
+        )
+        provider = FixtureSearchProvider(
+            results_by_query={
+                retry_query: (
+                    SearchResult(
+                        title="테스트초기 클라우드 매출 성장",
+                        url=retry_url,
+                        snippet="클라우드 매출 성장률 42%",
+                        source="fixture-news",
+                        query=retry_query,
+                        confidence=0.8,
+                    ),
+                ),
+            }
+        )
+
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=provider,
+        ).run(
+            FreeWebResearchInput(
+                company_name="테스트초기",
+                symbol="900001",
+                sector="platform",
+                market=Market.KR,
+                as_of_date=date(2026, 6, 8),
+                top_results=5,
+                fixture_text_by_url={retry_url: "테스트초기 클라우드 매출 성장률 42%와 AI 인프라 매출이 확인됐다."},
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                max_theme_expansion_rounds=1,
+            )
+        )
+
+        self.assertIn(retry_query, result.expansion_queries_run)
+        self.assertTrue(any(item.reason == "duplicate_theme_query" for item in result.skipped_queries))
+        self.assertTrue(any("duplicate_theme_query" in item for item in route_provider.calls[1].score_gap_context))
+        self.assertEqual(len(result.web_result.parsed_news), 1)
+
     def test_theme_route_continues_after_empty_expansion_round(self):
         route_provider = FakeThemeRouteProvider(
             outputs=[
@@ -624,7 +971,7 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
             )
         )
 
-        self.assertEqual(len(route_provider.calls), 2)
+        self.assertGreaterEqual(len(route_provider.calls), 2)
         self.assertEqual(result.expansion_queries_run, ("NAVER AI 매출 확인", "NAVER 클라우드 매출 성장률"))
         self.assertEqual(len(result.web_result.parsed_news), 1)
         self.assertTrue(result.web_result.parsed_news[0].parsed_fields["gpu_cloud_revenue_visible"])
@@ -796,6 +1143,87 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
             {item.evidence_id for item in result.web_result.evidence},
         )
 
+    def test_post_parse_gap_expansion_reasks_llm_when_query_is_duplicate(self):
+        initial_url = "https://news.example.com/test-post-parse-demand"
+        report_url = "https://finance.example.com/research/test-post-parse-retry"
+        duplicate_query = "테스트후속 수주잔고"
+        retry_query = "테스트후속 EPS OP FCF 추정치 상향 컨센서스 리포트"
+        route_provider = FakeThemeRouteProvider(
+            outputs=[
+                ThemeRouteOutput(status="no_transition"),
+                ThemeRouteOutput(
+                    status="needs_more_evidence",
+                    missing_information=("consensus_report_bridge",),
+                    suggested_queries=(duplicate_query,),
+                ),
+                ThemeRouteOutput(
+                    status="needs_more_evidence",
+                    missing_information=("consensus_report_bridge",),
+                    suggested_queries=(retry_query,),
+                ),
+                ThemeRouteOutput(status="no_transition"),
+            ]
+        )
+        provider = FixtureSearchProvider(
+            results_by_query={
+                duplicate_query: (
+                    SearchResult(
+                        title="테스트후속 데이터센터 수요",
+                        url=initial_url,
+                        snippet="AI 데이터센터 수요가 확대된다.",
+                        source="fixture-news",
+                        published_at=datetime(2026, 6, 8, 8),
+                        query=duplicate_query,
+                        is_news=True,
+                        confidence=0.8,
+                    ),
+                ),
+                retry_query: (
+                    SearchResult(
+                        title="테스트후속 추정치 상향 리포트",
+                        url=report_url,
+                        snippet="EPS 상향 30%, 영업이익 추정치 상향 32%, FCF 상향 24%",
+                        source="fixture-research",
+                        published_at=datetime(2026, 6, 8, 9),
+                        query=retry_query,
+                        is_report_domain=True,
+                        confidence=0.9,
+                    ),
+                ),
+            }
+        )
+
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=provider,
+        ).run(
+            FreeWebResearchInput(
+                company_name="테스트후속",
+                symbol="900002",
+                sector="semiconductor",
+                market=Market.KR,
+                as_of_date=date(2026, 6, 8),
+                top_results=5,
+                fixture_text_by_url={
+                    initial_url: "테스트후속은 AI 데이터센터 수요 확대를 보도했다.",
+                    report_url: (
+                        "테스트후속 리포트. EPS 상향 30%, 영업이익 추정치 상향 32%, "
+                        "FCF 상향 24%, 목표주가 상향 14%."
+                    ),
+                },
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                max_theme_expansion_rounds=0,
+                theme_evidence_review_enabled=True,
+            )
+        )
+
+        self.assertIn(retry_query, result.expansion_queries_run)
+        self.assertTrue(any(item.reason == "duplicate_post_parse_gap_query" for item in result.skipped_queries))
+        self.assertTrue(any("duplicate_post_parse_gap_query" in item for item in route_provider.calls[2].score_gap_context))
+        self.assertTrue(result.feature_input.consensus_revisions)
+        self.assertGreaterEqual(result.score.diagnostic_scores["revision_score"], 80.0)
+
     def test_post_parse_gap_expansion_runs_contract_quality_query_from_missing_slot(self):
         initial_url = "https://news.example.com/test-memory-hbm"
         contract_url = "https://news.example.com/test-memory-hbm-contract-quality"
@@ -889,7 +1317,6 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
 
     def test_post_parse_gap_expansion_does_not_synthesize_query_without_llm_suggestion(self):
         initial_url = "https://news.example.com/test-memory-hbm-no-suggestion"
-        would_be_template_url = "https://news.example.com/test-memory-hardcoded-template"
         route_provider = FakeThemeRouteProvider(
             outputs=[
                 ThemeRouteOutput(
@@ -932,18 +1359,6 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
                         confidence=0.8,
                     ),
                 ),
-                "테스트메모리 장기공급계약 선수금 수주잔고 RPO": (
-                    SearchResult(
-                        title="이 결과는 deterministic 템플릿이 있었다면 잡혔을 결과",
-                        url=would_be_template_url,
-                        snippet="선수금과 수주잔고",
-                        source="fixture-news",
-                        published_at=datetime(2026, 6, 8, 9),
-                        query="테스트메모리 장기공급계약 선수금 수주잔고 RPO",
-                        is_news=True,
-                        confidence=0.9,
-                    ),
-                ),
             }
         )
 
@@ -960,7 +1375,6 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
                 top_results=5,
                 fixture_text_by_url={
                     initial_url: "테스트메모리는 HBM 수요와 GPU 고객 확대를 보도했다.",
-                    would_be_template_url: "템플릿 검색이 실행되면 안 된다.",
                 },
                 theme_rebalance_enabled=True,
                 theme_route_provider=route_provider,
@@ -971,7 +1385,601 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
 
         self.assertEqual(result.theme_route_diagnostics["post_parse_gap_expansion_count"], 0)
         self.assertNotIn("테스트메모리 장기공급계약 선수금 수주잔고 RPO", result.expansion_queries_run)
-        self.assertNotIn(would_be_template_url, {item.result.url for item in result.web_result.ranked_results})
+
+    def test_revision_gap_expansion_searches_estimate_change_from_llm_query(self):
+        initial_url = "https://news.example.com/test-electronics-ai-demand"
+        revision_url = "https://finance.example.com/research/test-electronics-revision"
+        route_provider = FakeThemeRouteProvider(
+            outputs=[
+                ThemeRouteOutput(
+                    status="transition_detected",
+                    transition_detected=True,
+                    route_confidence=0.74,
+                    emerging_theme_id="AI_INFRA_PLATFORM_DATACENTER",
+                    missing_information=("revision",),
+                ),
+                ThemeRouteOutput(
+                    status="transition_detected",
+                    transition_detected=True,
+                    route_confidence=0.84,
+                    emerging_theme_id="AI_INFRA_PLATFORM_DATACENTER",
+                    missing_information=("이전 추정치 대비 EPS OP FCF 컨센서스 상향률",),
+                    suggested_queries=("테스트전자 EPS OP FCF 추정치 상향 컨센서스 변화 리포트",),
+                    evidence_slots=(
+                        EvidenceSlotStatus(
+                            slot="revision",
+                            status="missing",
+                            missing_reason="이전 추정치와 현재 추정치 비교가 필요",
+                        ),
+                    ),
+                ),
+            ]
+        )
+        provider = FixtureSearchProvider(
+            results_by_query={
+                "테스트전자 데이터센터 수주": (
+                    SearchResult(
+                        title="테스트전자 AI 데이터센터 수요",
+                        url=initial_url,
+                        snippet="AI 수요가 확대된다.",
+                        source="fixture-news",
+                        published_at=datetime(2026, 6, 8, 8),
+                        query="테스트전자 데이터센터 수주",
+                        is_news=True,
+                        confidence=0.8,
+                    ),
+                ),
+                "테스트전자 EPS OP FCF 추정치 상향 컨센서스 변화 리포트": (
+                    SearchResult(
+                        title="테스트전자 종목분석 - 추정치 대폭 상향",
+                        url=revision_url,
+                        snippet="EPS 상향 35%, 영업이익 추정치 상향 40%, FCF 상향 25%",
+                        source="fixture-research",
+                        published_at=datetime(2026, 6, 8, 9),
+                        query="테스트전자 EPS OP FCF 추정치 상향 컨센서스 변화 리포트",
+                        is_report_domain=True,
+                        confidence=0.9,
+                    ),
+                ),
+            }
+        )
+
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=provider,
+        ).run(
+            FreeWebResearchInput(
+                company_name="테스트전자",
+                symbol="123456",
+                sector="semiconductor",
+                market=Market.KR,
+                as_of_date=date(2026, 6, 8),
+                top_results=5,
+                fixture_text_by_url={
+                    initial_url: "테스트전자는 AI 데이터센터 수요 확대를 보도했다.",
+                    revision_url: (
+                        "테스트전자 리포트. EPS 상향 35%, 영업이익 추정치 상향 40%, "
+                        "FCF 상향 25%, 목표주가 상향 20%. 원문 기반 추정치 비교."
+                    ),
+                },
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                max_theme_expansion_rounds=0,
+                theme_evidence_review_enabled=True,
+            )
+        )
+
+        self.assertIn("테스트전자 EPS OP FCF 추정치 상향 컨센서스 변화 리포트", result.expansion_queries_run)
+        self.assertGreaterEqual(result.theme_route_diagnostics["post_parse_gap_expansion_count"], 1)
+        self.assertTrue(result.feature_input.consensus_revisions)
+        self.assertGreaterEqual(result.score.diagnostic_scores["revision_score"], 80.0)
+
+    def test_score_gap_expansion_searches_low_revision_after_initial_score(self):
+        initial_url = "https://news.example.com/test-score-gap-demand"
+        revision_url = "https://finance.example.com/research/test-score-gap-revision"
+        route_provider = FakeThemeRouteProvider(
+            outputs=[
+                ThemeRouteOutput(status="no_transition"),
+                ThemeRouteOutput(status="no_transition"),
+                ThemeRouteOutput(
+                    status="needs_more_evidence",
+                    missing_information=("revision estimate consensus target price EPS OP FCF",),
+                    suggested_queries=("테스트스코어 EPS OP FCF 추정치 상향 컨센서스 변화 리포트",),
+                ),
+                ThemeRouteOutput(status="no_transition"),
+            ]
+        )
+        provider = FixtureSearchProvider(
+            results_by_query={
+                "테스트스코어 데이터센터 수주": (
+                    SearchResult(
+                        title="테스트스코어 데이터센터 수요",
+                        url=initial_url,
+                        snippet="데이터센터 수요가 확대된다.",
+                        source="fixture-news",
+                        published_at=datetime(2026, 6, 8, 8),
+                        query="테스트스코어 데이터센터 수주",
+                        is_news=True,
+                        confidence=0.8,
+                    ),
+                ),
+                "테스트스코어 EPS OP FCF 추정치 상향 컨센서스 변화 리포트": (
+                    SearchResult(
+                        title="테스트스코어 추정치 상향 리포트",
+                        url=revision_url,
+                        snippet="EPS 상향 33%, 영업이익 추정치 상향 36%, FCF 상향 28%",
+                        source="fixture-research",
+                        published_at=datetime(2026, 6, 8, 9),
+                        query="테스트스코어 EPS OP FCF 추정치 상향 컨센서스 변화 리포트",
+                        is_report_domain=True,
+                        confidence=0.9,
+                    ),
+                ),
+            }
+        )
+
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=provider,
+        ).run(
+            FreeWebResearchInput(
+                company_name="테스트스코어",
+                symbol="777777",
+                sector="semiconductor",
+                market=Market.KR,
+                as_of_date=date(2026, 6, 8),
+                top_results=5,
+                fixture_text_by_url={
+                    initial_url: "테스트스코어는 데이터센터 수요 확대를 보도했다.",
+                    revision_url: (
+                        "테스트스코어 리포트. EPS 상향 33%, 영업이익 추정치 상향 36%, "
+                        "FCF 상향 28%, 목표주가 상향 18%."
+                    ),
+                },
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                max_theme_expansion_rounds=0,
+                theme_evidence_review_enabled=True,
+            )
+        )
+
+        self.assertEqual(result.theme_route_diagnostics["post_parse_gap_expansion_count"], 0)
+        self.assertGreaterEqual(result.theme_route_diagnostics["post_score_gap_expansion_count"], 1)
+        self.assertIn("테스트스코어 EPS OP FCF 추정치 상향 컨센서스 변화 리포트", result.expansion_queries_run)
+        self.assertTrue(any("revision" in item for item in route_provider.calls[2].score_gap_context))
+        self.assertTrue(result.feature_input.consensus_revisions)
+        self.assertGreaterEqual(result.score.diagnostic_scores["revision_score"], 80.0)
+
+    def test_score_gap_expansion_reasks_llm_when_query_is_empty(self):
+        initial_url = "https://news.example.com/test-retry-demand"
+        revision_url = "https://finance.example.com/research/test-retry-revision"
+        query = "테스트재요청 EPS OP FCF 추정치 상향 컨센서스 변화 리포트"
+        route_provider = FakeThemeRouteProvider(
+            outputs=[
+                ThemeRouteOutput(status="no_transition"),
+                ThemeRouteOutput(status="no_transition"),
+                ThemeRouteOutput(
+                    status="needs_more_evidence",
+                    missing_information=("revision estimate consensus target price EPS OP FCF",),
+                    suggested_queries=(),
+                ),
+                ThemeRouteOutput(
+                    status="needs_more_evidence",
+                    missing_information=("revision estimate consensus target price EPS OP FCF",),
+                    suggested_queries=(query,),
+                ),
+                ThemeRouteOutput(status="no_transition"),
+            ]
+        )
+        provider = FixtureSearchProvider(
+            results_by_query={
+                "테스트재요청 데이터센터 수주": (
+                    SearchResult(
+                        title="테스트재요청 데이터센터 수요",
+                        url=initial_url,
+                        snippet="데이터센터 수요가 확대된다.",
+                        source="fixture-news",
+                        published_at=datetime(2026, 6, 8, 8),
+                        query="테스트재요청 데이터센터 수주",
+                        is_news=True,
+                        confidence=0.8,
+                    ),
+                ),
+                query: (
+                    SearchResult(
+                        title="테스트재요청 추정치 상향 리포트",
+                        url=revision_url,
+                        snippet="EPS 상향 31%, 영업이익 추정치 상향 34%, FCF 상향 29%",
+                        source="fixture-research",
+                        published_at=datetime(2026, 6, 8, 9),
+                        query=query,
+                        is_report_domain=True,
+                        confidence=0.9,
+                    ),
+                ),
+            }
+        )
+
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=provider,
+        ).run(
+            FreeWebResearchInput(
+                company_name="테스트재요청",
+                symbol="777778",
+                sector="semiconductor",
+                market=Market.KR,
+                as_of_date=date(2026, 6, 8),
+                top_results=5,
+                fixture_text_by_url={
+                    initial_url: "테스트재요청은 데이터센터 수요 확대를 보도했다.",
+                    revision_url: (
+                        "테스트재요청 리포트. EPS 상향 31%, 영업이익 추정치 상향 34%, "
+                        "FCF 상향 29%, 목표주가 상향 17%."
+                    ),
+                },
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                max_theme_expansion_rounds=0,
+            )
+        )
+
+        self.assertIn(query, result.expansion_queries_run)
+        self.assertTrue(
+            any(
+                "previous score-gap route returned no suggested_queries" in item
+                for item in route_provider.calls[3].score_gap_context
+            )
+        )
+        self.assertGreaterEqual(result.score.diagnostic_scores["revision_score"], 80.0)
+
+    def test_score_gap_expansion_reasks_llm_when_query_is_duplicate(self):
+        initial_url = "https://news.example.com/test-duplicate-demand"
+        revision_url = "https://finance.example.com/research/test-duplicate-revision"
+        duplicate_query = "테스트중복 데이터센터 수주"
+        retry_query = "테스트중복 EPS OP FCF 추정치 상향 컨센서스 변화 리포트"
+        route_provider = FakeThemeRouteProvider(
+            outputs=[
+                ThemeRouteOutput(status="no_transition"),
+                ThemeRouteOutput(status="no_transition"),
+                ThemeRouteOutput(
+                    status="needs_more_evidence",
+                    missing_information=("revision estimate consensus target price EPS OP FCF",),
+                    suggested_queries=(duplicate_query,),
+                ),
+                ThemeRouteOutput(
+                    status="needs_more_evidence",
+                    missing_information=("revision estimate consensus target price EPS OP FCF",),
+                    suggested_queries=(retry_query,),
+                ),
+                ThemeRouteOutput(status="no_transition"),
+            ]
+        )
+        provider = FixtureSearchProvider(
+            results_by_query={
+                duplicate_query: (
+                    SearchResult(
+                        title="테스트중복 데이터센터 수요",
+                        url=initial_url,
+                        snippet="데이터센터 수요가 확대된다.",
+                        source="fixture-news",
+                        published_at=datetime(2026, 6, 8, 8),
+                        query=duplicate_query,
+                        is_news=True,
+                        confidence=0.8,
+                    ),
+                ),
+                retry_query: (
+                    SearchResult(
+                        title="테스트중복 추정치 상향 리포트",
+                        url=revision_url,
+                        snippet="EPS 상향 32%, 영업이익 추정치 상향 37%, FCF 상향 26%",
+                        source="fixture-research",
+                        published_at=datetime(2026, 6, 8, 9),
+                        query=retry_query,
+                        is_report_domain=True,
+                        confidence=0.9,
+                    ),
+                ),
+            }
+        )
+
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=provider,
+        ).run(
+            FreeWebResearchInput(
+                company_name="테스트중복",
+                symbol="777779",
+                sector="semiconductor",
+                market=Market.KR,
+                as_of_date=date(2026, 6, 8),
+                top_results=5,
+                fixture_text_by_url={
+                    initial_url: "테스트중복은 데이터센터 수요 확대를 보도했다.",
+                    revision_url: (
+                        "테스트중복 리포트. EPS 상향 32%, 영업이익 추정치 상향 37%, "
+                        "FCF 상향 26%, 목표주가 상향 16%."
+                    ),
+                },
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                max_theme_expansion_rounds=0,
+            )
+        )
+
+        self.assertIn(retry_query, result.expansion_queries_run)
+        self.assertTrue(any(item.reason == "duplicate_score_gap_query" for item in result.skipped_queries))
+        self.assertTrue(
+            any("duplicate_score_gap_query" in item for item in route_provider.calls[3].score_gap_context)
+        )
+        self.assertGreaterEqual(result.score.diagnostic_scores["revision_score"], 80.0)
+
+    def test_material_score_gap_without_llm_queries_blocks_score_and_stage(self):
+        route_provider = FakeThemeRouteProvider(
+            outputs=[
+                ThemeRouteOutput(status="no_transition"),
+                ThemeRouteOutput(
+                    status="needs_more_evidence",
+                    missing_information=("selected revision source missing",),
+                    suggested_queries=(),
+                ),
+                ThemeRouteOutput(
+                    status="needs_more_evidence",
+                    missing_information=("selected revision source missing",),
+                    suggested_queries=(),
+                ),
+            ]
+        )
+
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=EmptySearchProvider(),
+        ).run(
+            FreeWebResearchInput(
+                company_name="테스트보류",
+                symbol="999998",
+                sector="software",
+                market=Market.KR,
+                as_of_date=date(2026, 6, 8),
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                max_theme_expansion_rounds=0,
+            )
+        )
+
+        self.assertEqual(result.stage.stage, Stage.STAGE_0)
+        self.assertEqual(result.score.total_score, 0.0)
+        self.assertEqual(result.score.diagnostic_scores["score_valid"], 0.0)
+        self.assertEqual(result.score.diagnostic_scores["score_blocked_by_score_gap"], 100.0)
+        self.assertEqual(result.theme_route_diagnostics["score_blocked_reason"], "score_gap_llm_no_suggested_queries")
+        self.assertEqual(result.theme_route_diagnostics["post_score_gap_expansion_status"], "llm_no_suggested_queries")
+        self.assertIn("raw_score_total_before_score_gap_block", result.score.diagnostic_scores)
+        self.assertTrue(result.theme_route_diagnostics["material_score_gap_unresolved_gaps"])
+
+    def test_score_gap_expansion_does_not_stop_just_because_total_score_is_high(self):
+        inputs = FreeWebResearchInput(
+            company_name="테스트고점수",
+            symbol="888888",
+            sector="software",
+            market=Market.KR,
+            as_of_date=date(2026, 6, 8),
+            theme_rebalance_enabled=True,
+            theme_route_provider=FakeThemeRouteProvider(outputs=(ThemeRouteOutput(status="no_transition"),)),
+            theme_evidence_review_enabled=True,
+        )
+        score = ScoreSnapshot(
+            symbol="888888",
+            as_of_date=date(2026, 6, 8),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=20.0,
+            bottleneck_pricing_score=20.0,
+            market_mispricing_score=15.0,
+            valuation_rerating_score=15.0,
+            capital_allocation_score=5.0,
+            information_confidence_score=5.0,
+            risk_penalty=0.0,
+            total_score=99.0,
+            diagnostic_scores={"revision_score": 0.0},
+        )
+
+        self.assertTrue(_post_score_gap_expansion_allowed(inputs, score))
+
+    def test_score_gap_expansion_is_not_disabled_by_query_budget_object(self):
+        inputs = FreeWebResearchInput(
+            company_name="테스트예산",
+            symbol="888887",
+            sector="software",
+            market=Market.KR,
+            as_of_date=date(2026, 6, 8),
+            budget=SearchBudget(max_total_queries_per_day=1, max_queries_per_symbol=1),
+            theme_rebalance_enabled=True,
+            theme_route_provider=FakeThemeRouteProvider(outputs=(ThemeRouteOutput(status="no_transition"),)),
+            theme_evidence_review_enabled=True,
+        )
+        score = ScoreSnapshot(
+            symbol="888887",
+            as_of_date=date(2026, 6, 8),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=20.0,
+            bottleneck_pricing_score=20.0,
+            market_mispricing_score=15.0,
+            valuation_rerating_score=15.0,
+            capital_allocation_score=5.0,
+            information_confidence_score=5.0,
+            risk_penalty=0.0,
+            total_score=99.0,
+            diagnostic_scores={"revision_score": 0.0},
+        )
+
+        self.assertTrue(_post_score_gap_expansion_allowed(inputs, score))
+
+    def test_score_gap_context_includes_fcf_valuation_and_evidence_family_gaps(self):
+        score = ScoreSnapshot(
+            symbol="888889",
+            as_of_date=date(2026, 6, 8),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=20.0,
+            bottleneck_pricing_score=20.0,
+            market_mispricing_score=15.0,
+            valuation_rerating_score=15.0,
+            capital_allocation_score=5.0,
+            information_confidence_score=5.0,
+            risk_penalty=0.0,
+            total_score=90.0,
+            diagnostic_scores={
+                "revision_score": 100.0,
+                "structural_visibility_quality": 100.0,
+                "contract_quality": 100.0,
+                "backlog_rpo_visibility": 100.0,
+                "capa_constraint": 100.0,
+                "asp_pricing_power": 100.0,
+                "actual_profit_conversion_score": 80.0,
+                "sector_visibility_score": 80.0,
+                "sector_bottleneck_score": 80.0,
+                "medium_term_revision_visibility": 80.0,
+                "fcf_quality_score": 20.0,
+                "valuation_score": 20.0,
+                "domain_specific_evidence_score": 20.0,
+                "evidence_family_price": 0.0,
+                "evidence_family_financial_actual": 0.0,
+                "evidence_family_disclosure": 0.0,
+                "evidence_family_research_report": 0.0,
+                "evidence_family_consensus": 0.0,
+                "evidence_family_consensus_proxy": 0.0,
+                "evidence_family_consensus_revision": 0.0,
+                "evidence_family_consensus_revision_proxy": 0.0,
+                "evidence_family_news": 0.0,
+                "evidence_family_search_snippet_news": 0.0,
+                "estimate_missing_revision_source": 100.0,
+                "estimate_missing_fcf_source": 100.0,
+            },
+        )
+
+        gaps = _score_gap_missing_information(score)
+
+        self.assertTrue(any("selected_revision_source_missing" in item for item in gaps))
+        self.assertTrue(any("selected_fcf_source_missing" in item for item in gaps))
+        self.assertTrue(any("FCF conversion" in item for item in gaps))
+        self.assertTrue(any("valuation PER PBR" in item for item in gaps))
+        self.assertTrue(any("domain-specific operating KPI" in item for item in gaps))
+        self.assertTrue(any("inventory receivables" in item for item in gaps))
+        self.assertTrue(any("consensus revision EPS OP FCF" in item for item in gaps))
+
+    def test_independent_evidence_family_gap_is_material_when_llm_cannot_expand(self):
+        inputs = FreeWebResearchInput(
+            company_name="테스트증거부족",
+            symbol="888887",
+            sector="software",
+            market=Market.KR,
+            as_of_date=date(2026, 6, 8),
+            theme_rebalance_enabled=True,
+            theme_route_provider=FakeThemeRouteProvider(outputs=(ThemeRouteOutput(status="no_transition"),)),
+        )
+        gap = "missing independent evidence families for stage gate: research_report, consensus_revision; expand source-backed evidence for these families"
+        expansion = _ScoreGapExpansionResult(
+            status="llm_no_suggested_queries",
+            unresolved_gaps=(gap,),
+            rejection_reasons=("llm_returned_no_suggested_queries",),
+        )
+
+        self.assertEqual(_material_score_gaps((gap,)), (gap,))
+        self.assertEqual(
+            _score_gap_score_block_reason(inputs=inputs, expansion=expansion),
+            "score_gap_llm_no_suggested_queries",
+        )
+
+        round_limit = _ScoreGapExpansionResult(
+            status="round_limit_reached",
+            unresolved_gaps=(gap,),
+            rejection_reasons=("max_score_gap_expansion_rounds_reached",),
+        )
+        self.assertEqual(
+            _score_gap_score_block_reason(inputs=inputs, expansion=round_limit, queries_run_count=0),
+            "score_gap_round_limit",
+        )
+        self.assertIsNone(
+            _score_gap_score_block_reason(inputs=inputs, expansion=round_limit, queries_run_count=1),
+        )
+
+        provider_error = _ScoreGapExpansionResult(
+            status="provider_error",
+            unresolved_gaps=(gap,),
+            blocked_reason="codex_cli_timeout",
+        )
+        self.assertIsNone(
+            _score_gap_score_block_reason(inputs=inputs, expansion=provider_error, queries_run_count=0),
+        )
+
+    def test_stage_gate_failures_are_returned_as_llm_gap_context(self):
+        score = ScoreSnapshot(
+            symbol="888886",
+            as_of_date=date(2026, 6, 8),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=20.0,
+            bottleneck_pricing_score=20.0,
+            market_mispricing_score=15.0,
+            valuation_rerating_score=15.0,
+            capital_allocation_score=5.0,
+            information_confidence_score=5.0,
+            risk_penalty=0.0,
+            total_score=95.0,
+            diagnostic_scores={
+                "score_valid": 100.0,
+                "revision_score": 0.0,
+                "structural_visibility_quality": 100.0,
+                "contract_quality": 100.0,
+                "report_date_confidence": 100.0,
+            },
+        )
+
+        gaps = _stage_gate_missing_information(score, RedTeamAssessment.empty("888886", date(2026, 6, 8)))
+
+        self.assertTrue(any("failed_stage3_revision" in item for item in gaps))
+        self.assertTrue(any("consensus revision" in item for item in gaps))
+        self.assertTrue(any("missing independent evidence families" in item for item in gaps))
+
+    def test_price_only_and_emerging_theme_guards_are_returned_as_llm_gap_context(self):
+        score = ScoreSnapshot(
+            symbol="888885",
+            as_of_date=date(2026, 6, 8),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=20.0,
+            bottleneck_pricing_score=20.0,
+            market_mispricing_score=15.0,
+            valuation_rerating_score=15.0,
+            capital_allocation_score=5.0,
+            information_confidence_score=5.0,
+            risk_penalty=0.0,
+            total_score=95.0,
+            diagnostic_scores={
+                "score_valid": 100.0,
+                "revision_score": 90.0,
+                "structural_visibility_quality": 90.0,
+                "contract_quality": 90.0,
+                "price_only_blowoff_score": 80.0,
+                "snippet_only_green_block": 100.0,
+                "emerging_theme_active": 100.0,
+                "llm_deep_research_completed": 0.0,
+                "green_unlock_evidence_score": 0.0,
+                "date_unverified_snippet_news_count_capped": 1.0,
+            },
+        )
+
+        gaps = tuple(
+            dict.fromkeys(
+                (
+                    *_score_gap_missing_information(score),
+                    *_stage_gate_missing_information(score, RedTeamAssessment.empty("888885", date(2026, 6, 8))),
+                )
+            )
+        )
+
+        self.assertTrue(any("price-only blowoff" in item for item in gaps))
+        self.assertTrue(any("failed_positive_stage_price_only_blowoff" in item for item in gaps))
+        self.assertTrue(any("snippet-only" in item for item in gaps))
+        self.assertTrue(any("emerging-theme deep research" in item for item in gaps))
+        self.assertTrue(any("Green unlock" in item for item in gaps))
 
     def test_theme_route_canonical_is_applied_to_scoring_without_keyword_hardcode(self):
         url = "https://news.example.com/company-route-noise"
@@ -1163,6 +2171,10 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertIsNone(result.theme_route_diagnostics["canonical_archetype_id"])
         self.assertEqual(result.theme_route_diagnostics["theme_evidence_gate_status"], "no_evidence_slots")
         self.assertEqual(result.score.diagnostic_scores["theme_route_applied_to_scoring"], 0.0)
+        self.assertEqual(result.stage.stage, Stage.STAGE_0)
+        self.assertFalse(result.theme_route_diagnostics["score_valid"])
+        self.assertEqual(result.theme_route_diagnostics["score_blocked_reason"], "theme_route_needs_more_evidence")
+        self.assertEqual(result.score.diagnostic_scores["score_blocked_by_theme_route"], 100.0)
 
     def test_source_backed_theme_route_normalized_fields_enter_feature_input(self):
         url = "https://news.example.com/naver-ai-cloud-source-backed"
@@ -1291,6 +2303,10 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertIsNone(result.theme_route_diagnostics["canonical_archetype_id"])
         self.assertEqual(result.theme_route_diagnostics["theme_evidence_gate_status"], "no_matching_evidence_refs")
         self.assertEqual(result.score.diagnostic_scores["theme_route_applied_to_scoring"], 0.0)
+        self.assertEqual(result.stage.stage, Stage.STAGE_0)
+        self.assertFalse(result.theme_route_diagnostics["score_valid"])
+        self.assertEqual(result.theme_route_diagnostics["score_blocked_reason"], "theme_route_needs_more_evidence")
+        self.assertEqual(result.score.diagnostic_scores["score_blocked_by_theme_route"], 100.0)
 
 
 def _run_free(

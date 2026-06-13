@@ -208,6 +208,32 @@ HBM 수요 증가와 메모리 가격 상승이 확인되고, 전 분기 재고 
         self.assertNotIn("fy1_op", fields)
         self.assertNotIn("forward_op_estimate", fields)
 
+    def test_invalid_negative_target_price_is_dropped_instead_of_crashing(self):
+        result = parse_research_report_text(
+            symbol="999999",
+            market=Market.KR,
+            text="목표주가 -3% 변동이라는 잘못된 스니펫이 섞였지만 HBM 수요 증가가 언급된다.",
+            metadata={"publish_date": date(2026, 6, 8), "as_of_date": date(2026, 6, 8)},
+        )
+
+        self.assertIsNone(result.report.target_price)
+        self.assertIn("target_price", result.parsed_fields["invalid_non_negative_fields"])
+
+    def test_invalid_negative_target_price_metadata_is_dropped(self):
+        result = parse_research_report_text(
+            symbol="999998",
+            market=Market.KR,
+            text="목표주가 수치는 본문에 없다.",
+            metadata={
+                "publish_date": date(2026, 6, 8),
+                "as_of_date": date(2026, 6, 8),
+                "target_price": -1000,
+            },
+        )
+
+        self.assertIsNone(result.report.target_price)
+        self.assertIn("target_price", result.parsed_fields["invalid_non_negative_fields"])
+
 
 if __name__ == "__main__":
     unittest.main()

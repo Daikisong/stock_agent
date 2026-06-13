@@ -11,7 +11,14 @@ from typing import Mapping, Sequence
 from e2r.audit import AuditFinding, audit_parser_outputs
 from e2r.cheap_scan import KoreaCheapScanConfig, KoreaCheapScanResult, KoreaCheapScanSources, KoreaCheapScanner
 from e2r.cheap_scan.models import CheapScanCandidate, RecommendedNextLayer
-from e2r.llm import LLMAnalystInput, LLMAnalystOutput, LLMProvider, LLMResearchAnalyst, build_theme_route_provider_from_env
+from e2r.llm import (
+    LLMAnalystInput,
+    LLMAnalystOutput,
+    LLMProvider,
+    LLMResearchAnalyst,
+    build_default_codex_theme_route_provider,
+    build_theme_route_provider_from_env,
+)
 from e2r.llm.theme_provider import ThemeRouteProvider
 from e2r.models import Evidence, Market, RedTeamFinding, ScoreSnapshot, StageSnapshot
 from e2r.research.free_web_research_runner import FreeWebResearchInput, FreeWebResearchRunner, WebResearchPipelineResult
@@ -32,13 +39,13 @@ class E2RStandardConfig:
     market: Market = Market.KR
     sources: KoreaCheapScanSources | None = None
     universe_limit: int | None = None
-    top_candidates: int = 50
+    top_candidates: int | None = None
     output_directory: str | Path = "output/e2r_standard"
     fixture_mode: bool = True
     cheap_scan_lookback_days: int = 370
     disclosure_lookback_days: int = 3
     report_radar_enabled: bool = True
-    report_radar_universe_limit: int = 20
+    report_radar_universe_limit: int | None = None
     search_budget: SearchBudget = field(default_factory=SearchBudget)
     browser_provider: SearchProvider | None = None
     free_search_provider: SearchProvider | None = None
@@ -50,8 +57,8 @@ class E2RStandardConfig:
     llm_provider: LLMProvider | None = None
     theme_rebalance_enabled: bool | None = None
     theme_route_provider: ThemeRouteProvider | None = None
-    max_theme_expansion_rounds: int = 3
-    theme_evidence_review_enabled: bool = False
+    max_theme_expansion_rounds: int | None = None
+    theme_evidence_review_enabled: bool = True
 
     def __post_init__(self) -> None:
         if type(self.as_of_date) is not date:
@@ -62,7 +69,9 @@ class E2RStandardConfig:
             raise ValueError("page_fetch_timeout_seconds must be positive")
         if self.theme_rebalance_enabled is None:
             object.__setattr__(self, "theme_rebalance_enabled", _default_theme_rebalance_enabled(self))
-        if self.max_theme_expansion_rounds < 0:
+        if self.report_radar_universe_limit is not None and self.report_radar_universe_limit <= 0:
+            raise ValueError("report_radar_universe_limit must be positive")
+        if self.max_theme_expansion_rounds is not None and self.max_theme_expansion_rounds < 0:
             raise ValueError("max_theme_expansion_rounds must be non-negative")
 
 
@@ -171,10 +180,7 @@ class E2RStandardFlow:
         if theme_route_provider is None and config.theme_rebalance_enabled:
             theme_route_provider = build_theme_route_provider_from_env(working_directory=Path.cwd())
         if theme_route_provider is None and _should_default_to_codex_theme_provider(config):
-            theme_route_provider = build_theme_route_provider_from_env(
-                {"E2R_THEME_ROUTE_PROVIDER": "codex"},
-                working_directory=Path.cwd(),
-            )
+            theme_route_provider = build_default_codex_theme_route_provider(working_directory=Path.cwd())
         results: list[WebResearchPipelineResult] = []
         for candidate in candidates:
             if candidate.recommended_next_layer not in {RecommendedNextLayer.EVENT_SEARCH, RecommendedNextLayer.DEEP_RESEARCH}:

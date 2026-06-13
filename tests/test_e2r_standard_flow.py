@@ -66,6 +66,8 @@ class E2RStandardFlowTests(unittest.TestCase):
             config = E2RStandardConfig(as_of_date=AS_OF)
 
         self.assertFalse(config.theme_rebalance_enabled)
+        self.assertTrue(config.theme_evidence_review_enabled)
+        self.assertIsNone(config.top_candidates)
 
     def test_live_standard_flow_defaults_theme_rebalance_on_and_uses_codex_provider(self):
         with patch.dict("os.environ", {}, clear=True), patch(

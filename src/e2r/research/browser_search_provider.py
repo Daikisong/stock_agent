@@ -58,7 +58,7 @@ class BrowserSearchProvider:
     errors: list[str] = field(default_factory=list)
     blocked: bool = False
 
-    def search(self, query: str, as_of_date: date, max_results: int = 10) -> tuple[SearchResult, ...]:
+    def search(self, query: str, as_of_date: date, max_results: int = 100) -> tuple[SearchResult, ...]:
         html_text = self._fixture_html(query)
         if html_text is not None:
             return self.parse_search_results(html_text, query, as_of_date)[:max_results]

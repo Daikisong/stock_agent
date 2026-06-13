@@ -382,6 +382,17 @@ class FeatureEngineeringTests(unittest.TestCase):
         self.assertGreater(with_equity.score().valuation_rerating_score, without_equity.score().valuation_rerating_score)
         self.assertEqual(with_equity.payload.diagnostic_scores["evidence_family_financial_actual"], 1.0)
 
+    def test_feature_engineering_exposes_fcf_and_valuation_diagnostics_for_gap_expansion(self):
+        result = DeterministicFeatureEngineer().engineer(base_input({}))
+        score = result.score()
+
+        self.assertIn("fcf_quality_score", score.diagnostic_scores)
+        self.assertIn("valuation_score", score.diagnostic_scores)
+        self.assertGreater(score.diagnostic_scores["fcf_quality_score"], 0.0)
+        self.assertGreater(score.diagnostic_scores["valuation_score"], 0.0)
+        self.assertEqual(result.source_fields["fcf_quality_score"], score.diagnostic_scores["fcf_quality_score"])
+        self.assertEqual(result.source_fields["valuation_score"], score.diagnostic_scores["valuation_score"])
+
     def test_quarterly_actual_growth_does_not_compare_against_annual_actual(self):
         actuals = (
             FinancialActual(

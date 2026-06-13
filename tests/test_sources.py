@@ -1,6 +1,8 @@
 from datetime import date
+import io
 from pathlib import Path
 import unittest
+import zipfile
 
 from e2r.models import Market, SourceTier
 from e2r.sources import (
@@ -47,6 +49,37 @@ class SourceConnectorTests(unittest.TestCase):
         self.assertTrue(fields["backlog_mentioned"])
         self.assertNotIn("is_cancellable", fields)
         self.assertEqual(evidence.source_tier, SourceTier.TIER_0)
+
+    def test_opendart_parses_corp_code_zip_by_stock_code(self):
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w") as archive:
+            archive.writestr(
+                "CORPCODE.xml",
+                "\n".join(
+                    (
+                        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+                        "<result>",
+                        "  <list>",
+                        "    <corp_code>00126380</corp_code>",
+                        "    <corp_name>삼성전자</corp_name>",
+                        "    <stock_code>005930</stock_code>",
+                        "    <modify_date>20240501</modify_date>",
+                        "  </list>",
+                        "  <list>",
+                        "    <corp_code>00164779</corp_code>",
+                        "    <corp_name>SK하이닉스</corp_name>",
+                        "    <stock_code>000660</stock_code>",
+                        "    <modify_date>20240501</modify_date>",
+                        "  </list>",
+                        "</result>",
+                    )
+                ).encode("utf-8"),
+            )
+
+        mapping = OpenDARTConnector.company_codes_by_stock_code(buffer.getvalue())
+
+        self.assertEqual(mapping["005930"], "00126380")
+        self.assertEqual(mapping["000660"], "00164779")
 
     def test_live_connectors_report_missing_credentials_clearly(self):
         with self.assertRaises(MissingCredentialError):

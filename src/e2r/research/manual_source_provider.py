@@ -36,7 +36,7 @@ class ManualSourceProvider:
 
     sources: Sequence[ManualSource] = field(default_factory=tuple)
 
-    def search(self, query: str, as_of_date: date, max_results: int = 10) -> tuple[SearchResult, ...]:
+    def search(self, query: str, as_of_date: date, max_results: int = 100) -> tuple[SearchResult, ...]:
         results: list[SearchResult] = []
         for index, source in enumerate(self.sources, start=1):
             if source.queries and query not in source.queries:

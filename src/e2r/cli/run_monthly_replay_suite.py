@@ -22,7 +22,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--skip-hybrid", action="store_true")
     parser.add_argument("--frequency", choices=[item.value for item in ReplayFrequency], default=ReplayFrequency.MONTHLY.value)
     parser.add_argument("--universe-limit", type=int)
-    parser.add_argument("--max-candidates-per-date", type=int, default=50)
+    parser.add_argument("--max-candidates-per-date", type=int)
     parser.add_argument("--case-root", default="data/historical_cases")
     parser.add_argument("--strict", action="store_true")
     parser.add_argument("--write-json", action=argparse.BooleanOptionalAction, default=True)

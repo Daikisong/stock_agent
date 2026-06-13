@@ -24,6 +24,12 @@ from e2r.backtest.stage_lifecycle_backtest import (
     write_stage_lifecycle_outputs,
 )
 from e2r.models import Market, Stage
+from e2r.score_validity import (
+    normalized_score_state_mapping_if_present,
+    normalized_score_state_payload,
+    serialized_score_block_reason,
+    serialized_score_valid,
+)
 
 
 DEFAULT_MONTHLY_SUITE_OUTPUT_DIR = Path("output/backtests/monthly_replay_suite")
@@ -44,7 +50,7 @@ class MonthlyReplaySuiteConfig:
     frequency: ReplayFrequency | str = ReplayFrequency.MONTHLY
     market: Market | str = Market.KR
     universe_limit: int | None = None
-    max_candidates_per_date: int = 50
+    max_candidates_per_date: int | None = None
     strict: bool = False
     write_json: bool = True
     write_md: bool = True
@@ -377,6 +383,7 @@ def render_top_stage3_candidate_cards(result: MonthlyReplaySuiteResult) -> str:
                 f"- pre_runup_3y: {_fmt(lifecycle.pre_runup_3y if lifecycle else None)}",
                 f"- evidence summary: {', '.join(candidate.evidence_types_seen) or 'none'}",
                 f"- reason codes: {', '.join(candidate.reason_codes) or 'none'}",
+                f"- score_state: {_candidate_score_state(candidate)}",
                 "",
                 "| score component | value |",
                 "| --- | ---: |",
@@ -392,7 +399,7 @@ def render_top_stage3_candidate_cards(result: MonthlyReplaySuiteResult) -> str:
             "valuation_rerating",
             "risk_penalty",
         ):
-            value = candidate.score_components.get(key, candidate.diagnostic_scores.get(key))
+            value = None if candidate.total_score is None else candidate.score_components.get(key, candidate.diagnostic_scores.get(key))
             lines.append(f"| {key} | {_fmt(value)} |")
         lines.extend(
             [
@@ -411,6 +418,18 @@ def render_top_stage3_candidate_cards(result: MonthlyReplaySuiteResult) -> str:
             ]
         )
     return "\n".join(lines).rstrip() + "\n"
+
+
+def _candidate_score_state(candidate: HistoricalReplayCandidate) -> str:
+    valid = serialized_score_valid(candidate)
+    if valid is None:
+        valid = "unknown"
+    reason = serialized_score_block_reason(candidate) or "none"
+    fingerprint = candidate.score_fingerprint or "none"
+    input_fingerprint = candidate.research_input_fingerprint or "none"
+    drivers = "|".join(candidate.score_variability_drivers) if candidate.score_variability_drivers else "none"
+    total = _fmt(candidate.total_score)
+    return f"total={total}; valid={valid}; reason={reason}; fingerprint={fingerprint}; input_fingerprint={input_fingerprint}; drivers={drivers}"
 
 
 def _write_suite_reports(
@@ -816,7 +835,7 @@ def _top_stage3_candidates(mode_results: Mapping[str, HistoricalUniverseReplayRe
         for candidate in _all_candidates(result)
         if candidate.stage in {Stage.STAGE_3_GREEN, Stage.STAGE_3_YELLOW, Stage.STAGE_3_RED}
     ]
-    return tuple(sorted(rows, key=lambda item: (-item[1].total_score, item[0], item[1].case_id)))
+    return tuple(sorted(rows, key=lambda item: (-_score_sort_value(item[1].total_score), item[0], item[1].case_id)))
 
 
 def _all_candidates(result: HistoricalUniverseReplayResult) -> tuple[HistoricalReplayCandidate, ...]:
@@ -827,7 +846,11 @@ def _best_candidate_for_case(result: HistoricalUniverseReplayResult, case_id: st
     candidates = [candidate for candidate in _all_candidates(result) if candidate.case_id == case_id]
     if not candidates:
         return None
-    return sorted(candidates, key=lambda item: (_stage_rank(item.stage), item.layer1_score, item.total_score), reverse=True)[0]
+    return sorted(candidates, key=lambda item: (_stage_rank(item.stage), item.layer1_score, _score_sort_value(item.total_score)), reverse=True)[0]
+
+
+def _score_sort_value(score: float | None) -> float:
+    return float(score) if score is not None else -1.0
 
 
 def _missing_report_news_count(result: HistoricalUniverseReplayResult) -> int:
@@ -1047,9 +1070,12 @@ def _jsonable(value: Any) -> Any:
     if isinstance(value, Path):
         return str(value)
     if is_dataclass(value):
-        return {field.name: _jsonable(getattr(value, field.name)) for field in fields(value)}
+        payload = {field.name: _jsonable(getattr(value, field.name)) for field in fields(value)}
+        if "total_score" in payload and "score_valid" in payload:
+            payload = normalized_score_state_payload(payload)
+        return payload
     if isinstance(value, Mapping):
-        return {str(key): _jsonable(item) for key, item in value.items()}
+        return normalized_score_state_mapping_if_present({str(key): _jsonable(item) for key, item in value.items()})
     if isinstance(value, (list, tuple, set, frozenset)):
         return [_jsonable(item) for item in value]
     return value
