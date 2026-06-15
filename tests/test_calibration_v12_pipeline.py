@@ -146,6 +146,23 @@ class V12CalibrationPipelineTests(unittest.TestCase):
             self.assertEqual({doc.path.parent for doc in docs}, {root})
             self.assertIn(suffix_path, {doc.path for doc in docs})
 
+    def test_v12_file_discovery_can_include_achieve_archive_for_cumulative_run(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._write_fixture(root)
+            archive = root / "achieve" / "achieve_v12"
+            archive.mkdir(parents=True)
+            archived_path = (
+                archive
+                / "e2r_stock_web_v12_residual_round_R6_loop_43_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_research.md"
+            )
+            archived_path.write_text(_v12_md(), encoding="utf-8")
+
+            docs = v12_result_documents(discover_markdown_documents(root, include_archive=True))
+
+            self.assertEqual(len(docs), 2)
+            self.assertIn(archived_path, {doc.path for doc in docs})
+
     def test_v12_no_repeat_standalone_discovery_parse_and_normalize(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             path = (

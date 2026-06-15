@@ -68,8 +68,21 @@ v12 연구 배치가 들어오면 이 명령을 실행한다.
 ```bash
 PYTHONPATH=src python -m e2r.calibration.cli run-v12-calibration \
   --md-input-root docs/round \
+  --include-archive \
   --data-directory data/e2r/calibration/v12 \
   --report-directory reports/e2r_calibration/v12
+```
+
+`--include-archive`는 누적 재계산에 필수다.
+`docs/round/achieve`로 옮겨진 과거 연구자료도 누적 corpus에 포함해야 지금까지 쌓아 온 대표 row와 점수비중 support가 유지된다.
+새 root 연구자료만 임시 진단할 때만 이 옵션을 빼고 실행한다.
+
+쉬운 예:
+
+```text
+docs/round/root 새 연구 157개 + docs/round/achieve 과거 연구 2002개가 있다.
+--include-archive 없이 돌리면 157개만 계산한다.
+--include-archive로 돌리면 2159개 전체 MD를 발견하고, 표준 v12 result만 ingest한다.
 ```
 
 ## 실행 전 Preflight Gate

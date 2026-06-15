@@ -22,8 +22,20 @@ rollback_profile: calibrated
 ```bash
 PYTHONPATH=src python -m e2r.calibration.cli run-v12-calibration \
   --md-input-root docs/round \
+  --include-archive \
   --data-directory data/e2r/calibration/v12 \
   --report-directory reports/e2r_calibration/v12
+```
+
+`--include-archive`는 누적 운영의 기본값이다.
+`docs/round/achieve`에 보관된 과거 연구자료를 제외하면 현재 root에 남은 새 연구자료만 snapshot으로 재계산된다.
+
+쉬운 예:
+
+```text
+root에 새 연구 157개가 있고 achieve에 과거 연구 2002개가 있으면
+--include-archive 없이 실행한 결과는 157개 배치다.
+--include-archive로 실행한 결과가 누적 corpus다.
 ```
 
 `run-v12-full`은 감사용 진단 명령이다. 기본 점수체계에 반영하려면 `run-v12-calibration`을 사용한다.
