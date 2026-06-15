@@ -24,10 +24,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--search-snapshot-root", default="data/search_snapshots")
     parser.add_argument("--report-snapshot-root", default="data/report_snapshots")
     parser.add_argument("--universe-limit", type=int)
-    parser.add_argument("--max-candidates-per-date", type=int, default=50)
-    parser.add_argument("--max-web-research-candidates-per-date", type=int, default=20)
-    parser.add_argument("--max-queries-per-candidate", type=int, default=8)
-    parser.add_argument("--max-results-per-query", type=int, default=5)
+    parser.add_argument("--max-candidates-per-date", type=int)
+    parser.add_argument("--max-web-research-candidates-per-date", type=int)
+    parser.add_argument("--max-queries-per-candidate", type=int)
+    parser.add_argument("--max-results-per-query", type=int, default=100)
     parser.add_argument("--require-date-verified-for-green", dest="require_date_verified_for_green", action="store_true")
     parser.add_argument("--no-require-date-verified-for-green", dest="require_date_verified_for_green", action="store_false")
     parser.set_defaults(require_date_verified_for_green=True)
@@ -43,6 +43,13 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--allow-snapshot-derived-universe", action="store_true")
     parser.add_argument("--allow-live-historical-official-fetch", action="store_true")
     parser.add_argument("--save-official-history-cache", action="store_true")
+    parser.add_argument("--theme-rebalance", dest="theme_rebalance_enabled", action="store_true")
+    parser.add_argument("--no-theme-rebalance", dest="theme_rebalance_enabled", action="store_false")
+    parser.set_defaults(theme_rebalance_enabled=None)
+    parser.add_argument("--max-theme-expansion-rounds", type=int)
+    parser.add_argument("--theme-evidence-review", dest="theme_evidence_review_enabled", action="store_true")
+    parser.add_argument("--no-theme-evidence-review", dest="theme_evidence_review_enabled", action="store_false")
+    parser.set_defaults(theme_evidence_review_enabled=True)
     return parser
 
 
@@ -71,6 +78,9 @@ def config_from_args(args: argparse.Namespace) -> AsOfResearchReplayConfig:
         allow_snapshot_derived_universe=args.allow_snapshot_derived_universe,
         allow_live_historical_official_fetch=args.allow_live_historical_official_fetch,
         save_official_history_cache=args.save_official_history_cache,
+        theme_rebalance_enabled=args.theme_rebalance_enabled,
+        max_theme_expansion_rounds=args.max_theme_expansion_rounds,
+        theme_evidence_review_enabled=args.theme_evidence_review_enabled,
     )
 
 

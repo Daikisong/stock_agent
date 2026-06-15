@@ -28,6 +28,8 @@ class SearchResult:
     is_news: bool = False
     is_disclosure: bool = False
     confidence: float = 0.5
+    date_verified: bool | None = None
+    green_allowed_by_date: bool | None = None
 
     def __post_init__(self) -> None:
         if not self.title.strip():
@@ -41,7 +43,7 @@ class SearchResult:
 class SearchProvider(Protocol):
     """Search provider contract used by the web research runner."""
 
-    def search(self, query: str, as_of_date: date, max_results: int = 10) -> tuple[SearchResult, ...]:
+    def search(self, query: str, as_of_date: date, max_results: int = 100) -> tuple[SearchResult, ...]:
         """Return normalized results visible as of ``as_of_date``."""
 
 
@@ -53,7 +55,7 @@ class FixtureSearchProvider:
     fixture_root: str | Path | None = None
     fixture_stem: str = "search_results"
 
-    def search(self, query: str, as_of_date: date, max_results: int = 10) -> tuple[SearchResult, ...]:
+    def search(self, query: str, as_of_date: date, max_results: int = 100) -> tuple[SearchResult, ...]:
         rows: list[SearchResult] = []
         for item in self.results_by_query.get(query, ()):
             rows.append(item if isinstance(item, SearchResult) else normalize_search_result(item, fallback_query=query))
@@ -73,7 +75,7 @@ class FixtureSearchProvider:
 class EmptySearchProvider:
     """No-result provider for tests and missing connector paths."""
 
-    def search(self, query: str, as_of_date: date, max_results: int = 10) -> tuple[SearchResult, ...]:
+    def search(self, query: str, as_of_date: date, max_results: int = 100) -> tuple[SearchResult, ...]:
         return ()
 
 
@@ -87,11 +89,11 @@ class RequestOnlySearchProvider:
     credential_name: str | None = None
     built_requests: list[SourceRequest] = field(default_factory=list)
 
-    def search(self, query: str, as_of_date: date, max_results: int = 10) -> tuple[SearchResult, ...]:
+    def search(self, query: str, as_of_date: date, max_results: int = 100) -> tuple[SearchResult, ...]:
         self.built_requests.append(self.build_request(query, as_of_date, max_results))
         return ()
 
-    def build_request(self, query: str, as_of_date: date, max_results: int = 10) -> SourceRequest:
+    def build_request(self, query: str, as_of_date: date, max_results: int = 100) -> SourceRequest:
         provider = self.provider_name.lower()
         if provider == "naver":
             url = self.base_url or "https://openapi.naver.com/v1/search/webkr.json"
@@ -140,6 +142,8 @@ def normalize_search_result(row: Mapping[str, Any], *, fallback_query: str | Non
         is_news=_boolish(row.get("is_news")) or _looks_like_news(source, url),
         is_disclosure=_boolish(row.get("is_disclosure")) or _looks_like_disclosure(title, url),
         confidence=float_or_none(row.get("confidence")) or 0.5,
+        date_verified=_optional_boolish(row.get("date_verified")),
+        green_allowed_by_date=_optional_boolish(row.get("green_allowed_by_date")),
     )
 
 
@@ -151,6 +155,12 @@ def _boolish(value: Any) -> bool:
     if isinstance(value, (int, float)):
         return value != 0
     return str(value).strip().lower() in {"1", "true", "yes", "y", "on"}
+
+
+def _optional_boolish(value: Any) -> bool | None:
+    if value in (None, ""):
+        return None
+    return _boolish(value)
 
 
 def _is_pdf_url(url: str) -> bool:

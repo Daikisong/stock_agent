@@ -23,6 +23,7 @@ from e2r.sector.round16_theme_coverage_v05 import Round16ThemeCoverageEntry, rou
 
 ROUND17_SOURCE_ROUND_PATH = "docs/round/round_17.md"
 ROUND17_ARCHIVED_SOURCE_ROUND_PATH = "docs/round/achieve/round_17.md"
+ROUND17_LEGACY_ARCHIVED_SOURCE_ROUND_PATH = "docs/round/achieve/old/round_17.md"
 ROUND17_DEFAULT_OUTPUT_DIRECTORY = "output/e2r_round17_theme_absorption_audit"
 ROUND17_DEFAULT_THEME_MAP_PATH = "data/sector_taxonomy/theme_tag_map_v05.csv"
 ROUND17_DEFAULT_ALIAS_PATH = "data/sector_taxonomy/theme_aliases_round17.yml"
@@ -136,9 +137,11 @@ def _resolve_round17_source_path(path: str | Path) -> Path:
     text_path = Path(path)
     if text_path.exists():
         return text_path
-    archived_path = Path(ROUND17_ARCHIVED_SOURCE_ROUND_PATH)
-    if text_path.as_posix() == ROUND17_SOURCE_ROUND_PATH and archived_path.exists():
-        return archived_path
+    if text_path.as_posix() == ROUND17_SOURCE_ROUND_PATH:
+        for candidate in (ROUND17_ARCHIVED_SOURCE_ROUND_PATH, ROUND17_LEGACY_ARCHIVED_SOURCE_ROUND_PATH):
+            archived_path = Path(candidate)
+            if archived_path.exists():
+                return archived_path
     return text_path
 
 

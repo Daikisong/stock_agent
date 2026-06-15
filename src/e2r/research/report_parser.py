@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from e2r.models import Evidence, Market, ResearchReport, SourceTier
+from e2r.research.one_off_context import has_one_off_shortage_context
 from e2r.sources.source_errors import date_value, float_or_none, market_value, text_or_none, tuple_value
 
 
@@ -52,7 +53,8 @@ def parse_research_report_text(
     analyst = text_or_none(metadata.get("analyst") or _line_value(text, ("애널리스트", "Analyst")))
     title = str(metadata.get("title") or _line_value(text, ("제목", "Title")) or _first_heading(text) or "Research report")
 
-    parsed = _extract_fields(text)
+    parse_context = _parse_context_text(text=text, metadata=metadata, title=title)
+    parsed = _extract_fields(parse_context)
     for key in (
         "current_price",
         "target_price",
@@ -90,10 +92,11 @@ def parse_research_report_text(
     for key in ("asp_increase_mentioned", "lead_time_mentioned", "shortage_mentioned"):
         if metadata.get(key) not in (None, ""):
             parsed.setdefault(key, bool(metadata[key]))
+    _drop_invalid_non_negative_fields(parsed)
 
-    investment_points = tuple_value(metadata.get("investment_points")) or _points_after(text, ("투자포인트", "투자 포인트", "Investment points"))
-    risk_points = tuple_value(metadata.get("risk_points")) or _points_after(text, ("리스크", "Risk"))
-    parsed["parser_confidence"] = _confidence(parsed, text)
+    investment_points = tuple_value(metadata.get("investment_points")) or _points_after(parse_context, ("투자포인트", "투자 포인트", "Investment points"))
+    risk_points = tuple_value(metadata.get("risk_points")) or _points_after(parse_context, ("리스크", "Risk"))
+    parsed["parser_confidence"] = _confidence(parsed, parse_context)
 
     report = ResearchReport(
         symbol=symbol,
@@ -155,7 +158,7 @@ def parse_research_report_text(
         symbol=symbol,
         title=title,
         url_or_identifier=text_or_none(metadata.get("url")),
-        excerpt_or_value=text[:240],
+        excerpt_or_value=parse_context[:240],
         parsed_fields=parsed,
         confidence=parsed["parser_confidence"],
     )
@@ -234,6 +237,9 @@ def _extract_fields(text: str) -> dict[str, Any]:
             if value is not None:
                 fields[output] = value
 
+    _add_forward_estimate_fields(text, fields)
+    _add_target_price_fields(text, fields)
+
     if "ASP" in text or "판가" in text:
         fields["asp_increase_mentioned"] = any(token in text for token in ("ASP 상승", "판가 상승", "가격 상승", "ASP 개선"))
     if any(token in text for token in ("ASP 상승", "판가 상승", "가격 상승", "ASP 개선", "판가 개선")):
@@ -252,9 +258,7 @@ def _extract_fields(text: str) -> dict[str, Any]:
         fields["shortage_type"] = "structural"
         fields["structural_shortage_mentioned"] = True
     lowered = text.lower()
-    if any(token in lowered for token in ("pandemic", "temporary", "one-off", "one off")) or any(
-        token in text for token in ("팬데믹", "코로나", "일회성", "진단키트")
-    ):
+    if has_one_off_shortage_context(text):
         fields["shortage_type"] = "one_off"
         fields["one_off_shortage"] = True
         fields["pandemic_demand_spike"] = True
@@ -267,8 +271,120 @@ def _extract_fields(text: str) -> dict[str, Any]:
     return fields
 
 
+_NON_NEGATIVE_REPORT_FIELDS = frozenset(
+    (
+        "current_price",
+        "target_price",
+        "target_multiple_before",
+        "target_multiple_after",
+        "fy1_sales",
+        "fy2_sales",
+        "fy3_sales",
+        "est_per",
+        "est_pbr",
+        "fifty_two_week_high",
+        "fifty_two_week_low",
+        "backlog",
+        "new_orders",
+        "order_backlog_to_sales",
+    )
+)
+
+
+def _drop_invalid_non_negative_fields(fields: dict[str, Any]) -> None:
+    dropped: list[str] = []
+    for key in _NON_NEGATIVE_REPORT_FIELDS:
+        value = fields.get(key)
+        if isinstance(value, (int, float)) and value < 0:
+            fields.pop(key, None)
+            dropped.append(key)
+    if dropped:
+        fields["invalid_non_negative_fields"] = tuple(sorted(dropped))
+
+
+def _parse_context_text(*, text: str, metadata: Mapping[str, Any], title: str) -> str:
+    parts = (
+        title,
+        text_or_none(metadata.get("snippet")),
+        text_or_none(metadata.get("description")),
+        text,
+    )
+    deduped: list[str] = []
+    seen: set[str] = set()
+    for part in parts:
+        cleaned = str(part or "").strip()
+        if not cleaned or cleaned in seen:
+            continue
+        seen.add(cleaned)
+        deduped.append(cleaned)
+    return "\n".join(deduped)
+
+
+def _add_forward_estimate_fields(text: str, fields: dict[str, Any]) -> None:
+    lowered = text.lower()
+    if not any(
+        token in lowered
+        for token in (
+            "예상",
+            "전망",
+            "전망치",
+            "추정",
+            "추정치",
+            "가이던스",
+            "forecast",
+            "estimate",
+            "expected",
+            "guidance",
+        )
+    ):
+        return
+
+    forward_found = False
+    if _estimate_upgrade_mentioned(text):
+        fields["estimate_upgrade_mentioned"] = True
+    if _has_forward_estimate_amount(text, ("영업이익", "영업익", "OP", "operating profit")):
+        forward_found = True
+        fields["forward_estimate_present"] = True
+        value = _forward_money_after(text, ("영업이익", "영업익", "OP", "operating profit"))
+        if value is not None:
+            fields.setdefault("fy1_op", value)
+            fields.setdefault("forward_op_estimate", value)
+    if _has_forward_estimate_amount(text, ("매출액", "매출", "Sales", "Revenue")):
+        forward_found = True
+        fields["forward_estimate_present"] = True
+        value = _forward_money_after(text, ("매출액", "매출", "Sales", "Revenue"))
+        if value is not None:
+            fields.setdefault("fy1_sales", value)
+            fields.setdefault("forward_sales_estimate", value)
+    eps = _forward_eps_after(text)
+    if eps is not None:
+        forward_found = True
+        fields["forward_estimate_present"] = True
+        fields.setdefault("fy1_eps", eps)
+        fields.setdefault("forward_eps_estimate", eps)
+    fiscal_year = _forward_fiscal_year(text) if forward_found else None
+    if fiscal_year is not None:
+        fields.setdefault("fy1_fiscal_year", fiscal_year)
+
+
+def _add_target_price_fields(text: str, fields: dict[str, Any]) -> None:
+    target_price = _target_price_value(text)
+    if target_price is not None:
+        fields.setdefault("target_price", target_price)
+    revision_pct = _target_price_revision_pct(text)
+    if revision_pct is not None:
+        fields.setdefault("target_revision_pct", revision_pct)
+        fields.setdefault("target_price_revision_pct", revision_pct)
+        fields["target_price_upgrade_mentioned"] = True
+    elif _target_price_upgrade_mentioned(text):
+        fields["target_price_upgrade_mentioned"] = True
+
+
 def _add_qualitative_e2r_fields(text: str, fields: dict[str, Any]) -> None:
     lowered = text.lower()
+    hbm_context = "hbm" in lowered or "고대역폭메모리" in text
+    if hbm_context:
+        fields["hbm_context_mentioned"] = True
     if any(token in text for token in ("수출 비중 확대", "수출 확대", "수출 증가", "해외 매출 확대")):
         fields["export_channel_expansion"] = True
         fields["export_growth_mentioned"] = True
@@ -282,19 +398,76 @@ def _add_qualitative_e2r_fields(text: str, fields: dict[str, Any]) -> None:
         fields["export_channel_expansion"] = True
     if any(token in text for token in ("고마진 믹스", "믹스 개선", "수익성 높은", "OPM 개선", "마진 개선")):
         fields["high_margin_mix_improvement"] = True
-    if "hbm" in lowered and any(token in text for token in ("수요 증가", "수요 확대", "수요 강세")):
+    if hbm_context and (
+        any(token in text for token in ("수요 증가", "수요 확대", "수요 강세", "수요 폭증", "수요 우위", "주문 확대", "고객 수요"))
+        or any(token in lowered for token in ("demand growth", "strong demand", "customer demand"))
+    ):
         fields["hbm_demand_mentioned"] = True
     if any(token in text for token in ("메모리 가격 상승", "DRAM 가격 상승", "D램 가격 상승", "NAND 가격 상승", "낸드 가격 상승")):
         fields["memory_price_increase_mentioned"] = True
         fields["pricing_power_mentioned"] = True
+    if hbm_context and (
+        any(token in text for token in ("HBM 가격 상승", "HBM 가격 인상", "가격 인상", "가격 상승", "ASP 상승", "평균판매가격"))
+        or any(token in lowered for token in ("hbm price", "asp"))
+    ):
+        fields["memory_price_increase_mentioned"] = True
+        fields["pricing_power_mentioned"] = True
+        fields["asp_increase_mentioned"] = True
     if any(token in text for token in ("공급조절", "감산", "공급 discipline", "supply discipline")):
         fields["supply_discipline_mentioned"] = True
     if any(token in text for token in ("선주문", "preorder", "allocation", "우선 배정")):
         fields["customer_preorder_or_allocation"] = True
+    if hbm_context and (
+        any(
+            token in text
+            for token in (
+                "완판",
+                "전량 판매",
+                "전량판매",
+                "물량 확보",
+                "물량 선점",
+                "물량 배정",
+                "고객 수요 대비 공급",
+                "공급 충족률",
+                "공급 부족",
+                "공급부족",
+                "중장기 물량 확보",
+                "장기 물량 확보",
+            )
+        )
+        or any(token in lowered for token in ("sold out", "pre-sold", "sold-out", "capacity allocation", "supply allocation"))
+    ):
+        fields["customer_preorder_or_allocation"] = True
+        fields["capacity_precommitted"] = True
+        fields["hbm_capacity_pre_sold"] = True
+    if hbm_context and (
+        any(
+            token in text
+            for token in (
+                "공급 부족",
+                "공급부족",
+                "공급이 제한",
+                "공급 확대가 제한",
+                "공급 충족률",
+                "수요 대비 공급",
+                "타이트",
+                "신규 팹 증설에 시간",
+                "단기간 내 공급 확대",
+                "생산능력 부족",
+            )
+        )
+        or any(token in lowered for token in ("supply shortage", "tight supply", "capacity constraint"))
+    ):
+        fields["supply_shortage_mentioned"] = True
+        fields["capacity_constraint"] = True
+        fields["capa_shortage"] = True
+        fields["hbm_capacity_constraint"] = True
     if any(token in text for token in ("정부 고객", "정부향", "폴란드", "방산")):
         fields["government_customer"] = True
-    if any(token in text for token in ("장기계약", "장기 공급계약", "다년 계약", "multi-year")):
+    if any(token in text for token in ("장기계약", "장기 공급계약", "장기공급계약", "다년 계약", "multi-year")):
         fields["multi_year_contract"] = True
+        if hbm_context and fields.get("customer_preorder_or_allocation"):
+            fields["revenue_visibility_contract"] = True
 
 
 def _report_date(text: str, metadata: Mapping[str, Any]) -> date:
@@ -325,14 +498,18 @@ def _first_heading(text: str) -> str | None:
 
 def _number_after(text: str, labels: tuple[str, ...], *, percent: bool = False) -> float | None:
     for label in labels:
-        pattern = rf"{re.escape(label)}[^0-9\-]*(?P<number>-?[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<unit>%|억원|억|원|배|x)?"
+        pattern = rf"{re.escape(label)}[^0-9\-]*(?P<number>-?[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<unit>%|조원|조|억원|억|만원|원|배|x)?"
         match = re.search(pattern, text, re.IGNORECASE)
         if not match:
             continue
         value = float(match.group("number").replace(",", ""))
         unit = match.group("unit")
+        if unit in {"조원", "조"}:
+            value *= 1_000_000_000_000.0
         if unit in {"억원", "억"}:
             value *= 100_000_000.0
+        if unit == "만원":
+            value *= 10_000.0
         return value if percent or unit != "%" else value
     return None
 
@@ -350,6 +527,166 @@ def _number_in_year_line(text: str, fy_index: int, labels: tuple[str, ...]) -> f
             if match:
                 return float(match.group("number").replace(",", ""))
     return None
+
+
+def _forward_fiscal_year(text: str) -> int | None:
+    patterns = (
+        r"(?<![a-z0-9])(?:[1-4]\s*q|q\s*[1-4])\s*'?(?P<year>[0-9]{2,4})(?![0-9])",
+        r"(?<![a-z0-9])(?P<year>[0-9]{2,4})\s*(?:년|e)\s*(?:[1-4]\s*분기)?[^.\n]{0,40}(?:예상|전망|전망치|추정|추정치|가이던스)",
+        r"(?:예상|전망|전망치|추정|추정치|가이던스)[^.\n]{0,40}(?P<year>20[0-9]{2}|[0-9]{2})\s*(?:년|e)?",
+    )
+    for pattern in patterns:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if not match:
+            continue
+        year = _year_value(match.group("year"))
+        if 1990 <= year <= 2100:
+            return year
+    return None
+
+
+def _has_forward_estimate_amount(text: str, labels: tuple[str, ...]) -> bool:
+    return _forward_money_after(text, labels) is not None
+
+
+def _forward_money_after(text: str, labels: tuple[str, ...]) -> float | None:
+    for label in labels:
+        label_pattern = re.escape(label)
+        patterns = (
+            rf"{label_pattern}[^.\n]{{0,48}}?(?P<number>-?[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<unit>조원|조|억원|억|백만원|만원|원|trillion|billion|million)\s*(?:으로|로)?[^.\n]{{0,36}}?(?:예상|전망|전망치|추정|추정치|가이던스|상향|forecast|estimate|expected|guidance|raised)",
+            rf"(?:예상|전망|전망치|추정|추정치|가이던스|상향|forecast|estimate|expected|guidance|raised)[^.\n]{{0,48}}?{label_pattern}[^.\n]{{0,48}}?(?P<number>-?[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<unit>조원|조|억원|억|백만원|만원|원|trillion|billion|million)",
+            rf"(?:FY[1-3]|20[0-9]{{2}}E|[1-4]\s*Q\s*'?[0-9]{{2,4}}|Q\s*[1-4]\s*'?[0-9]{{2,4}})[^.\n]{{0,80}}?{label_pattern}[^.\n]{{0,48}}?(?P<number>-?[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<unit>조원|조|억원|억|백만원|만원|원|trillion|billion|million)",
+        )
+        for pattern in patterns:
+            match = re.search(pattern, text, re.IGNORECASE)
+            if not match:
+                continue
+            value = _float(match.group("number"))
+            if value is None:
+                continue
+            return _scale_amount(value, match.group("unit"))
+    return None
+
+
+def _forward_eps_after(text: str) -> float | None:
+    if not re.search(r"(?:EPS|주당순이익)", text, re.IGNORECASE):
+        return None
+    if not re.search(r"(?:예상|전망|전망치|추정|추정치|컨센서스|가이던스|forecast|estimate|expected|guidance)", text, re.IGNORECASE):
+        return None
+    return _number_after(text, ("EPS", "주당순이익"))
+
+
+def _target_price_value(text: str) -> float | None:
+    upgrade_patterns = (
+        r"(?:목표주가|목표가)[^.\n]{0,80}?기존\s*(?P<old>[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<old_unit>만원|원)?[^.\n]{0,40}?(?P<new>[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<new_unit>만원|원)?(?:으로|로)?\s*상향",
+        r"(?:목표주가|목표가)[^.\n]{0,80}?(?P<old>[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<old_unit>만원|원)?\s*(?:에서|→|->|to)\s*(?P<new>[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<new_unit>만원|원)?",
+        r"target price[^.\n]{0,80}?(?:from\s*)?(?P<old>[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<old_unit>만원|원)?\s*(?:to|→|->)\s*(?P<new>[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<new_unit>만원|원)?",
+    )
+    for pattern in upgrade_patterns:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if not match:
+            continue
+        new = _scale_price(_float(match.group("new")), match.groupdict().get("new_unit"))
+        if new is not None:
+            return new
+    patterns = (
+        r"(?:목표주가|목표가)[^0-9\-]{0,36}(?P<number>[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<unit>만원|원)?",
+        r"target price[^0-9\-]{0,36}(?:KRW|₩)?\s*(?P<number>[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<unit>만원|원)?",
+    )
+    for pattern in patterns:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if not match:
+            continue
+        value = _float(match.group("number"))
+        if value is None:
+            continue
+        unit = match.group("unit") or ""
+        if unit == "만원":
+            value *= 10_000.0
+        return value
+    return None
+
+
+def _target_price_revision_pct(text: str) -> float | None:
+    patterns = (
+        r"(?:목표주가|목표가)[^.\n]{0,80}?기존\s*(?P<old>[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<old_unit>만원|원)?[^.\n]{0,40}?(?P<new>[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<new_unit>만원|원)?(?:으로|로)?\s*상향",
+        r"(?:목표주가|목표가)[^.\n]{0,80}?(?P<old>[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<old_unit>만원|원)?\s*(?:에서|→|->|to)\s*(?P<new>[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<new_unit>만원|원)?",
+        r"target price[^.\n]{0,80}?(?:from\s*)?(?P<old>[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<old_unit>만원|원)?\s*(?:to|→|->)\s*(?P<new>[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<new_unit>만원|원)?",
+    )
+    for pattern in patterns:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if not match:
+            continue
+        old = _scale_price(_float(match.group("old")), match.groupdict().get("old_unit"))
+        new = _scale_price(_float(match.group("new")), match.groupdict().get("new_unit"))
+        if old is None or new is None or old <= 0 or new <= old:
+            continue
+        return (new / old - 1.0) * 100.0
+    return None
+
+
+def _target_price_upgrade_mentioned(text: str) -> bool:
+    lowered = text.lower()
+    return (
+        "목표주가 상향" in text
+        or "목표가 상향" in text
+        or "목표가↑" in text
+        or re.search(r"(?:목표주가|목표가)[^.\n]{0,40}(?:상향|올려|인상)", text) is not None
+        or "target price raised" in lowered
+        or "target price upgrade" in lowered
+    )
+
+
+def _estimate_upgrade_mentioned(text: str) -> bool:
+    lowered = text.lower()
+    return (
+        "실적 전망치 상향" in text
+        or "실적 추정치 상향" in text
+        or "영업이익 전망치 상향" in text
+        or "영업이익 추정치 상향" in text
+        or "전망치 상향" in text
+        or "추정치 상향" in text
+        or "eps 상향" in lowered
+        or "estimate upgrade" in lowered
+        or "estimate raised" in lowered
+    )
+
+
+def _scale_amount(value: float, unit: str | None) -> float:
+    normalized = (unit or "").lower()
+    if normalized in {"조원", "조", "trillion"}:
+        return value * 1_000_000_000_000.0
+    if normalized in {"억원", "억", "billion"}:
+        return value * 100_000_000.0
+    if normalized in {"백만원", "million"}:
+        return value * 1_000_000.0
+    if normalized == "만원":
+        return value * 10_000.0
+    return value
+
+
+def _scale_price(value: float | None, unit: str | None) -> float | None:
+    if value is None:
+        return None
+    if unit == "만원":
+        return value * 10_000.0
+    return value
+
+
+def _year_value(value: str) -> int:
+    year = int(value)
+    if year < 100:
+        return 2000 + year if year < 70 else 1900 + year
+    return year
+
+
+def _float(value: str | None) -> float | None:
+    if value in (None, ""):
+        return None
+    try:
+        return float(str(value).replace(",", ""))
+    except ValueError:
+        return None
 
 
 def _points_after(text: str, labels: tuple[str, ...]) -> tuple[str, ...]:

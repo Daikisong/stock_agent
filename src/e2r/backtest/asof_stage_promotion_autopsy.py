@@ -25,6 +25,19 @@ from e2r.research.asof_web_research import (
     RetrospectiveSnapshotSearchProvider,
     fixture_text_by_url_for_candidate,
 )
+from e2r.score_validity import (
+    is_score_valid,
+    normalized_score_state_mapping_if_present,
+    normalized_score_state_payload,
+    raw_score_total_before_block,
+    research_input_fingerprint,
+    serialized_score_block_reason,
+    serialized_score_valid,
+    score_block_reason,
+    score_fingerprint,
+    score_variability_drivers,
+    visible_score_total,
+)
 from e2r.research.report_snapshot_store import ReportSnapshotStore
 from e2r.research.search_snapshot_store import SearchSnapshotStore
 from e2r.stage_gate_diagnostics import StageGateDiagnostics, diagnose_stage_gates, promotion_band
@@ -42,10 +55,16 @@ class AsOfStagePromotionAutopsyConfig:
     official_root: str | Path = DEFAULT_HISTORICAL_OFFICIAL_ROOT
     search_snapshot_root: str | Path = "data/search_snapshots"
     report_snapshot_root: str | Path = "data/report_snapshots"
-    top_candidates: int = 50
-    max_queries_per_candidate: int = 8
-    max_results_per_query: int = 5
+    top_candidates: int | None = None
+    max_queries_per_candidate: int | None = None
+    max_results_per_query: int = 100
     report_date: date | None = None
+
+    def __post_init__(self) -> None:
+        if self.max_queries_per_candidate is not None and self.max_queries_per_candidate < 0:
+            raise ValueError("max_queries_per_candidate cannot be negative")
+        if self.top_candidates is not None and self.top_candidates <= 0:
+            raise ValueError("top_candidates must be positive")
 
 
 @dataclass(frozen=True)
@@ -57,30 +76,36 @@ class StagePromotionAutopsyRow:
     as_of_date: date
     layer: str
     current_stage: Stage
-    current_score: float
-    eps_fcf_explosion: float
-    earnings_visibility: float
-    bottleneck_pricing: float
-    market_mispricing: float
-    valuation_rerating: float
-    capital_allocation: float
-    information_confidence: float
-    risk_penalty: float
-    revision_score: float
-    price_stage_score: float
-    contract_quality: float
-    backlog_rpo_visibility: float
-    capa_constraint: float
-    asp_pricing_power: float
-    structural_shortage: float
-    one_off_shortage_risk: float
-    structural_visibility_quality: float
-    sector_visibility_score: float
-    sector_bottleneck_score: float
-    recurring_demand_visibility: float
-    export_channel_visibility: float
-    medium_term_revision_visibility: float
-    domain_specific_evidence_score: float
+    current_score: float | None
+    score_valid: bool
+    score_blocked_reason: str | None
+    score_fingerprint: str | None
+    research_input_fingerprint: str | None
+    score_variability_drivers: tuple[str, ...]
+    raw_score_before_block: float | None
+    eps_fcf_explosion: float | None
+    earnings_visibility: float | None
+    bottleneck_pricing: float | None
+    market_mispricing: float | None
+    valuation_rerating: float | None
+    capital_allocation: float | None
+    information_confidence: float | None
+    risk_penalty: float | None
+    revision_score: float | None
+    price_stage_score: float | None
+    contract_quality: float | None
+    backlog_rpo_visibility: float | None
+    capa_constraint: float | None
+    asp_pricing_power: float | None
+    structural_shortage: float | None
+    one_off_shortage_risk: float | None
+    structural_visibility_quality: float | None
+    sector_visibility_score: float | None
+    sector_bottleneck_score: float | None
+    recurring_demand_visibility: float | None
+    export_channel_visibility: float | None
+    medium_term_revision_visibility: float | None
+    domain_specific_evidence_score: float | None
     sector_profile: str
     promotion_band: str
     cross_evidence_families_present: str
@@ -191,38 +216,65 @@ def _autopsy_row(
 ) -> StagePromotionAutopsyRow:
     score = scored.score
     coverage = scored.bundle.coverage()
+    valid_score = is_score_valid(score)
     failed = set(diagnostics.failed_gate_names)
     hard_audit_count = sum(1 for item in scored.audit_findings if item.severity == "hard" or item.suggested_action == "block_green")
+    input_counts = {
+        "price_bars": coverage["price_bars_count"],
+        "financial_actuals": coverage["financial_actuals_count"],
+        "disclosures": coverage["disclosures_count"],
+        "research_reports": coverage["research_reports_count"],
+        "news_items": coverage["news_items_count"],
+        "consensus": coverage["consensus_count"],
+        "consensus_revisions": coverage["consensus_revisions_count"],
+    }
+    input_fingerprint = research_input_fingerprint(
+        score=score,
+        evidence=getattr(scored.bundle, "evidence", ()),
+        input_counts=input_counts,
+        source_fields=getattr(getattr(scored, "feature_result", None), "source_fields", None),
+    )
     return StagePromotionAutopsyRow(
         symbol=candidate.symbol,
         company_name=candidate.company_name,
         as_of_date=candidate.as_of_date,
         layer=candidate.recommended_next_layer.value,
         current_stage=scored.stage.stage,
-        current_score=score.total_score,
-        eps_fcf_explosion=score.eps_fcf_explosion_score,
-        earnings_visibility=score.earnings_visibility_score,
-        bottleneck_pricing=score.bottleneck_pricing_score,
-        market_mispricing=score.market_mispricing_score,
-        valuation_rerating=score.valuation_rerating_score,
-        capital_allocation=score.capital_allocation_score,
-        information_confidence=score.information_confidence_score,
-        risk_penalty=score.risk_penalty,
-        revision_score=_diag(score.diagnostic_scores, "revision_score"),
-        price_stage_score=_diag(score.diagnostic_scores, "price_stage_score"),
-        contract_quality=_diag(score.diagnostic_scores, "contract_quality"),
-        backlog_rpo_visibility=_diag(score.diagnostic_scores, "backlog_rpo_visibility"),
-        capa_constraint=_diag(score.diagnostic_scores, "capa_constraint"),
-        asp_pricing_power=_diag(score.diagnostic_scores, "asp_pricing_power"),
-        structural_shortage=_diag(score.diagnostic_scores, "structural_shortage"),
-        one_off_shortage_risk=_diag(score.diagnostic_scores, "one_off_shortage_risk"),
-        structural_visibility_quality=_diag(score.diagnostic_scores, "structural_visibility_quality"),
-        sector_visibility_score=_diag(score.diagnostic_scores, "sector_visibility_score"),
-        sector_bottleneck_score=_diag(score.diagnostic_scores, "sector_bottleneck_score"),
-        recurring_demand_visibility=_diag(score.diagnostic_scores, "recurring_demand_visibility"),
-        export_channel_visibility=_diag(score.diagnostic_scores, "export_channel_visibility"),
-        medium_term_revision_visibility=_diag(score.diagnostic_scores, "medium_term_revision_visibility"),
-        domain_specific_evidence_score=_diag(score.diagnostic_scores, "domain_specific_evidence_score"),
+        current_score=visible_score_total(score),
+        score_valid=valid_score,
+        score_blocked_reason=score_block_reason(score),
+        score_fingerprint=score_fingerprint(score),
+        research_input_fingerprint=input_fingerprint,
+        score_variability_drivers=score_variability_drivers(
+            score,
+            input_counts=input_counts,
+            evidence_count=len(score.evidence_ids),
+            input_fingerprint=input_fingerprint,
+        ),
+        raw_score_before_block=raw_score_total_before_block(score),
+        eps_fcf_explosion=score.eps_fcf_explosion_score if valid_score else None,
+        earnings_visibility=score.earnings_visibility_score if valid_score else None,
+        bottleneck_pricing=score.bottleneck_pricing_score if valid_score else None,
+        market_mispricing=score.market_mispricing_score if valid_score else None,
+        valuation_rerating=score.valuation_rerating_score if valid_score else None,
+        capital_allocation=score.capital_allocation_score if valid_score else None,
+        information_confidence=score.information_confidence_score if valid_score else None,
+        risk_penalty=score.risk_penalty if valid_score else None,
+        revision_score=_valid_diag(score.diagnostic_scores, "revision_score", valid_score),
+        price_stage_score=_valid_diag(score.diagnostic_scores, "price_stage_score", valid_score),
+        contract_quality=_valid_diag(score.diagnostic_scores, "contract_quality", valid_score),
+        backlog_rpo_visibility=_valid_diag(score.diagnostic_scores, "backlog_rpo_visibility", valid_score),
+        capa_constraint=_valid_diag(score.diagnostic_scores, "capa_constraint", valid_score),
+        asp_pricing_power=_valid_diag(score.diagnostic_scores, "asp_pricing_power", valid_score),
+        structural_shortage=_valid_diag(score.diagnostic_scores, "structural_shortage", valid_score),
+        one_off_shortage_risk=_valid_diag(score.diagnostic_scores, "one_off_shortage_risk", valid_score),
+        structural_visibility_quality=_valid_diag(score.diagnostic_scores, "structural_visibility_quality", valid_score),
+        sector_visibility_score=_valid_diag(score.diagnostic_scores, "sector_visibility_score", valid_score),
+        sector_bottleneck_score=_valid_diag(score.diagnostic_scores, "sector_bottleneck_score", valid_score),
+        recurring_demand_visibility=_valid_diag(score.diagnostic_scores, "recurring_demand_visibility", valid_score),
+        export_channel_visibility=_valid_diag(score.diagnostic_scores, "export_channel_visibility", valid_score),
+        medium_term_revision_visibility=_valid_diag(score.diagnostic_scores, "medium_term_revision_visibility", valid_score),
+        domain_specific_evidence_score=_valid_diag(score.diagnostic_scores, "domain_specific_evidence_score", valid_score),
         sector_profile=diagnostics.sector_profile,
         promotion_band=promotion_band(score, scored.stage.stage),
         cross_evidence_families_present=", ".join(diagnostics.cross_evidence_families_present),
@@ -260,6 +312,8 @@ def _autopsy_row(
 
 
 def _explain(scored: AsOfEvidenceBundleScore, diagnostics: StageGateDiagnostics, hard_audit_count: int) -> str:
+    if not is_score_valid(scored.score):
+        return f"Score pending: {score_block_reason(scored.score) or 'score_invalid'}."
     if hard_audit_count:
         return "Parser audit produced hard findings, so Green is blocked."
     if scored.red_team.has_hard_break:
@@ -307,16 +361,17 @@ def render_autopsy_markdown(result: AsOfStagePromotionAutopsyResult) -> str:
             "",
             "## Candidate Gate Matrix",
             "",
-            "| symbol | company | date | stage | band | sector | score | info | EPS/FCF | visibility | structural visibility | bottleneck | valuation | failed gates |",
-            "| --- | --- | --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
+            "| symbol | company | date | stage | band | sector | visible_score | score state | info | EPS/FCF | visibility | structural visibility | bottleneck | valuation | failed gates |",
+            "| --- | --- | --- | --- | --- | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
         ]
     )
     for row in result.rows:
         failed_gates = [field.name for field in fields(row) if field.name.startswith("failed_") and getattr(row, field.name)]
         lines.append(
             f"| {row.symbol} | {row.company_name} | {row.as_of_date.isoformat()} | {row.current_stage.value} | {row.promotion_band} | {row.sector_profile} | "
-            f"{row.current_score:.2f} | {row.information_confidence:.2f} | {row.eps_fcf_explosion:.2f} | "
-            f"{row.earnings_visibility:.2f} | {row.structural_visibility_quality:.2f} | {row.bottleneck_pricing:.2f} | {row.valuation_rerating:.2f} | "
+            f"{_fmt_score(row.current_score)} | {_score_state_text(row)} | {_fmt_component(row.information_confidence)} | {_fmt_component(row.eps_fcf_explosion)} | "
+            f"{_fmt_component(row.earnings_visibility)} | {_fmt_component(row.structural_visibility_quality)} | "
+            f"{_fmt_component(row.bottleneck_pricing)} | {_fmt_component(row.valuation_rerating)} | "
             f"{', '.join(failed_gates) or 'none'} |"
         )
     lines.extend(
@@ -357,7 +412,24 @@ def _write_csv(path: Path, rows: Sequence[StagePromotionAutopsyRow], fieldnames:
         writer.writeheader()
         for row in rows:
             item = _jsonable(row)
-            writer.writerow({key: item.get(key) for key in fieldnames})
+            writer.writerow({key: _csv_value(item.get(key)) for key in fieldnames})
+
+
+def _csv_value(value: Any) -> Any:
+    if isinstance(value, list):
+        return "|".join(str(item) for item in value)
+    return value
+
+
+def _fmt_score(value: float | None) -> str:
+    return "" if value is None else f"{value:.2f}"
+
+
+def _score_state_text(row: StagePromotionAutopsyRow) -> str:
+    if serialized_score_valid(row):
+        return f"valid / fp {row.score_fingerprint or 'none'}"
+    raw = f" / raw {_fmt_score(row.raw_score_before_block)}" if row.raw_score_before_block is not None else ""
+    return f"pending {serialized_score_block_reason(row) or 'score_invalid'}{raw} / fp {row.score_fingerprint or 'none'}"
 
 
 def _score_component_fields() -> tuple[str, ...]:
@@ -368,6 +440,12 @@ def _score_component_fields() -> tuple[str, ...]:
         "layer",
         "current_stage",
         "current_score",
+        "score_valid",
+        "score_blocked_reason",
+        "score_fingerprint",
+        "research_input_fingerprint",
+        "score_variability_drivers",
+        "raw_score_before_block",
         "eps_fcf_explosion",
         "earnings_visibility",
         "bottleneck_pricing",
@@ -407,6 +485,12 @@ def _gate_fields() -> tuple[str, ...]:
         "company_name",
         "as_of_date",
         "current_stage",
+        "score_valid",
+        "score_blocked_reason",
+        "score_fingerprint",
+        "research_input_fingerprint",
+        "score_variability_drivers",
+        "raw_score_before_block",
         "promotion_band",
         "sector_profile",
         "failed_stage2_total_score",
@@ -437,6 +521,12 @@ def _coverage_fields() -> tuple[str, ...]:
         "company_name",
         "as_of_date",
         "current_stage",
+        "score_valid",
+        "score_blocked_reason",
+        "score_fingerprint",
+        "research_input_fingerprint",
+        "score_variability_drivers",
+        "raw_score_before_block",
         "price_bars_count",
         "financial_actuals_count",
         "disclosures_count",
@@ -450,10 +540,11 @@ def _coverage_fields() -> tuple[str, ...]:
 def _select_candidate_rows(
     candidates: Sequence[Mapping[str, Any]],
     benchmark_rows: Sequence[Mapping[str, Any]],
-    top_candidates: int,
+    top_candidates: int | None,
 ) -> tuple[Mapping[str, Any], ...]:
     selected: dict[tuple[str, str], Mapping[str, Any]] = {}
-    for item in candidates[:top_candidates]:
+    candidate_slice = candidates if top_candidates is None else candidates[:top_candidates]
+    for item in candidate_slice:
         selected[(str(item["symbol"]), str(item["as_of_date"]))] = item
     by_symbol: dict[str, list[Mapping[str, Any]]] = {}
     for item in candidates:
@@ -496,6 +587,16 @@ def _diag(values: Mapping[str, Any], key: str) -> float:
         return 0.0
 
 
+def _valid_diag(values: Mapping[str, Any], key: str, valid_score: bool) -> float | None:
+    if not valid_score:
+        return None
+    return _diag(values, key)
+
+
+def _fmt_component(value: float | None) -> str:
+    return "" if value is None else f"{value:.2f}"
+
+
 def _jsonable(value: Any) -> Any:
     if isinstance(value, (date, datetime)):
         return value.isoformat()
@@ -504,9 +605,12 @@ def _jsonable(value: Any) -> Any:
     if isinstance(value, Path):
         return str(value)
     if is_dataclass(value):
-        return {field.name: _jsonable(getattr(value, field.name)) for field in fields(value)}
+        payload = {field.name: _jsonable(getattr(value, field.name)) for field in fields(value)}
+        if "score_valid" in payload:
+            payload = normalized_score_state_payload(payload)
+        return payload
     if isinstance(value, Mapping):
-        return {str(key): _jsonable(item) for key, item in value.items()}
+        return normalized_score_state_mapping_if_present({str(key): _jsonable(item) for key, item in value.items()})
     if isinstance(value, (list, tuple, set, frozenset)):
         return [_jsonable(item) for item in value]
     return value

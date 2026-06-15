@@ -12,6 +12,7 @@ from datetime import date, datetime
 from email.utils import parsedate_to_datetime
 from typing import Any, Mapping, Sequence
 
+from e2r.env import load_project_env
 from e2r.research.search_provider import FixtureSearchProvider, SearchResult, normalize_search_result
 from e2r.sources.source_errors import SourceRequest
 
@@ -41,12 +42,14 @@ class NaverFreeSearchProvider:
     errors: list[str] = field(default_factory=list)
 
     def __post_init__(self) -> None:
+        if self.live_enabled and not self.fixture_mode:
+            load_project_env()
         if self.client_id is None:
             self.client_id = os.getenv("NAVER_CLIENT_ID")
         if self.client_secret is None:
             self.client_secret = os.getenv("NAVER_CLIENT_SECRET")
 
-    def search(self, query: str, as_of_date: date, max_results: int = 10) -> tuple[SearchResult, ...]:
+    def search(self, query: str, as_of_date: date, max_results: int = 100) -> tuple[SearchResult, ...]:
         fixture_results = self.fixture_provider.search(query, as_of_date, max_results) if self.fixture_provider else ()
         if self.fixture_mode:
             self.built_requests.extend(self.build_search_requests(query, as_of_date, max_results))
@@ -70,7 +73,7 @@ class NaverFreeSearchProvider:
             unique.setdefault(item.url, item)
         return tuple(sorted(unique.values(), key=lambda item: item.rank or 9999)[:max_results])
 
-    def build_search_requests(self, query: str, as_of_date: date, max_results: int = 10) -> tuple[SourceRequest, ...]:
+    def build_search_requests(self, query: str, as_of_date: date, max_results: int = 100) -> tuple[SourceRequest, ...]:
         requests: list[SourceRequest] = []
         for domain in self.search_domains:
             if domain not in NAVER_SEARCH_ENDPOINTS:

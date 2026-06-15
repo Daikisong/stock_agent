@@ -4,12 +4,12 @@
   "profile_id": "e2r_2_2_rolling_calibrated",
   "activate": true,
   "production_default_scoring_changed": true,
-  "applied_patch_count": 52,
+  "applied_patch_count": 108,
   "applied_axis_counts": {
-    "earlier_thesis_break_watch": 2,
+    "earlier_thesis_break_watch": 38,
     "hard_4c_confirmation": 1,
-    "local_4b_watch_guard": 13,
-    "stage2_required_bridge": 36
+    "local_4b_watch_guard": 23,
+    "stage2_required_bridge": 46
   },
   "stage3_green_not_loosened": true,
   "rollback_profile": "calibrated"

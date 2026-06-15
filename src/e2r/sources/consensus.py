@@ -8,7 +8,50 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from e2r.models import ConsensusRevision, ConsensusSnapshot
-from e2r.sources.source_errors import date_value, float_or_none, int_or_none, load_fixture_records, text_or_none
+from e2r.sources.source_errors import date_value, float_or_none, int_or_none, load_fixture_records, parsed_fields_from_record, text_or_none
+
+
+_CONSENSUS_KNOWN_KEYS = {
+    "symbol",
+    "date",
+    "fiscal_year",
+    "as_of_date",
+    "source",
+    "sales_e",
+    "op_e",
+    "net_income_e",
+    "eps_e",
+    "fcf_e",
+    "bps_e",
+    "roe_e",
+    "per_e",
+    "pbr_e",
+    "analyst_count",
+    "target_price",
+    "target_multiple_type",
+    "target_multiple",
+    "parsed_fields",
+}
+
+_REVISION_KNOWN_KEYS = {
+    "symbol",
+    "date",
+    "fiscal_year",
+    "as_of_date",
+    "source",
+    "eps_revision_1w",
+    "eps_revision_1m",
+    "eps_revision_3m",
+    "op_revision_1w",
+    "op_revision_1m",
+    "op_revision_3m",
+    "fcf_revision_1m",
+    "target_price_revision_1m",
+    "analyst_count_change",
+    "street_high_eps_revision_1m",
+    "street_low_eps_revision_1m",
+    "parsed_fields",
+}
 
 
 @dataclass(frozen=True)
@@ -74,6 +117,7 @@ class ConsensusCSVConnector:
             target_price=float_or_none(row.get("target_price")),
             target_multiple_type=text_or_none(row.get("target_multiple_type")),
             target_multiple=float_or_none(row.get("target_multiple")),
+            parsed_fields=parsed_fields_from_record(row, _CONSENSUS_KNOWN_KEYS),
         )
 
     @staticmethod
@@ -94,4 +138,6 @@ class ConsensusCSVConnector:
             analyst_count_change=int_or_none(row.get("analyst_count_change")),
             street_high_eps_revision_1m=float_or_none(row.get("street_high_eps_revision_1m")),
             street_low_eps_revision_1m=float_or_none(row.get("street_low_eps_revision_1m")),
+            source=str(row.get("source") or "consensus-csv"),
+            parsed_fields=parsed_fields_from_record(row, _REVISION_KNOWN_KEYS),
         )

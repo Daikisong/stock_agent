@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import json
+import re
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from pathlib import Path
@@ -158,6 +159,9 @@ def date_value(value: Any) -> date:
     text = str(value).strip().replace(".", "-")
     if len(text) == 8 and text.isdigit():
         text = f"{text[:4]}-{text[4:6]}-{text[6:]}"
+    match = re.match(r"(?P<year>\d{4})-(?P<month>\d{1,2})-(?P<day>\d{1,2})(?:\D|$)", text)
+    if match:
+        return date(int(match.group("year")), int(match.group("month")), int(match.group("day")))
     return date.fromisoformat(text[:10])
 
 

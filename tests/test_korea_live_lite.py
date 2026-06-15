@@ -1,21 +1,37 @@
 from datetime import date, datetime
+import io
 import json
 from pathlib import Path
+from types import SimpleNamespace
 import tempfile
 import unittest
 from unittest.mock import patch
+import zipfile
 
 from e2r.cheap_scan import DataGoKrFSCConnector, KoreaCheapScanSources
-from e2r.cli.review_korea_run import build_review_summary, render_review_summary
-from e2r.models import DisclosureEvent, Stage
+from e2r.cli.review_korea_run import (
+    KoreaRunReviewSummary,
+    _targeted_score_changes,
+    _targeted_score_states,
+    build_review_summary,
+    render_review_summary,
+)
+from e2r.features import FeatureEngineeringInput
+from e2r.llm import FakeThemeRouteProvider, ThemeRouteOutput
+from e2r.models import DisclosureEvent, ScoreSnapshot, Stage
 from e2r.pipeline.korea_live_lite import (
     KoreaLiveLiteBudget,
     KoreaLiveLiteConfig,
     KoreaLiveLiteRunner,
+    _result_score_valid,
+    _score_blocked_status,
+    _score_state_contract_findings_for_outputs,
+    _targeted_smoke_result_row,
     build_opendart_date_range_requests,
     plan_opendart_detail_fetches,
 )
 from e2r.research.search_provider import EmptySearchProvider, FixtureSearchProvider, SearchResult
+from e2r.score_validity import score_state_contract_violations
 from e2r.sources import KINDConnector, KRXConnector, OpenDARTConnector
 from e2r.sources.http_client import HttpClientStats, HttpResult
 
@@ -24,6 +40,14 @@ AS_OF = date(2024, 5, 21)
 
 
 class KoreaLiveLiteTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self._codex_theme_route_patch = patch(
+            "e2r.llm.codex_theme_provider.CodexCLIThemeRouteProvider.route",
+            return_value=ThemeRouteOutput(status="no_transition"),
+        )
+        self.codex_theme_route = self._codex_theme_route_patch.start()
+        self.addCleanup(self._codex_theme_route_patch.stop)
+
     def test_live_lite_config_validates_budgets(self):
         with self.assertRaises(ValueError):
             KoreaLiveLiteBudget(max_opendart_calls_per_day=-1)
@@ -31,17 +55,74 @@ class KoreaLiveLiteTests(unittest.TestCase):
             KoreaLiveLiteConfig(as_of_date=AS_OF, top_candidates=0)
         with self.assertRaises(ValueError):
             KoreaLiveLiteConfig(as_of_date=AS_OF, allow_parallel_live_requests=False, max_global_live_workers=2)
+        with self.assertRaises(ValueError):
+            KoreaLiveLiteConfig(as_of_date=AS_OF, post_parse_gap_expansion_max_queries=-1)
+        with self.assertRaises(ValueError):
+            KoreaLiveLiteConfig(as_of_date=AS_OF, score_gap_query_retry_max=-1)
+        with self.assertRaises(ValueError):
+            KoreaLiveLiteConfig(as_of_date=AS_OF, max_score_gap_expansion_rounds=-1)
+        with self.assertRaises(ValueError):
+            KoreaLiveLiteConfig(as_of_date=AS_OF, theme_route_search_result_limit=-1)
+        with self.assertRaises(ValueError):
+            KoreaLiveLiteConfig(as_of_date=AS_OF, theme_route_document_limit=-1)
+        with self.assertRaises(ValueError):
+            KoreaLiveLiteConfig(as_of_date=AS_OF, theme_route_document_excerpt_chars=0)
 
-    def test_live_lite_tiny_smoke_preset_uses_safe_budget_values(self):
+    def test_live_lite_default_search_budget_is_uncapped(self):
+        budget = KoreaLiveLiteBudget()
+        config = KoreaLiveLiteConfig(as_of_date=AS_OF)
+
+        self.assertIsNone(budget.max_opendart_calls_per_day)
+        self.assertIsNone(budget.max_krx_calls_per_day)
+        self.assertIsNone(budget.max_data_go_kr_calls_per_day)
+        self.assertIsNone(budget.max_naver_search_calls_per_day)
+        self.assertIsNone(budget.max_company_guide_calls_per_day)
+        self.assertIsNone(budget.max_symbols_for_event_search)
+        self.assertIsNone(budget.max_symbols_for_deep_research)
+        self.assertIsNone(budget.max_opendart_detail_fetches_per_run)
+        self.assertIsNone(config.top_candidates)
+        self.assertEqual(config.max_results_per_query, 100)
+        self.assertEqual(config.top_results, 60)
+        self.assertEqual(config.max_theme_expansion_rounds, 2)
+        self.assertEqual(config.max_score_gap_expansion_rounds, 2)
+        self.assertEqual(config.post_parse_gap_expansion_max_queries, 10)
+        self.assertEqual(config.theme_route_search_result_limit, 80)
+        self.assertEqual(config.theme_route_document_limit, 32)
+        self.assertEqual(config.theme_route_document_excerpt_chars, 1200)
+
+    def test_live_lite_tiny_smoke_preset_keeps_research_budget_uncapped(self):
         config = KoreaLiveLiteConfig.smoke_preset("tiny", as_of_date=AS_OF)
 
         self.assertEqual(config.universe_limit, 50)
-        self.assertEqual(config.budget.max_naver_search_calls_per_day, 50)
-        self.assertEqual(config.budget.max_symbols_for_event_search, 5)
-        self.assertEqual(config.budget.max_symbols_for_deep_research, 1)
+        self.assertIsNone(config.budget.max_naver_search_calls_per_day)
+        self.assertIsNone(config.budget.max_symbols_for_event_search)
+        self.assertIsNone(config.budget.max_symbols_for_deep_research)
+        self.assertIsNone(config.budget.max_opendart_detail_fetches_per_run)
         self.assertFalse(config.allow_parallel_live_requests)
         self.assertEqual(config.max_global_live_workers, 1)
         self.assertEqual(config.live_smoke_preset_used, "tiny")
+
+    def test_standard_shadow_preset_is_uncapped_like_operation(self):
+        config = KoreaLiveLiteConfig.smoke_preset("standard_shadow", as_of_date=AS_OF)
+
+        self.assertIsNone(config.universe_limit)
+        self.assertIsNone(config.budget.max_naver_search_calls_per_day)
+        self.assertIsNone(config.budget.max_symbols_for_event_search)
+        self.assertIsNone(config.budget.max_symbols_for_deep_research)
+        self.assertIsNone(config.budget.max_opendart_detail_fetches_per_run)
+        self.assertEqual(config.live_smoke_preset_used, "standard_shadow")
+
+    def test_live_mode_defaults_theme_rebalance_on(self):
+        env = {
+            "OPENDART_API_KEY": "OPENDART_SECRET",
+            "DATA_GO_KR_SERVICE_KEY": "DATA_SECRET",
+            "NAVER_CLIENT_ID": "NAVER_ID",
+            "NAVER_CLIENT_SECRET": "NAVER_SECRET",
+        }
+        with patch.dict("os.environ", env, clear=True):
+            config = KoreaLiveLiteConfig(as_of_date=AS_OF, fixture_mode=False, live_enabled=True)
+
+        self.assertTrue(config.theme_rebalance_enabled)
 
     def test_missing_credentials_do_not_crash_and_mark_fixture_fallback(self):
         with tempfile.TemporaryDirectory() as output_dir, patch.dict("os.environ", {}, clear=True):
@@ -51,6 +132,7 @@ class KoreaLiveLiteTests(unittest.TestCase):
                     output_directory=output_dir,
                     fixture_mode=False,
                     live_enabled=True,
+                    env_file=None,
                     browser_provider=EmptySearchProvider(),
                     free_search_provider=EmptySearchProvider(),
                 )
@@ -75,9 +157,15 @@ class KoreaLiveLiteTests(unittest.TestCase):
             self.assertTrue(result.evidence_path.exists())
             self.assertTrue(result.brief_path.exists())
             self.assertTrue(result.run_log_path.exists())
+            self.assertIsNotNone(result.phase_log_path)
+            self.assertTrue(result.phase_log_path.exists())
+            phase_lines = result.phase_log_path.read_text(encoding="utf-8").strip().splitlines()
+            self.assertTrue(any('"phase": "start"' in line for line in phase_lines))
+            self.assertEqual(result.run_log.phase_log_path, str(result.phase_log_path))
             self.assertTrue(result.calibration_json_path.exists())
             self.assertTrue(result.calibration_md_path.exists())
             self.assertIn("E2R Morning Brief", result.brief_path.read_text(encoding="utf-8"))
+            self.assertIn("cheap_scan_score", result.calibration_md_path.read_text(encoding="utf-8"))
             candidates_json = json.loads(result.candidates_path.read_text(encoding="utf-8"))
             calibration_json = json.loads(result.calibration_json_path.read_text(encoding="utf-8"))
             run_log_json = json.loads(result.run_log_path.read_text(encoding="utf-8"))
@@ -91,6 +179,9 @@ class KoreaLiveLiteTests(unittest.TestCase):
             self.assertIn("actual_http_requests_by_source", run_log_json)
             self.assertIn("logical_queries_by_source", run_log_json)
             self.assertIn("max_concurrency_used_by_source", run_log_json)
+            self.assertIn("score_state_contract_findings", run_log_json)
+            self.assertEqual(run_log_json["score_state_contract_findings"], [])
+            self.assertEqual(result.run_log.score_state_contract_findings, ())
             self.assertEqual(run_log_json["source_modes"]["stock_issuance"], "disabled_optional")
             self.assertEqual(run_log_json["source_modes"]["krx_openapi"], "disabled_optional")
             self.assertTrue(
@@ -134,6 +225,349 @@ class KoreaLiveLiteTests(unittest.TestCase):
         self.assertIn("opendart", summary.source_modes)
         self.assertIn("total candidates", rendered)
         self.assertIn("manual review required", rendered)
+
+    def test_review_cli_renders_targeted_score_state_drivers(self):
+        summary = KoreaRunReviewSummary(
+            as_of_date=AS_OF.isoformat(),
+            total_candidates=1,
+            event_search_count=0,
+            deep_research_count=0,
+            targeted_score_states=(
+                "009999 stage=0 visible_score=pending valid=False reason=theme_route_provider_error fingerprint=abc input_fingerprint=input123 drivers=score_invalid:theme_route_provider_error",
+            ),
+        )
+
+        rendered = render_review_summary(summary)
+
+        self.assertIn("targeted score states", rendered)
+        self.assertIn("visible_score=pending", rendered)
+        self.assertIn("score_invalid:theme_route_provider_error", rendered)
+
+    def test_review_cli_prefers_visible_score_over_compat_score_total(self):
+        states = _targeted_score_states(
+            (
+                {
+                    "symbol": "009999",
+                    "stage": Stage.STAGE_3_YELLOW,
+                    "visible_score": 65,
+                    "score_total": 12,
+                    "score_valid": True,
+                    "score_fingerprint": "scorefp",
+                    "research_input_fingerprint": "inputfp",
+                    "score_variability_drivers": ("research_input_fingerprint:inputfp",),
+                },
+            )
+        )
+
+        self.assertEqual(len(states), 1)
+        self.assertIn("visible_score=65", states[0])
+        self.assertIn("contract=valid_score_alias_mismatch:score_total", states[0])
+        self.assertNotIn("score=12", states[0])
+
+    def test_review_cli_does_not_display_invalid_compat_score_as_visible(self):
+        states = _targeted_score_states(
+            (
+                {
+                    "symbol": "009999",
+                    "stage": "0",
+                    "score_total": 82,
+                    "score_valid": False,
+                    "score_blocked_reason": "score_gap_unresolved",
+                    "raw_score_before_block": 82,
+                    "score_fingerprint": "blocked-scorefp",
+                    "research_input_fingerprint": "inputfp",
+                    "score_variability_drivers": ("raw_score_before_block:82",),
+                },
+                {
+                    "symbol": "008888",
+                    "stage": "0",
+                    "score": 77,
+                    "score_blocked_reason": "theme_route_unresolved",
+                    "score_fingerprint": "blocked-scorefp-2",
+                    "research_input_fingerprint": "inputfp-2",
+                    "score_variability_drivers": ("score_invalid:theme_route_unresolved",),
+                },
+            )
+        )
+
+        self.assertEqual(len(states), 2)
+        self.assertIn("009999 stage=0 visible_score=pending", states[0])
+        self.assertIn("008888 stage=0 visible_score=pending", states[1])
+        self.assertIn("contract=invalid_compat_score_present:score_total", states[0])
+        self.assertIn("contract=invalid_compat_score_present:score", states[1])
+        self.assertNotIn("visible_score=82", " | ".join(states))
+        self.assertNotIn("visible_score=77", " | ".join(states))
+
+    def test_review_cli_does_not_display_conflicting_valid_aliases_as_visible(self):
+        states = _targeted_score_states(
+            (
+                {
+                    "symbol": "006666",
+                    "stage": "3-Yellow",
+                    "score": 82,
+                    "score_total": 90,
+                    "score_valid": True,
+                    "score_fingerprint": "legacy-conflict-scorefp",
+                    "research_input_fingerprint": "inputfp",
+                    "score_variability_drivers": ("legacy_alias_conflict",),
+                },
+            )
+        )
+        changes = _targeted_score_changes(
+            (
+                {
+                    "symbol": "006666",
+                    "score": 82,
+                    "score_total": 90,
+                    "score_valid": True,
+                    "score_fingerprint": "legacy-conflict-scorefp",
+                    "research_input_fingerprint": "inputfp",
+                },
+            ),
+            (
+                {
+                    "symbol": "006666",
+                    "visible_score": 65,
+                    "score_valid": True,
+                    "score_fingerprint": "valid-scorefp",
+                    "research_input_fingerprint": "inputfp",
+                },
+            ),
+        )
+
+        self.assertEqual(len(states), 1)
+        self.assertIn("006666 stage=3-Yellow visible_score=pending valid=False reason=score_alias_conflict", states[0])
+        self.assertIn("contract=score_alias_conflict,valid_visible_score_missing", states[0])
+        self.assertNotIn("visible_score=82", states[0])
+        self.assertNotIn("visible_score=90", states[0])
+        self.assertIn("change=score_became_valid", changes[0])
+        self.assertIn("before=pending", changes[0])
+        self.assertIn("after=65", changes[0])
+        self.assertIn("score_alias_conflict", changes[0])
+
+    def test_review_cli_treats_score_without_validity_as_pending(self):
+        states = _targeted_score_states(
+            (
+                {
+                    "symbol": "007777",
+                    "stage": "3-Yellow",
+                    "score_total": 82,
+                    "score_fingerprint": "legacy-scorefp",
+                    "research_input_fingerprint": "legacy-inputfp",
+                },
+            )
+        )
+        changes = _targeted_score_changes(
+            (
+                {
+                    "symbol": "007777",
+                    "score_total": 82,
+                    "score_fingerprint": "legacy-scorefp",
+                    "research_input_fingerprint": "legacy-inputfp",
+                },
+            ),
+            (
+                {
+                    "symbol": "007777",
+                    "visible_score": 65,
+                    "score_valid": True,
+                    "score_fingerprint": "new-scorefp",
+                    "research_input_fingerprint": "new-inputfp",
+                },
+            ),
+        )
+
+        self.assertIn("007777 stage=3-Yellow visible_score=pending", states[0])
+        self.assertIn("contract=invalid_compat_score_present:score_total", states[0])
+        self.assertNotIn("visible_score=82", states[0])
+        self.assertIn("before=pending", changes[0])
+        self.assertIn("after=65", changes[0])
+        self.assertIn("score_valid_missing", changes[0])
+
+    def test_live_lite_run_log_contract_audit_catches_legacy_compat_score_rows(self):
+        findings = _score_state_contract_findings_for_outputs(
+            as_of_date=AS_OF,
+            candidates=(),
+            targeted_smoke_results=(
+                {
+                    "symbol": "005930",
+                    "stage": "2",
+                    "visible_score": None,
+                    "score_total": 68.9,
+                    "score_valid": True,
+                },
+            ),
+        )
+
+        self.assertIn("targeted_smoke_results[0]:valid_visible_score_missing", findings)
+
+    def test_live_lite_run_log_contract_audit_requires_visible_score_field(self):
+        findings = _score_state_contract_findings_for_outputs(
+            as_of_date=AS_OF,
+            candidates=(),
+            targeted_smoke_results=(
+                {
+                    "symbol": "000660",
+                    "stage": "0",
+                    "score_valid": False,
+                    "score_blocked_reason": "theme_route_provider_error",
+                },
+            ),
+        )
+
+        self.assertIn("targeted_smoke_results[0]:visible_score_field_missing", findings)
+
+    def test_review_cli_classifies_targeted_score_changes(self):
+        changes = _targeted_score_changes(
+            (
+                {
+                    "symbol": "009999",
+                    "visible_score": 82,
+                    "score_valid": True,
+                    "score_fingerprint": "score-a",
+                    "research_input_fingerprint": "input-a",
+                    "component_scores": {"earnings_visibility": 18},
+                },
+            ),
+            (
+                {
+                    "symbol": "009999",
+                    "visible_score": 65,
+                    "score_valid": True,
+                    "score_fingerprint": "score-b",
+                    "research_input_fingerprint": "input-b",
+                    "score_components": {"earnings_visibility_score": 10},
+                },
+            ),
+        )
+
+        self.assertEqual(len(changes), 1)
+        self.assertIn("change=input_changed", changes[0])
+        self.assertIn("before=82", changes[0])
+        self.assertIn("after=65", changes[0])
+        self.assertIn("delta=-17", changes[0])
+        self.assertIn("component_delta:earnings_visibility=-8", changes[0])
+
+    def test_review_cli_keeps_missing_targeted_score_rows_visible(self):
+        changes = _targeted_score_changes(
+            (
+                {
+                    "symbol": "009999",
+                    "visible_score": 82,
+                    "score_valid": True,
+                    "score_fingerprint": "score-a",
+                    "research_input_fingerprint": "input-a",
+                },
+            ),
+            (),
+        )
+
+        self.assertEqual(len(changes), 1)
+        self.assertIn("009999 change=missing_after_state", changes[0])
+
+    def test_review_summary_compares_previous_output_directory(self):
+        with tempfile.TemporaryDirectory() as previous_dir, tempfile.TemporaryDirectory() as current_dir:
+            previous_root = Path(previous_dir) / "korea_live_lite"
+            current_root = Path(current_dir) / "korea_live_lite"
+            previous_root.mkdir()
+            current_root.mkdir()
+            for root in (previous_root, current_root):
+                (root / f"{AS_OF.isoformat()}_candidates.json").write_text('{"candidates":[]}', encoding="utf-8")
+                (root / f"{AS_OF.isoformat()}_evidence.json").write_text('{"evidence":[]}', encoding="utf-8")
+                (root / f"{AS_OF.isoformat()}_brief.md").write_text("", encoding="utf-8")
+            (previous_root / f"{AS_OF.isoformat()}_run_log.json").write_text(
+                json.dumps(
+                    {
+                        "targeted_smoke_results": [
+                            {
+                                "symbol": "009999",
+                                "visible_score": 82,
+                                "score_valid": True,
+                                "score_fingerprint": "score-a",
+                                "research_input_fingerprint": "input-a",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (current_root / f"{AS_OF.isoformat()}_run_log.json").write_text(
+                json.dumps(
+                    {
+                        "targeted_smoke_results": [
+                            {
+                                "symbol": "009999",
+                                "visible_score": 65,
+                                "score_valid": True,
+                                "score_fingerprint": "score-b",
+                                "research_input_fingerprint": "input-b",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            summary = build_review_summary(
+                current_dir,
+                AS_OF.isoformat(),
+                previous_output_directory=previous_dir,
+            )
+            rendered = render_review_summary(summary)
+
+        self.assertEqual(len(summary.targeted_score_changes), 1)
+        self.assertIn("change=input_changed", summary.targeted_score_changes[0])
+        self.assertEqual(summary.score_state_contract_findings, ())
+        self.assertIn("targeted score changes", rendered)
+        self.assertIn("score state contract: ok", rendered)
+        self.assertIn("delta=-17", rendered)
+
+    def test_review_summary_reports_score_state_contract_findings_with_paths(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            root = Path(output_dir) / "korea_live_lite"
+            root.mkdir()
+            (root / f"{AS_OF.isoformat()}_candidates.json").write_text(
+                json.dumps(
+                    {
+                        "candidates": [
+                            {
+                                "symbol": "005930",
+                                "score": 82,
+                                "score_valid": True,
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / f"{AS_OF.isoformat()}_evidence.json").write_text('{"evidence":[]}', encoding="utf-8")
+            (root / f"{AS_OF.isoformat()}_brief.md").write_text("", encoding="utf-8")
+            (root / f"{AS_OF.isoformat()}_run_log.json").write_text(
+                json.dumps(
+                    {
+                        "targeted_smoke_results": [
+                            {
+                                "symbol": "009999",
+                                "visible_score": 65,
+                                "score_total": 12,
+                                "score_valid": True,
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            summary = build_review_summary(output_dir, AS_OF.isoformat())
+            rendered = render_review_summary(summary)
+
+        self.assertIn("candidates[0]:valid_visible_score_missing", summary.score_state_contract_findings)
+        self.assertIn("candidates[0]:visible_score_field_missing", summary.score_state_contract_findings)
+        self.assertIn("targeted_smoke_results[0]:valid_score_alias_mismatch:score_total", summary.score_state_contract_findings)
+        self.assertIn("score state contract:", rendered)
+        self.assertIn("candidates[0]:valid_visible_score_missing", rendered)
+        self.assertIn("candidates[0]:visible_score_field_missing", rendered)
+        self.assertIn("targeted_smoke_results[0]:valid_score_alias_mismatch:score_total", rendered)
 
     def test_opendart_disclosure_collection_is_date_based_not_per_symbol(self):
         with tempfile.TemporaryDirectory() as output_dir:
@@ -375,10 +809,308 @@ class KoreaLiveLiteTests(unittest.TestCase):
         self.assertFalse(any(item.candidate_source_path == "targeted_smoke" for item in result.candidates))
         self.assertTrue(result.run_log.targeted_smoke_results)
         smoke = next(item for item in result.run_log.targeted_smoke_results if item["symbol"] == "009999")
-        self.assertEqual(smoke["status"], "insufficient_evidence")
+        self.assertEqual(smoke["status"], "evidence_pending_expansion")
         self.assertFalse(smoke["production_candidate"])
         self.assertNotEqual(smoke["stage"], Stage.STAGE_3_GREEN.value)
         self.assertNotIn("스모크테스트", brief_text)
+
+    def test_targeted_smoke_runs_even_when_event_symbol_budget_is_zero(self):
+        url = "https://news.example.com/smoke"
+        provider = FixtureSearchProvider(
+            results_by_query={
+                "스모크테스트 수주잔고": (
+                    SearchResult(
+                        title="스모크테스트 수주잔고 증가",
+                        url=url,
+                        snippet="수주잔고와 매출 성장",
+                        source="fixture-news",
+                        query="스모크테스트 수주잔고",
+                        confidence=0.8,
+                    ),
+                )
+            }
+        )
+        with tempfile.TemporaryDirectory() as output_dir:
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    targeted_smoke_enabled=True,
+                    targeted_smoke_symbol="009999",
+                    targeted_smoke_company="스모크테스트",
+                    targeted_smoke_queries=("스모크테스트 수주잔고",),
+                    budget=KoreaLiveLiteBudget(
+                        max_symbols_for_event_search=0,
+                        max_symbols_for_deep_research=0,
+                        max_naver_search_calls_per_day=10,
+                    ),
+                    browser_provider=provider,
+                    free_search_provider=EmptySearchProvider(),
+                    fixture_text_by_url={url: "스모크테스트 수주잔고 증가와 매출 성장"},
+                )
+            )
+
+        smoke = next(item for item in result.run_log.targeted_smoke_results if item["symbol"] == "009999")
+        self.assertEqual(smoke["status"], "evidence_found")
+        self.assertFalse(any(item.candidate_source_path == "targeted_smoke" for item in result.candidates))
+
+    def test_targeted_smoke_only_runs_injected_candidate_and_skips_production_candidates(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    targeted_smoke_enabled=True,
+                    targeted_smoke_only=True,
+                    targeted_smoke_symbol="009999",
+                    targeted_smoke_company="스모크테스트",
+                    targeted_smoke_queries=("스모크테스트 수주잔고",),
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+
+        self.assertEqual(tuple(item.stage.symbol for item in result.web_results), ("009999",))
+        self.assertTrue(result.run_log.targeted_smoke_results)
+        self.assertEqual(result.cheap_scan.instruments_scanned, 0)
+        self.assertFalse(result.candidates)
+        self.assertFalse(result.run_log.skipped_candidates)
+
+    def test_targeted_smoke_marks_score_invalid_when_theme_route_provider_errors(self):
+        url = "https://news.example.com/smoke-route-error"
+        provider = FixtureSearchProvider(
+            results_by_query={
+                "스모크테스트 수주잔고": (
+                    SearchResult(
+                        title="스모크테스트 수주잔고 증가",
+                        url=url,
+                        snippet="수주잔고와 매출 성장",
+                        source="fixture-news",
+                        query="스모크테스트 수주잔고",
+                        confidence=0.8,
+                    ),
+                )
+            }
+        )
+        route_provider = FakeThemeRouteProvider(
+            output=ThemeRouteOutput(
+                status="provider_error",
+                blocked_reason="provider returned no valid route json",
+            )
+        )
+        with tempfile.TemporaryDirectory() as output_dir:
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    targeted_smoke_enabled=True,
+                    targeted_smoke_symbol="009999",
+                    targeted_smoke_company="스모크테스트",
+                    targeted_smoke_queries=("스모크테스트 수주잔고",),
+                    budget=KoreaLiveLiteBudget(
+                        max_symbols_for_event_search=0,
+                        max_symbols_for_deep_research=0,
+                        max_naver_search_calls_per_day=10,
+                    ),
+                    browser_provider=provider,
+                    free_search_provider=EmptySearchProvider(),
+                    fixture_text_by_url={url: "스모크테스트 수주잔고 증가와 매출 성장"},
+                    theme_rebalance_enabled=True,
+                    theme_route_provider=route_provider,
+                    theme_evidence_review_enabled=False,
+                )
+            )
+
+        smoke = next(item for item in result.run_log.targeted_smoke_results if item["symbol"] == "009999")
+        self.assertEqual(smoke["status"], "score_blocked_theme_route")
+        self.assertFalse(smoke["score_valid"])
+        self.assertIsNone(smoke["visible_score"])
+        self.assertIsNone(smoke["score_total"])
+        self.assertEqual(smoke["score_blocked_reason"], "theme_route_provider_error")
+        self.assertIsNotNone(smoke["raw_score_total_before_theme_route_block"])
+        self.assertEqual(smoke["stage"], Stage.STAGE_0)
+        self.assertIn("score_invalid:theme_route_provider_error", smoke["score_variability_drivers"])
+        self.assertIn("theme_rebalance_status:provider_error", smoke["score_variability_drivers"])
+        self.assertIn("theme_route_status:provider_error", smoke["score_variability_drivers"])
+
+    def test_targeted_smoke_validity_uses_score_snapshot_even_if_diagnostics_string_is_true(self):
+        score = ScoreSnapshot(
+            symbol="009999",
+            as_of_date=AS_OF,
+            eps_fcf_explosion_score=0,
+            earnings_visibility_score=0,
+            bottleneck_pricing_score=0,
+            market_mispricing_score=0,
+            valuation_rerating_score=0,
+            capital_allocation_score=0,
+            information_confidence_score=0,
+            risk_penalty=0,
+            total_score=0,
+            diagnostic_scores={
+                "score_valid": 0.0,
+                "score_blocked_by_score_gap": 100.0,
+                "raw_score_total_before_score_gap_block": 68.9,
+            },
+        )
+        result = SimpleNamespace(score=score, theme_route_diagnostics={"score_valid": "true"})
+
+        self.assertFalse(_result_score_valid(result))
+        self.assertEqual(_score_blocked_status("score_gap_llm_no_suggested_queries"), "score_blocked_score_gap")
+
+    def test_targeted_smoke_hides_invalid_score_components(self):
+        score = ScoreSnapshot(
+            symbol="009999",
+            as_of_date=AS_OF,
+            eps_fcf_explosion_score=0,
+            earnings_visibility_score=0,
+            bottleneck_pricing_score=0,
+            market_mispricing_score=0,
+            valuation_rerating_score=0,
+            capital_allocation_score=0,
+            information_confidence_score=0,
+            risk_penalty=0,
+            total_score=0,
+            diagnostic_scores={
+                "score_valid": 0.0,
+                "score_blocked_by_score_gap": 100.0,
+                "raw_eps_fcf_before_score_gap_block": 16.0,
+                "raw_earnings_visibility_before_score_gap_block": 14.0,
+                "raw_bottleneck_pricing_before_score_gap_block": 15.0,
+                "raw_market_mispricing_before_score_gap_block": 11.0,
+                "raw_valuation_rerating_before_score_gap_block": 12.0,
+                "raw_capital_allocation_before_score_gap_block": 4.0,
+                "raw_information_confidence_before_score_gap_block": 5.0,
+                "raw_risk_penalty_before_score_gap_block": 0.0,
+                "raw_score_total_before_score_gap_block": 77.0,
+            },
+        )
+        candidate = SimpleNamespace(
+            symbol="009999",
+            company_name="스모크테스트",
+            candidate_source_path="targeted_smoke",
+            test_injected=True,
+            production_candidate=False,
+        )
+        result = SimpleNamespace(
+            theme_route_diagnostics={"score_valid": False, "score_blocked_reason": "score_gap_no_executable_searches"},
+            web_result=SimpleNamespace(evidence=(), queries_run=()),
+            score=score,
+            stage=SimpleNamespace(stage=Stage.STAGE_0, stage_reason=("score was marked invalid before stage classification",)),
+            feature_result=SimpleNamespace(payload=SimpleNamespace(large_sector_id=None, canonical_archetype_id=None), source_fields={}),
+            feature_input=FeatureEngineeringInput(symbol="009999", as_of_date=AS_OF),
+            expansion_queries_run=(),
+        )
+
+        row = _targeted_smoke_result_row(candidate, result)
+
+        self.assertFalse(row["score_valid"])
+        self.assertIsNone(row["visible_score"])
+        self.assertIsNone(row["score_total"])
+        self.assertIsInstance(row["score_fingerprint"], str)
+        self.assertIsNone(row["score_components"])
+        self.assertIsInstance(row["research_input_fingerprint"], str)
+        self.assertEqual(row["raw_score_before_block"], 77.0)
+        self.assertEqual(row["raw_score_components_before_block"]["eps_fcf_explosion_score"], 16.0)
+        self.assertEqual(row["score_evidence_ids"], ())
+        self.assertIn("score_invalid:score_gap_no_executable_searches", row["score_variability_drivers"])
+        self.assertIn("score_gap_blocked:score_gap_no_executable_searches", row["score_variability_drivers"])
+        self.assertIn(f"research_input_fingerprint:{row['research_input_fingerprint']}", row["score_variability_drivers"])
+        self.assertEqual(score_state_contract_violations(row), ())
+
+    def test_targeted_smoke_explains_valid_score_variability_inputs(self):
+        score = ScoreSnapshot(
+            symbol="009999",
+            as_of_date=AS_OF,
+            eps_fcf_explosion_score=20,
+            earnings_visibility_score=10,
+            bottleneck_pricing_score=12,
+            market_mispricing_score=8,
+            valuation_rerating_score=9,
+            capital_allocation_score=2,
+            information_confidence_score=4,
+            risk_penalty=0,
+            total_score=65,
+            diagnostic_scores={
+                "score_valid": 100.0,
+                "estimate_missing_fcf_source": 100.0,
+                "estimate_missing_revision_source": 100.0,
+                "estimate_missing_op_source": 100.0,
+                "estimate_conflict_count_capped": 2.0,
+            },
+        )
+        candidate = SimpleNamespace(
+            symbol="009999",
+            company_name="스모크테스트",
+            candidate_source_path="targeted_smoke",
+            test_injected=True,
+            production_candidate=False,
+        )
+        result = SimpleNamespace(
+            theme_route_diagnostics={
+                "score_valid": True,
+                "theme_rebalance_status": "completed",
+                "theme_route_status": "transition_detected",
+                "theme_evidence_gate_status": "source_backed",
+                "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                "post_score_gap_expansion_count": 0,
+                "post_score_gap_expansion_status": "not_attempted",
+            },
+            web_result=SimpleNamespace(evidence=(), queries_run=()),
+            score=score,
+            stage=SimpleNamespace(stage=Stage.STAGE_2, stage_reason=("valid but incomplete evidence",)),
+            feature_result=SimpleNamespace(
+                payload=SimpleNamespace(large_sector_id="R2_AI_SEMICONDUCTOR_ELECTRONICS", canonical_archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY"),
+                source_fields={"estimate_selected_eps_source": "company_guide_snapshot"},
+            ),
+            feature_input=FeatureEngineeringInput(symbol="009999", as_of_date=AS_OF),
+            expansion_queries_run=(),
+        )
+
+        row = _targeted_smoke_result_row(candidate, result)
+
+        self.assertTrue(row["score_valid"])
+        self.assertEqual(row["visible_score"], 65)
+        self.assertEqual(row["score_total"], 65)
+        self.assertIsInstance(row["research_input_fingerprint"], str)
+        self.assertIn("estimate_source_missing:fcf", row["score_variability_drivers"])
+        self.assertIn("estimate_source_missing:revision", row["score_variability_drivers"])
+        self.assertIn("estimate_source_missing:op", row["score_variability_drivers"])
+        self.assertIn("input_missing:research_report", row["score_variability_drivers"])
+        self.assertIn("llm_expansion_query_count:0", row["score_variability_drivers"])
+        self.assertIn("score_gap_expansion_status:not_attempted", row["score_variability_drivers"])
+        self.assertIn(f"research_input_fingerprint:{row['research_input_fingerprint']}", row["score_variability_drivers"])
+        self.assertEqual(score_state_contract_violations(row), ())
+
+    def test_top_trading_value_probe_selects_highest_value_without_production_pollution(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    top_trading_value_probe_enabled=True,
+                    top_trading_value_probe_count=2,
+                    budget=KoreaLiveLiteBudget(
+                        max_symbols_for_event_search=0,
+                        max_symbols_for_deep_research=0,
+                        max_naver_search_calls_per_day=20,
+                    ),
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+
+        probe_rows = tuple(result.run_log.top_trading_value_probe_candidates)
+        self.assertEqual([item["symbol"] for item in probe_rows], ["222222", "444444"])
+        self.assertTrue(all(item["candidate_source_path"] == "top_trading_value_probe" for item in probe_rows))
+        self.assertTrue(all(item["production_candidate"] is False for item in probe_rows))
+        self.assertFalse(any(item.candidate_source_path == "top_trading_value_probe" for item in result.candidates))
+        probe_results = [item for item in result.run_log.targeted_smoke_results if item["candidate_source_path"] == "top_trading_value_probe"]
+        self.assertEqual({item["symbol"] for item in probe_results}, {"222222", "444444"})
+        self.assertTrue(all("score_total" in item for item in probe_results))
+        self.assertTrue(all("stage_reason" in item for item in probe_results))
+        self.assertTrue(all("scoring_canonical_archetype_id" in item for item in probe_results))
+        self.assertTrue(all("post_score_gap_expansion_count" in item for item in probe_results))
+        self.assertTrue(all(item["feature_input_counts"]["price_bars"] > 0 for item in probe_results))
 
     def test_report_radar_candidate_path_respects_budget_and_records_source_path(self):
         url = "https://ssl.pstatic.net/imgstock/upload/research/company/radar_report.pdf"
@@ -521,6 +1253,7 @@ class KoreaLiveLiteTests(unittest.TestCase):
                     output_directory=output_dir,
                     fixture_mode=False,
                     live_enabled=True,
+                    env_file=None,
                     http_client=http_client,
                     browser_provider=EmptySearchProvider(),
                     free_search_provider=EmptySearchProvider(),
@@ -579,6 +1312,8 @@ class KoreaLiveLiteTests(unittest.TestCase):
 
         self.assertEqual(result.run_log.source_modes["naver_search"], "live_executed")
         self.assertTrue(any(item.source_type == "news" for item in result.evidence))
+        self.assertGreaterEqual(self.codex_theme_route.call_count, 1)
+        self.assertIn("completed", result.run_log.theme_route_status_counts)
 
     def test_request_only_sources_are_marked_when_live_credentials_exist(self):
         http_client = MockHttpClient(json_by_url_token={"opendart": {"total_page": 1, "list": []}})
@@ -596,6 +1331,7 @@ class KoreaLiveLiteTests(unittest.TestCase):
                     output_directory=output_dir,
                     fixture_mode=False,
                     live_enabled=True,
+                    env_file=None,
                     http_client=http_client,
                     browser_provider=EmptySearchProvider(),
                     free_search_provider=EmptySearchProvider(),
@@ -640,6 +1376,7 @@ class KoreaLiveLiteTests(unittest.TestCase):
             json_by_url_token={
                 "GetKrxListedInfoService": DATA_GO_LISTED_ITEMS_PAYLOAD,
                 "GetStockSecuritiesInfoService": DATA_GO_STOCK_PRICE_PAYLOAD,
+                "GetFinaStatInfoService": DATA_GO_FINANCIAL_PAYLOAD,
                 "opendart": {"total_page": 1, "list": []},
             }
         )
@@ -673,8 +1410,365 @@ class KoreaLiveLiteTests(unittest.TestCase):
         self.assertEqual(candidate.recommended_next_layer.value, "event_search")
         self.assertIn("PRICE_VOLUME_SPIKE", candidate.reason_codes)
         self.assertEqual(result.run_log.source_modes["data_go_kr"], "live_executed")
-        self.assertEqual(result.run_log.source_call_counts["data_go_kr_calls"], 2)
+        self.assertEqual(result.run_log.source_call_counts["data_go_kr_calls"], 5)
+        self.assertEqual(result.run_log.source_call_counts["data_go_kr_financial_actual_calls"], 3)
+        self.assertTrue(any(item.source_type == "financial_actual" and item.symbol == "999999" for item in result.evidence))
         self.assertNotIn("data_go_kr", result.run_log.request_only_sources)
+
+    def test_targeted_smoke_only_uses_direct_data_go_price_without_full_universe(self):
+        http_client = MockHttpClient(
+            json_by_url_token={
+                "GetStockSecuritiesInfoService": DATA_GO_STOCK_PRICE_PAYLOAD,
+                "GetFinaStatInfoService": DATA_GO_FINANCIAL_PAYLOAD,
+                "opendart": {"total_page": 1, "list": []},
+            }
+        )
+        env = {
+            "OPENDART_API_KEY": "OPENDART_SECRET",
+            "DATA_GO_KR_SERVICE_KEY": "DATA_SECRET",
+            "NAVER_CLIENT_ID": "NAVER_ID",
+            "NAVER_CLIENT_SECRET": "NAVER_SECRET",
+        }
+
+        with tempfile.TemporaryDirectory() as output_dir, patch.dict("os.environ", env, clear=True):
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    fixture_mode=False,
+                    live_enabled=True,
+                    http_client=http_client,
+                    budget=KoreaLiveLiteBudget(
+                        max_data_go_kr_calls_per_day=10,
+                        max_symbols_for_event_search=0,
+                        max_symbols_for_deep_research=0,
+                    ),
+                    targeted_smoke_enabled=True,
+                    targeted_smoke_only=True,
+                    targeted_smoke_symbol="999999",
+                    targeted_smoke_company="라이브전력",
+                    targeted_smoke_queries=("라이브전력 실적",),
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                    theme_rebalance_enabled=False,
+                    company_guide_enabled=False,
+                )
+            )
+
+        stock_price_requests = [request for request in result.run_log.built_requests if "GetStockSecuritiesInfoService" in request.url]
+        self.assertEqual(len(stock_price_requests), 1)
+        self.assertEqual(stock_price_requests[0].params["likeSrtnCd"], "999999")
+        self.assertEqual(stock_price_requests[0].params["numOfRows"], 1000)
+        self.assertNotIn("pageNo", stock_price_requests[0].params)
+        financial_requests = [request for request in result.run_log.built_requests if "GetFinaStatInfoService" in request.url]
+        self.assertEqual(len(financial_requests), 3)
+        self.assertTrue(all(request.params["likeSrtnCd"] == "999999" for request in financial_requests))
+        self.assertFalse(any("corpNm" in request.params for request in financial_requests))
+        self.assertFalse(any("GetKrxListedInfoService" in request.url for request in result.run_log.built_requests))
+        self.assertEqual(result.run_log.source_modes["data_go_kr"], "live_targeted")
+        self.assertEqual(result.run_log.source_call_counts["data_go_kr_calls"], 4)
+        smoke = next(item for item in result.run_log.targeted_smoke_results if item["symbol"] == "999999")
+        self.assertEqual(smoke["feature_input_counts"]["price_bars"], 2)
+        self.assertTrue(any(item.source_type == "financial_actual" and item.symbol == "999999" for item in result.evidence))
+
+    def test_opendart_single_account_live_financials_feed_base_feature_input(self):
+        http_client = MockHttpClient(
+            json_by_url_token={
+                "GetKrxListedInfoService": DATA_GO_LISTED_ITEMS_PAYLOAD,
+                "GetStockSecuritiesInfoService": DATA_GO_STOCK_PRICE_PAYLOAD,
+                "GetFinaStatInfoService": DATA_GO_FINANCIAL_PAYLOAD,
+                "fnlttSinglAcnt": OPENDART_SINGLE_ACCOUNT_PAYLOAD,
+                "opendart": OPENDART_DISCLOSURE_WITH_CORP_PAYLOAD,
+            }
+        )
+        env = {
+            "OPENDART_API_KEY": "OPENDART_SECRET",
+            "DATA_GO_KR_SERVICE_KEY": "DATA_SECRET",
+            "NAVER_CLIENT_ID": "NAVER_ID",
+            "NAVER_CLIENT_SECRET": "NAVER_SECRET",
+        }
+
+        with tempfile.TemporaryDirectory() as output_dir, patch.dict("os.environ", env, clear=True):
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    fixture_mode=False,
+                    live_enabled=True,
+                    http_client=http_client,
+                    budget=KoreaLiveLiteBudget(
+                        max_data_go_kr_calls_per_day=10,
+                        max_opendart_calls_per_day=10,
+                        max_symbols_for_event_search=10,
+                        max_symbols_for_deep_research=10,
+                    ),
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+
+        self.assertEqual(result.run_log.source_call_counts["opendart_financial_statement_calls"], 5)
+        self.assertTrue(
+            any(
+                item.source_type == "financial_actual"
+                and item.symbol == "999999"
+                and item.title == "Reported financials 2024-03-31"
+                for item in result.evidence
+            )
+        )
+        self.assertTrue(
+            any(
+                item.source_type == "financial_actual"
+                and item.symbol == "999999"
+                and item.source_name == "OpenDART single account"
+                and item.parsed_fields["operating_profit"] == 25000000000.0
+                and item.parsed_fields["cashflow_from_operations"] == 30000000000.0
+                and item.parsed_fields["capex"] == 7000000000.0
+                and item.parsed_fields["fcf"] == 23000000000.0
+                and item.parsed_fields["equity"] == 80000000000.0
+                for item in result.evidence
+            )
+        )
+
+    def test_opendart_single_account_uses_corp_code_map_when_recent_disclosure_missing(self):
+        http_client = MockHttpClient(
+            json_by_url_token={
+                "GetStockSecuritiesInfoService": DATA_GO_STOCK_PRICE_PAYLOAD,
+                "GetFinaStatInfoService": {"response": {"body": {"items": {"item": []}, "totalCount": 0}}},
+                "fnlttSinglAcnt": OPENDART_SINGLE_ACCOUNT_PAYLOAD,
+                "opendart": {"total_page": 1, "list": []},
+            },
+            bytes_by_url_token={
+                "corpCode.xml": _opendart_corp_code_zip(
+                    (
+                        ("00199999", "라이브전력", "999999", "20240501"),
+                        ("00188888", "다른회사", "888888", "20240501"),
+                    )
+                )
+            },
+        )
+        env = {
+            "OPENDART_API_KEY": "OPENDART_SECRET",
+            "DATA_GO_KR_SERVICE_KEY": "DATA_SECRET",
+            "NAVER_CLIENT_ID": "NAVER_ID",
+            "NAVER_CLIENT_SECRET": "NAVER_SECRET",
+        }
+
+        with tempfile.TemporaryDirectory() as output_dir, patch.dict("os.environ", env, clear=True):
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    fixture_mode=False,
+                    live_enabled=True,
+                    http_client=http_client,
+                    budget=KoreaLiveLiteBudget(
+                        max_data_go_kr_calls_per_day=10,
+                        max_opendart_calls_per_day=10,
+                        max_opendart_detail_fetches_per_run=0,
+                        max_symbols_for_event_search=0,
+                        max_symbols_for_deep_research=0,
+                    ),
+                    targeted_smoke_enabled=True,
+                    targeted_smoke_only=True,
+                    targeted_smoke_symbol="999999",
+                    targeted_smoke_company="라이브전력",
+                    targeted_smoke_queries=("라이브전력 실적",),
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                    theme_rebalance_enabled=False,
+                    company_guide_enabled=False,
+                )
+            )
+
+        corp_code_requests = [request for request in result.run_log.built_requests if "corpCode.xml" in request.url]
+        self.assertEqual(len(corp_code_requests), 1)
+        self.assertNotIn("crtfc_key", corp_code_requests[0].params)
+        opendart_financial_requests = [request for request in result.run_log.built_requests if "fnlttSinglAcntAll" in request.url]
+        self.assertEqual(len(opendart_financial_requests), 5)
+        self.assertTrue(all(request.params["corp_code"] == "00199999" for request in opendart_financial_requests))
+        self.assertEqual(result.run_log.source_call_counts["opendart_company_code_calls"], 1)
+        self.assertEqual(result.run_log.source_call_counts["opendart_financial_statement_calls"], 5)
+        smoke = next(item for item in result.run_log.targeted_smoke_results if item["symbol"] == "999999")
+        self.assertGreaterEqual(smoke["feature_input_counts"]["financial_actuals"], 1)
+        self.assertTrue(
+            any(
+                item.source_type == "financial_actual"
+                and item.symbol == "999999"
+                and item.source_name == "OpenDART single account"
+                for item in result.evidence
+            )
+        )
+
+    def test_opendart_disclosure_scan_reserves_budget_for_financial_actuals(self):
+        disclosure_payload = dict(OPENDART_DISCLOSURE_WITH_CORP_PAYLOAD)
+        disclosure_payload["total_page"] = 99
+        http_client = MockHttpClient(
+            json_by_url_token={
+                "GetKrxListedInfoService": DATA_GO_LISTED_ITEMS_PAYLOAD,
+                "GetStockSecuritiesInfoService": DATA_GO_STOCK_PRICE_PAYLOAD,
+                "GetFinaStatInfoService": DATA_GO_FINANCIAL_PAYLOAD,
+                "fnlttSinglAcnt": OPENDART_SINGLE_ACCOUNT_PAYLOAD,
+                "opendart": disclosure_payload,
+            }
+        )
+        env = {
+            "OPENDART_API_KEY": "OPENDART_SECRET",
+            "DATA_GO_KR_SERVICE_KEY": "DATA_SECRET",
+            "NAVER_CLIENT_ID": "NAVER_ID",
+            "NAVER_CLIENT_SECRET": "NAVER_SECRET",
+        }
+
+        with tempfile.TemporaryDirectory() as output_dir, patch.dict("os.environ", env, clear=True):
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    fixture_mode=False,
+                    live_enabled=True,
+                    http_client=http_client,
+                    budget=KoreaLiveLiteBudget(
+                        max_data_go_kr_calls_per_day=10,
+                        max_opendart_calls_per_day=4,
+                        max_opendart_detail_fetches_per_run=0,
+                        max_symbols_for_event_search=10,
+                        max_symbols_for_deep_research=10,
+                    ),
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+
+        self.assertEqual(result.run_log.source_call_counts["opendart_disclosure_date_range"], 1)
+        self.assertEqual(result.run_log.source_call_counts["opendart_financial_statement_calls"], 3)
+        self.assertTrue(
+            any(
+                item.source_type == "financial_actual"
+                and item.symbol == "999999"
+                and item.source_name == "OpenDART single account"
+                for item in result.evidence
+            )
+        )
+
+    def test_data_go_scan_reserves_budget_for_candidate_financial_actuals(self):
+        http_client = MockHttpClient(
+            json_by_url_token={
+                "GetKrxListedInfoService": DATA_GO_LISTED_ITEMS_PAYLOAD,
+                "GetStockSecuritiesInfoService": DATA_GO_STOCK_PRICE_PAYLOAD,
+                "GetFinaStatInfoService": DATA_GO_FINANCIAL_PAYLOAD,
+                "opendart": OPENDART_DISCLOSURE_WITH_CORP_PAYLOAD,
+            }
+        )
+        env = {
+            "OPENDART_API_KEY": "OPENDART_SECRET",
+            "DATA_GO_KR_SERVICE_KEY": "DATA_SECRET",
+            "NAVER_CLIENT_ID": "NAVER_ID",
+            "NAVER_CLIENT_SECRET": "NAVER_SECRET",
+        }
+
+        with tempfile.TemporaryDirectory() as output_dir, patch.dict("os.environ", env, clear=True):
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    fixture_mode=False,
+                    live_enabled=True,
+                    http_client=http_client,
+                    targeted_smoke_enabled=True,
+                    targeted_smoke_symbol="999999",
+                    targeted_smoke_company="라이브전력",
+                    budget=KoreaLiveLiteBudget(
+                        max_data_go_kr_calls_per_day=5,
+                        max_opendart_calls_per_day=10,
+                        max_opendart_detail_fetches_per_run=0,
+                        max_symbols_for_event_search=0,
+                        max_symbols_for_deep_research=0,
+                        max_naver_search_calls_per_day=10,
+                    ),
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+
+        self.assertEqual(result.run_log.source_call_counts["data_go_kr_calls"], 5)
+        self.assertEqual(result.run_log.source_call_counts["data_go_kr_financial_actual_calls"], 3)
+        smoke = next(item for item in result.run_log.targeted_smoke_results if item["symbol"] == "999999")
+        self.assertGreaterEqual(smoke["feature_input_counts"]["financial_actuals"], 1)
+
+    def test_company_guide_live_enrichment_feeds_consensus_and_reports_to_pipeline(self):
+        http_client = MockHttpClient(
+            json_by_url_token={
+                "GetKrxListedInfoService": DATA_GO_LISTED_ITEMS_PAYLOAD,
+                "GetStockSecuritiesInfoService": DATA_GO_STOCK_PRICE_PAYLOAD,
+                "GetFinaStatInfoService": DATA_GO_FINANCIAL_PAYLOAD,
+                "opendart": {"total_page": 1, "list": []},
+                "c1080001_data.aspx?cmp_cd=999999": {
+                    "lists": [
+                        {
+                            "RPT_ID": 24052101,
+                            "ANL_DT": "24/05/21",
+                            "IDX": "20240521.000001",
+                            "RPT_TITLE": "라이브전력 실적 가시성 확대",
+                            "TARGET_PRC": "120,000",
+                            "RECOMM": "Buy",
+                            "COMMENT": "수주잔고 증가<br/>목표주가 상향 및 EPS 상향",
+                            "PAGE_CNT": 5,
+                            "FILE_NM": "1F00120240521_999999.pdf",
+                            "CLOSE_PRC": "85,000",
+                            "EPS": 12345.0,
+                            "BRK_NM_SHORT_KOR": "테스트증권",
+                            "ANL_NM_KOR": "홍길동",
+                            "PRC_ACTION_TYP_NM": "목표주가 상향",
+                            "EPS_ACTION_TYP_NM": "추정EPS 상향",
+                            "RECOMM_ACTION_TYP_NM": "변동없음",
+                        }
+                    ]
+                },
+            },
+            text_by_url_token={
+                "c1010001.aspx?cmp_cd=999999": _company_guide_live_lite_consensus_html(),
+            },
+        )
+        env = {
+            "OPENDART_API_KEY": "OPENDART_SECRET",
+            "DATA_GO_KR_SERVICE_KEY": "DATA_SECRET",
+            "NAVER_CLIENT_ID": "NAVER_ID",
+            "NAVER_CLIENT_SECRET": "NAVER_SECRET",
+        }
+
+        with tempfile.TemporaryDirectory() as output_dir, patch.dict("os.environ", env, clear=True):
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    fixture_mode=False,
+                    live_enabled=True,
+                    http_client=http_client,
+                    targeted_smoke_enabled=True,
+                    targeted_smoke_symbol="999999",
+                    targeted_smoke_company="라이브전력",
+                    budget=KoreaLiveLiteBudget(
+                        max_data_go_kr_calls_per_day=5,
+                        max_opendart_calls_per_day=10,
+                        max_opendart_detail_fetches_per_run=0,
+                        max_symbols_for_event_search=0,
+                        max_symbols_for_deep_research=0,
+                        max_naver_search_calls_per_day=10,
+                        max_company_guide_calls_per_day=2,
+                    ),
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                )
+            )
+
+        smoke = next(item for item in result.run_log.targeted_smoke_results if item["symbol"] == "999999")
+        self.assertEqual(result.run_log.source_modes["company_guide"], "live_executed")
+        self.assertEqual(result.run_log.source_call_counts["company_guide_snapshot_calls"], 1)
+        self.assertEqual(result.run_log.source_call_counts["company_guide_recent_report_calls"], 1)
+        self.assertEqual(smoke["feature_input_counts"]["consensus"], 1)
+        self.assertEqual(smoke["feature_input_counts"]["research_reports"], 1)
+        self.assertTrue(any(item.source_type == "consensus" and item.symbol == "999999" for item in result.evidence))
+        self.assertTrue(any(item.source_type == "research_report" and item.symbol == "999999" for item in result.evidence))
 
     def test_live_lite_can_run_with_data_go_v2_endpoint_config(self):
         http_client = MockHttpClient(
@@ -861,7 +1955,7 @@ DATA_GO_LISTED_ITEMS_PAYLOAD = {
                 "item": [
                     {
                         "basDt": "20240521",
-                        "srtnCd": "999999",
+                        "srtnCd": "A999999",
                         "isinCd": "KR7999990000",
                         "itmsNm": "라이브전력",
                         "corpNm": "라이브전력",
@@ -914,6 +2008,122 @@ DATA_GO_STOCK_PRICE_PAYLOAD = {
     }
 }
 
+DATA_GO_FINANCIAL_PAYLOAD = {
+    "response": {
+        "body": {
+            "items": {
+                "item": [
+                    {
+                        "bizYear": "2023",
+                        "srtnCd": "999999",
+                        "corpNm": "라이브전력",
+                        "saleAmt": "100000000000",
+                        "bzopPft": "25000000000",
+                        "crtmNpf": "20000000000",
+                        "eps": "1200",
+                        "opm": "25",
+                    }
+                ]
+            },
+            "totalCount": 1,
+            "numOfRows": 10,
+            "pageNo": 1,
+        }
+    }
+}
+
+OPENDART_DISCLOSURE_WITH_CORP_PAYLOAD = {
+    "total_page": 1,
+    "list": [
+        {
+            "corp_code": "00199999",
+            "corp_name": "라이브전력",
+            "stock_code": "999999",
+            "corp_cls": "Y",
+            "report_nm": "분기보고서",
+            "rcept_no": "20240521000001",
+            "rcept_dt": "20240521",
+        }
+    ],
+}
+
+OPENDART_SINGLE_ACCOUNT_PAYLOAD = {
+    "status": "000",
+    "message": "정상",
+    "list": [
+        {
+            "corp_code": "00199999",
+            "bsns_year": "2023",
+            "reprt_code": "11011",
+            "fs_div": "CFS",
+            "fs_nm": "연결재무제표",
+            "sj_div": "IS",
+            "account_nm": "매출액",
+            "thstrm_amount": "100,000,000,000",
+        },
+        {
+            "corp_code": "00199999",
+            "bsns_year": "2023",
+            "reprt_code": "11011",
+            "fs_div": "CFS",
+            "fs_nm": "연결재무제표",
+            "sj_div": "IS",
+            "account_nm": "영업이익(손실)",
+            "thstrm_amount": "25,000,000,000",
+        },
+        {
+            "corp_code": "00199999",
+            "bsns_year": "2023",
+            "reprt_code": "11011",
+            "fs_div": "CFS",
+            "fs_nm": "연결재무제표",
+            "sj_div": "IS",
+            "account_nm": "당기순이익",
+            "thstrm_amount": "20,000,000,000",
+        },
+        {
+            "corp_code": "00199999",
+            "bsns_year": "2023",
+            "reprt_code": "11011",
+            "fs_div": "CFS",
+            "fs_nm": "연결재무제표",
+            "sj_div": "BS",
+            "account_nm": "자본총계",
+            "thstrm_amount": "80,000,000,000",
+        },
+        {
+            "corp_code": "00199999",
+            "bsns_year": "2023",
+            "reprt_code": "11011",
+            "fs_div": "CFS",
+            "fs_nm": "연결재무제표",
+            "sj_div": "CF",
+            "account_nm": "영업활동현금흐름",
+            "thstrm_amount": "30,000,000,000",
+        },
+        {
+            "corp_code": "00199999",
+            "bsns_year": "2023",
+            "reprt_code": "11011",
+            "fs_div": "CFS",
+            "fs_nm": "연결재무제표",
+            "sj_div": "CF",
+            "account_nm": "유형자산의 취득",
+            "thstrm_amount": "5,000,000,000",
+        },
+        {
+            "corp_code": "00199999",
+            "bsns_year": "2023",
+            "reprt_code": "11011",
+            "fs_div": "CFS",
+            "fs_nm": "연결재무제표",
+            "sj_div": "CF",
+            "account_nm": "무형자산의 취득",
+            "thstrm_amount": "2,000,000,000",
+        },
+    ],
+}
+
 def _candidate(result, symbol):
     for candidate in result.candidates:
         if candidate.symbol == symbol:
@@ -938,10 +2148,55 @@ def _disclosure(symbol, title, rcept_no):
     )
 
 
+def _company_guide_live_lite_consensus_html():
+    return """
+    <p class="disc table">[기준:2024.05.21]</p>
+    <table id="cTB15">
+      <tr>
+        <td rowspan="2"><span>4.10</span></td>
+        <th>투자의견</th><th>목표주가<span>(원)</span></th><th>EPS<span>(원)</span></th>
+        <th>PER<span>(배)</span></th><th>추정기관수</th>
+      </tr>
+      <tr>
+        <td><b>4.10</b></td><td>120,000</td><td>12,345</td><td>9.72</td><td>7</td>
+      </tr>
+    </table>
+    <table id="cTB24">
+      <tbody>
+        <tr>
+          <td>테스트증권</td><td>24/05/21</td><td>120,000</td><td>100,000</td>
+          <td><span>20.00</span></td><td>Buy</td><td>Buy</td>
+        </tr>
+      </tbody>
+    </table>
+    """
+
+
+def _opendart_corp_code_zip(rows):
+    body = ["<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "<result>"]
+    for corp_code, corp_name, stock_code, modify_date in rows:
+        body.extend(
+            [
+                "  <list>",
+                f"    <corp_code>{corp_code}</corp_code>",
+                f"    <corp_name>{corp_name}</corp_name>",
+                f"    <stock_code>{stock_code}</stock_code>",
+                f"    <modify_date>{modify_date}</modify_date>",
+                "  </list>",
+            ]
+        )
+    body.append("</result>")
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w") as archive:
+        archive.writestr("CORPCODE.xml", "\n".join(body).encode("utf-8"))
+    return buffer.getvalue()
+
+
 class MockHttpClient:
-    def __init__(self, json_by_url_token, text_by_url_token=None):
+    def __init__(self, json_by_url_token, text_by_url_token=None, bytes_by_url_token=None):
         self.json_by_url_token = dict(json_by_url_token)
         self.text_by_url_token = dict(text_by_url_token or {})
+        self.bytes_by_url_token = dict(bytes_by_url_token or {})
         self.stats = HttpClientStats()
         self.requests = []
 
@@ -971,6 +2226,21 @@ class MockHttpClient:
                 return HttpResult(ok=True, status_code=200, text=text, cache_path=str(cache_path) if cache_path else None)
         self.stats.live_requests_failed += 1
         return HttpResult(ok=False, error="mock_text_response_not_found")
+
+    def get_bytes(self, request, *, cache_path=None):
+        self.requests.append(request)
+        url = request.url + "?" + "&".join(f"{key}={value}" for key, value in request.params.items())
+        for token, payload in self.bytes_by_url_token.items():
+            if token in url:
+                self.stats.live_requests_executed += 1
+                if cache_path is not None:
+                    path = Path(cache_path)
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes(payload)
+                    self.stats.cache_writes += 1
+                return HttpResult(ok=True, status_code=200, bytes_data=payload, cache_path=str(cache_path) if cache_path else None)
+        self.stats.live_requests_failed += 1
+        return HttpResult(ok=False, error="mock_bytes_response_not_found")
 
 
 if __name__ == "__main__":

@@ -37,7 +37,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--case-root", default="data/historical_cases")
     parser.add_argument("--market", choices=[item.value for item in Market], default=Market.KR.value)
     parser.add_argument("--universe-limit", type=int)
-    parser.add_argument("--max-candidates-per-date", type=int, default=50)
+    parser.add_argument("--max-candidates-per-date", type=int)
     parser.add_argument("--max-report-radar-queries-per-date", type=int, default=0)
     parser.add_argument("--no-write", action="store_true", help="Run replay without writing report files.")
     return parser

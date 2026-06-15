@@ -312,6 +312,27 @@ def _disclosure(row: Mapping[str, Any], symbol: str, default_as_of: date) -> Dis
 
 
 def _consensus(row: Mapping[str, Any], symbol: str, default_as_of: date) -> ConsensusSnapshot:
+    known = {
+        "symbol",
+        "date",
+        "fiscal_year",
+        "as_of_date",
+        "source",
+        "sales_e",
+        "op_e",
+        "net_income_e",
+        "eps_e",
+        "fcf_e",
+        "bps_e",
+        "roe_e",
+        "per_e",
+        "pbr_e",
+        "analyst_count",
+        "target_price",
+        "target_multiple_type",
+        "target_multiple",
+        "parsed_fields",
+    }
     return ConsensusSnapshot(
         symbol=str(row.get("symbol") or symbol),
         date=date_value(row.get("date") or row.get("as_of_date") or default_as_of),
@@ -331,10 +352,30 @@ def _consensus(row: Mapping[str, Any], symbol: str, default_as_of: date) -> Cons
         target_price=float_or_none(row.get("target_price")),
         target_multiple_type=text_or_none(row.get("target_multiple_type")),
         target_multiple=float_or_none(row.get("target_multiple")),
+        parsed_fields=parsed_fields_from_record(row, known),
     )
 
 
 def _revision(row: Mapping[str, Any], symbol: str, default_as_of: date) -> ConsensusRevision:
+    known = {
+        "symbol",
+        "date",
+        "fiscal_year",
+        "as_of_date",
+        "source",
+        "eps_revision_1w",
+        "eps_revision_1m",
+        "eps_revision_3m",
+        "op_revision_1w",
+        "op_revision_1m",
+        "op_revision_3m",
+        "fcf_revision_1m",
+        "target_price_revision_1m",
+        "analyst_count_change",
+        "street_high_eps_revision_1m",
+        "street_low_eps_revision_1m",
+        "parsed_fields",
+    }
     return ConsensusRevision(
         symbol=str(row.get("symbol") or symbol),
         date=date_value(row.get("date") or row.get("as_of_date") or default_as_of),
@@ -351,6 +392,8 @@ def _revision(row: Mapping[str, Any], symbol: str, default_as_of: date) -> Conse
         analyst_count_change=int_or_none(row.get("analyst_count_change")),
         street_high_eps_revision_1m=float_or_none(row.get("street_high_eps_revision_1m")),
         street_low_eps_revision_1m=float_or_none(row.get("street_low_eps_revision_1m")),
+        source=str(row.get("source") or "HistoricalConsensus"),
+        parsed_fields=parsed_fields_from_record(row, known),
     )
 
 
@@ -515,7 +558,7 @@ def _evidence_records(
                 market=market,
                 symbol=symbol,
                 title=f"Consensus FY{item.fiscal_year}",
-                parsed_fields={"eps_e": item.eps_e, "op_e": item.op_e, "fcf_e": item.fcf_e},
+                parsed_fields={**item.parsed_fields, "eps_e": item.eps_e, "op_e": item.op_e, "fcf_e": item.fcf_e},
                 confidence=0.7,
             )
         )
@@ -525,7 +568,7 @@ def _evidence_records(
             Evidence(
                 evidence_id=f"historical-revision:{symbol}:{item.date.isoformat()}:{item.fiscal_year}",
                 source_type="consensus_revision",
-                source_name="HistoricalConsensus",
+                source_name=item.source,
                 source_tier=SourceTier.TIER_3,
                 published_at=timestamp,
                 observed_at=timestamp,
@@ -535,6 +578,7 @@ def _evidence_records(
                 symbol=symbol,
                 title=f"Consensus revision FY{item.fiscal_year}",
                 parsed_fields={
+                    **item.parsed_fields,
                     "eps_revision_1m": item.eps_revision_1m,
                     "op_revision_1m": item.op_revision_1m,
                     "fcf_revision_1m": item.fcf_revision_1m,

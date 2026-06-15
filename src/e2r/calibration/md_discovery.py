@@ -211,7 +211,7 @@ def _parse_v12_filename_ids(path: Path) -> tuple[str | None, str | None, str | N
     return None, None, None, None
 
 
-def discover_markdown_documents(root: str | Path) -> list[MarkdownDocument]:
+def discover_markdown_documents(root: str | Path, *, include_archive: bool = False) -> list[MarkdownDocument]:
     """Discover all MD files and classify generated calibration results.
 
     The function intentionally returns non-result MD files too, because the
@@ -226,7 +226,7 @@ def discover_markdown_documents(root: str | Path) -> list[MarkdownDocument]:
             relative_parts = path.relative_to(root_path).parts
         except ValueError:
             relative_parts = path.parts
-        if any(part in ARCHIVE_DIR_NAMES for part in relative_parts[:-1]):
+        if not include_archive and any(part in ARCHIVE_DIR_NAMES for part in relative_parts[:-1]):
             continue
         text_head = path.read_text(encoding="utf-8", errors="replace")[:24000]
         schema_family = _schema_family(path)

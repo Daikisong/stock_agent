@@ -8,16 +8,16 @@ Stage 3-Green 기준은 낮추지 않았고, 가격만 오른 케이스는 posit
 - profile_path: `configs/e2r_scoring_profile_v2_2.yaml`
 - active_profile_path: `configs/e2r_scoring_profile_active.yaml`
 - production_default_scoring_changed: `True`
-- applied_patch_count: `52`
-- applied_axis_counts: `{'earlier_thesis_break_watch': 2, 'hard_4c_confirmation': 1, 'local_4b_watch_guard': 13, 'stage2_required_bridge': 36}`
+- applied_patch_count: `108`
+- applied_axis_counts: `{'earlier_thesis_break_watch': 38, 'hard_4c_confirmation': 1, 'local_4b_watch_guard': 23, 'stage2_required_bridge': 46}`
 - rollback_profile: `calibrated`
 
 ## Applied Scope Counts
 - v12_stage2_bonus_scopes: `0`
-- v12_stage2_required_bridge_scopes: `36`
-- v12_local_4b_watch_guard_scopes: `13`
+- v12_stage2_required_bridge_scopes: `46`
+- v12_local_4b_watch_guard_scopes: `23`
 - v12_full_4b_overlay_scopes: `0`
-- v12_earlier_4c_watch_scopes: `2`
+- v12_earlier_4c_watch_scopes: `38`
 - v12_hard_4c_confirmation_scopes: `1`
 
 ## Simple Example

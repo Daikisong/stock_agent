@@ -45,6 +45,25 @@ class ParserAuditTests(unittest.TestCase):
 
         self.assertFalse(any(item.code == "low_parser_confidence" for item in findings))
 
+    def test_snippet_only_evidence_uses_specific_audit_codes(self):
+        evidence = _evidence(
+            source_type="news",
+            source_name="fixture-news",
+            parsed_fields={
+                "parser_confidence": 0.25,
+                "search_snippet_only": True,
+                "search_snippet_date_unverified": True,
+                "green_allowed_by_date": False,
+            },
+        )
+
+        findings = audit_parser_outputs(evidence=(evidence,))
+
+        codes = {item.code for item in findings}
+        self.assertIn("search_snippet_only_evidence", codes)
+        self.assertIn("search_snippet_date_unverified", codes)
+        self.assertNotIn("low_parser_confidence", codes)
+
 
 def _evidence(parsed_fields, source_type="research_report", source_name="FixtureBroker"):
     timestamp = datetime(2024, 5, 21, 8)

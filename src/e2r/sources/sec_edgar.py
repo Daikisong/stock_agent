@@ -7,6 +7,7 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+from e2r.evidence_ids import stable_news_evidence_id
 from e2r.models import DisclosureEvent, Evidence, FinancialActual, Market, NewsItem, SourceTier
 from e2r.sources.source_errors import (
     SourceRequest,
@@ -126,6 +127,7 @@ class SECEdgarConnector:
             operating_profit=float_or_none(row.get("operating_profit") or row.get("operating_income")),
             net_income=float_or_none(row.get("net_income")),
             eps=float_or_none(row.get("eps") or row.get("eps_diluted")),
+            equity=float_or_none(row.get("equity") or row.get("stockholders_equity") or row.get("total_equity")),
             cashflow_from_operations=cfo,
             capex=capex,
             fcf=fcf,
@@ -154,6 +156,7 @@ class SECEdgarConnector:
             "eps": ("EarningsPerShareDiluted",),
             "cashflow_from_operations": ("NetCashProvidedByUsedInOperatingActivities",),
             "capex": ("PaymentsToAcquirePropertyPlantAndEquipment",),
+            "equity": ("StockholdersEquity", "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"),
             "inventory": ("InventoryNet",),
             "receivables": ("AccountsReceivableNetCurrent",),
         }
@@ -193,6 +196,7 @@ class SECEdgarConnector:
                     operating_profit=values.get("operating_profit"),
                     net_income=values.get("net_income"),
                     eps=values.get("eps"),
+                    equity=values.get("equity"),
                     cashflow_from_operations=cfo,
                     capex=capex,
                     fcf=fcf,
@@ -246,12 +250,27 @@ class SECEdgarConnector:
         fields = parsed_fields_from_record(row, {"symbol", "source", "title", "published_at", "filed", "body", "raw_text", "as_of_date", "parsed_fields"})
         if raw_text:
             fields.update(_sec_keyword_fields(raw_text))
+        title = str(row.get("title") or row.get("form") or "SEC filing")
+        source = str(row.get("source") or "SEC EDGAR")
+        source_url = text_or_none(row.get("source_url") or row.get("url"))
+        fields.setdefault("source_url", source_url)
+        fields.setdefault(
+            "evidence_id",
+            stable_news_evidence_id(
+                symbol=str(row["symbol"]),
+                published_date=published.date(),
+                source=source,
+                source_url=source_url,
+                title=title,
+                prefix="sec-news",
+            ),
+        )
         return NewsItem(
             symbol=str(row["symbol"]),
             sector=text_or_none(row.get("sector")),
             published_at=published,
-            source=str(row.get("source") or "SEC EDGAR"),
-            title=str(row.get("title") or row.get("form") or "SEC filing"),
+            source=source,
+            title=title,
             as_of_date=date_value(row.get("as_of_date") or published.date()),
             body=raw_text,
             source_tier=SourceTier.TIER_0,
@@ -278,8 +297,17 @@ class SECEdgarConnector:
                 parsed_fields=event.parsed_fields,
                 confidence=0.8,
             )
+        source_url = str(event.parsed_fields.get("source_url") or event.parsed_fields.get("url") or "").strip() or None
+        evidence_id = str(event.parsed_fields.get("evidence_id") or "").strip() or stable_news_evidence_id(
+            symbol=event.symbol or "UNKNOWN",
+            published_date=event.published_at.date(),
+            source=event.source,
+            source_url=source_url,
+            title=event.title,
+            prefix="sec-news",
+        )
         return Evidence(
-            evidence_id=f"sec-news:{event.symbol}:{event.published_at.date().isoformat()}:{abs(hash(event.title))}",
+            evidence_id=evidence_id,
             source_type="sec_filing_news",
             source_name=event.source,
             source_tier=event.source_tier,
@@ -290,6 +318,7 @@ class SECEdgarConnector:
             market=market,
             symbol=event.symbol or "UNKNOWN",
             title=event.title,
+            url_or_identifier=source_url,
             excerpt_or_value=event.body[:240] if event.body else None,
             parsed_fields=event.parsed_fields,
             confidence=0.8,

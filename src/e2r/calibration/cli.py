@@ -59,11 +59,12 @@ def run_calibration_pipeline(
     data_directory: str | Path = DATA_DIR,
     report_directory: str | Path = REPORT_DIR,
     write_runtime_profiles: bool = True,
+    include_archive: bool = False,
 ) -> dict[str, Any]:
     md_root = Path(md_input_root)
     data_dir = Path(data_directory)
     report_dir = Path(report_directory)
-    documents = discover_markdown_documents(md_root)
+    documents = discover_markdown_documents(md_root, include_archive=include_archive)
     results = v11_result_documents(documents)
     prompts = prompt_spec_documents(documents)
 
@@ -140,12 +141,13 @@ def run_v12_full_pipeline(
     data_directory: str | Path = V12_DATA_DIR,
     report_directory: str | Path = V12_REPORT_DIR,
     preserve_global_profile: bool = True,
+    include_archive: bool = False,
 ) -> dict[str, Any]:
     md_root = Path(md_input_root)
     data_dir = Path(data_directory)
     report_dir = Path(report_directory)
     active_before = Path("configs/e2r_scoring_profile_active.yaml").read_text(encoding="utf-8") if Path("configs/e2r_scoring_profile_active.yaml").exists() else ""
-    documents = discover_markdown_documents(md_root)
+    documents = discover_markdown_documents(md_root, include_archive=include_archive)
     results = v12_result_documents(documents)
     prompts = prompt_spec_documents(documents)
     if not results:
@@ -195,6 +197,7 @@ def run_v12_full_pipeline(
     )
     summary = _build_v12_summary(
         md_root=md_root,
+        include_archive=include_archive,
         documents=documents,
         results=results,
         prompts=prompts,
@@ -223,6 +226,7 @@ def run_v12_calibration_pipeline(
     data_directory: str | Path = V12_DATA_DIR,
     report_directory: str | Path = V12_REPORT_DIR,
     activate_profile: bool = True,
+    include_archive: bool = False,
 ) -> dict[str, Any]:
     """One-command v12 flow: ingest, validate, derive patches, and apply safe runtime profile."""
 
@@ -231,6 +235,7 @@ def run_v12_calibration_pipeline(
         data_directory=data_directory,
         report_directory=report_directory,
         preserve_global_profile=False,
+        include_archive=include_archive,
     )
     apply_result = write_v12_rolling_profile(
         patch_specs_path=Path(data_directory) / "v12_patch_specs.jsonl",
@@ -404,6 +409,7 @@ def _build_summary(
 def _build_v12_summary(
     *,
     md_root: Path,
+    include_archive: bool = False,
     documents,
     results,
     prompts,
@@ -428,6 +434,7 @@ def _build_v12_summary(
     return {
         "repo": "https://github.com/Songdaiki/stock_agent",
         "md_input_root": str(md_root),
+        "include_archive": include_archive,
         "discovered_md_count": len(documents),
         "v12_result_md_count": len(results),
         "excluded_prompt_spec_count": len(prompts),
@@ -484,6 +491,7 @@ def _render_v12_ingest_summary(summary: dict[str, Any]) -> str:
     ]
     for key in (
         "md_input_root",
+        "include_archive",
         "v12_result_md_count",
         "v12_parsed_document_count",
         "v12_failed_document_count",
@@ -739,18 +747,36 @@ def build_parser() -> argparse.ArgumentParser:
     v12_apply.add_argument("--data-directory", default=str(V12_DATA_DIR))
     v12_apply.add_argument("--report-directory", default=str(V12_REPORT_DIR))
     v12_apply.add_argument("--no-activate-profile", action="store_true", default=False)
+    v12_apply.add_argument(
+        "--include-archive",
+        action="store_true",
+        default=False,
+        help="Include archive folders such as docs/round/achieve for cumulative v12 recalibration.",
+    )
 
     v12 = subparsers.add_parser("run-v12-full", help="Diagnostic v12 ingest and patch-ledger generation.")
     v12.add_argument("--md-input-root", default="docs/round")
     v12.add_argument("--data-directory", default=str(V12_DATA_DIR))
     v12.add_argument("--report-directory", default=str(V12_REPORT_DIR))
     v12.add_argument("--preserve-global-profile", action="store_true", default=True)
+    v12.add_argument(
+        "--include-archive",
+        action="store_true",
+        default=False,
+        help="Include archive folders such as docs/round/achieve for cumulative v12 diagnostics.",
+    )
     for alias in ("ingest-v12", "build-stage-transitions", "build-v12-shadow", "report-v12-coverage"):
         sub = subparsers.add_parser(alias, help=f"Alias for run-v12-full ({alias}).")
         sub.add_argument("--md-input-root", default="docs/round")
         sub.add_argument("--data-directory", default=str(V12_DATA_DIR))
         sub.add_argument("--report-directory", default=str(V12_REPORT_DIR))
         sub.add_argument("--preserve-global-profile", action="store_true", default=True)
+        sub.add_argument(
+            "--include-archive",
+            action="store_true",
+            default=False,
+            help="Include archive folders such as docs/round/achieve for cumulative v12 diagnostics.",
+        )
     return parser
 
 
@@ -762,6 +788,7 @@ def main(argv: list[str] | None = None) -> int:
             data_directory=args.data_directory,
             report_directory=args.report_directory,
             activate_profile=not args.no_activate_profile,
+            include_archive=args.include_archive,
         )
     elif args.command in {"run-v12-full", "ingest-v12", "build-stage-transitions", "build-v12-shadow", "report-v12-coverage"}:
         result = run_v12_full_pipeline(
@@ -769,6 +796,7 @@ def main(argv: list[str] | None = None) -> int:
             data_directory=args.data_directory,
             report_directory=args.report_directory,
             preserve_global_profile=args.preserve_global_profile,
+            include_archive=args.include_archive,
         )
     else:
         result = run_calibration_pipeline(

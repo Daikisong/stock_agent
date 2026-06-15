@@ -58,6 +58,7 @@ class DeterministicScorerTests(unittest.TestCase):
         self.assertEqual(snapshot.as_of_date, date(2024, 3, 27))
         self.assertEqual(snapshot.total_score, 65.0)
         self.assertEqual(snapshot.eps_fcf_explosion_score, 16.0)
+        self.assertEqual(snapshot.diagnostic_scores["score_valid"], 100.0)
         self.assertEqual(snapshot.diagnostic_scores["revision_score"], 72.0)
         self.assertEqual(snapshot.evidence_ids, ("ev-1", "ev-2"))
 

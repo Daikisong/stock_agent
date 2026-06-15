@@ -26,8 +26,20 @@ from e2r.backtest.stage_lifecycle_backtest import (
 )
 from e2r.features import DeterministicFeatureEngineer, FeatureEngineeringInput
 from e2r.historical_cases import HistoricalCase, load_historical_cases
-from e2r.models import Evidence, Market, PriceBar, Stage
+from e2r.models import Evidence, Market, PriceBar, ScoreSnapshot, Stage
 from e2r.red_team import RedTeamEngine
+from e2r.score_validity import (
+    is_score_valid,
+    normalized_score_state_mapping_if_present,
+    normalized_score_state_payload,
+    research_input_fingerprint,
+    serialized_score_block_reason,
+    serialized_score_valid,
+    score_block_reason,
+    score_fingerprint,
+    score_variability_drivers,
+    visible_score_total,
+)
 from e2r.staging import StageClassificationInput, StageClassifier
 
 
@@ -60,7 +72,7 @@ class HistoricalReplayConfig:
     mode: HistoricalReplayMode | str = HistoricalReplayMode.CASE_FIXTURE
     market: Market | str = Market.KR
     universe_limit: int | None = None
-    max_candidates_per_date: int = 50
+    max_candidates_per_date: int | None = None
     max_report_radar_queries_per_date: int = 0
     require_point_in_time: bool = True
     output_directory: str | Path = DEFAULT_HISTORICAL_REPLAY_OUTPUT_DIR
@@ -77,7 +89,7 @@ class HistoricalReplayConfig:
             raise ValueError("end_date cannot be before start_date")
         if self.universe_limit is not None and self.universe_limit <= 0:
             raise ValueError("universe_limit must be positive")
-        if self.max_candidates_per_date <= 0:
+        if self.max_candidates_per_date is not None and self.max_candidates_per_date <= 0:
             raise ValueError("max_candidates_per_date must be positive")
         if self.max_report_radar_queries_per_date < 0:
             raise ValueError("max_report_radar_queries_per_date must be non-negative")
@@ -92,7 +104,7 @@ class HistoricalReplayCandidate:
     company_name: str
     as_of_date: date
     stage: Stage
-    total_score: float
+    total_score: float | None
     layer1_result: str
     layer1_score: float
     candidate_source_path: str
@@ -102,6 +114,11 @@ class HistoricalReplayCandidate:
     diagnostic_scores: Mapping[str, float] = field(default_factory=dict)
     red_team_risk: str | None = None
     missing_evidence_warnings: tuple[str, ...] = ()
+    score_valid: bool | None = None
+    score_blocked_reason: str | None = None
+    score_fingerprint: str | None = None
+    research_input_fingerprint: str | None = None
+    score_variability_drivers: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -115,7 +132,12 @@ class HistoricalReplayDroppedCandidate:
     dropped_reason: str
     evidence_types_seen: tuple[str, ...]
     stage: Stage
-    total_score: float
+    total_score: float | None
+    score_valid: bool | None = None
+    score_blocked_reason: str | None = None
+    score_fingerprint: str | None = None
+    research_input_fingerprint: str | None = None
+    score_variability_drivers: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -127,11 +149,16 @@ class HistoricalReplayStageRecord:
     company_name: str
     as_of_date: date
     stage: Stage
-    total_score: float
+    total_score: float | None
     red_team_status: str
     evidence_ids: tuple[str, ...]
     score_components: Mapping[str, float] = field(default_factory=dict)
     diagnostic_scores: Mapping[str, float] = field(default_factory=dict)
+    score_valid: bool | None = None
+    score_blocked_reason: str | None = None
+    score_fingerprint: str | None = None
+    research_input_fingerprint: str | None = None
+    score_variability_drivers: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -238,6 +265,11 @@ class HistoricalUniverseReplay:
                     evidence_ids=replayed.evidence_ids,
                     score_components=replayed.score_components,
                     diagnostic_scores=replayed.diagnostic_scores,
+                    score_valid=replayed.score_valid,
+                    score_blocked_reason=replayed.score_blocked_reason,
+                    score_fingerprint=replayed.score_fingerprint,
+                    research_input_fingerprint=replayed.research_input_fingerprint,
+                    score_variability_drivers=replayed.score_variability_drivers,
                 )
             )
 
@@ -259,6 +291,11 @@ class HistoricalUniverseReplay:
                         diagnostic_scores=replayed.diagnostic_scores,
                         red_team_risk=replayed.red_team_status,
                         missing_evidence_warnings=missing,
+                        score_valid=replayed.score_valid,
+                        score_blocked_reason=replayed.score_blocked_reason,
+                        score_fingerprint=replayed.score_fingerprint,
+                        research_input_fingerprint=replayed.research_input_fingerprint,
+                        score_variability_drivers=replayed.score_variability_drivers,
                     )
                 )
             else:
@@ -272,14 +309,16 @@ class HistoricalUniverseReplay:
                         evidence_types_seen=layer1.evidence_types_seen,
                         stage=replayed.stage,
                         total_score=replayed.total_score,
+                        score_valid=replayed.score_valid,
+                        score_blocked_reason=replayed.score_blocked_reason,
+                        score_fingerprint=replayed.score_fingerprint,
+                        research_input_fingerprint=replayed.research_input_fingerprint,
+                        score_variability_drivers=replayed.score_variability_drivers,
                     )
                 )
 
-        ranked_candidates = tuple(
-            sorted(candidates, key=lambda item: (-item.layer1_score, -item.total_score, item.case_id))[
-                : config.max_candidates_per_date
-            ]
-        )
+        ranked_all = tuple(sorted(candidates, key=lambda item: (-item.layer1_score, -_score_sort_value(item.total_score), item.case_id)))
+        ranked_candidates = ranked_all if config.max_candidates_per_date is None else ranked_all[: config.max_candidates_per_date]
         coverage = {
             "mode": config.mode.value,
             "report_news_available": config.mode in {HistoricalReplayMode.CASE_FIXTURE, HistoricalReplayMode.HYBRID},
@@ -335,11 +374,16 @@ class HistoricalUniverseReplay:
 @dataclass(frozen=True)
 class _ScoredView:
     stage: Stage
-    total_score: float
+    total_score: float | None
     red_team_status: str
     evidence_ids: tuple[str, ...]
     score_components: Mapping[str, float]
     diagnostic_scores: Mapping[str, float]
+    score_valid: bool | None
+    score_blocked_reason: str | None
+    score_fingerprint: str | None
+    research_input_fingerprint: str | None
+    score_variability_drivers: tuple[str, ...]
 
 
 _LIFECYCLE_STAGES = {
@@ -405,17 +449,26 @@ def render_top_stage3_candidates(result: HistoricalUniverseReplayResult) -> str:
     lines = [
         "# Top Stage 3 Candidates",
         "",
-        "| date | case | company | stage | score | layer1 | evidence |",
-        "| --- | --- | --- | --- | ---: | --- | --- |",
+        "| date | case | company | stage | visible_score | score state | layer1 | evidence |",
+        "| --- | --- | --- | --- | ---: | --- | --- | --- |",
     ]
-    for item in sorted(candidates, key=lambda candidate: (candidate.as_of_date, -candidate.total_score))[:20]:
+    for item in sorted(candidates, key=lambda candidate: (candidate.as_of_date, -_score_sort_value(candidate.total_score)))[:20]:
         lines.append(
             f"| {item.as_of_date.isoformat()} | {item.case_id} | {item.company_name} | {item.stage.value} | "
-            f"{item.total_score:.1f} | {item.layer1_result} | {', '.join(item.evidence_types_seen)} |"
+            f"{_fmt_score(item.total_score)} | {_candidate_score_state_text(item)} | {item.layer1_result} | {', '.join(item.evidence_types_seen)} |"
         )
     if len(lines) == 4:
-        lines.append("| n/a | n/a | n/a | n/a | 0.0 | n/a | n/a |")
+        lines.append("| n/a | n/a | n/a | n/a |  | n/a | n/a | n/a |")
     return "\n".join(lines).rstrip() + "\n"
+
+
+def _candidate_score_state_text(item: HistoricalReplayCandidate) -> str:
+    valid = serialized_score_valid(item)
+    if valid is None:
+        valid = "unknown"
+    reason = serialized_score_block_reason(item) or "none"
+    fingerprint = item.score_fingerprint or "none"
+    return f"valid={valid}; reason={reason}; fp={fingerprint}"
 
 
 def render_false_positive_cases(result: HistoricalUniverseReplayResult) -> str:
@@ -518,6 +571,13 @@ def _score_view(case: HistoricalCase, replay_date: date) -> _ScoredView:
     feature_result = DeterministicFeatureEngineer().engineer(feature_input)
     score = feature_result.score()
     red_team = RedTeamEngine().assess(feature_result.red_team_signals)
+    input_fingerprint = research_input_fingerprint(
+        score=score,
+        evidence=case.evidence,
+        input_counts=_feature_input_count_row(feature_input),
+        source_fields=feature_result.source_fields,
+        extra={"case_id": case.case_id},
+    )
     stage = StageClassifier().classify(
         StageClassificationInput(
             score=score,
@@ -529,21 +589,50 @@ def _score_view(case: HistoricalCase, replay_date: date) -> _ScoredView:
     )
     return _ScoredView(
         stage=stage.stage,
-        total_score=score.total_score,
+        total_score=visible_score_total(score),
         red_team_status=red_team.risk_level.value,
         evidence_ids=stage.evidence_ids,
-        score_components={
-            "eps_fcf_explosion": score.eps_fcf_explosion_score,
-            "earnings_visibility": score.earnings_visibility_score,
-            "bottleneck_pricing": score.bottleneck_pricing_score,
-            "market_mispricing": score.market_mispricing_score,
-            "valuation_rerating": score.valuation_rerating_score,
-            "capital_allocation": score.capital_allocation_score,
-            "information_confidence": score.information_confidence_score,
-            "risk_penalty": score.risk_penalty,
-        },
+        score_components=_visible_score_component_row(score),
         diagnostic_scores=dict(score.diagnostic_scores),
+        score_valid=is_score_valid(score),
+        score_blocked_reason=score_block_reason(score),
+        score_fingerprint=score_fingerprint(score),
+        research_input_fingerprint=input_fingerprint,
+        score_variability_drivers=score_variability_drivers(
+            score,
+            input_counts=_feature_input_count_row(feature_input),
+            evidence_count=len(stage.evidence_ids),
+            input_fingerprint=input_fingerprint,
+        ),
     )
+
+
+def _visible_score_component_row(score: ScoreSnapshot) -> Mapping[str, float]:
+    if not is_score_valid(score):
+        return {}
+    return {
+        "eps_fcf_explosion": score.eps_fcf_explosion_score,
+        "earnings_visibility": score.earnings_visibility_score,
+        "bottleneck_pricing": score.bottleneck_pricing_score,
+        "market_mispricing": score.market_mispricing_score,
+        "valuation_rerating": score.valuation_rerating_score,
+        "capital_allocation": score.capital_allocation_score,
+        "information_confidence": score.information_confidence_score,
+        "risk_penalty": score.risk_penalty,
+    }
+
+
+def _feature_input_count_row(feature_input: FeatureEngineeringInput) -> Mapping[str, int]:
+    return {
+        "price_bars": len(feature_input.price_bars),
+        "financial_actuals": len(feature_input.financial_actuals),
+        "consensus": len(feature_input.consensus),
+        "consensus_revisions": len(feature_input.consensus_revisions),
+        "disclosures": len(feature_input.disclosures),
+        "research_reports": len(feature_input.research_reports),
+        "news_items": len(feature_input.news_items),
+        "agent_extracted_fields": len(feature_input.agent_extracted_fields),
+    }
 
 
 def _layer1_result(case: HistoricalCase, replay_date: date, expected_stage: Stage | None) -> Layer1RecallResult:
@@ -708,7 +797,7 @@ def _candidate_rank_tuple(candidate: HistoricalReplayCandidate) -> tuple[int, fl
         LAYER_DEEP_RESEARCH: 3,
         LAYER_STAGE2_OR_HIGHER: 4,
     }.get(candidate.layer1_result, 0)
-    return (_stage_rank(candidate.stage), candidate.layer1_score, candidate.total_score, -candidate.as_of_date.toordinal())
+    return (_stage_rank(candidate.stage), candidate.layer1_score, _score_sort_value(candidate.total_score), -candidate.as_of_date.toordinal())
 
 
 def _known_case_status(case: HistoricalCase, candidate: HistoricalReplayCandidate, mode: HistoricalReplayMode) -> str:
@@ -828,6 +917,14 @@ def _avg(values: Sequence[int | None]) -> str:
     return f"{sum(clean) / len(clean):.1f}"
 
 
+def _score_sort_value(score: float | None) -> float:
+    return float(score) if score is not None else -1.0
+
+
+def _fmt_score(score: float | None) -> str:
+    return "" if score is None else f"{score:.1f}"
+
+
 def _jsonable(value: Any) -> Any:
     if isinstance(value, (date, datetime)):
         return value.isoformat()
@@ -836,9 +933,12 @@ def _jsonable(value: Any) -> Any:
     if isinstance(value, Path):
         return str(value)
     if is_dataclass(value):
-        return {field.name: _jsonable(getattr(value, field.name)) for field in fields(value)}
+        payload = {field.name: _jsonable(getattr(value, field.name)) for field in fields(value)}
+        if "total_score" in payload and "score_valid" in payload:
+            payload = normalized_score_state_payload(payload)
+        return payload
     if isinstance(value, Mapping):
-        return {str(key): _jsonable(item) for key, item in value.items()}
+        return normalized_score_state_mapping_if_present({str(key): _jsonable(item) for key, item in value.items()})
     if isinstance(value, (list, tuple, set, frozenset)):
         return [_jsonable(item) for item in value]
     return value

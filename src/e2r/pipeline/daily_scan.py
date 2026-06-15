@@ -11,12 +11,23 @@ from typing import Any, Mapping, Sequence
 
 from e2r.briefing import MorningBrief, MorningBriefInput, generate_morning_briefing
 from e2r.historical_cases import HistoricalCase, load_historical_cases
+from e2r.llm.theme_provider import ThemeRouteProvider
 from e2r.models import BacktestResult, Evidence, Instrument, Market, RedTeamFinding, ScoreSnapshot, StageSnapshot
 from e2r.pipeline.company_research import (
     CompanyResearchInput,
     CompanyResearchPipeline,
     CompanyResearchResult,
     ConnectorBundle,
+)
+from e2r.score_validity import (
+    is_score_valid,
+    normalized_score_state_mapping_if_present,
+    raw_score_total_before_block,
+    research_input_fingerprint,
+    score_block_reason,
+    score_fingerprint,
+    score_variability_drivers,
+    visible_score_total,
 )
 
 
@@ -34,6 +45,10 @@ class DailyScanConfig:
     include_historical_cases: bool = False
     historical_case_dir: str | Path = "data/historical_cases"
     lookback_days: int = 756
+    theme_rebalance_enabled: bool | None = None
+    theme_route_provider: ThemeRouteProvider | None = None
+    theme_evidence_review_enabled: bool = True
+    max_theme_expansion_rounds: int | None = None
 
     def __post_init__(self) -> None:
         if type(self.as_of_date) is not date:
@@ -44,6 +59,8 @@ class DailyScanConfig:
             raise ValueError("universe_limit must be positive when set")
         if self.lookback_days <= 0:
             raise ValueError("lookback_days must be positive")
+        if self.max_theme_expansion_rounds is not None and self.max_theme_expansion_rounds < 0:
+            raise ValueError("max_theme_expansion_rounds must be non-negative")
 
 
 @dataclass(frozen=True)
@@ -85,6 +102,11 @@ class DailyScanRunner:
                         as_of_date=config.as_of_date,
                         connectors=config.connector_bundle,
                         lookback_days=config.lookback_days,
+                        fixture_mode=config.fixture_mode,
+                        theme_rebalance_enabled=config.theme_rebalance_enabled,
+                        theme_route_provider=config.theme_route_provider,
+                        theme_evidence_review_enabled=config.theme_evidence_review_enabled,
+                        max_theme_expansion_rounds=config.max_theme_expansion_rounds,
                     )
                 )
             company_results.append(result)
@@ -214,26 +236,27 @@ class DailyScanRunner:
         markdown_path = output_dir / f"{stem}.md"
         json_path = output_dir / f"{stem}.json"
         markdown_path.write_text(morning_brief.text, encoding="utf-8")
+        company_result_rows = [_company_result_output_row(result) for result in results]
+        score_rows = [
+            _score_output_row(
+                result.score,
+                input_fingerprint=str(row["research_input_fingerprint"]),
+                input_counts=row["feature_input_counts"],
+                evidence_count=int(row["evidence_count"]),
+            )
+            for result, row in zip(results, company_result_rows)
+        ]
+        if not score_rows:
+            score_rows = [_score_output_row(score) for score in scores]
         payload = {
             "as_of_date": config.as_of_date,
             "instruments": instruments,
-            "scores": scores,
+            "scores": score_rows,
             "stages": stages,
             "red_team_findings": findings,
             "evidence": evidence,
             "backtests": backtests,
-            "company_results": [
-                {
-                    "symbol": result.instrument.symbol,
-                    "name": result.instrument.name,
-                    "stage": result.stage.stage,
-                    "score": result.score.total_score,
-                    "shortage_type": result.feature_result.shortage_type,
-                    "evidence_count": len(result.evidence),
-                    "error_count": len(result.errors),
-                }
-                for result in results
-            ],
+            "company_results": company_result_rows,
             "brief_text": morning_brief.text,
             "errors": tuple(errors),
         }
@@ -260,6 +283,106 @@ def _dedupe_evidence(items: Sequence[Evidence]) -> tuple[Evidence, ...]:
     return tuple(unique.values())
 
 
+def _score_output_row(
+    score: ScoreSnapshot,
+    *,
+    input_fingerprint: str | None = None,
+    input_counts: Mapping[str, int] | None = None,
+    evidence_count: int | None = None,
+) -> Mapping[str, Any]:
+    valid = is_score_valid(score)
+    visible_score = visible_score_total(score)
+    component_scores = None
+    risk_penalty = None
+    if valid:
+        component_scores = {
+            "eps_fcf_explosion": score.eps_fcf_explosion_score,
+            "earnings_visibility": score.earnings_visibility_score,
+            "bottleneck_pricing": score.bottleneck_pricing_score,
+            "market_mispricing": score.market_mispricing_score,
+            "valuation_rerating": score.valuation_rerating_score,
+            "capital_allocation": score.capital_allocation_score,
+            "information_confidence": score.information_confidence_score,
+        }
+        risk_penalty = score.risk_penalty
+    return {
+        "symbol": score.symbol,
+        "as_of_date": score.as_of_date,
+        "score_valid": valid,
+        "score_blocked_reason": score_block_reason(score),
+        "score_fingerprint": score_fingerprint(score),
+        "research_input_fingerprint": input_fingerprint,
+        "score_variability_drivers": score_variability_drivers(
+            score,
+            input_counts=input_counts,
+            evidence_count=evidence_count,
+            input_fingerprint=input_fingerprint,
+        ),
+        "visible_score": visible_score,
+        "total_score": visible_score,
+        "raw_score_before_block": raw_score_total_before_block(score),
+        "component_scores": component_scores,
+        "risk_penalty": risk_penalty,
+        "diagnostic_scores": score.diagnostic_scores,
+        "evidence_ids": score.evidence_ids,
+        "scoring_version": score.scoring_version,
+    }
+
+
+def _company_result_output_row(result: CompanyResearchResult) -> Mapping[str, Any]:
+    input_counts = _feature_input_count_row(result.feature_input)
+    input_fingerprint = _company_result_input_fingerprint(result, input_counts=input_counts)
+    visible_score = visible_score_total(result.score)
+    return {
+        "symbol": result.instrument.symbol,
+        "name": result.instrument.name,
+        "stage": result.stage.stage,
+        "score": visible_score,
+        "visible_score": visible_score,
+        "score_valid": is_score_valid(result.score),
+        "score_blocked_reason": score_block_reason(result.score),
+        "score_fingerprint": score_fingerprint(result.score),
+        "research_input_fingerprint": input_fingerprint,
+        "score_variability_drivers": score_variability_drivers(
+            result.score,
+            input_counts=input_counts,
+            evidence_count=len(result.evidence),
+            input_fingerprint=input_fingerprint,
+        ),
+        "raw_score_before_block": raw_score_total_before_block(result.score),
+        "shortage_type": result.feature_result.shortage_type,
+        "feature_input_counts": input_counts,
+        "evidence_count": len(result.evidence),
+        "error_count": len(result.errors),
+    }
+
+
+def _company_result_input_fingerprint(
+    result: CompanyResearchResult,
+    *,
+    input_counts: Mapping[str, int] | None = None,
+) -> str:
+    return research_input_fingerprint(
+        score=result.score,
+        evidence=result.evidence,
+        input_counts=input_counts or _feature_input_count_row(result.feature_input),
+        source_fields=result.feature_result.source_fields,
+    )
+
+
+def _feature_input_count_row(feature_input: Any) -> Mapping[str, int]:
+    return {
+        "price_bars": len(feature_input.price_bars),
+        "financial_actuals": len(feature_input.financial_actuals),
+        "consensus": len(feature_input.consensus),
+        "consensus_revisions": len(feature_input.consensus_revisions),
+        "disclosures": len(feature_input.disclosures),
+        "research_reports": len(feature_input.research_reports),
+        "news_items": len(feature_input.news_items),
+        "agent_extracted_fields": len(feature_input.agent_extracted_fields),
+    }
+
+
 def _jsonable(value: Any) -> Any:
     if isinstance(value, (date, datetime)):
         return value.isoformat()
@@ -270,7 +393,7 @@ def _jsonable(value: Any) -> Any:
     if is_dataclass(value):
         return {field.name: _jsonable(getattr(value, field.name)) for field in fields(value)}
     if isinstance(value, Mapping):
-        return {str(key): _jsonable(item) for key, item in value.items()}
+        return normalized_score_state_mapping_if_present({str(key): _jsonable(item) for key, item in value.items()})
     if isinstance(value, (list, tuple)):
         return [_jsonable(item) for item in value]
     return value

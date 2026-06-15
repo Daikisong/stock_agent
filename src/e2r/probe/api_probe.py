@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from e2r.cheap_scan.korea_sources import DataGoKrFSCConnector
+from e2r.env import load_project_env
 from e2r.models import DisclosureEvent, FinancialActual, Instrument, Market, PriceBar
 from e2r.probe.schema_profiler import SchemaProfile, profile_payload, render_schema_markdown, select_item_rows, find_list_candidates
 from e2r.research.naver_search_provider import NAVER_SEARCH_ENDPOINTS, NaverFreeSearchProvider
@@ -34,6 +35,7 @@ class APIProbeConfig:
     output_directory: str | Path = "output/api_probe"
     live_enabled: bool = False
     fixture_mode: bool = True
+    env_file: str | Path | None = ".env"
     max_requests_per_source: int = 3
     timeout_seconds: int = 10
     use_cache: bool = True
@@ -149,6 +151,8 @@ class APIProbeRunner:
         self.fixture_payloads = payloads
 
     def run(self, config: APIProbeConfig) -> APIProbeResult:
+        if config.live_enabled or not config.fixture_mode:
+            load_project_env(config.env_file)
         output_dir = Path(config.output_directory) / config.as_of_date.isoformat()
         raw_dir = output_dir / "raw"
         raw_dir.mkdir(parents=True, exist_ok=True)

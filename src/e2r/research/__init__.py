@@ -11,6 +11,7 @@ from .report_parser import ReportParseResult, parse_research_report_file, parse_
 from .search_budget import ResearchLayer, SearchBudget, SearchBudgetDecision, SearchBudgetTracker
 from .search_provider import EmptySearchProvider, FixtureSearchProvider, RequestOnlySearchProvider, SearchResult
 from .search_result_ranker import RankedSearchResult, SearchResultRanker
+from .search_snippet_evidence import AI_INFRA_THEME_ID, is_search_snippet_only, news_item_from_search_snippet
 from .web_research_runner import (
     DroppedSearchResult,
     WebResearchInput,
@@ -22,6 +23,7 @@ from .web_research_runner import (
 
 __all__ = [
     "BrowserSearchProvider",
+    "AI_INFRA_THEME_ID",
     "DroppedSearchResult",
     "EmptySearchProvider",
     "FetchResult",
@@ -53,6 +55,8 @@ __all__ = [
     "WebResearchRunner",
     "classify_search_result",
     "extract_e2r_text_fields",
+    "is_search_snippet_only",
+    "news_item_from_search_snippet",
     "parse_research_report_file",
     "parse_research_report_text",
 ]

@@ -15,6 +15,7 @@ from e2r.backtest.e2r_standard_replay import E2RStandardReplay, E2RStandardRepla
 from e2r.backtest.historical_universe_replay import ReplayFrequency
 from e2r.models import Market, Stage
 from e2r.pipeline.e2r_standard_flow import E2R_STANDARD
+from e2r.score_validity import normalized_score_state_mapping_if_present, normalized_score_state_payload
 
 
 DEFAULT_BLIND_DISCOVERY_OUTPUT_DIR = Path("output/backtests/blind_discovery")
@@ -29,7 +30,7 @@ class BlindDiscoveryConfig:
     flow: str = E2R_STANDARD
     output_directory: str | Path = DEFAULT_BLIND_DISCOVERY_OUTPUT_DIR
     universe_limit: int | None = None
-    max_candidates_per_date: int = 50
+    max_candidates_per_date: int | None = None
     case_root: str | Path = "data/historical_cases"
     benchmark_label_path: str | Path = "data/benchmark_labels/e2r_known_winners.json"
     search_snapshot_root: str | Path = "data/search_snapshots"
@@ -56,9 +57,14 @@ class DiscoveredCandidate:
     layer: str
     stage: Stage
     rank: int
-    score: float
+    score: float | None
     evidence_types_seen: tuple[str, ...]
     reason_codes: tuple[str, ...]
+    score_valid: bool | None = None
+    score_blocked_reason: str | None = None
+    score_fingerprint: str | None = None
+    research_input_fingerprint: str | None = None
+    score_variability_drivers: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -132,10 +138,14 @@ def _generate_standard_replay_outputs(config: BlindDiscoveryConfig) -> E2RStanda
 def _discovered_candidates(result: E2RStandardReplayResult) -> tuple[DiscoveredCandidate, ...]:
     rows: list[DiscoveredCandidate] = []
     for snapshot in result.snapshots:
-        ranked = sorted(snapshot.candidates, key=lambda item: (-item.score, item.symbol))
+        ranked = sorted(snapshot.candidates, key=lambda item: (-_score_sort_value(item.score), item.symbol))
         for rank, candidate in enumerate(ranked, start=1):
             rows.append(_candidate_row(candidate, rank))
     return tuple(rows)
+
+
+def _score_sort_value(score: float | None) -> float:
+    return float(score) if score is not None else -1.0
 
 
 def _candidate_row(candidate, rank: int) -> DiscoveredCandidate:
@@ -149,6 +159,11 @@ def _candidate_row(candidate, rank: int) -> DiscoveredCandidate:
         score=candidate.score,
         evidence_types_seen=tuple(candidate.evidence_types_seen),
         reason_codes=tuple(candidate.reason_codes),
+        score_valid=getattr(candidate, "score_valid", None),
+        score_blocked_reason=getattr(candidate, "score_blocked_reason", None),
+        score_fingerprint=getattr(candidate, "score_fingerprint", None),
+        research_input_fingerprint=getattr(candidate, "research_input_fingerprint", None),
+        score_variability_drivers=tuple(getattr(candidate, "score_variability_drivers", ())),
     )
 
 
@@ -441,9 +456,35 @@ def _write_outputs(result: BlindDiscoveryResult) -> BlindDiscoveryResult:
 def _write_candidates(csv_path: Path, json_path: Path, rows: Sequence[DiscoveredCandidate]) -> None:
     json_path.write_text(json.dumps(_jsonable(rows), ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=("symbol", "company_name", "as_of_date", "layer", "stage", "rank", "score"))
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=(
+                "symbol",
+                "company_name",
+                "as_of_date",
+                "layer",
+                "stage",
+                "rank",
+                "score",
+                "visible_score",
+                "score_valid",
+                "score_blocked_reason",
+                "score_fingerprint",
+                "research_input_fingerprint",
+                "score_variability_drivers",
+            ),
+        )
         writer.writeheader()
         for item in rows:
+            score_payload = normalized_score_state_payload(
+                {
+                    "score": item.score,
+                    "score_valid": item.score_valid,
+                    "score_blocked_reason": item.score_blocked_reason,
+                }
+            )
+            score = score_payload.get("score")
+            visible_score = score_payload.get("visible_score")
             writer.writerow(
                 {
                     "symbol": item.symbol,
@@ -452,7 +493,13 @@ def _write_candidates(csv_path: Path, json_path: Path, rows: Sequence[Discovered
                     "layer": item.layer,
                     "stage": item.stage.value,
                     "rank": item.rank,
-                    "score": item.score,
+                    "score": score if score is not None else "",
+                    "visible_score": visible_score if visible_score is not None else "",
+                    "score_valid": score_payload.get("score_valid") if score_payload.get("score_valid") is not None else "",
+                    "score_blocked_reason": score_payload.get("score_blocked_reason") or "",
+                    "score_fingerprint": item.score_fingerprint or "",
+                    "research_input_fingerprint": item.research_input_fingerprint or "",
+                    "score_variability_drivers": "|".join(item.score_variability_drivers),
                 }
             )
 
@@ -479,9 +526,12 @@ def _jsonable(value: Any) -> Any:
     if isinstance(value, Path):
         return str(value)
     if is_dataclass(value):
-        return {field.name: _jsonable(getattr(value, field.name)) for field in fields(value)}
+        payload = {field.name: _jsonable(getattr(value, field.name)) for field in fields(value)}
+        if "score" in payload and "score_valid" in payload:
+            payload = normalized_score_state_payload(payload)
+        return payload
     if isinstance(value, Mapping):
-        return {str(key): _jsonable(item) for key, item in value.items()}
+        return normalized_score_state_mapping_if_present({str(key): _jsonable(item) for key, item in value.items()})
     if isinstance(value, (list, tuple, set, frozenset)):
         return [_jsonable(item) for item in value]
     return value

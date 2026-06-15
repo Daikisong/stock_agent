@@ -148,7 +148,7 @@ class SnapshotSearchProvider:
 
     search_store: SearchSnapshotStore | None = None
 
-    def search(self, query: str, as_of_date: date, max_results: int = 10) -> tuple[SearchResult, ...]:
+    def search(self, query: str, as_of_date: date, max_results: int = 100) -> tuple[SearchResult, ...]:
         if self.search_store is None:
             return ()
         results = self.search_store.search_results(query=query, as_of_date=as_of_date, max_results=max_results)

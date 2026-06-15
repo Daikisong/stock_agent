@@ -8,6 +8,15 @@ from enum import Enum
 
 from e2r.models import Market
 
+CANDIDATE_SOURCE_PATHS = frozenset(
+    {
+        "official_cheap_scan",
+        "report_radar",
+        "targeted_smoke",
+        "top_trading_value_probe",
+    }
+)
+
 
 class RecommendedNextLayer(str, Enum):
     """Next action after cheap scan."""
@@ -49,8 +58,9 @@ class CheapScanCandidate:
             object.__setattr__(self, "market", Market(self.market))
         if not isinstance(self.recommended_next_layer, RecommendedNextLayer):
             object.__setattr__(self, "recommended_next_layer", RecommendedNextLayer(self.recommended_next_layer))
-        if self.candidate_source_path not in {"official_cheap_scan", "report_radar", "targeted_smoke"}:
-            raise ValueError("candidate_source_path must be official_cheap_scan, report_radar, or targeted_smoke")
+        if self.candidate_source_path not in CANDIDATE_SOURCE_PATHS:
+            allowed = ", ".join(sorted(CANDIDATE_SOURCE_PATHS))
+            raise ValueError(f"candidate_source_path must be one of: {allowed}")
         if self.test_injected and self.production_candidate:
             raise ValueError("test_injected candidates cannot be production candidates")
         object.__setattr__(self, "reason_codes", tuple(dict.fromkeys(self.reason_codes)))
@@ -67,4 +77,4 @@ class CheapScanCandidate:
                 raise ValueError(f"{field_name} must be between 0 and 100")
 
 
-__all__ = ["CheapScanCandidate", "RecommendedNextLayer"]
+__all__ = ["CANDIDATE_SOURCE_PATHS", "CheapScanCandidate", "RecommendedNextLayer"]

@@ -16,6 +16,14 @@ from .models import (
     Stage,
     StageSnapshot,
 )
+from .score_validity import (
+    is_score_valid,
+    raw_score_total_before_block,
+    score_block_reason,
+    score_fingerprint,
+    score_variability_drivers,
+    visible_score_total,
+)
 
 
 STAGE_3_STAGES = frozenset({Stage.STAGE_3_GREEN, Stage.STAGE_3_YELLOW, Stage.STAGE_3_RED})
@@ -50,6 +58,30 @@ def _assert_no_recommendation_terms(text: str) -> None:
     for term in _FORBIDDEN_TERMS:
         if term.lower() in lowered:
             raise ValueError("briefing text contains disallowed recommendation wording")
+
+
+def _brief_score_state_text(score: ScoreSnapshot) -> str:
+    drivers = tuple(
+        driver
+        for driver in score_variability_drivers(score)
+        if driver.startswith(
+            (
+                "estimate_source_missing:",
+                "estimate_quality:",
+                "input_missing:",
+                "input_count:",
+                "evidence_count:",
+                "score_evidence_count:",
+                "llm_expansion_query_count:",
+                "theme_rebalance_status:",
+                "theme_route_status:",
+                "theme_evidence_gate_status:",
+                "route_mismatch:",
+            )
+        )
+    )
+    driver_text = f" / 변동요인 {', '.join(drivers[:3])}" if drivers else ""
+    return f"상태 valid fp {score_fingerprint(score) or 'none'}{driver_text}"
 
 
 @dataclass(frozen=True)
@@ -208,7 +240,7 @@ class MorningBriefingGenerator:
             backtest = backtests.get(stage.symbol)
             rendered.append(f"- {self._instrument_label(stage.symbol, instrument)}")
             rendered.append(f"  현재 Stage: {stage.stage.value} / 전일 대비: {self._stage_delta(stage)}")
-            rendered.append(f"  총점과 주요 점수: {self._score_line(score)}")
+            rendered.append(f"  표시점수와 주요 점수: {self._score_line(score)}")
             rendered.append(f"  핵심 변화: {self._reasons(stage)}")
             rendered.append(f"  핵심 숫자: {self._metric_line(score, backtest)}")
             rendered.append(f"  근거: {self._evidence_line(stage.evidence_ids, evidence)}")
@@ -235,12 +267,19 @@ class MorningBriefingGenerator:
     def _score_line(score: ScoreSnapshot | None) -> str:
         if score is None:
             return "점수 n/a"
+        if not is_score_valid(score):
+            reason = score_block_reason(score) or "score_invalid"
+            raw = raw_score_total_before_block(score)
+            raw_text = f" / 참고 raw {_score(raw)}" if raw is not None else ""
+            return f"점수 산출 보류 ({reason}){raw_text} | 상태 pending fp {score_fingerprint(score) or 'none'}"
+        state_text = _brief_score_state_text(score)
         return (
-            f"총점 {_score(score.total_score)} | "
+            f"표시점수 {_score(visible_score_total(score))} | "
             f"EPS/FCF {_score(score.eps_fcf_explosion_score)}/20, "
             f"가시성 {_score(score.earnings_visibility_score)}/20, "
             f"병목/가격 {_score(score.bottleneck_pricing_score)}/20, "
-            f"밸류여지 {_score(score.valuation_rerating_score)}/15"
+            f"밸류여지 {_score(score.valuation_rerating_score)}/15 | "
+            f"{state_text}"
         )
 
     @staticmethod
@@ -252,7 +291,10 @@ class MorningBriefingGenerator:
     @staticmethod
     def _metric_line(score: ScoreSnapshot | None, backtest: BacktestResult | None) -> str:
         parts: list[str] = []
-        if score is not None:
+        if score is not None and not is_score_valid(score):
+            reason = score_block_reason(score) or "score_invalid"
+            parts.append(f"Score Pending {reason}")
+        elif score is not None:
             revision = score.diagnostic_scores.get("revision_score")
             price_stage = score.diagnostic_scores.get("price_stage_score")
             if revision is not None:
@@ -389,4 +431,3 @@ def generate_morning_briefing(
             scheduled_events=tuple(scheduled_events),
         )
     )
-

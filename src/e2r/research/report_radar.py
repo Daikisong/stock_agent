@@ -62,7 +62,7 @@ class ReportRadar:
     """Run high-signal E2R phrase searches for a capped universe slice."""
 
     search_provider: SearchProvider
-    max_results_per_query: int = 3
+    max_results_per_query: int = 100
 
     def run(
         self,
@@ -71,7 +71,7 @@ class ReportRadar:
         as_of_date: date,
         budget: SearchBudget,
         active_watchlist_symbols: Sequence[str] = (),
-        max_symbols: int = 20,
+        max_symbols: int | None = None,
     ) -> tuple[ReportRadarCandidate, ...]:
         tracker = SearchBudgetTracker(budget)
         selected = _select_instruments(instruments, active_watchlist_symbols, max_symbols)
@@ -97,7 +97,7 @@ class ReportRadar:
 def _select_instruments(
     instruments: Sequence[Instrument],
     active_watchlist_symbols: Sequence[str],
-    max_symbols: int,
+    max_symbols: int | None,
 ) -> tuple[Instrument, ...]:
     by_symbol: Mapping[str, Instrument] = {item.symbol: item for item in instruments}
     selected: list[Instrument] = []
@@ -108,9 +108,9 @@ def _select_instruments(
     for item in instruments:
         if item not in selected:
             selected.append(item)
-        if len(selected) >= max_symbols:
+        if max_symbols is not None and len(selected) >= max_symbols:
             break
-    return tuple(selected[:max_symbols])
+    return tuple(selected if max_symbols is None else selected[:max_symbols])
 
 
 def _candidate_from_result(

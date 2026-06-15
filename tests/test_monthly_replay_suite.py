@@ -4,9 +4,23 @@ import json
 import tempfile
 import unittest
 
-from e2r.backtest.historical_universe_replay import HistoricalReplayMode, ReplayFrequency
-from e2r.backtest.monthly_replay_suite import MonthlyReplaySuiteConfig, MonthlyReplaySuiteRunner
+from e2r.backtest.historical_universe_replay import (
+    HistoricalReplayCandidate,
+    HistoricalReplayConfig,
+    HistoricalReplayMode,
+    HistoricalReplaySnapshot,
+    HistoricalUniverseReplayResult,
+    ReplayFrequency,
+)
+from e2r.backtest.monthly_replay_suite import (
+    MonthlyReplaySuiteConfig,
+    MonthlyReplaySuiteResult,
+    MonthlyReplaySuiteRunner,
+    _candidate_score_state,
+    render_top_stage3_candidate_cards,
+)
 from e2r.cli.run_monthly_replay_suite import build_parser, config_from_args
+from e2r.models import Stage
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -164,6 +178,90 @@ class MonthlyReplaySuiteTests(unittest.TestCase):
         self.assertNotIn("OPENDART_API_KEY", joined)
         self.assertNotIn("NAVER_CLIENT_SECRET", joined)
         self.assertNotIn("DATA_GO_KR_SERVICE_KEY", joined)
+
+    def test_top_stage3_cards_do_not_fallback_to_diagnostics_when_score_pending(self):
+        candidate = HistoricalReplayCandidate(
+            case_id="case-1",
+            symbol="111111",
+            company_name="테스트",
+            as_of_date=date(2023, 8, 1),
+            stage=Stage.STAGE_3_YELLOW,
+            total_score=None,
+            layer1_result="deep_research",
+            layer1_score=80.0,
+            candidate_source_path="fixture",
+            reason_codes=("TEST",),
+            evidence_types_seen=("research_report",),
+            score_components={},
+            diagnostic_scores={"eps_fcf_explosion": 17.0, "contract_quality": 80.0},
+            score_valid=False,
+            score_blocked_reason="score_gap_unresolved",
+            score_fingerprint="blocked-fingerprint",
+            score_variability_drivers=("score_invalid:score_gap_unresolved", "raw_score_before_block:83"),
+        )
+        snapshot = HistoricalReplaySnapshot(
+            as_of_date=date(2023, 8, 1),
+            instruments_scanned=1,
+            candidates=(candidate,),
+            dropped_candidates=(),
+            stage_snapshots=(),
+            evidence_counts={},
+            reason_code_distribution={},
+            missing_evidence_warnings=(),
+            source_coverage_summary={},
+        )
+        mode_result = HistoricalUniverseReplayResult(
+            config=HistoricalReplayConfig(start_date=date(2023, 8, 1), end_date=date(2023, 8, 1)),
+            snapshots=(snapshot,),
+            lifecycle_results=(),
+            known_case_validations=(),
+        )
+        suite = MonthlyReplaySuiteResult(
+            config=MonthlyReplaySuiteConfig(start_date=date(2023, 8, 1), end_date=date(2023, 8, 1)),
+            output_root=Path("."),
+            mode_results={"case_fixture": mode_result},
+            suite_summary={},
+            mode_comparison={},
+            lifecycle_aggregates={},
+            known_case_validation=(),
+            missed_winners=(),
+            false_positives=(),
+            evidence_coverage={},
+            readiness_assessment={},
+            limitations=(),
+            report_paths={},
+        )
+
+        text = render_top_stage3_candidate_cards(suite)
+
+        self.assertIn("| eps_fcf_explosion | n/a |", text)
+        self.assertNotIn("17.0", text)
+        self.assertIn("score_state: total=n/a; valid=False; reason=score_gap_unresolved", text)
+        self.assertIn("score_invalid:score_gap_unresolved", text)
+
+    def test_top_stage3_card_score_state_does_not_show_valid_true_without_visible_score(self):
+        candidate = HistoricalReplayCandidate(
+            case_id="case-1",
+            symbol="111111",
+            company_name="테스트",
+            as_of_date=date(2023, 8, 1),
+            stage=Stage.STAGE_3_YELLOW,
+            total_score=None,
+            layer1_result="deep_research",
+            layer1_score=80.0,
+            candidate_source_path="fixture",
+            reason_codes=("TEST",),
+            evidence_types_seen=("research_report",),
+            score_valid=True,
+            score_blocked_reason=None,
+            score_fingerprint="scorefp",
+        )
+
+        text = _candidate_score_state(candidate)
+
+        self.assertIn("total=n/a", text)
+        self.assertIn("valid=False", text)
+        self.assertIn("reason=visible_score_missing", text)
 
 
 if __name__ == "__main__":

@@ -22,7 +22,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--end-date", required=True)
     parser.add_argument("--market", choices=[item.value for item in Market], default=Market.KR.value)
     parser.add_argument("--output-directory", default="data/historical_official")
-    parser.add_argument("--max-opendart-detail-fetches-per-day", type=int, default=50)
+    parser.add_argument("--max-opendart-detail-fetches-per-day", type=int)
     parser.add_argument("--execute-live", action="store_true", help="Reserved for future controlled live backfill executor.")
     return parser
 
