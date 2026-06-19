@@ -1600,6 +1600,64 @@ class KoreaLiveLiteTests(unittest.TestCase):
             )
         )
 
+    def test_selected_candidate_opendart_disclosures_feed_base_feature_input(self):
+        http_client = MockHttpClient(
+            json_by_url_token={
+                "GetStockSecuritiesInfoService": DATA_GO_STOCK_PRICE_PAYLOAD,
+                "GetFinaStatInfoService": {"response": {"body": {"items": {"item": []}, "totalCount": 0}}},
+                "corp_code=00199999": OPENDART_DISCLOSURE_WITH_CORP_PAYLOAD,
+                "fnlttSinglAcnt": {"status": "000", "message": "정상", "list": []},
+                "opendart": {"total_page": 1, "list": []},
+            },
+            bytes_by_url_token={
+                "corpCode.xml": _opendart_corp_code_zip(
+                    (
+                        ("00199999", "라이브전력", "999999", "20240501"),
+                        ("00188888", "다른회사", "888888", "20240501"),
+                    )
+                )
+            },
+        )
+        env = {
+            "OPENDART_API_KEY": "OPENDART_SECRET",
+            "DATA_GO_KR_SERVICE_KEY": "DATA_SECRET",
+            "NAVER_CLIENT_ID": "NAVER_ID",
+            "NAVER_CLIENT_SECRET": "NAVER_SECRET",
+        }
+
+        with tempfile.TemporaryDirectory() as output_dir, patch.dict("os.environ", env, clear=True):
+            result = KoreaLiveLiteRunner().run(
+                KoreaLiveLiteConfig(
+                    as_of_date=AS_OF,
+                    output_directory=output_dir,
+                    fixture_mode=False,
+                    live_enabled=True,
+                    http_client=http_client,
+                    targeted_smoke_enabled=True,
+                    targeted_smoke_only=True,
+                    targeted_smoke_symbol="999999",
+                    targeted_smoke_company="라이브전력",
+                    targeted_smoke_queries=("라이브전력 실적",),
+                    browser_provider=EmptySearchProvider(),
+                    free_search_provider=EmptySearchProvider(),
+                    theme_rebalance_enabled=False,
+                    company_guide_enabled=False,
+                )
+            )
+
+        smoke = next(item for item in result.run_log.targeted_smoke_results if item["symbol"] == "999999")
+        self.assertEqual(result.run_log.source_call_counts["opendart_company_code_calls"], 1)
+        self.assertEqual(result.run_log.source_call_counts["opendart_symbol_disclosure_calls"], 1)
+        self.assertEqual(smoke["feature_input_counts"]["disclosures"], 1)
+        self.assertTrue(
+            any(
+                item.source_type == "disclosure"
+                and item.symbol == "999999"
+                and item.title == "분기보고서"
+                for item in result.evidence
+            )
+        )
+
     def test_opendart_disclosure_scan_reserves_budget_for_financial_actuals(self):
         disclosure_payload = dict(OPENDART_DISCLOSURE_WITH_CORP_PAYLOAD)
         disclosure_payload["total_page"] = 99
@@ -1766,8 +1824,13 @@ class KoreaLiveLiteTests(unittest.TestCase):
         self.assertEqual(result.run_log.source_call_counts["company_guide_snapshot_calls"], 1)
         self.assertEqual(result.run_log.source_call_counts["company_guide_recent_report_calls"], 1)
         self.assertEqual(smoke["feature_input_counts"]["consensus"], 1)
+        self.assertEqual(smoke["feature_input_counts"]["consensus_revisions"], 1)
         self.assertEqual(smoke["feature_input_counts"]["research_reports"], 1)
+        self.assertIn("failed_green_gates", smoke)
+        self.assertIn("stage_gate_diagnostics", smoke)
+        self.assertIn("failed_gate_names", smoke["stage_gate_diagnostics"])
         self.assertTrue(any(item.source_type == "consensus" and item.symbol == "999999" for item in result.evidence))
+        self.assertTrue(any(item.source_type == "consensus_revision" and item.symbol == "999999" for item in result.evidence))
         self.assertTrue(any(item.source_type == "research_report" and item.symbol == "999999" for item in result.evidence))
 
     def test_live_lite_can_run_with_data_go_v2_endpoint_config(self):

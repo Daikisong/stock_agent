@@ -526,6 +526,7 @@ class FreeWebResearchRunner:
                     evidence_ids=tuple(item.evidence_id for item in web_result.evidence),
                 )
             )
+        theme_route_diagnostics = _with_stage_gate_diagnostics(theme_route_diagnostics, score, red_team)
         return WebResearchPipelineResult(
             web_result=web_result,
             feature_input=feature_input,
@@ -1495,6 +1496,54 @@ def _stage_gate_missing_information(score: ScoreSnapshot, red_team: RedTeamAsses
             + "; expand source-backed evidence for these families"
         )
     return tuple(dict.fromkeys(gaps))
+
+
+def _with_stage_gate_diagnostics(
+    diagnostics: Mapping[str, object],
+    score: ScoreSnapshot,
+    red_team: RedTeamAssessment,
+) -> Mapping[str, object]:
+    stage_gates = diagnose_stage_gates(score, red_team)
+    payload = {
+        "stage2_gate_passed": stage_gates.stage2_gate_passed,
+        "stage3_green_gate_passed": stage_gates.stage3_green_gate_passed,
+        "failed_gate_names": tuple(stage_gates.failed_gate_names),
+        "values_vs_thresholds": {
+            name: dict(values)
+            for name, values in stage_gates.values_vs_thresholds.items()
+        },
+        "sector_profile": stage_gates.sector_profile,
+        "structural_visibility_quality": stage_gates.structural_visibility_quality,
+        "sector_visibility_score": stage_gates.sector_visibility_score,
+        "sector_bottleneck_score": stage_gates.sector_bottleneck_score,
+        "cross_evidence_families_present": tuple(stage_gates.cross_evidence_families_present),
+        "missing_evidence_families": tuple(stage_gates.missing_evidence_families),
+        "promotion_band": stage_gates.promotion_band,
+    }
+    green_gate_names = {
+        "failed_structural_visibility_quality",
+        "failed_sector_visibility",
+        "failed_sector_bottleneck",
+        "failed_green_cross_evidence",
+        "failed_report_date_confidence",
+        "failed_domain_specific_evidence",
+        "failed_positive_stage_price_only_blowoff",
+        "failed_snippet_only_green_block",
+        "failed_emerging_theme_deep_research",
+        "failed_emerging_theme_green_unlock_evidence",
+        "failed_emerging_theme_date_verified_evidence",
+        "failed_theme_overheat_risk",
+    }
+    failed_green_gates = tuple(
+        name
+        for name in stage_gates.failed_gate_names
+        if name.startswith("failed_stage3") or name in green_gate_names
+    )
+    return {
+        **dict(diagnostics),
+        "stage_gate_diagnostics": payload,
+        "failed_green_gates": failed_green_gates,
+    }
 
 
 def _diagnostic_value(diagnostics: Mapping[str, Any], key: str) -> float:

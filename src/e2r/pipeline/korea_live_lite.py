@@ -23,6 +23,7 @@ from e2r.features import FeatureEngineeringInput
 from e2r.llm.codex_theme_provider import build_default_codex_theme_route_provider, build_theme_route_provider_from_env
 from e2r.llm.theme_provider import ThemeRouteProvider
 from e2r.models import (
+    ConsensusRevision,
     ConsensusSnapshot,
     DisclosureEvent,
     Evidence,
@@ -54,7 +55,7 @@ from e2r.score_validity import (
     score_variability_drivers as build_score_variability_drivers,
     visible_score_total,
 )
-from e2r.sources import DEFAULT_SOURCE_LICENSE_METADATA, CompanyGuideConnector, KINDConnector, KRXConnector, OpenDARTConnector, SourceLicenseMetadata
+from e2r.sources import DEFAULT_SOURCE_LICENSE_METADATA, BrokerTargetRow, CompanyGuideConnector, KINDConnector, KRXConnector, OpenDARTConnector, SourceLicenseMetadata
 from e2r.sources.http_client import HttpClient, HttpClientStats
 from e2r.sources.opendart import extract_document_text, normalize_disclosure_detail
 from e2r.sources.rate_limit import RateLimiter, SourceRateLimit
@@ -339,6 +340,7 @@ class KoreaLiveLiteResult:
 @dataclass(frozen=True)
 class _CompanyGuideFeatureData:
     consensus: tuple[ConsensusSnapshot, ...] = field(default_factory=tuple)
+    consensus_revisions: tuple[ConsensusRevision, ...] = field(default_factory=tuple)
     research_reports: tuple[ResearchReport, ...] = field(default_factory=tuple)
 
 
@@ -478,6 +480,28 @@ class KoreaLiveLiteRunner:
             config.budget,
             targeted_smoke_only=config.targeted_smoke_only,
         )
+        selected_opendart_corp_codes = _opendart_corp_codes_for_candidates(
+            candidates=selected_candidates,
+            sources=sources,
+            existing_disclosures=all_date_disclosures,
+            config=config,
+            http_client=http_client,
+            built_requests=built_requests,
+            source_call_counts=source_call_counts,
+        )
+        selected_symbol_disclosures = _execute_opendart_disclosures_for_candidates(
+            candidates=selected_candidates,
+            sources=sources,
+            corp_codes=selected_opendart_corp_codes,
+            config=config,
+            http_client=http_client,
+            built_requests=built_requests,
+            source_call_counts=source_call_counts,
+        )
+        if selected_symbol_disclosures:
+            all_date_disclosures = _merge_detail_disclosures(all_date_disclosures, selected_symbol_disclosures)
+            scan_sources = _sources_with_date_disclosures(sources, all_date_disclosures)
+            cheap_evidence.update(_cheap_scan_evidence_by_id(sources, selected_symbol_disclosures, config.as_of_date))
         live_financial_actuals = _execute_data_go_kr_financial_actuals_for_candidates(
             candidates=selected_candidates,
             sources=scan_sources,
@@ -491,6 +515,7 @@ class KoreaLiveLiteRunner:
             candidates=selected_candidates,
             sources=sources,
             date_disclosures=all_date_disclosures,
+            candidate_corp_codes=selected_opendart_corp_codes,
             config=config,
             http_client=http_client,
             built_requests=built_requests,
@@ -520,6 +545,9 @@ class KoreaLiveLiteRunner:
                         + tuple(opendart_financial_actuals.get(candidate.symbol, ()))
                     ),
                     extra_consensus=company_guide_data.get(candidate.symbol, _EMPTY_COMPANY_GUIDE_FEATURE_DATA).consensus,
+                    extra_consensus_revisions=company_guide_data.get(
+                        candidate.symbol, _EMPTY_COMPANY_GUIDE_FEATURE_DATA
+                    ).consensus_revisions,
                     extra_research_reports=company_guide_data.get(candidate.symbol, _EMPTY_COMPANY_GUIDE_FEATURE_DATA).research_reports,
                 )
             )
@@ -1308,6 +1336,133 @@ def _execute_opendart_disclosure_pages(
     )
 
 
+def _opendart_corp_codes_for_candidates(
+    *,
+    candidates: Sequence[CheapScanCandidate],
+    sources: KoreaCheapScanSources,
+    existing_disclosures: Sequence[DisclosureEvent],
+    config: KoreaLiveLiteConfig,
+    http_client: HttpClient,
+    built_requests: list[SourceRequest],
+    source_call_counts: dict[str, int],
+) -> dict[str, str]:
+    if not candidates or sources.opendart is None or not _can_execute_live_opendart(config):
+        return {}
+    corp_codes = _opendart_corp_codes_by_symbol(existing_disclosures)
+    missing = tuple(
+        candidate
+        for candidate in _unique_candidates_by_symbol(candidates)
+        if candidate.symbol not in corp_codes
+    )
+    if not missing:
+        return dict(corp_codes)
+    used_calls = (
+        source_call_counts.get("opendart_disclosure_date_range", 0)
+        + source_call_counts.get("opendart_detail_fetches", 0)
+        + source_call_counts.get("opendart_symbol_disclosure_calls", 0)
+        + source_call_counts.get("opendart_company_code_calls", 0)
+        + source_call_counts.get("opendart_financial_statement_calls", 0)
+    )
+    remaining_calls = _remaining_from_cap(config.budget.max_opendart_calls_per_day, used_calls)
+    corp_codes_from_map, _remaining_calls = _execute_opendart_company_code_lookup_for_candidates(
+        candidates=missing,
+        existing_corp_codes=corp_codes,
+        sources=sources,
+        config=config,
+        http_client=http_client,
+        built_requests=built_requests,
+        source_call_counts=source_call_counts,
+        remaining_calls=remaining_calls,
+    )
+    return {**corp_codes_from_map, **corp_codes}
+
+
+def _execute_opendart_disclosures_for_candidates(
+    *,
+    candidates: Sequence[CheapScanCandidate],
+    sources: KoreaCheapScanSources,
+    corp_codes: Mapping[str, str],
+    config: KoreaLiveLiteConfig,
+    http_client: HttpClient,
+    built_requests: list[SourceRequest],
+    source_call_counts: dict[str, int],
+) -> tuple[DisclosureEvent, ...]:
+    """Fetch selected-candidate OpenDART list rows over the feature window.
+
+    Date-range preloading is optimized for cheap-scan routing and may only
+    cover a short market-wide window. Feature engineering needs the selected
+    candidate's own recent filings, so this path uses the official corp code
+    after candidate selection without adding symbol-specific scoring logic.
+    """
+
+    if not candidates or sources.opendart is None or not _can_execute_live_opendart(config):
+        return ()
+    if not hasattr(sources.opendart, "build_disclosure_search_request"):
+        return ()
+    used_calls = (
+        source_call_counts.get("opendart_disclosure_date_range", 0)
+        + source_call_counts.get("opendart_detail_fetches", 0)
+        + source_call_counts.get("opendart_symbol_disclosure_calls", 0)
+        + source_call_counts.get("opendart_company_code_calls", 0)
+        + source_call_counts.get("opendart_financial_statement_calls", 0)
+    )
+    remaining_calls = _remaining_from_cap(config.budget.max_opendart_calls_per_day, used_calls)
+    if not _has_remaining_calls(remaining_calls):
+        return ()
+    if (
+        config.budget.max_opendart_calls_per_day is not None
+        and remaining_calls <= _opendart_financial_statement_call_reserve(config)
+    ):
+        return ()
+    if not corp_codes:
+        return ()
+
+    start = config.as_of_date - timedelta(days=max(config.disclosure_lookback_days, 30))
+    fetched: list[DisclosureEvent] = []
+    seen_symbols: set[str] = set()
+    for candidate in candidates:
+        if candidate.symbol in seen_symbols:
+            continue
+        seen_symbols.add(candidate.symbol)
+        corp_code = corp_codes.get(candidate.symbol)
+        if not corp_code or not _has_remaining_calls(remaining_calls):
+            continue
+        raw_request = sources.opendart.build_disclosure_search_request(
+            corp_code,
+            start,
+            config.as_of_date,
+            config.as_of_date,
+        )
+        public_request = SourceRequest(
+            method=raw_request.method,
+            url=raw_request.url,
+            params={key: value for key, value in raw_request.params.items() if key != "crtfc_key"},
+            headers=dict(raw_request.headers),
+            fixture_mode=False,
+            credential_name=raw_request.credential_name,
+        )
+        built_requests.append(public_request)
+        live_request = _with_secret_param(public_request, "crtfc_key", os.environ["OPENDART_API_KEY"])
+        cache_path = (
+            Path(config.cache_directory)
+            / "opendart_symbol_disclosures"
+            / config.as_of_date.isoformat()
+            / f"{_safe_filename(candidate.symbol)}_{_safe_filename(corp_code)}.json"
+        )
+        result = http_client.get_json(live_request, cache_path=cache_path)
+        source_call_counts["opendart_symbol_disclosure_calls"] += 1
+        remaining_calls = _consume_remaining_call(remaining_calls)
+        if not result.ok or not isinstance(result.json_data, Mapping):
+            continue
+        for item in _opendart_payload_to_disclosures(result.json_data, config.as_of_date):
+            if item.symbol not in {candidate.symbol, corp_code}:
+                continue
+            normalized = replace(item, symbol=candidate.symbol) if item.symbol != candidate.symbol else item
+            if start <= normalized.published_at.date() <= config.as_of_date and normalized.available_at.date() <= config.as_of_date:
+                fetched.append(normalized)
+    return tuple(sorted(fetched, key=lambda item: (item.symbol, item.published_at, item.rcept_no or "")))
+
+
 def _opendart_disclosure_page_call_cap(config: KoreaLiveLiteConfig) -> int | None:
     """Keep OpenDART budget for selected-candidate financial actuals.
 
@@ -1814,6 +1969,7 @@ def _execute_opendart_single_account_actuals_for_candidates(
     candidates: Sequence[CheapScanCandidate],
     sources: KoreaCheapScanSources,
     date_disclosures: Sequence[DisclosureEvent],
+    candidate_corp_codes: Mapping[str, str] | None = None,
     config: KoreaLiveLiteConfig,
     http_client: HttpClient,
     built_requests: list[SourceRequest],
@@ -1833,18 +1989,19 @@ def _execute_opendart_single_account_actuals_for_candidates(
     remaining_calls = _remaining_from_cap(config.budget.max_opendart_calls_per_day, used_calls)
     if not _has_remaining_calls(remaining_calls):
         return {}
-    corp_codes = _opendart_corp_codes_by_symbol(date_disclosures)
-    corp_codes_from_map, remaining_calls = _execute_opendart_company_code_lookup_for_candidates(
-        candidates=candidates,
-        existing_corp_codes=corp_codes,
-        sources=sources,
-        config=config,
-        http_client=http_client,
-        built_requests=built_requests,
-        source_call_counts=source_call_counts,
-        remaining_calls=remaining_calls,
-    )
-    corp_codes = {**corp_codes_from_map, **corp_codes}
+    corp_codes = {**(candidate_corp_codes or {}), **_opendart_corp_codes_by_symbol(date_disclosures)}
+    if any(candidate.symbol not in corp_codes for candidate in _unique_candidates_by_symbol(candidates)):
+        corp_codes_from_map, remaining_calls = _execute_opendart_company_code_lookup_for_candidates(
+            candidates=candidates,
+            existing_corp_codes=corp_codes,
+            sources=sources,
+            config=config,
+            http_client=http_client,
+            built_requests=built_requests,
+            source_call_counts=source_call_counts,
+            remaining_calls=remaining_calls,
+        )
+        corp_codes = {**corp_codes_from_map, **corp_codes}
     if not corp_codes:
         return {}
 
@@ -1987,6 +2144,7 @@ def _execute_company_guide_for_candidates(
             continue
         seen_symbols.add(candidate.symbol)
         consensus: tuple[ConsensusSnapshot, ...] = ()
+        revisions: tuple[ConsensusRevision, ...] = ()
         reports: tuple[ResearchReport, ...] = ()
 
         if _has_remaining_calls(remaining_calls):
@@ -2005,6 +2163,11 @@ def _execute_company_guide_for_candidates(
                         as_of_date=config.as_of_date,
                     )
                     consensus = (parsed.consensus,)
+                    revisions = _company_guide_revisions_from_broker_targets(
+                        parsed.broker_targets,
+                        symbol=candidate.symbol,
+                        as_of_date=config.as_of_date,
+                    )
                     any_success = True
                 except (TypeError, ValueError) as exc:
                     last_error = f"company_guide_snapshot_parse_failed:{type(exc).__name__}"
@@ -2038,9 +2201,10 @@ def _execute_company_guide_for_candidates(
             elif result.error:
                 last_error = f"company_guide_recent_report_fetch_failed:{result.error}"
 
-        if consensus or reports:
+        if consensus or revisions or reports:
             fetched[candidate.symbol] = _CompanyGuideFeatureData(
                 consensus=_dedupe_consensus_snapshots(consensus),
+                consensus_revisions=_dedupe_consensus_revisions(revisions),
                 research_reports=_dedupe_research_reports(reports),
             )
         if not _has_remaining_calls(remaining_calls):
@@ -2050,6 +2214,48 @@ def _execute_company_guide_for_candidates(
     if not any_success:
         fallback_reasons["company_guide"] = last_error or "company_guide_no_data"
     return fetched
+
+
+def _company_guide_revisions_from_broker_targets(
+    rows: Sequence[BrokerTargetRow],
+    *,
+    symbol: str,
+    as_of_date: date,
+) -> tuple[ConsensusRevision, ...]:
+    usable = tuple(
+        row
+        for row in rows
+        if row.symbol == symbol
+        and row.date <= as_of_date
+        and row.target_price_revision_pct is not None
+    )
+    if not usable:
+        return ()
+    values = tuple(float(row.target_price_revision_pct) for row in usable if row.target_price_revision_pct is not None)
+    if not values:
+        return ()
+    latest_date = max(row.date for row in usable)
+    average_revision = round(sum(values) / len(values), 4)
+    return (
+        ConsensusRevision(
+            symbol=symbol,
+            date=latest_date,
+            fiscal_year=as_of_date.year,
+            as_of_date=as_of_date,
+            target_price_revision_1m=average_revision,
+            analyst_count_change=len(values),
+            source="company_guide_snapshot",
+            parsed_fields={
+                "source": "company_guide_snapshot",
+                "company_guide_broker_target_revision_proxy": True,
+                "revision_proxy_method": "average_broker_target_price_revision_pct",
+                "broker_target_revision_count": len(values),
+                "broker_target_revision_min": min(values),
+                "broker_target_revision_max": max(values),
+                "consensus_proxy_score_eligible": True,
+            },
+        ),
+    )
 
 
 def _company_guide_public_request(request: SourceRequest) -> SourceRequest:
@@ -2264,6 +2470,7 @@ def _base_feature_input_for_candidate(
     config: KoreaLiveLiteConfig,
     extra_financial_actuals: Sequence[FinancialActual] = (),
     extra_consensus: Sequence[ConsensusSnapshot] = (),
+    extra_consensus_revisions: Sequence[ConsensusRevision] = (),
     extra_research_reports: Sequence[ResearchReport] = (),
 ) -> FeatureEngineeringInput | None:
     instrument = {item.symbol: item for item in instruments}.get(candidate.symbol)
@@ -2277,8 +2484,9 @@ def _base_feature_input_for_candidate(
         tuple(sources.get_financial_actuals(candidate.symbol, config.as_of_date)) + tuple(extra_financial_actuals)
     )
     consensus = _dedupe_consensus_snapshots(tuple(extra_consensus))
+    consensus_revisions = _dedupe_consensus_revisions(tuple(extra_consensus_revisions))
     research_reports = _dedupe_research_reports(tuple(extra_research_reports))
-    if not price_bars and not disclosures and not financial_actuals and not consensus and not research_reports:
+    if not price_bars and not disclosures and not financial_actuals and not consensus and not consensus_revisions and not research_reports:
         return None
     return FeatureEngineeringInput(
         symbol=candidate.symbol,
@@ -2288,6 +2496,7 @@ def _base_feature_input_for_candidate(
         price_bars=price_bars,
         financial_actuals=financial_actuals,
         consensus=consensus,
+        consensus_revisions=consensus_revisions,
         disclosures=disclosures,
         research_reports=research_reports,
     )
@@ -2331,6 +2540,11 @@ def _financial_actual_field_count(item: FinancialActual) -> int:
 
 
 def _dedupe_consensus_snapshots(items: Sequence[ConsensusSnapshot]) -> tuple[ConsensusSnapshot, ...]:
+    by_key = {(item.symbol, item.date, item.fiscal_year, item.source): item for item in items}
+    return tuple(sorted(by_key.values(), key=lambda item: (item.date, item.fiscal_year, item.source)))
+
+
+def _dedupe_consensus_revisions(items: Sequence[ConsensusRevision]) -> tuple[ConsensusRevision, ...]:
     by_key = {(item.symbol, item.date, item.fiscal_year, item.source): item for item in items}
     return tuple(sorted(by_key.values(), key=lambda item: (item.date, item.fiscal_year, item.source)))
 
@@ -2580,6 +2794,8 @@ def _targeted_smoke_result_row(
         "post_score_gap_expansion_queries": diagnostics.get("post_score_gap_expansion_queries", ()),
         "post_score_gap_warning_reason": diagnostics.get("post_score_gap_warning_reason"),
         "material_score_gap_unresolved_gaps": diagnostics.get("material_score_gap_unresolved_gaps", ()),
+        "failed_green_gates": diagnostics.get("failed_green_gates", ()),
+        "stage_gate_diagnostics": diagnostics.get("stage_gate_diagnostics"),
         "status": (
             _score_blocked_status(blocked_reason)
             if not score_valid_bool

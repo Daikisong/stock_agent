@@ -196,6 +196,11 @@ def _research_report_from_row(row: Mapping[str, Any], *, symbol: str, as_of_date
     publish_date = _yy_mm_dd_date(raw_date, as_of_date)
     if publish_date > as_of_date:
         return None
+    target_price_action = text_or_none(row.get("PRC_ACTION_TYP_NM"))
+    eps_action = text_or_none(row.get("EPS_ACTION_TYP_NM"))
+    recommend_action = text_or_none(row.get("RECOMM_ACTION_TYP_NM"))
+    target_price_direction = _action_direction(target_price_action)
+    eps_direction = _action_direction(eps_action)
     parsed_fields = {
         "source": "company_guide_recent_report",
         "report_id": row.get("RPT_ID"),
@@ -204,9 +209,15 @@ def _research_report_from_row(row: Mapping[str, Any], *, symbol: str, as_of_date
         "page_count": _safe_int(row.get("PAGE_CNT")),
         "close_price": _safe_float(row.get("CLOSE_PRC")),
         "comment": _strip_html(text_or_none(row.get("COMMENT")) or ""),
-        "target_price_action": text_or_none(row.get("PRC_ACTION_TYP_NM")),
-        "eps_action": text_or_none(row.get("EPS_ACTION_TYP_NM")),
-        "recommend_action": text_or_none(row.get("RECOMM_ACTION_TYP_NM")),
+        "target_price_action": target_price_action,
+        "eps_action": eps_action,
+        "recommend_action": recommend_action,
+        "target_price_revision_direction": target_price_direction,
+        "eps_revision_direction": eps_direction,
+        "target_price_upgrade_mentioned": target_price_direction == "up",
+        "target_price_downgrade_mentioned": target_price_direction == "down",
+        "eps_revision_up_mentioned": eps_direction == "up",
+        "eps_revision_down_mentioned": eps_direction == "down",
     }
     return ResearchReport(
         symbol=symbol,
@@ -229,6 +240,19 @@ def _snapshot_date(html_text: str, fallback: date) -> date:
     if not match:
         return fallback
     return date(int(match.group(1)), int(match.group(2)), int(match.group(3)))
+
+
+def _action_direction(value: str | None) -> str | None:
+    text = (value or "").strip()
+    if not text:
+        return None
+    if any(token in text for token in ("상향", "인상", "올림", "증가", "raise", "up")):
+        return "up"
+    if any(token in text for token in ("하향", "인하", "내림", "감소", "lower", "down")):
+        return "down"
+    if any(token in text for token in ("변동없음", "유지", "없음", "unchanged", "maintain")):
+        return "unchanged"
+    return None
 
 
 def _yy_mm_dd_date(value: str, as_of_date: date) -> date:

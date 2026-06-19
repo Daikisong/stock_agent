@@ -275,10 +275,16 @@ class SourceConnectorTests(unittest.TestCase):
         self.assertEqual(samsung[1].target_price, 420000)
         self.assertEqual(samsung[1].fy1_eps, 48448)
         self.assertEqual(samsung[1].parsed_fields["target_price_action"], "목표주가 상향")
+        self.assertEqual(samsung[1].parsed_fields["target_price_revision_direction"], "up")
+        self.assertTrue(samsung[1].parsed_fields["target_price_upgrade_mentioned"])
+        self.assertEqual(samsung[1].parsed_fields["eps_revision_direction"], "up")
+        self.assertTrue(samsung[1].parsed_fields["eps_revision_up_mentioned"])
 
         self.assertEqual(hynix[0].target_price, 2950000)
         self.assertEqual(hynix[0].fy1_eps, 325071)
         self.assertEqual(hynix[1].broker, "미래에셋")
+        self.assertEqual(hynix[1].parsed_fields["target_price_revision_direction"], "unchanged")
+        self.assertEqual(hynix[1].parsed_fields["eps_revision_direction"], "up")
         self.assertIn("장기공급계약", hynix[1].raw_text or "")
 
     def test_company_guide_request_metadata_stays_fixture_first(self):
