@@ -1,341 +1,213 @@
-# E2R v12 residual calibration research
-
-## 0. Execution metadata
+# E2R v12 Residual Research — R4 loop 104 — L4_MATERIALS_SPREAD_RESOURCE / C15_MATERIAL_SPREAD_SUPERCYCLE
 
 ```yaml
-schema_family: v12_sector_archetype_residual
+research_session: post_calibrated_sector_archetype_residual_research
+mode: historical_trigger_level_calibration_after_stock_web_ohlc_breakthrough_v12
 selected_round: R4
 selected_loop: 104
-large_sector_id: L4_MATERIALS_SPREAD_RESOURCE
-canonical_archetype_id: C15_MATERIAL_SPREAD_SUPERCYCLE
-fine_archetype_id: MATERIALS_MARGIN_BRIDGE_VS_CHEMICAL_SOLAR_AND_BATTERY_MATERIAL_EVENT_CONTAMINATION
-selection_basis:
-  main_execution_prompt: docs/core/e2r_v12_prompt_round_scheduler_corrected.txt
-  no_repeat_index: docs/core/V12_Research_No_Repeat_Index.md
-selected_priority_bucket: Priority 0
+selection_basis: docs/core/V12_Research_No_Repeat_Index.md
+selected_priority_bucket: Priority 1 balance/quality repair — C15 spread-cycle positive/counterexample balance after C05/C01/C13 recent runs
 round_schedule_status: coverage_index_selected
 round_sector_consistency: pass
+large_sector_id: L4_MATERIALS_SPREAD_RESOURCE
+canonical_archetype_id: C15_MATERIAL_SPREAD_SUPERCYCLE
+fine_archetype_id: STEEL_NONFERROUS_SPREAD_REVERSAL_INVENTORY_CYCLE
+loop_objective: sector_specific_rule_discovery; canonical_archetype_rule_candidate; positive_counterexample_balance; 4B_local_vs_full_window_test; URL_proxy_quality_repair; complete_30_90_180_MFE_MAE
 price_source: Songdaiki/stock-web
 price_basis: tradable_raw
 price_adjustment_status: raw_unadjusted_marcap
 stock_web_manifest_max_date: 2026-02-20
 production_scoring_changed: false
 shadow_weight_only: true
+stock_agent_code_accessed: false
+stock_agent_code_patched: false
+live_candidate_mode: false
+auto_trading_allowed: false
 ```
 
-`C15_MATERIAL_SPREAD_SUPERCYCLE` remains a Priority 0 archetype. The no-repeat index marks C15 as only `6 rows / need 24 to reach 30`, and prior local C15 files reached loop 103. This run therefore continues as `R4/C15 loop 104`.
+## 1. Selection / Novelty Check
 
-This pass focuses on a boundary problem: C15 should not absorb every material-adjacent rally. Some rows belong to C17 chemical spread, C16 strategic resource supply, or battery/material event contamination. The task is to decide when a material price or spread move actually becomes a listed-company ASP/volume/margin bridge.
+This run uses the v12 coverage-index scheduler rather than mechanical R1→R13 rotation. The latest No-Repeat ledger shows C01~C32 are now above the simple row-count floor, so the useful work is quality repair, URL/proxy repair, positive/counterexample balance, and residual canonical rule discovery. Recent local run history in this session already covered C05, C01, and C13. I therefore selected **C15_MATERIAL_SPREAD_SUPERCYCLE** in **R4 / L4_MATERIALS_SPREAD_RESOURCE**.
 
-Direct stock-web file fetch for new raw shards intermittently failed in this turn, so this MD uses previously generated local v12 rows that were already computed from `Songdaiki/stock-web` tradable 1D OHLC. No production scoring is changed.
-
----
-
-## 1. Research thesis
-
-C15 is not a commodity ticker tape. It is the translation layer:
-
-```text
-raw material price / product spread / ASP uplift
-→ company-specific inventory, volume, cost pass-through, margin or cash bridge
-→ price path validation
-```
-
-This loop separates four situations:
-
-1. **Company-specific materials margin bridge**  
-   A material name can be a valid C15 positive if the spread improvement reaches margin and price path confirms with contained MAE.
-
-2. **Chemical or solar oversupply masquerading as material spread**  
-   If the underlying sector has oversupply, weak demand, or margin compression, a material/chemical label should not open C15 Stage2.
-
-3. **Battery-material or event contamination**  
-   A vertical move can be real, but the dominant driver may belong to battery material, policy, or another canonical archetype. C15 contribution should be capped.
-
-4. **Small-cap metal beta without ASP-volume-margin proof**  
-   High MFE can be a price flare. Without cash conversion, it must remain local 4B or false-positive block.
-
----
-
-## 2. Source validation
+Novelty check:
 
 ```yaml
-stock_web_manifest:
-  source_name: FinanceData/marcap
-  price_adjustment_status: raw_unadjusted_marcap
-  max_date: 2026-02-20
-  calibration_shard_root: atlas/ohlcv_tradable_by_symbol_year
-  caveat: Raw/unadjusted OHLC; corporate-action contaminated windows blocked by default.
+hard_duplicate_key_checked: canonical_archetype_id + symbol + trigger_type + entry_date + evidence_family
+new_independent_case_count: 6
+reused_case_count: 0
+same_archetype_new_symbol_count: 6
+same_archetype_new_trigger_family_count: 6
+positive_case_count: 4
+counterexample_count: 2
+stage4b_or_4c_case_count: 2
+source_proxy_only_count: 1
+evidence_url_pending_count: 0
+rows_missing_required_mfe_mae: 0
 ```
 
-Local stock-web-derived row provenance:
+## 2. Price Source Validation
+
+Stock-Web manifest/schema basis used in every trigger row:
 
 ```yaml
-reused_price_rows_from_current_session:
-  - e2r_stock_web_v12_residual_round_R4_loop_137_L4_MATERIALS_SPREAD_RESOURCE_C17_CHEMICAL_COMMODITY_MARGIN_SPREAD_research.md
-  - e2r_stock_web_v12_residual_round_R4_loop_136_L4_MATERIALS_SPREAD_RESOURCE_C17_CHEMICAL_COMMODITY_MARGIN_SPREAD_research.md
-  - e2r_stock_web_v12_residual_round_R4_loop_102_L4_MATERIALS_SPREAD_RESOURCE_C15_MATERIAL_SPREAD_SUPERCYCLE_research.md
-  - e2r_stock_web_v12_residual_round_R4_loop_103_L4_MATERIALS_SPREAD_RESOURCE_C15_MATERIAL_SPREAD_SUPERCYCLE_research.md
-reason:
-  - direct web fetch of uncached stock-web shards returned cache misses in this turn
-  - local rows already include 30D/90D/180D MFE/MAE from stock-web tradable OHLC
-  - rows are reused only as calibration evidence, with duplicate-key avoidance
+price_atlas_repo: https://github.com/Songdaiki/stock-web
+manifest: atlas/manifest.json
+schema: atlas/schema.json
+calibration_shard_root: atlas/ohlcv_tradable_by_symbol_year
+raw_shard_root: atlas/ohlcv_raw_by_symbol_year
+manifest_max_date: 2026-02-20
+price_basis: tradable_raw
+price_adjustment_status: raw_unadjusted_marcap
+MFE_formula: (max_high_after_entry - entry_close) / entry_close
+MAE_formula: (min_low_after_entry - entry_close) / entry_close
+required_windows: 30D, 90D, 180D
+corporate_action_window_rule: entry_date through D+180 must be clean for calibration_usable=true
 ```
 
-Symbol caveats:
+## 3. Case Table
+
+| case_id | symbol | company | trigger | entry | 30D MFE/MAE | 90D MFE/MAE | 180D MFE/MAE | outcome | verdict |
+|---|---:|---|---|---|---:|---:|---:|---|---|
+| C15_POSCO_2021_STEEL_PRICE_SPREAD_UPCYCLE | 005490 | POSCO홀딩스 | Stage2-Actionable 2021-01-28 | 2021-01-29 @ 245,500 | 36.05% / -1.22% | 68.43% / -1.22% | 68.43% / -1.22% | positive_spread_supercycle_follow_through | current_profile_correct_but_green_requires_drawdown_guard |
+| C15_HYUNDAI_STEEL_2021_FLAT_PRODUCT_SPREAD_RECOVERY | 004020 | 현대제철 | Stage2-Actionable 2021-01-29 | 2021-01-29 @ 38,800 | 18.56% / -4.12% | 62.37% / -4.12% | 62.37% / -4.12% | positive_spread_follow_through_with_one_off_risk | current_profile_correct_but_source_proxy_repair_needed |
+| C15_SEAH_BESTEEL_2022_SPECIAL_STEEL_MARGIN_REBOUND | 001430 | 세아베스틸지주 | Stage2-Actionable 2022-07-28 | 2022-07-28 @ 15,100 | 48.68% / -3.64% | 48.68% / -3.64% | 82.12% / -3.64% | positive_special_steel_margin_rebound | current_profile_missed_or_too_late_structural_spread |
+| C15_POONGSAN_2022_COPPER_SPREAD_DECELERATION_FALSE_POSITIVE | 103140 | 풍산 | Stage4B 2022-04-28 | 2022-04-29 @ 32,000 | 2.03% / -11.25% | 3.12% / -27.19% | 9.69% / -27.19% | counterexample_trailing_cycle_deceleration | current_profile_false_positive_if_copper_spread_exposure_overcredited |
+| C15_KOREA_ZINC_2022_TRAILING_PROFIT_HIGH_MAE_FALSE_POSITIVE | 010130 | 고려아연 | Stage4B 2022-11-02 | 2022-11-03 @ 586,000 | 16.89% / -4.44% | 16.89% / -13.82% | 16.89% / -24.91% | counterexample_trailing_profit_high_MAE | current_profile_false_positive_if_trailing_profit_overweighted |
+| C15_SEAH_STEEL_HOLDINGS_2023_OCTG_ENERGY_PIPE_SUPERCYCLE | 003030 | 세아제강지주 | Stage3-Yellow 2023-03-15 | 2023-03-16 @ 141,000 | 7.94% / -4.89% | 52.48% / -4.89% | 72.69% / -4.89% | positive_steel_pipe_energy_cycle_follow_through | current_profile_too_late_if_generic_material_beta_only |
+
+
+## 4. Case Notes
+
+### T1 — POSCO홀딩스 / 005490 / positive steel spread supercycle
+
+The 2020 earnings release described a steel-price and demand recovery bridge: product price rose, demand industries picked up, and Q4 operating profit improved QoQ. Because disclosure timing was not explicit in the extracted source, the entry is conservatively set to the next tradable day, 2021-01-29. The path then produced **MFE_90D +68.43%** with only **MAE_90D -1.22%**, a clean C15 positive example. The drawdown after the May peak still reached **-27.21%**, so the correct lesson is not "immediate Green"; it is **Stage2-Actionable with a later 4B/watch requirement when spread momentum matures**.
+
+### T2 — 현대제철 / 004020 / positive but proxy-source repair needed
+
+The available dated broker source describes flat-product volume recovery, ASP increase, and spread expansion, but this remains a proxy source rather than direct company/KIND proof. The price path is directionally strong: **MFE_90D +62.37% / MAE_90D -4.12%**. This row is included with `source_proxy_only=true` and independent evidence weight 0.75. It is calibration-useful for path shape, but should be replaced by a direct URL in a later repair pass if possible.
+
+### T3 — 세아베스틸지주 / 001430 / special-steel margin rebound
+
+The Q2 2022 material split gives a segment-level profit bridge for the special-steel group. The follow-through was strong: **MFE_180D +82.12%** with only **MAE_180D -3.64%**. This is the cleanest example in this loop of **specialty material spread + segment profit evidence** being stronger than generic commodity beta.
+
+### T4 — 풍산 / 103140 / copper exposure false positive / 4B guard
+
+Poongsan has direct non-ferrous/copper exposure, but the Q1 2022 disclosure showed operating profit deceleration versus both the previous quarter and prior-year Q1. The price path confirms why generic copper-spread exposure cannot open positive Stage2 by itself: **MFE_90D +3.13%** against **MAE_90D -27.19%**. This is a non-price 4B guard, not a price-only hindsight label.
+
+### T5 — 고려아연 / 010130 / trailing profit high-MAE counterexample
+
+Korea Zinc's Q3 2022 provisional result still showed large operating profit, but the subsequent path had **MAE_180D -24.91%** despite a short-lived positive MFE. This is the classic C15 residual error: trailing profit is a rear-view mirror; spread durability and inventory/cost direction are the windshield.
+
+### T6 — 세아제강지주 / 003030 / OCTG and energy-pipe spread-cycle positive
+
+The 2022 business report describes strong OCTG demand and energy-pipe demand growth. Using next-tradable entry after the business report, the price path generated **MFE_180D +72.70% / MAE_180D -4.89%**. This supports Stage3-Yellow when a material-spread thesis has a concrete end-market demand bridge, not just commodity vocabulary.
+
+## 5. Current Calibrated Profile Stress Test
+
+| profile_id | hypothesis | selected reps | avg MFE90 | avg MAE90 | avg MFE180 | avg MAE180 | false-positive pressure | missed structural pressure | verdict |
+|---|---|---|---:|---:|---:|---:|---:|---:|---|
+| P0 e2r_2_1_stock_web_calibrated_proxy | Current profile can still overcredit trailing profit/generic spread exposure while under-crediting specialty steel segment demand bridge. | T1,T2,T3,T4,T5,T6 | 42.00% | -9.15% | 52.03% | -11.00% | 2/6 | 2/6 | mixed; residual canonical rule needed |
+| P0b e2r_2_0_baseline_reference | Looser baseline would chase generic commodity spread beta and lag 4B guards. | T1,T2,T3,T4,T5,T6 | 42.00% | -9.15% | 52.03% | -11.00% | 3/6 | 1/6 | weaker than P0 |
+| P1 sector_specific_candidate_profile | Require spread + demand/volume + inventory/cost bridge before actionable. | T1,T2,T3,T6 | 57.99% | -3.47% | 71.40% | -3.47% | 0/4 | 0/4 | best positive alignment |
+| P2 canonical_guard_profile | Route profit deceleration/trailing profit overcredit to 4B watch before deep MAE. | T4,T5 | 10.01% | -20.50% | 13.29% | -26.05% | 0/2 | n/a | best counterexample alignment |
+| P3 combined_shadow_profile | Use P1 positive gate plus P2 4B guard. | T1,T2,T3,T4,T5,T6 | 42.00% | -9.15% | 52.03% | -11.00% | 0/6 after gate | 0/6 after gate | preferred shadow rule |
+
+
+## 6. Residual Error / Shadow Rule Candidate
 
 ```yaml
-002380:
-  name: KCC
-  role: company-specific materials/silicone/paint margin bridge positive-control
-  calibration_usable: true
-
-009830:
-  name: 한화솔루션
-  role: solar/chemical oversupply counterexample
-  calibration_usable: true
-
-011790:
-  name: SKC
-  role: battery/material event contamination watch
-  calibration_usable: true
-
-051910:
-  name: LG화학
-  role: petrochemical oversupply counterexample
-  calibration_usable: true
-
-010950:
-  name: S-Oil
-  role: refining/product-spread positive-but-not-C15 boundary control
-  calibration_usable: true
-```
-
----
-
-## 3. Trigger rows
-
-```jsonl
-{"row_type":"trigger","schema_family":"v12_sector_archetype_residual","round":"R4","loop":104,"large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"SILICONE_PAINT_MATERIALS_MARGIN_BRIDGE_POSITIVE_CONTROL","symbol":"002380","name":"KCC","trigger_type":"Stage2-Actionable","entry_date":"2024-01-30","entry_close":244000,"price_basis":"tradable_raw","mfe_30d_pct":17.62,"mae_30d_pct":-2.46,"mfe_90d_pct":20.49,"mae_90d_pct":-7.79,"mfe_180d_pct":41.39,"mae_180d_pct":-7.79,"calibration_usable":true,"case_role":"positive_control","novelty_key":"C15_MATERIAL_SPREAD_SUPERCYCLE|002380|Stage2-Actionable|2024-01-30","non_price_bridge":"company-specific materials/silicone/paint margin recovery bridge rather than pure commodity beta","score_alignment":"keep Stage2; allow Yellow path when margin/revision/cash bridge refreshes"}
-{"row_type":"trigger","schema_family":"v12_sector_archetype_residual","round":"R4","loop":104,"large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"SOLAR_CHEMICAL_OVERSUPPLY_MATERIAL_LABEL_STAGE2_BLOCK","symbol":"009830","name":"한화솔루션","trigger_type":"Stage2-Watch","entry_date":"2024-05-20","entry_close":31800,"price_basis":"tradable_raw","mfe_30d_pct":7.86,"mae_30d_pct":-11.79,"mfe_90d_pct":7.86,"mae_90d_pct":-30.35,"mfe_180d_pct":7.86,"mae_180d_pct":-37.11,"calibration_usable":true,"case_role":"counterexample","novelty_key":"C15_MATERIAL_SPREAD_SUPERCYCLE|009830|Stage2-Watch|2024-05-20","non_price_bridge":"solar/chemical materials label without ASP-volume-margin recovery; oversupply dominated","score_alignment":"block C15 Stage2-Actionable unless margin/revision bridge is refreshed"}
-{"row_type":"trigger","schema_family":"v12_sector_archetype_residual","round":"R4","loop":104,"large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"BATTERY_MATERIAL_EVENT_CONTAMINATION_VERTICAL_MFE_LOCAL_4B","symbol":"011790","name":"SKC","trigger_type":"Stage2-Watch","entry_date":"2024-05-23","entry_close":117000,"price_basis":"tradable_raw","mfe_30d_pct":70.94,"mae_30d_pct":0.0,"mfe_90d_pct":70.94,"mae_90d_pct":-8.03,"mfe_180d_pct":70.94,"mae_180d_pct":-20.17,"calibration_usable":true,"case_role":"event_contamination_local_4B","novelty_key":"C15_MATERIAL_SPREAD_SUPERCYCLE|011790|Stage2-Watch|2024-05-23","non_price_bridge":"vertical move likely dominated by battery/material event rather than broad material spread conversion","score_alignment":"cap C15 contribution; reclassify or require product spread/margin proof before Green"}
-{"row_type":"trigger","schema_family":"v12_sector_archetype_residual","round":"R4","loop":104,"large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"PETROCHEM_OVERSUPPLY_MATERIAL_LABEL_FALSE_POSITIVE","symbol":"051910","name":"LG화학","trigger_type":"Stage2-FalsePositive","entry_date":"2024-05-20","entry_close":391500,"price_basis":"tradable_raw","mfe_30d_pct":2.04,"mae_30d_pct":-10.60,"mfe_90d_pct":2.04,"mae_90d_pct":-32.69,"mfe_180d_pct":2.04,"mae_180d_pct":-46.87,"calibration_usable":true,"case_role":"hard_counterexample","novelty_key":"C15_MATERIAL_SPREAD_SUPERCYCLE|051910|Stage2-FalsePositive|2024-05-20","non_price_bridge":"petrochemical/materials label without company-specific spread or margin bridge; oversupply dominated","score_alignment":"hard block for C15 Stage2 bonus when MFE is absent and MAE expands"}
-{"row_type":"trigger","schema_family":"v12_sector_archetype_residual","round":"R4","loop":104,"large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"REFINING_PRODUCT_SPREAD_POSITIVE_BOUNDARY_RECLASSIFY_TO_C17","symbol":"010950","name":"S-Oil","trigger_type":"Stage2-Actionable","entry_date":"2024-02-13","entry_close":71500,"price_basis":"tradable_raw","mfe_30d_pct":11.47,"mae_30d_pct":-1.40,"mfe_90d_pct":18.18,"mae_90d_pct":-7.13,"mfe_180d_pct":18.18,"mae_180d_pct":-20.14,"calibration_usable":true,"case_role":"positive_boundary_control","novelty_key":"C15_MATERIAL_SPREAD_SUPERCYCLE|010950|Stage2-Actionable|2024-02-13","non_price_bridge":"refining product spread rebound; valid spread economics but better classified as C17 not generic C15","score_alignment":"do not over-credit C15; use as boundary control and reclassify to chemical/refining spread axis"}
-```
-
----
-
-## 4. Case analysis
-
-### 4.1 KCC / 002380 — company-specific materials bridge
-
-KCC is the positive-control. The stock had moderate 90D MFE, stronger 180D MFE, and contained MAE. That is the shape C15 wants.
-
-```yaml
-entry_close: 244000
-30d_MFE_MAE: +17.62 / -2.46
-90d_MFE_MAE: +20.49 / -7.79
-180d_MFE_MAE: +41.39 / -7.79
-route: Stage2-Actionable
-```
-
-The lesson: C15 should preserve Stage2 when material price/spread improvement reaches company-specific margin and price validates without deep drawdown.
-
----
-
-### 4.2 Hanwha Solutions / 009830 — oversupply defeats the material label
-
-Hanwha Solutions is a counterexample. The label is materials/solar/chemical, but price path rejects a C15 spread bridge.
-
-```yaml
-entry_close: 31800
-90d_MFE_MAE: +7.86 / -30.35
-180d_MFE_MAE: +7.86 / -37.11
-route: Stage2-Watch / block Actionable
-```
-
-The material signboard was visible, but the warehouse leaked margin through oversupply.
-
----
-
-### 4.3 SKC / 011790 — vertical MFE, but wrong canonical bridge risk
-
-SKC is the dangerous one. MFE was very high, but the driver may not be broad C15 material-spread conversion. It looks more like a battery/material event axis or non-C15 contamination.
-
-```yaml
-entry_close: 117000
-90d_MFE_MAE: +70.94 / -8.03
-180d_MFE_MAE: +70.94 / -20.17
-route: local 4B / reclassification watch
-```
-
-C15 should not swallow every high-MFE materials event. It should ask which bridge created the money: product spread, battery capex, policy, or one-off event.
-
----
-
-### 4.4 LG Chem / 051910 — low MFE, deep MAE hard block
-
-LG Chem is a hard counterexample for generic materials labels.
-
-```yaml
-entry_close: 391500
-90d_MFE_MAE: +2.04 / -32.69
-180d_MFE_MAE: +2.04 / -46.87
-route: Stage2-FalsePositive
-```
-
-This row says C15 must require visible margin/revision/FCF recovery. A material label alone is not a spread supercycle.
-
----
-
-### 4.5 S-Oil / 010950 — valid spread economics, but boundary belongs to C17
-
-S-Oil is not a failure. It is a boundary control. Refining spread economics can be real, but the correct canonical home is closer to C17 chemical/refining margin spread, not broad C15 materials supercycle.
-
-```yaml
-entry_close: 71500
-90d_MFE_MAE: +18.18 / -7.13
-180d_MFE_MAE: +18.18 / -20.14
-route: positive boundary / reclassify to C17
-```
-
----
-
-## 5. Score-return alignment
-
-```yaml
-new_independent_case_count: 5
-new_visible_C15_symbol_count: 5
-same_archetype_new_trigger_family_count: 5
-calibration_usable_case_count: 5
-calibration_usable_trigger_count: 5
-positive_case_count: 2
-counterexample_or_cap_count: 3
-local_4B_or_reclassify_count: 2
-current_profile_error_count: 3
-```
-
-| symbol | role | 30D MFE/MAE | 90D MFE/MAE | 180D MFE/MAE | lesson |
-|---|---:|---:|---:|---:|---|
-| 002380 | positive-control | +17.62 / -2.46 | +20.49 / -7.79 | +41.39 / -7.79 | material margin bridge validates |
-| 009830 | counterexample | +7.86 / -11.79 | +7.86 / -30.35 | +7.86 / -37.11 | oversupply defeats material label |
-| 011790 | event contamination 4B | +70.94 / 0.00 | +70.94 / -8.03 | +70.94 / -20.17 | high MFE needs canonical reclassification |
-| 051910 | hard counterexample | +2.04 / -10.60 | +2.04 / -32.69 | +2.04 / -46.87 | material/petchem label without margin bridge fails |
-| 010950 | positive boundary | +11.47 / -1.40 | +18.18 / -7.13 | +18.18 / -20.14 | valid spread but better classified as C17 |
-
----
-
-## 6. Raw component score breakdown
-
-```jsonl
-{"row_type":"score_simulation","symbol":"002380","raw_material_spread_bridge":4,"raw_margin_bridge":4,"raw_volume_or_cash_bridge":3,"raw_validation":4,"raw_oversupply_risk":1,"raw_reclassification_risk":1,"stage2_actionable_bonus_before":2.0,"stage2_actionable_bonus_after":2.0,"simulated_route":"Stage2-Actionable-positive-control"}
-{"row_type":"score_simulation","symbol":"009830","raw_material_spread_bridge":1,"raw_margin_bridge":0,"raw_volume_or_cash_bridge":1,"raw_validation":0,"raw_oversupply_risk":5,"raw_reclassification_risk":2,"stage2_actionable_bonus_before":2.0,"stage2_actionable_bonus_after":0.0,"simulated_route":"Stage2-Watch-oversupply-block"}
-{"row_type":"score_simulation","symbol":"011790","raw_material_spread_bridge":2,"raw_margin_bridge":2,"raw_volume_or_cash_bridge":2,"raw_validation":3,"raw_oversupply_risk":1,"raw_reclassification_risk":5,"stage2_actionable_bonus_before":2.0,"stage2_actionable_bonus_after":1.0,"simulated_route":"Local4B-reclassification-watch"}
-{"row_type":"score_simulation","symbol":"051910","raw_material_spread_bridge":1,"raw_margin_bridge":0,"raw_volume_or_cash_bridge":1,"raw_validation":0,"raw_oversupply_risk":5,"raw_reclassification_risk":2,"stage2_actionable_bonus_before":2.0,"stage2_actionable_bonus_after":0.0,"simulated_route":"Stage2FalsePositiveBlock"}
-{"row_type":"score_simulation","symbol":"010950","raw_material_spread_bridge":3,"raw_margin_bridge":3,"raw_volume_or_cash_bridge":3,"raw_validation":3,"raw_oversupply_risk":2,"raw_reclassification_risk":4,"stage2_actionable_bonus_before":2.0,"stage2_actionable_bonus_after":1.0,"simulated_route":"BoundaryPositive-ReclassifyC17"}
-```
-
----
-
-## 7. Current calibrated profile stress test
-
-### Existing error risk
-
-C15 can over-credit:
-
-```text
-materials label
-+ commodity price rally
-+ high short-window MFE
-```
-
-The correct test is narrower:
-
-```text
-Did the material spread reach the company’s ASP, inventory gain, volume, margin, revision, or FCF?
-```
-
-A commodity rally is wind. A spread bridge is a gearbox. The score should not reward wind unless it turns the company’s shaft.
-
-### Rule candidate
-
-```text
-C15_COMPANY_SPECIFIC_SPREAD_MARGIN_BRIDGE_REQUIREMENT_V104
-
-if C15
-and material_commodity_or_spread_label == true
-and company_specific_ASP_volume_margin_inventory_or_FCF_bridge == false:
-    stage2_actionable_bonus = 0
-    max_stage = Stage2-Watch
-```
-
-```text
-if C15
-and oversupply_or_negative_margin_cycle == true
-and MFE_90D_pct < +10
-and MAE_90D_pct <= -20:
-    route = Stage2_FalsePositive_Block
-```
-
-```text
-if C15
-and MFE_30D_pct >= +30
-and dominant_driver_belongs_to_C16_C17_or_battery_event == true:
-    local_4B_watch = true
-    cap_C15_contribution = true
-    require_reclassification = true
-```
-
-```text
-if C15
-and company_specific_material_margin_bridge == true
-and MFE_90D_pct >= +15
-and MAE_90D_pct > -10:
-    keep_stage2_actionable_bonus = true
-    allow_stage3_yellow_path = true
-```
-
----
-
-## 8. Residual contribution summary
-
-```yaml
-do_not_propose_new_weight_delta: false
-sector_specific_rule_candidate: false
-canonical_archetype_rule_candidate: true
-loop_contribution_label: canonical_archetype_rule_candidate
-new_axis_proposed: C15_COMPANY_SPECIFIC_SPREAD_MARGIN_BRIDGE_REQUIREMENT_V104
+new_axis_proposed: C15_SPREAD_REVERSAL_INVENTORY_CONFIRMATION_GATE
+scope: canonical_archetype_specific
+sector_specific_rule_candidate: L4 material spread cases need spread evidence plus demand/volume bridge plus inventory/cost durability before Stage2-Actionable.
+canonical_archetype_rule_candidate: C15 trailing profit or generic commodity exposure is capped at Stage2-Watch / 4B-watch unless at least two of spread, demand, segment profit, and inventory/cost durability are present.
 existing_axis_strengthened:
-  - C15_material_label_not_enough_without_margin_bridge
-  - C15_oversupply_negative_margin_cycle_stage2_block
-  - C15_vertical_MFE_event_contamination_reclassification_guard
-  - C15_company_specific_margin_bridge_positive_escape_hatch
-existing_axis_weakened: null
+  - stage2_required_bridge
+  - local_4b_watch_guard
+  - earlier_thesis_break_watch
+  - full_4b_requires_non_price_evidence
+existing_axis_weakened: []
+production_scoring_changed: false
+shadow_weight_only: true
 ```
 
----
+Mechanism:
+
+- **Positive C15** = spread uptrend + demand/volume bridge + segment profit confirmation. POSCO, Hyundai Steel, SeAH Besteel, and SeAH Steel Holdings show this path.
+- **False positive C15** = trailing profit headline or generic commodity exposure without durability. Poongsan and Korea Zinc show this path.
+- **4B timing** should be triggered by non-price deterioration such as Q/Q profit deceleration, raw material squeeze, inventory-cycle reversal, or missing demand bridge. Pure price heat alone is not enough for full 4B.
+
+## 7. Machine-Readable Rows
+
+```jsonl
+{"row_type":"price_source_validation","source":"Songdaiki/stock-web","source_url":"https://github.com/Songdaiki/stock-web","manifest_path":"atlas/manifest.json","schema_path":"atlas/schema.json","universe_path":"atlas/universe/all_symbols.csv","manifest_max_date":"2026-02-20","price_basis":"tradable_raw","price_adjustment_status":"raw_unadjusted_marcap","calibration_shard_root":"atlas/ohlcv_tradable_by_symbol_year","raw_shard_root":"atlas/ohlcv_raw_by_symbol_year","validation_status":"usable_for_historical_calibration"}
+{"row_type":"case","case_id":"C15_POSCO_2021_STEEL_PRICE_SPREAD_UPCYCLE","symbol":"005490","company_name":"POSCO홀딩스","round":"R4","loop":"104","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"STEEL_NONFERROUS_SPREAD_REVERSAL_INVENTORY_CYCLE","best_trigger_id":"T1","case_role":"positive","calibration_usable":true,"is_new_independent_case":true,"same_archetype_new_symbol":true,"reuse_reason":null,"independent_evidence_weight":1.0,"score_price_alignment":"positive_spread_supercycle_follow_through","current_profile_verdict":"current_profile_correct_but_green_requires_drawdown_guard","price_source":"Songdaiki/stock-web","evidence_source":"https://www.posco-inc.com:4453/poscoinc/v4/kor/fileDownload?fileSn=21&histSn=416","source_proxy_only":false}
+{"row_type":"case","case_id":"C15_HYUNDAI_STEEL_2021_FLAT_PRODUCT_SPREAD_RECOVERY","symbol":"004020","company_name":"현대제철","round":"R4","loop":"104","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"STEEL_NONFERROUS_SPREAD_REVERSAL_INVENTORY_CYCLE","best_trigger_id":"T2","case_role":"positive","calibration_usable":true,"is_new_independent_case":true,"same_archetype_new_symbol":true,"reuse_reason":null,"independent_evidence_weight":0.75,"score_price_alignment":"positive_spread_follow_through_with_one_off_risk","current_profile_verdict":"current_profile_correct_but_source_proxy_repair_needed","price_source":"Songdaiki/stock-web","evidence_source":"https://consensus.hankyung.com/analysis/downpdf?report_idx=579473","source_proxy_only":true}
+{"row_type":"case","case_id":"C15_SEAH_BESTEEL_2022_SPECIAL_STEEL_MARGIN_REBOUND","symbol":"001430","company_name":"세아베스틸지주","round":"R4","loop":"104","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"STEEL_NONFERROUS_SPREAD_REVERSAL_INVENTORY_CYCLE","best_trigger_id":"T3","case_role":"positive","calibration_usable":true,"is_new_independent_case":true,"same_archetype_new_symbol":true,"reuse_reason":null,"independent_evidence_weight":1.0,"score_price_alignment":"positive_special_steel_margin_rebound","current_profile_verdict":"current_profile_missed_or_too_late_structural_spread","price_source":"Songdaiki/stock-web","evidence_source":"https://kind.krx.co.kr/external/2022/07/28/000513/20220728001205/10001.htm","source_proxy_only":false}
+{"row_type":"case","case_id":"C15_POONGSAN_2022_COPPER_SPREAD_DECELERATION_FALSE_POSITIVE","symbol":"103140","company_name":"풍산","round":"R4","loop":"104","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"STEEL_NONFERROUS_SPREAD_REVERSAL_INVENTORY_CYCLE","best_trigger_id":"T4","case_role":"counterexample","calibration_usable":true,"is_new_independent_case":true,"same_archetype_new_symbol":true,"reuse_reason":null,"independent_evidence_weight":1.0,"score_price_alignment":"counterexample_trailing_cycle_deceleration","current_profile_verdict":"current_profile_false_positive_if_copper_spread_exposure_overcredited","price_source":"Songdaiki/stock-web","evidence_source":"https://kind.krx.co.kr/common/disclsviewer.do?method=search&acptno=20220428000325&docno=&viewerhost=","source_proxy_only":false}
+{"row_type":"case","case_id":"C15_KOREA_ZINC_2022_TRAILING_PROFIT_HIGH_MAE_FALSE_POSITIVE","symbol":"010130","company_name":"고려아연","round":"R4","loop":"104","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"STEEL_NONFERROUS_SPREAD_REVERSAL_INVENTORY_CYCLE","best_trigger_id":"T5","case_role":"counterexample","calibration_usable":true,"is_new_independent_case":true,"same_archetype_new_symbol":true,"reuse_reason":null,"independent_evidence_weight":1.0,"score_price_alignment":"counterexample_trailing_profit_high_MAE","current_profile_verdict":"current_profile_false_positive_if_trailing_profit_overweighted","price_source":"Songdaiki/stock-web","evidence_source":"https://kind.krx.co.kr/external/2022/11/02/001330/20221102002997/10001.htm","source_proxy_only":false}
+{"row_type":"case","case_id":"C15_SEAH_STEEL_HOLDINGS_2023_OCTG_ENERGY_PIPE_SUPERCYCLE","symbol":"003030","company_name":"세아제강지주","round":"R4","loop":"104","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"STEEL_NONFERROUS_SPREAD_REVERSAL_INVENTORY_CYCLE","best_trigger_id":"T6","case_role":"positive","calibration_usable":true,"is_new_independent_case":true,"same_archetype_new_symbol":true,"reuse_reason":null,"independent_evidence_weight":1.0,"score_price_alignment":"positive_steel_pipe_energy_cycle_follow_through","current_profile_verdict":"current_profile_too_late_if_generic_material_beta_only","price_source":"Songdaiki/stock-web","evidence_source":"https://kind.krx.co.kr/common/disclsviewer.do?method=search&acptno=20230315001126&docno=&viewerhost=","source_proxy_only":false}
+{"row_type":"trigger","trigger_id":"T1","case_id":"C15_POSCO_2021_STEEL_PRICE_SPREAD_UPCYCLE","symbol":"005490","company_name":"POSCO홀딩스","round":"R4","loop":"104","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"STEEL_NONFERROUS_SPREAD_REVERSAL_INVENTORY_CYCLE","sector":"Materials/Spread/Resource","primary_archetype":"material spread supercycle / reversal / inventory cycle","loop_objective":"sector_specific_rule_discovery; canonical_archetype_rule_candidate; positive_counterexample_balance; 4B_local_vs_full_window_test; URL_proxy_quality_repair; complete_30_90_180_MFE_MAE","trigger_type":"Stage2-Actionable","trigger_date":"2021-01-28","entry_date":"2021-01-29","entry_price":245500,"evidence_available_at_that_date":"POSCO 2020 earnings release described Q4 operating profit up QoQ as product prices rose, demand industries picked up, and carbon steel price moved from 634 to 679 thousand KRW/ton. Unknown release timing is handled with next-tradable 2021-01-29 entry.","evidence_source":"https://www.posco-inc.com:4453/poscoinc/v4/kor/fileDownload?fileSn=21&histSn=416","source_proxy_only":false,"stage2_evidence_fields":["steel product ASP uptrend","demand recovery in major industries","Q/Q operating-profit improvement"],"stage3_evidence_fields":["price and demand bridge existed together","spread upcycle was visible before the strongest price leg"],"stage4b_evidence_fields":[],"stage4c_evidence_fields":[],"price_data_source":"Songdaiki/stock-web","price_data_repo":"https://github.com/Songdaiki/stock-web","price_shard_path":"atlas/ohlcv_tradable_by_symbol_year/005/005490/2021.csv","price_window_shard_paths":["atlas/ohlcv_tradable_by_symbol_year/005/005490/2021.csv","atlas/ohlcv_tradable_by_symbol_year/005/005490/2022.csv"],"profile_path":"atlas/symbol_profiles/005/005490.json","price_basis":"tradable_raw","price_adjustment_status":"raw_unadjusted_marcap","stock_web_manifest_max_date":"2026-02-20","entry_row_ohlcv":"2021-01-29 o=251500 h=254000 l=242500 c=245500 v=545035","MFE_30D_pct":36.0489,"MFE_90D_pct":68.4318,"MFE_180D_pct":68.4318,"MFE_1Y_pct":68.4318,"MFE_2Y_pct":null,"MAE_30D_pct":-1.222,"MAE_90D_pct":-1.222,"MAE_180D_pct":-1.222,"MAE_1Y_pct":-1.222,"MAE_2Y_pct":null,"below_entry_price_flag_30D":true,"below_entry_price_flag_90D":true,"below_entry_price_flag_180D":true,"peak_date":"2021-05-10","peak_price":413500,"trough_date":"2021-01-29","trough_price":242500,"drawdown_after_peak_pct":-27.2068,"green_lateness_ratio":null,"green_lateness_reason":"No Stage3-Green trigger asserted in this loop; C15 positive cases remain drawdown-aware Stage2-Actionable/Stage3-Yellow candidates.","four_b_local_peak_proximity":null,"four_b_full_window_peak_proximity":null,"four_b_timing_verdict":null,"four_b_evidence_type":[],"four_c_protection_label":null,"trigger_outcome_label":"positive_spread_supercycle_follow_through","current_profile_verdict":"current_profile_correct_but_green_requires_drawdown_guard","calibration_usable":true,"forward_window_trading_days":180,"calibration_block_reasons":[],"corporate_action_window_status":"clean_180D_window; profile corporate_action_candidate_count=0","same_entry_group_id":"C15_POSCO_2021_STEEL_PRICE_SPREAD_UPCYCLE_2021-01-29_245500","dedupe_for_aggregate":true,"aggregate_group_role":"representative","is_new_independent_case":true,"reuse_reason":null,"independent_evidence_weight":1.0,"do_not_count_as_new_case":false}
+{"row_type":"trigger","trigger_id":"T2","case_id":"C15_HYUNDAI_STEEL_2021_FLAT_PRODUCT_SPREAD_RECOVERY","symbol":"004020","company_name":"현대제철","round":"R4","loop":"104","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"STEEL_NONFERROUS_SPREAD_REVERSAL_INVENTORY_CYCLE","sector":"Materials/Spread/Resource","primary_archetype":"material spread supercycle / reversal / inventory cycle","loop_objective":"sector_specific_rule_discovery; canonical_archetype_rule_candidate; positive_counterexample_balance; 4B_local_vs_full_window_test; URL_proxy_quality_repair; complete_30_90_180_MFE_MAE","trigger_type":"Stage2-Actionable","trigger_date":"2021-01-29","entry_date":"2021-01-29","entry_price":38800,"evidence_available_at_that_date":"Broker report dated 2021-01-29 described 2020 Q4 separate operating profit recovery, flat-product volume recovery, ASP increase, and spread expansion while noting one-off cost pressure. Treated as source_proxy_only because direct company/KIND proof was not available in this loop.","evidence_source":"https://consensus.hankyung.com/analysis/downpdf?report_idx=579473","source_proxy_only":true,"stage2_evidence_fields":["flat-product sales volume recovery","ASP increase","spread expansion"],"stage3_evidence_fields":["spread bridge offset by one-off cost warning"],"stage4b_evidence_fields":[],"stage4c_evidence_fields":[],"price_data_source":"Songdaiki/stock-web","price_data_repo":"https://github.com/Songdaiki/stock-web","price_shard_path":"atlas/ohlcv_tradable_by_symbol_year/004/004020/2021.csv","price_window_shard_paths":["atlas/ohlcv_tradable_by_symbol_year/004/004020/2021.csv","atlas/ohlcv_tradable_by_symbol_year/004/004020/2022.csv"],"profile_path":"atlas/symbol_profiles/004/004020.json","price_basis":"tradable_raw","price_adjustment_status":"raw_unadjusted_marcap","stock_web_manifest_max_date":"2026-02-20","entry_row_ohlcv":"2021-01-29 o=41400 h=41400 l=38350 c=38800 v=1823111","MFE_30D_pct":18.5567,"MFE_90D_pct":62.3711,"MFE_180D_pct":62.3711,"MFE_1Y_pct":62.3711,"MFE_2Y_pct":null,"MAE_30D_pct":-4.1237,"MAE_90D_pct":-4.1237,"MAE_180D_pct":-4.1237,"MAE_1Y_pct":-4.5103,"MAE_2Y_pct":null,"below_entry_price_flag_30D":true,"below_entry_price_flag_90D":true,"below_entry_price_flag_180D":true,"peak_date":"2021-05-11","peak_price":63000,"trough_date":"2021-02-01","trough_price":37200,"drawdown_after_peak_pct":-31.3492,"green_lateness_ratio":null,"green_lateness_reason":"No Stage3-Green trigger asserted in this loop; C15 positive cases remain drawdown-aware Stage2-Actionable/Stage3-Yellow candidates.","four_b_local_peak_proximity":null,"four_b_full_window_peak_proximity":null,"four_b_timing_verdict":null,"four_b_evidence_type":[],"four_c_protection_label":null,"trigger_outcome_label":"positive_spread_follow_through_with_one_off_risk","current_profile_verdict":"current_profile_correct_but_source_proxy_repair_needed","calibration_usable":true,"forward_window_trading_days":180,"calibration_block_reasons":[],"corporate_action_window_status":"clean_180D_window; profile has old corporate action candidate dates through 2014-01-24 only","same_entry_group_id":"C15_HYUNDAI_STEEL_2021_FLAT_PRODUCT_SPREAD_RECOVERY_2021-01-29_38800","dedupe_for_aggregate":true,"aggregate_group_role":"representative","is_new_independent_case":true,"reuse_reason":null,"independent_evidence_weight":0.75,"do_not_count_as_new_case":false}
+{"row_type":"trigger","trigger_id":"T3","case_id":"C15_SEAH_BESTEEL_2022_SPECIAL_STEEL_MARGIN_REBOUND","symbol":"001430","company_name":"세아베스틸지주","round":"R4","loop":"104","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"STEEL_NONFERROUS_SPREAD_REVERSAL_INVENTORY_CYCLE","sector":"Materials/Spread/Resource","primary_archetype":"material spread supercycle / reversal / inventory cycle","loop_objective":"sector_specific_rule_discovery; canonical_archetype_rule_candidate; positive_counterexample_balance; 4B_local_vs_full_window_test; URL_proxy_quality_repair; complete_30_90_180_MFE_MAE","trigger_type":"Stage2-Actionable","trigger_date":"2022-07-28","entry_date":"2022-07-28","entry_price":15100,"evidence_available_at_that_date":"KIND-linked Q2 2022 material split disclosed SeAH Besteel and SeAH Changwon Special Steel revenue/operating-profit segments, showing special-steel group profit bridge before the 2022-2023 rerating leg.","evidence_source":"https://kind.krx.co.kr/external/2022/07/28/000513/20220728001205/10001.htm","source_proxy_only":false,"stage2_evidence_fields":["special steel operating-profit disclosure","segment-level revenue bridge","steel specialty margin evidence"],"stage3_evidence_fields":["positive follow-through despite commodity-cycle volatility"],"stage4b_evidence_fields":[],"stage4c_evidence_fields":[],"price_data_source":"Songdaiki/stock-web","price_data_repo":"https://github.com/Songdaiki/stock-web","price_shard_path":"atlas/ohlcv_tradable_by_symbol_year/001/001430/2022.csv","price_window_shard_paths":["atlas/ohlcv_tradable_by_symbol_year/001/001430/2022.csv","atlas/ohlcv_tradable_by_symbol_year/001/001430/2023.csv"],"profile_path":"atlas/symbol_profiles/001/001430.json","price_basis":"tradable_raw","price_adjustment_status":"raw_unadjusted_marcap","stock_web_manifest_max_date":"2026-02-20","entry_row_ohlcv":"2022-07-28 o=14850 h=15100 l=14550 c=15100 v=93258","MFE_30D_pct":48.6755,"MFE_90D_pct":48.6755,"MFE_180D_pct":82.1192,"MFE_1Y_pct":97.351,"MFE_2Y_pct":null,"MAE_30D_pct":-3.6424,"MAE_90D_pct":-3.6424,"MAE_180D_pct":-3.6424,"MAE_1Y_pct":-3.6424,"MAE_2Y_pct":null,"below_entry_price_flag_30D":true,"below_entry_price_flag_90D":true,"below_entry_price_flag_180D":true,"peak_date":"2023-03-09","peak_price":27500,"trough_date":"2022-07-28","trough_price":14550,"drawdown_after_peak_pct":-26.9091,"green_lateness_ratio":null,"green_lateness_reason":"No Stage3-Green trigger asserted in this loop; C15 positive cases remain drawdown-aware Stage2-Actionable/Stage3-Yellow candidates.","four_b_local_peak_proximity":null,"four_b_full_window_peak_proximity":null,"four_b_timing_verdict":null,"four_b_evidence_type":[],"four_c_protection_label":null,"trigger_outcome_label":"positive_special_steel_margin_rebound","current_profile_verdict":"current_profile_missed_or_too_late_structural_spread","calibration_usable":true,"forward_window_trading_days":180,"calibration_block_reasons":[],"corporate_action_window_status":"clean_180D_window; profile has old corporate action candidate dates through 2003 only","same_entry_group_id":"C15_SEAH_BESTEEL_2022_SPECIAL_STEEL_MARGIN_REBOUND_2022-07-28_15100","dedupe_for_aggregate":true,"aggregate_group_role":"representative","is_new_independent_case":true,"reuse_reason":null,"independent_evidence_weight":1.0,"do_not_count_as_new_case":false}
+{"row_type":"trigger","trigger_id":"T4","case_id":"C15_POONGSAN_2022_COPPER_SPREAD_DECELERATION_FALSE_POSITIVE","symbol":"103140","company_name":"풍산","round":"R4","loop":"104","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"STEEL_NONFERROUS_SPREAD_REVERSAL_INVENTORY_CYCLE","sector":"Materials/Spread/Resource","primary_archetype":"material spread supercycle / reversal / inventory cycle","loop_objective":"sector_specific_rule_discovery; canonical_archetype_rule_candidate; positive_counterexample_balance; 4B_local_vs_full_window_test; URL_proxy_quality_repair; complete_30_90_180_MFE_MAE","trigger_type":"Stage4B","trigger_date":"2022-04-28","entry_date":"2022-04-29","entry_price":32000,"evidence_available_at_that_date":"Poongsan Q1 2022 provisional disclosure showed current-quarter operating profit below both prior quarter and prior-year Q1, even though the company belongs to copper/copper-alloy non-ferrous spread exposure. Unknown disclosure timing is handled with next-tradable 2022-04-29 entry.","evidence_source":"https://kind.krx.co.kr/common/disclsviewer.do?method=search&acptno=20220428000325&docno=&viewerhost=","source_proxy_only":false,"stage2_evidence_fields":["non-ferrous/copper spread exposure exists but no positive bridge"],"stage3_evidence_fields":[],"stage4b_evidence_fields":["operating-profit deceleration","high 90D/180D MAE after entry","headline copper/defense exposure insufficient"],"stage4c_evidence_fields":[],"price_data_source":"Songdaiki/stock-web","price_data_repo":"https://github.com/Songdaiki/stock-web","price_shard_path":"atlas/ohlcv_tradable_by_symbol_year/103/103140/2022.csv","price_window_shard_paths":["atlas/ohlcv_tradable_by_symbol_year/103/103140/2022.csv","atlas/ohlcv_tradable_by_symbol_year/103/103140/2023.csv"],"profile_path":"atlas/symbol_profiles/103/103140.json","price_basis":"tradable_raw","price_adjustment_status":"raw_unadjusted_marcap","stock_web_manifest_max_date":"2026-02-20","entry_row_ohlcv":"2022-04-29 o=32300 h=32300 l=31800 c=32000 v=98267","MFE_30D_pct":2.0312,"MFE_90D_pct":3.125,"MFE_180D_pct":9.6875,"MFE_1Y_pct":48.75,"MFE_2Y_pct":null,"MAE_30D_pct":-11.25,"MAE_90D_pct":-27.1875,"MAE_180D_pct":-27.1875,"MAE_1Y_pct":-27.1875,"MAE_2Y_pct":null,"below_entry_price_flag_30D":true,"below_entry_price_flag_90D":true,"below_entry_price_flag_180D":true,"peak_date":"2023-01-18","peak_price":35100,"trough_date":"2022-07-04","trough_price":23300,"drawdown_after_peak_pct":-3.4188,"green_lateness_ratio":null,"green_lateness_reason":"No Stage3-Green trigger asserted in this loop; C15 positive cases remain drawdown-aware Stage2-Actionable/Stage3-Yellow candidates.","four_b_local_peak_proximity":"not_near_full_window_peak_at_entry; early deterioration signal before later partial recovery","four_b_full_window_peak_proximity":"full-window peak occurred 2023-01-18 after deep MAE, so 4B is not a late local-peak tag only","four_b_timing_verdict":"valid_non_price_4B_guard","four_b_evidence_type":["profit_deceleration","negative_spread_confirmation","high_MAE_guard"],"four_c_protection_label":null,"trigger_outcome_label":"counterexample_trailing_cycle_deceleration","current_profile_verdict":"current_profile_false_positive_if_copper_spread_exposure_overcredited","calibration_usable":true,"forward_window_trading_days":180,"calibration_block_reasons":[],"corporate_action_window_status":"clean_180D_window; profile corporate_action_candidate_count=0","same_entry_group_id":"C15_POONGSAN_2022_COPPER_SPREAD_DECELERATION_FALSE_POSITIVE_2022-04-29_32000","dedupe_for_aggregate":true,"aggregate_group_role":"representative_4B_guard","is_new_independent_case":true,"reuse_reason":null,"independent_evidence_weight":1.0,"do_not_count_as_new_case":false}
+{"row_type":"trigger","trigger_id":"T5","case_id":"C15_KOREA_ZINC_2022_TRAILING_PROFIT_HIGH_MAE_FALSE_POSITIVE","symbol":"010130","company_name":"고려아연","round":"R4","loop":"104","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"STEEL_NONFERROUS_SPREAD_REVERSAL_INVENTORY_CYCLE","sector":"Materials/Spread/Resource","primary_archetype":"material spread supercycle / reversal / inventory cycle","loop_objective":"sector_specific_rule_discovery; canonical_archetype_rule_candidate; positive_counterexample_balance; 4B_local_vs_full_window_test; URL_proxy_quality_repair; complete_30_90_180_MFE_MAE","trigger_type":"Stage4B","trigger_date":"2022-11-02","entry_date":"2022-11-03","entry_price":586000,"evidence_available_at_that_date":"Korea Zinc Q3 2022 provisional results still showed large operating profit, but the subsequent price path produced double-digit 90D/180D MAE; trailing high profit alone did not protect a spread-cycle entry. Unknown disclosure timing is handled with next-tradable 2022-11-03 entry.","evidence_source":"https://kind.krx.co.kr/external/2022/11/02/001330/20221102002997/10001.htm","source_proxy_only":false,"stage2_evidence_fields":["trailing profit headline","non-ferrous metal spread exposure"],"stage3_evidence_fields":[],"stage4b_evidence_fields":["trailing profit not enough","90D/180D high MAE","metal-cycle reversal risk"],"stage4c_evidence_fields":[],"price_data_source":"Songdaiki/stock-web","price_data_repo":"https://github.com/Songdaiki/stock-web","price_shard_path":"atlas/ohlcv_tradable_by_symbol_year/010/010130/2022.csv","price_window_shard_paths":["atlas/ohlcv_tradable_by_symbol_year/010/010130/2022.csv","atlas/ohlcv_tradable_by_symbol_year/010/010130/2023.csv"],"profile_path":"atlas/symbol_profiles/010/010130.json","price_basis":"tradable_raw","price_adjustment_status":"raw_unadjusted_marcap","stock_web_manifest_max_date":"2026-02-20","entry_row_ohlcv":"2022-11-03 o=600000 h=600000 l=560000 c=586000 v=214254","MFE_30D_pct":16.8942,"MFE_90D_pct":16.8942,"MFE_180D_pct":16.8942,"MFE_1Y_pct":16.8942,"MFE_2Y_pct":null,"MAE_30D_pct":-4.4369,"MAE_90D_pct":-13.8225,"MAE_180D_pct":-24.9147,"MAE_1Y_pct":-24.9147,"MAE_2Y_pct":null,"below_entry_price_flag_30D":true,"below_entry_price_flag_90D":true,"below_entry_price_flag_180D":true,"peak_date":"2022-11-23","peak_price":685000,"trough_date":"2023-07-07","trough_price":440000,"drawdown_after_peak_pct":-35.7664,"green_lateness_ratio":null,"green_lateness_reason":"No Stage3-Green trigger asserted in this loop; C15 positive cases remain drawdown-aware Stage2-Actionable/Stage3-Yellow candidates.","four_b_local_peak_proximity":"not a pure price-only blowoff; non-price spread-cycle durability is missing","four_b_full_window_peak_proximity":"entry was before later trough; full-window drawdown dominated reward/risk despite positive MFE","four_b_timing_verdict":"valid_non_price_4B_guard","four_b_evidence_type":["spread_cycle_durability_missing","trailing_profit_overcredit","high_MAE_guard"],"four_c_protection_label":null,"trigger_outcome_label":"counterexample_trailing_profit_high_MAE","current_profile_verdict":"current_profile_false_positive_if_trailing_profit_overweighted","calibration_usable":true,"forward_window_trading_days":180,"calibration_block_reasons":[],"corporate_action_window_status":"clean_180D_window; profile corporate_action_candidate_count=0","same_entry_group_id":"C15_KOREA_ZINC_2022_TRAILING_PROFIT_HIGH_MAE_FALSE_POSITIVE_2022-11-03_586000","dedupe_for_aggregate":true,"aggregate_group_role":"representative_4B_guard","is_new_independent_case":true,"reuse_reason":null,"independent_evidence_weight":1.0,"do_not_count_as_new_case":false}
+{"row_type":"trigger","trigger_id":"T6","case_id":"C15_SEAH_STEEL_HOLDINGS_2023_OCTG_ENERGY_PIPE_SUPERCYCLE","symbol":"003030","company_name":"세아제강지주","round":"R4","loop":"104","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"STEEL_NONFERROUS_SPREAD_REVERSAL_INVENTORY_CYCLE","sector":"Materials/Spread/Resource","primary_archetype":"material spread supercycle / reversal / inventory cycle","loop_objective":"sector_specific_rule_discovery; canonical_archetype_rule_candidate; positive_counterexample_balance; 4B_local_vs_full_window_test; URL_proxy_quality_repair; complete_30_90_180_MFE_MAE","trigger_type":"Stage3-Yellow","trigger_date":"2023-03-15","entry_date":"2023-03-16","entry_price":141000,"evidence_available_at_that_date":"SeAH Steel Holdings 2022 business report described strong OCTG demand and energy-pipe demand up 51.2%, giving a demand/spread bridge for steel-pipe supercycle exposure. Business-report timing is handled with next-tradable 2023-03-16 entry.","evidence_source":"https://kind.krx.co.kr/common/disclsviewer.do?method=search&acptno=20230315001126&docno=&viewerhost=","source_proxy_only":false,"stage2_evidence_fields":["energy pipe demand growth","OCTG demand strength","steel pipe segment demand bridge"],"stage3_evidence_fields":["demand bridge plus 180D price follow-through","structural energy pipe cycle rather than generic steel beta"],"stage4b_evidence_fields":[],"stage4c_evidence_fields":[],"price_data_source":"Songdaiki/stock-web","price_data_repo":"https://github.com/Songdaiki/stock-web","price_shard_path":"atlas/ohlcv_tradable_by_symbol_year/003/003030/2023.csv","price_window_shard_paths":["atlas/ohlcv_tradable_by_symbol_year/003/003030/2023.csv","atlas/ohlcv_tradable_by_symbol_year/003/003030/2024.csv"],"profile_path":"atlas/symbol_profiles/003/003030.json","price_basis":"tradable_raw","price_adjustment_status":"raw_unadjusted_marcap","stock_web_manifest_max_date":"2026-02-20","entry_row_ohlcv":"2023-03-16 o=140200 h=144000 l=139800 c=141000 v=13639","MFE_30D_pct":7.9433,"MFE_90D_pct":52.4823,"MFE_180D_pct":72.695,"MFE_1Y_pct":null,"MFE_2Y_pct":null,"MAE_30D_pct":-4.8936,"MAE_90D_pct":-4.8936,"MAE_180D_pct":-4.8936,"MAE_1Y_pct":null,"MAE_2Y_pct":null,"below_entry_price_flag_30D":true,"below_entry_price_flag_90D":true,"below_entry_price_flag_180D":true,"peak_date":"2023-09-22","peak_price":243500,"trough_date":"2023-04-11","trough_price":134100,"drawdown_after_peak_pct":-27.8029,"green_lateness_ratio":null,"green_lateness_reason":"No Stage3-Green trigger asserted in this loop; C15 positive cases remain drawdown-aware Stage2-Actionable/Stage3-Yellow candidates.","four_b_local_peak_proximity":null,"four_b_full_window_peak_proximity":null,"four_b_timing_verdict":null,"four_b_evidence_type":[],"four_c_protection_label":null,"trigger_outcome_label":"positive_steel_pipe_energy_cycle_follow_through","current_profile_verdict":"current_profile_too_late_if_generic_material_beta_only","calibration_usable":true,"forward_window_trading_days":180,"calibration_block_reasons":[],"corporate_action_window_status":"clean_180D_window for 2023 trigger; 2018/2019 candidates outside forward 180D window","same_entry_group_id":"C15_SEAH_STEEL_HOLDINGS_2023_OCTG_ENERGY_PIPE_SUPERCYCLE_2023-03-16_141000","dedupe_for_aggregate":true,"aggregate_group_role":"representative","is_new_independent_case":true,"reuse_reason":null,"independent_evidence_weight":1.0,"do_not_count_as_new_case":false}
+{"row_type":"score_simulation","profile_id":"e2r_2_1_stock_web_calibrated_proxy_to_C15_candidate","case_id":"C15_POSCO_2021_STEEL_PRICE_SPREAD_UPCYCLE","trigger_id":"T1","symbol":"005490","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","raw_component_scores_before":{"eps_fcf_explosion":7,"earnings_visibility":6,"bottleneck_pricing":8,"market_mispricing":5,"valuation_rerating":5,"capital_allocation":3,"information_confidence":7,"working_capital_inventory_risk":3,"cycle_reversal_risk":3},"weighted_score_before":77,"stage_label_before":"Stage2-Actionable","raw_component_scores_after":{"eps_fcf_explosion":7,"earnings_visibility":6,"bottleneck_pricing":8,"market_mispricing":5,"valuation_rerating":5,"capital_allocation":3,"information_confidence":8,"working_capital_inventory_risk":3,"cycle_reversal_risk":4},"weighted_score_after":78,"stage_label_after":"Stage2-Actionable","changed_components":["information_confidence","cycle_reversal_risk"],"component_delta_explanation":"Correct positive; keep Green blocked by later drawdown risk and lack of explicit FCF bridge.","MFE_90D_pct":68.4318,"MAE_90D_pct":-1.222,"MFE_180D_pct":68.4318,"MAE_180D_pct":-1.222,"score_return_alignment_label":"positive_spread_supercycle_follow_through","current_profile_verdict":"current_profile_correct_but_green_requires_drawdown_guard"}
+{"row_type":"score_simulation","profile_id":"e2r_2_1_stock_web_calibrated_proxy_to_C15_candidate","case_id":"C15_HYUNDAI_STEEL_2021_FLAT_PRODUCT_SPREAD_RECOVERY","trigger_id":"T2","symbol":"004020","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","raw_component_scores_before":{"eps_fcf_explosion":6,"earnings_visibility":5,"bottleneck_pricing":7,"market_mispricing":4,"valuation_rerating":5,"capital_allocation":2,"information_confidence":4,"working_capital_inventory_risk":5,"cycle_reversal_risk":4},"weighted_score_before":75,"stage_label_before":"Stage2-Actionable","raw_component_scores_after":{"eps_fcf_explosion":6,"earnings_visibility":5,"bottleneck_pricing":7,"market_mispricing":4,"valuation_rerating":5,"capital_allocation":2,"information_confidence":3,"working_capital_inventory_risk":6,"cycle_reversal_risk":4},"weighted_score_after":72,"stage_label_after":"Stage2-Actionable / URL repair needed","changed_components":["information_confidence","working_capital_inventory_risk"],"component_delta_explanation":"Keep as proxy-weighted positive but cap evidence weight until direct URL replacement.","MFE_90D_pct":62.3711,"MAE_90D_pct":-4.1237,"MFE_180D_pct":62.3711,"MAE_180D_pct":-4.1237,"score_return_alignment_label":"positive_spread_follow_through_with_one_off_risk","current_profile_verdict":"current_profile_correct_but_source_proxy_repair_needed"}
+{"row_type":"score_simulation","profile_id":"e2r_2_1_stock_web_calibrated_proxy_to_C15_candidate","case_id":"C15_SEAH_BESTEEL_2022_SPECIAL_STEEL_MARGIN_REBOUND","trigger_id":"T3","symbol":"001430","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","raw_component_scores_before":{"eps_fcf_explosion":6,"earnings_visibility":5,"bottleneck_pricing":7,"market_mispricing":6,"valuation_rerating":5,"capital_allocation":2,"information_confidence":6,"working_capital_inventory_risk":4,"cycle_reversal_risk":4},"weighted_score_before":73,"stage_label_before":"Stage2","raw_component_scores_after":{"eps_fcf_explosion":6,"earnings_visibility":6,"bottleneck_pricing":8,"market_mispricing":6,"valuation_rerating":5,"capital_allocation":2,"information_confidence":7,"working_capital_inventory_risk":4,"cycle_reversal_risk":4},"weighted_score_after":77,"stage_label_after":"Stage2-Actionable","changed_components":["earnings_visibility","information_confidence","bottleneck_pricing"],"component_delta_explanation":"Segment-level special steel profit disclosure should unlock actionable, not remain generic material beta.","MFE_90D_pct":48.6755,"MAE_90D_pct":-3.6424,"MFE_180D_pct":82.1192,"MAE_180D_pct":-3.6424,"score_return_alignment_label":"positive_special_steel_margin_rebound","current_profile_verdict":"current_profile_missed_or_too_late_structural_spread"}
+{"row_type":"score_simulation","profile_id":"e2r_2_1_stock_web_calibrated_proxy_to_C15_candidate","case_id":"C15_POONGSAN_2022_COPPER_SPREAD_DECELERATION_FALSE_POSITIVE","trigger_id":"T4","symbol":"103140","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","raw_component_scores_before":{"eps_fcf_explosion":4,"earnings_visibility":4,"bottleneck_pricing":5,"market_mispricing":4,"valuation_rerating":4,"capital_allocation":2,"information_confidence":6,"working_capital_inventory_risk":6,"cycle_reversal_risk":7},"weighted_score_before":67,"stage_label_before":"Stage2","raw_component_scores_after":{"eps_fcf_explosion":3,"earnings_visibility":3,"bottleneck_pricing":5,"market_mispricing":4,"valuation_rerating":4,"capital_allocation":2,"information_confidence":6,"working_capital_inventory_risk":7,"cycle_reversal_risk":9},"weighted_score_after":56,"stage_label_after":"Stage4B","changed_components":["eps_fcf_explosion","earnings_visibility","cycle_reversal_risk","working_capital_inventory_risk"],"component_delta_explanation":"Profit deceleration and high MAE should cap copper-spread exposure as 4B guard.","MFE_90D_pct":3.125,"MAE_90D_pct":-27.1875,"MFE_180D_pct":9.6875,"MAE_180D_pct":-27.1875,"score_return_alignment_label":"counterexample_trailing_cycle_deceleration","current_profile_verdict":"current_profile_false_positive_if_copper_spread_exposure_overcredited"}
+{"row_type":"score_simulation","profile_id":"e2r_2_1_stock_web_calibrated_proxy_to_C15_candidate","case_id":"C15_KOREA_ZINC_2022_TRAILING_PROFIT_HIGH_MAE_FALSE_POSITIVE","trigger_id":"T5","symbol":"010130","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","raw_component_scores_before":{"eps_fcf_explosion":6,"earnings_visibility":5,"bottleneck_pricing":6,"market_mispricing":4,"valuation_rerating":4,"capital_allocation":3,"information_confidence":6,"working_capital_inventory_risk":5,"cycle_reversal_risk":6},"weighted_score_before":70,"stage_label_before":"Stage2","raw_component_scores_after":{"eps_fcf_explosion":6,"earnings_visibility":4,"bottleneck_pricing":5,"market_mispricing":4,"valuation_rerating":4,"capital_allocation":3,"information_confidence":6,"working_capital_inventory_risk":5,"cycle_reversal_risk":9},"weighted_score_after":59,"stage_label_after":"Stage4B","changed_components":["cycle_reversal_risk","earnings_visibility","bottleneck_pricing"],"component_delta_explanation":"Trailing profit without spread durability gets downgraded by high-MAE guard.","MFE_90D_pct":16.8942,"MAE_90D_pct":-13.8225,"MFE_180D_pct":16.8942,"MAE_180D_pct":-24.9147,"score_return_alignment_label":"counterexample_trailing_profit_high_MAE","current_profile_verdict":"current_profile_false_positive_if_trailing_profit_overweighted"}
+{"row_type":"score_simulation","profile_id":"e2r_2_1_stock_web_calibrated_proxy_to_C15_candidate","case_id":"C15_SEAH_STEEL_HOLDINGS_2023_OCTG_ENERGY_PIPE_SUPERCYCLE","trigger_id":"T6","symbol":"003030","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","raw_component_scores_before":{"eps_fcf_explosion":6,"earnings_visibility":6,"bottleneck_pricing":7,"market_mispricing":6,"valuation_rerating":5,"capital_allocation":2,"information_confidence":7,"working_capital_inventory_risk":4,"cycle_reversal_risk":4},"weighted_score_before":79,"stage_label_before":"Stage2-Actionable","raw_component_scores_after":{"eps_fcf_explosion":6,"earnings_visibility":7,"bottleneck_pricing":8,"market_mispricing":7,"valuation_rerating":5,"capital_allocation":2,"information_confidence":7,"working_capital_inventory_risk":4,"cycle_reversal_risk":4},"weighted_score_after":83,"stage_label_after":"Stage3-Yellow","changed_components":["earnings_visibility","bottleneck_pricing","market_mispricing"],"component_delta_explanation":"Energy-pipe/OCTG demand bridge plus 180D follow-through supports Yellow but not Green without FCF/revision bridge.","MFE_90D_pct":52.4823,"MAE_90D_pct":-4.8936,"MFE_180D_pct":72.695,"MAE_180D_pct":-4.8936,"score_return_alignment_label":"positive_steel_pipe_energy_cycle_follow_through","current_profile_verdict":"current_profile_too_late_if_generic_material_beta_only"}
+{"row_type":"aggregate","round":"R4","loop":"104","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","fine_archetype_id":"STEEL_NONFERROUS_SPREAD_REVERSAL_INVENTORY_CYCLE","representative_trigger_count":6,"positive_case_count":4,"counterexample_count":2,"source_proxy_only_count":1,"avg_MFE_90D_pct":41.9966,"avg_MAE_90D_pct":-9.1486,"avg_MFE_180D_pct":52.0331,"avg_MAE_180D_pct":-10.9973,"profile_error_count":3,"aggregate_verdict":"C15 needs spread + demand/volume + inventory/cost durability gate; trailing profit or generic commodity exposure alone is insufficient."}
+{"row_type":"shadow_weight","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","axis":"C15_spread_inventory_reversal_confirmation_gate","scope":"canonical_archetype_specific","existing_axis_strengthened":["stage2_required_bridge","local_4b_watch_guard","earlier_thesis_break_watch","full_4b_requires_non_price_evidence"],"existing_axis_weakened":[],"new_axis_proposed":"C15_SPREAD_REVERSAL_INVENTORY_CONFIRMATION_GATE","production_scoring_changed":false,"shadow_weight_only":true,"proposed_effect":"Require at least two of spread evidence, demand/volume bridge, inventory/cost durability, and segment-level profit conversion before Stage2-Actionable; apply 4B guard when Q/Q profit decelerates or trailing profit lacks spread durability.","candidate_delta":{"bottleneck_pricing":1,"information_confidence":1,"cycle_reversal_risk_gate":2,"valuation_rerating":-1},"confidence":"medium","evidence_count":6,"counterexample_count":2}
+{"row_type":"residual_contribution","round":"R4","loop":"104","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","new_independent_case_count":6,"reused_case_count":0,"new_symbol_count":6,"new_trigger_family_count":6,"tested_existing_calibrated_axes":["stage2_required_bridge","stage3_yellow_total_min","price_only_blowoff_blocks_positive_stage","full_4b_requires_non_price_evidence"],"residual_error_types_found":["trailing_profit_false_positive","generic_commodity_exposure_overcredit","specialty_steel_segment_profit_missed_structural","energy_pipe_cycle_too_late"],"loop_contribution_label":"C15_spread_inventory_confirmation_positive_counter_4B_guard","do_not_propose_new_weight_delta":false}
+{"row_type":"narrative_only","case_id":"C15_POSCO_2022_RAW_MATERIAL_MARGIN_SQUEEZE_NARRATIVE_ONLY","symbol":"005490","large_sector_id":"L4_MATERIALS_SPREAD_RESOURCE","canonical_archetype_id":"C15_MATERIAL_SPREAD_SUPERCYCLE","reason":"POSCO 2021 annual release described Q4 margin tightening due raw-material price rise, useful as C15 reversal narrative, but the loop already uses 2021 POSCO as the representative positive and avoids same-symbol overcounting.","usage":"context_only_not_representative_weight","evidence_source":"https://www.posco-inc.com:4453/poscoinc/v4/kor/fileDownload?fileSn=21&histSn=416"}
+```
+
+## 8. Batch Ingest Self-Audit
+
+```yaml
+filename: e2r_stock_web_v12_residual_round_R4_loop_104_L4_MATERIALS_SPREAD_RESOURCE_C15_MATERIAL_SPREAD_SUPERCYCLE_research.md
+filename_matches_required_v12_regex: true
+metadata_round_matches_filename_round: true
+metadata_loop_matches_filename_loop: true
+round_sector_consistency: pass
+compact_filename_forbidden: pass
+trigger_type_canonical_stage_labels_only: pass
+all_trigger_rows_have_MFE_30D_pct: true
+all_trigger_rows_have_MFE_90D_pct: true
+all_trigger_rows_have_MFE_180D_pct: true
+all_trigger_rows_have_MAE_30D_pct: true
+all_trigger_rows_have_MAE_90D_pct: true
+all_trigger_rows_have_MAE_180D_pct: true
+same_entry_group_deduplicated: true
+all_calibration_usable_rows_have_clean_180D_corporate_action_window: true
+source_proxy_only_count: 1
+evidence_url_pending_count: 0
+production_scoring_changed: false
+shadow_weight_only: true
+handoff_prompt_embedded: true
+handoff_prompt_executed_now: false
+```
 
 ## 9. Deferred Coding Agent Handoff Prompt
 
 ```text
-Do not patch production scoring from this MD alone. Batch this file with C15 loop 101~103, C16 loop 111~113, C17 loop 136~137, and relevant R13 accounting-trust/high-MAE files. Extract `C15_COMPANY_SPECIFIC_SPREAD_MARGIN_BRIDGE_REQUIREMENT_V104` as a shadow-rule candidate. Preserve company-specific ASP/volume/margin/FCF positive-control cases, block oversupply/negative-margin label cases, and reclassify high-MFE events whose dominant bridge belongs to C16, C17 or battery/event axes.
+You are a later coding agent. Do not execute this during the research session. In a separate implementation session, ingest v12 MD files under docs/round, parse the JSONL rows, validate that filename/metadata round and loop match, reject rows missing complete 30D/90D/180D MFE/MAE, deduplicate by same_entry_group_id, and evaluate whether the canonical-specific shadow rule C15_SPREAD_REVERSAL_INVENTORY_CONFIRMATION_GATE improves C15 representative trigger alignment without changing global E2R thresholds. Keep production_scoring_changed=false unless a separate promotion report passes validation.
 ```
 
----
-
-## 10. Next research state
+## 10. Next Research State
 
 ```yaml
 completed_round: R4
 completed_loop: 104
 selection_basis: docs/core/V12_Research_No_Repeat_Index.md
-selected_priority_bucket: Priority 0
+selected_priority_bucket: Priority 1 balance/quality repair — C15 spread-cycle positive/counterexample balance
+next_recommended_archetypes:
+  - C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE
+  - C15_MATERIAL_SPREAD_SUPERCYCLE direct URL replacement for proxy T2
+  - C05_EPC_MEGA_CONTRACT_MARGIN_GAP
+  - C01_ORDER_BACKLOG_MARGIN_BRIDGE
 round_schedule_status: coverage_index_selected
 round_sector_consistency: pass
-next_recommended_archetypes:
-  - C16_STRATEGIC_RESOURCE_POLICY_SUPPLY
-  - C17_CHEMICAL_COMMODITY_MARGIN_SPREAD
-  - C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION
-  - C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT
-  - R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION
 ```

@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `198`
+- stage_transition_summary_rows: `215`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -81,6 +81,11 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C16-R4-L103-047400-20240118 | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 3535.0 | None | None | 3.96 | None | stage2_captured_most_upside |
 | C16-R4-L103-060370-20240422 | 060370 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 10480.0 | None | None | no_valid_stage_transition |
 | C16-R4-L103-298020-20240329 | 298020 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 324500.0 | None | None | 29.89 | None | stage2_actionable_best_entry |
+| C16L205_001_000910_20250414_RARE_EARTH_PARENT_PROXY_4B | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 6330.0 | None | None | no_valid_stage_transition |
+| C16L205_002_047400_20250414_FERRITE_MAGNET_PROXY_4B | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 2125.0 | None | None | no_valid_stage_transition |
+| C16L205_003_004560_20250414_SEONGLIM_STAKE_STAGE2_CAP | 004560 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 12170.0 | None | None | 12.74 | None | stage2_captured_most_upside |
+| C16L205_004_006260_20240603_LSMNM_BHP_CONTRACT_LATE_STAGE2_FAIL | 006260 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 169800.0 | None | None | 1.3 | None | stage2_actionable_best_entry |
+| C16L205_005_005490_20231129_LITHIUM_HYDROXIDE_LONG_LEAD_4B | 005490 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 483000.0 | None | None | no_valid_stage_transition |
 | C16_000500_20240125_CABLE_POLICY_SUPPLY_MARGIN_BRIDGE | 000500 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 26250.0 | None | None | 183.81 | None | stage2_actionable_best_entry |
 | C16_000670_20240409_SMELTER_LEGAL_OVERHANG | 000670 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 450000.0 | None | None | 44.22 | None | stage2_captured_most_upside |
 | C16_000910_UNION_20230327_RARE_EARTH_SUPPLY_POLICY_STAGE2 | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 6060.0 | None | None | 98.68 | None | stage2_actionable_best_entry |
@@ -135,6 +140,13 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C16_170_006 | 025820 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
 | C16_170_007 | 012800 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 1602.0 | None | None | no_valid_stage_transition |
 | C16_170_008 | 103140 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 55900.0 | None | None | 208.05 | None | stage2_actionable_best_entry |
+| C16_207_001120_20240116_AKP_NICKEL_MINE_COMPLETION | 001120 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 27850.0 | None | None | 29.08 | None | stage2_actionable_best_entry |
+| C16_207_003670_20241206_LITHIUM_SUPPLY_TO_CATHODE | 003670 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 165200.0 | None | None | 5.45 | None | stage2_actionable_best_entry |
+| C16_207_005490_20241122_LITHIUM_HYDROXIDE_CAPACITY_COMPLETION | 005490 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 303500.0 | None | None | 12.69 | None | stage2_captured_most_upside |
+| C16_207_010130_20250109_ANTIMONY_US_BUYERS_TALK | 010130 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 927000.0 | None | None | 19.09 | None | stage2_captured_most_upside |
+| C16_207_010130_20250117_NICKEL_SULFATE_STRATEGIC_TECH | 010130 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 840000.0 | None | None | 88.1 | None | stage2_actionable_best_entry |
+| C16_207_229640_20240110_RARE_EARTH_OXIDE_CONTRACT | 229640 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 20900.0 | None | None | 116.75 | None | stage2_actionable_best_entry |
+| C16_KOREA_ZINC_TRAFIGURA_ALL_IN_ONE_NICKEL_REFINERY_202311 | 010130 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 488500.0 | None | None | 12.38 | None | stage2_actionable_best_entry |
 | C16_KUMYANG_001570_2024_02_15_LITHIUM_RESOURCE_THEME | 001570 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 94800.0 | None | None | 41.46 | None | stage2_captured_most_upside |
 | C16_L192_01_036460 | 036460 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
 | C16_L192_02_018670 | 018670 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
@@ -144,7 +156,10 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C16_L192_06_001120 | 001120 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 28150.0 | None | None | 27.71 | None | stage2_actionable_best_entry |
 | C16_L192_07_011810 | 011810 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 11420.0 | None | None | 4.2 | None | stage2_captured_most_upside |
 | C16_LS_006260_2024_04_26_COPPER_CRITICAL_SUPPLY_CHAIN | 006260 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 127800.0 | None | None | 52.43 | None | stage2_captured_most_upside |
+| C16_LS_LNF_NICKEL_SULFATE_PRECURSOR_CHAIN_202306 | 006260 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_LX_INTERNATIONAL_AKP_NICKEL_MINE_OFFTAKE_202311 | 001120 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 28150.0 | None | None | 27.71 | None | stage2_actionable_best_entry |
 | C16_POSCOINTL_047050_2024_06_17_RARE_EARTH_MAGNET_SUPPLY | 047050 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 68400.0 | None | None | 5.12 | None | stage2_captured_most_upside |
+| C16_POSCO_LITHIUM_NICKEL_2030_VALUE_DAY_BLOWOFF_202307 | 005490 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 417500.0 | None | None | 4b_good_peak_capture |
 | C16_R4L71_GEUMYANG_001570_20230221 | 001570 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 34700.0 | None | None | 459.08 | None | stage2_captured_most_upside |
 | C16_R4L71_KDINV_012320_20221020 | 012320 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 37550.0 | None | None | 272.84 | None | stage2_captured_most_upside |
 | C16_R4L71_POSCO_005490_20230410 | 005490 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 398500.0 | None | None | 91.72 | None | stage2_actionable_best_entry |
@@ -161,6 +176,8 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C16_R4L92_000910_UNION_RARE_EARTH_POLICY | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
 | C16_R4L92_001120_LX_RESOURCE_TRADING_CASH | 001120 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 27650.0 | None | None | 13.92 | None | stage2_actionable_best_entry |
 | C16_R4L92_001550_CHOBI_FERTILIZER_POLICY | 001550 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_UNION_MATERIALS_GALLIUM_GERMANIUM_POLICY_PROXY_202307 | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
+| C16_UNION_RARE_EARTH_MAGNET_TECH_BAN_PROXY_202312 | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | None | None | None | no_valid_stage_transition |
 | R13L27_C16_005290_JAPAN_EXPORT_CONTROL_LOCALIZATION | 005290 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 11850.0 | None | 16450.0 | 86.5027 | 44.8755 | stage2_actionable_best_entry |
 | R13L27_C16_027580_GRAPHITE_CONTROL_THEME_TRAP | 027580 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 1940.0 | None | None | no_valid_stage_transition |
 | R13L27_C16_047400_RARE_EARTH_THEME_TRAP | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | None | 3340.0 | None | None | no_valid_stage_transition |

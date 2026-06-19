@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `246`
+- stage_transition_summary_rows: `260`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -158,6 +158,20 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C02_R1L144_103590_C02_transformer_cable_backlog_factory_expansion_bridge_20240327 | 103590 | C02_POWER_GRID_DATACENTER_CAPEX | 20700.0 | None | None | 46.1353 | None | stage2_actionable_best_entry |
 | C02_R1L144_267260_C02_transformer_backlog_margin_bridge_clean_positive_20240216 | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | None | 115900.0 | None | None | None | green_too_late |
 | C02_R1L144_298040_C02_heavy_transformer_us_eu_backlog_margin_bridge_20241126 | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
+| C02_R1L145_001440_20240725_TAIHAN_SINGLE_CONTRACT_TOO_EARLY | 001440 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 13620.0 | None | None | 4b_too_early |
+| C02_R1L145_001440_20240919_TAIHAN_FIRST_US_HVDC | 001440 | C02_POWER_GRID_DATACENTER_CAPEX | 11700.0 | None | None | 50.3419 | None | stage2_actionable_best_entry |
+| C02_R1L145_006340_20240626_DAEWON_PRICE_ONLY_US_TRANSFORMER_EXPECTATION | 006340 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | 4350.0 | None | None | no_valid_stage_transition |
+| C02_R1L145_010120_20250120_LSELECTRIC_4Q24_US_HVTR_BACKLOG | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
+| C02_R1L145_033100_20240318_JERYONG_US_DISTRIBUTION_TRANSFORMER_BACKLOG | 033100 | C02_POWER_GRID_DATACENTER_CAPEX | None | 32550.0 | None | None | None | green_good_but_late |
+| C02_R1L145_267260_20250120_HDHE_4Q24_MARGIN_ORDER_BRIDGE | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
+| C02_R1L145_298040_20250519_HYOSUNG_EU_UHV_AI_SUPPLIER | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | None | 582000.0 | None | None | None | green_good_but_late |
+| C02_R1L193_010120_20240725_4B | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
+| C02_R1L193_010120_20250422_STAGE2A | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | 172600.0 | None | None | 220.97 | None | stage2_actionable_best_entry |
+| C02_R1L193_033100_20240529_STAGE2A_HMAE | 033100 | C02_POWER_GRID_DATACENTER_CAPEX | 73900.0 | None | None | 36.27 | None | stage2_actionable_best_entry |
+| C02_R1L193_033100_20241203_4B_HOLDOUT | 033100 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
+| C02_R1L193_103590_20241115_STAGE2A | 103590 | C02_POWER_GRID_DATACENTER_CAPEX | 24650.0 | None | None | 80.12 | None | stage2_actionable_best_entry |
+| C02_R1L193_267260_20240424_STAGE2A | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | 255000.0 | None | None | 71.18 | None | stage2_actionable_best_entry |
+| C02_R1L193_298040_20250429_STAGE2A | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | 520000.0 | None | None | 377.5 | None | stage2_actionable_best_entry |
 | C02_R1L88_147830_CHERYONG_LATE_GRID_EQUIPMENT_EXTENSION | 147830 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |
 | C02_R1L88_298040_HYOSUNG_HEAVY_TRANSFORMER_CAPEX | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | 222500.0 | None | None | 132.81 | None | stage2_actionable_best_entry |
 | C02_R1L88_388050_G2POWER_GRID_THEME_NO_BRIDGE | 388050 | C02_POWER_GRID_DATACENTER_CAPEX | None | None | None | None | None | no_valid_stage_transition |

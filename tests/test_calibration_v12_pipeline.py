@@ -526,6 +526,27 @@ This file records a C26 split, but it has no structured MFE/MAE trigger rows.
         self.assertEqual(len(reps), 2)
         self.assertEqual({row["symbol"] for row in reps}, {"000810", "005830"})
 
+    def test_v12_dedupe_accepts_list_evidence_family(self) -> None:
+        base = {
+            "trigger_id": "a",
+            "symbol": "000810",
+            "canonical_archetype_id": "C22",
+            "trigger_type": "Stage2-Actionable",
+            "trigger_date": "2024-02-22",
+            "entry_date": "2024-02-23",
+            "entry_price": 1000,
+            "evidence_family": ["orderbook", "margin_bridge"],
+        }
+        duplicate = {**base, "trigger_id": "b", "evidence_family": ["orderbook", "margin_bridge"]}
+        reordered_duplicate = {**base, "trigger_id": "c", "evidence_family": ["margin_bridge", "orderbook"]}
+        independent_family = {**base, "trigger_id": "d", "evidence_family": ["orderbook", "margin_bridge", "fcf"]}
+
+        reps, dedupe_map = dedupe_v12_trigger_rows([base, duplicate, reordered_duplicate, independent_family])
+
+        self.assertEqual(len(reps), 2)
+        self.assertEqual(len(dedupe_map), 4)
+        self.assertTrue(any(row["dedupe_member_count"] == 3 for row in reps))
+
     def test_stage_transition_summary_generated(self) -> None:
         rows = [
             {"case_id": "case", "symbol": "000810", "trigger_type": "Stage2-Actionable", "entry_date": "2024-02-23", "entry_price": 1000, "MFE_180D_pct": 40},

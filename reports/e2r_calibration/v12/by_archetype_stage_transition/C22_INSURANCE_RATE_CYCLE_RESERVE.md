@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `240`
+- stage_transition_summary_rows: `247`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -104,6 +104,13 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C22_R6L107_018_005830_20240426_STAGE4BWATCH | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | 99900.0 | None | None | no_valid_stage_transition |
 | C22_R6L107_019_088350_20240426_STAGE3YELLOW | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
 | C22_R6L107_020_003690_20240822_STAGE3YELLOW | 003690 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
+| C22_R6L137_001_DBINS_20240222_IFRS17_CSM_CAPITAL_RETURN | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 93600.0 | None | None | 32.48 | None | stage2_actionable_best_entry |
+| C22_R6L137_002_SFMI_20240223_CSM_DPS_PAYOUT | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | 308500.0 | None | None | 27.55 | None | stage2_actionable_best_entry |
+| C22_R6L137_003_SLIFE_20240220_HEALTH_CSM_KICS_VALUEUP_PENDING | 032830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 81700.0 | None | None | 32.8 | None | stage2_actionable_best_entry |
+| C22_R6L137_004_HMF_20240308_LONGTERM_INSURANCE_SHOCK | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | 31950.0 | None | None | 4b_too_early |
+| C22_R6L137_005_HMF_20240814_2Q_CSM_QUALITY_LOSS_RATIO_BREAK | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | 4c_too_late |
+| C22_R6L137_006_DBINS_20241114_3Q_CSM_HIGH_MAE | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
+| C22_R6L137_007_SFMI_20250120_VALUEUP_KICS_RETURN_EXECUTION | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | 358000.0 | None | None | None | green_good_but_late |
 | C22_R6L84_001450_HYUNDAIMARINE_VALUEUP_SPIKE_RESERVE_UNVERIFIED | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |
 | C22_R6L84_032830_SAMSUNGLIFE_CSM_CAPITAL_RETURN_BRIDGE | 032830 | C22_INSURANCE_RATE_CYCLE_RESERVE | 65700.0 | None | None | 65.14 | None | stage2_actionable_best_entry |
 | C22_R6L84_088350_HANWHALIFE_BETA_SPIKE_NO_CSM_RETURN_BRIDGE | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | None | None | None | None | no_valid_stage_transition |

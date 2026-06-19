@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `239`
+- stage_transition_summary_rows: `248`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -13,8 +13,17 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 011790 | 011790 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 117000.0 | None | None | no_valid_stage_transition |
 | 018470 | 018470 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | 020150 | 020150 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 31250.0 | None | None | 57.44 | None | stage2_actionable_best_entry |
+| 066970 | 066970 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 112000.0 | None | None | 12.77 | None | stage2_actionable_best_entry |
+| 247540 | 247540 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
+| 278280 | 278280 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 61300.0 | None | None | 7.18 | None | stage2_captured_most_upside |
 | 361610 | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 73400.0 | None | None | 10.08 | None | stage2_captured_most_upside |
-| 373220 | 373220 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 380000.0 | None | None | 16.84 | None | stage2_captured_most_upside |
+| 373220 | 373220 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 380000.0 | None | 416500.0 | 16.84 | 57.0384 | stage2_captured_most_upside |
+| C12-006400-20250124-SDI-MAJOR-CUSTOMER-INVENTORY | 006400 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 222000.0 | None | None | no_valid_stage_transition |
+| C12-020150-20250124-LOTTE-CUSTOMER-INVENTORY | 020150 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 22100.0 | None | None | no_valid_stage_transition |
+| C12-066970-20240509-LNF-INVENTORY-VALUATION-LOSS | 066970 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C12-247540-20250211-ECOPROBM-FY24-LOSS-REBOUND | 247540 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 121200.0 | None | None | no_valid_stage_transition |
+| C12-361610-20240430-SKIET-DOWNSTREAM-INVENTORY | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C12-373220-20240725-LGES-SALES-TARGET-CUT | 373220 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 325000.0 | None | None | no_valid_stage_transition |
 | C12-LGES-20240725 | 373220 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 332500.0 | None | None | 30.98 | None | stage2_captured_most_upside |
 | C12-R3L62-066970 | 066970 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C12-R3L62-247540 | 247540 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 455000.0 | None | None | no_valid_stage_transition |

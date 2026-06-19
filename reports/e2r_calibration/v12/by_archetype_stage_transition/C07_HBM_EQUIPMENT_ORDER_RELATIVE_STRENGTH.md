@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `201`
+- stage_transition_summary_rows: `214`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -92,6 +92,13 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C07_083310_LOTVACUUM_20240222_VACUUM_HBM_ORDER_FALSE_GREEN | 083310 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |
 | C07_084370_EUGENETECH_20240321_HBM_DEPOSITION_ORDER_RS_STAGE2 | 084370 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 41450.0 | None | None | 44.75 | None | stage2_actionable_best_entry |
 | C07_092870_EXICON_20240701_HBM_TESTER_PRICE_PREMIUM_4B | 092870 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | 21650.0 | None | None | no_valid_stage_transition |
+| C07_200_01_042700_2024-03-25_Stage2Actionable | 042700 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 97400.0 | None | None | 101.44 | None | stage2_actionable_best_entry |
+| C07_200_02_042700_2024-06-10_Stage4B | 042700 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | 160000.0 | None | None | no_valid_stage_transition |
+| C07_200_03_089030_2024-04-19_Stage2Actionable | 089030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 35400.0 | None | None | 100.0 | None | stage2_actionable_best_entry |
+| C07_200_04_031980_2024-06-03_Stage2Actionable | 031980 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 55700.0 | None | None | 53.14 | None | stage2_actionable_best_entry |
+| C07_200_05_031980_2024-07-11_Stage4B | 031980 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | 67400.0 | None | None | no_valid_stage_transition |
+| C07_200_06_110990_2023-08-10_Stage3Yellow | 110990 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |
+| C07_200_07_110990_2025-01-15_Stage2Actionable | 110990 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 14800.0 | None | None | 31.55 | None | stage2_actionable_best_entry |
 | C07_232140_YC_20240417_HBM_TESTER_ORDER_RELATIVE_STRENGTH | 232140 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |
 | C07_232140_YC_20240417_HBM_TESTER_ORDER_RS_STAGE2 | 232140 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 7280.0 | None | None | 215.25 | None | stage2_actionable_best_entry |
 | C07_232140_YC_20240418_HBM_TESTER_ORDER_STAGE2 | 232140 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 9460.0 | None | None | 142.6 | None | stage2_actionable_best_entry |
@@ -164,6 +171,12 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C07_R2L93_031980_PSKH_HBM_BACKEND_ORDER | 031980 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 41900.0 | None | None | 103.58 | None | stage2_actionable_best_entry |
 | C07_R2L93_067310_HANAMICRON_CROSSLABEL_PACKAGING | 067310 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |
 | C07_R2L93_110990_DIT_HBM_LASER_WEAK_BRIDGE | 110990 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |
+| C07_R2_L128_001 | 089030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 29000.0 | None | None | 144.14 | None | stage2_actionable_best_entry |
+| C07_R2_L128_002 | 039440 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 26050.0 | None | None | 66.03 | None | stage2_actionable_best_entry |
+| C07_R2_L128_003 | 031980 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 54900.0 | None | None | 55.37 | None | stage2_actionable_best_entry |
+| C07_R2_L128_004 | 042700 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | 156800.0 | None | None | no_valid_stage_transition |
+| C07_R2_L128_005 | 039030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | None | None | None | no_valid_stage_transition |
+| C07_R2_L128_006 | 003160 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | None | 19800.0 | None | None | no_valid_stage_transition |
 | C07_TECHWING_089030_2024_02_22_HBM_TEST_HANDLER_ORDER_RS | 089030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 22300.0 | None | None | 217.49 | None | stage2_actionable_best_entry |
 | C07_TES_095610_2024_03_06_HBM_DEPOSITION_EQUIPMENT_RS_RERATING_4B | 095610 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 20800.0 | None | None | 58.17 | None | stage2_actionable_best_entry |
 | C07_WONIKIPS_240810_2024_03_06_MEMORY_CAPEX_EQUIPMENT_RS_FALSE_POSITIVE | 240810 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 35100.0 | None | None | 27.78 | None | stage2_captured_most_upside |

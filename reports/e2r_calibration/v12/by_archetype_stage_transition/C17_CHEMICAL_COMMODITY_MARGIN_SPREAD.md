@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `235`
+- stage_transition_summary_rows: `242`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -32,6 +32,8 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C17-L99-07-009830 | 009830 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 31450.0 | None | None | 9.06 | None | stage2_actionable_best_entry |
 | C17-L99-08-025000 | 025000 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | None | None | None | no_valid_stage_transition |
 | C17_002380_KCC_20240715_SILICONE_SPREAD_PREMIUM_4B | 002380 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | 335000.0 | None | None | no_valid_stage_transition |
+| C17_004000_20250514_LOTTEFINE_CHLORINE_PRICE_VOLUME_RECOVERY | 004000 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 36300.0 | None | None | 40.5 | None | stage2_actionable_best_entry |
+| C17_006650_20250508_SECTOR_DOWNCYCLE_FALSE_4C_OVERBLOCK | 006650 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | 88600.0 | None | None | no_valid_stage_transition |
 | C17_006650_DAEHANPETRO_20210106_PETROCHEMICAL_SPREAD_STAGE2 | 006650 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 277000.0 | None | None | 46.39 | None | stage2_actionable_best_entry |
 | C17_006650_DAEHANPETRO_20240125_PETROCHEM_SPREAD_FALSE_GREEN | 006650 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | None | None | None | no_valid_stage_transition |
 | C17_006650_DAEHAN_20210427_PETROCHEMICAL_SPREAD_LATE_FALSE_GREEN | 006650 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | None | None | None | no_valid_stage_transition |
@@ -42,6 +44,10 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C17_010950_SOIL_20220328_REFINING_SPREAD_STAGE2_4B | 010950 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 97900.0 | None | None | 25.64 | None | stage2_actionable_best_entry |
 | C17_010950_SOIL_20220613_REFINING_CRACK_PEAK_FALSE_GREEN | 010950 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | None | None | None | no_valid_stage_transition |
 | C17_010950_SOIL_20220823_REFINING_SPREAD_FALSE_GREEN | 010950 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | None | None | None | no_valid_stage_transition |
+| C17_011170_20240208_LOTTECHEM_2023_LOSS_TRUE_4C | 011170 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | None | None | None | no_valid_stage_transition |
+| C17_011170_20241108_LOTTECHEM_Q3_LOSS_TRUE_4C | 011170 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | None | None | None | no_valid_stage_transition |
+| C17_011780_20210323_NB_LATEX_SPREAD_RERATING_LOCAL_4B | 011780 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 233000.0 | None | None | 28.11 | None | stage2_actionable_best_entry |
+| C17_011780_20240130_DEPRESSED_MARKET_FALSE_4C | 011780 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | 128900.0 | None | None | no_valid_stage_transition |
 | C17_011790_SKC_20220408_FILM_CHEMICAL_SPREAD_PRICE_PREMIUM_4B | 011790 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | 166500.0 | None | None | no_valid_stage_transition |
 | C17_014830_UNID_20210419_CAUSTIC_POTASH_SPREAD_STAGE2 | 014830 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 75700.0 | None | None | 110.04 | None | stage2_actionable_best_entry |
 | C17_014830_UNID_20210902_CHLORALKALI_SPREAD_FALSE_GREEN | 014830 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | None | None | None | no_valid_stage_transition |
@@ -79,6 +85,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C17_298000_HYOSUNGCHEM_20220209_PP_PROPANE_SPREAD_FALSE_GREEN | 298000 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | None | None | None | no_valid_stage_transition |
 | C17_298000_HYOSUNGCHEM_20220211_PP_PROPANE_SPREAD_PREMIUM_4B | 298000 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | 289500.0 | None | None | no_valid_stage_transition |
 | C17_298000_PP_CHEMICAL_LABEL_SPIKE_HIGH_MAE_2024 | 298000 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | None | None | None | no_valid_stage_transition |
+| C17_298020_20210504_SPANDEX_MARGIN_SUPERCYCLE_LOCAL_4B | 298020 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | None | None | None | no_valid_stage_transition |
 | C17_DAEHAN_006650_2024_03_06_ETHYLENE_POLYMER_SPREAD_BOUNCE_THEN_4C | 006650 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | None | None | None | None | 4c_too_late |
 | C17_FOOSUNG_093370_2024_02_15_FLUOROCHEMICAL_SPREAD_FALSE_POSITIVE | 093370 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 9050.0 | None | None | 2.1 | None | stage2_captured_most_upside |
 | C17_KUMHOPETRO_011780_2024_01_29_SYNTHETIC_RUBBER_SPREAD_RERATING | 011780 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 125400.0 | None | None | 33.17 | None | stage2_actionable_best_entry |

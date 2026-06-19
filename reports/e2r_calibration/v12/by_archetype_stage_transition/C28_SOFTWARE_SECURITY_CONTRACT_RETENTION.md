@@ -3,17 +3,17 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `228`
+- stage_transition_summary_rows: `236`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| 012510 | 012510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 52000.0 | None | None | 58.65 | None | stage2_actionable_best_entry |
+| 012510 | 012510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 52000.0 | None | None | 85.1944 | None | stage2_actionable_best_entry |
 | 018260 | 018260 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
-| 030520 | 030520 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | 28500.0 | None | None | no_valid_stage_transition |
+| 030520 | 030520 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 22100.0 | None | 28500.0 | 85.9722 | 33.6845 | stage2_captured_most_upside |
 | 042510 | 042510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
 | 047560 | 047560 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 15230.0 | None | 32000.0 | 346.4872 | 31.7794 | stage2_captured_most_upside |
 | 049480 | 049480 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 3065.0 | None | None | 40.783 | None | stage2_actionable_best_entry |
-| 053800 | 053800 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| 053800 | 053800 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 73400.0 | None | None | 58.99 | None | stage2_actionable_best_entry |
 | 058970 | 058970 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 43050.0 | None | None | 68.64 | None | stage2_captured_most_upside |
 | 067920 | 067920 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 6660.0 | None | None | 30.33 | None | stage2_captured_most_upside |
 | 079940 | 079940 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 17540.0 | None | None | 63.626 | None | stage2_captured_most_upside |
@@ -22,10 +22,18 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 136540 | 136540 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 12400.0 | None | None | 20.56 | None | stage2_actionable_best_entry |
 | 150900 | 150900 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
 | 242040 | 242040 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 2050.0 | None | None | 42.1951 | None | stage2_actionable_best_entry |
-| 263860 | 263860 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| 263860 | 263860 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 10040.0 | None | None | 198.8039 | None | stage2_captured_most_upside |
 | 294570 | 294570 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 22000.0 | None | 18000.0 | 4.09 | -444.5432 | stage2_captured_most_upside |
+| C28-01 | 012510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | 57300.0 | None | None | None | green_good_but_late |
 | C28-012510-2024-ERP-AI | 012510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 40800.0 | 56000.0 | None | 91.91 | None | green_good_but_late |
+| C28-02 | 263860 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| C28-03 | 263860 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | 9430.0 | None | None | None | green_good_but_late |
+| C28-04 | 053800 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| C28-05 | 030520 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | 18320.0 | None | None | None | green_good_but_late |
 | C28-053800-2022-THEME-GUARD | 053800 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | 175800.0 | None | None | 4b_good_peak_capture |
+| C28-06 | 042510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| C28-07 | 067920 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | None | None | None | no_valid_stage_transition |
+| C28-08 | 136540 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | None | None | 13420.0 | None | None | no_valid_stage_transition |
 | C28-131370-2020-REMOTE-SUPPORT | 131370 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 3200.0 | None | 19950.0 | 639.0852 | 81.9042 | 4b_good_peak_capture |
 | C28-R8-L100-01 | 258790 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 1473.0 | None | None | 21.32 | None | stage2_captured_most_upside |
 | C28-R8-L100-02 | 356890 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 4285.0 | None | None | 28.35 | None | stage2_actionable_best_entry |

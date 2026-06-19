@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `178`
+- stage_transition_summary_rows: `185`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -185,3 +185,10 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R1L90_C04_ILJINPOWER_2024_NUCLEAR_MAINTENANCE_THEME_EVENT_CAP_4B | 094820 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | None | None | 13520.0 | None | None | 4b_good_peak_capture |
 | R1L90_C04_KEPCOIND_2024_NUCLEAR_OM_POLICY_PROJECT_BRIDGE_POSITIVE | 130660 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 9500.0 | None | None | 105.26 | None | stage2_actionable_best_entry |
 | R1L90_C04_WOOJIN_2024_NUCLEAR_INSTRUMENT_THEME_FALSE_STAGE2 | 105840 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 9090.0 | None | None | 23.21 | None | stage2_actionable_best_entry |
+| T01 | 034020 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 18200.0 | None | None | 281.32 | None | stage2_actionable_best_entry |
+| T02 | 105840 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | None | None | 8120.0 | None | None | no_valid_stage_transition |
+| T03 | 052690 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | None | None | 68800.0 | None | None | no_valid_stage_transition |
+| T04 | 032820 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | None | None | 2170.0 | None | None | no_valid_stage_transition |
+| T05 | 094820 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | None | None | None | None | None | no_valid_stage_transition |
+| T06 | 051600 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 42400.0 | None | None | 54.25 | None | stage2_actionable_best_entry |
+| T07 | 034020 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | None | None | None | None | None | no_valid_stage_transition |

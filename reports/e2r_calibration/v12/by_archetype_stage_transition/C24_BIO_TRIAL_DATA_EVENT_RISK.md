@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `216`
+- stage_transition_summary_rows: `230`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -56,6 +56,13 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C24_095700_20250227_GXI7_GBM_PHASE2_FAIL_4C | 095700 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C24_115180_20240529_Q901_ASCO_FIRST_IN_HUMAN_DATA | 115180 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C24_128940_2022_09_23_Poziotinib_ODAC_negative_portfolio_buffer | 128940 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | 237000.0 | None | None | no_valid_stage_transition |
+| C24_211_ABL_SANOFI_PRECLINICAL_LICENSE_NOT_ENDPOINT_DATA | 298380 | C24_BIO_TRIAL_DATA_EVENT_RISK | 26150.0 | None | None | 33.08 | None | stage2_captured_most_upside |
+| C24_211_HANMI_POZIOTINIB_ODAC_RISK_BENEFIT_FAIL | 128940 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_211_HELIXMITH_VM202_DPN_PRIMARY_ENDPOINT_FAIL | 084990 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_211_HLB_CRL_CLINICAL_DATA_INTACT_REGULATORY_OFFSET | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | 67100.0 | None | None | no_valid_stage_transition |
+| C24_211_OSCOTEC_MARIPOSA_ROYALTY_OPTION | 039200 | C24_BIO_TRIAL_DATA_EVENT_RISK | 21850.0 | None | None | 105.49 | None | stage2_actionable_best_entry |
+| C24_211_SILLAJEN_PHOCUS_FUTILITY_TERMINATION | 215600 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_211_YUHAN_MARIPOSA_PHASE3_POSITIVE | 000100 | C24_BIO_TRIAL_DATA_EVENT_RISK | 62000.0 | None | None | 61.94 | None | stage2_actionable_best_entry |
 | C24_215600_2019_08_02_PexaVec_PHOCUS_DMC_futility_stop | 215600 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C24_215600_SILLAJEN_20190802_PEXAVEC_TRIAL_FUTILITY_HARD_4C | 215600 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C24_217730_20240705_FURESTEM_AD_PHASE3_FAIL_4C | 217730 강스템바이오텍 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
@@ -65,7 +72,10 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C24_321550_20240508_MERIGOLIX_ENDOMETRIOSIS_P2A_TOPLINE | 321550 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C24_358570_20240603_GI102_ASCO_P1_2A_PRELIMINARY_DATA | 358570 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C24_ABL_298380_2024_03_06_BISPECIFIC_DATA_PLATFORM_RERATING | 298380 | C24_BIO_TRIAL_DATA_EVENT_RISK | 27300.0 | None | None | 41.03 | None | stage2_actionable_best_entry |
+| C24_CELLTRION_20240224_LIBERTY_2Y_CT_P13_SC_DATA | 068270 | C24_BIO_TRIAL_DATA_EVENT_RISK | 181500.0 | None | None | 16.25 | None | stage2_actionable_best_entry |
+| C24_HELIXMITH_20240103_ENGENSIS_PHASE3_PRIMARY_ENDPOINT_FAIL | 084990 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C24_HLB_028300_2024_05_16_FDA_BINARY_EVENT_RISK_4C | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | 4c_too_late |
+| C24_HLB_20240530_CARES310_OS_POSITIVE_BUT_CRL_OVERHANG | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | 61500.0 | None | None | no_valid_stage_transition |
 | C24_L182_028300_20240517_CRL1 | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | 4c_too_late |
 | C24_L182_028300_20240603_ASCO_DATA | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | 57300.0 | None | None | 71.2 | None | stage2_actionable_best_entry |
 | C24_L182_028300_20240924_RESUBMISSION | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | 91200.0 | None | None | 7.02 | None | stage2_captured_most_upside |
@@ -74,6 +84,8 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C24_L182_196170_20241114_DAIICHI | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | 441500.0 | None | None | 15.06 | None | stage2_captured_most_upside |
 | C24_L182_196170_20241120_MERCK_P3 | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C24_L182_196170_20250331_KEYTRUDA_SC_UPDATE | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_LIGACHEM_20240524_LCB71_PHASE1A_INITIAL_DATA | 141080 | C24_BIO_TRIAL_DATA_EVENT_RISK | 67700.0 | None | None | 112.11 | None | stage2_actionable_best_entry |
+| C24_OSCOTEC_20250108_MARIPOSA_OS_PARTNER_READTHROUGH | 039200 | C24_BIO_TRIAL_DATA_EVENT_RISK | 25200.0 | None | None | 90.28 | None | stage2_actionable_best_entry |
 | C24_QRI_115180_2024_03_06_CLINICAL_DATA_EVENT_FALSE_POSITIVE | 115180 | C24_BIO_TRIAL_DATA_EVENT_RISK | 4595.0 | None | None | 9.68 | None | stage2_captured_most_upside |
 | C24_R7L104_028300_20240425_HLB_PRE_FDA_BINARY_EVENT_SPIKE | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C24_R7L104_140410_20240304_MEZZION_TRIAL_REDOSING_PATH | 140410 | C24_BIO_TRIAL_DATA_EVENT_RISK | 45250.0 | None | None | 10.94 | None | stage2_actionable_best_entry |
@@ -162,6 +174,8 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C24_R7_L107_018_104540_2024-02-02 | 104540 | C24_BIO_TRIAL_DATA_EVENT_RISK | 9870.0 | None | None | 11.6 | None | stage2_captured_most_upside |
 | C24_R7_L107_019_253840_2024-01-25 | 253840 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | 6840.0 | None | None | no_valid_stage_transition |
 | C24_R7_L107_020_149980_2024-05-17 | 149980 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_SILLAJEN_20190802_PEXAVEC_PHASE3_FUTILITY | 215600 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
+| C24_YUHAN_20231023_MARIPOSA_PFS_POSITIVE_TRIAL_DATA | 000100 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | no_valid_stage_transition |
 | R13L32_C24_009420_HANALL_20230927_PARTNER_DATA_POSITIVE | 009420 | C24_BIO_TRIAL_DATA_EVENT_RISK | 32650.0 | 44300.0 | None | 43.19 | None | green_too_late |
 | R13L32_C24_039200_OSCOTEC_20200921_DATA_POSITIVE_HIGH_MAE | 039200 | C24_BIO_TRIAL_DATA_EVENT_RISK | 46000.0 | None | None | 55.43 | None | 4c_too_late |
 | R13L32_C24_215600_SILLAJEN_20190802_PHASE3_FUTILITY_4C | 215600 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | None | None | None | None | 4c_too_late |

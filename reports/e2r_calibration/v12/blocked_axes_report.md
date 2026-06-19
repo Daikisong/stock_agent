@@ -3,7 +3,6 @@
 | axis | scope | decision | promotion_type | missing_to_promote | recommended_next_action |
 |---|---|---|---|---|---|
 | full_4b_overlay_candidate | large_sector:L10_POLICY_EVENT_CROSS_REDTEAM_MISC | blocked_by_data_quality | Type1_safety_guardrail | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| full_4b_overlay_candidate | large_sector:L4_MATERIALS_SPREAD_RESOURCE | blocked_by_data_quality | Type1_safety_guardrail | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
 | full_4b_overlay_candidate | large_sector:L5_CONSUMER_BRAND_DISTRIBUTION | blocked_by_data_quality | Type1_safety_guardrail | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
 | full_4b_overlay_candidate | large_sector:L6_FINANCIAL_CAPITAL_RETURN_DIGITAL | blocked_by_data_quality | Type1_safety_guardrail | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
 | full_4b_overlay_candidate | large_sector:L7_BIO_HEALTHCARE_MEDICAL | blocked_by_data_quality | Type1_safety_guardrail | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
@@ -12,7 +11,6 @@
 | full_4b_overlay_candidate | canonical_archetype:C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | blocked_by_data_quality | Type1_safety_guardrail | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
 | full_4b_overlay_candidate | canonical_archetype:C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | blocked_by_data_quality | Type1_safety_guardrail | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
 | full_4b_overlay_candidate | canonical_archetype:C13_BATTERY_JV_UTILIZATION_AMPC_IRA | blocked_by_data_quality | Type1_safety_guardrail | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
-| full_4b_overlay_candidate | canonical_archetype:C15_MATERIAL_SPREAD_SUPERCYCLE | blocked_by_data_quality | Type1_safety_guardrail | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
 | full_4b_overlay_candidate | canonical_archetype:C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | blocked_by_data_quality | Type1_safety_guardrail | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
 | full_4b_overlay_candidate | canonical_archetype:C19_BRAND_RETAIL_INVENTORY_MARGIN | blocked_by_data_quality | Type1_safety_guardrail | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
 | full_4b_overlay_candidate | canonical_archetype:C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | blocked_by_data_quality | Type1_safety_guardrail | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |

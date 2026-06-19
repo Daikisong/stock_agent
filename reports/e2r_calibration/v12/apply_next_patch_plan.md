@@ -3,7 +3,7 @@
 이 보고서는 이번 v12 batch에서 바로 적용할 수 있는 안전한 미세 패치 목록입니다.
 `run-v12-calibration`은 이 목록을 읽어 `configs/e2r_scoring_profile_v2_2.yaml`에 반영합니다.
 
-- apply_next_patch_count: `108`
+- apply_next_patch_count: `112`
 - active_default_profile_after_apply: `e2r_2_2_rolling_calibrated`
 - production_default_scoring_changed_after_apply: `true`
 
@@ -21,6 +21,7 @@
 | e2r_2_2_L3_BATTERY_EV_GREEN_MOBILITY_local_4b_watch_guard_v1 | 4B price-only watch guard | large_sector:L3_BATTERY_EV_GREEN_MOBILITY | local_4b_watch_guard | price_only_4b_watch_only_not_full_4b | rollback_if_4b_watch_triggers_too_early_on_verified_non_price_cases |
 | e2r_2_2_L3_BATTERY_EV_GREEN_MOBILITY_earlier_thesis_break_watch_v1 | 4C thesis-break watch | large_sector:L3_BATTERY_EV_GREEN_MOBILITY | earlier_thesis_break_watch | earlier_4c_watch_before_hard_4c | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |
 | e2r_2_2_L4_MATERIALS_SPREAD_RESOURCE_stage2_required_bridge_v1 | Stage2 evidence guard | large_sector:L4_MATERIALS_SPREAD_RESOURCE | stage2_required_bridge | require_non_price_bridge | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |
+| e2r_2_2_L4_MATERIALS_SPREAD_RESOURCE_local_4b_watch_guard_v1 | 4B price-only watch guard | large_sector:L4_MATERIALS_SPREAD_RESOURCE | local_4b_watch_guard | price_only_4b_watch_only_not_full_4b | rollback_if_4b_watch_triggers_too_early_on_verified_non_price_cases |
 | e2r_2_2_L4_MATERIALS_SPREAD_RESOURCE_earlier_thesis_break_watch_v1 | 4C thesis-break watch | large_sector:L4_MATERIALS_SPREAD_RESOURCE | earlier_thesis_break_watch | earlier_4c_watch_before_hard_4c | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |
 | e2r_2_2_L5_CONSUMER_BRAND_DISTRIBUTION_stage2_required_bridge_v1 | Stage2 evidence guard | large_sector:L5_CONSUMER_BRAND_DISTRIBUTION | stage2_required_bridge | require_non_price_bridge | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |
 | e2r_2_2_L5_CONSUMER_BRAND_DISTRIBUTION_earlier_thesis_break_watch_v1 | 4C thesis-break watch | large_sector:L5_CONSUMER_BRAND_DISTRIBUTION | earlier_thesis_break_watch | earlier_4c_watch_before_hard_4c | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |
@@ -57,6 +58,7 @@
 | e2r_2_2_C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF_earlier_thesis_break_watch_v1 | 4C thesis-break watch | canonical_archetype:C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | earlier_thesis_break_watch | earlier_4c_watch_before_hard_4c | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |
 | e2r_2_2_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_stage2_required_bridge_v1 | Stage2 evidence guard | canonical_archetype:C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | stage2_required_bridge | require_non_price_bridge | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |
 | e2r_2_2_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_local_4b_watch_guard_v1 | 4B price-only watch guard | canonical_archetype:C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | local_4b_watch_guard | price_only_4b_watch_only_not_full_4b | rollback_if_4b_watch_triggers_too_early_on_verified_non_price_cases |
+| e2r_2_2_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_earlier_thesis_break_watch_v1 | 4C thesis-break watch | canonical_archetype:C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | earlier_thesis_break_watch | earlier_4c_watch_before_hard_4c | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |
 | e2r_2_2_C11_BATTERY_ORDERBOOK_RERATING_stage2_required_bridge_v1 | Stage2 evidence guard | canonical_archetype:C11_BATTERY_ORDERBOOK_RERATING | stage2_required_bridge | require_non_price_bridge | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |
 | e2r_2_2_C11_BATTERY_ORDERBOOK_RERATING_local_4b_watch_guard_v1 | 4B price-only watch guard | canonical_archetype:C11_BATTERY_ORDERBOOK_RERATING | local_4b_watch_guard | price_only_4b_watch_only_not_full_4b | rollback_if_4b_watch_triggers_too_early_on_verified_non_price_cases |
 | e2r_2_2_C11_BATTERY_ORDERBOOK_RERATING_earlier_thesis_break_watch_v1 | 4C thesis-break watch | canonical_archetype:C11_BATTERY_ORDERBOOK_RERATING | earlier_thesis_break_watch | earlier_4c_watch_before_hard_4c | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |
@@ -68,6 +70,8 @@
 | e2r_2_2_C14_EV_DEMAND_SLOWDOWN_4B_4C_local_4b_watch_guard_v1 | 4B price-only watch guard | canonical_archetype:C14_EV_DEMAND_SLOWDOWN_4B_4C | local_4b_watch_guard | price_only_4b_watch_only_not_full_4b | rollback_if_4b_watch_triggers_too_early_on_verified_non_price_cases |
 | e2r_2_2_C14_EV_DEMAND_SLOWDOWN_4B_4C_earlier_thesis_break_watch_v1 | 4C thesis-break watch | canonical_archetype:C14_EV_DEMAND_SLOWDOWN_4B_4C | earlier_thesis_break_watch | earlier_4c_watch_before_hard_4c | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |
 | e2r_2_2_C15_MATERIAL_SPREAD_SUPERCYCLE_stage2_required_bridge_v1 | Stage2 evidence guard | canonical_archetype:C15_MATERIAL_SPREAD_SUPERCYCLE | stage2_required_bridge | require_non_price_bridge | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |
+| e2r_2_2_C15_MATERIAL_SPREAD_SUPERCYCLE_local_4b_watch_guard_v1 | 4B price-only watch guard | canonical_archetype:C15_MATERIAL_SPREAD_SUPERCYCLE | local_4b_watch_guard | price_only_4b_watch_only_not_full_4b | rollback_if_4b_watch_triggers_too_early_on_verified_non_price_cases |
+| e2r_2_2_C15_MATERIAL_SPREAD_SUPERCYCLE_earlier_thesis_break_watch_v1 | 4C thesis-break watch | canonical_archetype:C15_MATERIAL_SPREAD_SUPERCYCLE | earlier_thesis_break_watch | earlier_4c_watch_before_hard_4c | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |
 | e2r_2_2_C16_STRATEGIC_RESOURCE_POLICY_SUPPLY_stage2_required_bridge_v1 | Stage2 evidence guard | canonical_archetype:C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | stage2_required_bridge | require_non_price_bridge | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |
 | e2r_2_2_C16_STRATEGIC_RESOURCE_POLICY_SUPPLY_local_4b_watch_guard_v1 | 4B price-only watch guard | canonical_archetype:C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | local_4b_watch_guard | price_only_4b_watch_only_not_full_4b | rollback_if_4b_watch_triggers_too_early_on_verified_non_price_cases |
 | e2r_2_2_C17_CHEMICAL_COMMODITY_MARGIN_SPREAD_stage2_required_bridge_v1 | Stage2 evidence guard | canonical_archetype:C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | stage2_required_bridge | require_non_price_bridge | rollback_if_next_v12_batch_reverses_positive_counterexample_balance |

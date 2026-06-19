@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `245`
+- stage_transition_summary_rows: `263`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -110,6 +110,14 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C32_R12L106_035720_20240202 | 035720 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 59100.0 | None | None | 8.46 | None | stage2_actionable_best_entry |
 | C32_R12L106_086790_20240226 | 086790 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | None | None | None | no_valid_stage_transition |
 | C32_R12L106_180640_20240129 | 180640 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 70800.0 | None | None | 22.88 | None | stage2_actionable_best_entry |
+| C32_R12L136_001 | 041510 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 94300.0 | None | None | 55.89 | None | stage2_actionable_best_entry |
+| C32_R12L136_002 | 041510 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | 102700.0 | None | None | no_valid_stage_transition |
+| C32_R12L136_003 | 352820 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | None | None | None | no_valid_stage_transition |
+| C32_R12L136_004 | 035720 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | None | None | None | no_valid_stage_transition |
+| C32_R12L136_005 | 035720 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | None | None | None | no_valid_stage_transition |
+| C32_R12L136_006 | 035720 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | 38850.0 | None | None | no_valid_stage_transition |
+| C32_R12L136_007 | 000990 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | None | None | None | no_valid_stage_transition |
+| C32_R12L136_008 | 000990 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | 34000.0 | None | None | no_valid_stage_transition |
 | C32_R12L84_000880_HANWHA_HOLDCO_THEME_NO_GOVERNANCE_BRIDGE | 000880 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | None | None | None | no_valid_stage_transition |
 | C32_R12L84_004990_LOTTE_HOLDCO_VALUEUP_THEME_NO_BRIDGE | 004990 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | None | None | None | no_valid_stage_transition |
 | C32_R12L84_028260_SAMSUNGCNT_HOLDCO_NAV_RETURN_BRIDGE | 028260 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 127900.0 | None | None | 34.25 | None | stage2_actionable_best_entry |
@@ -125,6 +133,16 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C32_R12L92_000670_YOUNGPOONG_RELATED_PARTY_SPILLOVER | 000670 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | None | None | None | no_valid_stage_transition |
 | C32_R12L92_010130_KOREA_ZINC_CONTROL_PREMIUM | 010130 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 666000.0 | None | None | 261.41 | None | stage2_actionable_best_entry |
 | C32_R12L92_180640_HANJINKAL_HISTORICAL_CONTROL_PREMIUM | 180640 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | None | None | None | no_valid_stage_transition |
+| C32_R12_222_01_010130_20240913 | 010130 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 666000.0 | None | None | 261.41 | None | stage2_actionable_best_entry |
+| C32_R12_222_02_010130_20241021 | 010130 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | None | None | None | no_valid_stage_transition |
+| C32_R12_222_03_041510_20230210 | 041510 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 114700.0 | None | None | 40.54 | None | stage2_actionable_best_entry |
+| C32_R12_222_04_041510_20230313 | 041510 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | None | None | None | no_valid_stage_transition |
+| C32_R12_222_05_011200_20231219 | 011200 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 18430.0 | None | None | 26.42 | None | stage2_captured_most_upside |
+| C32_R12_222_06_011200_20240207 | 011200 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | None | None | None | no_valid_stage_transition |
+| C32_R12_222_07_008930_20240112 | 008930 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 38400.0 | None | None | 46.35 | None | stage2_captured_most_upside |
+| C32_R12_222_08_008930_20240328 | 008930 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | None | None | None | no_valid_stage_transition |
+| C32_R12_222_09_040300_20231023 | 040300 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 6000.0 | None | None | 60.0 | None | stage2_actionable_best_entry |
+| C32_R12_222_10_028260_20240215 | 028260 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 156300.0 | None | None | 9.85 | None | stage2_captured_most_upside |
 | C32_ROBOTICS_ANNOUNCE_DERIVATIVE_OPTIONALITY | 454910 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | 85300.0 | None | None | no_valid_stage_transition |
 | C32_ROBOTICS_FINAL_SCRAP_NO_HARDBLOCK | 454910 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | None | None | None | no_valid_stage_transition |
 | C32_ROBOTICS_WITHDRAWAL_OPTIONALITY_DECAY | 454910 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | None | 69300.0 | None | None | no_valid_stage_transition |

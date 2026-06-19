@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `202`
+- stage_transition_summary_rows: `217`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -44,6 +44,14 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C25-L185-CASE07-039860-NANOENTEK | 039860 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 3925.0 | None | None | 43.69 | None | stage2_captured_most_upside |
 | C25-L185-CASE08-096530-SEEGENE | 096530 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 25150.0 | None | None | 42.94 | None | stage2_actionable_best_entry |
 | C25-L185-CASE09-137310-SD_BIOSENSOR | 137310 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 30200.0 | None | None | 2.48 | None | stage2_captured_most_upside |
+| C25-R7-L140-001 | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | 97000.0 | None | None | None | green_false_positive |
+| C25-R7-L140-002 | 338220 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| C25-R7-L140-003 | 099190 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 15530.0 | None | None | 35.22 | None | stage2_actionable_best_entry |
+| C25-R7-L140-004 | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | 52200.0 | None | None | None | green_false_positive |
+| C25-R7-L140-005 | 322510 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| C25-R7-L140-006 | 228670 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | 31350.0 | None | None | no_valid_stage_transition |
+| C25-R7-L140-007 | 043150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| C25-R7-L140-008 | 100120 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 21600.0 | None | None | 17.13 | None | stage2_actionable_best_entry |
 | C25-R7-L148-CLASSYS-20240808-Q2-HIGH-MARGIN-EXPORT-DEVICE | 214150 Classys | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 50000.0 | None | None | 48.8 | None | stage2_actionable_best_entry |
 | C25-R7-L148-CLASSYS-20240808-Q2-HIGH-MARGIN-EXPORT-DEVICE | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 50000.0 | None | None | 48.8 | None | stage2_actionable_best_entry |
 | C25-R7-L148-DENTIUM-20221109-CHINA-VBP-EXPORT-MARGIN-BRIDGE | 145720 Dentium | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 77800.0 | None | None | 137.79 | None | stage2_actionable_best_entry |
@@ -76,6 +84,13 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C25_100120_VIEWORKS_20230620_IMAGING_EXPORT_MARGIN_4B | 100120 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | 36900.0 | None | None | no_valid_stage_transition |
 | C25_145720_DENTIUM_2023-07-04_CHINA_VBP_MARGIN_COUNTEREXAMPLE | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 153700.0 | None | None | 3.7085 | None | stage2_actionable_best_entry |
 | C25_145720_DENTIUM_2024_0229_DENTAL_EXPORT_REIMBURSEMENT_FALSE_POSITIVE | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
+| C25_209_CLASSYS_EVERESSE_US_DISTRIBUTION | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 45600.0 | None | None | 63.16 | None | stage2_actionable_best_entry |
+| C25_209_DENTIUM_3Q24_MISS_REVERSIBLE_4B | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | 62800.0 | None | None | no_valid_stage_transition |
+| C25_209_DENTIUM_4Q23_EXPORT_RECOVERY_FALSE_POSITIVE | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 144200.0 | None | None | 2.98 | None | stage2_actionable_best_entry |
+| C25_209_ISENS_3Q23_CGM_TINY_REVENUE_4B | 099190 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | 23500.0 | None | None | no_valid_stage_transition |
+| C25_209_ISENS_CE_MDR_NO_SALES_CONVERSION | 099190 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 21450.0 | None | None | 6.99 | None | stage2_captured_most_upside |
+| C25_209_LUNIT_SAMSUNG_DISTRIBUTION_HIGH_MAE | 328130 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 75900.0 | None | None | 4.35 | None | stage2_captured_most_upside |
+| C25_209_VUNO_DEEPCARS_ADOPTION_NO_REVENUE_BRIDGE | 338220 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 34900.0 | None | None | 13.75 | None | stage2_captured_most_upside |
 | C25_214150_CLASSYS_2024-08-09_EXPORT_EQUIPMENT_MARGIN_BRIDGE | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
 | C25_214150_CLASSYS_2024_0509_EXPORT_CONSUMABLE_REORDER_POSITIVE | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | None | None | None | None | no_valid_stage_transition |
 | C25_214450_PHARMARESEARCH_20230403_AESTHETIC_DEVICE_EXPORT_MARGIN_STAGE2 | 214450 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 75100.0 | None | None | 110.65 | None | stage2_actionable_best_entry |

@@ -3,10 +3,11 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `350`
+- stage_transition_summary_rows: `399`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
+| 000270 | 000270 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
 | 000370 | 000370 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 6070.0 | None | None | no_valid_stage_transition |
 | 000540 | 000540 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 3850.0 | None | None | 21.0 | None | stage2_captured_most_upside |
 | 000660 | 000660 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 200000.0 | None | None | 24.25 | None | stage2_actionable_best_entry |
@@ -14,27 +15,32 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 000810 | 000810 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
 | 001450 | 001450 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
 | 002990 | 002990 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| 003620 | 003620 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
 | 003690 | 003690 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 8240.0 | None | None | 10.2 | None | stage2_captured_most_upside |
 | 004090 | 004090 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 21650.0 | None | None | 29.79 | None | stage2_captured_most_upside |
 | 004960 | 004960 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
-| 005380 | 005380 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| 005380 | 005380 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 258500.0 | None | None | no_valid_stage_transition |
 | 005830 | 005830 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 95000.0 | None | None | 54.5432 | None | stage2_actionable_best_entry |
 | 005930 | 005930 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
 | 006400 | 006400 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
 | 008970 | 008970 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 1175.0 | None | None | 42.81 | None | stage2_captured_most_upside |
 | 009410 | 009410 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| 009830 | 009830 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 29300.0 | None | None | no_valid_stage_transition |
+| 011210 | 011210 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| 012330 | 012330 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 263500.0 | None | None | 24.1 | None | stage2_actionable_best_entry |
 | 013990 | 013990 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 4200.0 | None | None | 70.95 | None | stage2_captured_most_upside |
 | 014790 | 014790 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| 015760 | 015760 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 18680.0 | None | None | 120.283 | None | stage2_captured_most_upside |
 | 024060 | 024060 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 17520.0 | None | None | no_valid_stage_transition |
 | 024110 | 024110 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 14000.0 | None | None | 21.3 | None | stage2_actionable_best_entry |
 | 032830 | 032830 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 100000.0 | None | None | no_valid_stage_transition |
-| 036460 | 036460 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 38700.0 | None | None | no_valid_stage_transition |
+| 036460 | 036460 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 47050.0 | None | 38700.0 | 37.0909 | -47.8475 | stage2_actionable_best_entry |
 | 039490 | 039490 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | 126000.0 | None | None | None | green_good_but_late |
 | 039610 | 039610 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 8630.0 | None | None | 78.68 | None | stage2_captured_most_upside |
 | 042700 | 042700 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 146400.0 | None | None | 34.02 | None | stage2_actionable_best_entry |
 | 047040 | 047040 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 4250.0 | None | None | no_valid_stage_transition |
 | 051600 | 051600 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 43500.0 | None | None | 10.57 | None | stage2_captured_most_upside |
-| 052690 | 052690 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 95000.0 | None | None | 3.26 | None | stage2_captured_most_upside |
+| 052690 | 052690 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 82000.0 | None | None | 19.6305 | None | stage2_captured_most_upside |
 | 053050 | 053050 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 4485.0 | None | None | no_valid_stage_transition |
 | 053290 | 053290 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 6200.0 | None | None | 1.61 | None | stage2_captured_most_upside |
 | 055550 | 055550 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
@@ -49,6 +55,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 090360 | 090360 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 28100.0 | None | None | no_valid_stage_transition |
 | 105560 | 105560 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 87900.0 | 74200.0 | 87900.0 | 19.0239 | 0.0 | green_good_but_late |
 | 108490 | 108490 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 27600.0 | None | None | no_valid_stage_transition |
+| 112610 | 112610 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 78300.0 | None | None | no_valid_stage_transition |
 | 117730 | 117730 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 19200.0 | None | None | no_valid_stage_transition |
 | 128820 | 128820 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 4250.0 | None | None | 12.35 | None | stage2_captured_most_upside |
 | 133750 | 133750 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 3515.0 | None | None | 4.41 | None | stage2_captured_most_upside |
@@ -62,6 +69,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 277810 | 277810 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 177400.0 | None | None | no_valid_stage_transition |
 | 294870 | 294870 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 17920.0 | None | None | no_valid_stage_transition |
 | 316140 | 316140 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 14520.0 | None | None | 23.9614 | None | stage2_actionable_best_entry |
+| 336260 | 336260 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 21600.0 | None | None | 55.09 | None | stage2_actionable_best_entry |
 | 339950 | 339950 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 1821.0 | None | None | 62.82 | None | stage2_captured_most_upside |
 | 361610 | 361610 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
 | 373220 | 373220 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 332500.0 | None | None | 33.53 | None | stage2_actionable_best_entry |
@@ -88,6 +96,22 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C31-L201-07 | 112610 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
 | C31-L201-08 | 100090 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 15320.0 | None | None | 105.61 | None | stage2_actionable_best_entry |
 | C31-L201-09 | 041190 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| C31-R11-L214-01 | 105560 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 62400.0 | None | None | 66.51 | None | stage2_actionable_best_entry |
+| C31-R11-L214-02 | 138930 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 7720.0 | None | None | 33.94 | None | stage2_captured_most_upside |
+| C31-R11-L214-03 | 071320 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 43300.0 | None | None | 24.48 | None | stage2_actionable_best_entry |
+| C31-R11-L214-04 | 112610 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| C31-R11-L214-05 | 015760 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 18680.0 | None | None | 11.62 | None | stage2_actionable_best_entry |
+| C31-R11-L214-06 | 036460 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 25850.0 | None | None | 10.44 | None | stage2_actionable_best_entry |
+| C31-R11-L214-07 | 336260 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| C31-R11-L214-08 | 052690 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 95200.0 | None | None | 4b_good_peak_capture |
+| C31-R11-L225-01 | 018670 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 184800.0 | None | None | 62.34 | None | stage2_actionable_best_entry |
+| C31-R11-L225-02 | 017940 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| C31-R11-L225-03 | 010950 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 58500.0 | None | None | 14.36 | None | stage2_captured_most_upside |
+| C31-R11-L225-04 | 078930 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 42000.0 | None | None | 35.0 | None | stage2_actionable_best_entry |
+| C31-R11-L225-05 | 014530 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 3755.0 | None | None | 15.71 | None | stage2_captured_most_upside |
+| C31-R11-L225-06 | 024060 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| C31-R11-L225-07 | 004090 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| C31-R11-L225-08 | 003650 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 94500.0 | None | None | 28.04 | None | stage2_actionable_best_entry |
 | C31_000660_SKHYNIX_20230330_KCHIPS_TAX_CREDIT_HBM_CAPEX_STAGE2 | 000660 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 88800.0 | None | None | 61.82 | None | stage2_actionable_best_entry |
 | C31_000990_DBHITEK_20230330_KCHIPS_LEGACY_FOUNDRY_FALSE_GREEN | 000990 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
 | C31_004090_KOREAPETROLEUM_20240603_EAST_SEA_OIL_GAS_POLICY_THEME_4B | 004090 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 17950.0 | None | None | no_valid_stage_transition |
@@ -116,6 +140,22 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C31_322000_HDHES_20220915_IRA_SOLAR_POLICY_PRICE_PREMIUM_4B | 322000 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 84500.0 | None | None | no_valid_stage_transition |
 | C31_336260_202007 | 336260 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 38350.0 | None | None | 70.5404 | None | stage2_actionable_best_entry |
 | C31_407400_GGOOMBI_20240103_BIRTHRATE_INFANT_GOODS_POLICY_PREMIUM_4B | 407400 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 13410.0 | None | None | no_valid_stage_transition |
+| C31_L219_01_SAMSUNG_PMT_AFTER_MEMORY_RERATING | 005930 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 80000.0 | None | None | 4b_too_early |
+| C31_L219_02_SAMSUNG_FINAL_AWARD_AFTER_RESET | 005930 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| C31_L219_03_SKHYNIX_PMT_HBM_PACKAGING_ROUTE | 000660 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 169300.0 | None | None | 34.08 | None | stage2_actionable_best_entry |
+| C31_L219_04_SKHYNIX_FINAL_AWARD_DUE_DILIGENCE | 000660 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| C31_L219_05_SKC_ABSOLICS_FINAL_AWARD | 011790 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 97500.0 | None | None | 85.64 | None | stage2_actionable_best_entry |
+| C31_L219_06_LGES_Q1_AMPC_RESULT_ONLY_TRAP | 373220 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| C31_L219_07_SKINNOVATION_BLUEOVAL_CONDITIONAL_LOAN | 096770 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 182600.0 | None | None | 25.68 | None | stage2_actionable_best_entry |
+| C31_L219_08_SAMSUNGSDI_STARPLUS_CONDITIONAL_LOAN | 006400 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 261000.0 | None | None | 2.68 | None | stage2_captured_most_upside |
+| C31_L221_CASE_001_HANA_MATERIALS_KCHIPS_TAX_CREDIT_POSITIVE | 166090 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 42300.0 | None | None | 27.19 | None | stage2_actionable_best_entry |
+| C31_L221_CASE_002_EXICON_KCHIPS_TEST_EQUIPMENT_POSITIVE | 092870 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 10390.0 | None | None | 89.89 | None | stage2_actionable_best_entry |
+| C31_L221_CASE_003_WONIKIPS_KCHIPS_CAPEX_PROXY_COUNTER | 240810 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 35050.0 | None | None | 9.42 | None | stage2_captured_most_upside |
+| C31_L221_CASE_004_GST_KCHIPS_INFRA_PROXY_COUNTER | 083450 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 28150.0 | None | None | 12.26 | None | stage2_captured_most_upside |
+| C31_L221_CASE_005_LOTVACUUM_26TN_PACKAGE_PROXY_FALSE_POSITIVE | 083310 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 17550.0 | None | None | 1.71 | None | stage2_captured_most_upside |
+| C31_L221_CASE_006_JT_26TN_PACKAGE_AFTER_SPIKE_4B | 089790 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | 8570.0 | None | None | no_valid_stage_transition |
+| C31_L221_CASE_007_TES_26TN_PACKAGE_PROXY_HIGH_MAE | 095610 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 23400.0 | None | None | 18.8 | None | stage2_captured_most_upside |
+| C31_L221_CASE_008_SIMMTECH_26TN_PACKAGE_PCB_PROXY_COUNTER | 222800 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 33750.0 | None | None | 10.37 | None | stage2_captured_most_upside |
 | C31_R11L100_000540_20240227 | 000540 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
 | C31_R11L100_000810_20240227 | 000810 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 293500.0 | None | None | 34.07 | None | stage2_actionable_best_entry |
 | C31_R11L100_005830_20240227 | 005830 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 92000.0 | None | None | 34.78 | None | stage2_actionable_best_entry |
@@ -174,6 +214,15 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C31_R11L109_267260_20240126_STAGE2ACTIONABLE_GRID_POLICY_DATACENTER_CAPEX_INDIRECT | 267260 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 86000.0 | None | None | 70.0 | None | stage2_actionable_best_entry |
 | C31_R11L109_298040_20240129_STAGE2ACTIONABLE_GRID_INFRA_POLICY_ORDER_MARGIN_BRIDGE | 298040 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 185000.0 | None | None | 58.0 | None | stage2_actionable_best_entry |
 | C31_R11L109_373220_20240304_STAGE2_IRA_POLICY_AMPC_PARENT_BALANCE_SHEET_CONTAMINANT | 373220 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 405000.0 | None | None | 7.0 | None | stage2_captured_most_upside |
+| C31_R11L226_001_036460 | 036460 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
+| C31_R11L226_002_004690 | 004690 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 91500.0 | None | None | 1.97 | None | stage2_actionable_best_entry |
+| C31_R11L226_003_017390 | 017390 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 56400.0 | None | None | 0.53 | None | stage2_captured_most_upside |
+| C31_R11L226_004_015360 | 015360 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 43850.0 | None | None | 31.81 | None | stage2_actionable_best_entry |
+| C31_R11L226_005_034590 | 034590 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 25750.0 | None | None | 1.17 | None | stage2_captured_most_upside |
+| C31_R11L226_006_053050 | 053050 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 3590.0 | None | None | 52.37 | None | stage2_actionable_best_entry |
+| C31_R11L226_007_117580 | 117580 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 9160.0 | None | None | 34.83 | None | stage2_actionable_best_entry |
+| C31_R11L226_008_267290 | 267290 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 19640.0 | None | None | 1.53 | None | stage2_captured_most_upside |
+| C31_R11L226_009_071320 | 071320 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 48650.0 | None | None | 24.15 | None | stage2_actionable_best_entry |
 | C31_R11_L172_01 | 289010 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
 | C31_R11_L172_02 | 057030 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |
 | C31_R11_L172_03 | 032850 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | None | None | None | None | no_valid_stage_transition |

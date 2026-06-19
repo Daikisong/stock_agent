@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `199`
+- stage_transition_summary_rows: `205`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -57,13 +57,16 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C23-R7L100-06 | 028300 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
 | C23-YUHAN-LAZERTINIB-FDA-202408 | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 94300.0 | 157000.0 | None | 76.9954 | None | green_too_late |
 | C23-YUHAN-LAZERTINIB-FDA-202408 | None | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 94300.0 | 157000.0 | None | 76.9954 | None | green_too_late |
+| C23_000100_2024_08_21_LAZCLUZE_FDA_APPROVAL | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 94300.0 | None | None | 76.99 | None | stage2_actionable_best_entry |
 | C23_000100_LAZCLUZE_FDA_202408 | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | 94300.0 | None | None | None | green_good_but_late |
 | C23_000100_LAZCLUZE_FDA_202408 | None | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | 94300.0 | None | None | None | green_good_but_late |
 | C23_006280_20240709_STAGE2A | 006280 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 124900.0 | None | None | 45.56 | None | stage2_actionable_best_entry |
 | C23_006280_20241021_STAGE3YELLOW | 006280 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| C23_028300_2024_05_17_RIVOCERANIB_CRL_4C | 028300 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
 | C23_028300_RIVOCERANIB_CRL_202405 | 028300 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
 | C23_028300_RIVOCERANIB_CRL_202405 | None | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
 | C23_068270_20240701_STAGE2 | 068270 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 184000.0 | None | None | 16.3 | None | stage2_captured_most_upside |
+| C23_068270_2024_03_18_ZYMFENTRA_COMMERCIAL_AVAILABILITY | 068270 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 182500.0 | None | None | 15.62 | None | stage2_actionable_best_entry |
 | C23_068270_ZYMFENTRA_COMM_202403 | 068270 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 184400.0 | None | None | 14.43 | None | stage2_actionable_best_entry |
 | C23_068270_ZYMFENTRA_COMM_202403 | None | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 184400.0 | None | None | 14.43 | None | stage2_actionable_best_entry |
 | C23_069620_20240319_STAGE2 | 069620 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 123600.0 | None | None | 22.98 | None | stage2_captured_most_upside |
@@ -72,9 +75,11 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C23_069620_NABOTA_FDA_201902 | None | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
 | C23_084990_20240202_STAGE2 | 084990 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 4410.0 | None | None | 68.71 | None | stage2_captured_most_upside |
 | C23_084990_20241115_STAGE2 | 084990 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 3020.0 | None | None | 31.13 | None | stage2_captured_most_upside |
+| C23_128940_2022_09_13_ROLVEDON_APPROVAL_COUNTEREXAMPLE | 128940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 305000.0 | None | None | 11.31 | None | stage2_actionable_best_entry |
 | C23_128940_20240115_STAGE2 | 128940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 338000.0 | None | None | 11.39 | None | stage2_captured_most_upside |
 | C23_128940_20240805_STAGE2 | 128940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 258000.0 | None | None | 24.42 | None | stage2_captured_most_upside |
 | C23_145020_20240925_STAGE2ACTIONABLE | 145020 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 270000.0 | None | None | 42.96 | None | stage2_actionable_best_entry |
+| C23_145020_2024_03_04_FDA_APPROVAL_US_LAUNCH_BRIDGE | 145020 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 202500.0 | None | None | 60.99 | None | stage2_actionable_best_entry |
 | C23_145020_LETYBO_FDA_202403 | 145020 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
 | C23_145020_LETYBO_FDA_202403 | None | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
 | C23_170900_20240229_STAGE2 | 170900 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 74900.0 | None | None | 17.49 | None | stage2_captured_most_upside |
@@ -83,6 +88,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C23_185750_20241118_STAGE2 | 185750 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 94500.0 | None | None | 21.16 | None | stage2_captured_most_upside |
 | C23_196170_20240221_STAGE2A | 196170 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 93900.0 | None | None | 287.11 | None | stage2_actionable_best_entry |
 | C23_196170_20240920_STAGE3YELLOW | 196170 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | None | None | None | None | no_valid_stage_transition |
+| C23_302440_2023_05_30_MHRA_APPROVAL_COMMERCIAL_GAP | 302440 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 81600.0 | None | None | 8.58 | None | stage2_captured_most_upside |
 | C23_326030_20240229_STAGE2 | 326030 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 96900.0 | None | None | 23.32 | None | stage2_captured_most_upside |
 | C23_326030_20240829_STAGE2ACTIONABLE | 326030 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 119500.0 | None | None | 18.41 | None | stage2_actionable_best_entry |
 | C23_HKINNON_195940_2024_01_03_DRUG_COMMERCIALIZATION_PREMIUM_REVISION_LAG | 195940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 46500.0 | None | None | 10.54 | None | stage2_captured_most_upside |

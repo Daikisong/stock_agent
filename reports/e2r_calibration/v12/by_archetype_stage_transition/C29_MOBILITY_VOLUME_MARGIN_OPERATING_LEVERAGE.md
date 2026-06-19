@@ -8,15 +8,15 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
 | 000240 | 000240 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
-| 000270 | 000270 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 68600.0 | None | None | 111.0806 | None | stage2_actionable_best_entry |
+| 000270 | 000270 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 68600.0 | None | 102000.0 | 111.0806 | 43.8313 | stage2_actionable_best_entry |
 | 002350 | 002350 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 8000.0 | None | None | 23.747 | None | stage2_actionable_best_entry |
 | 003620 | 003620 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
-| 005380 | 005380 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 201500.0 | None | None | 42.9271 | None | stage2_actionable_best_entry |
+| 005380 | 005380 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 201500.0 | None | None | 48.6351 | None | stage2_actionable_best_entry |
 | 005850 | 005850 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 32200.0 | None | None | 47.9865 | None | stage2_actionable_best_entry |
 | 010100 | 010100 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 6330.0 | None | None | 24.64 | None | stage2_captured_most_upside |
 | 010690 | 010690 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 14500.0 | None | 11690.0 | 9.59 | -202.0783 | stage2_actionable_best_entry |
 | 011210 | 011210 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 62100.0 | None | None | 7.9155 | None | stage2_captured_most_upside |
-| 012330 | 012330 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 232500.0 | None | None | 24.3024 | None | stage2_captured_most_upside |
+| 012330 | 012330 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 232500.0 | 251000.0 | None | 114.8344 | None | green_good_but_late |
 | 015750 | 015750 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
 | 018880 | 018880 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 6160.0 | None | None | 10.3932 | None | stage2_captured_most_upside |
 | 023800 | 023800 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 8340.0 | None | None | 20.74 | None | stage2_captured_most_upside |
@@ -25,7 +25,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 064350 | 064350 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 28100.0 | None | None | 141.99 | None | stage2_actionable_best_entry |
 | 064960 | 064960 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 44400.0 | None | None | 13.29 | None | stage2_captured_most_upside |
 | 073240 | 073240 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | None | 5600.0 | None | None | no_valid_stage_transition |
-| 086280 | 086280 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 108600.0 | None | 123900.0 | 39.04 | 36.0871 | stage2_actionable_best_entry |
+| 086280 | 086280 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 108600.0 | None | 123900.0 | 39.5003 | 35.6666 | stage2_actionable_best_entry |
 | 089590 | 089590 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | None | 11790.0 | None | None | no_valid_stage_transition |
 | 089860 | 089860 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 26800.0 | None | None | 20.71 | None | stage2_actionable_best_entry |
 | 161390 | 161390 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 38600.0 | None | None | 68.3912 | None | stage2_actionable_best_entry |

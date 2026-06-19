@@ -3,14 +3,15 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `208`
+- stage_transition_summary_rows: `215`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| 003230 | 003230 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 446500.0 | None | 686000.0 | 110.5321 | 48.5284 | stage2_actionable_best_entry |
+| 001680 | 001680 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 21250.0 | None | None | 45.41 | None | stage2_captured_most_upside |
+| 003230 | 003230 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 343500.0 | None | 686000.0 | 173.6611 | 57.4158 | stage2_actionable_best_entry |
 | 003960 | 003960 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | 47680.0 | None | None | no_valid_stage_transition |
-| 004370 | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 469000.0 | None | 469000.0 | 27.72 | 0.0 | stage2_actionable_best_entry |
-| 005180 | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 88300.0 | None | None | 34.09 | None | stage2_actionable_best_entry |
+| 004370 | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 420500.0 | None | 469000.0 | 42.4511 | 27.1698 | stage2_captured_most_upside |
+| 005180 | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 75600.0 | None | None | 56.6157 | None | stage2_actionable_best_entry |
 | 005390 | 005390 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 1957.0 | None | None | 45.12 | None | stage2_actionable_best_entry |
 | 005610 | 005610 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 60300.0 | None | None | 13.4 | None | stage2_captured_most_upside |
 | 006040 | 006040 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 33000.0 | None | None | 21.3 | None | stage2_actionable_best_entry |
@@ -28,7 +29,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 081660 | 081660 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 38550.0 | None | 41900.0 | 16.6 | 52.3495 | stage2_actionable_best_entry |
 | 090430 | 090430 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
 | 093050 | 093050 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 15620.0 | None | None | 6.98 | None | stage2_actionable_best_entry |
-| 097950 | 097950 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 295000.0 | None | None | 32.54 | None | stage2_captured_most_upside |
+| 097950 | 097950 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 295000.0 | None | None | 38.1397 | None | stage2_captured_most_upside |
 | 105630 | 105630 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 21450.0 | None | None | 3.73 | None | stage2_actionable_best_entry |
 | 111770 | 111770 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 44400.0 | None | None | 18.6927 | None | stage2_captured_most_upside |
 | 136480 | 136480 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
@@ -41,12 +42,18 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 264900 | 264900 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
 | 271560 | 271560 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 95400.0 | None | None | 7.86 | None | stage2_captured_most_upside |
 | 278470 | 278470 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 60100.0 | None | 60100.0 | 365.06 | 0.0 | stage2_actionable_best_entry |
-| 280360 | 280360 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 122000.0 | None | None | 70.9066 | None | stage2_actionable_best_entry |
+| 280360 | 280360 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 122000.0 | None | 138000.0 | 70.9066 | 18.4958 | stage2_actionable_best_entry |
 | 383220 | 383220 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | 74000.0 | None | None | no_valid_stage_transition |
 | C18-R13L44-161890-KOLMAR | 161890 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 64300.0 | 76200.0 | 74400.0 | 36.8637 | 42.61 | green_too_late |
 | C18-R13L44-192820-COSMAX | 192820 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 160500.0 | 184100.0 | 184900.0 | 29.6 | 51.3598 | 4b_too_early |
 | C18-R13L44-237880-CLIO | 237880 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 40100.0 | None | None | 12.2223 | None | 4c_too_late |
 | C18-R13L44-383220-FNF | 383220 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 74000.0 | None | None | 3.24 | None | 4c_too_late |
+| C18-R5L133-01 | 003230 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | 193000.0 | None | None | None | green_false_positive |
+| C18-R5L133-02 | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
+| C18-R5L133-03 | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | 404500.0 | None | None | no_valid_stage_transition |
+| C18-R5L133-04 | 097950 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
+| C18-R5L133-05 | 271560 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 92000.0 | None | None | 38.37 | None | stage2_actionable_best_entry |
+| C18-R5L133-06 | 383220 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |
 | C18_001680_20240806_jongga_kimchi_us_retail_reorder | 001680 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 23150.0 | None | None | 12.743 | None | stage2_actionable_best_entry |
 | C18_001680_DAESANG_20240612_SAUCE_EXPORT_REORDER_PRICE_PREMIUM_4B | 001680 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | 28400.0 | None | None | no_valid_stage_transition |
 | C18_001680_DAESANG_20240612_SAUCE_KFOOD_EXPORT_FALSE_GREEN | 001680 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | None | None | None | None | no_valid_stage_transition |

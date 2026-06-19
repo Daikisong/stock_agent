@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `225`
+- stage_transition_summary_rows: `232`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -48,6 +48,13 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C26-L186-CASE08-273060-WISEBIRDS-Q1-2025-AD-EFFICIENCY-RAMP | 273060 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 1027.0 | None | None | 40.31 | None | stage2_actionable_best_entry |
 | C26-L186-CASE09-363260-MOBIDAYS-Q1-2024-TIKTOK-SHOP-OPTIONALITY | 363260 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | 2310.0 | None | None | no_valid_stage_transition |
 | C26-L186-CASE10-214270-FSN-Q1-2025-BRAND-PLATFORM-OP-LEVERAGE | 214270 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 1806.0 | None | None | 118.99 | None | stage2_actionable_best_entry |
+| C26-R8-L141-001 | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
+| C26-R8-L141-002 | 035420 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | 194600.0 | None | None | no_valid_stage_transition |
+| C26-R8-L141-003 | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
+| C26-R8-L141-004 | 216050 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | None | None | None | no_valid_stage_transition |
+| C26-R8-L141-005 | 089600 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 13780.0 | None | None | 29.9 | None | stage2_actionable_best_entry |
+| C26-R8-L141-006 | 214270 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | 2030.0 | None | None | no_valid_stage_transition |
+| C26-R8-L141-007 | 237820 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 6430.0 | None | None | 22.71 | None | stage2_actionable_best_entry |
 | C26_030000_CHEIL_20210312_AD_SPEND_REOPENING_OPERATING_LEVERAGE_STAGE2 | 030000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 21250.0 | None | None | 24.71 | None | stage2_actionable_best_entry |
 | C26_030000_CHEIL_20220715_AD_AGENCY_OPERATING_LEVERAGE_STAGE2 | 030000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 21750.0 | None | None | 14.71 | None | stage2_actionable_best_entry |
 | C26_214270_FSN_20220103_DIGITAL_ADTECH_PRICE_PREMIUM_4B | 214270 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | None | 13800.0 | None | None | no_valid_stage_transition |

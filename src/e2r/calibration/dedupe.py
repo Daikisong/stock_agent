@@ -13,6 +13,15 @@ def _rounded_price(value: Any) -> str:
         return str(value or "")
 
 
+def _hashable_key_value(value: Any) -> Any:
+    if isinstance(value, list):
+        items = tuple(_hashable_key_value(item) for item in value)
+        return tuple(sorted(items, key=repr))
+    if isinstance(value, dict):
+        return tuple((key, _hashable_key_value(item)) for key, item in sorted(value.items()))
+    return value
+
+
 def _dedupe_key(row: dict[str, Any]) -> tuple[Any, ...]:
     same_entry_group_id = row.get("same_entry_group_id")
     if same_entry_group_id:
@@ -89,6 +98,7 @@ def dedupe_trigger_rows(rows: list[dict[str, Any]]) -> tuple[list[dict[str, Any]
 
 
 def _v12_dedupe_key(row: dict[str, Any]) -> tuple[Any, ...]:
+    evidence_family = row.get("evidence_family") or row.get("trigger_family") or row.get("fine_archetype_id")
     return (
         "v12_strict",
         row.get("symbol"),
@@ -97,7 +107,7 @@ def _v12_dedupe_key(row: dict[str, Any]) -> tuple[Any, ...]:
         row.get("trigger_date"),
         row.get("entry_date"),
         _rounded_price(row.get("entry_price")),
-        row.get("evidence_family") or row.get("trigger_family") or row.get("fine_archetype_id"),
+        _hashable_key_value(evidence_family),
     )
 
 

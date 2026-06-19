@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `237`
+- stage_transition_summary_rows: `244`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -45,6 +45,13 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C03-R1L105-02 | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
 | C03-R1L105-03 | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 34500.0 | None | None | 97.1 | None | stage2_actionable_best_entry |
 | C03-R1L105-04 | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | 18450.0 | None | None | no_valid_stage_transition |
+| C03-R1L147-001 | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
+| C03-R1L147-002 | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
+| C03-R1L147-003 | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
+| C03-R1L147-004 | 047810 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 53100.0 | None | None | 9.23 | None | stage2_actionable_best_entry |
+| C03-R1L147-005 | 003570 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 10370.0 | None | None | 42.14 | None | stage2_actionable_best_entry |
+| C03-R1L147-006 | 065450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
+| C03-R1L147-007 | 010820 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
 | C03_000880_HANWHA_20220729_DEFENSE_GROUP_THEME_4B | 000880 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | 27550.0 | None | None | no_valid_stage_transition |
 | C03_003570_20241017_COMPONENT_SPIKE | 003570 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | None | None | None | None | no_valid_stage_transition |
 | C03_003570_SNTDYNAMICS_20220727_DEFENSE_DRIVETRAIN_COMPONENT_STAGE2 | 003570 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 8080.0 | None | None | 58.42 | None | stage2_actionable_best_entry |

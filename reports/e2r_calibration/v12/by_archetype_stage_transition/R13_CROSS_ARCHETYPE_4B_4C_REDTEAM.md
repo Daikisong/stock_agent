@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `818`
+- stage_transition_summary_rows: `867`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -20,6 +20,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 001450 | 001450 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 30150.0 | None | None | 22.06 | None | stage2_actionable_best_entry |
 | 001570 | 001570 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 152200.0 | None | None | no_valid_stage_transition |
 | 002380 | 002380 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 244000.0 | None | None | 41.39 | None | stage2_actionable_best_entry |
+| 002410 | 002410 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
 | 002460 | 002460 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 11170.0 | None | None | 0.27 | None | stage2_captured_most_upside |
 | 002990 | 002990 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
 | 003070 | 003070 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 15740.0 | None | None | 2.35 | None | stage2_captured_most_upside |
@@ -32,7 +33,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 004490 | 004490 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 61900.0 | None | None | 97.9 | None | stage2_actionable_best_entry |
 | 004800 | 004800 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 65100.0 | None | None | 3.53 | None | stage2_captured_most_upside |
 | 004990 | 004990 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 31250.0 | None | None | 8.0 | None | stage2_captured_most_upside |
-| 005380 | 005380 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 259000.0 | None | None | 3.09 | None | stage2_captured_most_upside |
+| 005380 | 005380 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 251500.0 | None | None | 6.1643 | None | stage2_actionable_best_entry |
 | 005420 | 005420 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 64800.0 | None | None | no_valid_stage_transition |
 | 005610 | 005610 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 65500.0 | None | None | 1.83 | None | stage2_captured_most_upside |
 | 005830 | 005830 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 95000.0 | None | None | 30.53 | None | stage2_actionable_best_entry |
@@ -49,23 +50,28 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 007310 | 007310 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 497500.0 | None | None | 1.11 | None | stage2_captured_most_upside |
 | 008730 | 008730 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
 | 008770 | 008770 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 62900.0 | None | None | 0.16 | None | stage2_captured_most_upside |
+| 008930 | 008930 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 44350.0 | None | None | no_valid_stage_transition |
 | 009470 | 009470 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 39700.0 | None | None | no_valid_stage_transition |
 | 009830 | 009830 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 38550.0 | None | None | 1.95 | None | stage2_captured_most_upside |
 | 009900 | 009900 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 17440.0 | None | None | 1.61 | None | stage2_captured_most_upside |
 | 010060 | 010060 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 113700.0 | None | None | 2.37 | None | stage2_captured_most_upside |
 | 010120 | 010120 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 73500.0 | None | 260000.0 | 312.9237 | 81.0873 | stage2_actionable_best_entry |
+| 010130 | 010130 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 666000.0 | None | 877000.0 | 261.4135 | 12.1194 | stage2_actionable_best_entry |
 | 010690 | 010690 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 11690.0 | None | None | no_valid_stage_transition |
 | 010780 | 010780 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 24850.0 | None | None | 25.55 | None | stage2_actionable_best_entry |
 | 010820 | 010820 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 3765.0 | None | None | 5.98 | None | stage2_captured_most_upside |
 | 011070 | 011070 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 250500.0 | None | None | no_valid_stage_transition |
 | 011170 | 011170 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 298000.0 | None | None | 13.42 | None | stage2_actionable_best_entry |
-| 011210 | 011210 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| 011200 | 011200 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 19080.0 | None | None | no_valid_stage_transition |
+| 011210 | 011210 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 39950.0 | None | None | 45.18 | None | stage2_actionable_best_entry |
 | 011780 | 011780 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 97200.0 | 190500.0 | None | 201.9582 | None | green_too_late |
 | 011790 | 011790 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 195300.0 | None | None | 2.41 | None | stage2_captured_most_upside |
+| 012330 | 012330 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 225500.0 | None | None | no_valid_stage_transition |
 | 012450 | 012450 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 146300.0 | None | None | 190.5 | None | stage2_actionable_best_entry |
 | 012630 | 012630 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 6640.0 | None | None | 72.59 | None | stage2_actionable_best_entry |
-| 013360 | 013360 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 1548.0 | None | None | 6.78 | None | stage2_captured_most_upside |
+| 013360 | 013360 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 1548.0 | None | None | 220.7339 | None | stage2_captured_most_upside |
 | 013810 | 013810 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 5090.0 | None | None | 16.9 | None | stage2_captured_most_upside |
+| 014790 | 014790 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 2280.0 | None | None | no_valid_stage_transition |
 | 017040 | 017040 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 2720.0 | None | None | 22.06 | None | stage2_captured_most_upside |
 | 018250 | 018250 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 25200.0 | None | None | 5.75 | None | stage2_captured_most_upside |
 | 018290 | 018290 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 26600.0 | 38000.0 | None | 65.4143 | None | green_too_late |
@@ -87,8 +93,10 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 032820 | 032820 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 2700.0 | None | None | 22.22 | None | stage2_captured_most_upside |
 | 033100 | 033100 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 31200.0 | None | 51500.0 | 277.8812 | 23.4144 | stage2_actionable_best_entry |
 | 034020 | 034020 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 21250.0 | None | None | no_valid_stage_transition |
+| 034300 | 034300 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 10890.0 | None | None | no_valid_stage_transition |
 | 035420 | 035420 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 174600.0 | None | None | 34.88 | None | stage2_actionable_best_entry |
 | 035720 | 035720 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| 035890 | 035890 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 1342.0 | None | None | 33.46 | None | stage2_actionable_best_entry |
 | 035900 | 035900 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 101400.0 | None | 131200.0 | 44.5759 | 65.9292 | stage2_captured_most_upside |
 | 036460 | 036460 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 39400.0 | None | None | 63.71 | None | stage2_actionable_best_entry |
 | 036810 | 036810 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 28250.0 | None | None | no_valid_stage_transition |
@@ -159,7 +167,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 194480 | 194480 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 75700.0 | None | None | 0.79 | None | stage2_actionable_best_entry |
 | 196170 | 196170 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 105000.0 | None | None | 333.8097 | None | stage2_actionable_best_entry |
 | 200880 | 200880 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 18000.0 | None | None | 38.89 | None | stage2_actionable_best_entry |
-| 204320 | 204320 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 38350.0 | None | None | no_valid_stage_transition |
+| 204320 | 204320 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 42300.0 | None | 38350.0 | 18.205 | -51.2938 | stage2_captured_most_upside |
 | 206650 | 206650 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 12350.0 | None | None | 17.41 | None | stage2_captured_most_upside |
 | 211050 | 211050 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 6400.0 | None | None | 5.47 | None | stage2_captured_most_upside |
 | 214270 | 214270 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
@@ -215,6 +223,16 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 452400 | 452400 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
 | 457550 | 457550 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
 | 950220 | 950220 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 1800.0 | None | None | 17.78 | None | stage2_captured_most_upside |
+| R13-4B4C-L216-01-028050_20240131-CASE | 028050 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | 22300.0 | None | None | None | green_false_positive |
+| R13-4B4C-L216-02-000720_20240719-CASE | 000720 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 32600.0 | None | None | no_valid_stage_transition |
+| R13-4B4C-L216-03-000720_20250122-CASE | 000720 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| R13-4B4C-L216-04-373220_20241029-CASE | 373220 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | 409000.0 | None | None | None | green_false_positive |
+| R13-4B4C-L216-05-006400_20241031-CASE | 006400 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | 4c_too_late |
+| R13-4B4C-L216-06-005010_20230417-CASE | 005010 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | 7060.0 | None | None | None | green_false_positive |
+| R13-4B4C-L216-07-104700_20240517-CASE | 104700 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| R13-4B4C-L216-08-052690_20220311-CASE | 052690 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 95200.0 | None | None | 4b_good_peak_capture |
+| R13-4B4C-L216-09-336260_20230525-CASE | 336260 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| R13-4B4C-L216-10-084010_20210113-CASE | 084010 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 11500.0 | None | None | 123.48 | None | stage2_actionable_best_entry |
 | R13-L230-L7-4B4C-CASE01-000100 | 000100 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
 | R13-L230-L7-4B4C-CASE02-039200 | 039200 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
 | R13-L230-L7-4B4C-CASE03-145020 | 145020 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
@@ -634,6 +652,20 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R13_206_20_071970 | 071970 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 27850.0 | None | None | 245.42 | None | stage2_actionable_best_entry |
 | R13_206_21_170790 | 170790 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 8620.0 | None | None | 4.87 | None | stage2_captured_most_upside |
 | R13_206_22_079940 | 079940 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 13480.0 | None | None | 112.91 | None | stage2_actionable_best_entry |
+| R13_211_01_006360_20250430_STAGE4B_HOLDOUT | 006360 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 18250.0 | None | None | no_valid_stage_transition |
+| R13_211_02_010780_20250526_STAGE4B_HOLDOUT | 010780 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 19200.0 | None | None | no_valid_stage_transition |
+| R13_211_03_067310_20250515_STAGE2ACTIONABLE_HOLDOUT | 067310 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 11430.0 | None | None | 245.58 | None | stage2_actionable_best_entry |
+| R13_211_04_095340_20250123_STAGE2_HOLDOUT | 095340 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 73900.0 | None | None | 15.02 | None | stage2_captured_most_upside |
+| R13_211_05_074600_20240611_STAGE4B_HOLDOUT | 074600 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 37600.0 | None | None | no_valid_stage_transition |
+| R13_211_06_373220_20241028_STAGE4B_HOLDOUT | 373220 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 416500.0 | None | None | no_valid_stage_transition |
+| R13_211_07_361610_20240430_STAGE4C_HOLDOUT | 361610 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| R13_211_08_066970_20241104_STAGE2ACTIONABLE_HOLDOUT | 066970 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 112000.0 | None | None | 12.77 | None | stage2_actionable_best_entry |
+| R13_211_09_229640_20240110_STAGE2ACTIONABLE_HOLDOUT | 229640 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 20900.0 | None | None | 116.75 | None | stage2_actionable_best_entry |
+| R13_211_10_003670_20241206_STAGE2ACTIONABLE_HOLDOUT | 003670 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 165200.0 | None | None | 5.45 | None | stage2_actionable_best_entry |
+| R13_211_11_000100_20231024_STAGE2ACTIONABLE_HOLDOUT | 000100 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 58000.0 | None | None | 73.1 | None | stage2_actionable_best_entry |
+| R13_211_12_217730_20240705_STAGE4C_HOLDOUT | 217730 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| R13_211_13_338220_20240313_STAGE2_HOLDOUT | 338220 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 34900.0 | None | None | 13.75 | None | stage2_captured_most_upside |
+| R13_211_14_099190_20231106_STAGE4B_HOLDOUT | 099190 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 23500.0 | None | None | no_valid_stage_transition |
 | R13_4B4C_010_001_C02_POWER_GRID_DATACENTER_CAPEX_006340_2024-04-09 | 006340 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 3200.0 | None | None | no_valid_stage_transition |
 | R13_4B4C_010_002_C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG_012450_2024-11-12 | 012450 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 421000.0 | None | None | no_valid_stage_transition |
 | R13_4B4C_010_003_C05_EPC_MEGA_CONTRACT_MARGIN_GAP_028050_2024-06-26 | 028050 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 25200.0 | None | None | no_valid_stage_transition |
@@ -650,6 +682,23 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | R13_4B4C_010_015_C28_SOFTWARE_SECURITY_CONTRACT_RETENTION_030520_2024-01-19 | 030520 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 30450.0 | None | None | no_valid_stage_transition |
 | R13_4B4C_010_016_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_375500_2024-06-13 | 375500 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 39500.0 | None | None | no_valid_stage_transition |
 | R13_4B4C_010_018_C11_BATTERY_ORDERBOOK_RERATING_278280_2024-02-21 | 278280 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 95600.0 | None | None | no_valid_stage_transition |
+| R13_4B4C_196_01_095610_20240425 | 095610 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 26100.0 | None | None | no_valid_stage_transition |
+| R13_4B4C_196_02_166090_20240626 | 166090 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 63900.0 | None | None | no_valid_stage_transition |
+| R13_4B4C_196_03_373220_20240726 | 373220 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 325000.0 | None | None | no_valid_stage_transition |
+| R13_4B4C_196_04_006400_20241031 | 006400 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| R13_4B4C_196_05_006400_20250428 | 006400 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| R13_4B4C_196_06_010950_20230425 | 010950 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| R13_4B4C_196_07_096770_20230207 | 096770 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| R13_4B4C_196_08_375500_20250207 | 375500 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| R13_4B4C_196_09_010120_20240725 | 010120 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 215500.0 | None | None | no_valid_stage_transition |
+| R13_4B4C_C02_006340_DAEWON_PRICE_ONLY_GRID_THEME | 006340 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 4350.0 | None | None | no_valid_stage_transition |
+| R13_4B4C_C07_042700_HANMI_TCBONDER_ORDER_LATE_BLOWOFF | 042700 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 156800.0 | None | None | no_valid_stage_transition |
+| R13_4B4C_C12_066970_LNF_INVENTORY_VALUATION_LOSS_TRUE_4C | 066970 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| R13_4B4C_C16_005490_POSCO_RESOURCE_VALUE_DAY_LOCAL_4B | 005490 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 417500.0 | None | None | no_valid_stage_transition |
+| R13_4B4C_C17_011170_LOTTECHEM_LOSS_SPREAD_BREAK_TRUE_4C | 011170 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| R13_4B4C_C27_253450_STUDIO_DRAGON_HIT_WITHOUT_MONETIZATION | 253450 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| R13_4B4C_C28_263860_GENIANS_REVENUE_MILESTONE_NO_RETENTION | 263860 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
+| R13_4B4C_C30_294870_HDC_CONSTRUCTION_TRUST_BREAK_TRUE_4C | 294870 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
 | R13_4B4C_L101_C001_034020 | 034020 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
 | R13_4B4C_L101_C002_257720 | 257720 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |
 | R13_4B4C_L101_C003_011790 | 011790 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | None | None | None | no_valid_stage_transition |

@@ -3,13 +3,14 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `262`
+- stage_transition_summary_rows: `272`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
 | 033160 | 033160 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 11670.0 | None | None | no_valid_stage_transition |
-| 036810 | 036810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 22350.0 | None | None | 87.25 | None | stage2_actionable_best_entry |
-| 036930 | 036930 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 35300.0 | None | None | 17.42 | None | stage2_actionable_best_entry |
+| 036810 | 036810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 21900.0 | None | 39600.0 | 91.1 | 88.7178 | stage2_actionable_best_entry |
+| 036930 | 036930 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 31200.0 | None | None | 32.8502 | None | stage2_actionable_best_entry |
+| 039030 | 039030 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 240500.0 | None | None | no_valid_stage_transition |
 | 064290 | 064290 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
 | 084370 | 084370 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 44350.0 | None | None | no_valid_stage_transition |
 | 086390 | 086390 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 10480.0 | None | None | no_valid_stage_transition |
@@ -23,6 +24,9 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 161580 | 161580 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
 | 187870 | 187870 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 15120.0 | None | None | 16.2037 | None | stage2_actionable_best_entry |
 | 232680 | 232680 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
+| 240810 | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 25950.0 | None | 36950.0 | 169.36 | 25.0291 | stage2_actionable_best_entry |
+| 322310 | 322310 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 34650.0 | None | None | no_valid_stage_transition |
+| 403870 | 403870 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 59300.0 | None | None | no_valid_stage_transition |
 | C09-215-001 | 036810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
 | C09-215-002 | 036810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 28250.0 | None | None | 4b_good_peak_capture |
 | C09-215-003 | 089790 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 9830.0 | None | None | 15.56 | None | stage2_captured_most_upside |
@@ -127,11 +131,14 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C09_AURAS_322310_2024_03_06_ADVANCED_OVERLAY_METROLOGY_PREMIUM_FAIL | 322310 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 36950.0 | None | None | 6.9 | None | stage2_captured_most_upside |
 | C09_CYMECHS_160980_2024_03_06_WAFER_TRANSFER_AUTOMATION_PREMIUM_FAIL | 160980 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 19810.0 | None | None | 10.55 | None | stage2_captured_most_upside |
 | C09_DEVICEENG_187870_2024_03_06_ADVANCED_CLEANING_EQUIPMENT_PREMIUM_FAIL | 187870 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 14950.0 | None | None | 17.53 | None | stage2_captured_most_upside |
+| C09_EOTECHNICS_2024_HBM_LASER_EXPECTATION_BLOWOFF | 039030 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 205500.0 | None | None | no_valid_stage_transition |
 | C09_FNSTECH_083500_2024_03_06_ADVANCED_CLEAN_PROCESS_EQUIPMENT_EVENT_RERATING_4B | 083500 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 13010.0 | None | None | 32.67 | None | stage2_actionable_best_entry |
+| C09_HPSP_2024_HIGH_PRESSURE_ANNEALING_VALUATION_BLOWOFF | 403870 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 59300.0 | None | None | no_valid_stage_transition |
 | C09_INTEKPLUS_064290_2024_03_06_ADVANCED_INSPECTION_PREMIUM_FAIL | 064290 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 40450.0 | None | None | 1.11 | None | stage2_captured_most_upside |
 | C09_ISC_095340_2024_03_08_STAGE2_FALSE_POSITIVE_BLOWOFF | 095340 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 95000.0 | None | None | 13.68 | None | stage2_captured_most_upside |
 | C09_ISC_095340_2024_03_08_STAGE2_FALSE_POSITIVE_BLOWOFF | None | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 95000.0 | None | None | 13.68 | None | stage2_captured_most_upside |
 | C09_JT_089790_2024_03_06_ADVANCED_HANDLER_TEST_EQUIPMENT_PREMIUM_FAIL | 089790 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 10180.0 | None | None | 11.59 | None | stage2_captured_most_upside |
+| C09_JUSUNG_2024_ALD_SHIPMENT_ORDER_BRIDGE | 036930 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 27600.0 | None | None | 57.2464 | None | stage2_actionable_best_entry |
 | C09_KCTECH_281820_2024_02_27_ADV_EQUIP_RERATING_4B | 281820 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 39200.0 | None | None | 50.51 | None | stage2_actionable_best_entry |
 | C09_KCTECH_281820_2024_03_06_CMP_PROCESS_EQUIPMENT_PREMIUM_FAIL | 281820 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 47600.0 | None | None | 23.95 | None | stage2_captured_most_upside |
 | C09_KOSES_089890_2024_01_24_ADVANCED_PACKAGING_LASER_EQUIPMENT_BLOWOFF_4B | 089890 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 15660.0 | None | None | 40.17 | None | stage2_actionable_best_entry |
@@ -166,6 +173,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C09_L150_420770_FCBGA_GLASS_SUBSTRATE_BLOWOFF | 420770 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 76400.0 | None | None | no_valid_stage_transition |
 | C09_LOTVAC_083310_2024_02_22_VACUUM_EQUIP_PRICE_SPIKE | 083310 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 23350.0 | None | None | 4.71 | None | stage2_captured_most_upside |
 | C09_NEXTEEN_348210_2024_03_06_ADVANCED_INSPECTION_EQUIPMENT_PREMIUM_FAIL | 348210 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 74400.0 | None | None | 4.17 | None | stage2_captured_most_upside |
+| C09_PARKSYSTEMS_2024_NANOSCALE_METROLOGY_DIRECT_IR_BRIDGE | 140860 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
 | C09_PHILOPTICS_161580_2024_03_06_GLASS_SUBSTRATE_ADVANCED_PACKAGING_BLOWOFF | 161580 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 13040.0 | None | None | 189.49 | None | stage2_actionable_best_entry |
 | C09_PSKHOLDINGS_031980_2024_03_06_ADVANCED_PACKAGING_EQUIPMENT_RERATING_4B | 031980 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 42450.0 | None | None | 64.19 | None | stage2_actionable_best_entry |
 | C09_R2L111_01_042700_20240201_Stage3Yellow | 042700 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
@@ -220,6 +228,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C09_R2_L116_396470_WOT_TAYLOR_THC_DIRECT_VENDOR_PRICE_BLOWOFF | 396470 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 9870.0 | None | None | 85.31 | None | stage2_actionable_best_entry |
 | C09_R2_L116_403870_HPSP_HPA_MONOPOLY_VALUATION_BLOWOFF | 403870 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 46850.0 | None | None | 36.39 | None | stage2_actionable_best_entry |
 | C09_SNSTECH_101490_2024_03_06_MASK_BLANK_PELLICLE_ADVANCED_EQUIPMENT_PREMIUM_FAIL | 101490 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 47050.0 | None | None | 15.83 | None | stage2_captured_most_upside |
+| C09_SNSTECH_2024_EUV_PELLICLE_FUTURE_TECHNICAL_RISK_4C | 101490 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
 | C09_TFE_425420_2024_07_04_LOCAL_4B_PRICE_ONLY_BLOWOFF | 425420 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 31200.0 | None | None | no_valid_stage_transition |
 | C09_TFE_425420_2024_07_04_LOCAL_4B_PRICE_ONLY_BLOWOFF | None | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | 31200.0 | None | None | no_valid_stage_transition |
 | C09_TSE_131290_2024_02_13_STAGE2A_PROBE_CARD_BRIDGE | 131290 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 57000.0 | None | None | 54.04 | None | stage2_actionable_best_entry |
@@ -228,6 +237,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C09_UNITEST_086390_2024_03_06_ADVANCED_MEMORY_TEST_EQUIPMENT_RERATING_4B | 086390 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 14050.0 | None | None | 38.79 | None | stage2_actionable_best_entry |
 | C09_VM_089970_2024_06_11_ADV_EQUIP_BLOWOFF_FALSE_POSITIVE | 089970 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 17730.0 | None | None | 18.16 | None | stage2_captured_most_upside |
 | C09_VM_APTC_089970_2024_03_06_ADVANCED_ETCH_EQUIPMENT_RERATING_4B | 089970 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 14100.0 | None | None | 48.58 | None | stage2_actionable_best_entry |
+| C09_WONIKIPS_2024_MEMORY_AI_EQUIPMENT_BETA_NO_ORDER | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | None | None | None | None | None | no_valid_stage_transition |
 | CASE_C09_L131_01_071280_Stage2_2024-01-02 | 071280 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 6380.0 | None | None | 190.44 | None | stage2_captured_most_upside |
 | CASE_C09_L131_02_319660_Stage2Actionable_2024-02-01 | 319660 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 19760.0 | None | None | 97.87 | None | stage2_actionable_best_entry |
 | CASE_C09_L131_03_265520_Stage2_2024-01-31 | 265520 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 21350.0 | None | None | 70.02 | None | stage2_captured_most_upside |

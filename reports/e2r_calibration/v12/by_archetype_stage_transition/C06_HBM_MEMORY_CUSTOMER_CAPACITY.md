@@ -3,18 +3,18 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `205`
+- stage_transition_summary_rows: `211`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| 000660 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
-| 005930 | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
-| 007660 | 007660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 31350.0 | None | None | 58.53 | None | stage2_actionable_best_entry |
-| 009150 | 009150 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
+| 000660 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 173600.0 | None | None | 189.1685 | None | stage2_actionable_best_entry |
+| 005930 | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 52400.0 | None | 75900.0 | 94.66 | 47.3773 | stage2_captured_most_upside |
+| 007660 | 007660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 31350.0 | None | None | 59.4868 | None | stage2_actionable_best_entry |
+| 009150 | 009150 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 144200.0 | None | None | 22.4009 | None | stage2_captured_most_upside |
 | 086390 | 086390 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | 10480.0 | None | None | no_valid_stage_transition |
 | 160980 | 160980 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | 20400.0 | None | None | no_valid_stage_transition |
 | 187870 | 187870 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
-| 222800 | 222800 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 30100.0 | None | None | 14.45 | None | stage2_captured_most_upside |
+| 222800 | 222800 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 30100.0 | None | 38800.0 | 31.2239 | 92.5689 | stage2_captured_most_upside |
 | 232680 | 232680 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 6460.0 | None | None | 82.0433 | None | stage2_actionable_best_entry |
 | 272110 | 272110 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 17050.0 | None | None | 55.132 | None | stage2_actionable_best_entry |
 | 317330 | 317330 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | 29950.0 | None | None | no_valid_stage_transition |
@@ -31,6 +31,12 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C06-005930-20240807-PARTIAL-PASS-NO-DEAL | None | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 74700.0 | None | None | 7.36 | None | stage2_captured_most_upside |
 | C06-005930-20241008-AI-LAG | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | 4c_too_late |
 | C06-005930-20241008-AI-LAG | None | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | 4c_too_late |
+| C06-127-001 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 116500.0 | None | None | 66.52 | None | stage2_actionable_best_entry |
+| C06-127-002 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | 160200.0 | None | None | None | green_good_but_late |
+| C06-127-003 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | 183800.0 | None | None | None | green_good_but_late |
+| C06-127-004 | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | 75900.0 | None | None | 4b_good_peak_capture |
+| C06-127-005 | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | None | None | None | None | no_valid_stage_transition |
+| C06-127-006 | 009150 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 120200.0 | None | None | 24.63 | None | stage2_actionable_best_entry |
 | C06-402340-20241122-HOLDCO-PROXY | 402340 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 87500.0 | None | None | 131.43 | None | stage2_actionable_best_entry |
 | C06-402340-20241122-HOLDCO-PROXY | None | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 87500.0 | None | None | 131.43 | None | stage2_actionable_best_entry |
 | C06-L218-01 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | 215500.0 | None | None | 199.8 | None | stage2_actionable_best_entry |

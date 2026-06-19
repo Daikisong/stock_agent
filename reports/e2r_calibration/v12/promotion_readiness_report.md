@@ -8,8 +8,8 @@ source proxy / evidence URL 한계가 있으면 positive patch는 막고 guardra
 - production_default_scoring_changed_after_apply: `true`
 - default_promotion_ready: `False`
 - next_patch_ready: `True`
-- apply_next_patch_count: `108`
-- stage_transition_summary_rows: `9516`
+- apply_next_patch_count: `112`
+- stage_transition_summary_rows: `10660`
 
 ## Promotion Decisions
 
@@ -28,7 +28,7 @@ source proxy / evidence URL 한계가 있으면 positive patch는 막고 guardra
 | local_4b_watch_guard | L3_BATTERY_EV_GREEN_MOBILITY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | earlier_thesis_break_watch | L3_BATTERY_EV_GREEN_MOBILITY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | L4_MATERIALS_SPREAD_RESOURCE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| full_4b_overlay_candidate | L4_MATERIALS_SPREAD_RESOURCE | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
+| local_4b_watch_guard | L4_MATERIALS_SPREAD_RESOURCE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | earlier_thesis_break_watch | L4_MATERIALS_SPREAD_RESOURCE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | L5_CONSUMER_BRAND_DISTRIBUTION | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | full_4b_overlay_candidate | L5_CONSUMER_BRAND_DISTRIBUTION | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
@@ -71,6 +71,7 @@ source proxy / evidence URL 한계가 있으면 positive patch는 막고 guardra
 | earlier_thesis_break_watch | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | local_4b_watch_guard | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| earlier_thesis_break_watch | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C11_BATTERY_ORDERBOOK_RERATING | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | local_4b_watch_guard | C11_BATTERY_ORDERBOOK_RERATING | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | earlier_thesis_break_watch | C11_BATTERY_ORDERBOOK_RERATING | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
@@ -84,7 +85,8 @@ source proxy / evidence URL 한계가 있으면 positive patch는 막고 guardra
 | local_4b_watch_guard | C14_EV_DEMAND_SLOWDOWN_4B_4C | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | earlier_thesis_break_watch | C14_EV_DEMAND_SLOWDOWN_4B_4C | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C15_MATERIAL_SPREAD_SUPERCYCLE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
-| full_4b_overlay_candidate | C15_MATERIAL_SPREAD_SUPERCYCLE | blocked_by_data_quality | Type1_safety_guardrail | False | full_4b_overlay_needs_verified_non_proxy_evidence | verify_evidence_urls_or_replace_source_proxy_rows |
+| local_4b_watch_guard | C15_MATERIAL_SPREAD_SUPERCYCLE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
+| earlier_thesis_break_watch | C15_MATERIAL_SPREAD_SUPERCYCLE | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | local_4b_watch_guard | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 | stage2_required_bridge | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
@@ -148,6 +150,6 @@ source proxy / evidence URL 한계가 있으면 positive patch는 막고 guardra
 | earlier_thesis_break_watch | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 
 ## Blockers
-- evidence_url_pending: 3888 / v12 rows can support shadow analysis but need exact public evidence URLs before default promotion. / needed: Attach verified DART/IR/report/news URLs or mark rows as evidence-verified.
-- source_proxy_only: 3611 / Some evidence is source-name-level historical event proxy, not verified production evidence. / needed: Replace proxy rows with verified as-of evidence records.
-- rejected_rows: 7473 / Some rows failed validation or were not usable for shadow calibration. / needed: Fix missing sector/archetype IDs, price fields, or evidence flags.
+- evidence_url_pending: 3906 / v12 rows can support shadow analysis but need exact public evidence URLs before default promotion. / needed: Attach verified DART/IR/report/news URLs or mark rows as evidence-verified.
+- source_proxy_only: 3723 / Some evidence is source-name-level historical event proxy, not verified production evidence. / needed: Replace proxy rows with verified as-of evidence records.
+- rejected_rows: 8186 / Some rows failed validation or were not usable for shadow calibration. / needed: Fix missing sector/archetype IDs, price fields, or evidence flags.

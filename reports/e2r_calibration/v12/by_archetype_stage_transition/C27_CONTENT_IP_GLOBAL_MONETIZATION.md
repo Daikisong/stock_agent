@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `197`
+- stage_transition_summary_rows: `212`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -24,6 +24,14 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 293490 | 293490 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
 | 352820 | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
 | 419530 | 419530 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 15610.0 | None | 15610.0 | 91.22 | 0.0 | stage2_actionable_best_entry |
+| C27-01 | 035900 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | 95500.0 | None | None | None | green_good_but_late |
+| C27-02 | 041510 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | 132600.0 | None | None | no_valid_stage_transition |
+| C27-03 | 263720 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 29850.0 | None | None | 29.31 | None | stage2_actionable_best_entry |
+| C27-04 | 376300 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| C27-05 | 253450 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| C27-06 | 035760 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
+| C27-07 | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | 201500.0 | None | None | no_valid_stage_transition |
+| C27-08 | 122870 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
 | C27-R8-L100-035900-20241114 | 035900 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 56800.0 | None | None | 53.87 | None | stage2_actionable_best_entry |
 | C27-R8-L100-036420-20240516 | 036420 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
 | C27-R8-L100-041510-20241108 | 041510 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
@@ -138,6 +146,13 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C27_R8_L156_251270_NETMARBLE_SOLO_LEVELING_LAUNCH | 251270 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 64800.0 | None | None | 11.73 | None | stage2_captured_most_upside |
 | C27_R8_L156_253450_STUDIO_DRAGON_QOT | 253450 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 41400.0 | None | None | 26.57 | None | stage2_captured_most_upside |
 | C27_R8_L156_259960_KRAFTON_PUBG_BGMI_RECORD_Q1 | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 258500.0 | None | None | 50.87 | None | stage2_actionable_best_entry |
+| C27_R8_L214_035760_2024-05-10_Stage2Actionable | 035760 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 88600.0 | None | None | 7.11 | None | stage2_actionable_best_entry |
+| C27_R8_L214_041510_2024-08-08_Stage2 | 041510 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 70400.0 | None | None | 90.77 | None | stage2_captured_most_upside |
+| C27_R8_L214_194480_2024-05-09_Stage2Actionable | 194480 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 50800.0 | None | None | 50.2 | None | stage2_actionable_best_entry |
+| C27_R8_L214_253450_2024-04-16_Stage4B | 253450 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | 40050.0 | None | None | no_valid_stage_transition |
+| C27_R8_L214_259960_2024-08-13_Stage2Actionable | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 331000.0 | None | None | 18.73 | None | stage2_actionable_best_entry |
+| C27_R8_L214_263750_2024-11-12_Stage4B | 263750 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | 37050.0 | None | None | no_valid_stage_transition |
+| C27_R8_L214_352820_2024-05-03_Stage4B | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | 203500.0 | None | None | no_valid_stage_transition |
 | C27_SM_20230210_CONTROL_PREMIUM_EVENT | 041510 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |
 | C27_STUDIODRAGON_253450_2024_03_06_CONTENT_IP_GLOBAL_PLATFORM_FAIL | 253450 | C27_CONTENT_IP_GLOBAL_MONETIZATION | 42900.0 | None | None | 10.37 | None | stage2_captured_most_upside |
 | C27_STUDIO_DRAGON_20210120_COST_HEAVY_OTT | 253450 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | None | None | None | None | no_valid_stage_transition |

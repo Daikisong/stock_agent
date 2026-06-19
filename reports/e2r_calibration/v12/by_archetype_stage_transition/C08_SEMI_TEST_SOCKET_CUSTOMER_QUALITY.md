@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `225`
+- stage_transition_summary_rows: `237`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -16,6 +16,12 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 252990 | 252990 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 6970.0 | None | None | no_valid_stage_transition |
 | 253590 | 253590 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
 | 425420 | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 37100.0 | None | None | no_valid_stage_transition |
+| C08-208-001 | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 73200.0 | None | None | 47.54 | None | stage2_actionable_best_entry |
+| C08-208-002 | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 241500.0 | None | None | 27.95 | None | stage2_actionable_best_entry |
+| C08-208-003 | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 48550.0 | None | None | 15.35 | None | stage2_captured_most_upside |
+| C08-208-004 | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 6250.0 | None | None | 94.88 | None | stage2_actionable_best_entry |
+| C08-208-005 | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 16210.0 | None | None | 204.13 | None | stage2_captured_most_upside |
+| C08-208-006 | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 9700.0 | None | None | 4b_good_peak_capture |
 | C08-L158-001 | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 235500.0 | None | None | 31.21 | None | stage2_actionable_best_entry |
 | C08-L158-002 | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 255500.0 | None | None | no_valid_stage_transition |
 | C08-L158-003 | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 268000.0 | None | None | no_valid_stage_transition |
@@ -37,6 +43,8 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C08-R2L130-232140-YC-SAMSUNG-MEMORY-TESTER-CUSTOMER-QUALITY | 232140 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 12060.0 | None | None | 90.3 | None | stage2_actionable_best_entry |
 | C08-R2L130-322310-OROS-HBM-PAD-OVERLAY-PROXY-GUARD | 322310 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 29100.0 | None | None | 5.5 | None | stage2_captured_most_upside |
 | C08_003160_2024_03_06_MEMORY_TESTER_EVENT_RERATING_4B_WATCH | 003160 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 12070.0 | None | None | 155.18 | None | stage2_actionable_best_entry |
+| C08_058470_20250515_LEENO_Q1_RD_SOCKET_ORDER | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
+| C08_080580_20240402_OKINS_OP_COLLAPSE_CUSTOMER_CAPEX_CUT | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
 | C08_080580_OKINS_20240122_CXL_SOCKET_PRICE_ONLY_BLOWOFF | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
 | C08_080580_OKINS_20240122_TEST_SOCKET_THEME_PRICE_PREMIUM_4B | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 12930.0 | None | None | no_valid_stage_transition |
 | C08_080580_OKINS_20240123_SOCKET_THEME_FALSE_GREEN | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
@@ -47,6 +55,8 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C08_086390_2024_03_06_MEMORY_TESTER_CUSTOMER_REPEAT_DEMAND_RECOVERY | 086390 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 14050.0 | None | None | 38.79 | None | stage2_actionable_best_entry |
 | C08_089790_2024_03_06_TEST_HANDLER_CUSTOMER_QUALITY_BRIDGE_ABSENT | 089790 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 10180.0 | None | None | 11.59 | None | stage2_captured_most_upside |
 | C08_095340_2024_03_28_TEST_SOCKET_BLOWOFF_4B_GUARD | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 99400.0 | None | None | no_valid_stage_transition |
+| C08_095340_20250211_ISC_PARENT_RESULTS_HIGH_MAE | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 73700.0 | None | None | no_valid_stage_transition |
+| C08_098120_20241203_MCS_BURNIN_SOCKET_DEMAND_RECOVERY | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 4570.0 | None | None | 435.01 | None | stage2_actionable_best_entry |
 | C08_098120_MCS_20230330_TEST_SOCKET_CUSTOMER_QUALITY_STAGE2 | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 7580.0 | None | None | 93.27 | None | stage2_actionable_best_entry |
 | C08_098120_MCS_20230522_TEST_SOCKET_CUSTOMER_QUALITY_STAGE2 | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 7530.0 | None | None | 99.47 | None | stage2_actionable_best_entry |
 | C08_098120_MCS_20240426_TEST_SOCKET_PRICE_PREMIUM_4B | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 10700.0 | None | None | no_valid_stage_transition |
@@ -58,6 +68,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C08_098120_MICROCONTACT_20240926_LATE_TEST_SOCKET_FALSE_GREEN | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
 | C08_110990_2024_03_06_INSPECTION_EQUIPMENT_EVENT_PREMIUM_4B_DRAWDOWN | 110990 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 22600.0 | None | None | 43.14 | None | stage2_actionable_best_entry |
 | C08_119830_2024_03_06_SEMICONDUCTOR_TEST_SERVICE_LABEL_WITHOUT_MARGIN_BRIDGE | 119830 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 7400.0 | None | None | 18.24 | None | stage2_captured_most_upside |
+| C08_131290_20210224_TSE_HBM_DIE_CARRIER_SOCKET | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 55600.0 | None | None | 44.78 | None | stage2_actionable_best_entry |
 | C08_131290_2024_02_01_PROBE_CARD_QUALIFICATION_REORDER_POSITIVE | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 43500.0 | None | None | 101.84 | None | stage2_actionable_best_entry |
 | C08_131970_2024_03_06_TEST_SERVICE_CUSTOMER_QUALITY_MID_MFE_HIGH_MAE | 131970 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 44350.0 | None | None | 20.18 | None | stage2_captured_most_upside |
 | C08_131970_DOOSANTESNA_20240405_TEST_SERVICE_CUSTOMER_QUALITY_FALSE_GREEN | 131970 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
@@ -73,6 +84,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C08_252990_SAMCNS_20240206_PROBE_CARD_STF_FALSE_GREEN | 252990 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
 | C08_252990_SEMCNS_20240418_PROBE_CARD_CERAMIC_CUSTOMER_QUALITY_FALSE_GREEN | 252990 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | None | None | None | no_valid_stage_transition |
 | C08_420770_2024_03_06_SUBSTRATE_INSPECTION_QUALITY_EVENT_FADE | 420770 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 62800.0 | None | None | 31.37 | None | stage2_captured_most_upside |
+| C08_425420_20231222_TFE_PACKAGE_TEST_PROXY_BLOWOFF | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 34350.0 | None | None | no_valid_stage_transition |
 | C08_425420_2024_03_20_TEST_INTERFACE_PRICE_ONLY_BETA_DECAY | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 43100.0 | None | None | no_valid_stage_transition |
 | C08_425420_TFE_20240208_TEST_SOCKET_THEME_FALSE_GREEN | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 35200.0 | None | None | 24.57 | None | stage2_actionable_best_entry |
 | C08_425420_TFE_20240320_TEST_SOCKET_QUALITY_THEME_LOCAL_4B | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | None | 43100.0 | None | None | no_valid_stage_transition |

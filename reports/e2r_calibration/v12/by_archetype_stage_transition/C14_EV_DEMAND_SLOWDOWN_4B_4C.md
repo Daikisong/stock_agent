@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `239`
+- stage_transition_summary_rows: `252`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -34,8 +34,11 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C14-R3L97-06-078600 | 078600 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 93900.0 | None | None | no_valid_stage_transition |
 | C14-R3L97-07-011790 | 011790 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 102900.0 | None | None | no_valid_stage_transition |
 | C14-SKIET-2024-01-22-SEPARATOR_UTILIZATION_BREAK | 361610 | C14_EV_DEMAND_SLOWDOWN_4B_4C | 72100.0 | None | None | 10.96 | None | stage2_captured_most_upside |
+| C14_003670_20240123_RESULTS_EV_CHASM_4B | 003670 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 261000.0 | None | None | no_valid_stage_transition |
 | C14_006110_SAMAAL_20231012_FOIL_DEMAND_SLOWDOWN_AFTER_BLOWOFF_4B | 006110 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 152400.0 | None | None | no_valid_stage_transition |
+| C14_006400_20241030_Q3_HARD_4C_SUCCESS | 006400 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |
 | C14_006400_2024_CELL_UTILIZATION_4C_SUCCESS | 006400 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | 4c_too_late |
+| C14_006400_20250425_Q1_TROUGH_FALSE_HARD_4C | 006400 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |
 | C14_011790_SKC_20230405_COPPERFOIL_EV_DEMAND_SLOWDOWN_FALSE_GREEN | 011790 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |
 | C14_011790_SKC_20230613_COPPERFOIL_EV_DEMAND_PRICE_PREMIUM_4B | 011790 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 110000.0 | None | None | no_valid_stage_transition |
 | C14_011790_SKC_20230726_EV_COPPERFOIL_DEMAND_SLOWDOWN_4B | 011790 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 103000.0 | None | None | no_valid_stage_transition |
@@ -50,7 +53,10 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C14_361610_SKIET_20230726_SEPARATOR_CALLOFF_SLOWDOWN_FALSE_GREEN | 361610 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |
 | C14_361610_SKIET_20230726_SEPARATOR_EV_DEMAND_SLOWDOWN_LOCAL_4B | 361610 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 108600.0 | None | None | no_valid_stage_transition |
 | C14_361610_SKIET_20230726_SEPARATOR_UTILIZATION_DEMAND_4C | 361610 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |
+| C14_373220_20240425_Q1_UTILIZATION_STAGE4B | 373220 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 372000.0 | None | None | no_valid_stage_transition |
+| C14_373220_20240725_Q2_SHIPMENT_ESS_OFFSET_FALSE_4C | 373220 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 325000.0 | None | None | no_valid_stage_transition |
 | C14_373220_2024_HEADLINE_ONLY_FALSE_BREAK | 373220 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |
+| C14_373220_20250109_Q4_LOSS_ESS_OFFSET_STAGE4B | 373220 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 348500.0 | None | None | no_valid_stage_transition |
 | C14_393890_WCP_20230704_SEPARATOR_LATE_RERATING_4C_WATCH | 393890 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |
 | C14_393890_WCP_20230726_SEPARATOR_EV_DEMAND_CALLOFF_4C | 393890 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |
 | C14_393890_WCP_20230726_SEPARATOR_EV_DEMAND_SLOWDOWN_4B | 393890 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 75700.0 | None | None | no_valid_stage_transition |
@@ -109,6 +115,13 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C14_R3L108_278280_20240221_STAGE4C | 278280 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |
 | C14_R3L108_299030_20240308_STAGE4C | 299030 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |
 | C14_R3L108_361610_20240115_STAGE4C | 361610 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |
+| C14_R3L124_001_LGES_Q1_2024_EV_DEMAND_UTILIZATION_ADJUSTMENT | 373220 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 372000.0 | None | None | no_valid_stage_transition |
+| C14_R3L124_002_SAMSUNG_SDI_Q2_2024_MUTED_EV_DEMAND_DELAYED_RECOVERY | 006400 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 319500.0 | None | None | no_valid_stage_transition |
+| C14_R3L124_003_SK_INNOVATION_Q2_2024_BATTERY_LOSS_LOW_UTILIZATION | 096770 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |
+| C14_R3L124_004_POSCO_FUTURE_M_2024_RESULTS_BATTERY_MATERIALS_LOSS_REBOUND_EXCEPTION | 003670 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 125000.0 | None | None | no_valid_stage_transition |
+| C14_R3L124_005_ECOPRO_BM_Q2_2024_EV_SLOWDOWN_CAPACITY_ADJUSTMENT | 247540 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |
+| C14_R3L124_006_LNF_MAY_2024_LITHIUM_EV_SLOWDOWN_LOSS_FORECAST | 066970 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |
+| C14_R3L124_007_LOTTE_ENERGY_MATERIALS_2024_PRELIM_LOSS_FALSE_4C_OVERBLOCK | 020150 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 22100.0 | None | None | no_valid_stage_transition |
 | C14_R3L127_003670_20240124 | 003670 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 261000.0 | None | None | no_valid_stage_transition |
 | C14_R3L127_003670_20240124 | None | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | 261000.0 | None | None | 4b_too_early |
 | C14_R3L127_278280_20230823 | 278280 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | None | None | None | None | no_valid_stage_transition |

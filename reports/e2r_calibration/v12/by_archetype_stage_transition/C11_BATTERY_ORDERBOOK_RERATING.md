@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `258`
+- stage_transition_summary_rows: `264`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -34,6 +34,10 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 336370 | 336370 | C11_BATTERY_ORDERBOOK_RERATING | 16300.0 | None | None | 10.43 | None | stage2_captured_most_upside |
 | 373220 LG Energy Solution | 373220 LG Energy Solution | C11_BATTERY_ORDERBOOK_RERATING | None | None | 436500.0 | None | None | no_valid_stage_transition |
 | 373220 | 373220 | C11_BATTERY_ORDERBOOK_RERATING | None | None | 436500.0 | None | None | no_valid_stage_transition |
+| C11-003670-20250203-POSCOFM-FY24-MARGIN-BREAK-OVERBLOCK | 003670 | C11_BATTERY_ORDERBOOK_RERATING | None | None | 125000.0 | None | None | no_valid_stage_transition |
+| C11-006400-20240828-SDI-GM-JV-LONGDATED | 006400 | C11_BATTERY_ORDERBOOK_RERATING | 358500.0 | None | None | 9.76 | None | stage2_captured_most_upside |
+| C11-051910-20240208-LGCHEM-GM-CATHODE-LONGDATED | 051910 | C11_BATTERY_ORDERBOOK_RERATING | 471000.0 | None | None | 10.4 | None | stage2_captured_most_upside |
+| C11-066970-20240325-LNF-SKON-CATHODE-LOSS-BRIDGE | 066970 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
 | C11-217820-20231020-WONIKPNE-BACKLOG-MARGIN-QUALITY-FAIL | 217820 | C11_BATTERY_ORDERBOOK_RERATING | 6880.0 | None | None | 13.37 | None | stage2_actionable_best_entry |
 | C11-220-01 | 083930 | C11_BATTERY_ORDERBOOK_RERATING | 13280.0 | None | None | 61.14 | None | stage2_actionable_best_entry |
 | C11-220-02 | 302430 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
@@ -50,7 +54,9 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C11-277880-20240528-TSI-MIXING-BACKLOG-CHASM-4B | 277880 | C11_BATTERY_ORDERBOOK_RERATING | None | None | 8270.0 | None | None | no_valid_stage_transition |
 | C11-282880-20230222-COWIN-BACKLOG-TURNKEY-MARGIN | 282880 | C11_BATTERY_ORDERBOOK_RERATING | 25100.0 | None | None | 87.25 | None | stage2_actionable_best_entry |
 | C11-299030-20240304-HANATECH-BACKLOG-DELAY-QUALITY-FAIL | 299030 | C11_BATTERY_ORDERBOOK_RERATING | 60200.0 | None | None | 21.43 | None | stage2_actionable_best_entry |
+| C11-361610-20250227-SKIET-GOTION-SEPARATOR-HIGH-MAE | 361610 | C11_BATTERY_ORDERBOOK_RERATING | 28000.0 | None | None | 25.36 | None | stage2_actionable_best_entry |
 | C11-372170-20221216-YUNSUNG-MIXING-BACKLOG-SKON | 372170 | C11_BATTERY_ORDERBOOK_RERATING | 45100.0 | None | None | 495.34 | None | stage2_actionable_best_entry |
+| C11-373220-20240725-LGES-RENAULT-LFP-HYUNDAI-JV-GUIDANCE | 373220 | C11_BATTERY_ORDERBOOK_RERATING | 325000.0 | None | None | 36.62 | None | stage2_actionable_best_entry |
 | C11-L100-01 | 137400 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
 | C11-L100-02 | 137400 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |
 | C11-L100-03 | 222080 | C11_BATTERY_ORDERBOOK_RERATING | None | None | None | None | None | no_valid_stage_transition |

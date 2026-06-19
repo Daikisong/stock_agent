@@ -7,14 +7,14 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
-| 000720 | 000720 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 33100.0 | None | None | 8.8 | None | stage2_actionable_best_entry |
+| 000720 | 000720 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 33100.0 | None | None | 157.0979 | None | stage2_actionable_best_entry |
 | 001470 | 001470 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 2155.0 | None | None | no_valid_stage_transition |
 | 002410 | 002410 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 1767.0 | None | None | no_valid_stage_transition |
 | 002990 | 002990 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 5250.0 | None | None | no_valid_stage_transition |
 | 003070 | 003070 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 9370.0 | None | None | 37.57 | None | stage2_captured_most_upside |
 | 004960 | 004960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 7370.0 | None | 7370.0 | 8.14 | 0.0 | stage2_captured_most_upside |
 | 005960 | 005960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 5350.0 | None | None | no_valid_stage_transition |
-| 006360 | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 15640.0 | None | 15630.0 | 39.071 | -0.1636 | stage2_actionable_best_entry |
+| 006360 | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 15640.0 | None | 15690.0 | 41.6182 | 0.7682 | stage2_actionable_best_entry |
 | 009410 | 009410 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
 | 013580 | 013580 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 14460.0 | None | None | 7.75 | None | stage2_captured_most_upside |
 | 014790 | 014790 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | 2010.0 | None | None | no_valid_stage_transition |
@@ -24,7 +24,7 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 035890 | 035890 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 1278.0 | None | None | 26.84 | None | stage2_captured_most_upside |
 | 047040 | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 4015.0 | None | 4250.0 | 23.7 | 24.6964 | stage2_actionable_best_entry |
 | 294870 | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 17530.0 | None | 17920.0 | 60.8711 | 3.6549 | stage2_actionable_best_entry |
-| 375500 | 375500 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 36650.0 | None | None | 7.779 | None | stage2_captured_most_upside |
+| 375500 | 375500 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 36650.0 | None | None | 62.8889 | None | stage2_captured_most_upside |
 | C30-R10-L100-001 | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |
 | C30-R10-L100-002 | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | 4c_too_late |
 | C30-R10-L100-003 | 005960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | None | None | None | None | no_valid_stage_transition |

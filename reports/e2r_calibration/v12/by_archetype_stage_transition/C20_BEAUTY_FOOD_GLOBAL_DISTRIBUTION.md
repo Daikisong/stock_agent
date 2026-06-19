@@ -3,22 +3,24 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `239`
+- stage_transition_summary_rows: `247`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
 | 003230 | 003230 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 446500.0 | None | 686000.0 | 110.5321 | 48.5284 | stage2_actionable_best_entry |
 | 004370 | 004370 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | 469000.0 | None | None | no_valid_stage_transition |
 | 005180 | 005180 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 88300.0 | None | None | 34.1 | None | stage2_actionable_best_entry |
+| 018290 | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 35300.0 | None | None | 29.04 | None | stage2_actionable_best_entry |
+| 051900 | 051900 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | 351000.0 | None | None | no_valid_stage_transition |
 | 069960 | 069960 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
-| 090430 | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 194200.0 | None | None | 3.2488 | None | stage2_actionable_best_entry |
+| 090430 | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 194200.0 | None | 124500.0 | 3.2488 | -1104.7254 | stage2_actionable_best_entry |
 | 097950 | 097950 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
 | 139480 | 139480 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
-| 161890 | 161890 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 51500.0 | None | None | 52.82 | None | stage2_actionable_best_entry |
+| 161890 | 161890 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 51500.0 | None | None | 70.8738 | None | stage2_actionable_best_entry |
 | 192820 | 192820 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 157700.0 | None | 157700.0 | 31.9 | 0.0 | stage2_actionable_best_entry |
-| 257720 | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
+| 257720 | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 28900.0 | None | None | 87.5447 | None | stage2_actionable_best_entry |
 | 271560 | 271560 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
-| 278470 | 278470 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 60100.0 | None | 60100.0 | 365.06 | 0.0 | stage2_actionable_best_entry |
+| 278470 | 278470 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 60100.0 | None | 60100.0 | 388.3489 | 0.0 | stage2_actionable_best_entry |
 | 383220 | 383220 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
 | C20-003230-2024-05-17-SAMYANG-EXPORT-NOODLE-MARGIN | 003230 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | 446500.0 | None | None | None | green_good_but_late |
 | C20-051900-2024-04-26-LGHH-BEAUTY-RECOVERY-CHANNEL-MIX | 051900 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 392000.0 | None | None | 22.45 | None | stage2_actionable_best_entry |
@@ -31,6 +33,12 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C20-2024-257720-B | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | 50300.0 | None | None | no_valid_stage_transition |
 | C20-214420-2024-05-28-TONYMOLY-EXPORT-CHANNEL-RECOVERY | 214420 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 9460.0 | None | None | 81.71 | None | stage2_actionable_best_entry |
 | C20-257720-2024-05-23-SILICON2-GLOBAL-KBEAUTY-DISTRIBUTION | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
+| C20-R5L135-01 | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | 31450.0 | None | None | None | green_good_but_late |
+| C20-R5L135-02 | 192820 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | 166000.0 | None | None | None | green_good_but_late |
+| C20-R5L135-03 | 161890 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 66300.0 | None | None | 32.73 | None | stage2_actionable_best_entry |
+| C20-R5L135-04 | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | 25500.0 | None | None | None | green_good_but_late |
+| C20-R5L135-05 | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | 117300.0 | None | None | no_valid_stage_transition |
+| C20-R5L135-06 | 051900 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |
 | C20_168_003230_20240517_SAMYANG_BULDAK_GLOBAL_CHANNEL_REORDER | 003230 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 446500.0 | None | None | 97.54 | None | stage2_actionable_best_entry |
 | C20_168_018290_20240514_VT_REEDLESHOT_JAPAN_US_EU_EXPANSION | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 25500.0 | None | None | 72.55 | None | stage2_actionable_best_entry |
 | C20_168_051900_20240426_LGHNH_Q1_REBOUND_DURABILITY_GAP | 051900 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | None | None | None | None | no_valid_stage_transition |

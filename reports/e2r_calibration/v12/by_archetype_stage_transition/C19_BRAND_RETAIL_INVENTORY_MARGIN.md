@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `188`
+- stage_transition_summary_rows: `194`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -37,6 +37,12 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C19-R5L131-298540-NATURE-LICENSED-IP-FIXED-COST-CHINA-RISK-COUNTER | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 22250.0 | None | None | 4.72 | None | stage2_captured_most_upside |
 | C19-R5L131-337930-XEXYMIX-HIGH-PRICE-MIX-DISCOUNT-DISCIPLINE-POSITIVE | 337930 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 5100.0 | None | None | 49.41 | None | stage2_actionable_best_entry |
 | C19-R5L131-383220-FNF-RECORD-PERFORMANCE-PEAK-RISK-COUNTER | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19-R5L134-01 | 337930 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19-R5L134-02 | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19-R5L134-03 | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 40350.0 | None | None | 11.4 | None | stage2_actionable_best_entry |
+| C19-R5L134-04 | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 103500.0 | None | None | no_valid_stage_transition |
+| C19-R5L134-05 | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
+| C19-R5L134-06 | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 20050.0 | None | None | no_valid_stage_transition |
 | C19_004170_20240219_DEPARTMENT_STORE_DUTYFREE_PRICE_ONLY_4B | 004170 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | 189500.0 | None | None | no_valid_stage_transition |
 | C19_020000_20241115_INVENTORY_CLEAN_LOW_MAE_VALUE_RERATING_POSITIVE | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | 14580.0 | None | None | 24.55 | None | stage2_actionable_best_entry |
 | C19_020000_HANDSOME_20220511_FASHION_REOPENING_INVENTORY_FALSE_GREEN | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | None | None | None | None | no_valid_stage_transition |
