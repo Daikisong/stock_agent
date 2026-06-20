@@ -1,0 +1,3590 @@
+{
+  "schema_version": "v12_component_score_loss_waterfall_v1",
+  "scope": "current_benchmark_runtime_candidates_only",
+  "scoring_policy": "diagnostic_only_no_weight_or_stage_change",
+  "score_csv_path": "output/0619_asof_stage_promotion_benchmark_current_2023_2026/score_components_by_candidate.csv",
+  "gate_csv_path": "output/0619_asof_stage_promotion_benchmark_current_2023_2026/stage_gate_matrix.csv",
+  "summary": {
+    "plain_answer": "하닉/삼전은 HBM 보너스 대상이 아니라 전 아키타입 component 손실을 설명하는 예시다. 현재 benchmark에서 Green 0개의 직접 원인은 대체로 EPS가 아니라 bottleneck/visibility/confidence/bridge 손실이다.",
+    "candidate_row_count": 120,
+    "symbol_count": 11,
+    "stage_counts": {
+      "0": 7,
+      "1": 60,
+      "2": 34,
+      "3-Yellow": 19
+    },
+    "stage3_green_count": 0,
+    "runtime_exercised_archetype_count": 7,
+    "canonical_archetype_count_in_weight_profile": 36,
+    "runtime_unexercised_archetype_count": 29,
+    "global_average_component_losses": [
+      {
+        "component": "bottleneck_pricing",
+        "label": "bottleneck/pricing",
+        "avg_max_points": 16.7417,
+        "avg_score_points": 6.2646,
+        "avg_loss_points": 10.4771,
+        "avg_fill_rate": 0.3531
+      },
+      {
+        "component": "earnings_visibility",
+        "label": "earnings visibility",
+        "avg_max_points": 22.4667,
+        "avg_score_points": 13.3537,
+        "avg_loss_points": 9.113,
+        "avg_fill_rate": 0.5791
+      },
+      {
+        "component": "eps_fcf_explosion",
+        "label": "EPS/FCF",
+        "avg_max_points": 20.4667,
+        "avg_score_points": 14.415,
+        "avg_loss_points": 6.0517,
+        "avg_fill_rate": 0.6571
+      },
+      {
+        "component": "information_confidence",
+        "label": "information confidence",
+        "avg_max_points": 9.2417,
+        "avg_score_points": 3.7575,
+        "avg_loss_points": 5.4842,
+        "avg_fill_rate": 0.4625
+      },
+      {
+        "component": "valuation_rerating",
+        "label": "valuation rerating",
+        "avg_max_points": 12.1833,
+        "avg_score_points": 7.1812,
+        "avg_loss_points": 5.0021,
+        "avg_fill_rate": 0.5817
+      },
+      {
+        "component": "market_mispricing",
+        "label": "market mispricing",
+        "avg_max_points": 13.775,
+        "avg_score_points": 8.8889,
+        "avg_loss_points": 4.8861,
+        "avg_fill_rate": 0.6309
+      },
+      {
+        "component": "capital_allocation",
+        "label": "capital allocation",
+        "avg_max_points": 5.125,
+        "avg_score_points": 0.3146,
+        "avg_loss_points": 4.8104,
+        "avg_fill_rate": 0.0608
+      }
+    ],
+    "failed_gate_counts": {
+      "failed_stage3_total_score": 120,
+      "failed_stage3_bottleneck": 120,
+      "failed_stage3_visibility": 79,
+      "failed_stage2_total_score": 67,
+      "failed_stage3_valuation": 67,
+      "failed_stage2_information_confidence": 63,
+      "failed_stage3_market_mispricing": 56,
+      "failed_sector_bottleneck": 56,
+      "failed_domain_specific_evidence": 55,
+      "failed_stage2_eps_fcf": 45,
+      "failed_stage3_eps_fcf": 45,
+      "failed_sector_visibility": 44,
+      "failed_green_cross_evidence": 40,
+      "failed_stage3_contract_quality": 37,
+      "failed_structural_visibility_quality": 33,
+      "failed_stage2_valuation": 22,
+      "failed_stage3_revision": 22
+    },
+    "green_threshold": 87.0,
+    "waterfall_note": "loss_to_100은 배점표 100점에서 못 받은 점수이고, green_shortfall_to_87은 Green 문턱까지 부족한 점수다."
+  },
+  "focus_rows": [
+    {
+      "symbol": "000660",
+      "company_name": "SK하이닉스",
+      "as_of_date": "2024-05-01",
+      "current_stage": "3-Yellow",
+      "current_score": 80.0131,
+      "green_shortfall_to_87": 6.9869,
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "sector_profile": "MEMORY_HBM",
+      "total_weight": 100.0,
+      "total_component_score": 80.0131,
+      "total_component_loss_to_100": 19.9869,
+      "component_score_minus_current_score": 0.0,
+      "components": [
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "max_points": 24.0,
+          "score_points": 24.0,
+          "loss_points": 0.0,
+          "fill_rate": 1.0
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "max_points": 21.0,
+          "score_points": 17.724,
+          "loss_points": 3.276,
+          "fill_rate": 0.844
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "max_points": 19.0,
+          "score_points": 12.1827,
+          "loss_points": 6.8173,
+          "fill_rate": 0.6412
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "max_points": 15.0,
+          "score_points": 13.041,
+          "loss_points": 1.959,
+          "fill_rate": 0.8694
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "max_points": 12.0,
+          "score_points": 9.9846,
+          "loss_points": 2.0154,
+          "fill_rate": 0.8321
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "max_points": 4.0,
+          "score_points": 0.0808,
+          "loss_points": 3.9192,
+          "fill_rate": 0.0202
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "max_points": 5.0,
+          "score_points": 3.0,
+          "loss_points": 2.0,
+          "fill_rate": 0.6
+        }
+      ],
+      "top_component_losses": [
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "max_points": 19.0,
+          "score_points": 12.1827,
+          "loss_points": 6.8173,
+          "fill_rate": 0.6412
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "max_points": 4.0,
+          "score_points": 0.0808,
+          "loss_points": 3.9192,
+          "fill_rate": 0.0202
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "max_points": 21.0,
+          "score_points": 17.724,
+          "loss_points": 3.276,
+          "fill_rate": 0.844
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "max_points": 12.0,
+          "score_points": 9.9846,
+          "loss_points": 2.0154,
+          "fill_rate": 0.8321
+        }
+      ],
+      "failed_gates": [
+        "failed_stage3_total_score",
+        "failed_stage3_bottleneck"
+      ],
+      "green_gate_deficit_summary": "total:80.01/87.00(-6.99); bottleneck:12.18/14.25(-2.07)",
+      "bridge_snapshot": {
+        "research_axis_bridge_margin": 100.0,
+        "research_axis_bridge_customer": 100.0,
+        "research_axis_bridge_backlog": 100.0,
+        "research_axis_bridge_contract": 100.0,
+        "research_axis_bridge_valuation_repricing": 100.0,
+        "research_axis_bridge_capital_return": 0.0,
+        "research_axis_bridge_insurance_quality": 0.0,
+        "research_axis_bridge_bio_commercialization": 0.0,
+        "research_axis_bridge_software_retention": 0.0,
+        "research_axis_bridge_consumer_sell_through": 0.0,
+        "research_axis_bridge_guard_risk": 0.0
+      },
+      "plain_diagnosis": "좋은 연구축이 있어도 bottleneck/visibility runtime field로 약하게 번역되어 Green 문턱을 못 넘는다."
+    },
+    {
+      "symbol": "005930",
+      "company_name": "삼성전자",
+      "as_of_date": "2024-04-01",
+      "current_stage": "2",
+      "current_score": 72.1181,
+      "green_shortfall_to_87": 14.8819,
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "sector_profile": "MEMORY_HBM",
+      "total_weight": 100.0,
+      "total_component_score": 72.1181,
+      "total_component_loss_to_100": 27.8819,
+      "component_score_minus_current_score": 0.0,
+      "components": [
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "max_points": 22.0,
+          "score_points": 22.0,
+          "loss_points": 0.0,
+          "fill_rate": 1.0
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "max_points": 18.0,
+          "score_points": 13.1685,
+          "loss_points": 4.8315,
+          "fill_rate": 0.7316
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "max_points": 14.0,
+          "score_points": 8.165,
+          "loss_points": 5.835,
+          "fill_rate": 0.5832
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "max_points": 12.0,
+          "score_points": 9.4296,
+          "loss_points": 2.5704,
+          "fill_rate": 0.7858
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "max_points": 10.0,
+          "score_points": 7.8935,
+          "loss_points": 2.1065,
+          "fill_rate": 0.7893
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "max_points": 5.0,
+          "score_points": 0.0615,
+          "loss_points": 4.9385,
+          "fill_rate": 0.0123
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "max_points": 19.0,
+          "score_points": 11.4,
+          "loss_points": 7.6,
+          "fill_rate": 0.6
+        }
+      ],
+      "top_component_losses": [
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "max_points": 19.0,
+          "score_points": 11.4,
+          "loss_points": 7.6,
+          "fill_rate": 0.6
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "max_points": 14.0,
+          "score_points": 8.165,
+          "loss_points": 5.835,
+          "fill_rate": 0.5832
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "max_points": 5.0,
+          "score_points": 0.0615,
+          "loss_points": 4.9385,
+          "fill_rate": 0.0123
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "max_points": 18.0,
+          "score_points": 13.1685,
+          "loss_points": 4.8315,
+          "fill_rate": 0.7316
+        }
+      ],
+      "failed_gates": [
+        "failed_stage3_total_score",
+        "failed_stage3_visibility",
+        "failed_stage3_bottleneck"
+      ],
+      "green_gate_deficit_summary": "total:72.12/87.00(-14.88); yellow_total:72.12/75.00(-2.88); bottleneck:8.16/10.50(-2.33); visibility:13.17/13.50(-0.33)",
+      "bridge_snapshot": {
+        "research_axis_bridge_margin": 100.0,
+        "research_axis_bridge_customer": 100.0,
+        "research_axis_bridge_backlog": 100.0,
+        "research_axis_bridge_contract": 0.0,
+        "research_axis_bridge_valuation_repricing": 100.0,
+        "research_axis_bridge_capital_return": 0.0,
+        "research_axis_bridge_insurance_quality": 0.0,
+        "research_axis_bridge_bio_commercialization": 0.0,
+        "research_axis_bridge_software_retention": 0.0,
+        "research_axis_bridge_consumer_sell_through": 0.0,
+        "research_axis_bridge_guard_risk": 0.0
+      },
+      "plain_diagnosis": "증거 신뢰도와 검증성 점수가 커서, source-backed fixture 또는 guard 분리가 먼저 필요하다."
+    },
+    {
+      "symbol": "267260",
+      "company_name": "HD현대일렉트릭",
+      "as_of_date": "2023-08-01",
+      "current_stage": "2",
+      "current_score": 72.9252,
+      "green_shortfall_to_87": 14.0748,
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "sector_profile": "POWER_EQUIPMENT",
+      "total_weight": 100.0,
+      "total_component_score": 72.9252,
+      "total_component_loss_to_100": 27.0748,
+      "component_score_minus_current_score": 0.0,
+      "components": [
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "max_points": 21.0,
+          "score_points": 21.0,
+          "loss_points": 0.0,
+          "fill_rate": 1.0
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "max_points": 24.0,
+          "score_points": 19.2878,
+          "loss_points": 4.7122,
+          "fill_rate": 0.8037
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "max_points": 20.0,
+          "score_points": 9.905,
+          "loss_points": 10.095,
+          "fill_rate": 0.4952
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "max_points": 13.0,
+          "score_points": 10.1855,
+          "loss_points": 2.8145,
+          "fill_rate": 0.7835
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "max_points": 12.0,
+          "score_points": 8.0775,
+          "loss_points": 3.9225,
+          "fill_rate": 0.6731
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "max_points": 5.0,
+          "score_points": 1.4694,
+          "loss_points": 3.5306,
+          "fill_rate": 0.2939
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "max_points": 5.0,
+          "score_points": 3.0,
+          "loss_points": 2.0,
+          "fill_rate": 0.6
+        }
+      ],
+      "top_component_losses": [
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "max_points": 20.0,
+          "score_points": 9.905,
+          "loss_points": 10.095,
+          "fill_rate": 0.4952
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "max_points": 24.0,
+          "score_points": 19.2878,
+          "loss_points": 4.7122,
+          "fill_rate": 0.8037
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "max_points": 12.0,
+          "score_points": 8.0775,
+          "loss_points": 3.9225,
+          "fill_rate": 0.6731
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "max_points": 5.0,
+          "score_points": 1.4694,
+          "loss_points": 3.5306,
+          "fill_rate": 0.2939
+        }
+      ],
+      "failed_gates": [
+        "failed_stage3_total_score",
+        "failed_stage3_bottleneck",
+        "failed_stage3_contract_quality"
+      ],
+      "green_gate_deficit_summary": "total:72.93/87.00(-14.07); bottleneck:9.90/15.00(-5.09); contract:41.50/45.00(-3.50); yellow_total:72.93/75.00(-2.07)",
+      "bridge_snapshot": {
+        "research_axis_bridge_margin": 100.0,
+        "research_axis_bridge_customer": 100.0,
+        "research_axis_bridge_backlog": 100.0,
+        "research_axis_bridge_contract": 100.0,
+        "research_axis_bridge_valuation_repricing": 100.0,
+        "research_axis_bridge_capital_return": 0.0,
+        "research_axis_bridge_insurance_quality": 0.0,
+        "research_axis_bridge_bio_commercialization": 0.0,
+        "research_axis_bridge_software_retention": 0.0,
+        "research_axis_bridge_consumer_sell_through": 0.0,
+        "research_axis_bridge_guard_risk": 0.0
+      },
+      "plain_diagnosis": "좋은 연구축이 있어도 bottleneck/visibility runtime field로 약하게 번역되어 Green 문턱을 못 넘는다."
+    },
+    {
+      "symbol": "298040",
+      "company_name": "효성중공업",
+      "as_of_date": "2023-06-01",
+      "current_stage": "2",
+      "current_score": 71.6938,
+      "green_shortfall_to_87": 15.3062,
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "sector_profile": "POWER_EQUIPMENT",
+      "total_weight": 100.0,
+      "total_component_score": 73.6938,
+      "total_component_loss_to_100": 26.3062,
+      "component_score_minus_current_score": 2.0,
+      "components": [
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "max_points": 21.0,
+          "score_points": 21.0,
+          "loss_points": 0.0,
+          "fill_rate": 1.0
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "max_points": 24.0,
+          "score_points": 15.8826,
+          "loss_points": 8.1174,
+          "fill_rate": 0.6618
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "max_points": 20.0,
+          "score_points": 9.7812,
+          "loss_points": 10.2188,
+          "fill_rate": 0.4891
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "max_points": 13.0,
+          "score_points": 12.4098,
+          "loss_points": 0.5902,
+          "fill_rate": 0.9546
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "max_points": 12.0,
+          "score_points": 11.5914,
+          "loss_points": 0.4086,
+          "fill_rate": 0.9659
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "max_points": 5.0,
+          "score_points": 0.0288,
+          "loss_points": 4.9712,
+          "fill_rate": 0.0058
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "max_points": 5.0,
+          "score_points": 3.0,
+          "loss_points": 2.0,
+          "fill_rate": 0.6
+        }
+      ],
+      "top_component_losses": [
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "max_points": 20.0,
+          "score_points": 9.7812,
+          "loss_points": 10.2188,
+          "fill_rate": 0.4891
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "max_points": 24.0,
+          "score_points": 15.8826,
+          "loss_points": 8.1174,
+          "fill_rate": 0.6618
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "max_points": 5.0,
+          "score_points": 0.0288,
+          "loss_points": 4.9712,
+          "fill_rate": 0.0058
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "max_points": 5.0,
+          "score_points": 3.0,
+          "loss_points": 2.0,
+          "fill_rate": 0.6
+        }
+      ],
+      "failed_gates": [
+        "failed_stage3_total_score",
+        "failed_stage3_visibility",
+        "failed_stage3_bottleneck",
+        "failed_stage3_contract_quality",
+        "failed_sector_visibility",
+        "failed_domain_specific_evidence"
+      ],
+      "green_gate_deficit_summary": "contract:0.00/45.00(-45.00); total:71.69/87.00(-15.31); bottleneck:9.78/15.00(-5.22); yellow_total:71.69/75.00(-3.31); visibility:15.88/18.00(-2.12); domain_evidence:33.33/35.00(-1.67); sector_visibility:44.77/45.00(-0.23)",
+      "bridge_snapshot": {
+        "research_axis_bridge_margin": 100.0,
+        "research_axis_bridge_customer": 100.0,
+        "research_axis_bridge_backlog": 100.0,
+        "research_axis_bridge_contract": 0.0,
+        "research_axis_bridge_valuation_repricing": 100.0,
+        "research_axis_bridge_capital_return": 0.0,
+        "research_axis_bridge_insurance_quality": 0.0,
+        "research_axis_bridge_bio_commercialization": 0.0,
+        "research_axis_bridge_software_retention": 0.0,
+        "research_axis_bridge_consumer_sell_through": 0.0,
+        "research_axis_bridge_guard_risk": 0.0
+      },
+      "plain_diagnosis": "좋은 연구축이 있어도 bottleneck/visibility runtime field로 약하게 번역되어 Green 문턱을 못 넘는다."
+    },
+    {
+      "symbol": "012450",
+      "company_name": "한화에어로스페이스",
+      "as_of_date": "2024-08-01",
+      "current_stage": "1",
+      "current_score": 35.6473,
+      "green_shortfall_to_87": 51.3527,
+      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "sector_profile": "DEFENSE",
+      "total_weight": 100.0,
+      "total_component_score": 35.6473,
+      "total_component_loss_to_100": 64.3527,
+      "component_score_minus_current_score": 0.0,
+      "components": [
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "max_points": 20.0,
+          "score_points": 0.0,
+          "loss_points": 20.0,
+          "fill_rate": 0.0
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "max_points": 24.0,
+          "score_points": 14.5343,
+          "loss_points": 9.4657,
+          "fill_rate": 0.6056
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "max_points": 17.0,
+          "score_points": 2.3766,
+          "loss_points": 14.6234,
+          "fill_rate": 0.1398
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "max_points": 14.0,
+          "score_points": 8.6035,
+          "loss_points": 5.3965,
+          "fill_rate": 0.6145
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "max_points": 14.0,
+          "score_points": 7.8829,
+          "loss_points": 6.1171,
+          "fill_rate": 0.5631
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "max_points": 6.0,
+          "score_points": 0.0,
+          "loss_points": 6.0,
+          "fill_rate": 0.0
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "max_points": 5.0,
+          "score_points": 2.25,
+          "loss_points": 2.75,
+          "fill_rate": 0.45
+        }
+      ],
+      "top_component_losses": [
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "max_points": 20.0,
+          "score_points": 0.0,
+          "loss_points": 20.0,
+          "fill_rate": 0.0
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "max_points": 17.0,
+          "score_points": 2.3766,
+          "loss_points": 14.6234,
+          "fill_rate": 0.1398
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "max_points": 24.0,
+          "score_points": 14.5343,
+          "loss_points": 9.4657,
+          "fill_rate": 0.6056
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "max_points": 14.0,
+          "score_points": 7.8829,
+          "loss_points": 6.1171,
+          "fill_rate": 0.5631
+        }
+      ],
+      "failed_gates": [
+        "failed_stage2_total_score",
+        "failed_stage2_eps_fcf",
+        "failed_stage2_information_confidence",
+        "failed_stage3_total_score",
+        "failed_stage3_eps_fcf",
+        "failed_stage3_visibility",
+        "failed_stage3_bottleneck",
+        "failed_stage3_market_mispricing",
+        "failed_stage3_valuation",
+        "failed_sector_bottleneck"
+      ],
+      "green_gate_deficit_summary": "total:35.65/87.00(-51.35); yellow_total:35.65/75.00(-39.35); sector_bottleneck:14.65/35.00(-20.35); eps_fcf:0.00/17.00(-17.00); bottleneck:2.38/12.75(-10.37); visibility:14.53/18.00(-3.47); valuation:7.88/9.33(-1.45); mispricing:8.60/9.33(-0.73)",
+      "bridge_snapshot": {
+        "research_axis_bridge_margin": 100.0,
+        "research_axis_bridge_customer": 100.0,
+        "research_axis_bridge_backlog": 100.0,
+        "research_axis_bridge_contract": 100.0,
+        "research_axis_bridge_valuation_repricing": 100.0,
+        "research_axis_bridge_capital_return": 0.0,
+        "research_axis_bridge_insurance_quality": 0.0,
+        "research_axis_bridge_bio_commercialization": 0.0,
+        "research_axis_bridge_software_retention": 0.0,
+        "research_axis_bridge_consumer_sell_through": 100.0,
+        "research_axis_bridge_guard_risk": 0.0
+      },
+      "plain_diagnosis": "실적 전환이 아직 EPS/FCF component로 충분히 확정되지 않았다."
+    },
+    {
+      "symbol": "003230",
+      "company_name": "삼양식품",
+      "as_of_date": "2024-06-01",
+      "current_stage": "1",
+      "current_score": 64.161,
+      "green_shortfall_to_87": 22.839,
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "sector_profile": "GENERIC",
+      "total_weight": 100.0,
+      "total_component_score": 64.161,
+      "total_component_loss_to_100": 35.839,
+      "component_score_minus_current_score": 0.0,
+      "components": [
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "max_points": 22.0,
+          "score_points": 22.0,
+          "loss_points": 0.0,
+          "fill_rate": 1.0
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "max_points": 23.0,
+          "score_points": 15.0627,
+          "loss_points": 7.9373,
+          "fill_rate": 0.6549
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "max_points": 12.0,
+          "score_points": 2.8878,
+          "loss_points": 9.1122,
+          "fill_rate": 0.2407
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "max_points": 16.0,
+          "score_points": 10.5952,
+          "loss_points": 5.4048,
+          "fill_rate": 0.6622
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "max_points": 13.0,
+          "score_points": 7.568,
+          "loss_points": 5.432,
+          "fill_rate": 0.5822
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "max_points": 4.0,
+          "score_points": 0.0473,
+          "loss_points": 3.9527,
+          "fill_rate": 0.0118
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "max_points": 10.0,
+          "score_points": 6.0,
+          "loss_points": 4.0,
+          "fill_rate": 0.6
+        }
+      ],
+      "top_component_losses": [
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "max_points": 12.0,
+          "score_points": 2.8878,
+          "loss_points": 9.1122,
+          "fill_rate": 0.2407
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "max_points": 23.0,
+          "score_points": 15.0627,
+          "loss_points": 7.9373,
+          "fill_rate": 0.6549
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "max_points": 13.0,
+          "score_points": 7.568,
+          "loss_points": 5.432,
+          "fill_rate": 0.5822
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "max_points": 16.0,
+          "score_points": 10.5952,
+          "loss_points": 5.4048,
+          "fill_rate": 0.6622
+        }
+      ],
+      "failed_gates": [
+        "failed_stage2_total_score",
+        "failed_stage3_total_score",
+        "failed_stage3_visibility",
+        "failed_stage3_bottleneck",
+        "failed_stage3_market_mispricing",
+        "failed_stage3_valuation",
+        "failed_sector_bottleneck",
+        "failed_domain_specific_evidence"
+      ],
+      "green_gate_deficit_summary": "total:64.16/87.00(-22.84); domain_evidence:14.29/35.00(-20.71); yellow_total:64.16/75.00(-10.84); sector_bottleneck:25.50/35.00(-9.50); bottleneck:2.89/9.00(-6.11); visibility:15.06/17.25(-2.19); valuation:7.57/8.67(-1.10); mispricing:10.60/10.67(-0.07)",
+      "bridge_snapshot": {
+        "research_axis_bridge_margin": 100.0,
+        "research_axis_bridge_customer": 100.0,
+        "research_axis_bridge_backlog": 0.0,
+        "research_axis_bridge_contract": 0.0,
+        "research_axis_bridge_valuation_repricing": 100.0,
+        "research_axis_bridge_capital_return": 0.0,
+        "research_axis_bridge_insurance_quality": 0.0,
+        "research_axis_bridge_bio_commercialization": 0.0,
+        "research_axis_bridge_software_retention": 0.0,
+        "research_axis_bridge_consumer_sell_through": 100.0,
+        "research_axis_bridge_guard_risk": 0.0
+      },
+      "plain_diagnosis": "좋은 연구축이 있어도 bottleneck/visibility runtime field로 약하게 번역되어 Green 문턱을 못 넘는다."
+    },
+    {
+      "symbol": "247540",
+      "company_name": "에코프로비엠",
+      "as_of_date": "2023-08-01",
+      "current_stage": "1",
+      "current_score": 9.308,
+      "green_shortfall_to_87": 77.692,
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "sector_profile": "GENERIC",
+      "total_weight": 100.0,
+      "total_component_score": 13.308,
+      "total_component_loss_to_100": 86.692,
+      "component_score_minus_current_score": 4.0,
+      "components": [
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "max_points": 10.0,
+          "score_points": 0.0,
+          "loss_points": 10.0,
+          "fill_rate": 0.0
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "max_points": 14.0,
+          "score_points": 0.0,
+          "loss_points": 14.0,
+          "fill_rate": 0.0
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "max_points": 8.0,
+          "score_points": 0.528,
+          "loss_points": 7.472,
+          "fill_rate": 0.066
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "max_points": 12.0,
+          "score_points": 0.48,
+          "loss_points": 11.52,
+          "fill_rate": 0.04
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "max_points": 10.0,
+          "score_points": 0.3,
+          "loss_points": 9.7,
+          "fill_rate": 0.03
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "max_points": 6.0,
+          "score_points": 0.0,
+          "loss_points": 6.0,
+          "fill_rate": 0.0
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "max_points": 40.0,
+          "score_points": 12.0,
+          "loss_points": 28.0,
+          "fill_rate": 0.3
+        }
+      ],
+      "top_component_losses": [
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "max_points": 40.0,
+          "score_points": 12.0,
+          "loss_points": 28.0,
+          "fill_rate": 0.3
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "max_points": 14.0,
+          "score_points": 0.0,
+          "loss_points": 14.0,
+          "fill_rate": 0.0
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "max_points": 12.0,
+          "score_points": 0.48,
+          "loss_points": 11.52,
+          "fill_rate": 0.04
+        },
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "max_points": 10.0,
+          "score_points": 0.0,
+          "loss_points": 10.0,
+          "fill_rate": 0.0
+        }
+      ],
+      "failed_gates": [
+        "failed_stage2_total_score",
+        "failed_stage2_eps_fcf",
+        "failed_stage2_valuation",
+        "failed_stage2_information_confidence",
+        "failed_stage3_total_score",
+        "failed_stage3_eps_fcf",
+        "failed_stage3_visibility",
+        "failed_stage3_bottleneck",
+        "failed_stage3_market_mispricing",
+        "failed_stage3_valuation",
+        "failed_stage3_revision",
+        "failed_structural_visibility_quality",
+        "failed_sector_visibility",
+        "failed_sector_bottleneck",
+        "failed_green_cross_evidence",
+        "failed_domain_specific_evidence"
+      ],
+      "green_gate_deficit_summary": "total:9.31/87.00(-77.69); yellow_total:9.31/75.00(-65.69); revision:0.00/55.00(-55.00); structural_visibility:0.00/45.00(-45.00); sector_visibility:0.00/45.00(-45.00); domain_evidence:0.00/35.00(-35.00); sector_bottleneck:6.00/35.00(-29.00); visibility:0.00/10.50(-10.50); eps_fcf:0.00/8.50(-8.50); mispricing:0.48/8.00(-7.52); valuation:0.30/6.67(-6.37); bottleneck:0.53/6.00(-5.47); cross_evidence:2.00/3.00(-1.00)",
+      "bridge_snapshot": {
+        "research_axis_bridge_margin": 0.0,
+        "research_axis_bridge_customer": 0.0,
+        "research_axis_bridge_backlog": 0.0,
+        "research_axis_bridge_contract": 0.0,
+        "research_axis_bridge_valuation_repricing": 0.0,
+        "research_axis_bridge_capital_return": 0.0,
+        "research_axis_bridge_insurance_quality": 0.0,
+        "research_axis_bridge_bio_commercialization": 0.0,
+        "research_axis_bridge_software_retention": 0.0,
+        "research_axis_bridge_consumer_sell_through": 0.0,
+        "research_axis_bridge_guard_risk": 0.0
+      },
+      "plain_diagnosis": "증거 신뢰도와 검증성 점수가 커서, source-backed fixture 또는 guard 분리가 먼저 필요하다."
+    }
+  ],
+  "archetype_rows": [
+    {
+      "group_key": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "row_count": 11,
+      "symbol_count": 2,
+      "stage_counts": {
+        "0": 7,
+        "1": 4
+      },
+      "max_score": 4.4554,
+      "avg_score": 2.8353,
+      "stage3_green_count": 0,
+      "failed_gate_counts": {
+        "failed_stage2_total_score": 11,
+        "failed_stage2_eps_fcf": 11,
+        "failed_stage2_valuation": 11,
+        "failed_stage2_information_confidence": 11,
+        "failed_stage3_total_score": 11,
+        "failed_stage3_eps_fcf": 11,
+        "failed_stage3_visibility": 11,
+        "failed_stage3_bottleneck": 11,
+        "failed_stage3_market_mispricing": 11,
+        "failed_stage3_valuation": 11,
+        "failed_stage3_revision": 11,
+        "failed_structural_visibility_quality": 11,
+        "failed_sector_visibility": 11,
+        "failed_sector_bottleneck": 11,
+        "failed_green_cross_evidence": 11,
+        "failed_domain_specific_evidence": 11,
+        "failed_stage3_contract_quality": 4
+      },
+      "average_component_losses": [
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "avg_max_points": 25.0,
+          "avg_score_points": 3.1818,
+          "avg_loss_points": 21.8182,
+          "avg_fill_rate": 0.1273
+        },
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "avg_max_points": 20.0,
+          "avg_score_points": 0.0,
+          "avg_loss_points": 20.0,
+          "avg_fill_rate": 0.0
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "avg_max_points": 18.0,
+          "avg_score_points": 1.1487,
+          "avg_loss_points": 16.8513,
+          "avg_fill_rate": 0.0638
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "avg_max_points": 12.0,
+          "avg_score_points": 0.36,
+          "avg_loss_points": 11.64,
+          "avg_fill_rate": 0.03
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "avg_max_points": 12.0,
+          "avg_score_points": 0.48,
+          "avg_loss_points": 11.52,
+          "avg_fill_rate": 0.04
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "avg_max_points": 8.0,
+          "avg_score_points": 0.4311,
+          "avg_loss_points": 7.5689,
+          "avg_fill_rate": 0.0539
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "avg_max_points": 5.0,
+          "avg_score_points": 1.0227,
+          "avg_loss_points": 3.9773,
+          "avg_fill_rate": 0.2045
+        }
+      ],
+      "best_row_waterfall": {
+        "symbol": "000660",
+        "company_name": "SK하이닉스",
+        "as_of_date": "2025-11-01",
+        "current_stage": "0",
+        "current_score": 4.4554,
+        "green_shortfall_to_87": 82.5446,
+        "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+        "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+        "sector_profile": "GENERIC",
+        "total_weight": 100.0,
+        "total_component_score": 8.4554,
+        "total_component_loss_to_100": 91.5446,
+        "component_score_minus_current_score": 4.0,
+        "components": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 20.0,
+            "score_points": 0.0,
+            "loss_points": 20.0,
+            "fill_rate": 0.0
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 25.0,
+            "score_points": 5.0,
+            "loss_points": 20.0,
+            "fill_rate": 0.2
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 18.0,
+            "score_points": 1.188,
+            "loss_points": 16.812,
+            "fill_rate": 0.066
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 12.0,
+            "score_points": 0.48,
+            "loss_points": 11.52,
+            "fill_rate": 0.04
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 12.0,
+            "score_points": 0.36,
+            "loss_points": 11.64,
+            "fill_rate": 0.03
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 8.0,
+            "score_points": 0.6774,
+            "loss_points": 7.3226,
+            "fill_rate": 0.0847
+          },
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 5.0,
+            "score_points": 0.75,
+            "loss_points": 4.25,
+            "fill_rate": 0.15
+          }
+        ],
+        "top_component_losses": [
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 25.0,
+            "score_points": 5.0,
+            "loss_points": 20.0,
+            "fill_rate": 0.2
+          },
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 20.0,
+            "score_points": 0.0,
+            "loss_points": 20.0,
+            "fill_rate": 0.0
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 18.0,
+            "score_points": 1.188,
+            "loss_points": 16.812,
+            "fill_rate": 0.066
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 12.0,
+            "score_points": 0.36,
+            "loss_points": 11.64,
+            "fill_rate": 0.03
+          }
+        ],
+        "failed_gates": [
+          "failed_stage2_total_score",
+          "failed_stage2_eps_fcf",
+          "failed_stage2_valuation",
+          "failed_stage2_information_confidence",
+          "failed_stage3_total_score",
+          "failed_stage3_eps_fcf",
+          "failed_stage3_visibility",
+          "failed_stage3_bottleneck",
+          "failed_stage3_market_mispricing",
+          "failed_stage3_valuation",
+          "failed_stage3_revision",
+          "failed_structural_visibility_quality",
+          "failed_sector_visibility",
+          "failed_sector_bottleneck",
+          "failed_green_cross_evidence",
+          "failed_domain_specific_evidence"
+        ],
+        "green_gate_deficit_summary": "total:4.46/87.00(-82.54); yellow_total:4.46/75.00(-70.54); revision:0.00/55.00(-55.00); structural_visibility:0.00/45.00(-45.00); sector_visibility:0.00/45.00(-45.00); domain_evidence:0.00/35.00(-35.00); sector_bottleneck:6.00/35.00(-29.00); eps_fcf:0.00/17.00(-17.00); visibility:5.00/18.75(-13.75); bottleneck:1.19/13.50(-12.31); valuation:0.36/8.00(-7.64); mispricing:0.48/8.00(-7.52); cross_evidence:1.00/3.00(-2.00)",
+        "bridge_snapshot": {
+          "research_axis_bridge_margin": 0.0,
+          "research_axis_bridge_customer": 0.0,
+          "research_axis_bridge_backlog": 0.0,
+          "research_axis_bridge_contract": 0.0,
+          "research_axis_bridge_valuation_repricing": 0.0,
+          "research_axis_bridge_capital_return": 0.0,
+          "research_axis_bridge_insurance_quality": 0.0,
+          "research_axis_bridge_bio_commercialization": 0.0,
+          "research_axis_bridge_software_retention": 0.0,
+          "research_axis_bridge_consumer_sell_through": 0.0,
+          "research_axis_bridge_guard_risk": 0.0
+        },
+        "plain_diagnosis": "실적 전환이 아직 EPS/FCF component로 충분히 확정되지 않았다."
+      }
+    },
+    {
+      "group_key": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "row_count": 44,
+      "symbol_count": 4,
+      "stage_counts": {
+        "1": 11,
+        "2": 33
+      },
+      "max_score": 72.9252,
+      "avg_score": 66.9741,
+      "stage3_green_count": 0,
+      "failed_gate_counts": {
+        "failed_stage3_total_score": 44,
+        "failed_stage3_bottleneck": 44,
+        "failed_stage3_contract_quality": 33,
+        "failed_stage3_visibility": 22,
+        "failed_sector_visibility": 22,
+        "failed_domain_specific_evidence": 22,
+        "failed_sector_bottleneck": 11,
+        "failed_stage2_total_score": 11,
+        "failed_stage2_information_confidence": 11,
+        "failed_stage3_valuation": 11,
+        "failed_structural_visibility_quality": 11
+      },
+      "average_component_losses": [
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "avg_max_points": 20.0,
+          "avg_score_points": 8.65,
+          "avg_loss_points": 11.35,
+          "avg_fill_rate": 0.4325
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "avg_max_points": 24.0,
+          "avg_score_points": 16.1424,
+          "avg_loss_points": 7.8576,
+          "avg_fill_rate": 0.6726
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "avg_max_points": 5.0,
+          "avg_score_points": 0.7025,
+          "avg_loss_points": 4.2975,
+          "avg_fill_rate": 0.1405
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "avg_max_points": 12.0,
+          "avg_score_points": 8.9894,
+          "avg_loss_points": 3.0106,
+          "avg_fill_rate": 0.7491
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "avg_max_points": 13.0,
+          "avg_score_points": 10.5031,
+          "avg_loss_points": 2.4969,
+          "avg_fill_rate": 0.8079
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "avg_max_points": 5.0,
+          "avg_score_points": 2.8125,
+          "avg_loss_points": 2.1875,
+          "avg_fill_rate": 0.5625
+        },
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "avg_max_points": 21.0,
+          "avg_score_points": 20.475,
+          "avg_loss_points": 0.525,
+          "avg_fill_rate": 0.975
+        }
+      ],
+      "best_row_waterfall": {
+        "symbol": "267260",
+        "company_name": "HD현대일렉트릭",
+        "as_of_date": "2023-08-01",
+        "current_stage": "2",
+        "current_score": 72.9252,
+        "green_shortfall_to_87": 14.0748,
+        "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+        "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+        "sector_profile": "POWER_EQUIPMENT",
+        "total_weight": 100.0,
+        "total_component_score": 72.9252,
+        "total_component_loss_to_100": 27.0748,
+        "component_score_minus_current_score": 0.0,
+        "components": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 21.0,
+            "score_points": 21.0,
+            "loss_points": 0.0,
+            "fill_rate": 1.0
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 24.0,
+            "score_points": 19.2878,
+            "loss_points": 4.7122,
+            "fill_rate": 0.8037
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 20.0,
+            "score_points": 9.905,
+            "loss_points": 10.095,
+            "fill_rate": 0.4952
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 13.0,
+            "score_points": 10.1855,
+            "loss_points": 2.8145,
+            "fill_rate": 0.7835
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 12.0,
+            "score_points": 8.0775,
+            "loss_points": 3.9225,
+            "fill_rate": 0.6731
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 5.0,
+            "score_points": 1.4694,
+            "loss_points": 3.5306,
+            "fill_rate": 0.2939
+          },
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 5.0,
+            "score_points": 3.0,
+            "loss_points": 2.0,
+            "fill_rate": 0.6
+          }
+        ],
+        "top_component_losses": [
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 20.0,
+            "score_points": 9.905,
+            "loss_points": 10.095,
+            "fill_rate": 0.4952
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 24.0,
+            "score_points": 19.2878,
+            "loss_points": 4.7122,
+            "fill_rate": 0.8037
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 12.0,
+            "score_points": 8.0775,
+            "loss_points": 3.9225,
+            "fill_rate": 0.6731
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 5.0,
+            "score_points": 1.4694,
+            "loss_points": 3.5306,
+            "fill_rate": 0.2939
+          }
+        ],
+        "failed_gates": [
+          "failed_stage3_total_score",
+          "failed_stage3_bottleneck",
+          "failed_stage3_contract_quality"
+        ],
+        "green_gate_deficit_summary": "total:72.93/87.00(-14.07); bottleneck:9.90/15.00(-5.09); contract:41.50/45.00(-3.50); yellow_total:72.93/75.00(-2.07)",
+        "bridge_snapshot": {
+          "research_axis_bridge_margin": 100.0,
+          "research_axis_bridge_customer": 100.0,
+          "research_axis_bridge_backlog": 100.0,
+          "research_axis_bridge_contract": 100.0,
+          "research_axis_bridge_valuation_repricing": 100.0,
+          "research_axis_bridge_capital_return": 0.0,
+          "research_axis_bridge_insurance_quality": 0.0,
+          "research_axis_bridge_bio_commercialization": 0.0,
+          "research_axis_bridge_software_retention": 0.0,
+          "research_axis_bridge_consumer_sell_through": 0.0,
+          "research_axis_bridge_guard_risk": 0.0
+        },
+        "plain_diagnosis": "좋은 연구축이 있어도 bottleneck/visibility runtime field로 약하게 번역되어 Green 문턱을 못 넘는다."
+      }
+    },
+    {
+      "group_key": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "row_count": 12,
+      "symbol_count": 1,
+      "stage_counts": {
+        "1": 12
+      },
+      "max_score": 35.6473,
+      "avg_score": 35.6473,
+      "stage3_green_count": 0,
+      "failed_gate_counts": {
+        "failed_stage2_total_score": 12,
+        "failed_stage2_eps_fcf": 12,
+        "failed_stage2_information_confidence": 12,
+        "failed_stage3_total_score": 12,
+        "failed_stage3_eps_fcf": 12,
+        "failed_stage3_visibility": 12,
+        "failed_stage3_bottleneck": 12,
+        "failed_stage3_market_mispricing": 12,
+        "failed_stage3_valuation": 12,
+        "failed_sector_bottleneck": 12
+      },
+      "average_component_losses": [
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "avg_max_points": 20.0,
+          "avg_score_points": 0.0,
+          "avg_loss_points": 20.0,
+          "avg_fill_rate": 0.0
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "avg_max_points": 17.0,
+          "avg_score_points": 2.3766,
+          "avg_loss_points": 14.6234,
+          "avg_fill_rate": 0.1398
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "avg_max_points": 24.0,
+          "avg_score_points": 14.5343,
+          "avg_loss_points": 9.4657,
+          "avg_fill_rate": 0.6056
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "avg_max_points": 14.0,
+          "avg_score_points": 7.8829,
+          "avg_loss_points": 6.1171,
+          "avg_fill_rate": 0.5631
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "avg_max_points": 6.0,
+          "avg_score_points": 0.0,
+          "avg_loss_points": 6.0,
+          "avg_fill_rate": 0.0
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "avg_max_points": 14.0,
+          "avg_score_points": 8.6035,
+          "avg_loss_points": 5.3965,
+          "avg_fill_rate": 0.6145
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "avg_max_points": 5.0,
+          "avg_score_points": 2.25,
+          "avg_loss_points": 2.75,
+          "avg_fill_rate": 0.45
+        }
+      ],
+      "best_row_waterfall": {
+        "symbol": "012450",
+        "company_name": "한화에어로스페이스",
+        "as_of_date": "2024-08-01",
+        "current_stage": "1",
+        "current_score": 35.6473,
+        "green_shortfall_to_87": 51.3527,
+        "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+        "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+        "sector_profile": "DEFENSE",
+        "total_weight": 100.0,
+        "total_component_score": 35.6473,
+        "total_component_loss_to_100": 64.3527,
+        "component_score_minus_current_score": 0.0,
+        "components": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 20.0,
+            "score_points": 0.0,
+            "loss_points": 20.0,
+            "fill_rate": 0.0
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 24.0,
+            "score_points": 14.5343,
+            "loss_points": 9.4657,
+            "fill_rate": 0.6056
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 17.0,
+            "score_points": 2.3766,
+            "loss_points": 14.6234,
+            "fill_rate": 0.1398
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 14.0,
+            "score_points": 8.6035,
+            "loss_points": 5.3965,
+            "fill_rate": 0.6145
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 14.0,
+            "score_points": 7.8829,
+            "loss_points": 6.1171,
+            "fill_rate": 0.5631
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 6.0,
+            "score_points": 0.0,
+            "loss_points": 6.0,
+            "fill_rate": 0.0
+          },
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 5.0,
+            "score_points": 2.25,
+            "loss_points": 2.75,
+            "fill_rate": 0.45
+          }
+        ],
+        "top_component_losses": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 20.0,
+            "score_points": 0.0,
+            "loss_points": 20.0,
+            "fill_rate": 0.0
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 17.0,
+            "score_points": 2.3766,
+            "loss_points": 14.6234,
+            "fill_rate": 0.1398
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 24.0,
+            "score_points": 14.5343,
+            "loss_points": 9.4657,
+            "fill_rate": 0.6056
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 14.0,
+            "score_points": 7.8829,
+            "loss_points": 6.1171,
+            "fill_rate": 0.5631
+          }
+        ],
+        "failed_gates": [
+          "failed_stage2_total_score",
+          "failed_stage2_eps_fcf",
+          "failed_stage2_information_confidence",
+          "failed_stage3_total_score",
+          "failed_stage3_eps_fcf",
+          "failed_stage3_visibility",
+          "failed_stage3_bottleneck",
+          "failed_stage3_market_mispricing",
+          "failed_stage3_valuation",
+          "failed_sector_bottleneck"
+        ],
+        "green_gate_deficit_summary": "total:35.65/87.00(-51.35); yellow_total:35.65/75.00(-39.35); sector_bottleneck:14.65/35.00(-20.35); eps_fcf:0.00/17.00(-17.00); bottleneck:2.38/12.75(-10.37); visibility:14.53/18.00(-3.47); valuation:7.88/9.33(-1.45); mispricing:8.60/9.33(-0.73)",
+        "bridge_snapshot": {
+          "research_axis_bridge_margin": 100.0,
+          "research_axis_bridge_customer": 100.0,
+          "research_axis_bridge_backlog": 100.0,
+          "research_axis_bridge_contract": 100.0,
+          "research_axis_bridge_valuation_repricing": 100.0,
+          "research_axis_bridge_capital_return": 0.0,
+          "research_axis_bridge_insurance_quality": 0.0,
+          "research_axis_bridge_bio_commercialization": 0.0,
+          "research_axis_bridge_software_retention": 0.0,
+          "research_axis_bridge_consumer_sell_through": 100.0,
+          "research_axis_bridge_guard_risk": 0.0
+        },
+        "plain_diagnosis": "실적 전환이 아직 EPS/FCF component로 충분히 확정되지 않았다."
+      }
+    },
+    {
+      "group_key": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "row_count": 19,
+      "symbol_count": 1,
+      "stage_counts": {
+        "3-Yellow": 19
+      },
+      "max_score": 80.0131,
+      "avg_score": 78.5529,
+      "stage3_green_count": 0,
+      "failed_gate_counts": {
+        "failed_stage3_total_score": 19,
+        "failed_stage3_bottleneck": 19,
+        "failed_stage2_information_confidence": 7,
+        "failed_green_cross_evidence": 7
+      },
+      "average_component_losses": [
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "avg_max_points": 19.0,
+          "avg_score_points": 11.4554,
+          "avg_loss_points": 7.5446,
+          "avg_fill_rate": 0.6029
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "avg_max_points": 4.0,
+          "avg_score_points": 0.0802,
+          "avg_loss_points": 3.9198,
+          "avg_fill_rate": 0.02
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "avg_max_points": 21.0,
+          "avg_score_points": 17.5443,
+          "avg_loss_points": 3.4557,
+          "avg_fill_rate": 0.8354
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "avg_max_points": 5.0,
+          "avg_score_points": 2.4474,
+          "avg_loss_points": 2.5526,
+          "avg_fill_rate": 0.4895
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "avg_max_points": 12.0,
+          "avg_score_points": 9.9846,
+          "avg_loss_points": 2.0154,
+          "avg_fill_rate": 0.8321
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "avg_max_points": 15.0,
+          "avg_score_points": 13.041,
+          "avg_loss_points": 1.959,
+          "avg_fill_rate": 0.8694
+        },
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "avg_max_points": 24.0,
+          "avg_score_points": 24.0,
+          "avg_loss_points": 0.0,
+          "avg_fill_rate": 1.0
+        }
+      ],
+      "best_row_waterfall": {
+        "symbol": "000660",
+        "company_name": "SK하이닉스",
+        "as_of_date": "2024-05-01",
+        "current_stage": "3-Yellow",
+        "current_score": 80.0131,
+        "green_shortfall_to_87": 6.9869,
+        "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+        "sector_profile": "MEMORY_HBM",
+        "total_weight": 100.0,
+        "total_component_score": 80.0131,
+        "total_component_loss_to_100": 19.9869,
+        "component_score_minus_current_score": 0.0,
+        "components": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 24.0,
+            "score_points": 24.0,
+            "loss_points": 0.0,
+            "fill_rate": 1.0
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 21.0,
+            "score_points": 17.724,
+            "loss_points": 3.276,
+            "fill_rate": 0.844
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 19.0,
+            "score_points": 12.1827,
+            "loss_points": 6.8173,
+            "fill_rate": 0.6412
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 15.0,
+            "score_points": 13.041,
+            "loss_points": 1.959,
+            "fill_rate": 0.8694
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 12.0,
+            "score_points": 9.9846,
+            "loss_points": 2.0154,
+            "fill_rate": 0.8321
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 4.0,
+            "score_points": 0.0808,
+            "loss_points": 3.9192,
+            "fill_rate": 0.0202
+          },
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 5.0,
+            "score_points": 3.0,
+            "loss_points": 2.0,
+            "fill_rate": 0.6
+          }
+        ],
+        "top_component_losses": [
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 19.0,
+            "score_points": 12.1827,
+            "loss_points": 6.8173,
+            "fill_rate": 0.6412
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 4.0,
+            "score_points": 0.0808,
+            "loss_points": 3.9192,
+            "fill_rate": 0.0202
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 21.0,
+            "score_points": 17.724,
+            "loss_points": 3.276,
+            "fill_rate": 0.844
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 12.0,
+            "score_points": 9.9846,
+            "loss_points": 2.0154,
+            "fill_rate": 0.8321
+          }
+        ],
+        "failed_gates": [
+          "failed_stage3_total_score",
+          "failed_stage3_bottleneck"
+        ],
+        "green_gate_deficit_summary": "total:80.01/87.00(-6.99); bottleneck:12.18/14.25(-2.07)",
+        "bridge_snapshot": {
+          "research_axis_bridge_margin": 100.0,
+          "research_axis_bridge_customer": 100.0,
+          "research_axis_bridge_backlog": 100.0,
+          "research_axis_bridge_contract": 100.0,
+          "research_axis_bridge_valuation_repricing": 100.0,
+          "research_axis_bridge_capital_return": 0.0,
+          "research_axis_bridge_insurance_quality": 0.0,
+          "research_axis_bridge_bio_commercialization": 0.0,
+          "research_axis_bridge_software_retention": 0.0,
+          "research_axis_bridge_consumer_sell_through": 0.0,
+          "research_axis_bridge_guard_risk": 0.0
+        },
+        "plain_diagnosis": "좋은 연구축이 있어도 bottleneck/visibility runtime field로 약하게 번역되어 Green 문턱을 못 넘는다."
+      }
+    },
+    {
+      "group_key": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "row_count": 1,
+      "symbol_count": 1,
+      "stage_counts": {
+        "2": 1
+      },
+      "max_score": 72.1181,
+      "avg_score": 72.1181,
+      "stage3_green_count": 0,
+      "failed_gate_counts": {
+        "failed_stage3_total_score": 1,
+        "failed_stage3_visibility": 1,
+        "failed_stage3_bottleneck": 1
+      },
+      "average_component_losses": [
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "avg_max_points": 19.0,
+          "avg_score_points": 11.4,
+          "avg_loss_points": 7.6,
+          "avg_fill_rate": 0.6
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "avg_max_points": 14.0,
+          "avg_score_points": 8.165,
+          "avg_loss_points": 5.835,
+          "avg_fill_rate": 0.5832
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "avg_max_points": 5.0,
+          "avg_score_points": 0.0615,
+          "avg_loss_points": 4.9385,
+          "avg_fill_rate": 0.0123
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "avg_max_points": 18.0,
+          "avg_score_points": 13.1685,
+          "avg_loss_points": 4.8315,
+          "avg_fill_rate": 0.7316
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "avg_max_points": 12.0,
+          "avg_score_points": 9.4296,
+          "avg_loss_points": 2.5704,
+          "avg_fill_rate": 0.7858
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "avg_max_points": 10.0,
+          "avg_score_points": 7.8935,
+          "avg_loss_points": 2.1065,
+          "avg_fill_rate": 0.7893
+        },
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "avg_max_points": 22.0,
+          "avg_score_points": 22.0,
+          "avg_loss_points": 0.0,
+          "avg_fill_rate": 1.0
+        }
+      ],
+      "best_row_waterfall": {
+        "symbol": "005930",
+        "company_name": "삼성전자",
+        "as_of_date": "2024-04-01",
+        "current_stage": "2",
+        "current_score": 72.1181,
+        "green_shortfall_to_87": 14.8819,
+        "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+        "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+        "sector_profile": "MEMORY_HBM",
+        "total_weight": 100.0,
+        "total_component_score": 72.1181,
+        "total_component_loss_to_100": 27.8819,
+        "component_score_minus_current_score": 0.0,
+        "components": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 22.0,
+            "score_points": 22.0,
+            "loss_points": 0.0,
+            "fill_rate": 1.0
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 18.0,
+            "score_points": 13.1685,
+            "loss_points": 4.8315,
+            "fill_rate": 0.7316
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 14.0,
+            "score_points": 8.165,
+            "loss_points": 5.835,
+            "fill_rate": 0.5832
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 12.0,
+            "score_points": 9.4296,
+            "loss_points": 2.5704,
+            "fill_rate": 0.7858
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 10.0,
+            "score_points": 7.8935,
+            "loss_points": 2.1065,
+            "fill_rate": 0.7893
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 5.0,
+            "score_points": 0.0615,
+            "loss_points": 4.9385,
+            "fill_rate": 0.0123
+          },
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 19.0,
+            "score_points": 11.4,
+            "loss_points": 7.6,
+            "fill_rate": 0.6
+          }
+        ],
+        "top_component_losses": [
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 19.0,
+            "score_points": 11.4,
+            "loss_points": 7.6,
+            "fill_rate": 0.6
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 14.0,
+            "score_points": 8.165,
+            "loss_points": 5.835,
+            "fill_rate": 0.5832
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 5.0,
+            "score_points": 0.0615,
+            "loss_points": 4.9385,
+            "fill_rate": 0.0123
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 18.0,
+            "score_points": 13.1685,
+            "loss_points": 4.8315,
+            "fill_rate": 0.7316
+          }
+        ],
+        "failed_gates": [
+          "failed_stage3_total_score",
+          "failed_stage3_visibility",
+          "failed_stage3_bottleneck"
+        ],
+        "green_gate_deficit_summary": "total:72.12/87.00(-14.88); yellow_total:72.12/75.00(-2.88); bottleneck:8.16/10.50(-2.33); visibility:13.17/13.50(-0.33)",
+        "bridge_snapshot": {
+          "research_axis_bridge_margin": 100.0,
+          "research_axis_bridge_customer": 100.0,
+          "research_axis_bridge_backlog": 100.0,
+          "research_axis_bridge_contract": 0.0,
+          "research_axis_bridge_valuation_repricing": 100.0,
+          "research_axis_bridge_capital_return": 0.0,
+          "research_axis_bridge_insurance_quality": 0.0,
+          "research_axis_bridge_bio_commercialization": 0.0,
+          "research_axis_bridge_software_retention": 0.0,
+          "research_axis_bridge_consumer_sell_through": 0.0,
+          "research_axis_bridge_guard_risk": 0.0
+        },
+        "plain_diagnosis": "증거 신뢰도와 검증성 점수가 커서, source-backed fixture 또는 guard 분리가 먼저 필요하다."
+      }
+    },
+    {
+      "group_key": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "row_count": 22,
+      "symbol_count": 2,
+      "stage_counts": {
+        "1": 22
+      },
+      "max_score": 64.161,
+      "avg_score": 54.4233,
+      "stage3_green_count": 0,
+      "failed_gate_counts": {
+        "failed_stage2_total_score": 22,
+        "failed_stage3_total_score": 22,
+        "failed_stage3_visibility": 22,
+        "failed_stage3_bottleneck": 22,
+        "failed_stage3_market_mispricing": 22,
+        "failed_stage3_valuation": 22,
+        "failed_sector_bottleneck": 11,
+        "failed_domain_specific_evidence": 11,
+        "failed_stage2_eps_fcf": 11,
+        "failed_stage2_information_confidence": 11,
+        "failed_stage3_eps_fcf": 11,
+        "failed_green_cross_evidence": 11
+      },
+      "average_component_losses": [
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "avg_max_points": 23.0,
+          "avg_score_points": 15.2844,
+          "avg_loss_points": 7.7156,
+          "avg_fill_rate": 0.6645
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "avg_max_points": 12.0,
+          "avg_score_points": 4.4712,
+          "avg_loss_points": 7.5289,
+          "avg_fill_rate": 0.3726
+        },
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "avg_max_points": 22.0,
+          "avg_score_points": 15.95,
+          "avg_loss_points": 6.05,
+          "avg_fill_rate": 0.725
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "avg_max_points": 10.0,
+          "avg_score_points": 4.5,
+          "avg_loss_points": 5.5,
+          "avg_fill_rate": 0.45
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "avg_max_points": 13.0,
+          "avg_score_points": 7.5797,
+          "avg_loss_points": 5.4203,
+          "avg_fill_rate": 0.5831
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "avg_max_points": 16.0,
+          "avg_score_points": 10.6144,
+          "avg_loss_points": 5.3856,
+          "avg_fill_rate": 0.6634
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "avg_max_points": 4.0,
+          "avg_score_points": 0.0237,
+          "avg_loss_points": 3.9763,
+          "avg_fill_rate": 0.0059
+        }
+      ],
+      "best_row_waterfall": {
+        "symbol": "003230",
+        "company_name": "삼양식품",
+        "as_of_date": "2024-06-01",
+        "current_stage": "1",
+        "current_score": 64.161,
+        "green_shortfall_to_87": 22.839,
+        "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+        "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+        "sector_profile": "GENERIC",
+        "total_weight": 100.0,
+        "total_component_score": 64.161,
+        "total_component_loss_to_100": 35.839,
+        "component_score_minus_current_score": 0.0,
+        "components": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 22.0,
+            "score_points": 22.0,
+            "loss_points": 0.0,
+            "fill_rate": 1.0
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 23.0,
+            "score_points": 15.0627,
+            "loss_points": 7.9373,
+            "fill_rate": 0.6549
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 12.0,
+            "score_points": 2.8878,
+            "loss_points": 9.1122,
+            "fill_rate": 0.2407
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 16.0,
+            "score_points": 10.5952,
+            "loss_points": 5.4048,
+            "fill_rate": 0.6622
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 13.0,
+            "score_points": 7.568,
+            "loss_points": 5.432,
+            "fill_rate": 0.5822
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 4.0,
+            "score_points": 0.0473,
+            "loss_points": 3.9527,
+            "fill_rate": 0.0118
+          },
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 10.0,
+            "score_points": 6.0,
+            "loss_points": 4.0,
+            "fill_rate": 0.6
+          }
+        ],
+        "top_component_losses": [
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 12.0,
+            "score_points": 2.8878,
+            "loss_points": 9.1122,
+            "fill_rate": 0.2407
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 23.0,
+            "score_points": 15.0627,
+            "loss_points": 7.9373,
+            "fill_rate": 0.6549
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 13.0,
+            "score_points": 7.568,
+            "loss_points": 5.432,
+            "fill_rate": 0.5822
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 16.0,
+            "score_points": 10.5952,
+            "loss_points": 5.4048,
+            "fill_rate": 0.6622
+          }
+        ],
+        "failed_gates": [
+          "failed_stage2_total_score",
+          "failed_stage3_total_score",
+          "failed_stage3_visibility",
+          "failed_stage3_bottleneck",
+          "failed_stage3_market_mispricing",
+          "failed_stage3_valuation",
+          "failed_sector_bottleneck",
+          "failed_domain_specific_evidence"
+        ],
+        "green_gate_deficit_summary": "total:64.16/87.00(-22.84); domain_evidence:14.29/35.00(-20.71); yellow_total:64.16/75.00(-10.84); sector_bottleneck:25.50/35.00(-9.50); bottleneck:2.89/9.00(-6.11); visibility:15.06/17.25(-2.19); valuation:7.57/8.67(-1.10); mispricing:10.60/10.67(-0.07)",
+        "bridge_snapshot": {
+          "research_axis_bridge_margin": 100.0,
+          "research_axis_bridge_customer": 100.0,
+          "research_axis_bridge_backlog": 0.0,
+          "research_axis_bridge_contract": 0.0,
+          "research_axis_bridge_valuation_repricing": 100.0,
+          "research_axis_bridge_capital_return": 0.0,
+          "research_axis_bridge_insurance_quality": 0.0,
+          "research_axis_bridge_bio_commercialization": 0.0,
+          "research_axis_bridge_software_retention": 0.0,
+          "research_axis_bridge_consumer_sell_through": 100.0,
+          "research_axis_bridge_guard_risk": 0.0
+        },
+        "plain_diagnosis": "좋은 연구축이 있어도 bottleneck/visibility runtime field로 약하게 번역되어 Green 문턱을 못 넘는다."
+      }
+    },
+    {
+      "group_key": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "row_count": 11,
+      "symbol_count": 1,
+      "stage_counts": {
+        "1": 11
+      },
+      "max_score": 9.308,
+      "avg_score": 9.308,
+      "stage3_green_count": 0,
+      "failed_gate_counts": {
+        "failed_stage2_total_score": 11,
+        "failed_stage2_eps_fcf": 11,
+        "failed_stage2_valuation": 11,
+        "failed_stage2_information_confidence": 11,
+        "failed_stage3_total_score": 11,
+        "failed_stage3_eps_fcf": 11,
+        "failed_stage3_visibility": 11,
+        "failed_stage3_bottleneck": 11,
+        "failed_stage3_market_mispricing": 11,
+        "failed_stage3_valuation": 11,
+        "failed_stage3_revision": 11,
+        "failed_structural_visibility_quality": 11,
+        "failed_sector_visibility": 11,
+        "failed_sector_bottleneck": 11,
+        "failed_green_cross_evidence": 11,
+        "failed_domain_specific_evidence": 11
+      },
+      "average_component_losses": [
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "avg_max_points": 40.0,
+          "avg_score_points": 12.0,
+          "avg_loss_points": 28.0,
+          "avg_fill_rate": 0.3
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "avg_max_points": 14.0,
+          "avg_score_points": 0.0,
+          "avg_loss_points": 14.0,
+          "avg_fill_rate": 0.0
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "avg_max_points": 12.0,
+          "avg_score_points": 0.48,
+          "avg_loss_points": 11.52,
+          "avg_fill_rate": 0.04
+        },
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "avg_max_points": 10.0,
+          "avg_score_points": 0.0,
+          "avg_loss_points": 10.0,
+          "avg_fill_rate": 0.0
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "avg_max_points": 10.0,
+          "avg_score_points": 0.3,
+          "avg_loss_points": 9.7,
+          "avg_fill_rate": 0.03
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "avg_max_points": 8.0,
+          "avg_score_points": 0.528,
+          "avg_loss_points": 7.472,
+          "avg_fill_rate": 0.066
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "avg_max_points": 6.0,
+          "avg_score_points": 0.0,
+          "avg_loss_points": 6.0,
+          "avg_fill_rate": 0.0
+        }
+      ],
+      "best_row_waterfall": {
+        "symbol": "247540",
+        "company_name": "에코프로비엠",
+        "as_of_date": "2023-08-01",
+        "current_stage": "1",
+        "current_score": 9.308,
+        "green_shortfall_to_87": 77.692,
+        "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+        "sector_profile": "GENERIC",
+        "total_weight": 100.0,
+        "total_component_score": 13.308,
+        "total_component_loss_to_100": 86.692,
+        "component_score_minus_current_score": 4.0,
+        "components": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 10.0,
+            "score_points": 0.0,
+            "loss_points": 10.0,
+            "fill_rate": 0.0
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 14.0,
+            "score_points": 0.0,
+            "loss_points": 14.0,
+            "fill_rate": 0.0
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 8.0,
+            "score_points": 0.528,
+            "loss_points": 7.472,
+            "fill_rate": 0.066
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 12.0,
+            "score_points": 0.48,
+            "loss_points": 11.52,
+            "fill_rate": 0.04
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 10.0,
+            "score_points": 0.3,
+            "loss_points": 9.7,
+            "fill_rate": 0.03
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 6.0,
+            "score_points": 0.0,
+            "loss_points": 6.0,
+            "fill_rate": 0.0
+          },
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 40.0,
+            "score_points": 12.0,
+            "loss_points": 28.0,
+            "fill_rate": 0.3
+          }
+        ],
+        "top_component_losses": [
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 40.0,
+            "score_points": 12.0,
+            "loss_points": 28.0,
+            "fill_rate": 0.3
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 14.0,
+            "score_points": 0.0,
+            "loss_points": 14.0,
+            "fill_rate": 0.0
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 12.0,
+            "score_points": 0.48,
+            "loss_points": 11.52,
+            "fill_rate": 0.04
+          },
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 10.0,
+            "score_points": 0.0,
+            "loss_points": 10.0,
+            "fill_rate": 0.0
+          }
+        ],
+        "failed_gates": [
+          "failed_stage2_total_score",
+          "failed_stage2_eps_fcf",
+          "failed_stage2_valuation",
+          "failed_stage2_information_confidence",
+          "failed_stage3_total_score",
+          "failed_stage3_eps_fcf",
+          "failed_stage3_visibility",
+          "failed_stage3_bottleneck",
+          "failed_stage3_market_mispricing",
+          "failed_stage3_valuation",
+          "failed_stage3_revision",
+          "failed_structural_visibility_quality",
+          "failed_sector_visibility",
+          "failed_sector_bottleneck",
+          "failed_green_cross_evidence",
+          "failed_domain_specific_evidence"
+        ],
+        "green_gate_deficit_summary": "total:9.31/87.00(-77.69); yellow_total:9.31/75.00(-65.69); revision:0.00/55.00(-55.00); structural_visibility:0.00/45.00(-45.00); sector_visibility:0.00/45.00(-45.00); domain_evidence:0.00/35.00(-35.00); sector_bottleneck:6.00/35.00(-29.00); visibility:0.00/10.50(-10.50); eps_fcf:0.00/8.50(-8.50); mispricing:0.48/8.00(-7.52); valuation:0.30/6.67(-6.37); bottleneck:0.53/6.00(-5.47); cross_evidence:2.00/3.00(-1.00)",
+        "bridge_snapshot": {
+          "research_axis_bridge_margin": 0.0,
+          "research_axis_bridge_customer": 0.0,
+          "research_axis_bridge_backlog": 0.0,
+          "research_axis_bridge_contract": 0.0,
+          "research_axis_bridge_valuation_repricing": 0.0,
+          "research_axis_bridge_capital_return": 0.0,
+          "research_axis_bridge_insurance_quality": 0.0,
+          "research_axis_bridge_bio_commercialization": 0.0,
+          "research_axis_bridge_software_retention": 0.0,
+          "research_axis_bridge_consumer_sell_through": 0.0,
+          "research_axis_bridge_guard_risk": 0.0
+        },
+        "plain_diagnosis": "증거 신뢰도와 검증성 점수가 커서, source-backed fixture 또는 guard 분리가 먼저 필요하다."
+      }
+    }
+  ],
+  "sector_rows": [
+    {
+      "group_key": "DEFENSE",
+      "row_count": 12,
+      "symbol_count": 1,
+      "stage_counts": {
+        "1": 12
+      },
+      "max_score": 35.6473,
+      "avg_score": 35.6473,
+      "stage3_green_count": 0,
+      "failed_gate_counts": {
+        "failed_stage2_total_score": 12,
+        "failed_stage2_eps_fcf": 12,
+        "failed_stage2_information_confidence": 12,
+        "failed_stage3_total_score": 12,
+        "failed_stage3_eps_fcf": 12,
+        "failed_stage3_visibility": 12,
+        "failed_stage3_bottleneck": 12,
+        "failed_stage3_market_mispricing": 12,
+        "failed_stage3_valuation": 12,
+        "failed_sector_bottleneck": 12
+      },
+      "average_component_losses": [
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "avg_max_points": 20.0,
+          "avg_score_points": 0.0,
+          "avg_loss_points": 20.0,
+          "avg_fill_rate": 0.0
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "avg_max_points": 17.0,
+          "avg_score_points": 2.3766,
+          "avg_loss_points": 14.6234,
+          "avg_fill_rate": 0.1398
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "avg_max_points": 24.0,
+          "avg_score_points": 14.5343,
+          "avg_loss_points": 9.4657,
+          "avg_fill_rate": 0.6056
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "avg_max_points": 14.0,
+          "avg_score_points": 7.8829,
+          "avg_loss_points": 6.1171,
+          "avg_fill_rate": 0.5631
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "avg_max_points": 6.0,
+          "avg_score_points": 0.0,
+          "avg_loss_points": 6.0,
+          "avg_fill_rate": 0.0
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "avg_max_points": 14.0,
+          "avg_score_points": 8.6035,
+          "avg_loss_points": 5.3965,
+          "avg_fill_rate": 0.6145
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "avg_max_points": 5.0,
+          "avg_score_points": 2.25,
+          "avg_loss_points": 2.75,
+          "avg_fill_rate": 0.45
+        }
+      ],
+      "best_row_waterfall": {
+        "symbol": "012450",
+        "company_name": "한화에어로스페이스",
+        "as_of_date": "2024-08-01",
+        "current_stage": "1",
+        "current_score": 35.6473,
+        "green_shortfall_to_87": 51.3527,
+        "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+        "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+        "sector_profile": "DEFENSE",
+        "total_weight": 100.0,
+        "total_component_score": 35.6473,
+        "total_component_loss_to_100": 64.3527,
+        "component_score_minus_current_score": 0.0,
+        "components": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 20.0,
+            "score_points": 0.0,
+            "loss_points": 20.0,
+            "fill_rate": 0.0
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 24.0,
+            "score_points": 14.5343,
+            "loss_points": 9.4657,
+            "fill_rate": 0.6056
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 17.0,
+            "score_points": 2.3766,
+            "loss_points": 14.6234,
+            "fill_rate": 0.1398
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 14.0,
+            "score_points": 8.6035,
+            "loss_points": 5.3965,
+            "fill_rate": 0.6145
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 14.0,
+            "score_points": 7.8829,
+            "loss_points": 6.1171,
+            "fill_rate": 0.5631
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 6.0,
+            "score_points": 0.0,
+            "loss_points": 6.0,
+            "fill_rate": 0.0
+          },
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 5.0,
+            "score_points": 2.25,
+            "loss_points": 2.75,
+            "fill_rate": 0.45
+          }
+        ],
+        "top_component_losses": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 20.0,
+            "score_points": 0.0,
+            "loss_points": 20.0,
+            "fill_rate": 0.0
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 17.0,
+            "score_points": 2.3766,
+            "loss_points": 14.6234,
+            "fill_rate": 0.1398
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 24.0,
+            "score_points": 14.5343,
+            "loss_points": 9.4657,
+            "fill_rate": 0.6056
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 14.0,
+            "score_points": 7.8829,
+            "loss_points": 6.1171,
+            "fill_rate": 0.5631
+          }
+        ],
+        "failed_gates": [
+          "failed_stage2_total_score",
+          "failed_stage2_eps_fcf",
+          "failed_stage2_information_confidence",
+          "failed_stage3_total_score",
+          "failed_stage3_eps_fcf",
+          "failed_stage3_visibility",
+          "failed_stage3_bottleneck",
+          "failed_stage3_market_mispricing",
+          "failed_stage3_valuation",
+          "failed_sector_bottleneck"
+        ],
+        "green_gate_deficit_summary": "total:35.65/87.00(-51.35); yellow_total:35.65/75.00(-39.35); sector_bottleneck:14.65/35.00(-20.35); eps_fcf:0.00/17.00(-17.00); bottleneck:2.38/12.75(-10.37); visibility:14.53/18.00(-3.47); valuation:7.88/9.33(-1.45); mispricing:8.60/9.33(-0.73)",
+        "bridge_snapshot": {
+          "research_axis_bridge_margin": 100.0,
+          "research_axis_bridge_customer": 100.0,
+          "research_axis_bridge_backlog": 100.0,
+          "research_axis_bridge_contract": 100.0,
+          "research_axis_bridge_valuation_repricing": 100.0,
+          "research_axis_bridge_capital_return": 0.0,
+          "research_axis_bridge_insurance_quality": 0.0,
+          "research_axis_bridge_bio_commercialization": 0.0,
+          "research_axis_bridge_software_retention": 0.0,
+          "research_axis_bridge_consumer_sell_through": 100.0,
+          "research_axis_bridge_guard_risk": 0.0
+        },
+        "plain_diagnosis": "실적 전환이 아직 EPS/FCF component로 충분히 확정되지 않았다."
+      }
+    },
+    {
+      "group_key": "GENERIC",
+      "row_count": 29,
+      "symbol_count": 3,
+      "stage_counts": {
+        "0": 7,
+        "1": 22
+      },
+      "max_score": 64.161,
+      "avg_score": 28.943,
+      "stage3_green_count": 0,
+      "failed_gate_counts": {
+        "failed_stage2_total_score": 29,
+        "failed_stage3_total_score": 29,
+        "failed_stage3_visibility": 29,
+        "failed_stage3_bottleneck": 29,
+        "failed_stage3_market_mispricing": 29,
+        "failed_stage3_valuation": 29,
+        "failed_sector_bottleneck": 29,
+        "failed_domain_specific_evidence": 29,
+        "failed_stage2_eps_fcf": 18,
+        "failed_stage2_valuation": 18,
+        "failed_stage2_information_confidence": 18,
+        "failed_stage3_eps_fcf": 18,
+        "failed_stage3_revision": 18,
+        "failed_structural_visibility_quality": 18,
+        "failed_sector_visibility": 18,
+        "failed_green_cross_evidence": 18
+      },
+      "average_component_losses": [
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "avg_max_points": 20.1724,
+          "avg_score_points": 7.0086,
+          "avg_loss_points": 13.1638,
+          "avg_fill_rate": 0.3776
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "avg_max_points": 20.069,
+          "avg_score_points": 6.9203,
+          "avg_loss_points": 13.1486,
+          "avg_fill_rate": 0.2967
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "avg_max_points": 11.931,
+          "avg_score_points": 1.5824,
+          "avg_loss_points": 10.3486,
+          "avg_fill_rate": 0.1322
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "avg_max_points": 13.5172,
+          "avg_score_points": 4.3168,
+          "avg_loss_points": 9.2004,
+          "avg_fill_rate": 0.276
+        },
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "avg_max_points": 16.9655,
+          "avg_score_points": 8.3448,
+          "avg_loss_points": 8.6207,
+          "avg_fill_rate": 0.3793
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "avg_max_points": 11.6207,
+          "avg_score_points": 3.0713,
+          "avg_loss_points": 8.5494,
+          "avg_fill_rate": 0.2394
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "avg_max_points": 5.7241,
+          "avg_score_points": 0.1815,
+          "avg_loss_points": 5.5427,
+          "avg_fill_rate": 0.0249
+        }
+      ],
+      "best_row_waterfall": {
+        "symbol": "003230",
+        "company_name": "삼양식품",
+        "as_of_date": "2024-06-01",
+        "current_stage": "1",
+        "current_score": 64.161,
+        "green_shortfall_to_87": 22.839,
+        "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+        "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+        "sector_profile": "GENERIC",
+        "total_weight": 100.0,
+        "total_component_score": 64.161,
+        "total_component_loss_to_100": 35.839,
+        "component_score_minus_current_score": 0.0,
+        "components": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 22.0,
+            "score_points": 22.0,
+            "loss_points": 0.0,
+            "fill_rate": 1.0
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 23.0,
+            "score_points": 15.0627,
+            "loss_points": 7.9373,
+            "fill_rate": 0.6549
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 12.0,
+            "score_points": 2.8878,
+            "loss_points": 9.1122,
+            "fill_rate": 0.2407
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 16.0,
+            "score_points": 10.5952,
+            "loss_points": 5.4048,
+            "fill_rate": 0.6622
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 13.0,
+            "score_points": 7.568,
+            "loss_points": 5.432,
+            "fill_rate": 0.5822
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 4.0,
+            "score_points": 0.0473,
+            "loss_points": 3.9527,
+            "fill_rate": 0.0118
+          },
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 10.0,
+            "score_points": 6.0,
+            "loss_points": 4.0,
+            "fill_rate": 0.6
+          }
+        ],
+        "top_component_losses": [
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 12.0,
+            "score_points": 2.8878,
+            "loss_points": 9.1122,
+            "fill_rate": 0.2407
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 23.0,
+            "score_points": 15.0627,
+            "loss_points": 7.9373,
+            "fill_rate": 0.6549
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 13.0,
+            "score_points": 7.568,
+            "loss_points": 5.432,
+            "fill_rate": 0.5822
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 16.0,
+            "score_points": 10.5952,
+            "loss_points": 5.4048,
+            "fill_rate": 0.6622
+          }
+        ],
+        "failed_gates": [
+          "failed_stage2_total_score",
+          "failed_stage3_total_score",
+          "failed_stage3_visibility",
+          "failed_stage3_bottleneck",
+          "failed_stage3_market_mispricing",
+          "failed_stage3_valuation",
+          "failed_sector_bottleneck",
+          "failed_domain_specific_evidence"
+        ],
+        "green_gate_deficit_summary": "total:64.16/87.00(-22.84); domain_evidence:14.29/35.00(-20.71); yellow_total:64.16/75.00(-10.84); sector_bottleneck:25.50/35.00(-9.50); bottleneck:2.89/9.00(-6.11); visibility:15.06/17.25(-2.19); valuation:7.57/8.67(-1.10); mispricing:10.60/10.67(-0.07)",
+        "bridge_snapshot": {
+          "research_axis_bridge_margin": 100.0,
+          "research_axis_bridge_customer": 100.0,
+          "research_axis_bridge_backlog": 0.0,
+          "research_axis_bridge_contract": 0.0,
+          "research_axis_bridge_valuation_repricing": 100.0,
+          "research_axis_bridge_capital_return": 0.0,
+          "research_axis_bridge_insurance_quality": 0.0,
+          "research_axis_bridge_bio_commercialization": 0.0,
+          "research_axis_bridge_software_retention": 0.0,
+          "research_axis_bridge_consumer_sell_through": 100.0,
+          "research_axis_bridge_guard_risk": 0.0
+        },
+        "plain_diagnosis": "좋은 연구축이 있어도 bottleneck/visibility runtime field로 약하게 번역되어 Green 문턱을 못 넘는다."
+      }
+    },
+    {
+      "group_key": "K_BEAUTY_EXPORT",
+      "row_count": 11,
+      "symbol_count": 1,
+      "stage_counts": {
+        "1": 11
+      },
+      "max_score": 44.6855,
+      "avg_score": 44.6855,
+      "stage3_green_count": 0,
+      "failed_gate_counts": {
+        "failed_stage2_total_score": 11,
+        "failed_stage2_eps_fcf": 11,
+        "failed_stage2_information_confidence": 11,
+        "failed_stage3_total_score": 11,
+        "failed_stage3_eps_fcf": 11,
+        "failed_stage3_visibility": 11,
+        "failed_stage3_bottleneck": 11,
+        "failed_stage3_market_mispricing": 11,
+        "failed_stage3_valuation": 11,
+        "failed_green_cross_evidence": 11
+      },
+      "average_component_losses": [
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "avg_max_points": 22.0,
+          "avg_score_points": 9.9,
+          "avg_loss_points": 12.1,
+          "avg_fill_rate": 0.45
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "avg_max_points": 23.0,
+          "avg_score_points": 15.506,
+          "avg_loss_points": 7.494,
+          "avg_fill_rate": 0.6742
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "avg_max_points": 10.0,
+          "avg_score_points": 3.0,
+          "avg_loss_points": 7.0,
+          "avg_fill_rate": 0.3
+        },
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "avg_max_points": 12.0,
+          "avg_score_points": 6.0545,
+          "avg_loss_points": 5.9455,
+          "avg_fill_rate": 0.5045
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "avg_max_points": 13.0,
+          "avg_score_points": 7.5914,
+          "avg_loss_points": 5.4086,
+          "avg_fill_rate": 0.584
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "avg_max_points": 16.0,
+          "avg_score_points": 10.6336,
+          "avg_loss_points": 5.3664,
+          "avg_fill_rate": 0.6646
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "avg_max_points": 4.0,
+          "avg_score_points": 0.0,
+          "avg_loss_points": 4.0,
+          "avg_fill_rate": 0.0
+        }
+      ],
+      "best_row_waterfall": {
+        "symbol": "257720",
+        "company_name": "실리콘투",
+        "as_of_date": "2024-06-01",
+        "current_stage": "1",
+        "current_score": 44.6855,
+        "green_shortfall_to_87": 42.3145,
+        "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+        "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+        "sector_profile": "K_BEAUTY_EXPORT",
+        "total_weight": 100.0,
+        "total_component_score": 52.6855,
+        "total_component_loss_to_100": 47.3145,
+        "component_score_minus_current_score": 8.0,
+        "components": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 22.0,
+            "score_points": 9.9,
+            "loss_points": 12.1,
+            "fill_rate": 0.45
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 23.0,
+            "score_points": 15.506,
+            "loss_points": 7.494,
+            "fill_rate": 0.6742
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 12.0,
+            "score_points": 6.0545,
+            "loss_points": 5.9455,
+            "fill_rate": 0.5045
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 16.0,
+            "score_points": 10.6336,
+            "loss_points": 5.3664,
+            "fill_rate": 0.6646
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 13.0,
+            "score_points": 7.5914,
+            "loss_points": 5.4086,
+            "fill_rate": 0.584
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 4.0,
+            "score_points": 0.0,
+            "loss_points": 4.0,
+            "fill_rate": 0.0
+          },
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 10.0,
+            "score_points": 3.0,
+            "loss_points": 7.0,
+            "fill_rate": 0.3
+          }
+        ],
+        "top_component_losses": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 22.0,
+            "score_points": 9.9,
+            "loss_points": 12.1,
+            "fill_rate": 0.45
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 23.0,
+            "score_points": 15.506,
+            "loss_points": 7.494,
+            "fill_rate": 0.6742
+          },
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 10.0,
+            "score_points": 3.0,
+            "loss_points": 7.0,
+            "fill_rate": 0.3
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 12.0,
+            "score_points": 6.0545,
+            "loss_points": 5.9455,
+            "fill_rate": 0.5045
+          }
+        ],
+        "failed_gates": [
+          "failed_stage2_total_score",
+          "failed_stage2_eps_fcf",
+          "failed_stage2_information_confidence",
+          "failed_stage3_total_score",
+          "failed_stage3_eps_fcf",
+          "failed_stage3_visibility",
+          "failed_stage3_bottleneck",
+          "failed_stage3_market_mispricing",
+          "failed_stage3_valuation",
+          "failed_green_cross_evidence"
+        ],
+        "green_gate_deficit_summary": "total:44.69/87.00(-42.31); yellow_total:44.69/75.00(-30.31); eps_fcf:9.90/18.70(-8.80); bottleneck:6.05/9.00(-2.95); visibility:15.51/17.25(-1.74); valuation:7.59/8.67(-1.08); cross_evidence:2.00/3.00(-1.00); mispricing:10.63/10.67(-0.03)",
+        "bridge_snapshot": {
+          "research_axis_bridge_margin": 100.0,
+          "research_axis_bridge_customer": 100.0,
+          "research_axis_bridge_backlog": 0.0,
+          "research_axis_bridge_contract": 0.0,
+          "research_axis_bridge_valuation_repricing": 100.0,
+          "research_axis_bridge_capital_return": 0.0,
+          "research_axis_bridge_insurance_quality": 0.0,
+          "research_axis_bridge_bio_commercialization": 0.0,
+          "research_axis_bridge_software_retention": 0.0,
+          "research_axis_bridge_consumer_sell_through": 100.0,
+          "research_axis_bridge_guard_risk": 100.0
+        },
+        "plain_diagnosis": "실적 전환이 아직 EPS/FCF component로 충분히 확정되지 않았다."
+      }
+    },
+    {
+      "group_key": "MEMORY_HBM",
+      "row_count": 20,
+      "symbol_count": 2,
+      "stage_counts": {
+        "2": 1,
+        "3-Yellow": 19
+      },
+      "max_score": 80.0131,
+      "avg_score": 78.2311,
+      "stage3_green_count": 0,
+      "failed_gate_counts": {
+        "failed_stage3_total_score": 20,
+        "failed_stage3_bottleneck": 20,
+        "failed_stage2_information_confidence": 7,
+        "failed_green_cross_evidence": 7,
+        "failed_stage3_visibility": 1
+      },
+      "average_component_losses": [
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "avg_max_points": 18.75,
+          "avg_score_points": 11.2909,
+          "avg_loss_points": 7.4591,
+          "avg_fill_rate": 0.6019
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "avg_max_points": 4.05,
+          "avg_score_points": 0.0793,
+          "avg_loss_points": 3.9707,
+          "avg_fill_rate": 0.0197
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "avg_max_points": 20.85,
+          "avg_score_points": 17.3255,
+          "avg_loss_points": 3.5245,
+          "avg_fill_rate": 0.8303
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "avg_max_points": 5.7,
+          "avg_score_points": 2.895,
+          "avg_loss_points": 2.805,
+          "avg_fill_rate": 0.495
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "avg_max_points": 11.9,
+          "avg_score_points": 9.88,
+          "avg_loss_points": 2.02,
+          "avg_fill_rate": 0.8299
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "avg_max_points": 14.85,
+          "avg_score_points": 12.8604,
+          "avg_loss_points": 1.9896,
+          "avg_fill_rate": 0.8652
+        },
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "avg_max_points": 23.9,
+          "avg_score_points": 23.9,
+          "avg_loss_points": 0.0,
+          "avg_fill_rate": 1.0
+        }
+      ],
+      "best_row_waterfall": {
+        "symbol": "000660",
+        "company_name": "SK하이닉스",
+        "as_of_date": "2024-05-01",
+        "current_stage": "3-Yellow",
+        "current_score": 80.0131,
+        "green_shortfall_to_87": 6.9869,
+        "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+        "sector_profile": "MEMORY_HBM",
+        "total_weight": 100.0,
+        "total_component_score": 80.0131,
+        "total_component_loss_to_100": 19.9869,
+        "component_score_minus_current_score": 0.0,
+        "components": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 24.0,
+            "score_points": 24.0,
+            "loss_points": 0.0,
+            "fill_rate": 1.0
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 21.0,
+            "score_points": 17.724,
+            "loss_points": 3.276,
+            "fill_rate": 0.844
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 19.0,
+            "score_points": 12.1827,
+            "loss_points": 6.8173,
+            "fill_rate": 0.6412
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 15.0,
+            "score_points": 13.041,
+            "loss_points": 1.959,
+            "fill_rate": 0.8694
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 12.0,
+            "score_points": 9.9846,
+            "loss_points": 2.0154,
+            "fill_rate": 0.8321
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 4.0,
+            "score_points": 0.0808,
+            "loss_points": 3.9192,
+            "fill_rate": 0.0202
+          },
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 5.0,
+            "score_points": 3.0,
+            "loss_points": 2.0,
+            "fill_rate": 0.6
+          }
+        ],
+        "top_component_losses": [
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 19.0,
+            "score_points": 12.1827,
+            "loss_points": 6.8173,
+            "fill_rate": 0.6412
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 4.0,
+            "score_points": 0.0808,
+            "loss_points": 3.9192,
+            "fill_rate": 0.0202
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 21.0,
+            "score_points": 17.724,
+            "loss_points": 3.276,
+            "fill_rate": 0.844
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 12.0,
+            "score_points": 9.9846,
+            "loss_points": 2.0154,
+            "fill_rate": 0.8321
+          }
+        ],
+        "failed_gates": [
+          "failed_stage3_total_score",
+          "failed_stage3_bottleneck"
+        ],
+        "green_gate_deficit_summary": "total:80.01/87.00(-6.99); bottleneck:12.18/14.25(-2.07)",
+        "bridge_snapshot": {
+          "research_axis_bridge_margin": 100.0,
+          "research_axis_bridge_customer": 100.0,
+          "research_axis_bridge_backlog": 100.0,
+          "research_axis_bridge_contract": 100.0,
+          "research_axis_bridge_valuation_repricing": 100.0,
+          "research_axis_bridge_capital_return": 0.0,
+          "research_axis_bridge_insurance_quality": 0.0,
+          "research_axis_bridge_bio_commercialization": 0.0,
+          "research_axis_bridge_software_retention": 0.0,
+          "research_axis_bridge_consumer_sell_through": 0.0,
+          "research_axis_bridge_guard_risk": 0.0
+        },
+        "plain_diagnosis": "좋은 연구축이 있어도 bottleneck/visibility runtime field로 약하게 번역되어 Green 문턱을 못 넘는다."
+      }
+    },
+    {
+      "group_key": "POWER_EQUIPMENT",
+      "row_count": 48,
+      "symbol_count": 5,
+      "stage_counts": {
+        "1": 15,
+        "2": 33
+      },
+      "max_score": 72.9252,
+      "avg_score": 61.3929,
+      "stage3_green_count": 0,
+      "failed_gate_counts": {
+        "failed_stage3_total_score": 48,
+        "failed_stage3_bottleneck": 48,
+        "failed_stage3_contract_quality": 37,
+        "failed_stage3_visibility": 26,
+        "failed_sector_visibility": 26,
+        "failed_domain_specific_evidence": 26,
+        "failed_sector_bottleneck": 15,
+        "failed_stage2_total_score": 15,
+        "failed_stage2_information_confidence": 15,
+        "failed_stage3_valuation": 15,
+        "failed_structural_visibility_quality": 15,
+        "failed_stage2_eps_fcf": 4,
+        "failed_stage2_valuation": 4,
+        "failed_stage3_eps_fcf": 4,
+        "failed_stage3_market_mispricing": 4,
+        "failed_stage3_revision": 4,
+        "failed_green_cross_evidence": 4
+      },
+      "average_component_losses": [
+        {
+          "component": "bottleneck_pricing",
+          "label": "bottleneck/pricing",
+          "avg_max_points": 19.8333,
+          "avg_score_points": 8.0192,
+          "avg_loss_points": 11.8141,
+          "avg_fill_rate": 0.4015
+        },
+        {
+          "component": "earnings_visibility",
+          "label": "earnings visibility",
+          "avg_max_points": 24.0833,
+          "avg_score_points": 14.7972,
+          "avg_loss_points": 9.2862,
+          "avg_fill_rate": 0.6165
+        },
+        {
+          "component": "capital_allocation",
+          "label": "capital allocation",
+          "avg_max_points": 5.25,
+          "avg_score_points": 0.6439,
+          "avg_loss_points": 4.6061,
+          "avg_fill_rate": 0.1288
+        },
+        {
+          "component": "valuation_rerating",
+          "label": "valuation rerating",
+          "avg_max_points": 12.0,
+          "avg_score_points": 8.2703,
+          "avg_loss_points": 3.7297,
+          "avg_fill_rate": 0.6892
+        },
+        {
+          "component": "market_mispricing",
+          "label": "market mispricing",
+          "avg_max_points": 12.9167,
+          "avg_score_points": 9.6679,
+          "avg_loss_points": 3.2488,
+          "avg_fill_rate": 0.7439
+        },
+        {
+          "component": "information_confidence",
+          "label": "information confidence",
+          "avg_max_points": 5.0,
+          "avg_score_points": 2.7031,
+          "avg_loss_points": 2.2969,
+          "avg_fill_rate": 0.5406
+        },
+        {
+          "component": "eps_fcf_explosion",
+          "label": "EPS/FCF",
+          "avg_max_points": 20.9167,
+          "avg_score_points": 18.7687,
+          "avg_loss_points": 2.1479,
+          "avg_fill_rate": 0.8937
+        }
+      ],
+      "best_row_waterfall": {
+        "symbol": "267260",
+        "company_name": "HD현대일렉트릭",
+        "as_of_date": "2023-08-01",
+        "current_stage": "2",
+        "current_score": 72.9252,
+        "green_shortfall_to_87": 14.0748,
+        "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+        "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+        "sector_profile": "POWER_EQUIPMENT",
+        "total_weight": 100.0,
+        "total_component_score": 72.9252,
+        "total_component_loss_to_100": 27.0748,
+        "component_score_minus_current_score": 0.0,
+        "components": [
+          {
+            "component": "eps_fcf_explosion",
+            "label": "EPS/FCF",
+            "max_points": 21.0,
+            "score_points": 21.0,
+            "loss_points": 0.0,
+            "fill_rate": 1.0
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 24.0,
+            "score_points": 19.2878,
+            "loss_points": 4.7122,
+            "fill_rate": 0.8037
+          },
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 20.0,
+            "score_points": 9.905,
+            "loss_points": 10.095,
+            "fill_rate": 0.4952
+          },
+          {
+            "component": "market_mispricing",
+            "label": "market mispricing",
+            "max_points": 13.0,
+            "score_points": 10.1855,
+            "loss_points": 2.8145,
+            "fill_rate": 0.7835
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 12.0,
+            "score_points": 8.0775,
+            "loss_points": 3.9225,
+            "fill_rate": 0.6731
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 5.0,
+            "score_points": 1.4694,
+            "loss_points": 3.5306,
+            "fill_rate": 0.2939
+          },
+          {
+            "component": "information_confidence",
+            "label": "information confidence",
+            "max_points": 5.0,
+            "score_points": 3.0,
+            "loss_points": 2.0,
+            "fill_rate": 0.6
+          }
+        ],
+        "top_component_losses": [
+          {
+            "component": "bottleneck_pricing",
+            "label": "bottleneck/pricing",
+            "max_points": 20.0,
+            "score_points": 9.905,
+            "loss_points": 10.095,
+            "fill_rate": 0.4952
+          },
+          {
+            "component": "earnings_visibility",
+            "label": "earnings visibility",
+            "max_points": 24.0,
+            "score_points": 19.2878,
+            "loss_points": 4.7122,
+            "fill_rate": 0.8037
+          },
+          {
+            "component": "valuation_rerating",
+            "label": "valuation rerating",
+            "max_points": 12.0,
+            "score_points": 8.0775,
+            "loss_points": 3.9225,
+            "fill_rate": 0.6731
+          },
+          {
+            "component": "capital_allocation",
+            "label": "capital allocation",
+            "max_points": 5.0,
+            "score_points": 1.4694,
+            "loss_points": 3.5306,
+            "fill_rate": 0.2939
+          }
+        ],
+        "failed_gates": [
+          "failed_stage3_total_score",
+          "failed_stage3_bottleneck",
+          "failed_stage3_contract_quality"
+        ],
+        "green_gate_deficit_summary": "total:72.93/87.00(-14.07); bottleneck:9.90/15.00(-5.09); contract:41.50/45.00(-3.50); yellow_total:72.93/75.00(-2.07)",
+        "bridge_snapshot": {
+          "research_axis_bridge_margin": 100.0,
+          "research_axis_bridge_customer": 100.0,
+          "research_axis_bridge_backlog": 100.0,
+          "research_axis_bridge_contract": 100.0,
+          "research_axis_bridge_valuation_repricing": 100.0,
+          "research_axis_bridge_capital_return": 0.0,
+          "research_axis_bridge_insurance_quality": 0.0,
+          "research_axis_bridge_bio_commercialization": 0.0,
+          "research_axis_bridge_software_retention": 0.0,
+          "research_axis_bridge_consumer_sell_through": 0.0,
+          "research_axis_bridge_guard_risk": 0.0
+        },
+        "plain_diagnosis": "좋은 연구축이 있어도 bottleneck/visibility runtime field로 약하게 번역되어 Green 문턱을 못 넘는다."
+      }
+    }
+  ]
+}

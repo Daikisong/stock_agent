@@ -39,6 +39,8 @@ class AsOfEvidenceBundle:
     company_name: str
     as_of_date: date
     sector_context: str | None = None
+    large_sector_id: str | None = None
+    canonical_archetype_id: str | None = None
     price_bars: tuple[PriceBar, ...] = ()
     financial_actuals: tuple[FinancialActual, ...] = ()
     official_disclosures: tuple[DisclosureEvent, ...] = ()
@@ -56,6 +58,8 @@ class AsOfEvidenceBundle:
             as_of_date=self.as_of_date,
             company_name=self.company_name,
             sector_context=self.sector_context,
+            large_sector_id=self.large_sector_id,
+            canonical_archetype_id=self.canonical_archetype_id,
             price_bars=self.price_bars,
             financial_actuals=self.financial_actuals,
             consensus=self.consensus,
@@ -95,6 +99,8 @@ def build_asof_evidence_bundle(
     candidate: CheapScanCandidate,
     store: HistoricalOfficialStore,
     web_result: AsOfWebResearchResult | None = None,
+    extra_reports: Sequence[ResearchReport] = (),
+    extra_evidence: Sequence[Evidence] = (),
     lookback_days: int = 370,
 ) -> AsOfEvidenceBundle:
     """Build a complete as-of feature bundle from official and web evidence."""
@@ -114,9 +120,14 @@ def build_asof_evidence_bundle(
         reports = tuple(web.parsed_reports)
         news = tuple(web.parsed_news)
         evidence.extend(web.evidence)
+    if extra_reports:
+        reports = reports + tuple(extra_reports)
+    if extra_evidence:
+        evidence.extend(extra_evidence)
 
     proxy = build_report_consensus_proxy(reports, as_of_date=candidate.as_of_date)
     reports = proxy.reports
+    large_sector_id, canonical_archetype_id = _taxonomy_from_reports(reports)
     source_types = _source_types(
         price_bars=price_bars,
         financial_actuals=financial_actuals,
@@ -132,6 +143,8 @@ def build_asof_evidence_bundle(
         company_name=candidate.company_name,
         as_of_date=candidate.as_of_date,
         sector_context=" ".join(candidate.reason_codes) or None,
+        large_sector_id=large_sector_id,
+        canonical_archetype_id=canonical_archetype_id,
         price_bars=price_bars,
         financial_actuals=financial_actuals,
         official_disclosures=official_disclosures,
@@ -335,6 +348,16 @@ def _dedupe_evidence(evidence: Sequence[Evidence]) -> tuple[Evidence, ...]:
     for item in evidence:
         unique.setdefault(item.evidence_id, item)
     return tuple(unique.values())
+
+
+def _taxonomy_from_reports(reports: Sequence[ResearchReport]) -> tuple[str | None, str | None]:
+    for report in reports:
+        fields = report.parsed_fields or {}
+        canonical = str(fields.get("canonical_archetype_id") or "").strip()
+        large = str(fields.get("large_sector_id") or "").strip()
+        if canonical:
+            return large or None, canonical
+    return None, None
 
 
 __all__ = [

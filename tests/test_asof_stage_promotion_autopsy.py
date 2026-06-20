@@ -51,10 +51,28 @@ class AsOfStagePromotionAutopsyTests(unittest.TestCase):
             self.assertTrue((paths["output"] / "2026-05-14_autopsy.md").exists())
             self.assertTrue((paths["output"] / "stage_gate_matrix.csv").exists())
             self.assertTrue((paths["output"] / "feature_input_coverage.csv").exists())
-            self.assertIn("failed_stage3_bottleneck", (paths["output"] / "stage_gate_matrix.csv").read_text(encoding="utf-8"))
+            stage_gate_matrix = (paths["output"] / "stage_gate_matrix.csv").read_text(encoding="utf-8")
+            self.assertIn("failed_stage3_bottleneck", stage_gate_matrix)
+            self.assertIn("failed_date_unverified_green_evidence", stage_gate_matrix)
             self.assertIn("score_valid", (paths["output"] / "score_components_by_candidate.csv").read_text(encoding="utf-8"))
-            self.assertIn("score_fingerprint", (paths["output"] / "stage_gate_matrix.csv").read_text(encoding="utf-8"))
-            self.assertIn("research_input_fingerprint", (paths["output"] / "stage_gate_matrix.csv").read_text(encoding="utf-8"))
+            self.assertIn("score_fingerprint", stage_gate_matrix)
+            self.assertIn("research_input_fingerprint", stage_gate_matrix)
+            self.assertIn(
+                "archetype_component_bottleneck_pricing",
+                (paths["output"] / "score_components_by_candidate.csv").read_text(encoding="utf-8"),
+            )
+            self.assertIn(
+                "archetype_green_policy_unlock_evidence",
+                (paths["output"] / "score_components_by_candidate.csv").read_text(encoding="utf-8"),
+            )
+            self.assertIn(
+                "canonical_archetype_id",
+                (paths["output"] / "stage_gate_matrix.csv").read_text(encoding="utf-8"),
+            )
+            self.assertIn(
+                "archetype_green_policy_absolute_block",
+                (paths["output"] / "stage_gate_matrix.csv").read_text(encoding="utf-8"),
+            )
 
     def test_autopsy_row_hides_components_for_invalid_score(self):
         score = ScoreSnapshot(
@@ -146,6 +164,28 @@ class AsOfStagePromotionAutopsyTests(unittest.TestCase):
             capital_allocation=None,
             information_confidence=None,
             risk_penalty=None,
+            large_sector_id="",
+            canonical_archetype_id="",
+            archetype_weight_profile_applied=None,
+            archetype_weighted_total_before_calibration=None,
+            archetype_weight_eps_fcf_explosion=None,
+            archetype_weight_earnings_visibility=None,
+            archetype_weight_bottleneck_pricing=None,
+            archetype_weight_market_mispricing=None,
+            archetype_weight_valuation_rerating=None,
+            archetype_weight_capital_allocation=None,
+            archetype_weight_information_confidence=None,
+            archetype_component_eps_fcf_explosion=None,
+            archetype_component_earnings_visibility=None,
+            archetype_component_bottleneck_pricing=None,
+            archetype_component_market_mispricing=None,
+            archetype_component_valuation_rerating=None,
+            archetype_component_capital_allocation=None,
+            archetype_component_information_confidence=None,
+            archetype_green_policy_absolute_block=None,
+            archetype_green_policy_unlock_required=None,
+            archetype_green_policy_unlock_evidence=None,
+            archetype_green_restricted_by_profile=None,
             revision_score=None,
             price_stage_score=None,
             contract_quality=None,
@@ -161,6 +201,30 @@ class AsOfStagePromotionAutopsyTests(unittest.TestCase):
             export_channel_visibility=None,
             medium_term_revision_visibility=None,
             domain_specific_evidence_score=None,
+            research_axis_bridge_present_count_capped=None,
+            research_axis_bridge_margin=None,
+            research_axis_bridge_customer=None,
+            research_axis_bridge_backlog=None,
+            research_axis_bridge_contract=None,
+            research_axis_bridge_valuation_repricing=None,
+            research_axis_bridge_capital_return=None,
+            research_axis_bridge_insurance_quality=None,
+            research_axis_bridge_bio_commercialization=None,
+            research_axis_bridge_software_retention=None,
+            research_axis_bridge_consumer_sell_through=None,
+            research_axis_bridge_guard_risk=None,
+            research_axis_bridge_guard_risk_penalty_points=None,
+            actual_profit_conversion_score=None,
+            bottleneck_industrial_raw=None,
+            bottleneck_sector_raw=None,
+            bottleneck_actual_conversion_raw=None,
+            bottleneck_validated_conversion_raw=None,
+            bottleneck_selected_raw=None,
+            bottleneck_selected_path="",
+            bottleneck_component_before_one_off_penalty=None,
+            bottleneck_one_off_penalty_points=None,
+            bottleneck_raw_required_for_green=None,
+            bottleneck_raw_deficit_to_green=None,
             sector_profile="GENERIC",
             promotion_band="Score Pending",
             cross_evidence_families_present="",
@@ -189,10 +253,29 @@ class AsOfStagePromotionAutopsyTests(unittest.TestCase):
             failed_sector_bottleneck=False,
             failed_green_cross_evidence=False,
             failed_report_date_confidence=False,
+            failed_date_unverified_green_evidence=False,
             failed_domain_specific_evidence=False,
             failed_stage3_red_team=False,
+            stage3_total_deficit=None,
+            stage3_eps_fcf_deficit=None,
+            stage3_visibility_deficit=None,
+            stage3_bottleneck_deficit=None,
+            stage3_market_mispricing_deficit=None,
+            stage3_valuation_deficit=None,
+            stage3_revision_deficit=None,
+            stage3_contract_quality_deficit=None,
+            structural_visibility_deficit=None,
+            sector_visibility_deficit=None,
+            sector_bottleneck_deficit=None,
+            green_cross_evidence_deficit=None,
+            domain_specific_evidence_deficit=None,
+            stage3_yellow_total_deficit=None,
+            green_gate_deficit_summary="",
             red_team_risk="low",
             hard_audit_count=0,
+            audit_finding_codes="",
+            audit_finding_fields="",
+            audit_finding_actions="",
             explanation="Score pending: asof_web_score_unresolved.",
         )
 
@@ -215,6 +298,143 @@ class AsOfStagePromotionAutopsyTests(unittest.TestCase):
 
         self.assertIn("pending visible_score_missing", text)
         self.assertNotIn("valid / fp", text)
+
+    def test_autopsy_row_surfaces_hard_audit_codes_and_gate_failures(self):
+        score = ScoreSnapshot(
+            symbol="111111",
+            as_of_date=date(2024, 5, 16),
+            eps_fcf_explosion_score=20,
+            earnings_visibility_score=16,
+            bottleneck_pricing_score=9,
+            market_mispricing_score=12,
+            valuation_rerating_score=11,
+            capital_allocation_score=0,
+            information_confidence_score=3,
+            risk_penalty=0,
+            total_score=72,
+            diagnostic_scores={"score_valid": 100.0, "revision_score": 100},
+        )
+        candidate = SimpleNamespace(
+            symbol="111111",
+            company_name="테스트",
+            as_of_date=date(2024, 5, 16),
+            recommended_next_layer=SimpleNamespace(value="deep_research"),
+        )
+        scored = SimpleNamespace(
+            score=score,
+            bundle=SimpleNamespace(
+                coverage=lambda: {
+                    "price_bars_count": 0,
+                    "financial_actuals_count": 0,
+                    "disclosures_count": 0,
+                    "research_reports_count": 1,
+                    "news_items_count": 0,
+                    "consensus_count": 1,
+                    "consensus_revisions_count": 1,
+                },
+                evidence=(),
+            ),
+            feature_result=SimpleNamespace(source_fields=None),
+            audit_findings=(
+                SimpleNamespace(
+                    severity="hard",
+                    suggested_action="block_green",
+                    code="target_price_revision_too_high",
+                    field_name="target_price_revision_1m",
+                ),
+            ),
+            red_team=SimpleNamespace(risk_level=SimpleNamespace(value="low"), has_hard_break=False),
+            stage=SimpleNamespace(stage=Stage.STAGE_2),
+        )
+        diagnostics = SimpleNamespace(
+            failed_gate_names=("failed_stage3_total_score", "failed_stage3_bottleneck"),
+            sector_profile="GENERIC",
+            stage2_gate_passed=True,
+            stage3_green_gate_passed=False,
+            cross_evidence_families_present=("research_report",),
+            missing_evidence_families=(),
+            values_vs_thresholds={
+                "failed_stage3_total_score": {"value": 72.0, "threshold": 85.0, "passed": False},
+                "failed_stage3_bottleneck": {"value": 9.0, "threshold": 15.0, "passed": False},
+            },
+        )
+
+        row = _autopsy_row(candidate, scored, diagnostics)
+
+        self.assertEqual(row.hard_audit_count, 1)
+        self.assertEqual(row.stage3_total_deficit, 13.0)
+        self.assertEqual(row.stage3_bottleneck_deficit, 6.0)
+        self.assertIn("total:72.00/85.00", row.green_gate_deficit_summary)
+        self.assertIn("bottleneck:9.00/15.00", row.green_gate_deficit_summary)
+        self.assertEqual(row.audit_finding_codes, "target_price_revision_too_high")
+        self.assertEqual(row.audit_finding_fields, "target_price_revision_1m")
+        self.assertEqual(row.audit_finding_actions, "block_green")
+        self.assertIn("target_price_revision_too_high", row.explanation)
+        self.assertIn("failed_stage3_bottleneck", row.explanation)
+
+    def test_autopsy_row_surfaces_non_stage3_prefix_green_gate_failures(self):
+        candidate = SimpleNamespace(
+            symbol="222222",
+            company_name="날짜검증",
+            as_of_date=date(2023, 8, 1),
+            recommended_next_layer=SimpleNamespace(value="deep_research"),
+        )
+        score = ScoreSnapshot(
+            symbol="222222",
+            as_of_date=date(2023, 8, 1),
+            eps_fcf_explosion_score=20,
+            earnings_visibility_score=20,
+            bottleneck_pricing_score=20,
+            market_mispricing_score=15,
+            valuation_rerating_score=15,
+            capital_allocation_score=5,
+            information_confidence_score=5,
+            risk_penalty=0,
+            total_score=95,
+            diagnostic_scores={"score_valid": 100},
+        )
+        scored = SimpleNamespace(
+            score=score,
+            bundle=SimpleNamespace(
+                coverage=lambda: {
+                    "price_bars_count": 1,
+                    "financial_actuals_count": 1,
+                    "disclosures_count": 0,
+                    "research_reports_count": 1,
+                    "news_items_count": 0,
+                    "consensus_count": 0,
+                    "consensus_revisions_count": 0,
+                },
+                evidence=(),
+            ),
+            feature_result=SimpleNamespace(source_fields=None),
+            audit_findings=(),
+            red_team=SimpleNamespace(risk_level=SimpleNamespace(value="low"), has_hard_break=False),
+            stage=SimpleNamespace(stage=Stage.STAGE_2),
+        )
+        diagnostics = SimpleNamespace(
+            failed_gate_names=("failed_date_unverified_green_evidence", "failed_report_date_confidence"),
+            sector_profile="GENERIC",
+            stage2_gate_passed=True,
+            stage3_green_gate_passed=False,
+            cross_evidence_families_present=("research_report",),
+            missing_evidence_families=(),
+            values_vs_thresholds={
+                "failed_date_unverified_green_evidence": {
+                    "value": "date_unverified_documents=1.0",
+                    "threshold": "no date-unverified snippets or documents",
+                    "passed": False,
+                },
+                "failed_report_date_confidence": {"value": 0.0, "threshold": 1.0, "passed": False},
+            },
+        )
+
+        row = _autopsy_row(candidate, scored, diagnostics)
+
+        self.assertTrue(row.failed_date_unverified_green_evidence)
+        self.assertTrue(row.failed_report_date_confidence)
+        self.assertIn("failed_date_unverified_green_evidence", row.explanation)
+        self.assertIn("failed_report_date_confidence", row.explanation)
 
 
 def _paths(root: str):

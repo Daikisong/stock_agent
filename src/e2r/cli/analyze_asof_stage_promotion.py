@@ -23,6 +23,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-queries-per-candidate", type=int)
     parser.add_argument("--max-results-per-query", type=int, default=100)
     parser.add_argument("--report-date", type=date.fromisoformat)
+    parser.add_argument(
+        "--runtime-fixture-spec-file",
+        action="append",
+        default=[],
+        help="Explicit V12 runtime fixture spec JSON/JSONL to use while recomputing autopsy rows.",
+    )
     return parser
 
 
@@ -37,6 +43,7 @@ def config_from_args(args: argparse.Namespace) -> AsOfStagePromotionAutopsyConfi
         max_queries_per_candidate=args.max_queries_per_candidate,
         max_results_per_query=args.max_results_per_query,
         report_date=args.report_date,
+        runtime_fixture_spec_paths=tuple(Path(item) for item in args.runtime_fixture_spec_file),
     )
 
 

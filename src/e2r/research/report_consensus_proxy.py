@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from datetime import date
+import math
 from typing import Any, Mapping, Sequence
 
 from e2r.models import ConsensusRevision, ConsensusSnapshot, ResearchReport
@@ -76,15 +77,15 @@ def _consensus_from_report(
     rows: list[ConsensusSnapshot] = []
     for offset, prefix in enumerate(("fy1", "fy2", "fy3")):
         values = {
-            "sales_e": getattr(report, f"{prefix}_sales"),
-            "op_e": getattr(report, f"{prefix}_op"),
-            "eps_e": getattr(report, f"{prefix}_eps"),
+            "sales_e": _finite_number(getattr(report, f"{prefix}_sales")),
+            "op_e": _finite_number(getattr(report, f"{prefix}_op")),
+            "eps_e": _finite_number(getattr(report, f"{prefix}_eps")),
         }
         if offset == 0:
-            values["per_e"] = report.est_per
-            values["pbr_e"] = report.est_pbr
-            values["roe_e"] = report.roe
-            values["target_price"] = report.target_price
+            values["per_e"] = _finite_number(report.est_per)
+            values["pbr_e"] = _finite_number(report.est_pbr)
+            values["roe_e"] = _finite_number(report.roe)
+            values["target_price"] = _finite_number(report.target_price)
         if not any(value is not None for value in values.values()):
             continue
         rows.append(
@@ -118,8 +119,9 @@ def _revision_from_report(
             "target_price_revision_1m",
         ),
     }
-    if report.target_revision_pct is not None:
-        values["target_price_revision_1m"] = report.target_revision_pct
+    target_revision = _finite_number(report.target_revision_pct)
+    if target_revision is not None:
+        values["target_price_revision_1m"] = target_revision
     if not any(value is not None for value in values.values()):
         return None
     parsed_fields = dict(proxy_metadata)
@@ -203,10 +205,22 @@ def _first_number(fields: Mapping[str, Any], *keys: str) -> float | None:
         if value in (None, ""):
             continue
         try:
-            return float(value)
+            number = float(value)
         except (TypeError, ValueError):
             continue
+        if math.isfinite(number):
+            return number
     return None
+
+
+def _finite_number(value: Any) -> float | None:
+    if value in (None, ""):
+        return None
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    return number if math.isfinite(number) else None
 
 
 __all__ = ["ReportConsensusProxyResult", "build_report_consensus_proxy"]

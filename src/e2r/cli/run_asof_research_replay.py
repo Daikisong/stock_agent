@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import argparse
+import csv
+import json
 from datetime import date
 from pathlib import Path
-from typing import Sequence
+from typing import Any, Iterable, Sequence
 
 from e2r.backtest.asof_research_replay import AsOfResearchReplay, AsOfResearchReplayConfig, render_asof_replay_summary
 from e2r.backtest.historical_universe_replay import ReplayFrequency
@@ -17,6 +19,18 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--start-date", required=True)
     parser.add_argument("--end-date", required=True)
     parser.add_argument("--frequency", choices=[item.value for item in ReplayFrequency], default=ReplayFrequency.MONTHLY.value)
+    parser.add_argument(
+        "--extra-replay-date",
+        action="append",
+        default=[],
+        help="Additional exact as-of date to replay inside the start/end range. Can be provided multiple times.",
+    )
+    parser.add_argument(
+        "--extra-replay-dates-file",
+        action="append",
+        default=[],
+        help="JSON/JSONL/CSV file containing exact fixture dates to add to the replay schedule.",
+    )
     parser.add_argument("--market", choices=[item.value for item in Market], default=Market.KR.value)
     parser.add_argument("--output-directory", default="output/backtests/asof_research_replay")
     parser.add_argument("--official-root", default="data/historical_official")
@@ -50,14 +64,31 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--theme-evidence-review", dest="theme_evidence_review_enabled", action="store_true")
     parser.add_argument("--no-theme-evidence-review", dest="theme_evidence_review_enabled", action="store_false")
     parser.set_defaults(theme_evidence_review_enabled=True)
+    parser.add_argument(
+        "--runtime-fixture-spec-file",
+        action="append",
+        default=[],
+        help="Explicit V12 runtime fixture spec JSON/JSONL to convert into source-backed diagnostic replay evidence.",
+    )
     return parser
 
 
 def config_from_args(args: argparse.Namespace) -> AsOfResearchReplayConfig:
+    start_date = date.fromisoformat(args.start_date)
+    end_date = date.fromisoformat(args.end_date)
+    explicit_extra_dates = tuple(date.fromisoformat(item) for item in args.extra_replay_date)
+    file_extra_dates = tuple(
+        replay_date
+        for path in args.extra_replay_dates_file
+        for replay_date in load_extra_replay_dates_file(path)
+        if start_date <= replay_date <= end_date
+    )
+    extra_replay_dates = tuple(dict.fromkeys((*explicit_extra_dates, *file_extra_dates)))
     return AsOfResearchReplayConfig(
-        start_date=date.fromisoformat(args.start_date),
-        end_date=date.fromisoformat(args.end_date),
+        start_date=start_date,
+        end_date=end_date,
         frequency=args.frequency,
+        extra_replay_dates=extra_replay_dates,
         market=args.market,
         output_directory=Path(args.output_directory),
         official_root=Path(args.official_root),
@@ -81,7 +112,66 @@ def config_from_args(args: argparse.Namespace) -> AsOfResearchReplayConfig:
         theme_rebalance_enabled=args.theme_rebalance_enabled,
         max_theme_expansion_rounds=args.max_theme_expansion_rounds,
         theme_evidence_review_enabled=args.theme_evidence_review_enabled,
+        runtime_fixture_spec_paths=tuple(Path(item) for item in args.runtime_fixture_spec_file),
     )
+
+
+def load_extra_replay_dates_file(path: str | Path) -> tuple[date, ...]:
+    path_obj = Path(path)
+    if path_obj.suffix.lower() == ".jsonl":
+        rows = []
+        with path_obj.open(encoding="utf-8") as handle:
+            for line in handle:
+                if line.strip():
+                    rows.append(json.loads(line))
+        values: Iterable[Any] = rows
+    elif path_obj.suffix.lower() == ".csv":
+        with path_obj.open(encoding="utf-8", newline="") as handle:
+            values = list(csv.DictReader(handle))
+    else:
+        values = json.loads(path_obj.read_text(encoding="utf-8"))
+    return tuple(sorted(set(_extract_extra_replay_dates(values))))
+
+
+def _extract_extra_replay_dates(value: Any) -> tuple[date, ...]:
+    dates: list[date] = []
+    if isinstance(value, str):
+        parsed = _parse_replay_date(value)
+        return (parsed,) if parsed else ()
+    if isinstance(value, list):
+        for item in value:
+            dates.extend(_extract_extra_replay_dates(item))
+        return tuple(dates)
+    if not isinstance(value, dict):
+        return ()
+    for key in ("as_of_date", "trigger_date", "entry_date", "date"):
+        parsed = _parse_replay_date(value.get(key))
+        if parsed:
+            dates.append(parsed)
+    candidate = value.get("candidate")
+    if isinstance(candidate, dict):
+        dates.extend(_extract_extra_replay_dates(candidate))
+    for role_key in ("green_fixture_candidate", "guard_fixture_candidate"):
+        role_payload = value.get(role_key)
+        if isinstance(role_payload, dict):
+            dates.extend(_extract_extra_replay_dates(role_payload))
+    for collection_key in ("rows", "archetypes"):
+        collection = value.get(collection_key)
+        if isinstance(collection, list):
+            dates.extend(_extract_extra_replay_dates(collection))
+    return tuple(dates)
+
+
+def _parse_replay_date(value: Any) -> date | None:
+    if isinstance(value, date):
+        return value
+    text = str(value or "").strip()
+    if not text:
+        return None
+    try:
+        return date.fromisoformat(text[:10])
+    except ValueError:
+        return None
 
 
 def main(argv: Sequence[str] | None = None) -> int:

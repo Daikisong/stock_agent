@@ -42,6 +42,29 @@ class ThemeRouteTests(unittest.TestCase):
         self.assertEqual(output.normalized_parsed_fields["cloud_revenue_growth_pct"], 40.0)
         self.assertEqual(output.diagnostic_scores, {"theme": 80.0})
 
+    def test_validate_theme_route_output_rejects_non_finite_numeric_fields(self):
+        output = validate_theme_route_output(
+            {
+                "status": "transition_detected",
+                "transition_detected": "nan",
+                "route_confidence": "nan",
+                "normalized_parsed_fields": {
+                    "good_value": "40%",
+                    "bad_value": float("nan"),
+                },
+                "diagnostic_scores": {
+                    "bad_nan": "nan",
+                    "bad_inf": float("inf"),
+                    "good": "80",
+                },
+            }
+        )
+
+        self.assertFalse(output.transition_detected)
+        self.assertEqual(output.route_confidence, 0.0)
+        self.assertEqual(output.normalized_parsed_fields, {"good_value": 40.0})
+        self.assertEqual(output.diagnostic_scores, {"good": 80.0})
+
     def test_validate_theme_route_output_maps_insufficient_evidence_to_more_research(self):
         output = validate_theme_route_output(
             {

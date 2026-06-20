@@ -1,0 +1,3695 @@
+{
+  "schema_version": "v12_fixture_runtime_coverage_board_v1",
+  "archetype_count": 36,
+  "ready_fixture_archetype_count": 30,
+  "runtime_covered_archetype_count": 7,
+  "ready_fixture_not_in_current_benchmark_count": 24,
+  "ready_fixture_in_benchmark_no_runtime_green_count": 6,
+  "runtime_green_archetype_count": 0,
+  "exact_green_fixture_present_count": 0,
+  "exact_guard_fixture_present_count": 0,
+  "status_counts": {
+    "fixture_not_ready": 6,
+    "not_in_current_benchmark": 24,
+    "runtime_input_evidence_missing": 2,
+    "runtime_stage3_gate_blocked": 4
+  },
+  "missing_required_bridge_axis_counts": {
+    "backlog": 9,
+    "bio_commercialization": 3,
+    "capital_return": 3,
+    "consumer_sell_through": 2,
+    "contract": 15,
+    "customer": 15,
+    "guard_risk": 22,
+    "insurance_quality": 1,
+    "margin": 18,
+    "software_retention": 3,
+    "valuation_repricing": 4
+  },
+  "archetypes": [
+    {
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 9,
+      "fixture_green_row_count": 9,
+      "clean_green_row_count": 8,
+      "green_guard_marker_row_count": 0,
+      "clean_guard_row_count": 51,
+      "runtime_candidate_count": 11,
+      "runtime_stage_distribution": {
+        "0": 7,
+        "1": 4
+      },
+      "runtime_green_count": 0,
+      "runtime_max_score": 4.4554,
+      "runtime_avg_score": 2.8353,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [
+        {
+          "gate": "failed_stage2_total_score",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage2_eps_fcf",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage2_valuation",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage2_information_confidence",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_total_score",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_eps_fcf",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_visibility",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_bottleneck",
+          "count": 11
+        }
+      ],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "bridge_source_families_missing",
+        "families_present": [
+          "disclosure",
+          "financial_actual",
+          "price"
+        ],
+        "max_evidence_count": 2,
+        "max_input_counts": {
+          "research_report": 0,
+          "news_item": 0,
+          "consensus": 0,
+          "consensus_revision": 0,
+          "financial_actual": 2,
+          "price_bar": 2
+        }
+      },
+      "runtime_gap_status": "runtime_input_evidence_missing"
+    },
+    {
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 5,
+      "fixture_green_row_count": 3,
+      "clean_green_row_count": 3,
+      "green_guard_marker_row_count": 2,
+      "clean_guard_row_count": 55,
+      "runtime_candidate_count": 44,
+      "runtime_stage_distribution": {
+        "1": 11,
+        "2": 33
+      },
+      "runtime_green_count": 0,
+      "runtime_max_score": 72.9252,
+      "runtime_avg_score": 66.9741,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 44,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "customer": {
+          "present_count": 44,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "backlog": {
+          "present_count": 33,
+          "max": 100.0,
+          "avg": 75.0
+        },
+        "contract": {
+          "present_count": 22,
+          "max": 100.0,
+          "avg": 50.0
+        },
+        "valuation_repricing": {
+          "present_count": 44,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 11,
+          "max": 100.0,
+          "avg": 25.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [
+        {
+          "gate": "failed_stage3_total_score",
+          "count": 44
+        },
+        {
+          "gate": "failed_stage3_bottleneck",
+          "count": 44
+        },
+        {
+          "gate": "failed_stage3_contract_quality",
+          "count": 33
+        },
+        {
+          "gate": "failed_stage3_visibility",
+          "count": 22
+        },
+        {
+          "gate": "failed_sector_visibility",
+          "count": 22
+        },
+        {
+          "gate": "failed_domain_specific_evidence",
+          "count": 22
+        },
+        {
+          "gate": "failed_sector_bottleneck",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage2_total_score",
+          "count": 11
+        }
+      ],
+      "runtime_input_evidence_summary": {
+        "assessable": true,
+        "reason": "source_text_family_present",
+        "families_present": [
+          "disclosure",
+          "financial_actual",
+          "price",
+          "research_report"
+        ],
+        "max_evidence_count": 7,
+        "max_input_counts": {
+          "research_report": 1,
+          "news_item": 0,
+          "consensus": 2,
+          "consensus_revision": 1,
+          "financial_actual": 2,
+          "price_bar": 2
+        }
+      },
+      "runtime_gap_status": "runtime_stage3_gate_blocked"
+    },
+    {
+      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "fixture_status": "needs_verified_green_source",
+      "raw_stage3_green_row_count": 6,
+      "fixture_green_row_count": 5,
+      "clean_green_row_count": 0,
+      "green_guard_marker_row_count": 1,
+      "clean_guard_row_count": 42,
+      "runtime_candidate_count": 12,
+      "runtime_stage_distribution": {
+        "1": 12
+      },
+      "runtime_green_count": 0,
+      "runtime_max_score": 35.6473,
+      "runtime_avg_score": 35.6473,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 12,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "customer": {
+          "present_count": 12,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "backlog": {
+          "present_count": 12,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "contract": {
+          "present_count": 12,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "valuation_repricing": {
+          "present_count": 12,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 12,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [
+        {
+          "gate": "failed_stage2_total_score",
+          "count": 12
+        },
+        {
+          "gate": "failed_stage2_eps_fcf",
+          "count": 12
+        },
+        {
+          "gate": "failed_stage2_information_confidence",
+          "count": 12
+        },
+        {
+          "gate": "failed_stage3_total_score",
+          "count": 12
+        },
+        {
+          "gate": "failed_stage3_eps_fcf",
+          "count": 12
+        },
+        {
+          "gate": "failed_stage3_visibility",
+          "count": 12
+        },
+        {
+          "gate": "failed_stage3_bottleneck",
+          "count": 12
+        },
+        {
+          "gate": "failed_stage3_market_mispricing",
+          "count": 12
+        }
+      ],
+      "runtime_input_evidence_summary": {
+        "assessable": true,
+        "reason": "source_text_family_present",
+        "families_present": [
+          "disclosure",
+          "price",
+          "research_report"
+        ],
+        "max_evidence_count": 5,
+        "max_input_counts": {
+          "research_report": 1,
+          "news_item": 0,
+          "consensus": 2,
+          "consensus_revision": 1,
+          "financial_actual": 0,
+          "price_bar": 2
+        }
+      },
+      "runtime_gap_status": "fixture_not_ready"
+    },
+    {
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "policy_project_cash_bridge",
+      "fixture_status": "needs_green_row",
+      "raw_stage3_green_row_count": 0,
+      "fixture_green_row_count": 0,
+      "clean_green_row_count": 0,
+      "green_guard_marker_row_count": 0,
+      "clean_guard_row_count": 56,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "fixture_not_ready"
+    },
+    {
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 10,
+      "fixture_green_row_count": 9,
+      "clean_green_row_count": 9,
+      "green_guard_marker_row_count": 1,
+      "clean_guard_row_count": 75,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 9,
+      "fixture_green_row_count": 9,
+      "clean_green_row_count": 5,
+      "green_guard_marker_row_count": 0,
+      "clean_guard_row_count": 57,
+      "runtime_candidate_count": 19,
+      "runtime_stage_distribution": {
+        "3-Yellow": 19
+      },
+      "runtime_green_count": 0,
+      "runtime_max_score": 80.0131,
+      "runtime_avg_score": 78.5529,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "missing_required_bridge_axes": [],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 19,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "customer": {
+          "present_count": 19,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "backlog": {
+          "present_count": 19,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "contract": {
+          "present_count": 19,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "valuation_repricing": {
+          "present_count": 19,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [
+        {
+          "gate": "failed_stage3_total_score",
+          "count": 19
+        },
+        {
+          "gate": "failed_stage3_bottleneck",
+          "count": 19
+        },
+        {
+          "gate": "failed_stage2_information_confidence",
+          "count": 7
+        },
+        {
+          "gate": "failed_green_cross_evidence",
+          "count": 7
+        }
+      ],
+      "runtime_input_evidence_summary": {
+        "assessable": true,
+        "reason": "source_text_family_present",
+        "families_present": [
+          "disclosure",
+          "financial_actual",
+          "price",
+          "research_report"
+        ],
+        "max_evidence_count": 7,
+        "max_input_counts": {
+          "research_report": 1,
+          "news_item": 0,
+          "consensus": 2,
+          "consensus_revision": 1,
+          "financial_actual": 2,
+          "price_bar": 2
+        }
+      },
+      "runtime_gap_status": "runtime_stage3_gate_blocked"
+    },
+    {
+      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "fixture_status": "needs_verified_green_source",
+      "raw_stage3_green_row_count": 2,
+      "fixture_green_row_count": 1,
+      "clean_green_row_count": 0,
+      "green_guard_marker_row_count": 1,
+      "clean_guard_row_count": 45,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "fixture_not_ready"
+    },
+    {
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 10,
+      "fixture_green_row_count": 7,
+      "clean_green_row_count": 1,
+      "green_guard_marker_row_count": 3,
+      "clean_guard_row_count": 51,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "valuation_blowoff_guard_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 3,
+      "fixture_green_row_count": 2,
+      "clean_green_row_count": 1,
+      "green_guard_marker_row_count": 1,
+      "clean_guard_row_count": 104,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_memory_recovery_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 4,
+      "fixture_green_row_count": 4,
+      "clean_green_row_count": 4,
+      "green_guard_marker_row_count": 0,
+      "clean_guard_row_count": 98,
+      "runtime_candidate_count": 1,
+      "runtime_stage_distribution": {
+        "2": 1
+      },
+      "runtime_green_count": 0,
+      "runtime_max_score": 72.1181,
+      "runtime_avg_score": 72.1181,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "margin",
+        "valuation_repricing"
+      ],
+      "missing_required_bridge_axes": [],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 1,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "customer": {
+          "present_count": 1,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "backlog": {
+          "present_count": 1,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 1,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [
+        {
+          "gate": "failed_stage3_total_score",
+          "count": 1
+        },
+        {
+          "gate": "failed_stage3_visibility",
+          "count": 1
+        },
+        {
+          "gate": "failed_stage3_bottleneck",
+          "count": 1
+        }
+      ],
+      "runtime_input_evidence_summary": {
+        "assessable": true,
+        "reason": "source_text_family_present",
+        "families_present": [
+          "disclosure",
+          "financial_actual",
+          "price",
+          "research_report"
+        ],
+        "max_evidence_count": 6,
+        "max_input_counts": {
+          "research_report": 1,
+          "news_item": 0,
+          "consensus": 2,
+          "consensus_revision": 1,
+          "financial_actual": 1,
+          "price_bar": 2
+        }
+      },
+      "runtime_gap_status": "runtime_stage3_gate_blocked"
+    },
+    {
+      "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 2,
+      "fixture_green_row_count": 1,
+      "clean_green_row_count": 1,
+      "green_guard_marker_row_count": 1,
+      "clean_guard_row_count": 81,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "fixture_status": "needs_green_row",
+      "raw_stage3_green_row_count": 0,
+      "fixture_green_row_count": 0,
+      "clean_green_row_count": 0,
+      "green_guard_marker_row_count": 0,
+      "clean_guard_row_count": 83,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "fixture_not_ready"
+    },
+    {
+      "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 6,
+      "fixture_green_row_count": 4,
+      "clean_green_row_count": 1,
+      "green_guard_marker_row_count": 2,
+      "clean_guard_row_count": 98,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "fixture_status": "needs_verified_green_source",
+      "raw_stage3_green_row_count": 1,
+      "fixture_green_row_count": 1,
+      "clean_green_row_count": 0,
+      "green_guard_marker_row_count": 0,
+      "clean_guard_row_count": 128,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "fixture_not_ready"
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 12,
+      "fixture_green_row_count": 7,
+      "clean_green_row_count": 6,
+      "green_guard_marker_row_count": 5,
+      "clean_guard_row_count": 100,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "fixture_status": "needs_green_row",
+      "raw_stage3_green_row_count": 0,
+      "fixture_green_row_count": 0,
+      "clean_green_row_count": 0,
+      "green_guard_marker_row_count": 0,
+      "clean_guard_row_count": 65,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "fixture_not_ready"
+    },
+    {
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 15,
+      "fixture_green_row_count": 11,
+      "clean_green_row_count": 8,
+      "green_guard_marker_row_count": 4,
+      "clean_guard_row_count": 74,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 14,
+      "fixture_green_row_count": 14,
+      "clean_green_row_count": 8,
+      "green_guard_marker_row_count": 0,
+      "clean_guard_row_count": 67,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 5,
+      "fixture_green_row_count": 3,
+      "clean_green_row_count": 2,
+      "green_guard_marker_row_count": 2,
+      "clean_guard_row_count": 37,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 33,
+      "fixture_green_row_count": 31,
+      "clean_green_row_count": 22,
+      "green_guard_marker_row_count": 2,
+      "clean_guard_row_count": 85,
+      "runtime_candidate_count": 22,
+      "runtime_stage_distribution": {
+        "1": 22
+      },
+      "runtime_green_count": 0,
+      "runtime_max_score": 64.161,
+      "runtime_avg_score": 54.4233,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 22,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "customer": {
+          "present_count": 22,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 22,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 22,
+          "max": 100.0,
+          "avg": 100.0
+        },
+        "guard_risk": {
+          "present_count": 11,
+          "max": 100.0,
+          "avg": 50.0
+        }
+      },
+      "top_failed_gates": [
+        {
+          "gate": "failed_stage2_total_score",
+          "count": 22
+        },
+        {
+          "gate": "failed_stage3_total_score",
+          "count": 22
+        },
+        {
+          "gate": "failed_stage3_visibility",
+          "count": 22
+        },
+        {
+          "gate": "failed_stage3_bottleneck",
+          "count": 22
+        },
+        {
+          "gate": "failed_stage3_market_mispricing",
+          "count": 22
+        },
+        {
+          "gate": "failed_stage3_valuation",
+          "count": 22
+        },
+        {
+          "gate": "failed_sector_bottleneck",
+          "count": 11
+        },
+        {
+          "gate": "failed_domain_specific_evidence",
+          "count": 11
+        }
+      ],
+      "runtime_input_evidence_summary": {
+        "assessable": true,
+        "reason": "source_text_family_present",
+        "families_present": [
+          "disclosure",
+          "financial_actual",
+          "price",
+          "research_report"
+        ],
+        "max_evidence_count": 7,
+        "max_input_counts": {
+          "research_report": 1,
+          "news_item": 0,
+          "consensus": 2,
+          "consensus_revision": 1,
+          "financial_actual": 2,
+          "price_bar": 2
+        }
+      },
+      "runtime_gap_status": "runtime_stage3_gate_blocked"
+    },
+    {
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "runtime_bridge_group": "financial_capital_return_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 37,
+      "fixture_green_row_count": 37,
+      "clean_green_row_count": 23,
+      "green_guard_marker_row_count": 0,
+      "clean_guard_row_count": 65,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "runtime_bridge_group": "insurance_reserve_capital_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 28,
+      "fixture_green_row_count": 25,
+      "clean_green_row_count": 15,
+      "green_guard_marker_row_count": 3,
+      "clean_guard_row_count": 59,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 30,
+      "fixture_green_row_count": 22,
+      "clean_green_row_count": 16,
+      "green_guard_marker_row_count": 8,
+      "clean_guard_row_count": 59,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 7,
+      "fixture_green_row_count": 5,
+      "clean_green_row_count": 2,
+      "green_guard_marker_row_count": 2,
+      "clean_guard_row_count": 56,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 12,
+      "fixture_green_row_count": 11,
+      "clean_green_row_count": 9,
+      "green_guard_marker_row_count": 1,
+      "clean_guard_row_count": 60,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 19,
+      "fixture_green_row_count": 17,
+      "clean_green_row_count": 11,
+      "green_guard_marker_row_count": 2,
+      "clean_guard_row_count": 74,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 12,
+      "fixture_green_row_count": 10,
+      "clean_green_row_count": 8,
+      "green_guard_marker_row_count": 2,
+      "clean_guard_row_count": 80,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 14,
+      "fixture_green_row_count": 14,
+      "clean_green_row_count": 6,
+      "green_guard_marker_row_count": 0,
+      "clean_guard_row_count": 66,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 10,
+      "fixture_green_row_count": 9,
+      "clean_green_row_count": 5,
+      "green_guard_marker_row_count": 1,
+      "clean_guard_row_count": 81,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "runtime_bridge_group": "construction_pf_cash_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 3,
+      "fixture_green_row_count": 3,
+      "clean_green_row_count": 1,
+      "green_guard_marker_row_count": 0,
+      "clean_guard_row_count": 91,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "policy_project_cash_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 12,
+      "fixture_green_row_count": 12,
+      "clean_green_row_count": 4,
+      "green_guard_marker_row_count": 0,
+      "clean_guard_row_count": 123,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "governance_tender_cash_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 1,
+      "fixture_green_row_count": 1,
+      "clean_green_row_count": 1,
+      "green_guard_marker_row_count": 0,
+      "clean_guard_row_count": 107,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 5,
+      "fixture_green_row_count": 2,
+      "clean_green_row_count": 2,
+      "green_guard_marker_row_count": 3,
+      "clean_guard_row_count": 194,
+      "runtime_candidate_count": 11,
+      "runtime_stage_distribution": {
+        "1": 11
+      },
+      "runtime_green_count": 0,
+      "runtime_max_score": 9.308,
+      "runtime_avg_score": 9.308,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [
+        {
+          "gate": "failed_stage2_total_score",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage2_eps_fcf",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage2_valuation",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage2_information_confidence",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_total_score",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_eps_fcf",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_visibility",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_bottleneck",
+          "count": 11
+        }
+      ],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "bridge_source_families_missing",
+        "families_present": [
+          "disclosure",
+          "price"
+        ],
+        "max_evidence_count": 1,
+        "max_input_counts": {
+          "research_report": 0,
+          "news_item": 0,
+          "consensus": 0,
+          "consensus_revision": 0,
+          "financial_actual": 0,
+          "price_bar": 2
+        }
+      },
+      "runtime_gap_status": "runtime_input_evidence_missing"
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 32,
+      "fixture_green_row_count": 24,
+      "clean_green_row_count": 19,
+      "green_guard_marker_row_count": 8,
+      "clean_guard_row_count": 380,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 8,
+      "fixture_green_row_count": 5,
+      "clean_green_row_count": 3,
+      "green_guard_marker_row_count": 3,
+      "clean_guard_row_count": 309,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "raw_stage3_green_row_count": 5,
+      "fixture_green_row_count": 2,
+      "clean_green_row_count": 2,
+      "green_guard_marker_row_count": 3,
+      "clean_guard_row_count": 305,
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_green_count": 0,
+      "runtime_max_score": null,
+      "runtime_avg_score": null,
+      "green_fixture_in_current_benchmark": false,
+      "guard_fixture_in_current_benchmark": false,
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "bridge_axis_stats": {
+        "margin": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "customer": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "backlog": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "contract": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "valuation_repricing": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "capital_return": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "insurance_quality": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "bio_commercialization": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "software_retention": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "consumer_sell_through": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        },
+        "guard_risk": {
+          "present_count": 0,
+          "max": 0.0,
+          "avg": 0.0
+        }
+      },
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "runtime_gap_status": "not_in_current_benchmark"
+    }
+  ]
+}

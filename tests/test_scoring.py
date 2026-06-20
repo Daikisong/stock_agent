@@ -2,6 +2,7 @@ from datetime import date
 import unittest
 from unittest.mock import patch
 
+from e2r.models import ScoreSnapshot
 from e2r.scoring import CANONICAL_SCORE_COMPONENTS, DeterministicScorer, ScoringPayload
 
 
@@ -29,6 +30,76 @@ class ScoringPayloadTests(unittest.TestCase):
                 symbol="TEST",
                 as_of_date=date(2026, 5, 13),
                 components=complete_components(eps_fcf_explosion=21.0),
+            )
+
+    def test_payload_coerces_numeric_diagnostic_strings(self):
+        payload = ScoringPayload(
+            symbol="TEST",
+            as_of_date=date(2026, 5, 13),
+            components=complete_components(),
+            diagnostic_scores={"revision_score": "72.5"},
+        )
+
+        self.assertEqual(payload.diagnostic_scores["revision_score"], 72.5)
+
+    def test_payload_coerces_numeric_component_strings(self):
+        payload = ScoringPayload(
+            symbol="TEST",
+            as_of_date=date(2026, 5, 13),
+            components=complete_components(eps_fcf_explosion="17.5"),
+        )
+
+        self.assertEqual(payload.components["eps_fcf_explosion"], 17.5)
+
+    def test_payload_rejects_non_numeric_diagnostic_scores(self):
+        with self.assertRaisesRegex(ValueError, "diagnostic score revision_score must be numeric"):
+            ScoringPayload(
+                symbol="TEST",
+                as_of_date=date(2026, 5, 13),
+                components=complete_components(),
+                diagnostic_scores={"revision_score": "unknown"},
+            )
+
+    def test_payload_allows_signed_total_adjustment_diagnostic(self):
+        payload = ScoringPayload(
+            symbol="TEST",
+            as_of_date=date(2026, 5, 13),
+            components=complete_components(),
+            diagnostic_scores={"calibration_total_adjustment": -2.0},
+        )
+
+        self.assertEqual(payload.diagnostic_scores["calibration_total_adjustment"], -2.0)
+
+    def test_payload_rejects_non_finite_component_and_diagnostic_values(self):
+        with self.assertRaisesRegex(ValueError, "eps_fcf_explosion must be between 0 and 20.0"):
+            ScoringPayload(
+                symbol="TEST",
+                as_of_date=date(2026, 5, 13),
+                components=complete_components(eps_fcf_explosion=float("nan")),
+            )
+        with self.assertRaisesRegex(ValueError, "diagnostic score revision_score must be finite"):
+            ScoringPayload(
+                symbol="TEST",
+                as_of_date=date(2026, 5, 13),
+                components=complete_components(),
+                diagnostic_scores={"revision_score": float("inf")},
+            )
+
+    def test_score_snapshot_rejects_non_finite_diagnostics(self):
+        with self.assertRaisesRegex(ValueError, "diagnostic score revision_score must be finite"):
+            ScoreSnapshot(
+                symbol="TEST",
+                as_of_date=date(2026, 5, 13),
+                eps_fcf_explosion_score=20.0,
+                earnings_visibility_score=20.0,
+                bottleneck_pricing_score=20.0,
+                market_mispricing_score=15.0,
+                valuation_rerating_score=15.0,
+                capital_allocation_score=5.0,
+                information_confidence_score=5.0,
+                risk_penalty=0.0,
+                total_score=100.0,
+                diagnostic_scores={"revision_score": float("nan")},
             )
 
 
@@ -80,6 +151,23 @@ class DeterministicScorerTests(unittest.TestCase):
 
         with patch.dict("os.environ", {"E2R_SCORING_PROFILE": "calibrated"}):
             self.assertEqual(DeterministicScorer().score(payload).total_score, 0.0)
+
+    def test_calibration_risk_penalties_reduce_score_without_crashing(self):
+        payload = ScoringPayload(
+            symbol="RISK",
+            as_of_date=date(2026, 5, 13),
+            components={component.key: component.max_points * 0.7 for component in CANONICAL_SCORE_COMPONENTS},
+            diagnostic_scores={
+                "high_mae_risk": 100.0,
+                "stage2_actionable_volatility_risk": 100.0,
+            },
+        )
+
+        with patch.dict("os.environ", {"E2R_SCORING_PROFILE": "calibrated"}):
+            score = DeterministicScorer().score(payload)
+
+        self.assertEqual(score.total_score, 66.0)
+        self.assertEqual(score.diagnostic_scores["calibration_total_adjustment"], -4.0)
 
 
 if __name__ == "__main__":

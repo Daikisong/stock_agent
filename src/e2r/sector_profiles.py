@@ -12,6 +12,8 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Mapping, Sequence
 
+from e2r.calibration.taxonomy import CANONICAL_ARCHETYPE_IDS, normalise_canonical_archetype_id
+
 
 class SectorProfile(str, Enum):
     """Domain profiles used for structural visibility scoring."""
@@ -24,6 +26,10 @@ class SectorProfile(str, Enum):
     CYCLICAL_SHIPPING = "CYCLICAL_SHIPPING"
     BATTERY_OVERHEAT = "BATTERY_OVERHEAT"
     AI_INFRA_PLATFORM = "AI_INFRA_PLATFORM"
+    FINANCIAL_CAPITAL_RETURN = "FINANCIAL_CAPITAL_RETURN"
+    INSURANCE_RESERVE = "INSURANCE_RESERVE"
+    BIO_COMMERCIALIZATION = "BIO_COMMERCIALIZATION"
+    SOFTWARE_SECURITY = "SOFTWARE_SECURITY"
     GENERIC = "GENERIC"
 
 
@@ -37,6 +43,10 @@ _PROFILE_IDS: dict[SectorProfile, int] = {
     SectorProfile.CYCLICAL_SHIPPING: 6,
     SectorProfile.BATTERY_OVERHEAT: 7,
     SectorProfile.AI_INFRA_PLATFORM: 8,
+    SectorProfile.FINANCIAL_CAPITAL_RETURN: 9,
+    SectorProfile.INSURANCE_RESERVE: 10,
+    SectorProfile.BIO_COMMERCIALIZATION: 11,
+    SectorProfile.SOFTWARE_SECURITY: 12,
 }
 _ID_PROFILES = {value: key for key, value in _PROFILE_IDS.items()}
 
@@ -178,6 +188,71 @@ PROFILE_DEFINITIONS: Mapping[SectorProfile, SectorProfileDefinition] = {
         red_team_risk_fields=("capex_burden_risk", "ai_theme_hype_without_revenue", "gpu_supply_dependency"),
         contract_required_for_green=False,
     ),
+    SectorProfile.FINANCIAL_CAPITAL_RETURN: SectorProfileDefinition(
+        profile=SectorProfile.FINANCIAL_CAPITAL_RETURN,
+        preferred_visibility_fields=(
+            "roe",
+            "pbr_e",
+            "est_pbr",
+            "capital_return_execution",
+            "treasury_share_cancellation",
+            "shareholder_return_execution",
+            "credit_cost_quality",
+        ),
+        preferred_bottleneck_fields=("capital_return_execution", "credit_cost_quality"),
+        preferred_pricing_fields=("market_frame_shift", "target_multiple_rerating"),
+        stage3_green_required_evidence_families=("research_report", "financial_actual", "consensus_revision"),
+        red_team_risk_fields=("capital_return_unconfirmed", "policy_headline_only"),
+        contract_required_for_green=False,
+    ),
+    SectorProfile.INSURANCE_RESERVE: SectorProfileDefinition(
+        profile=SectorProfile.INSURANCE_RESERVE,
+        preferred_visibility_fields=(
+            "csm_growth_visible",
+            "k_ics_ratio",
+            "reserve_quality_visible",
+            "loss_ratio_quality",
+            "capital_return_execution",
+            "dividend_visibility",
+        ),
+        preferred_bottleneck_fields=("reserve_quality_visible", "loss_ratio_quality", "csm_growth_visible"),
+        preferred_pricing_fields=("market_frame_shift", "target_multiple_rerating"),
+        stage3_green_required_evidence_families=("research_report", "financial_actual", "consensus_revision"),
+        red_team_risk_fields=("reserve_quality_unconfirmed", "insurance_rate_cycle_beta_only"),
+        contract_required_for_green=False,
+    ),
+    SectorProfile.BIO_COMMERCIALIZATION: SectorProfileDefinition(
+        profile=SectorProfile.BIO_COMMERCIALIZATION,
+        preferred_visibility_fields=(
+            "regulatory_approval_confirmed",
+            "approval_to_revenue_bridge",
+            "royalty_route",
+            "partner_economics_visible",
+            "reimbursement_confirmed",
+        ),
+        preferred_bottleneck_fields=("approval_to_revenue_bridge", "royalty_route", "reimbursement_confirmed"),
+        preferred_pricing_fields=("market_frame_shift", "target_multiple_rerating"),
+        stage3_green_required_evidence_families=("research_report", "disclosure", "news"),
+        red_team_risk_fields=("binary_event_unresolved", "approval_not_confirmed"),
+        contract_required_for_green=False,
+    ),
+    SectorProfile.SOFTWARE_SECURITY: SectorProfileDefinition(
+        profile=SectorProfile.SOFTWARE_SECURITY,
+        preferred_visibility_fields=(
+            "arr_growth_pct",
+            "nrr",
+            "arr_growth_visible",
+            "retention_or_renewal",
+            "contract_renewal_visible",
+            "seat_expansion_visible",
+            "recurring_margin_leverage",
+        ),
+        preferred_bottleneck_fields=("contract_renewal_visible", "retention_or_renewal", "recurring_margin_leverage"),
+        preferred_pricing_fields=("recurring_margin_leverage", "target_multiple_rerating"),
+        stage3_green_required_evidence_families=("research_report", "financial_actual", "consensus_revision"),
+        red_team_risk_fields=("political_theme_risk", "policy_headline_only"),
+        contract_required_for_green=False,
+    ),
     SectorProfile.GENERIC: SectorProfileDefinition(
         profile=SectorProfile.GENERIC,
         preferred_visibility_fields=("contract_quality", "backlog_rpo_visibility", "medium_term_revision_visibility"),
@@ -188,6 +263,55 @@ PROFILE_DEFINITIONS: Mapping[SectorProfile, SectorProfileDefinition] = {
         contract_required_for_green=False,
     ),
 }
+
+
+_ARCHETYPE_PROFILE_MAP: Mapping[str, SectorProfile] = {
+    "C01_ORDER_BACKLOG_MARGIN_BRIDGE": SectorProfile.GENERIC,
+    "C02_POWER_GRID_DATACENTER_CAPEX": SectorProfile.POWER_EQUIPMENT,
+    "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": SectorProfile.DEFENSE,
+    "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY": SectorProfile.POWER_EQUIPMENT,
+    "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": SectorProfile.POWER_EQUIPMENT,
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": SectorProfile.MEMORY_HBM,
+    "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH": SectorProfile.MEMORY_HBM,
+    "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": SectorProfile.MEMORY_HBM,
+    "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF": SectorProfile.MEMORY_HBM,
+    "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": SectorProfile.MEMORY_HBM,
+    "C11_BATTERY_ORDERBOOK_RERATING": SectorProfile.BATTERY_OVERHEAT,
+    "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK": SectorProfile.BATTERY_OVERHEAT,
+    "C13_BATTERY_JV_UTILIZATION_AMPC_IRA": SectorProfile.BATTERY_OVERHEAT,
+    "C14_EV_DEMAND_SLOWDOWN_4B_4C": SectorProfile.BATTERY_OVERHEAT,
+    "C15_MATERIAL_SPREAD_SUPERCYCLE": SectorProfile.GENERIC,
+    "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY": SectorProfile.GENERIC,
+    "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": SectorProfile.GENERIC,
+    "C18_CONSUMER_EXPORT_CHANNEL_REORDER": SectorProfile.K_FOOD_EXPORT,
+    "C19_BRAND_RETAIL_INVENTORY_MARGIN": SectorProfile.K_BEAUTY_EXPORT,
+    "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION": SectorProfile.K_BEAUTY_EXPORT,
+    "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN": SectorProfile.FINANCIAL_CAPITAL_RETURN,
+    "C22_INSURANCE_RATE_CYCLE_RESERVE": SectorProfile.INSURANCE_RESERVE,
+    "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": SectorProfile.BIO_COMMERCIALIZATION,
+    "C24_BIO_TRIAL_DATA_EVENT_RISK": SectorProfile.BIO_COMMERCIALIZATION,
+    "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT": SectorProfile.BIO_COMMERCIALIZATION,
+    "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE": SectorProfile.AI_INFRA_PLATFORM,
+    "C27_CONTENT_IP_GLOBAL_MONETIZATION": SectorProfile.SOFTWARE_SECURITY,
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": SectorProfile.SOFTWARE_SECURITY,
+    "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": SectorProfile.GENERIC,
+    "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK": SectorProfile.GENERIC,
+    "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": SectorProfile.GENERIC,
+    "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP": SectorProfile.GENERIC,
+    "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": SectorProfile.GENERIC,
+    "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM": SectorProfile.GENERIC,
+    "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION": SectorProfile.GENERIC,
+    "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL": SectorProfile.GENERIC,
+}
+
+
+def profile_for_archetype(value: Any) -> SectorProfile | None:
+    """Return the scoring profile implied by a canonical archetype."""
+
+    canonical = normalise_canonical_archetype_id(value)
+    if canonical is None or canonical not in CANONICAL_ARCHETYPE_IDS:
+        return None
+    return _ARCHETYPE_PROFILE_MAP.get(canonical, SectorProfile.GENERIC)
 
 
 def profile_id(profile: SectorProfile) -> float:
@@ -220,18 +344,12 @@ def infer_sector_profile(
 
     del symbol  # symbol-specific benchmark lookups are deliberately avoided.
     parsed_fields = parsed_fields or {}
-    if (
-        any(key in parsed_fields for key in ("lead_time_months", "lead_time_extended", "capa_utilization_pct"))
-        and any(key in parsed_fields for key in ("order_backlog_to_sales", "rpo_to_sales", "backlog_to_sales"))
-    ):
-        return SectorProfile.POWER_EQUIPMENT
     haystack = " ".join(
         str(part or "")
         for part in (
             company_name,
             sector_custom,
             text,
-            " ".join(str(key) for key, value in parsed_fields.items() if bool(value)),
         )
     ).lower()
     metadata_haystack = f"{company_name or ''} {sector_custom or ''}".lower()
@@ -240,14 +358,30 @@ def infer_sector_profile(
     memory_context = _has_structured_memory_context(parsed_fields) or _has_memory_hbm_context(haystack)
     power_context = _has_power_equipment_context(haystack)
     defense_context = _has_defense_context(haystack, parsed_fields)
+    structured_power_context = (
+        any(key in parsed_fields for key in ("lead_time_months", "lead_time_extended", "capa_utilization_pct"))
+        and any(key in parsed_fields for key in ("order_backlog_to_sales", "rpo_to_sales", "backlog_to_sales"))
+    )
     metadata_prefers_holding = _metadata_prefers_holding_profile(metadata_haystack)
     metadata_prefers_memory = _metadata_prefers_memory_profile(metadata_haystack)
     metadata_prefers_power = _metadata_prefers_power_profile(metadata_haystack)
     metadata_blocks_ai_infra = _metadata_blocks_ai_infra_profile(metadata_haystack)
     mobility_business_context = _has_mobility_business_context(haystack)
+    insurance_context = _has_insurance_context(haystack, parsed_fields)
+    financial_context = _has_financial_profile_context(haystack, parsed_fields, metadata_haystack)
+    bio_context = _has_bio_profile_context(haystack, parsed_fields, metadata_haystack)
+    software_context = _has_software_security_context(haystack, parsed_fields, metadata_haystack)
 
     if metadata_prefers_holding:
         return SectorProfile.GENERIC
+    if insurance_context:
+        return SectorProfile.INSURANCE_RESERVE
+    if bio_context:
+        return SectorProfile.BIO_COMMERCIALIZATION
+    if software_context and not metadata_blocks_ai_infra:
+        return SectorProfile.SOFTWARE_SECURITY
+    if financial_context:
+        return SectorProfile.FINANCIAL_CAPITAL_RETURN
     if _metadata_prefers_ai_platform_profile(metadata_haystack) and platform_context:
         return SectorProfile.AI_INFRA_PLATFORM
     if metadata_prefers_memory and memory_context:
@@ -267,6 +401,8 @@ def infer_sector_profile(
         return SectorProfile.DEFENSE
     if memory_context and not _metadata_blocks_memory_profile(metadata_haystack):
         return SectorProfile.MEMORY_HBM
+    if structured_power_context and not _metadata_blocks_power_profile(metadata_haystack):
+        return SectorProfile.POWER_EQUIPMENT
     if power_context and not _metadata_blocks_power_profile(metadata_haystack):
         return SectorProfile.POWER_EQUIPMENT
     if any(token in haystack for token in ("불닭", "라면", "k-food", "k푸드", "k-푸드")) and not _metadata_blocks_consumer_profile(
@@ -343,6 +479,96 @@ def _has_ai_platform_context(haystack: str, parsed_fields: Mapping[str, Any], *,
             "cloud_arpu_improvement",
         )
     )
+
+
+def _has_financial_profile_context(haystack: str, parsed_fields: Mapping[str, Any], metadata_haystack: str) -> bool:
+    if any(
+        parsed_fields.get(key) not in (None, "", False, 0)
+        for key in (
+            "capital_return_execution",
+            "treasury_share_cancellation",
+            "shareholder_return_execution",
+            "buyback_executed",
+            "credit_cost_quality",
+        )
+    ):
+        return True
+    finance_tokens = (
+        "금융",
+        "은행",
+        "bank",
+        "financial sector",
+        "financial holding",
+        "저pbr",
+        "low pbr",
+        "자사주",
+        "주주환원",
+        "배당",
+        "credit cost",
+        "신용비용",
+    )
+    return any(token in haystack for token in finance_tokens) or any(token in metadata_haystack for token in finance_tokens)
+
+
+def _has_insurance_context(haystack: str, parsed_fields: Mapping[str, Any]) -> bool:
+    if any(
+        parsed_fields.get(key) not in (None, "", False, 0)
+        for key in (
+            "csm_growth_visible",
+            "k_ics_ratio",
+            "reserve_quality_visible",
+            "loss_ratio_quality",
+            "insurance_rate_cycle_beta_only",
+        )
+    ):
+        return True
+    return any(token in haystack for token in ("보험", "insurance", "csm", "k-ics", "kics", "손해율", "준비금"))
+
+
+def _has_bio_profile_context(haystack: str, parsed_fields: Mapping[str, Any], metadata_haystack: str) -> bool:
+    if any(
+        parsed_fields.get(key) not in (None, "", False, 0)
+        for key in (
+            "regulatory_approval_confirmed",
+            "approval_to_revenue_bridge",
+            "royalty_route",
+            "partner_economics_visible",
+            "reimbursement_confirmed",
+            "binary_event_unresolved",
+        )
+    ):
+        return True
+    bio_tokens = (
+        "bio",
+        "바이오",
+        "healthcare",
+        "fda",
+        "품목허가",
+        "허가",
+        "로열티",
+        "royalty",
+        "pdufa",
+    )
+    return any(token in haystack for token in bio_tokens) or any(token in metadata_haystack for token in bio_tokens)
+
+
+def _has_software_security_context(haystack: str, parsed_fields: Mapping[str, Any], metadata_haystack: str) -> bool:
+    if any(
+        parsed_fields.get(key) not in (None, "", False, 0)
+        for key in (
+            "arr_growth_pct",
+            "nrr",
+            "arr_growth_visible",
+            "retention_or_renewal",
+            "contract_renewal_visible",
+            "seat_expansion_visible",
+            "recurring_margin_leverage",
+            "political_theme_risk",
+        )
+    ):
+        return True
+    software_tokens = ("software", "소프트웨어", "security", "보안", "saas", "arr", "nrr", "retention", "renewal")
+    return any(token in haystack for token in software_tokens) or any(token in metadata_haystack for token in software_tokens)
 
 
 def _metadata_prefers_ai_platform_profile(metadata_haystack: str) -> bool:
@@ -747,6 +973,7 @@ __all__ = [
     "definition_for",
     "field_presence_score",
     "infer_sector_profile",
+    "profile_for_archetype",
     "profile_from_id",
     "profile_id",
     "profile_name_from_diagnostic",

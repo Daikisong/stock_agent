@@ -1,0 +1,1596 @@
+{
+  "rows": [
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "redteam_guardrail_scope_not_green_unlock",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 19,
+      "research_raw_stage3_green_count": 32,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "information_confidence",
+        "earnings_visibility",
+        "market_mispricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 172,
+      "weight_support_positive_case_count": 72,
+      "weight_support_row_count": 1023,
+      "weight_support_unique_symbol_count": 430,
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 4.0,
+        "earnings_visibility": 12.0,
+        "eps_fcf_explosion": 8.0,
+        "information_confidence": 50.0,
+        "market_mispricing": 10.0,
+        "valuation_rerating": 8.0
+      }
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "redteam_guardrail_scope_not_green_unlock",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 2,
+      "research_raw_stage3_green_count": 5,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "information_confidence",
+        "earnings_visibility",
+        "market_mispricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 202,
+      "weight_support_positive_case_count": 15,
+      "weight_support_row_count": 715,
+      "weight_support_unique_symbol_count": 394,
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 6.0,
+        "earnings_visibility": 14.0,
+        "eps_fcf_explosion": 10.0,
+        "information_confidence": 40.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "redteam_guardrail_scope_not_green_unlock",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 3,
+      "research_raw_stage3_green_count": 8,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "information_confidence",
+        "capital_allocation",
+        "earnings_visibility"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 104,
+      "weight_support_positive_case_count": 29,
+      "weight_support_row_count": 619,
+      "weight_support_unique_symbol_count": 326,
+      "weights": {
+        "bottleneck_pricing": 5.0,
+        "capital_allocation": 20.0,
+        "earnings_visibility": 12.0,
+        "eps_fcf_explosion": 8.0,
+        "information_confidence": 37.0,
+        "market_mispricing": 10.0,
+        "valuation_rerating": 8.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "event_only_until_cashflow_conversion",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 4,
+      "research_raw_stage3_green_count": 12,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "information_confidence",
+        "earnings_visibility",
+        "market_mispricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 102,
+      "weight_support_positive_case_count": 64,
+      "weight_support_row_count": 478,
+      "weight_support_unique_symbol_count": 180,
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 10.0,
+        "earnings_visibility": 15.0,
+        "eps_fcf_explosion": 12.0,
+        "information_confidence": 25.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 15.0
+      }
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "feature_layer_status": "weight_supported_but_runtime_input_evidence_missing",
+      "green_policy": "redteam_guardrail_scope_not_green_unlock",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, runtime 후보의 원천 입력 가족이 부족해 feature bridge를 판정하지 못했다.",
+      "primary_repair_lane": "runtime_input_evidence_coverage",
+      "repair_lanes": [
+        "runtime_input_evidence_coverage",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 2,
+      "research_raw_stage3_green_count": 5,
+      "runtime_candidate_count": 11,
+      "runtime_gap_status": "runtime_input_evidence_missing",
+      "runtime_max_score": 9.308,
+      "top_weight_axes": [
+        "information_confidence",
+        "earnings_visibility",
+        "market_mispricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 127,
+      "weight_support_positive_case_count": 12,
+      "weight_support_row_count": 473,
+      "weight_support_unique_symbol_count": 299,
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 6.0,
+        "earnings_visibility": 14.0,
+        "eps_fcf_explosion": 10.0,
+        "information_confidence": 40.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "green_allowed_with_roe_pbr_and_executed_capital_return",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 23,
+      "research_raw_stage3_green_count": 37,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "valuation_rerating",
+        "earnings_visibility",
+        "eps_fcf_explosion"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 43,
+      "weight_support_positive_case_count": 44,
+      "weight_support_row_count": 413,
+      "weight_support_unique_symbol_count": 38,
+      "weights": {
+        "bottleneck_pricing": 5.0,
+        "capital_allocation": 15.0,
+        "earnings_visibility": 20.0,
+        "eps_fcf_explosion": 15.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 25.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "watch_to_green_with_mix_margin_and_capital_return",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 5,
+      "research_raw_stage3_green_count": 10,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "valuation_rerating"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 93,
+      "weight_support_positive_case_count": 66,
+      "weight_support_row_count": 411,
+      "weight_support_unique_symbol_count": 59,
+      "weights": {
+        "bottleneck_pricing": 10.0,
+        "capital_allocation": 15.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 17.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "event_premium_not_structural_green_without_fcf_or_return",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 1,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "valuation_rerating",
+        "market_mispricing",
+        "earnings_visibility"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 50,
+      "weight_support_positive_case_count": 25,
+      "weight_support_row_count": 378,
+      "weight_support_unique_symbol_count": 67,
+      "weights": {
+        "bottleneck_pricing": 5.0,
+        "capital_allocation": 15.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 12.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 20.0,
+        "valuation_rerating": 25.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "red_watch",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 3,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "information_confidence",
+        "eps_fcf_explosion",
+        "earnings_visibility"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 66,
+      "weight_support_positive_case_count": 36,
+      "weight_support_row_count": 377,
+      "weight_support_unique_symbol_count": 51,
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 10.0,
+        "earnings_visibility": 12.0,
+        "eps_fcf_explosion": 18.0,
+        "information_confidence": 30.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "feature_layer_status": "weight_supported_but_weighted_gate_still_blocks",
+      "green_policy": "watch_to_green_with_memory_recovery_order_and_cycle_reversal_guard",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔고 field도 일부 들어갔지만, weighted Stage3 gate가 아직 막는다.",
+      "primary_repair_lane": "weighted_gate_threshold_or_component_balance",
+      "repair_lanes": [
+        "exact_fixture_archive",
+        "weighted_gate_threshold_or_component_balance"
+      ],
+      "research_clean_green_count": 4,
+      "research_raw_stage3_green_count": 4,
+      "runtime_candidate_count": 1,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 72.1181,
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "information_confidence",
+        "earnings_visibility"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 79,
+      "weight_support_positive_case_count": 60,
+      "weight_support_row_count": 366,
+      "weight_support_unique_symbol_count": 102,
+      "weights": {
+        "bottleneck_pricing": 14.0,
+        "capital_allocation": 5.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 22.0,
+        "information_confidence": 19.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "feature_layer_status": "weight_supported_but_weighted_gate_still_blocks",
+      "green_policy": "green_allowed_with_global_distribution_and_repeat_sellthrough",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔고 field도 일부 들어갔지만, weighted Stage3 gate가 아직 막는다.",
+      "primary_repair_lane": "weighted_gate_threshold_or_component_balance",
+      "repair_lanes": [
+        "exact_fixture_archive",
+        "weighted_gate_threshold_or_component_balance"
+      ],
+      "research_clean_green_count": 22,
+      "research_raw_stage3_green_count": 33,
+      "runtime_candidate_count": 22,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 64.161,
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "market_mispricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 45,
+      "weight_support_positive_case_count": 42,
+      "weight_support_row_count": 358,
+      "weight_support_unique_symbol_count": 50,
+      "weights": {
+        "bottleneck_pricing": 12.0,
+        "capital_allocation": 4.0,
+        "earnings_visibility": 23.0,
+        "eps_fcf_explosion": 22.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 16.0,
+        "valuation_rerating": 13.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "green_allowed_with_arpu_monetization_and_op_leverage",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 11,
+      "research_raw_stage3_green_count": 19,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "market_mispricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 65,
+      "weight_support_positive_case_count": 35,
+      "weight_support_row_count": 334,
+      "weight_support_unique_symbol_count": 37,
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 10.0,
+        "earnings_visibility": 22.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 16.0,
+        "valuation_rerating": 14.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "green_allowed_with_reserve_rate_cycle_and_capital_return",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 15,
+      "research_raw_stage3_green_count": 28,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "valuation_rerating",
+        "earnings_visibility",
+        "capital_allocation"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 50,
+      "weight_support_positive_case_count": 47,
+      "weight_support_row_count": 327,
+      "weight_support_unique_symbol_count": 20,
+      "weights": {
+        "bottleneck_pricing": 5.0,
+        "capital_allocation": 18.0,
+        "earnings_visibility": 22.0,
+        "eps_fcf_explosion": 12.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 14.0,
+        "valuation_rerating": 24.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "green_restricted_by_cycle_reversal",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 6,
+      "research_raw_stage3_green_count": 12,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "bottleneck_pricing",
+        "information_confidence"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 72,
+      "weight_support_positive_case_count": 47,
+      "weight_support_row_count": 324,
+      "weight_support_unique_symbol_count": 96,
+      "weights": {
+        "bottleneck_pricing": 20.0,
+        "capital_allocation": 8.0,
+        "earnings_visibility": 12.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 20.0,
+        "market_mispricing": 10.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "green_allowed_with_export_channel_repeat_demand",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 8,
+      "research_raw_stage3_green_count": 14,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "market_mispricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 47,
+      "weight_support_positive_case_count": 42,
+      "weight_support_row_count": 308,
+      "weight_support_unique_symbol_count": 58,
+      "weights": {
+        "bottleneck_pricing": 12.0,
+        "capital_allocation": 4.0,
+        "earnings_visibility": 23.0,
+        "eps_fcf_explosion": 22.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 16.0,
+        "valuation_rerating": 13.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "watch_to_green_with_utilization_and_policy_durability",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 6,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "information_confidence"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 81,
+      "weight_support_positive_case_count": 46,
+      "weight_support_row_count": 307,
+      "weight_support_unique_symbol_count": 58,
+      "weights": {
+        "bottleneck_pricing": 14.0,
+        "capital_allocation": 10.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 16.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "watch_to_green_with_valuation_blowoff_guard",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 3,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 101,
+      "weight_support_positive_case_count": 59,
+      "weight_support_row_count": 305,
+      "weight_support_unique_symbol_count": 77,
+      "weights": {
+        "bottleneck_pricing": 18.0,
+        "capital_allocation": 6.0,
+        "earnings_visibility": 20.0,
+        "eps_fcf_explosion": 22.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 13.0,
+        "valuation_rerating": 11.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "red_watch",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 8,
+      "research_raw_stage3_green_count": 15,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "information_confidence",
+        "eps_fcf_explosion",
+        "bottleneck_pricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 53,
+      "weight_support_positive_case_count": 31,
+      "weight_support_row_count": 297,
+      "weight_support_unique_symbol_count": 47,
+      "weights": {
+        "bottleneck_pricing": 18.0,
+        "capital_allocation": 5.0,
+        "earnings_visibility": 12.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 25.0,
+        "market_mispricing": 10.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "watch_to_green_only_after_contract_margin_and_working_capital_clarity",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 9,
+      "research_raw_stage3_green_count": 10,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "earnings_visibility",
+        "information_confidence",
+        "eps_fcf_explosion"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 56,
+      "weight_support_positive_case_count": 51,
+      "weight_support_row_count": 295,
+      "weight_support_unique_symbol_count": 88,
+      "weights": {
+        "bottleneck_pricing": 10.0,
+        "capital_allocation": 8.0,
+        "earnings_visibility": 22.0,
+        "eps_fcf_explosion": 18.0,
+        "information_confidence": 20.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "feature_layer_status": "weight_supported_but_runtime_input_evidence_missing",
+      "green_policy": "green_allowed_with_order_backlog_margin_and_fcf_bridge",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, runtime 후보의 원천 입력 가족이 부족해 feature bridge를 판정하지 못했다.",
+      "primary_repair_lane": "runtime_input_evidence_coverage",
+      "repair_lanes": [
+        "runtime_input_evidence_coverage",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 8,
+      "research_raw_stage3_green_count": 9,
+      "runtime_candidate_count": 11,
+      "runtime_gap_status": "runtime_input_evidence_missing",
+      "runtime_max_score": 4.4554,
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "bottleneck_pricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 50,
+      "weight_support_positive_case_count": 70,
+      "weight_support_row_count": 288,
+      "weight_support_unique_symbol_count": 89,
+      "weights": {
+        "bottleneck_pricing": 18.0,
+        "capital_allocation": 8.0,
+        "earnings_visibility": 25.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 12.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "green_restricted_until_margin_and_fcf_after_capex",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 2,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 73,
+      "weight_support_positive_case_count": 33,
+      "weight_support_row_count": 286,
+      "weight_support_unique_symbol_count": 75,
+      "weights": {
+        "bottleneck_pricing": 15.0,
+        "capital_allocation": 8.0,
+        "earnings_visibility": 20.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 15.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "green_allowed_with_arr_retention_and_margin_leverage",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 6,
+      "research_raw_stage3_green_count": 14,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "market_mispricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 87,
+      "weight_support_positive_case_count": 39,
+      "weight_support_row_count": 285,
+      "weight_support_unique_symbol_count": 52,
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 8.0,
+        "earnings_visibility": 24.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 16.0,
+        "valuation_rerating": 14.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "feature_layer_status": "weight_supported_but_weighted_gate_still_blocks",
+      "green_policy": "green_allowed_with_grid_capex_backlog_capacity_and_margin_visibility",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔고 field도 일부 들어갔지만, weighted Stage3 gate가 아직 막는다.",
+      "primary_repair_lane": "weighted_gate_threshold_or_component_balance",
+      "repair_lanes": [
+        "exact_fixture_archive",
+        "weighted_gate_threshold_or_component_balance"
+      ],
+      "research_clean_green_count": 3,
+      "research_raw_stage3_green_count": 5,
+      "runtime_candidate_count": 44,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 72.9252,
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "bottleneck_pricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 58,
+      "weight_support_positive_case_count": 50,
+      "weight_support_row_count": 277,
+      "weight_support_unique_symbol_count": 44,
+      "weights": {
+        "bottleneck_pricing": 20.0,
+        "capital_allocation": 5.0,
+        "earnings_visibility": 24.0,
+        "eps_fcf_explosion": 21.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 13.0,
+        "valuation_rerating": 12.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "watch_to_green_after_approval_revenue_or_royalty_conversion",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 16,
+      "research_raw_stage3_green_count": 30,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "information_confidence",
+        "earnings_visibility",
+        "eps_fcf_explosion"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 24,
+      "weight_support_positive_case_count": 27,
+      "weight_support_row_count": 269,
+      "weight_support_unique_symbol_count": 38,
+      "weights": {
+        "bottleneck_pricing": 5.0,
+        "capital_allocation": 7.0,
+        "earnings_visibility": 24.0,
+        "eps_fcf_explosion": 12.0,
+        "information_confidence": 30.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "feature_layer_status": "weight_supported_but_fixture_not_source_backed",
+      "green_policy": "green_allowed_with_government_backlog_and_delivery_visibility",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에는 들어갔지만, exact replay fixture로 쓰기에는 source-backed 입력이 부족하다.",
+      "primary_repair_lane": "source_backed_fixture_cleaning",
+      "repair_lanes": [
+        "source_backed_fixture_cleaning",
+        "exact_fixture_archive"
+      ],
+      "research_clean_green_count": 0,
+      "research_raw_stage3_green_count": 6,
+      "runtime_candidate_count": 12,
+      "runtime_gap_status": "fixture_not_ready",
+      "runtime_max_score": 35.6473,
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "bottleneck_pricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 65,
+      "weight_support_positive_case_count": 47,
+      "weight_support_row_count": 267,
+      "weight_support_unique_symbol_count": 30,
+      "weights": {
+        "bottleneck_pricing": 17.0,
+        "capital_allocation": 6.0,
+        "earnings_visibility": 24.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 14.0,
+        "valuation_rerating": 14.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "feature_layer_status": "weight_supported_but_fixture_not_source_backed",
+      "green_policy": "red_watch",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에는 들어갔지만, exact replay fixture로 쓰기에는 source-backed 입력이 부족하다.",
+      "primary_repair_lane": "source_backed_fixture_cleaning",
+      "repair_lanes": [
+        "source_backed_fixture_cleaning",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 0,
+      "research_raw_stage3_green_count": 1,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "fixture_not_ready",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "information_confidence",
+        "eps_fcf_explosion",
+        "earnings_visibility"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 80,
+      "weight_support_positive_case_count": 51,
+      "weight_support_row_count": 264,
+      "weight_support_unique_symbol_count": 56,
+      "weights": {
+        "bottleneck_pricing": 10.0,
+        "capital_allocation": 7.0,
+        "earnings_visibility": 12.0,
+        "eps_fcf_explosion": 15.0,
+        "information_confidence": 40.0,
+        "market_mispricing": 8.0,
+        "valuation_rerating": 8.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "watch_to_green_with_repeat_ip_monetization",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 8,
+      "research_raw_stage3_green_count": 12,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "information_confidence",
+        "earnings_visibility"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 46,
+      "weight_support_positive_case_count": 33,
+      "weight_support_row_count": 263,
+      "weight_support_unique_symbol_count": 40,
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 8.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 20.0,
+        "market_mispricing": 14.0,
+        "valuation_rerating": 12.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "feature_layer_status": "weight_supported_runtime_needs_review",
+      "green_policy": "green_restricted_by_calloff_and_customer_demand_risk",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "weight support와 runtime feature 적용 상태를 추가 점검해야 한다.",
+      "primary_repair_lane": "exact_fixture_archive",
+      "repair_lanes": [
+        "exact_fixture_archive"
+      ],
+      "research_clean_green_count": null,
+      "research_raw_stage3_green_count": null,
+      "runtime_candidate_count": null,
+      "runtime_gap_status": null,
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "information_confidence",
+        "earnings_visibility"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 92,
+      "weight_support_positive_case_count": 45,
+      "weight_support_row_count": 262,
+      "weight_support_unique_symbol_count": 69,
+      "weights": {
+        "bottleneck_pricing": 14.0,
+        "capital_allocation": 8.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 20.0,
+        "market_mispricing": 10.0,
+        "valuation_rerating": 10.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "green_allowed_with_export_reimbursement_and_repeat_consumable_revenue",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 9,
+      "research_raw_stage3_green_count": 12,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "market_mispricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 68,
+      "weight_support_positive_case_count": 31,
+      "weight_support_row_count": 259,
+      "weight_support_unique_symbol_count": 52,
+      "weights": {
+        "bottleneck_pricing": 13.0,
+        "capital_allocation": 9.0,
+        "earnings_visibility": 22.0,
+        "eps_fcf_explosion": 20.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 14.0,
+        "valuation_rerating": 12.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "event_only_red_watch",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 2,
+      "research_raw_stage3_green_count": 7,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "information_confidence",
+        "earnings_visibility",
+        "market_mispricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 41,
+      "weight_support_positive_case_count": 36,
+      "weight_support_row_count": 253,
+      "weight_support_unique_symbol_count": 63,
+      "weights": {
+        "bottleneck_pricing": 5.0,
+        "capital_allocation": 5.0,
+        "earnings_visibility": 15.0,
+        "eps_fcf_explosion": 5.0,
+        "information_confidence": 55.0,
+        "market_mispricing": 10.0,
+        "valuation_rerating": 5.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "green_allowed_with_customer_qualification_repeat_demand_and_margin_conversion",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 10,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 53,
+      "weight_support_positive_case_count": 39,
+      "weight_support_row_count": 247,
+      "weight_support_unique_symbol_count": 63,
+      "weights": {
+        "bottleneck_pricing": 16.0,
+        "capital_allocation": 6.0,
+        "earnings_visibility": 21.0,
+        "eps_fcf_explosion": 22.0,
+        "information_confidence": 9.0,
+        "market_mispricing": 14.0,
+        "valuation_rerating": 12.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "feature_layer_status": "weight_supported_but_fixture_not_source_backed",
+      "green_policy": "green_allowed_with_orders_and_revenue_conversion",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에는 들어갔지만, exact replay fixture로 쓰기에는 source-backed 입력이 부족하다.",
+      "primary_repair_lane": "source_backed_fixture_cleaning",
+      "repair_lanes": [
+        "source_backed_fixture_cleaning",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 0,
+      "research_raw_stage3_green_count": 2,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "fixture_not_ready",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 60,
+      "weight_support_positive_case_count": 56,
+      "weight_support_row_count": 237,
+      "weight_support_unique_symbol_count": 54,
+      "weights": {
+        "bottleneck_pricing": 19.0,
+        "capital_allocation": 6.0,
+        "earnings_visibility": 22.0,
+        "eps_fcf_explosion": 22.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 14.0,
+        "valuation_rerating": 12.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "feature_layer_status": "weight_supported_runtime_needs_review",
+      "green_policy": "watch_to_green_with_supply_contract_and_policy_durability",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "weight support와 runtime feature 적용 상태를 추가 점검해야 한다.",
+      "primary_repair_lane": "exact_fixture_archive",
+      "repair_lanes": [
+        "exact_fixture_archive"
+      ],
+      "research_clean_green_count": null,
+      "research_raw_stage3_green_count": null,
+      "runtime_candidate_count": null,
+      "runtime_gap_status": null,
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 51,
+      "weight_support_positive_case_count": 24,
+      "weight_support_row_count": 234,
+      "weight_support_unique_symbol_count": 64,
+      "weights": {
+        "bottleneck_pricing": 18.0,
+        "capital_allocation": 7.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 18.0,
+        "information_confidence": 15.0,
+        "market_mispricing": 12.0,
+        "valuation_rerating": 12.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "feature_layer_status": "weight_supported_but_weighted_gate_still_blocks",
+      "green_policy": "green_allowed_with_hbm_capacity_customer_and_revision",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔고 field도 일부 들어갔지만, weighted Stage3 gate가 아직 막는다.",
+      "primary_repair_lane": "weighted_gate_threshold_or_component_balance",
+      "repair_lanes": [
+        "exact_fixture_archive",
+        "weighted_gate_threshold_or_component_balance"
+      ],
+      "research_clean_green_count": 5,
+      "research_raw_stage3_green_count": 9,
+      "runtime_candidate_count": 19,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 80.0131,
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 56,
+      "weight_support_positive_case_count": 32,
+      "weight_support_row_count": 229,
+      "weight_support_unique_symbol_count": 58,
+      "weights": {
+        "bottleneck_pricing": 19.0,
+        "capital_allocation": 4.0,
+        "earnings_visibility": 21.0,
+        "eps_fcf_explosion": 24.0,
+        "information_confidence": 5.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 12.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "green_policy": "watch_to_green_with_inventory_and_margin_proof",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "누적 연구는 weight support에 들어갔지만, current benchmark 후보가 없어 feature/scoring을 실행하지 못했다.",
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 2,
+      "research_raw_stage3_green_count": 5,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "information_confidence",
+        "eps_fcf_explosion",
+        "earnings_visibility"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 41,
+      "weight_support_positive_case_count": 26,
+      "weight_support_row_count": 223,
+      "weight_support_unique_symbol_count": 44,
+      "weights": {
+        "bottleneck_pricing": 8.0,
+        "capital_allocation": 7.0,
+        "earnings_visibility": 18.0,
+        "eps_fcf_explosion": 18.0,
+        "information_confidence": 20.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 14.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "feature_layer_status": "weight_supported_runtime_needs_review",
+      "green_policy": "watch_to_green_only_after_final_contract_and_legal_clarity",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "plain_explanation": "weight support와 runtime feature 적용 상태를 추가 점검해야 한다.",
+      "primary_repair_lane": "exact_fixture_archive",
+      "repair_lanes": [
+        "exact_fixture_archive"
+      ],
+      "research_clean_green_count": null,
+      "research_raw_stage3_green_count": null,
+      "runtime_candidate_count": null,
+      "runtime_gap_status": null,
+      "runtime_max_score": null,
+      "top_weight_axes": [
+        "earnings_visibility",
+        "valuation_rerating",
+        "eps_fcf_explosion"
+      ],
+      "weight_profile_present": true,
+      "weight_support_counterexample_count": 75,
+      "weight_support_positive_case_count": 33,
+      "weight_support_row_count": 220,
+      "weight_support_unique_symbol_count": 21,
+      "weights": {
+        "bottleneck_pricing": 10.0,
+        "capital_allocation": 10.0,
+        "earnings_visibility": 22.0,
+        "eps_fcf_explosion": 15.0,
+        "information_confidence": 10.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 18.0
+      }
+    }
+  ],
+  "summary": {
+    "archetype_weight_count": 36,
+    "feature_layer_status_counts": {
+      "weight_supported_but_candidate_not_exercised": 24,
+      "weight_supported_but_fixture_not_source_backed": 3,
+      "weight_supported_but_runtime_input_evidence_missing": 2,
+      "weight_supported_but_weighted_gate_still_blocks": 4,
+      "weight_supported_runtime_needs_review": 3
+    },
+    "profile_enabled": true,
+    "profile_id": "e2r_2_2_archetype_weight_runtime",
+    "top_support_archetypes": [
+      {
+        "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+        "weight_support_row_count": 1023
+      },
+      {
+        "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+        "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+        "weight_support_row_count": 715
+      },
+      {
+        "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+        "weight_support_row_count": 619
+      },
+      {
+        "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+        "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+        "weight_support_row_count": 478
+      },
+      {
+        "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "feature_layer_status": "weight_supported_but_runtime_input_evidence_missing",
+        "weight_support_row_count": 473
+      },
+      {
+        "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+        "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+        "weight_support_row_count": 413
+      },
+      {
+        "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+        "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+        "weight_support_row_count": 411
+      },
+      {
+        "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+        "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+        "weight_support_row_count": 378
+      },
+      {
+        "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+        "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+        "weight_support_row_count": 377
+      },
+      {
+        "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+        "feature_layer_status": "weight_supported_but_weighted_gate_still_blocks",
+        "weight_support_row_count": 366
+      }
+    ],
+    "total_archetype_counterexamples": 2628,
+    "total_archetype_positive_cases": 1495,
+    "total_archetype_support_rows": 12471,
+    "weighted_archetypes_with_feature_or_gate_gap": 6,
+    "weighted_archetypes_with_no_current_candidate": 24
+  }
+}

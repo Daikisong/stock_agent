@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import json
+import math
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from pathlib import Path
@@ -59,14 +60,20 @@ def _float_or_none(value: Any) -> float | None:
     value = _blank_to_none(value)
     if value is None:
         return None
-    return float(value)
+    number = float(value)
+    if not math.isfinite(number):
+        return None
+    return number
 
 
 def _int_or_none(value: Any) -> int | None:
     value = _blank_to_none(value)
     if value is None:
         return None
-    return int(float(value))
+    number = float(value)
+    if not math.isfinite(number):
+        return None
+    return int(number)
 
 
 def _bool_value(value: Any) -> bool:

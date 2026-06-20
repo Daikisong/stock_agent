@@ -6,9 +6,11 @@ from dataclasses import dataclass, field
 from datetime import date
 
 from .calibration.scoring_profile import get_active_scoring_profile
+from .diagnostic_values import numeric_diagnostic
 from .models import ScoreSnapshot, Stage, StageSnapshot
 from .red_team import RedTeamAssessment, RedTeamRiskLevel, Soft4BStatus
 from .score_validity import is_score_valid
+from .sector_profiles import profile_name_from_diagnostic
 
 
 ACTIVE_RERATING_STAGES = frozenset(
@@ -51,8 +53,14 @@ def _require_score(value: float, field_name: str) -> None:
         raise ValueError(f"{field_name} must be between 0 and 100")
 
 
-def _score_diagnostic(score: ScoreSnapshot, key: str, default: float = 0.0) -> float:
-    return float(score.diagnostic_scores.get(key, default))
+def _score_diagnostic(
+    score: ScoreSnapshot,
+    key: str,
+    default: float = 0.0,
+    *,
+    invalid_default: float = 0.0,
+) -> float:
+    return numeric_diagnostic(score.diagnostic_scores, key, default, invalid_default=invalid_default)
 
 
 def _grade_from_score(total_score: float, stage: Stage, soft_4b_status: Soft4BStatus = Soft4BStatus.NONE) -> str:
@@ -223,7 +231,7 @@ class StageClassifier:
             threshold = 60.0
         return (
             profile.guardrail_enabled("price_only_blowoff_blocks_positive_stage")
-            and _score_diagnostic(score, "price_only_blowoff_score") >= threshold
+            and _score_diagnostic(score, "price_only_blowoff_score", invalid_default=threshold) >= threshold
         )
 
     @staticmethod
@@ -265,6 +273,8 @@ class StageClassifier:
         profile = get_active_scoring_profile()
         if StageClassifier._positive_stage_blocked_by_price_only(score):
             return False
+        if not _date_verified_green_allowed(score):
+            return False
         if not _emerging_theme_green_allowed(score):
             return False
         revision_score = _score_diagnostic(score, "revision_score")
@@ -274,8 +284,10 @@ class StageClassifier:
             _score_diagnostic(score, "contract_quality", 100.0),
         )
         contract_quality = _score_diagnostic(score, "contract_quality", 100.0)
-        contract_required_for_green = _score_diagnostic(score, "contract_required_for_green", 0.0)
-        one_off_shortage_risk = _score_diagnostic(score, "one_off_shortage_risk")
+        contract_required_for_green = _contract_required_for_green(score)
+        one_off_shortage_risk = _score_diagnostic(score, "one_off_shortage_risk", invalid_default=70.0)
+        if _score_diagnostic(score, "archetype_green_restricted_by_profile", invalid_default=1.0) > 0:
+            return False
         return (
             score.total_score >= profile.threshold("stage3_green_total_min", 85.0)
             and _component_meets(score, "eps_fcf_explosion", profile.threshold("stage3_green_eps_fcf_min", 17.0))
@@ -318,16 +330,28 @@ class StageClassifier:
 
 
 def _effective_component_score(score: ScoreSnapshot, key: str) -> float:
-    if _score_diagnostic(score, "archetype_weight_profile_applied") > 0:
+    if _score_diagnostic(score, "archetype_weight_profile_applied", invalid_default=1.0) > 0:
         return _score_diagnostic(score, f"archetype_component_{key}", getattr(score, _COMPONENT_SCORE_ATTRS[key]))
     return float(getattr(score, _COMPONENT_SCORE_ATTRS[key]))
 
 
+def _contract_required_for_green(score: ScoreSnapshot) -> float:
+    if "contract_required_for_green" in score.diagnostic_scores:
+        return _score_diagnostic(score, "contract_required_for_green", invalid_default=1.0)
+    sector_profile = profile_name_from_diagnostic(_score_diagnostic(score, "sector_profile_id", 0.0))
+    return 1.0 if sector_profile in {"POWER_EQUIPMENT", "DEFENSE", "BATTERY_OVERHEAT"} else 0.0
+
+
 def _effective_component_threshold(score: ScoreSnapshot, key: str, canonical_threshold: float) -> float:
-    if _score_diagnostic(score, "archetype_weight_profile_applied") <= 0:
+    if _score_diagnostic(score, "archetype_weight_profile_applied", invalid_default=1.0) <= 0:
         return canonical_threshold
     canonical_max = _COMPONENT_CANONICAL_MAX[key]
-    weight_max = _score_diagnostic(score, f"archetype_weight_{key}", canonical_max)
+    weight_max = _score_diagnostic(
+        score,
+        f"archetype_weight_{key}",
+        canonical_max,
+        invalid_default=canonical_max,
+    )
     return round(weight_max * canonical_threshold / canonical_max, 4)
 
 
@@ -340,15 +364,22 @@ def _component_below(score: ScoreSnapshot, key: str, canonical_threshold: float)
 
 
 def _emerging_theme_green_allowed(score: ScoreSnapshot) -> bool:
-    if _score_diagnostic(score, "snippet_only_green_block") > 0:
+    if _score_diagnostic(score, "snippet_only_green_block", invalid_default=1.0) > 0:
         return False
-    if _score_diagnostic(score, "emerging_theme_active") <= 0:
+    if _score_diagnostic(score, "emerging_theme_active", invalid_default=100.0) <= 0:
         return True
     return (
         _score_diagnostic(score, "llm_deep_research_completed") >= 100.0
         and _score_diagnostic(score, "green_unlock_evidence_score") >= 60.0
-        and _score_diagnostic(score, "date_unverified_snippet_news_count_capped") <= 0.0
-        and _score_diagnostic(score, "report_date_confidence", 100.0) >= 1.0
+        and _score_diagnostic(score, "date_unverified_snippet_news_count_capped", invalid_default=1.0) <= 0.0
+    )
+
+
+def _date_verified_green_allowed(score: ScoreSnapshot) -> bool:
+    return (
+        _score_diagnostic(score, "report_date_confidence", 100.0) >= 1.0
+        and _score_diagnostic(score, "date_unverified_snippet_news_count_capped", invalid_default=1.0) <= 0.0
+        and _score_diagnostic(score, "date_unverified_document_count_capped", invalid_default=1.0) <= 0.0
     )
 
 

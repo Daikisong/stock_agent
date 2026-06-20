@@ -17,6 +17,7 @@ from e2r.research import (
     SearchResultRanker,
     WebResearchInput,
     WebResearchRunner,
+    extract_e2r_text_fields,
 )
 from e2r.research.query_planner import QueryPlan, QuerySpec
 from e2r.staging import StageClassificationInput, StageClassifier
@@ -89,6 +90,64 @@ HD현대일렉트릭은 북미 전력기기 공급 부족과 변압기 리드타
 
 
 class WebResearchRunnerTests(unittest.TestCase):
+    def test_lightweight_text_extractor_recognizes_v12_common_bridge_aliases(self):
+        fields = extract_e2r_text_fields(
+            """
+정책 승인과 프로젝트 수주, 회사 현금흐름 연결, implementation timeline이 확인된다.
+spread expansion, ex-credit margin, utilization rate, inventory cycle이 보인다.
+datacenter customer, HBM customer order, qualification confirmed, volume visibility도 확인된다.
+HBM 수요 증가와 메모리 가격 상승, 공급조절, advanced packaging bottleneck, 중기 추정치 상향이 확인된다.
+글로벌 유통망 확대와 플랫폼 유통 확대, 해외 채널 확대가 이어진다.
+일반 장비도 CAPA 제약과 capacity bottleneck이 있고, 자사주 소각과 배당 확대가 있다.
+CSM 성장, 준비금 안정, 손해율 개선, FDA 승인 후 매출 전환, 로열티와 보험급여가 확인된다.
+ARR 성장, renewal, seat expansion, PF 익스포저 축소, 재무구조 개선, 현금 회수 가시성도 보인다.
+valuation overheat, evidence source quality, thesis break, event spread risk가 남아 있다.
+""",
+            as_of_date=date(2024, 11, 20),
+        )
+
+        self.assertTrue(fields["policy_or_regulatory_confirmed"])
+        self.assertTrue(fields["project_award_confirmed"])
+        self.assertTrue(fields["direct_company_cash_route"])
+        self.assertTrue(fields["implementation_timeline"])
+        self.assertTrue(fields["spread_expansion"])
+        self.assertTrue(fields["ex_credit_margin"])
+        self.assertTrue(fields["utilization_rate"])
+        self.assertTrue(fields["inventory_cycle"])
+        self.assertTrue(fields["datacenter_customer"])
+        self.assertTrue(fields["hbm_customer_order"])
+        self.assertTrue(fields["qualification_confirmed"])
+        self.assertTrue(fields["volume_visibility"])
+        self.assertTrue(fields["cycle_demand_visibility"])
+        self.assertTrue(fields["end_market_demand_visibility"])
+        self.assertTrue(fields["supply_demand_tightness"])
+        self.assertTrue(fields["cycle_to_revenue_bridge"])
+        self.assertTrue(fields["advanced_packaging_bottleneck"])
+        self.assertTrue(fields["platform_distribution_scale"])
+        self.assertTrue(fields["brand_channel_expansion"])
+        self.assertTrue(fields["overseas_channel_expansion"])
+        self.assertTrue(fields["capacity_constraint"])
+        self.assertTrue(fields["capa_shortage"])
+        self.assertTrue(fields["capital_return_execution"])
+        self.assertTrue(fields["dividend_visibility"])
+        self.assertTrue(fields["csm_growth_visible"])
+        self.assertTrue(fields["reserve_quality_visible"])
+        self.assertTrue(fields["loss_ratio_quality"])
+        self.assertTrue(fields["regulatory_approval_confirmed"])
+        self.assertTrue(fields["approval_to_revenue_bridge"])
+        self.assertTrue(fields["royalty_route"])
+        self.assertTrue(fields["reimbursement_confirmed"])
+        self.assertTrue(fields["arr_growth_visible"])
+        self.assertTrue(fields["retention_or_renewal"])
+        self.assertTrue(fields["seat_expansion_visible"])
+        self.assertTrue(fields["pf_exposure_reduced"])
+        self.assertTrue(fields["balance_sheet_repair"])
+        self.assertTrue(fields["cash_collection_visible"])
+        self.assertTrue(fields["valuation_overheat"])
+        self.assertTrue(fields["evidence_source_quality"])
+        self.assertTrue(fields["thesis_break_confirmed"])
+        self.assertTrue(fields["event_spread_risk"])
+
     def test_default_selection_does_not_cap_ranked_results(self):
         query = "테스트전자 리포트"
         results = tuple(

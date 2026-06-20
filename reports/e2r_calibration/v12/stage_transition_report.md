@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `10660`
+- stage_transition_summary_rows: `10645`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -287,7 +287,6 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 010820 | 010820 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 3765.0 | None | None | 5.98 | None | stage2_captured_most_upside |
 | 010820 | 010820 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 3470.0 | None | None | 14.99 | None | stage2_captured_most_upside |
 | 010950 | 010950 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | 71500.0 | None | None | 18.18 | None | stage2_actionable_best_entry |
-| 010950 | 010950 | C15_MATERIAL_SPREAD_SUPERCYCLE | 71500.0 | None | None | 18.18 | None | stage2_actionable_best_entry |
 | 010950 | 010950 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 71500.0 | None | None | 18.1846 | None | stage2_actionable_best_entry |
 | 011070 | 011070 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | None | 250500.0 | None | None | no_valid_stage_transition |
 | 011150 | 011150 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | 2635.0 | None | None | 145.16 | None | stage2_captured_most_upside |
@@ -562,7 +561,6 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 051910 | 051910 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | 504000.0 | None | None | 3.17 | None | stage2_captured_most_upside |
 | 051910 | 051910 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | None | None | None | None | no_valid_stage_transition |
 | 051910 | 051910 | C14_EV_DEMAND_SLOWDOWN_4B_4C | 377000.0 | None | None | 9.28 | None | stage2_captured_most_upside |
-| 051910 | 051910 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
 | 051910 | 051910 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 504000.0 | None | 430000.0 | 3.1746 | -462.504 | stage2_captured_most_upside |
 | 052690 | 052690 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 82000.0 | None | None | 19.6305 | None | stage2_captured_most_upside |
 | 052690 | 052690 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | 59200.0 | None | None | 65.71 | None | stage2_actionable_best_entry |
@@ -3056,13 +3054,6 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C10_L232_08_089790 | 089790 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | 6930.0 | None | None | no_valid_stage_transition |
 | C10_LOTVACUUM_083310_2024_02_22_MEMORY_EQUIPMENT_RECOVERY_FALSE_POSITIVE | 083310 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 23350.0 | None | None | 4.71 | None | stage2_captured_most_upside |
 | C10_LOTVACUUM_083310_2024_03_06_VACUUM_EQUIPMENT_MEMORY_RECOVERY_BETA_FAIL | 083310 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 22650.0 | None | None | 6.18 | None | stage2_captured_most_upside |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_R2L111_005290_HBM_CMP_SLURRY_OPTIONALITY_C09_C10_BOUNDARY_20241024 | 005290 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 26700.0 | None | None | 29.4 | None | stage2_captured_most_upside |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_R2L111_059090_CERAMIC_HEATER_SUBSIDIARY_SYNERGY_PRICE_BLOWOFF_20240509 | 059090 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | 12630.0 | None | None | 4b_good_peak_capture |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_R2L111_101160_NAND_AFTERMARKET_PARTS_LOW_MFE_STAGE2_BLOCK_20240213 | 101160 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 24000.0 | None | None | 8.96 | None | stage2_captured_most_upside |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_R2L111_104830_SPECIALTY_GAS_MEMORY_UTILIZATION_MIX_FAST_MFE_HIGH_MAE_20240228 | 104830 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | 31350.0 | None | None | 4b_good_peak_capture |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_R2L111_166090_NAND_SI_PARTS_NEW_ETCHER_TEST_FIRST_YEAR_20240206 | 166090 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | None | None | None | no_valid_stage_transition |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_R2L111_183300_CLEANING_COATING_MEMORY_UTILIZATION_FAST_MFE_FULL_WINDOW_4B_20240402 | 183300 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | 75200.0 | None | None | 4b_good_peak_capture |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_R2L111_357780_MEMORY_UTILIZATION_UNCERTAINTY_STAGE2_DOWNROUTE_20241125 | 357780 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 197200.0 | None | None | 29.31 | None | stage2_captured_most_upside |
 | C10_NPP_144960_2024_03_06_PLASMA_POWER_MEMORY_EQUIPMENT_RECOVERY_4B | 144960 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 4965.0 | None | None | 46.02 | None | stage2_actionable_best_entry |
 | C10_PSK_319660_2024_02_29_MEMORY_RECOVERY_EQUIPMENT_ORDER_RERATING | 319660 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 25400.0 | None | None | 53.94 | None | stage2_actionable_best_entry |
 | C10_PSK_319660_2024_03_06_MEMORY_DRY_STRIP_EQUIPMENT_CYCLE_RERATING | 319660 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 26250.0 | None | None | 48.95 | None | stage2_actionable_best_entry |
@@ -3393,12 +3384,6 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C12_L153_365340_SUNGIL_20240308_FACTORY_SUPPLY_APPROVAL | 365340 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 92500.0 | None | None | 3.24 | None | stage2_actionable_best_entry |
 | C12_NANOMATERIALS_121600_2024_02_21_CNT_CUSTOMER_RAMP_STAGE2_FALSE_POSITIVE | 121600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 134000.0 | None | None | 17.76 | None | stage2_captured_most_upside |
 | C12_NANO_121600_2024_03_06_CNT_CUSTOMER_CONTRACT_CALL_OFF_4B_TO_4C | 121600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | 4c_too_late |
-| C12_R3L100_003670_POSCOFM_20230131 | 003670 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
-| C12_R3L100_083930_AVACO_20230915 | 083930 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 18140.0 | None | None | 16.3175 | None | stage2_actionable_best_entry |
-| C12_R3L100_217820_WONIKPNE_20231024 | 217820 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 7060.0 | None | None | 8.4986 | None | stage2_actionable_best_entry |
-| C12_R3L100_282880_COWINTECH_20231031 | 282880 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 29200.0 | None | None | 13.3562 | None | stage2_actionable_best_entry |
-| C12_R3L100_290670_DAEBOMAG_20230519 | 290670 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 61000.0 | None | None | no_valid_stage_transition |
-| C12_R3L100_382480_GITECH_20231122 | 382480 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 3200.0 | None | None | 14.2187 | None | stage2_actionable_best_entry |
 | C12_R3L101_001530_ALUMINIUM_FOIL_CAPACITY_CONVERSION_POSITIVE_20230518 | 001530 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C12_R3L101_002710_BATTERY_CAN_MATERIAL_CUSTOMER_CONVERSION_POSITIVE_20230310 | 002710 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C12_R3L101_014820_CAPACITY_FINANCING_WITHOUT_NAMED_SHIPMENT_COUNTEREXAMPLE_20230502 | 014820 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 43400.0 | None | None | 3.34 | None | stage2_actionable_best_entry |

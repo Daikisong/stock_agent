@@ -28,19 +28,23 @@ from e2r.backtest.historical_official_store import (
     HistoricalOfficialStore,
 )
 from e2r.backtest.historical_universe_replay import ReplayFrequency
+from e2r.backtest.runtime_fixture_evidence import RuntimeFixtureEvidenceStore
 from e2r.cheap_scan import KoreaCheapScanConfig, KoreaCheapScanner
 from e2r.cheap_scan.models import CheapScanCandidate, RecommendedNextLayer
 from e2r.llm import build_default_codex_theme_route_provider, build_theme_route_provider_from_env
 from e2r.llm.theme_provider import ThemeRouteProvider
-from e2r.models import Market, Stage
+from e2r.models import Instrument, Market, Stage
 from e2r.research.asof_web_research import (
+    AsOfDateFilteredSearchProvider,
     AsOfWebResearchConfig,
     AsOfWebResearchResult,
     AsOfWebResearchRunner,
     RetrospectiveSnapshotSearchProvider,
     fixture_text_by_url_for_candidate,
 )
+from e2r.research.report_radar import ReportRadar
 from e2r.research.report_snapshot_store import ReportSnapshotStore
+from e2r.research.search_budget import SearchBudget
 from e2r.research.search_provider import EmptySearchProvider, SearchProvider
 from e2r.research.search_snapshot_store import SearchSnapshotStore
 from e2r.score_validity import (
@@ -90,6 +94,8 @@ class AsOfResearchReplayConfig:
     theme_route_provider: ThemeRouteProvider | None = None
     max_theme_expansion_rounds: int | None = None
     theme_evidence_review_enabled: bool = True
+    extra_replay_dates: Sequence[date | str] = ()
+    runtime_fixture_spec_paths: Sequence[str | Path] = ()
 
     def __post_init__(self) -> None:
         if not isinstance(self.frequency, ReplayFrequency):
@@ -98,6 +104,12 @@ class AsOfResearchReplayConfig:
             object.__setattr__(self, "market", Market(str(self.market)))
         if self.end_date < self.start_date:
             raise ValueError("end_date cannot be before start_date")
+        extra_replay_dates = tuple(_normalise_extra_replay_date(item) for item in self.extra_replay_dates)
+        out_of_range = [item for item in extra_replay_dates if item < self.start_date or item > self.end_date]
+        if out_of_range:
+            raise ValueError("extra_replay_dates must be within start_date and end_date")
+        object.__setattr__(self, "extra_replay_dates", extra_replay_dates)
+        object.__setattr__(self, "runtime_fixture_spec_paths", tuple(self.runtime_fixture_spec_paths or ()))
         if self.max_candidates_per_date is not None and self.max_candidates_per_date <= 0:
             raise ValueError("max_candidates_per_date must be positive")
         if self.max_web_research_candidates_per_date is not None and self.max_web_research_candidates_per_date < 0:
@@ -219,9 +231,15 @@ class AsOfResearchReplay:
         sources = HistoricalOfficialSources(store)
         search_store = SearchSnapshotStore(config.search_snapshot_root)
         report_store = ReportSnapshotStore(config.report_snapshot_root)
+        fixture_store = RuntimeFixtureEvidenceStore(config.runtime_fixture_spec_paths)
         snapshots: list[AsOfResearchReplaySnapshot] = []
-        for replay_date in _replay_dates(config.start_date, config.end_date, config.frequency):
-            snapshots.append(self._run_one_date(config, replay_date, store, sources, search_store, report_store))
+        for replay_date in _scheduled_replay_dates(
+            config.start_date,
+            config.end_date,
+            config.frequency,
+            config.extra_replay_dates,
+        ):
+            snapshots.append(self._run_one_date(config, replay_date, store, sources, search_store, report_store, fixture_store))
         discovered = tuple(item for snapshot in snapshots for item in snapshot.candidates)
         # Benchmark labels are loaded only after candidate generation finishes.
         labels = labels_for_market(load_benchmark_labels(config.benchmark_label_path), config.market)
@@ -244,11 +262,21 @@ class AsOfResearchReplay:
         sources: HistoricalOfficialSources,
         search_store: SearchSnapshotStore,
         report_store: ReportSnapshotStore,
+        fixture_store: RuntimeFixtureEvidenceStore,
     ) -> AsOfResearchReplaySnapshot:
-        universe = sources.list_instruments(config.market, replay_date)
+        official_universe = sources.list_instruments(config.market, replay_date)
+        fixture_universe = fixture_store.instruments(market=config.market, as_of_date=replay_date)
+        snapshot_universe = (
+            _snapshot_derived_universe(search_store, report_store, config.market, replay_date)
+            if config.allow_snapshot_derived_universe
+            else ()
+        )
+        universe = _merge_universe(official_universe, snapshot_universe, fixture_universe)
         if config.universe_limit is not None:
             universe = universe[: config.universe_limit]
         limitations = list(store.coverage(replay_date, config.market).limitations())
+        if snapshot_universe:
+            limitations.append("snapshot_derived_universe")
         if not universe:
             limitations.append("insufficient official historical data: universe missing")
             return AsOfResearchReplaySnapshot(
@@ -273,9 +301,17 @@ class AsOfResearchReplay:
                 report_radar_enabled=False,
             )
         )
+        replay_universe_symbols = {item.symbol for item in universe}
+        radar_candidates = _snapshot_report_radar_candidates(
+            config=config,
+            replay_date=replay_date,
+            search_store=search_store,
+            instruments=tuple(item for item in snapshot_universe if item.symbol in replay_universe_symbols),
+        )
+        fixture_candidates = fixture_store.candidates(market=config.market, as_of_date=replay_date)
         layer1 = tuple(
             item
-            for item in cheap_scan.candidates
+            for item in _merge_candidates(cheap_scan.candidates, radar_candidates, fixture_candidates)
             if item.recommended_next_layer in {RecommendedNextLayer.EVENT_SEARCH, RecommendedNextLayer.DEEP_RESEARCH}
         )
         web_results: list[AsOfWebResearchResult] = []
@@ -311,7 +347,15 @@ class AsOfResearchReplay:
                     ),
                 )
                 web_results.append(web_result)
-            bundle = build_asof_evidence_bundle(candidate=candidate, store=store, web_result=web_result)
+            extra_reports = fixture_store.reports_for_candidate(candidate)
+            extra_evidence = fixture_store.evidence_for_candidate(candidate)
+            bundle = build_asof_evidence_bundle(
+                candidate=candidate,
+                store=store,
+                web_result=web_result,
+                extra_reports=extra_reports,
+                extra_evidence=extra_evidence,
+            )
             merged_scoring = score_asof_evidence_bundle(bundle, candidate=candidate, web_result=web_result)
             row = _candidate_row(candidate, rank, web_result, merged_scoring)
             candidate_rows.append(row)
@@ -359,6 +403,103 @@ def _theme_route_provider_for_config(config: AsOfResearchReplayConfig) -> ThemeR
             return provider
         return build_default_codex_theme_route_provider(working_directory=Path.cwd())
     return None
+
+
+def _snapshot_derived_universe(
+    search_store: SearchSnapshotStore,
+    report_store: ReportSnapshotStore,
+    market: Market,
+    as_of_date: date,
+) -> tuple[Instrument, ...]:
+    by_symbol: dict[str, Instrument] = {}
+    for item in search_store.load_snapshots():
+        if item.published_at is not None and item.published_at.date() > as_of_date:
+            continue
+        _add_snapshot_instrument(by_symbol, item.symbol, item.company_name, market)
+    for item in report_store.load_snapshots(as_of_date=as_of_date):
+        _add_snapshot_instrument(by_symbol, item.symbol, item.company_name, market)
+    return tuple(sorted(by_symbol.values(), key=lambda item: item.symbol))
+
+
+def _add_snapshot_instrument(
+    by_symbol: dict[str, Instrument],
+    symbol: str | None,
+    company_name: str | None,
+    market: Market,
+) -> None:
+    if not symbol or not company_name:
+        return
+    by_symbol.setdefault(
+        symbol,
+        Instrument(
+            symbol=symbol,
+            name=company_name,
+            market=market,
+            exchange="KRX" if market == Market.KR else market.value,
+            currency="KRW" if market == Market.KR else "USD",
+        ),
+    )
+
+
+def _merge_universe(*groups: Sequence[Instrument]) -> tuple[Instrument, ...]:
+    by_symbol: dict[str, Instrument] = {}
+    for group in groups:
+        for item in group:
+            by_symbol.setdefault(item.symbol, item)
+    return tuple(by_symbol.values())
+
+
+def _snapshot_report_radar_candidates(
+    *,
+    config: AsOfResearchReplayConfig,
+    replay_date: date,
+    search_store: SearchSnapshotStore,
+    instruments: Sequence[Instrument],
+) -> tuple[CheapScanCandidate, ...]:
+    if not config.allow_snapshot_derived_universe or not instruments:
+        return ()
+    candidates: list[CheapScanCandidate] = []
+    for instrument in instruments:
+        provider = AsOfDateFilteredSearchProvider(
+            RetrospectiveSnapshotSearchProvider(
+                store=search_store,
+                symbol=instrument.symbol,
+                company_name=instrument.name,
+            ),
+            replay_date,
+        )
+        budget = SearchBudget(
+            max_total_queries_per_day=None,
+            max_queries_per_symbol=config.max_queries_per_candidate,
+        )
+        radar_rows = ReportRadar(provider, max_results_per_query=config.max_results_per_query).run(
+            instruments=(instrument,),
+            as_of_date=replay_date,
+            budget=budget,
+            max_symbols=1,
+        )
+        candidates.extend(item.to_cheap_scan_candidate() for item in radar_rows)
+    return _merge_candidates(candidates)
+
+
+def _merge_candidates(*groups: Sequence[CheapScanCandidate]) -> tuple[CheapScanCandidate, ...]:
+    by_symbol: dict[tuple[object, ...], CheapScanCandidate] = {}
+    for group in groups:
+        for item in group:
+            by_symbol.setdefault(_candidate_merge_key(item), item)
+    return tuple(by_symbol.values())
+
+
+def _candidate_merge_key(candidate: CheapScanCandidate) -> tuple[object, ...]:
+    if candidate.candidate_source_path == "runtime_fixture_spec":
+        return (
+            candidate.candidate_source_path,
+            candidate.symbol,
+            candidate.as_of_date,
+            candidate.reason_codes,
+            candidate.evidence_ids,
+        )
+    return ("symbol", candidate.symbol)
 
 
 def _candidate_row(
@@ -486,12 +627,17 @@ def _trace_for_candidate(
     search_results = web_result.pipeline_result.web_result.search_results if web_result and web_result.pipeline_result else ()
     fetched = web_result.pipeline_result.web_result.fetched_documents if web_result and web_result.pipeline_result else ()
     evidence = web_result.pipeline_result.web_result.evidence if web_result and web_result.pipeline_result else ()
+    from_report_radar = candidate.candidate_source_path == "report_radar"
     steps = (
         FlowTraceStep("entered_universe", True),
-        FlowTraceStep("passed_official_cheap_scan", True),
+        FlowTraceStep("passed_official_cheap_scan", not from_report_radar),
         FlowTraceStep("watch_disclosure_found", bool(set(candidate.reason_codes) & {"DISC_SUPPLY_CONTRACT", "DISC_FACILITY_INVESTMENT", "DISC_EARNINGS_PREANNOUNCE"})),
         FlowTraceStep("opendart_detail_fetched", False, "detail fetch is represented by historical official fixtures when present"),
-        FlowTraceStep("report_radar_candidate", False, "as-of replay starts web research only after Layer-1 candidates"),
+        FlowTraceStep(
+            "report_radar_candidate",
+            from_report_radar,
+            "candidate came from explicit snapshot-derived report radar",
+        ),
         FlowTraceStep("free_web_research_executed", web_research_executed),
         FlowTraceStep("search_results_found", bool(search_results)),
         FlowTraceStep("documents_fetched", any(item.ok for item in fetched)),
@@ -600,6 +746,13 @@ def _failure_stage(
 def render_asof_replay_summary(result: AsOfResearchReplayResult) -> str:
     stage_counts = Counter(item.stage.value for item in result.discovered_candidates)
     band_counts = Counter(item.promotion_band for item in result.discovered_candidates)
+    if result.config.allow_snapshot_derived_universe:
+        candidate_generation_note = (
+            "This replay starts from official historical universe data and explicitly enabled "
+            "snapshot-derived report-radar candidates."
+        )
+    else:
+        candidate_generation_note = "This replay starts from official historical universe data."
     lines = [
         "# As-Of Research Replay Summary",
         "",
@@ -625,7 +778,8 @@ def render_asof_replay_summary(result: AsOfResearchReplayResult) -> str:
         f"- Stage 3-Watch band count: {band_counts.get('Stage 3-Watch', 0)}",
         f"- merged scoring used: yes",
         "",
-        "This replay starts from official historical universe data. Web research is executed only after Layer-1 candidate generation.",
+        candidate_generation_note,
+        "Web research is executed only after Layer-1 candidate generation.",
         "It uses reconstructed public-document research and rejects documents published after the replay date.",
     ]
     limitations = tuple(dict.fromkeys(item for snapshot in result.snapshots for item in snapshot.limitations))
@@ -747,8 +901,11 @@ def render_limitations(result: AsOfResearchReplayResult) -> str:
         "- Documents published after replay date are rejected.",
         "- Undated documents are date_unverified and cannot create Stage 3-Green alone when configured.",
         "- Benchmark labels are evaluation-only and loaded after candidate output.",
-        "- Search/report snapshots do not define the universe.",
     ]
+    if result.config.allow_snapshot_derived_universe:
+        lines.append("- Search/report snapshots can add report-radar candidates only because the explicit option was enabled.")
+    else:
+        lines.append("- Search/report snapshots do not define the universe.")
     for item in tuple(dict.fromkeys(value for snapshot in result.snapshots for value in snapshot.limitations)):
         lines.append(f"- {item}")
     return "\n".join(lines).rstrip() + "\n"
@@ -903,6 +1060,26 @@ def _replay_dates(start: date, end: date, frequency: ReplayFrequency) -> tuple[d
             month = 1 if cursor.month == 12 else cursor.month + 1
             cursor = date(year, month, 1)
     return tuple(values)
+
+
+def _normalise_extra_replay_date(value: date | str) -> date:
+    if isinstance(value, date):
+        return value
+    return date.fromisoformat(str(value))
+
+
+def _scheduled_replay_dates(
+    start: date,
+    end: date,
+    frequency: ReplayFrequency,
+    extra_replay_dates: Sequence[date | str] = (),
+) -> tuple[date, ...]:
+    base_dates = set(_replay_dates(start, end, frequency))
+    for item in extra_replay_dates:
+        extra_date = _normalise_extra_replay_date(item)
+        if start <= extra_date <= end:
+            base_dates.add(extra_date)
+    return tuple(sorted(base_dates))
 
 
 def _jsonable(value: Any) -> Any:

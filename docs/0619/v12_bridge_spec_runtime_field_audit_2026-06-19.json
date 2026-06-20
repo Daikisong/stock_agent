@@ -1,0 +1,3910 @@
+{
+  "rows": [
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "margin",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "backlog",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "contract",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "customer",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "guard_risk",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        }
+      ],
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "volume_growth_visible",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "mix_improvement",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_literal_exact_parser_missing"
+        },
+        {
+          "primitive": "operating_leverage_visible",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "pricing_power_confirmed",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "fcf_quality_score",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "derived_runtime_metric"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "research_clean_green_count": 5,
+      "research_raw_stage3_green_count": 10,
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "margin",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "backlog",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "contract",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "customer",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "guard_risk",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "order_backlog_to_sales",
+          "primitive_axes": [
+            "backlog"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "customer_contract",
+          "primitive_axes": [
+            "contract",
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "call_off_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "ex_credit_margin",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "fcf_quality_score",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "derived_runtime_metric"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 2,
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "margin",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "backlog",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "contract",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "customer",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "guard_risk",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "capacity",
+        "contract",
+        "customer",
+        "guard_risk",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "jv_utilization",
+          "primitive_axes": [
+            "capacity"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "ampc_or_subsidy_capture",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "ex_credit_margin",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "customer_contract",
+          "primitive_axes": [
+            "contract",
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "policy_reversal_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 6,
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "margin",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "backlog",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "contract",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "customer",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "guard_risk",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "diagnosis": "research_green_not_source_backed_enough_for_runtime_fixture",
+      "expected_primitive_axes": [
+        "customer",
+        "guard_risk",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "ev_demand_slowdown",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "inventory_spike",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "price_cut_risk",
+          "primitive_axes": [
+            "guard_risk",
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "customer_capex_decline",
+          "primitive_axes": [
+            "customer",
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "thesis_break_confirmed",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "research_clean_green_count": 0,
+      "research_raw_stage3_green_count": 1,
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "fixture_not_ready",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "margin",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "backlog",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "contract",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "customer",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        }
+      ],
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "contract",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "contract_amount_to_prior_sales",
+          "primitive_axes": [
+            "contract"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "contract_duration_months",
+          "primitive_axes": [
+            "contract"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "margin_bridge_visible",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "cost_overrun",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "delivery_schedule",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "research_clean_green_count": 9,
+      "research_raw_stage3_green_count": 10,
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "margin",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "backlog",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "contract",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "customer",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "diagnosis": "runtime_candidate_input_evidence_missing_for_bridge",
+      "expected_primitive_axes": [
+        "backlog",
+        "contract",
+        "customer",
+        "margin"
+      ],
+      "expected_primitive_count": 6,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "order_backlog_to_sales",
+          "primitive_axes": [
+            "backlog"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "named_customer_quality",
+          "primitive_axes": [
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "contract_quality",
+          "primitive_axes": [
+            "contract"
+          ],
+          "support_sources": [
+            "derived_runtime_metric"
+          ],
+          "support_status": "derived_runtime_metric"
+        },
+        {
+          "primitive": "delivery_schedule",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "opm_expansion_pctp",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "fcf_quality_score",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "derived_runtime_metric"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "research_clean_green_count": 8,
+      "research_raw_stage3_green_count": 9,
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "runtime_candidate_count": 11,
+      "runtime_gap_status": "runtime_input_evidence_missing",
+      "runtime_max_score": 4.4554,
+      "supported_or_derived_primitive_count": 6
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "customer",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "backlog",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "contract",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "margin",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "backlog",
+        "consumer_sell_through",
+        "customer",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "named_customer_quality",
+          "primitive_axes": [
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "qualification_confirmed",
+          "primitive_axes": [],
+          "support_sources": [
+            "parser_output"
+          ],
+          "support_status": "parser_output_exact_score_missing"
+        },
+        {
+          "primitive": "repeat_order_confirmed",
+          "primitive_axes": [
+            "backlog",
+            "consumer_sell_through"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "socket_or_test_demand_visible",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "margin_bridge_visible",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 10,
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "customer",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "backlog",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "contract",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "margin",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        }
+      ],
+      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "diagnosis": "research_green_not_source_backed_enough_for_runtime_fixture",
+      "expected_primitive_axes": [
+        "backlog",
+        "bio_commercialization",
+        "capacity",
+        "contract",
+        "customer"
+      ],
+      "expected_primitive_count": 6,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "hbm_customer_order",
+          "primitive_axes": [
+            "backlog",
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "customer_contract_visible",
+          "primitive_axes": [
+            "contract",
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "equipment_order_backlog",
+          "primitive_axes": [
+            "backlog"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "advanced_packaging_bottleneck",
+          "primitive_axes": [
+            "capacity"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "relative_strength_score",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "order_to_revenue_bridge",
+          "primitive_axes": [
+            "backlog",
+            "bio_commercialization"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "research_clean_green_count": 0,
+      "research_raw_stage3_green_count": 2,
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "fixture_not_ready",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 6
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "capital_return",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "valuation_repricing",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "guard_risk",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        }
+      ],
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "capital_return",
+        "valuation_repricing"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "roe",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "pbr_e",
+          "primitive_axes": [
+            "valuation_repricing"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "treasury_share_cancellation",
+          "primitive_axes": [
+            "capital_return"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "capital_return_execution",
+          "primitive_axes": [
+            "capital_return"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "credit_cost_quality",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "research_clean_green_count": 23,
+      "research_raw_stage3_green_count": 37,
+      "runtime_bridge_group": "financial_capital_return_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "insurance_quality",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "capital_return",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "guard_risk",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        }
+      ],
+      "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "capital_return",
+        "insurance_quality"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "csm_growth_visible",
+          "primitive_axes": [
+            "insurance_quality"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "k_ics_ratio",
+          "primitive_axes": [
+            "insurance_quality"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "reserve_quality_visible",
+          "primitive_axes": [
+            "insurance_quality"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "loss_ratio_quality",
+          "primitive_axes": [
+            "insurance_quality"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "capital_return_execution",
+          "primitive_axes": [
+            "capital_return"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "research_clean_green_count": 15,
+      "research_raw_stage3_green_count": 28,
+      "runtime_bridge_group": "insurance_reserve_capital_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "software_retention",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "customer",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "margin",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "bio_commercialization",
+        "guard_risk",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "arpu_growth_pct",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "ad_revenue_growth_pct",
+          "primitive_axes": [
+            "bio_commercialization"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "take_rate_improvement",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "operating_leverage_visible",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "regulatory_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "research_clean_green_count": 11,
+      "research_raw_stage3_green_count": 19,
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "margin",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "contract",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "guard_risk",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "capacity",
+        "guard_risk",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "spread_expansion",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "raw_material_cost_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "utilization_rate",
+          "primitive_axes": [
+            "capacity"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "inventory_cycle",
+          "primitive_axes": [],
+          "support_sources": [
+            "parser_output"
+          ],
+          "support_status": "parser_output_exact_score_missing"
+        },
+        {
+          "primitive": "opm_expansion_pctp",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "research_clean_green_count": 8,
+      "research_raw_stage3_green_count": 15,
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "consumer_sell_through",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "margin",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "customer",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "diagnosis": "research_green_fixture_not_exercised_by_candidate_funnel",
+      "expected_primitive_axes": [
+        "backlog",
+        "consumer_sell_through",
+        "customer",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "export_growth_pct",
+          "primitive_axes": [
+            "consumer_sell_through"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "sell_through_confirmed",
+          "primitive_axes": [
+            "consumer_sell_through"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "repeat_order_confirmed",
+          "primitive_axes": [
+            "backlog",
+            "consumer_sell_through"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "channel_reorder_confirmed",
+          "primitive_axes": [
+            "backlog",
+            "consumer_sell_through",
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "opm_expansion_pctp",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "research_clean_green_count": 8,
+      "research_raw_stage3_green_count": 14,
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "software_retention",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "customer",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "margin",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        }
+      ],
+      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "bio_commercialization",
+        "consumer_sell_through",
+        "contract",
+        "guard_risk",
+        "software_retention"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "ip_monetization_visible",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "global_launch_conversion",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "repeat_revenue",
+          "primitive_axes": [
+            "bio_commercialization",
+            "consumer_sell_through"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "user_retention",
+          "primitive_axes": [
+            "contract",
+            "software_retention"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "token_or_theme_hype_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "research_clean_green_count": 8,
+      "research_raw_stage3_green_count": 12,
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "margin",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "contract",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "guard_risk",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        }
+      ],
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "capacity",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "spread_expansion",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "utilization_rate",
+          "primitive_axes": [
+            "capacity"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "inventory_cycle",
+          "primitive_axes": [],
+          "support_sources": [
+            "parser_output"
+          ],
+          "support_status": "parser_output_exact_score_missing"
+        },
+        {
+          "primitive": "pricing_power_confirmed",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "fcf_quality_score",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "derived_runtime_metric"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "research_clean_green_count": 6,
+      "research_raw_stage3_green_count": 12,
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "software_retention",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "customer",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "margin",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "backlog",
+        "contract",
+        "margin",
+        "software_retention"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "arr_growth_visible",
+          "primitive_axes": [
+            "software_retention"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "nrr",
+          "primitive_axes": [
+            "software_retention"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "retention_or_renewal",
+          "primitive_axes": [
+            "contract",
+            "software_retention"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "rpo_to_sales",
+          "primitive_axes": [
+            "backlog"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "recurring_margin_leverage",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "research_clean_green_count": 6,
+      "research_raw_stage3_green_count": 14,
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "guard_risk",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "valuation_repricing",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "contract",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        }
+      ],
+      "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "guard_risk"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "policy_or_regulatory_confirmed",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "direct_company_cash_route",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "subsidy_capture_visible",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "implementation_timeline",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "policy_headline_only",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "research_clean_green_count": 4,
+      "research_raw_stage3_green_count": 12,
+      "runtime_bridge_group": "policy_project_cash_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "consumer_sell_through",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "margin",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "customer",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "backlog",
+        "consumer_sell_through",
+        "customer",
+        "guard_risk",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "inventory_spike",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "sell_through_confirmed",
+          "primitive_axes": [
+            "consumer_sell_through"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "pricing_power_confirmed",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "channel_reorder_confirmed",
+          "primitive_axes": [
+            "backlog",
+            "consumer_sell_through",
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "raw_material_cost_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "research_clean_green_count": 2,
+      "research_raw_stage3_green_count": 5,
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "guard_risk",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "valuation_repricing",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "customer",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "backlog",
+        "bio_commercialization",
+        "customer",
+        "guard_risk",
+        "margin",
+        "valuation_repricing"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "valuation_overheat",
+          "primitive_axes": [
+            "guard_risk",
+            "valuation_repricing"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "price_only_blowoff",
+          "primitive_axes": [
+            "guard_risk",
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "order_to_revenue_bridge",
+          "primitive_axes": [
+            "backlog",
+            "bio_commercialization"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "customer_quality_visible",
+          "primitive_axes": [
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "capex_cycle_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 3,
+      "runtime_bridge_group": "valuation_blowoff_guard_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "margin",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "contract",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "guard_risk",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "guard_risk"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "pf_exposure_reduced",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "balance_sheet_repair",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "cash_collection_visible",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "occupancy_or_presale_visible",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "funding_cost_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 3,
+      "runtime_bridge_group": "construction_pf_cash_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "bio_commercialization",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "guard_risk",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        }
+      ],
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "bio_commercialization",
+        "customer"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "regulatory_approval_confirmed",
+          "primitive_axes": [
+            "bio_commercialization"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "approval_to_revenue_bridge",
+          "primitive_axes": [
+            "bio_commercialization"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "royalty_route",
+          "primitive_axes": [
+            "bio_commercialization"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "partner_economics_visible",
+          "primitive_axes": [
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "reimbursement_confirmed",
+          "primitive_axes": [
+            "bio_commercialization"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "research_clean_green_count": 16,
+      "research_raw_stage3_green_count": 30,
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "bio_commercialization",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "guard_risk",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        }
+      ],
+      "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "bio_commercialization",
+        "consumer_sell_through",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "reimbursement_confirmed",
+          "primitive_axes": [
+            "bio_commercialization"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "procedure_volume_growth",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "export_growth_pct",
+          "primitive_axes": [
+            "consumer_sell_through"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "consumable_repeat_revenue",
+          "primitive_axes": [
+            "bio_commercialization",
+            "consumer_sell_through"
+          ],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "gross_margin_bridge",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "research_clean_green_count": 9,
+      "research_raw_stage3_green_count": 12,
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "bio_commercialization",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        },
+        {
+          "axis": "guard_risk",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "trial_quality_visible",
+          "primitive_axes": [
+            "bio_commercialization"
+          ],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "binary_event_unresolved",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "approval_not_confirmed",
+          "primitive_axes": [
+            "bio_commercialization"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "safety_signal",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "cash_runway_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "research_clean_green_count": 2,
+      "research_raw_stage3_green_count": 7,
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "capital_return",
+          "status": "required_by_gate_but_absent_from_bridge_spec"
+        },
+        {
+          "axis": "guard_risk",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "bio_commercialization",
+        "guard_risk",
+        "margin",
+        "valuation_repricing"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "tender_offer_confirmed",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "minority_cash_path",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "control_premium_floor",
+          "primitive_axes": [
+            "valuation_repricing"
+          ],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "regulatory_approval_confirmed",
+          "primitive_axes": [
+            "bio_commercialization"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "event_spread_risk",
+          "primitive_axes": [
+            "guard_risk",
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 1,
+      "runtime_bridge_group": "governance_tender_cash_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "guard_risk",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "contract",
+        "guard_risk",
+        "revision",
+        "valuation_repricing"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "thesis_break_confirmed",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "contract_cancelled_or_delayed",
+          "primitive_axes": [
+            "contract",
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "revision_slowdown",
+          "primitive_axes": [
+            "revision"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "accounting_trust_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "valuation_overheat",
+          "primitive_axes": [
+            "guard_risk",
+            "valuation_repricing"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "research_clean_green_count": 19,
+      "research_raw_stage3_green_count": 32,
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "guard_risk",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "guard_risk",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "auditor_or_disclosure_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "restatement_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "share_count_drift",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "price_only_blowoff",
+          "primitive_axes": [
+            "guard_risk",
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "source_quality_conflict",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "research_clean_green_count": 3,
+      "research_raw_stage3_green_count": 8,
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "guard_risk",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "expected_primitive_axes": [
+        "guard_risk",
+        "valuation_repricing"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "high_mae_history",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "valuation_overheat",
+          "primitive_axes": [
+            "guard_risk",
+            "valuation_repricing"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "liquidity_or_microcap_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "execution_risk_score",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "positioning_reversal_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "research_clean_green_count": 2,
+      "research_raw_stage3_green_count": 5,
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "guard_risk",
+          "status": "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak"
+        }
+      ],
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "diagnosis": "runtime_candidate_input_evidence_missing_for_bridge",
+      "expected_primitive_axes": [
+        "bio_commercialization",
+        "guard_risk",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "price_only_blowoff",
+          "primitive_axes": [
+            "guard_risk",
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "policy_headline_only",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "evidence_source_quality",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "missing_cashflow_bridge",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "theme_hype_without_revenue",
+          "primitive_axes": [
+            "bio_commercialization"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "research_clean_green_count": 2,
+      "research_raw_stage3_green_count": 5,
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "runtime_candidate_count": 11,
+      "runtime_gap_status": "runtime_input_evidence_missing",
+      "runtime_max_score": 9.308,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "consumer_sell_through",
+          "status": "covered_by_bridge_spec_and_runtime"
+        },
+        {
+          "axis": "margin",
+          "status": "covered_by_bridge_spec_and_runtime"
+        },
+        {
+          "axis": "customer",
+          "status": "covered_by_bridge_spec_and_runtime"
+        }
+      ],
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "diagnosis": "weighted_stage3_gate_blocks_after_fields_present",
+      "expected_primitive_axes": [
+        "backlog",
+        "consumer_sell_through",
+        "customer",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "export_growth_pct",
+          "primitive_axes": [
+            "consumer_sell_through"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "platform_distribution_scale",
+          "primitive_axes": [
+            "consumer_sell_through",
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "brand_customer_diversification",
+          "primitive_axes": [
+            "customer"
+          ],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "repeat_order_confirmed",
+          "primitive_axes": [
+            "backlog",
+            "consumer_sell_through"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "high_margin_mix_improvement",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "research_clean_green_count": 22,
+      "research_raw_stage3_green_count": 33,
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "runtime_candidate_count": 22,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 64.161,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "customer",
+          "status": "covered_by_bridge_spec_and_runtime"
+        },
+        {
+          "axis": "backlog",
+          "status": "covered_by_bridge_spec_and_runtime"
+        },
+        {
+          "axis": "contract",
+          "status": "covered_by_bridge_spec_and_runtime"
+        },
+        {
+          "axis": "margin",
+          "status": "covered_by_bridge_spec_and_runtime"
+        }
+      ],
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "diagnosis": "weighted_stage3_gate_blocks_after_fields_present",
+      "expected_primitive_axes": [
+        "backlog",
+        "bio_commercialization",
+        "capacity",
+        "consumer_sell_through",
+        "contract",
+        "customer",
+        "margin",
+        "revision"
+      ],
+      "expected_primitive_count": 6,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "customer_preorder_or_allocation",
+          "primitive_axes": [
+            "backlog",
+            "consumer_sell_through",
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "revenue_visibility_contract",
+          "primitive_axes": [
+            "bio_commercialization",
+            "contract"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "hbm_capacity_constraint",
+          "primitive_axes": [
+            "capacity"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "hbm_capacity_pre_sold",
+          "primitive_axes": [
+            "backlog",
+            "capacity"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "memory_price_increase_mentioned",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "medium_term_revision_visibility",
+          "primitive_axes": [
+            "revision"
+          ],
+          "support_sources": [
+            "feature_literal",
+            "derived_runtime_metric"
+          ],
+          "support_status": "derived_runtime_metric"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "research_clean_green_count": 5,
+      "research_raw_stage3_green_count": 9,
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "runtime_candidate_count": 19,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 80.0131,
+      "supported_or_derived_primitive_count": 6
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "customer",
+          "status": "runtime_present_but_not_explicit_in_bridge_spec"
+        },
+        {
+          "axis": "backlog",
+          "status": "covered_by_bridge_spec_and_runtime"
+        },
+        {
+          "axis": "margin",
+          "status": "covered_by_bridge_spec_and_runtime"
+        },
+        {
+          "axis": "valuation_repricing",
+          "status": "runtime_present_but_not_explicit_in_bridge_spec"
+        }
+      ],
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "diagnosis": "weighted_stage3_gate_blocks_after_fields_present",
+      "expected_primitive_axes": [
+        "backlog",
+        "bio_commercialization",
+        "capacity",
+        "margin"
+      ],
+      "expected_primitive_count": 11,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "memory_price_increase_mentioned",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "supply_discipline_mentioned",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "cycle_demand_visibility",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "end_market_demand_visibility",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "supply_demand_tightness",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "cycle_to_revenue_bridge",
+          "primitive_axes": [
+            "bio_commercialization"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "advanced_packaging_bottleneck",
+          "primitive_axes": [
+            "capacity"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "equipment_order_recovery",
+          "primitive_axes": [
+            "backlog"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "order_to_revenue_bridge",
+          "primitive_axes": [
+            "backlog",
+            "bio_commercialization"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "inventory_cycle_repair",
+          "primitive_axes": [],
+          "support_sources": [
+            "parser_output"
+          ],
+          "support_status": "parser_output_exact_score_missing"
+        },
+        {
+          "primitive": "fcf_quality_score",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "derived_runtime_metric"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "margin",
+        "valuation_repricing"
+      ],
+      "research_clean_green_count": 4,
+      "research_raw_stage3_green_count": 4,
+      "runtime_bridge_group": "semiconductor_memory_recovery_bridge",
+      "runtime_candidate_count": 1,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 72.1181,
+      "supported_or_derived_primitive_count": 11
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "margin",
+          "status": "covered_by_bridge_spec_and_runtime"
+        },
+        {
+          "axis": "backlog",
+          "status": "covered_by_bridge_spec_and_runtime"
+        },
+        {
+          "axis": "contract",
+          "status": "runtime_present_but_not_explicit_in_bridge_spec"
+        },
+        {
+          "axis": "customer",
+          "status": "covered_by_bridge_spec_and_runtime"
+        }
+      ],
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "diagnosis": "weighted_stage3_gate_blocks_after_fields_present",
+      "expected_primitive_axes": [
+        "backlog",
+        "capacity",
+        "customer",
+        "margin"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "datacenter_customer",
+          "primitive_axes": [
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "order_backlog_to_sales",
+          "primitive_axes": [
+            "backlog"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "lead_time_extended",
+          "primitive_axes": [
+            "capacity"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "capacity_constraint",
+          "primitive_axes": [
+            "capacity"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "pricing_power_confirmed",
+          "primitive_axes": [
+            "margin"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "research_clean_green_count": 3,
+      "research_raw_stage3_green_count": 5,
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "runtime_candidate_count": 44,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 72.9252,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [
+        {
+          "axis": "margin",
+          "status": "runtime_present_but_not_explicit_in_bridge_spec"
+        },
+        {
+          "axis": "backlog",
+          "status": "covered_by_bridge_spec_and_runtime"
+        },
+        {
+          "axis": "contract",
+          "status": "covered_by_bridge_spec_and_runtime"
+        },
+        {
+          "axis": "customer",
+          "status": "covered_by_bridge_spec_and_runtime"
+        }
+      ],
+      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "diagnosis": "research_green_not_source_backed_enough_for_runtime_fixture",
+      "expected_primitive_axes": [
+        "backlog",
+        "consumer_sell_through",
+        "contract",
+        "customer"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "export_contract",
+          "primitive_axes": [
+            "consumer_sell_through",
+            "contract"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "government_customer",
+          "primitive_axes": [
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "order_backlog_to_sales",
+          "primitive_axes": [
+            "backlog"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "delivery_schedule",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "cost_overrun",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "research_clean_green_count": 0,
+      "research_raw_stage3_green_count": 6,
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "runtime_candidate_count": 12,
+      "runtime_gap_status": "fixture_not_ready",
+      "runtime_max_score": 35.6473,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [],
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "diagnosis": null,
+      "expected_primitive_axes": [
+        "guard_risk"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "policy_or_regulatory_confirmed",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "project_award_confirmed",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "permit_or_legal_delay",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "direct_company_cash_route",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "cost_overrun",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "required_bridge_axes": [],
+      "research_clean_green_count": null,
+      "research_raw_stage3_green_count": null,
+      "runtime_bridge_group": "policy_project_cash_bridge",
+      "runtime_candidate_count": null,
+      "runtime_gap_status": null,
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [],
+      "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "diagnosis": null,
+      "expected_primitive_axes": [
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "customer_contract",
+          "primitive_axes": [
+            "contract",
+            "customer"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "call_off_risk",
+          "primitive_axes": [
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "customer_capex_decline",
+          "primitive_axes": [
+            "customer",
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "contract_cancelled_or_delayed",
+          "primitive_axes": [
+            "contract",
+            "guard_risk"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_input_exact_parser_missing"
+        },
+        {
+          "primitive": "volume_visibility",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "required_bridge_axes": [],
+      "research_clean_green_count": null,
+      "research_raw_stage3_green_count": null,
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "runtime_candidate_count": null,
+      "runtime_gap_status": null,
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    },
+    {
+      "axis_contract_statuses": [],
+      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "diagnosis": null,
+      "expected_primitive_axes": [
+        "capacity",
+        "contract"
+      ],
+      "expected_primitive_count": 5,
+      "expected_runtime_primitives": [
+        {
+          "primitive": "offtake_contract",
+          "primitive_axes": [
+            "contract"
+          ],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        },
+        {
+          "primitive": "supply_shortage",
+          "primitive_axes": [
+            "capacity"
+          ],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "policy_supply_support",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "permit_status",
+          "primitive_axes": [],
+          "support_sources": [
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "feature_and_parser_literal_exact"
+        },
+        {
+          "primitive": "direct_company_cash_route",
+          "primitive_axes": [],
+          "support_sources": [
+            "score_method_arg",
+            "feature_literal",
+            "parser_output",
+            "bridge_diagnostic_group"
+          ],
+          "support_status": "score_and_parser_exact"
+        }
+      ],
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "required_bridge_axes": [],
+      "research_clean_green_count": null,
+      "research_raw_stage3_green_count": null,
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "runtime_candidate_count": null,
+      "runtime_gap_status": null,
+      "runtime_max_score": null,
+      "supported_or_derived_primitive_count": 5
+    }
+  ],
+  "summary": {
+    "archetype_count": 36,
+    "archetypes_with_missing_feature_parser_contract": 0,
+    "archetypes_with_required_axis_contract_mismatch": 18,
+    "axis_contract_status_counts": {
+      "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 56,
+      "covered_by_bridge_spec_and_runtime": 15,
+      "required_by_gate_but_absent_from_bridge_spec": 28,
+      "runtime_present_but_not_explicit_in_bridge_spec": 4
+    },
+    "bridge_group_missing_primitive_counts": {},
+    "expected_primitive_rows": 189,
+    "primitive_support_status_counts": {
+      "derived_runtime_metric": 2,
+      "feature_and_parser_literal_exact": 27,
+      "feature_literal_exact_parser_missing": 1,
+      "parser_output_exact_score_missing": 4,
+      "score_and_parser_exact": 132,
+      "score_input_exact_parser_missing": 23
+    },
+    "source_inventory_counts": {
+      "bridge_diagnostic_group_keys": 194,
+      "derived_runtime_metrics": 20,
+      "feature_literal_keys": 441,
+      "feature_method_arg_keys": 252,
+      "parser_output_keys": 206
+    }
+  }
+}

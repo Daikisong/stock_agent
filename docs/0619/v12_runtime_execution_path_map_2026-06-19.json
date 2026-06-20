@@ -1,0 +1,1354 @@
+{
+  "archetype_rows": [
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "information_confidence",
+        "earnings_visibility",
+        "market_mispricing"
+      ],
+      "weight_support_counterexample_count": 172,
+      "weight_support_positive_case_count": 72,
+      "weight_support_row_count": 1023
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "information_confidence",
+        "earnings_visibility",
+        "market_mispricing"
+      ],
+      "weight_support_counterexample_count": 202,
+      "weight_support_positive_case_count": 15,
+      "weight_support_row_count": 715
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "information_confidence",
+        "capital_allocation",
+        "earnings_visibility"
+      ],
+      "weight_support_counterexample_count": 104,
+      "weight_support_positive_case_count": 29,
+      "weight_support_row_count": 619
+    },
+    {
+      "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "information_confidence",
+        "earnings_visibility",
+        "market_mispricing"
+      ],
+      "weight_support_counterexample_count": 102,
+      "weight_support_positive_case_count": 64,
+      "weight_support_row_count": 478
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_runtime_input_evidence_missing",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "후보는 있지만 리포트/뉴스/컨센서스/충분한 공시+재무 입력 가족이 부족해 bridge field를 판정하지 못한다.",
+      "runtime_candidate_count": 11,
+      "runtime_gap_status": "runtime_input_evidence_missing",
+      "runtime_max_score": 9.308,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "information_confidence",
+        "earnings_visibility",
+        "market_mispricing"
+      ],
+      "weight_support_counterexample_count": 127,
+      "weight_support_positive_case_count": 12,
+      "weight_support_row_count": 473
+    },
+    {
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "case_label": "금융 capital return 후보/replay gap 예시",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "valuation_rerating",
+        "earnings_visibility",
+        "eps_fcf_explosion"
+      ],
+      "weight_support_counterexample_count": 43,
+      "weight_support_positive_case_count": 44,
+      "weight_support_row_count": 413
+    },
+    {
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "valuation_rerating"
+      ],
+      "weight_support_counterexample_count": 93,
+      "weight_support_positive_case_count": 66,
+      "weight_support_row_count": 411
+    },
+    {
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "valuation_rerating",
+        "market_mispricing",
+        "earnings_visibility"
+      ],
+      "weight_support_counterexample_count": 50,
+      "weight_support_positive_case_count": 25,
+      "weight_support_row_count": 378
+    },
+    {
+      "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "information_confidence",
+        "eps_fcf_explosion",
+        "earnings_visibility"
+      ],
+      "weight_support_counterexample_count": 66,
+      "weight_support_positive_case_count": 36,
+      "weight_support_row_count": 377
+    },
+    {
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "case_label": "플랫폼 광고/레버리지 후보/replay gap과 field contract 후속 예시",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "market_mispricing"
+      ],
+      "weight_support_counterexample_count": 65,
+      "weight_support_positive_case_count": 35,
+      "weight_support_row_count": 334
+    },
+    {
+      "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "valuation_rerating",
+        "earnings_visibility",
+        "capital_allocation"
+      ],
+      "weight_support_counterexample_count": 50,
+      "weight_support_positive_case_count": 47,
+      "weight_support_row_count": 327
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "bottleneck_pricing",
+        "information_confidence"
+      ],
+      "weight_support_counterexample_count": 72,
+      "weight_support_positive_case_count": 47,
+      "weight_support_row_count": 324
+    },
+    {
+      "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "market_mispricing"
+      ],
+      "weight_support_counterexample_count": 47,
+      "weight_support_positive_case_count": 42,
+      "weight_support_row_count": 308
+    },
+    {
+      "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "information_confidence"
+      ],
+      "weight_support_counterexample_count": 81,
+      "weight_support_positive_case_count": 46,
+      "weight_support_row_count": 307
+    },
+    {
+      "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "weight_support_counterexample_count": 101,
+      "weight_support_positive_case_count": 59,
+      "weight_support_row_count": 305
+    },
+    {
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "information_confidence",
+        "eps_fcf_explosion",
+        "bottleneck_pricing"
+      ],
+      "weight_support_counterexample_count": 53,
+      "weight_support_positive_case_count": 31,
+      "weight_support_row_count": 297
+    },
+    {
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "information_confidence",
+        "eps_fcf_explosion"
+      ],
+      "weight_support_counterexample_count": 56,
+      "weight_support_positive_case_count": 51,
+      "weight_support_row_count": 295
+    },
+    {
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_runtime_input_evidence_missing",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "후보는 있지만 리포트/뉴스/컨센서스/충분한 공시+재무 입력 가족이 부족해 bridge field를 판정하지 못한다.",
+      "runtime_candidate_count": 11,
+      "runtime_gap_status": "runtime_input_evidence_missing",
+      "runtime_max_score": 4.4554,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "bottleneck_pricing"
+      ],
+      "weight_support_counterexample_count": 50,
+      "weight_support_positive_case_count": 70,
+      "weight_support_row_count": 288
+    },
+    {
+      "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "weight_support_counterexample_count": 73,
+      "weight_support_positive_case_count": 33,
+      "weight_support_row_count": 286
+    },
+    {
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "market_mispricing"
+      ],
+      "weight_support_counterexample_count": 87,
+      "weight_support_positive_case_count": 39,
+      "weight_support_row_count": 285
+    },
+    {
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "case_label": "바이오 approval-to-revenue 후보/replay gap 예시",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "information_confidence",
+        "earnings_visibility",
+        "eps_fcf_explosion"
+      ],
+      "weight_support_counterexample_count": 24,
+      "weight_support_positive_case_count": 27,
+      "weight_support_row_count": 269
+    },
+    {
+      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_fixture_not_source_backed",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "research Green은 있지만 replay fixture로 쓰기 위한 source-backed 입력이 부족하다.",
+      "runtime_candidate_count": 12,
+      "runtime_gap_status": "fixture_not_ready",
+      "runtime_max_score": 35.6473,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "bottleneck_pricing"
+      ],
+      "weight_support_counterexample_count": 65,
+      "weight_support_positive_case_count": 47,
+      "weight_support_row_count": 267
+    },
+    {
+      "canonical_archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_fixture_not_source_backed",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "research Green은 있지만 replay fixture로 쓰기 위한 source-backed 입력이 부족하다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "fixture_not_ready",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "information_confidence",
+        "eps_fcf_explosion",
+        "earnings_visibility"
+      ],
+      "weight_support_counterexample_count": 80,
+      "weight_support_positive_case_count": 51,
+      "weight_support_row_count": 264
+    },
+    {
+      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "information_confidence",
+        "earnings_visibility"
+      ],
+      "weight_support_counterexample_count": 46,
+      "weight_support_positive_case_count": 33,
+      "weight_support_row_count": 263
+    },
+    {
+      "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "market_mispricing"
+      ],
+      "weight_support_counterexample_count": 68,
+      "weight_support_positive_case_count": 31,
+      "weight_support_row_count": 259
+    },
+    {
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "information_confidence",
+        "earnings_visibility",
+        "market_mispricing"
+      ],
+      "weight_support_counterexample_count": 41,
+      "weight_support_positive_case_count": 36,
+      "weight_support_row_count": 253
+    },
+    {
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "weight_support_counterexample_count": 53,
+      "weight_support_positive_case_count": 39,
+      "weight_support_row_count": 247
+    },
+    {
+      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_fixture_not_source_backed",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "research Green은 있지만 replay fixture로 쓰기 위한 source-backed 입력이 부족하다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "fixture_not_ready",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "weight_support_counterexample_count": 60,
+      "weight_support_positive_case_count": 56,
+      "weight_support_row_count": 237
+    },
+    {
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "information_confidence",
+        "eps_fcf_explosion",
+        "earnings_visibility"
+      ],
+      "weight_support_counterexample_count": 41,
+      "weight_support_positive_case_count": 26,
+      "weight_support_row_count": 223
+    },
+    {
+      "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "docs/0619 runtime audit outputs"
+      ],
+      "feature_layer_status": "weight_supported_runtime_needs_review",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "next_fix": "현재 audit 범위 밖이므로 후보/field/gate 중 어느 층인지 추가 trace가 필요하다.",
+      "plain_runtime_reason": "현재 audit만으로는 중단 지점 추가 확인이 필요하다.",
+      "runtime_candidate_count": null,
+      "runtime_gap_status": "",
+      "runtime_max_score": null,
+      "stop_layer": "manual_review",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "information_confidence",
+        "earnings_visibility"
+      ],
+      "weight_support_counterexample_count": 92,
+      "weight_support_positive_case_count": 45,
+      "weight_support_row_count": 262
+    },
+    {
+      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "docs/0619 runtime audit outputs"
+      ],
+      "feature_layer_status": "weight_supported_runtime_needs_review",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "next_fix": "현재 audit 범위 밖이므로 후보/field/gate 중 어느 층인지 추가 trace가 필요하다.",
+      "plain_runtime_reason": "현재 audit만으로는 중단 지점 추가 확인이 필요하다.",
+      "runtime_candidate_count": null,
+      "runtime_gap_status": "",
+      "runtime_max_score": null,
+      "stop_layer": "manual_review",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "weight_support_counterexample_count": 51,
+      "weight_support_positive_case_count": 24,
+      "weight_support_row_count": 234
+    },
+    {
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "docs/0619 runtime audit outputs"
+      ],
+      "feature_layer_status": "weight_supported_runtime_needs_review",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "next_fix": "현재 audit 범위 밖이므로 후보/field/gate 중 어느 층인지 추가 trace가 필요하다.",
+      "plain_runtime_reason": "현재 audit만으로는 중단 지점 추가 확인이 필요하다.",
+      "runtime_candidate_count": null,
+      "runtime_gap_status": "",
+      "runtime_max_score": null,
+      "stop_layer": "manual_review",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "valuation_rerating",
+        "eps_fcf_explosion"
+      ],
+      "weight_support_counterexample_count": 75,
+      "weight_support_positive_case_count": 33,
+      "weight_support_row_count": 220
+    },
+    {
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "case_label": "삼성전자 memory recovery route 예시",
+      "code_owners": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "feature_layer_status": "weight_supported_but_weighted_gate_still_blocks",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_runtime_reason": "field는 일부 들어왔지만 weighted Stage3-Green 문턱에서 아직 부족하다.",
+      "runtime_candidate_count": 1,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 72.1181,
+      "stop_layer": "stage_gate",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "information_confidence",
+        "earnings_visibility"
+      ],
+      "weight_support_counterexample_count": 79,
+      "weight_support_positive_case_count": 60,
+      "weight_support_row_count": 366
+    },
+    {
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "feature_layer_status": "weight_supported_but_weighted_gate_still_blocks",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_runtime_reason": "field는 일부 들어왔지만 weighted Stage3-Green 문턱에서 아직 부족하다.",
+      "runtime_candidate_count": 22,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 64.161,
+      "stop_layer": "stage_gate",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "market_mispricing"
+      ],
+      "weight_support_counterexample_count": 45,
+      "weight_support_positive_case_count": 42,
+      "weight_support_row_count": 358
+    },
+    {
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "case_label": "field가 일부 있어도 weighted gate가 막는 예시",
+      "code_owners": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "feature_layer_status": "weight_supported_but_weighted_gate_still_blocks",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_runtime_reason": "field는 일부 들어왔지만 weighted Stage3-Green 문턱에서 아직 부족하다.",
+      "runtime_candidate_count": 44,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 72.9252,
+      "stop_layer": "stage_gate",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "bottleneck_pricing"
+      ],
+      "weight_support_counterexample_count": 58,
+      "weight_support_positive_case_count": 50,
+      "weight_support_row_count": 277
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "case_label": "하닉 HBM 예시이지만 HBM 특례가 아니라 bridge 이후 gate 검증까지 보는 문제",
+      "code_owners": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "feature_layer_status": "weight_supported_but_weighted_gate_still_blocks",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_runtime_reason": "field는 일부 들어왔지만 weighted Stage3-Green 문턱에서 아직 부족하다.",
+      "runtime_candidate_count": 19,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 80.0131,
+      "stop_layer": "stage_gate",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "weight_support_counterexample_count": 56,
+      "weight_support_positive_case_count": 32,
+      "weight_support_row_count": 229
+    }
+  ],
+  "execution_layers": [
+    {
+      "can_fill_runtime_feature_fields": false,
+      "easy_example": "시험 범위와 배점 근거를 모으는 단계다. 답안지의 실제 답은 아직 쓰지 않는다.",
+      "layer_id": "research_corpus",
+      "main_code": [
+        "src/e2r/calibration/archetype_weight_profile.py::build_archetype_weight_profile_payload"
+      ],
+      "main_inputs": [
+        "data/e2r/calibration/v12/v12_trigger_rows_representative.jsonl"
+      ],
+      "main_outputs": [
+        "configs/e2r_archetype_weight_profile_v2_2.json"
+      ],
+      "order": 1,
+      "plain_role": "누적 연구 row와 Green/guard 사례를 모은다."
+    },
+    {
+      "can_fill_runtime_feature_fields": false,
+      "easy_example": "수학 배점을 40점으로 정하는 단계다. 수학 답이 빈칸이면 40점을 받을 수 없다.",
+      "layer_id": "weight_profile",
+      "main_code": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights"
+      ],
+      "main_inputs": [
+        "configs/e2r_archetype_weight_profile_v2_2.json"
+      ],
+      "main_outputs": [
+        "archetype_component_* weighted components"
+      ],
+      "order": 2,
+      "plain_role": "아키타입별 7개 component 배점을 정한다."
+    },
+    {
+      "can_fill_runtime_feature_fields": false,
+      "easy_example": "시험을 봐야 점수를 낼 수 있다. 후보가 0개면 채점도 0번이다.",
+      "layer_id": "candidate_replay_archive",
+      "main_code": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "main_inputs": [
+        "docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.jsonl",
+        "local official/search/report archive"
+      ],
+      "main_outputs": [
+        "runtime candidate rows",
+        "as-of feature inputs"
+      ],
+      "order": 3,
+      "plain_role": "Green/guard 사례가 실제 replay 후보와 source-backed 입력으로 들어오는지 확인한다."
+    },
+    {
+      "can_fill_runtime_feature_fields": true,
+      "easy_example": "답안지에 실제 풀이를 쓰는 단계다. 여기서 빈칸이면 뒤의 배점은 살아 있어도 점수가 안 오른다.",
+      "layer_id": "parser_feature_bridge",
+      "main_code": [
+        "src/e2r/research/report_parser.py",
+        "src/e2r/features.py::DeterministicFeatureEngineer.engineer",
+        "src/e2r/features.py::_sector_metrics",
+        "src/e2r/features.py::_industrial_sub_scores",
+        "src/e2r/features.py::_contract_quality_score",
+        "src/e2r/features.py::_backlog_rpo_visibility_score"
+      ],
+      "main_inputs": [
+        "research reports",
+        "filings",
+        "news",
+        "financial statements"
+      ],
+      "main_outputs": [
+        "contract_quality",
+        "backlog_rpo_visibility",
+        "capa_constraint_score",
+        "customer_quality_score",
+        "ScoringPayload components"
+      ],
+      "order": 4,
+      "plain_role": "리포트/공시/뉴스/재무 입력을 source-backed runtime field로 구조화한다."
+    },
+    {
+      "can_fill_runtime_feature_fields": false,
+      "easy_example": "답안지를 채점하는 단계다. 채점자가 빈칸에 임의로 점수를 줄 수 없다.",
+      "layer_id": "deterministic_score",
+      "main_code": [
+        "src/e2r/scoring.py::DeterministicScorer.score",
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights"
+      ],
+      "main_inputs": [
+        "ScoringPayload",
+        "archetype weight profile"
+      ],
+      "main_outputs": [
+        "ScoreSnapshot",
+        "weighted component scores"
+      ],
+      "order": 5,
+      "plain_role": "source-backed feature field를 component 점수로 합산한다."
+    },
+    {
+      "can_fill_runtime_feature_fields": false,
+      "easy_example": "총점과 필수 과목 과락을 같이 본다. 총점이 높아도 필수 과목이 비면 Green이 막힌다.",
+      "layer_id": "stage_gate",
+      "main_code": [
+        "src/e2r/staging.py::StageClassifier.classify",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "main_inputs": [
+        "ScoreSnapshot",
+        "RedTeamAssessment"
+      ],
+      "main_outputs": [
+        "StageSnapshot",
+        "StageGateDiagnostics"
+      ],
+      "order": 6,
+      "plain_role": "weighted score와 gate 조건으로 Stage 3-Green 여부를 결정한다."
+    }
+  ],
+  "focus_rows": [
+    {
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "case_label": "금융 capital return 후보/replay gap 예시",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "valuation_rerating",
+        "earnings_visibility",
+        "eps_fcf_explosion"
+      ],
+      "weight_support_counterexample_count": 43,
+      "weight_support_positive_case_count": 44,
+      "weight_support_row_count": 413
+    },
+    {
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "case_label": "플랫폼 광고/레버리지 후보/replay gap과 field contract 후속 예시",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "market_mispricing"
+      ],
+      "weight_support_counterexample_count": 65,
+      "weight_support_positive_case_count": 35,
+      "weight_support_row_count": 334
+    },
+    {
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "case_label": "바이오 approval-to-revenue 후보/replay gap 예시",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "feature_layer_status": "weight_supported_but_candidate_not_exercised",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_runtime_reason": "weight support는 있지만 current runtime 후보가 0개라 feature/scoring을 실행하지 못했다.",
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "information_confidence",
+        "earnings_visibility",
+        "eps_fcf_explosion"
+      ],
+      "weight_support_counterexample_count": 24,
+      "weight_support_positive_case_count": 27,
+      "weight_support_row_count": 269
+    },
+    {
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "case_label": "삼성전자 memory recovery route 예시",
+      "code_owners": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "feature_layer_status": "weight_supported_but_weighted_gate_still_blocks",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_runtime_reason": "field는 일부 들어왔지만 weighted Stage3-Green 문턱에서 아직 부족하다.",
+      "runtime_candidate_count": 1,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 72.1181,
+      "stop_layer": "stage_gate",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "information_confidence",
+        "earnings_visibility"
+      ],
+      "weight_support_counterexample_count": 79,
+      "weight_support_positive_case_count": 60,
+      "weight_support_row_count": 366
+    },
+    {
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "case_label": "field가 일부 있어도 weighted gate가 막는 예시",
+      "code_owners": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "feature_layer_status": "weight_supported_but_weighted_gate_still_blocks",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_runtime_reason": "field는 일부 들어왔지만 weighted Stage3-Green 문턱에서 아직 부족하다.",
+      "runtime_candidate_count": 44,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 72.9252,
+      "stop_layer": "stage_gate",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "bottleneck_pricing"
+      ],
+      "weight_support_counterexample_count": 58,
+      "weight_support_positive_case_count": 50,
+      "weight_support_row_count": 277
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "case_label": "하닉 HBM 예시이지만 HBM 특례가 아니라 bridge 이후 gate 검증까지 보는 문제",
+      "code_owners": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "feature_layer_status": "weight_supported_but_weighted_gate_still_blocks",
+      "missing_feature_parser_contract_count": 0,
+      "missing_required_bridge_axes": [],
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_runtime_reason": "field는 일부 들어왔지만 weighted Stage3-Green 문턱에서 아직 부족하다.",
+      "runtime_candidate_count": 19,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 80.0131,
+      "stop_layer": "stage_gate",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "weight_support_counterexample_count": 56,
+      "weight_support_positive_case_count": 32,
+      "weight_support_row_count": 229
+    }
+  ],
+  "schema_version": "v12_runtime_execution_path_map_v1",
+  "summary": {
+    "archetype_path_row_count": 36,
+    "archetype_weight_count": 36,
+    "execution_layer_count": 6,
+    "feature_layer_status_counts": {
+      "weight_supported_but_candidate_not_exercised": 24,
+      "weight_supported_but_fixture_not_source_backed": 3,
+      "weight_supported_but_runtime_input_evidence_missing": 2,
+      "weight_supported_but_weighted_gate_still_blocks": 4,
+      "weight_supported_runtime_needs_review": 3
+    },
+    "hbm_case_scores": {
+      "samsung_common_loss": "c10_memory_recovery_customer_backlog_contract_bridge_still_weak",
+      "samsung_max_score": 72.1181,
+      "sk_hynix_common_loss": "bridge_fields_present_but_weighted_gate_still_short",
+      "sk_hynix_max_score": 80.0131
+    },
+    "main_conclusion": "누적 연구는 weight profile까지 반영됐지만, runtime feature/candidate/gate layer가 각 아키타입의 source-backed 증거를 아직 충분히 점수 field로 번역하지 못한다.",
+    "primitive_support_status_counts": {
+      "derived_runtime_metric": 2,
+      "feature_and_parser_literal_exact": 27,
+      "feature_literal_exact_parser_missing": 1,
+      "parser_output_exact_score_missing": 4,
+      "score_and_parser_exact": 132,
+      "score_input_exact_parser_missing": 23
+    },
+    "repair_lane_counts": {
+      "candidate_funnel_or_benchmark_replay": 24,
+      "exact_fixture_archive": 36,
+      "gate_bridge_axis_alignment": 18,
+      "runtime_field_strength": 28,
+      "runtime_input_evidence_coverage": 2,
+      "source_backed_fixture_cleaning": 3,
+      "weighted_gate_threshold_or_component_balance": 4
+    },
+    "research_counterexamples": 2628,
+    "research_positive_cases": 1495,
+    "research_support_rows": 12471,
+    "runtime_gap_status_counts": {
+      "fixture_not_ready": 3,
+      "not_in_current_benchmark": 24,
+      "runtime_input_evidence_missing": 2,
+      "runtime_stage3_gate_blocked": 4
+    },
+    "stop_layer_counts": {
+      "candidate_replay_archive": 29,
+      "manual_review": 3,
+      "stage_gate": 4
+    }
+  }
+}

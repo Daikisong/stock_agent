@@ -66,6 +66,42 @@ class ArchetypeClassifierTests(unittest.TestCase):
 
         self.assertEqual(classification.canonical_archetype_id, "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP")
 
+    def test_financial_inventory_field_alone_does_not_route_to_consumer_retail_inventory(self):
+        classification = classify_v12_archetype(
+            symbol="CASE",
+            sector_profile=SectorProfile.GENERIC,
+            parsed_fields={"financial_actuals_present": True, "inventory": 1200},
+            text="분기 재무 업데이트 actual inventory",
+            price_stage_score=0.0,
+            revision_score=0.0,
+        )
+
+        self.assertEqual(classification.canonical_archetype_id, "C01_ORDER_BACKLOG_MARGIN_BRIDGE")
+
+    def test_consumer_retail_inventory_context_routes_to_c19(self):
+        classification = classify_v12_archetype(
+            symbol="CASE",
+            sector_profile=SectorProfile.GENERIC,
+            parsed_fields={"sell_through_confirmed": True, "inventory_spike": True},
+            text="브랜드 리테일 채널에서 재고 급증과 셀스루 둔화가 확인된다",
+            price_stage_score=0.0,
+            revision_score=0.0,
+        )
+
+        self.assertEqual(classification.canonical_archetype_id, "C19_BRAND_RETAIL_INVENTORY_MARGIN")
+
+    def test_consumer_retail_context_without_inventory_risk_does_not_route_to_c19(self):
+        classification = classify_v12_archetype(
+            symbol="CASE",
+            sector_profile=SectorProfile.GENERIC,
+            parsed_fields={},
+            text="브랜드 리테일 채널 확대와 매장 입점이 진행된다",
+            price_stage_score=0.0,
+            revision_score=0.0,
+        )
+
+        self.assertNotEqual(classification.canonical_archetype_id, "C19_BRAND_RETAIL_INVENTORY_MARGIN")
+
     def test_llm_semiconductor_aliases_normalize_to_canonical_taxonomy(self):
         self.assertEqual(normalise_large_sector_id("semiconductors"), "L2_AI_SEMICONDUCTOR_ELECTRONICS")
         self.assertEqual(
@@ -103,6 +139,30 @@ class ArchetypeClassifierTests(unittest.TestCase):
         )
 
         self.assertEqual(classification.canonical_archetype_id, "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
+
+    def test_hbm_capacity_constraint_without_customer_lock_routes_to_memory_recovery(self):
+        classification = classify_v12_archetype(
+            symbol="CASE",
+            sector_profile=SectorProfile.MEMORY_HBM,
+            parsed_fields={
+                "hbm_demand_mentioned": True,
+                "memory_price_increase_mentioned": True,
+                "supply_discipline_mentioned": True,
+                "hbm_capacity_constraint": True,
+                "advanced_packaging_bottleneck": True,
+                "cycle_demand_visibility": True,
+                "supply_demand_tightness": True,
+            },
+            text=(
+                "HBM 수요 증가와 메모리 가격 상승이 확인된다. "
+                "DRAM 가격 상승과 NAND 가격 상승, 공급조절로 업황이 개선된다. "
+                "HBM CAPA 제약과 advanced packaging bottleneck이 단기 병목으로 남아 있다."
+            ),
+            price_stage_score=0.0,
+            revision_score=0.0,
+        )
+
+        self.assertEqual(classification.canonical_archetype_id, "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE")
 
     def test_semiconductor_equipment_supplier_context_routes_to_c07(self):
         classification = classify_v12_archetype(

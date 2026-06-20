@@ -4,7 +4,14 @@ import unittest
 
 from e2r.cli.mine_e2r_sector_cases import main as mine_cases_main
 from e2r.sector.archetypes import E2RArchetype
-from e2r.sector.case_library import E2RCaseRecord, coverage_by_archetype, load_case_library, write_case_coverage_outputs
+from e2r.sector.case_library import (
+    CaseDataQuality,
+    E2RCaseRecord,
+    PriceValidation,
+    coverage_by_archetype,
+    load_case_library,
+    write_case_coverage_outputs,
+)
 from e2r.sector.taxonomy import SectorTaxonomyRow, write_sector_taxonomy
 
 
@@ -31,6 +38,28 @@ class E2RCaseLibraryTests(unittest.TestCase):
 
         record.validate()
         self.assertEqual(record.primary_archetype, E2RArchetype.CONTRACT_BACKLOG_INDUSTRIAL)
+
+    def test_case_library_ignores_non_finite_numeric_fields(self):
+        quality = CaseDataQuality.from_mapping(
+            {
+                "official_data_available": True,
+                "report_data_available": True,
+                "price_data_available": True,
+                "stage_dates_confidence": "nan",
+            }
+        )
+        validation = PriceValidation.from_mapping(
+            {
+                "stage3_price": "nan",
+                "peak_return_from_stage3": "inf",
+                "time_to_100pct": "nan",
+            }
+        )
+
+        self.assertEqual(quality.stage_dates_confidence, 0.0)
+        self.assertIsNone(validation.stage3_price)
+        self.assertIsNone(validation.peak_return_from_stage3)
+        self.assertIsNone(validation.time_to_100pct)
 
     def test_case_coverage_reports_insufficient_when_under_2x2(self):
         records = load_case_library("data/e2r_case_library/cases.jsonl")

@@ -1,0 +1,1322 @@
+{
+  "lane_specs": [
+    {
+      "acceptance_requirements": [
+        "Green/guard pair has exact as-of official universe, price history, report text snapshot, and search snapshot inputs.",
+        "Both roles reach the replay candidate set by exact symbol+as_of_date, not merely same symbol or benchmark label.",
+        "Green role either reaches Stage3-Green or emits source-backed field-level deficit; guard role must not reach Stage3-Green.",
+        "Replay proof is point-in-time: no report, price, disclosure, or label after as_of_date is used."
+      ],
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent"
+      ],
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "test_templates": [
+        "test_{slug}_green_guard_pair_has_exact_asof_inputs",
+        "test_{slug}_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_{slug}_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ]
+    },
+    {
+      "acceptance_requirements": [
+        "Parser exposes the missing primitive or axis as a source-backed structured field with evidence ids.",
+        "FeatureEngineer converts the field into the required runtime component or bridge diagnostic without company-name special cases.",
+        "StageGateDiagnostics reports the axis value and remaining deficit instead of a generic failed gate.",
+        "Positive/guard fixture pair proves the new field raises true positives without opening the guard."
+      ],
+      "current_blockers": [
+        "missing_required_bridge_axes is non-empty or primitive field contract is missing",
+        "runtime candidate exists but feature/gate axis remains zero or weak"
+      ],
+      "implementation_lane": "02_parser_feature_bridge_contract",
+      "test_templates": [
+        "test_{slug}_parser_extracts_missing_primitives_with_evidence_ids",
+        "test_{slug}_feature_bridge_populates_missing_axes_without_name_special_case",
+        "test_{slug}_stage_gate_diagnostics_reports_axis_deficit"
+      ]
+    },
+    {
+      "acceptance_requirements": [
+        "Positive/guard pair has nonzero source-backed required axes before any threshold or weight discussion.",
+        "Weighted component deficits are computed from archetype_component_* values and match StageClassifier gates.",
+        "Any threshold or balance change improves positive recall while preserving guard rejection.",
+        "Score explanation names the field-level remaining deficit if Stage3-Green is still blocked."
+      ],
+      "current_blockers": [
+        "field exists but weighted total/component gate still blocks Stage3-Green",
+        "positive/guard pair evidence is not yet enough to justify threshold changes"
+      ],
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "test_templates": [
+        "test_{slug}_weighted_gate_uses_archetype_components_after_fields_present",
+        "test_{slug}_positive_guard_pair_validates_threshold_or_balance_change"
+      ]
+    },
+    {
+      "acceptance_requirements": [
+        "Manual row is reclassified into fixture/archive, parser-feature, or stage-gate lane with evidence.",
+        "The row has an explicit Green/guard fixture status and missing input list.",
+        "The row is not treated as complete while manual_review remains its stop layer."
+      ],
+      "current_blockers": [
+        "stop layer is still manual_review",
+        "no concrete candidate/archive, parser-feature, or stage-gate owner is assigned"
+      ],
+      "implementation_lane": "04_manual_gap_classification",
+      "test_templates": [
+        "test_{slug}_manual_gap_is_reclassified_to_concrete_repair_lane"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c21_financial_roe_pbr_capital_return_green_guard_pair_has_exact_asof_inputs",
+        "test_c21_financial_roe_pbr_capital_return_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c21_financial_roe_pbr_capital_return_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=capital_return,valuation_repricing,guard_risk",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 83.8,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_r13_cross_archetype_4b_4c_redteam_green_guard_pair_has_exact_asof_inputs",
+        "test_r13_cross_archetype_4b_4c_redteam_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_r13_cross_archetype_4b_4c_redteam_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=guard_risk",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 67.8,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c23_bio_regulatory_approval_commercialization_green_guard_pair_has_exact_asof_inputs",
+        "test_c23_bio_regulatory_approval_commercialization_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c23_bio_regulatory_approval_commercialization_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=bio_commercialization,guard_risk",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 65.0,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c22_insurance_rate_cycle_reserve_green_guard_pair_has_exact_asof_inputs",
+        "test_c22_insurance_rate_cycle_reserve_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c22_insurance_rate_cycle_reserve_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=insurance_quality,capital_return,guard_risk",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 64.2,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c26_platform_ad_revenue_operating_leverage_green_guard_pair_has_exact_asof_inputs",
+        "test_c26_platform_ad_revenue_operating_leverage_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c26_platform_ad_revenue_operating_leverage_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=software_retention,customer,margin",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 54.6,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c05_epc_mega_contract_margin_gap_green_guard_pair_has_exact_asof_inputs",
+        "test_c05_epc_mega_contract_margin_gap_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c05_epc_mega_contract_margin_gap_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=margin,backlog,contract,customer",
+        "retrospective_missing_inputs={'evidence_source_report_text_snapshot': 2, 'evidence_source_search_snapshot': 2, 'official_universe': 2, 'price_history_370d': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 49.0,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c29_mobility_volume_margin_operating_leverage_green_guard_pair_has_exact_asof_inputs",
+        "test_c29_mobility_volume_margin_operating_leverage_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c29_mobility_volume_margin_operating_leverage_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=margin,backlog,contract,customer,guard_risk",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 47.0,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c18_consumer_export_channel_reorder_green_guard_pair_has_exact_asof_inputs",
+        "test_c18_consumer_export_channel_reorder_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c18_consumer_export_channel_reorder_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=consumer_sell_through,margin,customer",
+        "retrospective_missing_inputs={'official_universe': 1, 'price_history_370d': 1, 'report_text_snapshot': 1, 'retrospective_search_snapshot': 1}",
+        "fixture_funnel_status={'exact_symbol_date_candidate_reached_runtime': 1, 'symbol_never_reached_current_runtime': 1}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 46.6,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c27_content_ip_global_monetization_green_guard_pair_has_exact_asof_inputs",
+        "test_c27_content_ip_global_monetization_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c27_content_ip_global_monetization_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=software_retention,customer,margin",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 45.8,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c17_chemical_commodity_margin_spread_green_guard_pair_has_exact_asof_inputs",
+        "test_c17_chemical_commodity_margin_spread_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c17_chemical_commodity_margin_spread_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=margin,contract,guard_risk",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 45.0,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c01_order_backlog_margin_bridge_green_guard_pair_has_exact_asof_inputs",
+        "test_c01_order_backlog_margin_bridge_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c01_order_backlog_margin_bridge_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=margin,backlog,contract,customer",
+        "retrospective_missing_inputs={'evidence_source_report_text_snapshot': 1, 'evidence_source_search_snapshot': 1, 'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 1, 'retrospective_search_snapshot': 1}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 44.6,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 11,
+      "runtime_max_score": 4.4554
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c25_medical_device_export_reimbursement_green_guard_pair_has_exact_asof_inputs",
+        "test_c25_medical_device_export_reimbursement_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c25_medical_device_export_reimbursement_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=bio_commercialization,guard_risk",
+        "retrospective_missing_inputs={'evidence_source_report_text_snapshot': 1, 'evidence_source_search_snapshot': 1, 'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 1, 'retrospective_search_snapshot': 1}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 43.8,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c15_material_spread_supercycle_green_guard_pair_has_exact_asof_inputs",
+        "test_c15_material_spread_supercycle_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c15_material_spread_supercycle_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=margin,contract,guard_risk",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 41.8,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c28_software_security_contract_retention_green_guard_pair_has_exact_asof_inputs",
+        "test_c28_software_security_contract_retention_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c28_software_security_contract_retention_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=software_retention,customer,margin",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 40.6,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c31_policy_subsidy_legislation_event_green_guard_pair_has_exact_asof_inputs",
+        "test_c31_policy_subsidy_legislation_event_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c31_policy_subsidy_legislation_event_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=guard_risk,valuation_repricing,contract",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 37.8,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c13_battery_jv_utilization_ampc_ira_green_guard_pair_has_exact_asof_inputs",
+        "test_c13_battery_jv_utilization_ampc_ira_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c13_battery_jv_utilization_ampc_ira_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=margin,backlog,contract,customer,guard_risk",
+        "retrospective_missing_inputs={'evidence_source_report_text_snapshot': 1, 'evidence_source_search_snapshot': 1, 'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 1, 'retrospective_search_snapshot': 1}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 31.4,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c08_semi_test_socket_customer_quality_green_guard_pair_has_exact_asof_inputs",
+        "test_c08_semi_test_socket_customer_quality_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c08_semi_test_socket_customer_quality_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=customer,backlog,contract,margin",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 31.0,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c30_construction_pf_balance_sheet_break_green_guard_pair_has_exact_asof_inputs",
+        "test_c30_construction_pf_balance_sheet_break_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c30_construction_pf_balance_sheet_break_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=margin,contract,guard_risk",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 28.2,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c11_battery_orderbook_rerating_green_guard_pair_has_exact_asof_inputs",
+        "test_c11_battery_orderbook_rerating_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c11_battery_orderbook_rerating_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=margin,backlog,contract,customer,guard_risk",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 27.8,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c14_ev_demand_slowdown_4b_4c_green_guard_pair_has_exact_asof_inputs",
+        "test_c14_ev_demand_slowdown_4b_4c_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c14_ev_demand_slowdown_4b_4c_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=margin,backlog,contract,customer,guard_risk"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 27.4,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c19_brand_retail_inventory_margin_green_guard_pair_has_exact_asof_inputs",
+        "test_c19_brand_retail_inventory_margin_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c19_brand_retail_inventory_margin_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=consumer_sell_through,margin,customer",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 27.0,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_r13_cross_archetype_accounting_trust_price_validation_green_guard_pair_has_exact_asof_inputs",
+        "test_r13_cross_archetype_accounting_trust_price_validation_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_r13_cross_archetype_accounting_trust_price_validation_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=guard_risk",
+        "retrospective_missing_inputs={'official_universe': 1, 'price_history_370d': 2, 'report_text_snapshot': 1, 'retrospective_search_snapshot': 1}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 1, 'symbol_reached_runtime_but_not_fixture_date': 1}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 26.2,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c24_bio_trial_data_event_risk_green_guard_pair_has_exact_asof_inputs",
+        "test_c24_bio_trial_data_event_risk_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c24_bio_trial_data_event_risk_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=bio_commercialization,guard_risk",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 25.8,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_r13_cross_archetype_stage2_false_positive_review_green_guard_pair_has_exact_asof_inputs",
+        "test_r13_cross_archetype_stage2_false_positive_review_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_r13_cross_archetype_stage2_false_positive_review_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=guard_risk",
+        "retrospective_missing_inputs={'evidence_source_report_text_snapshot': 1, 'evidence_source_search_snapshot': 1, 'official_universe': 1, 'price_history_370d': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 1, 'symbol_reached_runtime_but_not_fixture_date': 1}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 25.0,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 11,
+      "runtime_max_score": 9.308
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c09_advanced_equipment_valuation_blowoff_green_guard_pair_has_exact_asof_inputs",
+        "test_c09_advanced_equipment_valuation_blowoff_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c09_advanced_equipment_valuation_blowoff_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=guard_risk,valuation_repricing,customer",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 24.2,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c07_hbm_equipment_order_relative_strength_green_guard_pair_has_exact_asof_inputs",
+        "test_c07_hbm_equipment_order_relative_strength_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c07_hbm_equipment_order_relative_strength_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=customer,backlog,contract,margin"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 23.8,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c32_governance_control_premium_tender_cap_green_guard_pair_has_exact_asof_inputs",
+        "test_c32_governance_control_premium_tender_cap_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c32_governance_control_premium_tender_cap_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=capital_return,guard_risk",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 23.4,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_r13_cross_archetype_high_mae_guardrail_green_guard_pair_has_exact_asof_inputs",
+        "test_r13_cross_archetype_high_mae_guardrail_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_r13_cross_archetype_high_mae_guardrail_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent",
+        "missing_required_bridge_axes=guard_risk",
+        "retrospective_missing_inputs={'evidence_source_report_text_snapshot': 1, 'evidence_source_search_snapshot': 1, 'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 1, 'retrospective_search_snapshot': 1}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 23.0,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c03_defense_export_framework_backlog_green_guard_pair_has_exact_asof_inputs",
+        "test_c03_defense_export_framework_backlog_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c03_defense_export_framework_backlog_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 15.4,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 12,
+      "runtime_max_score": 35.6473
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c04_nuclear_policy_project_legal_delay_green_guard_pair_has_exact_asof_inputs",
+        "test_c04_nuclear_policy_project_legal_delay_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c04_nuclear_policy_project_legal_delay_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 7.0,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c12_battery_customer_contract_call_off_risk_green_guard_pair_has_exact_asof_inputs",
+        "test_c12_battery_customer_contract_call_off_risk_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c12_battery_customer_contract_call_off_risk_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 7.0,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c16_strategic_resource_policy_supply_green_guard_pair_has_exact_asof_inputs",
+        "test_c16_strategic_resource_policy_supply_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c16_strategic_resource_policy_supply_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "current_blockers": [
+        "pair_retrospective_ready is false",
+        "pair_strict_pit_ready is false",
+        "current runtime exact candidate match is absent"
+      ],
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 7.0,
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null
+    },
+    {
+      "acceptance_status_current": "blocked_weighted_gate_after_fields_present",
+      "acceptance_tests_to_add": [
+        "test_c20_beauty_food_global_distribution_weighted_gate_uses_archetype_components_after_fields_present",
+        "test_c20_beauty_food_global_distribution_positive_guard_pair_validates_threshold_or_balance_change"
+      ],
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "current_blockers": [
+        "field exists but weighted total/component gate still blocks Stage3-Green",
+        "positive/guard pair evidence is not yet enough to justify threshold changes",
+        "retrospective_missing_inputs={'official_universe': 2, 'price_history_370d': 2, 'report_text_snapshot': 2, 'retrospective_search_snapshot': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "field가 비어 있는 상태에서 Green threshold를 낮추지 않는다. positive/guard pair가 준비된 뒤 조정한다.",
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 84.2,
+      "required_proof_artifacts": [
+        "ScoreSnapshot archetype_component_* values",
+        "StageClassifier gate diagnostics",
+        "positive/guard parity result"
+      ],
+      "runtime_candidate_count": 22,
+      "runtime_max_score": 64.161
+    },
+    {
+      "acceptance_status_current": "blocked_weighted_gate_after_fields_present",
+      "acceptance_tests_to_add": [
+        "test_c06_hbm_memory_customer_capacity_weighted_gate_uses_archetype_components_after_fields_present",
+        "test_c06_hbm_memory_customer_capacity_positive_guard_pair_validates_threshold_or_balance_change"
+      ],
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "current_blockers": [
+        "field exists but weighted total/component gate still blocks Stage3-Green",
+        "positive/guard pair evidence is not yet enough to justify threshold changes",
+        "retrospective_missing_inputs={'evidence_source_report_text_snapshot': 1, 'evidence_source_search_snapshot': 1, 'recent_price_history_45d': 1}",
+        "fixture_funnel_status={'exact_symbol_date_candidate_reached_runtime': 1, 'symbol_reached_runtime_but_not_fixture_date': 1}"
+      ],
+      "do_not_accept": "field가 비어 있는 상태에서 Green threshold를 낮추지 않는다. positive/guard pair가 준비된 뒤 조정한다.",
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 40.6,
+      "required_proof_artifacts": [
+        "ScoreSnapshot archetype_component_* values",
+        "StageClassifier gate diagnostics",
+        "positive/guard parity result"
+      ],
+      "runtime_candidate_count": 19,
+      "runtime_max_score": 80.0131
+    },
+    {
+      "acceptance_status_current": "blocked_weighted_gate_after_fields_present",
+      "acceptance_tests_to_add": [
+        "test_c10_memory_recovery_equipment_cycle_weighted_gate_uses_archetype_components_after_fields_present",
+        "test_c10_memory_recovery_equipment_cycle_positive_guard_pair_validates_threshold_or_balance_change"
+      ],
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "current_blockers": [
+        "field exists but weighted total/component gate still blocks Stage3-Green",
+        "positive/guard pair evidence is not yet enough to justify threshold changes",
+        "retrospective_missing_inputs={'evidence_source_report_text_snapshot': 2, 'evidence_source_search_snapshot': 2, 'official_universe': 2, 'price_history_370d': 2}",
+        "fixture_funnel_status={'symbol_never_reached_current_runtime': 2}"
+      ],
+      "do_not_accept": "field가 비어 있는 상태에서 Green threshold를 낮추지 않는다. positive/guard pair가 준비된 뒤 조정한다.",
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 36.6,
+      "required_proof_artifacts": [
+        "ScoreSnapshot archetype_component_* values",
+        "StageClassifier gate diagnostics",
+        "positive/guard parity result"
+      ],
+      "runtime_candidate_count": 1,
+      "runtime_max_score": 72.1181
+    },
+    {
+      "acceptance_status_current": "blocked_weighted_gate_after_fields_present",
+      "acceptance_tests_to_add": [
+        "test_c02_power_grid_datacenter_capex_weighted_gate_uses_archetype_components_after_fields_present",
+        "test_c02_power_grid_datacenter_capex_positive_guard_pair_validates_threshold_or_balance_change"
+      ],
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "current_blockers": [
+        "field exists but weighted total/component gate still blocks Stage3-Green",
+        "positive/guard pair evidence is not yet enough to justify threshold changes",
+        "retrospective_missing_inputs={'evidence_source_report_text_snapshot': 1, 'evidence_source_search_snapshot': 1, 'official_universe': 1, 'price_history_370d': 1, 'recent_price_history_45d': 1}",
+        "fixture_funnel_status={'exact_symbol_date_candidate_reached_runtime': 1, 'symbol_never_reached_current_runtime': 1}"
+      ],
+      "do_not_accept": "field가 비어 있는 상태에서 Green threshold를 낮추지 않는다. positive/guard pair가 준비된 뒤 조정한다.",
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "priority_score": 35.0,
+      "required_proof_artifacts": [
+        "ScoreSnapshot archetype_component_* values",
+        "StageClassifier gate diagnostics",
+        "positive/guard parity result"
+      ],
+      "runtime_candidate_count": 44,
+      "runtime_max_score": 72.9252
+    }
+  ],
+  "schema_version": "v12_runtime_repair_acceptance_spec_v1",
+  "summary": {
+    "acceptance_status_counts": {
+      "blocked_missing_exact_fixture_archive_or_candidate_funnel": 32,
+      "blocked_weighted_gate_after_fields_present": 4
+    },
+    "all_pairs_retrospective_ready_count": 0,
+    "all_pairs_strict_pit_ready_count": 0,
+    "archetype_count": 36,
+    "implementation_lane_counts": {
+      "01_fixture_archive_and_candidate_funnel": 32,
+      "03_weighted_gate_validation_after_fields": 4
+    },
+    "plain_conclusion": "수리 완료 판정은 점수 상승이 아니라 exact replay 입력, source-backed field, positive/guard gate parity가 함께 증명될 때만 가능하다."
+  }
+}

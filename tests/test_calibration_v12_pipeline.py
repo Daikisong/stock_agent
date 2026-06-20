@@ -432,6 +432,80 @@ This file records a C26 split, but it has no structured MFE/MAE trigger rows.
             self.assertEqual(parsed.rows_by_type["residual_contribution"][0]["loop_contribution_label"], "canonical_archetype_rule_candidate")
             self.assertTrue(parsed.rows_by_type["trigger"][0]["evidence_url_pending"])
 
+    def test_v12_proxy_text_overrides_explicit_false_flags(self) -> None:
+        rows = [
+            {
+                "trigger_id": "T_PROXY",
+                "case_id": "C_PROXY",
+                "symbol": "001440",
+                "large_sector_id": "L1_CAPEX_BACKLOG_CONTRACTING",
+                "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+                "trigger_type": "Stage3-Green",
+                "trigger_date": "2024-04-04",
+                "entry_date": "2024-04-05",
+                "entry_price": 1000,
+                "price_data_source": "Songdaiki/stock-web",
+                "price_basis": "tradable_raw",
+                "price_adjustment_status": "raw_unadjusted_marcap",
+                "MFE_30D_pct": 10,
+                "MFE_90D_pct": 25,
+                "MFE_180D_pct": 40,
+                "MAE_30D_pct": -3,
+                "MAE_90D_pct": -5,
+                "MAE_180D_pct": -8,
+                "forward_window_trading_days": 180,
+                "calibration_usable": True,
+                "dedupe_for_aggregate": True,
+                "evidence_source": "source_proxy_only_not_price_only",
+                "evidence_available_at_that_date": "source_proxy_only: capex beta visible; verified URL repair pending",
+                "source_proxy_only": False,
+                "evidence_url_pending": False,
+            }
+        ]
+
+        bundle = validate_v12_trigger_rows(rows)
+
+        self.assertEqual(len(bundle.valid_rows), 1)
+        self.assertTrue(bundle.valid_rows[0]["source_proxy_only"])
+        self.assertTrue(bundle.valid_rows[0]["evidence_url_pending"])
+
+    def test_v12_evidence_source_proxy_text_is_not_clean_support(self) -> None:
+        rows = [
+            {
+                "trigger_id": "T_RESEARCH_PROXY",
+                "case_id": "C_RESEARCH_PROXY",
+                "symbol": "003230",
+                "large_sector_id": "L5_CONSUMER_BRAND_CHANNEL_REOPENING",
+                "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+                "trigger_type": "Stage3-Green",
+                "trigger_date": "2024-05-16",
+                "entry_date": "2024-05-17",
+                "entry_price": 1000,
+                "price_data_source": "Songdaiki/stock-web",
+                "price_basis": "tradable_raw",
+                "price_adjustment_status": "raw_unadjusted_marcap",
+                "MFE_30D_pct": 8,
+                "MFE_90D_pct": 24,
+                "MFE_180D_pct": 36,
+                "MAE_30D_pct": -4,
+                "MAE_90D_pct": -7,
+                "MAE_180D_pct": -9,
+                "forward_window_trading_days": 180,
+                "calibration_usable": True,
+                "dedupe_for_aggregate": True,
+                "evidence_source": "Historical earnings/revision proxy; price verified in stock-web rows.",
+                "evidence_available_at_that_date": "Revision proxy visible after confirmation.",
+                "source_proxy_only": False,
+                "evidence_url_pending": False,
+            }
+        ]
+
+        bundle = validate_v12_trigger_rows(rows)
+
+        self.assertEqual(len(bundle.valid_rows), 1)
+        self.assertTrue(bundle.valid_rows[0]["source_proxy_only"])
+        self.assertFalse(bundle.valid_rows[0]["evidence_url_pending"])
+
     def test_v12_trigger_aliases_normalize(self) -> None:
         self.assertEqual(normalise_trigger_type("Stage3-Green comparison"), "Stage3-Green")
         self.assertEqual(normalise_trigger_type("Stage3-Green-comparison"), "Stage3-Green")

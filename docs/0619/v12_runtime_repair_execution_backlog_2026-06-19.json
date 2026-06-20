@@ -1,0 +1,2265 @@
+{
+  "rows": [
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 2,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:105560@2025-05-26",
+          "guard:323410@2024-02-26"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "next_patch": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 83.8,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 413
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1
+      },
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:000100@2024-08-20",
+          "guard:095340@2024-03-08"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "next_patch": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 67.8,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 1023
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:000100@2024-09-24",
+          "guard:028300@2024-04-30"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "next_patch": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 65.0,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 269
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 2,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:032830@2024-02-21",
+          "guard:088350@2024-07-11"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "next_patch": "C22_INSURANCE_RATE_CYCLE_RESERVE Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 64.2,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 327
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:067160@2021-07-27",
+          "guard:035720@2021-06-24"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "next_patch": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 54.6,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 334
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 2,
+        "required_by_gate_but_absent_from_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:375500@2024-10-31",
+          "guard:103230@2024-05-16"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "next_patch": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 49.0,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "evidence_source_report_text_snapshot": 2,
+          "evidence_source_search_snapshot": 2,
+          "official_universe": 2,
+          "price_history_370d": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 295
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 4
+      },
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:000270@2023-04-26",
+          "guard:011210@2024-01-26"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "next_patch": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 47.0,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 411
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 3
+      },
+      "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:003230@2024-05-16",
+          "guard:097950@2024-05-16"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "exact_symbol_date_candidate_reached_runtime": 1,
+          "symbol_never_reached_current_runtime": 1
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 1,
+          "candidate_reached_scoring_then_score_or_gate_decides": 1
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "next_patch": "C18_CONSUMER_EXPORT_CHANNEL_REORDER Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 46.6,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 1,
+          "price_history_370d": 1,
+          "report_text_snapshot": 1,
+          "retrospective_search_snapshot": 1
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 1,
+          "ready_retrospective_exact_replay": 1
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 308
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:194480@2021-01-21",
+          "guard:259960@2021-11-12"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "next_patch": "C27_CONTENT_IP_GLOBAL_MONETIZATION Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 45.8,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 263
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 2,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:011780@2021-01-21",
+          "guard:006650@2021-02-16"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "next_patch": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 45.0,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 297
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 4
+      },
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:010140@2025-02-06",
+          "guard:103230@2024-05-16"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "next_patch": "C01_ORDER_BACKLOG_MARGIN_BRIDGE Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "runtime_input_evidence_coverage",
+      "priority_score": 44.6,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "evidence_source_report_text_snapshot": 1,
+          "evidence_source_search_snapshot": 1,
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 1,
+          "retrospective_search_snapshot": 1
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 11,
+      "runtime_max_score": 4.4554,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 288
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:335890@2023-01-13",
+          "guard:145720@2024-02-29"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "next_patch": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 43.8,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "evidence_source_report_text_snapshot": 1,
+          "evidence_source_search_snapshot": 1,
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 1,
+          "retrospective_search_snapshot": 1
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 259
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:298020@2021-01-14",
+          "guard:004020@2024-02-07"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "next_patch": "C15_MATERIAL_SPREAD_SUPERCYCLE Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 41.8,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 324
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 2,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:058970@2023-03-15",
+          "guard:030520@2024-01-10"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "next_patch": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 40.6,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 285
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:112610@2022-11-16",
+          "guard:011930@2022-08-11"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "next_patch": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 37.8,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 478
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 4,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:051490@2020-07-13",
+          "guard:006400@2023-04-25"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "next_patch": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 31.4,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "evidence_source_report_text_snapshot": 1,
+          "evidence_source_search_snapshot": 1,
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 1,
+          "retrospective_search_snapshot": 1
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 307
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 3,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:131290@2024-04-26",
+          "guard:098120@2024-04-26"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "next_patch": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 31.0,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 247
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:000720@2021-05-27",
+          "guard:014790@2023-09-25"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "next_patch": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 28.2,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 377
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 5
+      },
+      "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:121600@2023-02-09",
+          "guard:006110@2023-07-26"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "next_patch": "C11_BATTERY_ORDERBOOK_RERATING Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 27.8,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 286
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 3,
+        "required_by_gate_but_absent_from_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [],
+        "roles": [],
+        "row_count": 0
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {},
+        "funnel_root_cause_counts": {}
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "next_patch": "C14_EV_DEMAND_SLOWDOWN_4B_4C Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "source_backed_fixture_cleaning",
+      "priority_score": 27.4,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {},
+        "retrospective_status_counts": {}
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 264
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 3
+      },
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:036620@2024-05-21",
+          "guard:383220@2023-05-16"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "next_patch": "C19_BRAND_RETAIL_INVENTORY_MARGIN Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 27.0,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 223
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1
+      },
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:267260@2025-04-22",
+          "guard:090430@2021-05-12"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 1,
+          "symbol_reached_runtime_but_not_fixture_date": 1
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 1,
+          "monthly_schedule_or_fixture_date_mismatch": 1
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "next_patch": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 26.2,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 1,
+          "price_history_370d": 2,
+          "report_text_snapshot": 1,
+          "retrospective_search_snapshot": 1
+        },
+        "retrospective_status_counts": {
+          "missing_candidate_generation_inputs": 1,
+          "missing_official_and_research_inputs": 1
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 619
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 2
+      },
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:028300@2024-05-16",
+          "guard:288330@2023-06-23"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "next_patch": "C24_BIO_TRIAL_DATA_EVENT_RISK Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 25.8,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 253
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1
+      },
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:267260@2025-04-22",
+          "guard:000100@2024-08-30"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 1,
+          "symbol_reached_runtime_but_not_fixture_date": 1
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 1,
+          "monthly_schedule_or_fixture_date_mismatch": 1
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "next_patch": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "runtime_input_evidence_coverage",
+      "priority_score": 25.0,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "evidence_source_report_text_snapshot": 1,
+          "evidence_source_search_snapshot": 1,
+          "official_universe": 1,
+          "price_history_370d": 2
+        },
+        "retrospective_status_counts": {
+          "missing_candidate_generation_inputs": 1,
+          "missing_official_and_research_inputs": 1
+        }
+      },
+      "runtime_candidate_count": 11,
+      "runtime_max_score": 9.308,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 473
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 3
+      },
+      "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:131290@2024-04-26",
+          "guard:036930@2024-04-08"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "next_patch": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 24.2,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 305
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 3,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [],
+        "roles": [],
+        "row_count": 0
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {},
+        "funnel_root_cause_counts": {}
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "next_patch": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "source_backed_fixture_cleaning",
+      "priority_score": 23.8,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {},
+        "retrospective_status_counts": {}
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 237
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:010130@2024-09-13",
+          "guard:008930@2024-01-15"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "next_patch": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 23.4,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 378
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1
+      },
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:373220@2024-10-28",
+          "guard:160980@2024-04-24"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "next_patch": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 23.0,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "evidence_source_report_text_snapshot": 1,
+          "evidence_source_search_snapshot": 1,
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 1,
+          "retrospective_search_snapshot": 1
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 715
+    },
+    {
+      "axis_contract_status_counts": {
+        "covered_by_bridge_spec_and_runtime": 3,
+        "runtime_present_but_not_explicit_in_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [],
+        "roles": [],
+        "row_count": 0
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {},
+        "funnel_root_cause_counts": {}
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_patch": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "source_backed_fixture_cleaning",
+      "priority_score": 15.4,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {},
+        "retrospective_status_counts": {}
+      },
+      "runtime_candidate_count": 12,
+      "runtime_max_score": 35.6473,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 267
+    },
+    {
+      "axis_contract_status_counts": {},
+      "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [],
+        "roles": [],
+        "row_count": 0
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {},
+        "funnel_root_cause_counts": {}
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_patch": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "exact_fixture_archive",
+      "priority_score": 7.0,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {},
+        "retrospective_status_counts": {}
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 262
+    },
+    {
+      "axis_contract_status_counts": {},
+      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [],
+        "roles": [],
+        "row_count": 0
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {},
+        "funnel_root_cause_counts": {}
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_patch": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "exact_fixture_archive",
+      "priority_score": 7.0,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {},
+        "retrospective_status_counts": {}
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 234
+    },
+    {
+      "axis_contract_status_counts": {},
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "code_files_to_touch": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py",
+        "historical official/search/report fixture archive"
+      ],
+      "do_not_do": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "fixture_summary": {
+        "candidates": [],
+        "roles": [],
+        "row_count": 0
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {},
+        "funnel_root_cause_counts": {}
+      },
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_patch": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY Green/guard fixture를 official universe, price history, report/search snapshot에 exact as-of로 넣고 current replay 후보에 도달시키는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "exact_fixture_archive",
+      "priority_score": 7.0,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {},
+        "retrospective_status_counts": {}
+      },
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "stop_layer": "candidate_replay_archive",
+      "tests_to_add_or_extend": [
+        "tests/test_v12_exact_fixture_replay_readiness.py",
+        "tests/test_v12_fixture_candidate_funnel_audit.py",
+        "new exact Green/guard replay fixture tests"
+      ],
+      "weight_support_row_count": 220
+    },
+    {
+      "axis_contract_status_counts": {
+        "covered_by_bridge_spec_and_runtime": 3
+      },
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "code_files_to_touch": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "do_not_do": "field가 비어 있는 상태에서 Green threshold를 낮추지 않는다. positive/guard pair가 준비된 뒤 조정한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:192820@2025-02-24",
+          "guard:439090@2023-06-08"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_patch": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION의 positive/guard pair에서 field가 채워진 뒤 weighted total/component gate 부족분을 재검증하는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "weighted_gate_threshold_or_component_balance",
+      "priority_score": 84.2,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "official_universe": 2,
+          "price_history_370d": 2,
+          "report_text_snapshot": 2,
+          "retrospective_search_snapshot": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 22,
+      "runtime_max_score": 64.161,
+      "stop_layer": "stage_gate",
+      "tests_to_add_or_extend": [
+        "tests/test_scoring.py",
+        "tests/test_staging.py",
+        "tests/test_stage_gate_diagnostics.py",
+        "new positive/guard gate parity tests"
+      ],
+      "weight_support_row_count": 358
+    },
+    {
+      "axis_contract_status_counts": {
+        "covered_by_bridge_spec_and_runtime": 4
+      },
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "code_files_to_touch": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "do_not_do": "field가 비어 있는 상태에서 Green threshold를 낮추지 않는다. positive/guard pair가 준비된 뒤 조정한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:000660@2024-04-25",
+          "guard:005930@2024-07-11"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "exact_symbol_date_candidate_reached_runtime": 1,
+          "symbol_reached_runtime_but_not_fixture_date": 1
+        },
+        "funnel_root_cause_counts": {
+          "candidate_reached_scoring_then_score_or_gate_decides": 1,
+          "monthly_schedule_or_fixture_date_mismatch": 1
+        }
+      },
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_patch": "C06_HBM_MEMORY_CUSTOMER_CAPACITY의 positive/guard pair에서 field가 채워진 뒤 weighted total/component gate 부족분을 재검증하는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "weighted_gate_threshold_or_component_balance",
+      "priority_score": 40.6,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "evidence_source_report_text_snapshot": 1,
+          "evidence_source_search_snapshot": 1,
+          "recent_price_history_45d": 1
+        },
+        "retrospective_status_counts": {
+          "missing_candidate_generation_inputs": 1,
+          "missing_research_snapshot_inputs": 1
+        }
+      },
+      "runtime_candidate_count": 19,
+      "runtime_max_score": 80.0131,
+      "stop_layer": "stage_gate",
+      "tests_to_add_or_extend": [
+        "tests/test_scoring.py",
+        "tests/test_staging.py",
+        "tests/test_stage_gate_diagnostics.py",
+        "new positive/guard gate parity tests"
+      ],
+      "weight_support_row_count": 229
+    },
+    {
+      "axis_contract_status_counts": {
+        "covered_by_bridge_spec_and_runtime": 2,
+        "runtime_present_but_not_explicit_in_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "code_files_to_touch": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "do_not_do": "field가 비어 있는 상태에서 Green threshold를 낮추지 않는다. positive/guard pair가 준비된 뒤 조정한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:317330@2024-01-02",
+          "guard:089790@2024-07-22"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "symbol_never_reached_current_runtime": 2
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 2
+        }
+      },
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_patch": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE의 positive/guard pair에서 field가 채워진 뒤 weighted total/component gate 부족분을 재검증하는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "weighted_gate_threshold_or_component_balance",
+      "priority_score": 36.6,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "evidence_source_report_text_snapshot": 2,
+          "evidence_source_search_snapshot": 2,
+          "official_universe": 2,
+          "price_history_370d": 2
+        },
+        "retrospective_status_counts": {
+          "missing_official_and_research_inputs": 2
+        }
+      },
+      "runtime_candidate_count": 1,
+      "runtime_max_score": 72.1181,
+      "stop_layer": "stage_gate",
+      "tests_to_add_or_extend": [
+        "tests/test_scoring.py",
+        "tests/test_staging.py",
+        "tests/test_stage_gate_diagnostics.py",
+        "new positive/guard gate parity tests"
+      ],
+      "weight_support_row_count": 366
+    },
+    {
+      "axis_contract_status_counts": {
+        "covered_by_bridge_spec_and_runtime": 3,
+        "runtime_present_but_not_explicit_in_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "code_files_to_touch": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "do_not_do": "field가 비어 있는 상태에서 Green threshold를 낮추지 않는다. positive/guard pair가 준비된 뒤 조정한다.",
+      "fixture_summary": {
+        "candidates": [
+          "green:267260@2024-02-16",
+          "guard:006340@2024-05-14"
+        ],
+        "roles": [
+          "green",
+          "guard"
+        ],
+        "row_count": 2
+      },
+      "funnel_summary": {
+        "fixture_funnel_status_counts": {
+          "exact_symbol_date_candidate_reached_runtime": 1,
+          "symbol_never_reached_current_runtime": 1
+        },
+        "funnel_root_cause_counts": {
+          "benchmark_universe_or_official_cheap_scan_funnel_gap": 1,
+          "candidate_reached_scoring_then_score_or_gate_decides": 1
+        }
+      },
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_patch": "C02_POWER_GRID_DATACENTER_CAPEX의 positive/guard pair에서 field가 채워진 뒤 weighted total/component gate 부족분을 재검증하는 패치.",
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "weighted_gate_threshold_or_component_balance",
+      "priority_score": 35.0,
+      "readiness_summary": {
+        "retrospective_missing_input_counts": {
+          "evidence_source_report_text_snapshot": 1,
+          "evidence_source_search_snapshot": 1,
+          "official_universe": 1,
+          "price_history_370d": 1,
+          "recent_price_history_45d": 1
+        },
+        "retrospective_status_counts": {
+          "missing_candidate_generation_inputs": 1,
+          "missing_official_and_research_inputs": 1
+        }
+      },
+      "runtime_candidate_count": 44,
+      "runtime_max_score": 72.9252,
+      "stop_layer": "stage_gate",
+      "tests_to_add_or_extend": [
+        "tests/test_scoring.py",
+        "tests/test_staging.py",
+        "tests/test_stage_gate_diagnostics.py",
+        "new positive/guard gate parity tests"
+      ],
+      "weight_support_row_count": 277
+    }
+  ],
+  "schema_version": "v12_runtime_repair_execution_backlog_v1",
+  "summary": {
+    "archetype_count": 36,
+    "current_candidate_counts": {
+      "has_current_candidates": 7,
+      "no_current_candidates": 29
+    },
+    "implementation_lane_counts": {
+      "01_fixture_archive_and_candidate_funnel": 32,
+      "03_weighted_gate_validation_after_fields": 4
+    },
+    "missing_required_axis_counts": {
+      "backlog": 8,
+      "bio_commercialization": 3,
+      "capital_return": 3,
+      "consumer_sell_through": 2,
+      "contract": 12,
+      "customer": 14,
+      "guard_risk": 19,
+      "insurance_quality": 1,
+      "margin": 16,
+      "software_retention": 3,
+      "valuation_repricing": 3
+    },
+    "next_order": [
+      "01_fixture_archive_and_candidate_funnel",
+      "02_parser_feature_bridge_contract",
+      "03_weighted_gate_validation_after_fields",
+      "04_manual_gap_classification"
+    ],
+    "pair_retrospective_ready_count": 0,
+    "pair_strict_pit_ready_count": 0,
+    "plain_conclusion": "다음 구현은 HBM 점수 보너스가 아니라 fixture archive/candidate funnel, parser-feature bridge, weighted gate validation 순서로 진행해야 한다.",
+    "stop_layer_counts": {
+      "candidate_replay_archive": 32,
+      "stage_gate": 4
+    },
+    "top_missing_feature_parser_primitives": [],
+    "top_missing_required_axes": [
+      {
+        "axis": "guard_risk",
+        "count": 19
+      },
+      {
+        "axis": "margin",
+        "count": 16
+      },
+      {
+        "axis": "customer",
+        "count": 14
+      },
+      {
+        "axis": "contract",
+        "count": 12
+      },
+      {
+        "axis": "backlog",
+        "count": 8
+      },
+      {
+        "axis": "valuation_repricing",
+        "count": 3
+      },
+      {
+        "axis": "capital_return",
+        "count": 3
+      },
+      {
+        "axis": "bio_commercialization",
+        "count": 3
+      },
+      {
+        "axis": "software_retention",
+        "count": 3
+      },
+      {
+        "axis": "consumer_sell_through",
+        "count": 2
+      },
+      {
+        "axis": "insurance_quality",
+        "count": 1
+      }
+    ]
+  }
+}

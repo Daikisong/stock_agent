@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import json
+import math
 import re
 from dataclasses import dataclass, field
 from datetime import date, datetime
@@ -133,14 +134,20 @@ def float_or_none(value: Any) -> float | None:
     value = blank_to_none(value)
     if value is None:
         return None
-    return float(str(value).replace(",", ""))
+    number = float(str(value).replace(",", ""))
+    if not math.isfinite(number):
+        return None
+    return number
 
 
 def int_or_none(value: Any) -> int | None:
     value = blank_to_none(value)
     if value is None:
         return None
-    return int(float(str(value).replace(",", "")))
+    number = float(str(value).replace(",", ""))
+    if not math.isfinite(number):
+        return None
+    return int(number)
 
 
 def bool_value(value: Any) -> bool:
@@ -218,7 +225,10 @@ def coerce_jsonish(value: Any) -> Any:
         return lowered == "true"
     try:
         if "." in text:
-            return float(text.replace(",", ""))
+            number = float(text.replace(",", ""))
+            if math.isfinite(number):
+                return number
+            return text
         return int(text.replace(",", ""))
     except ValueError:
         return text

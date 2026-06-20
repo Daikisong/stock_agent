@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `291`
+- stage_transition_summary_rows: `289`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -16,7 +16,6 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 009830 | 009830 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
 | 010060 | 010060 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 95100.0 | None | None | no_valid_stage_transition |
 | 010130 | 010130 | C15_MATERIAL_SPREAD_SUPERCYCLE | 469000.0 | None | 469000.0 | 229.0 | 0.0 | stage2_actionable_best_entry |
-| 010950 | 010950 | C15_MATERIAL_SPREAD_SUPERCYCLE | 71500.0 | None | None | 18.18 | None | stage2_actionable_best_entry |
 | 011170 | 011170 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
 | 011780 | 011780 | C15_MATERIAL_SPREAD_SUPERCYCLE | 133600.0 | None | None | 31.29 | None | stage2_actionable_best_entry |
 | 011790 | 011790 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | 117000.0 | None | None | no_valid_stage_transition |
@@ -24,7 +23,6 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | 018470 | 018470 | C15_MATERIAL_SPREAD_SUPERCYCLE | 2470.0 | None | None | 7.29 | None | stage2_captured_most_upside |
 | 021050 | 021050 | C15_MATERIAL_SPREAD_SUPERCYCLE | 1328.0 | None | None | 51.0 | None | stage2_captured_most_upside |
 | 025820 | 025820 | C15_MATERIAL_SPREAD_SUPERCYCLE | 5690.0 | None | None | 47.9809 | None | stage2_actionable_best_entry |
-| 051910 | 051910 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
 | 103140 | 103140 | C15_MATERIAL_SPREAD_SUPERCYCLE | 46100.0 | None | 62900.0 | 71.1535 | 51.2168 | stage2_actionable_best_entry |
 | 298000 | 298000 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | None | None | None | None | no_valid_stage_transition |
 | C15-001230-20210517-STAGE2A | 001230 | C15_MATERIAL_SPREAD_SUPERCYCLE | 25250.0 | None | None | 2.57 | None | stage2_actionable_best_entry |

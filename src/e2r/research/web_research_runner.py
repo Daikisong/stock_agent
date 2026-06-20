@@ -528,18 +528,66 @@ def extract_e2r_text_fields(text: str, *, as_of_date: date | None = None) -> dic
     lowered = text.lower()
     if "선수금" in text or "선급금" in text or "prepayment" in lowered:
         fields["prepayment_exists"] = True
+        fields["customer_prepayment"] = True
+    if any(token in text for token in ("고객사 확정", "확정 고객", "주요 고객", "고객사 배정", "확정 물량")) or any(
+        token in lowered for token in ("confirmed customer", "named customer", "anchor customer", "customer allocation")
+    ):
+        fields["named_customer_quality"] = True
+        fields["customer_preorder_or_allocation"] = True
+    if any(token in text for token in ("브랜드 고객", "주요 고객 다변화", "고객 다변화", "앵커 고객")) or any(
+        token in lowered for token in ("brand customer", "customer diversification", "anchor customer", "named customer")
+    ):
+        fields["brand_customer_diversification"] = True
+        fields["named_customer_quality"] = True
+    if any(token in text for token in ("공급계약", "납품계약", "프레임워크 계약", "마스터 공급계약")) or any(
+        token in lowered
+        for token in ("supply agreement", "supply contract", "customer contract", "framework agreement", "master supply agreement")
+    ):
+        fields["customer_contract_visible"] = True
+        fields["supply_agreement_visible"] = True
     if any(token in text for token in ("최소 매출 보장", "최소매출 보장", "최소 물량 보장", "최소 구매 보장")) or any(
         token in lowered for token in ("minimum revenue guarantee", "minimum sales guarantee", "minimum purchase commitment")
     ):
         fields["minimum_revenue_guarantee"] = True
         fields["minimum_sales_guarantee"] = True
         fields["revenue_visibility_contract"] = True
-    if "해지 불가" in text or "취소 불가" in text or "take-or-pay" in lowered:
+    if "해지 불가" in text or "취소 불가" in text or "take-or-pay" in lowered or "take or pay" in lowered:
         fields["non_cancellable"] = True
+    if any(token in text for token in ("최소 구매 보장", "최소 물량 보장", "의무 구매")) or any(
+        token in lowered for token in ("take-or-pay", "take or pay", "minimum purchase commitment")
+    ):
+        fields["take_or_pay"] = True
+        fields["customer_preorder_or_allocation"] = True
     if "사상 최대 수주잔고" in text or ("수주잔고" in text and "사상 최대" in text) or "record backlog" in lowered:
         fields["record_backlog"] = True
-    if "capa 부족" in lowered or "생산능력 부족" in text or "capacity constraint" in lowered:
+        fields["backlog_record_high"] = True
+    if any(token in text for token in ("생산능력 배정", "생산 슬롯 확정", "생산 슬롯 예약", "물량 예약")) or any(
+        token in lowered for token in ("capacity allocation", "capacity booked", "booked out", "slot reservation")
+    ):
+        fields["capacity_precommitted"] = True
+        fields["booked_out_capacity"] = True
+        fields["order_slot_locked"] = True
+    if any(token in text for token in ("납기 일정", "인도 일정", "출하 일정")) or "delivery schedule" in lowered:
+        fields["delivery_schedule"] = True
+    if any(token in text for token in ("수주잔고 매출 전환", "수주 매출 전환", "매출 전환 경로", "출하 매출 전환")) or any(
+        token in lowered for token in ("order-to-revenue", "order to revenue", "revenue recognition path", "call-off")
+    ):
+        fields["order_to_revenue_bridge"] = True
+    if any(token in lowered for token in ("book-to-bill", "book to bill")):
+        fields["book_to_bill_visible"] = True
+    if any(token in text for token in ("장비 수주 회복", "장비 주문 회복", "수주 회복")) or "equipment order recovery" in lowered:
+        fields["equipment_order_recovery"] = True
+        fields["order_to_revenue_bridge"] = True
+    if (
+        "capa 부족" in lowered
+        or "capa 제약" in lowered
+        or "capa 병목" in lowered
+        or "생산능력 부족" in text
+        or "capacity constraint" in lowered
+        or "capacity bottleneck" in lowered
+    ):
         fields["capacity_constraint"] = True
+        fields["capa_shortage"] = True
     if "리드타임 장기화" in text and ("공급부족" in text or "공급 부족" in text):
         fields["lead_time_extended"] = True
         fields["supply_shortage_mentioned"] = True
@@ -591,6 +639,160 @@ def extract_e2r_text_fields(text: str, *, as_of_date: date | None = None) -> dic
     if "회계 이슈" in text or "감사의견" in text or "accounting issue" in lowered:
         fields["accounting_or_trust_issue"] = True
         fields["risk_comment"] = _excerpt(text, ("회계 이슈", "감사의견", "accounting issue"))
+    if any(token in text for token in ("주가만 상승", "가격만 상승", "테마만 부각")) or any(
+        token in lowered for token in ("price-only", "price only", "theme hype")
+    ):
+        fields["price_only_blowoff"] = True
+    if any(token in text for token in ("매출 연결 없음", "매출로 연결되지", "현금흐름 연결 없음")) or any(
+        token in lowered for token in ("without revenue", "no revenue bridge", "missing cashflow bridge")
+    ):
+        fields["missing_cashflow_bridge"] = True
+        fields["theme_hype_without_revenue"] = True
+    if any(token in text for token in ("출처 불일치", "근거 상충", "자료 신뢰도 낮음")) or any(
+        token in lowered for token in ("source conflict", "source quality conflict", "low source quality")
+    ):
+        fields["source_quality_conflict"] = True
+        fields["evidence_source_quality_issue"] = True
+    if any(token in text for token in ("고객 인증 지연", "퀄 지연", "인증 지연")) or any(
+        token in lowered for token in ("qualification lag", "qualification delay")
+    ):
+        fields["qualification_lag_risk"] = True
+    if any(token in text for token in ("정책 승인", "규제 승인", "인허가 확인", "정부 승인")) or any(
+        token in lowered for token in ("policy confirmed", "regulatory confirmed", "regulatory approval confirmed")
+    ):
+        fields["policy_or_regulatory_confirmed"] = True
+    if any(token in text for token in ("프로젝트 수주", "프로젝트 선정", "사업자 선정", "낙찰")) or any(
+        token in lowered for token in ("project award", "project awarded", "selected bidder")
+    ):
+        fields["project_award_confirmed"] = True
+    if any(token in text for token in ("회사 현금흐름 연결", "현금흐름 연결", "직접 매출 연결")) or any(
+        token in lowered for token in ("direct company cash route", "company cash route", "direct revenue route")
+    ):
+        fields["direct_company_cash_route"] = True
+        fields["policy_to_company_cash_route"] = True
+    if any(token in text for token in ("스프레드 확대", "마진 스프레드 확대")) or "spread expansion" in lowered:
+        fields["spread_expansion"] = True
+        fields["margin_bridge_visible"] = True
+    if any(token in text for token in ("ex-credit 마진", "세액공제 제외 마진")) or "ex-credit margin" in lowered:
+        fields["ex_credit_margin"] = True
+        fields["margin_bridge_visible"] = True
+    if any(token in text for token in ("원재료 비용 리스크", "원재료 가격 부담")) or any(
+        token in lowered for token in ("raw material cost risk", "raw material price risk")
+    ):
+        fields["raw_material_cost_risk"] = True
+    if any(token in text for token in ("가동률 상승", "가동률 개선")) or "utilization rate" in lowered:
+        fields["utilization_rate"] = True
+    if "inventory cycle" in lowered or "재고 사이클" in text:
+        fields["inventory_cycle"] = True
+    if any(token in text for token in ("재고 급증", "재고 증가")) or "inventory spike" in lowered:
+        fields["inventory_spike"] = True
+        fields["receivables_inventory_spike"] = True
+    if any(token in text for token in ("데이터센터 고객",)) or any(
+        token in lowered for token in ("datacenter customer", "data center customer")
+    ):
+        fields["datacenter_customer"] = True
+        fields["data_center_contract"] = True
+    if "hbm customer order" in lowered or "HBM 고객 주문" in text or "HBM 고객 수주" in text:
+        fields["hbm_customer_order"] = True
+        fields["customer_preorder_or_allocation"] = True
+    if "relative strength" in lowered or "상대강도" in text:
+        fields["relative_strength_score"] = True
+    if "qualification confirmed" in lowered or "고객 인증 완료" in text or "퀄 통과" in text:
+        fields["qualification_confirmed"] = True
+    if any(token in lowered for token in ("socket demand", "test socket demand")) or "테스트 소켓 수요" in text:
+        fields["socket_or_test_demand_visible"] = True
+    if "customer quality visible" in lowered or "고객 품질 확인" in text or "우량 고객" in text:
+        fields["customer_quality_visible"] = True
+    if "volume visibility" in lowered or "물량 가시성" in text:
+        fields["volume_visibility"] = True
+    if "volume growth" in lowered or "판매량 증가" in text or "출하량 증가" in text:
+        fields["volume_growth_visible"] = True
+    if "jv utilization" in lowered or "JV 가동률" in text or "합작공장 가동률" in text:
+        fields["jv_utilization"] = True
+    if "valuation overheat" in lowered or "밸류에이션 과열" in text:
+        fields["valuation_overheat"] = True
+    if "thesis break" in lowered or "논리 훼손 확인" in text or "투자논리 훼손" in text:
+        fields["thesis_break_confirmed"] = True
+    if "evidence source quality" in lowered or "증거 품질" in text or "출처 품질" in text:
+        fields["evidence_source_quality"] = True
+    if "restatement risk" in lowered or "재무제표 재작성" in text or "정정 리스크" in text:
+        fields["restatement_risk"] = True
+    if "event spread risk" in lowered or "이벤트 스프레드 리스크" in text:
+        fields["event_spread_risk"] = True
+    if "offtake contract" in lowered or "오프테이크 계약" in text:
+        fields["offtake_contract"] = True
+        fields["customer_contract_visible"] = True
+    if "supply shortage" in lowered or "공급 부족" in text or "공급부족" in text:
+        fields["supply_shortage"] = True
+    if "policy supply support" in lowered or "정책 공급 지원" in text:
+        fields["policy_supply_support"] = True
+    if "permit status" in lowered or "허가 상태" in text:
+        fields["permit_status"] = True
+    if "subsidy capture" in lowered or "세액공제 수혜" in text or "AMPC" in text:
+        fields["ampc_or_subsidy_capture"] = True
+        fields["subsidy_capture_visible"] = True
+    if "implementation timeline" in lowered or "이행 일정" in text or "실행 일정" in text:
+        fields["implementation_timeline"] = True
+    if "gross margin bridge" in lowered or "매출총이익률 브릿지" in text:
+        fields["gross_margin_bridge"] = True
+        fields["margin_bridge_visible"] = True
+    if any(token in text for token in ("자사주 소각", "자기주식 소각")) or any(
+        token in lowered for token in ("treasury share cancellation", "share cancellation")
+    ):
+        fields["treasury_share_cancellation"] = True
+        fields["buyback_executed"] = True
+        fields["capital_return_execution"] = True
+    if any(token in text for token in ("자사주 매입", "자사주 취득")) or "buyback" in lowered:
+        fields["buyback_announced"] = True
+    if any(token in text for token in ("배당 확대", "배당성향 확대", "주주환원 확대")) or any(
+        token in lowered for token in ("shareholder return", "dividend growth")
+    ):
+        fields["dividend_visibility"] = True
+        fields["shareholder_return_execution"] = True
+    if any(token in text for token in ("신용비용 안정", "NPL 안정", "부실채권 안정")) or "credit cost" in lowered:
+        fields["credit_cost_quality"] = True
+    if any(token in text for token in ("CSM 증가", "CSM 성장", "계약서비스마진 증가", "계약서비스마진 성장")):
+        fields["csm_growth_visible"] = True
+    if any(token in text for token in ("준비금 안정", "준비금 충분")) or any(
+        token in lowered for token in ("reserve quality", "reserve adequacy")
+    ):
+        fields["reserve_quality_visible"] = True
+    if any(token in text for token in ("손해율 개선", "손해율 안정")) or any(
+        token in lowered for token in ("loss ratio improvement", "loss ratio stable")
+    ):
+        fields["loss_ratio_quality"] = True
+    if any(token in text for token in ("FDA 승인", "품목허가", "허가 승인")) or any(
+        token in lowered for token in ("regulatory approval", "approved by fda")
+    ):
+        fields["regulatory_approval_confirmed"] = True
+    if fields.get("regulatory_approval_confirmed") and (
+        any(token in text for token in ("상업화", "출시", "매출 전환"))
+        or any(token in lowered for token in ("approval-to-revenue", "approval to revenue"))
+    ):
+        fields["approval_to_revenue_bridge"] = True
+    if any(token in text for token in ("로열티", "마일스톤")) or any(token in lowered for token in ("royalty", "milestone payment")):
+        fields["royalty_route"] = True
+        fields["partner_economics_visible"] = True
+    if any(token in text for token in ("보험급여", "급여 등재")) or "reimbursement" in lowered:
+        fields["reimbursement_confirmed"] = True
+    if any(token in text for token in ("ARR 증가", "ARR 성장")) or any(
+        token in lowered for token in ("arr growth", "recurring revenue growth")
+    ):
+        fields["arr_growth_visible"] = True
+    if any(token in text for token in ("갱신율", "churn 감소")) or any(token in lowered for token in ("renewal", "retention", "nrr", "churn low")):
+        fields["retention_or_renewal"] = True
+        fields["contract_renewal_visible"] = True
+    if any(token in text for token in ("좌석 확장", "사용자 확장")) or "seat expansion" in lowered:
+        fields["seat_expansion_visible"] = True
+    if any(token in text for token in ("PF 익스포저 축소", "재무구조 개선", "현금 회수 가시성")) or any(
+        token in lowered for token in ("pf exposure reduced", "balance sheet repair", "cash collection visible")
+    ):
+        if "pf" in lowered or "PF" in text:
+            fields["pf_exposure_reduced"] = True
+        if "재무구조 개선" in text or "balance sheet repair" in lowered:
+            fields["balance_sheet_repair"] = True
+        if "현금 회수 가시성" in text or "cash collection visible" in lowered:
+            fields["cash_collection_visible"] = True
     _add_qualitative_e2r_fields(text, lowered, fields)
     return fields
 
@@ -641,9 +843,42 @@ def _add_qualitative_e2r_fields(text: str, lowered: str, fields: dict[str, Any])
     if any(token in text for token in ("해외 채널 확대", "해외 채널 확장", "북미 채널", "미국 채널")):
         fields["overseas_channel_expansion"] = True
         fields["channel_expansion"] = True
+        fields["brand_channel_expansion"] = True
+    if any(
+        token in text
+        for token in (
+            "글로벌 유통망 확대",
+            "글로벌 유통 확대",
+            "플랫폼 유통 확대",
+            "대형 유통 채널",
+            "대형 리테일 채널",
+            "입점 확대",
+        )
+    ) or any(
+        token in lowered
+        for token in (
+            "global distribution",
+            "distribution scale",
+            "platform distribution",
+            "retail channel expansion",
+            "major retail channel",
+        )
+    ):
+        fields["platform_distribution_scale"] = True
+        fields["brand_channel_expansion"] = True
+        fields["channel_expansion"] = True
     if any(token in text for token in ("반복 수요", "재구매", "리오더")) or any(
         token in lowered for token in ("recurring demand", "repeat purchase")
     ):
+        fields["recurring_consumer_demand"] = True
+    if any(token in text for token in ("재주문", "리오더")) or any(token in lowered for token in ("repeat order", "reorder")):
+        fields["repeat_order_confirmed"] = True
+        fields["channel_reorder_confirmed"] = True
+        fields["recurring_consumer_demand"] = True
+    if any(token in text for token in ("셀스루", "판매 회전", "재고 소진")) or any(
+        token in lowered for token in ("sell-through", "sell through")
+    ):
+        fields["sell_through_confirmed"] = True
         fields["recurring_consumer_demand"] = True
     if "불닭" in text and any(token in text for token in ("수출", "채널", "미국", "해외")):
         fields["recurring_consumer_demand"] = True
@@ -667,6 +902,33 @@ def _add_qualitative_e2r_fields(text: str, lowered: str, fields: dict[str, Any])
         fields["asp_increase_mentioned"] = True
     if any(token in text for token in ("공급조절", "감산")) or "supply discipline" in lowered:
         fields["supply_discipline_mentioned"] = True
+    semiconductor_cycle_context = hbm_context or any(
+        token in lowered for token in ("memory", "dram", "nand", "semiconductor", "advanced packaging")
+    ) or any(token in text for token in ("메모리", "반도체", "D램", "디램", "낸드", "패키징"))
+    demand_cycle_visible = any(
+        token in text
+        for token in (
+            "수요 증가",
+            "수요 확대",
+            "수요 강세",
+            "수요 회복",
+            "업황 개선",
+            "주문 회복",
+        )
+    ) or any(token in lowered for token in ("demand growth", "strong demand", "demand recovery", "cycle recovery"))
+    price_cycle_visible = bool(fields.get("memory_price_increase_mentioned") or fields.get("pricing_power_mentioned"))
+    supply_cycle_visible = bool(fields.get("supply_discipline_mentioned")) or any(
+        token in lowered for token in ("supply discipline", "capacity constraint", "bottleneck")
+    )
+    if semiconductor_cycle_context and demand_cycle_visible and (price_cycle_visible or supply_cycle_visible):
+        fields["cycle_demand_visibility"] = True
+        fields["end_market_demand_visibility"] = True
+    if semiconductor_cycle_context and demand_cycle_visible and price_cycle_visible and supply_cycle_visible:
+        fields["supply_demand_tightness"] = True
+    if fields.get("cycle_demand_visibility") and any(
+        token in text for token in ("추정치 상향", "목표주가 상향", "EPS 상향", "영업이익 상향")
+    ):
+        fields["cycle_to_revenue_bridge"] = True
     if any(token in text for token in ("선주문", "우선 배정", "최소 물량 보장", "최소 구매 보장")) or any(token in lowered for token in ("preorder", "allocation", "minimum purchase commitment")):
         fields["customer_preorder_or_allocation"] = True
     if hbm_context and (
@@ -714,6 +976,14 @@ def _add_qualitative_e2r_fields(text: str, lowered: str, fields: dict[str, Any])
         fields["capacity_constraint"] = True
         fields["capa_shortage"] = True
         fields["hbm_capacity_constraint"] = True
+    if hbm_context and (
+        any(token in text for token in ("CAPA 제약", "CAPA 병목", "패키징 병목", "첨단 패키징 병목"))
+        or any(token in lowered for token in ("advanced packaging bottleneck", "packaging bottleneck"))
+    ):
+        fields["capacity_constraint"] = True
+        fields["hbm_capacity_constraint"] = True
+        fields["advanced_packaging_bottleneck"] = True
+        fields["supply_demand_tightness"] = True
     if _has_defense_contract_context(text):
         fields["government_customer"] = True
     if any(token in text for token in ("장기계약", "장기 공급계약", "장기공급계약", "다년 계약")) or any(token in lowered for token in ("multi-year", "lta", "long-term agreement")):

@@ -6,6 +6,7 @@ It may suggest searches and diagnostics, but it must not carry a final Stage.
 
 from __future__ import annotations
 
+import math
 import re
 from collections.abc import Sequence
 from dataclasses import dataclass, field
@@ -290,6 +291,8 @@ def _json_safe_value(value: Any) -> bool | float | str | None:
     if isinstance(value, bool):
         return value
     if isinstance(value, (int, float)) and not isinstance(value, bool):
+        if not math.isfinite(float(value)):
+            return None
         return float(value)
     if isinstance(value, str):
         text = value.strip()
@@ -338,16 +341,23 @@ def _float_or_none(value: Any) -> float | None:
     if isinstance(value, bool):
         return 1.0 if value else 0.0
     try:
-        return float(value)
+        number = float(value)
     except (TypeError, ValueError):
         return None
+    if not math.isfinite(number):
+        return None
+    return number
 
 
 def _clamp_unit(value: float) -> float:
+    if not math.isfinite(float(value)):
+        return 0.0
     return max(0.0, min(1.0, value))
 
 
 def _clamp_100(value: float) -> float:
+    if not math.isfinite(float(value)):
+        return 0.0
     return max(0.0, min(100.0, value))
 
 

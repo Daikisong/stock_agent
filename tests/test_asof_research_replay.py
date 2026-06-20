@@ -1,3 +1,4 @@
+from collections import Counter
 from datetime import date, datetime
 from pathlib import Path
 import csv
@@ -6,8 +7,16 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from e2r.backtest.asof_research_replay import AsOfReplayCandidate, AsOfResearchReplay, AsOfResearchReplayConfig, _theme_route_provider_for_config, _write_candidates
-from e2r.cli.run_asof_research_replay import build_parser, config_from_args
+from e2r.backtest.asof_research_replay import (
+    AsOfReplayCandidate,
+    AsOfResearchReplay,
+    AsOfResearchReplayConfig,
+    _scheduled_replay_dates,
+    _theme_route_provider_for_config,
+    _write_candidates,
+)
+from e2r.backtest.historical_universe_replay import ReplayFrequency
+from e2r.cli.run_asof_research_replay import build_parser, config_from_args, load_extra_replay_dates_file
 from e2r.models import Stage
 from e2r.research.report_snapshot_store import ReportSnapshotStore
 from e2r.research.search_provider import SearchResult
@@ -22,6 +31,7 @@ class AsOfResearchReplayTests(unittest.TestCase):
         self.assertTrue(config.fixture_search)
         self.assertFalse(config.allow_snapshot_derived_universe)
         self.assertEqual(str(config.official_root), "data/historical_official")
+        self.assertEqual(config.extra_replay_dates, ())
         self.assertIsNone(config.max_queries_per_candidate)
         self.assertIsNone(config.max_candidates_per_date)
         self.assertIsNone(config.max_web_research_candidates_per_date)
@@ -43,6 +53,85 @@ class AsOfResearchReplayTests(unittest.TestCase):
         self.assertIsNone(config.max_queries_per_candidate)
         self.assertIsNone(config.max_candidates_per_date)
         self.assertIsNone(config.max_web_research_candidates_per_date)
+
+    def test_cli_accepts_extra_replay_dates_for_exact_fixture_runs(self):
+        args = build_parser().parse_args(
+            [
+                "--start-date",
+                "2023-07-01",
+                "--end-date",
+                "2023-08-01",
+                "--extra-replay-date",
+                "2023-07-27",
+            ]
+        )
+        config = config_from_args(args)
+
+        self.assertEqual(config.extra_replay_dates, (date(2023, 7, 27),))
+
+    def test_cli_loads_extra_replay_dates_from_v12_fixture_spec_file(self):
+        with tempfile.TemporaryDirectory() as directory:
+            spec_path = Path(directory) / "fixture_spec.json"
+            spec_path.write_text(
+                json.dumps(
+                    {
+                        "rows": [
+                            {"candidate": {"as_of_date": "2024-04-25", "symbol": "000660"}},
+                            {"candidate": {"trigger_date": "2024-05-14", "symbol": "006340"}},
+                            {"candidate": {"as_of_date": "2026-01-01", "symbol": "OUT_OF_RANGE"}},
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            args = build_parser().parse_args(
+                [
+                    "--start-date",
+                    "2024-04-01",
+                    "--end-date",
+                    "2024-05-31",
+                    "--extra-replay-date",
+                    "2024-04-01",
+                    "--extra-replay-dates-file",
+                    str(spec_path),
+                ]
+            )
+            config = config_from_args(args)
+
+        self.assertEqual(
+            config.extra_replay_dates,
+            (date(2024, 4, 1), date(2024, 4, 25), date(2024, 5, 14)),
+        )
+
+    def test_extra_replay_dates_file_supports_jsonl_and_csv(self):
+        with tempfile.TemporaryDirectory() as directory:
+            jsonl_path = Path(directory) / "dates.jsonl"
+            csv_path = Path(directory) / "dates.csv"
+            jsonl_path.write_text(
+                '{"candidate":{"as_of_date":"2024-04-25"}}\n{"trigger_date":"2024-05-14"}\n',
+                encoding="utf-8",
+            )
+            csv_path.write_text("symbol,as_of_date\n000660,2024-04-25\n267260,2024-02-16\n", encoding="utf-8")
+
+            jsonl_dates = load_extra_replay_dates_file(jsonl_path)
+            csv_dates = load_extra_replay_dates_file(csv_path)
+
+        self.assertEqual(jsonl_dates, (date(2024, 4, 25), date(2024, 5, 14)))
+        self.assertEqual(csv_dates, (date(2024, 2, 16), date(2024, 4, 25)))
+
+    def test_extra_replay_dates_are_sorted_and_deduped_with_base_schedule(self):
+        replay_dates = _scheduled_replay_dates(
+            date(2023, 7, 1),
+            date(2023, 9, 1),
+            ReplayFrequency.MONTHLY,
+            (date(2023, 7, 27), "2023-08-01"),
+        )
+
+        self.assertEqual(
+            replay_dates,
+            (date(2023, 7, 1), date(2023, 7, 27), date(2023, 8, 1), date(2023, 9, 1)),
+        )
 
     def test_asof_theme_rebalance_flag_defaults_to_codex_provider_without_env(self):
         with patch.dict("os.environ", {}, clear=True):
@@ -76,6 +165,138 @@ class AsOfResearchReplayTests(unittest.TestCase):
         self.assertTrue(all(item.symbol != "999999" for item in result.discovered_candidates))
         self.assertEqual(result.benchmark_recall[0].failure_stage, "not_in_universe")
 
+    def test_snapshot_derived_universe_adds_report_radar_candidate_when_enabled(self):
+        with tempfile.TemporaryDirectory() as root:
+            paths = _fixture_paths(root)
+            _write_labels(paths["labels"], symbol="333333")
+            SearchSnapshotStore(paths["search"]).save_snapshot(
+                snapshot_from_search_result(
+                    SearchResult(
+                        title="스냅샷후보 수주잔고 OPM Review PDF",
+                        url="https://example.com/snapshot.pdf",
+                        published_at=datetime(2023, 8, 1, 8, 0),
+                        is_pdf=True,
+                        is_report_domain=True,
+                        confidence=0.9,
+                    ),
+                    query="스냅샷후보 수주잔고 OPM 수출 비중 PDF",
+                    search_date=date(2026, 5, 14),
+                    symbol="333333",
+                    company_name="스냅샷후보",
+                )
+            )
+
+            result = AsOfResearchReplay().run(
+                AsOfResearchReplayConfig(
+                    start_date=date(2023, 8, 1),
+                    end_date=date(2023, 8, 1),
+                    official_root=paths["official"],
+                    benchmark_label_path=paths["labels"],
+                    search_snapshot_root=paths["search"],
+                    report_snapshot_root=paths["reports"],
+                    output_directory=paths["output"],
+                    allow_snapshot_derived_universe=True,
+                    max_web_research_candidates_per_date=0,
+                    max_queries_per_candidate=4,
+                    max_results_per_query=5,
+                ),
+                write_outputs=False,
+            )
+
+        by_symbol = {item.symbol: item for item in result.discovered_candidates}
+        self.assertIn("333333", by_symbol)
+        self.assertEqual(by_symbol["333333"].candidate_source_path, "report_radar")
+        self.assertTrue(result.benchmark_recall[0].appeared_in_candidates)
+        self.assertIn("snapshot_derived_universe", result.snapshots[0].limitations)
+        trace = result.snapshots[0].flow_traces[0]
+        self.assertFalse(trace.reached("passed_official_cheap_scan"))
+        self.assertTrue(trace.reached("report_radar_candidate"))
+
+    def test_snapshot_derived_universe_rejects_future_published_snapshot(self):
+        with tempfile.TemporaryDirectory() as root:
+            paths = _fixture_paths(root)
+            _write_labels(paths["labels"], symbol="333333")
+            SearchSnapshotStore(paths["search"]).save_snapshot(
+                snapshot_from_search_result(
+                    SearchResult(
+                        title="스냅샷후보 수주잔고 OPM Review PDF",
+                        url="https://example.com/future.pdf",
+                        published_at=datetime(2023, 8, 2, 8, 0),
+                        is_pdf=True,
+                        is_report_domain=True,
+                        confidence=0.9,
+                    ),
+                    query="스냅샷후보 수주잔고 OPM 수출 비중 PDF",
+                    search_date=date(2026, 5, 14),
+                    symbol="333333",
+                    company_name="스냅샷후보",
+                )
+            )
+
+            result = AsOfResearchReplay().run(
+                AsOfResearchReplayConfig(
+                    start_date=date(2023, 8, 1),
+                    end_date=date(2023, 8, 1),
+                    official_root=paths["official"],
+                    benchmark_label_path=paths["labels"],
+                    search_snapshot_root=paths["search"],
+                    report_snapshot_root=paths["reports"],
+                    output_directory=paths["output"],
+                    allow_snapshot_derived_universe=True,
+                    max_web_research_candidates_per_date=0,
+                    max_queries_per_candidate=4,
+                    max_results_per_query=5,
+                ),
+                write_outputs=False,
+            )
+
+        self.assertFalse(result.discovered_candidates)
+        self.assertFalse(result.benchmark_recall[0].appeared_in_candidates)
+
+    def test_snapshot_report_radar_does_not_cross_match_unrelated_official_symbol(self):
+        with tempfile.TemporaryDirectory() as root:
+            paths = _fixture_paths(root)
+            _write_official(paths["official"], symbols=("111111",))
+            _write_labels(paths["labels"], symbol="333333")
+            SearchSnapshotStore(paths["search"]).save_snapshot(
+                snapshot_from_search_result(
+                    SearchResult(
+                        title="스냅샷후보 수주잔고 OPM Review PDF",
+                        url="https://example.com/snapshot.pdf",
+                        published_at=datetime(2023, 8, 1, 8, 0),
+                        is_pdf=True,
+                        is_report_domain=True,
+                        confidence=0.9,
+                    ),
+                    query="스냅샷후보 수주잔고 OPM 수출 비중 PDF",
+                    search_date=date(2026, 5, 14),
+                    symbol="333333",
+                    company_name="스냅샷후보",
+                )
+            )
+
+            result = AsOfResearchReplay().run(
+                AsOfResearchReplayConfig(
+                    start_date=date(2023, 8, 1),
+                    end_date=date(2023, 8, 1),
+                    official_root=paths["official"],
+                    benchmark_label_path=paths["labels"],
+                    search_snapshot_root=paths["search"],
+                    report_snapshot_root=paths["reports"],
+                    output_directory=paths["output"],
+                    allow_snapshot_derived_universe=True,
+                    max_web_research_candidates_per_date=0,
+                    max_queries_per_candidate=4,
+                    max_results_per_query=5,
+                ),
+                write_outputs=False,
+            )
+
+        self.assertFalse(
+            any(item.symbol == "111111" and item.candidate_source_path == "report_radar" for item in result.discovered_candidates)
+        )
+        self.assertTrue(any(item.symbol == "333333" and item.candidate_source_path == "report_radar" for item in result.discovered_candidates))
+
     def test_missing_official_universe_reports_insufficient_data(self):
         with tempfile.TemporaryDirectory() as root:
             paths = _fixture_paths(root)
@@ -102,6 +323,153 @@ class AsOfResearchReplayTests(unittest.TestCase):
         self.assertEqual([step.name for step in trace.steps[:2]], ["entered_universe", "passed_official_cheap_scan"])
         self.assertTrue(trace.reached("free_web_research_executed"))
         self.assertTrue(trace.reached("documents_date_verified"))
+
+    def test_extra_replay_date_enters_same_candidate_pipeline(self):
+        with tempfile.TemporaryDirectory() as root:
+            paths = _fixture_paths(root)
+            _write_official(paths["official"], symbols=("111111", "222222"))
+            _write_labels(paths["labels"], symbol="111111")
+            result = AsOfResearchReplay().run(
+                AsOfResearchReplayConfig(
+                    start_date=date(2023, 7, 1),
+                    end_date=date(2023, 8, 1),
+                    frequency=ReplayFrequency.MONTHLY,
+                    extra_replay_dates=(date(2023, 7, 27),),
+                    official_root=paths["official"],
+                    benchmark_label_path=paths["labels"],
+                    search_snapshot_root=paths["search"],
+                    report_snapshot_root=paths["reports"],
+                    output_directory=paths["output"],
+                    max_web_research_candidates_per_date=0,
+                ),
+                write_outputs=False,
+            )
+
+        snapshot_dates = tuple(snapshot.as_of_date for snapshot in result.snapshots)
+        self.assertEqual(snapshot_dates, (date(2023, 7, 1), date(2023, 7, 27), date(2023, 8, 1)))
+        self.assertTrue(
+            any(item.symbol == "111111" and item.as_of_date == date(2023, 7, 27) for item in result.discovered_candidates)
+        )
+
+    def test_runtime_fixture_spec_adds_source_backed_candidate_without_official_universe(self):
+        with tempfile.TemporaryDirectory() as root:
+            paths = _fixture_paths(root)
+            _write_labels(paths["labels"], symbol="267260", expected_safe_stage="Green")
+            source_path = Path(root) / "fixture_research.md"
+            trigger = {
+                "row_type": "trigger",
+                "trigger_id": "fixture-green",
+                "case_id": "fixture-case",
+                "symbol": "267260",
+                "company_name": "HD현대일렉트릭",
+                "trigger_type": "Stage3-Green",
+                "entry_date": "2024-02-16",
+                "stage2_evidence_fields": ["power-grid/datacenter demand", "customer/capex route"],
+                "stage3_evidence_fields": ["named backlog/order evidence", "delivery/revenue/margin bridge"],
+                "evidence_available_at_that_date": "source-backed backlog, global customers, delivery and margin bridge",
+            }
+            source_path.write_text(json.dumps(trigger, ensure_ascii=False) + "\n", encoding="utf-8")
+            spec_path = Path(root) / "runtime_fixture_spec.json"
+            spec_path.write_text(
+                json.dumps(
+                    {
+                        "rows": [
+                            {
+                                "role": "green",
+                                "fixture_status": "ready_for_runtime_replay_fixture",
+                                "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+                                "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+                                "expected_runtime_primitives": [
+                                    "datacenter_customer",
+                                    "order_backlog_to_sales",
+                                "lead_time_extended",
+                                "capacity_constraint",
+                                "pricing_power_confirmed",
+                                "delivery_schedule",
+                                "order_to_revenue_bridge",
+                                "customer_contract_visible",
+                                "contract_amount_to_prior_sales",
+                                "contract_duration_months",
+                            ],
+                            "candidate": {
+                                    "symbol": "267260",
+                                    "as_of_date": "2024-02-16",
+                                    "trigger_id": "fixture-green",
+                                    "case_id": "fixture-case",
+                                "trigger_type": "Stage3-Green",
+                                "evidence_source": "https://example.com/source-backed-report.pdf",
+                                "source_file": str(source_path),
+                                    "source_proxy_only": False,
+                                    "evidence_url_pending": False,
+                                },
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            result = AsOfResearchReplay().run(
+                AsOfResearchReplayConfig(
+                    start_date=date(2024, 2, 16),
+                    end_date=date(2024, 2, 16),
+                    official_root=paths["official"],
+                    benchmark_label_path=paths["labels"],
+                    search_snapshot_root=paths["search"],
+                    report_snapshot_root=paths["reports"],
+                    output_directory=paths["output"],
+                    runtime_fixture_spec_paths=(spec_path,),
+                    max_web_research_candidates_per_date=0,
+                ),
+                write_outputs=False,
+            )
+
+        row = result.discovered_candidates[0]
+        self.assertEqual(row.symbol, "267260")
+        self.assertEqual(row.candidate_source_path, "runtime_fixture_spec")
+        self.assertIn("research_report", row.evidence_types_seen)
+        self.assertTrue(row.score_valid)
+        self.assertEqual(row.stage, Stage.STAGE_3_GREEN)
+
+    def test_v12_runtime_fixture_spec_acceptance_covers_green_and_guard_rows(self):
+        spec_path = Path("docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json")
+        spec_payload = json.loads(spec_path.read_text(encoding="utf-8"))
+        spec_rows = spec_payload["rows"]
+        expected_roles = Counter(row["role"] for row in spec_rows)
+
+        with tempfile.TemporaryDirectory() as root:
+            result = AsOfResearchReplay().run(
+                AsOfResearchReplayConfig(
+                    start_date=date(2020, 1, 1),
+                    end_date=date(2026, 5, 14),
+                    frequency=ReplayFrequency.MONTHLY,
+                    extra_replay_dates=load_extra_replay_dates_file(spec_path),
+                    official_root=Path("data/historical_official"),
+                    benchmark_label_path=Path("data/benchmark_labels/e2r_known_winners.json"),
+                    search_snapshot_root=Path("data/search_snapshots"),
+                    report_snapshot_root=Path("data/report_snapshots"),
+                    output_directory=Path(root) / "output",
+                    max_web_research_candidates_per_date=0,
+                    runtime_fixture_spec_paths=(spec_path,),
+                ),
+                write_outputs=False,
+            )
+
+        fixture_rows = [item for item in result.discovered_candidates if item.candidate_source_path == "runtime_fixture_spec"]
+        stage_counts = Counter((_fixture_candidate_role(item), item.stage) for item in fixture_rows)
+
+        self.assertEqual(len(fixture_rows), len(spec_rows))
+        self.assertEqual(stage_counts[("green", Stage.STAGE_3_GREEN)], expected_roles["green"])
+        self.assertEqual(
+            sum(count for (role, stage), count in stage_counts.items() if role == "green" and stage != Stage.STAGE_3_GREEN),
+            0,
+        )
+        self.assertEqual(
+            sum(count for (role, stage), count in stage_counts.items() if role == "guard" and stage == Stage.STAGE_3_GREEN),
+            0,
+        )
+        self.assertEqual(sum(count for (role, _stage), count in stage_counts.items() if role == "guard"), expected_roles["guard"])
 
     def test_fake_benchmark_label_without_evidence_does_not_create_candidate(self):
         with tempfile.TemporaryDirectory() as root:
@@ -220,6 +588,13 @@ def _config(paths, *, output=None):
         max_queries_per_candidate=4,
         max_results_per_query=2,
     )
+
+
+def _fixture_candidate_role(candidate: AsOfReplayCandidate) -> str:
+    for code in candidate.reason_codes:
+        if code.startswith("fixture_role:"):
+            return code.split(":", 1)[1]
+    return ""
 
 
 def _write_labels(path: Path, *, symbol: str, group: str = "structural", expected_safe_stage: str = "Yellow") -> None:

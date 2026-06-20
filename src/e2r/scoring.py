@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import date
+import math
 from typing import Mapping, Protocol
 
 from .calibration.archetype_weight_profile import (
@@ -13,6 +14,7 @@ from .calibration.archetype_weight_profile import (
 )
 from .calibration.scoring_profile import get_active_scoring_profile
 from .calibration.taxonomy import large_sector_for_archetype, normalise_canonical_archetype_id, normalise_large_sector_id
+from .diagnostic_values import numeric_diagnostic
 from .models import IndustrialSubScores, ScoreSnapshot
 
 
@@ -36,6 +38,7 @@ CANONICAL_SCORE_COMPONENTS: tuple[ScoreComponentSpec, ...] = (
 )
 
 _MAX_POINTS_BY_KEY = {component.key: component.max_points for component in CANONICAL_SCORE_COMPONENTS}
+_SIGNED_DIAGNOSTIC_KEYS = frozenset({"calibration_total_adjustment"})
 
 
 @dataclass(frozen=True)
@@ -73,16 +76,33 @@ class ScoringPayload:
             raise ValueError(f"unknown score components: {sorted(unknown)}")
         for key, value in component_copy.items():
             max_points = _MAX_POINTS_BY_KEY[key]
-            if value < 0 or value > max_points:
+            try:
+                number = float(value)
+            except (TypeError, ValueError) as exc:
+                raise ValueError(f"{key} must be numeric") from exc
+            if not math.isfinite(number) or number < 0 or number > max_points:
                 raise ValueError(f"{key} must be between 0 and {max_points}")
-        if self.risk_penalty < 0:
+            component_copy[key] = number
+        try:
+            risk_penalty = float(self.risk_penalty)
+        except (TypeError, ValueError) as exc:
+            raise ValueError("risk_penalty must be numeric") from exc
+        if not math.isfinite(risk_penalty) or risk_penalty < 0:
             raise ValueError("risk_penalty must be non-negative")
-        diagnostic_copy = dict(self.diagnostic_scores)
-        for key, value in diagnostic_copy.items():
+        diagnostic_copy: dict[str, float] = {}
+        for key, value in self.diagnostic_scores.items():
             if not isinstance(key, str) or not key.strip():
                 raise ValueError("diagnostic score keys must be non-empty strings")
-            if value < 0 or value > 100:
-                raise ValueError(f"diagnostic score {key} must be between 0 and 100")
+            try:
+                number = float(value)
+            except (TypeError, ValueError) as exc:
+                raise ValueError(f"diagnostic score {key} must be numeric") from exc
+            if not math.isfinite(number):
+                raise ValueError(f"diagnostic score {key} must be finite")
+            min_value = -100.0 if key in _SIGNED_DIAGNOSTIC_KEYS else 0.0
+            if number < min_value or number > 100:
+                raise ValueError(f"diagnostic score {key} must be between {min_value:g} and 100")
+            diagnostic_copy[key] = number
         if self.industrial_sub_scores is not None and not isinstance(self.industrial_sub_scores, IndustrialSubScores):
             raise ValueError("industrial_sub_scores must be an IndustrialSubScores instance")
         if not isinstance(self.scoring_version, str) or not self.scoring_version.strip():
@@ -96,6 +116,7 @@ class ScoringPayload:
         ):
             raise ValueError("canonical_archetype_id must be a non-empty string when provided")
         object.__setattr__(self, "components", component_copy)
+        object.__setattr__(self, "risk_penalty", risk_penalty)
         object.__setattr__(self, "diagnostic_scores", diagnostic_copy)
         object.__setattr__(self, "evidence_ids", tuple(self.evidence_ids))
         if self.large_sector_id is not None:
@@ -126,13 +147,13 @@ class DeterministicScorer:
         calibration_bonus = 0.0
         calibration_risk_penalty = 0.0
 
-        if diagnostic_scores.get("calibration_stage2_actionable_evidence", 0.0) > 0:
+        if numeric_diagnostic(diagnostic_scores, "calibration_stage2_actionable_evidence") > 0:
             calibration_bonus += profile.adjustment("stage2_actionable_evidence_bonus")
-        if diagnostic_scores.get("credible_order_or_policy_evidence", 0.0) > 0:
+        if numeric_diagnostic(diagnostic_scores, "credible_order_or_policy_evidence") > 0:
             calibration_bonus += profile.adjustment("stage2_actionable_evidence_bonus")
-        if diagnostic_scores.get("high_mae_risk", 0.0) > 0:
+        if numeric_diagnostic(diagnostic_scores, "high_mae_risk") > 0:
             calibration_risk_penalty += profile.adjustment("high_mae_risk_guard_penalty")
-        if diagnostic_scores.get("stage2_actionable_volatility_risk", 0.0) > 0:
+        if numeric_diagnostic(diagnostic_scores, "stage2_actionable_volatility_risk") > 0:
             calibration_risk_penalty += profile.adjustment("stage2_actionable_volatility_guard_penalty")
         if _has_stage3_cross_evidence_buffer(payload, diagnostic_scores, profile):
             calibration_bonus += profile.adjustment("stage3_cross_evidence_green_buffer")
@@ -189,20 +210,98 @@ def _apply_archetype_runtime_weights(payload: ScoringPayload, profile) -> Weight
     if weighted.match is None:
         raise ArchetypeClassificationError("canonical_archetype_id did not resolve to a runtime weight profile")
     diagnostics = dict(weighted.diagnostics)
-    diagnostics["archetype_green_restricted_by_profile"] = (
-        1.0
-        if any(
-            token in weighted.match.green_policy
-            for token in ("red_watch", "event_only", "green_restricted", "red_flag")
-        )
-        else 0.0
-    )
+    diagnostics.update(_green_policy_diagnostics(payload, weighted))
     diagnostics["archetype_weight_support_row_count_capped"] = min(float(weighted.match.support.get("row_count", 0) or 0), 100.0)
     diagnostics["archetype_weight_support_symbol_count_capped"] = min(
         float(weighted.match.support.get("unique_symbol_count", 0) or 0),
         100.0,
     )
     return WeightedComponents(components=weighted.components, diagnostics=diagnostics, match=weighted.match)
+
+
+def _green_policy_diagnostics(payload: ScoringPayload, weighted: WeightedComponents) -> dict[str, float]:
+    if weighted.match is None:
+        return {}
+    green_policy = weighted.match.green_policy.lower()
+    absolute_block = _green_policy_is_absolute_block(green_policy)
+    conditional_unlock_required = _green_policy_requires_unlock(green_policy)
+    unlock_score = _green_policy_unlock_score(payload, weighted) if conditional_unlock_required else 0.0
+    source_backed_policy_override = _source_backed_green_policy_override(payload, green_policy)
+    restricted = (absolute_block and not source_backed_policy_override) or (
+        conditional_unlock_required and unlock_score < 60.0
+    )
+    return {
+        "archetype_green_policy_absolute_block": 1.0 if absolute_block else 0.0,
+        "archetype_green_policy_unlock_required": 1.0 if conditional_unlock_required else 0.0,
+        "archetype_green_policy_unlock_evidence": round(min(max(unlock_score, 0.0), 100.0), 4),
+        "archetype_green_policy_source_backed_override": 1.0 if source_backed_policy_override else 0.0,
+        "archetype_green_restricted_by_profile": 1.0 if restricted else 0.0,
+    }
+
+
+def _green_policy_is_absolute_block(green_policy: str) -> bool:
+    if any(token in green_policy for token in ("redteam_guardrail", "not_green_unlock", "red_flag")):
+        return True
+    return green_policy in {"red_watch", "event_only_red_watch"} or green_policy.endswith("_red_watch")
+
+
+def _green_policy_requires_unlock(green_policy: str) -> bool:
+    if _green_policy_is_absolute_block(green_policy):
+        return False
+    return any(
+        token in green_policy
+        for token in (
+            "green_restricted",
+            "watch_to_green",
+            "event_only_until",
+            "event_premium_not_structural_green_without",
+        )
+    )
+
+
+def _source_backed_green_policy_override(payload: ScoringPayload, green_policy: str) -> bool:
+    if green_policy != "red_watch":
+        return False
+    diagnostics = payload.diagnostic_scores
+    source_bridge = numeric_diagnostic(diagnostics, "source_backed_green_bridge_raw")
+    guard_risk = numeric_diagnostic(diagnostics, "research_axis_bridge_guard_risk")
+    guard_penalty = numeric_diagnostic(diagnostics, "research_axis_bridge_guard_risk_penalty_points")
+    bridge_count = numeric_diagnostic(diagnostics, "research_axis_bridge_present_count_capped")
+    return source_bridge >= 85.0 and guard_risk <= 0.0 and guard_penalty <= 0.0 and bridge_count >= 3.0
+
+
+def _green_policy_unlock_score(payload: ScoringPayload, weighted: WeightedComponents) -> float:
+    diagnostics = payload.diagnostic_scores
+    revision_score = numeric_diagnostic(diagnostics, "revision_score")
+    structural_visibility = numeric_diagnostic(
+        diagnostics,
+        "structural_visibility_quality",
+        numeric_diagnostic(diagnostics, "contract_quality"),
+    )
+    domain_evidence = numeric_diagnostic(diagnostics, "domain_specific_evidence_score")
+    actual_conversion = numeric_diagnostic(diagnostics, "actual_profit_conversion_score")
+    fcf_quality = numeric_diagnostic(diagnostics, "fcf_quality_score")
+    bridge_count = numeric_diagnostic(diagnostics, "research_axis_bridge_present_count_capped")
+    capital_return_bridge = numeric_diagnostic(diagnostics, "research_axis_bridge_capital_return")
+    bio_commercialization_bridge = numeric_diagnostic(diagnostics, "research_axis_bridge_bio_commercialization")
+    margin_bridge = numeric_diagnostic(diagnostics, "research_axis_bridge_margin")
+    weighted_capital = weighted.components.get("capital_allocation", payload.components.get("capital_allocation", 0.0))
+    capital_component_quality = min(weighted_capital / max(weighted.match.weights.get("capital_allocation", 5.0), 1.0) * 100.0, 100.0) if weighted.match else 0.0
+
+    unlock_scores = [numeric_diagnostic(diagnostics, "green_unlock_evidence_score")]
+    if actual_conversion >= 55.0 and (domain_evidence >= 35.0 or structural_visibility >= 45.0 or bridge_count >= 3.0):
+        unlock_scores.append(min(actual_conversion, max(domain_evidence, structural_visibility, bridge_count / 6.0 * 100.0)))
+    if fcf_quality >= 55.0 and revision_score >= 55.0 and (
+        structural_visibility >= 45.0 or domain_evidence >= 35.0 or margin_bridge > 0.0
+    ):
+        unlock_scores.append(min(fcf_quality, revision_score))
+    if capital_component_quality >= 60.0 and revision_score >= 55.0 and (
+        capital_return_bridge > 0.0 or fcf_quality >= 45.0
+    ):
+        unlock_scores.append(min(capital_component_quality, max(capital_return_bridge, fcf_quality)))
+    if bio_commercialization_bridge > 0.0 and actual_conversion >= 45.0 and domain_evidence >= 45.0:
+        unlock_scores.append(min(bio_commercialization_bridge, actual_conversion, domain_evidence))
+    return max(unlock_scores)
 
 
 def _require_runtime_archetype_classification(payload: ScoringPayload, runtime_profile) -> None:
@@ -239,17 +338,17 @@ def _has_stage3_cross_evidence_buffer(payload: ScoringPayload, diagnostics: Mapp
 
     if profile.adjustment("stage3_cross_evidence_green_buffer") <= 0:
         return False
-    if diagnostics.get("price_only_blowoff_score", 0.0) >= 70.0:
+    if numeric_diagnostic(diagnostics, "price_only_blowoff_score") >= 70.0:
         return False
-    if diagnostics.get("one_off_shortage_risk", 0.0) >= 70.0:
+    if numeric_diagnostic(diagnostics, "one_off_shortage_risk") >= 70.0:
         return False
-    if diagnostics.get("theme_overheat_score", 0.0) >= 70.0:
+    if numeric_diagnostic(diagnostics, "theme_overheat_score") >= 70.0:
         return False
-    if diagnostics.get("snippet_only_green_block", 0.0) > 0:
+    if numeric_diagnostic(diagnostics, "snippet_only_green_block") > 0:
         return False
-    if diagnostics.get("revision_score", 0.0) < max(70.0, profile.threshold("stage3_green_revision_min", 55.0)):
+    if numeric_diagnostic(diagnostics, "revision_score") < max(70.0, profile.threshold("stage3_green_revision_min", 55.0)):
         return False
-    if len(payload.evidence_ids) < 2 and diagnostics.get("cross_evidence_family_count", 0.0) < 4.0:
+    if len(payload.evidence_ids) < 2 and numeric_diagnostic(diagnostics, "cross_evidence_family_count") < 4.0:
         return False
     return (
         payload.components["eps_fcf_explosion"] >= profile.threshold("stage3_green_eps_fcf_min", 17.0)
@@ -271,9 +370,9 @@ def _scope_labels(payload: ScoringPayload) -> tuple[str, ...]:
 
 
 def _has_non_price_stage2_bridge(diagnostics: Mapping[str, float]) -> bool:
-    if diagnostics.get("calibration_stage2_actionable_evidence", 0.0) > 0:
+    if numeric_diagnostic(diagnostics, "calibration_stage2_actionable_evidence") > 0:
         return True
-    if diagnostics.get("credible_order_or_policy_evidence", 0.0) > 0:
+    if numeric_diagnostic(diagnostics, "credible_order_or_policy_evidence") > 0:
         return True
     non_price_families = (
         "evidence_family_financial_actual",
@@ -283,8 +382,8 @@ def _has_non_price_stage2_bridge(diagnostics: Mapping[str, float]) -> bool:
         "evidence_family_consensus_revision",
         "evidence_family_news",
     )
-    non_price_count = sum(1 for key in non_price_families if diagnostics.get(key, 0.0) > 0)
-    return non_price_count >= 2 or diagnostics.get("cross_evidence_family_count", 0.0) >= 3.0
+    non_price_count = sum(1 for key in non_price_families if numeric_diagnostic(diagnostics, key) > 0)
+    return non_price_count >= 2 or numeric_diagnostic(diagnostics, "cross_evidence_family_count") >= 3.0
 
 
 def _v12_stage2_bonus_applies(payload: ScoringPayload, diagnostics: Mapping[str, float], profile, scope_labels: tuple[str, ...]) -> bool:
@@ -292,9 +391,9 @@ def _v12_stage2_bonus_applies(payload: ScoringPayload, diagnostics: Mapping[str,
         return False
     if not profile.scope_enabled("v12_stage2_bonus_scopes", scope_labels):
         return False
-    if diagnostics.get("price_only_blowoff_score", 0.0) >= 70.0:
+    if numeric_diagnostic(diagnostics, "price_only_blowoff_score", invalid_default=70.0) >= 70.0:
         return False
-    if diagnostics.get("one_off_shortage_risk", 0.0) >= 80.0:
+    if numeric_diagnostic(diagnostics, "one_off_shortage_risk", invalid_default=80.0) >= 80.0:
         return False
     if not _has_non_price_stage2_bridge(diagnostics):
         return False

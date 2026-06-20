@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from dataclasses import dataclass, field, replace
 from datetime import date, datetime
 from pathlib import Path
@@ -331,7 +332,13 @@ def _parser_confidence_for_url(url: str, pipeline: WebResearchPipelineResult) ->
     for evidence in pipeline.web_result.evidence:
         if evidence.url_or_identifier == url:
             value = evidence.parsed_fields.get("parser_confidence")
-            return float(value) if value is not None else evidence.confidence
+            if value is None:
+                return evidence.confidence
+            try:
+                confidence = float(value)
+            except (TypeError, ValueError):
+                return evidence.confidence
+            return confidence if math.isfinite(confidence) else evidence.confidence
     return None
 
 

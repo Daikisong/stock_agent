@@ -1,0 +1,893 @@
+{
+  "rows": [
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c21_financial_roe_pbr_capital_return_green_guard_pair_has_exact_asof_inputs",
+        "test_c21_financial_roe_pbr_capital_return_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c21_financial_roe_pbr_capital_return_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "next_input_action": "official universe, price history, report/search snapshot을 채우고 exact symbol+date 후보가 current replay에 도달하게 한다.",
+      "role_gap_classes": [
+        "archive_or_candidate_funnel_missing"
+      ],
+      "role_gap_rows": [
+        {
+          "as_of_date": "2025-05-26",
+          "case_id": "R13L22_C21_KBFG_105560_2025_CAPITAL_RETURN_CONFIRMED",
+          "fixture_funnel_status": "symbol_never_reached_current_runtime",
+          "funnel_root_cause": "benchmark_universe_or_official_cheap_scan_funnel_gap",
+          "input_gap_class": "archive_or_candidate_funnel_missing",
+          "nearest_runtime_candidates": [],
+          "retrospective_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "retrospective_search_snapshot",
+            "report_text_snapshot"
+          ],
+          "retrospective_readiness_status": "missing_official_and_research_inputs",
+          "role": "green",
+          "runtime_symbol_candidate_count": 0,
+          "runtime_symbol_dates": [],
+          "strict_pit_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "pit_search_snapshot",
+            "pit_report_text_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_official_and_research_inputs",
+          "symbol": "105560",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2024-02-26",
+          "case_id": "R6L60_C21_KAKAOBANK_2024_POLICYONLY_COUNTEREXAMPLE",
+          "fixture_funnel_status": "symbol_never_reached_current_runtime",
+          "funnel_root_cause": "benchmark_universe_or_official_cheap_scan_funnel_gap",
+          "input_gap_class": "archive_or_candidate_funnel_missing",
+          "nearest_runtime_candidates": [],
+          "retrospective_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "retrospective_search_snapshot",
+            "report_text_snapshot"
+          ],
+          "retrospective_readiness_status": "missing_official_and_research_inputs",
+          "role": "guard",
+          "runtime_symbol_candidate_count": 0,
+          "runtime_symbol_dates": [],
+          "strict_pit_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "pit_search_snapshot",
+            "pit_report_text_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_official_and_research_inputs",
+          "symbol": "323410",
+          "trigger_type": "Stage2-PolicyOnly"
+        }
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "selection_reason": "candidate/funnel top priority and non-HBM financial capital-return example"
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_r13_cross_archetype_4b_4c_redteam_green_guard_pair_has_exact_asof_inputs",
+        "test_r13_cross_archetype_4b_4c_redteam_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_r13_cross_archetype_4b_4c_redteam_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "next_input_action": "official universe, price history, report/search snapshot을 채우고 exact symbol+date 후보가 current replay에 도달하게 한다.",
+      "role_gap_classes": [
+        "archive_or_candidate_funnel_missing"
+      ],
+      "role_gap_rows": [
+        {
+          "as_of_date": "2024-08-20",
+          "case_id": "R13L11_XCASE__R7L11_C23_000100_YUHAN_LAZCLUZE_APPROVAL_COMMERCIALIZATION_20240820",
+          "fixture_funnel_status": "symbol_never_reached_current_runtime",
+          "funnel_root_cause": "benchmark_universe_or_official_cheap_scan_funnel_gap",
+          "input_gap_class": "archive_or_candidate_funnel_missing",
+          "nearest_runtime_candidates": [],
+          "retrospective_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "retrospective_search_snapshot",
+            "report_text_snapshot"
+          ],
+          "retrospective_readiness_status": "missing_official_and_research_inputs",
+          "role": "green",
+          "runtime_symbol_candidate_count": 0,
+          "runtime_symbol_dates": [],
+          "strict_pit_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "pit_search_snapshot",
+            "pit_report_text_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_official_and_research_inputs",
+          "symbol": "000100",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2024-03-08",
+          "case_id": "R13L11_XCASE__R2L11_C08_095340_ISC_SOCKET_BLOWOFF",
+          "fixture_funnel_status": "symbol_never_reached_current_runtime",
+          "funnel_root_cause": "benchmark_universe_or_official_cheap_scan_funnel_gap",
+          "input_gap_class": "archive_or_candidate_funnel_missing",
+          "nearest_runtime_candidates": [],
+          "retrospective_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "retrospective_search_snapshot",
+            "report_text_snapshot"
+          ],
+          "retrospective_readiness_status": "missing_official_and_research_inputs",
+          "role": "guard",
+          "runtime_symbol_candidate_count": 0,
+          "runtime_symbol_dates": [],
+          "strict_pit_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "pit_search_snapshot",
+            "pit_report_text_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_official_and_research_inputs",
+          "symbol": "095340",
+          "trigger_type": "Stage3-Green"
+        }
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "selection_reason": "top 3 priority row for 01_fixture_archive_and_candidate_funnel"
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c23_bio_regulatory_approval_commercialization_green_guard_pair_has_exact_asof_inputs",
+        "test_c23_bio_regulatory_approval_commercialization_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c23_bio_regulatory_approval_commercialization_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "next_input_action": "official universe, price history, report/search snapshot을 채우고 exact symbol+date 후보가 current replay에 도달하게 한다.",
+      "role_gap_classes": [
+        "archive_or_candidate_funnel_missing"
+      ],
+      "role_gap_rows": [
+        {
+          "as_of_date": "2024-09-24",
+          "case_id": "R7L10_C23_YUHAN_LAZCLUZE_FDA_20240821",
+          "fixture_funnel_status": "symbol_never_reached_current_runtime",
+          "funnel_root_cause": "benchmark_universe_or_official_cheap_scan_funnel_gap",
+          "input_gap_class": "archive_or_candidate_funnel_missing",
+          "nearest_runtime_candidates": [],
+          "retrospective_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "retrospective_search_snapshot",
+            "report_text_snapshot"
+          ],
+          "retrospective_readiness_status": "missing_official_and_research_inputs",
+          "role": "green",
+          "runtime_symbol_candidate_count": 0,
+          "runtime_symbol_dates": [],
+          "strict_pit_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "pit_search_snapshot",
+            "pit_report_text_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_official_and_research_inputs",
+          "symbol": "000100",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2024-04-30",
+          "case_id": "R7L10_C23_HLB_PRE_PDUFA_FALSE_GREEN_20240430",
+          "fixture_funnel_status": "symbol_never_reached_current_runtime",
+          "funnel_root_cause": "benchmark_universe_or_official_cheap_scan_funnel_gap",
+          "input_gap_class": "archive_or_candidate_funnel_missing",
+          "nearest_runtime_candidates": [],
+          "retrospective_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "retrospective_search_snapshot",
+            "report_text_snapshot"
+          ],
+          "retrospective_readiness_status": "missing_official_and_research_inputs",
+          "role": "guard",
+          "runtime_symbol_candidate_count": 0,
+          "runtime_symbol_dates": [],
+          "strict_pit_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "pit_search_snapshot",
+            "pit_report_text_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_official_and_research_inputs",
+          "symbol": "028300",
+          "trigger_type": "Stage3-Green"
+        }
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "selection_reason": "non-HBM bio commercialization candidate/funnel example"
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c26_platform_ad_revenue_operating_leverage_green_guard_pair_has_exact_asof_inputs",
+        "test_c26_platform_ad_revenue_operating_leverage_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c26_platform_ad_revenue_operating_leverage_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "next_input_action": "official universe, price history, report/search snapshot을 채우고 exact symbol+date 후보가 current replay에 도달하게 한다.",
+      "role_gap_classes": [
+        "archive_or_candidate_funnel_missing"
+      ],
+      "role_gap_rows": [
+        {
+          "as_of_date": "2021-07-27",
+          "case_id": "C26_SOOP_2021_CREATOR_PLATFORM_OPERATING_LEVERAGE",
+          "fixture_funnel_status": "symbol_never_reached_current_runtime",
+          "funnel_root_cause": "benchmark_universe_or_official_cheap_scan_funnel_gap",
+          "input_gap_class": "archive_or_candidate_funnel_missing",
+          "nearest_runtime_candidates": [],
+          "retrospective_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "retrospective_search_snapshot",
+            "report_text_snapshot"
+          ],
+          "retrospective_readiness_status": "missing_official_and_research_inputs",
+          "role": "green",
+          "runtime_symbol_candidate_count": 0,
+          "runtime_symbol_dates": [],
+          "strict_pit_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "pit_search_snapshot",
+            "pit_report_text_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_official_and_research_inputs",
+          "symbol": "067160",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2021-06-24",
+          "case_id": "R8L15_C26_KAKAO_2021_REG_CAP",
+          "fixture_funnel_status": "symbol_never_reached_current_runtime",
+          "funnel_root_cause": "benchmark_universe_or_official_cheap_scan_funnel_gap",
+          "input_gap_class": "archive_or_candidate_funnel_missing",
+          "nearest_runtime_candidates": [],
+          "retrospective_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "retrospective_search_snapshot",
+            "report_text_snapshot"
+          ],
+          "retrospective_readiness_status": "missing_official_and_research_inputs",
+          "role": "guard",
+          "runtime_symbol_candidate_count": 0,
+          "runtime_symbol_dates": [],
+          "strict_pit_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "pit_search_snapshot",
+            "pit_report_text_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_official_and_research_inputs",
+          "symbol": "035720",
+          "trigger_type": "Stage3-Green"
+        }
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "selection_reason": "non-HBM platform example with candidate/funnel plus parser primitive gaps"
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c04_nuclear_policy_project_legal_delay_green_guard_pair_has_exact_asof_inputs",
+        "test_c04_nuclear_policy_project_legal_delay_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c04_nuclear_policy_project_legal_delay_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_input_action": "선택된 manual row라 fixture 후보를 먼저 지정하고 lane을 재분류한다.",
+      "role_gap_classes": [
+        "selected_manual_row_without_fixture_spec"
+      ],
+      "role_gap_rows": [],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "selection_reason": "manual classification example for policy/project lane"
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c12_battery_customer_contract_call_off_risk_green_guard_pair_has_exact_asof_inputs",
+        "test_c12_battery_customer_contract_call_off_risk_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c12_battery_customer_contract_call_off_risk_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_input_action": "선택된 manual row라 fixture 후보를 먼저 지정하고 lane을 재분류한다.",
+      "role_gap_classes": [
+        "selected_manual_row_without_fixture_spec"
+      ],
+      "role_gap_rows": [],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "selection_reason": "manual classification example for battery call-off lane"
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c16_strategic_resource_policy_supply_green_guard_pair_has_exact_asof_inputs",
+        "test_c16_strategic_resource_policy_supply_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c16_strategic_resource_policy_supply_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_input_action": "선택된 manual row라 fixture 후보를 먼저 지정하고 lane을 재분류한다.",
+      "role_gap_classes": [
+        "selected_manual_row_without_fixture_spec"
+      ],
+      "role_gap_rows": [],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "selection_reason": "manual classification example for strategic-resource policy lane"
+    },
+    {
+      "acceptance_status_current": "blocked_weighted_gate_after_fields_present",
+      "acceptance_tests_to_add": [
+        "test_c20_beauty_food_global_distribution_weighted_gate_uses_archetype_components_after_fields_present",
+        "test_c20_beauty_food_global_distribution_positive_guard_pair_validates_threshold_or_balance_change"
+      ],
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_input_action": "official universe, price history, report/search snapshot을 채우고 exact symbol+date 후보가 current replay에 도달하게 한다.",
+      "role_gap_classes": [
+        "archive_or_candidate_funnel_missing"
+      ],
+      "role_gap_rows": [
+        {
+          "as_of_date": "2025-02-24",
+          "case_id": "C20-R5L135-02",
+          "fixture_funnel_status": "symbol_never_reached_current_runtime",
+          "funnel_root_cause": "benchmark_universe_or_official_cheap_scan_funnel_gap",
+          "input_gap_class": "archive_or_candidate_funnel_missing",
+          "nearest_runtime_candidates": [],
+          "retrospective_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "retrospective_search_snapshot",
+            "report_text_snapshot"
+          ],
+          "retrospective_readiness_status": "missing_official_and_research_inputs",
+          "role": "green",
+          "runtime_symbol_candidate_count": 0,
+          "runtime_symbol_dates": [],
+          "strict_pit_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "pit_search_snapshot",
+            "pit_report_text_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_official_and_research_inputs",
+          "symbol": "192820",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2023-06-08",
+          "case_id": "C20_R5L25_439090",
+          "fixture_funnel_status": "symbol_never_reached_current_runtime",
+          "funnel_root_cause": "benchmark_universe_or_official_cheap_scan_funnel_gap",
+          "input_gap_class": "archive_or_candidate_funnel_missing",
+          "nearest_runtime_candidates": [],
+          "retrospective_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "retrospective_search_snapshot",
+            "report_text_snapshot"
+          ],
+          "retrospective_readiness_status": "missing_official_and_research_inputs",
+          "role": "guard",
+          "runtime_symbol_candidate_count": 0,
+          "runtime_symbol_dates": [],
+          "strict_pit_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "pit_search_snapshot",
+            "pit_report_text_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_official_and_research_inputs",
+          "symbol": "439090",
+          "trigger_type": "IPO/theme trigger"
+        }
+      ],
+      "runtime_candidate_count": 22,
+      "runtime_max_score": 64.161,
+      "selection_reason": "top parser-feature bridge priority outside HBM"
+    },
+    {
+      "acceptance_status_current": "blocked_weighted_gate_after_fields_present",
+      "acceptance_tests_to_add": [
+        "test_c06_hbm_memory_customer_capacity_weighted_gate_uses_archetype_components_after_fields_present",
+        "test_c06_hbm_memory_customer_capacity_positive_guard_pair_validates_threshold_or_balance_change"
+      ],
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_input_action": "월초 replay 날짜와 fixture as_of_date 차이를 처리하는 exact fixture replay 경로를 추가한다.",
+      "role_gap_classes": [
+        "exact_candidate_reached_but_research_snapshot_missing",
+        "runtime_symbol_reached_but_schedule_date_mismatch"
+      ],
+      "role_gap_rows": [
+        {
+          "as_of_date": "2024-04-25",
+          "case_id": "C06_R2L108_000660_HBM3E_CUSTOMER_CAPACITY_SOLDOUT_20240425",
+          "fixture_funnel_status": "exact_symbol_date_candidate_reached_runtime",
+          "funnel_root_cause": "candidate_reached_scoring_then_score_or_gate_decides",
+          "input_gap_class": "exact_candidate_reached_but_research_snapshot_missing",
+          "nearest_runtime_candidates": [
+            {
+              "as_of_date": "2024-04-25",
+              "candidate_source_path": "official_cheap_scan",
+              "company_name": "SK하이닉스",
+              "date_delta_days": 0,
+              "layer": "event_search",
+              "promotion_band": "Stage 1",
+              "reason_codes": [
+                "DISC_EARNINGS_PREANNOUNCE",
+                "DISC_OP_YOY_100P",
+                "PRICE_NEAR_52W_HIGH"
+              ],
+              "score": 49.0179,
+              "stage": "1",
+              "symbol": "000660"
+            },
+            {
+              "as_of_date": "2024-04-24",
+              "candidate_source_path": "official_cheap_scan",
+              "company_name": "SK하이닉스",
+              "date_delta_days": 1,
+              "layer": "event_search",
+              "promotion_band": "Stage 1",
+              "reason_codes": [
+                "DISC_EARNINGS_PREANNOUNCE",
+                "DISC_OP_YOY_100P",
+                "PRICE_NEAR_52W_HIGH"
+              ],
+              "score": 49.0179,
+              "stage": "1",
+              "symbol": "000660"
+            },
+            {
+              "as_of_date": "2024-04-26",
+              "candidate_source_path": "official_cheap_scan",
+              "company_name": "SK하이닉스",
+              "date_delta_days": 1,
+              "layer": "event_search",
+              "promotion_band": "Stage 1",
+              "reason_codes": [
+                "DISC_EARNINGS_PREANNOUNCE",
+                "DISC_OP_YOY_100P",
+                "PRICE_NEAR_52W_HIGH"
+              ],
+              "score": 49.0179,
+              "stage": "1",
+              "symbol": "000660"
+            }
+          ],
+          "retrospective_missing_inputs": [
+            "evidence_source_search_snapshot",
+            "evidence_source_report_text_snapshot"
+          ],
+          "retrospective_readiness_status": "missing_research_snapshot_inputs",
+          "role": "green",
+          "runtime_symbol_candidate_count": 46,
+          "runtime_symbol_dates": [
+            "2024-04-01",
+            "2024-04-08",
+            "2024-04-24",
+            "2024-04-25",
+            "2024-04-26",
+            "2024-04-30",
+            "2024-05-01",
+            "2024-05-14",
+            "2024-05-16",
+            "2024-05-21",
+            "2024-06-01",
+            "2024-07-01"
+          ],
+          "strict_pit_missing_inputs": [
+            "pit_evidence_source_search_snapshot",
+            "pit_evidence_source_report_text_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_research_snapshot_inputs",
+          "symbol": "000660",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2024-07-11",
+          "case_id": "C06_005930_SAMSUNG_20240711_HBM_QUALIFICATION_LAG_FALSE_GREEN",
+          "fixture_funnel_status": "symbol_reached_runtime_but_not_fixture_date",
+          "funnel_root_cause": "monthly_schedule_or_fixture_date_mismatch",
+          "input_gap_class": "runtime_symbol_reached_but_schedule_date_mismatch",
+          "nearest_runtime_candidates": [
+            {
+              "as_of_date": "2024-04-26",
+              "candidate_source_path": "official_cheap_scan",
+              "company_name": "삼성전자",
+              "date_delta_days": 76,
+              "layer": "event_search",
+              "promotion_band": "Stage 1",
+              "reason_codes": [
+                "DISC_EARNINGS_PREANNOUNCE",
+                "DISC_OP_YOY_100P",
+                "PRICE_NEAR_52W_HIGH"
+              ],
+              "score": 46.4468,
+              "stage": "1",
+              "symbol": "005930"
+            },
+            {
+              "as_of_date": "2024-04-25",
+              "candidate_source_path": "official_cheap_scan",
+              "company_name": "삼성전자",
+              "date_delta_days": 77,
+              "layer": "event_search",
+              "promotion_band": "Stage 1",
+              "reason_codes": [
+                "DISC_EARNINGS_PREANNOUNCE",
+                "DISC_OP_YOY_100P",
+                "PRICE_NEAR_52W_HIGH"
+              ],
+              "score": 46.4468,
+              "stage": "1",
+              "symbol": "005930"
+            },
+            {
+              "as_of_date": "2024-04-24",
+              "candidate_source_path": "official_cheap_scan",
+              "company_name": "삼성전자",
+              "date_delta_days": 78,
+              "layer": "event_search",
+              "promotion_band": "Stage 1",
+              "reason_codes": [
+                "DISC_EARNINGS_PREANNOUNCE",
+                "DISC_OP_YOY_100P",
+                "PRICE_NEAR_52W_HIGH"
+              ],
+              "score": 46.4468,
+              "stage": "1",
+              "symbol": "005930"
+            }
+          ],
+          "retrospective_missing_inputs": [
+            "recent_price_history_45d"
+          ],
+          "retrospective_readiness_status": "missing_candidate_generation_inputs",
+          "role": "guard",
+          "runtime_symbol_candidate_count": 5,
+          "runtime_symbol_dates": [
+            "2024-04-01",
+            "2024-04-08",
+            "2024-04-24",
+            "2024-04-25",
+            "2024-04-26"
+          ],
+          "strict_pit_missing_inputs": [
+            "recent_price_history_45d",
+            "pit_search_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_official_and_research_inputs",
+          "symbol": "005930",
+          "trigger_type": "Stage3-Yellow"
+        }
+      ],
+      "runtime_candidate_count": 19,
+      "runtime_max_score": 80.0131,
+      "selection_reason": "SK Hynix HBM field-bridge example; must not become name-specific bonus"
+    },
+    {
+      "acceptance_status_current": "blocked_weighted_gate_after_fields_present",
+      "acceptance_tests_to_add": [
+        "test_c10_memory_recovery_equipment_cycle_weighted_gate_uses_archetype_components_after_fields_present",
+        "test_c10_memory_recovery_equipment_cycle_positive_guard_pair_validates_threshold_or_balance_change"
+      ],
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_input_action": "official universe, price history, report/search snapshot을 채우고 exact symbol+date 후보가 current replay에 도달하게 한다.",
+      "role_gap_classes": [
+        "archive_or_candidate_funnel_missing"
+      ],
+      "role_gap_rows": [
+        {
+          "as_of_date": "2024-01-02",
+          "case_id": "C10_L228_05_317330_ADVANCED_ELECTRONIC_MATERIALS_ROUTE_EARLY_RESET_WITH_STRONG_ASYMMETRY",
+          "fixture_funnel_status": "symbol_never_reached_current_runtime",
+          "funnel_root_cause": "benchmark_universe_or_official_cheap_scan_funnel_gap",
+          "input_gap_class": "archive_or_candidate_funnel_missing",
+          "nearest_runtime_candidates": [],
+          "retrospective_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "evidence_source_search_snapshot",
+            "evidence_source_report_text_snapshot"
+          ],
+          "retrospective_readiness_status": "missing_official_and_research_inputs",
+          "role": "green",
+          "runtime_symbol_candidate_count": 0,
+          "runtime_symbol_dates": [],
+          "strict_pit_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "pit_evidence_source_search_snapshot",
+            "pit_evidence_source_report_text_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_official_and_research_inputs",
+          "symbol": "317330",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2024-07-22",
+          "case_id": "C10_L232_08_089790",
+          "fixture_funnel_status": "symbol_never_reached_current_runtime",
+          "funnel_root_cause": "benchmark_universe_or_official_cheap_scan_funnel_gap",
+          "input_gap_class": "archive_or_candidate_funnel_missing",
+          "nearest_runtime_candidates": [],
+          "retrospective_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "evidence_source_search_snapshot",
+            "evidence_source_report_text_snapshot"
+          ],
+          "retrospective_readiness_status": "missing_official_and_research_inputs",
+          "role": "guard",
+          "runtime_symbol_candidate_count": 0,
+          "runtime_symbol_dates": [],
+          "strict_pit_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "pit_evidence_source_search_snapshot",
+            "pit_evidence_source_report_text_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_official_and_research_inputs",
+          "symbol": "089790",
+          "trigger_type": "Stage4B"
+        }
+      ],
+      "runtime_candidate_count": 1,
+      "runtime_max_score": 72.1181,
+      "selection_reason": "Samsung memory-recovery route example; checks HBM-adjacent route guard"
+    },
+    {
+      "acceptance_status_current": "blocked_weighted_gate_after_fields_present",
+      "acceptance_tests_to_add": [
+        "test_c02_power_grid_datacenter_capex_weighted_gate_uses_archetype_components_after_fields_present",
+        "test_c02_power_grid_datacenter_capex_positive_guard_pair_validates_threshold_or_balance_change"
+      ],
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "next_input_action": "official universe, price history, report/search snapshot을 채우고 exact symbol+date 후보가 current replay에 도달하게 한다.",
+      "role_gap_classes": [
+        "archive_or_candidate_funnel_missing",
+        "exact_candidate_reached_but_readiness_inputs_missing"
+      ],
+      "role_gap_rows": [
+        {
+          "as_of_date": "2024-02-16",
+          "case_id": "C02_R1L144_267260_C02_transformer_backlog_margin_bridge_clean_positive_20240216",
+          "fixture_funnel_status": "exact_symbol_date_candidate_reached_runtime",
+          "funnel_root_cause": "candidate_reached_scoring_then_score_or_gate_decides",
+          "input_gap_class": "exact_candidate_reached_but_readiness_inputs_missing",
+          "nearest_runtime_candidates": [
+            {
+              "as_of_date": "2024-02-16",
+              "candidate_source_path": "official_cheap_scan",
+              "company_name": "HD현대일렉트릭",
+              "date_delta_days": 0,
+              "layer": "event_search",
+              "promotion_band": "Stage 1",
+              "reason_codes": [
+                "PRICE_VOLUME_SPIKE",
+                "PRICE_NEAR_52W_HIGH",
+                "PRICE_60D_TOP_PERCENTILE",
+                "FIN_OPM_EXPANSION_5P"
+              ],
+              "score": 14.1385,
+              "stage": "1",
+              "symbol": "267260"
+            },
+            {
+              "as_of_date": "2024-02-21",
+              "candidate_source_path": "official_cheap_scan",
+              "company_name": "HD현대일렉트릭",
+              "date_delta_days": 5,
+              "layer": "event_search",
+              "promotion_band": "Stage 1",
+              "reason_codes": [
+                "PRICE_VOLUME_SPIKE",
+                "PRICE_NEAR_52W_HIGH",
+                "PRICE_60D_TOP_PERCENTILE",
+                "FIN_OPM_EXPANSION_5P"
+              ],
+              "score": 14.1385,
+              "stage": "1",
+              "symbol": "267260"
+            },
+            {
+              "as_of_date": "2024-02-07",
+              "candidate_source_path": "official_cheap_scan",
+              "company_name": "HD현대일렉트릭",
+              "date_delta_days": 9,
+              "layer": "event_search",
+              "promotion_band": "Stage 1",
+              "reason_codes": [
+                "PRICE_VOLUME_SPIKE",
+                "PRICE_NEAR_52W_HIGH",
+                "PRICE_60D_TOP_PERCENTILE",
+                "FIN_OPM_EXPANSION_5P"
+              ],
+              "score": 14.1385,
+              "stage": "1",
+              "symbol": "267260"
+            }
+          ],
+          "retrospective_missing_inputs": [
+            "recent_price_history_45d"
+          ],
+          "retrospective_readiness_status": "missing_candidate_generation_inputs",
+          "role": "green",
+          "runtime_symbol_candidate_count": 30,
+          "runtime_symbol_dates": [
+            "2023-08-01",
+            "2023-09-01",
+            "2023-09-25",
+            "2023-10-01",
+            "2023-11-01",
+            "2023-12-01",
+            "2024-01-01",
+            "2024-01-02",
+            "2024-01-10",
+            "2024-01-15",
+            "2024-01-26",
+            "2024-02-01"
+          ],
+          "strict_pit_missing_inputs": [
+            "recent_price_history_45d"
+          ],
+          "strict_pit_readiness_status": "missing_candidate_generation_inputs",
+          "symbol": "267260",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2024-05-14",
+          "case_id": "C02_006340_20240516_power_grid_theme_overhang_blowoff_counterexample",
+          "fixture_funnel_status": "symbol_never_reached_current_runtime",
+          "funnel_root_cause": "benchmark_universe_or_official_cheap_scan_funnel_gap",
+          "input_gap_class": "archive_or_candidate_funnel_missing",
+          "nearest_runtime_candidates": [],
+          "retrospective_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "evidence_source_search_snapshot",
+            "evidence_source_report_text_snapshot"
+          ],
+          "retrospective_readiness_status": "missing_official_and_research_inputs",
+          "role": "guard",
+          "runtime_symbol_candidate_count": 0,
+          "runtime_symbol_dates": [],
+          "strict_pit_missing_inputs": [
+            "official_universe",
+            "price_history_370d",
+            "pit_evidence_source_search_snapshot",
+            "pit_evidence_source_report_text_snapshot"
+          ],
+          "strict_pit_readiness_status": "missing_official_and_research_inputs",
+          "symbol": "006340",
+          "trigger_type": "Stage4B"
+        }
+      ],
+      "runtime_candidate_count": 44,
+      "runtime_max_score": 72.9252,
+      "selection_reason": "weighted gate example after runtime candidates and fields are partly present"
+    }
+  ],
+  "schema_version": "v12_runtime_first_repair_input_gap_manifest_v1",
+  "summary": {
+    "fixture_funnel_status_counts": {
+      "exact_symbol_date_candidate_reached_runtime": 2,
+      "symbol_never_reached_current_runtime": 13,
+      "symbol_reached_runtime_but_not_fixture_date": 1
+    },
+    "generalization_guard": "삼전/하닉은 전체 아키타입 runtime 번역 결손을 보여주는 대표 증상이다. acceptance는 HBM 이름 보너스가 아니라 비-HBM selected rows까지 같은 입력/archive, parser-feature, gate 경로가 통과할 때만 인정한다.",
+    "missing_input_counts": {
+      "retrospective:evidence_source_report_text_snapshot": 4,
+      "retrospective:evidence_source_search_snapshot": 4,
+      "retrospective:official_universe": 13,
+      "retrospective:price_history_370d": 13,
+      "retrospective:recent_price_history_45d": 2,
+      "retrospective:report_text_snapshot": 10,
+      "retrospective:retrospective_search_snapshot": 10,
+      "strict:official_universe": 13,
+      "strict:pit_evidence_source_report_text_snapshot": 4,
+      "strict:pit_evidence_source_search_snapshot": 4,
+      "strict:pit_report_text_snapshot": 10,
+      "strict:pit_search_snapshot": 11,
+      "strict:price_history_370d": 13,
+      "strict:recent_price_history_45d": 2
+    },
+    "plain_conclusion": "첫 수리 slice의 대부분은 점수식 문제가 아니라 exact as-of 입력 archive와 candidate funnel 결손이다. C06/C02처럼 일부 입력이 있는 row는 strict PIT 또는 date mismatch를 따로 고쳐야 한다.",
+    "retrospective_readiness_status_counts": {
+      "missing_candidate_generation_inputs": 2,
+      "missing_official_and_research_inputs": 13,
+      "missing_research_snapshot_inputs": 1
+    },
+    "role_gap_class_counts": {
+      "archive_or_candidate_funnel_missing": 13,
+      "exact_candidate_reached_but_readiness_inputs_missing": 1,
+      "exact_candidate_reached_but_research_snapshot_missing": 1,
+      "runtime_symbol_reached_but_schedule_date_mismatch": 1,
+      "selected_manual_row_without_fixture_spec": 3
+    },
+    "selected_archetype_count": 11,
+    "selected_fixture_role_row_count": 16,
+    "selected_hbm_or_samsung_related_count": 2,
+    "selected_lane_counts": {
+      "01_fixture_archive_and_candidate_funnel": 7,
+      "03_weighted_gate_validation_after_fields": 4
+    },
+    "selected_non_hbm_count": 9,
+    "strict_pit_readiness_status_counts": {
+      "missing_candidate_generation_inputs": 1,
+      "missing_official_and_research_inputs": 14,
+      "missing_research_snapshot_inputs": 1
+    }
+  }
+}

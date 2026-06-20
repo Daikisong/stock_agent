@@ -1,0 +1,614 @@
+{
+  "schema_version": "v12_hbm_research_signal_translation_audit_v1",
+  "scope": "accumulated_hbm_research_rows_vs_runtime_score_fields",
+  "filter_rule": "C06-C10 core semiconductor archetypes plus rows whose local text explicitly mentions HBM/high bandwidth memory",
+  "hbm_research_row_count": 1544,
+  "runtime_row_count": 32,
+  "hbm_research_archetype_counts": {
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 229,
+    "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH": 237,
+    "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": 247,
+    "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF": 305,
+    "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": 359,
+    "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": 8,
+    "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM": 39,
+    "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION": 25,
+    "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL": 74,
+    "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": 21
+  },
+  "hbm_research_trigger_type_counts": {
+    "4B": 10,
+    "4C": 1,
+    "AI_MEMORY_PCB_THEME_WITHOUT_CUSTOMER_CAPACITY": 1,
+    "FC_BGA_HBM_SUBSTRATE_CAPACITY_BRIDGE": 1,
+    "False-Green counterexample": 1,
+    "Local-4B-Watch": 1,
+    "MEMORY_SUBSTRATE_RECOVERY_WITHOUT_HBM_CUSTOMER_BRIDGE": 1,
+    "R13-4B-local-price-only": 1,
+    "R13-4C": 1,
+    "Stage2": 269,
+    "Stage2-4B-Validated-AdvancedALDEquipmentValuationBlowoffNoOrderDeliveryMarginBridge": 1,
+    "Stage2-Actionable": 596,
+    "Stage2-FailedRerating-ValuationGuard": 1,
+    "Stage2-FalsePositive": 1,
+    "Stage2-FalsePositive / ALDEquipmentValuationBlowoffFadeWithSharecountValidation": 1,
+    "Stage2-FalsePositive / AdvancedEquipmentThemeValuationFade": 1,
+    "Stage2-FalsePositive / ConsumableCustomerQualityLocal4B": 1,
+    "Stage2-FalsePositive / EquipmentBetaBridgeFade": 1,
+    "Stage2-FalsePositive / ICSocketCustomerQualityFade": 1,
+    "Stage2-FalsePositive / InspectionMetrologyEquipmentThemeFade": 1,
+    "Stage2-FalsePositive / MemorySubstrateCycleFade": 1,
+    "Stage2-FalsePositive / MetrologyEquipmentThemeBetaFade": 1,
+    "Stage2-FalsePositive / MetrologyInspectionEquipmentValuationBlowoffFadeWithLocal4B": 1,
+    "Stage2-FalsePositive / OSATPackagingBetaWeakUtilization": 1,
+    "Stage2-FalsePositive / PackageSubstrateBetaFade": 1,
+    "Stage2-FalsePositive / ProcessEquipmentCycleBetaFade": 1,
+    "Stage2-FalsePositive / SocketProbeThemeMFEFadeWithLocal4B": 1,
+    "Stage2-FalsePositive / Stage4B-Local-PriceOnly": 1,
+    "Stage2-FalsePositive / TestSocketConnectorThemeFade": 1,
+    "Stage2-FalsePositive / TestSocketCustomerQualityBridgeFade": 1,
+    "Stage2-FalsePositive-AISemiconductorIPBlowoffNoMemoryCustomerCapacityBridge": 1,
+    "Stage2-FalsePositive-BackendHBMPostprocessEquipmentRebound-NoDurableOrderMarginBridge": 1,
+    "Stage2-FalsePositive-CCSSEquipmentPriceSpikeNoDurableOrderRevisionMarginBridge": 1,
+    "Stage2-FalsePositive-ChillerScrubberMemoryRecoverySpikeNoDurableOrderRevisionMarginBridge": 1,
+    "Stage2-FalsePositive-DigitalGridRelayPriceMFE-NoSemiCustomerQualityBridge": 1,
+    "Stage2-FalsePositive-EUVPellicleAdvancedEquipmentPriceMFENoDurableOrderMarginBridge": 1,
+    "Stage2-FalsePositive-FoundryMemoryBetaSpike-NoHBMCustomerBridge": 1,
+    "Stage2-FalsePositive-HBMEquipmentLateExtension-NoFreshOrderBridge": 1,
+    "Stage2-FalsePositive-HBMLaserAnnealingVocabularyNoDurableOrderRevisionMarginBridge": 1,
+    "Stage2-FalsePositive-HBMPackagingCapacityCrossLabelPriceMFE-NoEquipmentOrderBridge": 1,
+    "Stage2-FalsePositive-HBMTesterNarrative-NoRevenueBridge-HighMAE": 1,
+    "Stage2-FalsePositive-HPSP-AdvancedEquipment-Blowoff-HighMAE": 1,
+    "Stage2-FalsePositive-InspectionEquipmentCustomerQualityVocabularyNoDurableMarginCashBridge": 1,
+    "Stage2-FalsePositive-LaserBondingThemeBlowoff-NoCustomerShipmentMarginBridge": 1,
+    "Stage2-FalsePositive-LateMemoryTesterValuationExtension-NoFreshOrderBridge": 1,
+    "Stage2-FalsePositive-MaskBlankEUVVocabularyNoOrderRevisionMarginBridge": 1,
+    "Stage2-FalsePositive-MemoryEquipmentBetaSpike-NoHBMOrderBridge": 1,
+    "Stage2-FalsePositive-MemorySubstrateVocabularyNoHBMMixASPFCFBridge": 1,
+    "Stage2-FalsePositive-MemoryTesterThemePriceMFE-NoHBMCustomerOrderBridge": 1,
+    "Stage2-FalsePositive-OSATPackagingThemeNoHBMCustomerCapacityBridge": 1,
+    "Stage2-FalsePositive-OverbroadValuationBlowoffWouldMissAFMMetrologyOrderBridgeAfterReset": 1,
+    "Stage2-FalsePositive-OverlayMetrologyPriceMFEBlowoffNoDurableCustomerOrderBridge": 1,
+    "Stage2-FalsePositive-PCBSubstrateCapacityVocabularyNoHBMCustomerMixFCFBridge": 1,
+    "Stage2-FalsePositive-PackageInspectionThemeSpikeNoCustomerRepeatDemandBridge": 1,
+    "Stage2-FalsePositive-ProbeCardTestInterfacePostSpikeNoRenewalRevisionMarginBridge": 1,
+    "Stage2-FalsePositive-QuartzMaterialsLateCycleSpikeNoOrderMarginBridge": 1,
+    "Stage2-FalsePositive-QuartzSiliconPartsRecoveryVocabularyNoDirectMemoryEquipmentCycleBridge": 1,
+    "Stage2-FalsePositive-SemiMaterialBetaSpike-NoHBMCustomerCapacityBridge": 1,
+    "Stage2-FalsePositive-SemiPartsLateCycleRampNoFreshCustomerMarginBridge": 1,
+    "Stage2-FalsePositive-TestHandlerRelativeStrength-NoOrderBridge": 1,
+    "Stage2-FalsePositive-TestSocketCustomerQualityBetaBlowoff-NoFreshQualificationBridge": 1,
+    "Stage2-FalsePositive-TestSocketPriceMFEWithoutDurableCustomerQualificationMarginBridge": 1,
+    "Stage2-FalsePositive-TestSocketThemeRebound-NoCustomerShipmentMarginBridge": 1,
+    "Stage2-FalsePositive-TestSocketThemeVolatilityNoDurableCustomerOrderBridge": 1,
+    "Stage2-FalsePositive-WetCleanRobotEquipmentVocabularyNoCleanOrderMarginBridge": 1,
+    "Stage2-Lifecycle-SemicapMemoryCapexOrderRevenueBridgeWithValuation4BWatch": 1,
+    "Stage2-Lifecycle-TestSocketCustomerQualityReorderMarginBridgeWithLocal4B": 1,
+    "Stage2-Watch": 39,
+    "Stage2/Yellow counterexample": 1,
+    "Stage3-FalseGreen-ValuationBlowoff": 2,
+    "Stage3-FalseGreen-ValuationGuard": 2,
+    "Stage3-Green": 32,
+    "Stage3-Yellow": 152,
+    "Stage4B": 334,
+    "Stage4C": 29,
+    "deposition_equipment_price_spike_before_order_revision_bridge": 1,
+    "deposition_equipment_recovery_with_customer_ramp_bridge_proxy": 1,
+    "hbm_customer_capacity_mix_asp_bridge": 1,
+    "late_cycle_rebound_without_revision_followthrough": 1,
+    "late_hbm_capacity_extension_after_strong_price_run": 1,
+    "late_memory_hbm_beta_chase": 1,
+    "late_substrate_hbm_beta_chase": 1,
+    "memory_beta_hbm_qualification_lag_bridge_test": 1,
+    "memory_equipment_recovery_beta_without_firm_order_bridge": 1,
+    "price_moved_without_evidence": 2,
+    "process_equipment_recovery_with_order_conversion_proxy": 1,
+    "retest_after_memory_recovery_order_bridge": 1,
+    "substrate_capacity_hbm_sympathy_bridge_test": 1
+  },
+  "gap_signal_counts": {},
+  "symbol_rows": [
+    {
+      "symbol": "000660",
+      "company_label": "SK하이닉스",
+      "research_hbm_row_count": 159,
+      "research_raw_stage3_green_count": 8,
+      "research_positive_or_green_worthy_count": 59,
+      "research_signal_counts": {
+        "capacity_lock": 99,
+        "direct_hbm": 145,
+        "lag_or_guard": 21,
+        "margin_or_mix": 74,
+        "named_customer": 118,
+        "order_or_contract": 88,
+        "revision_or_fcf": 29
+      },
+      "positive_signal_counts": {
+        "capacity_lock": 45,
+        "direct_hbm": 55,
+        "lag_or_guard": 8,
+        "margin_or_mix": 25,
+        "named_customer": 52,
+        "order_or_contract": 32,
+        "revision_or_fcf": 18
+      },
+      "runtime_best_row": {
+        "symbol": "000660",
+        "company_name": "SK하이닉스",
+        "as_of_date": "2024-05-01",
+        "current_stage": "3-Yellow",
+        "current_score": "80.0131",
+        "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+        "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "sector_profile": "MEMORY_HBM",
+        "archetype_component_eps_fcf_explosion": "24.0",
+        "archetype_component_earnings_visibility": "17.724",
+        "archetype_component_bottleneck_pricing": "12.1827",
+        "archetype_component_market_mispricing": "13.041",
+        "archetype_component_valuation_rerating": "9.9846",
+        "archetype_component_information_confidence": "3.0",
+        "revision_score": "100.0",
+        "contract_quality": "0.0",
+        "backlog_rpo_visibility": "55.0",
+        "capa_constraint": "15.0",
+        "asp_pricing_power": "20.0",
+        "domain_specific_evidence_score": "100.0",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "100.0",
+        "research_axis_bridge_valuation_repricing": "100.0",
+        "research_axis_bridge_guard_risk": "0.0",
+        "actual_profit_conversion_score": "80.0333",
+        "bottleneck_selected_raw": "64.1197",
+        "bottleneck_selected_path": "actual_conversion_bridge",
+        "bottleneck_raw_deficit_to_green": "10.8803",
+        "stage3_total_deficit": "6.9869",
+        "stage3_visibility_deficit": "0.0",
+        "stage3_bottleneck_deficit": "2.0673",
+        "stage3_yellow_total_deficit": "0.0",
+        "green_gate_deficit_summary": "total:80.01/87.00(-6.99); bottleneck:12.18/14.25(-2.07)",
+        "audit_finding_codes": "eps_revision_too_high, low_parser_confidence",
+        "source_directory": "output/0619_asof_stage_promotion_benchmark_current_2023_2026"
+      },
+      "signal_translation_status": [
+        {
+          "signal": "capacity_lock",
+          "runtime_fields": [
+            "capa_constraint",
+            "research_axis_bridge_backlog"
+          ],
+          "field_values": {
+            "capa_constraint": 15.0,
+            "research_axis_bridge_backlog": 100.0
+          },
+          "status": "translated_to_runtime_field"
+        },
+        {
+          "signal": "direct_hbm",
+          "runtime_fields": [],
+          "field_values": {},
+          "status": "diagnostic_only"
+        },
+        {
+          "signal": "lag_or_guard",
+          "runtime_fields": [],
+          "field_values": {},
+          "status": "diagnostic_only"
+        },
+        {
+          "signal": "margin_or_mix",
+          "runtime_fields": [
+            "research_axis_bridge_margin",
+            "asp_pricing_power"
+          ],
+          "field_values": {
+            "research_axis_bridge_margin": 100.0,
+            "asp_pricing_power": 20.0
+          },
+          "status": "translated_to_runtime_field"
+        },
+        {
+          "signal": "named_customer",
+          "runtime_fields": [
+            "research_axis_bridge_customer"
+          ],
+          "field_values": {
+            "research_axis_bridge_customer": 100.0
+          },
+          "status": "translated_to_runtime_field"
+        },
+        {
+          "signal": "order_or_contract",
+          "runtime_fields": [
+            "research_axis_bridge_contract",
+            "research_axis_bridge_backlog"
+          ],
+          "field_values": {
+            "research_axis_bridge_contract": 100.0,
+            "research_axis_bridge_backlog": 100.0
+          },
+          "status": "translated_to_runtime_field"
+        },
+        {
+          "signal": "revision_or_fcf",
+          "runtime_fields": [
+            "revision_score",
+            "actual_profit_conversion_score"
+          ],
+          "field_values": {
+            "revision_score": 100.0,
+            "actual_profit_conversion_score": 80.0333
+          },
+          "status": "translated_to_runtime_field"
+        }
+      ],
+      "gap_signals": [],
+      "research_examples": [
+        {
+          "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+          "fine_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_ORDER_CYCLE_REVERSAL_VS_PRICE_ONLY_CAPEX_BETA",
+          "case_id": "C10_R2_L109_089030_20231027_HBM_HANDLER_MEMORY_RECOVERY",
+          "trigger_id": "TRG_C10_R2_L109_089030_20231027_HBM_HANDLER_MEMORY_RECOVERY",
+          "trigger_type": "Stage2-Actionable",
+          "trigger_date": "2023-10-26",
+          "entry_date": "2023-10-27",
+          "MFE_180D_pct": 742.86,
+          "MAE_180D_pct": -1.43,
+          "current_profile_verdict": "current_profile_missed_structural",
+          "source_proxy_only": true,
+          "evidence_url_pending": false,
+          "signals": [
+            "direct_hbm",
+            "named_customer",
+            "order_or_contract",
+            "margin_or_mix",
+            "revision_or_fcf"
+          ],
+          "evidence_available_at_that_date": "SK hynix Q3 2023 showed DRAM-side recovery and HBM product mix momentum; for equipment suppliers this was a cycle-to-order conversion watch, not pure price chase.",
+          "evidence_source": "SK hynix Q3 2023 earnings release / public media summary; source_proxy_only=false",
+          "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_109_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_research(1).md"
+        },
+        {
+          "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+          "fine_archetype_id": "R13_RECENT_P0_CLUSTER_4B_4C_CONFIRMATION_HOLDOUT_V6",
+          "case_id": null,
+          "trigger_id": null,
+          "trigger_type": "Stage2-Actionable",
+          "trigger_date": "2025-04-25",
+          "entry_date": "2025-04-25",
+          "MFE_180D_pct": 327.3,
+          "MAE_180D_pct": -4.2,
+          "current_profile_verdict": null,
+          "source_proxy_only": false,
+          "evidence_url_pending": false,
+          "signals": [
+            "direct_hbm",
+            "named_customer",
+            "capacity_lock"
+          ],
+          "evidence_available_at_that_date": null,
+          "evidence_source": null,
+          "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_222_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_research.md"
+        },
+        {
+          "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+          "fine_archetype_id": "R13_RECENT_P0_CLUSTER_PRICE_EVIDENCE_TRUST_VALIDATION_HOLDOUT_V3",
+          "case_id": "R13-223-037",
+          "trigger_id": "R13-223-T37",
+          "trigger_type": "Stage2-Actionable",
+          "trigger_date": "2025-04-25",
+          "entry_date": "2025-04-25",
+          "MFE_180D_pct": 327.3,
+          "MAE_180D_pct": -4.2,
+          "current_profile_verdict": null,
+          "source_proxy_only": false,
+          "evidence_url_pending": false,
+          "signals": [
+            "direct_hbm",
+            "named_customer",
+            "capacity_lock"
+          ],
+          "evidence_available_at_that_date": null,
+          "evidence_source": null,
+          "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_223_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_research.md"
+        },
+        {
+          "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+          "fine_archetype_id": "R13_RECENT_C02_C09_C14_C10_C06_C07_C11_HIGH_MAE_HOLDOUT_V6",
+          "case_id": null,
+          "trigger_id": null,
+          "trigger_type": "Stage2-Actionable",
+          "trigger_date": "2025-04-25",
+          "entry_date": "2025-04-25",
+          "MFE_180D_pct": 327.3,
+          "MAE_180D_pct": -4.2,
+          "current_profile_verdict": null,
+          "source_proxy_only": false,
+          "evidence_url_pending": false,
+          "signals": [
+            "direct_hbm",
+            "named_customer",
+            "capacity_lock"
+          ],
+          "evidence_available_at_that_date": null,
+          "evidence_source": null,
+          "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_221_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_research.md"
+        },
+        {
+          "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+          "fine_archetype_id": "C10_HBM_CXL_ADVANCED_PACKAGING_PROXY_TO_ORDER_CONVERSION_GUARD",
+          "case_id": "C10_L220_CASE_003_TLB_CXL_SAMPLE_TO_CUSTOMER_ROUTE_SUCCESS",
+          "trigger_id": "C10_L220_TRG_003",
+          "trigger_type": "Stage2-Actionable",
+          "trigger_date": "2025-02-14",
+          "entry_date": "2025-02-14",
+          "MFE_180D_pct": 308.94,
+          "MAE_180D_pct": -19.99,
+          "current_profile_verdict": "current_profile_missed_structural",
+          "source_proxy_only": false,
+          "evidence_url_pending": false,
+          "signals": [
+            "direct_hbm",
+            "named_customer",
+            "order_or_contract"
+          ],
+          "evidence_available_at_that_date": "TLB press list carried the report that TLB supplied CXL PCB-module samples to Samsung Electronics and SK hynix, giving a more direct customer route than generic HBM proxy text.",
+          "evidence_source": "https://www.tlbpcb.com/bbs/list.php?catcode=19100000&code=board2",
+          "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_220_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_research.md"
+        },
+        {
+          "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+          "fine_archetype_id": "C07_TCBONDER_SIGNED_ORDER_NAMED_CUSTOMER_EARLY_PHASE",
+          "case_id": "C07_L140_CASE01_HANMI_202402_SKHYNIX_TCBONDER_860BN",
+          "trigger_id": null,
+          "trigger_type": "Stage2-Actionable",
+          "trigger_date": null,
+          "entry_date": "2024-02-05",
+          "MFE_180D_pct": 233.67,
+          "MAE_180D_pct": -0.68,
+          "current_profile_verdict": null,
+          "source_proxy_only": false,
+          "evidence_url_pending": false,
+          "signals": [
+            "direct_hbm",
+            "named_customer",
+            "order_or_contract"
+          ],
+          "evidence_available_at_that_date": null,
+          "evidence_source": null,
+          "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_140_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH_research.md"
+        },
+        {
+          "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+          "fine_archetype_id": "R13_RECENT_P0_CLUSTER_PRICE_EVIDENCE_TRUST_VALIDATION_HOLDOUT_V3",
+          "case_id": "R13-223-036",
+          "trigger_id": "R13-223-T36",
+          "trigger_type": "Stage2-Actionable",
+          "trigger_date": "2025-03-21",
+          "entry_date": "2025-03-21",
+          "MFE_180D_pct": 199.8,
+          "MAE_180D_pct": -24.5,
+          "current_profile_verdict": null,
+          "source_proxy_only": false,
+          "evidence_url_pending": false,
+          "signals": [
+            "direct_hbm",
+            "named_customer",
+            "capacity_lock"
+          ],
+          "evidence_available_at_that_date": null,
+          "evidence_source": null,
+          "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_223_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_research.md"
+        },
+        {
+          "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+          "fine_archetype_id": "mixed_C10_memory_recovery_equipment_cycle_second_pass_order_conversion_set",
+          "case_id": "VM_C10_HYNIX_ETCH_ORDER_UNLOCK",
+          "trigger_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE:089970:Stage2-Actionable:2025-03-19",
+          "trigger_type": "Stage2-Actionable",
+          "trigger_date": "2025-03-18",
+          "entry_date": "2025-03-19",
+          "MFE_180D_pct": 190.06,
+          "MAE_180D_pct": -13.17,
+          "current_profile_verdict": "current_profile_missed_structural",
+          "source_proxy_only": false,
+          "evidence_url_pending": false,
+          "signals": [
+            "order_or_contract",
+            "margin_or_mix"
+          ],
+          "evidence_available_at_that_date": "2025-03-18 report tied VM to SK hynix 1b/M15X etch investment, share gain, and 2025-2026 revenue cycle visibility; this was stronger than generic memory beta.",
+          "evidence_source": "SK Securities report, 2025-03-18, 브이엠: 본업 성장 사이클 + 해외 모멘텀은 덤",
+          "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_110_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_research.md"
+        }
+      ]
+    },
+    {
+      "symbol": "005930",
+      "company_label": "삼성전자",
+      "research_hbm_row_count": 75,
+      "research_raw_stage3_green_count": 0,
+      "research_positive_or_green_worthy_count": 3,
+      "research_signal_counts": {
+        "capacity_lock": 63,
+        "direct_hbm": 73,
+        "lag_or_guard": 33,
+        "margin_or_mix": 22,
+        "named_customer": 66,
+        "order_or_contract": 21,
+        "revision_or_fcf": 13
+      },
+      "positive_signal_counts": {
+        "capacity_lock": 3,
+        "direct_hbm": 3,
+        "margin_or_mix": 1,
+        "named_customer": 2,
+        "order_or_contract": 1
+      },
+      "runtime_best_row": {
+        "symbol": "005930",
+        "company_name": "삼성전자",
+        "as_of_date": "2024-04-01",
+        "current_stage": "2",
+        "current_score": "72.1181",
+        "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+        "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+        "sector_profile": "MEMORY_HBM",
+        "archetype_component_eps_fcf_explosion": "22.0",
+        "archetype_component_earnings_visibility": "13.1685",
+        "archetype_component_bottleneck_pricing": "8.165",
+        "archetype_component_market_mispricing": "9.4296",
+        "archetype_component_valuation_rerating": "7.8935",
+        "archetype_component_information_confidence": "11.4",
+        "revision_score": "80.0",
+        "contract_quality": "0.0",
+        "backlog_rpo_visibility": "40.0",
+        "capa_constraint": "15.0",
+        "asp_pricing_power": "20.0",
+        "domain_specific_evidence_score": "100.0",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "0.0",
+        "research_axis_bridge_valuation_repricing": "100.0",
+        "research_axis_bridge_guard_risk": "0.0",
+        "actual_profit_conversion_score": "62.9167",
+        "bottleneck_selected_raw": "58.3217",
+        "bottleneck_selected_path": "actual_conversion_bridge",
+        "bottleneck_raw_deficit_to_green": "16.6783",
+        "stage3_total_deficit": "14.8819",
+        "stage3_visibility_deficit": "0.3315",
+        "stage3_bottleneck_deficit": "2.335",
+        "stage3_yellow_total_deficit": "2.8819",
+        "green_gate_deficit_summary": "total:72.12/87.00(-14.88); yellow_total:72.12/75.00(-2.88); bottleneck:8.16/10.50(-2.33); visibility:13.17/13.50(-0.33)",
+        "audit_finding_codes": "eps_revision_too_high, low_parser_confidence",
+        "source_directory": "output/0619_asof_stage_promotion_benchmark_current_2023_2026"
+      },
+      "signal_translation_status": [
+        {
+          "signal": "capacity_lock",
+          "runtime_fields": [
+            "capa_constraint",
+            "research_axis_bridge_backlog"
+          ],
+          "field_values": {
+            "capa_constraint": 15.0,
+            "research_axis_bridge_backlog": 100.0
+          },
+          "status": "translated_to_runtime_field"
+        },
+        {
+          "signal": "direct_hbm",
+          "runtime_fields": [],
+          "field_values": {},
+          "status": "diagnostic_only"
+        },
+        {
+          "signal": "margin_or_mix",
+          "runtime_fields": [
+            "research_axis_bridge_margin",
+            "asp_pricing_power"
+          ],
+          "field_values": {
+            "research_axis_bridge_margin": 100.0,
+            "asp_pricing_power": 20.0
+          },
+          "status": "translated_to_runtime_field"
+        },
+        {
+          "signal": "named_customer",
+          "runtime_fields": [
+            "research_axis_bridge_customer"
+          ],
+          "field_values": {
+            "research_axis_bridge_customer": 100.0
+          },
+          "status": "translated_to_runtime_field"
+        },
+        {
+          "signal": "order_or_contract",
+          "runtime_fields": [
+            "research_axis_bridge_contract",
+            "research_axis_bridge_backlog"
+          ],
+          "field_values": {
+            "research_axis_bridge_contract": 0.0,
+            "research_axis_bridge_backlog": 100.0
+          },
+          "status": "translated_to_runtime_field"
+        }
+      ],
+      "gap_signals": [],
+      "research_examples": [
+        {
+          "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+          "fine_archetype_id": "R13_RECENT_P0_CLUSTER_PRICE_EVIDENCE_TRUST_VALIDATION_HOLDOUT_V3",
+          "case_id": "R13-223-042",
+          "trigger_id": "R13-223-T42",
+          "trigger_type": "Stage2-Actionable",
+          "trigger_date": "2025-05-30",
+          "entry_date": "2025-05-30",
+          "MFE_180D_pct": 157.1,
+          "MAE_180D_pct": -0.7,
+          "current_profile_verdict": null,
+          "source_proxy_only": false,
+          "evidence_url_pending": false,
+          "signals": [
+            "direct_hbm",
+            "named_customer",
+            "capacity_lock"
+          ],
+          "evidence_available_at_that_date": null,
+          "evidence_source": null,
+          "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_223_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_research.md"
+        },
+        {
+          "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "fine_archetype_id": "SAMSUNG_HBM_RESET_REOPEN_NOT_PERMANENT_4C",
+          "case_id": "C06_005930_20250131_RESET_HBM_REDESIGN_MEMORY_RECOVERY",
+          "trigger_id": null,
+          "trigger_type": "Stage2-Actionable",
+          "trigger_date": "2025-01-31",
+          "entry_date": "2025-01-31",
+          "MFE_180D_pct": 94.66,
+          "MAE_180D_pct": -3.05,
+          "current_profile_verdict": "current_profile_too_harsh_if_permanent_4c_blocks_reopen",
+          "source_proxy_only": false,
+          "evidence_url_pending": false,
+          "signals": [
+            "direct_hbm",
+            "named_customer",
+            "capacity_lock"
+          ],
+          "evidence_available_at_that_date": null,
+          "evidence_source": null,
+          "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_122_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research(1).md"
+        },
+        {
+          "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+          "fine_archetype_id": "mixed_C09_hpa_laser_environment_hbm_order_revenue_bridge_fourth_pass",
+          "case_id": "C09_R2_L116_039030_EOTECH_LASER_ANNEALING_POSITIVE_WITH_4B",
+          "trigger_id": "TRG_C09_R2_L116_039030_20230907",
+          "trigger_type": "Stage2-Actionable",
+          "trigger_date": "2023-09-06",
+          "entry_date": "2023-09-07",
+          "MFE_180D_pct": 71.45,
+          "MAE_180D_pct": -20.01,
+          "current_profile_verdict": "current_profile_4B_too_late",
+          "source_proxy_only": false,
+          "evidence_url_pending": false,
+          "signals": [
+            "direct_hbm",
+            "capacity_lock",
+            "order_or_contract",
+            "margin_or_mix"
+          ],
+          "evidence_available_at_that_date": "삼성전자향 레이저 어닐링 공급, HBM3/HBM3e CAPA 확대 시 레이저 어닐링 수요 증가, 스텔스 다이싱/그루빙 장비 시양산 및 수주 가능성",
+          "evidence_source": "https://view.asiae.co.kr/article/2023082913041816228",
+          "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_116_L2_AI_SEMICONDUCTOR_ELECTRONICS_C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF_research.md"
+        }
+      ]
+    }
+  ]
+}

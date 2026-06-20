@@ -9,6 +9,7 @@ from pathlib import Path
 from time import sleep
 from typing import Any, Callable, Mapping, Protocol, Sequence
 
+from e2r.diagnostic_values import diagnostic_value
 from e2r.features import DeterministicFeatureEngineer, FeatureEngineeringInput, FeatureEngineeringResult
 from e2r.llm.codex_theme_provider import build_default_codex_theme_route_provider
 from e2r.llm.theme_provider import ThemeRouteProvider
@@ -1402,6 +1403,8 @@ def _score_gap_missing_information(score: ScoreSnapshot) -> tuple[str, ...]:
         gaps.append("emerging theme Green unlock evidence: expand source-backed company revenue bridge, FCF bridge, customer contract, capacity, pricing, and valuation runway")
     if _diagnostic_value(diagnostics, "date_unverified_snippet_news_count_capped") > 0.0:
         gaps.append("date-unverified snippet evidence: expand date-verified full news report disclosure or filing visible by as_of_date")
+    if _diagnostic_value(diagnostics, "date_unverified_document_count_capped") > 0.0:
+        gaps.append("date-unverified document evidence: expand date-verified report disclosure news filing or primary-source document visible by as_of_date")
     if _diagnostic_value(diagnostics, "report_date_confidence") < 1.0:
         gaps.append("date-unverified document evidence: expand date-verified full report disclosure news filing or primary-source document visible by as_of_date")
     if _diagnostic_value(diagnostics, "v12_scope_stage2_required_bridge_match") > 0.0 and _diagnostic_value(diagnostics, "cross_evidence_family_count") < 3.0:
@@ -1467,6 +1470,7 @@ _STAGE_GATE_GAP_CONTEXT = {
     "failed_sector_bottleneck": "stage3 sector bottleneck gate failed; expand source-backed sector capacity, utilization, lead time, price increase, shortage, and supply evidence",
     "failed_green_cross_evidence": "stage3 Green cross-evidence gate failed; expand missing independent evidence families rather than relying on one source type",
     "failed_report_date_confidence": "stage3 Green report-date confidence gate failed; expand date-verified report, disclosure, news, or filing evidence visible by as_of_date",
+    "failed_date_unverified_green_evidence": "stage3 Green date-unverified evidence gate failed; replace undated snippets or documents with date-verified full news, reports, disclosures, filings, or primary-source evidence visible by as_of_date",
     "failed_domain_specific_evidence": "stage3 domain-specific evidence gate failed; expand operating KPI, customer demand, unit economics, product mix, paid conversion, and revenue conversion evidence",
     "failed_stage3_one_off_shortage_risk": "stage3 Green one-off shortage risk gate failed; expand evidence distinguishing structural demand from one-off cost, temporary shortage, inventory, receivables, and demand normalization",
     "failed_stage3_red_team": "stage3 Green red-team gate failed; expand source-backed accounting, legal, customer cancellation, slowdown, valuation crowding, thesis-break, and risk mitigation evidence",
@@ -1526,6 +1530,7 @@ def _with_stage_gate_diagnostics(
         "failed_sector_bottleneck",
         "failed_green_cross_evidence",
         "failed_report_date_confidence",
+        "failed_date_unverified_green_evidence",
         "failed_domain_specific_evidence",
         "failed_positive_stage_price_only_blowoff",
         "failed_snippet_only_green_block",
@@ -1547,12 +1552,7 @@ def _with_stage_gate_diagnostics(
 
 
 def _diagnostic_value(diagnostics: Mapping[str, Any], key: str) -> float:
-    value = diagnostics.get(key, 0.0)
-    if isinstance(value, bool):
-        return 100.0 if value else 0.0
-    if isinstance(value, (int, float)):
-        return float(value)
-    return 0.0
+    return diagnostic_value(diagnostics.get(key, 0.0))
 
 
 def _query_limit_reached(queries: Sequence[str], limit: int | None) -> bool:

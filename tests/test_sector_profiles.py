@@ -4,9 +4,10 @@ import unittest
 
 from e2r.features import DeterministicFeatureEngineer, FeatureEngineeringInput
 from e2r.archetype_classifier import classify_v12_archetype
+from e2r.calibration.taxonomy import CANONICAL_ARCHETYPE_IDS
 from e2r.models import ConsensusRevision, ConsensusSnapshot, FinancialActual, PriceBar, ResearchReport, Stage
 from e2r.red_team import RedTeamEngine
-from e2r.sector_profiles import SectorProfile, infer_sector_profile, profile_name_from_diagnostic
+from e2r.sector_profiles import SectorProfile, infer_sector_profile, profile_for_archetype, profile_name_from_diagnostic
 from e2r.stage_gate_diagnostics import promotion_band
 from e2r.staging import StageClassificationInput, StageClassifier
 
@@ -98,6 +99,18 @@ def _rich_input(title: str, parsed_fields: dict) -> FeatureEngineeringInput:
 
 
 class SectorProfileTests(unittest.TestCase):
+    def test_canonical_archetypes_have_profile_mapping(self):
+        missing = [item for item in CANONICAL_ARCHETYPE_IDS if profile_for_archetype(item) is None]
+
+        self.assertEqual(missing, [])
+        self.assertEqual(profile_for_archetype("C06_HBM_MEMORY_CUSTOMER_CAPACITY"), SectorProfile.MEMORY_HBM)
+        self.assertEqual(profile_for_archetype("C01_ORDER_BACKLOG_MARGIN_BRIDGE"), SectorProfile.GENERIC)
+        self.assertEqual(profile_for_archetype("C18_CONSUMER_EXPORT_CHANNEL_REORDER"), SectorProfile.K_FOOD_EXPORT)
+        self.assertEqual(profile_for_archetype("C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION"), SectorProfile.K_BEAUTY_EXPORT)
+        self.assertEqual(profile_for_archetype("C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN"), SectorProfile.FINANCIAL_CAPITAL_RETURN)
+        self.assertEqual(profile_for_archetype("C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION"), SectorProfile.BIO_COMMERCIALIZATION)
+        self.assertEqual(profile_for_archetype("C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"), SectorProfile.SOFTWARE_SECURITY)
+
     def test_profile_inference_from_keywords(self):
         self.assertEqual(infer_sector_profile(text="초고압 변압기 리드타임 장기화"), SectorProfile.POWER_EQUIPMENT)
         self.assertEqual(infer_sector_profile(text="방산 K9 폴란드 정부 고객"), SectorProfile.DEFENSE)
@@ -105,6 +118,10 @@ class SectorProfileTests(unittest.TestCase):
         self.assertEqual(infer_sector_profile(text="실리콘투 K-뷰티 해외 채널 확장"), SectorProfile.K_BEAUTY_EXPORT)
         self.assertEqual(infer_sector_profile(text="HBM 수요 증가 메모리 가격 상승"), SectorProfile.MEMORY_HBM)
         self.assertEqual(infer_sector_profile(text="AI 데이터센터 GPU 클라우드 매출 확대"), SectorProfile.AI_INFRA_PLATFORM)
+        self.assertEqual(infer_sector_profile(text="저PBR 은행 자사주 소각 주주환원"), SectorProfile.FINANCIAL_CAPITAL_RETURN)
+        self.assertEqual(infer_sector_profile(text="보험 CSM 증가 K-ICS 손해율 개선"), SectorProfile.INSURANCE_RESERVE)
+        self.assertEqual(infer_sector_profile(text="FDA 승인 이후 상업화 로열티"), SectorProfile.BIO_COMMERCIALIZATION)
+        self.assertEqual(infer_sector_profile(text="SaaS ARR NRR renewal retention"), SectorProfile.SOFTWARE_SECURITY)
 
     def test_hbm_supplier_profile_is_not_stolen_by_nvidia_datacenter_terms(self):
         profile = infer_sector_profile(
@@ -124,6 +141,22 @@ class SectorProfileTests(unittest.TestCase):
         self.assertEqual(profile, SectorProfile.MEMORY_HBM)
         self.assertNotEqual(routed.canonical_archetype_id, "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG")
         self.assertTrue(routed.canonical_archetype_id.startswith(("C06", "C10")))
+
+    def test_hbm_capacity_and_backlog_fields_do_not_force_power_equipment_profile(self):
+        profile = infer_sector_profile(
+            company_name="테스트메모리",
+            sector_custom="semiconductor memory",
+            text="HBM D램 고객 물량 배정과 CAPA 제약, 수주잔고 가시성이 같이 확인된다.",
+            parsed_fields={
+                "hbm_demand_mentioned": True,
+                "hbm_capacity_constraint": True,
+                "customer_preorder_or_allocation": True,
+                "capa_utilization_pct": 100,
+                "order_backlog_to_sales": 1.5,
+            },
+        )
+
+        self.assertEqual(profile, SectorProfile.MEMORY_HBM)
 
     def test_structured_hbm_supplier_evidence_beats_gpu_cloud_noise_without_sector_metadata(self):
         profile = infer_sector_profile(
@@ -499,6 +532,66 @@ class SectorProfileTests(unittest.TestCase):
         self.assertEqual(result.source_fields["large_sector_id"], "L8_PLATFORM_CONTENT_SW_SECURITY")
         self.assertEqual(result.source_fields["canonical_archetype_id"], "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE")
 
+    def test_cross_archetype_domain_profiles_feed_existing_canonical_routes(self):
+        cases = (
+            (
+                "저PBR 은행 자사주 소각 주주환원 신용비용 안정",
+                {
+                    "roe": 12,
+                    "pbr_e": 0.45,
+                    "capital_return_execution": True,
+                    "treasury_share_cancellation": True,
+                    "credit_cost_quality": True,
+                },
+                "FINANCIAL_CAPITAL_RETURN",
+                "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+            ),
+            (
+                "보험 CSM 증가 K-ICS 245% 준비금 안정 손해율 개선",
+                {
+                    "csm_growth_visible": True,
+                    "k_ics_ratio": 245,
+                    "reserve_quality_visible": True,
+                    "loss_ratio_quality": True,
+                },
+                "INSURANCE_RESERVE",
+                "C22_INSURANCE_RATE_CYCLE_RESERVE",
+            ),
+            (
+                "FDA 승인 이후 상업화 매출 전환 로열티",
+                {
+                    "regulatory_approval_confirmed": True,
+                    "approval_to_revenue_bridge": True,
+                    "royalty_route": True,
+                    "partner_economics_visible": True,
+                },
+                "BIO_COMMERCIALIZATION",
+                "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+            ),
+            (
+                "SaaS ARR growth NRR renewal retention recurring margin",
+                {
+                    "arr_growth_pct": 35,
+                    "nrr": 125,
+                    "arr_growth_visible": True,
+                    "retention_or_renewal": True,
+                    "contract_renewal_visible": True,
+                    "recurring_margin_leverage": True,
+                },
+                "SOFTWARE_SECURITY",
+                "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+            ),
+        )
+        for title, parsed_fields, expected_profile, expected_archetype in cases:
+            with self.subTest(expected_profile=expected_profile):
+                result = DeterministicFeatureEngineer().engineer(_rich_input(title, parsed_fields))
+                score = result.score()
+
+                self.assertEqual(result.source_fields["sector_profile"], expected_profile)
+                self.assertEqual(result.source_fields["canonical_archetype_id"], expected_archetype)
+                self.assertGreater(score.diagnostic_scores["domain_specific_evidence_score"], 0)
+                self.assertGreater(score.diagnostic_scores["sector_visibility_score"], 0)
+
     def test_k_food_visibility_does_not_require_contract_quality(self):
         result = DeterministicFeatureEngineer().engineer(
             _rich_input(
@@ -539,6 +632,33 @@ class SectorProfileTests(unittest.TestCase):
         self.assertEqual(profile_name_from_diagnostic(score.diagnostic_scores["sector_profile_id"]), "MEMORY_HBM")
         self.assertLess(score.diagnostic_scores["contract_quality"], 45)
         self.assertGreater(score.diagnostic_scores["sector_visibility_score"], 35)
+
+    def test_generic_financial_inventory_field_does_not_create_consumer_retail_archetype(self):
+        as_of_date = date(2026, 5, 1)
+        result = DeterministicFeatureEngineer().engineer(
+            FeatureEngineeringInput(
+                symbol="000660",
+                company_name="SK하이닉스",
+                sector_context="반도체",
+                as_of_date=as_of_date,
+                financial_actuals=(
+                    FinancialActual(
+                        symbol="000660",
+                        fiscal_year=2025,
+                        fiscal_quarter=4,
+                        period_end=date(2025, 12, 31),
+                        reported_at=datetime(2026, 2, 15, 8),
+                        as_of_date=as_of_date,
+                        source="test",
+                        sales=1000,
+                        operating_profit=100,
+                        inventory=500,
+                    ),
+                ),
+            )
+        )
+
+        self.assertNotEqual(result.source_fields["canonical_archetype_id"], "C19_BRAND_RETAIL_INVENTORY_MARGIN")
 
     def test_qualitative_evidence_is_bounded_and_cannot_create_green_alone(self):
         as_of_date = date(2024, 5, 16)

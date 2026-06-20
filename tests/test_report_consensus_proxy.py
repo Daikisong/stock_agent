@@ -51,6 +51,29 @@ class ReportConsensusProxyTests(unittest.TestCase):
         self.assertFalse(result.consensus_revisions)
         self.assertNotIn("consensus_proxy_created", result.reports[0].parsed_fields)
 
+    def test_non_finite_report_numbers_do_not_create_proxy_rows(self):
+        report = ResearchReport(
+            symbol="298040",
+            publish_date=date(2023, 5, 15),
+            broker="broker",
+            title="효성중공업 Review",
+            as_of_date=date(2023, 5, 15),
+            fy1_op=float("nan"),
+            fy1_eps=float("inf"),
+            parsed_fields={
+                "target_price_revision_pct": "nan",
+                "parser_confidence": "nan",
+                "source_url": "https://example.com/report.pdf",
+            },
+            raw_text="충분한 길이의 원문 " * 20,
+        )
+
+        result = build_report_consensus_proxy((report,))
+
+        self.assertFalse(result.consensus)
+        self.assertFalse(result.consensus_revisions)
+        self.assertNotIn("consensus_proxy_created", result.reports[0].parsed_fields)
+
     def test_parsed_forward_estimate_report_creates_consensus_not_actuals(self):
         parsed = parse_research_report_text(
             symbol="123456",

@@ -9,6 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from enum import Enum, IntEnum
+import math
 from typing import Any, Mapping
 
 
@@ -70,19 +71,39 @@ def _require_datetime(value: datetime, field_name: str) -> None:
         raise ValueError(f"{field_name} must be a datetime")
 
 
+def _is_finite_number(value: Any) -> bool:
+    try:
+        return math.isfinite(float(value))
+    except (TypeError, ValueError):
+        return False
+
+
 def _require_non_negative(value: float | int | None, field_name: str) -> None:
-    if value is not None and value < 0:
+    if value is not None and (not _is_finite_number(value) or value < 0):
         raise ValueError(f"{field_name} must be non-negative")
 
 
 def _require_positive(value: float | int | None, field_name: str) -> None:
-    if value is not None and value <= 0:
+    if value is not None and (not _is_finite_number(value) or value <= 0):
         raise ValueError(f"{field_name} must be positive")
 
 
 def _require_score(value: float | int, field_name: str, max_score: float = 100.0) -> None:
-    if value < 0 or value > max_score:
+    if not _is_finite_number(value) or value < 0 or value > max_score:
         raise ValueError(f"{field_name} must be between 0 and {max_score}")
+
+
+_SIGNED_DIAGNOSTIC_KEYS = frozenset({"calibration_total_adjustment"})
+
+
+def _require_diagnostic_score(value: float | int, key: str) -> None:
+    if not _is_finite_number(value):
+        raise ValueError(f"diagnostic score {key} must be finite")
+    if key in _SIGNED_DIAGNOSTIC_KEYS:
+        if value < -100 or value > 100:
+            raise ValueError(f"diagnostic score {key} must be between -100 and 100.0")
+        return
+    _require_score(value, f"diagnostic score {key}")
 
 
 def _copy_mapping(value: Mapping[str, Any] | None) -> dict[str, Any]:
@@ -554,10 +575,16 @@ class ScoreSnapshot:
         _require_non_negative(self.risk_penalty, "risk_penalty")
         _require_score(self.total_score, "total_score")
         _require_text(self.scoring_version, "scoring_version")
+        diagnostics = {}
         for key, value in self.diagnostic_scores.items():
             _require_text(key, "diagnostic score key")
-            _require_score(value, f"diagnostic score {key}")
-        object.__setattr__(self, "diagnostic_scores", _copy_mapping(self.diagnostic_scores))
+            try:
+                number = float(value)
+            except (TypeError, ValueError) as exc:
+                raise ValueError(f"diagnostic score {key} must be numeric") from exc
+            _require_diagnostic_score(number, key)
+            diagnostics[key] = number
+        object.__setattr__(self, "diagnostic_scores", diagnostics)
         object.__setattr__(self, "evidence_ids", _copy_tuple(self.evidence_ids))
 
 

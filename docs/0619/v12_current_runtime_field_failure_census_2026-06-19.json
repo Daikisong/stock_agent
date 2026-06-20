@@ -1,0 +1,1714 @@
+{
+  "schema_version": "v12_current_runtime_field_failure_census_v1",
+  "scope": "current_benchmark_runtime_candidates_only",
+  "score_csv_path": "output/0619_asof_stage_promotion_benchmark_current_2023_2026/score_components_by_candidate.csv",
+  "gate_csv_path": "output/0619_asof_stage_promotion_benchmark_current_2023_2026/stage_gate_matrix.csv",
+  "summary": {
+    "plain_answer": "현재 runtime benchmark는 후보 120개를 채점했지만 Green은 0개다. 전부 Stage3 total과 bottleneck gate에서 막히며, 원인은 아키타입별 bridge field 0점과 gate deficit이다.",
+    "candidate_row_count": 120,
+    "symbol_count": 11,
+    "stage_counts": {
+      "0": 7,
+      "1": 60,
+      "2": 34,
+      "3-Yellow": 19
+    },
+    "stage3_green_count": 0,
+    "runtime_exercised_archetype_count": 7,
+    "canonical_archetype_count_in_weight_profile": 36,
+    "runtime_unexercised_archetype_count": 29,
+    "failed_gate_counts": {
+      "failed_stage3_total_score": 120,
+      "failed_stage3_bottleneck": 120,
+      "failed_stage3_visibility": 79,
+      "failed_stage2_total_score": 67,
+      "failed_stage3_valuation": 67,
+      "failed_stage2_information_confidence": 63,
+      "failed_stage3_market_mispricing": 56,
+      "failed_sector_bottleneck": 56,
+      "failed_domain_specific_evidence": 55,
+      "failed_stage2_eps_fcf": 45,
+      "failed_stage3_eps_fcf": 45,
+      "failed_sector_visibility": 44,
+      "failed_green_cross_evidence": 40,
+      "failed_stage3_contract_quality": 37,
+      "failed_structural_visibility_quality": 33,
+      "failed_stage2_valuation": 22,
+      "failed_stage3_revision": 22
+    },
+    "all_candidates_failed_stage3_total": true,
+    "all_candidates_failed_stage3_bottleneck": true,
+    "global_zero_field_counts": {
+      "research_axis_bridge_margin": {
+        "zero_count": 22,
+        "row_count": 120,
+        "zero_rate": 0.1833
+      },
+      "research_axis_bridge_customer": {
+        "zero_count": 22,
+        "row_count": 120,
+        "zero_rate": 0.1833
+      },
+      "research_axis_bridge_backlog": {
+        "zero_count": 55,
+        "row_count": 120,
+        "zero_rate": 0.4583
+      },
+      "research_axis_bridge_contract": {
+        "zero_count": 67,
+        "row_count": 120,
+        "zero_rate": 0.5583
+      },
+      "research_axis_bridge_valuation_repricing": {
+        "zero_count": 22,
+        "row_count": 120,
+        "zero_rate": 0.1833
+      },
+      "research_axis_bridge_capital_return": {
+        "zero_count": 120,
+        "row_count": 120,
+        "zero_rate": 1.0
+      },
+      "research_axis_bridge_insurance_quality": {
+        "zero_count": 120,
+        "row_count": 120,
+        "zero_rate": 1.0
+      },
+      "research_axis_bridge_bio_commercialization": {
+        "zero_count": 120,
+        "row_count": 120,
+        "zero_rate": 1.0
+      },
+      "research_axis_bridge_software_retention": {
+        "zero_count": 120,
+        "row_count": 120,
+        "zero_rate": 1.0
+      },
+      "research_axis_bridge_consumer_sell_through": {
+        "zero_count": 75,
+        "row_count": 120,
+        "zero_rate": 0.625
+      },
+      "research_axis_bridge_guard_risk": {
+        "zero_count": 109,
+        "row_count": 120,
+        "zero_rate": 0.9083
+      },
+      "contract_quality": {
+        "zero_count": 64,
+        "row_count": 120,
+        "zero_rate": 0.5333
+      },
+      "backlog_rpo_visibility": {
+        "zero_count": 44,
+        "row_count": 120,
+        "zero_rate": 0.3667
+      },
+      "capa_constraint": {
+        "zero_count": 56,
+        "row_count": 120,
+        "zero_rate": 0.4667
+      },
+      "revision_score": {
+        "zero_count": 22,
+        "row_count": 120,
+        "zero_rate": 0.1833
+      },
+      "domain_specific_evidence_score": {
+        "zero_count": 22,
+        "row_count": 120,
+        "zero_rate": 0.1833
+      }
+    },
+    "global_zero_field_note": "전역 zero count는 모든 bridge family의 coverage census다. bio/finance/software field가 120/120 zero인 것은 현재 benchmark가 그 아키타입을 거의 채점하지 않았다는 뜻이며, 각 후보에 모두 필요한 필드라는 뜻은 아니다.",
+    "coverage_caveat": "이 census는 현재 benchmark 후보가 실제 채점한 아키타입만 증명한다. 나머지 아키타입은 점수식보다 replay/archive coverage가 먼저 필요하다."
+  },
+  "archetype_rows": [
+    {
+      "group_key": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "row_count": 11,
+      "symbol_count": 2,
+      "stage_counts": {
+        "0": 7,
+        "1": 4
+      },
+      "stage3_green_count": 0,
+      "max_score": 4.4554,
+      "avg_score": 2.8353,
+      "best_row": {
+        "symbol": "000660",
+        "company_name": "SK하이닉스",
+        "as_of_date": "2025-11-01",
+        "current_stage": "0",
+        "current_score": "4.4554",
+        "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+        "sector_profile": "GENERIC",
+        "green_gate_deficit_summary": "total:4.46/87.00(-82.54); yellow_total:4.46/75.00(-70.54); revision:0.00/55.00(-55.00); structural_visibility:0.00/45.00(-45.00); sector_visibility:0.00/45.00(-45.00); domain_evidence:0.00/35.00(-35.00); sector_bottleneck:6.00/35.00(-29.00); eps_fcf:0.00/17.00(-17.00); visibility:5.00/18.75(-13.75); bottleneck:1.19/13.50(-12.31); valuation:0.36/8.00(-7.64); mispricing:0.48/8.00(-7.52); cross_evidence:1.00/3.00(-2.00)",
+        "research_axis_bridge_margin": "0.0",
+        "research_axis_bridge_customer": "0.0",
+        "research_axis_bridge_backlog": "0.0",
+        "research_axis_bridge_contract": "0.0",
+        "revision_score": "0.0",
+        "contract_quality": "0.0",
+        "backlog_rpo_visibility": "0.0",
+        "capa_constraint": "0.0"
+      },
+      "component_averages": {
+        "archetype_component_eps_fcf_explosion": 0.0,
+        "archetype_component_earnings_visibility": 3.1818,
+        "archetype_component_bottleneck_pricing": 1.1487,
+        "archetype_component_market_mispricing": 0.48,
+        "archetype_component_valuation_rerating": 0.36,
+        "archetype_component_capital_allocation": 0.4311,
+        "archetype_component_information_confidence": 1.0227
+      },
+      "runtime_quality_averages": {
+        "revision_score": 0.0,
+        "contract_quality": 0.0,
+        "backlog_rpo_visibility": 0.0,
+        "capa_constraint": 0.0,
+        "structural_visibility_quality": 0.0,
+        "sector_visibility_score": 0.0,
+        "sector_bottleneck_score": 5.6364,
+        "domain_specific_evidence_score": 0.0,
+        "actual_profit_conversion_score": 16.9909
+      },
+      "positive_deficit_averages": {
+        "stage3_total_deficit": 84.1647,
+        "stage3_eps_fcf_deficit": 17.0,
+        "stage3_visibility_deficit": 15.5682,
+        "stage3_bottleneck_deficit": 12.3513,
+        "stage3_market_mispricing_deficit": 7.52,
+        "stage3_valuation_deficit": 7.64,
+        "stage3_revision_deficit": 55.0,
+        "stage3_contract_quality_deficit": 45.0,
+        "structural_visibility_deficit": 45.0,
+        "sector_visibility_deficit": 45.0,
+        "sector_bottleneck_deficit": 29.3636,
+        "green_cross_evidence_deficit": 1.6364,
+        "domain_specific_evidence_deficit": 35.0,
+        "stage3_yellow_total_deficit": 72.1647
+      },
+      "zero_field_counts": {
+        "research_axis_bridge_margin": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_customer": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_backlog": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_contract": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_valuation_repricing": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_capital_return": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_insurance_quality": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_bio_commercialization": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_software_retention": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_consumer_sell_through": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_guard_risk": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "contract_quality": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "backlog_rpo_visibility": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "capa_constraint": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "revision_score": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "domain_specific_evidence_score": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        }
+      },
+      "failed_gate_counts": {
+        "failed_stage2_total_score": 11,
+        "failed_stage2_eps_fcf": 11,
+        "failed_stage2_valuation": 11,
+        "failed_stage2_information_confidence": 11,
+        "failed_stage3_total_score": 11,
+        "failed_stage3_eps_fcf": 11,
+        "failed_stage3_visibility": 11,
+        "failed_stage3_bottleneck": 11,
+        "failed_stage3_market_mispricing": 11,
+        "failed_stage3_valuation": 11,
+        "failed_stage3_revision": 11,
+        "failed_structural_visibility_quality": 11,
+        "failed_sector_visibility": 11,
+        "failed_sector_bottleneck": 11,
+        "failed_green_cross_evidence": 11,
+        "failed_domain_specific_evidence": 11,
+        "failed_stage3_contract_quality": 4
+      },
+      "bottleneck_selected_path_counts": {
+        "sector": 7,
+        "industrial": 4
+      },
+      "plain_diagnosis": "전력/인프라는 EPS와 일부 backlog는 보이지만 contract quality, margin delivery, bottleneck gate가 부족하다."
+    },
+    {
+      "group_key": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "row_count": 44,
+      "symbol_count": 4,
+      "stage_counts": {
+        "1": 11,
+        "2": 33
+      },
+      "stage3_green_count": 0,
+      "max_score": 72.9252,
+      "avg_score": 66.9741,
+      "best_row": {
+        "symbol": "267260",
+        "company_name": "HD현대일렉트릭",
+        "as_of_date": "2023-08-01",
+        "current_stage": "2",
+        "current_score": "72.9252",
+        "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+        "sector_profile": "POWER_EQUIPMENT",
+        "green_gate_deficit_summary": "total:72.93/87.00(-14.07); bottleneck:9.90/15.00(-5.09); contract:41.50/45.00(-3.50); yellow_total:72.93/75.00(-2.07)",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "100.0",
+        "revision_score": "100.0",
+        "contract_quality": "41.5",
+        "backlog_rpo_visibility": "85.0",
+        "capa_constraint": "48.0"
+      },
+      "component_averages": {
+        "archetype_component_eps_fcf_explosion": 20.475,
+        "archetype_component_earnings_visibility": 16.1424,
+        "archetype_component_bottleneck_pricing": 8.65,
+        "archetype_component_market_mispricing": 10.5031,
+        "archetype_component_valuation_rerating": 8.9894,
+        "archetype_component_capital_allocation": 0.7025,
+        "archetype_component_information_confidence": 2.8125
+      },
+      "runtime_quality_averages": {
+        "revision_score": 98.3333,
+        "contract_quality": 30.625,
+        "backlog_rpo_visibility": 61.25,
+        "capa_constraint": 35.375,
+        "structural_visibility_quality": 57.3491,
+        "sector_visibility_score": 53.4586,
+        "sector_bottleneck_score": 40.9563,
+        "domain_specific_evidence_score": 41.6667,
+        "actual_profit_conversion_score": 23.625
+      },
+      "positive_deficit_averages": {
+        "stage3_total_deficit": 20.0259,
+        "stage3_visibility_deficit": 6.3583,
+        "stage3_bottleneck_deficit": 6.35,
+        "stage3_valuation_deficit": 0.3498,
+        "stage3_contract_quality_deficit": 31.1667,
+        "structural_visibility_deficit": 20.53,
+        "sector_visibility_deficit": 10.7934,
+        "sector_bottleneck_deficit": 2.0625,
+        "domain_specific_evidence_deficit": 1.6667,
+        "stage3_yellow_total_deficit": 8.0259
+      },
+      "zero_field_counts": {
+        "research_axis_bridge_backlog": {
+          "zero_count": 11,
+          "row_count": 44,
+          "zero_rate": 0.25
+        },
+        "research_axis_bridge_contract": {
+          "zero_count": 22,
+          "row_count": 44,
+          "zero_rate": 0.5
+        },
+        "research_axis_bridge_capital_return": {
+          "zero_count": 44,
+          "row_count": 44,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_insurance_quality": {
+          "zero_count": 44,
+          "row_count": 44,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_bio_commercialization": {
+          "zero_count": 44,
+          "row_count": 44,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_software_retention": {
+          "zero_count": 44,
+          "row_count": 44,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_consumer_sell_through": {
+          "zero_count": 33,
+          "row_count": 44,
+          "zero_rate": 0.75
+        },
+        "research_axis_bridge_guard_risk": {
+          "zero_count": 44,
+          "row_count": 44,
+          "zero_rate": 1.0
+        },
+        "contract_quality": {
+          "zero_count": 22,
+          "row_count": 44,
+          "zero_rate": 0.5
+        },
+        "backlog_rpo_visibility": {
+          "zero_count": 11,
+          "row_count": 44,
+          "zero_rate": 0.25
+        }
+      },
+      "failed_gate_counts": {
+        "failed_stage3_total_score": 44,
+        "failed_stage3_bottleneck": 44,
+        "failed_stage3_contract_quality": 33,
+        "failed_stage3_visibility": 22,
+        "failed_sector_visibility": 22,
+        "failed_domain_specific_evidence": 22,
+        "failed_sector_bottleneck": 11,
+        "failed_stage2_total_score": 11,
+        "failed_stage2_information_confidence": 11,
+        "failed_stage3_valuation": 11,
+        "failed_structural_visibility_quality": 11
+      },
+      "bottleneck_selected_path_counts": {
+        "industrial": 22,
+        "actual_conversion_bridge": 11,
+        "sector": 11
+      },
+      "plain_diagnosis": "전력/인프라는 EPS와 일부 backlog는 보이지만 contract quality, margin delivery, bottleneck gate가 부족하다."
+    },
+    {
+      "group_key": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "row_count": 12,
+      "symbol_count": 1,
+      "stage_counts": {
+        "1": 12
+      },
+      "stage3_green_count": 0,
+      "max_score": 35.6473,
+      "avg_score": 35.6473,
+      "best_row": {
+        "symbol": "012450",
+        "company_name": "한화에어로스페이스",
+        "as_of_date": "2024-08-01",
+        "current_stage": "1",
+        "current_score": "35.6473",
+        "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+        "sector_profile": "DEFENSE",
+        "green_gate_deficit_summary": "total:35.65/87.00(-51.35); yellow_total:35.65/75.00(-39.35); sector_bottleneck:14.65/35.00(-20.35); eps_fcf:0.00/17.00(-17.00); bottleneck:2.38/12.75(-10.37); visibility:14.53/18.00(-3.47); valuation:7.88/9.33(-1.45); mispricing:8.60/9.33(-0.73)",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "100.0",
+        "revision_score": "83.3333",
+        "contract_quality": "62.0",
+        "backlog_rpo_visibility": "70.0",
+        "capa_constraint": "0.0"
+      },
+      "component_averages": {
+        "archetype_component_eps_fcf_explosion": 0.0,
+        "archetype_component_earnings_visibility": 14.5343,
+        "archetype_component_bottleneck_pricing": 2.3766,
+        "archetype_component_market_mispricing": 8.6035,
+        "archetype_component_valuation_rerating": 7.8829,
+        "archetype_component_capital_allocation": 0.0,
+        "archetype_component_information_confidence": 2.25
+      },
+      "runtime_quality_averages": {
+        "revision_score": 83.3333,
+        "contract_quality": 62.0,
+        "backlog_rpo_visibility": 70.0,
+        "capa_constraint": 0.0,
+        "structural_visibility_quality": 67.9472,
+        "sector_visibility_score": 62.5295,
+        "sector_bottleneck_score": 14.65,
+        "domain_specific_evidence_score": 40.0,
+        "actual_profit_conversion_score": 0.0
+      },
+      "positive_deficit_averages": {
+        "stage3_total_deficit": 51.3527,
+        "stage3_eps_fcf_deficit": 17.0,
+        "stage3_visibility_deficit": 3.4657,
+        "stage3_bottleneck_deficit": 10.3734,
+        "stage3_market_mispricing_deficit": 0.7298,
+        "stage3_valuation_deficit": 1.4504,
+        "sector_bottleneck_deficit": 20.35,
+        "stage3_yellow_total_deficit": 39.3527
+      },
+      "zero_field_counts": {
+        "research_axis_bridge_capital_return": {
+          "zero_count": 12,
+          "row_count": 12,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_insurance_quality": {
+          "zero_count": 12,
+          "row_count": 12,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_bio_commercialization": {
+          "zero_count": 12,
+          "row_count": 12,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_software_retention": {
+          "zero_count": 12,
+          "row_count": 12,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_guard_risk": {
+          "zero_count": 12,
+          "row_count": 12,
+          "zero_rate": 1.0
+        },
+        "capa_constraint": {
+          "zero_count": 12,
+          "row_count": 12,
+          "zero_rate": 1.0
+        }
+      },
+      "failed_gate_counts": {
+        "failed_stage2_total_score": 12,
+        "failed_stage2_eps_fcf": 12,
+        "failed_stage2_information_confidence": 12,
+        "failed_stage3_total_score": 12,
+        "failed_stage3_eps_fcf": 12,
+        "failed_stage3_visibility": 12,
+        "failed_stage3_bottleneck": 12,
+        "failed_stage3_market_mispricing": 12,
+        "failed_stage3_valuation": 12,
+        "failed_sector_bottleneck": 12
+      },
+      "bottleneck_selected_path_counts": {
+        "sector": 12
+      },
+      "plain_diagnosis": "방산은 contract/backlog가 있어도 납품-매출-마진 전환이 EPS/FCF와 bottleneck으로 약하게 들어간다."
+    },
+    {
+      "group_key": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "row_count": 19,
+      "symbol_count": 1,
+      "stage_counts": {
+        "3-Yellow": 19
+      },
+      "stage3_green_count": 0,
+      "max_score": 80.0131,
+      "avg_score": 78.5529,
+      "best_row": {
+        "symbol": "000660",
+        "company_name": "SK하이닉스",
+        "as_of_date": "2024-05-01",
+        "current_stage": "3-Yellow",
+        "current_score": "80.0131",
+        "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "sector_profile": "MEMORY_HBM",
+        "green_gate_deficit_summary": "total:80.01/87.00(-6.99); bottleneck:12.18/14.25(-2.07)",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "100.0",
+        "revision_score": "100.0",
+        "contract_quality": "0.0",
+        "backlog_rpo_visibility": "55.0",
+        "capa_constraint": "15.0"
+      },
+      "component_averages": {
+        "archetype_component_eps_fcf_explosion": 24.0,
+        "archetype_component_earnings_visibility": 17.5443,
+        "archetype_component_bottleneck_pricing": 11.4554,
+        "archetype_component_market_mispricing": 13.041,
+        "archetype_component_valuation_rerating": 9.9846,
+        "archetype_component_capital_allocation": 0.0802,
+        "archetype_component_information_confidence": 2.4474
+      },
+      "runtime_quality_averages": {
+        "revision_score": 100.0,
+        "contract_quality": 0.0,
+        "backlog_rpo_visibility": 55.0,
+        "capa_constraint": 15.0,
+        "structural_visibility_quality": 78.442,
+        "sector_visibility_score": 78.7463,
+        "sector_bottleneck_score": 62.5309,
+        "domain_specific_evidence_score": 100.0,
+        "actual_profit_conversion_score": 66.9241
+      },
+      "positive_deficit_averages": {
+        "stage3_total_deficit": 8.4471,
+        "stage3_bottleneck_deficit": 2.7946,
+        "green_cross_evidence_deficit": 1.0
+      },
+      "zero_field_counts": {
+        "research_axis_bridge_capital_return": {
+          "zero_count": 19,
+          "row_count": 19,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_insurance_quality": {
+          "zero_count": 19,
+          "row_count": 19,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_bio_commercialization": {
+          "zero_count": 19,
+          "row_count": 19,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_software_retention": {
+          "zero_count": 19,
+          "row_count": 19,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_consumer_sell_through": {
+          "zero_count": 19,
+          "row_count": 19,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_guard_risk": {
+          "zero_count": 19,
+          "row_count": 19,
+          "zero_rate": 1.0
+        },
+        "contract_quality": {
+          "zero_count": 19,
+          "row_count": 19,
+          "zero_rate": 1.0
+        }
+      },
+      "failed_gate_counts": {
+        "failed_stage3_total_score": 19,
+        "failed_stage3_bottleneck": 19,
+        "failed_stage2_information_confidence": 7,
+        "failed_green_cross_evidence": 7
+      },
+      "bottleneck_selected_path_counts": {
+        "actual_conversion_bridge": 19
+      },
+      "plain_diagnosis": "HBM 전망/revision과 bridge field는 잡히지만 weighted total/bottleneck gate에서 아직 Green까지 부족하다."
+    },
+    {
+      "group_key": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "row_count": 1,
+      "symbol_count": 1,
+      "stage_counts": {
+        "2": 1
+      },
+      "stage3_green_count": 0,
+      "max_score": 72.1181,
+      "avg_score": 72.1181,
+      "best_row": {
+        "symbol": "005930",
+        "company_name": "삼성전자",
+        "as_of_date": "2024-04-01",
+        "current_stage": "2",
+        "current_score": "72.1181",
+        "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+        "sector_profile": "MEMORY_HBM",
+        "green_gate_deficit_summary": "total:72.12/87.00(-14.88); yellow_total:72.12/75.00(-2.88); bottleneck:8.16/10.50(-2.33); visibility:13.17/13.50(-0.33)",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "0.0",
+        "revision_score": "80.0",
+        "contract_quality": "0.0",
+        "backlog_rpo_visibility": "40.0",
+        "capa_constraint": "15.0"
+      },
+      "component_averages": {
+        "archetype_component_eps_fcf_explosion": 22.0,
+        "archetype_component_earnings_visibility": 13.1685,
+        "archetype_component_bottleneck_pricing": 8.165,
+        "archetype_component_market_mispricing": 9.4296,
+        "archetype_component_valuation_rerating": 7.8935,
+        "archetype_component_capital_allocation": 0.0615,
+        "archetype_component_information_confidence": 11.4
+      },
+      "runtime_quality_averages": {
+        "revision_score": 80.0,
+        "contract_quality": 0.0,
+        "backlog_rpo_visibility": 40.0,
+        "capa_constraint": 15.0,
+        "structural_visibility_quality": 72.5613,
+        "sector_visibility_score": 75.225,
+        "sector_bottleneck_score": 61.05,
+        "domain_specific_evidence_score": 100.0,
+        "actual_profit_conversion_score": 62.9167
+      },
+      "positive_deficit_averages": {
+        "stage3_total_deficit": 14.8819,
+        "stage3_visibility_deficit": 0.3315,
+        "stage3_bottleneck_deficit": 2.335,
+        "stage3_yellow_total_deficit": 2.8819
+      },
+      "zero_field_counts": {
+        "research_axis_bridge_contract": {
+          "zero_count": 1,
+          "row_count": 1,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_capital_return": {
+          "zero_count": 1,
+          "row_count": 1,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_insurance_quality": {
+          "zero_count": 1,
+          "row_count": 1,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_bio_commercialization": {
+          "zero_count": 1,
+          "row_count": 1,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_software_retention": {
+          "zero_count": 1,
+          "row_count": 1,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_consumer_sell_through": {
+          "zero_count": 1,
+          "row_count": 1,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_guard_risk": {
+          "zero_count": 1,
+          "row_count": 1,
+          "zero_rate": 1.0
+        },
+        "contract_quality": {
+          "zero_count": 1,
+          "row_count": 1,
+          "zero_rate": 1.0
+        }
+      },
+      "failed_gate_counts": {
+        "failed_stage3_total_score": 1,
+        "failed_stage3_visibility": 1,
+        "failed_stage3_bottleneck": 1
+      },
+      "bottleneck_selected_path_counts": {
+        "actual_conversion_bridge": 1
+      },
+      "plain_diagnosis": "삼성 memory recovery route는 margin은 잡히지만 customer/backlog/contract가 비어 direct Green이 아니다."
+    },
+    {
+      "group_key": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "row_count": 22,
+      "symbol_count": 2,
+      "stage_counts": {
+        "1": 22
+      },
+      "stage3_green_count": 0,
+      "max_score": 64.161,
+      "avg_score": 54.4233,
+      "best_row": {
+        "symbol": "003230",
+        "company_name": "삼양식품",
+        "as_of_date": "2024-06-01",
+        "current_stage": "1",
+        "current_score": "64.161",
+        "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+        "sector_profile": "GENERIC",
+        "green_gate_deficit_summary": "total:64.16/87.00(-22.84); domain_evidence:14.29/35.00(-20.71); yellow_total:64.16/75.00(-10.84); sector_bottleneck:25.50/35.00(-9.50); bottleneck:2.89/9.00(-6.11); visibility:15.06/17.25(-2.19); valuation:7.57/8.67(-1.10); mispricing:10.60/10.67(-0.07)",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_backlog": "0.0",
+        "research_axis_bridge_contract": "0.0",
+        "revision_score": "100.0",
+        "contract_quality": "35.0",
+        "backlog_rpo_visibility": "0.0",
+        "capa_constraint": "0.0"
+      },
+      "component_averages": {
+        "archetype_component_eps_fcf_explosion": 15.95,
+        "archetype_component_earnings_visibility": 15.2844,
+        "archetype_component_bottleneck_pricing": 4.4712,
+        "archetype_component_market_mispricing": 10.6144,
+        "archetype_component_valuation_rerating": 7.5797,
+        "archetype_component_capital_allocation": 0.0237,
+        "archetype_component_information_confidence": 4.5
+      },
+      "runtime_quality_averages": {
+        "revision_score": 100.0,
+        "contract_quality": 35.0,
+        "backlog_rpo_visibility": 5.0,
+        "capa_constraint": 0.0,
+        "structural_visibility_quality": 75.3709,
+        "sector_visibility_score": 73.0814,
+        "sector_bottleneck_score": 47.3413,
+        "domain_specific_evidence_score": 57.1428,
+        "actual_profit_conversion_score": 39.0
+      },
+      "positive_deficit_averages": {
+        "stage3_total_deficit": 32.5767,
+        "stage3_eps_fcf_deficit": 8.8,
+        "stage3_visibility_deficit": 1.9657,
+        "stage3_bottleneck_deficit": 4.5288,
+        "stage3_market_mispricing_deficit": 0.0523,
+        "stage3_valuation_deficit": 1.087,
+        "sector_bottleneck_deficit": 9.5,
+        "green_cross_evidence_deficit": 1.0,
+        "domain_specific_evidence_deficit": 20.7143,
+        "stage3_yellow_total_deficit": 20.5768
+      },
+      "zero_field_counts": {
+        "research_axis_bridge_backlog": {
+          "zero_count": 22,
+          "row_count": 22,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_contract": {
+          "zero_count": 22,
+          "row_count": 22,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_capital_return": {
+          "zero_count": 22,
+          "row_count": 22,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_insurance_quality": {
+          "zero_count": 22,
+          "row_count": 22,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_bio_commercialization": {
+          "zero_count": 22,
+          "row_count": 22,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_software_retention": {
+          "zero_count": 22,
+          "row_count": 22,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_guard_risk": {
+          "zero_count": 11,
+          "row_count": 22,
+          "zero_rate": 0.5
+        },
+        "backlog_rpo_visibility": {
+          "zero_count": 11,
+          "row_count": 22,
+          "zero_rate": 0.5
+        },
+        "capa_constraint": {
+          "zero_count": 22,
+          "row_count": 22,
+          "zero_rate": 1.0
+        }
+      },
+      "failed_gate_counts": {
+        "failed_stage2_total_score": 22,
+        "failed_stage3_total_score": 22,
+        "failed_stage3_visibility": 22,
+        "failed_stage3_bottleneck": 22,
+        "failed_stage3_market_mispricing": 22,
+        "failed_stage3_valuation": 22,
+        "failed_sector_bottleneck": 11,
+        "failed_domain_specific_evidence": 11,
+        "failed_stage2_eps_fcf": 11,
+        "failed_stage2_information_confidence": 11,
+        "failed_stage3_eps_fcf": 11,
+        "failed_green_cross_evidence": 11
+      },
+      "bottleneck_selected_path_counts": {
+        "sector": 22
+      },
+      "plain_diagnosis": "소비재/수출은 channel reorder, sell-through, margin bridge가 Green component로 충분히 번역되지 않는다."
+    },
+    {
+      "group_key": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "row_count": 11,
+      "symbol_count": 1,
+      "stage_counts": {
+        "1": 11
+      },
+      "stage3_green_count": 0,
+      "max_score": 9.308,
+      "avg_score": 9.308,
+      "best_row": {
+        "symbol": "247540",
+        "company_name": "에코프로비엠",
+        "as_of_date": "2023-08-01",
+        "current_stage": "1",
+        "current_score": "9.308",
+        "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "sector_profile": "GENERIC",
+        "green_gate_deficit_summary": "total:9.31/87.00(-77.69); yellow_total:9.31/75.00(-65.69); revision:0.00/55.00(-55.00); structural_visibility:0.00/45.00(-45.00); sector_visibility:0.00/45.00(-45.00); domain_evidence:0.00/35.00(-35.00); sector_bottleneck:6.00/35.00(-29.00); visibility:0.00/10.50(-10.50); eps_fcf:0.00/8.50(-8.50); mispricing:0.48/8.00(-7.52); valuation:0.30/6.67(-6.37); bottleneck:0.53/6.00(-5.47); cross_evidence:2.00/3.00(-1.00)",
+        "research_axis_bridge_margin": "0.0",
+        "research_axis_bridge_customer": "0.0",
+        "research_axis_bridge_backlog": "0.0",
+        "research_axis_bridge_contract": "0.0",
+        "revision_score": "0.0",
+        "contract_quality": "0.0",
+        "backlog_rpo_visibility": "0.0",
+        "capa_constraint": "0.0"
+      },
+      "component_averages": {
+        "archetype_component_eps_fcf_explosion": 0.0,
+        "archetype_component_earnings_visibility": 0.0,
+        "archetype_component_bottleneck_pricing": 0.528,
+        "archetype_component_market_mispricing": 0.48,
+        "archetype_component_valuation_rerating": 0.3,
+        "archetype_component_capital_allocation": 0.0,
+        "archetype_component_information_confidence": 12.0
+      },
+      "runtime_quality_averages": {
+        "revision_score": 0.0,
+        "contract_quality": 0.0,
+        "backlog_rpo_visibility": 0.0,
+        "capa_constraint": 0.0,
+        "structural_visibility_quality": 0.0,
+        "sector_visibility_score": 0.0,
+        "sector_bottleneck_score": 6.0,
+        "domain_specific_evidence_score": 0.0,
+        "actual_profit_conversion_score": 0.0
+      },
+      "positive_deficit_averages": {
+        "stage3_total_deficit": 77.692,
+        "stage3_eps_fcf_deficit": 8.5,
+        "stage3_visibility_deficit": 10.5,
+        "stage3_bottleneck_deficit": 5.472,
+        "stage3_market_mispricing_deficit": 7.52,
+        "stage3_valuation_deficit": 6.3667,
+        "stage3_revision_deficit": 55.0,
+        "structural_visibility_deficit": 45.0,
+        "sector_visibility_deficit": 45.0,
+        "sector_bottleneck_deficit": 29.0,
+        "green_cross_evidence_deficit": 1.0,
+        "domain_specific_evidence_deficit": 35.0,
+        "stage3_yellow_total_deficit": 65.692
+      },
+      "zero_field_counts": {
+        "research_axis_bridge_margin": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_customer": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_backlog": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_contract": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_valuation_repricing": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_capital_return": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_insurance_quality": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_bio_commercialization": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_software_retention": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_consumer_sell_through": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_guard_risk": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "contract_quality": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "backlog_rpo_visibility": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "capa_constraint": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "revision_score": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "domain_specific_evidence_score": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        }
+      },
+      "failed_gate_counts": {
+        "failed_stage2_total_score": 11,
+        "failed_stage2_eps_fcf": 11,
+        "failed_stage2_valuation": 11,
+        "failed_stage2_information_confidence": 11,
+        "failed_stage3_total_score": 11,
+        "failed_stage3_eps_fcf": 11,
+        "failed_stage3_visibility": 11,
+        "failed_stage3_bottleneck": 11,
+        "failed_stage3_market_mispricing": 11,
+        "failed_stage3_valuation": 11,
+        "failed_stage3_revision": 11,
+        "failed_structural_visibility_quality": 11,
+        "failed_sector_visibility": 11,
+        "failed_sector_bottleneck": 11,
+        "failed_green_cross_evidence": 11,
+        "failed_domain_specific_evidence": 11
+      },
+      "bottleneck_selected_path_counts": {
+        "sector": 11
+      },
+      "plain_diagnosis": "R13은 false-positive guard 성격이므로 낮은 점수 자체는 의도일 수 있지만, guard_risk source field도 명확히 남겨야 한다."
+    }
+  ],
+  "sector_rows": [
+    {
+      "group_key": "DEFENSE",
+      "row_count": 12,
+      "symbol_count": 1,
+      "stage_counts": {
+        "1": 12
+      },
+      "stage3_green_count": 0,
+      "max_score": 35.6473,
+      "avg_score": 35.6473,
+      "best_row": {
+        "symbol": "012450",
+        "company_name": "한화에어로스페이스",
+        "as_of_date": "2024-08-01",
+        "current_stage": "1",
+        "current_score": "35.6473",
+        "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+        "sector_profile": "DEFENSE",
+        "green_gate_deficit_summary": "total:35.65/87.00(-51.35); yellow_total:35.65/75.00(-39.35); sector_bottleneck:14.65/35.00(-20.35); eps_fcf:0.00/17.00(-17.00); bottleneck:2.38/12.75(-10.37); visibility:14.53/18.00(-3.47); valuation:7.88/9.33(-1.45); mispricing:8.60/9.33(-0.73)",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "100.0",
+        "revision_score": "83.3333",
+        "contract_quality": "62.0",
+        "backlog_rpo_visibility": "70.0",
+        "capa_constraint": "0.0"
+      },
+      "component_averages": {
+        "archetype_component_eps_fcf_explosion": 0.0,
+        "archetype_component_earnings_visibility": 14.5343,
+        "archetype_component_bottleneck_pricing": 2.3766,
+        "archetype_component_market_mispricing": 8.6035,
+        "archetype_component_valuation_rerating": 7.8829,
+        "archetype_component_capital_allocation": 0.0,
+        "archetype_component_information_confidence": 2.25
+      },
+      "runtime_quality_averages": {
+        "revision_score": 83.3333,
+        "contract_quality": 62.0,
+        "backlog_rpo_visibility": 70.0,
+        "capa_constraint": 0.0,
+        "structural_visibility_quality": 67.9472,
+        "sector_visibility_score": 62.5295,
+        "sector_bottleneck_score": 14.65,
+        "domain_specific_evidence_score": 40.0,
+        "actual_profit_conversion_score": 0.0
+      },
+      "positive_deficit_averages": {
+        "stage3_total_deficit": 51.3527,
+        "stage3_eps_fcf_deficit": 17.0,
+        "stage3_visibility_deficit": 3.4657,
+        "stage3_bottleneck_deficit": 10.3734,
+        "stage3_market_mispricing_deficit": 0.7298,
+        "stage3_valuation_deficit": 1.4504,
+        "sector_bottleneck_deficit": 20.35,
+        "stage3_yellow_total_deficit": 39.3527
+      },
+      "zero_field_counts": {
+        "research_axis_bridge_capital_return": {
+          "zero_count": 12,
+          "row_count": 12,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_insurance_quality": {
+          "zero_count": 12,
+          "row_count": 12,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_bio_commercialization": {
+          "zero_count": 12,
+          "row_count": 12,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_software_retention": {
+          "zero_count": 12,
+          "row_count": 12,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_guard_risk": {
+          "zero_count": 12,
+          "row_count": 12,
+          "zero_rate": 1.0
+        },
+        "capa_constraint": {
+          "zero_count": 12,
+          "row_count": 12,
+          "zero_rate": 1.0
+        }
+      },
+      "failed_gate_counts": {
+        "failed_stage2_total_score": 12,
+        "failed_stage2_eps_fcf": 12,
+        "failed_stage2_information_confidence": 12,
+        "failed_stage3_total_score": 12,
+        "failed_stage3_eps_fcf": 12,
+        "failed_stage3_visibility": 12,
+        "failed_stage3_bottleneck": 12,
+        "failed_stage3_market_mispricing": 12,
+        "failed_stage3_valuation": 12,
+        "failed_sector_bottleneck": 12
+      },
+      "bottleneck_selected_path_counts": {
+        "sector": 12
+      },
+      "plain_diagnosis": "후보는 채점됐지만 여러 bridge field가 0이라 연구축이 runtime 점수로 충분히 바뀌지 않았다."
+    },
+    {
+      "group_key": "GENERIC",
+      "row_count": 29,
+      "symbol_count": 3,
+      "stage_counts": {
+        "0": 7,
+        "1": 22
+      },
+      "stage3_green_count": 0,
+      "max_score": 64.161,
+      "avg_score": 28.943,
+      "best_row": {
+        "symbol": "003230",
+        "company_name": "삼양식품",
+        "as_of_date": "2024-06-01",
+        "current_stage": "1",
+        "current_score": "64.161",
+        "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+        "sector_profile": "GENERIC",
+        "green_gate_deficit_summary": "total:64.16/87.00(-22.84); domain_evidence:14.29/35.00(-20.71); yellow_total:64.16/75.00(-10.84); sector_bottleneck:25.50/35.00(-9.50); bottleneck:2.89/9.00(-6.11); visibility:15.06/17.25(-2.19); valuation:7.57/8.67(-1.10); mispricing:10.60/10.67(-0.07)",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_backlog": "0.0",
+        "research_axis_bridge_contract": "0.0",
+        "revision_score": "100.0",
+        "contract_quality": "35.0",
+        "backlog_rpo_visibility": "0.0",
+        "capa_constraint": "0.0"
+      },
+      "component_averages": {
+        "archetype_component_eps_fcf_explosion": 8.3448,
+        "archetype_component_earnings_visibility": 6.9203,
+        "archetype_component_bottleneck_pricing": 1.5824,
+        "archetype_component_market_mispricing": 4.3168,
+        "archetype_component_valuation_rerating": 3.0713,
+        "archetype_component_capital_allocation": 0.1815,
+        "archetype_component_information_confidence": 7.0086
+      },
+      "runtime_quality_averages": {
+        "revision_score": 37.931,
+        "contract_quality": 13.2759,
+        "backlog_rpo_visibility": 0.0,
+        "capa_constraint": 0.0,
+        "structural_visibility_quality": 23.2228,
+        "sector_visibility_score": 23.2228,
+        "sector_bottleneck_score": 13.3966,
+        "domain_specific_evidence_score": 5.4187,
+        "actual_profit_conversion_score": 29.3931
+      },
+      "positive_deficit_averages": {
+        "stage3_total_deficit": 58.057,
+        "stage3_eps_fcf_deficit": 11.8056,
+        "stage3_visibility_deficit": 8.1314,
+        "stage3_bottleneck_deficit": 7.3659,
+        "stage3_market_mispricing_deficit": 4.6947,
+        "stage3_valuation_deficit": 4.6758,
+        "stage3_revision_deficit": 55.0,
+        "structural_visibility_deficit": 45.0,
+        "sector_visibility_deficit": 45.0,
+        "sector_bottleneck_deficit": 21.6034,
+        "green_cross_evidence_deficit": 1.3889,
+        "domain_specific_evidence_deficit": 29.5813,
+        "stage3_yellow_total_deficit": 46.057
+      },
+      "zero_field_counts": {
+        "research_axis_bridge_margin": {
+          "zero_count": 18,
+          "row_count": 29,
+          "zero_rate": 0.6207
+        },
+        "research_axis_bridge_customer": {
+          "zero_count": 18,
+          "row_count": 29,
+          "zero_rate": 0.6207
+        },
+        "research_axis_bridge_backlog": {
+          "zero_count": 29,
+          "row_count": 29,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_contract": {
+          "zero_count": 29,
+          "row_count": 29,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_valuation_repricing": {
+          "zero_count": 18,
+          "row_count": 29,
+          "zero_rate": 0.6207
+        },
+        "research_axis_bridge_capital_return": {
+          "zero_count": 29,
+          "row_count": 29,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_insurance_quality": {
+          "zero_count": 29,
+          "row_count": 29,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_bio_commercialization": {
+          "zero_count": 29,
+          "row_count": 29,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_software_retention": {
+          "zero_count": 29,
+          "row_count": 29,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_consumer_sell_through": {
+          "zero_count": 18,
+          "row_count": 29,
+          "zero_rate": 0.6207
+        },
+        "research_axis_bridge_guard_risk": {
+          "zero_count": 29,
+          "row_count": 29,
+          "zero_rate": 1.0
+        },
+        "contract_quality": {
+          "zero_count": 18,
+          "row_count": 29,
+          "zero_rate": 0.6207
+        },
+        "backlog_rpo_visibility": {
+          "zero_count": 29,
+          "row_count": 29,
+          "zero_rate": 1.0
+        },
+        "capa_constraint": {
+          "zero_count": 29,
+          "row_count": 29,
+          "zero_rate": 1.0
+        },
+        "revision_score": {
+          "zero_count": 18,
+          "row_count": 29,
+          "zero_rate": 0.6207
+        },
+        "domain_specific_evidence_score": {
+          "zero_count": 18,
+          "row_count": 29,
+          "zero_rate": 0.6207
+        }
+      },
+      "failed_gate_counts": {
+        "failed_stage2_total_score": 29,
+        "failed_stage3_total_score": 29,
+        "failed_stage3_visibility": 29,
+        "failed_stage3_bottleneck": 29,
+        "failed_stage3_market_mispricing": 29,
+        "failed_stage3_valuation": 29,
+        "failed_sector_bottleneck": 29,
+        "failed_domain_specific_evidence": 29,
+        "failed_stage2_eps_fcf": 18,
+        "failed_stage2_valuation": 18,
+        "failed_stage2_information_confidence": 18,
+        "failed_stage3_eps_fcf": 18,
+        "failed_stage3_revision": 18,
+        "failed_structural_visibility_quality": 18,
+        "failed_sector_visibility": 18,
+        "failed_green_cross_evidence": 18
+      },
+      "bottleneck_selected_path_counts": {
+        "sector": 29
+      },
+      "plain_diagnosis": "후보는 채점됐지만 여러 bridge field가 0이라 연구축이 runtime 점수로 충분히 바뀌지 않았다."
+    },
+    {
+      "group_key": "K_BEAUTY_EXPORT",
+      "row_count": 11,
+      "symbol_count": 1,
+      "stage_counts": {
+        "1": 11
+      },
+      "stage3_green_count": 0,
+      "max_score": 44.6855,
+      "avg_score": 44.6855,
+      "best_row": {
+        "symbol": "257720",
+        "company_name": "실리콘투",
+        "as_of_date": "2024-06-01",
+        "current_stage": "1",
+        "current_score": "44.6855",
+        "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+        "sector_profile": "K_BEAUTY_EXPORT",
+        "green_gate_deficit_summary": "total:44.69/87.00(-42.31); yellow_total:44.69/75.00(-30.31); eps_fcf:9.90/18.70(-8.80); bottleneck:6.05/9.00(-2.95); visibility:15.51/17.25(-1.74); valuation:7.59/8.67(-1.08); cross_evidence:2.00/3.00(-1.00); mispricing:10.63/10.67(-0.03)",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_backlog": "0.0",
+        "research_axis_bridge_contract": "0.0",
+        "revision_score": "100.0",
+        "contract_quality": "35.0",
+        "backlog_rpo_visibility": "10.0",
+        "capa_constraint": "0.0"
+      },
+      "component_averages": {
+        "archetype_component_eps_fcf_explosion": 9.9,
+        "archetype_component_earnings_visibility": 15.506,
+        "archetype_component_bottleneck_pricing": 6.0545,
+        "archetype_component_market_mispricing": 10.6336,
+        "archetype_component_valuation_rerating": 7.5914,
+        "archetype_component_capital_allocation": 0.0,
+        "archetype_component_information_confidence": 3.0
+      },
+      "runtime_quality_averages": {
+        "revision_score": 100.0,
+        "contract_quality": 35.0,
+        "backlog_rpo_visibility": 10.0,
+        "capa_constraint": 0.0,
+        "structural_visibility_quality": 89.518,
+        "sector_visibility_score": 84.939,
+        "sector_bottleneck_score": 69.1825,
+        "domain_specific_evidence_score": 100.0,
+        "actual_profit_conversion_score": 17.5
+      },
+      "positive_deficit_averages": {
+        "stage3_total_deficit": 42.3145,
+        "stage3_eps_fcf_deficit": 8.8,
+        "stage3_visibility_deficit": 1.744,
+        "stage3_bottleneck_deficit": 2.9455,
+        "stage3_market_mispricing_deficit": 0.0331,
+        "stage3_valuation_deficit": 1.0753,
+        "green_cross_evidence_deficit": 1.0,
+        "stage3_yellow_total_deficit": 30.3145
+      },
+      "zero_field_counts": {
+        "research_axis_bridge_backlog": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_contract": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_capital_return": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_insurance_quality": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_bio_commercialization": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_software_retention": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        },
+        "capa_constraint": {
+          "zero_count": 11,
+          "row_count": 11,
+          "zero_rate": 1.0
+        }
+      },
+      "failed_gate_counts": {
+        "failed_stage2_total_score": 11,
+        "failed_stage2_eps_fcf": 11,
+        "failed_stage2_information_confidence": 11,
+        "failed_stage3_total_score": 11,
+        "failed_stage3_eps_fcf": 11,
+        "failed_stage3_visibility": 11,
+        "failed_stage3_bottleneck": 11,
+        "failed_stage3_market_mispricing": 11,
+        "failed_stage3_valuation": 11,
+        "failed_green_cross_evidence": 11
+      },
+      "bottleneck_selected_path_counts": {
+        "sector": 11
+      },
+      "plain_diagnosis": "후보는 채점됐지만 여러 bridge field가 0이라 연구축이 runtime 점수로 충분히 바뀌지 않았다."
+    },
+    {
+      "group_key": "MEMORY_HBM",
+      "row_count": 20,
+      "symbol_count": 2,
+      "stage_counts": {
+        "2": 1,
+        "3-Yellow": 19
+      },
+      "stage3_green_count": 0,
+      "max_score": 80.0131,
+      "avg_score": 78.2311,
+      "best_row": {
+        "symbol": "000660",
+        "company_name": "SK하이닉스",
+        "as_of_date": "2024-05-01",
+        "current_stage": "3-Yellow",
+        "current_score": "80.0131",
+        "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "sector_profile": "MEMORY_HBM",
+        "green_gate_deficit_summary": "total:80.01/87.00(-6.99); bottleneck:12.18/14.25(-2.07)",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "100.0",
+        "revision_score": "100.0",
+        "contract_quality": "0.0",
+        "backlog_rpo_visibility": "55.0",
+        "capa_constraint": "15.0"
+      },
+      "component_averages": {
+        "archetype_component_eps_fcf_explosion": 23.9,
+        "archetype_component_earnings_visibility": 17.3255,
+        "archetype_component_bottleneck_pricing": 11.2909,
+        "archetype_component_market_mispricing": 12.8604,
+        "archetype_component_valuation_rerating": 9.88,
+        "archetype_component_capital_allocation": 0.0793,
+        "archetype_component_information_confidence": 2.895
+      },
+      "runtime_quality_averages": {
+        "revision_score": 99.0,
+        "contract_quality": 0.0,
+        "backlog_rpo_visibility": 54.25,
+        "capa_constraint": 15.0,
+        "structural_visibility_quality": 78.148,
+        "sector_visibility_score": 78.5703,
+        "sector_bottleneck_score": 62.4569,
+        "domain_specific_evidence_score": 100.0,
+        "actual_profit_conversion_score": 66.7237
+      },
+      "positive_deficit_averages": {
+        "stage3_total_deficit": 8.7689,
+        "stage3_visibility_deficit": 0.3315,
+        "stage3_bottleneck_deficit": 2.7716,
+        "green_cross_evidence_deficit": 1.0,
+        "stage3_yellow_total_deficit": 2.8819
+      },
+      "zero_field_counts": {
+        "research_axis_bridge_contract": {
+          "zero_count": 1,
+          "row_count": 20,
+          "zero_rate": 0.05
+        },
+        "research_axis_bridge_capital_return": {
+          "zero_count": 20,
+          "row_count": 20,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_insurance_quality": {
+          "zero_count": 20,
+          "row_count": 20,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_bio_commercialization": {
+          "zero_count": 20,
+          "row_count": 20,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_software_retention": {
+          "zero_count": 20,
+          "row_count": 20,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_consumer_sell_through": {
+          "zero_count": 20,
+          "row_count": 20,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_guard_risk": {
+          "zero_count": 20,
+          "row_count": 20,
+          "zero_rate": 1.0
+        },
+        "contract_quality": {
+          "zero_count": 20,
+          "row_count": 20,
+          "zero_rate": 1.0
+        }
+      },
+      "failed_gate_counts": {
+        "failed_stage3_total_score": 20,
+        "failed_stage3_bottleneck": 20,
+        "failed_stage2_information_confidence": 7,
+        "failed_green_cross_evidence": 7,
+        "failed_stage3_visibility": 1
+      },
+      "bottleneck_selected_path_counts": {
+        "actual_conversion_bridge": 20
+      },
+      "plain_diagnosis": "후보는 채점됐지만 여러 bridge field가 0이라 연구축이 runtime 점수로 충분히 바뀌지 않았다."
+    },
+    {
+      "group_key": "POWER_EQUIPMENT",
+      "row_count": 48,
+      "symbol_count": 5,
+      "stage_counts": {
+        "1": 15,
+        "2": 33
+      },
+      "stage3_green_count": 0,
+      "max_score": 72.9252,
+      "avg_score": 61.3929,
+      "best_row": {
+        "symbol": "267260",
+        "company_name": "HD현대일렉트릭",
+        "as_of_date": "2023-08-01",
+        "current_stage": "2",
+        "current_score": "72.9252",
+        "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+        "sector_profile": "POWER_EQUIPMENT",
+        "green_gate_deficit_summary": "total:72.93/87.00(-14.07); bottleneck:9.90/15.00(-5.09); contract:41.50/45.00(-3.50); yellow_total:72.93/75.00(-2.07)",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "100.0",
+        "revision_score": "100.0",
+        "contract_quality": "41.5",
+        "backlog_rpo_visibility": "85.0",
+        "capa_constraint": "48.0"
+      },
+      "component_averages": {
+        "archetype_component_eps_fcf_explosion": 18.7687,
+        "archetype_component_earnings_visibility": 14.7972,
+        "archetype_component_bottleneck_pricing": 8.0192,
+        "archetype_component_market_mispricing": 9.6679,
+        "archetype_component_valuation_rerating": 8.2703,
+        "archetype_component_capital_allocation": 0.6439,
+        "archetype_component_information_confidence": 2.7031
+      },
+      "runtime_quality_averages": {
+        "revision_score": 90.1389,
+        "contract_quality": 28.0729,
+        "backlog_rpo_visibility": 56.1458,
+        "capa_constraint": 32.4271,
+        "structural_visibility_quality": 52.5701,
+        "sector_visibility_score": 49.0037,
+        "sector_bottleneck_score": 37.9599,
+        "domain_specific_evidence_score": 38.1944,
+        "actual_profit_conversion_score": 21.6562
+      },
+      "positive_deficit_averages": {
+        "stage3_total_deficit": 25.6071,
+        "stage3_eps_fcf_deficit": 17.0,
+        "stage3_visibility_deficit": 8.2647,
+        "stage3_bottleneck_deficit": 6.8558,
+        "stage3_market_mispricing_deficit": 7.52,
+        "stage3_valuation_deficit": 2.2939,
+        "stage3_revision_deficit": 55.0,
+        "stage3_contract_quality_deficit": 32.6622,
+        "structural_visibility_deficit": 27.0553,
+        "sector_visibility_deficit": 16.056,
+        "sector_bottleneck_deficit": 9.5125,
+        "green_cross_evidence_deficit": 1.0,
+        "domain_specific_evidence_deficit": 6.7949,
+        "stage3_yellow_total_deficit": 13.6071
+      },
+      "zero_field_counts": {
+        "research_axis_bridge_margin": {
+          "zero_count": 4,
+          "row_count": 48,
+          "zero_rate": 0.0833
+        },
+        "research_axis_bridge_customer": {
+          "zero_count": 4,
+          "row_count": 48,
+          "zero_rate": 0.0833
+        },
+        "research_axis_bridge_backlog": {
+          "zero_count": 15,
+          "row_count": 48,
+          "zero_rate": 0.3125
+        },
+        "research_axis_bridge_contract": {
+          "zero_count": 26,
+          "row_count": 48,
+          "zero_rate": 0.5417
+        },
+        "research_axis_bridge_valuation_repricing": {
+          "zero_count": 4,
+          "row_count": 48,
+          "zero_rate": 0.0833
+        },
+        "research_axis_bridge_capital_return": {
+          "zero_count": 48,
+          "row_count": 48,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_insurance_quality": {
+          "zero_count": 48,
+          "row_count": 48,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_bio_commercialization": {
+          "zero_count": 48,
+          "row_count": 48,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_software_retention": {
+          "zero_count": 48,
+          "row_count": 48,
+          "zero_rate": 1.0
+        },
+        "research_axis_bridge_consumer_sell_through": {
+          "zero_count": 37,
+          "row_count": 48,
+          "zero_rate": 0.7708
+        },
+        "research_axis_bridge_guard_risk": {
+          "zero_count": 48,
+          "row_count": 48,
+          "zero_rate": 1.0
+        },
+        "contract_quality": {
+          "zero_count": 26,
+          "row_count": 48,
+          "zero_rate": 0.5417
+        },
+        "backlog_rpo_visibility": {
+          "zero_count": 15,
+          "row_count": 48,
+          "zero_rate": 0.3125
+        },
+        "capa_constraint": {
+          "zero_count": 4,
+          "row_count": 48,
+          "zero_rate": 0.0833
+        },
+        "revision_score": {
+          "zero_count": 4,
+          "row_count": 48,
+          "zero_rate": 0.0833
+        },
+        "domain_specific_evidence_score": {
+          "zero_count": 4,
+          "row_count": 48,
+          "zero_rate": 0.0833
+        }
+      },
+      "failed_gate_counts": {
+        "failed_stage3_total_score": 48,
+        "failed_stage3_bottleneck": 48,
+        "failed_stage3_contract_quality": 37,
+        "failed_stage3_visibility": 26,
+        "failed_sector_visibility": 26,
+        "failed_domain_specific_evidence": 26,
+        "failed_sector_bottleneck": 15,
+        "failed_stage2_total_score": 15,
+        "failed_stage2_information_confidence": 15,
+        "failed_stage3_valuation": 15,
+        "failed_structural_visibility_quality": 15,
+        "failed_stage2_eps_fcf": 4,
+        "failed_stage2_valuation": 4,
+        "failed_stage3_eps_fcf": 4,
+        "failed_stage3_market_mispricing": 4,
+        "failed_stage3_revision": 4,
+        "failed_green_cross_evidence": 4
+      },
+      "bottleneck_selected_path_counts": {
+        "industrial": 26,
+        "actual_conversion_bridge": 11,
+        "sector": 11
+      },
+      "plain_diagnosis": "후보는 채점됐지만 여러 bridge field가 0이라 연구축이 runtime 점수로 충분히 바뀌지 않았다."
+    }
+  ]
+}

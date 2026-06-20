@@ -1,5 +1,6 @@
 from datetime import date, datetime
 from pathlib import Path
+import tempfile
 import unittest
 
 from e2r.connectors import CSVJSONDataConnector, EmptyDataConnector, FallbackDataConnector, MockDataConnector
@@ -211,6 +212,28 @@ class CSVJSONDataConnectorTests(unittest.TestCase):
         self.assertEqual(hd_reports[0].parsed_fields["shortage_type"], "structural")
         self.assertTrue(zoom_news)
         self.assertTrue(zoom_news[0].parsed_fields["pandemic_demand_spike"])
+
+    def test_non_finite_optional_numbers_are_ignored_when_loading_csv(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            (root / "consensus_revisions.csv").write_text(
+                "\n".join(
+                    (
+                        "symbol,date,fiscal_year,as_of_date,eps_revision_1m,op_revision_1m,analyst_count_change,source",
+                        "CASE,2024-01-05,2024,2024-01-05,nan,inf,nan,file",
+                    )
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            connector = CSVJSONDataConnector.from_directory(root)
+            revisions = connector.get_consensus_revisions("CASE", date(2024, 1, 5))
+
+        self.assertEqual(len(revisions), 1)
+        self.assertIsNone(revisions[0].eps_revision_1m)
+        self.assertIsNone(revisions[0].op_revision_1m)
+        self.assertIsNone(revisions[0].analyst_count_change)
 
 
 class FallbackDataConnectorTests(unittest.TestCase):

@@ -1,0 +1,1904 @@
+{
+  "schema_version": "v12_cross_archetype_score_loss_trace_v1",
+  "scope": "all_ready_v12_archetype_green_guard_fixture_pairs",
+  "scoring_policy": "diagnostic_only_no_symbol_or_archetype_bonus",
+  "ready_archetype_count": 30,
+  "spec_row_count": 60,
+  "role_counts": {
+    "green": 30,
+    "guard": 30
+  },
+  "gap_status_counts_by_archetype": {
+    "not_in_current_benchmark": 24,
+    "runtime_input_evidence_missing": 2,
+    "runtime_stage3_gate_blocked": 4
+  },
+  "gap_status_counts_by_green_role": {
+    "not_in_current_benchmark": 24,
+    "runtime_input_evidence_missing": 2,
+    "runtime_stage3_gate_blocked": 4
+  },
+  "gap_status_counts_by_guard_role": {
+    "not_in_current_benchmark": 24,
+    "runtime_input_evidence_missing": 2,
+    "runtime_stage3_gate_blocked": 4
+  },
+  "loss_layer_counts_by_archetype": {
+    "candidate_funnel_or_replay_coverage": 24,
+    "runtime_input_evidence_coverage": 2,
+    "weighted_component_or_stage3_gate": 4
+  },
+  "runtime_candidate_status_counts_by_archetype": {
+    "runtime_input_evidence_missing": 2,
+    "runtime_stage3_gate_blocked": 4
+  },
+  "missing_required_bridge_axis_counts": {
+    "backlog": 6,
+    "bio_commercialization": 3,
+    "capital_return": 3,
+    "consumer_sell_through": 2,
+    "contract": 10,
+    "customer": 12,
+    "guard_risk": 18,
+    "insurance_quality": 1,
+    "margin": 14,
+    "software_retention": 3,
+    "valuation_repricing": 3
+  },
+  "rows": [
+    {
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "loss_layer": "runtime_input_evidence_coverage",
+      "runtime_gap_status": "runtime_input_evidence_missing",
+      "simple_explanation": "Runtime candidates exist, but the source families needed to judge bridge translation are missing.",
+      "next_action": "Repair replay input coverage or fixture archive before blaming parser or weights.",
+      "runtime_candidate_count": 11,
+      "runtime_stage_distribution": {
+        "0": 7,
+        "1": 4
+      },
+      "runtime_max_score": 4.4554,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "top_failed_gates": [
+        {
+          "gate": "failed_stage2_total_score",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage2_eps_fcf",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage2_valuation",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage2_information_confidence",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_total_score",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_eps_fcf",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_visibility",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_bottleneck",
+          "count": 11
+        }
+      ],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "bridge_source_families_missing",
+        "families_present": [
+          "disclosure",
+          "financial_actual",
+          "price"
+        ],
+        "max_evidence_count": 2,
+        "max_input_counts": {
+          "research_report": 0,
+          "news_item": 0,
+          "consensus": 0,
+          "consensus_revision": 0,
+          "financial_actual": 2,
+          "price_bar": 2
+        }
+      },
+      "expected_runtime_primitives": [
+        "order_backlog_to_sales",
+        "named_customer_quality",
+        "contract_quality",
+        "delivery_schedule",
+        "opm_expansion_pctp",
+        "fcf_quality_score"
+      ],
+      "green_candidate": {
+        "case_id": "C01-R1-L211-07",
+        "symbol": "010140",
+        "as_of_date": "2025-02-06",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 154.5,
+        "MAE_180D_pct": -2.35
+      },
+      "guard_candidate": {
+        "case_id": "C01_R1L214_005_103230_SNW_20240516_REPORT_BACKLOG_TEXT_FALSE_POSITIVE",
+        "symbol": "103230",
+        "as_of_date": "2024-05-16",
+        "trigger_type": "Stage2",
+        "MFE_180D_pct": 3.42,
+        "MAE_180D_pct": -46.64
+      }
+    },
+    {
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "loss_layer": "weighted_component_or_stage3_gate",
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "simple_explanation": "Bridge axes are present enough, but weighted total, bottleneck, or visibility gate blocks Green.",
+      "next_action": "Inspect component formula and gate thresholds only with positive/guard replay evidence.",
+      "runtime_candidate_count": 44,
+      "runtime_stage_distribution": {
+        "1": 11,
+        "2": 33
+      },
+      "runtime_max_score": 72.9252,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [],
+      "top_failed_gates": [
+        {
+          "gate": "failed_stage3_total_score",
+          "count": 44
+        },
+        {
+          "gate": "failed_stage3_bottleneck",
+          "count": 44
+        },
+        {
+          "gate": "failed_stage3_contract_quality",
+          "count": 33
+        },
+        {
+          "gate": "failed_stage3_visibility",
+          "count": 22
+        },
+        {
+          "gate": "failed_sector_visibility",
+          "count": 22
+        },
+        {
+          "gate": "failed_domain_specific_evidence",
+          "count": 22
+        },
+        {
+          "gate": "failed_sector_bottleneck",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage2_total_score",
+          "count": 11
+        }
+      ],
+      "runtime_input_evidence_summary": {
+        "assessable": true,
+        "reason": "source_text_family_present",
+        "families_present": [
+          "disclosure",
+          "financial_actual",
+          "price",
+          "research_report"
+        ],
+        "max_evidence_count": 7,
+        "max_input_counts": {
+          "research_report": 1,
+          "news_item": 0,
+          "consensus": 2,
+          "consensus_revision": 1,
+          "financial_actual": 2,
+          "price_bar": 2
+        }
+      },
+      "expected_runtime_primitives": [
+        "datacenter_customer",
+        "order_backlog_to_sales",
+        "lead_time_extended",
+        "capacity_constraint",
+        "pricing_power_confirmed"
+      ],
+      "green_candidate": {
+        "case_id": "C02_R1L144_267260_C02_transformer_backlog_margin_bridge_clean_positive_20240216",
+        "symbol": "267260",
+        "as_of_date": "2024-02-16",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 256.7731,
+        "MAE_180D_pct": -0.5177
+      },
+      "guard_candidate": {
+        "case_id": "C02_006340_20240516_power_grid_theme_overhang_blowoff_counterexample",
+        "symbol": "006340",
+        "as_of_date": "2024-05-14",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 3.26,
+        "MAE_180D_pct": -55.09
+      }
+    },
+    {
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible",
+        "cost_overrun",
+        "delivery_schedule"
+      ],
+      "green_candidate": {
+        "case_id": "C05_L129_375500_20241031_STAGE3G",
+        "symbol": "375500",
+        "as_of_date": "2024-10-31",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 93.2,
+        "MAE_180D_pct": -5.18
+      },
+      "guard_candidate": {
+        "case_id": "C05_R1L218_CASE003_103230_20240516",
+        "symbol": "103230",
+        "as_of_date": "2024-05-16",
+        "trigger_type": "Stage2",
+        "MFE_180D_pct": 2.85,
+        "MAE_180D_pct": -47.2
+      }
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "loss_layer": "weighted_component_or_stage3_gate",
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "simple_explanation": "Bridge axes are present enough, but weighted total, bottleneck, or visibility gate blocks Green.",
+      "next_action": "Inspect component formula and gate thresholds only with positive/guard replay evidence.",
+      "runtime_candidate_count": 19,
+      "runtime_stage_distribution": {
+        "3-Yellow": 19
+      },
+      "runtime_max_score": 80.0131,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "missing_required_bridge_axes": [],
+      "top_failed_gates": [
+        {
+          "gate": "failed_stage3_total_score",
+          "count": 19
+        },
+        {
+          "gate": "failed_stage3_bottleneck",
+          "count": 19
+        },
+        {
+          "gate": "failed_stage2_information_confidence",
+          "count": 7
+        },
+        {
+          "gate": "failed_green_cross_evidence",
+          "count": 7
+        }
+      ],
+      "runtime_input_evidence_summary": {
+        "assessable": true,
+        "reason": "source_text_family_present",
+        "families_present": [
+          "disclosure",
+          "financial_actual",
+          "price",
+          "research_report"
+        ],
+        "max_evidence_count": 7,
+        "max_input_counts": {
+          "research_report": 1,
+          "news_item": 0,
+          "consensus": 2,
+          "consensus_revision": 1,
+          "financial_actual": 2,
+          "price_bar": 2
+        }
+      },
+      "expected_runtime_primitives": [
+        "customer_preorder_or_allocation",
+        "revenue_visibility_contract",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold",
+        "memory_price_increase_mentioned",
+        "medium_term_revision_visibility"
+      ],
+      "green_candidate": {
+        "case_id": "C06_R2L108_000660_HBM3E_CUSTOMER_CAPACITY_SOLDOUT_20240425",
+        "symbol": "000660",
+        "as_of_date": "2024-04-25",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 39.76,
+        "MAE_180D_pct": -18.62
+      },
+      "guard_candidate": {
+        "case_id": "C06_005930_SAMSUNG_20240711_HBM_QUALIFICATION_LAG_FALSE_GREEN",
+        "symbol": "005930",
+        "as_of_date": "2024-07-11",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 1.37,
+        "MAE_180D_pct": -43.04
+      }
+    },
+    {
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "named_customer_quality",
+        "qualification_confirmed",
+        "repeat_order_confirmed",
+        "socket_or_test_demand_visible",
+        "margin_bridge_visible"
+      ],
+      "green_candidate": {
+        "case_id": "R2L11_C08_131290_TSE_HBM_PROBE_CARD",
+        "symbol": "131290",
+        "as_of_date": "2024-04-26",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 11.14,
+        "MAE_180D_pct": -51.84
+      },
+      "guard_candidate": {
+        "case_id": "C08_098120_MICROCONTACT_20240426_SECOND_WAVE_TEST_SOCKET_FALSE_GREEN",
+        "symbol": "098120",
+        "as_of_date": "2024-04-26",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 4.02,
+        "MAE_180D_pct": -60.33
+      }
+    },
+    {
+      "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "valuation_blowoff_guard_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "valuation_overheat",
+        "price_only_blowoff",
+        "order_to_revenue_bridge",
+        "customer_quality_visible",
+        "capex_cycle_risk"
+      ],
+      "green_candidate": {
+        "case_id": "R2L14_C09_131290_TSE_LATE_GREEN_VALUATION_BLOWOFF",
+        "symbol": "131290",
+        "as_of_date": "2024-04-26",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 11.14,
+        "MAE_180D_pct": -51.84
+      },
+      "guard_candidate": {
+        "case_id": "C09_036930_JUSUNG_20240408_DEPOSITION_EQUIPMENT_VALUATION_BLOWOFF",
+        "symbol": "036930",
+        "as_of_date": "2024-04-08",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 13.56,
+        "MAE_180D_pct": -39.59
+      }
+    },
+    {
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_memory_recovery_bridge",
+      "loss_layer": "weighted_component_or_stage3_gate",
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "simple_explanation": "Bridge axes are present enough, but weighted total, bottleneck, or visibility gate blocks Green.",
+      "next_action": "Inspect component formula and gate thresholds only with positive/guard replay evidence.",
+      "runtime_candidate_count": 1,
+      "runtime_stage_distribution": {
+        "2": 1
+      },
+      "runtime_max_score": 72.1181,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "margin",
+        "valuation_repricing"
+      ],
+      "missing_required_bridge_axes": [],
+      "top_failed_gates": [
+        {
+          "gate": "failed_stage3_total_score",
+          "count": 1
+        },
+        {
+          "gate": "failed_stage3_visibility",
+          "count": 1
+        },
+        {
+          "gate": "failed_stage3_bottleneck",
+          "count": 1
+        }
+      ],
+      "runtime_input_evidence_summary": {
+        "assessable": true,
+        "reason": "source_text_family_present",
+        "families_present": [
+          "disclosure",
+          "financial_actual",
+          "price",
+          "research_report"
+        ],
+        "max_evidence_count": 6,
+        "max_input_counts": {
+          "research_report": 1,
+          "news_item": 0,
+          "consensus": 2,
+          "consensus_revision": 1,
+          "financial_actual": 1,
+          "price_bar": 2
+        }
+      },
+      "expected_runtime_primitives": [
+        "memory_price_increase_mentioned",
+        "supply_discipline_mentioned",
+        "cycle_demand_visibility",
+        "end_market_demand_visibility",
+        "supply_demand_tightness",
+        "cycle_to_revenue_bridge",
+        "advanced_packaging_bottleneck",
+        "equipment_order_recovery",
+        "order_to_revenue_bridge",
+        "inventory_cycle_repair",
+        "fcf_quality_score"
+      ],
+      "green_candidate": {
+        "case_id": "C10_L228_05_317330_ADVANCED_ELECTRONIC_MATERIALS_ROUTE_EARLY_RESET_WITH_STRONG_ASYMMETRY",
+        "symbol": "317330",
+        "as_of_date": "2024-01-02",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 255.45,
+        "MAE_180D_pct": -6.27
+      },
+      "guard_candidate": {
+        "case_id": "C10_L232_08_089790",
+        "symbol": "089790",
+        "as_of_date": "2024-07-22",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 1.59,
+        "MAE_180D_pct": -56.35
+      }
+    },
+    {
+      "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "order_backlog_to_sales",
+        "customer_contract",
+        "call_off_risk",
+        "ex_credit_margin",
+        "fcf_quality_score"
+      ],
+      "green_candidate": {
+        "case_id": "C11_121600_NANOSINSO_20230209_CNT_ORDERBOOK_RERATING_GREEN",
+        "symbol": "121600",
+        "as_of_date": "2023-02-09",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 77.38,
+        "MAE_180D_pct": -1.92
+      },
+      "guard_candidate": {
+        "case_id": "C11_006110_SAMAAL_20230726_ALUMINUMFOIL_ORDERBOOK_FALSE_GREEN",
+        "symbol": "006110",
+        "as_of_date": "2023-07-26",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 15.52,
+        "MAE_180D_pct": -31.63
+      }
+    },
+    {
+      "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "jv_utilization",
+        "ampc_or_subsidy_capture",
+        "ex_credit_margin",
+        "customer_contract",
+        "policy_reversal_risk"
+      ],
+      "green_candidate": {
+        "case_id": "C13_R3L235_CASE006_051490",
+        "symbol": "051490",
+        "as_of_date": "2020-07-13",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 100.14,
+        "MAE_180D_pct": -10.52
+      },
+      "guard_candidate": {
+        "case_id": "C13_R3L190_006400_GM_JV_2023_LONG_LEAD_FALSE_POSITIVE",
+        "symbol": "006400",
+        "as_of_date": "2023-04-25",
+        "trigger_type": "Stage2",
+        "MFE_180D_pct": 5.97,
+        "MAE_180D_pct": -47.72
+      }
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "spread_expansion",
+        "utilization_rate",
+        "inventory_cycle",
+        "pricing_power_confirmed",
+        "fcf_quality_score"
+      ],
+      "green_candidate": {
+        "case_id": "C15_298020_HYOSUNG_TNC_20210114_SPANDEX_SPREAD_SUPERCYCLE",
+        "symbol": "298020",
+        "as_of_date": "2021-01-14",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 322.37,
+        "MAE_180D_pct": -0.66
+      },
+      "guard_candidate": {
+        "case_id": "C15_004020_20240207_STEEL_SPREAD_SUPERCYCLE_FALSE_POSITIVE",
+        "symbol": "004020",
+        "as_of_date": "2024-02-07",
+        "trigger_type": "Stage2",
+        "MFE_180D_pct": 1.35,
+        "MAE_180D_pct": -45.68
+      }
+    },
+    {
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "spread_expansion",
+        "raw_material_cost_risk",
+        "utilization_rate",
+        "inventory_cycle",
+        "opm_expansion_pctp"
+      ],
+      "green_candidate": {
+        "case_id": "R4L11_C17_011780_KUMHO_NB_LATEX_SPREAD_SUPERCYCLE_20210121",
+        "symbol": "011780",
+        "as_of_date": "2021-01-21",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 60.48,
+        "MAE_180D_pct": -4.57
+      },
+      "guard_candidate": {
+        "case_id": "R4L11_C17_DAEHAN_NCC_SPREAD_FALSE_GREEN_2021",
+        "symbol": "006650",
+        "as_of_date": "2021-02-16",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 3.05,
+        "MAE_180D_pct": -53.37
+      }
+    },
+    {
+      "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "export_growth_pct",
+        "sell_through_confirmed",
+        "repeat_order_confirmed",
+        "channel_reorder_confirmed",
+        "opm_expansion_pctp"
+      ],
+      "green_candidate": {
+        "case_id": "R13L41_C18_SAMYANG_003230_EXPORT_REORDER",
+        "symbol": "003230",
+        "as_of_date": "2024-05-16",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 60.81,
+        "MAE_180D_pct": 0.0
+      },
+      "guard_candidate": {
+        "case_id": "R5L15-C18-097950-CJ-LEGACY-FOOD-FALSE-GREEN",
+        "symbol": "097950",
+        "as_of_date": "2024-05-16",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 22.19,
+        "MAE_180D_pct": -30.28
+      }
+    },
+    {
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "inventory_spike",
+        "sell_through_confirmed",
+        "pricing_power_confirmed",
+        "channel_reorder_confirmed",
+        "raw_material_cost_risk"
+      ],
+      "green_candidate": {
+        "case_id": "R13L45_C19_036620_GAMSUNG_RETAIL_MARGIN_SUCCESS",
+        "symbol": "036620",
+        "as_of_date": "2024-05-21",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 12.07,
+        "MAE_180D_pct": -33.45
+      },
+      "guard_candidate": {
+        "case_id": "R5L31_C19_FNF_20230516_CHINA_INVENTORY_FALSE_GREEN",
+        "symbol": "383220",
+        "as_of_date": "2023-05-16",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 2.76,
+        "MAE_180D_pct": -37.2
+      }
+    },
+    {
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "loss_layer": "weighted_component_or_stage3_gate",
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "simple_explanation": "Bridge axes are present enough, but weighted total, bottleneck, or visibility gate blocks Green.",
+      "next_action": "Inspect component formula and gate thresholds only with positive/guard replay evidence.",
+      "runtime_candidate_count": 22,
+      "runtime_stage_distribution": {
+        "1": 22
+      },
+      "runtime_max_score": 64.161,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "missing_required_bridge_axes": [],
+      "top_failed_gates": [
+        {
+          "gate": "failed_stage2_total_score",
+          "count": 22
+        },
+        {
+          "gate": "failed_stage3_total_score",
+          "count": 22
+        },
+        {
+          "gate": "failed_stage3_visibility",
+          "count": 22
+        },
+        {
+          "gate": "failed_stage3_bottleneck",
+          "count": 22
+        },
+        {
+          "gate": "failed_stage3_market_mispricing",
+          "count": 22
+        },
+        {
+          "gate": "failed_stage3_valuation",
+          "count": 22
+        },
+        {
+          "gate": "failed_sector_bottleneck",
+          "count": 11
+        },
+        {
+          "gate": "failed_domain_specific_evidence",
+          "count": 11
+        }
+      ],
+      "runtime_input_evidence_summary": {
+        "assessable": true,
+        "reason": "source_text_family_present",
+        "families_present": [
+          "disclosure",
+          "financial_actual",
+          "price",
+          "research_report"
+        ],
+        "max_evidence_count": 7,
+        "max_input_counts": {
+          "research_report": 1,
+          "news_item": 0,
+          "consensus": 2,
+          "consensus_revision": 1,
+          "financial_actual": 2,
+          "price_bar": 2
+        }
+      },
+      "expected_runtime_primitives": [
+        "export_growth_pct",
+        "platform_distribution_scale",
+        "brand_customer_diversification",
+        "repeat_order_confirmed",
+        "high_margin_mix_improvement"
+      ],
+      "green_candidate": {
+        "case_id": "C20-R5L135-02",
+        "symbol": "192820",
+        "as_of_date": "2025-02-24",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 72.8916,
+        "MAE_180D_pct": -10.1807
+      },
+      "guard_candidate": {
+        "case_id": "C20_R5L25_439090",
+        "symbol": "439090",
+        "as_of_date": "2023-06-08",
+        "trigger_type": "IPO/theme trigger",
+        "MFE_180D_pct": 27.4,
+        "MAE_180D_pct": -52.0
+      }
+    },
+    {
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "runtime_bridge_group": "financial_capital_return_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "roe",
+        "pbr_e",
+        "treasury_share_cancellation",
+        "capital_return_execution",
+        "credit_cost_quality"
+      ],
+      "green_candidate": {
+        "case_id": "R13L22_C21_KBFG_105560_2025_CAPITAL_RETURN_CONFIRMED",
+        "symbol": "105560",
+        "as_of_date": "2025-05-26",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 67.16,
+        "MAE_180D_pct": -3.33
+      },
+      "guard_candidate": {
+        "case_id": "R6L60_C21_KAKAOBANK_2024_POLICYONLY_COUNTEREXAMPLE",
+        "symbol": "323410",
+        "as_of_date": "2024-02-26",
+        "trigger_type": "Stage2-PolicyOnly",
+        "MFE_180D_pct": 1.66,
+        "MAE_180D_pct": -38.67
+      }
+    },
+    {
+      "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "runtime_bridge_group": "insurance_reserve_capital_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "csm_growth_visible",
+        "k_ics_ratio",
+        "reserve_quality_visible",
+        "loss_ratio_quality",
+        "capital_return_execution"
+      ],
+      "green_candidate": {
+        "case_id": "R6L47_C22_032830_SAMSUNG_LIFE_VALUEUP_RESERVE_BRIDGE",
+        "symbol": "032830",
+        "as_of_date": "2024-02-21",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 22.88,
+        "MAE_180D_pct": -13.25
+      },
+      "guard_candidate": {
+        "case_id": "C22_088350_2024-07-11_Stage2-FalsePositive_life_insurance_valueup_label_without_reserve_capital_return_bridge",
+        "symbol": "088350",
+        "as_of_date": "2024-07-11",
+        "trigger_type": "Stage2",
+        "MFE_180D_pct": 2.86,
+        "MAE_180D_pct": -24.76
+      }
+    },
+    {
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "regulatory_approval_confirmed",
+        "approval_to_revenue_bridge",
+        "royalty_route",
+        "partner_economics_visible",
+        "reimbursement_confirmed"
+      ],
+      "green_candidate": {
+        "case_id": "R7L10_C23_YUHAN_LAZCLUZE_FDA_20240821",
+        "symbol": "000100",
+        "as_of_date": "2024-09-24",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 6.31,
+        "MAE_180D_pct": -36.05
+      },
+      "guard_candidate": {
+        "case_id": "R7L10_C23_HLB_PRE_PDUFA_FALSE_GREEN_20240430",
+        "symbol": "028300",
+        "as_of_date": "2024-04-30",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 2.79,
+        "MAE_180D_pct": -59.4
+      }
+    },
+    {
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "trial_quality_visible",
+        "binary_event_unresolved",
+        "approval_not_confirmed",
+        "safety_signal",
+        "cash_runway_risk"
+      ],
+      "green_candidate": {
+        "case_id": "R7L12-C24-028300-HLB-BINARY-READOUT-REGULATORY-REUSE",
+        "symbol": "028300",
+        "as_of_date": "2024-05-16",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 11.59,
+        "MAE_180D_pct": -52.87
+      },
+      "guard_candidate": {
+        "case_id": "R7L15-C24-288330-BRIDGEBIO-BBT877-RESET-20230623",
+        "symbol": "288330",
+        "as_of_date": "2023-06-23",
+        "trigger_type": "Stage2-FalsePositive",
+        "MFE_180D_pct": 24.17,
+        "MAE_180D_pct": -56.79
+      }
+    },
+    {
+      "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "reimbursement_confirmed",
+        "procedure_volume_growth",
+        "export_growth_pct",
+        "consumable_repeat_revenue",
+        "gross_margin_bridge"
+      ],
+      "green_candidate": {
+        "case_id": "C25_335890_VIOL_20230113_AESTHETIC_RF_EXPORT_CONSUMABLE_RERATING",
+        "symbol": "335890",
+        "as_of_date": "2023-01-13",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 106.13,
+        "MAE_180D_pct": -4.46
+      },
+      "guard_candidate": {
+        "case_id": "C25_209_DENTIUM_4Q23_EXPORT_RECOVERY_FALSE_POSITIVE",
+        "symbol": "145720",
+        "as_of_date": "2024-02-29",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 2.98,
+        "MAE_180D_pct": -62.55
+      }
+    },
+    {
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "arpu_growth_pct",
+        "ad_revenue_growth_pct",
+        "take_rate_improvement",
+        "operating_leverage_visible",
+        "regulatory_risk"
+      ],
+      "green_candidate": {
+        "case_id": "C26_SOOP_2021_CREATOR_PLATFORM_OPERATING_LEVERAGE",
+        "symbol": "067160",
+        "as_of_date": "2021-07-27",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 82.36,
+        "MAE_180D_pct": -26.06
+      },
+      "guard_candidate": {
+        "case_id": "R8L15_C26_KAKAO_2021_REG_CAP",
+        "symbol": "035720",
+        "as_of_date": "2021-06-24",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 10.19,
+        "MAE_180D_pct": -47.64
+      }
+    },
+    {
+      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "ip_monetization_visible",
+        "global_launch_conversion",
+        "repeat_revenue",
+        "user_retention",
+        "token_or_theme_hype_risk"
+      ],
+      "green_candidate": {
+        "case_id": "C27_194480_DEVSISTERS_20210121_COOKIE_RUN_KINGDOM_GLOBAL_IP_RERATING",
+        "symbol": "194480",
+        "as_of_date": "2021-01-21",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 1056.52,
+        "MAE_180D_pct": -12.75
+      },
+      "guard_candidate": {
+        "case_id": "C27_259960_KRAFTON_20211112_GLOBAL_GAME_IP_RELEASE_FALSE_GREEN",
+        "symbol": "259960",
+        "as_of_date": "2021-11-12",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 8.41,
+        "MAE_180D_pct": -60.28
+      }
+    },
+    {
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "arr_growth_visible",
+        "nrr",
+        "retention_or_renewal",
+        "rpo_to_sales",
+        "recurring_margin_leverage"
+      ],
+      "green_candidate": {
+        "case_id": "C28_058970_EMRO_20230315_SCM_SAAS_CONTRACT_RERATING",
+        "symbol": "058970",
+        "as_of_date": "2023-03-15",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 223.84,
+        "MAE_180D_pct": 0.0
+      },
+      "guard_candidate": {
+        "case_id": "R8L10_C28_CASE_003_HANCOM_2024_AI_OFFICE_FALSE_GREEN",
+        "symbol": "030520",
+        "as_of_date": "2024-01-10",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 55.4,
+        "MAE_180D_pct": -22.7
+      }
+    },
+    {
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "volume_growth_visible",
+        "mix_improvement",
+        "operating_leverage_visible",
+        "pricing_power_confirmed",
+        "fcf_quality_score"
+      ],
+      "green_candidate": {
+        "case_id": "R9L33-C29-000270-KIA-2023-FY22-VOLUME-MIX-MARGIN",
+        "symbol": "000270",
+        "as_of_date": "2023-04-26",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 16.51,
+        "MAE_180D_pct": -11.55
+      },
+      "guard_candidate": {
+        "case_id": "R9L11_C29_011210_ENGINE_PARTS_FALSE_STAGE2",
+        "symbol": "011210",
+        "as_of_date": "2024-01-26",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 15.52,
+        "MAE_180D_pct": -6.03
+      }
+    },
+    {
+      "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "runtime_bridge_group": "construction_pf_cash_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "pf_exposure_reduced",
+        "balance_sheet_repair",
+        "cash_collection_visible",
+        "occupancy_or_presale_visible",
+        "funding_cost_risk"
+      ],
+      "green_candidate": {
+        "case_id": "R10L15_C30_000720_POS_20210405",
+        "symbol": "000720",
+        "as_of_date": "2021-05-27",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 10.03,
+        "MAE_180D_pct": -29.84
+      },
+      "guard_candidate": {
+        "case_id": "C30_014790_HLDNI_20230925_PF_BALANCE_SHEET_YELLOW_FALSE_GREEN",
+        "symbol": "014790",
+        "as_of_date": "2023-09-25",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 1.54,
+        "MAE_180D_pct": -14.46
+      }
+    },
+    {
+      "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "policy_project_cash_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "policy_or_regulatory_confirmed",
+        "direct_company_cash_route",
+        "subsidy_capture_visible",
+        "implementation_timeline",
+        "policy_headline_only"
+      ],
+      "green_candidate": {
+        "case_id": "C31_112610_202208",
+        "symbol": "112610",
+        "as_of_date": "2022-11-16",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 16.23,
+        "MAE_180D_pct": -17.55
+      },
+      "guard_candidate": {
+        "case_id": "C31_011930_SHINSUNGENG_20220811_SOLAR_CLEANROOM_POLICY_FALSE_GREEN",
+        "symbol": "011930",
+        "as_of_date": "2022-08-11",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 8.75,
+        "MAE_180D_pct": -38.57
+      }
+    },
+    {
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "governance_tender_cash_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "tender_offer_confirmed",
+        "minority_cash_path",
+        "control_premium_floor",
+        "regulatory_approval_confirmed",
+        "event_spread_risk"
+      ],
+      "green_candidate": {
+        "case_id": null,
+        "symbol": "010130",
+        "as_of_date": "2024-09-13",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 261.4114,
+        "MAE_180D_pct": -3.4535
+      },
+      "guard_candidate": {
+        "case_id": "R13_C32_HANMI_008930_2024_OCI_FAMILY_CONTROL_DISPUTE",
+        "symbol": "008930",
+        "as_of_date": "2024-01-15",
+        "trigger_type": "4C",
+        "MFE_180D_pct": 29.79,
+        "MAE_180D_pct": -29.91
+      }
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "thesis_break_confirmed",
+        "contract_cancelled_or_delayed",
+        "revision_slowdown",
+        "accounting_trust_risk",
+        "valuation_overheat"
+      ],
+      "green_candidate": {
+        "case_id": "R13L11_XCASE__R7L11_C23_000100_YUHAN_LAZCLUZE_APPROVAL_COMMERCIALIZATION_20240820",
+        "symbol": "000100",
+        "as_of_date": "2024-08-20",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 77.55,
+        "MAE_180D_pct": -26.28
+      },
+      "guard_candidate": {
+        "case_id": "R13L11_XCASE__R2L11_C08_095340_ISC_SOCKET_BLOWOFF",
+        "symbol": "095340",
+        "as_of_date": "2024-03-08",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 13.68,
+        "MAE_180D_pct": -56.74
+      }
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "auditor_or_disclosure_risk",
+        "restatement_risk",
+        "share_count_drift",
+        "price_only_blowoff",
+        "source_quality_conflict"
+      ],
+      "green_candidate": {
+        "case_id": "R13ATPV153_267260_HDHE_2025_ORDER_BACKLOG_EARNINGS_CONTROL",
+        "symbol": "267260",
+        "as_of_date": "2025-04-22",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 228.07,
+        "MAE_180D_pct": -2.02
+      },
+      "guard_candidate": {
+        "case_id": "R13L13_ACC_CASE_X07_090430_20210512",
+        "symbol": "090430",
+        "as_of_date": "2021-05-12",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 2.56,
+        "MAE_180D_pct": -46.84
+      }
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "loss_layer": "candidate_funnel_or_replay_coverage",
+      "runtime_gap_status": "not_in_current_benchmark",
+      "simple_explanation": "Research has a Green/guard pair, but current runtime replay does not execute it.",
+      "next_action": "Materialize point-in-time replay fixtures before changing scoring weights.",
+      "runtime_candidate_count": 0,
+      "runtime_stage_distribution": {},
+      "runtime_max_score": null,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "top_failed_gates": [],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "no_runtime_candidate_rows",
+        "families_present": [],
+        "max_evidence_count": 0,
+        "max_input_counts": {}
+      },
+      "expected_runtime_primitives": [
+        "high_mae_history",
+        "valuation_overheat",
+        "liquidity_or_microcap_risk",
+        "execution_risk_score",
+        "positioning_reversal_risk"
+      ],
+      "green_candidate": {
+        "case_id": "R13-HMAE-L217-01-373220_20241029",
+        "symbol": "373220",
+        "as_of_date": "2024-10-28",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 6.48,
+        "MAE_180D_pct": -34.96
+      },
+      "guard_candidate": {
+        "case_id": "R13_HIGHMAE_C10_160980_20240425",
+        "symbol": "160980",
+        "as_of_date": "2024-04-24",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 7.2235,
+        "MAE_180D_pct": -66.5463
+      }
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "loss_layer": "runtime_input_evidence_coverage",
+      "runtime_gap_status": "runtime_input_evidence_missing",
+      "simple_explanation": "Runtime candidates exist, but the source families needed to judge bridge translation are missing.",
+      "next_action": "Repair replay input coverage or fixture archive before blaming parser or weights.",
+      "runtime_candidate_count": 11,
+      "runtime_stage_distribution": {
+        "1": 11
+      },
+      "runtime_max_score": 9.308,
+      "runtime_green_count": 0,
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "top_failed_gates": [
+        {
+          "gate": "failed_stage2_total_score",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage2_eps_fcf",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage2_valuation",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage2_information_confidence",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_total_score",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_eps_fcf",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_visibility",
+          "count": 11
+        },
+        {
+          "gate": "failed_stage3_bottleneck",
+          "count": 11
+        }
+      ],
+      "runtime_input_evidence_summary": {
+        "assessable": false,
+        "reason": "bridge_source_families_missing",
+        "families_present": [
+          "disclosure",
+          "price"
+        ],
+        "max_evidence_count": 1,
+        "max_input_counts": {
+          "research_report": 0,
+          "news_item": 0,
+          "consensus": 0,
+          "consensus_revision": 0,
+          "financial_actual": 0,
+          "price_bar": 2
+        }
+      },
+      "expected_runtime_primitives": [
+        "price_only_blowoff",
+        "policy_headline_only",
+        "evidence_source_quality",
+        "missing_cashflow_bridge",
+        "theme_hype_without_revenue"
+      ],
+      "green_candidate": {
+        "case_id": "R13SFP_267260_HDHE_ORDER_BACKLOG_CONTROL",
+        "symbol": "267260",
+        "as_of_date": "2025-04-22",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 228.07,
+        "MAE_180D_pct": -2.02
+      },
+      "guard_candidate": {
+        "case_id": "R13_STAGE2_FALSE_POSITIVE_L134_000100_2024-08-30_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+        "symbol": "000100",
+        "as_of_date": "2024-08-30",
+        "trigger_type": "Stage2-Watch",
+        "MFE_180D_pct": 18.3688,
+        "MAE_180D_pct": -28.7943
+      }
+    }
+  ]
+}

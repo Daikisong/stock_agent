@@ -139,6 +139,18 @@ def _classify_from_context(
 
     if sector_profile == SectorProfile.AI_INFRA_PLATFORM:
         return _classify_ai_infra_platform(haystack)
+    if sector_profile == SectorProfile.FINANCIAL_CAPITAL_RETURN:
+        return "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN"
+    if sector_profile == SectorProfile.INSURANCE_RESERVE:
+        return "C22_INSURANCE_RATE_CYCLE_RESERVE"
+    if sector_profile == SectorProfile.BIO_COMMERCIALIZATION:
+        return bio_route or "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION"
+    if sector_profile == SectorProfile.SOFTWARE_SECURITY:
+        if _has_any(haystack, ("ad revenue", "advertising", "arpu", "광고")):
+            return "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE"
+        if _has_any(haystack, ("content", "game", "콘텐츠", "게임")):
+            return "C27_CONTENT_IP_GLOBAL_MONETIZATION"
+        return "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
 
     if bio_route and sector_profile == SectorProfile.GENERIC and _has_bio_healthcare_metadata_or_context(metadata_haystack, haystack):
         return bio_route
@@ -157,13 +169,14 @@ def _classify_from_context(
         equipment_supplier_context = _has_semiconductor_equipment_supplier_context(haystack, parsed_fields)
         memory_manufacturer_context = _has_memory_manufacturer_context(haystack, parsed_fields)
         hbm_customer_capacity_context = _has_hbm_customer_capacity_context(haystack, parsed_fields)
+        memory_recovery_cycle_context = _has_memory_recovery_cycle_context(haystack, parsed_fields)
         if memory_manufacturer_context and hbm_customer_capacity_context:
             return "C06_HBM_MEMORY_CUSTOMER_CAPACITY"
         if not structured_memory_context and not hbm_customer_capacity_context and _has_test_socket_context(haystack):
             return "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY"
         if not structured_memory_context and not hbm_customer_capacity_context and equipment_supplier_context:
             return "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH"
-        if memory_manufacturer_context and _has_any(haystack, ("recovery", "cycle", "price increase", "가격 상승", "supply discipline", "공급조절")):
+        if memory_manufacturer_context and memory_recovery_cycle_context:
             return "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE"
         if memory_manufacturer_context:
             return "C06_HBM_MEMORY_CUSTOMER_CAPACITY"
@@ -173,7 +186,7 @@ def _classify_from_context(
             return "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH"
         if _has_any(haystack, ("blowoff", "valuation", "과열", "멀티플")):
             return "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF"
-        if _has_any(haystack, ("recovery", "cycle", "price increase", "가격 상승", "supply discipline", "공급조절")):
+        if memory_recovery_cycle_context:
             return "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE"
         return "C06_HBM_MEMORY_CUSTOMER_CAPACITY"
 
@@ -195,7 +208,7 @@ def _classify_from_context(
         return "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION"
     if _has_any(haystack, ("export channel", "수출 채널", "reorder", "재주문")):
         return "C18_CONSUMER_EXPORT_CHANNEL_REORDER"
-    if _has_any(haystack, ("inventory", "재고", "retail", "리테일", "brand margin")):
+    if _has_consumer_retail_inventory_context(haystack, parsed_fields):
         return "C19_BRAND_RETAIL_INVENTORY_MARGIN"
 
     if _has_any(haystack, ("insurance", "보험", "reserve", "준비금", "rate cycle")) and not _has_bio_healthcare_metadata_or_context(
@@ -558,12 +571,47 @@ def _has_structured_memory_manufacturer_context(parsed_fields: Mapping[str, Any]
     )
 
 
+def _has_memory_recovery_cycle_context(haystack: str, parsed_fields: Mapping[str, Any]) -> bool:
+    if any(
+        parsed_fields.get(key) not in (None, "", False, 0)
+        for key in (
+            "memory_price_increase_mentioned",
+            "supply_discipline_mentioned",
+            "cycle_demand_visibility",
+            "end_market_demand_visibility",
+            "supply_demand_tightness",
+            "cycle_to_revenue_bridge",
+        )
+    ):
+        return True
+    return _has_any(
+        haystack,
+        (
+            "recovery",
+            "cycle",
+            "price increase",
+            "가격 상승",
+            "업황 개선",
+            "수요 회복",
+            "supply discipline",
+            "공급조절",
+        ),
+    )
+
+
 def _has_hbm_customer_capacity_context(haystack: str, parsed_fields: Mapping[str, Any]) -> bool:
     if any(
         parsed_fields.get(key) not in (None, "", False, 0)
         for key in (
-            "hbm_capacity_constraint",
             "customer_preorder_or_allocation",
+            "hbm_customer_order",
+            "named_customer_quality",
+            "customer_contract_visible",
+            "customer_contract",
+            "supply_agreement_visible",
+            "capacity_precommitted",
+            "hbm_capacity_pre_sold",
+            "booked_out_capacity",
             "minimum_revenue_guarantee",
             "minimum_sales_guarantee",
             "revenue_visibility_contract",
@@ -776,6 +824,65 @@ def _classify_bio_healthcare_context(haystack: str) -> str | None:
     return None
 
 
+def _has_consumer_retail_inventory_context(haystack: str, parsed_fields: Mapping[str, Any]) -> bool:
+    inventory_context = _has_any(
+        haystack,
+        (
+            "inventory",
+            "재고",
+            "channel stuffing",
+            "receivables",
+        ),
+    ) or any(
+        parsed_fields.get(key) not in (None, "", False, 0)
+        for key in (
+            "inventory_spike",
+            "inventory_overhang",
+            "receivables_inventory_spike",
+        )
+    )
+    if not inventory_context:
+        return False
+    consumer_context = _has_any(
+        haystack,
+        (
+            "beauty",
+            "뷰티",
+            "cosmetic",
+            "화장품",
+            "food",
+            "식품",
+            "brand",
+            "브랜드",
+            "retail",
+            "리테일",
+            "channel",
+            "채널",
+            "sell-through",
+            "sell through",
+            "셀스루",
+            "reorder",
+            "재주문",
+            "store",
+            "offline",
+        ),
+    ) or any(
+        parsed_fields.get(key) not in (None, "", False, 0)
+        for key in (
+            "sell_through_confirmed",
+            "repeat_order_confirmed",
+            "channel_reorder_confirmed",
+            "brand_customer_diversification",
+            "brand_channel_expansion",
+            "platform_distribution_scale",
+            "export_channel_expansion",
+            "overseas_channel_expansion",
+            "recurring_consumer_demand",
+        )
+    )
+    return consumer_context
+
+
 def _haystack(
     *,
     text: str,
@@ -783,8 +890,8 @@ def _haystack(
     sector_context: str | None,
     parsed_fields: Mapping[str, Any],
 ) -> str:
-    field_tokens = " ".join(str(key) for key, value in parsed_fields.items() if value not in (None, "", False, 0))
-    return " ".join((company_name or "", sector_context or "", text or "", field_tokens)).lower()
+    del parsed_fields
+    return " ".join((company_name or "", sector_context or "", text or "")).lower()
 
 
 def _has_any(haystack: str, tokens: tuple[str, ...]) -> bool:

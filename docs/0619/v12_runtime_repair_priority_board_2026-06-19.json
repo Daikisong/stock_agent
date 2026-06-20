@@ -1,0 +1,1265 @@
+{
+  "lane_labels": {
+    "candidate_funnel_or_benchmark_replay": "research Green fixture가 current runtime 후보로 안 들어옴",
+    "exact_fixture_archive": "Green/guard exact replay 입력 아카이브가 부족함",
+    "gate_bridge_axis_alignment": "bridge spec과 Green gate required axis가 서로 안 맞음",
+    "parser_feature_field_contract": "bridge primitive가 parser/feature field contract에 없음",
+    "runtime_field_strength": "bridge spec 축은 있지만 runtime row에서 field가 0이거나 약함",
+    "runtime_input_evidence_coverage": "후보 row는 있지만 bridge 판정에 필요한 원천 입력 가족이 부족함",
+    "source_backed_fixture_cleaning": "연구 Green이 source-backed fixture로 깨끗하지 않음",
+    "weighted_gate_threshold_or_component_balance": "field는 있는데 weighted Stage3 gate에서 막힘"
+  },
+  "rows": [
+    {
+      "axis_contract_status_counts": {
+        "covered_by_bridge_spec_and_runtime": 3
+      },
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "diagnosis": "weighted_stage3_gate_blocks_after_fields_present",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "weighted_gate_threshold_or_component_balance",
+      "priority_score": 84.2,
+      "repair_lanes": [
+        "exact_fixture_archive",
+        "weighted_gate_threshold_or_component_balance"
+      ],
+      "research_clean_green_count": 22,
+      "research_raw_stage3_green_count": 33,
+      "runtime_candidate_count": 22,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 64.161,
+      "why_low_now": "field는 들어왔지만 weighted Stage3-Green total/component gate를 넘지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 2,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 83.8,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 23,
+      "research_raw_stage3_green_count": 37,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1
+      },
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 67.8,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 19,
+      "research_raw_stage3_green_count": 32,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 65.0,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 16,
+      "research_raw_stage3_green_count": 30,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 2,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 64.2,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 15,
+      "research_raw_stage3_green_count": 28,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 54.6,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 11,
+      "research_raw_stage3_green_count": 19,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 2,
+        "required_by_gate_but_absent_from_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 49.0,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 9,
+      "research_raw_stage3_green_count": 10,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 4
+      },
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 47.0,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 5,
+      "research_raw_stage3_green_count": 10,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 3
+      },
+      "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "diagnosis": "research_green_fixture_not_exercised_by_candidate_funnel",
+      "green_retrospective_ready": true,
+      "green_strict_pit_ready": true,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 46.6,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 8,
+      "research_raw_stage3_green_count": 14,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 45.8,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 8,
+      "research_raw_stage3_green_count": 12,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 2,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 45.0,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 8,
+      "research_raw_stage3_green_count": 15,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 4
+      },
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "diagnosis": "runtime_candidate_input_evidence_missing_for_bridge",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "runtime_input_evidence_coverage",
+      "priority_score": 44.6,
+      "repair_lanes": [
+        "runtime_input_evidence_coverage",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 8,
+      "research_raw_stage3_green_count": 9,
+      "runtime_candidate_count": 11,
+      "runtime_gap_status": "runtime_input_evidence_missing",
+      "runtime_max_score": 4.4554,
+      "why_low_now": "후보 row는 있지만 리포트/뉴스/컨센서스/충분한 공시+재무 입력이 부족해 bridge 변환 실패인지 아직 판정할 수 없다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 43.8,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 9,
+      "research_raw_stage3_green_count": 12,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 41.8,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 6,
+      "research_raw_stage3_green_count": 12,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 2,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 40.6,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 6,
+      "research_raw_stage3_green_count": 14,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "covered_by_bridge_spec_and_runtime": 4
+      },
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "diagnosis": "weighted_stage3_gate_blocks_after_fields_present",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "weighted_gate_threshold_or_component_balance",
+      "priority_score": 40.6,
+      "repair_lanes": [
+        "exact_fixture_archive",
+        "weighted_gate_threshold_or_component_balance"
+      ],
+      "research_clean_green_count": 5,
+      "research_raw_stage3_green_count": 9,
+      "runtime_candidate_count": 19,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 80.0131,
+      "why_low_now": "field는 들어왔지만 weighted Stage3-Green total/component gate를 넘지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 37.8,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 4,
+      "research_raw_stage3_green_count": 12,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "covered_by_bridge_spec_and_runtime": 2,
+        "runtime_present_but_not_explicit_in_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "diagnosis": "weighted_stage3_gate_blocks_after_fields_present",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "weighted_gate_threshold_or_component_balance",
+      "priority_score": 36.6,
+      "repair_lanes": [
+        "exact_fixture_archive",
+        "weighted_gate_threshold_or_component_balance"
+      ],
+      "research_clean_green_count": 4,
+      "research_raw_stage3_green_count": 4,
+      "runtime_candidate_count": 1,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 72.1181,
+      "why_low_now": "field는 들어왔지만 weighted Stage3-Green total/component gate를 넘지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "covered_by_bridge_spec_and_runtime": 3,
+        "runtime_present_but_not_explicit_in_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "diagnosis": "weighted_stage3_gate_blocks_after_fields_present",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "weighted_gate_threshold_or_component_balance",
+      "priority_score": 35.0,
+      "repair_lanes": [
+        "exact_fixture_archive",
+        "weighted_gate_threshold_or_component_balance"
+      ],
+      "research_clean_green_count": 3,
+      "research_raw_stage3_green_count": 5,
+      "runtime_candidate_count": 44,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 72.9252,
+      "why_low_now": "field는 들어왔지만 weighted Stage3-Green total/component gate를 넘지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 4,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 31.4,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 6,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 3,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 31.0,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 10,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 28.2,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 3,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 5
+      },
+      "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 27.8,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 2,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 3,
+        "required_by_gate_but_absent_from_bridge_spec": 2
+      },
+      "canonical_archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "diagnosis": "research_green_not_source_backed_enough_for_runtime_fixture",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "source_backed_fixture_cleaning",
+      "priority_score": 27.4,
+      "repair_lanes": [
+        "source_backed_fixture_cleaning",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 0,
+      "research_raw_stage3_green_count": 1,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "fixture_not_ready",
+      "runtime_max_score": null,
+      "why_low_now": "연구 Green이 source-backed exact replay fixture로 쓰기에는 아직 깨끗하지 않다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 3
+      },
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 27.0,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 2,
+      "research_raw_stage3_green_count": 5,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1
+      },
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 26.2,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 3,
+      "research_raw_stage3_green_count": 8,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 2
+      },
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 25.8,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 2,
+      "research_raw_stage3_green_count": 7,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1
+      },
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "diagnosis": "runtime_candidate_input_evidence_missing_for_bridge",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "runtime_input_evidence_coverage",
+      "priority_score": 25.0,
+      "repair_lanes": [
+        "runtime_input_evidence_coverage",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 2,
+      "research_raw_stage3_green_count": 5,
+      "runtime_candidate_count": 11,
+      "runtime_gap_status": "runtime_input_evidence_missing",
+      "runtime_max_score": 9.308,
+      "why_low_now": "후보 row는 있지만 리포트/뉴스/컨센서스/충분한 공시+재무 입력이 부족해 bridge 변환 실패인지 아직 판정할 수 없다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 3
+      },
+      "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 24.2,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 3,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 3,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "diagnosis": "research_green_not_source_backed_enough_for_runtime_fixture",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "source_backed_fixture_cleaning",
+      "priority_score": 23.8,
+      "repair_lanes": [
+        "source_backed_fixture_cleaning",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 0,
+      "research_raw_stage3_green_count": 2,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "fixture_not_ready",
+      "runtime_max_score": null,
+      "why_low_now": "연구 Green이 source-backed exact replay fixture로 쓰기에는 아직 깨끗하지 않다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1,
+        "required_by_gate_but_absent_from_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 23.4,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "gate_bridge_axis_alignment",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 1,
+      "research_raw_stage3_green_count": 1,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "bridge_spec_axis_present_but_runtime_field_missing_or_too_weak": 1
+      },
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+      "priority_score": 23.0,
+      "repair_lanes": [
+        "candidate_funnel_or_benchmark_replay",
+        "exact_fixture_archive",
+        "runtime_field_strength"
+      ],
+      "research_clean_green_count": 2,
+      "research_raw_stage3_green_count": 5,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "why_low_now": "Green 연구는 있지만 current benchmark 후보가 없어 runtime score 식을 아직 시험하지 못했다."
+    },
+    {
+      "axis_contract_status_counts": {
+        "covered_by_bridge_spec_and_runtime": 3,
+        "runtime_present_but_not_explicit_in_bridge_spec": 1
+      },
+      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "diagnosis": "research_green_not_source_backed_enough_for_runtime_fixture",
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "source_backed_fixture_cleaning",
+      "priority_score": 15.4,
+      "repair_lanes": [
+        "source_backed_fixture_cleaning",
+        "exact_fixture_archive"
+      ],
+      "research_clean_green_count": 0,
+      "research_raw_stage3_green_count": 6,
+      "runtime_candidate_count": 12,
+      "runtime_gap_status": "fixture_not_ready",
+      "runtime_max_score": 35.6473,
+      "why_low_now": "연구 Green이 source-backed exact replay fixture로 쓰기에는 아직 깨끗하지 않다."
+    },
+    {
+      "axis_contract_status_counts": {},
+      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "diagnosis": null,
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "exact_fixture_archive",
+      "priority_score": 7.0,
+      "repair_lanes": [
+        "exact_fixture_archive"
+      ],
+      "research_clean_green_count": null,
+      "research_raw_stage3_green_count": null,
+      "runtime_candidate_count": null,
+      "runtime_gap_status": "",
+      "runtime_max_score": null,
+      "why_low_now": "자동 분류만으로는 충분하지 않아 수동 점검이 필요하다."
+    },
+    {
+      "axis_contract_status_counts": {},
+      "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "diagnosis": null,
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "exact_fixture_archive",
+      "priority_score": 7.0,
+      "repair_lanes": [
+        "exact_fixture_archive"
+      ],
+      "research_clean_green_count": null,
+      "research_raw_stage3_green_count": null,
+      "runtime_candidate_count": null,
+      "runtime_gap_status": "",
+      "runtime_max_score": null,
+      "why_low_now": "자동 분류만으로는 충분하지 않아 수동 점검이 필요하다."
+    },
+    {
+      "axis_contract_status_counts": {},
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "diagnosis": null,
+      "green_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_retrospective_ready": false,
+      "guard_strict_pit_ready": false,
+      "missing_feature_parser_contract_count": 0,
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "pair_retrospective_ready": false,
+      "pair_strict_pit_ready": false,
+      "primary_repair_lane": "exact_fixture_archive",
+      "priority_score": 7.0,
+      "repair_lanes": [
+        "exact_fixture_archive"
+      ],
+      "research_clean_green_count": null,
+      "research_raw_stage3_green_count": null,
+      "runtime_candidate_count": null,
+      "runtime_gap_status": "",
+      "runtime_max_score": null,
+      "why_low_now": "자동 분류만으로는 충분하지 않아 수동 점검이 필요하다."
+    }
+  ],
+  "summary": {
+    "archetype_count": 36,
+    "pair_retrospective_ready_count": 0,
+    "pair_strict_pit_ready_count": 0,
+    "primary_repair_lane_counts": {
+      "candidate_funnel_or_benchmark_replay": 24,
+      "exact_fixture_archive": 3,
+      "runtime_input_evidence_coverage": 2,
+      "source_backed_fixture_cleaning": 3,
+      "weighted_gate_threshold_or_component_balance": 4
+    },
+    "repair_lane_counts": {
+      "candidate_funnel_or_benchmark_replay": 24,
+      "exact_fixture_archive": 36,
+      "gate_bridge_axis_alignment": 18,
+      "runtime_field_strength": 28,
+      "runtime_input_evidence_coverage": 2,
+      "source_backed_fixture_cleaning": 3,
+      "weighted_gate_threshold_or_component_balance": 4
+    },
+    "top_priority_archetypes": [
+      {
+        "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+        "primary_repair_lane": "weighted_gate_threshold_or_component_balance",
+        "priority_score": 84.2
+      },
+      {
+        "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+        "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+        "priority_score": 83.8
+      },
+      {
+        "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+        "priority_score": 67.8
+      },
+      {
+        "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+        "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+        "priority_score": 65.0
+      },
+      {
+        "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+        "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+        "priority_score": 64.2
+      },
+      {
+        "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+        "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+        "priority_score": 54.6
+      },
+      {
+        "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+        "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+        "priority_score": 49.0
+      },
+      {
+        "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+        "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+        "priority_score": 47.0
+      },
+      {
+        "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+        "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+        "priority_score": 46.6
+      },
+      {
+        "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+        "primary_repair_lane": "candidate_funnel_or_benchmark_replay",
+        "priority_score": 45.8
+      }
+    ]
+  }
+}

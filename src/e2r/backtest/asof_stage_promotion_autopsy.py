@@ -17,6 +17,7 @@ from e2r.backtest.asof_evidence_bundle import (
     score_asof_evidence_bundle,
 )
 from e2r.backtest.historical_official_store import DEFAULT_HISTORICAL_OFFICIAL_ROOT, HistoricalOfficialStore
+from e2r.backtest.runtime_fixture_evidence import RuntimeFixtureEvidenceStore
 from e2r.cheap_scan.models import CheapScanCandidate, RecommendedNextLayer
 from e2r.models import Market, Stage
 from e2r.research.asof_web_research import (
@@ -59,12 +60,14 @@ class AsOfStagePromotionAutopsyConfig:
     max_queries_per_candidate: int | None = None
     max_results_per_query: int = 100
     report_date: date | None = None
+    runtime_fixture_spec_paths: Sequence[str | Path] = ()
 
     def __post_init__(self) -> None:
         if self.max_queries_per_candidate is not None and self.max_queries_per_candidate < 0:
             raise ValueError("max_queries_per_candidate cannot be negative")
         if self.top_candidates is not None and self.top_candidates <= 0:
             raise ValueError("top_candidates must be positive")
+        object.__setattr__(self, "runtime_fixture_spec_paths", tuple(self.runtime_fixture_spec_paths or ()))
 
 
 @dataclass(frozen=True)
@@ -91,6 +94,28 @@ class StagePromotionAutopsyRow:
     capital_allocation: float | None
     information_confidence: float | None
     risk_penalty: float | None
+    large_sector_id: str
+    canonical_archetype_id: str
+    archetype_weight_profile_applied: float | None
+    archetype_weighted_total_before_calibration: float | None
+    archetype_weight_eps_fcf_explosion: float | None
+    archetype_weight_earnings_visibility: float | None
+    archetype_weight_bottleneck_pricing: float | None
+    archetype_weight_market_mispricing: float | None
+    archetype_weight_valuation_rerating: float | None
+    archetype_weight_capital_allocation: float | None
+    archetype_weight_information_confidence: float | None
+    archetype_component_eps_fcf_explosion: float | None
+    archetype_component_earnings_visibility: float | None
+    archetype_component_bottleneck_pricing: float | None
+    archetype_component_market_mispricing: float | None
+    archetype_component_valuation_rerating: float | None
+    archetype_component_capital_allocation: float | None
+    archetype_component_information_confidence: float | None
+    archetype_green_policy_absolute_block: float | None
+    archetype_green_policy_unlock_required: float | None
+    archetype_green_policy_unlock_evidence: float | None
+    archetype_green_restricted_by_profile: float | None
     revision_score: float | None
     price_stage_score: float | None
     contract_quality: float | None
@@ -106,6 +131,30 @@ class StagePromotionAutopsyRow:
     export_channel_visibility: float | None
     medium_term_revision_visibility: float | None
     domain_specific_evidence_score: float | None
+    research_axis_bridge_present_count_capped: float | None
+    research_axis_bridge_margin: float | None
+    research_axis_bridge_customer: float | None
+    research_axis_bridge_backlog: float | None
+    research_axis_bridge_contract: float | None
+    research_axis_bridge_valuation_repricing: float | None
+    research_axis_bridge_capital_return: float | None
+    research_axis_bridge_insurance_quality: float | None
+    research_axis_bridge_bio_commercialization: float | None
+    research_axis_bridge_software_retention: float | None
+    research_axis_bridge_consumer_sell_through: float | None
+    research_axis_bridge_guard_risk: float | None
+    research_axis_bridge_guard_risk_penalty_points: float | None
+    actual_profit_conversion_score: float | None
+    bottleneck_industrial_raw: float | None
+    bottleneck_sector_raw: float | None
+    bottleneck_actual_conversion_raw: float | None
+    bottleneck_validated_conversion_raw: float | None
+    bottleneck_selected_raw: float | None
+    bottleneck_selected_path: str
+    bottleneck_component_before_one_off_penalty: float | None
+    bottleneck_one_off_penalty_points: float | None
+    bottleneck_raw_required_for_green: float | None
+    bottleneck_raw_deficit_to_green: float | None
     sector_profile: str
     promotion_band: str
     cross_evidence_families_present: str
@@ -134,10 +183,29 @@ class StagePromotionAutopsyRow:
     failed_sector_bottleneck: bool
     failed_green_cross_evidence: bool
     failed_report_date_confidence: bool
+    failed_date_unverified_green_evidence: bool
     failed_domain_specific_evidence: bool
     failed_stage3_red_team: bool
+    stage3_total_deficit: float | None
+    stage3_eps_fcf_deficit: float | None
+    stage3_visibility_deficit: float | None
+    stage3_bottleneck_deficit: float | None
+    stage3_market_mispricing_deficit: float | None
+    stage3_valuation_deficit: float | None
+    stage3_revision_deficit: float | None
+    stage3_contract_quality_deficit: float | None
+    structural_visibility_deficit: float | None
+    sector_visibility_deficit: float | None
+    sector_bottleneck_deficit: float | None
+    green_cross_evidence_deficit: float | None
+    domain_specific_evidence_deficit: float | None
+    stage3_yellow_total_deficit: float | None
+    green_gate_deficit_summary: str
     red_team_risk: str
     hard_audit_count: int
+    audit_finding_codes: str
+    audit_finding_fields: str
+    audit_finding_actions: str
     explanation: str
 
 
@@ -162,6 +230,7 @@ class AsOfStagePromotionAutopsy:
         store = HistoricalOfficialStore(config.official_root)
         search_store = SearchSnapshotStore(config.search_snapshot_root)
         report_store = ReportSnapshotStore(config.report_snapshot_root)
+        fixture_store = RuntimeFixtureEvidenceStore(_runtime_fixture_spec_paths(config, asof_output))
         rows: list[StagePromotionAutopsyRow] = []
         for item in selected:
             candidate = _candidate_from_row(item)
@@ -187,7 +256,15 @@ class AsOfStagePromotionAutopsy:
                     allow_undated_docs_for_yellow_only=True,
                 ),
             )
-            bundle = build_asof_evidence_bundle(candidate=candidate, store=store, web_result=web_result)
+            extra_reports = fixture_store.reports_for_candidate(candidate)
+            extra_evidence = fixture_store.evidence_for_candidate(candidate)
+            bundle = build_asof_evidence_bundle(
+                candidate=candidate,
+                store=store,
+                web_result=web_result,
+                extra_reports=extra_reports,
+                extra_evidence=extra_evidence,
+            )
             scored = score_asof_evidence_bundle(bundle, candidate=candidate, web_result=web_result)
             diagnostics = diagnose_stage_gates(scored.score, scored.red_team)
             rows.append(_autopsy_row(candidate, scored, diagnostics))
@@ -260,6 +337,76 @@ def _autopsy_row(
         capital_allocation=score.capital_allocation_score if valid_score else None,
         information_confidence=score.information_confidence_score if valid_score else None,
         risk_penalty=score.risk_penalty if valid_score else None,
+        large_sector_id=_source_field_text(scored, "large_sector_id", valid_score),
+        canonical_archetype_id=_source_field_text(scored, "canonical_archetype_id", valid_score),
+        archetype_weight_profile_applied=_valid_diag(score.diagnostic_scores, "archetype_weight_profile_applied", valid_score),
+        archetype_weighted_total_before_calibration=_valid_diag(
+            score.diagnostic_scores,
+            "archetype_weighted_total_before_calibration",
+            valid_score,
+        ),
+        archetype_weight_eps_fcf_explosion=_valid_diag(score.diagnostic_scores, "archetype_weight_eps_fcf_explosion", valid_score),
+        archetype_weight_earnings_visibility=_valid_diag(score.diagnostic_scores, "archetype_weight_earnings_visibility", valid_score),
+        archetype_weight_bottleneck_pricing=_valid_diag(score.diagnostic_scores, "archetype_weight_bottleneck_pricing", valid_score),
+        archetype_weight_market_mispricing=_valid_diag(score.diagnostic_scores, "archetype_weight_market_mispricing", valid_score),
+        archetype_weight_valuation_rerating=_valid_diag(score.diagnostic_scores, "archetype_weight_valuation_rerating", valid_score),
+        archetype_weight_capital_allocation=_valid_diag(score.diagnostic_scores, "archetype_weight_capital_allocation", valid_score),
+        archetype_weight_information_confidence=_valid_diag(score.diagnostic_scores, "archetype_weight_information_confidence", valid_score),
+        archetype_component_eps_fcf_explosion=_valid_diag(
+            score.diagnostic_scores,
+            "archetype_component_eps_fcf_explosion",
+            valid_score,
+        ),
+        archetype_component_earnings_visibility=_valid_diag(
+            score.diagnostic_scores,
+            "archetype_component_earnings_visibility",
+            valid_score,
+        ),
+        archetype_component_bottleneck_pricing=_valid_diag(
+            score.diagnostic_scores,
+            "archetype_component_bottleneck_pricing",
+            valid_score,
+        ),
+        archetype_component_market_mispricing=_valid_diag(
+            score.diagnostic_scores,
+            "archetype_component_market_mispricing",
+            valid_score,
+        ),
+        archetype_component_valuation_rerating=_valid_diag(
+            score.diagnostic_scores,
+            "archetype_component_valuation_rerating",
+            valid_score,
+        ),
+        archetype_component_capital_allocation=_valid_diag(
+            score.diagnostic_scores,
+            "archetype_component_capital_allocation",
+            valid_score,
+        ),
+        archetype_component_information_confidence=_valid_diag(
+            score.diagnostic_scores,
+            "archetype_component_information_confidence",
+            valid_score,
+        ),
+        archetype_green_policy_absolute_block=_valid_diag(
+            score.diagnostic_scores,
+            "archetype_green_policy_absolute_block",
+            valid_score,
+        ),
+        archetype_green_policy_unlock_required=_valid_diag(
+            score.diagnostic_scores,
+            "archetype_green_policy_unlock_required",
+            valid_score,
+        ),
+        archetype_green_policy_unlock_evidence=_valid_diag(
+            score.diagnostic_scores,
+            "archetype_green_policy_unlock_evidence",
+            valid_score,
+        ),
+        archetype_green_restricted_by_profile=_valid_diag(
+            score.diagnostic_scores,
+            "archetype_green_restricted_by_profile",
+            valid_score,
+        ),
         revision_score=_valid_diag(score.diagnostic_scores, "revision_score", valid_score),
         price_stage_score=_valid_diag(score.diagnostic_scores, "price_stage_score", valid_score),
         contract_quality=_valid_diag(score.diagnostic_scores, "contract_quality", valid_score),
@@ -275,6 +422,70 @@ def _autopsy_row(
         export_channel_visibility=_valid_diag(score.diagnostic_scores, "export_channel_visibility", valid_score),
         medium_term_revision_visibility=_valid_diag(score.diagnostic_scores, "medium_term_revision_visibility", valid_score),
         domain_specific_evidence_score=_valid_diag(score.diagnostic_scores, "domain_specific_evidence_score", valid_score),
+        research_axis_bridge_present_count_capped=_valid_diag(
+            score.diagnostic_scores,
+            "research_axis_bridge_present_count_capped",
+            valid_score,
+        ),
+        research_axis_bridge_margin=_valid_diag(score.diagnostic_scores, "research_axis_bridge_margin", valid_score),
+        research_axis_bridge_customer=_valid_diag(score.diagnostic_scores, "research_axis_bridge_customer", valid_score),
+        research_axis_bridge_backlog=_valid_diag(score.diagnostic_scores, "research_axis_bridge_backlog", valid_score),
+        research_axis_bridge_contract=_valid_diag(score.diagnostic_scores, "research_axis_bridge_contract", valid_score),
+        research_axis_bridge_valuation_repricing=_valid_diag(
+            score.diagnostic_scores,
+            "research_axis_bridge_valuation_repricing",
+            valid_score,
+        ),
+        research_axis_bridge_capital_return=_valid_diag(
+            score.diagnostic_scores,
+            "research_axis_bridge_capital_return",
+            valid_score,
+        ),
+        research_axis_bridge_insurance_quality=_valid_diag(
+            score.diagnostic_scores,
+            "research_axis_bridge_insurance_quality",
+            valid_score,
+        ),
+        research_axis_bridge_bio_commercialization=_valid_diag(
+            score.diagnostic_scores,
+            "research_axis_bridge_bio_commercialization",
+            valid_score,
+        ),
+        research_axis_bridge_software_retention=_valid_diag(
+            score.diagnostic_scores,
+            "research_axis_bridge_software_retention",
+            valid_score,
+        ),
+        research_axis_bridge_consumer_sell_through=_valid_diag(
+            score.diagnostic_scores,
+            "research_axis_bridge_consumer_sell_through",
+            valid_score,
+        ),
+        research_axis_bridge_guard_risk=_valid_diag(score.diagnostic_scores, "research_axis_bridge_guard_risk", valid_score),
+        research_axis_bridge_guard_risk_penalty_points=_valid_diag(
+            score.diagnostic_scores,
+            "research_axis_bridge_guard_risk_penalty_points",
+            valid_score,
+        ),
+        actual_profit_conversion_score=_valid_diag(score.diagnostic_scores, "actual_profit_conversion_score", valid_score),
+        bottleneck_industrial_raw=_valid_diag(score.diagnostic_scores, "bottleneck_industrial_raw", valid_score),
+        bottleneck_sector_raw=_valid_diag(score.diagnostic_scores, "bottleneck_sector_raw", valid_score),
+        bottleneck_actual_conversion_raw=_valid_diag(score.diagnostic_scores, "bottleneck_actual_conversion_raw", valid_score),
+        bottleneck_validated_conversion_raw=_valid_diag(
+            score.diagnostic_scores,
+            "bottleneck_validated_conversion_raw",
+            valid_score,
+        ),
+        bottleneck_selected_raw=_valid_diag(score.diagnostic_scores, "bottleneck_selected_raw", valid_score),
+        bottleneck_selected_path=_source_field_text(scored, "bottleneck_selected_path", valid_score),
+        bottleneck_component_before_one_off_penalty=_valid_diag(
+            score.diagnostic_scores,
+            "bottleneck_component_before_one_off_penalty",
+            valid_score,
+        ),
+        bottleneck_one_off_penalty_points=_valid_diag(score.diagnostic_scores, "bottleneck_one_off_penalty_points", valid_score),
+        bottleneck_raw_required_for_green=_valid_diag(score.diagnostic_scores, "bottleneck_raw_required_for_green", valid_score),
+        bottleneck_raw_deficit_to_green=_valid_diag(score.diagnostic_scores, "bottleneck_raw_deficit_to_green", valid_score),
         sector_profile=diagnostics.sector_profile,
         promotion_band=promotion_band(score, scored.stage.stage),
         cross_evidence_families_present=", ".join(diagnostics.cross_evidence_families_present),
@@ -303,10 +514,29 @@ def _autopsy_row(
         failed_sector_bottleneck="failed_sector_bottleneck" in failed,
         failed_green_cross_evidence="failed_green_cross_evidence" in failed,
         failed_report_date_confidence="failed_report_date_confidence" in failed,
+        failed_date_unverified_green_evidence="failed_date_unverified_green_evidence" in failed,
         failed_domain_specific_evidence="failed_domain_specific_evidence" in failed,
         failed_stage3_red_team="failed_stage3_red_team" in failed,
+        stage3_total_deficit=_gate_deficit(diagnostics, "failed_stage3_total_score", valid_score),
+        stage3_eps_fcf_deficit=_gate_deficit(diagnostics, "failed_stage3_eps_fcf", valid_score),
+        stage3_visibility_deficit=_gate_deficit(diagnostics, "failed_stage3_visibility", valid_score),
+        stage3_bottleneck_deficit=_gate_deficit(diagnostics, "failed_stage3_bottleneck", valid_score),
+        stage3_market_mispricing_deficit=_gate_deficit(diagnostics, "failed_stage3_market_mispricing", valid_score),
+        stage3_valuation_deficit=_gate_deficit(diagnostics, "failed_stage3_valuation", valid_score),
+        stage3_revision_deficit=_gate_deficit(diagnostics, "failed_stage3_revision", valid_score),
+        stage3_contract_quality_deficit=_gate_deficit(diagnostics, "failed_stage3_contract_quality", valid_score),
+        structural_visibility_deficit=_gate_deficit(diagnostics, "failed_structural_visibility_quality", valid_score),
+        sector_visibility_deficit=_gate_deficit(diagnostics, "failed_sector_visibility", valid_score),
+        sector_bottleneck_deficit=_gate_deficit(diagnostics, "failed_sector_bottleneck", valid_score),
+        green_cross_evidence_deficit=_gate_deficit(diagnostics, "failed_green_cross_evidence", valid_score),
+        domain_specific_evidence_deficit=_gate_deficit(diagnostics, "failed_domain_specific_evidence", valid_score),
+        stage3_yellow_total_deficit=_gate_deficit(diagnostics, "failed_stage3_yellow_calibrated_total", valid_score),
+        green_gate_deficit_summary=_gate_deficit_summary(diagnostics, valid_score),
         red_team_risk=scored.red_team.risk_level.value,
         hard_audit_count=hard_audit_count,
+        audit_finding_codes=_audit_finding_values(scored.audit_findings, "code"),
+        audit_finding_fields=_audit_finding_values(scored.audit_findings, "field_name"),
+        audit_finding_actions=_audit_finding_values(scored.audit_findings, "suggested_action"),
         explanation=_explain(scored, diagnostics, hard_audit_count),
     )
 
@@ -315,16 +545,106 @@ def _explain(scored: AsOfEvidenceBundleScore, diagnostics: StageGateDiagnostics,
     if not is_score_valid(scored.score):
         return f"Score pending: {score_block_reason(scored.score) or 'score_invalid'}."
     if hard_audit_count:
-        return "Parser audit produced hard findings, so Green is blocked."
+        audit_codes = _audit_finding_values(scored.audit_findings, "code")
+        audit_text = f"Parser audit produced hard findings ({audit_codes or 'unknown'}), so Green is blocked"
+        if not diagnostics.stage2_gate_passed:
+            gates = ", ".join(_stage2_failed_gate_names(diagnostics))
+            return f"{audit_text}; Stage 2 gate also failed: {gates}."
+        if not diagnostics.stage3_green_gate_passed:
+            gates = ", ".join(_stage3_green_failed_gate_names(diagnostics))
+            return f"{audit_text}; Stage 3-Green gate also failed: {gates}."
+        return f"{audit_text}."
     if scored.red_team.has_hard_break:
         return "Red Team hard thesis-break blocked promotion."
     if not diagnostics.stage2_gate_passed:
-        gates = ", ".join(name for name in diagnostics.failed_gate_names if name.startswith("failed_stage2"))
+        gates = ", ".join(_stage2_failed_gate_names(diagnostics))
         return f"Stage 2 gate failed: {gates}."
     if not diagnostics.stage3_green_gate_passed:
-        gates = ", ".join(name for name in diagnostics.failed_gate_names if name.startswith("failed_stage3"))
+        gates = ", ".join(_stage3_green_failed_gate_names(diagnostics))
         return f"Stage 2 is possible, but Stage 3-Green gate failed: {gates}."
     return "All Stage 3-Green gates passed."
+
+
+def _stage2_failed_gate_names(diagnostics: StageGateDiagnostics) -> tuple[str, ...]:
+    return tuple(
+        name
+        for name in diagnostics.failed_gate_names
+        if name.startswith("failed_stage2") or name == "failed_positive_stage_price_only_blowoff"
+    )
+
+
+def _stage3_green_failed_gate_names(diagnostics: StageGateDiagnostics) -> tuple[str, ...]:
+    return tuple(
+        name
+        for name in diagnostics.failed_gate_names
+        if not name.startswith("failed_stage2") and name != "failed_score_validity"
+    )
+
+
+def _audit_finding_values(findings: Sequence[Any], attr_name: str) -> str:
+    values = {
+        str(value)
+        for finding in findings
+        if (value := getattr(finding, attr_name, None)) not in (None, "")
+    }
+    return ", ".join(sorted(values))
+
+
+def _source_field_text(scored: AsOfEvidenceBundleScore, key: str, valid_score: bool) -> str:
+    if not valid_score:
+        return ""
+    source_fields = getattr(getattr(scored, "feature_result", None), "source_fields", None)
+    if not isinstance(source_fields, Mapping):
+        return ""
+    value = source_fields.get(key)
+    return "" if value in (None, "") else str(value)
+
+
+_DEFICIT_GATES: tuple[tuple[str, str], ...] = (
+    ("failed_stage3_total_score", "total"),
+    ("failed_stage3_eps_fcf", "eps_fcf"),
+    ("failed_stage3_visibility", "visibility"),
+    ("failed_stage3_bottleneck", "bottleneck"),
+    ("failed_stage3_market_mispricing", "mispricing"),
+    ("failed_stage3_valuation", "valuation"),
+    ("failed_stage3_revision", "revision"),
+    ("failed_stage3_contract_quality", "contract"),
+    ("failed_structural_visibility_quality", "structural_visibility"),
+    ("failed_sector_visibility", "sector_visibility"),
+    ("failed_sector_bottleneck", "sector_bottleneck"),
+    ("failed_green_cross_evidence", "cross_evidence"),
+    ("failed_domain_specific_evidence", "domain_evidence"),
+    ("failed_stage3_yellow_calibrated_total", "yellow_total"),
+)
+
+
+def _gate_deficit(diagnostics: StageGateDiagnostics, gate_name: str, valid_score: bool) -> float | None:
+    if not valid_score:
+        return None
+    detail = diagnostics.values_vs_thresholds.get(gate_name, {})
+    if detail.get("passed") is True:
+        return 0.0
+    value = detail.get("value")
+    threshold = detail.get("threshold")
+    if not isinstance(value, (int, float)) or not isinstance(threshold, (int, float)):
+        return None
+    return round(max(float(threshold) - float(value), 0.0), 4)
+
+
+def _gate_deficit_summary(diagnostics: StageGateDiagnostics, valid_score: bool) -> str:
+    if not valid_score:
+        return ""
+    items: list[tuple[float, str]] = []
+    for gate_name, label in _DEFICIT_GATES:
+        deficit = _gate_deficit(diagnostics, gate_name, valid_score)
+        if deficit is None or deficit <= 0:
+            continue
+        detail = diagnostics.values_vs_thresholds.get(gate_name, {})
+        value = detail.get("value")
+        threshold = detail.get("threshold")
+        if isinstance(value, (int, float)) and isinstance(threshold, (int, float)):
+            items.append((deficit, f"{label}:{float(value):.2f}/{float(threshold):.2f}(-{deficit:.2f})"))
+    return "; ".join(text for _, text in sorted(items, reverse=True))
 
 
 def render_autopsy_markdown(result: AsOfStagePromotionAutopsyResult) -> str:
@@ -361,8 +681,8 @@ def render_autopsy_markdown(result: AsOfStagePromotionAutopsyResult) -> str:
             "",
             "## Candidate Gate Matrix",
             "",
-            "| symbol | company | date | stage | band | sector | visible_score | score state | info | EPS/FCF | visibility | structural visibility | bottleneck | valuation | failed gates |",
-            "| --- | --- | --- | --- | --- | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
+            "| symbol | company | date | stage | band | sector | visible_score | score state | info | EPS/FCF | visibility | structural visibility | bottleneck | valuation | failed gates | top deficits |",
+            "| --- | --- | --- | --- | --- | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- |",
         ]
     )
     for row in result.rows:
@@ -372,7 +692,7 @@ def render_autopsy_markdown(result: AsOfStagePromotionAutopsyResult) -> str:
             f"{_fmt_score(row.current_score)} | {_score_state_text(row)} | {_fmt_component(row.information_confidence)} | {_fmt_component(row.eps_fcf_explosion)} | "
             f"{_fmt_component(row.earnings_visibility)} | {_fmt_component(row.structural_visibility_quality)} | "
             f"{_fmt_component(row.bottleneck_pricing)} | {_fmt_component(row.valuation_rerating)} | "
-            f"{', '.join(failed_gates) or 'none'} |"
+            f"{', '.join(failed_gates) or 'none'} | {row.green_gate_deficit_summary or 'none'} |"
         )
     lines.extend(
         [
@@ -454,6 +774,28 @@ def _score_component_fields() -> tuple[str, ...]:
         "capital_allocation",
         "information_confidence",
         "risk_penalty",
+        "large_sector_id",
+        "canonical_archetype_id",
+        "archetype_weight_profile_applied",
+        "archetype_weighted_total_before_calibration",
+        "archetype_weight_eps_fcf_explosion",
+        "archetype_weight_earnings_visibility",
+        "archetype_weight_bottleneck_pricing",
+        "archetype_weight_market_mispricing",
+        "archetype_weight_valuation_rerating",
+        "archetype_weight_capital_allocation",
+        "archetype_weight_information_confidence",
+        "archetype_component_eps_fcf_explosion",
+        "archetype_component_earnings_visibility",
+        "archetype_component_bottleneck_pricing",
+        "archetype_component_market_mispricing",
+        "archetype_component_valuation_rerating",
+        "archetype_component_capital_allocation",
+        "archetype_component_information_confidence",
+        "archetype_green_policy_absolute_block",
+        "archetype_green_policy_unlock_required",
+        "archetype_green_policy_unlock_evidence",
+        "archetype_green_restricted_by_profile",
         "revision_score",
         "price_stage_score",
         "contract_quality",
@@ -469,12 +811,54 @@ def _score_component_fields() -> tuple[str, ...]:
         "export_channel_visibility",
         "medium_term_revision_visibility",
         "domain_specific_evidence_score",
+        "research_axis_bridge_present_count_capped",
+        "research_axis_bridge_margin",
+        "research_axis_bridge_customer",
+        "research_axis_bridge_backlog",
+        "research_axis_bridge_contract",
+        "research_axis_bridge_valuation_repricing",
+        "research_axis_bridge_capital_return",
+        "research_axis_bridge_insurance_quality",
+        "research_axis_bridge_bio_commercialization",
+        "research_axis_bridge_software_retention",
+        "research_axis_bridge_consumer_sell_through",
+        "research_axis_bridge_guard_risk",
+        "research_axis_bridge_guard_risk_penalty_points",
+        "actual_profit_conversion_score",
+        "bottleneck_industrial_raw",
+        "bottleneck_sector_raw",
+        "bottleneck_actual_conversion_raw",
+        "bottleneck_validated_conversion_raw",
+        "bottleneck_selected_raw",
+        "bottleneck_selected_path",
+        "bottleneck_component_before_one_off_penalty",
+        "bottleneck_one_off_penalty_points",
+        "bottleneck_raw_required_for_green",
+        "bottleneck_raw_deficit_to_green",
         "sector_profile",
         "promotion_band",
         "cross_evidence_families_present",
         "missing_evidence_families",
+        "stage3_total_deficit",
+        "stage3_eps_fcf_deficit",
+        "stage3_visibility_deficit",
+        "stage3_bottleneck_deficit",
+        "stage3_market_mispricing_deficit",
+        "stage3_valuation_deficit",
+        "stage3_revision_deficit",
+        "stage3_contract_quality_deficit",
+        "structural_visibility_deficit",
+        "sector_visibility_deficit",
+        "sector_bottleneck_deficit",
+        "green_cross_evidence_deficit",
+        "domain_specific_evidence_deficit",
+        "stage3_yellow_total_deficit",
+        "green_gate_deficit_summary",
         "red_team_risk",
         "hard_audit_count",
+        "audit_finding_codes",
+        "audit_finding_fields",
+        "audit_finding_actions",
         "explanation",
     )
 
@@ -493,6 +877,28 @@ def _gate_fields() -> tuple[str, ...]:
         "raw_score_before_block",
         "promotion_band",
         "sector_profile",
+        "large_sector_id",
+        "canonical_archetype_id",
+        "archetype_weight_profile_applied",
+        "archetype_weighted_total_before_calibration",
+        "archetype_weight_eps_fcf_explosion",
+        "archetype_weight_earnings_visibility",
+        "archetype_weight_bottleneck_pricing",
+        "archetype_weight_market_mispricing",
+        "archetype_weight_valuation_rerating",
+        "archetype_weight_capital_allocation",
+        "archetype_weight_information_confidence",
+        "archetype_component_eps_fcf_explosion",
+        "archetype_component_earnings_visibility",
+        "archetype_component_bottleneck_pricing",
+        "archetype_component_market_mispricing",
+        "archetype_component_valuation_rerating",
+        "archetype_component_capital_allocation",
+        "archetype_component_information_confidence",
+        "archetype_green_policy_absolute_block",
+        "archetype_green_policy_unlock_required",
+        "archetype_green_policy_unlock_evidence",
+        "archetype_green_restricted_by_profile",
         "failed_stage2_total_score",
         "failed_stage2_eps_fcf",
         "failed_stage2_valuation",
@@ -510,8 +916,38 @@ def _gate_fields() -> tuple[str, ...]:
         "failed_sector_bottleneck",
         "failed_green_cross_evidence",
         "failed_report_date_confidence",
+        "failed_date_unverified_green_evidence",
         "failed_domain_specific_evidence",
         "failed_stage3_red_team",
+        "bottleneck_industrial_raw",
+        "bottleneck_sector_raw",
+        "bottleneck_actual_conversion_raw",
+        "bottleneck_validated_conversion_raw",
+        "bottleneck_selected_raw",
+        "bottleneck_selected_path",
+        "bottleneck_component_before_one_off_penalty",
+        "bottleneck_one_off_penalty_points",
+        "bottleneck_raw_required_for_green",
+        "bottleneck_raw_deficit_to_green",
+        "stage3_total_deficit",
+        "stage3_eps_fcf_deficit",
+        "stage3_visibility_deficit",
+        "stage3_bottleneck_deficit",
+        "stage3_market_mispricing_deficit",
+        "stage3_valuation_deficit",
+        "stage3_revision_deficit",
+        "stage3_contract_quality_deficit",
+        "structural_visibility_deficit",
+        "sector_visibility_deficit",
+        "sector_bottleneck_deficit",
+        "green_cross_evidence_deficit",
+        "domain_specific_evidence_deficit",
+        "stage3_yellow_total_deficit",
+        "green_gate_deficit_summary",
+        "hard_audit_count",
+        "audit_finding_codes",
+        "audit_finding_fields",
+        "audit_finding_actions",
     )
 
 
@@ -572,6 +1008,23 @@ def _candidate_from_row(row: Mapping[str, Any]) -> CheapScanCandidate:
         recommended_next_layer=layer,
         candidate_source_path=str(row.get("candidate_source_path") or "official_cheap_scan"),
     )
+
+
+def _runtime_fixture_spec_paths(config: AsOfStagePromotionAutopsyConfig, asof_output: Path) -> tuple[str | Path, ...]:
+    if config.runtime_fixture_spec_paths:
+        return tuple(config.runtime_fixture_spec_paths)
+    summary = _load_json(asof_output / "asof_replay_summary.json")
+    if not isinstance(summary, Mapping):
+        return ()
+    replay_config = summary.get("config")
+    if not isinstance(replay_config, Mapping):
+        return ()
+    paths = replay_config.get("runtime_fixture_spec_paths") or ()
+    if isinstance(paths, (str, Path)):
+        return (paths,)
+    if isinstance(paths, Sequence):
+        return tuple(str(item) for item in paths if item)
+    return ()
 
 
 def _load_json(path: Path) -> Any:

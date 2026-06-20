@@ -1,0 +1,131 @@
+{
+  "schema_version": "v12_goal_scope_evidence_audit_v1",
+  "scope": "0619_investigation_requirement_coverage",
+  "scoring_policy": "diagnostic_only_no_weight_or_stage_change",
+  "summary": {
+    "requirement_count": 8,
+    "requirement_status_counts": {
+      "proved": 1,
+      "proved_but_weight_layer_only": 1,
+      "proved_current_artifacts": 1,
+      "proved_failure_taxonomy": 1,
+      "proved_for_current_benchmark": 2,
+      "proved_no": 1,
+      "proved_root_cause": 1
+    },
+    "investigation_completion_status": "complete_for_root_cause_investigation",
+    "implementation_repair_status": "not_complete_and_tracked_as_acceptance_blockers",
+    "investigation_plain_conclusion": "삼전/하닉 저점수는 HBM 특례로 풀 문제가 아니라 누적 연구가 candidate/archive, runtime input evidence, parser-feature bridge, weighted gate 중 어디서 멈추는지 전 아키타입에서 분리해야 하는 공통 문제다.",
+    "implementation_plain_conclusion": "조사 목표는 요구사항별 증거로 완료됐지만, 수리 구현은 아직 완료가 아니다. acceptance spec의 blocked 항목을 exact replay, parser/feature bridge, positive/guard parity로 풀어야 한다.",
+    "hynix_green_shortfall_to_87": 6.9869,
+    "samsung_green_shortfall_to_87": 14.8819,
+    "historical_stage3_green_after_case_count": 331,
+    "research_support_rows": 12471,
+    "runtime_exercised_archetype_count": 7,
+    "runtime_unexercised_archetype_count": 29,
+    "current_stage3_green_count": 0,
+    "stop_layer_counts": {
+      "candidate_replay_archive": 29,
+      "manual_review": 3,
+      "stage_gate": 4
+    },
+    "acceptance_status_counts": {
+      "blocked_missing_exact_fixture_archive_or_candidate_funnel": 32,
+      "blocked_weighted_gate_after_fields_present": 4
+    }
+  },
+  "requirement_rows": [
+    {
+      "requirement_id": "R1_samsung_hynix_score_cut_location",
+      "question": "삼전/하닉 점수가 어디서 깎였나?",
+      "status": "proved_for_current_benchmark",
+      "evidence": [
+        "docs/0619/v12_component_score_loss_waterfall_2026-06-19.md",
+        "docs/0619/v12_current_runtime_field_failure_census_2026-06-19.md",
+        "docs/0619/v12_score_loss_causal_chain_2026-06-19.md"
+      ],
+      "plain_answer": "하닉은 EPS/FCF가 만점인데 bottleneck/visibility/bridge 손실로 Green까지 6.9869점 부족하다. 삼성도 EPS/FCF는 만점이지만 confidence/bottleneck/visibility 손실로 Green까지 14.8819점 부족하다.",
+      "remaining_work": "점수 기준을 낮추는 것이 아니라 source-backed bridge field를 채워 positive/guard replay로 검증해야 한다."
+    },
+    {
+      "requirement_id": "R2_historical_green_cases_existed",
+      "question": "지금까지 연구자료에 Green까지 간 애들이 실제로 있었나?",
+      "status": "proved",
+      "evidence": [
+        "docs/0619/v12_historical_green_case_runtime_translation_ledger_2026-06-19.md",
+        "docs/0619/v12_green_score_axis_runtime_contract_audit_2026-06-19.md"
+      ],
+      "plain_answer": "있었다. score_simulation row 9052개 중 historical Stage3-Green after case가 331개이고, Green이 있었던 아키타입은 30개다.",
+      "remaining_work": "historical Green label을 그대로 production Green으로 쓰지 말고 source-backed fixture로 재현해야 한다."
+    },
+    {
+      "requirement_id": "R3_research_accumulated_into_weights",
+      "question": "연구자료가 합쳐져서 점수표가 만들어진 게 맞나?",
+      "status": "proved_but_weight_layer_only",
+      "evidence": [
+        "docs/0619/v12_weight_support_runtime_feature_audit_2026-06-19.md",
+        "docs/0619/v12_runtime_execution_path_map_2026-06-19.md"
+      ],
+      "plain_answer": "맞다. 누적 support row 12471개, positive 1495개, counterexample 2628개가 36개 아키타입 weight profile에 들어갔다.",
+      "remaining_work": "weight는 배점표라서 답안지 field를 자동으로 채우지 않는다. parser/feature bridge가 별도로 필요하다."
+    },
+    {
+      "requirement_id": "R4_why_low_despite_accumulation",
+      "question": "누적됐는데 왜 지금 pipeline 점수는 낮나?",
+      "status": "proved_root_cause",
+      "evidence": [
+        "docs/0619/v12_runtime_execution_path_map_2026-06-19.md",
+        "docs/0619/v12_green_score_axis_runtime_contract_audit_2026-06-19.md",
+        "docs/0619/v12_component_score_loss_waterfall_2026-06-19.md"
+      ],
+      "plain_answer": "누적 연구는 weight layer까지는 들어갔지만, 현재 scorer는 research score축 이름을 직접 읽지 않는다. Green score key top40 중 {'exact_derived_metric_only': 1, 'exact_source_runtime_field': 2, 'missing_axis_bridge_contract': 9, 'requires_axis_bridge_to_runtime_primitives': 28} 상태라서 대부분 source-backed primitive bridge가 필요하다.",
+      "remaining_work": "margin/customer/backlog/contract/capital_return 같은 score축을 실제 parser field와 component 입력으로 연결해야 한다."
+    },
+    {
+      "requirement_id": "R5_not_hbm_only",
+      "question": "HBM 문제만 고치면 끝나는가?",
+      "status": "proved_no",
+      "evidence": [
+        "docs/0619/v12_cross_archetype_score_loss_trace_2026-06-19.md",
+        "docs/0619/v12_current_runtime_field_failure_census_2026-06-19.md",
+        "docs/0619/v12_component_score_loss_waterfall_2026-06-19.md"
+      ],
+      "plain_answer": "아니다. 현재 benchmark가 실제 채점한 아키타입은 7개뿐이고 29개는 미채점이다. ready fixture 31개 기준 손실층도 {'candidate_funnel_or_replay_coverage': 24, 'runtime_input_evidence_coverage': 2, 'weighted_component_or_stage3_gate': 4}로 나뉜다.",
+      "remaining_work": "C21/C22/C23/C28/C26 같은 비-HBM도 exact replay와 bridge adapter를 같이 보강해야 한다."
+    },
+    {
+      "requirement_id": "R6_systemic_failure_layers",
+      "question": "전체적으로 우리 문제가 무엇인가?",
+      "status": "proved_failure_taxonomy",
+      "evidence": [
+        "docs/0619/v12_runtime_execution_path_map_2026-06-19.md",
+        "docs/0619/v12_runtime_repair_acceptance_spec_2026-06-19.md",
+        "docs/0619/v12_runtime_repair_execution_backlog_2026-06-19.md"
+      ],
+      "plain_answer": "중단 층은 {'candidate_replay_archive': 29, 'manual_review': 3, 'stage_gate': 4}다. 수리 완료 판정 상태도 {'blocked_missing_exact_fixture_archive_or_candidate_funnel': 32, 'blocked_weighted_gate_after_fields_present': 4}라서, 후보/archive, parser-feature bridge, gate alignment를 분리해서 고쳐야 한다.",
+      "remaining_work": "수리 자체는 아직 완료가 아니다. acceptance spec의 blocked 상태를 실제 fixture/replay/test로 풀어야 한다."
+    },
+    {
+      "requirement_id": "R7_current_runtime_component_distribution",
+      "question": "지금 점수 손실은 어떤 과목에 몰려 있나?",
+      "status": "proved_for_current_benchmark",
+      "evidence": [
+        "docs/0619/v12_component_score_loss_waterfall_2026-06-19.md"
+      ],
+      "plain_answer": "전역 평균 손실 상위는 bottleneck_pricing 10.4771점, earnings_visibility 9.113점, eps_fcf_explosion 6.0517점이다.",
+      "remaining_work": "이 분포는 current benchmark 후보 120개 기준이다. 미채점 28개 아키타입은 replay 후 별도 재계산해야 한다."
+    },
+    {
+      "requirement_id": "R8_documentation_under_0619",
+      "question": "0619 폴더에 계속 문서화했나?",
+      "status": "proved_current_artifacts",
+      "evidence": [
+        "docs/0619/README.md",
+        "docs/0619/v12_component_score_loss_waterfall_2026-06-19.md",
+        "docs/0619/v12_runtime_execution_path_map_2026-06-19.md"
+      ],
+      "plain_answer": "0619 README가 현재 결론과 읽을 순서를 갖고 있고, v12 진단 문서들이 JSON/MD 쌍으로 남아 있다.",
+      "remaining_work": "새 수리 패치가 생기면 같은 방식으로 acceptance evidence와 README를 갱신해야 한다."
+    }
+  ]
+}

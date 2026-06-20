@@ -11,6 +11,7 @@ from e2r.calibration.archetype_weight_profile import (
     write_archetype_weight_runtime_profile,
 )
 from e2r.calibration.scoring_profile import ScoringProfile
+from e2r.calibration.taxonomy import large_sector_for_archetype
 from e2r.models import Stage
 from e2r.red_team import RedTeamAssessment
 from e2r.scoring import ArchetypeClassificationError, CANONICAL_SCORE_COMPONENTS, DeterministicScorer, ScoringPayload
@@ -225,6 +226,288 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
 
             self.assertEqual(kbeauty_stage.stage, Stage.STAGE_3_GREEN)
             self.assertNotEqual(industrial_stage.stage, Stage.STAGE_3_GREEN)
+
+    def test_redteam_guardrail_archetypes_do_not_unlock_green_from_high_scores(self):
+        guardrail_archetypes = (
+            "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+            "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+            "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+            "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            profile_path = Path(tmp) / "profile.json"
+            profile_path.write_text(
+                json.dumps(build_archetype_weight_profile_payload(), ensure_ascii=False),
+                encoding="utf-8",
+            )
+
+            for canonical_archetype_id in guardrail_archetypes:
+                with self.subTest(canonical_archetype_id=canonical_archetype_id):
+                    payload = ScoringPayload(
+                        symbol="GUARD",
+                        as_of_date=date(2026, 5, 14),
+                        components=complete_components(
+                            eps_fcf_explosion=20.0,
+                            earnings_visibility=20.0,
+                            bottleneck_pricing=20.0,
+                            market_mispricing=15.0,
+                            valuation_rerating=15.0,
+                            capital_allocation=5.0,
+                            information_confidence=5.0,
+                        ),
+                        diagnostic_scores={
+                            "revision_score": 100.0,
+                            "structural_visibility_quality": 100.0,
+                            "contract_quality": 100.0,
+                            "contract_required_for_green": 0.0,
+                        },
+                        large_sector_id="L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+                        canonical_archetype_id=canonical_archetype_id,
+                    )
+                    red_team = RedTeamAssessment.empty("GUARD", date(2026, 5, 14))
+
+                    with patch("e2r.scoring.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
+                        score = DeterministicScorer().score(payload)
+                    with patch("e2r.staging.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
+                        stage = StageClassifier().classify(StageClassificationInput(score=score, red_team=red_team))
+
+                    self.assertEqual(score.diagnostic_scores["archetype_green_restricted_by_profile"], 1.0)
+                    self.assertNotEqual(stage.stage, Stage.STAGE_3_GREEN)
+
+    def test_conditional_green_policies_require_but_can_unlock_with_conversion_evidence(self):
+        conditional_archetypes = (
+            "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+            "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+            "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+            "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+            "C11_BATTERY_ORDERBOOK_RERATING",
+            "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+            "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+            "C15_MATERIAL_SPREAD_SUPERCYCLE",
+            "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+            "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+            "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+            "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+            "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+            "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+            "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+        )
+        high_components = complete_components(
+            eps_fcf_explosion=20.0,
+            earnings_visibility=20.0,
+            bottleneck_pricing=20.0,
+            market_mispricing=15.0,
+            valuation_rerating=15.0,
+            capital_allocation=5.0,
+            information_confidence=5.0,
+        )
+        base_diagnostics = {
+            "revision_score": 100.0,
+            "structural_visibility_quality": 100.0,
+            "contract_quality": 100.0,
+            "contract_required_for_green": 0.0,
+        }
+        unlock_diagnostics = {
+            **base_diagnostics,
+            "actual_profit_conversion_score": 80.0,
+            "fcf_quality_score": 80.0,
+            "domain_specific_evidence_score": 75.0,
+            "research_axis_bridge_present_count_capped": 5.0,
+            "research_axis_bridge_margin": 100.0,
+            "research_axis_bridge_capital_return": 100.0,
+            "research_axis_bridge_bio_commercialization": 100.0,
+        }
+
+        with tempfile.TemporaryDirectory() as tmp:
+            profile_path = Path(tmp) / "profile.json"
+            profile_path.write_text(
+                json.dumps(build_archetype_weight_profile_payload(), ensure_ascii=False),
+                encoding="utf-8",
+            )
+
+            for canonical_archetype_id in conditional_archetypes:
+                with self.subTest(canonical_archetype_id=canonical_archetype_id):
+                    blocked_payload = ScoringPayload(
+                        symbol="COND_BLOCKED",
+                        as_of_date=date(2026, 5, 14),
+                        components=high_components,
+                        diagnostic_scores=base_diagnostics,
+                        large_sector_id=large_sector_for_archetype(canonical_archetype_id),
+                        canonical_archetype_id=canonical_archetype_id,
+                    )
+                    unlocked_payload = ScoringPayload(
+                        symbol="COND_UNLOCKED",
+                        as_of_date=date(2026, 5, 14),
+                        components=high_components,
+                        diagnostic_scores=unlock_diagnostics,
+                        large_sector_id=large_sector_for_archetype(canonical_archetype_id),
+                        canonical_archetype_id=canonical_archetype_id,
+                    )
+                    blocked_red_team = RedTeamAssessment.empty("COND_BLOCKED", date(2026, 5, 14))
+                    unlocked_red_team = RedTeamAssessment.empty("COND_UNLOCKED", date(2026, 5, 14))
+
+                    with patch("e2r.scoring.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
+                        blocked_score = DeterministicScorer().score(blocked_payload)
+                        unlocked_score = DeterministicScorer().score(unlocked_payload)
+                    with patch("e2r.staging.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
+                        blocked_stage = StageClassifier().classify(
+                            StageClassificationInput(score=blocked_score, red_team=blocked_red_team)
+                        )
+                        unlocked_stage = StageClassifier().classify(
+                            StageClassificationInput(score=unlocked_score, red_team=unlocked_red_team)
+                        )
+
+                    self.assertEqual(blocked_score.diagnostic_scores["archetype_green_policy_unlock_required"], 1.0)
+                    self.assertEqual(blocked_score.diagnostic_scores["archetype_green_restricted_by_profile"], 1.0)
+                    self.assertNotEqual(blocked_stage.stage, Stage.STAGE_3_GREEN)
+                    self.assertEqual(unlocked_score.diagnostic_scores["archetype_green_policy_unlock_required"], 1.0)
+                    self.assertGreaterEqual(
+                        unlocked_score.diagnostic_scores["archetype_green_policy_unlock_evidence"],
+                        60.0,
+                    )
+                    self.assertEqual(unlocked_score.diagnostic_scores["archetype_green_restricted_by_profile"], 0.0)
+                    self.assertEqual(unlocked_stage.stage, Stage.STAGE_3_GREEN)
+
+    def test_absolute_green_block_policies_stay_blocked_even_with_unlock_evidence(self):
+        absolute_block_archetypes = (
+            "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+            "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+            "C24_BIO_TRIAL_DATA_EVENT_RISK",
+            "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+            "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+            "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+            "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+            "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+        )
+        high_components = complete_components(
+            eps_fcf_explosion=20.0,
+            earnings_visibility=20.0,
+            bottleneck_pricing=20.0,
+            market_mispricing=15.0,
+            valuation_rerating=15.0,
+            capital_allocation=5.0,
+            information_confidence=5.0,
+        )
+        unlock_diagnostics = {
+            "revision_score": 100.0,
+            "structural_visibility_quality": 100.0,
+            "contract_quality": 100.0,
+            "contract_required_for_green": 0.0,
+            "actual_profit_conversion_score": 100.0,
+            "fcf_quality_score": 100.0,
+            "domain_specific_evidence_score": 100.0,
+            "green_unlock_evidence_score": 100.0,
+        }
+
+        with tempfile.TemporaryDirectory() as tmp:
+            profile_path = Path(tmp) / "profile.json"
+            profile_path.write_text(
+                json.dumps(build_archetype_weight_profile_payload(), ensure_ascii=False),
+                encoding="utf-8",
+            )
+
+            for canonical_archetype_id in absolute_block_archetypes:
+                with self.subTest(canonical_archetype_id=canonical_archetype_id):
+                    payload = ScoringPayload(
+                        symbol="ABS_BLOCK",
+                        as_of_date=date(2026, 5, 14),
+                        components=high_components,
+                        diagnostic_scores=unlock_diagnostics,
+                        large_sector_id=large_sector_for_archetype(canonical_archetype_id),
+                        canonical_archetype_id=canonical_archetype_id,
+                    )
+                    red_team = RedTeamAssessment.empty("ABS_BLOCK", date(2026, 5, 14))
+
+                    with patch("e2r.scoring.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
+                        score = DeterministicScorer().score(payload)
+                    with patch("e2r.staging.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
+                        stage = StageClassifier().classify(StageClassificationInput(score=score, red_team=red_team))
+
+                    self.assertEqual(score.diagnostic_scores["archetype_green_policy_absolute_block"], 1.0)
+                    self.assertEqual(score.diagnostic_scores["archetype_green_restricted_by_profile"], 1.0)
+                    self.assertNotEqual(stage.stage, Stage.STAGE_3_GREEN)
+
+    def test_red_watch_policy_can_unlock_only_with_source_backed_green_bridge(self):
+        high_components = complete_components(
+            eps_fcf_explosion=20.0,
+            earnings_visibility=20.0,
+            bottleneck_pricing=20.0,
+            market_mispricing=15.0,
+            valuation_rerating=15.0,
+            capital_allocation=5.0,
+            information_confidence=5.0,
+        )
+        source_backed_bridge_diagnostics = {
+            "revision_score": 100.0,
+            "structural_visibility_quality": 100.0,
+            "contract_quality": 100.0,
+            "contract_required_for_green": 0.0,
+            "actual_profit_conversion_score": 100.0,
+            "fcf_quality_score": 100.0,
+            "domain_specific_evidence_score": 100.0,
+            "green_unlock_evidence_score": 100.0,
+            "source_backed_green_bridge_raw": 92.0,
+            "research_axis_bridge_guard_risk": 0.0,
+            "research_axis_bridge_guard_risk_penalty_points": 0.0,
+            "research_axis_bridge_present_count_capped": 5.0,
+        }
+
+        with tempfile.TemporaryDirectory() as tmp:
+            profile_path = Path(tmp) / "profile.json"
+            profile_path.write_text(
+                json.dumps(build_archetype_weight_profile_payload(), ensure_ascii=False),
+                encoding="utf-8",
+            )
+
+            for canonical_archetype_id in (
+                "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+                "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+            ):
+                with self.subTest(canonical_archetype_id=canonical_archetype_id):
+                    payload = ScoringPayload(
+                        symbol="SOURCE_BRIDGE",
+                        as_of_date=date(2026, 5, 14),
+                        components=high_components,
+                        diagnostic_scores=source_backed_bridge_diagnostics,
+                        large_sector_id=large_sector_for_archetype(canonical_archetype_id),
+                        canonical_archetype_id=canonical_archetype_id,
+                    )
+                    red_team = RedTeamAssessment.empty("SOURCE_BRIDGE", date(2026, 5, 14))
+
+                    with patch("e2r.scoring.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
+                        score = DeterministicScorer().score(payload)
+                    with patch("e2r.staging.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
+                        stage = StageClassifier().classify(StageClassificationInput(score=score, red_team=red_team))
+
+                    self.assertEqual(score.diagnostic_scores["archetype_green_policy_absolute_block"], 1.0)
+                    self.assertEqual(score.diagnostic_scores["archetype_green_policy_source_backed_override"], 1.0)
+                    self.assertEqual(score.diagnostic_scores["archetype_green_restricted_by_profile"], 0.0)
+                    self.assertEqual(stage.stage, Stage.STAGE_3_GREEN)
+
+            for canonical_archetype_id in (
+                "C24_BIO_TRIAL_DATA_EVENT_RISK",
+                "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+            ):
+                with self.subTest(canonical_archetype_id=canonical_archetype_id):
+                    payload = ScoringPayload(
+                        symbol="STRICT_GUARD",
+                        as_of_date=date(2026, 5, 14),
+                        components=high_components,
+                        diagnostic_scores=source_backed_bridge_diagnostics,
+                        large_sector_id=large_sector_for_archetype(canonical_archetype_id),
+                        canonical_archetype_id=canonical_archetype_id,
+                    )
+                    red_team = RedTeamAssessment.empty("STRICT_GUARD", date(2026, 5, 14))
+
+                    with patch("e2r.scoring.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
+                        score = DeterministicScorer().score(payload)
+                    with patch("e2r.staging.get_active_scoring_profile", return_value=runtime_profile(profile_path)):
+                        stage = StageClassifier().classify(StageClassificationInput(score=score, red_team=red_team))
+
+                    self.assertEqual(score.diagnostic_scores["archetype_green_policy_source_backed_override"], 0.0)
+                    self.assertEqual(score.diagnostic_scores["archetype_green_restricted_by_profile"], 1.0)
+                    self.assertNotEqual(stage.stage, Stage.STAGE_3_GREEN)
 
     def test_unknown_archetype_is_rejected_instead_of_fallback(self):
         with tempfile.TemporaryDirectory() as tmp:

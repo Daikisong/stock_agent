@@ -66,6 +66,32 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertIn("RAW_SCORE_TOTAL_BEFORE_GAP:78.0", codes)
         self.assertFalse(any(item.startswith("SCORE_TOTAL:") for item in codes))
 
+    def test_score_gap_missing_information_coerces_numeric_diagnostic_strings(self):
+        score = ScoreSnapshot(
+            symbol="123456",
+            as_of_date=date(2026, 6, 12),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=20.0,
+            bottleneck_pricing_score=20.0,
+            market_mispricing_score=15.0,
+            valuation_rerating_score=15.0,
+            capital_allocation_score=5.0,
+            information_confidence_score=5.0,
+            risk_penalty=0.0,
+            total_score=100.0,
+            diagnostic_scores={"revision_score": 90.0, "contract_required_for_green": 0.0},
+        )
+        diagnostics = dict(score.diagnostic_scores)
+        diagnostics["revision_score"] = "44"
+        diagnostics["contract_required_for_green"] = "1"
+        diagnostics["contract_quality"] = "unknown"
+        object.__setattr__(score, "diagnostic_scores", diagnostics)
+
+        gaps = _score_gap_missing_information(score)
+
+        self.assertIn("revision estimate consensus target price EPS OP FCF", gaps)
+        self.assertIn("contract backlog RPO prepayment order allocation", gaps)
+
     def test_free_web_research_defaults_evidence_review_on_for_gap_expansion(self):
         inputs = FreeWebResearchInput(
             company_name="테스트",

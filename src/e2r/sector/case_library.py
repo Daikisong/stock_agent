@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import csv
 import json
+import math
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
@@ -173,7 +174,7 @@ class CaseDataQuality:
             official_data_available=_bool(value.get("official_data_available")),
             report_data_available=_bool(value.get("report_data_available")),
             price_data_available=_bool(value.get("price_data_available")),
-            stage_dates_confidence=float(value.get("stage_dates_confidence", 0.0)),
+            stage_dates_confidence=_float_or_none(value.get("stage_dates_confidence")) or 0.0,
         )
 
     def as_dict(self) -> dict[str, bool | float]:
@@ -528,13 +529,19 @@ def _legacy_case_type(value: Any) -> str | None:
 def _float_or_none(value: Any) -> float | None:
     if value in (None, ""):
         return None
-    return float(value)
+    number = float(value)
+    if not math.isfinite(number):
+        return None
+    return number
 
 
 def _int_or_none(value: Any) -> int | None:
     if value in (None, ""):
         return None
-    return int(value)
+    number = float(value)
+    if not math.isfinite(number):
+        return None
+    return int(number)
 
 
 def _bool_or_none(value: Any) -> bool | None:

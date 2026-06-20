@@ -1,0 +1,4586 @@
+{
+  "schema_version": "v12_exact_fixture_replay_readiness_v1",
+  "scope": "v12_runtime_replay_spec_rows_vs_local_historical_official_search_report_inputs",
+  "spec_row_count": 60,
+  "fixture_symbol_count": 53,
+  "official_universe_symbol_count": 13,
+  "retrospective_ready_count": 1,
+  "strict_pit_ready_count": 1,
+  "retrospective_readiness_status_counts": {
+    "missing_candidate_generation_inputs": 4,
+    "missing_official_and_research_inputs": 54,
+    "missing_research_snapshot_inputs": 1,
+    "ready_retrospective_exact_replay": 1
+  },
+  "strict_pit_readiness_status_counts": {
+    "missing_candidate_generation_inputs": 3,
+    "missing_official_and_research_inputs": 55,
+    "missing_research_snapshot_inputs": 1,
+    "ready_strict_pit_exact_replay": 1
+  },
+  "root_cause_counts": {
+    "exact_fixture_inputs_archived": 1,
+    "fixture_official_archive_or_research_snapshots_missing": 54,
+    "fixture_research_snapshot_not_archived": 1,
+    "fixture_symbol_or_price_history_missing_from_official_archive": 4
+  },
+  "retrospective_missing_input_counts": {
+    "evidence_source_report_text_snapshot": 11,
+    "evidence_source_search_snapshot": 11,
+    "official_universe": 54,
+    "price_history_370d": 56,
+    "recent_price_history_45d": 2,
+    "report_text_snapshot": 44,
+    "retrospective_search_snapshot": 44
+  },
+  "strict_pit_missing_input_counts": {
+    "official_universe": 54,
+    "pit_evidence_source_report_text_snapshot": 11,
+    "pit_evidence_source_search_snapshot": 11,
+    "pit_report_text_snapshot": 44,
+    "pit_search_snapshot": 45,
+    "price_history_370d": 56,
+    "recent_price_history_45d": 2
+  },
+  "role_retrospective_status_counts": {
+    "green:missing_candidate_generation_inputs": 3,
+    "green:missing_official_and_research_inputs": 25,
+    "green:missing_research_snapshot_inputs": 1,
+    "green:ready_retrospective_exact_replay": 1,
+    "guard:missing_candidate_generation_inputs": 1,
+    "guard:missing_official_and_research_inputs": 29
+  },
+  "archetype_pair_summary": {
+    "archetype_count": 30,
+    "green_retrospective_ready_count": 1,
+    "guard_retrospective_ready_count": 0,
+    "pair_retrospective_ready_count": 0,
+    "green_strict_pit_ready_count": 1,
+    "guard_strict_pit_ready_count": 0,
+    "pair_strict_pit_ready_count": 0
+  },
+  "archetype_pair_rows": [
+    {
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_candidate_generation_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_research_snapshot_inputs"
+      ],
+      "guard_statuses": [
+        "missing_candidate_generation_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "green_retrospective_ready": true,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": true,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "ready_retrospective_exact_replay"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_candidate_generation_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_official_and_research_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "green_retrospective_ready": false,
+      "guard_retrospective_ready": false,
+      "pair_retrospective_ready": false,
+      "green_strict_pit_ready": false,
+      "guard_strict_pit_ready": false,
+      "pair_strict_pit_ready": false,
+      "green_statuses": [
+        "missing_candidate_generation_inputs"
+      ],
+      "guard_statuses": [
+        "missing_official_and_research_inputs"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "role": "green",
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "current_runtime_gap_status": "runtime_input_evidence_missing",
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "C01-R1-L211-07",
+        "trigger_id": "C01-R1-L211-07-T1",
+        "symbol": "010140",
+        "as_of_date": "2025-02-06",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 154.5,
+        "MAE_180D_pct": -2.35,
+        "evidence_source": [
+          "https://www.ibks.com/company/common/download.jsp?filename=20250206074137953_ko.pdf&filepath=%2Ffiles%2Ftradeinfo%2Fbusreport",
+          "https://home.imeritz.com/include/resource/research/WorkFlow/20250205102728702K_02.pdf"
+        ],
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R1_loop_211_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C01_ORDER_BACKLOG_MARGIN_BRIDGE_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "evidence_source_search_snapshot",
+        "evidence_source_report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_evidence_source_search_snapshot",
+        "pit_evidence_source_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 2,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "current_runtime_gap_status": "runtime_input_evidence_missing",
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C01_R1L214_005_103230_SNW_20240516_REPORT_BACKLOG_TEXT_FALSE_POSITIVE",
+        "trigger_id": "C01_R1L214_TRG005_103230_20240517",
+        "symbol": "103230",
+        "as_of_date": "2024-05-16",
+        "trigger_type": "Stage2",
+        "MFE_180D_pct": 3.42,
+        "MAE_180D_pct": -46.64,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R1_loop_214_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C01_ORDER_BACKLOG_MARGIN_BRIDGE_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "current_missing_required_bridge_axes": [],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "C02_R1L144_267260_C02_transformer_backlog_margin_bridge_clean_positive_20240216",
+        "trigger_id": "C02_R1L144_267260_C02_transformer_backlog_margin_bridge_clean_positive_20240216_T1",
+        "symbol": "267260",
+        "as_of_date": "2024-02-16",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 256.7731,
+        "MAE_180D_pct": -0.5177,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R1_loop_144_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C02_POWER_GRID_DATACENTER_CAPEX_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_candidate_generation_inputs",
+      "strict_pit_readiness_status": "missing_candidate_generation_inputs",
+      "retrospective_missing_inputs": [
+        "recent_price_history_45d"
+      ],
+      "strict_pit_missing_inputs": [
+        "recent_price_history_45d"
+      ],
+      "root_cause": "fixture_symbol_or_price_history_missing_from_official_archive",
+      "input_counts": {
+        "official_universe_present": true,
+        "price_bars_370d": 2,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 2,
+        "disclosures_45d": 0,
+        "disclosures_370d": 1,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 1,
+        "symbol_report_snapshots": 1,
+        "retrospective_search_snapshots": 1,
+        "retrospective_report_snapshots": 1,
+        "pit_search_snapshots": 1,
+        "pit_report_snapshots": 1
+      },
+      "latest_input_dates": {
+        "latest_price_date": "2023-07-27",
+        "latest_price_gap_days": 204,
+        "latest_financial_reported_at": "2023-07-27",
+        "latest_disclosure_published_at": "2023-07-27",
+        "latest_search_date": "2023-07-27",
+        "latest_report_as_of_date": "2023-07-27"
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "current_missing_required_bridge_axes": [],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C02_006340_20240516_power_grid_theme_overhang_blowoff_counterexample",
+        "trigger_id": "C02_006340_20240516_power_grid_theme_overhang_blowoff_counterexample_Stage4B_2024-05-16",
+        "symbol": "006340",
+        "as_of_date": "2024-05-14",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 3.26,
+        "MAE_180D_pct": -55.09,
+        "evidence_source": "https://www.newsis.com/view/NISX20240514_0002734557",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R1_loop_139_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C02_POWER_GRID_DATACENTER_CAPEX_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "evidence_source_search_snapshot",
+        "evidence_source_report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_evidence_source_search_snapshot",
+        "pit_evidence_source_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 1,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "C05_L129_375500_20241031_STAGE3G",
+        "trigger_id": "C05_L129_T005_375500_STAGE3G_20241031",
+        "symbol": "375500",
+        "as_of_date": "2024-10-31",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 93.2,
+        "MAE_180D_pct": -5.18,
+        "evidence_source": "https://www.dlenc.co.kr/eng/daelim/pr/NewsView.do?cd_mnu=EU035&currentPage=1&idx=25384&keyword=all&searchword=",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R1_loop_129_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C05_EPC_MEGA_CONTRACT_MARGIN_GAP_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "evidence_source_search_snapshot",
+        "evidence_source_report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_evidence_source_search_snapshot",
+        "pit_evidence_source_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 1,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C05_R1L218_CASE003_103230_20240516",
+        "trigger_id": "C05_R1L218_TRG003_103230_20240516_Stage2",
+        "symbol": "103230",
+        "as_of_date": "2024-05-16",
+        "trigger_type": "Stage2",
+        "MFE_180D_pct": 2.85,
+        "MAE_180D_pct": -47.2,
+        "evidence_source": "https://kind.krx.co.kr/common/disclsviewer.do?acptno=20240516000245&docno=&method=search&viewerhost=",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R1_loop_218_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C05_EPC_MEGA_CONTRACT_MARGIN_GAP_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "evidence_source_search_snapshot",
+        "evidence_source_report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_evidence_source_search_snapshot",
+        "pit_evidence_source_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 1,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "current_missing_required_bridge_axes": [],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "C06_R2L108_000660_HBM3E_CUSTOMER_CAPACITY_SOLDOUT_20240425",
+        "trigger_id": "C06_R2L108_000660_T1",
+        "symbol": "000660",
+        "as_of_date": "2024-04-25",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 39.76,
+        "MAE_180D_pct": -18.62,
+        "evidence_source": "https://www.reuters.com/technology/sk-hynix-q1-profit-beats-expectations-ai-boom-2024-04-24/",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_108_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_research_snapshot_inputs",
+      "strict_pit_readiness_status": "missing_research_snapshot_inputs",
+      "retrospective_missing_inputs": [
+        "evidence_source_search_snapshot",
+        "evidence_source_report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "pit_evidence_source_search_snapshot",
+        "pit_evidence_source_report_text_snapshot"
+      ],
+      "root_cause": "fixture_research_snapshot_not_archived",
+      "input_counts": {
+        "official_universe_present": true,
+        "price_bars_370d": 2,
+        "recent_price_bars_45d": 1,
+        "financial_actuals": 1,
+        "disclosures_45d": 1,
+        "disclosures_370d": 1,
+        "candidate_evidence_urls": 1,
+        "symbol_search_snapshots": 1,
+        "symbol_report_snapshots": 1,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": "2024-03-15",
+        "latest_price_gap_days": 41,
+        "latest_financial_reported_at": "2024-02-15",
+        "latest_disclosure_published_at": "2024-03-15",
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "current_missing_required_bridge_axes": [],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C06_005930_SAMSUNG_20240711_HBM_QUALIFICATION_LAG_FALSE_GREEN",
+        "trigger_id": null,
+        "symbol": "005930",
+        "as_of_date": "2024-07-11",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 1.37,
+        "MAE_180D_pct": -43.04,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_sk_hynix_samsung_hbm_capacity_2023_2024_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_candidate_generation_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "recent_price_history_45d"
+      ],
+      "strict_pit_missing_inputs": [
+        "recent_price_history_45d",
+        "pit_search_snapshot"
+      ],
+      "root_cause": "fixture_symbol_or_price_history_missing_from_official_archive",
+      "input_counts": {
+        "official_universe_present": true,
+        "price_bars_370d": 2,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 2,
+        "disclosures_45d": 0,
+        "disclosures_370d": 1,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 1,
+        "symbol_report_snapshots": 1,
+        "retrospective_search_snapshots": 1,
+        "retrospective_report_snapshots": 1,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 1
+      },
+      "latest_input_dates": {
+        "latest_price_date": "2024-03-15",
+        "latest_price_gap_days": 118,
+        "latest_financial_reported_at": "2024-04-30",
+        "latest_disclosure_published_at": "2024-03-15",
+        "latest_search_date": "2026-05-14",
+        "latest_report_as_of_date": "2024-04-01"
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "current_missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R2L11_C08_131290_TSE_HBM_PROBE_CARD",
+        "trigger_id": "R2L11_T02B_TSE_LATE_GREEN_4B_OVERLAY",
+        "symbol": "131290",
+        "as_of_date": "2024-04-26",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 11.14,
+        "MAE_180D_pct": -51.84,
+        "evidence_source": "public analyst/media summary; exact original URL enrichment required before production promotion",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_11_L2_AI_SEMICONDUCTOR_ELECTRONICS_C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY_research(1).md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "current_missing_required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C08_098120_MICROCONTACT_20240426_SECOND_WAVE_TEST_SOCKET_FALSE_GREEN",
+        "trigger_id": null,
+        "symbol": "098120",
+        "as_of_date": "2024-04-26",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 4.02,
+        "MAE_180D_pct": -60.33,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L2_AI_SEMICONDUCTOR_ELECTRONICS_C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY_second_wave_micro_socket_burnin_pcb_4b_2024_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "valuation_blowoff_guard_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "current_missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R2L14_C09_131290_TSE_LATE_GREEN_VALUATION_BLOWOFF",
+        "trigger_id": "R2L14_C09_131290_TSE_LATE_GREEN_BLOWOFF",
+        "symbol": "131290",
+        "as_of_date": "2024-04-26",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 11.14,
+        "MAE_180D_pct": -51.84,
+        "evidence_source": "prior R2/C08 v12 OHLC row plus stock-web shard; public valuation/positioning URL enrichment required before production promotion",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_14_L2_AI_SEMICONDUCTOR_ELECTRONICS_C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "valuation_blowoff_guard_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "current_missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C09_036930_JUSUNG_20240408_DEPOSITION_EQUIPMENT_VALUATION_BLOWOFF",
+        "trigger_id": null,
+        "symbol": "036930",
+        "as_of_date": "2024-04-08",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 13.56,
+        "MAE_180D_pct": -39.59,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L2_AI_SEMICONDUCTOR_ELECTRONICS_C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF_hbm_equipment_blowoff_2024_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_memory_recovery_bridge",
+      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "margin",
+        "valuation_repricing"
+      ],
+      "current_missing_required_bridge_axes": [],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "C10_L228_05_317330_ADVANCED_ELECTRONIC_MATERIALS_ROUTE_EARLY_RESET_WITH_STRONG_ASYMMETRY",
+        "trigger_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE|317330|Stage3-Green|2024-01-02",
+        "symbol": "317330",
+        "as_of_date": "2024-01-02",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 255.45,
+        "MAE_180D_pct": -6.27,
+        "evidence_source": "https://marketin.edaily.co.kr/News/Read?newsId=03699846622555832",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_228_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "evidence_source_search_snapshot",
+        "evidence_source_report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_evidence_source_search_snapshot",
+        "pit_evidence_source_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 1,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_memory_recovery_bridge",
+      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "margin",
+        "valuation_repricing"
+      ],
+      "current_missing_required_bridge_axes": [],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C10_L232_08_089790",
+        "trigger_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE|089790|Stage4B|2024-07-23",
+        "symbol": "089790",
+        "as_of_date": "2024-07-22",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 1.59,
+        "MAE_180D_pct": -56.35,
+        "evidence_source": "https://www.theinvest.co.kr/brdview.php?ud=IC0722080008561a315eirn_45",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_232_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "evidence_source_search_snapshot",
+        "evidence_source_report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_evidence_source_search_snapshot",
+        "pit_evidence_source_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 1,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "C11_121600_NANOSINSO_20230209_CNT_ORDERBOOK_RERATING_GREEN",
+        "trigger_id": null,
+        "symbol": "121600",
+        "as_of_date": "2023-02-09",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 77.38,
+        "MAE_180D_pct": -1.92,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L3_BATTERY_EV_GREEN_MOBILITY_C11_BATTERY_ORDERBOOK_RERATING_cnt_copperfoil_separator_2023_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C11_006110_SAMAAL_20230726_ALUMINUMFOIL_ORDERBOOK_FALSE_GREEN",
+        "trigger_id": null,
+        "symbol": "006110",
+        "as_of_date": "2023-07-26",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 15.52,
+        "MAE_180D_pct": -31.63,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L3_BATTERY_EV_GREEN_MOBILITY_C11_BATTERY_ORDERBOOK_RERATING_cathode_separator_foil_orderbook_4b_2023_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "C13_R3L235_CASE006_051490",
+        "trigger_id": null,
+        "symbol": "051490",
+        "as_of_date": "2020-07-13",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 100.14,
+        "MAE_180D_pct": -10.52,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R3_loop_235_L3_BATTERY_EV_GREEN_MOBILITY_C13_BATTERY_JV_UTILIZATION_AMPC_IRA_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C13_R3L190_006400_GM_JV_2023_LONG_LEAD_FALSE_POSITIVE",
+        "trigger_id": "R3L190_C13_006400_20230426_STAGE2",
+        "symbol": "006400",
+        "as_of_date": "2023-04-25",
+        "trigger_type": "Stage2",
+        "MFE_180D_pct": 5.97,
+        "MAE_180D_pct": -47.72,
+        "evidence_source": "https://www.samsungsdi.com/sdi-now/sdi-news/3162.html?idx=3162&pageIndex=2&pagesize=15",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R3_loop_190_L3_BATTERY_EV_GREEN_MOBILITY_C13_BATTERY_JV_UTILIZATION_AMPC_IRA_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "evidence_source_search_snapshot",
+        "evidence_source_report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_evidence_source_search_snapshot",
+        "pit_evidence_source_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 1,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "C15_298020_HYOSUNG_TNC_20210114_SPANDEX_SPREAD_SUPERCYCLE",
+        "trigger_id": null,
+        "symbol": "298020",
+        "as_of_date": "2021-01-14",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 322.37,
+        "MAE_180D_pct": -0.66,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L4_MATERIALS_SPREAD_RESOURCE_C15_MATERIAL_SPREAD_SUPERCYCLE_spandex_caustic_spread_2021_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C15_004020_20240207_STEEL_SPREAD_SUPERCYCLE_FALSE_POSITIVE",
+        "trigger_id": "C15_004020_20240207_S2_FALSE_POSITIVE",
+        "symbol": "004020",
+        "as_of_date": "2024-02-07",
+        "trigger_type": "Stage2",
+        "MFE_180D_pct": 1.35,
+        "MAE_180D_pct": -45.68,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R4_loop_100_L4_MATERIALS_SPREAD_RESOURCE_C15_MATERIAL_SPREAD_SUPERCYCLE_research(1).md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R4L11_C17_011780_KUMHO_NB_LATEX_SPREAD_SUPERCYCLE_20210121",
+        "trigger_id": "R4L11_T01_KUMHO_20210121_STAGE3_GREEN_SPREAD_REVISION",
+        "symbol": "011780",
+        "as_of_date": "2021-01-21",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 60.48,
+        "MAE_180D_pct": -4.57,
+        "evidence_source": "public result/news/report summary; exact original URLs must be enriched before production promotion",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R4_loop_11_L4_MATERIALS_SPREAD_RESOURCE_C17_CHEMICAL_COMMODITY_MARGIN_SPREAD_research(2).md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "R4L11_C17_DAEHAN_NCC_SPREAD_FALSE_GREEN_2021",
+        "trigger_id": "R4L11_C17_DAEHAN_20210216_GREEN_FALSE_POSITIVE",
+        "symbol": "006650",
+        "as_of_date": "2021-02-16",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 3.05,
+        "MAE_180D_pct": -53.37,
+        "evidence_source": "public sector report synthesis; later structural overcapacity validated by petrochemical restructuring evidence; OHLC source rows: 2021-02-16, 2021-02-17, 2021-08-20, 2021-11-01",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R4_loop_11_L4_MATERIALS_SPREAD_RESOURCE_C17_CHEMICAL_COMMODITY_MARGIN_SPREAD_research(1).md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "current_missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R13L41_C18_SAMYANG_003230_EXPORT_REORDER",
+        "trigger_id": "R13L41_C18_SAMYANG_GREEN_2024_05_17",
+        "symbol": "003230",
+        "as_of_date": "2024-05-16",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 60.81,
+        "MAE_180D_pct": 0.0,
+        "evidence_source": "public earnings/disclosure/news context plus stock-web price rows; no live scan used",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_41_L5_CONSUMER_BRAND_DISTRIBUTION_C18_CONSUMER_EXPORT_CHANNEL_REORDER_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "ready_retrospective_exact_replay",
+      "strict_pit_readiness_status": "ready_strict_pit_exact_replay",
+      "retrospective_missing_inputs": [],
+      "strict_pit_missing_inputs": [],
+      "root_cause": "exact_fixture_inputs_archived",
+      "input_counts": {
+        "official_universe_present": true,
+        "price_bars_370d": 2,
+        "recent_price_bars_45d": 2,
+        "financial_actuals": 2,
+        "disclosures_45d": 1,
+        "disclosures_370d": 1,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 1,
+        "symbol_report_snapshots": 1,
+        "retrospective_search_snapshots": 1,
+        "retrospective_report_snapshots": 1,
+        "pit_search_snapshots": 1,
+        "pit_report_snapshots": 1
+      },
+      "latest_input_dates": {
+        "latest_price_date": "2024-05-16",
+        "latest_price_gap_days": 0,
+        "latest_financial_reported_at": "2024-05-16",
+        "latest_disclosure_published_at": "2024-05-16",
+        "latest_search_date": "2024-05-16",
+        "latest_report_as_of_date": "2024-05-16"
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "current_missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "R5L15-C18-097950-CJ-LEGACY-FOOD-FALSE-GREEN",
+        "trigger_id": "R5L15-C18-097950-T1",
+        "symbol": "097950",
+        "as_of_date": "2024-05-16",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 22.19,
+        "MAE_180D_pct": -30.28,
+        "evidence_source": "historical public quarterly result / disclosure-family evidence; stock-web price row confirmed in atlas/ohlcv_tradable_by_symbol_year/097/097950/2024.csv",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R5_loop_15_L5_CONSUMER_BRAND_DISTRIBUTION_C18_CONSUMER_EXPORT_CHANNEL_REORDER_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "current_missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R13L45_C19_036620_GAMSUNG_RETAIL_MARGIN_SUCCESS",
+        "trigger_id": "R13L45_036620_STAGE3_GREEN_2024-05-21",
+        "symbol": "036620",
+        "as_of_date": "2024-05-21",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 12.07,
+        "MAE_180D_pct": -33.45,
+        "evidence_source": "DART/market confirmation + stock-web 2024 shard rows around 2024-05-21",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_45_L5_CONSUMER_BRAND_DISTRIBUTION_C19_BRAND_RETAIL_INVENTORY_MARGIN_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "current_missing_required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "R5L31_C19_FNF_20230516_CHINA_INVENTORY_FALSE_GREEN",
+        "trigger_id": "R5L31_T03_FNF_STAGE2_INVENTORY_RISK_20230516",
+        "symbol": "383220",
+        "as_of_date": "2023-05-16",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 2.76,
+        "MAE_180D_pct": -37.2,
+        "evidence_source": "company/DART/KIND earnings-disclosure family; analyst/public reporting family; stock-web OHLC for outcome validation only",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R5_loop_31_L5_CONSUMER_BRAND_DISTRIBUTION_C19_BRAND_RETAIL_INVENTORY_MARGIN_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "current_missing_required_bridge_axes": [],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "C20-R5L135-02",
+        "trigger_id": "e2r_stock_web_v12_residual_round_R5_loop_135_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+        "symbol": "192820",
+        "as_of_date": "2025-02-24",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 72.8916,
+        "MAE_180D_pct": -10.1807,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R5_loop_135_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "current_missing_required_bridge_axes": [],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C20_R5L25_439090",
+        "trigger_id": "TR_C20_439090_20230608_IPO",
+        "symbol": "439090",
+        "as_of_date": "2023-06-08",
+        "trigger_type": "IPO/theme trigger",
+        "MFE_180D_pct": 27.4,
+        "MAE_180D_pct": -52.0,
+        "evidence_source": "stock-web first trading row/profile; public IPO source to be attached before production",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R5_loop_25_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "runtime_bridge_group": "financial_capital_return_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R13L22_C21_KBFG_105560_2025_CAPITAL_RETURN_CONFIRMED",
+        "trigger_id": "T_KBFG_2025_05_26_STAGE3_GREEN_COMPARISON",
+        "symbol": "105560",
+        "as_of_date": "2025-05-26",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 67.16,
+        "MAE_180D_pct": -3.33,
+        "evidence_source": "KB Financial Group IR/earnings/value-up materials; stock-web rows from 2025.csv and 2026.csv.",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_22_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "runtime_bridge_group": "financial_capital_return_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "R6L60_C21_KAKAOBANK_2024_POLICYONLY_COUNTEREXAMPLE",
+        "trigger_id": "R6L60_C21_KAKAOBANK_POLICYONLY_20240226",
+        "symbol": "323410",
+        "as_of_date": "2024-02-26",
+        "trigger_type": "Stage2-PolicyOnly",
+        "MFE_180D_pct": 1.66,
+        "MAE_180D_pct": -38.67,
+        "evidence_source": "policy/date context plus stock-web shard 323/323410/2024.csv; no company-specific shareholder-return disclosure used for positive promotion",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R6_loop_60_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "runtime_bridge_group": "insurance_reserve_capital_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R6L47_C22_032830_SAMSUNG_LIFE_VALUEUP_RESERVE_BRIDGE",
+        "trigger_id": "R6L47_T02_032830_STAGE3_GREEN_RESERVE_BRIDGE",
+        "symbol": "032830",
+        "as_of_date": "2024-02-21",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 22.88,
+        "MAE_180D_pct": -13.25,
+        "evidence_source": "public market narrative + stock-web price confirmation; no production score patch",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R6_loop_47_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "runtime_bridge_group": "insurance_reserve_capital_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C22_088350_2024-07-11_Stage2-FalsePositive_life_insurance_valueup_label_without_reserve_capital_return_bridge",
+        "trigger_id": "V12_COMPACT_C22_088350_2024-07-11_Stage2-FalsePositive_life_insurance_valueup_label_without_reserve_capital_return_bridge_088350_2024-07-11_label_only_life_insurer_rate_cycle_false_positive",
+        "symbol": "088350",
+        "as_of_date": "2024-07-11",
+        "trigger_type": "Stage2",
+        "MFE_180D_pct": 2.86,
+        "MAE_180D_pct": -24.76,
+        "evidence_source": "life_insurance_valueup_label_without_reserve_quality_capital_return",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R6_loop_109_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C22_INSURANCE_RATE_CYCLE_RESERVE_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R7L10_C23_YUHAN_LAZCLUZE_FDA_20240821",
+        "trigger_id": "T_YUHAN_20240924_GREEN_LABEL_COMPARISON",
+        "symbol": "000100",
+        "as_of_date": "2024-09-24",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 6.31,
+        "MAE_180D_pct": -36.05,
+        "evidence_source": "public regulatory approval/rejection reporting and stock-web OHLC validation",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R7_loop_10_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION_research(1).md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "R7L10_C23_HLB_PRE_PDUFA_FALSE_GREEN_20240430",
+        "trigger_id": "T_HLB_20240430_PRE_PDUFA_FALSE_GREEN",
+        "symbol": "028300",
+        "as_of_date": "2024-04-30",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 2.79,
+        "MAE_180D_pct": -59.4,
+        "evidence_source": "public regulatory approval/rejection reporting and stock-web OHLC validation",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R7_loop_10_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION_research(1).md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R7L12-C24-028300-HLB-BINARY-READOUT-REGULATORY-REUSE",
+        "trigger_id": "R7L12-C24-028300-T1-PRE-EVENT-FALSE-GREEN-20240516",
+        "symbol": "028300",
+        "as_of_date": "2024-05-16",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 11.59,
+        "MAE_180D_pct": -52.87,
+        "evidence_source": "local R7 loop11 stock-web computed row; stock-web 028300 2024-05-16 c=95,800 and 2024-05-17 c=67,100",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R7_loop_12_L7_BIO_HEALTHCARE_MEDICAL_C24_BIO_TRIAL_DATA_EVENT_RISK_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "R7L15-C24-288330-BRIDGEBIO-BBT877-RESET-20230623",
+        "trigger_id": "R7L15-C24-288330-T1",
+        "symbol": "288330",
+        "as_of_date": "2023-06-23",
+        "trigger_type": "Stage2-FalsePositive",
+        "MFE_180D_pct": 24.17,
+        "MAE_180D_pct": -56.79,
+        "evidence_source": "public clinical-program/news-flow summary; stock-web OHLC rows for 288330 2023",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R7_loop_15_L7_BIO_HEALTHCARE_MEDICAL_C24_BIO_TRIAL_DATA_EVENT_RISK_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "C25_335890_VIOL_20230113_AESTHETIC_RF_EXPORT_CONSUMABLE_RERATING",
+        "trigger_id": null,
+        "symbol": "335890",
+        "as_of_date": "2023-01-13",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 106.13,
+        "MAE_180D_pct": -4.46,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L7_BIO_HEALTHCARE_MEDICAL_C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT_aesthetic_device_export_2023_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C25_209_DENTIUM_4Q23_EXPORT_RECOVERY_FALSE_POSITIVE",
+        "trigger_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT_210_06",
+        "symbol": "145720",
+        "as_of_date": "2024-02-29",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 2.98,
+        "MAE_180D_pct": -62.55,
+        "evidence_source": "https://securities.miraeasset.com/newir/view/pc/en/investor/researchReportsView.jsp?messageId=2318824 ; https://www.asiae.co.kr/en/article/2023042008253300248",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R7_loop_210_L7_BIO_HEALTHCARE_MEDICAL_C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "evidence_source_search_snapshot",
+        "evidence_source_report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_evidence_source_search_snapshot",
+        "pit_evidence_source_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 2,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "current_missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "C26_SOOP_2021_CREATOR_PLATFORM_OPERATING_LEVERAGE",
+        "trigger_id": "TRG_C26_SOOP_2021_STAGE3_GREEN_COMPARISON",
+        "symbol": "067160",
+        "as_of_date": "2021-07-27",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 82.36,
+        "MAE_180D_pct": -26.06,
+        "evidence_source": "AfreecaTV/SOOP Q2 2021 earnings/IR and stock-web price row",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_37_L8_PLATFORM_CONTENT_SW_SECURITY_C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "current_missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "R8L15_C26_KAKAO_2021_REG_CAP",
+        "trigger_id": "TR_KAKAO_20210624_GREEN",
+        "symbol": "035720",
+        "as_of_date": "2021-06-24",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 10.19,
+        "MAE_180D_pct": -47.64,
+        "evidence_source": "company earnings/public reporting",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R8_loop_15_L8_PLATFORM_CONTENT_SW_SECURITY_C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "current_missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "C27_194480_DEVSISTERS_20210121_COOKIE_RUN_KINGDOM_GLOBAL_IP_RERATING",
+        "trigger_id": null,
+        "symbol": "194480",
+        "as_of_date": "2021-01-21",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 1056.52,
+        "MAE_180D_pct": -12.75,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L8_PLATFORM_CONTENT_SW_SECURITY_C27_CONTENT_IP_GLOBAL_MONETIZATION_game_ip_launch_monetization_2021_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "current_missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C27_259960_KRAFTON_20211112_GLOBAL_GAME_IP_RELEASE_FALSE_GREEN",
+        "trigger_id": null,
+        "symbol": "259960",
+        "as_of_date": "2021-11-12",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 8.41,
+        "MAE_180D_pct": -60.28,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L8_PLATFORM_CONTENT_SW_SECURITY_C27_CONTENT_IP_GLOBAL_MONETIZATION_game_ip_launch_nft_retention_2021_2022_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "current_missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "C28_058970_EMRO_20230315_SCM_SAAS_CONTRACT_RERATING",
+        "trigger_id": null,
+        "symbol": "058970",
+        "as_of_date": "2023-03-15",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 223.84,
+        "MAE_180D_pct": 0.0,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L8_PLATFORM_CONTENT_SW_SECURITY_C28_SOFTWARE_SECURITY_CONTRACT_RETENTION_ai_office_security_contract_retention_2023_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "current_missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "R8L10_C28_CASE_003_HANCOM_2024_AI_OFFICE_FALSE_GREEN",
+        "trigger_id": "R8L10_C28_TRG_003A_HANCOM_STAGE2_ACTIONABLE_2024_01_10",
+        "symbol": "030520",
+        "as_of_date": "2024-01-10",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 55.4,
+        "MAE_180D_pct": -22.7,
+        "evidence_source": "public AI-software narrative / price-atlas validation only",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R8_loop_10_L8_PLATFORM_CONTENT_SW_SECURITY_C28_SOFTWARE_SECURITY_CONTRACT_RETENTION_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R9L33-C29-000270-KIA-2023-FY22-VOLUME-MIX-MARGIN",
+        "trigger_id": "R9L33-T002-KIA-STAGE3-GREEN-Q1CONFIRM",
+        "symbol": "000270",
+        "as_of_date": "2023-04-26",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 16.51,
+        "MAE_180D_pct": -11.55,
+        "evidence_source": "Kia Q1 result confirmation; stock-web rows validate Apr-2023 entry and forward OHLC.",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R9_loop_33_L3_BATTERY_EV_GREEN_MOBILITY_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "R9L11_C29_011210_ENGINE_PARTS_FALSE_STAGE2",
+        "trigger_id": "T_R9L11_011210_STAGE2",
+        "symbol": "011210",
+        "as_of_date": "2024-01-26",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 15.52,
+        "MAE_180D_pct": -6.03,
+        "evidence_source": "historical public earnings/disclosure/news family; exact source URL enrichment deferred",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R9_loop_11_L3_BATTERY_EV_GREEN_MOBILITY_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_research(1).md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "runtime_bridge_group": "construction_pf_cash_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R10L15_C30_000720_POS_20210405",
+        "trigger_id": "R10L15_T001G",
+        "symbol": "000720",
+        "as_of_date": "2021-05-27",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 10.03,
+        "MAE_180D_pct": -29.84,
+        "evidence_source": "stock-web tradable OHLC rows",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R10_loop_15_L9_CONSTRUCTION_REALESTATE_HOUSING_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "runtime_bridge_group": "construction_pf_cash_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C30_014790_HLDNI_20230925_PF_BALANCE_SHEET_YELLOW_FALSE_GREEN",
+        "trigger_id": null,
+        "symbol": "014790",
+        "as_of_date": "2023-09-25",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 1.54,
+        "MAE_180D_pct": -14.46,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L9_CONSTRUCTION_REAL_ESTATE_PF_CREDIT_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_ty_hl_hanshin_pf_liquidity_4c_2023_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "policy_project_cash_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "current_missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "C31_112610_202208",
+        "trigger_id": "TR_R13L29_CSW_GREEN_20221116",
+        "symbol": "112610",
+        "as_of_date": "2022-11-16",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 16.23,
+        "MAE_180D_pct": -17.55,
+        "evidence_source": "policy + relative strength",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_29_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C31_POLICY_SUBSIDY_LEGISLATION_EVENT_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "policy_project_cash_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "current_missing_required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "C31_011930_SHINSUNGENG_20220811_SOLAR_CLEANROOM_POLICY_FALSE_GREEN",
+        "trigger_id": null,
+        "symbol": "011930",
+        "as_of_date": "2022-08-11",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 8.75,
+        "MAE_180D_pct": -38.57,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L10_POLICY_SUBSIDY_GOVERNANCE_EVENT_C31_POLICY_SUBSIDY_LEGISLATION_EVENT_ira_solar_manufacturing_tax_credit_4b_2022_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "governance_tender_cash_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": null,
+        "trigger_id": null,
+        "symbol": "010130",
+        "as_of_date": "2024-09-13",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 261.4114,
+        "MAE_180D_pct": -3.4535,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R12_loop_100_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP_research(2).md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "governance_tender_cash_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "R13_C32_HANMI_008930_2024_OCI_FAMILY_CONTROL_DISPUTE",
+        "trigger_id": "R13_C32_HANMI_2024_T1_OVERLAY",
+        "symbol": "008930",
+        "as_of_date": "2024-01-15",
+        "trigger_type": "4C",
+        "MFE_180D_pct": 29.79,
+        "MAE_180D_pct": -29.91,
+        "evidence_source": "historical public-event timeline; price row verified from Songdaiki/stock-web shard",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_10_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "current_runtime_gap_status": "runtime_input_evidence_missing",
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R13SFP_267260_HDHE_ORDER_BACKLOG_CONTROL",
+        "trigger_id": null,
+        "symbol": "267260",
+        "as_of_date": "2025-04-22",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 228.07,
+        "MAE_180D_pct": -2.02,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_153_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_candidate_generation_inputs",
+      "strict_pit_readiness_status": "missing_candidate_generation_inputs",
+      "retrospective_missing_inputs": [
+        "price_history_370d"
+      ],
+      "strict_pit_missing_inputs": [
+        "price_history_370d"
+      ],
+      "root_cause": "fixture_symbol_or_price_history_missing_from_official_archive",
+      "input_counts": {
+        "official_universe_present": true,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 2,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 1,
+        "symbol_report_snapshots": 1,
+        "retrospective_search_snapshots": 1,
+        "retrospective_report_snapshots": 1,
+        "pit_search_snapshots": 1,
+        "pit_report_snapshots": 1
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": "2023-07-27",
+        "latest_disclosure_published_at": null,
+        "latest_search_date": "2023-07-27",
+        "latest_report_as_of_date": "2023-07-27"
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "current_runtime_gap_status": "runtime_input_evidence_missing",
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "R13_STAGE2_FALSE_POSITIVE_L134_000100_2024-08-30_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+        "trigger_id": "R13_STAGE2_L134_T03_000100",
+        "symbol": "000100",
+        "as_of_date": "2024-08-30",
+        "trigger_type": "Stage2-Watch",
+        "MFE_180D_pct": 18.3688,
+        "MAE_180D_pct": -28.7943,
+        "evidence_source": "https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-lazertinib-amivantamab-vmjw-non-small-lung-cancer",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_134_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "evidence_source_search_snapshot",
+        "evidence_source_report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_evidence_source_search_snapshot",
+        "pit_evidence_source_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 1,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R13L11_XCASE__R7L11_C23_000100_YUHAN_LAZCLUZE_APPROVAL_COMMERCIALIZATION_20240820",
+        "trigger_id": "R13L11_REDTEAM__R7L11_T01_YUHAN_20240820_STAGE3_GREEN_FDA_APPROVAL_DIRECT_ECONOMICS",
+        "symbol": "000100",
+        "as_of_date": "2024-08-20",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 77.55,
+        "MAE_180D_pct": -26.28,
+        "evidence_source": "FDA/J&J/Reuters approval and CRL event family; issuer-specific filing URLs should be enriched before production promotion; stock-web used only for OHLC",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_11_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "R13L11_XCASE__R2L11_C08_095340_ISC_SOCKET_BLOWOFF",
+        "trigger_id": "R13L11_REDTEAM__R2L11_T03_ISC_STAGE3_FALSE_GREEN_SOCKET_BLOWOFF",
+        "symbol": "095340",
+        "as_of_date": "2024-03-08",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 13.68,
+        "MAE_180D_pct": -56.74,
+        "evidence_source": "public analyst/media summary; exact original URL enrichment required before production promotion",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_11_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R13ATPV153_267260_HDHE_2025_ORDER_BACKLOG_EARNINGS_CONTROL",
+        "trigger_id": "R13_153_02",
+        "symbol": "267260",
+        "as_of_date": "2025-04-22",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 228.07,
+        "MAE_180D_pct": -2.02,
+        "evidence_source": "Yonhap, 2025-04-22, HD Hyundai Electric Q1 sales, OP, orders and backlog",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_153_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_candidate_generation_inputs",
+      "strict_pit_readiness_status": "missing_candidate_generation_inputs",
+      "retrospective_missing_inputs": [
+        "price_history_370d"
+      ],
+      "strict_pit_missing_inputs": [
+        "price_history_370d"
+      ],
+      "root_cause": "fixture_symbol_or_price_history_missing_from_official_archive",
+      "input_counts": {
+        "official_universe_present": true,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 2,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 1,
+        "symbol_report_snapshots": 1,
+        "retrospective_search_snapshots": 1,
+        "retrospective_report_snapshots": 1,
+        "pit_search_snapshots": 1,
+        "pit_report_snapshots": 1
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": "2023-07-27",
+        "latest_disclosure_published_at": null,
+        "latest_search_date": "2023-07-27",
+        "latest_report_as_of_date": "2023-07-27"
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "R13L13_ACC_CASE_X07_090430_20210512",
+        "trigger_id": "R13L13_ACC_X07_090430_20210512",
+        "symbol": "090430",
+        "as_of_date": "2021-05-12",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 2.56,
+        "MAE_180D_pct": -46.84,
+        "evidence_source": "source_loop=R5/L13; source_canonical=C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION; source_trigger_id=R5L13_C20_090430_20210512_STAGE2_FALSE_POSITIVE; source_file=e2r_stock_web_v12_residual_round_R5_loop_13_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_research.md; source row already uses Songdaiki/stock-web tradable shard",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_13_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "green",
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "candidate": {
+        "case_id": "R13-HMAE-L217-01-373220_20241029",
+        "trigger_id": "R13-HMAE-L217-01-373220_20241029-T01",
+        "symbol": "373220",
+        "as_of_date": "2024-10-28",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 6.48,
+        "MAE_180D_pct": -34.96,
+        "evidence_source": [
+          "https://news.lgensol.com/company-news/press-releases/3343/"
+        ],
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_217_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "evidence_source_search_snapshot",
+        "evidence_source_report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_evidence_source_search_snapshot",
+        "pit_evidence_source_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 1,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    },
+    {
+      "role": "guard",
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "current_missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "candidate": {
+        "case_id": "R13_HIGHMAE_C10_160980_20240425",
+        "trigger_id": "R13L152_HIGHMAE_T04_160980_20240425",
+        "symbol": "160980",
+        "as_of_date": "2024-04-24",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 7.2235,
+        "MAE_180D_pct": -66.5463,
+        "evidence_source": "",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_152_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "retrospective_readiness_status": "missing_official_and_research_inputs",
+      "strict_pit_readiness_status": "missing_official_and_research_inputs",
+      "retrospective_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "retrospective_search_snapshot",
+        "report_text_snapshot"
+      ],
+      "strict_pit_missing_inputs": [
+        "official_universe",
+        "price_history_370d",
+        "pit_search_snapshot",
+        "pit_report_text_snapshot"
+      ],
+      "root_cause": "fixture_official_archive_or_research_snapshots_missing",
+      "input_counts": {
+        "official_universe_present": false,
+        "price_bars_370d": 0,
+        "recent_price_bars_45d": 0,
+        "financial_actuals": 0,
+        "disclosures_45d": 0,
+        "disclosures_370d": 0,
+        "candidate_evidence_urls": 0,
+        "symbol_search_snapshots": 0,
+        "symbol_report_snapshots": 0,
+        "retrospective_search_snapshots": 0,
+        "retrospective_report_snapshots": 0,
+        "pit_search_snapshots": 0,
+        "pit_report_snapshots": 0
+      },
+      "latest_input_dates": {
+        "latest_price_date": null,
+        "latest_price_gap_days": null,
+        "latest_financial_reported_at": null,
+        "latest_disclosure_published_at": null,
+        "latest_search_date": null,
+        "latest_report_as_of_date": null
+      }
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 from dataclasses import replace
 from datetime import date, datetime
+import math
 from pathlib import Path
 import unittest
 
@@ -130,6 +131,540 @@ class FeatureEngineeringTests(unittest.TestCase):
             structural.industrial_sub_scores.one_off_shortage_risk,
             one_off.industrial_sub_scores.one_off_shortage_risk,
         )
+
+    def test_bottleneck_diagnostics_expose_formula_path(self):
+        result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "capa_utilization_pct": 100,
+                    "capa_locked_years": 3,
+                    "asp_yoy_pct": 30,
+                    "pricing_power_confirmed": True,
+                    "shortage_type": "structural",
+                    "structural_shortage_mentioned": True,
+                }
+            )
+        )
+        score = result.score()
+        diagnostics = score.diagnostic_scores
+
+        self.assertIn("bottleneck_industrial_raw", diagnostics)
+        self.assertIn("bottleneck_sector_raw", diagnostics)
+        self.assertIn("bottleneck_selected_raw", diagnostics)
+        self.assertIn(
+            result.source_fields["bottleneck_selected_path"],
+            {"industrial", "sector", "actual_conversion_bridge", "validated_conversion_bridge"},
+        )
+        self.assertAlmostEqual(
+            diagnostics["bottleneck_component_before_one_off_penalty"],
+            diagnostics["bottleneck_selected_raw"] / 100.0 * 20.0,
+            places=4,
+        )
+        self.assertEqual(diagnostics["bottleneck_raw_required_for_green"], 75.0)
+        self.assertGreaterEqual(diagnostics["bottleneck_raw_deficit_to_green"], 0.0)
+
+    def test_non_finite_parsed_field_numbers_are_ignored(self):
+        baseline = DeterministicFeatureEngineer().engineer(base_input({})).score()
+        polluted = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "actual_op_yoy_pct": "nan",
+                    "actual_eps_yoy_pct": float("nan"),
+                    "actual_sales_yoy_pct": float("inf"),
+                    "opm_expansion_pctp": "nan",
+                    "capa_utilization_pct": "nan",
+                    "asp_yoy_pct": float("inf"),
+                    "contract_duration_months": "nan",
+                    "order_backlog_to_sales": float("nan"),
+                    "eps_revision_1m": "nan",
+                }
+            )
+        ).score()
+
+        self.assertEqual(polluted.total_score, baseline.total_score)
+        self.assertEqual(polluted.eps_fcf_explosion_score, baseline.eps_fcf_explosion_score)
+        self.assertEqual(polluted.bottleneck_pricing_score, baseline.bottleneck_pricing_score)
+        self.assertTrue(all(math.isfinite(float(value)) for value in polluted.diagnostic_scores.values()))
+
+    def test_cross_archetype_bridge_diagnostics_are_exposed(self):
+        baseline = DeterministicFeatureEngineer().engineer(base_input({})).score()
+        result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "high_margin_mix_improvement": True,
+                    "customer_preorder_or_allocation": True,
+                    "record_backlog": True,
+                    "multi_year_contract": True,
+                    "capital_return_execution": True,
+                    "treasury_share_cancellation": True,
+                    "csm_growth_visible": True,
+                    "k_ics_ratio": 245,
+                    "regulatory_approval_confirmed": True,
+                    "approval_to_revenue_bridge": True,
+                    "royalty_route": True,
+                    "arr_growth_visible": True,
+                    "retention_or_renewal": True,
+                    "sell_through_confirmed": True,
+                    "repeat_order_confirmed": True,
+                    "binary_event_unresolved": True,
+                }
+            )
+        )
+        score = result.score()
+        diagnostics = score.diagnostic_scores
+
+        self.assertGreaterEqual(diagnostics["research_axis_bridge_present_count_capped"], 8)
+        self.assertEqual(diagnostics["research_axis_bridge_margin"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_valuation_repricing"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_capital_return"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_insurance_quality"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_bio_commercialization"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_software_retention"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_consumer_sell_through"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_guard_risk"], 100.0)
+        self.assertGreater(score.capital_allocation_score, baseline.capital_allocation_score)
+        self.assertGreater(result.industrial_sub_scores.backlog_rpo_visibility, 0)
+
+    def test_cross_archetype_guard_risk_adds_penalty(self):
+        baseline = DeterministicFeatureEngineer().engineer(base_input({"market_frame_shift": True})).score()
+        guarded = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "market_frame_shift": True,
+                    "binary_event_unresolved": True,
+                    "approval_not_confirmed": True,
+                    "capital_return_unconfirmed": True,
+                    "insurance_rate_cycle_beta_only": True,
+                    "reserve_quality_unconfirmed": True,
+                    "political_theme_risk": True,
+                }
+            )
+        ).score()
+
+        self.assertEqual(guarded.diagnostic_scores["research_axis_bridge_guard_risk"], 100.0)
+        self.assertGreater(guarded.diagnostic_scores["research_axis_bridge_guard_risk_penalty_points"], 0)
+        self.assertGreater(guarded.risk_penalty, baseline.risk_penalty)
+        self.assertLess(guarded.total_score, baseline.total_score)
+
+    def test_generic_contract_backlog_customer_bridge_scores_without_name_or_hbm_bonus(self):
+        result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "customer_contract_visible": True,
+                    "supply_agreement_visible": True,
+                    "named_customer_quality": True,
+                    "customer_preorder_or_allocation": True,
+                    "multi_year_contract": True,
+                    "prepayment_exists": True,
+                    "take_or_pay": True,
+                    "minimum_revenue_guarantee": True,
+                    "revenue_visibility_contract": True,
+                    "delivery_schedule": True,
+                    "order_to_revenue_bridge": True,
+                    "book_to_bill_visible": True,
+                    "capacity_precommitted": True,
+                    "booked_out_capacity": True,
+                    "order_slot_locked": True,
+                    "pricing_power_mentioned": True,
+                }
+            )
+        )
+        score = result.score()
+        diagnostics = score.diagnostic_scores
+
+        self.assertGreaterEqual(result.industrial_sub_scores.contract_quality, 80)
+        self.assertGreaterEqual(result.industrial_sub_scores.backlog_rpo_visibility, 80)
+        self.assertGreaterEqual(result.industrial_sub_scores.capa_constraint, 20)
+        self.assertEqual(diagnostics["research_axis_bridge_customer"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_backlog"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_contract"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_capacity"], 100.0)
+        self.assertGreater(score.earnings_visibility_score, 0)
+        self.assertGreater(score.bottleneck_pricing_score, 0)
+
+    def test_customer_preorder_feeds_backlog_and_contract_bridge_without_hbm_name(self):
+        result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "customer_preorder_or_allocation": True,
+                    "confirmed_order": True,
+                    "revenue_visibility_contract": True,
+                    "delivery_schedule": True,
+                }
+            )
+        )
+        diagnostics = result.score().diagnostic_scores
+
+        self.assertEqual(diagnostics["research_axis_bridge_customer"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_backlog"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_contract"], 100.0)
+        self.assertGreater(result.industrial_sub_scores.contract_quality, 0)
+        self.assertGreater(result.industrial_sub_scores.backlog_rpo_visibility, 0)
+
+    def test_customer_allocation_plus_capacity_constraint_scores_without_hbm_name(self):
+        baseline = DeterministicFeatureEngineer().engineer(base_input({}))
+        result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "customer_preorder_or_allocation": True,
+                    "capacity_constraint": True,
+                    "supply_shortage_mentioned": True,
+                    "pricing_power_mentioned": True,
+                }
+            )
+        )
+
+        self.assertGreater(result.industrial_sub_scores.contract_quality, baseline.industrial_sub_scores.contract_quality)
+        self.assertGreater(result.industrial_sub_scores.backlog_rpo_visibility, baseline.industrial_sub_scores.backlog_rpo_visibility)
+        self.assertGreater(result.industrial_sub_scores.capa_constraint, baseline.industrial_sub_scores.capa_constraint)
+        self.assertGreater(result.score().bottleneck_pricing_score, baseline.score().bottleneck_pricing_score)
+
+    def test_validated_conversion_bridge_lifts_bottleneck_without_hbm_name(self):
+        result = DeterministicFeatureEngineer().engineer(
+            replace(
+                base_input(
+                    {
+                        "financial_actuals_present": True,
+                        "actual_op_yoy_pct": 180,
+                        "actual_eps_yoy_pct": 180,
+                        "actual_sales_yoy_pct": 70,
+                        "opm_expansion_pctp": 14,
+                        "customer_preorder_or_allocation": True,
+                        "capacity_constraint": True,
+                        "supply_shortage_mentioned": True,
+                        "structural_shortage_mentioned": True,
+                        "pricing_power_mentioned": True,
+                        "recurring_consumer_demand": True,
+                        "repeat_order_confirmed": True,
+                        "sell_through_confirmed": True,
+                        "export_channel_expansion": True,
+                        "overseas_channel_expansion": True,
+                        "high_margin_mix_improvement": True,
+                        "customer_contract_visible": True,
+                        "named_customer_quality": True,
+                        "record_backlog": True,
+                        "delivery_schedule": True,
+                        "order_to_revenue_bridge": True,
+                        "margin_bridge_visible": True,
+                        "operating_leverage_visible": True,
+                        "market_frame_shift": True,
+                    }
+                ),
+                canonical_archetype_id="C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+            )
+        )
+        diagnostics = result.score().diagnostic_scores
+
+        self.assertIn(
+            result.source_fields["bottleneck_selected_path"],
+            {"validated_conversion_bridge", "source_backed_green_bridge"},
+        )
+        self.assertGreaterEqual(diagnostics["bottleneck_validated_conversion_raw"], 92.0)
+        self.assertGreaterEqual(diagnostics["bottleneck_selected_raw"], 92.0)
+
+    def test_validated_conversion_bridge_generalizes_across_non_hbm_archetypes(self):
+        cases = {
+            "C02_POWER_GRID_DATACENTER_CAPEX": (
+                "POWER_EQUIPMENT",
+                {
+                    "financial_actuals_present": True,
+                    "actual_op_yoy_pct": 180,
+                    "actual_eps_yoy_pct": 160,
+                    "actual_sales_yoy_pct": 80,
+                    "opm_expansion_pctp": 12,
+                    "customer_contract_visible": True,
+                    "multi_year_contract": True,
+                    "record_backlog": True,
+                    "delivery_schedule": True,
+                    "order_to_revenue_bridge": True,
+                    "lead_time_extended": True,
+                    "supply_shortage_mentioned": True,
+                    "structural_shortage_mentioned": True,
+                    "capacity_constraint": True,
+                    "pricing_power_mentioned": True,
+                    "market_frame_shift": True,
+                },
+            ),
+            "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN": (
+                "FINANCIAL_CAPITAL_RETURN",
+                {
+                    "financial_actuals_present": True,
+                    "actual_op_yoy_pct": 120,
+                    "actual_eps_yoy_pct": 120,
+                    "actual_sales_yoy_pct": 30,
+                    "opm_expansion_pctp": 8,
+                    "roe": 12,
+                    "pbr_e": 0.8,
+                    "capital_return_execution": True,
+                    "treasury_share_cancellation": True,
+                    "shareholder_return_execution": True,
+                    "dividend_visibility": True,
+                    "credit_cost_quality": True,
+                    "market_frame_shift": True,
+                },
+            ),
+            "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": (
+                "BIO_COMMERCIALIZATION",
+                {
+                    "financial_actuals_present": True,
+                    "actual_op_yoy_pct": 120,
+                    "actual_eps_yoy_pct": 120,
+                    "actual_sales_yoy_pct": 70,
+                    "opm_expansion_pctp": 10,
+                    "regulatory_approval_confirmed": True,
+                    "approval_to_revenue_bridge": True,
+                    "royalty_route": True,
+                    "partner_economics_visible": True,
+                    "reimbursement_confirmed": True,
+                    "market_frame_shift": True,
+                },
+            ),
+            "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": (
+                "SOFTWARE_SECURITY",
+                {
+                    "financial_actuals_present": True,
+                    "actual_op_yoy_pct": 120,
+                    "actual_eps_yoy_pct": 120,
+                    "actual_sales_yoy_pct": 70,
+                    "opm_expansion_pctp": 10,
+                    "arr_growth_pct": 45,
+                    "arr_growth_visible": True,
+                    "nrr": 125,
+                    "retention_or_renewal": True,
+                    "contract_renewal_visible": True,
+                    "seat_expansion_visible": True,
+                    "recurring_margin_leverage": True,
+                    "operating_leverage_visible": True,
+                    "market_frame_shift": True,
+                },
+            ),
+        }
+
+        for canonical_archetype_id, (expected_profile, fields) in cases.items():
+            with self.subTest(canonical_archetype_id=canonical_archetype_id):
+                self.assertNotIn("HBM", canonical_archetype_id)
+                self.assertFalse(any("hbm" in key.lower() for key in fields))
+                result = DeterministicFeatureEngineer().engineer(
+                    replace(base_input(fields), canonical_archetype_id=canonical_archetype_id)
+                )
+                diagnostics = result.score().diagnostic_scores
+
+                self.assertEqual(result.source_fields["sector_profile"], expected_profile)
+                self.assertIn(
+                    result.source_fields["bottleneck_selected_path"],
+                    {"validated_conversion_bridge", "source_backed_green_bridge"},
+                )
+                self.assertGreater(diagnostics["bottleneck_validated_conversion_raw"], 0.0)
+                self.assertGreater(
+                    diagnostics["bottleneck_validated_conversion_raw"],
+                    diagnostics["bottleneck_actual_conversion_raw"],
+                )
+                self.assertEqual(diagnostics["research_axis_bridge_guard_risk"], 0.0)
+
+    def test_guard_risk_blocks_validated_conversion_bridge(self):
+        result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "financial_actuals_present": True,
+                    "actual_op_yoy_pct": 180,
+                    "actual_eps_yoy_pct": 180,
+                    "actual_sales_yoy_pct": 70,
+                    "opm_expansion_pctp": 14,
+                    "customer_preorder_or_allocation": True,
+                    "capacity_constraint": True,
+                    "supply_shortage_mentioned": True,
+                    "pricing_power_mentioned": True,
+                    "record_backlog": True,
+                    "delivery_schedule": True,
+                    "order_to_revenue_bridge": True,
+                    "market_frame_shift": True,
+                    "price_only_blowoff": True,
+                }
+            )
+        )
+        diagnostics = result.score().diagnostic_scores
+
+        self.assertEqual(diagnostics["bottleneck_validated_conversion_raw"], 0.0)
+        self.assertNotEqual(result.source_fields["bottleneck_selected_path"], "validated_conversion_bridge")
+
+    def test_capa_increase_alias_and_absolute_backlog_feed_common_scores(self):
+        result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "backlog": 1800,
+                    "fy1_sales": 1000,
+                    "capa_increase_pct": 40,
+                    "pricing_power_mentioned": True,
+                }
+            )
+        )
+
+        self.assertGreaterEqual(result.industrial_sub_scores.backlog_rpo_visibility, 70)
+        self.assertGreater(result.industrial_sub_scores.capa_constraint, 0)
+        self.assertGreater(result.score().capital_allocation_score, 0)
+
+    def test_consumer_distribution_bridge_scores_without_brand_name_special_case(self):
+        result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "platform_distribution_scale": True,
+                    "brand_channel_expansion": True,
+                    "export_channel_expansion": True,
+                    "overseas_channel_expansion": True,
+                    "export_growth_pct": 70,
+                    "repeat_order_confirmed": True,
+                    "high_margin_mix_improvement": True,
+                }
+            )
+        )
+        diagnostics = result.score().diagnostic_scores
+
+        self.assertEqual(diagnostics["research_axis_bridge_customer"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_consumer_sell_through"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_margin"], 100.0)
+        self.assertGreater(diagnostics["export_channel_visibility"], 0)
+        self.assertGreater(diagnostics["recurring_demand_visibility"], 0)
+
+    def test_consumer_channel_margin_can_use_actual_conversion_bridge(self):
+        result = DeterministicFeatureEngineer().engineer(
+            replace(
+                base_input(
+                    {
+                        "export_channel_expansion": True,
+                        "repeat_order_confirmed": True,
+                        "channel_reorder_confirmed": True,
+                        "high_margin_mix_improvement": True,
+                        "pricing_power_mentioned": True,
+                    }
+                ),
+                canonical_archetype_id="C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+            )
+        )
+        diagnostics = result.score().diagnostic_scores
+
+        self.assertEqual(result.source_fields["inferred_sector_profile"], "GENERIC")
+        self.assertEqual(result.source_fields["sector_profile"], "K_BEAUTY_EXPORT")
+        self.assertEqual(result.source_fields["sector_profile_resolution"], "explicit_canonical_profile_override")
+        self.assertGreater(diagnostics["actual_profit_conversion_score"], 0)
+        self.assertGreater(diagnostics["bottleneck_actual_conversion_raw"], 0)
+        self.assertEqual(diagnostics["research_axis_bridge_consumer_sell_through"], 100.0)
+
+    def test_domain_evidence_score_is_not_diluted_when_alias_inventory_expands(self):
+        result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "hbm_demand_mentioned": True,
+                    "memory_price_increase_mentioned": True,
+                    "customer_preorder_or_allocation": True,
+                    "hbm_capacity_constraint": True,
+                }
+            )
+        )
+
+        self.assertEqual(result.score().diagnostic_scores["domain_specific_evidence_score"], 80.0)
+
+    def test_memory_recovery_cycle_feeds_customer_and_backlog_without_contract_axis(self):
+        result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "hbm_demand_mentioned": True,
+                    "memory_price_increase_mentioned": True,
+                    "pricing_power_mentioned": True,
+                    "supply_discipline_mentioned": True,
+                    "cycle_demand_visibility": True,
+                    "end_market_demand_visibility": True,
+                    "supply_demand_tightness": True,
+                    "cycle_to_revenue_bridge": True,
+                    "advanced_packaging_bottleneck": True,
+                }
+            )
+        )
+        diagnostics = result.score().diagnostic_scores
+
+        self.assertEqual(diagnostics["research_axis_bridge_customer"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_backlog"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_capacity"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_contract"], 0.0)
+        self.assertGreaterEqual(diagnostics["domain_specific_evidence_score"], 80.0)
+        self.assertGreater(result.industrial_sub_scores.backlog_rpo_visibility, 0)
+        self.assertEqual(result.industrial_sub_scores.contract_quality, 0.0)
+
+    def test_price_only_theme_hype_is_guard_not_positive_bridge(self):
+        baseline = DeterministicFeatureEngineer().engineer(base_input({"market_frame_shift": True})).score()
+        guarded = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "market_frame_shift": True,
+                    "price_only_blowoff": True,
+                    "theme_hype_without_revenue": True,
+                    "missing_cashflow_bridge": True,
+                    "source_quality_conflict": True,
+                }
+            )
+        ).score()
+
+        self.assertEqual(guarded.diagnostic_scores["research_axis_bridge_guard_risk"], 100.0)
+        self.assertEqual(guarded.diagnostic_scores["price_only_blowoff_score"], 100.0)
+        self.assertGreater(guarded.diagnostic_scores["research_axis_bridge_guard_risk_penalty_points"], 0)
+        self.assertGreater(guarded.risk_penalty, baseline.risk_penalty)
+        self.assertLess(guarded.total_score, baseline.total_score)
+
+    def test_operating_and_capex_risk_aliases_feed_guard_penalty(self):
+        baseline = DeterministicFeatureEngineer().engineer(base_input({"market_frame_shift": True})).score()
+        guarded = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "market_frame_shift": True,
+                    "receivables_inventory_spike": True,
+                    "customer_capex_decline": True,
+                    "contract_cancelled_or_delayed": True,
+                    "capex_burden_risk": True,
+                }
+            )
+        ).score()
+
+        self.assertEqual(guarded.diagnostic_scores["research_axis_bridge_guard_risk"], 100.0)
+        self.assertGreater(guarded.diagnostic_scores["research_axis_bridge_guard_risk_penalty_points"], 0)
+        self.assertGreater(guarded.risk_penalty, baseline.risk_penalty)
+
+    def test_policy_material_software_and_redteam_aliases_feed_common_bridge_axes(self):
+        result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "policy_or_regulatory_confirmed": True,
+                    "project_award_confirmed": True,
+                    "direct_company_cash_route": True,
+                    "subsidy_capture_visible": True,
+                    "implementation_timeline": True,
+                    "spread_expansion": True,
+                    "ex_credit_margin": True,
+                    "utilization_rate": True,
+                    "pf_exposure_reduced": True,
+                    "balance_sheet_repair": True,
+                    "cash_collection_visible": True,
+                    "arpu_growth_pct": 12,
+                    "ad_revenue_growth_pct": 18,
+                    "take_rate_improvement": True,
+                    "ip_monetization_visible": True,
+                    "repeat_revenue": True,
+                    "user_retention": True,
+                    "valuation_overheat": True,
+                    "evidence_source_quality": True,
+                    "thesis_break_confirmed": True,
+                }
+            )
+        )
+        score = result.score()
+        diagnostics = score.diagnostic_scores
+
+        self.assertEqual(diagnostics["research_axis_bridge_policy_cash_route"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_margin"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_capacity"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_capital_return"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_software_retention"], 100.0)
+        self.assertEqual(diagnostics["research_axis_bridge_guard_risk"], 100.0)
+        self.assertEqual(diagnostics["theme_overheat_score"], 100.0)
+        self.assertGreater(diagnostics["research_axis_bridge_guard_risk_penalty_points"], 0)
 
     def test_strong_eps_with_weak_contract_quality_is_not_stage_3_green(self):
         result = DeterministicFeatureEngineer().engineer(

@@ -3,16 +3,17 @@
 v12 잔차 장부입니다. 검증 통과 항목은 rolling calibration에 들어가고, 제약은 guardrail로 남깁니다.
 source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제한을 강화합니다.
 
-- residual_rows: `3906`
+- residual_rows: `4188`
 
 | trigger_id | symbol | archetype | verdict | source_proxy_only | evidence_url_pending |
 |---|---|---|---|---|---|
-| YUHAN_000100_2024_01_29_STAGE2A_REGULATORY_COMMERCIALIZATION | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_4B_too_late | False | True |
+| YUHAN_000100_2024_01_29_STAGE2A_REGULATORY_COMMERCIALIZATION | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_4B_too_late | True | True |
 | C23_R7_L209_T03 | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_too_late | False | True |
 | None | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | V12_COMPACT_000100_2024-07-01_APPROVAL_TO_COMMERCIAL_ROYALTY_BRIDGE | 000100 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
 | C24-R7-L99-TRG-04-000100 | 000100 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_too_late | True | True |
 | C24-R7-L100-TRIG-01-000100 | 000100 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_correct | True | True |
+| R13ATPV_L103_T004_000100 | 000100 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_kept_or_missed_positive_control | True | True |
 | R9L85_C29_000120_20240119_STAGE2_LOGISTICS_VOLUME_MARGIN_BRIDGE | 000120 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct_if_volume_margin_bridge_required | True | True |
 | TRG_R9L82-C29-000120-CJ-LOGISTICS-PARCEL-VOLUME-MARGIN-FADE | 000120 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should not treat logistics/parcel volume beta as durable Stage2 unless parcel volume, freight-rate/pass-through, contract mix, automation productivity, revenue conversion and margin bridge are visible. CJ Logistics had early MFE and then persistent high-MAE fade, so it is a local-4B boundary until operating-leverage proof is repaired. | True | True |
 | R13L85_REVIEW_R9_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_000120_2024-01-19 | 000120 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_correct | True | True |
@@ -31,18 +32,19 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R7L89_C23_SCDPHARM_2024_STAGE2_ACTIONABLE_BIOSIMILAR_COMMERCIALIZATION | 000250 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R7L88_C23_000250_20240325_STAGE2_BIOSIMILAR_APPROVAL_COMMERCIAL | 000250 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_correct_if_approval_partner_revenue_bridge_required | True | True |
 | R7L95_C23_SCD_2024_STAGE2_ACTIONABLE_BIOSIMILAR_GLOBAL_COMMERCIALIZATION_PARTNER_BRIDGE | 000250 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| None | 000250 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
-| None | 000250 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 000250 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
+| None | 000250 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | R13L88_REVIEW_R7_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION_000250_2024-03-25 | 000250 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
 | T_R9L10_000270_STAGE2 | 000270 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct | False | True |
+| T_C29_000270_STAGE2A_20240125 | 000270 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct | True | True |
 | T_C29_R9L105_000270_Stage2Actionable_20240125 | 000270 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| TRG_C29_R9L100_000270_STAGE2A_20240125 | 000270 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct | False | True |
+| TRG_C29_R9L100_000270_STAGE2A_20240125 | 000270 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct | True | True |
 | T_C29_R9L106_000270_20240614_17_Stage3-Green | 000270 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct | True | True |
 | T_C29_R9L106_000270_20240202_02_Stage3-Yellow | 000270 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct | True | True |
 | T_R9L10_000270_4B | 000270 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct | False | True |
 | T_C21_R6L104_000370_STAGE2_20240201 | 000370 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive | True | True |
 | None | 000370 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
-| None | 000370 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | False | True |
+| None | 000370 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | TRG_R6L80-C22-000370-HANWHA-GENERAL-INSURANCE-RATE-CYCLE | 000370 | C22_INSURANCE_RATE_CYCLE_RESERVE | C22 should allow non-life insurance positives when loss ratio, reserve adequacy, rate cycle, capital buffer and shareholder-return bridge are visible. Hanwha General Insurance had strong early MFE with bounded entry-basis MAE, then a lifecycle drawdown. | True | True |
 | TRG_R6L76-C22-000370-HANWHA-GENERAL-INSURANCE-LOSS-RATIO-CAPITAL-RETURN | 000370 | C22_INSURANCE_RATE_CYCLE_RESERVE | C22 should allow non-life insurers when value-up and rate-cycle attention connects to loss-ratio improvement, CSM/IFRS17 reserve quality, K-ICS capital buffer, dividend/buyback or capital-return bridge. Hanwha General Insurance produced high MFE with controlled entry-basis MAE, but later drawdown requires lifecycle local 4B if reserve/capital-return evidence fades. | True | True |
 | TRG_R6L74-C22-000370-HANWHA-GI-RESERVE-CAPITAL-RETURN | 000370 | C22_INSURANCE_RATE_CYCLE_RESERVE | C22 should allow Stage2 when non-top P&C insurers show CSM, reserve release, loss-ratio improvement, K-ICS/capital return or shareholder-return bridge. Hanwha General Insurance produced high MFE with controlled entry-basis MAE, but later local 4B-watch is needed if the reserve/capital-return evidence stops refreshing. | True | True |
@@ -55,17 +57,22 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_C22_R6L104_07 | 000370 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive | True | True |
 | None | 000370 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | None | 000370 | C22_INSURANCE_RATE_CYCLE_RESERVE | Canonical Stage4B is acceptable only as local/watch; full 4B or Stage3 promotion needs non-price reserve/capital bridge. | True | True |
+| T_C22_R6L102_005 | 000370 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_4B_too_late | True | True |
 | C31_R11L106_TRG_18 | 000370 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | None | 000370 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | V12_COMPACT_000370_2024-02-29_policy_valueup_insurance_csm_reserve_capital_return_cash_bridge | 000370 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
 | R6L90_C22_000400_20240213_STAGE2_FALSE_POSITIVE_NONLIFE_MNA_THEME | 000400 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive_if_MNA_theme_counted_as_C22_rate_cycle | True | True |
 | R6L86_C22_000400_20240423_STAGE2_FALSE_POSITIVE_SMALLCAP_INSURANCE_MNA_BETA | 000400 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive_if_MNA_beta_overcredited | True | True |
+| R6L10_C22_LOTTEINS_T2_REJECT_20240423 | 000400 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive | True | True |
 | None | 000400 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | R6L97_C22_LOTTEINS_2024_STAGE4B_INSURANCE_SALE_RESERVE_EVENT_CAP | 000400 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_4B_too_late_if_insurance_sale_reserve_event_premium_not_capped | True | True |
 | R6L91_C22_LOTTEINS_2024_STAGE4B_INSURANCE_MA_CONTROL_PREMIUM_CAP | 000400 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_4B_too_late_if_insurance_MA_control_premium_event_not_capped | True | True |
+| T_C22_R6L102_006 | 000400 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_4C_too_late | True | True |
 | R12L88_C32_LOTTEINS_2024_STAGE2_ACTIONABLE_INSURANCE_SALE_PREMIUM | 000400 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R13L86_REVIEW_R6_C22_INSURANCE_RATE_CYCLE_RESERVE_000400_2024-04-23 | 000400 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
+| R13L10_X05_000400_Stage2-candidate-rejected | 000400 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L91_REVIEW_R6_C22_INSURANCE_RATE_CYCLE_RESERVE_000400_2024_06_26_TRIGGER | 000400 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_insurance_MA_control_premium_event_not_capped | True | True |
+| GAONCABLE_000500_2024_03_06_STAGE2_FALSE_POSITIVE_WIRE_CABLE_CAPEX_BETA | 000500 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive_if_wire_beta_promoted_to_Green | True | True |
 | TRG_R1L76-C02-000500-GAON-CABLE-GRID-CAPEX-LIFECYCLE | 000500 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_correct | True | True |
 | TRG_R1L76-C02-000500-GAON-CABLE-GRID-CAPEX-LIFECYCLE | 000500 | C02_POWER_GRID_DATACENTER_CAPEX | C02 should include cable suppliers only when grid capex, export order, copper pass-through and margin bridge are visible. Gaon Cable produced high MFE with controlled early MAE, but post-peak drawdown and a later 2024 corporate-action candidate require lifecycle and validation controls. | True | True |
 | TRG_R1L78-C02-000500-GAON-CABLE-DATACENTER-GRID-CABLE-BACKLOG | 000500 | C02_POWER_GRID_DATACENTER_CAPEX | C02 should include cable names only when grid/datacenter capex maps to customer orderbook, cable shipment, ASP/copper pass-through and margin bridge. Gaon Cable produced high MFE with controlled entry-basis MAE, but the later drawdown requires lifecycle local 4B if orderbook/margin evidence fades. | True | True |
@@ -83,17 +90,19 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L91_REVIEW_R6_C22_INSURANCE_RATE_CYCLE_RESERVE_000540_2024_02_14_TRIGGER | 000540 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_if_fire_insurance_valueup_theme_counts_without_reserve_loss_ratio_capital_bridge | True | True |
 | C06-127-T001 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_correct_but_green_should_wait_for_mass_production | False | True |
 | R2L98_C06_SKHYNIX_2024_STAGE2_ACTIONABLE_HBM_MEMORY_CUSTOMER_CAPACITY_MIX_BRIDGE | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| SKHYNIX_000660_2024_02_22_STAGE2A_HBM_CUSTOMER_CAPACITY_MIX | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | False | True |
+| SKHYNIX_000660_2024_02_22_STAGE2A_HBM_CUSTOMER_CAPACITY_MIX | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | True | True |
 | R2L91_C06_SKHYNIX_2024_STAGE2_ACTIONABLE_HBM_CUSTOMER_CAPACITY_BRIDGE | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
+| SKHYNIX_000660_2024_03_06_STAGE2A_HBM_MEMORY_CUSTOMER_CAPACITY | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | True | True |
 | C06-127-T002 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_correct_green_with_drawdown_aware_hold | False | True |
 | C06-127-T003 | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_partly_too_permissive_if_late_valuation_not_penalized | False | True |
 | None | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | True | True |
 | None | 000660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | True | True |
 | C31_L101_T001_000660 | 000660 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_partially_correct_but_high_MAE_guard_needed | True | True |
-| None | 000660 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 000660 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | C32_000670_20240913_STAGE2_ACTIONABLE | 000670 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_false_positive_or_overpromotion_risk | True | True |
 | R12L92_C32_000670_20240913_STAGE2_FALSE_POSITIVE_SPILLOVER_CONTROL_BATTLE | 000670 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_false_positive_if_spillover_MFE_counted_as_direct_C32_tender_evidence | True | True |
 | T_C01_R1L111_000720_20240126_Stage2 | 000720 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | low-MAE rebound was tradable but construction/PF balance-sheet thesis belongs to C30/C05, not generic C01 backlog | True | True |
+| HYUNDAIEANDC_000720_2024_03_06_STAGE2_FALSE_POSITIVE_CONSTRUCTION_BACKLOG | 000720 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | True | True |
 | T_C05_R1L108_000720_20240126_MARGIN_BACKLOG_REPAIR | 000720 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | None | 000720 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | R1L84_C05_000720_20250122_STAGE2_EPC_BACKLOG_MARGIN_BRIDGE_POSITIVE | 000720 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_may_undercredit_if_C05_too_guarded | True | True |
@@ -106,12 +115,15 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 000720 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | True | True |
 | R13L86_REVIEW_R1_C05_EPC_MEGA_CONTRACT_MARGIN_GAP_000720_2024-04-29 | 000720 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L86_REVIEW_R10_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_000720_2024-04-29 | 000720 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
+| R13ATPV_L103_T003_000720 | 000720 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_kept_or_missed_positive_control | False | True |
 | None | 000810 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | None | 000810 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | R6L99_C22_SAMSUNGFIRE_2024_STAGE2_ACTIONABLE_PNC_RATE_RESERVE_CAPITAL_RETURN_BRIDGE | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R6L41_C22_000810_T1_STAGE2A | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_correct | True | True |
+| R6L10_C22_SFM_T2A_20240223 | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_correct | True | True |
 | None | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | Stage3-Green allowed only when reserve quality, CSM durability, solvency capital, and payout execution are all explicit. | True | True |
 | R6L41_C22_000810_T2_GREEN_COMPARE | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_too_late | True | True |
+| T_C22_R6L102_007 | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_correct | True | True |
 | None | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | TRG_C22_R6L104_02 | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_too_late | True | True |
 | None | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
@@ -119,11 +131,12 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | None | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | R6L41_C22_000810_T3_4B_LOCAL | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_4B_too_early | True | True |
+| R6L10_C22_SFM_T4B_20241203 | 000810 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_correct | True | True |
 | TRIG_C31_R11L100_004_000810 | 000810 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct | True | True |
 | C31_R11L106_TRG_15 | 000810 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | None | 000810 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | V12_COMPACT_000810_2024-06-28_policy_valueup_insurance_csm_reserve_capital_return_cash_bridge | 000810 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct | True | True |
-| None | 000810 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 000810 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | None | 000810 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | None | 000810 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | None | 000810 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
@@ -141,7 +154,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R4L78-C16-000910-UNION-RAREEARTH-RESOURCE-THEME-FADE | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | C16 should not treat rare-earth/resource-security theme beta as durable Stage2 unless direct supply exposure, customer demand, pricing, inventory and margin bridge are visible. Union had a small early MFE and then opened a deep MAE drawdown path. | True | True |
 | R4L92_C16_000910_20240110_STAGE2_FALSE_POSITIVE_RARE_EARTH_POLICY | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_false_positive_if_rare_earth_policy_vocabulary_overcredited | True | True |
 | C16-102-06-000910-T1 | 000910 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_false_positive | True | True |
-| DBHITEK_000990_2024_06_20_STAGE2_FALSE_POSITIVE_MEMORY_BETA_NO_HBM_BRIDGE | 000990 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | False | True |
+| DBHITEK_000990_2024_06_20_STAGE2_FALSE_POSITIVE_MEMORY_BETA_NO_HBM_BRIDGE | 000990 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
 | R2L85_C06_000990_20240620_STAGE2_FALSE_POSITIVE_FOUNDRY_MEMORY_BETA | 000990 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive_if_memory_beta_overcredited | True | True |
 | R13_CROSS_R13L4_C32_000990_20240304_TENDER_CASH_PATH_TRUST_000990_2024-03-04_Stage4B | 000990 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | R13L85_REVIEW_R2_C06_HBM_MEMORY_CUSTOMER_CAPACITY_000990_2024-06-20 | 000990 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
@@ -177,6 +190,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 001390 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
 | None | 001390 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
 | R1L93B_C01_001440_20240520_STAGE2_FALSE_POSITIVE_CABLE_PRICE_MFE | 001440 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive_if_cable_theme_price_MFE_overcredited_without_margin_cash_and_CA_repair | True | True |
+| DAEHANCABLE_001440_2024_04_04_STAGE2_FALSE_POSITIVE_CABLE_CAPEX_GREEN_BLOCK | 001440 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive_if_cable_capex_beta_promoted_to_Green | True | True |
 | TRG_R1L80-C02-001440-DAEHAN-CABLE-POST-CA-GRID-CAPEX-BACKLOG | 001440 | C02_POWER_GRID_DATACENTER_CAPEX | C02 should allow power-cable positives when grid/datacenter capex maps to cable order backlog, export/customer quality, delivery schedule, revenue recognition and margin bridge. Daehan Cable produced a very large post-CA MFE, but runtime promotion requires post-CA continuity and source repair. | True | True |
 | None | 001440 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
 | None | 001440 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
@@ -191,6 +205,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R6L93_C22_HYUNDAIMARINE_2024_STAGE2_FALSE_POSITIVE_NONLIFE_RESERVE_CYCLE_WATCH | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive_if_nonlife_reserve_cycle_watch_counts_without_loss_ratio_capital_return_revision_bridge | True | True |
 | None | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | Rate-cycle label alone should remain Stage2/watch; high MAE says actionable bonus is unsafe without explicit reserve/capital bridge. | True | True |
 | R6L84_C22_001450_20240205_STAGE2_FALSE_POSITIVE_NONLIFE_VALUEUP_RESERVE_UNVERIFIED | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive_if_valueup_beta_overcredited | True | True |
+| R6L10_C22_HYUNDAI_T2_20240514 | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive | True | True |
 | None | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | None | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | TRG_C22_R6L104_05 | 001450 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive | True | True |
@@ -233,7 +248,9 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13_CROSS_001570_2024-02-26_Stage4B | 001570 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | T_R13_STAGE2FP_L5_001570_Stage2_2024-02-26 | 001570 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_stage2_false_positive_or_overpromotion_risk | True | True |
 | R13_CROSS_001570_2024-02-26_Stage2 | 001570 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
-| C20_R5L115_001680_20240201_INGREDIENT_FOOD_EXPORT_MIX_MARGIN_BRIDGE_Stage2_Actionable | 001680 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_undercredits_bridge_but_needs_high_MAE_guard | False | True |
+| TRG_C18_R5_L103_001680_Stage2_Actionable_2024-02-15 | 001680 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_too_conservative | True | True |
+| C20_R5L115_001680_20240201_INGREDIENT_FOOD_EXPORT_MIX_MARGIN_BRIDGE_Stage2_Actionable | 001680 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_undercredits_bridge_but_needs_high_MAE_guard | True | True |
+| R13S2_L102_T003_001680 | 001680 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_missed_structural | True | True |
 | R13_L106_T17_001680 | 001680 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
 | None | 001720 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | C31_R11L106_TRG_14 | 001720 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
@@ -256,7 +273,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R10L91_C30_002290_20240102_STAGE2_FALSE_POSITIVE_SMALL_CONSTRUCTION_POLICY | 002290 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive_if_small_construction_policy_vocabulary_overcredited | True | True |
 | R10L94_C30_SAMIL_2024_STAGE4B_REGIONAL_BUILDER_POLICY_EVENT_CAP | 002290 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_4B_too_late_if_regional_builder_policy_event_premium_not_capped | True | True |
 | R13L94_REVIEW_R10_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_002290_2024_01_24_TRIGGER | 002290 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_4B_too_late_if_regional_builder_policy_event_premium_not_capped | True | True |
-| None | 002350 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | False | True |
+| None | 002350 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | True | True |
 | T_C29_R9L106_002350_20240223_11_Stage2 | 002350 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | T_C29_R9L104_002350_STAGE2_20240411 | 002350 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | True | True |
 | R9L87_C29_NEXEN_2023_STAGE2_FALSE_POSITIVE_HIGH_MAE | 002350 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive_if_stage2_bonus_ignores_post_spike_mae | True | True |
@@ -304,7 +321,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | C32_002790_20240517_STAGE2_ACTIONABLE | 002790 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_false_positive_or_overpromotion_risk | True | True |
 | T_C05_R1L109_002990_20240403_BUILDER_LABEL_HIGH_MAE | 002990 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | None | 002990 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | True | True |
-| TRG_C30_R10L100_002990_STAGE2_FALSE_20240125 | 002990 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive | False | True |
+| TRG_C30_R10L100_002990_STAGE2_FALSE_20240125 | 002990 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive | True | True |
 | TRG_R10L74-C30-002990-KUMHO-PF-LIQUIDITY-ORDERBOOK-LOCAL4B | 002990 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | C30 local 4B-watch should fire when mid-builder PF/orderbook/liquidity risk produces weak MFE and persistent MAE, but hard 4C still requires explicit non-price default, refinancing failure, court rehabilitation, auditor/control or solvency break. | True | True |
 | TRG_R10L78-C30-002990-KUMHO-E&C-SMALLBUILDER-HIGH-MAE-LOCAL4B | 002990 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | C30 should flag local 4B when construction/PF fear aligns with persistent MAE and drawdown, but hard 4C still requires non-price refinancing failure, default, covenant, impairment, auditor/control or solvency evidence. Kumho E&C produced almost no MFE and then a deep drawdown path. | True | True |
 | TRG_R10L74-C30-002990-KUMHO-PF-LIQUIDITY-ORDERBOOK-LOCAL4B | 002990 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | C30 local 4B-watch should fire when mid-builder PF/orderbook/liquidity risk produces weak MFE and persistent MAE, but hard 4C still requires explicit non-price default, refinancing failure, court rehabilitation, auditor/control or solvency break. | True | True |
@@ -321,6 +338,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L86_REVIEW_R10_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_003070_2024-06-20 | 003070 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | TRG_R2L80-C07-003160-DI-HBM-TEST-EQUIPMENT-RS-ORDER-BRIDGE | 003160 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | C07 should protect HBM/test-equipment positives when relative strength maps to equipment order, customer capacity, delivery schedule, revenue recognition and margin bridge. DI produced a very large MFE with controlled entry-basis MAE, but the post-peak drawdown means source-repaired lifecycle 4B is still needed. | True | True |
 | R2L98_C07_DI_2024_STAGE2_ACTIONABLE_HBM_TEST_EQUIPMENT_ORDER_RS_BRIDGE | 003160 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
+| C08_003160_2024_03_06_STAGE2_ACTIONABLE_MEMORY_TESTER_EVENT_RERATING_4B_WATCH | 003160 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
 | R2L93_C10_DI_2024_STAGE2_ACTIONABLE_MEMORY_TESTER_EQUIPMENT_RECOVERY | 003160 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R5L94_C18_SAMYANGFOODS_2024_STAGE2_ACTIONABLE_KFOOD_EXPORT_REORDER_CHANNEL_MARGIN | 003230 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R5L99_C18_SAMYANGFOODS_2024_STAGE2_ACTIONABLE_K_FOOD_EXPORT_REORDER_MARGIN_BRIDGE | 003230 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
@@ -328,6 +346,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 003230 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
 | R5L88_C20_SAMYANG_2024_STAGE2_ACTIONABLE_KFOOD_EXPORT_REORDER | 003230 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R5L83_C20_003230_20240409_STAGE2_KFOOD_REPEAT_EXPORT | 003230 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_correct | True | True |
+| R5L10_C20_SAMYANG_T2A_20240517 | 003230 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_correct | True | True |
 | None | 003230 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | False | True |
 | R5L88_C20_KFOOD_GLOBAL_REORDER_001 | 003230 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | False | True |
 | C20_R5L116_003230_20240417_Stage3_Yellow | 003230 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_too_late | True | True |
@@ -355,7 +374,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R6L98_C21_HANWHAINVEST_2024_STAGE4B_BROKERAGE_DIGITAL_ASSET_EVENT_CAP | 003530 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_4B_too_late_if_brokerage_digital_asset_event_premium_not_capped | True | True |
 | R6L88_C21_HANWHAINV_2024_STAGE4B_DIGITAL_BROKERAGE_THEME_CAP | 003530 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive_if_digital_finance_theme_spike_counts_as_capital_return_rerating | True | True |
 | None | 003540 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
-| None | 003540 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
+| None | 003540 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | C31_R11L106_TRG_13 | 003540 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | TRG_R11L82-C32-003550-LG-HOLDCO-VALUEUP-BOUNDED-NO-FORCED4B | 003550 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | C32 should not force bounded holding-company value-up rows into 4B when no non-price event break is confirmed, but it also should not call durable Stage2 without explicit event mechanics, NAV bridge, shareholder process and downside cap. LG is a bounded RiskWatch/no-forced-4B row. | True | True |
 | C32_003550_LG_20240207_S2A | 003550 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_stage3_too_early_without_capital_return_bridge | True | True |
@@ -366,13 +385,14 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R11L77-C03-003570-SNT-DYNAMICS-DEFENSE-DRIVETRAIN-EXPORT-BACKLOG | 003570 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_correct | True | True |
 | TRG_R1L74-C03-003570-SNT-DYNAMICS-POWERTRAIN-EXPORT-BACKLOG | 003570 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | C03 should include defense powertrain and transmission suppliers when export programs convert into backlog and margin. SNT Dynamics produced a strong 180D MFE with very controlled entry MAE, but later drawdown after the October peak requires lifecycle local 4B if backlog/margin evidence fades. | True | True |
 | T_C03_R1L108_003570_20240522_STAGE2_ACTIONABLE | 003570 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
-| None | 003570 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 003570 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | R9L88_C29_KGMOBILITY_2024_STAGE2_FALSE_POSITIVE_OEM_REBOUND | 003620 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive_if_OEM_rebound_counts_without_volume_mix_margin_cashflow_bridge | True | True |
 | R9L85_C29_003620_20240423_STAGE2_FALSE_POSITIVE_OEM_TURNAROUND | 003620 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive_if_OEM_turnaround_theme_overcredited | True | True |
 | T_C29_R9L106_003620_20240319_14_Stage4C | 003620 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | R13L88_REVIEW_C29_KGMOBILITY_2024_STAGE2_FALSE_POSITIVE_OEM_REBOUND | 003620 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_OEM_rebound_counts_without_volume_mix_margin_cashflow_bridge | True | True |
 | R13L85_REVIEW_R9_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_003620_2024-04-23 | 003620 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | None | 003650 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
+| POSCOFM_003670_2024_02_15_STAGE2_FALSE_POSITIVE_CATHODE_ORDERBOOK_MARGIN_FAIL | 003670 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive | True | True |
 | TRG-C11-003670-20250203-STAGE4B | 003670 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_error_if_hard_4c_without_orderbook_cancellation | False | True |
 | V12_COMPACT_C12_R3L105_003670_20240503_05_003670_2024-05-03_Stage2-Actionable | 003670 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
 | R3L83_C12_003670_20240322_STAGE2_FALSE_POSITIVE_ORDERBOOK_CALLOFF | 003670 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
@@ -384,11 +404,13 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 003670 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | R3L98_C14_POSCOFUTUREM_2024_STAGE4B_CATHODE_DEMAND_SLOWDOWN_EVENT_CAP | 003670 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4B_too_late_if_cathode_demand_recovery_event_premium_not_capped | True | True |
 | R3L100-C14-001-T1 | 003670 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_too_late_if_cathode_orderbook_memory_blocks_demand_reset_4C | True | True |
+| POSCOFUTUREM_003670_2024_03_06_STAGE4C_CATHODE_UTILIZATION_ASP_RISK | 003670 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4C_too_late_if_cathode_recovery_beta_overcredited | True | True |
 | None | 003670 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
 | C31_L101_T005_003670 | 003670 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
 | None | 003690 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | None | 003690 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | TRG_R6L76-C22-003690-KOREANRE-REINSURANCE-RESERVE-CAPITAL-RETURN | 003690 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive | True | True |
+| T_C22_R6L102_004 | 003690 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive | True | True |
 | None | 003690 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | TRG_R6L74-C22-003690-KOREANRE-REINSURANCE-CYCLE-CAPITAL-BUFFER | 003690 | C22_INSURANCE_RATE_CYCLE_RESERVE | C22 should include reinsurers when pricing cycle, reserve adequacy and capital buffer translate into low-MAE rerating. Korean Re produced slow but durable MFE; however a late-2024 share-count change in the shard requires validation before runtime promotion. | True | True |
 | None | 003690 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
@@ -413,7 +435,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L87_REVIEW_C32_NAMYANG_2021_STAGE4B_CONTROL_SALE_EVENT_CAP | 003920 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_control_premium_cap_not_detected | True | True |
 | R5_L122_C18_018 | 003960 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | C19_R5L119_14_003960_4B_Local_Watch_2024-06-17 | 003960 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
-| C20_R5L115_003960_20240201_SEAFOOD_PROCESSED_FOOD_MIX_EXPORT_BRIDGE_Stage2_Actionable | 003960 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_undercredits_mix_bridge_but_needs_peak_guard | False | True |
+| C20_R5L115_003960_20240201_SEAFOOD_PROCESSED_FOOD_MIX_EXPORT_BRIDGE_Stage2_Actionable | 003960 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_undercredits_mix_bridge_but_needs_peak_guard | True | True |
 | C20_R5L119_003960_20240617_09_Stage4B_Local_Watch | 003960 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | True | True |
 | C20_R5L118_003960_20240617_Stage4B | 003960 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_error | True | True |
 | T_C15_R4L105_004000_20240516_10_Stage2-Actionable | 004000 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive | True | True |
@@ -434,14 +456,17 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L87_REVIEW_R12_C31_POLICY_SUBSIDY_LEGISLATION_EVENT_004090_2024-06-04 | 004090 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L94_REVIEW_R4_C17_CHEMICAL_COMMODITY_MARGIN_SPREAD_004090_2024_04_09_TRIGGER | 004090 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_4B_too_late_if_oil_product_spread_event_premium_not_capped | True | True |
 | TRG_R5L74-C19-004170-SHINSEGAE-DS-MARGIN-RISKWATCH | 004170 | C19_BRAND_RETAIL_INVENTORY_MARGIN | C19 should distinguish stable department-store value-up from durable inventory/margin rerating. Shinsegae had early MFE but later MAE opened and the return path was not strong enough to qualify as durable Green without stronger traffic/duty-free/margin evidence. | True | True |
-| SHINSEGAE_004170_2024_01_29_STAGE2A_RETAIL_MARGIN_STABLE | 004170 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct | False | True |
+| SHINSEGAE_004170_2024_03_06_STAGE2_FALSE_POSITIVE_DUTYFREE_MARGIN_BRIDGE | 004170 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive_if_channel_rebound_overcredited_without_margin_revision | True | True |
+| SHINSEGAE_004170_2024_01_29_STAGE2A_RETAIL_MARGIN_STABLE | 004170 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct | True | True |
 | R5L93_C19_004170_20240208_STAGE2_FALSE_POSITIVE_DEPARTMENT_STORE | 004170 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive_if_department_store_brand_inventory_vocabulary_overcredited | True | True |
 | TRG_R5L74-C19-004170-SHINSEGAE-DS-MARGIN-RISKWATCH | 004170 | C19_BRAND_RETAIL_INVENTORY_MARGIN | C19 should distinguish stable department-store value-up from durable inventory/margin rerating. Shinsegae had early MFE but later MAE opened and the return path was not strong enough to qualify as durable Green without stronger traffic/duty-free/margin evidence. | True | True |
 | TRG_C19_004170_20240219_DEPARTMENT_STORE_DUTYFREE_PRICE_ONLY_4B | 004170 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_4B_too_late | True | True |
+| R5L12_C18_NONGSHIM_T2A_20230516 | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_too_late | True | True |
 | R5L92_C18_NONGSHIM_2024_STAGE2_ACTIONABLE_RAMEN_EXPORT_CHANNEL_REORDER | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| C18_R5L113_004370_20240528_Stage2_Actionable_2024-05-28 | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_too_late | False | True |
+| C18_R5L113_004370_20240528_Stage2_Actionable_2024-05-28 | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_too_late | True | True |
 | Stage2-Actionable | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_too_late | False | True |
-| C20_R5L115_004370_20240201_RAMEN_GLOBAL_REORDER_MARGIN_BRIDGE_Stage2_Actionable | 004370 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_too_late | False | True |
+| R5L12_C18_NONGSHIM_GREEN_20231113 | 004370 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_too_late | True | True |
+| C20_R5L115_004370_20240201_RAMEN_GLOBAL_REORDER_MARGIN_BRIDGE_Stage2_Actionable | 004370 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_too_late | True | True |
 | C20_R5L118_004370_20240528_Stage2_Actionable | 004370 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_error | True | True |
 | R5L91_C20_004370_20240614_STAGE2_FALSE_POSITIVE_FOOD_GLOBAL_POSTMOVE | 004370 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive_if_food_global_distribution_postmove_overcredited | True | True |
 | R5L83_C20_004370_20240528_LOCAL4B_MATURE_BRAND_ROUNDTRIP | 004370 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_4B_too_late | True | True |
@@ -480,19 +505,22 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | T_C11_R3L107_005070_STAGE4B_20240216 | 005070 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_orderbook_label_is_overcredited | True | True |
 | R3L93_C12_005070_20240220_STAGE2_FALSE_POSITIVE_CATHODE_CONTRACT_SPIKE | 005070 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive_if_cathode_customer_contract_vocabulary_overcredited | True | True |
 | None | 005070 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | True | True |
+| COSMOAM_005070_2024_03_06_STAGE4C_CUSTOMER_CALL_OFF_ASP_MARGIN_RISK | 005070 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_4C_too_late_if_contract_backlog_overcredited | True | True |
 | None | 005070 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_correct_if_hard_4c_requires_customer_pull_margin_break | True | True |
 | None | 005070 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | True | True |
-| COSMO_005070_2024_02_02_STAGE2A_CATHODE_CAPA_UTILIZATION | 005070 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_4B_too_late | False | True |
+| COSMO_005070_2024_02_02_STAGE2A_CATHODE_CAPA_UTILIZATION | 005070 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_4B_too_late | True | True |
 | T_C13_R3L103_005070_STAGE2ACTIONABLE_20240216 | 005070 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_too_late_if_mixed_asp_utilization_margin_bridge_visible | True | True |
 | T_C13_R3L104_005070_STAGE3GREEN_20240216 | 005070 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | T_C13_R3L105_005070_STAGE4B_20240216 | 005070 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
-| COSMO_005070_2024_02_21_4C_EV_DEMAND_SLOWDOWN | 005070 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4C_too_late | False | True |
+| COSMO_005070_2024_02_21_4C_EV_DEMAND_SLOWDOWN | 005070 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4C_too_late | True | True |
 | R5L96_C18_BINGGRAE_2024_STAGE2_ACTIONABLE_DAIRY_EXPORT_CHANNEL_REORDER_MARGIN_BRIDGE | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R5L89_C18_005180_20240415_STAGE2_KFOOD_EXPORT_REORDER | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_correct_if_export_reorder_sellthrough_margin_bridge_required | True | True |
 | R5L84_C18_005180_20240415_STAGE2_KFOOD_EXPORT_REORDER_BRIDGE | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_correct_if_reorder_bridge_required | True | True |
-| C18_R5L113_005180_20240517_Stage2_Actionable_2024-05-17 | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_too_late | False | True |
+| R5L12_C18_BINGGRAE_T2A_20240517 | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_correct | True | True |
+| C18_R5L113_005180_20240517_Stage2_Actionable_2024-05-17 | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_too_late | True | True |
 | Stage2-Actionable | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_too_late | False | True |
 | None | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
+| R5L12_C18_BINGGRAE_T4B_20240610 | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_correct | True | True |
 | C18_R5L113_005180_20240517_Stage4B_2024-06-11 | 005180 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_4B_too_late | False | True |
 | C19_R5L120_01_005180_Stage3_Yellow_2024-04-17 | 005180 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | C20_R5L116_005180_20240517_Stage2_Actionable | 005180 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_undercredits_bridge_but_needs_high_MAE_guard | True | True |
@@ -504,11 +532,12 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 005180 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | R2L85_C06_005290_20240321_STAGE2_FALSE_POSITIVE_SEMI_MATERIAL_BETA | 005290 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive_if_material_beta_overcredited | True | True |
 | TRG-C06-L110-005290-Stage3Yellow-2024-03-22 | 005290 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
-| DONGJIN_005290_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_MATERIAL_BETA | 005290 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | False | True |
+| DONGJIN_005290_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_MATERIAL_BETA | 005290 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | True | True |
 | R13L85_REVIEW_R2_C06_HBM_MEMORY_CUSTOMER_CAPACITY_005290_2024-03-21 | 005290 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | T_R9L10_005380_STAGE2 | 005380 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct | False | True |
+| T_C29_005380_STAGE2A_20240125 | 005380 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_too_late | True | True |
 | T_C29_R9L105_005380_Stage2Actionable_20240125 | 005380 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| TRG_C29_R9L100_005380_STAGE2A_20240125 | 005380 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_too_late | False | True |
+| TRG_C29_R9L100_005380_STAGE2A_20240125 | 005380 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_too_late | True | True |
 | T_C29_R9L106_005380_20240614_16_Stage3-Green | 005380 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct | True | True |
 | T_C29_R9L106_005380_20240202_01_Stage3-Yellow | 005380 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct | True | True |
 | None | 005380 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
@@ -516,7 +545,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 005380 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | R5_L122_C18_004 | 005390 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | None | 005390 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
-| None | 005390 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | False | True |
+| None | 005390 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | C19_R5L119_04_005390_Stage2_Actionable_2024-02-02 | 005390 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | V12_COMPACT_C20_R5L120_005390_20240202_10_005390_2024-02-02_Stage2-Actionable | 005390 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | True | True |
 | C14-R3L97-02-005420-Stage4C-2024-04-30 | 005420 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_correct | True | True |
@@ -544,7 +573,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R5L92_C18_SPCSAMLIP_2024_STAGE4B_BAKERY_CHANNEL_EVENT_CAP | 005610 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_4B_too_late_if_bakery_food_channel_event_premium_not_capped | True | True |
 | C19_R5L119_13_005610_Stage2_2024-05-17 | 005610 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | C20_R5L118_005610_20240517_Stage2 | 005610 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_error | True | True |
-| C20_R5L115_005610_20240517_BRAND_CHANNEL_BUZZ_LOCAL4B_CAP_Stage4B | 005610 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive_if_brand_buzz_promoted | False | True |
+| C20_R5L115_005610_20240517_BRAND_CHANNEL_BUZZ_LOCAL4B_CAP_Stage4B | 005610 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive_if_brand_buzz_promoted | True | True |
 | C20_R5L119_005610_20240517_06_Stage4B_Local_Watch | 005610 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | True | True |
 | R13L86_REVIEW_R5_C18_CONSUMER_EXPORT_CHANNEL_REORDER_005610_2024-06-14 | 005610 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L92_REVIEW_R5_C18_CONSUMER_EXPORT_CHANNEL_REORDER_005610_2024_06_14_TRIGGER | 005610 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_4B_too_late_if_bakery_food_channel_event_premium_not_capped | True | True |
@@ -556,9 +585,10 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_C22_R6L104_01 | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_too_late | True | True |
 | None | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | R6L41_C22_005830_T1_STAGE2A | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_correct | True | True |
+| R6L10_C22_DBINS_T2A_20240223 | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_correct | True | True |
 | None | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | C22-R6-L101-04-T1 | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | too_optimistic_without_drawdown_guard_despite_later_recovery | True | True |
-| None | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | False | True |
+| None | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | R6L41_C22_005830_T2_GREEN_COMPARE | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_too_late | True | True |
 | None | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | Yellow/watch is defensible, but Green needs fresh CSM/reserve/payout bridge rather than earlier value-up beta. | True | True |
 | None | 005830 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
@@ -569,7 +599,9 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 005830 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | C31_R11L106_TRG_16 | 005830 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | V12_COMPACT_005830_2024-08-22_policy_valueup_insurance_csm_reserve_capital_return_cash_bridge | 005830 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct | True | True |
-| None | 005850 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | False | True |
+| R13L100_T003_005830 | 005830 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_too_late | True | True |
+| R13ATPV_L103_T001_005830 | 005830 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_kept_or_missed_positive_control | True | True |
+| None | 005850 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | True | True |
 | C29_R9L87_TRG_005850_S2 | 005850 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_4B_too_late | True | True |
 | TRG_R9L74-C29-005850-SL-AUTO-LIGHTING-ADAS-MARGIN | 005850 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should include lighting/ADAS suppliers when OEM mix, order cadence and margin conversion drive rerating. SL had strong MFE, but post-peak drawdown says lifecycle local 4B should fire if OEM mix or margin evidence fades. | True | True |
 | TRG_R9L76-C29-005850-SL-LAMP-MODULE-OEM-MIX-MARGIN-BRIDGE | 005850 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should allow mobility supplier Stage2 when OEM program volume, lamp/module mix, pricing and margin bridge are visible. SL produced a large mid-year MFE with bounded entry-basis MAE, but the later drawdown requires lifecycle local 4B if volume/mix/margin evidence fades. | True | True |
@@ -583,17 +615,18 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R12L81-C31-005860-HANIL-FEED-FOOD-SECURITY-LIFECYCLE | 005860 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 should allow food-security/feed policy positives only when policy or grain-price attention maps to direct feed demand, purchase cost pass-through, customer volume, revenue conversion and margin bridge. Hanil Feed produced tradable MFE but later drawdown requires lifecycle 4B if direct-economics evidence fades. | True | True |
 | T_C03_R1L108_005870_20240429_STAGE2 | 005870 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
 | R1L102_C03_HUNEED_2024_STAGE2_FALSE_POSITIVE_DEFENSE_COMMUNICATION_EXPORT_FRAMEWORK_WATCH | 005870 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_defense_communication_export_watch_counts_without_signed_order_delivery_customer_acceptance_margin_revision_bridge | True | True |
-| None | 005870 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
-| SAMSUNG_005930_2024_03_20_STAGE2_FALSE_POSITIVE_HBM_CATCHUP_CAPACITY_LAG | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | False | True |
+| None | 005870 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
+| SAMSUNG_005930_2024_03_06_STAGE2_FALSE_POSITIVE_HBM_MEMORY_CAPACITY_LAG | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
+| SAMSUNG_005930_2024_03_20_STAGE2_FALSE_POSITIVE_HBM_CATCHUP_CAPACITY_LAG | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
 | C06-127-T004 | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_too_permissive_if_generic_hbm_demand_offsets_customer_delay | False | True |
 | C06-127-T005 | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_hard_4c_confirmation_before_price_validation | False | True |
 | None | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | True | True |
 | None | 005930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | True | True |
-| None | 005930 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 005930 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | R6L91_C21_005940_20240129_STAGE2_BROKERAGE_CAPITAL_RETURN | 005940 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_correct_if_ROE_payout_buyback_capital_buffer_bridge_required | True | True |
 | TRG_R6L81-C21-005940-NH-INVESTMENT-BROKERAGE-CAPITAL-RETURN-BRIDGE | 005940 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | C21 should protect securities/brokerage value-up positives when PBR/ROE rerating is backed by dividend or buyback policy, trading volume, retail brokerage, IB earnings and capital buffer. NH Investment had strong MFE with almost no entry-basis MAE. | True | True |
 | None | 005940 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
-| None | 005940 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
+| None | 005940 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | C31_R11L106_TRG_11 | 005940 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | T_C15_R4L105_005950_20240508_13_Stage2-Actionable | 005950 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive | True | True |
 | None | 005950 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
@@ -607,6 +640,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 005960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | True | True |
 | TRG_R10L75-C30-005960-DONGBU-PF-LIQUIDITY-LOCAL4B | 005960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive | True | True |
 | R13_CROSS_005960_2024-02-01_Stage4B-Local-PFRisk | 005960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive | True | True |
+| R13L100_T008_005960 | 005960 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late | False | True |
 | R13L89_REVIEW_C30_DONGBU_2024_STAGE2_FALSE_POSITIVE_CONSTRUCTION_BETA | 005960 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_if_construction_beta_counts_without_PF_cashflow_balance_bridge | True | True |
 | R5_L122_C18_011 | 006040 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | C19_R5L119_07_006040_Stage2_Actionable_2024-02-01 | 006040 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
@@ -626,7 +660,8 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R4L81-C16-006110-SAMA-ALUMINUM-FOIL-STRATEGIC-SUPPLY-FADE | 006110 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | C16 should not treat aluminum/battery-foil supply theme beta as durable Stage2 unless customer volume, utilization, orderbook, pricing and margin bridge are visible. Sam-A Aluminum had an early MFE, then a severe drawdown. | True | True |
 | R13L88_REVIEW_R4_C15_MATERIAL_SPREAD_SUPERCYCLE_006110_2024-02-20 | 006110 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L90_REVIEW_R4_C15_MATERIAL_SPREAD_SUPERCYCLE_006110_2024_06_11_TRIGGER | 006110 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_aluminum_foil_theme_premium_not_capped | True | True |
-| LS_006260_2024_03_14_STAGE2A_GRID_CABLE_DATACENTER_CAPEX | 006260 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late | False | True |
+| LS_006260_2024_03_14_STAGE2A_GRID_CABLE_DATACENTER_CAPEX | 006260 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late | True | True |
+| C02-R1-L143-01-006260-Stage2_Actionable | 006260 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_missed_structural | True | True |
 | C15_R4L89_LS_20240412 | 006260 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | False | True |
 | C15_R4L89_LS_20240412 | 006260 | C15_MATERIAL_SPREAD_SUPERCYCLE | None | False | True |
 | R4L92_C16_LS_2024_STAGE2_ACTIONABLE_COPPER_RESOURCE_SUPPLY_CHAIN | 006260 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
@@ -641,40 +676,48 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | C23_006280_20240709_STAGE2A_TRIGGER | 006280 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | None | 006280 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | V12_COMPACT_006280_2024-06-12_POST_LAUNCH_COMMERCIALIZATION_BLOWOFF_GUARD | 006280 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
-| None | 006280 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
+| None | 006280 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | None | 006280 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 must require fresh binary/data endpoint quality; reroute commercialization, device, reimbursement, or price-only events to C23/C25/local_4B as appropriate. | True | True |
 | R1L93B_C01_006340_20240513_STAGE2_FALSE_POSITIVE_WIRE_CABLE_BLOWOFF | 006340 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive_if_wire_cable_theme_blowoff_counted_as_orderbacklog_margin_bridge | True | True |
 | TRG_R1L76-C02-006340-DAEWON-CABLE-COPPER-GRID-THEME-FADE | 006340 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive | True | True |
-| DAEWONCABLE_006340_2024_04_05_STAGE2A_GRID_CABLE_SMALLCAP_BETA | 006340 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late | False | True |
+| DAEWONCABLE_006340_2024_04_05_STAGE2A_GRID_CABLE_SMALLCAP_BETA | 006340 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late | True | True |
 | TRG_R1L76-C02-006340-DAEWON-CABLE-COPPER-GRID-THEME-FADE | 006340 | C02_POWER_GRID_DATACENTER_CAPEX | C02 should not treat copper/cable/grid theme spikes as durable Stage2 unless customer order, backlog, delivery and margin bridge are explicit. Daewon Cable had huge tradable MFE but then a deep post-peak drawdown, making it a theme-spike lifecycle local 4B row rather than durable Green. | True | True |
 | R4L91_C15_006340_20240314_STAGE2_COPPER_WIRE_SPREAD | 006340 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_correct_if_inventory_spread_ASP_margin_cash_bridge_required | True | True |
 | None | 006340 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
+| GSENC_006360_2024_03_06_STAGE2_FALSE_POSITIVE_CONSTRUCTION_BACKLOG | 006360 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | True | True |
 | T_C01_R1L111_006360_20240430_Stage2-Actionable | 006360 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | delayed repair worked, but it is a C30/C05 balance-sheet/cost-repair bridge; C01 should only keep it as a reroute stress row | True | True |
-| None | 006360 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | False | True |
+| None | 006360 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | T_C05_R1L109_006360_20240201_COST_PROVISION_REPAIR_MARGIN_WATCH | 006360 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | T_C05_R1L108_006360_20240430_COST_PROVISION_RECOVERY | 006360 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | R1L84_C05_006360_20240403_STAGE2_REPAIR_CONTROL_MARGIN_BRIDGE | 006360 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_correct_watch_yellow_not_green | True | True |
 | TRG_C05_006360_20230629_STAGE4C | 006360 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_4C_should_route_fast_when_quality_cost_break_confirms_margin_gap | True | True |
 | None | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | True | True |
-| V12_COMPACT_006360_2024-04-29_post_pf_risk_repair_backlog_margin_recovery | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive | False | True |
+| V12_COMPACT_006360_2024-04-29_post_pf_risk_repair_backlog_margin_recovery | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive | True | True |
 | C30_R10L105_006360_20240430_Stage2_Actionable | 006360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_error_if_C30_overcredits_price_or_low_PBR_without_balance_sheet_bridge | True | True |
 | None | 006360 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
+| R13L10_X07_006360_Stage4C | 006360 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4C_too_late | True | True |
 | None | 006360 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
+| R13ATPV_L103_T005_006360 | 006360 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive_or_late_4C_trust_break | False | True |
 | None | 006360 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
+| R13HMG_L104_T007_006360 | 006360 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_or_late_4B_4C_under_high_MAE | False | True |
 | R10L91_C30_006390_20240531_STAGE2_CEMENT_ASP_MARGIN | 006390 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_correct_if_ASP_input_cost_margin_cash_bridge_required_and_data_quality_repaired | True | True |
 | TRG-C11-006400-20240828-STAGE2 | 006400 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_actionable | False | True |
 | R3L98_C11_SAMSUNGSDI_2024_STAGE2_FALSE_POSITIVE_CELLMAKER_ORDERBOOK_CALLOFF_WATCH | 006400 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_cellmaker_orderbook_watch_counts_without_calloff_utilization_margin_revision_bridge | True | True |
 | V12_COMPACT_C12_R3L105_006400_20240129_02_006400_2024-01-29_Stage2 | 006400 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
 | R3L93_C12_006400_20240312_STAGE2_FALSE_POSITIVE_PREMIUM_CELL_CALLOFF | 006400 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive_if_premium_cell_contract_vocabulary_overcredited | True | True |
+| TRG-C12-006400-20250124-STAGE4B | 006400 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | watch_not_death_when_customer_adjustment_is_segment_specific | False | True |
 | None | 006400 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | R3L92_C13_SAMSDI_2024_STAGE2_ACTIONABLE_CELL_JV_UTILIZATION_AMPC_BRIDGE | 006400 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | V12_COMPACT_C13-102-02_006400_2024-03-12_Stage3-Yellow | 006400 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive | True | True |
 | None | 006400 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
-| None | 006400 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| SAMSUNGSDI_006400_2024_03_06_STAGE2_4B_TIMING_OVERBLOCK_COUNTEREXAMPLE | 006400 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_overblocks_if_hard_4c_fires_before_confirmed_utilization_break | True | True |
+| SDI_006400_2024_03_25_4C_EV_DEMAND_SLOWDOWN_RELIEF_RALLY_FAIL | 006400 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4C_too_late | True | True |
+| None | 006400 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | None | 006400 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | R13_CROSS_006400_2024-03-12_Stage3-Yellow | 006400 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | T_C15_R4L105_006650_20240415_14_Stage2 | 006650 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive | True | True |
 | None | 006650 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
+| DAEHAN_006650_2024_03_06_STAGE4C_SPREAD_MARGIN_FCF_RISK | 006650 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_4C_too_late_after_4B_bounce | True | True |
 | R13_4B4C_L101_T005_006650 | 006650 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | None | 006650 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | None | True | True |
 | TRG_R6L73-C21-006800-MIRAESEC-BROKERAGE-VALUEUP-BETA-FADE | 006800 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | C21 should not treat brokerage/value-up beta as durable Green unless recurring ROE, capital return, treasury-stock cancellation or distribution bridge is verified. Mirae generated MFE but later faded and needs local 4B/RiskWatch rather than durable Stage2. | True | True |
@@ -702,24 +745,28 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R5L86_C18_007310_20240617_STAGE2_FALSE_POSITIVE_LARGECAP_FOOD_CHANNEL | 007310 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive_if_channel_theme_overcredited | True | True |
 | R5_L122_C18_019 | 007310 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | C19_R5L119_15_007310_Stage3_Yellow_2024-07-15 | 007310 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
-| C20_R5L115_007310_20240202_FOOD_EXPORT_LABEL_OPM_BRIDGE_FALSE_POSITIVE_Stage3_Yellow | 007310 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | False | True |
+| C20_R5L115_007310_20240202_FOOD_EXPORT_LABEL_OPM_BRIDGE_FALSE_POSITIVE_Stage3_Yellow | 007310 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | True | True |
 | C20_R5L118_007310_20240715_Stage3_Yellow | 007310 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_error | True | True |
 | R13L86_REVIEW_R5_C18_CONSUMER_EXPORT_CHANNEL_REORDER_007310_2024-06-17 | 007310 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L92_REVIEW_R5_C18_CONSUMER_EXPORT_CHANNEL_REORDER_007310_2024_06_13_TRIGGER | 007310 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive_if_domestic_food_channel_catchup_counts_without_export_reorder_margin_bridge | True | True |
 | R6L96_C21_PUREUNSB_2024_STAGE2_FALSE_POSITIVE_SAVINGS_BANK_RATE_VALUEUP_WATCH | 007330 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive_if_savings_bank_rate_valueup_watch_counts_without_ROE_credit_cost_capital_return_revision_bridge | True | True |
 | R13L96_REVIEW_R6_C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN_007330_2024_04_16_TRIGGER | 007330 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_savings_bank_rate_valueup_watch_counts_without_ROE_credit_cost_capital_return_revision_bridge | True | True |
 | None | 007540 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
+| C06_L112_TRG_01_007660_STAGE2A | 007660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_missed_structural | True | True |
 | TRG_R2L75-C06-007660-ISU-PETASYS-AI-SERVER-MEMORY-SUBSTRATE-CAPACITY | 007660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | C06 should not be limited to Samsung/SK Hynix memory makers. It should include AI server/HBM-adjacent memory-network substrate suppliers when customer capacity, order visibility and margin bridge are explicit. Isu Petasys produced strong MFE but later severe drawdown, so lifecycle local 4B is required if bridge evidence fades. | True | True |
 | TRG_R2L75-C06-007660-ISU-PETASYS-AI-SERVER-MEMORY-SUBSTRATE-CAPACITY | 007660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_correct | True | True |
-| ISUPETASYS_007660_2024_03_05_STAGE2A_AI_SERVER_HBM_PCB_CUSTOMER_CAPA | 007660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | False | True |
+| ISUPETASYS_007660_2024_03_05_STAGE2A_AI_SERVER_HBM_PCB_CUSTOMER_CAPA | 007660 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | True | True |
 | T_C15_R4L105_007690_20240402_15_Stage2 | 007690 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive | True | True |
 | None | 007690 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
 | R4L91_C17_KUKDO_2024_STAGE2_FALSE_POSITIVE_EPOXY_SPREAD_RECOVERY | 007690 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_false_positive_if_epoxy_chemical_spread_watch_counts_without_margin_revision_bridge | True | True |
 | R13L91_REVIEW_R4_C17_CHEMICAL_COMMODITY_MARGIN_SPREAD_007690_2024_02_20_TRIGGER | 007690 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_if_epoxy_chemical_spread_watch_counts_without_margin_revision_bridge | True | True |
+| KOREACIRCUIT_007810_2024_02_13_STAGE2_FALSE_POSITIVE_PACKAGE_SUBSTRATE_CAPACITY_EVENT | 007810 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
+| C06_L112_TRG_04_007810_STAGE2A | 007810 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
 | R9L92_C29_007860_20240129_STAGE2_AUTO_INTERIOR_VOLUME_MIX | 007860 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct_if_OEM_volume_program_mix_margin_cash_bridge_required | True | True |
 | R5_L122_C18_005 | 007980 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
-| None | 007980 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | False | True |
+| None | 007980 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | C19_R5L119_05_007980_Stage2_Actionable_2024-02-13 | 007980 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
+| DAEDUCK_008060_2024_03_06_STAGE2_FALSE_POSITIVE_PACKAGE_SUBSTRATE_HOLDCO | 008060 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
 | R4L91_C15_008350_20240213_STAGE2_FALSE_POSITIVE_ALUMINUM_EXTRUSION | 008350 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive_if_aluminum_theme_rebound_overcredited | True | True |
 | R4L96_C15_NAMSEONALUMINUM_2024_STAGE4B_ALUMINUM_POLICY_SPREAD_EVENT_CAP | 008350 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_4B_too_late_if_aluminum_policy_spread_event_premium_not_capped | True | True |
 | R13L96_REVIEW_R4_C15_MATERIAL_SPREAD_SUPERCYCLE_008350_2024_01_02_TRIGGER | 008350 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_aluminum_policy_spread_event_premium_not_capped | True | True |
@@ -745,6 +792,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R11L74-C31-008970-DONGYANG-PIPELINE-POLICY-PROXY-FADE | 008970 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 should not convert a pipeline/steel-pipe policy proxy into durable Stage2 unless project ownership, procurement scope, actual order, EPC participation or revenue timing is visible. KBI Dongyang Steel Pipe had a large initial MFE but then deep MAE and post-peak drawdown. | True | True |
 | TRG_R11L76-C31-008970-DONGYANG-STEEL-PIPE-EASTSEA-GAS-POLICY-PIPE-BETA-FADE | 008970 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 should not treat gas-field / pipeline policy beta as durable Stage2 unless direct beneficiary mapping, confirmed order, project schedule, revenue and margin bridge are visible. Dongyang Steel Pipe had a tradable MFE but then high MAE and repeated share-count movement, making it local 4B rather than Green. | True | True |
 | TRG_R11L74-C31-008970-DONGYANG-PIPELINE-POLICY-PROXY-FADE | 008970 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 should not convert a pipeline/steel-pipe policy proxy into durable Stage2 unless project ownership, procurement scope, actual order, EPC participation or revenue timing is visible. KBI Dongyang Steel Pipe had a large initial MFE but then deep MAE and post-peak drawdown. | True | True |
+| SAMSUNGELECMECH_009150_2024_03_06_STAGE2A_FCBGA_HBM_PACKAGE_CAPACITY | 009150 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | True | True |
 | C06-127-T006 | 009150 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | stage2_ok_but_green_cap_until_direct_memory_customer_capacity_bridge | False | True |
 | None | 009150 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | True | True |
 | None | 009150 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | None | True | True |
@@ -754,7 +802,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R10L92_C30_009410_20240103_STAGE2_4C_PF_WORKOUT_HARD_BREAK | 009410 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_correct_if_PF_workout_liquidity_hard_break_routes_to_4C_not_bargain_rebound | True | True |
 | R10L88_C30_TAEYOUNG_2025_STAGE4B_WORKOUT_EVENT_CAP | 009410 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_4B_too_late_if_workout_event_premium_not_capped | True | True |
 | None | 009410 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | True | True |
-| None | 009410 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 009410 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | None | 009410 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | R13L88_REVIEW_C30_TAEYOUNG_2025_STAGE4B_WORKOUT_EVENT_CAP | 009410 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_workout_event_premium_not_capped | True | True |
 | None | 009410 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
@@ -766,6 +814,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R4L89_C16_POSCOMTECH_2023_STAGE2_ACTIONABLE_LITHIUM_RESOURCE_SUPPLY_BRIDGE | 009520 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | None | 009520 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
 | R4L90_C16_009520_20240611_STAGE2_FALSE_POSITIVE_LITHIUM_THEME | 009520 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_false_positive_if_lithium_materials_theme_overcredited | True | True |
+| KSOE_009540_2024_03_06_STAGE2A_SHIPBUILDING_BACKLOG_MARGIN | 009540 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_4B_too_late | True | True |
 | T_C15_R4L105_009830_20240220_16_4C | 009830 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive | True | True |
 | None | 009830 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
 | None | 009830 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
@@ -792,14 +841,17 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R9L77-C29-010100-KOREA-MOVENEX-AUTO-PARTS-VOLUME-MARGIN-FADE | 010100 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | TRG_R9L77-C29-010100-KOREA-MOVENEX-AUTO-PARTS-VOLUME-MARGIN-FADE | 010100 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should not treat auto-parts or drivetrain component beta as durable Stage2 unless named customer program, volume, mix, pricing and margin bridge are visible. Korea Movenex produced an early spike, then leaked into a high-MAE drawdown. | True | True |
 | R1L93B_C01_010120_20240227_STAGE2_POWER_EQUIPMENT_BACKLOG | 010120 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct_if_order_quality_delivery_margin_cash_bridge_required_but_Green_strict | True | True |
+| LSELECTRIC_010120_2024_03_06_STAGE2A_GRID_AUTOMATION_BACKLOG_MARGIN | 010120 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_4B_too_late | True | True |
 | R1L10_C02_010120_STAGE2A_2024_01_03 | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_too_late | False | True |
 | R1L98_C02_LSELECTRIC_2024_STAGE2_ACTIONABLE_GRID_AUTOMATION_DATACENTER_CAPEX_DELIVERY_BRIDGE | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
+| LSELECTRIC_010120_2024_03_06_STAGE2A_GRID_DATACENTER_CAPEX_4B | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late_after_extreme_price_blowoff | True | True |
 | R11L85_C02_010120_20240716_STAGE2_FALSE_POSITIVE_GRID_PRICE_EXTENSION | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive_if_price_extension_overcredited | True | True |
 | R1L10_C02_010120_4B_WATCH_2024_04_12 | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_correct | False | True |
 | R1L91_C02_LSELECTRIC_2024_STAGE4B_LOCAL_SWITCHGEAR_CAPEX_CAP | 010120 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_local_4B_too_early_if_full_window_order_revision_bridge_continues | True | True |
 | C04_STATIC_TO50_TRG_12 | 010120 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | current_profile_false_positive | True | True |
 | None | 010120 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
 | None | 010120 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
+| R13L10_X01_010120_Stage2-Actionable | 010120 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_too_early | True | True |
 | V12_COMPACT_R13L12_ACCT_PRICE_15_C02_010120_20240704_010120_2024-07-04_4B | 010120 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | R13L85_REVIEW_R11_C02_POWER_GRID_DATACENTER_CAPEX_010120_2024-07-16 | 010120 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | R13L91_REVIEW_R1_C02_POWER_GRID_DATACENTER_CAPEX_010120_2024_07_24_TRIGGER | 010120 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_local_4B_too_early_if_full_window_order_revision_bridge_continues | True | True |
@@ -807,7 +859,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | V12_COMPACT_C15-101-02_010130_2024-09-13_Stage3_Yellow_Local4BWatch | 010130 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive | True | True |
 | TRG_R4L80-C15-010130-KOREA-ZINC-NONFERROUS-SPREAD-EVENT-LIFECYCLE | 010130 | C15_MATERIAL_SPREAD_SUPERCYCLE | C15 should allow nonferrous smelter positives only when zinc/copper/precious-metal spread, TC/RC, inventory, utilization and margin bridge are visible. Korea Zinc produced enormous MFE, but a late governance/tender-event component must be separated from commodity-spread economics before runtime promotion. | True | True |
 | T_C15_R4L103_010130_Stage4B_20240913 | 010130 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive_or_wrong_archetype_if_material_label_overweighted | True | True |
-| None | 010130 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 010130 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | C32_010130_20240913_LOCAL_4B_WATCH | 010130 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_correct_if_local4b_or_yellow_capped | True | True |
 | R12L92_C32_010130_20240913_STAGE2_CONTROL_PREMIUM_TENDER_CASH_PATH | 010130 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_correct_if_tender_terms_minority_eligibility_financing_settlement_floor_required | True | True |
 | None | 010130 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
@@ -817,11 +869,12 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 010130 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | None | 010130 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
 | None | 010130 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | None | True | True |
-| TRG_C01_R1L100_010140_20240726 | 010140 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | False | True |
+| TRG_C01_R1L100_010140_20240726 | 010140 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | True | True |
 | TRG_R1L77-C01-010140-SAMSUNG-HI-SHIPBUILDING-BACKLOG-MARGIN | 010140 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | C01 should allow shipbuilding orderbook Stage2 when backlog, LNG/offshore mix, pricing discipline, delivery schedule and margin bridge are visible. Samsung Heavy produced a large MFE with controlled entry-basis MAE, but post-peak drawdown requires lifecycle local 4B if backlog/margin evidence fades. | True | True |
 | TRG_R1L77-C01-010140-SAMSUNG-HI-SHIPBUILDING-BACKLOG-MARGIN | 010140 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct | True | True |
-| C01_R1L100_010620_midsize_ship_backlog_margin_bridge_T1 | 010620 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct_but_green_late_risk | False | True |
-| HDMIPO_010620_2024_04_18_STAGE2A_SHIPBUILDING_BACKLOG_MARGIN_BRIDGE | 010620 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_4B_too_late | False | True |
+| HDMIPO_010620_2024_03_06_STAGE2A_BACKLOG_TURNAROUND_MARGIN | 010620 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_4B_too_late | True | True |
+| C01_R1L100_010620_midsize_ship_backlog_margin_bridge_T1 | 010620 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct_but_green_late_risk | True | True |
+| HDMIPO_010620_2024_04_18_STAGE2A_SHIPBUILDING_BACKLOG_MARGIN_BRIDGE | 010620 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_4B_too_late | True | True |
 | TRG_R1L73-C01-010620-HDMIPO-MIDSHIP_PRODUCT_MIX_MARGIN_BRIDGE | 010620 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | C01 should capture mid-size vessel backlog recovery when product mix and margin conversion are visible. But after the 2025 peak, a later local 4B-watch is needed if the margin bridge stops refreshing or drawdown opens. | True | True |
 | TRG_R1L73-C01-010620-HDMIPO-MIDSHIP_PRODUCT_MIX_MARGIN_BRIDGE | 010620 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | C01 should capture mid-size vessel backlog recovery when product mix and margin conversion are visible. But after the 2025 peak, a later local 4B-watch is needed if the margin bridge stops refreshing or drawdown opens. | True | True |
 | R1L93_C01_010620_20240314_STAGE2_FALSE_OVERBLOCK_ORDERBOOK_MARGIN_RESET | 010620 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive_if_margin_gap_guard_blocks_reset_plus_orderbook_margin_recovery | True | True |
@@ -842,7 +895,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 010780 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | True | True |
 | R13L87_REVIEW_R10_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_010780_2024-01-25 | 010780 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
 | R13_L106_T08_010780 | 010780 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
-| None | 010820 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 010820 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | TRG_R1L74-C03-010820-FIRSTEC-DEFENSE-ELECTRONICS-PRICE-BETA | 010820 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | C03 should not treat defense electronics or drone-theme price beta as durable Stage2 unless named export order, customer framework, backlog conversion or margin bridge is visible. Firstec had a same-day spike but later MAE and drawdown opened, so it is a local 4B-watch / false Stage2 row. | True | True |
 | TRG_R11L77-C03-010820-FIRSTEC-DEFENSE-UNMANNED-THEME-BETA-FADE | 010820 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive | True | True |
 | R11L89_C03_FIRSTEC_2024_STAGE2_FALSE_POSITIVE_DRONE_DEFENSE_THEME | 010820 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_drone_defense_theme_counts_without_export_backlog_margin_bridge | True | True |
@@ -863,6 +916,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R4L73-C17-010950-SOIL-REFINING-SPREAD-BETA-LOCAL4B | 010950 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | C17 should not treat refinery spread beta as Green unless crack spread, inventory, utilization, and earnings revision bridge are visible. S-Oil produced almost no MFE and later severe 180D MAE, so local 4B-watch is more appropriate. | True | True |
 | None | 010950 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
 | TRG_R4L73-C17-010950-SOIL-REFINING-SPREAD-BETA-LOCAL4B | 010950 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | C17 should not treat refinery spread beta as Green unless crack spread, inventory, utilization, and earnings revision bridge are visible. S-Oil produced almost no MFE and later severe 180D MAE, so local 4B-watch is more appropriate. | True | True |
+| TR_R13L147_4B4C_12_010950_Stage4C_2023-02-02 | 010950 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct_if_routes_to_4C_not_buy_the_dip | False | True |
 | None | 010950 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | None | True | True |
 | R1L93_C05_SAMHODEV_2024_STAGE2_FALSE_POSITIVE_CIVIL_EPC_ORDER_CATCHUP | 010960 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_false_positive_if_civil_EPC_order_catchup_counts_without_contract_backlog_margin_revision_bridge | True | True |
 | R10L96_C30_SAMHODEV_2024_STAGE2_ACTIONABLE_CIVIL_ENGINEERING_ORDER_CASHFLOW_BRIDGE | 010960 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
@@ -878,6 +932,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | T_C15_R4L103_011170_Stage2_20240429 | 011170 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive_or_wrong_archetype_if_material_label_overweighted | True | True |
 | T_C15_R4L105_011170_20240429_18_4B-Local-Watch | 011170 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive | True | True |
 | None | 011170 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
+| LOTTECHEM_011170_2024_03_06_STAGE2_FALSE_POSITIVE_SPREAD_RECOVERY_BETA | 011170 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_false_positive | True | True |
 | None | 011170 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
 | R4L10_C17_011170_T1 | 011170 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_false_positive | False | True |
 | R4L98_C17_LOTTECHEM_2024_STAGE2_FALSE_POSITIVE_BASE_CHEMICAL_SPREAD_RECOVERY_WATCH | 011170 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_false_positive_if_base_chemical_recovery_watch_counts_without_realized_spread_volume_inventory_margin_revision_bridge | True | True |
@@ -890,7 +945,8 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 011170 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | None | True | True |
 | R13L94_REVIEW_R4_C17_CHEMICAL_COMMODITY_MARGIN_SPREAD_011170_2024_02_01_TRIGGER | 011170 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive_if_petrochem_spread_watch_counts_without_utilization_margin_revision_bridge | True | True |
 | C32_011200_HMM_20231219_STRATEGIC_SALE_S2 | 011200 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | True | True |
-| None | 011210 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | False | True |
+| None | 011210 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | True | True |
+| T_C29_011210_STAGE2_20240125 | 011210 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | T_C29_R9L106_011210_20240125_04_Stage2 | 011210 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | T_C29_R9L104_011210_STAGE2_20240202 | 011210 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | True | True |
 | R9L92_C29_UNICK_2024_STAGE2_FALSE_POSITIVE_EV_VALVE_MOBILITY_THEME | 011320 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive_if_EV_valve_mobility_theme_counts_without_volume_margin_revision_bridge | True | True |
@@ -901,6 +957,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | T_C15_R4L105_011500_20240328_19_Stage2-Actionable | 011500 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive | True | True |
 | None | 011500 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
 | None | 011500 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | None | True | True |
+| C01-R1-L119-06-011690-STAGE4B | 011690 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive_without_local_4B_watch | True | True |
 | C04_P1_TO50_TRG_09 | 011700 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | current_profile_false_positive | True | True |
 | T_C04_R1L107_011700_20240528_Stage2 | 011700 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | stage2_cap_required_without_order_bridge_or_cash_conversion | True | True |
 | None | 011700 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | None | False | True |
@@ -912,14 +969,15 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 011780 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
 | R4L10_C17_011780_T1 | 011780 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_correct | False | True |
 | R4L98_C17_KUMHOPETRO_2024_STAGE2_ACTIONABLE_SYNTHETIC_RUBBER_SPREAD_MARGIN_BRIDGE | 011780 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| KUMHOPETRO_011780_2024_01_29_STAGE2A_SYNTHETIC_RUBBER_SPREAD | 011780 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_4B_too_late | False | True |
+| KUMHOPETRO_011780_2024_01_29_STAGE2A_SYNTHETIC_RUBBER_SPREAD | 011780 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_4B_too_late | True | True |
+| KUMHO_011780_2024_03_06_STAGE2A_SYNTHETIC_RUBBER_SPREAD_4B | 011780 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_4B_too_late_if_spread_rerating_overpromoted_to_green | True | True |
 | None | 011780 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
 | None | 011780 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | None | 011780 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | None | 011780 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | None | 011780 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | None | 011780 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | None | True | True |
-| SKC_011790_2024_03_05_STAGE2A_COPPER_FOIL_ORDERBOOK_RERATING | 011790 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late | False | True |
+| SKC_011790_2024_03_05_STAGE2A_COPPER_FOIL_ORDERBOOK_RERATING | 011790 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late | True | True |
 | None | 011790 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_too_conservative_if_prior_drawdown_blocks_all_C11_repair_but_Green_should_be_high_MAE_guarded | True | True |
 | T_C11_R3L107_011790_STAGE2ACTIONABLE_20240405 | 011790 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_needs_high_MAE_guard_before_green | True | True |
 | V12_COMPACT_C12_R3L105_011790_20240618_07_011790_2024-06-18_Local-4B-Watch | 011790 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
@@ -931,6 +989,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R3L87_C13_011790_20240614_STAGE2_FALSE_POSITIVE_COPPERFOIL_JV_AMPC | 011790 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive_if_AMPC_JV_theme_overcredited | True | True |
 | TRG_R3L81-C13-011790-SKC-COPPERFOIL-AMPC-IRA-EVENT-SEPARATION | 011790 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | C13 should not blindly credit a whole SKC rally to battery JV/AMPC economics. A valid positive needs copper-foil customer/JV visibility, US capacity, utilization, IRA/AMPC economics, revenue and margin bridge; non-battery event/theme components must be separated. | True | True |
 | T_C13_R3L104_011790_STAGE4B_20240207 | 011790 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
+| SKC_011790_2024_03_06_STAGE2_4B_TIMING_COUNTEREXAMPLE | 011790 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_overblocks_if_all_EV_material_slowdown_equal | True | True |
 | C14-R3L97-07-011790-Stage4B-2025-03-31 | 011790 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive_if_hard_4c_without_recovery_band | True | True |
 | R3L88_C14_SKC_2024_STAGE4C_FALSE_BREAK_COPPERFOIL_GLASS_SUBSTRATE_RECOVERY | 011790 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4C_too_hard_if_price_break_without_durable_non_price_thesis_break | True | True |
 | T_C15_R4L104_011790_Stage2_Actionable_20240314 | 011790 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_too_permissive_if_price_only_material_blowoff_extends_Green | True | True |
@@ -955,6 +1014,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13_CROSS_011810_2024-02-16_Stage2-Actionable | 011810 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
 | R11L92_C05_011930_20240129_STAGE2_CLEANROOM_EPC_ORDER_MARGIN | 011930 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_correct_if_signed_order_delivery_cost_pass_through_margin_cash_bridge_required_but_Green_strict | True | True |
 | None | 011930 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
+| C01-R1-L119-07-012200-STAGE2ACTIONABLE | 012200 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_missed_structural_but_needs_4B_peak_guard | True | True |
 | R9L91_C29_012280_20240111_STAGE2_FALSE_POSITIVE_CASTING_AUTOPARTS | 012280 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive_if_casting_autoparts_rebound_overcredited | True | True |
 | TR_C16_KDINV_S2_20221020 | 012320 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_4B_too_late | True | True |
 | TRG_R9L76-C29-012330-HYUNDAI-MOBIS-MODULE-AS-MIX-CAPITAL-RETURN | 012330 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
@@ -974,23 +1034,26 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R11L91_C03_HANWHA_AERO_2024_STAGE2_ACTIONABLE_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R11L86_C03_012450_20240214_STAGE2_DEFENSE_EXPORT_FRAMEWORK | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_correct_if_export_framework_backlog_bridge_required | True | True |
 | R11L84_C03_012450_20240226_STAGE2_DEFENSE_PRIME_EXPORT_BACKLOG | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_correct_if_export_framework_backlog_bridge_required | True | True |
-| T_012450_20240214_STAGE3G_REPAIR | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_too_late_if_delivery_margin_bridge_is_over-gated | False | True |
-| T_012450_20240227_STAGE3G_REPAIR | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_should_allow_green_if_delivery_margin_bridge_verified | False | True |
+| None | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| T_012450_20240214_STAGE3G_REPAIR | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_too_late_if_delivery_margin_bridge_is_over-gated | True | True |
+| T_012450_20240227_STAGE3G_REPAIR | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_should_allow_green_if_delivery_margin_bridge_verified | True | True |
 | T_C03_R1L107_012450_20240426_STAGE3GREEN | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | allow_green_only_when_export_backlog_delivery_margin_bridge_is_verified | True | True |
 | T_C03_R1L108_012450_20240510_STAGE3_GREEN | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
 | V12_COMPACT_C03-R1L105-01_012450_2024-02-27_Stage3-Yellow | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive | True | True |
-| None | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | T_C03_R1L107_012450_20241112_STAGE4B | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | post_peak_leader_chase_requires_fresh_order_delivery_margin_refresh_or_remains_4b_watch | True | True |
 | T_C03_R1L108_012450_20241112_STAGE4B | 012450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
-| None | 012450 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 012450 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | None | 012450 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | R13L86_REVIEW_R11_C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG_012450_2024-02-14 | 012450 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
+| R13L100_T001_012450 | 012450 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | False | True |
 | None | 012450 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | None | 012450 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | None | 012450 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
-| None | 012510 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 012510 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | R8L92_C28_012510_20240108_STAGE2_ERP_CLOUD_CONTRACT_RETENTION | 012510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_correct_if_contract_renewal_ARR_margin_cash_bridge_required | True | True |
-| DOUZONE_012510_2024_01_18_STAGE2A_ERP_SAAS_RETENTION | 012510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_4B_too_late | False | True |
+| DOUZONE_012510_2024_01_18_STAGE2A_ERP_SAAS_RETENTION | 012510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_4B_too_late | True | True |
+| V12_COMPACT_C28-R8-L102-01_012510_2024-02-02_Stage2-Actionable | 012510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_correct | False | True |
 | V12_COMPACT_C28_R8L104_012510_20240708_012510_2024-07-09_Stage2-Actionable | 012510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
 | None | 012510 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | None | 012510 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
@@ -1006,6 +1069,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L92_REVIEW_R4_C16_STRATEGIC_RESOURCE_POLICY_SUPPLY_012800_2024_02_15_TRIGGER | 012800 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive_if_copper_theme_counts_without_supply_margin_revision_bridge | True | True |
 | R9L89_C29_012860_20240205_STAGE2_FALSE_POSITIVE_AUTO_ELECTRONICS_SPIKE | 012860 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive_if_auto_electronics_price_spike_overcredited | True | True |
 | C29_R9L88_TRG_012860_FP | 012860 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
+| R1L117-C01-005 | 013030 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | False | True |
 | R1L117-C01-005 | 013030 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | False | True |
 | T_C05_R1L109_013360_20240411_HOUSING_THEME_PRICE_ONLY | 013360 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | TRG_R10L80-C30-013360-ILSEONG-E&C-RECOVERY-SPIKE-NO-HARD4C | 013360 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | C30 should not convert small-builder/PF fear into hard 4C when the path still produces a recovery spike and MAE remains below severe threshold. Price action alone is not balance-sheet-break evidence. | True | True |
@@ -1042,8 +1106,8 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | C16-102-04-014580-T1 | 014580 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_missed_structural | True | True |
 | R1L117-C01-004 | 014620 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_missed_structural | False | True |
 | R1L117-C01-004 | 014620 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_missed_structural | True | True |
-| HANSOLCHEM_014680_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_CHEMICAL_BETA | 014680 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | False | True |
-| HANSOLCHEM_014680_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_MATERIALS_RECOVERY | 014680 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | False | True |
+| HANSOLCHEM_014680_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_CHEMICAL_BETA | 014680 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | True | True |
+| HANSOLCHEM_014680_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_MATERIALS_RECOVERY | 014680 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | True | True |
 | R4L93_C17_014680_20240227_STAGE2_SPECIALTY_CHEM_SPREAD_RESET | 014680 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_correct_if_spread_cost_margin_FCF_bridge_required_but_Green_strict | True | True |
 | None | 014680 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
 | R5_L122_C18_015 | 014710 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
@@ -1059,12 +1123,12 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R3L91_C13_014820_20240321_STAGE2_FALSE_POSITIVE_PACKAGING_CAN_MATERIALS | 014820 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive_if_packaging_can_materials_vocabulary_overcredited | True | True |
 | TRG_R4L76-C17-014830-UNID-KOH-CAUSTIC-POTASH-SPREAD-BRIDGE | 014830 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | C17 should allow chemical commodity Stage2 when the commodity price/spread move connects to inventory, export demand, utilization and margin bridge. Unid produced large MFE with controlled entry-basis MAE, but the later post-peak drawdown requires lifecycle local 4B if KOH/spread/margin evidence fades. | True | True |
 | TRG_R4L76-C17-014830-UNID-KOH-CAUSTIC-POTASH-SPREAD-BRIDGE | 014830 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_correct | True | True |
-| UNID_014830_2024_01_25_STAGE2A_CAUSTIC_POTASH_SPREAD | 014830 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_4B_too_late | False | True |
+| UNID_014830_2024_01_25_STAGE2A_CAUSTIC_POTASH_SPREAD | 014830 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_4B_too_late | True | True |
 | TRG_R4L79-C17-014830-UNID-KOH-SPREAD-MARGIN-LIFECYCLE | 014830 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | C17 should allow chemical spread positives only when commodity price/cost spread, export demand, inventory, utilization and margin bridge refreshes. Unid produced meaningful MFE and then a drawdown; it is Stage2 only after source repair and lifecycle-managed if spread/margin evidence fades. | True | True |
 | TRG_R4L73-C17-014830-UNID-CAUSTIC-POTASH-SPREAD-MARGIN-BRIDGE | 014830 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | C17 should allow Stage2 only when a commodity/spread move connects to product-specific spread, export price, cost pass-through, and margin conversion. 유니드 produced a real MFE path, but later collapse means local 4B-watch should activate if spread evidence stops refreshing. | True | True |
 | TRG_R4L73-C17-014830-UNID-CAUSTIC-POTASH-SPREAD-MARGIN-BRIDGE | 014830 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | C17 should allow Stage2 only when a commodity/spread move connects to product-specific spread, export price, cost pass-through, and margin conversion. 유니드 produced a real MFE path, but later collapse means local 4B-watch should activate if spread evidence stops refreshing. | True | True |
 | None | 014830 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
-| None | 015710 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 015710 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | R9L94_C29_SUNGWOOHITEC_2024_STAGE2_ACTIONABLE_AUTO_PARTS_GLOBAL_VOLUME_MARGIN_BRIDGE | 015750 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | None | 015750 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | True | True |
 | V12_COMPACT_R13L11-4B4C-017_015750_2024-02-26_cross_archetype_4b_4c_boundary_retest | 015750 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
@@ -1075,7 +1139,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R10L97_C30_SGCEC_2024_STAGE2_FALSE_POSITIVE_MIDCAP_EPC_PF_RECOVERY_WATCH | 016250 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive_if_midcap_EPC_PF_watch_counts_without_cashflow_funding_order_quality_margin_revision_bridge | True | True |
 | R13_L106_T20_016250 | 016250 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
 | None | 016360 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
-| None | 016360 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
+| None | 016360 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | None | 016360 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | C31_R11L106_TRG_12 | 016360 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | C32_016360_20240207_STAGE2_ACTIONABLE | 016360 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_false_positive_or_overpromotion_risk | True | True |
@@ -1085,18 +1149,20 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L92_REVIEW_R6_C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN_016610_2024_02_23_TRIGGER | 016610 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_4B_too_late_if_brokerage_capital_return_event_premium_not_capped | True | True |
 | R10L96_C30_SHINWONDEV_2024_STAGE2_FALSE_POSITIVE_SMALL_BUILDER_PF_RECOVERY_WATCH | 017000 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive_if_small_builder_PF_recovery_watch_counts_without_cashflow_funding_order_margin_bridge | True | True |
 | R13L96_REVIEW_R10_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_017000_2024_01_02_TRIGGER | 017000 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_small_builder_PF_recovery_watch_counts_without_cashflow_funding_order_margin_bridge | True | True |
-| KWANGMYUNG_017040_2024_05_07_STAGE2_FALSE_POSITIVE_SWITCHGEAR_EVENT_PREMIUM | 017040 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive | False | True |
+| KWANGMYUNG_017040_2024_05_07_STAGE2_FALSE_POSITIVE_SWITCHGEAR_EVENT_PREMIUM | 017040 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive | True | True |
 | TRG_R1L78-C02-017040-KWANGMYUNG-ELECTRIC-SWITCHGEAR-THEME-FADE | 017040 | C02_POWER_GRID_DATACENTER_CAPEX | C02 should not treat switchgear/electrical-equipment theme beta as durable Stage2 unless customer order, backlog conversion, delivery schedule, ASP and margin bridge are visible. Kwangmyung Electric produced a strong theme MFE, then opened a high-MAE drawdown path, making it local 4B-watch rather than durable Green. | True | True |
 | V12_COMPACT_R13L11-4B4C-004_017040_2024-05-07_cross_archetype_4b_4c_boundary_retest | 017040 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | V12_COMPACT_R13L2_C02_017040_20240507_STAGE2ACTIONABLE_017040_2024-05-07_cross_archetype_high_MAE_guardrail_review | 017040 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | T_R13_STAGE2FP_L6_017040_Stage2Actionable_2024-05-07 | 017040 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_stage2_false_positive_or_overpromotion_risk | True | True |
-| SEMYUNG_017510_2024_04_05_STAGE2A_GRID_COMPONENT_ORDER_BETA | 017510 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late | False | True |
+| SEMYUNG_017510_2024_04_05_STAGE2A_GRID_COMPONENT_ORDER_BETA | 017510 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late | True | True |
 | R1L95_C02_SEMYOUNGELECTRIC_2024_STAGE4B_TRANSMISSION_FITTING_GRID_EVENT_CAP | 017510 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late_if_transmission_fitting_grid_event_premium_not_capped | True | True |
 | R13L95_REVIEW_R1_C02_POWER_GRID_DATACENTER_CAPEX_017510_2024_07_10_TRIGGER | 017510 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_transmission_fitting_grid_event_premium_not_capped | True | True |
 | R13_L106_T14_017510 | 017510 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_4B_too_late | True | True |
 | TRG_R5L79-C18-017810-PULMUONE-GLOBAL-FOOD-CHANNEL-REORDER | 017810 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | C18 should preserve food-channel positives when overseas/online channel reorder, product mix, volume, revenue conversion and margin bridge are visible. Pulmuone produced high MFE with very bounded entry-basis MAE, but post-peak drawdown requires lifecycle management. | True | True |
+| TRG_C18_R5_L103_017810_Stage2_Actionable_2024-03-15 | 017810 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_too_late | True | True |
 | TRG_R5L75-C18-017810-PULMUONE-TOFU-HMR-US-CHANNEL-REORDER | 017810 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | C18 should include food names when overseas refrigerated channel reorder, utilization, logistics and margin conversion are visible. Pulmuone produced a clean multi-month MFE path, but later drawdown says the model needs lifecycle decay if reorder/margin evidence stalls. | True | True |
 | TRG_R5L75-C18-017810-PULMUONE-TOFU-HMR-US-CHANNEL-REORDER | 017810 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_correct | True | True |
+| R13L100_T002_017810 | 017810 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_too_late | True | True |
 | TRG_R5L73-C18-018250-AEKYUNG-EXPORT-CHANNEL-ONE-CANDLE-FADE | 018250 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | C18 should not treat a short export/channel rally as durable Green when reorder, sell-through or margin evidence fails to refresh. Aekyung generated MFE but later opened deep MAE and drawdown. | True | True |
 | None | 018250 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
 | TRG_R5L73-C18-018250-AEKYUNG-EXPORT-CHANNEL-ONE-CANDLE-FADE | 018250 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | C18 should not treat a short export/channel rally as durable Green when reorder, sell-through or margin evidence fails to refresh. Aekyung generated MFE but later opened deep MAE and drawdown. | True | True |
@@ -1104,6 +1170,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R5L88_C20_018250_20240531_STAGE2_FALSE_POSITIVE_MASS_BEAUTY_EXTENSION | 018250 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive_if_mass_beauty_extension_overcredited | True | True |
 | R13L88_REVIEW_R5_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_018250_2024-05-31 | 018250 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | None | 018250 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | None | True | True |
+| V12_COMPACT_C28-R8-L102-02_018260_2024-01-26_Stage2-Actionable | 018260 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_correct | False | True |
 | R5L89_C18_VT_2024_STAGE2_ACTIONABLE_KBEAUTY_EXPORT_REORDER | 018290 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R5L85_C20_018290_20240321_STAGE2_KBEAUTY_GLOBAL_SELLTHROUGH_BRIDGE | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_correct_if_sellthrough_distribution_bridge_required | True | True |
 | C20_R5_L102_T02_018290 | 018290 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_correct | True | True |
@@ -1133,7 +1200,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R5L76-C19-020000-HANDSOME-APPAREL-RETAIL-INVENTORY-BETA-FADE | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | True | True |
 | C19_R5L120_09_020000_Stage2_2024-02-07 | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | R5L93_C19_HANDSOME_2024_STAGE2_FALSE_POSITIVE_FASHION_RETAIL_INVENTORY_WATCH | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive_if_fashion_retail_inventory_watch_counts_without_sellthrough_margin_revision_bridge | True | True |
-| 020000_2024-11-15_Stage2_Actionable_C19_INVENTORY_CLEAN_LOW_MAE_VALUE_RERATING_POSITIVE | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct | False | True |
+| 020000_2024-11-15_Stage2_Actionable_C19_INVENTORY_CLEAN_LOW_MAE_VALUE_RERATING_POSITIVE | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct | True | True |
 | TRG_R5L76-C19-020000-HANDSOME-APPAREL-RETAIL-INVENTORY-BETA-FADE | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | C19 should not treat apparel retail or inventory-normalization beta as durable Stage2 unless sell-through, markdown control, channel productivity and margin bridge are visible. Handsome had a brief MFE but later faded into a lower range; share-count movement inside the window requires validation. | True | True |
 | R5L90_C19_020000_20240207_STAGE2_FALSE_POSITIVE_PREMIUM_APPAREL | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive_if_premium_apparel_rebound_overcredited | True | True |
 | None | 020000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
@@ -1148,12 +1215,14 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | V12_COMPACT_C12_R3L105_020150_20240607_10_020150_2024-06-07_Stage2-Actionable | 020150 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
 | R3L98_C12_LOTTEEM_2024_STAGE2_FALSE_POSITIVE_COPPERFOIL_CUSTOMER_CALLOFF_WATCH | 020150 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive_if_copperfoil_customer_contract_watch_counts_without_calloff_volume_inventory_margin_revision_bridge | True | True |
 | None | 020150 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | True | True |
+| TRG-C12-020150-20250124-STAGE4B | 020150 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | stage4b_watch_correct_hard_4c_overblocks_when_sales_and_balance_sheet_survive | False | True |
 | None | 020150 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | True | True |
 | T_C13_R3L105_020150_STAGE2ACTIONABLE_20240321 | 020150 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
-| None | 020150 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | False | True |
+| None | 020150 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | None | 020150 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | TRG_R3L81-C13-020150-LOTTE-ENERGY-MATERIALS-COPPERFOIL-UTILIZATION-RECOVERY | 020150 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | C13 can preserve copper-foil recovery positives when customer volume, utilization, IRA/AMPC economics and margin bridge are visible. Lotte Energy Materials had tradable MFE with bounded entry-basis MAE, but post-peak drawdown means bridge refresh is required. | True | True |
 | T_C13_R3L105_020150_STAGE3YELLOW_20240321 | 020150 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
+| LOTTEENERGYMATERIALS_020150_2024_03_06_STAGE2_4B_TIMING_COUNTEREXAMPLE | 020150 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_overblocks_if_hard_4c_fires_before_4b_exhaustion | True | True |
 | T_C14_R3L108_020150_STAGE3YELLOW_20240321 | 020150 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive | True | True |
 | T_R13_STAGE2FP_L6_020150_Stage2_2024-06-12 | 020150 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_stage2_false_positive_or_overpromotion_risk | True | True |
 | TRG_R9L81-C29-020560-ASIANA-AIRLINE-MERGER-TRANSPORT-MARGIN-FADE | 020560 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should not treat airline merger/transport beta as durable volume-margin operating leverage unless passenger volume, yield, fuel-cost pass-through, integration path, revenue and margin bridge are visible. Asiana had early MFE, then a persistent high-MAE drawdown. The profile has a 2024-12-30 corporate-action candidate outside the selected 180D window, so extended-window ingestion needs validation. | True | True |
@@ -1162,6 +1231,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R4L85_C16_021050_20240520_STAGE2_FALSE_POSITIVE_COPPER_THEME_SPIKE | 021050 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_false_positive_if_policy_supply_theme_overcredited | True | True |
 | C16-102-08-021050-T1 | 021050 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_false_positive | True | True |
 | R13L85_REVIEW_R4_C16_STRATEGIC_RESOURCE_POLICY_SUPPLY_021050_2024-05-20 | 021050 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
+| TRG_C18_R5_L103_021240_Stage2_Actionable_2024-06-17 | 021240 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_too_conservative | True | True |
 | TRG_R10L79-C30-021320-KCC-E&C-PF-BOUNDED-RISKWATCH-NO-FORCED4B | 021320 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | C30 should keep PF/orderbook monitoring active for bounded builders, but should not force local 4B or hard 4C when MAE is contained and no non-price refinancing or solvency break is confirmed. KCC E&C is a boundary row. | True | True |
 | TRG_R10L74-C30-021320-KCC-CONSTRUCTION-RISKWATCH-NO-HARD4C | 021320 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | C30 should not convert every regional-builder PF fear into full 4B or hard 4C when the price path has moderate MAE, tradable MFE and no confirmed non-price break. KCC Construction is a RiskWatch/no-hard-4C boundary row. | True | True |
 | R10L85_C30_021320_20240123_STAGE2_REGIONAL_CONTRACTOR_REPAIR_CONTROL | 021320 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_correct_if_balance_sheet_repair_bridge_required | True | True |
@@ -1170,8 +1240,10 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L85_REVIEW_R10_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_021320_2024-01-23 | 021320 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_correct | True | True |
 | R13L91_REVIEW_R10_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_021320_2024_04_08_TRIGGER | 021320 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_construction_PF_event_premium_not_capped | True | True |
 | R11L92_C05_023350_20240110_STAGE2_FALSE_POSITIVE_ENGINEERING_POLICY_PROJECT | 023350 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_false_positive_if_engineering_policy_project_vocabulary_overcredited | True | True |
+| R13_HIGHMAE_L143_023350_20240517_TRG | 023350 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_or_persistence_error_if_Stage2_Stage3_not_capped | False | True |
 | R10L90_C30_023410_20240223_STAGE2_FALSE_POSITIVE_READY_MIX_POLICY | 023410 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive_if_ready_mix_policy_MFE_overcredited | True | True |
 | TRG_C19_023530_20240208_RETAIL_VALUEUP_NO_INVENTORY_MARGIN_BRIDGE | 023530 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | True | True |
+| LOTTESHOP_023530_2024_01_17_STAGE2A_RETAIL_MARGIN_RESTRUCTURING_BUFFER | 023530 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_4B_too_late_if_retail_restructuring_overpromoted_to_Green | True | True |
 | R5L97_C19_LOTTESHOPPING_2024_STAGE2_ACTIONABLE_DEPARTMENT_STORE_RETAIL_INVENTORY_MARGIN_BRIDGE | 023530 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | TRG_R5L81-C19-023530-LOTTE-SHOPPING-RETAIL-MARGIN-VALUEUP-LIFECYCLE | 023530 | C19_BRAND_RETAIL_INVENTORY_MARGIN | C19 should allow department-store/retail positives only when value-up or channel recovery maps to inventory turnover, cost control, revenue mix and margin bridge. Lotte Shopping had a tradable early MFE but later high MAE, so it is lifecycle-managed rather than durable Green. | True | True |
 | TRG_R5L78-C19-023530-LOTTE-SHOPPING-RETAIL-INVENTORY-MARGIN-LIFECYCLE | 023530 | C19_BRAND_RETAIL_INVENTORY_MARGIN | C19 should allow large-cap retail inventory-normalization positives when channel productivity, inventory turnover, markdown discipline, cost control and margin bridge are visible. Lotte Shopping produced a meaningful MFE from a low-risk entry, but the later post-peak drawdown requires lifecycle local 4B if inventory/margin evidence fades. | True | True |
@@ -1185,19 +1257,21 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L87_REVIEW_R12_C31_POLICY_SUBSIDY_LEGISLATION_EVENT_024060_2024-06-04 | 024060 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L93_REVIEW_R4_C15_MATERIAL_SPREAD_SUPERCYCLE_024060_2024_06_04_TRIGGER | 024060 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_oil_resource_event_premium_not_capped | True | True |
 | None | 024070 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
-| V12_COMPACT_C21-IBK-20240314_024110_2024-03-14_Stage3_Yellow_LowPBR_Dividend_Label_LateChase | 024110 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive | False | True |
+| V12_COMPACT_C21-IBK-20240314_024110_2024-03-14_Stage3_Yellow_LowPBR_Dividend_Label_LateChase | 024110 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive | True | True |
 | R6L89_C21_024110_20240124_STAGE2_BANK_VALUEUP_CAPITAL_RETURN | 024110 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_correct_if_ROE_PBR_capital_return_bridge_required | True | True |
 | R6L100_C21_IBK_2024_STAGE2_ACTIONABLE_BANK_VALUEUP_ROE_PBR_CAPITAL_RETURN_BRIDGE | 024110 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | TRG_R6L73-C21-024110-IBK-HIGH-DIVIDEND-PBR-ROE-BRIDGE | 024110 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | C21 should include slower high-dividend/value-up bank paths when dividend yield, low PBR, capital discipline and stable ROE support the rerating. IBK produced strong MFE with essentially no entry-basis MAE. | True | True |
 | TRG_R6L73-C21-024110-IBK-HIGH-DIVIDEND-PBR-ROE-BRIDGE | 024110 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | C21 should include slower high-dividend/value-up bank paths when dividend yield, low PBR, capital discipline and stable ROE support the rerating. IBK produced strong MFE with essentially no entry-basis MAE. | True | True |
 | None | 024110 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
-| None | 024110 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
+| None | 024110 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | R6L88_C21_IBK_2024_STAGE4B_POLICY_BANK_VALUEUP_CAP | 024110 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_4B_too_late_if_policy_bank_valueup_premium_not_capped | True | True |
 | V12_COMPACT_024110_2024-04-26_policy_valueup_bank_brokerage_ROE_PBR_capital_return_execution_bridge | 024110 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
 | C31_R11L106_TRG_08 | 024110 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
+| R13ATPV_L103_T002_024110 | 024110 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_kept_or_missed_positive_control | True | True |
 | R11L97_C03_HANILFORGING_2024_STAGE4B_MUNITION_ARTILLERY_EXPORT_EVENT_CAP | 024740 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_4B_too_late_if_munition_artillery_export_event_premium_not_capped | True | True |
 | R1L94_C03_HANILFORGING_2024_STAGE4B_MUNITION_FORGING_DEFENSE_EVENT_CAP | 024740 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_4B_too_late_if_munition_forging_defense_event_premium_not_capped | True | True |
 | R13L94_REVIEW_R1_C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG_024740_2024_01_17_TRIGGER | 024740 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_4B_too_late_if_munition_forging_defense_event_premium_not_capped | True | True |
+| C02-R1-L143-02-024840-Stage2 | 024840 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive | True | True |
 | R1L98_C02_KBIMETAL_2024_STAGE4B_CABLE_COPPER_GRID_EVENT_CAP | 024840 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late_if_cable_copper_grid_event_premium_not_capped | True | True |
 | R4L90_C15_KBIMETAL_2024_STAGE2_ACTIONABLE_COPPER_SPREAD_MARGIN_BRIDGE | 024840 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R4L88_C15_024840_20240412_STAGE2_COPPER_METAL_SPREAD | 024840 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_correct_if_inventory_ASP_margin_bridge_required | True | True |
@@ -1249,12 +1323,12 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R1L86_C05_028050_20240611_STAGE2_EPC_MARGIN_RECOVERY | 028050 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_correct_if_margin_recovery_bridge_required | True | True |
 | R1L91_C05_028050_20240422_STAGE2_FALSE_POSITIVE_EPC_REBRAND | 028050 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_false_positive_if_large_EPC_vocabulary_overcredited | True | True |
 | R1L84_C05_028050_20240311_STAGE2_FALSE_POSITIVE_MARGIN_GAP | 028050 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_false_positive_if_headline_overcredited | True | True |
-| None | 028050 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | False | True |
+| None | 028050 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | T_C05_R1L108_028050_20240626_POST_PEAK_LOCAL4B | 028050 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | R10L88_C30_028050_20240201_STAGE2_ENGINEERING_BACKLOG_CASH | 028050 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_correct_if_backlog_margin_cash_bridge_required | True | True |
 | C30_R10L105_028050_20240228_Stage2_Actionable | 028050 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_error_if_C30_overcredits_price_or_low_PBR_without_balance_sheet_bridge | True | True |
 | None | 028050 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | True | True |
-| None | 028050 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 028050 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | R13L88_REVIEW_R10_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_028050_2024-02-01 | 028050 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
 | R13L86_REVIEW_R1_C05_EPC_MEGA_CONTRACT_MARGIN_GAP_028050_2024-06-11 | 028050 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
 | None | 028050 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
@@ -1273,15 +1347,16 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L86_REVIEW_R12_C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP_028260_2024-01-29 | 028260 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
 | C23_R7_L209_T05 | 028300 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_correct | False | True |
 | None | 028300 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
-| None | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
+| None | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | R7L93_C24_028300_20240516_STAGE2_4C_REGULATORY_CRL | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_correct_if_CRL_or_regulatory_refusal_routes_to_hard_4C_not_4B_rebound | True | True |
-| HLB_028300_2024_05_16_4C_FDA_BINARY_EVENT_RISK | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_4C_too_late | False | True |
+| HLB_028300_2024_05_16_4C_FDA_BINARY_EVENT_RISK | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_4C_too_late | True | True |
 | R7L98_C24_HLB_2024_STAGE4C_FDA_CRL_TRIAL_REGULATORY_EVENT_PROTECTION | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_kept_but_hard_4C_should_block_positive_stage | True | True |
 | C24_R7L98_TRIG_06_028300 | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_4C_too_late | True | True |
 | None | 028300 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | None | 028300 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | None | 028300 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | V12_COMPACT_R13L11-4B4C-006_028300_2024-04-25_cross_archetype_4b_4c_boundary_retest | 028300 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
+| TR_R13L147_4B4C_09_028300_Stage4C_2024-05-20 | 028300 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4C_too_early | False | True |
 | None | 028300 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | None | 028300 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | None | 028300 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
@@ -1291,14 +1366,14 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R6L96_C21_SAMSUNGCARD_2024_STAGE2_ACTIONABLE_CARD_DIVIDEND_VALUEUP_ROE_BRIDGE | 029780 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | TRG_R8L81-C26-030000-CHEIL-WORLDWIDE-AD-AGENCY-BOUNDED-RISKWATCH | 030000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | C26 should not force stable large ad-agency rows into 4B when MAE is bounded and no client-budget or margin break is confirmed, but it also should not call durable Stage2 without verified ad spend recovery, client budget, operating leverage and margin bridge. | True | True |
 | V12_COMPACT_030000_2024-02-01_platform_ad_budget_retention_opm_bridge_cleanup | 030000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| None | 030000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
-| T_C26_030000_STAGE2_20240401 | 030000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 030000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
+| T_C26_030000_STAGE2_20240401 | 030000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | T_C26_R8L106_05_030000_STAGE2ACTIONABLE_Stage2Actionable_2024-04-25 | 030000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_too_late_low_beta | True | True |
 | C32_030200_20240207_STAGE2_ACTIONABLE | 030200 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_false_positive_or_overpromotion_risk | True | True |
 | TRG_R6L77-C21-030210-DAOL-SECURITIES-BROKERAGE-VALUEUP-BETA-FADE | 030210 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive | True | True |
 | TRG_R6L77-C21-030210-DAOL-SECURITIES-BROKERAGE-VALUEUP-BETA-FADE | 030210 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | C21 should not treat brokerage/value-up beta as durable Stage2 unless ROE recovery, capital buffer, shareholder return, balance-sheet risk reduction and earnings bridge are visible. Daol Investment had only a small MFE, then drifted into a prolonged drawdown, making it a local 4B-watch boundary rather than a capital-return Green. | True | True |
 | V12_COMPACT_030520_2024-07-08_platform_ad_budget_retention_opm_bridge_cleanup | 030520 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| None | 030520 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 030520 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | R8L88_C28_HAANSOFT_2024_STAGE2_ACTIONABLE_AI_OFFICE_SOFTWARE | 030520 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R8L94_C28_HANCOM_2024_STAGE2_ACTIONABLE_AI_OFFICE_SOFTWARE_CONTRACT_RETENTION_BRIDGE | 030520 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R8L86_C28_030520_20240110_STAGE2_SOFTWARE_AI_CONTRACT_RETENTION | 030520 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_correct_if_contract_retention_bridge_required | True | True |
@@ -1313,8 +1388,8 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R6L100_C21_KYOBOSECU_2024_STAGE4B_SMALLCAP_BROKERAGE_VALUEUP_EVENT_CAP | 030610 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_4B_too_late_if_smallcap_brokerage_valueup_event_premium_not_capped | True | True |
 | None | 031430 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
 | R5_L122_C18_002 | 031430 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
-| None | 031430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | False | True |
-| 031430_2024-05-16_Stage2_C19_BRAND_PORTFOLIO_INVENTORY_DISCOUNT_FALSE_POSITIVE | 031430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | False | True |
+| None | 031430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
+| 031430_2024-05-16_Stage2_C19_BRAND_PORTFOLIO_INVENTORY_DISCOUNT_FALSE_POSITIVE | 031430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | True | True |
 | R5L90_C19_SI_2024_STAGE2_FALSE_POSITIVE_LUXURY_RETAIL_INVENTORY | 031430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive_if_brand_retail_recovery_counts_without_inventory_margin_revision_bridge | True | True |
 | R5L87_C19_031430_20240401_STAGE2_FALSE_POSITIVE_FASHION_BRAND | 031430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive_if_brand_inventory_rebound_overcredited | True | True |
 | C19_R5L119_02_031430_Stage3_Yellow_2024-03-27 | 031430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
@@ -1326,13 +1401,14 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | V12_COMPACT_031980_2024-02-01_Stage2-Actionable | 031980 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | R2L93_C07_031980_20240222_STAGE2_HBM_BACKEND_ORDER_REVISION | 031980 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_correct_if_order_delivery_revision_margin_cash_bridge_required_but_Green_strict | True | True |
 | TRG-C09-L115-01-031980-Stage2Actionable-2024-02-15 | 031980 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_missed_structural_if_capped_as_generic_price_blowoff | True | True |
-| PSKHOLDINGS_031980_2024_03_06_STAGE2A_ADVANCED_PACKAGING_EQUIPMENT | 031980 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | False | True |
+| PSKHOLDINGS_031980_2024_03_06_STAGE2A_ADVANCED_PACKAGING_EQUIPMENT | 031980 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | True | True |
 | T_C09_R2L111_03_031980_20240201 | 031980 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | TRG_C10_R2_L110_031980_20240201_BACKEND_MEMORY_PACKAGING_RECOVERY | 031980 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_missed_structural_if_direct_order_bridge_required_too_late | True | True |
 | TRG_R2L76-C10-031980-PSK-HOLDINGS-ADVANCED-PACKAGING-EQUIPMENT-CYCLE | 031980 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | C10 should allow equipment-cycle Stage2 when memory/advanced-package equipment demand connects to actual order, customer capacity, delivery and margin bridge. PSK Holdings produced high MFE with controlled entry-basis MAE; post-peak drawdown requires lifecycle local 4B if order/margin evidence fades. | True | True |
 | TRG_R2L76-C10-031980-PSK-HOLDINGS-ADVANCED-PACKAGING-EQUIPMENT-CYCLE | 031980 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_correct | True | True |
 | R2L93_C10_PSKHOLDINGS_2024_STAGE4B_ADVANCED_PACKAGING_EQUIPMENT_EVENT_CAP | 031980 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late_if_advanced_packaging_equipment_event_premium_not_capped | True | True |
 | R13L93_REVIEW_R2_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_031980_2024_06_19_TRIGGER | 031980 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_advanced_packaging_equipment_event_premium_not_capped | True | True |
+| R13HMG_L104_T001_031980 | 031980 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_needs_high_MAE_overlay_or_green_block | False | True |
 | R13_L106_T01_031980 | 031980 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_4B_too_late | True | True |
 | TRG_R12L82-C31-032350-LOTTE-TOURISM-RESORT-VISA-VOLUME-MARGIN | 032350 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 should allow tourism policy positives only when visa/reopening policy maps to inbound volume, casino drop, hotel occupancy, ADR, revenue conversion and margin bridge. Lotte Tour Development had moderate MFE with bounded MAE, but share-count validation is needed before runtime promotion. | True | True |
 | R4L96_C15_HWANGGEUMST_2024_STAGE2_FALSE_POSITIVE_STAINLESS_NICKEL_SPREAD_WATCH | 032560 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive_if_stainless_nickel_spread_watch_counts_without_shipment_inventory_margin_revision_bridge | True | True |
@@ -1343,6 +1419,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13_CROSS_032620_2024-02-23_Stage4B | 032620 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | None | 032620 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
 | V12_COMPACT_R13L2_C31_032620_20240223_STAGE4B_032620_2024-02-23_cross_archetype_high_MAE_guardrail_review | 032620 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
+| C02-R1-L143-05-032820-Stage2_Actionable | 032820 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late | True | True |
 | TRG_R1L81-C04-032820-WOORITECH-NUCLEAR-CONTROL-SYSTEM-RS-SHARECOUNT | 032820 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | C04 should protect nuclear control-system positives when project/order evidence, customer quality, delivery schedule, revenue conversion and margin bridge are visible. Woori Technology produced very large MFE with nearly no early MAE, but share-count validation is required before runtime promotion. | True | True |
 | TRG_R11L78-C04-032820-WOORI-TECH-NUCLEAR-IANDC-PROJECT-LIFECYCLE | 032820 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | C04 should protect nuclear control/I&C positives when project-policy demand maps to control-system order, customer/project visibility, delivery/revenue bridge and margin conversion. Woori Technology produced a strong MFE with almost no entry-basis MAE, but share-count movement requires validation. | True | True |
 | TRG_R1L75-C04-032820-WOORI-TECH-NUCLEAR-CONTROL-SYSTEM-BRIDGE | 032820 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | C04 should include nuclear control/I&C suppliers when policy/project attention converts into project scope, order or customer validation. Woori Technology produced very high MFE and no entry-basis negative MAE, but share-count changes and later drawdown require validation and lifecycle local 4B. | True | True |
@@ -1363,7 +1440,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R6L84_C22_032830_20240129_STAGE2_LIFE_CSM_CAPITAL_RETURN_BRIDGE | 032830 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_correct_if_CSM_and_capital_return_bridge_required | True | True |
 | TRG_R6L78-C22-032830-SAMSUNG-LIFE-RATE-RESERVE-CAPITAL-RETURN | 032830 | C22_INSURANCE_RATE_CYCLE_RESERVE | C22 should allow life-insurance positives when rate cycle, CSM/reserve quality, capital buffer, dividend/buyback and shareholder-return bridge are visible. Samsung Life produced large MFE with almost no entry-basis MAE, but later drawdown requires lifecycle local 4B if reserve/capital-return evidence fades. | True | True |
 | TRG_R6L80-C22-032830-SAMSUNG-LIFE-RATE-CYCLE-CAPITAL-RETURN | 032830 | C22_INSURANCE_RATE_CYCLE_RESERVE | C22 should preserve life-insurance positives when rate cycle, CSM/reserve quality, capital buffer, dividend/buyback policy and earnings durability are visible. Samsung Life produced large MFE with almost no entry-basis MAE, but later drawdown requires lifecycle monitoring. | True | True |
-| None | 032830 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | False | True |
+| None | 032830 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | None | 032830 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | None | 032830 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | None | 032830 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
@@ -1379,19 +1456,22 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 033100 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | None | True | True |
 | TRG_R1L76-C02-033100-JERYONG-TRANSFORMER-GRID-CAPEX-BACKLOG | 033100 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_correct | True | True |
 | TRG_R1L76-C02-033100-JERYONG-TRANSFORMER-GRID-CAPEX-BACKLOG | 033100 | C02_POWER_GRID_DATACENTER_CAPEX | C02 should allow transformer suppliers when grid/datacenter capex converts into export order backlog, delivery slot, ASP and margin bridge. Jeryong Electric had extreme MFE and no entry-basis MAE, but later drawdown requires lifecycle local 4B if backlog/order evidence fades. | True | True |
-| JERYONG_033100_2024_03_06_STAGE2A_TRANSFORMER_DATACENTER_EXPORT | 033100 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late | False | True |
+| JERYONG_033100_2024_03_06_STAGE2A_DISTRIBUTION_TRANSFORMER_EXPORT_BACKLOG | 033100 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late_after_extreme_transformer_blowoff | True | True |
+| JERYONG_033100_2024_03_06_STAGE2A_TRANSFORMER_DATACENTER_EXPORT | 033100 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late | True | True |
 | V12_COMPACT_R13L11-4B4C-013_033100_2024-05-02_cross_archetype_4b_4c_boundary_retest | 033100 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | V12_COMPACT_R13L12_ACCT_PRICE_04_C01_033100_20240502_033100_2024-05-02_4B-LocalWatch | 033100 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | TRG-C06-L111-033160-Stage2Actionable-2025-01-02 | 033160 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_ok_actionable | True | True |
+| TRG-C09-L117-05-033160-Stage4B-2024-03-22 | 033160 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late_if_bonding_material_theme_is_promoted_without_order_revenue_bridge | True | True |
 | R2L90_C06_033170_20240222_STAGE2_FALSE_POSITIVE_OSAT_PACKAGING_THEME | 033170 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive_if_OSAT_packaging_theme_overcredited | True | True |
-| SIGNETICS_033170_2024_03_06_STAGE2_FALSE_POSITIVE_OSAT_PACKAGE_EVENT | 033170 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | False | True |
+| SIGNETICS_033170_2024_03_06_STAGE2_FALSE_POSITIVE_OSAT_PACKAGE_EVENT | 033170 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
 | R9L91_C29_033250_20240102_STAGE2_FALSE_POSITIVE_CHASSIS_PARTS | 033250 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive_if_chassis_parts_vocabulary_overcredited | True | True |
 | TRG_R9L74-C29-033530-SJG-SEJONG-HYDROGEN-EXHAUST-PARTS-BETA-FADE | 033530 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should not treat hydrogen/exhaust/auto-parts theme beta as durable Stage2 unless customer volume, OEM program, pricing or margin bridge is visible. SJG Sejong had a tradable spike but later MAE and post-peak drawdown opened. | True | True |
 | TRG_R9L74-C29-033530-SJG-SEJONG-HYDROGEN-EXHAUST-PARTS-BETA-FADE | 033530 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should not treat hydrogen/exhaust/auto-parts theme beta as durable Stage2 unless customer volume, OEM program, pricing or margin bridge is visible. SJG Sejong had a tradable spike but later MAE and post-peak drawdown opened. | True | True |
 | R9L92_C29_033530_20240102_STAGE2_FALSE_POSITIVE_EXHAUST_LEGACY_AUTOPARTS | 033530 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive_if_exhaust_legacy_autoparts_vocabulary_overcredited | True | True |
 | R9L91_C29_SJGSEJONG_2024_STAGE4B_EXHAUST_MOBILITY_PARTS_EVENT_CAP | 033530 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_4B_too_late_if_exhaust_mobility_parts_event_premium_not_capped | True | True |
 | R13L91_REVIEW_R9_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_033530_2024_02_14_TRIGGER | 033530 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_exhaust_mobility_parts_event_premium_not_capped | True | True |
-| None | 033640 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| C06_L112_TRG_05_033640_STAGE2A | 033640 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
+| None | 033640 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | None | 033640 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | None | True | True |
 | C32_033780_20240207_STAGE2_ACTIONABLE | 033780 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_false_positive_or_overpromotion_risk | True | True |
 | R1L117-C01-002 | 034020 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct_but_scope_ambiguous_between_C01_and_C04 | False | True |
@@ -1438,27 +1518,29 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TR_C26_L105_035000_Stage2Actionable_20240930 | 035000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_correct | True | True |
 | R12L89_C31_035250_20240206_STAGE2_FALSE_POSITIVE_CASINO_POLICY | 035250 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive_if_casino_policy_theme_overcredited | True | True |
 | R8L99_C26_NAVER_2024_STAGE2_FALSE_POSITIVE_SEARCH_PORTAL_AD_RECOVERY_WATCH | 035420 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive_if_search_portal_ad_recovery_watch_counts_without_ad_revenue_operating_leverage_revision_bridge | True | True |
+| C26-L104-01-035420-T1 | 035420 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_missed_structural | True | True |
 | V12_COMPACT_035420_2024-02-02_platform_ad_budget_retention_opm_bridge_cleanup | 035420 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_correct | True | True |
-| None | 035420 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 035420 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | C27-R8L105-002|Stage2-Actionable|2024-02-07 | 035420 | C27_CONTENT_IP_GLOBAL_MONETIZATION | residual_error_needs_C27_specific_bridge_or_guard | True | True |
-| None | 035420 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 035420 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | C32_035420_20240712_STAGE2_ACTIONABLE | 035420 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_false_positive_or_overpromotion_risk | True | True |
 | None | 035420 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | None | 035420 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | None | 035420 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | R13_CROSS_R13L4_C26_035420_20240401_SEGMENT_MARGIN_TRUST_035420_2024-04-01_Stage3-Yellow | 035420 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | T_C26_R8L106_04_035720_STAGE2_Stage2_2024-02-02 | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| T_C26_035720_STAGE2_20240111 | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| T_C26_035720_STAGE2_20240111 | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | V12_COMPACT_035720_2024-01-26_platform_ad_budget_retention_opm_bridge_cleanup | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| None | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
+| C26-L104-05-035720-T1 | 035720 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | C27-R8L105-001|Stage2-Actionable|2024-02-06 | 035720 | C27_CONTENT_IP_GLOBAL_MONETIZATION | residual_error_needs_C27_specific_bridge_or_guard | True | True |
 | C31_L101_T008_035720 | 035720 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
-| None | 035720 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 035720 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | T_C32_R12L106_035720_20240202_Stage2-Actionable | 035720 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | governance repair narrative lacked cash bridge and produced deep MAE; Stage2 watch only | True | True |
-| None | 035760 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 035760 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | V12_COMPACT_035760_2024-06-12_platform_ad_budget_retention_opm_bridge_cleanup | 035760 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| T_C26_035760_STAGE2A_20240123 | 035760 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
-| T_C26_035760_STAGE4B_20240527 | 035760 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| T_C26_035760_STAGE2A_20240123 | 035760 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
+| T_C26_035760_STAGE4B_20240527 | 035760 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | R8L90_C27_035760_20240122_STAGE2_MEDIA_COMMERCE_IP | 035760 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_correct_if_distribution_IP_margin_cash_bridge_required | True | True |
 | R8L93_C27_CJENM_2024_STAGE2_FALSE_POSITIVE_CONTENT_PLATFORM_VALUEUP_WATCH | 035760 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive_if_content_platform_valueup_counts_without_IP_export_royalty_margin_revision_bridge | True | True |
 | R13L93_REVIEW_R8_C27_CONTENT_IP_GLOBAL_MONETIZATION_035760_2024_02_08_TRIGGER | 035760 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_content_platform_valueup_counts_without_IP_export_royalty_margin_revision_bridge | True | True |
@@ -1468,14 +1550,15 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 035890 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | True | True |
 | R10L88_C30_SEOHEE_2024_STAGE2_ACTIONABLE_PF_REPAIR | 035890 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R10L84_C30_035890_20240924_STAGE2_REGIONAL_HOUSING_REPAIR | 035890 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_correct_if_balance_sheet_repair_bridge_required | True | True |
-| None | 035900 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 035900 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
+| JYP_035900_2024_03_06_STAGE2_FALSE_POSITIVE_GLOBAL_ARTIST_IP | 035900 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive_if_artist_IP_beta_overcredited_without_margin_revision | True | True |
 | None | 035900 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | True | True |
 | R8L87_C27_035900_20240102_STAGE2_FALSE_POSITIVE_ARTIST_IP_THEME | 035900 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive_if_artist_IP_theme_overcredited | True | True |
 | C27-R8L105-003|Stage3-Yellow|2024-02-16 | 035900 | C27_CONTENT_IP_GLOBAL_MONETIZATION | residual_error_needs_C27_specific_bridge_or_guard | True | True |
 | R13L87_REVIEW_R8_C27_CONTENT_IP_GLOBAL_MONETIZATION_035900_2024-01-02 | 035900 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R11L91_C04_036190_20240102_STAGE2_FALSE_POSITIVE_LEGACY_PLANT_MAINTENANCE | 036190 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | current_profile_false_positive_if_maintenance_vocabulary_overcredited_as_nuclear_project | True | True |
 | R2L90_C07_UNISEM_2024_STAGE2_FALSE_POSITIVE_SCRUBBER_EQUIPMENT_THEME | 036200 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive_if_equipment_theme_counts_without_HBM_customer_order_revision_bridge | True | True |
-| UNISEM_036200_2024_03_06_STAGE2A_ADVANCED_PROCESS_SUPPORT_EQUIPMENT | 036200 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | False | True |
+| UNISEM_036200_2024_03_06_STAGE2A_ADVANCED_PROCESS_SUPPORT_EQUIPMENT | 036200 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | True | True |
 | R2L98_C10_UNISEM_2024_STAGE2_FALSE_POSITIVE_SCRUBBER_CHILLER_MEMORY_RECOVERY_WATCH | 036200 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive_if_scrubber_chiller_memory_recovery_watch_counts_without_customer_order_utilization_margin_revision_bridge | True | True |
 | R2L93_C10_036200_20240529_STAGE2_FALSE_POSITIVE_CHILLER_SCRUBBER_SPIKE | 036200 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive_if_chiller_scrubber_spike_overcredited | True | True |
 | TRG_C10_R2_L110_036200_20240502_CHILLER_SCRUBBER_LATE_CYCLE_FALSE_YELLOW | 036200 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive_late_yellow_without_order_bridge | True | True |
@@ -1488,8 +1571,9 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R2L90_C06_036540_20240118_STAGE2_MEMORY_BACKEND_CAPACITY | 036540 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_correct_if_customer_capacity_ramp_margin_bridge_required | True | True |
 | R2L97_C06_SFASEMI_2024_STAGE2_FALSE_POSITIVE_MEMORY_OSAT_CAPACITY_WATCH | 036540 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive_if_memory_OSAT_capacity_watch_counts_without_customer_capacity_order_utilization_margin_revision_bridge | True | True |
 | TRG-C06-L111-036540-Stage2Actionable-2024-04-01 | 036540 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
-| SFASEMICON_036540_2024_03_06_STAGE2_FALSE_POSITIVE_OSAT_PACKAGE_TEST | 036540 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | False | True |
-| None | 036540 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| SFASEMICON_036540_2024_03_06_STAGE2_FALSE_POSITIVE_OSAT_PACKAGE_TEST | 036540 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
+| None | 036540 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| TRG-C09-L118-06-036540-Stage3-Yellow-2024-05-02 | 036540 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_backend_beta_promoted_without_bridge | True | True |
 | None | 036540 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | True | True |
 | R2L93_C10_SFASEMI_2024_STAGE2_FALSE_POSITIVE_OSAT_MEMORY_RECOVERY_THEME | 036540 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive_if_OSAT_memory_recovery_theme_counts_without_order_utilization_margin_revision_bridge | True | True |
 | R13L93_REVIEW_R2_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_036540_2024_01_24_TRIGGER | 036540 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_OSAT_memory_recovery_theme_counts_without_order_utilization_margin_revision_bridge | True | True |
@@ -1501,32 +1585,34 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R12L75-C32-036560-YP-PRECISION-TENDER-CONTROL-PREMIUM-LIFECYCLE | 036560 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | C32 should allow a tender/control-premium lifecycle candidate when the listed company is a direct economic beneficiary of tender terms, control dispute or stake economics. Young Poong Precision/KZ Precision produced very large MFE, but post-tender drawdown means lifecycle local 4B is mandatory once tender/control-premium evidence fades. | True | True |
 | R5_L121_C18_001 | 036620 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | None | 036620 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
-| None | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | False | True |
+| None | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | TRG_C19_036620_20240214_OUTDOOR_BRAND_MARGIN_RESTOCK_SUCCESS | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct_but_4B_watch_needed | True | True |
-| GAMSUNG_036620_2024_02_21_STAGE2A_BRAND_SELLTHROUGH_MARGIN | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_4B_too_late | False | True |
+| GAMSUNG_036620_2024_02_21_STAGE2A_BRAND_SELLTHROUGH_MARGIN | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_4B_too_late | True | True |
 | R5L98_C19_GAMSUNG_2024_STAGE2_ACTIONABLE_APPAREL_BRAND_SELLTHROUGH_REORDER_MARGIN_BRIDGE | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R5L90_C19_GAMSUNG_2024_STAGE2_ACTIONABLE_OUTDOOR_BRAND_REORDER_MARGIN | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | C19_R5L119_17_036620_Stage2_Actionable_2024-02-22 | 036620 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | V12_COMPACT_C20_R5L120_036620_20240222_07_036620_2024-02-22_Stage2-Actionable | 036620 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | True | True |
+| SIMMTECHHOLDINGS_036710_2024_03_06_STAGE2_FALSE_POSITIVE_PACKAGE_SUBSTRATE_HOLDCO_EVENT | 036710 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
 | T_C06_R2L103_036810_20240318_Stage2_CROSS_C07 | 036810 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_C06_vs_C07_C08_C09_reroute_guard | True | True |
 | V12_COMPACT_036810_2024-03-18_Stage2 | 036810 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | TRG_R2L74-C07-036810-FST-EUV-CHILLER-ANCILLARY-EQUIPMENT-RS | 036810 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | C07 can include ancillary equipment when relative strength is tied to customer adoption, capex timing and margin conversion. FST had strong early MFE, but the later collapse shows that price strength must decay into local 4B if order/customer bridge evidence fails to refresh. | True | True |
 | TRG_R2L74-C07-036810-FST-EUV-CHILLER-ANCILLARY-EQUIPMENT-RS | 036810 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | C07 can include ancillary equipment when relative strength is tied to customer adoption, capex timing and margin conversion. FST had strong early MFE, but the later collapse shows that price strength must decay into local 4B if order/customer bridge evidence fails to refresh. | True | True |
-| None | 036810 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 036810 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | R2L93B_C09_036810_20240409_STAGE2_FALSE_POSITIVE_EUV_PRICE_MFE | 036810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_EUV_price_MFE_overcredited | True | True |
 | T_C09_R2L111_08_036810_20240318 | 036810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | TRG-C09-L115-05-036810-Stage4B-2024-06-17 | 036810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late_if_yellow_allowed | True | True |
 | None | 036810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | True | True |
 | T_R13_STAGE2FP_L6_036810_Stage2_2024-03-18 | 036810 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_stage2_false_positive_or_overpromotion_risk | True | True |
-| None | 036830 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 036830 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | R3L94_C12_SOULBRAINHOLDINGS_2024_STAGE2_ACTIONABLE_ELECTROLYTE_CUSTOMER_CALLOFF_CAPACITY_MARGIN | 036830 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R3L91_C13_036830_20240129_STAGE2_ELECTROLYTE_JV_UTILIZATION_AMPC | 036830 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_correct_if_JV_utilization_AMPC_margin_cash_bridge_required | True | True |
 | R3L98_C13_SOLBRAINHOLDINGS_2024_STAGE2_ACTIONABLE_ELECTROLYTE_HOLDCO_JV_UTILIZATION_AMPC_BRIDGE | 036830 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | T_C06_R2L103_036930_20240201_Stage2_CROSS_C07 | 036930 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_C06_vs_C07_C08_C09_reroute_guard | True | True |
 | V12_COMPACT_036930_2024-02-01_Stage2 | 036930 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
+| JUSUNG_036930_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_PROCESS_RS | 036930 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | R2L86_C07_036930_20240226_STAGE2_HBM_ALD_ORDER_BRIDGE | 036930 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_correct_if_order_bridge_required | True | True |
 | R2_L110_C07 | 036930 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | True | True |
-| None | 036930 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 036930 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | R2L93_C09_036930_20240228_STAGE2_4B_ALD_VALUATION_BLOWOFF | 036930 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_correct_if_valuation_blowoff_without_order_delivery_margin_routes_to_4B | True | True |
 | TRG_R2L82-C09-036930-JUSUNG-ALD-EQUIPMENT-VALUATION-BLOWOFF-SHARECOUNT | 036930 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | C09 should not treat ALD/deposition equipment theme beta as durable Stage2 unless named customer order, delivery schedule, backlog conversion, revenue and margin bridge are visible. Jusung produced a fast spike and then deep MAE; the 2024 shard also shows share-count change, so validation is required. | True | True |
 | TRG_R2L79-C09-036930-JUSUNG-ADVANCED-EQUIPMENT-THEME-BLOWOFF-FADE | 036930 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | C09 should not treat advanced deposition/equipment theme beta as durable Stage2 unless customer order, backlog conversion, delivery, customer capacity and margin bridge refreshes. Jusung Engineering had a tradable MFE, then opened a high-MAE drawdown path. | True | True |
@@ -1545,7 +1631,8 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | T_C06_R2L103_039030_20240223_Stage2Actionable_CROSS_C07 | 039030 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_C06_vs_C07_C08_C09_reroute_guard | True | True |
 | R2L85_C06_039030_20240228_STAGE2_HBM_CUSTOMER_CAPACITY_BRIDGE | 039030 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_correct_if_customer_capacity_bridge_required | True | True |
 | V12_COMPACT_039030_2024-02-23_Stage2-Actionable | 039030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
-| None | 039030 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| EOTECHNICS_039030_2024_03_06_STAGE2A_HBM_LASER_ANNEAL_RS | 039030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late | True | True |
+| None | 039030 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | R2L88_C09_EOTECH_2024_STAGE2_ACTIONABLE_ADVANCED_EQUIPMENT_RERATING | 039030 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | T_C09_R2L111_05_039030_20240223 | 039030 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | R2L88_C09_039030_20240228_STAGE2_ADVANCED_LASER_ORDER_MARGIN | 039030 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_correct_if_customer_order_margin_bridge_required | True | True |
@@ -1560,15 +1647,15 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 039200 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | T_R13_STAGE2FP_L5_039200_Stage2_2024-02-26 | 039200 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_stage2_false_positive_or_overpromotion_risk | True | True |
 | R2L90_C07_STI_2024_STAGE4B_HBM_REFLOW_THEME_CAP | 039440 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late_if_HBM_reflow_equipment_theme_premium_not_capped | True | True |
-| None | 039440 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 039440 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | R2L93C_C09_039440_20240213_STAGE2_FALSE_POSITIVE_CCSS_SPIKE | 039440 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_CCSS_equipment_price_spike_overcredited | True | True |
 | TRG-C09-L115-04-039440-Stage3Yellow-2024-03-15 | 039440 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_theme_label_promoted_to_yellow | True | True |
-| STI_039440_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_INFRA_RECOVERY | 039440 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | False | True |
-| STI_039440_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_INFRA_RECOVERY_BETA | 039440 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | False | True |
+| STI_039440_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_INFRA_RECOVERY | 039440 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | True | True |
+| STI_039440_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_INFRA_RECOVERY_BETA | 039440 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | True | True |
 | R13L90_REVIEW_R2_C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH_039440_2024_03_13_TRIGGER | 039440 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_HBM_reflow_equipment_theme_premium_not_capped | True | True |
 | TRG_R6L81-C21-039490-KIWOOM-BROKERAGE-TRADING-VOLUME-CAPITAL-RETURN | 039490 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | C21 should allow brokerage platform positives when market turnover, customer asset quality, retail brokerage, credit balance, capital return and earnings bridge are visible. Kiwoom produced a very large MFE with controlled entry-basis MAE, but stock-web share count changes need validation. | True | True |
 | None | 039490 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
-| None | 039490 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
+| None | 039490 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | R6L87_C21_039490_20240711_STAGE2_FALSE_POSITIVE_LATE_BROKERAGE_EXTENSION | 039490 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive_if_late_brokerage_extension_overcredited | True | True |
 | R6L83_C21_039490_20240314_STAGE2_RETAIL_BROKERAGE_LATE_ENTRY | 039490 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_too_early | True | True |
 | None | 039490 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
@@ -1579,6 +1666,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | V12_COMPACT_039490_2024-05-08_policy_valueup_bank_brokerage_ROE_PBR_capital_return_execution_bridge | 039490 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct | True | True |
 | R13L87_REVIEW_R6_C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN_039490_2024-07-11 | 039490 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | None | 039490 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
+| C02-R1-L143-07-039610-Stage4B | 039610 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive_if_stage2_on_policy_label_only | True | True |
 | TRG_R11L76-C31-039610-HWASEONG-VALVE-EASTSEA-GAS-POLICY-LIFECYCLE | 039610 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct | True | True |
 | TRG_R11L74-C31-039610-HWASUNG-VALVE-GAS-POLICY-CONTRACT-BRIDGE | 039610 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 can allow a policy-event lifecycle candidate when a valve or pipeline-infra name later connects to named procurement, order, EPC, utility or offshore infrastructure bridge. Hwasung Valve had a large MFE and later secondary peak, but still needs source repair and lifecycle local 4B after the peak. | True | True |
 | TRG_R11L74-C31-039610-HWASUNG-VALVE-GAS-POLICY-CONTRACT-BRIDGE | 039610 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 can allow a policy-event lifecycle candidate when a valve or pipeline-infra name later connects to named procurement, order, EPC, utility or offshore infrastructure bridge. Hwasung Valve had a large MFE and later secondary peak, but still needs source repair and lifecycle local 4B after the peak. | True | True |
@@ -1588,6 +1676,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 039840 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | V12_COMPACT_C25_R7L107_039840_20240527_Stage2_Actionable_039840_2024-05-27_Stage2-Actionable | 039840 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
 | None | 039840 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
+| C02-R1-L141-06-040160-Stage4B | 040160 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive | True | True |
 | TRG_R12L74-C32-040300-YTN-PRIVATIZATION-CONTROL-SALE-FADE | 040300 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | C32 should not treat privatization or control-sale approval as durable Stage2 unless minority tender economics, closing certainty, capital policy or earnings bridge is explicit. YTN had a short control-sale pop but then suffered high MAE and post-peak drawdown. | True | True |
 | R12L96_C32_YTN_2024_STAGE2_FALSE_POSITIVE_MEDIA_PRIVATIZATION_CONTROL_WATCH | 040300 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_false_positive_if_media_privatization_control_watch_counts_without_binding_transaction_regulatory_closing_tender_price_floor_bridge | True | True |
 | C32_040300_YTN_20231024_CONTROL_TRANSFER_S2 | 040300 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | True | True |
@@ -1607,40 +1696,44 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 041830 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 must require fresh binary/data endpoint quality; reroute commercialization, device, reimbursement, or price-only events to C23/C25/local_4B as appropriate. | True | True |
 | TRG_R7L82-C25-041830-INBODY-DIAGNOSTIC-DEVICE-EXPORT-BOUNDED | 041830 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | C25 should allow bounded diagnostic-device export positives only when export channel, hospital/fitness/clinic reorder, reimbursement or distributor channel quality, revenue conversion and margin bridge are visible. InBody had moderate MFE with bounded MAE, so it should be RiskWatch/Stage2-Yellow after source repair, not forced 4B. | True | True |
 | V12_COMPACT_C25_R7L107_041830_20240429_Stage2_041830_2024-04-29_Stage2 | 041830 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
+| R7L104-C25-T06 | 041830 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
 | None | 041830 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | R8L92_C26_CAFE24_2024_STAGE2_ACTIONABLE_COMMERCE_PLATFORM_AD_REVENUE_LEVERAGE | 042000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R8L99_C26_CAFE24_2024_STAGE2_ACTIONABLE_COMMERCE_PLATFORM_GMV_AD_TAKE_RATE_OPERATING_LEVERAGE | 042000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | TR_C26_L105_042000_Stage2Actionable_20240516 | 042000 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_missed_structural | True | True |
+| C02-R1-L141-05-042370-Stage4B | 042370 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive | True | True |
 | C04_P1_TO50_TRG_20 | 042370 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | current_profile_false_positive | True | True |
 | C04_STATIC_TO50_TRG_11 | 042370 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | current_profile_false_positive | True | True |
-| None | 042510 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
-| RAONSECURE_042510_2024_01_23_STAGE2_FALSE_POSITIVE_IDENTITY_SECURITY_EVENT | 042510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | False | True |
+| None | 042510 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
+| RAONSECURE_042510_2024_01_23_STAGE2_FALSE_POSITIVE_IDENTITY_SECURITY_EVENT | 042510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
 | R8L92_C28_042510_20240126_STAGE2_FALSE_POSITIVE_DIGITAL_ID_AUTH | 042510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive_if_digital_ID_authentication_theme_overcredited | True | True |
 | V12_COMPACT_C28_R8L104_042510_20240604_042510_2024-06-05_4B-Local-Watch | 042510 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
 | None | 042510 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | None | 042510 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
 | None | 042520 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
+| HANWHAOCEAN_042660_2024_03_06_STAGE2A_BACKLOG_MARGIN_TURNAROUND | 042660 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_4B_too_late | True | True |
 | R1L116-C01-001 | 042660 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct_when_backlog_is_entity_level_and_margin_bridge_is_visible | True | True |
 | C03_R1L111_002_TRIGGER | 042660 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_missed_structural | True | True |
 | T_C03_R1L107_042660_20240618_STAGE4B | 042660 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | naval_defense_and_shipbuilding_capacity_contaminant_should_route_to_C01_C05_unless_export_backlog_cash_bridge_is_explicit | True | True |
 | T_C03_R1L108_042660_20240821_STAGE4B | 042660 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
-| HDI_042670_2024_02_02_STAGE2_FALSE_POSITIVE_ORDER_CYCLE_MARGIN_BRIDGE | 042670 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | False | True |
-| C01_R1L100_042670_machinery_beta_no_backlog_margin_bridge_T1 | 042670 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive_if_stage2_bonus_uses_equipment_beta_only | False | True |
+| HDI_042670_2024_02_02_STAGE2_FALSE_POSITIVE_ORDER_CYCLE_MARGIN_BRIDGE | 042670 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | True | True |
+| C01_R1L100_042670_machinery_beta_no_backlog_margin_bridge_T1 | 042670 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive_if_stage2_bonus_uses_equipment_beta_only | True | True |
 | R1L116-C01-007 | 042670 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive_if_machinery_recovery_proxy_replaces_order_margin_bridge | True | True |
-| HANMI_042700_2024_02_08_STAGE2A_HBM_CUSTOMER_CAPACITY | 042700 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | False | True |
+| HANMI_042700_2024_02_08_STAGE2A_HBM_CUSTOMER_CAPACITY | 042700 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | True | True |
 | TRG_C06_R2_L109_042700_20240322_TCBONDER_CUSTOMER_CAPACITY_PROXY | 042700 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_too_late | True | True |
 | T_C06_R2L103_042700_20240201_Stage3Yellow_CROSS_C07 | 042700 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_C06_vs_C07_C08_C09_reroute_guard | True | True |
-| V12_COMPACT_042700_2024-03-26_C07_TCBONDER_ORDER_RELATIVE_STRENGTH_CONFIRMATION | 042700 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | False | True |
-| V12_COMPACT_042700_2024-06-13_C07_LEADER_LATE_EXTENSION_AFTER_REPRICING | 042700 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | False | True |
-| HANMI_042700_2024_02_08_STAGE2A_HBM_TCB_BONDER_ORDER_RS | 042700 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late | False | True |
+| V12_COMPACT_042700_2024-03-26_C07_TCBONDER_ORDER_RELATIVE_STRENGTH_CONFIRMATION | 042700 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
+| V12_COMPACT_042700_2024-06-13_C07_LEADER_LATE_EXTENSION_AFTER_REPRICING | 042700 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
+| HANMI_042700_2024_02_08_STAGE2A_HBM_TCB_BONDER_ORDER_RS | 042700 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late | True | True |
 | C07_R2L90_042700_20240208_STAGE2A | 042700 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_too_late | True | True |
+| HANMI_042700_2024_03_06_STAGE2A_HBM_TCBONDER_ORDER_RS | 042700 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late | True | True |
 | V12_COMPACT_042700_2024-02-01_Stage3-Yellow | 042700 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | C07_R2L90_042700_20240614_STAGE4B_OVERLAY | 042700 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late | True | True |
 | TRG-C09-L116-01-042700-Stage2Actionable-2024-02-15 | 042700 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_missed_structural_if_all_C09_is_treated_as_price_only_blowoff | True | True |
 | T_C09_R2L111_01_042700_20240201 | 042700 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | C31_L101_T002_042700 | 042700 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_too_permissive_without_high_MAE_4B_overlay | True | True |
 | C32_042700_20240326_STAGE2_ACTIONABLE | 042700 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_false_positive_or_overpromotion_risk | True | True |
-| None | 043150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | False | True |
+| None | 043150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | TRG_R7L77-C25-043150-VATECH-DENTAL-IMAGING-EXPORT-BETA-FADE | 043150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
 | None | 043150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | R7L91_C25_VATECH_2024_STAGE2_FALSE_POSITIVE_DENTAL_IMAGING_EXPORT_RECOVERY | 043150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive_if_dental_imaging_export_recovery_counts_without_order_reimbursement_margin_bridge | True | True |
@@ -1652,6 +1745,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L91_REVIEW_R7_C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT_043150_2024_04_01_TRIGGER | 043150 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_if_dental_imaging_export_recovery_counts_without_order_reimbursement_margin_bridge | True | True |
 | R1L87_C01_044450_20240117_STAGE2_FALSE_POSITIVE_SHIPPING_BACKLOG_THEME | 044450 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive_if_shipping_backlog_theme_promoted_without_fresh_bridge | True | True |
 | R13L87_REVIEW_R1_C01_ORDER_BACKLOG_MARGIN_BRIDGE_044450_2024-01-17 | 044450 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
+| C01-R1-L119-04-045100-STAGE2ACTIONABLE | 045100 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_missed_structural_if_only_C02_route_used | True | True |
 | R1L88_C05_HANYANGENG_2023_STAGE4B_CLEANROOM_EPC_EVENT_CAP | 045100 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_false_positive_if_cleanroom_EPC_spike_counts_as_structural_green | True | True |
 | R1L97_C05_HANYANGENG_2024_STAGE4B_SEMICON_FACILITY_EPC_EVENT_CAP | 045100 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_4B_too_late_if_semicon_facility_EPC_event_premium_not_capped | True | True |
 | C04_P1_TO50_TRG_15 | 046120 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | current_profile_false_positive | True | True |
@@ -1662,12 +1756,13 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R11L78-C04-046120-ORBITEC-NUCLEAR-INSPECTION-THEME-DELAY-FADE | 046120 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | C04 should not treat nuclear-inspection/radiation policy beta as durable Stage2 unless inspection work, named project, regulatory path, order backlog and margin bridge are visible. Orbitec had limited MFE and then a deep drawdown, making it local 4B-watch rather than durable Green. | True | True |
 | R13L92_REVIEW_R11_C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY_046120_2024_05_27_TRIGGER | 046120 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive_if_nuclear_inspection_theme_counts_without_project_service_margin_bridge | True | True |
 | R10L97_C30_WOOWONDEV_2024_STAGE4B_LOCAL_CIVIL_INFRA_EVENT_CAP | 046940 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_4B_too_late_if_local_civil_infra_event_premium_not_capped | True | True |
+| DAEWOOEANDC_047040_2024_03_06_STAGE2_FALSE_POSITIVE_CONSTRUCTION_BACKLOG | 047040 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | True | True |
 | None | 047040 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | None | True | True |
 | TRG_C05_047040_20230131_STAGE2_FALSE_POSITIVE | 047040 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_false_positive_if_order_headline_scored_without_margin_bridge | True | True |
 | T_C05_R1L109_047040_20240110_LARGE_BUILDER_ORDERBOOK_STAGE2_WATCH | 047040 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | T_C05_R1L108_047040_20240403_ORDERBOOK_LABEL_COUNTER | 047040 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | R11L90_C05_DAEWOOE_C_2024_STAGE2_ACTIONABLE_OVERSEAS_EPC_POLICY_CONTRACT_MARGIN_BRIDGE | 047040 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| None | 047040 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | False | True |
+| None | 047040 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | None | 047040 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | R1L86_C05_047040_20240715_STAGE2_FALSE_POSITIVE_MEGA_CONTRACT_THEME | 047040 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_false_positive_if_backlog_theme_overcredited | True | True |
 | T_C05_R1L108_047040_20240717_POST_PEAK_LOCAL4B | 047040 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
@@ -1677,14 +1772,14 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R10L77-C30-047040-DAEWOO-E&C-LARGECAP-PF-RISKWATCH-NO-HARD4C | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive | True | True |
 | TRG_R10L73-C30-047040-DAEWOO-LARGE-BUILDER-BUFFER-NOFULL4B | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | C30 should distinguish large-builder PF fear from a balance-sheet break. 대우건설 had bounded MAE and later tradable MFE, so it should remain RiskWatch/no-full-4B unless explicit impairment/refinancing/default evidence appears. | True | True |
 | C30_R10L105_047040_20240403_Stage2 | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_error_if_C30_overcredits_price_or_low_PBR_without_balance_sheet_bridge | True | True |
-| V12_COMPACT_047040_2024-07-15_construction_beta_event_spike_without_clean_cash_bridge | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive | False | True |
+| V12_COMPACT_047040_2024-07-15_construction_beta_event_spike_without_clean_cash_bridge | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive | True | True |
 | R10L87_C30_DAEWOO_2024_STAGE2_FALSE_POSITIVE_SECTOR_BETA | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive_if_order_or_sector_beta_counts_without_cashflow_bridge | True | True |
 | R10L94_C30_DAEWOOE_C_2024_STAGE2_ACTIONABLE_MAJOR_BUILDER_ORDER_BACKLOG_FUNDING_BRIDGE | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| TRG_C30_R10L100_047040_STAGE2A_20240125 | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_too_late | False | True |
+| TRG_C30_R10L100_047040_STAGE2A_20240125 | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_too_late | True | True |
 | R10L83_C30_047040_20240715_STAGE2_FALSE_POSITIVE_PF_RELIEF_SPIKE | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive | True | True |
 | TRG_R10L73-C30-047040-DAEWOO-LARGE-BUILDER-BUFFER-NOFULL4B | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | C30 should distinguish large-builder PF fear from a balance-sheet break. 대우건설 had bounded MAE and later tradable MFE, so it should remain RiskWatch/no-full-4B unless explicit impairment/refinancing/default evidence appears. | True | True |
 | C30_R10L104_047040_20240717_4B_Local_Watch | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive_if_promoted_beyond_local_4B | True | True |
-| TRG_C30_R10L100_047040_STAGE4B_OVERLAY_20240718 | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_4B_too_late | False | True |
+| TRG_C30_R10L100_047040_STAGE4B_OVERLAY_20240718 | 047040 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_4B_too_late | True | True |
 | R13L86_REVIEW_R1_C05_EPC_MEGA_CONTRACT_MARGIN_GAP_047040_2024-07-15 | 047040 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L87_REVIEW_C30_DAEWOO_2024_STAGE2_FALSE_POSITIVE_SECTOR_BETA | 047040 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_if_order_or_sector_beta_counts_without_cashflow_bridge | True | True |
 | None | 047050 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
@@ -1696,6 +1791,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
 | None | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
 | C16-102-05-047400-T1 | 047400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_false_positive | True | True |
+| R13L100_T006_047400 | 047400 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | False | True |
 | V12_COMPACT_R13L12_ACCT_PRICE_17_C16_047400_20240118_047400_2024-01-18_Stage2 | 047400 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | TRG_R8L75-C28-047560-ESTSOFT-AI-AVATAR-SOFTWARE-THEME-SPIKE-FADE | 047560 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
 | R8L97_C28_ESTSOFT_2024_STAGE2_ACTIONABLE_AI_SOFTWARE_LICENSE_CONTRACT_RETENTION_BRIDGE | 047560 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
@@ -1710,9 +1806,9 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | T_C03_R1L107_047810_20240718_STAGE2 | 047810 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | aerospace_export_label_repeated_without_incremental_order_margin_bridge_is_false_positive | True | True |
 | R1L99_C03_KAI_2024_STAGE2_FALSE_POSITIVE_AIRCRAFT_EXPORT_FRAMEWORK_WATCH | 047810 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_aircraft_export_framework_watch_counts_without_final_contract_delivery_backlog_margin_revision_bridge | True | True |
 | T_C03_R1L107_047810_20240223_STAGE2ACTIONABLE | 047810 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | aerospace_export_label_needs_delivery_and_margin_refresh_before_stage3 | True | True |
-| None | 047810 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 047810 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | T_C03_R1L108_047810_20240919_STAGE4C | 047810 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
-| None | 047810 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 047810 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | V12_COMPACT_R13L2_C03_047810_20240701_STAGE2_047810_2024-07-01_cross_archetype_high_MAE_guardrail_review | 047810 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | R8L96_C27_DAEWONMEDIA_2024_STAGE2_FALSE_POSITIVE_LEGACY_ANIMATION_IP_WATCH | 048910 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive_if_legacy_animation_IP_watch_counts_without_distribution_slate_licensing_margin_revision_bridge | True | True |
 | R13L96_REVIEW_R8_C27_CONTENT_IP_GLOBAL_MONETIZATION_048910_2024_01_24_TRIGGER | 048910 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_legacy_animation_IP_watch_counts_without_distribution_slate_licensing_margin_revision_bridge | True | True |
@@ -1734,13 +1830,15 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | T_C04_R1L107_051600_20240718_Stage3-Yellow | 051600 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | yellow_allowed_when_service_revenue_bridge_visible_but_green_needs_revision_margin_confirmation | True | True |
 | C04_P1_TO50_TRG_05 | 051600 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | current_profile_false_positive | True | True |
 | C04_STATIC_TO50_TRG_03 | 051600 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | current_profile_false_positive | True | True |
-| TRG_R11L73-C31-051600-KEPCO-KPS-CZECH-NUCLEAR-SERVICE-PROXY-RISKWATCH | 051600 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 should flag nuclear service proxies as RiskWatch unless service scope, O&M participation, or backlog bridge is verified. KEPCO KPS had bounded MAE and later recovery, so it should not become full 4B or hard 4C from the policy headline alone. | False | True |
+| TRG_R11L73-C31-051600-KEPCO-KPS-CZECH-NUCLEAR-SERVICE-PROXY-RISKWATCH | 051600 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 should flag nuclear service proxies as RiskWatch unless service scope, O&M participation, or backlog bridge is verified. KEPCO KPS had bounded MAE and later recovery, so it should not become full 4B or hard 4C from the policy headline alone. | True | True |
 | TRG_R11L73-C31-051600-KEPCO-KPS-CZECH-NUCLEAR-SERVICE-PROXY-RISKWATCH | 051600 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 should flag nuclear service proxies as RiskWatch unless service scope, O&M participation, or backlog bridge is verified. KEPCO KPS had bounded MAE and later recovery, so it should not become full 4B or hard 4C from the policy headline alone. | False | True |
 | R13L87_REVIEW_R11_C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY_051600_2024-07-12 | 051600 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
 | TRG_R5L80-C20-051900-LG-HH-CHINA-BRAND-RECOVERY-BOUNDARY | 051900 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | C20 should not force bounded large-cap China beauty recovery rows into 4B when MAE is controlled, but it also should not mark durable Stage2 without sell-through, channel inventory, brand mix, revenue and margin bridge. LG H&H is a bounded no-forced-4B boundary. | True | True |
 | R5L91_C20_LGHNH_2024_STAGE2_FALSE_POSITIVE_LUXURY_CHINA_RECOVERY | 051900 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive_if_luxury_china_channel_recovery_counts_without_reorder_margin_revision_bridge | True | True |
 | R5L85_C20_051900_20240510_STAGE2_FALSE_POSITIVE_BEAUTY_REOPENING_REBOUND | 051900 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive_if_reopening_beta_overcredited | True | True |
 | R5L91_C20_051900_20240430_STAGE2_FALSE_POSITIVE_LEGACY_BEAUTY_CHANNEL | 051900 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive_if_legacy_beauty_channel_vocabulary_overcredited | True | True |
+| R5L10_C20_LGHNH_T2_20210624 | 051900 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | True | True |
+| R13L10_X04_051900_Stage2-candidate-rejected | 051900 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L85_REVIEW_R5_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_051900_2024-05-10 | 051900 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | R13L91_REVIEW_R5_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_051900_2024_05_10_TRIGGER | 051900 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_if_luxury_china_channel_recovery_counts_without_reorder_margin_revision_bridge | True | True |
 | TRG-C11-051910-20240208-STAGE2 | 051910 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_green_or_actionable | False | True |
@@ -1753,11 +1851,12 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R3L84_C13_051910_20240216_STAGE2_FALSE_POSITIVE_HOLDCO_AMPC_JV_DISCOUNT | 051910 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive_if_policy_optionalities_overcredited | True | True |
 | T_C13_R3L104_051910_STAGE3YELLOW_20240201 | 051910 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | T_C13_R3L105_051910_STAGE4B_20240216 | 051910 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
+| LGCHEM_051910_2024_03_06_STAGE4C_PARENT_AMPC_JV_LOOKTHROUGH_RISK | 051910 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_4C_too_late_if_parent_AMPC_optional_value_overcredited | True | True |
 | TRG_R3L73-C14-051910-LGCHEM-INTEGRATED-MATERIALS-DEMAND-RISK-NO-HARD4C | 051910 | C14_EV_DEMAND_SLOWDOWN_4B_4C | C14 should flag EV/material demand slowdown risk, but not convert diversified integrated chemical/cathode exposure into hard 4C when later rebound and business-buffer evidence can exist. The correct label is RiskWatch/local 4B boundary, not hard thesis break without non-price evidence. | True | True |
 | TRG_R3L73-C14-051910-LGCHEM-INTEGRATED-MATERIALS-DEMAND-RISK-NO-HARD4C | 051910 | C14_EV_DEMAND_SLOWDOWN_4B_4C | C14 should flag EV/material demand slowdown risk, but not convert diversified integrated chemical/cathode exposure into hard 4C when later rebound and business-buffer evidence can exist. The correct label is RiskWatch/local 4B boundary, not hard thesis break without non-price evidence. | True | True |
 | R3L88_C14_LGCHEM_2023_STAGE4B_EV_MATERIALS_DEMAND_SLOWDOWN | 051910 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4B_too_late_if_EV_materials_price_volume_margin_break_not_capped | True | True |
 | T_C14_R3L108_051910_STAGE4B_20240216 | 051910 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive | True | True |
-| LGCHEM_051910_2024_02_21_4C_EV_DEMAND_SLOWDOWN | 051910 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4C_too_late | False | True |
+| LGCHEM_051910_2024_02_21_4C_EV_DEMAND_SLOWDOWN | 051910 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4C_too_late | True | True |
 | T_C15_R4L104_051910_Stage2_20240216 | 051910 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive_if_material_label_receives_stage2_actionable_bonus | True | True |
 | T_C15_R4L105_051910_20240216_03_4C | 051910 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive | True | True |
 | None | 051910 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
@@ -1785,64 +1884,72 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13_4B4C_L12_17_052690_20240718_4B_Local_Watch | 052690 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_source_proxy_row_promotes_to_green_or_full_4B | True | True |
 | R13L85_REVIEW_R1_C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY_052690_2024-04-29 | 052690 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_correct | True | True |
 | R13L90_REVIEW_R11_C05_EPC_MEGA_CONTRACT_MARGIN_GAP_052690_2024_03_11_TRIGGER | 052690 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_nuclear_engineering_EPC_policy_premium_not_capped | True | True |
-| None | 052860 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 052860 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | TRG_R11L75-C31-053290-NE-NEUNGYULE-MEDQUOTA-EDU-PROXY-FADE | 053290 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
 | R11L88_C31_NEE_2024_STAGE2_FALSE_POSITIVE_EDUCATION_POLICY_THEME | 053290 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive_if_education_policy_theme_counts_without_revenue_contract_bridge | True | True |
 | TRG_R11L75-C31-053290-NE-NEUNGYULE-MEDQUOTA-EDU-PROXY-FADE | 053290 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 should not treat broad education-policy beta as durable Stage2 unless the policy connects to direct product demand, paid course enrollment, channel expansion or margin bridge. NE Neungyule had only tiny MFE and then severe drawdown before later theme rebounds. | True | True |
 | R13L88_REVIEW_C31_NEE_2024_STAGE2_FALSE_POSITIVE_EDUCATION_POLICY_THEME | 053290 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_education_policy_theme_counts_without_revenue_contract_bridge | True | True |
+| R13L10_X08_053290_Stage2_event_premium_risk_watch | 053290 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late | False | True |
 | C28_R8L103_07_053300_Stage2_2024-09-02 | 053300 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_correct | True | True |
-| None | 053450 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 053450 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | TRG_R8L82-C28-053580-WEBCASH-FINTECH-SOFTWARE-RETENTION-FADE | 053580 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | C28 should not treat B2B fintech software retention theme beta as durable Stage2 unless customer retention, paid conversion, renewal, usage, revenue and margin bridge are visible. WebCash had modest MFE and then high-MAE fade. | True | True |
-| None | 053610 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| PROTEC_053610_2024_03_06_STAGE2_FALSE_POSITIVE_ADVANCED_PACKAGING_RS | 053610 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
+| None | 053610 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | TRG-C09-L116-03-053610-Stage3Yellow-2024-02-15 | 053610 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_short_lived_packaging_theme_promoted | True | True |
 | R2L112-C10-001-T1 | 053610 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_missed_structural_if_2024_memory_drawdown_blocks_2025_recovery_band | True | True |
 | None | 053690 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | None | True | True |
 | R1L88_C05_HANMIGLOBAL_2022_STAGE4B_NEOM_PM_EVENT_CAP | 053690 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | current_profile_4B_too_late_if_project_PM_theme_not_capped | True | True |
 | R10L95_C30_HANMIGLOBAL_2024_STAGE2_ACTIONABLE_CM_ORDER_CASHFLOW_BRIDGE | 053690 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | V12_COMPACT_053800_2024-07-01_platform_ad_budget_retention_opm_bridge_cleanup | 053800 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| None | 053800 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 053800 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | R8L88_C28_AHNLAB_2024_STAGE2_FALSE_POSITIVE_SECURITY_QUALITY | 053800 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive_if_security_quality_counts_without_contract_retention_revision_bridge | True | True |
 | R8L94_C28_AHNLAB_2024_STAGE2_FALSE_POSITIVE_CYBERSECURITY_RETENTION_WATCH | 053800 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive_if_cybersecurity_retention_watch_counts_without_enterprise_renewal_ARR_margin_revision_bridge | True | True |
 | R8L86_C28_053800_20240125_STAGE2_FALSE_POSITIVE_SECURITY_THEME_BETA | 053800 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive_if_security_beta_overcredited | True | True |
 | R13L86_REVIEW_R8_C28_SOFTWARE_SECURITY_CONTRACT_RETENTION_053800_2024-01-25 | 053800 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
+| R13L10_X06_053800_Stage2-Watch | 053800 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | False | True |
 | R13L94_REVIEW_R8_C28_SOFTWARE_SECURITY_CONTRACT_RETENTION_053800_2024_01_24_TRIGGER | 053800 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive_if_cybersecurity_retention_watch_counts_without_enterprise_renewal_ARR_margin_revision_bridge | True | True |
 | TRG_R12L81-C31-054050-NONGWOO-BIO-SEED-AGRI-POLICY-BOUNDED | 054050 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 should keep seed/agri policy monitoring active, but should not force local 4B when MAE is bounded and no non-price demand or margin break is confirmed. Nongwoo Bio is a RiskWatch/no durable Stage2/no forced 4B boundary. | True | True |
 | R10L95_C30_YOOSHIN_2024_STAGE2_FALSE_POSITIVE_ENGINEERING_PF_NORMALIZATION_WATCH | 054930 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive_if_engineering_PF_normalization_watch_counts_without_order_fee_cashflow_margin_bridge | True | True |
 | R13L95_REVIEW_R10_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_054930_2024_02_13_TRIGGER | 054930 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_engineering_PF_normalization_watch_counts_without_order_fee_cashflow_margin_bridge | True | True |
-| V12_COMPACT_C21-SHINHAN-20240201_055550_2024-02-01_Stage2_Actionable_CapitalReturn_ValueUp_Bridge | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive | False | True |
+| R13_HIGHMAE_L143_054930_20240813_TRG | 054930 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_or_persistence_error_if_Stage2_Stage3_not_capped | False | True |
+| V12_COMPACT_C21-SHINHAN-20240201_055550_2024-02-01_Stage2_Actionable_CapitalReturn_ValueUp_Bridge | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive | True | True |
 | R6L94_C21_SHINHAN_2024_STAGE2_ACTIONABLE_BANK_VALUEUP_CAPITAL_RETURN_ROE_PBR_BRIDGE | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | TRG_R6L79-C21-055550-SHINHAN-BANK-HOLDCO-CAPITAL-RETURN | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | C21 should protect bank-holding positives when ROE/PBR rerating maps to capital buffer, dividend, buyback, treasury cancellation and earnings-quality bridge. Shinhan produced large MFE with bounded entry-basis MAE, but raw share-count changes inside the window require validation before runtime promotion. | True | True |
 | R6L83_C21_055550_20240202_STAGE2_BANK_VALUEUP_CAPITAL_RETURN | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_correct | True | True |
 | None | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
 | None | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | None | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
-| None | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
+| None | 055550 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | R12L85_C31_055550_20240129_STAGE2_VALUEUP_POLICY_CAPITAL_RETURN | 055550 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct_if_policy_to_capital_return_bridge_required | True | True |
 | V12_COMPACT_055550_2024-03-07_policy_valueup_bank_capital_return_cash_bridge | 055550 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
 | V12_COMPACT_055550_2024-04-26_policy_valueup_bank_brokerage_ROE_PBR_capital_return_execution_bridge | 055550 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct | True | True |
 | C31_R11L106_TRG_03 | 055550 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
-| None | 055550 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 055550 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | None | 055550 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | R13L85_REVIEW_R12_C31_POLICY_SUBSIDY_LEGISLATION_EVENT_055550_2024-01-29 | 055550 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_correct | True | True |
 | TRG_R12L80-C31-057030-YBMNET-ONLINE-EDUCATION-POLICY-FADE | 057030 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 should not treat online education or language-learning policy beta as durable Stage2 unless paid conversion, institutional demand, subscription revenue and margin bridge are visible. YBM Net produced a tradable MFE but then a high-MAE fade. | True | True |
 | R11L88_C31_YBMNET_2024_STAGE4B_DIGITAL_EDU_POLICY_THEME_CAP | 057030 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_4B_too_late_if_digital_education_policy_theme_premium_not_capped | True | True |
 | R13L88_REVIEW_C31_YBMNET_2024_STAGE4B_DIGITAL_EDU_POLICY_THEME_CAP | 057030 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_digital_education_policy_theme_premium_not_capped | True | True |
+| C02-R1-L141-07-057540-Stage2_Actionable | 057540 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_data_insufficient | True | True |
 | V12_COMPACT_C25_R7L107_058110_20240416_Stage2_FalsePositive_058110_2024-04-16_Stage2-FalsePositive | 058110 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
 | R4L96_C15_POSCOSTEELION_2024_STAGE2_ACTIONABLE_COATED_STEEL_SPREAD_MARGIN_BRIDGE | 058430 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R2L93_C08_058470_20240213_STAGE2_IC_TEST_SOCKET_REPEAT | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_correct_if_customer_qualification_repeat_demand_margin_cash_bridge_required_but_Green_strict | True | True |
 | C08_R2_L112_004_058470_Stage2_Actionable | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_too_late | True | True |
+| LEENO_058470_2024_03_06_STAGE2A_SOCKET_CUSTOMER_QUALITY | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
 | R2L92_C08_LEENO_2024_STAGE2_ACTIONABLE_TEST_SOCKET_CUSTOMER_QUALITY_MARGIN | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| None | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
-| None | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| None | 058470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | None | 058470 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | TRG_R8L75-C28-058970-EMRO-PROCUREMENT-SAAS-CONTRACT-RETENTION-BRIDGE | 058970 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_correct | True | True |
 | R8L93_C28_058970_20240227_STAGE2_SCM_SAAS_RETENTION | 058970 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_correct_if_contract_retention_ARR_margin_cash_bridge_required_but_Green_strict | True | True |
 | TRG_R8L75-C28-058970-EMRO-PROCUREMENT-SAAS-CONTRACT-RETENTION-BRIDGE | 058970 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | C28 should allow a delayed Stage2 when procurement SaaS / supply-chain AI demand connects to actual enterprise contract retention, customer expansion, recurring license or margin bridge. EMRO produced controlled-MAE follow-through after the August reset, but the price shard shows share-count changes, so runtime promotion needs validation. | True | True |
+| R7L104-C25-T04 | 059210 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_correct | True | True |
 | None | 059210 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | TR_C26_L105_060250_Stage2_20240930 | 060250 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_missed_structural | True | True |
 | None | 060280 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | None | 060280 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 must require fresh binary/data endpoint quality; reroute commercialization, device, reimbursement, or price-only events to C23/C25/local_4B as appropriate. | True | True |
 | None | 060280 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
+| C02-R1-L141-02-060370-Stage2_Actionable | 060370 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late | True | True |
 | R1L89_C02_LSMARINE_2024_STAGE4B_SUBSEA_CABLE_EVENT_CAP | 060370 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late_if_subsea_cable_event_premium_not_capped | True | True |
 | None | 060370 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
 | None | 060370 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
@@ -1852,15 +1959,20 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R8L89_C28_060850_20240102_STAGE2_ERP_SAAS_RETENTION | 060850 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_correct_if_contract_retention_margin_cash_bridge_required | True | True |
 | TRG_R8L82-C28-060850-YOUNGLIMWON-ERP-CONTRACT-RETENTION-FADE | 060850 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | C28 should not treat ERP/cloud software theme beta as durable Stage2 unless ARR/subscription, renewal, churn control, implementation backlog, revenue conversion and margin bridge are visible. YoungLimWon had a theme spike and then high MAE, so it is local-4B unless retention economics are source-repaired. | True | True |
 | V12_COMPACT_R13_STAGE2FP_L8_13_060850_2024-08-13_STAGE2_060850_2024-08-13_stage2_source_proxy_deep_MAE_false_positive_review | 060850 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
-| LBSEMI_061970_2024_03_06_STAGE2_FALSE_POSITIVE_OSAT_TEST_PACKAGE | 061970 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | False | True |
+| C06_L112_TRG_06_061970_STAGE2A | 061970 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | True | True |
+| LBSEMI_061970_2024_03_06_STAGE2_FALSE_POSITIVE_OSAT_TEST_PACKAGE | 061970 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
+| C02-R1-L141-01-062040-Stage2_Actionable | 062040 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_missed_structural | True | True |
 | C27-R8L105-015|Stage2|2024-03-07 | 063080 | C27_CONTENT_IP_GLOBAL_MONETIZATION | residual_error_needs_C27_specific_bridge_or_guard | True | True |
 | R13_CROSS_063080_2024-03-07_Stage2 | 063080 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
-| INTEK_064290_2024_02_20_STAGE2_FALSE_POSITIVE_INSPECTION_EQUIP_BETA | 064290 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | False | True |
+| INTEK_064290_2024_02_20_STAGE2_FALSE_POSITIVE_INSPECTION_EQUIP_BETA | 064290 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | R2L93C_C08_064290_20240220_STAGE2_FALSE_POSITIVE_INSPECTION_DECAY | 064290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive_if_inspection_customer_quality_vocabulary_overcredited | True | True |
-| INTEKPLUS_064290_2024_03_06_STAGE2_FALSE_POSITIVE_ADVANCED_INSPECTION | 064290 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | False | True |
+| INTEKPLUS_064290_2024_03_06_STAGE2_FALSE_POSITIVE_ADVANCED_INSPECTION | 064290 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | T_C01_R1L111_064350_20240222_Stage2-Actionable | 064350 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | backlog path was eventually large but interim drawdown and mixed rail/defense exposure require a bridge before Green | True | True |
+| HYUNDAIROTEM_064350_2024_03_06_STAGE2A_DEFENSE_RAIL_BACKLOG_MARGIN | 064350 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_4B_too_late | True | True |
+| R1L117-C01-001 | 064350 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_missed_structural | False | True |
 | R1L117-C01-001 | 064350 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_missed_structural | False | True |
 | None | 064350 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | None | True | True |
+| None | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
 | R11L89_C03_HYUNDAIROTEM_2024_STAGE2_ACTIONABLE_DEFENSE_EXPORT_BACKLOG | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | TRG_R11L79-C03-064350-HYUNDAI-ROTEM-GROUND-SYSTEM-EXPORT-BACKLOG | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | C03 should allow ground-system positives when export framework or follow-on contract maps to named customer/project, backlog, delivery schedule, revenue recognition and margin bridge. Hyundai Rotem produced very large MFE with controlled entry-basis MAE, but lifecycle 4B is needed if delivery/margin evidence fades. | True | True |
 | TRG_R1L74-C03-064350-HYUNDAI-ROTEM-K2-GROUND-SYSTEMS-BACKLOG | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | C03 should allow Stage2 when defense-export attention is tied to a named ground-systems framework, backlog visibility, production cadence and margin bridge. Hyundai Rotem's stock-web path had large MFE and limited entry-basis MAE; after the late-2024 peak, a local 4B lifecycle guard is still needed if export/backlog evidence stops refreshing. | True | True |
@@ -1868,26 +1980,28 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R1L89_C03_064350_20240222_STAGE2_DEFENSE_EXPORT_BACKLOG | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_correct_if_export_framework_backlog_margin_bridge_required | True | True |
 | V12_COMPACT_C03-R1L105-03_064350_2024-02-22_Stage2-Actionable | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive | True | True |
 | T_C03_R1L108_064350_20240605_STAGE2_ACTIONABLE | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
-| T_064350_20240222_STAGE3Y_REPAIR | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_should_not_green_without_margin_refresh | False | True |
-| T_064350_20240329_STAGE3Y_REPAIR | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_needs_mixed_exposure_bridge_not_generic_defense_beta | False | True |
+| T_064350_20240222_STAGE3Y_REPAIR | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_should_not_green_without_margin_refresh | True | True |
+| T_064350_20240329_STAGE3Y_REPAIR | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_needs_mixed_exposure_bridge_not_generic_defense_beta | True | True |
 | T_C03_R1L107_064350_20240513_STAGE3YELLOW | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | delivery_schedule_visibility_can_convert_stage2_to_yellow_but_margin_bridge_required_for_green | True | True |
-| None | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | T_C03_R1L108_064350_20241018_STAGE4B | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
 | T_C03_R1L107_064350_20241018_STAGE4B | 064350 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | trend_continues_but_high_MAE_and_known_backlog_timing_make_stage4b_watch_preferable | True | True |
 | TRG_R9L77-C29-064350-HYUNDAI-ROTEM-RAIL-MOBILITY-ORDERBOOK-MARGIN | 064350 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should allow rail/mobility equipment positives when orderbook, delivery slots, export/customer cadence, utilization and margin bridge are visible. Hyundai Rotem produced very large MFE with controlled entry-basis MAE, but the move must be lifecycle-managed if orderbook/margin evidence fades. | True | True |
 | TRG_R9L77-C29-064350-HYUNDAI-ROTEM-RAIL-MOBILITY-ORDERBOOK-MARGIN | 064350 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct | True | True |
 | C31_L101_T004_064350 | 064350 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_missed_direct_bridge_strength | True | True |
-| TCK_064760_2024_03_22_STAGE2A_MEMORY_CUSTOMER_CAPACITY_PARTS | 064760 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | False | True |
+| TR_R13L147_4B4C_11_064350_Stage4B_2022-08-29 | 064350 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | false_positive_if_executive_contract_forced_to_yellow_without_reprice_context | False | True |
+| TCK_064760_2024_03_22_STAGE2A_MEMORY_CUSTOMER_CAPACITY_PARTS | 064760 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | True | True |
 | R2_L110_C07 | 064760 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | True | True |
 | TRG_R2L73-C08-064760-TCK-SIC-CONSUMABLE-CUSTOMER-QUALITY-LOCAL4B | 064760 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | C08 should not treat high-quality semi consumables as Green when near-term customer utilization or margin bridge is absent. TCK had an initial MFE but later opened large MAE and drawdown, requiring local 4B-watch rather than durable Stage2. | True | True |
-| None | 064760 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 064760 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | TRG_R2L73-C08-064760-TCK-SIC-CONSUMABLE-CUSTOMER-QUALITY-LOCAL4B | 064760 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | C08 should not treat high-quality semi consumables as Green when near-term customer utilization or margin bridge is absent. TCK had an initial MFE but later opened large MAE and drawdown, requiring local 4B-watch rather than durable Stage2. | True | True |
-| TCK_064760_2024_03_06_STAGE2A_MEMORY_CONSUMABLE_RECOVERY | 064760 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | False | True |
+| TRG-C09-L118-01-064760-Stage2-Actionable-2024-03-22 | 064760 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_too_late_if_parts_order_bridge_is_overblocked | True | True |
+| TCK_064760_2024_03_06_STAGE2A_MEMORY_CONSUMABLE_RECOVERY | 064760 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | True | True |
 | R1L96_C01_CAPE_2024_STAGE2_FALSE_POSITIVE_SHIP_PARTS_ORDER_BACKLOG_WATCH | 064820 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive_if_ship_parts_backlog_watch_counts_without_order_quality_delivery_margin_revision_bridge | True | True |
 | R13L96_REVIEW_R1_C01_ORDER_BACKLOG_MARGIN_BRIDGE_064820_2024_04_24_TRIGGER | 064820 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_ship_parts_backlog_watch_counts_without_order_quality_delivery_margin_revision_bridge | True | True |
 | R12L90_C32_FNGUIDE_2024_STAGE4B_PROXY_CONTROL_PREMIUM_CAP | 064850 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_4B_too_late_if_proxy_control_premium_not_capped | True | True |
 | R13L90_REVIEW_R12_C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP_064850_2024_09_24_TRIGGER | 064850 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_proxy_control_premium_not_capped | True | True |
-| None | 064960 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 064960 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | TRG_R9L80-C29-064960-SNT-MOTIV-MOTOR-DRIVETRAIN-BOUNDED-RISKWATCH | 064960 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should not force bounded motor/drivetrain supplier rows into 4B when MAE is contained, but it also should not mark durable Stage2 without customer volume, mix, drivetrain content and margin bridge. SNT Motiv is a bounded RiskWatch row. | True | True |
 | TRG_R9L75-C29-064960-SNT-MOTIVE-MOTOR-DEFENSE-AUTO-MIX-MARGIN | 064960 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | C29_R9L87_TRG_064960_S2 | 064960 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct | True | True |
@@ -1899,7 +2013,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R9L75-C29-064960-SNT-MOTIVE-MOTOR-DEFENSE-AUTO-MIX-MARGIN | 064960 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should include slow mobility suppliers when motor/module mix, electrification component exposure, customer program stability and margin bridge are visible. SNT Motive is not an explosive beta row; it is a low-volatility supplier rerating candidate that should not be overblocked but still needs non-price mix/margin evidence. | True | True |
 | None | 065130 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
 | V12_COMPACT_C28-R8-L102-06_065370_2024-02-22_Stage4B | 065370 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
-| None | 065450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 065450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | R1L102_C03_VICTEK_2024_STAGE4B_ELECTRONIC_WARFARE_GEOPOLITICAL_EVENT_CAP | 065450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_4B_too_late_if_electronic_warfare_defense_event_premium_not_capped | True | True |
 | T_C03_R1L108_065450_20240422_STAGE4B | 065450 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
 | R13_4B4C_L12_04_065450_20240422_Stage4C_Watch | 065450 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_source_proxy_row_promotes_to_green_or_full_4B | True | True |
@@ -1911,22 +2025,27 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 065510 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | TRG_R7L82-C25-065510-HUVITZ-OPHTHALMIC-DEVICE-SHARECOUNT-FADE | 065510 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | C25 should not treat ophthalmic/optical device export theme beta as durable Stage2 unless customer order, distributor channel, reimbursement/capex cycle, revenue conversion and margin bridge are visible. Huvitz had an early spike, a severe high-MAE fade, and 2024 shard share-count changes that require validation. | True | True |
 | R7L86_C25_065510_20240215_STAGE2_FALSE_POSITIVE_OPHTHALMIC_DEVICE_REBOUND | 065510 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive_if_device_rebound_overcredited | True | True |
+| R7L104-C25-T07 | 065510 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_4C_too_late | True | True |
 | R13L86_REVIEW_R7_C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT_065510_2024-02-15 | 065510 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
-| None | 065680 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| R13L100_T007_065510 | 065510 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4C_too_late | True | True |
+| None | 065680 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| C01-R1-L119-03-065710-STAGE2ACTIONABLE | 065710 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_too_late_without_C01_bridge_compression | True | True |
 | T_C11_R3L107_066970_STAGE2ACTIONABLE_20240322 | 066970 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_orderbook_label_is_overcredited | True | True |
 | TRG-C11-066970-20240325-STAGE4C | 066970 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_orderbook_overcredited | False | True |
 | V12_COMPACT_C12_R3L105_066970_20240216_04_066970_2024-02-16_Stage2 | 066970 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
 | None | 066970 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | True | True |
 | R3L83_C12_066970_20240322_STAGE2_FALSE_POSITIVE_CATHODE_CALLOFF | 066970 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
 | R3L86_C12_066970_20240325_STAGE2_FALSE_POSITIVE_CATHODE_CALLOFF_RISK | 066970 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive_if_contract_headline_overcredited | True | True |
-| LNF_066970_2024_02_14_STAGE2A_CATHODE_JV_UTILIZATION_IRA | 066970 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_4B_too_late | False | True |
+| TRG-C12-066970-20240509-STAGE4C | 066970 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | hard_4c_or_strict_cap_correct_when_loss_and_inventory_break_dominate | True | True |
+| LNF_066970_2024_02_14_STAGE2A_CATHODE_JV_UTILIZATION_IRA | 066970 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_4B_too_late | True | True |
 | R3L98_C13_LF_2024_STAGE2_FALSE_POSITIVE_CATHODE_IRA_AMPC_UTILIZATION_WATCH | 066970 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive_if_cathode_IRA_AMPC_watch_counts_without_customer_calloff_JV_utilization_margin_revision_bridge | True | True |
 | T_C13_R3L105_066970_STAGE2ACTIONABLE_20240322 | 066970 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | T_C13_R3L103_066970_STAGE3YELLOW_20240214 | 066970 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_too_fast_if_customer_calloff_absent | True | True |
 | None | 066970 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | T_C13_R3L104_066970_STAGE4B_20240214 | 066970 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | T_C13_R3L105_066970_STAGE4C_20240322 | 066970 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
-| None | 066970 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | False | True |
+| None | 066970 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | True | True |
+| LNF_066970_2024_03_06_STAGE4C_EV_CATHODE_CALL_OFF_RISK | 066970 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4C_too_late_after_stage2_bounce | True | True |
 | T_C14_R3L108_066970_STAGE4C_20240322 | 066970 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive | True | True |
 | R3L91_C14_LENF_2024_STAGE4C_EV_DEMAND_SLOWDOWN_MARGIN_THESIS_BREAK | 066970 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_kept_and_hard_4C_protection_should_block_EV_cathode_positive_stage | True | True |
 | V12_COMPACT_R13L11-4B4C-008_066970_2024-03-22_cross_archetype_4b_4c_boundary_retest | 066970 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
@@ -1942,9 +2061,10 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R8L83_C26_067160_20240108_STAGE2_LIVESTREAM_TRAFFIC_MIGRATION_POSITIVE | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_correct | True | True |
 | R8L85_C26_067160_20240108_STAGE2_LIVE_PLATFORM_OPERATING_LEVERAGE | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_correct_if_monetization_bridge_required | True | True |
 | R8L89_C26_SOOP_2024_STAGE2_ACTIONABLE_PLATFORM_REVENUE_BRIDGE | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
+| C26-L104-02-067160-T1 | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_correct | True | True |
 | T_C26_R8L106_01_067160_STAGE2ACTIONABLE_Stage2Actionable_2024-02-01 | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_too_late_or_data_insufficient | True | True |
 | V12_COMPACT_067160_2024-04-01_platform_ad_budget_retention_opm_bridge_cleanup | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_correct | True | True |
-| None | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 067160 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | C27-R8L105-007|Stage3-Yellow|2024-02-01 | 067160 | C27_CONTENT_IP_GLOBAL_MONETIZATION | residual_error_needs_C27_specific_bridge_or_guard | True | True |
 | R13L85_REVIEW_R8_C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE_067160_2024-01-08 | 067160 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_correct | True | True |
 | T_C06_R2L103_067310_20240222_Stage2Actionable_CROSS_C07 | 067310 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_C06_vs_C07_C08_C09_reroute_guard | True | True |
@@ -1953,10 +2073,11 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | V12_COMPACT_067310_2024-02-22_Stage2-Actionable | 067310 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | R2L93_C07_067310_20240327_STAGE2_FALSE_POSITIVE_PACKAGING_CROSSLABEL | 067310 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive_if_packaging_capacity_price_MFE_counted_as_C07_equipment_order_evidence | True | True |
 | TRG_R2L73-C08-067310-HANAMICRON-OSAT-HBM-BETA-WEAK-UTILIZATION | 067310 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | C08 must not allow OSAT/HBM packaging beta to become durable Stage2 without utilization, customer quality, margin, or package mix evidence. Hana Micron generated only small MFE and then severe MAE. | True | True |
-| None | 067310 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 067310 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | TRG_R2L73-C08-067310-HANAMICRON-OSAT-HBM-BETA-WEAK-UTILIZATION | 067310 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | C08 must not allow OSAT/HBM packaging beta to become durable Stage2 without utilization, customer quality, margin, or package mix evidence. Hana Micron generated only small MFE and then severe MAE. | True | True |
-| None | 067310 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
-| HANAMICRON_067310_2024_03_06_STAGE2_FALSE_POSITIVE_OSAT_MEMORY_RECOVERY | 067310 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | False | True |
+| None | 067310 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| TRG-C09-L118-05-067310-Stage3-Yellow-2024-07-01 | 067310 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_OSAT_label_unlocks_yellow | True | True |
+| HANAMICRON_067310_2024_03_06_STAGE2_FALSE_POSITIVE_OSAT_MEMORY_RECOVERY | 067310 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | True | True |
 | R9L89_C29_067570_20240206_STAGE2_FALSE_POSITIVE_NVH_REBOUND | 067570 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive_if_NVH_interior_rebound_overcredited | True | True |
 | R7L91_C23_067630_20240422_STAGE2_FALSE_POSITIVE_APPROVAL_EXPECTATION_CRL | 067630 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive_if_approval_expectation_overcredited_without_CRL_protection | True | True |
 | R7L98_C23_HLBLIFESCI_2024_STAGE4B_ONCOLOGY_APPROVAL_COMMERCIALIZATION_EVENT_CAP | 067630 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_4B_too_late_if_approval_commercialization_event_premium_not_capped | True | True |
@@ -1969,6 +2090,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R8L75-C28-067920-IGLOO-CYBERSECURITY-CONTRACT-RETENTION-BETA-FADE | 067920 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | C28 should not treat cybersecurity/SIEM/SOC theme spikes as durable Stage2 unless recurring contract retention, renewal rate, managed security service backlog or margin bridge is visible. IGLOO had a strong early MFE but then faded into high MAE and post-peak drawdown. | True | True |
 | R8L89_C28_067920_20240119_STAGE2_FALSE_POSITIVE_SECURITY_THEME | 067920 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive_if_security_theme_spike_overcredited | True | True |
 | C27-R8L105-014|Stage2|2024-03-12 | 068050 | C27_CONTENT_IP_GLOBAL_MONETIZATION | residual_error_needs_C27_specific_bridge_or_guard | True | True |
+| C02-R1-L143-06-068240-Stage4B | 068240 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late | True | True |
 | V12_COMPACT_068270_2024-02-02_BIOSIMILAR_APPROVAL_WITHOUT_INCREMENTAL_REVISION_GUARD | 068270 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
 | None | 068270 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | C23_R7_L209_T02 | 068270 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_correct | False | True |
@@ -1977,23 +2099,25 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R7L73-C23-068270-CELLTRION-ZYMFENTRA-COMMERCIALIZATION-BRIDGE | 068270 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | C23 should reward regulatory approval only when it becomes commercialization evidence: launch, reimbursement access, channel uptake, direct sales or margin bridge. Celltrion has a slower but cleaner large-cap commercialization path with controlled MAE. | True | True |
 | TRG_R7L81-C23-068270-CELLTRION-BIOSIMILAR-COMMERCIALIZATION-POSTCA | 068270 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | C23 should not overblock large-cap biosimilar commercialization rows when MAE is controlled and commercialization/export revenue bridge may be visible. Celltrion requires post-CA and share-count continuity validation because the profile flags a 2024-01-12 corporate-action candidate and the 2024 shard shows share-count changes. | True | True |
 | None | 068270 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 must require fresh binary/data endpoint quality; reroute commercialization, device, reimbursement, or price-only events to C23/C25/local_4B as appropriate. | True | True |
-| None | 068270 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
-| None | 068270 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 068270 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
+| None | 068270 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | None | 068270 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | R12L91_C31_068290_20240110_STAGE2_FALSE_POSITIVE_LOWBIRTH_CHILDCARE_POLICY | 068290 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive_if_low_birth_policy_price_MFE_overcredited | True | True |
 | C32_068400_SKRENTACAR_20240801_S2A | 068400 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_false_positive_if_completion_uncertain | True | True |
 | T_R13_STAGE2FP_L5_068400_Stage2Actionable_2024-08-01 | 068400 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_stage2_false_positive_or_overpromotion_risk | True | True |
 | R7L89_C23_CELLTRIONPHARM_2024_STAGE4B_BIOSIMILAR_APPROVAL_PREMIUM_CAP | 068760 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_4B_too_late_if_biosimilar_approval_event_premium_not_capped | True | True |
-| None | 068760 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
+| None | 068760 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | R4L88_C17_TKGHUCHEMS_2024_STAGE2_FALSE_POSITIVE_LOW_BETA_SPREAD | 069260 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_false_positive_if_spread_watch_counts_without_margin_revision_bridge | True | True |
 | None | 069260 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
 | TRG_R4L79-C17-069260-TKG-HUCHEMS-NITRIC-ACID-SPREAD-FADE | 069260 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | C17 should not treat nitric-acid/TDI/MNB spread exposure as durable Stage2 unless volume, contract price, utilization, raw-material spread and margin bridge refreshes. TKG Huchems produced tiny MFE and then a persistent drawdown path. | True | True |
 | V12_COMPACT_069620_2024-02-02_EXPORT_APPROVAL_WITHOUT_REVISION_GUARD | 069620 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
-| None | 069620 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | False | True |
+| None | 069620 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | None | 069620 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | None | 069620 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | None | 069620 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 must require fresh binary/data endpoint quality; reroute commercialization, device, reimbursement, or price-only events to C23/C25/local_4B as appropriate. | True | True |
+| R13S2_L102_T008_069620 | 069620 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | False | True |
 | R5_L122_C18_007 | 069960 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
+| HYUNDAIDEPT_069960_2024_03_06_STAGE2_FALSE_POSITIVE_DEPARTMENT_MARGIN_REBOUND | 069960 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive_if_defensive_margin_rebound_overcredited | True | True |
 | R5L87_C19_069960_20240129_STAGE2_RETAIL_INVENTORY_MARGIN | 069960 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct_if_inventory_margin_bridge_required | True | True |
 | C19_R5L120_08_069960_Stage2_Actionable_2024-01-29 | 069960 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | TRG_R5L74-C19-069960-HYUNDAI-DS-VALUEUP-TRAFFIC-MARGIN | 069960 | C19_BRAND_RETAIL_INVENTORY_MARGIN | C19 should allow Stage2 only when low-PBR/value-up retail attention connects to traffic, inventory discipline, duty-free recovery or margin conversion. Hyundai Department Store produced a controlled-MAE positive path, but later drawdown still needs local 4B-watch if the margin bridge stops refreshing. | True | True |
@@ -2009,15 +2133,16 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R12L89_C31_DISTRICTHEATING_2024_STAGE2_ACTIONABLE_TARIFF_CASHFLOW_BRIDGE | 071320 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R12L89_C31_071320_20240126_STAGE2_UTILITY_TARIFF_VALUEUP | 071320 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct_if_tariff_cost_recovery_capital_return_bridge_required | True | True |
 | TRG_R12L79-C31-071320-DISTRICT-HEATING-TARIFF-RECOVERY-BRIDGE | 071320 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 should preserve utility tariff normalization positives when policy adjustment maps to cost pass-through, direct earnings recovery, dividend/capital policy and regulatory visibility. Korea District Heating produced very large MFE with controlled entry-basis MAE, but the post-peak drawdown needs lifecycle management. | True | True |
-| C01_R1L100_071970_ship_engine_backlog_high_mae_success_T1 | 071970 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct_with_high_mae_guardrail_needed | False | True |
-| TRG_C01_R1L100_071970_20240424 | 071970 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct | False | True |
-| None | 073240 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | False | True |
+| C01_R1L100_071970_ship_engine_backlog_high_mae_success_T1 | 071970 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct_with_high_mae_guardrail_needed | True | True |
+| TRG_C01_R1L100_071970_20240424 | 071970 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct | True | True |
+| None | 073240 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | True | True |
 | R9L87_C29_KUMHO_2023_STAGE2_ACTIONABLE_MARGIN_BRIDGE | 073240 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R9L92_C29_KUMHOTIRE_2024_STAGE2_ACTIONABLE_TIRE_VOLUME_MARGIN_BRIDGE | 073240 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R9L86_C29_073240_20240125_STAGE2_TIRE_VOLUME_MARGIN | 073240 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct_if_volume_margin_bridge_required | True | True |
 | TRG_R9L78-C29-073240-KUMHO-TIRE-OE-REPLACEMENT-MIX-MARGIN | 073240 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should allow tire names when OE/replacement volume, product mix, utilization, raw-material spread and margin bridge are visible. Kumho Tire produced large MFE, but later high MAE and post-peak drawdown require lifecycle local 4B if mix/margin evidence fades. | True | True |
 | T_C29_R9L104_073240_STAGE2A_20240411 | 073240 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | True | True |
 | T_C29_R9L106_073240_20240430_12_Stage2-Actionable | 073240 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
+| R9L87_C29_KUMHO_2025_STAGE4C_FALSE_BREAK_FACTORY_FIRE | 073240 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_4C_too_hard_without_durable_non_price_thesis_break_confirmation | False | True |
 | R13L86_REVIEW_R9_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_073240_2024-01-25 | 073240 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
 | R13_L106_T11_073240 | 073240 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive_or_4B_too_late | True | True |
 | R4L87_C16_073570_20240329_STAGE2_FALSE_POSITIVE_LITHIUM_POLICY | 073570 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_false_positive_if_lithium_policy_theme_overcredited | True | True |
@@ -2033,20 +2158,22 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L95_REVIEW_R4_C16_STRATEGIC_RESOURCE_POLICY_SUPPLY_075970_2024_01_23_TRIGGER | 075970 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_rare_earth_policy_watch_counts_without_supply_order_margin_revision_bridge | True | True |
 | TRG_R1L83-C01-077970-STX-ENGINE-MARINE-ENGINE-BACKLOG-MARGIN | 077970 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | C01 should protect industrial orderbacklog positives only when customer/program backlog, delivery schedule, revenue recognition and margin bridge are visible. STX Engine produced very large MFE with effectively no entry-basis MAE, but post-peak drawdown still requires lifecycle 4B if order/delivery/margin evidence fades. | True | True |
 | TRG_R1L79-C01-077970-STX-ENGINE-ORDER-BACKLOG-DELIVERY-MARGIN | 077970 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | C01 should preserve ship/defense engine suppliers when order backlog, delivery schedule, customer quality, revenue recognition and margin bridge are visible. STX Engine produced high MFE with essentially no entry-basis MAE, but lifecycle local 4B is needed if backlog or margin evidence fades. | True | True |
-| TRG_C01_R1L100_077970_20240424 | 077970 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct | False | True |
+| TRG_C01_R1L100_077970_20240424 | 077970 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct | True | True |
 | R1L116-C01-003 | 077970 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct_for_engine_supplier_bridge_but_green_requires_margin_revision | True | True |
 | T_C03_R1L108_077970_20240612_STAGE2 | 077970 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
 | R1L94_C03_STXENGINE_2024_STAGE2_ACTIONABLE_NAVAL_ENGINE_EXPORT_BACKLOG_BRIDGE | 077970 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R11L97_C03_STXENGINE_2024_STAGE2_ACTIONABLE_NAVAL_ENGINE_DEFENSE_EXPORT_BACKLOG_DELIVERY_BRIDGE | 077970 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R1L102_C03_STXENGINE_2024_STAGE2_ACTIONABLE_NAVAL_ENGINE_EXPORT_DELIVERY_MARGIN_BRIDGE | 077970 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| None | 077970 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 077970 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | C27-R8L105-008|Stage2|2024-02-15 | 078340 | C27_CONTENT_IP_GLOBAL_MONETIZATION | residual_error_needs_C27_specific_bridge_or_guard | True | True |
 | R5L89_C18_ABLECNC_2024_STAGE2_FALSE_POSITIVE_BEAUTY_EXPORT_THEME | 078520 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive_if_beauty_export_theme_counts_without_reorder_margin_revision_bridge | True | True |
 | TRG_R3L77-C11-078600-DAEJOO-SILICON-ANODE-ORDERBOOK-MARGIN | 078600 | C11_BATTERY_ORDERBOOK_RERATING | C11 should allow battery-material orderbook Stage2 when a silicon-anode customer ramp, call-off/orderbook, capacity absorption and margin bridge are visible. Daejoo Electronic Materials produced high MFE with almost no entry-basis MAE; post-peak drawdown still requires lifecycle local 4B if orderbook/margin evidence fades. | True | True |
 | TRG_R3L77-C11-078600-DAEJOO-SILICON-ANODE-ORDERBOOK-MARGIN | 078600 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_correct | True | True |
 | R3L89_C11_DAEJOO_2024_STAGE2_ACTIONABLE_ORDER_REVISION_BRIDGE | 078600 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
+| DAEJOO_078600_2024_02_21_STAGE2A_SILICON_ANODE_ORDERBOOK_RERATING | 078600 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late | True | True |
 | T_C11_R3L107_078600_STAGE2ACTIONABLE_20240321 | 078600 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_too_late_if_orderbook_to_margin_bridge_is_confirmed | True | True |
 | R3L85_C11_078600_20240321_STAGE2_SILICON_ANODE_ORDERBOOK_BRIDGE | 078600 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_correct_if_customer_capacity_bridge_required | True | True |
+| DAEJOO_078600_2024_03_06_STAGE2_CUSTOMER_OPTIONALITY_OVERBLOCK_COUNTEREXAMPLE | 078600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_overblocks_if_all_customer_contract_risk_treated_as_call_off | True | True |
 | R3L94_C12_DAEJOO_2024_STAGE4B_SILICON_ANODE_CALLOFF_EVENT_CAP | 078600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_4B_too_late_if_silicon_anode_calloff_event_premium_not_capped | True | True |
 | None | 078600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | True | True |
 | T_C13_R3L103_078600_STAGE2ACTIONABLE_20240321 | 078600 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_too_late_when_customer_qualification_to_revenue_bridge_visible | True | True |
@@ -2059,21 +2186,25 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L94_REVIEW_R3_C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK_078600_2024_06_12_TRIGGER | 078600 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_4B_too_late_if_silicon_anode_calloff_event_premium_not_capped | True | True |
 | T_C06_R2L103_079370_20240201_Stage2_CROSS_C07 | 079370 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_C06_vs_C07_C08_C09_reroute_guard | True | True |
 | V12_COMPACT_079370_2024-02-01_Stage2 | 079370 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
+| ZEUS_079370_2024_03_06_STAGE2_FALSE_POSITIVE_WAFER_PROCESS_AUTOMATION_RS | 079370 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | T_C09_R2L111_09_079370_20240201 | 079370 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | R2L93C_C09_079370_20240222_STAGE2_FALSE_POSITIVE_WETCLEAN_CA | 079370 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_wet_clean_robot_equipment_vocabulary_overcredited | True | True |
 | TRG-C09-L115-07-079370-Stage4B-2024-03-15 | 079370 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_or_4B_too_late | True | True |
 | None | 079370 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | True | True |
+| LIGNEX1_079550_2024_03_06_STAGE2A_DEFENSE_BACKLOG_MARGIN | 079550 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_4B_too_late | True | True |
 | T_C01_R1L111_079550_20240214_Stage3-Yellow | 079550 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | strong backlog path, but C01 should defer to C03 when sovereign defense customer quality is the thesis driver | True | True |
 | None | 079550 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | None | True | True |
 | R1L99_C03_LIGNEX1_2024_STAGE2_ACTIONABLE_MISSILE_EXPORT_BACKLOG_DELIVERY_MARGIN_BRIDGE | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| T_079550_20240214_STAGE3G_REPAIR | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_too_late_if_sovereign_customer_quality_is_not_scored | False | True |
+| None | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| T_079550_20240214_STAGE3G_REPAIR | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_too_late_if_sovereign_customer_quality_is_not_scored | True | True |
 | V12_COMPACT_C03-R1L105-02_079550_2024-03-06_Stage3-Yellow | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive | True | True |
 | T_C03_R1L107_079550_20240430_STAGE3YELLOW | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | yellow_valid_but_green_requires_sovereign_customer_funding_and_margin_visibility | True | True |
 | T_C03_R1L108_079550_20240517_STAGE3_YELLOW | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
-| None | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
-| T_079550_20240306_STAGE4B_REPAIR | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_needs_local_4b_vs_green_split | False | True |
+| None | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
+| T_079550_20240306_STAGE4B_REPAIR | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_needs_local_4b_vs_green_split | True | True |
 | T_C03_R1L107_079550_20241108_STAGE4B | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | late_leader_chase_should_not_be_green_without_new_contract_or_margin_surprise | True | True |
 | T_C03_R1L108_079550_20241108_STAGE4B | 079550 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
+| TR_R13L147_4B4C_15_079550_Stage3-Yellow_2024-02-07 | 079550 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | too_late_if_system_prime_contract_not_given_yellow_credit | False | True |
 | None | 079810 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_equipment_orderbook_proxy_promotes_Yellow | True | True |
 | R3L96_C11_DENT_2024_STAGE2_FALSE_POSITIVE_BATTERY_EQUIPMENT_ORDERBOOK_WATCH | 079810 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_battery_equipment_orderbook_watch_counts_without_customer_calloff_delivery_margin_revision_bridge | True | True |
 | None | 079810 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late_if_orderbook_memory_ignores_local_peak | True | True |
@@ -2087,7 +2218,8 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R2L97_C06_JEJUSEMI_2024_STAGE4B_EDGE_AI_MEMORY_EVENT_CAP | 080220 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late_if_edge_AI_memory_event_premium_not_capped | True | True |
 | R13L91_REVIEW_R2_C06_HBM_MEMORY_CUSTOMER_CAPACITY_080220_2024_01_24_TRIGGER | 080220 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_if_AI_memory_theme_counts_without_HBM_customer_capacity_revision_bridge | True | True |
 | TRG-C06-L111-080580-Stage4B-2024-06-03 | 080580 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
-| None | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| OKINS_080580_2024_03_06_STAGE2_FALSE_POSITIVE_SOCKET_EVENT_SPIKE | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
 | TRG_R2L81-C08-080580-OKINS-ELECTRONICS-SOCKET-THEME-FADE | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | C08 should not treat socket/probe/interface theme beta as durable Stage2 unless named customer quality, reorder, utilization, delivery and margin bridge are visible. Okins Electronics had a tradable early MFE, then a severe high-MAE fade. | True | True |
 | TRG_R2L78-C08-080580-OKINS-TEST-SOCKET-THEME-FADE | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | C08 should not treat socket/connector/HBM theme beta as durable Stage2 unless customer qualification, socket reorder, shipment, ASP and margin bridge are visible. Okins Electronics had an early MFE but then opened a severe MAE drawdown path. | True | True |
 | R2L92_C08_080580_20240122_STAGE2_FALSE_POSITIVE_TEST_SOCKET_VOLATILITY | 080580 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive_if_test_socket_theme_volatility_overcredited | True | True |
@@ -2103,8 +2235,9 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R5_L122_C18_006 | 081660 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | None | 081660 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
 | R5_L122_C18_003 | 081660 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
-| None | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | False | True |
+| None | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | TRG_R5L76-C19-081660-FILA-HOLDINGS-GLOBAL-BRAND-INVENTORY-MARGIN | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | True | True |
+| FILA_081660_2024_03_06_STAGE2A_INVENTORY_NORMALIZATION_MARGIN_BUFFER | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_overblocks_if_brand_inventory_normalization_treated_as_channel_stuffing | True | True |
 | None | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | R13_CROSS_081660_2024-04-11_Stage2-Actionable-InventoryCleanup | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | True | True |
 | TRG_R5L76-C19-081660-FILA-HOLDINGS-GLOBAL-BRAND-INVENTORY-MARGIN | 081660 | C19_BRAND_RETAIL_INVENTORY_MARGIN | C19 should preserve low-MAE global brand rerating candidates when inventory destocking, channel mix, royalty/brand margin and capital return evidence are visible. FILA Holdings had modest MFE but a controlled risk profile; it still needs lifecycle monitoring if inventory/margin evidence fades. | True | True |
@@ -2121,12 +2254,14 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R1L96_C01_HANWHAENGINE_2024_STAGE2_ACTIONABLE_SHIP_ENGINE_ORDER_BACKLOG_MARGIN_BRIDGE | 082740 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | TRG_R1L83-C01-082740-HANWHA-ENGINE-MARINE-ENGINE-BACKLOG-NAME-SHARECOUNT | 082740 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | C01 can protect marine-engine positives when shipbuilding customer orderbook, delivery schedule, revenue conversion and margin bridge are visible. Hanwha Engine had large MFE and controlled early MAE, but 2024 name/share-count continuity must be validated before runtime promotion. | True | True |
 | R13L87_REVIEW_R1_C01_ORDER_BACKLOG_MARGIN_BRIDGE_082740_2024-03-14 | 082740 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
-| LOTVAC_083310_2024_02_22_STAGE2_FALSE_POSITIVE_VACUUM_EQUIP_SPIKE | 083310 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | False | True |
+| LOTVAC_083310_2024_02_22_STAGE2_FALSE_POSITIVE_VACUUM_EQUIP_SPIKE | 083310 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | TRG-C09-L116-04-083310-Stage2-2024-03-15 | 083310 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_memory_capex_proxy_is_stage2 | True | True |
-| LOTVACUUM_083310_2024_02_22_STAGE2_FALSE_POSITIVE_MEMORY_EQUIPMENT_RECOVERY | 083310 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | False | True |
-| LOTVACUUM_083310_2024_03_06_STAGE2_FALSE_POSITIVE_VACUUM_EQUIPMENT_BETA | 083310 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | False | True |
+| LOTVACUUM_083310_2024_02_22_STAGE2_FALSE_POSITIVE_MEMORY_EQUIPMENT_RECOVERY | 083310 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | True | True |
+| LOTVACUUM_083310_2024_03_06_STAGE2_FALSE_POSITIVE_VACUUM_EQUIPMENT_BETA | 083310 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | True | True |
 | R2L112-C10-004-T1 | 083310 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive_if_equipment_label_stays_actionable_after_MAE_break | True | True |
-| FNSTECH_083500_2024_03_06_STAGE2A_ADVANCED_CLEAN_PROCESS_EQUIPMENT | 083500 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | False | True |
+| R13S2_L102_T005_083310 | 083310 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | False | True |
+| R13HMG_L104_T005_083450 | 083450 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_or_late_4B_4C_under_high_MAE | False | True |
+| FNSTECH_083500_2024_03_06_STAGE2A_ADVANCED_CLEAN_PROCESS_EQUIPMENT | 083500 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | True | True |
 | C04_P1_TO50_TRG_11 | 083650 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | current_profile_false_positive | True | True |
 | None | 083650 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | None | True | True |
 | C04_STATIC_TO50_TRG_04 | 083650 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | current_profile_false_positive | True | True |
@@ -2140,21 +2275,22 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R2L77-C07-084370-EUGENE-TECH-DEPOSITION-EQUIPMENT-RS | 084370 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | C07 should preserve equipment relative-strength rows when customer capex, deposition equipment orders, delivery schedule and margin bridge are visible. Eugene Technology had a controlled-MAE rerating path; later drawdown should be lifecycle-managed, not treated as hard 4C without order or margin break. | True | True |
 | TRG_R2L77-C07-084370-EUGENE-TECH-DEPOSITION-EQUIPMENT-RS | 084370 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_correct | True | True |
 | R2L91_C07_084370_20240222_STAGE2_HBM_DEPOSITION_EQUIPMENT_ORDER_RAMP | 084370 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_correct_if_HBM_customer_order_delivery_margin_bridge_required | True | True |
+| EUGENETECH_084370_2024_03_06_STAGE2A_HBM_PROCESS_EQUIPMENT_RS | 084370 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late | True | True |
 | TRG_R2L74-C07-084370-EUGENE-TECH-DEPOSITION-EQUIPMENT-RS | 084370 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | C07 should allow Stage2 when front-end deposition equipment relative strength connects to HBM/DRAM capex, customer order visibility and margin bridge. Eugene Tech produced high MFE with limited entry MAE, but later post-peak drawdown means a lifecycle local 4B guard is needed if order/margin evidence stops refreshing. | True | True |
 | TRG_R2L74-C07-084370-EUGENE-TECH-DEPOSITION-EQUIPMENT-RS | 084370 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | C07 should allow Stage2 when front-end deposition equipment relative strength connects to HBM/DRAM capex, customer order visibility and margin bridge. Eugene Tech produced high MFE with limited entry MAE, but later post-peak drawdown means a lifecycle local 4B guard is needed if order/margin evidence stops refreshing. | True | True |
 | R2L86_C07_084370_20240528_STAGE2_FALSE_POSITIVE_LATE_EQUIPMENT_EXTENSION | 084370 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive_if_late_equipment_extension_overcredited | True | True |
 | R2_L110_C07 | 084370 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | True | True |
-| None | 084370 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 084370 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | None | 084370 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | True | True |
 | R13_CROSS_084370_2024-02-20_Stage2-Actionable | 084370 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | True | True |
-| EUGENETECH_084370_2024_03_06_STAGE2A_MEMORY_ALD_RECOVERY | 084370 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | False | True |
+| EUGENETECH_084370_2024_03_06_STAGE2A_MEMORY_ALD_RECOVERY | 084370 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | True | True |
 | R2L89_C10_EUGENETECH_2024_STAGE4B_MEMORY_EQUIPMENT_EVENT_CAP | 084370 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late_if_memory_equipment_event_premium_not_capped | True | True |
 | R13L86_REVIEW_R2_C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH_084370_2024-05-28 | 084370 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | V12_COMPACT_084990_2024-02-26_PIPELINE_SURVIVAL_BOUNCE_NOT_COMMERCIALIZATION | 084990 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
 | C23_084990_20240202_STAGE2_TRIGGER | 084990 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | None | 084990 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | None | 084990 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 must require fresh binary/data endpoint quality; reroute commercialization, device, reimbursement, or price-only events to C23/C25/local_4B as appropriate. | True | True |
-| None | 084990 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
+| None | 084990 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | C24-R7-L100-TRIG-03-084990 | 084990 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_correct | True | True |
 | C24-R7-L99-TRG-02-084990 | 084990 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_false_positive | True | True |
 | None | 084990 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
@@ -2162,6 +2298,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R7L96_C24_HELIXMITH_2024_STAGE4B_GENE_THERAPY_TRIAL_EVENT_CAP | 084990 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_4B_too_late_if_gene_therapy_trial_event_premium_not_capped | True | True |
 | C24-R7-L100-TRIG-05-084990 | 084990 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_4B_too_late | True | True |
 | R13L96_REVIEW_R7_C24_BIO_TRIAL_DATA_EVENT_RISK_084990_2024_02_06_TRIGGER | 084990 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_gene_therapy_trial_event_premium_not_capped | True | True |
+| TR_R13L147_4B4C_10_084990_Stage4C_2024-01-03 | 084990 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_hard_4c_direction_correct_but_too_permanent_without_reopen_decay_rule | False | True |
 | R13_CROSS_084990_2024-02-26_Stage2 | 084990 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | None | 084990 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
 | R13_CROSS_084990_2024-02-26_Stage2 | 084990 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
@@ -2189,7 +2326,8 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R9L73-C29-086280-GLOVIS-PCC-LOGISTICS-MARGIN-POST-CA | 086280 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should include logistics/PCC/CKD operating leverage when freight rate, capacity and capital-return bridge are visible. Because Hyundai Glovis had 2024 corporate-action candidates, the entry is placed after the 2024-08-02 candidate; the post-CA path is strong but needs source repair. | True | True |
 | TRG_R9L73-C29-086280-GLOVIS-PCC-LOGISTICS-MARGIN-POST-CA | 086280 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should include logistics/PCC/CKD operating leverage when freight rate, capacity and capital-return bridge are visible. Because Hyundai Glovis had 2024 corporate-action candidates, the entry is placed after the 2024-08-02 candidate; the post-CA path is strong but needs source repair. | True | True |
 | R2L91_C07_086390_20240308_STAGE2_FALSE_POSITIVE_MEMORY_TESTER_THEME | 086390 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive_if_memory_tester_MFE_overcredited | True | True |
-| UNITEST_086390_2024_03_06_STAGE2A_ADVANCED_MEMORY_TEST_EQUIPMENT | 086390 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | False | True |
+| C08_086390_2024_03_06_STAGE2_ACTIONABLE_MEMORY_TESTER_CUSTOMER_REPEAT_DEMAND_RECOVERY | 086390 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
+| UNITEST_086390_2024_03_06_STAGE2A_ADVANCED_MEMORY_TEST_EQUIPMENT | 086390 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | True | True |
 | T_C11_R3L107_086520_STAGE4B_20240202 | 086520 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_needs_high_MAE_guard_before_green | True | True |
 | R3L93_C13_086520_20240426_STAGE2_FALSE_POSITIVE_AMPC_HOLDCO | 086520 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive_if_AMPC_holdco_or_cathode_cycle_vocabulary_overcredited | True | True |
 | T_C13_R3L104_086520_STAGE3YELLOW_20240202 | 086520 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
@@ -2198,19 +2336,20 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R9L93_C14_ECOPRO_2024_STAGE4B_PARENT_EV_DEMAND_SLOWDOWN_EVENT_CAP | 086520 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4B_too_late_if_parent_battery_EV_demand_slowdown_rebound_premium_not_capped | True | True |
 | R13L93_REVIEW_R9_C14_EV_DEMAND_SLOWDOWN_4B_4C_086520_2024_07_08_TRIGGER | 086520 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_parent_battery_EV_demand_slowdown_rebound_premium_not_capped | True | True |
 | R1L117-C01-007 | 086670 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | False | True |
-| V12_COMPACT_C21-HANA-20240201_086790_2024-02-01_Stage2_Actionable_CapitalReturn_ValueUp_Bridge | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive | False | True |
+| R1L117-C01-007 | 086670 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | False | True |
+| V12_COMPACT_C21-HANA-20240201_086790_2024-02-01_Stage2_Actionable_CapitalReturn_ValueUp_Bridge | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive | True | True |
 | R6L88_C21_HANAFG_2024_STAGE2_ACTIONABLE_VALUEUP_CAPITAL_RETURN | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R6L85_C21_086790_20240129_STAGE2_BANK_CAPITAL_RETURN_BRIDGE | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_correct_if_capital_return_bridge_required | True | True |
 | R6L98_C21_HANAFIN_2024_STAGE2_ACTIONABLE_BANK_ROE_PBR_CAPITAL_RETURN_BRIDGE | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | None | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
-| None | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
+| None | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | None | 086790 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | R12L91_C31_086790_20240129_STAGE2_VALUEUP_POLICY_CAPITAL_RETURN | 086790 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct_if_policy_timetable_payout_capital_return_cash_bridge_required | True | True |
 | TRIG_C31_R11L100_002_086790 | 086790 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct | True | True |
 | V12_COMPACT_086790_2024-02-29_policy_valueup_bank_capital_return_cash_bridge | 086790 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct | True | True |
 | V12_COMPACT_086790_2024-04-26_policy_valueup_bank_brokerage_ROE_PBR_capital_return_execution_bridge | 086790 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct | True | True |
 | C31_R11L106_TRG_02 | 086790 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
-| None | 086790 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 086790 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | T_C32_R12L106_086790_20240226_Stage3-Yellow | 086790 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | cash return bridge is real, but C21 should own the scoring; C32 only tags governance/value-up contamination | True | True |
 | None | 086790 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | None | 086790 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
@@ -2222,7 +2361,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R7L89_C23_MEDITOX_2024_STAGE2_FALSE_POSITIVE_REGULATORY_COMMERCIALIZATION | 086900 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive_if_regulatory_or_litigation_theme_counts_without_commercialization_bridge | True | True |
 | V12_COMPACT_086900_2024-03-21_REGULATORY_CLEARANCE_EXPORT_REORDER_BRIDGE | 086900 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
 | R7L85_C23_086900_20240627_STAGE2_FALSE_POSITIVE_REGULATORY_LEGAL_THEME | 086900 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive_if_regulatory_legal_theme_overcredited | True | True |
-| None | 086900 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
+| None | 086900 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | R13L85_REVIEW_R7_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION_086900_2024-06-27 | 086900 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | T_C21_R6L104_088350_STAGE2_20240201 | 088350 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive | True | True |
 | None | 088350 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
@@ -2230,7 +2369,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | R6L41_C22_088350_T1_STAGE2_POLICY_ONLY | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive | True | True |
 | C22-R6-L101-07-T1 | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | false_positive_life_rate_beta_without_csm_or_capital_return_bridge | True | True |
-| None | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | False | True |
+| None | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | R6L89_C22_HANWHALIFE_2024_STAGE2_ACTIONABLE_RATE_VALUEUP_BRIDGE | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R6L97_C22_HANWHALIFE_2024_STAGE2_FALSE_POSITIVE_LIFE_RATE_SENSITIVITY_RESERVE_WATCH | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive_if_life_insurer_rate_sensitivity_watch_counts_without_CSM_reserve_capital_return_revision_bridge | True | True |
 | None | 088350 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
@@ -2246,17 +2385,17 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | C31_R11L106_TRG_19 | 088350 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | TRIG_C31_R11L100_007_088350 | 088350 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
 | R13L93_REVIEW_R6_C22_INSURANCE_RATE_CYCLE_RESERVE_088350_2024_02_05_TRIGGER | 088350 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_life_insurance_rate_cycle_event_premium_not_capped | True | True |
-| TECHWING_089030_2024_03_05_STAGE2A_HBM_TEST_HANDLER_CAPACITY | 089030 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | False | True |
+| TECHWING_089030_2024_03_05_STAGE2A_HBM_TEST_HANDLER_CAPACITY | 089030 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | True | True |
 | TRG_C06_R2_L109_089030_20240322_HBM_TESTER_CAPACITY_PROXY | 089030 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_missed_structural | True | True |
 | T_C06_R2L103_089030_20240201_Stage3Yellow_CROSS_C07 | 089030 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_C06_vs_C07_C08_C09_reroute_guard | True | True |
-| V12_COMPACT_089030_2024-05-20_C07_HBM_TEST_HANDLER_ORDER_RAMP_RELATIVE_STRENGTH | 089030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | False | True |
+| V12_COMPACT_089030_2024-05-20_C07_HBM_TEST_HANDLER_ORDER_RAMP_RELATIVE_STRENGTH | 089030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | R2L94_C07_TECHWING_2024_STAGE2_ACTIONABLE_HBM_TEST_HANDLER_ORDER_CAPACITY_BRIDGE | 089030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| TECHWING_089030_2024_02_22_STAGE2A_HBM_TEST_HANDLER_ORDER_RS | 089030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late | False | True |
+| TECHWING_089030_2024_02_22_STAGE2A_HBM_TEST_HANDLER_ORDER_RS | 089030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late | True | True |
 | C07_R2L90_089030_20240222_STAGE2A | 089030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late | True | True |
 | V12_COMPACT_089030_2024-02-01_Stage3-Yellow | 089030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | C07_R2L90_089030_20240711_STAGE4B_OVERLAY | 089030 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late | True | True |
-| TECHWING_089030_2024_03_06_STAGE2A_MEMORY_TEST_HANDLER_CUSTOMER_QUALITY | 089030 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | False | True |
-| None | 089030 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| TECHWING_089030_2024_03_06_STAGE2A_MEMORY_TEST_HANDLER_CUSTOMER_QUALITY | 089030 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
+| None | 089030 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | R2L93B_C09_089030_20240222_STAGE2_HBM_HANDLER_ORDER | 089030 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_correct_if_order_delivery_revision_margin_cash_bridge_required_but_Green_strict | True | True |
 | TRG-C09-L115-02-089030-Stage2Actionable-2024-03-15 | 089030 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_missed_structural_if_forced_into_price_only_blowoff_bucket | True | True |
 | T_C09_R2L111_02_089030_20240201 | 089030 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
@@ -2265,10 +2404,11 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R9L81-C29-089590-JEJU-AIR-LCC-PASSENGER-YIELD-FADE | 089590 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should not treat LCC passenger recovery beta as durable Stage2 unless passenger volume, load factor, yield, fuel cost and operating margin bridge are visible. Jeju Air had almost no forward MFE after entry and then a persistent high-MAE path. | True | True |
 | None | 089590 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | True | True |
 | R13_CROSS_089590_2024-01-05_Stage4B-Local-AirlinePassengerBeta | 089590 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
+| C26-L104-06-089600-T1 | 089600 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | T_C26_R8L106_02_089600_STAGE2_Stage2_2024-02-15 | 089600 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | R8L92_C26_NASMEDIA_2024_STAGE2_FALSE_POSITIVE_DIGITAL_AD_REP_RECOVERY | 089600 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive_if_digital_ad_recovery_counts_without_traffic_budget_margin_revision_bridge | True | True |
 | V12_COMPACT_089600_2024-03-21_platform_ad_budget_retention_opm_bridge_cleanup | 089600 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| None | 089600 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 089600 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | R8L83_C26_089600_20240411_STAGE2_FALSE_POSITIVE_ADTECH_RECOVERY | 089600 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | R8L85_C26_089600_20240124_STAGE2_FALSE_POSITIVE_DIGITAL_AD_BETA | 089600 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive_if_ad_beta_overcredited | True | True |
 | R13L83_HIGHMAE_REVIEW_089600_2024-04-11 | 089600 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
@@ -2276,21 +2416,23 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L92_REVIEW_R8_C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE_089600_2024_01_24_TRIGGER | 089600 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive_if_digital_ad_recovery_counts_without_traffic_budget_margin_revision_bridge | True | True |
 | R2L84_C07_089790_20240328_STAGE2_FALSE_POSITIVE_TEST_HANDLER_NO_ORDER_BRIDGE | 089790 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive_if_order_bridge_missing | True | True |
 | R2L98_C07_JT_2024_STAGE4B_TEST_HANDLER_HBM_EQUIPMENT_EVENT_CAP | 089790 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late_if_test_handler_HBM_equipment_event_premium_not_capped | True | True |
-| None | 089790 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| C08_089790_2024_03_06_STAGE2_TEST_HANDLER_CUSTOMER_QUALITY_BRIDGE_ABSENT | 089790 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
+| None | 089790 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | R2L97_C08_JT_2024_STAGE4B_TEST_HANDLER_EVENT_CAP | 089790 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late_if_test_handler_event_premium_not_capped | True | True |
-| JT_089790_2024_03_06_STAGE2_FALSE_POSITIVE_ADVANCED_HANDLER_TEST_EQUIPMENT | 089790 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | False | True |
+| JT_089790_2024_03_06_STAGE2_FALSE_POSITIVE_ADVANCED_HANDLER_TEST_EQUIPMENT | 089790 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | None | 089790 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | None | 089790 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | None | True | True |
 | TRG_R9L82-C29-089860-LOTTE-RENTAL-FLEET-UTILIZATION-MARGIN | 089860 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should allow rental/mobility positives only when fleet utilization, used-car residual value, pricing, rental demand, revenue conversion and margin bridge are visible. Lotte Rental produced bounded MAE and later MFE, so it is a protected RiskWatch/Stage2-Yellow candidate after source repair rather than forced 4B. | True | True |
 | None | 089860 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | True | True |
 | R13_CROSS_089860_2024-02-23_Stage2-Actionable-FleetUtilizationMarginBridge | 089860 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| V12_COMPACT_089890_2024-06-12_C07_LASER_EQUIPMENT_EVENT_SPIKE_NO_ORDER_BRIDGE | 089890 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | False | True |
-| KOSES_089890_2024_01_24_STAGE2A_ADVANCED_PACKAGING_LASER_EQUIPMENT | 089890 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | False | True |
+| V12_COMPACT_089890_2024-06-12_C07_LASER_EQUIPMENT_EVENT_SPIKE_NO_ORDER_BRIDGE | 089890 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
+| KOSES_089890_2024_01_24_STAGE2A_ADVANCED_PACKAGING_LASER_EQUIPMENT | 089890 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | True | True |
 | TRG-C09-L116-02-089890-Stage4B-2024-03-15 | 089890 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late_if_equipment_theme_promoted_to_yellow | True | True |
 | None | 089890 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | True | True |
-| None | 089970 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
-| VM_089970_2024_06_11_STAGE2_FALSE_POSITIVE_ADV_EQUIP_BLOWOFF | 089970 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | False | True |
-| VM_APTC_089970_2024_03_06_STAGE2A_ADVANCED_ETCH_EQUIPMENT | 089970 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | False | True |
+| None | 089970 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| VM_089970_2024_06_11_STAGE2_FALSE_POSITIVE_ADV_EQUIP_BLOWOFF | 089970 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
+| VM_APTC_089970_2024_03_06_STAGE2A_ADVANCED_ETCH_EQUIPMENT | 089970 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | True | True |
+| TRG-C09-L117-01-089970-Stage2Actionable-2025-01-02 | 089970 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_too_late_if_dry_etch_order_revenue_bridge_is_treated_as_generic_memory_beta | True | True |
 | None | 089980 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_correct_for_Actionable_but_Yellow_requires_margin_bridge | True | True |
 | R3L89_C11_089980_20240522_STAGE2_FALSE_POSITIVE_SEPARATOR_MATERIALS | 089980 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_separator_materials_rebound_overcredited | True | True |
 | V12_COMPACT_C12_R3L105_089980_20240430_14_089980_2024-04-30_Stage2 | 089980 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
@@ -2303,12 +2445,13 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L86_REVIEW_R9_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_090080_2024-02-02 | 090080 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | C19_R5L120_06_090430_Stage2_2024-05-31 | 090430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | R5L90_C19_090430_20240412_STAGE2_BEAUTY_CHANNEL_MARGIN | 090430 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct_if_channel_inventory_sellthrough_margin_bridge_required | True | True |
-| None | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | False | True |
+| None | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | True | True |
 | C20_R5L119_090430_20240531_07_Stage2 | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | True | True |
 | R5L91_C20_AMOREPACIFIC_2024_STAGE2_ACTIONABLE_KBEAUTY_GLOBAL_CHANNEL_REORDER | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | None | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | False | True |
 | R5L85_C20_090430_20240531_STAGE2_FALSE_POSITIVE_BEAUTY_CHANNEL_SPIKE | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive_if_channel_spike_overcredited | True | True |
 | R5L83_C20_090430_20240531_STAGE2_KBEAUTY_CHINA_REBOUND_FALSE_POSITIVE | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | True | True |
+| R5L10_C20_AMORE_T2_20210510 | 090430 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | True | True |
 | R13L85_REVIEW_R5_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_090430_2024-05-31 | 090430 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | T_R13_STAGE2FP_L6_090430_Stage2FalsePositive_2024-05-31 | 090430 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_stage2_false_positive_or_overpromotion_risk | True | True |
 | R3L93_C14_091580_20240307_STAGE2_FALSE_POSITIVE_BATTERYCAN_PARTS | 091580 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive_if_battery_parts_capacity_vocabulary_overcredited_under_EV_slowdown | True | True |
@@ -2317,7 +2460,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R10L96_C30_NAMHWA_2024_STAGE4B_LOCAL_BUILDER_PF_EVENT_CAP | 091590 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_4B_too_late_if_local_builder_PF_event_premium_not_capped | True | True |
 | R13L88_REVIEW_R10_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_091590_2024-01-02 | 091590 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L96_REVIEW_R10_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_091590_2024_01_02_TRIGGER | 091590 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_local_builder_PF_event_premium_not_capped | True | True |
-| None | 091700 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 091700 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | TRG_R9L81-C29-091810-TWAY-LCC-ROUTE-YIELD-SHARECOUNT-LIFECYCLE | 091810 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 can allow airline/LCC positives only when passenger volume, route expansion, load factor, yield, fuel-cost sensitivity and margin bridge are visible. T'way produced later MFE but had large interim MAE and stock-web share-count changes, so source repair and share-count validation are mandatory. | True | True |
 | TRG_R12L74-C32-091810-TWAY-AIR-CONTROL-PREMIUM-DISPUTE-LIFECYCLE | 091810 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | C32 should allow a delayed control-premium dispute candidate when stake accumulation, management-rights pressure and strategic airline-route economics become credible. T'way produced a large MFE into early 2025, but the later collapse requires lifecycle local 4B if control-premium or route/capacity execution evidence fades. | True | True |
 | TRG_R12L74-C32-091810-TWAY-AIR-CONTROL-PREMIUM-DISPUTE-LIFECYCLE | 091810 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | C32 should allow a delayed control-premium dispute candidate when stake accumulation, management-rights pressure and strategic airline-route economics become credible. T'way produced a large MFE into early 2025, but the later collapse requires lifecycle local 4B if control-premium or route/capacity execution evidence fades. | True | True |
@@ -2327,6 +2470,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R9L88_C29_092200_20240626_STAGE2_FALSE_POSITIVE_EV_DRIVETRAIN_SPIKE | 092200 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive_if_late_EV_drivetrain_spike_overcredited | True | True |
 | R13L88_REVIEW_R9_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_092200_2024-06-26 | 092200 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L90_REVIEW_R9_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_092200_2024_06_26_TRIGGER | 092200 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_if_EV_reducer_parts_theme_counts_without_volume_margin_revision_bridge | True | True |
+| C02-R1-L143-04-092220-Stage2 | 092220 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive | True | True |
 | R9L90_C29_092780_20240422_STAGE2_POWERTRAIN_PISTON_VOLUME | 092780 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct_if_OEM_volume_mix_margin_cash_bridge_required | True | True |
 | R2L98_C07_EXICON_2024_STAGE2_FALSE_POSITIVE_HBM_TESTER_POST_CA_RS_WATCH | 092870 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive_if_HBM_tester_RS_watch_counts_without_customer_order_qualification_utilization_margin_revision_bridge | True | True |
 | R2L84_C07_092870_20240926_STAGE2_FALSE_POSITIVE_HBM_TESTER_REBOUND | 092870 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive_if_relative_strength_overcredited | True | True |
@@ -2334,22 +2478,22 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R2L92_C08_092870_20240228_STAGE2_MEMORY_TESTER_CUSTOMER_QUALITY | 092870 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_correct_if_customer_qualification_order_delivery_margin_cash_bridge_required_and_data_quality_repaired | True | True |
 | TRG_R2L73-C08-092870-EXICON-HBM-TESTER-POST-CA-ADOPTION-BRIDGE | 092870 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | C08 can permit Stage2 when tester demand is tied to verified customer adoption/reorder and the entry window is after corporate-action contamination. Exicon's post-CA path had strong MFE with controlled MAE, but source repair is required before runtime promotion. | True | True |
 | TRG_R2L73-C08-092870-EXICON-HBM-TESTER-POST-CA-ADOPTION-BRIDGE | 092870 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | C08 can permit Stage2 when tester demand is tied to verified customer adoption/reorder and the entry window is after corporate-action contamination. Exicon's post-CA path had strong MFE with controlled MAE, but source repair is required before runtime promotion. | True | True |
-| None | 092870 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
-| None | 092870 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 092870 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| None | 092870 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | None | 092870 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | True | True |
 | None | 093050 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
 | R5_L122_C18_001 | 093050 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
-| None | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | False | True |
+| None | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | TRG_R5L76-C19-093050-LF-APPAREL-BRAND-INVENTORY-MARGIN-RECOVERY | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | True | True |
-| LF_093050_2024_03_07_STAGE2A_APPAREL_INVENTORY_MARGIN_STABLE | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct | False | True |
+| LF_093050_2024_03_07_STAGE2A_APPAREL_INVENTORY_MARGIN_STABLE | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct | True | True |
 | C19_R5L119_01_093050_Stage2_Actionable_2024-03-27 | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
-| 093050_2024-11-15_Stage2_Actionable_C19_RETAIL_BRAND_INVENTORY_CLEAN_VALUE_POSITIVE | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct | False | True |
+| 093050_2024-11-15_Stage2_Actionable_C19_RETAIL_BRAND_INVENTORY_CLEAN_VALUE_POSITIVE | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct | True | True |
 | TRG_R5L76-C19-093050-LF-APPAREL-BRAND-INVENTORY-MARGIN-RECOVERY | 093050 | C19_BRAND_RETAIL_INVENTORY_MARGIN | C19 should allow slow brand/retail positives when inventory normalization, DTC/channel mix, markdown control and margin bridge are visible. LF produced a moderate MFE with controlled MAE; not explosive, but useful to avoid overfitting C19 only to high-beta consumer names. | True | True |
 | V12_COMPACT_C20_R5L120_093050_20240327_08_093050_2024-03-27_Stage2-Actionable | 093050 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | True | True |
 | R3L95_C13_FOOSUNG_2024_STAGE2_FALSE_POSITIVE_ELECTROLYTE_FLUOROCHEM_AMPC_WATCH | 093370 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive_if_electrolyte_fluorochem_AMPC_watch_counts_without_utilization_margin_revision_bridge | True | True |
 | R3L88_C14_093370_20240126_4B_ELECTROLYTE_DEMAND_SLOWDOWN | 093370 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_correct_if_C14_blocks_Yellow_Green_under_demand_slowdown | True | True |
 | T_C15_R4L105_093370_20240321_06_Stage2 | 093370 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive | True | True |
-| FOOSUNG_093370_2024_02_15_STAGE2_FALSE_POSITIVE_FLUOROCHEMICAL_SPREAD | 093370 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_false_positive | False | True |
+| FOOSUNG_093370_2024_02_15_STAGE2_FALSE_POSITIVE_FLUOROCHEMICAL_SPREAD | 093370 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_false_positive | True | True |
 | T_C17_R4L105_02_093370_Stage2_20240321 | 093370 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_false_positive | True | True |
 | None | 093370 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
 | R13L88_REVIEW_R3_C14_EV_DEMAND_SLOWDOWN_4B_4C_093370_2024-01-26 | 093370 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
@@ -2370,19 +2514,19 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L93_REVIEW_R1_C05_EPC_MEGA_CONTRACT_MARGIN_GAP_094820_2024_05_27_TRIGGER | 094820 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_power_plant_service_EPC_event_premium_not_capped | True | True |
 | R13L85_REVIEW_R1_C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY_094820_2024-04-05 | 094820 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | R13L90_REVIEW_R1_C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY_094820_2024_04_05_TRIGGER | 094820 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_nuclear_maintenance_theme_premium_not_capped | True | True |
-| None | 095190 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 095190 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | R11L90_C03_095190_20240215_STAGE2_FALSE_POSITIVE_DUALUSE_MACHINING | 095190 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_dualuse_machining_MFE_overcredited | True | True |
-| ISC_095340_2024_03_08_STAGE2_FALSE_POSITIVE_HBM_SOCKET_CAPACITY | 095340 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | False | True |
+| ISC_095340_2024_03_08_STAGE2_FALSE_POSITIVE_HBM_SOCKET_CAPACITY | 095340 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
 | TRG-C06-L110-095340-Stage3Yellow-2024-04-01 | 095340 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
 | C08_R2L97_095340_STAGE2A_20240215_CUSTOMER_QUALITY_SOCKET_BRIDGE | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_too_late | True | True |
-| ISC_095340_2024_02_22_STAGE2A_SOCKET_QUALIFICATION | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | False | True |
-| ISC_095340_2024_03_06_STAGE2A_TEST_SOCKET_CUSTOMER_QUALITY | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | False | True |
+| ISC_095340_2024_02_22_STAGE2A_SOCKET_QUALIFICATION | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
+| ISC_095340_2024_03_06_STAGE2A_TEST_SOCKET_CUSTOMER_QUALITY | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
 | C08_R2_L112_002_095340_Stage2_Actionable | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_too_late | True | True |
-| None | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | R2L93_C08_095340_20240308_STAGE2_FALSE_POSITIVE_SOCKET_MFE_DECAY | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive_if_test_socket_price_MFE_overcredited | True | True |
-| None | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
-| C08_095340_2024_03_28_TEST_SOCKET_BLOWOFF_4B_GUARD_Stage4B | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | False | True |
-| TRG_C09_R2L98_ISC_20240328_4B_BLOWOFF_GUARD | 095340 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_correct | False | True |
+| None | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| C08_095340_2024_03_28_TEST_SOCKET_BLOWOFF_4B_GUARD_Stage4B | 095340 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
+| TRG_C09_R2L98_ISC_20240328_4B_BLOWOFF_GUARD | 095340 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_correct | True | True |
 | None | 095340 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | None | 095340 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | None | 095340 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
@@ -2395,9 +2539,11 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | V12_COMPACT_095610_2024-02-15_Stage2 | 095610 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | TRG_R2L74-C07-095610-TES-HBM-EQUIPMENT-BETA-BRIDGE-FADE | 095610 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | C07 should not treat a one-month equipment beta spike as durable Stage2 unless named customer order, HBM-related capex, backlog or margin bridge refreshes. TES had strong initial MFE but later opened severe MAE and drawdown, making it a local 4B-watch / false Stage2 row. | True | True |
 | R2_L110_C07 | 095610 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | True | True |
+| TES_095610_2024_03_06_STAGE2A_HBM_DEPOSITION_EQUIPMENT_RS | 095610 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late | True | True |
 | TRG_R2L74-C07-095610-TES-HBM-EQUIPMENT-BETA-BRIDGE-FADE | 095610 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | C07 should not treat a one-month equipment beta spike as durable Stage2 unless named customer order, HBM-related capex, backlog or margin bridge refreshes. TES had strong initial MFE but later opened severe MAE and drawdown, making it a local 4B-watch / false Stage2 row. | True | True |
 | T_C09_R2L111_10_095610_20240215 | 095610 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
-| TES_095610_2024_03_06_STAGE2A_MEMORY_EQUIPMENT_RECOVERY | 095610 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | False | True |
+| TES_095610_2024_04_15_STAGE2_FALSE_POSITIVE_MEMORY_EQUIP_SPIKE | 095610 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | True | True |
+| TES_095610_2024_03_06_STAGE2A_MEMORY_EQUIPMENT_RECOVERY | 095610 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | True | True |
 | R2L89_C10_TES_2024_STAGE2_FALSE_POSITIVE_DEPOSITION_THEME | 095610 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive_if_deposition_equipment_theme_counts_without_customer_order_revision_bridge | True | True |
 | R2L98_C10_TES_2024_STAGE4B_CVD_MEMORY_RECOVERY_EQUIPMENT_EVENT_CAP | 095610 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late_if_CVD_memory_recovery_equipment_event_premium_not_capped | True | True |
 | V12_COMPACT_C27-R8-L101-003_095660_2024-02-02_single_title_global_console_ip_label_without_new_monetization_bridge | 095660 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive | True | True |
@@ -2415,11 +2561,13 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | T_C13_R3L105_096770_STAGE2ACTIONABLE_20240129 | 096770 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | V12_COMPACT_C13-102-03_096770_2024-01-31_Stage2-Actionable | 096770 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive | True | True |
 | None | 096770 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
+| SKINNOVATION_096770_2024_03_06_STAGE4C_JV_UTILIZATION_AMPC_CASH_RISK | 096770 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_4C_too_late_if_AMPC_JV_narrative_overcredited | True | True |
 | R9L93_C14_SKINNOVATION_2024_STAGE2_ACTIONABLE_INTEGRATED_BATTERY_REFINING_FUNDING_BRIDGE | 096770 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R3L100-C14-002-T1 | 096770 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive_if_integrated_refining_cashflow_masks_battery_demand_reset | True | True |
 | C14-R3L97-04-096770-Stage4C-2025-01-31 | 096770 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_correct_but_requires_post_corporate_action_entry | True | True |
 | R13L87_REVIEW_R3_C13_BATTERY_JV_UTILIZATION_AMPC_IRA_096770_2024-01-22 | 096770 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
 | R13L93_REVIEW_R9_C14_EV_DEMAND_SLOWDOWN_4B_4C_096770_2024_01_24_TRIGGER | 096770 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
+| HJSHIP_097230_2024_03_06_STAGE2_FALSE_POSITIVE_BACKLOG_HEADLINE | 097230 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | True | True |
 | TRG_R1L73-C01-097230-HJSC-ORDER_BETA_WEAK_MARGIN_CONVERSION | 097230 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | C01 should not treat shipbuilding/construction order beta as Stage2 unless backlog quality and margin conversion are explicit. HJ Heavy produced a short MFE but later opened drawdown, making it a false Stage2 / local 4B-watch candidate. | True | True |
 | TRG_R1L73-C01-097230-HJSC-ORDER_BETA_WEAK_MARGIN_CONVERSION | 097230 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | C01 should not treat shipbuilding/construction order beta as Stage2 unless backlog quality and margin conversion are explicit. HJ Heavy produced a short MFE but later opened drawdown, making it a false Stage2 / local 4B-watch candidate. | True | True |
 | R1L87_C01_097230_20240207_STAGE2_FALSE_POSITIVE_SHIPBUILDING_BACKLOG | 097230 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive_if_backlog_theme_overcredited | True | True |
@@ -2431,15 +2579,19 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 097950 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
 | TRG_R5L79-C18-097950-CJ-CHEILJEDANG-KFOOD-GLOBAL-CHANNEL-REORDER | 097950 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | C18 should allow K-food/global food positives when overseas channel reorder, distribution expansion, volume growth, price/mix and margin bridge are visible. CJ CheilJedang produced strong MFE with bounded entry-basis MAE, but later drawdown means channel/revenue/margin evidence must refresh. | True | True |
 | TRG_R5L77-C18-097950-CJ-CHEILJEDANG-KFOOD-CHANNEL-MARGIN-LIFECYCLE | 097950 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | C18 should preserve large-cap food export/channel positives when global channel reorder, product mix, price-cost spread and margin bridge are visible. CJ CheilJedang produced moderate MFE with controlled MAE, then faded; it should be lifecycle-managed rather than treated as permanent Green. | True | True |
+| R5L12_C18_CJFOOD_T2_REJECT_20230510 | 097950 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
+| TRG_C18_R5_L103_097950_Stage4B_2024-06-17 | 097950 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | R5L91_C20_CJFOOD_2024_STAGE4B_GLOBAL_FOOD_MARGIN_DISTRIBUTION_CAP | 097950 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_4B_too_late_if_global_food_margin_distribution_premium_not_capped | True | True |
 | R13L91_REVIEW_R5_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_097950_2024_06_26_TRIGGER | 097950 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_global_food_margin_distribution_premium_not_capped | True | True |
+| MICROCONTACT_098120_2024_03_06_STAGE2_FALSE_POSITIVE_SOCKET_THEME | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
 | R2L92_C08_MICROCONTACT_2024_STAGE2_FALSE_POSITIVE_SOCKET_THEME | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive_if_socket_theme_counts_without_customer_quality_margin_revision_bridge | True | True |
 | R2L96_C08_MICONSO_2024_STAGE2_FALSE_POSITIVE_TEST_SOCKET_CHANNEL_WATCH | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive_if_test_socket_channel_watch_counts_without_customer_order_ASP_margin_revision_bridge | True | True |
-| None | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | TRG_R2L78-C08-098120-MICROCONTACTSOL-IC-SOCKET-CUSTOMER-QUALITY-FADE | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | C08 should not treat IC-socket/test-parts exposure as durable Stage2 unless customer quality, socket demand, order visibility and margin bridge refreshes. Micro Contact Solution had limited MFE and then a large MAE drawdown. | True | True |
 | TRG_R2L81-C08-098120-MICROCONTACTSOL-TEST-SOCKET-THEME-FADE | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | C08 should not treat IC/test-socket theme beta as durable Stage2 unless customer quality, reorder cadence, delivery/revenue and margin bridge are visible. Micro Contact Solution had only small early MFE and then severe MAE. | True | True |
 | R2L87_C08_098120_20240429_STAGE2_FALSE_POSITIVE_SOCKET_THEME_REBOUND | 098120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive_if_socket_theme_rebound_overcredited | True | True |
 | R13L87_REVIEW_R2_C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY_098120_2024-04-29 | 098120 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
+| R13L10_X02_098120_Stage2-Actionable_candidate_rejected | 098120 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L96_REVIEW_R2_C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY_098120_2024_04_24_TRIGGER | 098120 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_test_socket_channel_watch_counts_without_customer_order_ASP_margin_revision_bridge | True | True |
 | R13L92_REVIEW_R2_C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY_098120_2024_03_08_TRIGGER | 098120 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive_if_socket_theme_counts_without_customer_quality_margin_revision_bridge | True | True |
 | TRG-C09-L116-05-098460-Stage2Actionable-2024-06-17 | 098460 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_too_conservative_if_inspection_recovery_is_forced_to_4B_after_drawdown | True | True |
@@ -2457,10 +2609,11 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 099190 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | R7L83_C25_099190_20240110_STAGE2_FALSE_POSITIVE_CGM_REIMBURSEMENT | 099190 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
 | R7L92_C25_099190_20240111_STAGE2_FALSE_POSITIVE_CGM_REIMBURSEMENT | 099190 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive_if_CGM_reimbursement_vocabulary_overcredited | True | True |
+| R7L104-C25-T03 | 099190 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_too_late | True | True |
 | R13_L106_T19_099190 | 099190 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
 | T_C03_R1L107_099320_20240312_STAGE2 | 099320 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | space_defense_label_has_optional_value_but_sovereign_order_bridge_missing | True | True |
 | T_C03_R1L108_099320_20240411_STAGE2 | 099320 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
-| None | 099320 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 099320 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | R1L89_C03_099320_20240424_STAGE2_FALSE_POSITIVE_SPACE_DEFENSE_THEME | 099320 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_space_defense_theme_overcredited | True | True |
 | R11L84_C03_099320_20240701_STAGE2_FALSE_POSITIVE_SPACE_DEFENSE_THEME | 099320 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_space_defense_theme_overcredited | True | True |
 | R11L89_C03_SATRECINITIATIVE_2024_STAGE4B_SPACE_DEFENSE_THEME_CAP | 099320 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_4B_too_late_if_space_defense_theme_premium_not_capped | True | True |
@@ -2469,6 +2622,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | V12_COMPACT_R13_STAGE2FP_L8_17_099390_2024-06-13_STAGE2ACTIONABLE_099390_2024-06-13_stage2_source_proxy_deep_MAE_false_positive_review | 099390 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
 | TRG_R1L77-C01-100090-SK-OCEANPLANT-OFFSHORE-ORDERBOOK-BETA-FADE | 100090 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | True | True |
 | TRG_R1L77-C01-100090-SK-OCEANPLANT-OFFSHORE-ORDERBOOK-BETA-FADE | 100090 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | C01 should not treat offshore plant / orderbook beta as durable Stage2 unless project award, backlog conversion, delivery schedule, utilization and margin bridge are visible. SK Oceanplant had only small MFE and then a large MAE drawdown, making it local 4B-watch rather than a backlog Green. | True | True |
+| R13_HIGHMAE_L143_100090_20240822_TRG | 100090 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_or_persistence_error_if_Stage2_Stage3_not_capped | False | True |
 | None | 100120 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | None | 100120 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | V12_COMPACT_C25_R7L107_100120_20240826_Stage3_Yellow_100120_2024-08-26_Stage3-Yellow | 100120 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
@@ -2487,8 +2641,8 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R3L92_C14_101360_20240111_STAGE2_FALSE_OVERBLOCK_PRECURSOR_RAMP | 101360 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive_if_EV_slowdown_guard_ignores_customer_capacity_ramp_bridge | True | True |
 | T_C06_R2L103_101490_20240306_Stage4B_CROSS_C07 | 101490 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_C06_vs_C07_C08_C09_reroute_guard | True | True |
 | V12_COMPACT_101490_2024-03-06_Stage4B | 101490 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
-| None | 101490 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
-| SNSTECH_101490_2024_03_06_STAGE2_FALSE_POSITIVE_ADVANCED_MASK_PREMIUM | 101490 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | False | True |
+| None | 101490 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| SNSTECH_101490_2024_03_06_STAGE2_FALSE_POSITIVE_ADVANCED_MASK_PREMIUM | 101490 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | TRG-C09-L115-06-101490-Stage2-2024-03-15 | 101490 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_technology_scarcity_promoted | True | True |
 | R2L93B_C09_101490_20240228_STAGE2_FALSE_POSITIVE_MASKBLANK_DECAY | 101490 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_maskblank_EUV_vocabulary_overcredited | True | True |
 | T_C09_R2L111_07_101490_20240306 | 101490 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
@@ -2496,10 +2650,10 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R5L94_C18_HAITAI_2024_STAGE2_FALSE_POSITIVE_SNACK_RETAIL_EXPORT_THEME | 101530 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive_if_snack_retail_export_theme_counts_without_reorder_channel_margin_revision_bridge | True | True |
 | R5L89_C18_101530_20240614_STAGE2_FALSE_POSITIVE_SNACK_LATE_THEME | 101530 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive_if_snack_theme_spike_overcredited | True | True |
 | R13L94_REVIEW_R5_C18_CONSUMER_EXPORT_CHANNEL_REORDER_101530_2024_02_01_TRIGGER | 101530 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive_if_snack_retail_export_theme_counts_without_reorder_channel_margin_revision_bridge | True | True |
-| None | 102120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 102120 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | None | 102260 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
 | C03_R1L111_003_TRIGGER | 103140 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive | True | True |
-| None | 103140 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 103140 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | TRG_R1L82-C03-103140-POONGSAN-AMMO-EXPORT-BACKLOG-MARGIN | 103140 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | C03 should protect defense/ammunition positives only when export backlog, customer country/program, delivery schedule, metal spread, revenue recognition and margin bridge are visible. Poongsan produced a very large MFE with shallow entry-basis MAE, but post-peak drawdown requires lifecycle 4B if backlog/margin evidence fades. | True | True |
 | TRG_R11L79-C03-103140-POONGSAN-AMMO-EXPORT-DEMAND-BACKLOG | 103140 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | C03 should preserve ammo/munitions positives when defense export demand, backlog visibility, order/shipment cadence, raw-material spread and margin bridge are visible. Poongsan produced a very large MFE with bounded entry-basis MAE, but post-peak drawdown requires lifecycle management. | True | True |
 | T_C03_R1L107_103140_20240214_STAGE2ACTIONABLE | 103140 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | ammunition_export_bridge_positive_but_material_spread_contaminant_must_be_split_from_C16_C17 | True | True |
@@ -2510,8 +2664,10 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R4L100_C15_POONGSAN_2024_STAGE2_ACTIONABLE_COPPER_SPREAD_VOLUME_MARGIN_BRIDGE | 103140 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | T_C15_R4L103_103140_Stage2Actionable_20240307 | 103140 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_too_late_or_underexplains_positive_without_company_bridge | True | True |
 | R4L95_C16_POONGSAN_2024_STAGE2_ACTIONABLE_COPPER_DEFENSE_MATERIAL_SUPPLY_MARGIN_BRIDGE | 103140 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
+| ILJINELECTRIC_103590_2024_03_06_STAGE2A_GRID_CABLE_BACKLOG_MARGIN | 103590 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_4B_too_late | True | True |
 | R1L89_C02_ILJIN_2024_STAGE2_ACTIONABLE_GRID_ORDER_MARGIN_BRIDGE | 103590 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | TRG_R1L78-C02-103590-ILJIN-ELECTRIC-POWER-CABLE-TRANSFORMER-POST-CA | 103590 | C02_POWER_GRID_DATACENTER_CAPEX | C02 should allow power cable/transformer names when datacenter/grid capex maps to order backlog, delivery slots, ASP/copper pass-through and margin bridge. Iljin Electric produced very large MFE after the 2024-02-13 corporate-action candidate; runtime promotion requires post-CA continuity validation and source repair. | True | True |
+| ILJIN_103590_2024_03_06_STAGE2A_GRID_BACKLOG_CAPEX | 103590 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late_if_grid_backlog_overpromoted_to_Green | True | True |
 | R11L85_C02_103590_20240715_STAGE2_FALSE_POSITIVE_WIRE_TRANSFORMER_BETA | 103590 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive_if_wire_transformer_beta_overcredited | True | True |
 | None | 103590 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
 | None | 103590 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
@@ -2519,29 +2675,33 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R5L96_C18_WOOYANG_2024_STAGE4B_HMR_KFOOD_EXPORT_EVENT_CAP | 103840 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_4B_too_late_if_HMR_Kfood_export_event_premium_not_capped | True | True |
 | R13L96_REVIEW_R5_C18_CONSUMER_EXPORT_CHANNEL_REORDER_103840_2024_06_13_TRIGGER | 103840 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_HMR_Kfood_export_event_premium_not_capped | True | True |
 | R8L91_C26_104200_20240119_STAGE2_FALSE_POSITIVE_MUSIC_PLATFORM | 104200 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive_if_music_platform_content_theme_overcredited | True | True |
+| DYPNF_104460_2024_03_06_STAGE2A_POWDER_HANDLING_ORDERBOOK_BOUNDARY | 104460 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late_if_boundary_orderbook_overpromoted_to_green | True | True |
 | None | 104540 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | V12_COMPACT_C25_R7L107_104540_20240816_Stage2_FalsePositive_104540_2024-08-16_Stage2-FalsePositive | 104540 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
 | None | 104540 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
+| TRG-C09-L117-02-104830-Stage2Actionable-2025-01-02 | 104830 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_missed_structural_if_special_gas_shipment_bridge_is_forced_to_price_only_guard | True | True |
 | None | 104830 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
-| V12_COMPACT_C21-KB-20240201_105560_2024-02-01_Stage2_Actionable_CapitalReturn_ValueUp_Bridge | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive | False | True |
+| V12_COMPACT_C21-KB-20240201_105560_2024-02-01_Stage2_Actionable_CapitalReturn_ValueUp_Bridge | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive | True | True |
 | None | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
 | None | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
-| None | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
+| None | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | None | 105560 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | TRIG_C31_R11L100_001_105560 | 105560 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct | True | True |
 | V12_COMPACT_105560_2024-04-26_policy_valueup_bank_brokerage_ROE_PBR_capital_return_execution_bridge | 105560 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct | True | True |
 | C31_R11L106_TRG_01 | 105560 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | V12_COMPACT_105560_2024-02-26_policy_valueup_bank_capital_return_cash_bridge | 105560 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct | True | True |
-| None | 105560 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 105560 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | None | 105560 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
+| TR_R13L147_4B4C_13_105560_Stage4B_2024-10-25 | 105560 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | over_grants_continuation_credit_if_it_ignores_price_reprice_and_crowding | False | True |
 | R13_CROSS_R13L4_C21_105560_20240202_CAPITAL_RETURN_EXECUTION_105560_2024-02-02_Stage3-Yellow | 105560 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | None | 105560 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | R5_L121_C18_003 | 105630 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | None | 105630 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
-| None | 105630 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | False | True |
-| 105630_2023-05-16_Stage2_Actionable_C19_OEM_RESTOCKING_MARGIN_BRIDGE_POSITIVE | 105630 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct | False | True |
+| None | 105630 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
+| 105630_2023-05-16_Stage2_Actionable_C19_OEM_RESTOCKING_MARGIN_BRIDGE_POSITIVE | 105630 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct | True | True |
 | C19_R5L119_19_105630_Stage2_Actionable_2024-02-14 | 105630 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | V12_COMPACT_C20_R5L120_105630_20240214_06_105630_2024-02-14_Stage2-Actionable | 105630 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | True | True |
+| R1L117-C01-006 | 105740 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | False | True |
 | R1L117-C01-006 | 105740 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | False | True |
 | C04_P1_TO50_TRG_07 | 105840 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | current_profile_false_positive | True | True |
 | TRG_R1L75-C04-105840-WOOJIN-INSTRUMENTATION-POLICY-PROXY-FADE | 105840 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | current_profile_false_positive | True | True |
@@ -2559,26 +2719,31 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L85_REVIEW_R1_C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY_105840_2024-01-15 | 105840 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | R13L90_REVIEW_R1_C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY_105840_2024_01_24_TRIGGER | 105840 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_if_nuclear_instrument_theme_counts_without_project_order_margin_bridge | True | True |
 | TRG_C11_R3L105_004 | 107600 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_missed_structural | True | True |
-| None | 108380 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| C01-R1-L119-01-108380-STAGE4B | 108380 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive_if_Yellow_without_4B_guard | True | True |
+| None | 108380 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
+| DIT_110990_2024_03_06_STAGE2_FALSE_POSITIVE_HBM_EQUIPMENT_RS | 110990 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | R2L93_C07_110990_20240214_STAGE2_FALSE_POSITIVE_HBM_LASER_WEAK_BRIDGE | 110990 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive_if_HBM_laser_equipment_vocabulary_overcredited | True | True |
+| C08_110990_2024_03_06_STAGE2_ACTIONABLE_INSPECTION_EQUIPMENT_EVENT_PREMIUM_4B_DRAWDOWN | 110990 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
 | R2L98_C09_DIT_2024_STAGE2_ACTIONABLE_HBM_LASER_ANNEALING_ADVANCED_EQUIPMENT_BRIDGE | 110990 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
+| R13HMG_L104_T004_110990 | 110990 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_needs_high_MAE_overlay_or_green_block | True | True |
 | R5_L122_C18_008 | 111770 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | R5_L121_C18_002 | 111770 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | None | 111770 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
-| None | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | False | True |
+| None | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | R13_CROSS_111770_2024-02-01_Stage2-FalsePositive_/_InventoryDestockingWatch | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | True | True |
 | TRG_R5L78-C19-111770-YOUNGONE-APPAREL-OEM-INVENTORY-MARGIN-FADE | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | C19 should not treat apparel OEM or restocking exposure as durable Stage2 unless customer reorder, inventory normalization, shipment cadence, FX/cost spread and margin bridge refreshes. Youngone had a tradable early MFE, then a large drawdown into the spring/summer window. | True | True |
 | None | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
-| 111770_2023-05-16_Stage3_Yellow_C19_EXPORT_OEM_INVENTORY_MARGIN_BRIDGE_POSITIVE | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct | False | True |
+| 111770_2023-05-16_Stage3_Yellow_C19_EXPORT_OEM_INVENTORY_MARGIN_BRIDGE_POSITIVE | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct | True | True |
 | C19_R5L119_18_111770_Stage3_Yellow_2024-01-31 | 111770 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | V12_COMPACT_C20_R5L120_111770_20240129_03_111770_2024-01-29_Stage2 | 111770 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | True | True |
-| WEMADE_112040_2024_03_11_STAGE2A_GAME_BLOCKCHAIN_IP_MONETIZATION | 112040 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_4B_too_late | False | True |
+| WEMADE_112040_2024_03_11_STAGE2A_GAME_BLOCKCHAIN_IP_MONETIZATION | 112040 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_4B_too_late | True | True |
 | V12_COMPACT_C27-R8-L101-001_112040_2024-03-11_game_ip_global_launch_web3_liveops_spike_then_4b | 112040 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive | True | True |
 | C27-R8L105-017|Stage4B|2024-04-01 | 112040 | C27_CONTENT_IP_GLOBAL_MONETIZATION | residual_error_needs_C27_specific_bridge_or_guard | True | True |
 | R13_4B4C_L12_08_112040_20240401_4B_Local_Watch | 112040 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_source_proxy_row_promotes_to_green_or_full_4B | True | True |
 | V12_COMPACT_R13L12_ACCT_PRICE_10_C27_112040_20240311_112040_2024-03-11_Stage2-Actionable | 112040 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | R13_CROSS_112040_2024-04-01_Stage4B | 112040 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | V12_COMPACT_R13L2_C27_112040_20240311_STAGE2ACTIONABLE_112040_2024-03-11_cross_archetype_high_MAE_guardrail_review | 112040 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
+| R13_HIGHMAE_L143_112040_20211112_TRG | 112040 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_or_persistence_error_if_Stage2_Stage3_not_capped | False | True |
 | None | 112040 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
 | T_R13_STAGE2FP_L6_112040_Stage2Actionable_2024-03-11 | 112040 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_stage2_false_positive_or_overpromotion_risk | True | True |
 | R1L116-C01-005 | 112610 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive_if_backlog_without_margin_and_working_capital_bridge_is_promoted | True | True |
@@ -2587,7 +2752,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R3L90_C12_114190_20240126_STAGE2_BATTERY_EQUIPMENT_CALLOFF | 114190 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_correct_if_customer_calloff_shipment_margin_bridge_required | True | True |
 | R3L99-C14-002-T1 | 114190 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_too_late_if_2023_orderbook_memory_delays_hard_4C | True | True |
 | R5L98_C20_IFAMILYSC_2024_STAGE2_ACTIONABLE_K_BEAUTY_EXPORT_DTC_REORDER_BRIDGE | 114840 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| QRI_115180_2024_03_06_STAGE2_FALSE_POSITIVE_CLINICAL_DATA_EVENT | 115180 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_false_positive | False | True |
+| QRI_115180_2024_03_06_STAGE2_FALSE_POSITIVE_CLINICAL_DATA_EVENT | 115180 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_false_positive | True | True |
 | C32_115390_LOCKLOCK_20240215_LOCAL4B | 115390 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | would_overpromote_without_tender_cap_guard | True | True |
 | TRG_R12L76-C32-115390-LOCKNLOCK-VOLUNTARY-DELISTING-TENDER-FLOOR | 115390 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_correct | True | True |
 | TRG_R11L80-C32-115390-LOCKNLOCK-TENDER-PRICE-CAP-DELISTING | 115390 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | C32 should distinguish tender-offer price-cap trades from open-ended governance rerating. LocknLock was anchored by a tender/de-listing style price cap and later became inactive_or_delisted_like, so runtime ingestion requires status validation. | True | True |
@@ -2600,6 +2765,8 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L96_REVIEW_R9_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_118990_2024_01_02_TRIGGER | 118990 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_mobility_infotainment_watch_counts_without_OEM_volume_mix_margin_revision_bridge | True | True |
 | V12_COMPACT_C25_R7L107_119610_20240610_Stage2_Actionable_119610_2024-06-10_Stage2-Actionable | 119610 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
 | R7L89_C25_119610_20240131_STAGE2_FALSE_POSITIVE_CONTACT_LENS_WEAK_BRIDGE | 119610 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive_if_contact_lens_export_theme_overcredited | True | True |
+| C08_119830_2024_03_06_STAGE2_SEMICONDUCTOR_TEST_SERVICE_LABEL_WITHOUT_MARGIN_BRIDGE | 119830 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
+| C02-R1-L143-03-119850-Stage2_Actionable | 119850 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_missed_structural | True | True |
 | R1L91_C02_GNCENERGY_2024_STAGE2_FALSE_POSITIVE_BACKUP_POWER_THEME | 119850 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive_if_backup_power_theme_counts_without_order_margin_delivery_bridge | True | True |
 | R11L94_C31_GNCENERGY_2024_STAGE4B_DATACENTER_POWER_POLICY_EVENT_CAP | 119850 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_4B_too_late_if_datacenter_power_policy_event_premium_not_capped | True | True |
 | R13L91_REVIEW_R1_C02_POWER_GRID_DATACENTER_CAPEX_119850_2024_05_16_TRIGGER | 119850 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_if_backup_power_theme_counts_without_order_margin_delivery_bridge | True | True |
@@ -2622,11 +2789,12 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R3L93_C11_121600_20240312_STAGE2_FALSE_POSITIVE_CNT_SPIKE_NO_FCF | 121600 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_CNT_orderbook_spike_overcredited | True | True |
 | None | 121600 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_capacity_label_promotes_Yellow_after_local_blowoff | True | True |
 | R3L98_C11_NANOCHEM_2024_STAGE4B_CNT_MATERIAL_ORDERBOOK_EVENT_CAP | 121600 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late_if_CNT_material_orderbook_event_premium_not_capped | True | True |
-| NANOMATERIALS_121600_2024_02_21_STAGE2_FALSE_POSITIVE_CUSTOMER_RAMP | 121600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | False | True |
+| NANOMATERIALS_121600_2024_02_21_STAGE2_FALSE_POSITIVE_CUSTOMER_RAMP | 121600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
 | TRG_R3L78-C12-121600-NANO-CNT-CUSTOMER-CALLOFF-LIFECYCLE | 121600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | C12 should allow battery-material positives when customer contract visibility maps to call-off volume, capacity absorption, shipment cadence and margin bridge. Nano New Material produced large MFE with controlled early MAE, but the later post-peak drawdown requires lifecycle local 4B if customer call-off or margin evidence fades. | True | True |
 | V12_COMPACT_C12_R3L105_121600_20240315_11_121600_2024-03-15_Stage2-Actionable | 121600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
 | None | 121600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | True | True |
 | None | 121600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_negative_if_generic_battery_calloff_guard_forces_hard_4C_on_CNT_growth_exception | True | True |
+| NANO_121600_2024_03_06_STAGE4C_CUSTOMER_CONTRACT_OPTIONALITY_CALL_OFF_RISK | 121600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_4C_too_late_after_4B_bounce | True | True |
 | TRG_R3L76-C13-121600-NANOSIN-CNT-CONDUCTIVE-ADDITIVE-US-UTILIZATION | 121600 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_correct | True | True |
 | TRG_R3L76-C13-121600-NANOSIN-CNT-CONDUCTIVE-ADDITIVE-US-UTILIZATION | 121600 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | C13 should include CNT/conductive additive suppliers only when US/local supply, customer ramp, utilization and margin bridge is visible. Nano New Material produced strong early MFE, but the later utilization/demand drawdown means the signal must be lifecycle-managed and share-count validated. | True | True |
 | T_C13_R3L105_121600_STAGE2ACTIONABLE_20240221 | 121600 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
@@ -2635,18 +2803,20 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | T_C13_R3L104_121600_STAGE4B_20240314 | 121600 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | None | 121600 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | T_C14_R3L108_121600_STAGE3YELLOW_20240221 | 121600 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive | True | True |
-| YG_122870_2024_03_11_STAGE2_FALSE_POSITIVE_FANDOM_IP_LINEUP | 122870 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive | False | True |
+| YEST_122640_2024_03_06_STAGE2A_HBM_ANNEAL_EQUIPMENT_RS | 122640 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late | True | True |
+| YG_122870_2024_03_11_STAGE2_FALSE_POSITIVE_FANDOM_IP_LINEUP | 122870 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive | True | True |
 | C27-R8L105-005|Stage2|2024-03-14 | 122870 | C27_CONTENT_IP_GLOBAL_MONETIZATION | residual_error_needs_C27_specific_bridge_or_guard | True | True |
 | R9L88_C29_123040_20240926_STAGE2_FALSE_POSITIVE_BODY_PARTS_LATE_EXTENSION | 123040 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive_if_body_parts_late_extension_overcredited | True | True |
 | R13L88_REVIEW_R9_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_123040_2024-09-26 | 123040 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
-| None | 123100 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 123100 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | R9L91_C29_123410_20240122_STAGE2_HYBRID_VOLUME_MIX | 123410 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_correct_if_OEM_volume_program_mix_margin_cash_bridge_required | True | True |
 | R9L90_C29_KOREAFT_2024_STAGE2_ACTIONABLE_HYBRID_VOLUME_MARGIN_BRIDGE | 123410 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R9L94_C29_KOREAFT_2024_STAGE4B_HYBRID_PARTS_MOBILITY_EVENT_CAP | 123410 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_4B_too_late_if_hybrid_parts_mobility_event_premium_not_capped | True | True |
 | R13L94_REVIEW_R9_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_123410_2024_04_26_TRIGGER | 123410 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_4B_too_late_if_hybrid_parts_mobility_event_premium_not_capped | True | True |
 | V12_COMPACT_123570_2024-05-20_platform_ad_budget_retention_opm_bridge_cleanup | 123570 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| None | 123570 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 123570 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | R8L85_C26_123570_20240306_STAGE2_FALSE_POSITIVE_SMALLCAP_AD_THEME | 123570 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive_if_smallcap_ad_theme_overcredited | True | True |
+| C26-L104-08-123570-T1 | 123570 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_4B_too_late | True | True |
 | R8L92_C26_EMNET_2024_STAGE4B_DIGITAL_AD_AGENCY_EVENT_CAP | 123570 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_4B_too_late_if_digital_ad_agency_event_premium_not_capped | True | True |
 | R13L85_REVIEW_R8_C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE_123570_2024-03-06 | 123570 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | R13L92_REVIEW_R8_C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE_123570_2024_03_06_TRIGGER | 123570 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_4B_too_late_if_digital_ad_agency_event_premium_not_capped | True | True |
@@ -2660,7 +2830,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L94_REVIEW_R11_C31_POLICY_SUBSIDY_LEGISLATION_EVENT_126880_2024_01_24_TRIGGER | 126880 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive_if_hydrogen_policy_subsidy_watch_counts_without_budget_order_margin_revision_bridge | True | True |
 | R4L90_C16_128660_20240412_STAGE2_ALUMINUM_SUPPLY | 128660 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_correct_if_supply_policy_spread_margin_bridge_required | True | True |
 | R4L99_C16_PJMETAL_2024_STAGE4B_ALUMINUM_STRATEGIC_METAL_EVENT_CAP | 128660 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_4B_too_late_if_aluminum_strategic_metal_event_premium_not_capped | True | True |
-| None | 128940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | False | True |
+| None | 128940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | None | 128940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | C23_R7_L209_T04 | 128940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | False | True |
 | V12_COMPACT_128940_2024-02-01_PARTNER_MILESTONE_TO_ROYALTY_BRIDGE | 128940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
@@ -2668,6 +2838,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | T_C24_R7L105_128940_20240115_STAGE2 | 128940 | C24_BIO_TRIAL_DATA_EVENT_RISK | named_pipeline_visibility_score_too_high_without_fresh_binary_event_or_sales_bridge | True | True |
 | None | 128940 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | None | 128940 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 must require fresh binary/data endpoint quality; reroute commercialization, device, reimbursement, or price-only events to C23/C25/local_4B as appropriate. | True | True |
+| C02-R1-L141-04-130660-Stage4B | 130660 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late | True | True |
 | R1L90_C04_130660_20240422_STAGE2_NUCLEAR_OM_SERVICE_POLICY | 130660 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | current_profile_correct_if_project_policy_service_margin_bridge_required | True | True |
 | TRG_R1L75-C04-130660-KEPCO-INDUSTRIAL-NUCLEAR-SERVICE-PROJECT-BRIDGE | 130660 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | C04 should allow Stage2 when nuclear policy attention is tied to actual service/O&M/project scope, operating contract visibility and margin bridge. KEPCO Industrial produced very high MFE with controlled entry-basis MAE, but post-peak drawdown requires lifecycle local 4B if project-scope evidence fades. | True | True |
 | TRG_R1L75-C04-130660-KEPCO-INDUSTRIAL-NUCLEAR-SERVICE-PROJECT-BRIDGE | 130660 | C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | current_profile_correct | True | True |
@@ -2680,23 +2851,24 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | V12_COMPACT_C28_R8L104_131090_20240516_131090_2024-05-17_Stage2 | 131090 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
 | V12_COMPACT_R13_STAGE2FP_L8_04_131090_2024-05-17_STAGE2_131090_2024-05-17_stage2_source_proxy_deep_MAE_false_positive_review | 131090 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
 | TRG-C06-L110-131290-Stage2Actionable-2024-03-22 | 131290 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_too_late | True | True |
-| TSE_131290_2024_03_06_STAGE2_FALSE_POSITIVE_TEST_INTERFACE | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | False | True |
-| C08_131290_2024_02_01_PROBE_CARD_QUALIFICATION_REORDER_POSITIVE_Stage2-Actionable | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_missed_structural | False | True |
-| TSE_131290_2024_02_13_STAGE2A_PROBE_TEST_REACCELERATION | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | False | True |
+| TSE_131290_2024_03_06_STAGE2_FALSE_POSITIVE_TEST_INTERFACE | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
+| C08_131290_2024_02_01_PROBE_CARD_QUALIFICATION_REORDER_POSITIVE_Stage2-Actionable | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_missed_structural | True | True |
+| TSE_131290_2024_02_13_STAGE2A_PROBE_TEST_REACCELERATION | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
 | C08_R2L97_131290_STAGE2A_20240222_PROBE_CARD_TEST_INTERFACE_BRIDGE | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_correct_but_risk_overlay_too_late | True | True |
 | R2L93_C08_131290_20240426_STAGE2_FALSE_POSITIVE_PROBE_POST_SPIKE | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive_if_probe_testinterface_post_spike_vocabulary_overcredited | True | True |
 | C08_R2_L112_006_131290_Stage4B | 131290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
-| TRG_C09_R2L98_TSE_20240426_ADV_EQUIP_LATE_CHASE | 131290 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | False | True |
-| TSE_131290_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_TEST_INTERFACE | 131290 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | False | True |
+| TRG_C09_R2L98_TSE_20240426_ADV_EQUIP_LATE_CHASE | 131290 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
+| TSE_131290_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_TEST_INTERFACE | 131290 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | True | True |
 | V12_COMPACT_C28-R8-L102-04_131370_2024-07-09_Stage4B | 131370 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
 | R4L87_C16_131400_20240124_STAGE2_FALSE_POSITIVE_EV_LITHIUM_RESOURCE | 131400 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_false_positive_if_EV_resource_theme_overcredited | True | True |
 | R13L87_REVIEW_R4_C16_STRATEGIC_RESOURCE_POLICY_SUPPLY_131400_2024-01-24 | 131400 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | T_C06_R2L103_131970_20240304_Stage2_CROSS_C07 | 131970 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_C06_vs_C07_C08_C09_reroute_guard | True | True |
 | TRG-C06-L111-131970-Stage2Actionable-2025-01-02 | 131970 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_missed_structural | True | True |
 | V12_COMPACT_131970_2024-03-04_Stage2 | 131970 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
-| DOOSANTESNA_131970_2024_03_06_STAGE2_FALSE_POSITIVE_TEST_SERVICE | 131970 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | False | True |
-| None | 131970 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
-| None | 131970 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| C08_131970_2024_03_06_STAGE2_TEST_SERVICE_CUSTOMER_QUALITY_MID_MFE_HIGH_MAE | 131970 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
+| DOOSANTESNA_131970_2024_03_06_STAGE2_FALSE_POSITIVE_TEST_SERVICE | 131970 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
+| None | 131970 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| None | 131970 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | TRG_R11L75-C31-133750-MEGA-MD-MEDQUOTA-POLICY-PROXY-FADE | 133750 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
 | TRG_R11L75-C31-133750-MEGA-MD-MEDQUOTA-POLICY-PROXY-FADE | 133750 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 should not treat medical-school quota policy education-proxy spikes as durable Stage2 unless paid enrollment, course demand, retention or margin bridge is visible. MegaMD had a small MFE and then a deep MAE/drawdown. | True | True |
 | R5_L122_C18_014 | 136480 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
@@ -2712,7 +2884,8 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R3L74-C11-137400-PNT-BATTERY-EQUIPMENT-ORDERBOOK-BRIDGE | 137400 | C11_BATTERY_ORDERBOOK_RERATING | C11 should allow Stage2 when equipment orderbook and delivery-slot visibility convert into margin/revision bridge. PNT produced very high MFE after the trigger, but later post-peak drawdown and an in-window share-count change require lifecycle local 4B and coding-agent validation. | True | True |
 | TRG_R3L74-C11-137400-PNT-BATTERY-EQUIPMENT-ORDERBOOK-BRIDGE | 137400 | C11_BATTERY_ORDERBOOK_RERATING | C11 should allow Stage2 when equipment orderbook and delivery-slot visibility convert into margin/revision bridge. PNT produced very high MFE after the trigger, but later post-peak drawdown and an in-window share-count change require lifecycle local 4B and coding-agent validation. | True | True |
 | R3L98_C11_PNT_2024_STAGE2_ACTIONABLE_BATTERY_EQUIPMENT_ORDERBOOK_MARGIN_BRIDGE | 137400 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| PNT_137400_2024_03_05_STAGE2A_BATTERY_EQUIPMENT_ORDERBOOK | 137400 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late | False | True |
+| PNT_137400_2024_03_05_STAGE2A_BATTERY_EQUIPMENT_ORDERBOOK | 137400 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late | True | True |
+| PNT_137400_2024_03_06_STAGE2A_BATTERY_EQUIPMENT_ORDERBOOK | 137400 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late_if_orderbook_rerating_overpromoted_to_green | True | True |
 | TRG_R3L82-C11-137400-PNT-BATTERY-EQUIPMENT-ORDERBOOK-LIFECYCLE | 137400 | C11_BATTERY_ORDERBOOK_RERATING | C11 should protect battery equipment orderbook positives only when customer orderbook, delivery schedule, capacity utilization, revenue recognition and margin bridge are visible. PNT produced very large MFE with shallow entry-basis MAE, but stock-web shard shows share-count movement and post-peak drawdown requires lifecycle 4B discipline. | True | True |
 | None | 137400 | C11_BATTERY_ORDERBOOK_RERATING | None | True | True |
 | None | 137400 | C11_BATTERY_ORDERBOOK_RERATING | None | True | True |
@@ -2720,9 +2893,10 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | V12_COMPACT_C12_R3L105_137400_20240613_13_137400_2024-06-13_Stage3-Yellow | 137400 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
 | None | 137400 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | R3L93_C14_137400_20240213_STAGE2_FALSE_OVERBLOCK_PNT_BACKLOG | 137400 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive_if_broad_EV_slowdown_guard_blocks_backlog_order_margin_bridge_after_reset | True | True |
-| PNT_137400_2024_03_05_FALSE_4C_BROAD_EV_SLOWDOWN | 137400 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_overprotective_4C | False | True |
+| PNT_137400_2024_03_05_FALSE_4C_BROAD_EV_SLOWDOWN | 137400 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_overprotective_4C | True | True |
 | R6L95_C22_MERITZFINANCIAL_2024_STAGE2_ACTIONABLE_INSURANCE_RATE_RESERVE_CAPITAL_RETURN_BRIDGE | 138040 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R6L88_C22_138040_20240131_STAGE2_INSURANCE_HOLDCO_CAPITAL_RETURN | 138040 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_correct_if_reserve_capital_return_bridge_required | True | True |
+| T_C22_R6L102_001 | 138040 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_too_late | True | True |
 | None | 138040 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | V12_COMPACT_138040_2024-02-01_policy_valueup_insurance_csm_reserve_capital_return_cash_bridge | 138040 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct | True | True |
 | R13L88_REVIEW_R6_C22_INSURANCE_RATE_CYCLE_RESERVE_138040_2024-01-31 | 138040 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
@@ -2733,24 +2907,24 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R6L75-C21-138930-BNK-FINANCIAL-REGIONAL-BANK-CAPITAL-RETURN | 138930 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | C21 should keep slower regional-bank capital return winners when ROE stability, dividend path, treasury cancellation and CET1/capital buffer support the rerating. BNK had modest early MFE but a durable low-MAE rerating path; share-count validation remains required. | True | True |
 | TRG_R6L75-C21-138930-BNK-FINANCIAL-REGIONAL-BANK-CAPITAL-RETURN | 138930 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive | True | True |
 | T-BNK-S2A-20250113 | 138930 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_too_late | True | True |
-| None | 138930 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
+| None | 138930 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | TRG_R6L77-C21-138930-BNK-FINANCIAL-ROE-PBR-CAPITAL-RETURN | 138930 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | C21 should preserve slow regional-financial rerating rows when sustainable ROE, PBR discount, CET1/capital buffer, dividend policy and capital-return bridge are visible. BNK produced slow controlled-MAE MFE and share-count movement that likely relates to capital policy, but runtime promotion requires share-count validation. | True | True |
 | R6L92_C22_138930_20240129_STAGE2_FALSE_POSITIVE_BANK_RATE_CROSSLABEL | 138930 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive_if_bank_rate_PBR_MFE_counted_as_C22_insurance_evidence | True | True |
 | V12_COMPACT_138930_2024-04-26_policy_valueup_bank_brokerage_ROE_PBR_capital_return_execution_bridge | 138930 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
 | C31_R11L106_TRG_05 | 138930 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | V12_COMPACT_138930_2024-05-09_policy_valueup_regional_bank_capital_return_cash_bridge | 138930 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
-| None | 139130 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
+| None | 139130 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | None | 139130 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | V12_COMPACT_139130_2024-04-26_policy_valueup_bank_brokerage_ROE_PBR_capital_return_execution_bridge | 139130 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
 | C31_R11L106_TRG_07 | 139130 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | TRIG_C31_R11L100_005_139130 | 139130 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
 | None | 139130 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
-| EMART_139480_2024_01_29_STAGE2_FALSE_POSITIVE_RETAIL_TURNAROUND | 139480 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | False | True |
+| EMART_139480_2024_01_29_STAGE2_FALSE_POSITIVE_RETAIL_TURNAROUND | 139480 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | True | True |
 | TRG_R5L74-C19-139480-EMART-GROCERY-TURNAROUND-PRICE-BETA | 139480 | C19_BRAND_RETAIL_INVENTORY_MARGIN | C19 should not treat grocery retail/value-up price beta as durable Stage2 unless inventory turns, SSG/online losses, store traffic and margin bridge improve. E-Mart had early MFE but then opened deep MAE and a large post-peak drawdown, so the first signal should be local 4B-watch rather than Green. | True | True |
 | TRG_R5L74-C19-139480-EMART-GROCERY-TURNAROUND-PRICE-BETA | 139480 | C19_BRAND_RETAIL_INVENTORY_MARGIN | C19 should not treat grocery retail/value-up price beta as durable Stage2 unless inventory turns, SSG/online losses, store traffic and margin bridge improve. E-Mart had early MFE but then opened deep MAE and a large post-peak drawdown, so the first signal should be local 4B-watch rather than Green. | True | True |
 | TRG_R5L81-C19-139480-EMART-MART-INVENTORY-MARGIN-FADE | 139480 | C19_BRAND_RETAIL_INVENTORY_MARGIN | C19 should not treat mart/value-up or retail restructuring beta as durable Stage2 unless inventory cleanup, online/offline mix, cost control, revenue recovery and margin bridge are visible. E-Mart had a sharp early MFE and then a high-MAE fade. | True | True |
-| None | 140410 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
-| None | 140860 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 140410 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
+| None | 140860 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | R2L88_C09_PARKSYSTEMS_2024_STAGE2_FALSE_POSITIVE_VALUATION_PREMIUM | 140860 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_quality_premium_counts_without_order_revision_bridge | True | True |
 | R2L83_C09_140860_20240514_STAGE2_ADVANCED_AFM_REVENUE_BRIDGE_POSITIVE | 140860 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_correct | True | True |
 | R2L93_C09_140860_20240423_STAGE2_FALSE_OVERBLOCK_AFM_METROLOGY_ORDER | 140860 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_C09_guard_blocks_reset_plus_customer_order_bridge | True | True |
@@ -2768,20 +2942,22 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R7L74-C24-141080-LCB-ADC-PLATFORM-DATA-DERISKING | 141080 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 should not treat a biotech data/platform event as instant Green at the first gap, but it should allow delayed Stage2 when clinical/platform derisking and partner validation become real. LigaChem Bio required post-CA validation and later lifecycle 4B after the November peak. | True | True |
 | R7L93_C24_141080_20240222_STAGE2_FALSE_OVERBLOCK_ADC_PLATFORM_LICENSE | 141080 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_false_positive_if_C24_guard_blocks_platform_license_data_bridge_after_reset | True | True |
 | None | 141080 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 must require fresh binary/data endpoint quality; reroute commercialization, device, reimbursement, or price-only events to C23/C25/local_4B as appropriate. | True | True |
-| None | 141080 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
+| None | 141080 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | None | 141080 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | R13_CROSS_141080_2024-02-02_Stage2 | 141080 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | None | 141080 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
 | R13_CROSS_141080_2024-02-02_Stage2 | 141080 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
-| NPP_144960_2024_03_06_STAGE2A_PLASMA_POWER_MEMORY_EQUIPMENT_RECOVERY | 144960 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | False | True |
+| TRG-C09-L117-04-144960-Stage2Actionable-2024-03-22 | 144960 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_correct_actionable_but_needs_post_peak_4B_watch_after_bridge_fades | True | True |
+| NPP_144960_2024_03_06_STAGE2A_PLASMA_POWER_MEMORY_EQUIPMENT_RECOVERY | 144960 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | True | True |
 | R7L98_C23_HUGEL_2024_STAGE2_ACTIONABLE_BOTULINUM_TOXIN_FDA_APPROVAL_COMMERCIALIZATION_BRIDGE | 145020 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R7L85_C23_145020_20240304_STAGE2_APPROVAL_COMMERCIAL_BRIDGE | 145020 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_correct_if_commercialization_bridge_required | True | True |
 | C23_R7_L209_T01 | 145020 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_correct | False | True |
+| HUGEL_145020_2024_03_06_STAGE2A_FDA_APPROVAL_COMMERCIALIZATION | 145020 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_4B_too_late_if_approval_event_overpromoted_to_green | True | True |
 | None | 145020 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | V12_COMPACT_145020_2024-03-21_REGULATORY_APPROVAL_EXPORT_COMMERCIALIZATION | 145020 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
 | None | 145020 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | R13L85_REVIEW_R7_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION_145020_2024-03-04 | 145020 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_correct | True | True |
-| None | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | False | True |
+| None | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | R7L92_C25_145720_20240229_STAGE2_FALSE_POSITIVE_DENTAL_IMPLANT_EXPORT_SPIKE | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive_if_dental_export_spike_overcredited | True | True |
 | V12_COMPACT_C25_R7L107_145720_20240503_Stage3_Yellow_145720_2024-05-03_Stage3-Yellow | 145720 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
 | V12_COMPACT_R13L11-4B4C-002_145720_2024-02-29_cross_archetype_4b_4c_boundary_retest | 145720 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
@@ -2793,12 +2969,14 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | C19_R5L119_16_145990_Stage2_Actionable_2024-05-22 | 145990 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | C20_R5L118_145990_20240201_Stage2_Actionable | 145990 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_error | True | True |
 | C20_R5L116_145990_20240522_Stage2_Actionable | 145990 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_undercredits_bridge_but_needs_ASP_mix_guard | True | True |
-| None | 147760 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 147760 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| C02-R1-L141-03-147830-Stage2 | 147830 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_correct | True | True |
 | R1L88_C02_147830_20240926_STAGE2_FALSE_POSITIVE_LATE_GRID_EXTENSION | 147830 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive_if_late_grid_equipment_extension_overcredited | True | True |
 | R13L88_REVIEW_R1_C02_POWER_GRID_DATACENTER_CAPEX_147830_2024-09-26 | 147830 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R3L99-C14-006-T1 | 148930 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive_if_equipment_order_label_stays_actionable_without_delivery_bridge | True | True |
 | None | 149980 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | V12_COMPACT_C25_R7L107_149980_20240507_Stage2_Actionable_149980_2024-05-07_Stage2-Actionable | 149980 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
+| R7L104-C25-T05 | 149980 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
 | None | 149980 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | R8L92_C28_150900_20240102_STAGE2_FALSE_POSITIVE_DATA_SECURITY | 150900 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive_if_data_security_vocabulary_overcredited | True | True |
 | C28-R8-L101-03-Stage4B-2024-03-27 | 150900 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
@@ -2811,7 +2989,8 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L95_REVIEW_R12_C31_POLICY_SUBSIDY_LEGISLATION_EVENT_159580_2024_01_03_TRIGGER | 159580 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_low_birth_policy_watch_counts_without_subsidy_to_sales_channel_margin_revision_bridge | True | True |
 | R8L93_C27_NEW_2024_STAGE4B_FILM_STUDIO_CONTENT_EVENT_CAP | 160550 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_4B_too_late_if_film_studio_content_event_premium_not_capped | True | True |
 | R13L93_REVIEW_R8_C27_CONTENT_IP_GLOBAL_MONETIZATION_160550_2024_02_26_TRIGGER | 160550 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_film_studio_content_event_premium_not_capped | True | True |
-| CYMECHS_160980_2024_03_06_STAGE2_FALSE_POSITIVE_WAFER_TRANSFER_AUTOMATION | 160980 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | False | True |
+| CYMECHS_160980_2024_03_06_STAGE2_FALSE_POSITIVE_WAFER_TRANSFER_AUTOMATION | 160980 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
+| TRG-C09-L117-03-160980-Stage2Actionable-2025-01-02 | 160980 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_too_late_if_transfer_automation_order_bridge_is_not_allowed_as_C09_positive | True | True |
 | None | 160980 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | True | True |
 | C13_R3L102_03_161000_20240130_T1 | 161000 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_data_insufficient | True | True |
 | T_C15_R4L105_161000_20240201_07_Stage2-Actionable | 161000 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive | True | True |
@@ -2824,7 +3003,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R4L98_C17_AEKYUNGCHEM_2024_STAGE4B_BATTERY_CHEMICAL_SPREAD_EVENT_CAP | 161000 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_4B_too_late_if_battery_chemical_event_premium_not_capped | True | True |
 | C19_R5L120_07_161000_Stage2_Actionable_2024-02-01 | 161000 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | C20_R5L119_161000_20240201_10_Stage2_Actionable | 161000 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | True | True |
-| None | 161390 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | False | True |
+| None | 161390 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | True | True |
 | TRG_R9L77-C29-161390-HANKOOK-TIRE-OE-REPLACEMENT-MIX-MARGIN-FADE | 161390 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | R9L88_C29_HANKOOKTIRE_2024_STAGE2_ACTIONABLE_TIRE_MARGIN_BRIDGE | 161390 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | TRG_R9L73-C29-161390-HANKOOKTIRE-PRICE-MIX-MARGIN-LEVERAGE | 161390 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 should include tire price/mix and replacement-demand margin leverage, not only OEM vehicle volume. 한국타이어 produced a strong MFE with controlled early MAE, but later post-peak drawdown means local 4B-watch is needed if margin/mix evidence stops refreshing. | True | True |
@@ -2835,19 +3014,20 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R9L79-C29-161390-HANKOOK-TIRE-MIX-MARGIN-LIFECYCLE | 161390 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 can preserve tire volume/mix positives when OE/replacement demand, product mix, raw-material cost spread, pricing and margin bridge are visible. Hankook Tire produced meaningful MFE, but later high MAE after the peak means the signal must be lifecycle-managed instead of permanent Green. | True | True |
 | None | 161390 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | False | True |
 | T_C29_R9L104_161390_STAGE4B_20240125 | 161390 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | None | True | True |
-| PHILOPTICS_161580_2024_03_06_STAGE2A_GLASS_SUBSTRATE_EQUIPMENT | 161580 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | False | True |
+| PHILOPTICS_161580_2024_03_06_STAGE2A_GLASS_SUBSTRATE_EQUIPMENT | 161580 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | True | True |
 | None | 161890 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
 | C19_R5L120_04_161890_Stage2_Actionable_2024-05-08 | 161890 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | C20_R5L119_161890_20240508_04_Stage2_Actionable | 161890 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | True | True |
 | C20_R5_L102_T04_161890 | 161890 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_correct | True | True |
-| None | 161890 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | False | True |
+| None | 161890 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | True | True |
 | None | 161890 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | False | True |
 | T_C06_R2L103_166090_20240226_Stage2_CROSS_C07 | 166090 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_C06_vs_C07_C08_C09_reroute_guard | True | True |
 | V12_COMPACT_166090_2024-02-26_Stage2 | 166090 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | R2_L110_C07 | 166090 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | True | True |
-| None | 166090 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
-| HANAMATERIALS_166090_2024_03_06_STAGE2A_MEMORY_PARTS_RECOVERY | 166090 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | False | True |
-| HANAMATERIALS_166090_2024_03_22_STAGE2A_MEMORY_PROCESS_PARTS_RECOVERY | 166090 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | False | True |
+| None | 166090 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| TRG-C09-L118-04-166090-Stage4B-2024-07-01 | 166090 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late_if_parts_premium_clears_yellow | True | True |
+| HANAMATERIALS_166090_2024_03_06_STAGE2A_MEMORY_PARTS_RECOVERY | 166090 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | True | True |
+| HANAMATERIALS_166090_2024_03_22_STAGE2A_MEMORY_PROCESS_PARTS_RECOVERY | 166090 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | True | True |
 | R2L89_C10_166090_20240626_STAGE2_FALSE_POSITIVE_PARTS_LATE_CYCLE | 166090 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive_if_parts_late_cycle_extension_overcredited | True | True |
 | C07-R2-L111-168360-Stage2Actionable-2024-12-03 | 168360 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_too_strict_if_HBM_inspection_tool_qualification_has_non_price_customer_signal | True | True |
 | R8L91_C28_PIOLINK_2024_STAGE2_ACTIONABLE_NETWORK_SECURITY_ADC_CONTRACT_BRIDGE | 170790 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
@@ -2855,7 +3035,8 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 170900 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | V12_COMPACT_170900_2024-03-14_COMMERCIAL_PRODUCT_EXPORT_REORDER_BRIDGE | 170900 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
 | None | 170900 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
-| None | 170900 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
+| None | 170900 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
+| TRG-C09-L118-02-171010-Stage2-Actionable-2024-03-22 | 171010 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_missed_structural_if_all_process_materials_blocked | True | True |
 | R7L93_C24_ABCLON_2024_STAGE4B_CART_TRIAL_DATA_EVENT_CAP | 174900 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_4B_too_late_if_CART_trial_data_event_premium_not_capped | True | True |
 | R13L93_REVIEW_R7_C24_BIO_TRIAL_DATA_EVENT_RISK_174900_2024_03_05_TRIGGER | 174900 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_CART_trial_data_event_premium_not_capped | True | True |
 | R6L92_C21_JBFG_2024_STAGE2_ACTIONABLE_REGIONAL_BANK_ROE_CAPITAL_RETURN | 175330 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
@@ -2864,7 +3045,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R6L77-C21-175330-JB-FINANCIAL-ROE-PBR-CAPITAL-RETURN | 175330 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_correct | True | True |
 | TRG_R6L75-C21-175330-JB-FINANCIAL-ROE-CAPITAL-RETURN-BRIDGE | 175330 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_correct | True | True |
 | None | 175330 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
-| None | 175330 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
+| None | 175330 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | None | 175330 | C22_INSURANCE_RATE_CYCLE_RESERVE | None | True | True |
 | V12_COMPACT_175330_2024-04-26_policy_valueup_bank_brokerage_ROE_PBR_capital_return_execution_bridge | 175330 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_correct | True | True |
 | C31_R11L106_TRG_06 | 175330 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
@@ -2874,21 +3055,22 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R12L92_C32_180640_20240129_STAGE2_FALSE_POSITIVE_HISTORICAL_CONTROL_PREMIUM | 180640 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_false_positive_if_historical_control_premium_vocabulary_overcredited | True | True |
 | None | 180640 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | None | True | True |
 | R13L93_REVIEW_R12_C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP_180640_2024_02_08_TRIGGER | 180640 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_airline_holdco_control_premium_watch_counts_without_tender_control_premium_execution_bridge | True | True |
+| R13L100_T004_180640 | 180640 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_residual_error | True | True |
 | TR_C26_L105_181710_Stage2_20240930 | 181710 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_missed_structural | True | True |
 | R8L91_C26_181710_20240129_STAGE2_PLATFORM_OPERATING_LEVERAGE | 181710 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_correct_if_ARPU_mix_cost_margin_cash_bridge_required | True | True |
 | V12_COMPACT_181710_2024-02-05_platform_ad_budget_retention_opm_bridge_cleanup | 181710 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| None | 181710 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 181710 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | R10L92_C30_183190_20240129_STAGE2_CEMENT_MARGIN_CASH | 183190 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_correct_if_ASP_input_cost_margin_cash_bridge_required_but_Green_strict | True | True |
-| None | 183300 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 183300 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | R13_CROSS_184230_2024-07-01_Stage2 | 184230 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | V12_COMPACT_185750_2024-02-15_PRESCRIPTION_VOLUME_REIMBURSEMENT_CONFIRMATION | 185750 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
 | C23_185750_20240710_STAGE2_TRIGGER | 185750 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | None | 185750 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
-| None | 185750 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
-| DEVICEENG_187870_2024_03_06_STAGE2_FALSE_POSITIVE_ADVANCED_CLEANING_EQUIPMENT | 187870 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | False | True |
+| None | 185750 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
+| DEVICEENG_187870_2024_03_06_STAGE2_FALSE_POSITIVE_ADVANCED_CLEANING_EQUIPMENT | 187870 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | V12_COMPACT_C28_R8L104_189690_20240531_189690_2024-06-03_Stage2 | 189690 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
 | V12_COMPACT_R13_STAGE2FP_L8_14_189690_2024-06-03_STAGE2_189690_2024-06-03_stage2_source_proxy_deep_MAE_false_positive_review | 189690 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
-| SEOJUN_189860_2024_07_09_STAGE2_FALSE_POSITIVE_SWITCHGEAR_LATE_BETA | 189860 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive | False | True |
+| SEOJUN_189860_2024_07_09_STAGE2_FALSE_POSITIVE_SWITCHGEAR_LATE_BETA | 189860 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive | True | True |
 | TRG_R1L80-C02-189860-SEOJEON-ELECTRIC-SWITCHGEAR-THEME-BACKLOG-GAP | 189860 | C02_POWER_GRID_DATACENTER_CAPEX | C02 should not treat switchgear/grid/nuclear theme beta as durable Stage2 unless named customer, order backlog, delivery schedule, revenue recognition and margin bridge are visible. Seojeon Electric produced tradable MFE, then a post-peak drawdown, making it local 4B-watch rather than durable Green. | True | True |
 | V12_COMPACT_R13L11-4B4C-016_189860_2024-05-28_cross_archetype_4b_4c_boundary_retest | 189860 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13_CROSS_189860_2024-05-28_Stage2 | 189860 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
@@ -2898,6 +3080,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R8L79-C28-192250-KSIGN-SECURITY-THEME-LOCAL4B-CA-CAVEAT | 192250 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | C28 should not treat security/encryption/authentication theme MFE as durable Stage2 unless contract retention, renewal rate, recurring revenue, public/enterprise customer quality and margin bridge are visible. KSign produced a sharp MFE and then high MAE; 2024-11-01 corporate-action candidate is outside the selected 180D interpretation but must be validated before any extended ingestion. | True | True |
 | R8L93_C28_192250_20240326_STAGE2_FALSE_POSITIVE_CERT_SECURITY_CA | 192250 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive_if_certificate_security_theme_or_post_CA_price_counted_as_retention_evidence | True | True |
 | V12_COMPACT_R13_STAGE2FP_L8_06_192250_2024-05-14_STAGE2_192250_2024-05-14_stage2_source_proxy_deep_MAE_false_positive_review | 192250 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
+| TRG_C18_R5_L103_192400_Stage2_Actionable_2024-02-15 | 192400 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_correct | True | True |
 | TRG_R5L73-C18-192820-COSMAX-ODM-GLOBAL-CUSTOMER-REORDER | 192820 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | C18 should reward ODM/customer reorder only when global customer demand and margin conversion are visible. Cosmax shows a strong MFE path with manageable entry-basis MAE, but source repair is required before promotion. | True | True |
 | TRG_R5L73-C18-192820-COSMAX-ODM-GLOBAL-CUSTOMER-REORDER | 192820 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | C18 should reward ODM/customer reorder only when global customer demand and margin conversion are visible. Cosmax shows a strong MFE path with manageable entry-basis MAE, but source repair is required before promotion. | True | True |
 | TRG_R5L82-C18-192820-COSMAX-ODM-GLOBAL-CHANNEL-REORDER | 192820 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | C18 should allow global ODM/channel positives when customer mix, export channel sell-through, reorder cadence, capacity utilization, revenue conversion and margin bridge are visible. Cosmax had strong MFE but not without MAE, so source repair is required before Stage2 promotion. | True | True |
@@ -2906,7 +3089,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R5L80-C20-192820-COSMAX-BEAUTY-ODM-GLOBAL-REORDER-MARGIN | 192820 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | C20 should protect beauty ODM/OEM positives when global channel reorder, customer quality, US/China volume, revenue conversion and margin bridge are visible. Cosmax produced a large MFE but later drawdown means lifecycle 4B is needed if channel/revenue/margin evidence fades. | True | True |
 | R5L100_C20_COSMAX_2024_STAGE2_ACTIONABLE_K_BEAUTY_ODM_GLOBAL_CHANNEL_MARGIN_BRIDGE | 192820 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | C20_R5L119_192820_20240430_03_Stage2_Actionable | 192820 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | True | True |
-| None | 192820 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | False | True |
+| None | 192820 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | True | True |
 | C20_R5_L102_T08_192820 | 192820 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_4B_too_late | True | True |
 | None | 192820 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | None | 192820 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
@@ -2918,9 +3101,11 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R8L80-C27-194480-DEVSISTERS-COOKIE-IP-GLOBAL-LAUNCH-MARGIN | 194480 | C27_CONTENT_IP_GLOBAL_MONETIZATION | C27 should allow game-IP launch/live-ops positives when global launch cadence, user acquisition, sales ranking, revenue conversion and margin bridge are visible. Devsisters produced large MFE, but later drawdown makes lifecycle 4B necessary if post-launch metrics fade. | True | True |
 | C27-R8L105-018|Stage3-Yellow|2024-05-27 | 194480 | C27_CONTENT_IP_GLOBAL_MONETIZATION | residual_error_needs_C27_specific_bridge_or_guard | True | True |
 | R2L93_C06_195870_20240102_STAGE2_FALSE_POSITIVE_SUBSTRATE_DECAY | 195870 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive_if_memory_substrate_vocabulary_overcredited | True | True |
+| TRG-C09-L117-06-195870-Stage4B-2024-03-22 | 195870 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late_if_package_substrate_leadframe_beta_clears_yellow_without_revision_bridge | True | True |
 | None | 195870 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | True | True |
-| HKINNON_195940_2024_01_03_STAGE2_FALSE_POSITIVE_COMMERCIALIZATION_PREMIUM | 195940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | False | True |
+| HKINNON_195940_2024_01_03_STAGE2_FALSE_POSITIVE_COMMERCIALIZATION_PREMIUM | 195940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
 | V12_COMPACT_195940_2024-02-02_COMMERCIAL_DRUG_REIMBURSEMENT_VOLUME_BRIDGE | 195940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
+| HKINNO_195940_2024_03_06_STAGE2A_COMMERCIALIZATION_REVENUE_CHANNEL_BUFFER | 195940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_overblocks_if_approval_commercialization_treated_as_event_only | True | True |
 | TRG_R7L73-C23-195940-HKINNO-KCAB-GLOBAL-COMMERCIALIZATION-RAMP | 195940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | C23 should distinguish real prescription/export commercialization ramp from pure regulatory excitement. HK inno.N produced an attractive path, but later post-peak drawdown requires local 4B-watch if prescription/partner revenue evidence stops refreshing. | True | True |
 | TRG_R7L73-C23-195940-HKINNO-KCAB-GLOBAL-COMMERCIALIZATION-RAMP | 195940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | C23 should distinguish real prescription/export commercialization ramp from pure regulatory excitement. HK inno.N produced an attractive path, but later post-peak drawdown requires local 4B-watch if prescription/partner revenue evidence stops refreshing. | True | True |
 | R7L93_C23_195940_20240617_STAGE2_DRUG_COMMERCIAL_BRIDGE | 195940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_correct_if_approval_launch_reimbursement_royalty_cash_bridge_required_but_Green_strict | True | True |
@@ -2930,7 +3115,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 195940 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | V12_COMPACT_196170_2024-02-02_ROYALTY_COMMERCIALIZATION_BRIDGE_REVERIFY | 196170 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
 | R7L92_C23_ALTEOGEN_2024_STAGE2_ACTIONABLE_PLATFORM_LICENSE_REGULATORY_COMMERCIALIZATION | 196170 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| None | 196170 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | False | True |
+| None | 196170 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | None | 196170 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | None | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | R7L84_C24_196170_20240222_STAGE2_PLATFORM_EVENT_VALIDATION_BRIDGE | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_correct_if_partner_validation_bridge_required | True | True |
@@ -2938,13 +3123,15 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R7L87_C24_196170_20240223_STAGE2_PLATFORM_LICENSE_EVENT | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_correct_if_partnered_platform_data_bridge_required | True | True |
 | None | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 must require fresh binary/data endpoint quality; reroute commercialization, device, reimbursement, or price-only events to C23/C25/local_4B as appropriate. | True | True |
 | None | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 must require fresh binary/data endpoint quality; reroute commercialization, device, reimbursement, or price-only events to C23/C25/local_4B as appropriate. | True | True |
-| None | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
+| None | 196170 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | R13L87_REVIEW_R7_C24_BIO_TRIAL_DATA_EVENT_RISK_196170_2024-02-23 | 196170 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
 | R13_CROSS_R13L4_C23_196170_20240221_ROYALTY_REVENUE_TRUST_196170_2024-02-21_Stage2-Actionable | 196170 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
+| R13S2_L102_T004_196170 | 196170 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_missed_structural | True | True |
 | R1L89_C02_JEIL_2024_STAGE2_FALSE_POSITIVE_BREAKER_THEME_HIGH_MAE | 199820 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive_if_breaker_theme_counts_without_order_margin_bridge | True | True |
 | TRG_R1L80-C02-199820-CHEIL-ELECTRIC-POST-CA-SWITCHGEAR-FADE | 199820 | C02_POWER_GRID_DATACENTER_CAPEX | C02 should not treat post-CA switchgear/datacenter theme beta as durable Stage2 unless order backlog, customer quality, delivery schedule, revenue recognition and margin bridge survive the corporate-action reset. Cheil Electric's post-CA path had small MFE and high MAE. | True | True |
 | R11L89_C02_199820_20240920_STAGE2_FALSE_POSITIVE_SWITCHGEAR_THEME | 199820 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive_if_switchgear_theme_overcredited | True | True |
-| None | 200350 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| TRG_C18_R5_L103_200130_Stage4B_2024-07-15 | 200130 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
+| None | 200350 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | C27-R8L105-013|Stage4B|2024-02-29 | 200350 | C27_CONTENT_IP_GLOBAL_MONETIZATION | residual_error_needs_C27_specific_bridge_or_guard | True | True |
 | None | 200350 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | R13_4B4C_L12_05_200350_20240229_Stage4C_Watch | 200350 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_source_proxy_row_promotes_to_green_or_full_4B | True | True |
@@ -2952,7 +3139,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13_CROSS_200350_2024-02-29_Stage4B | 200350 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | None | 200350 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
 | None | 200350 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
-| AFACT_200470_2024_03_06_STAGE2A_TEST_SERVICE_RERATING | 200470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | False | True |
+| AFACT_200470_2024_03_06_STAGE2A_TEST_SERVICE_RERATING | 200470 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
 | None | 200470 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | True | True |
 | R2L95_C10_AFACT_2024_STAGE4B_TEST_OUTSOURCING_MEMORY_EVENT_CAP | 200470 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late_if_memory_test_outsourcing_event_premium_not_capped | True | True |
 | R13L95_REVIEW_R2_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_200470_2024_06_04_TRIGGER | 200470 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_memory_test_outsourcing_event_premium_not_capped | True | True |
@@ -2967,18 +3154,19 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L88_REVIEW_R9_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_200880_2024-02-01 | 200880 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
 | R7L96_C24_ABION_2024_STAGE2_FALSE_POSITIVE_CLINICAL_DATA_EVENT_WATCH | 203400 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_false_positive_if_clinical_data_event_watch_counts_without_endpoint_partner_funding_regulatory_revision_bridge | True | True |
 | R13L96_REVIEW_R7_C24_BIO_TRIAL_DATA_EVENT_RISK_203400_2024_06_10_TRIGGER | 203400 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_clinical_data_event_watch_counts_without_endpoint_partner_funding_regulatory_revision_bridge | True | True |
-| DREAMSECURITY_203650_2024_02_15_STAGE2_FALSE_POSITIVE_SECURITY_AUTH_THEME | 203650 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | False | True |
+| DREAMSECURITY_203650_2024_02_15_STAGE2_FALSE_POSITIVE_SECURITY_AUTH_THEME | 203650 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
 | V12_COMPACT_C28_R8L104_203650_20240701_203650_2024-07-02_Stage2 | 203650 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
 | V12_COMPACT_C28-R8-L102-03_203650_2024-06-17_Stage4B | 203650 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
 | V12_COMPACT_R13_STAGE2FP_L8_08_203650_2024-07-02_STAGE2_203650_2024-07-02_stage2_source_proxy_deep_MAE_false_positive_review | 203650 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
 | T_R9L10_204320_STAGE2 | 204320 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | False | True |
 | R9L96_C29_HLMANDO_2024_STAGE2_ACTIONABLE_ADAS_AUTO_PARTS_VOLUME_MARGIN_BRIDGE | 204320 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| TRG_C29_R9L100_204320_STAGE2_FALSE_20240605 | 204320 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | False | True |
+| TRG_C29_R9L100_204320_STAGE2_FALSE_20240605 | 204320 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | R9L83_C29_204320_20240605_STAGE2_FALSE_POSITIVE_ADAS_EV_SPIKE_HIGH_MAE | 204320 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | C29_R9L87_TRG_204320_S2 | 204320 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | T_C29_R9L106_204320_20240605_05_Stage4B | 204320 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
+| T_C29_204320_STAGE4B_20240605 | 204320 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_4B_too_late | True | True |
 | T_C29_R9L105_204320_Stage4B_20240605 | 204320 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| TRG_C29_R9L100_204320_STAGE4B_OVERLAY_20240607 | 204320 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_4B_too_late | False | True |
+| TRG_C29_R9L100_204320_STAGE4B_OVERLAY_20240607 | 204320 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_4B_too_late | True | True |
 | R9L88_C29_HLMANDO_2024_STAGE4B_AUTO_PARTS_EVENT_CAP | 204320 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_4B_too_late_if_auto_parts_mobility_premium_not_capped | True | True |
 | T_C29_R9L106_204320_20241112_19_Stage4C | 204320 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | R13L88_REVIEW_C29_HLMANDO_2024_STAGE4B_AUTO_PARTS_EVENT_CAP | 204320 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_auto_parts_mobility_premium_not_capped | True | True |
@@ -2996,25 +3184,27 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R8L76-C27-207760-MRBLUE-WEBTOON-IP-THEME-SPIKE-FADE | 207760 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive | True | True |
 | TRG_R8L76-C27-207760-MRBLUE-WEBTOON-IP-THEME-SPIKE-FADE | 207760 | C27_CONTENT_IP_GLOBAL_MONETIZATION | C27 should not treat webtoon/IP/platform theme spikes as durable Stage2 unless paid-content revenue, subscriber/traffic conversion, global distribution, licensing and margin bridge are visible. Mr. Blue produced large MFE but later collapsed into a high-MAE local 4B path; share-count movement requires validation. | True | True |
 | V12_COMPACT_207940_2024-02-02_CDMO_REGULATORY_LABEL_WITHOUT_INCREMENTAL_ORDER | 207940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
-| SAMBIO_207940_2024_01_29_STAGE2A_CDMO_COMMERCIALIZATION | 207940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_correct | False | True |
+| SAMBIO_207940_2024_01_29_STAGE2A_CDMO_COMMERCIALIZATION | 207940 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_correct | True | True |
 | C24-R7-L99-TRG-05-208340 | 208340 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_4C_too_late | True | True |
+| R13ATPV_L103_T006_208340 | 208340 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive_or_late_4C_trust_break | True | True |
 | None | 208370 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | R13_4B4C_L12_13_208370_20240229_4B_Local_Watch | 208370 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_source_proxy_row_promotes_to_green_or_full_4B | True | True |
 | R13_CROSS_208370_2024-02-29_Stage4B | 208370 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | R13_CROSS_208370_2024-02-29_Stage4B | 208370 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
+| T_C22_R6L102_003 | 211050 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_too_late | True | True |
 | R6L88_C22_211050_20241115_STAGE2_FALSE_POSITIVE_GA_DISTRIBUTION_SPIKE | 211050 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive_if_GA_distribution_beta_promoted_as_C22 | True | True |
 | R6L95_C22_INCARFINANCIAL_2024_STAGE4B_INSURANCE_BROKER_COMMISSION_EVENT_CAP | 211050 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_4B_too_late_if_insurance_broker_commission_event_premium_not_capped | True | True |
 | R13L88_REVIEW_R6_C22_INSURANCE_RATE_CYCLE_RESERVE_211050_2024-11-15 | 211050 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L95_REVIEW_R6_C22_INSURANCE_RATE_CYCLE_RESERVE_211050_2024_05_08_TRIGGER | 211050 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_insurance_broker_commission_event_premium_not_capped | True | True |
-| None | 211270 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 211270 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | R11L95_C03_APSAT_2024_STAGE2_FALSE_POSITIVE_SMALLSAT_POLICY_EXPORT_WATCH | 211270 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_smallsat_policy_watch_counts_without_customer_order_backlog_delivery_margin_revision_bridge | True | True |
 | R13L95_REVIEW_R11_C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG_211270_2024_01_03_TRIGGER | 211270 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_smallsat_policy_watch_counts_without_customer_order_backlog_delivery_margin_revision_bridge | True | True |
-| None | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | False | True |
+| None | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | R7L92_C25_214150_20240214_STAGE2_AESTHETIC_DEVICE_CONSUMABLE_EXPORT | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_correct_if_procedure_volume_consumable_reorder_margin_cash_bridge_required_but_data_quality_repair_needed | True | True |
 | V12_COMPACT_C25_R7L107_214150_20240605_Stage3_Yellow_214150_2024-06-05_Stage3-Yellow | 214150 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
 | None | 214150 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | None | 214150 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
-| None | 214270 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 214270 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | TRG_R8L73-C26-214270-FSN-DIGITAL-ADTECH-PRICE-BETA-LOCAL4B | 214270 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | C26 should not treat digital-adtech or platform theme MFE as durable Stage2 unless recurring ad revenue, take-rate, client retention and margin conversion are visible. FSN had a sharp MFE but later severe MAE and post-peak drawdown. | True | True |
 | TRG_R8L73-C26-214270-FSN-DIGITAL-ADTECH-PRICE-BETA-LOCAL4B | 214270 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | C26 should not treat digital-adtech or platform theme MFE as durable Stage2 unless recurring ad revenue, take-rate, client retention and margin conversion are visible. FSN had a sharp MFE but later severe MAE and post-peak drawdown. | True | True |
 | TR_C26_L105_214270_Stage4B_20240215 | 214270 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_4B_too_late | True | True |
@@ -3026,8 +3216,8 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | V12_COMPACT_214320_2024-02-07_platform_ad_budget_retention_opm_bridge_cleanup | 214320 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | TR_C26_L105_214320_Stage2_20240530 | 214320 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | R8L95_C26_INNOCEAN_2024_STAGE2_ACTIONABLE_AD_AGENCY_PLATFORM_OPERATING_LEVERAGE_BRIDGE | 214320 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| T_C26_214320_STAGE2A_20240125 | 214320 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
-| None | 214320 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| T_C26_214320_STAGE2A_20240125 | 214320 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
+| None | 214320 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | TRG_R8L73-C26-214320-INNOCEAN-AD-AGENCY-OPERATING-LEVERAGE-WEAK | 214320 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | C26 should distinguish ad-agency campaign stability from true platform operating leverage. Innocean had limited MFE and later MAE; without client-budget, digital mix or margin revision evidence it should remain RiskWatch / no durable Green rather than Stage2. | True | True |
 | T_C26_R8L106_06_214320_STAGE3YELLOW_Stage3Yellow_2024-05-17 | 214320 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_too_late_or_green_strictness_watch | True | True |
 | TRG_R5L73-C18-214420-TONYMOLY-KBEAUTY-EXPORT-CHANNEL-REORDER | 214420 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | C18 should allow Stage2 when small-brand export/channel reorder connects to operating leverage, but should add local 4B-watch after a blowoff if reorder evidence stops refreshing. | True | True |
@@ -3047,22 +3237,23 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | T_C03_R1L108_214430_20240403_STAGE2 | 214430 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
 | R11L91_C03_I3SYSTEM_2024_STAGE2_FALSE_POSITIVE_IR_SENSOR_DEFENSE_THEME | 214430 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_IR_sensor_defense_theme_counts_without_export_framework_backlog_bridge | True | True |
 | R1L89_C03_214430_20240325_STAGE2_FALSE_POSITIVE_DEFENSE_SENSOR_THEME | 214430 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_sensor_theme_spike_overcredited | True | True |
-| None | 214430 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 214430 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | R13L91_REVIEW_R11_C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG_214430_2024_03_25_TRIGGER | 214430 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_if_IR_sensor_defense_theme_counts_without_export_framework_backlog_bridge | True | True |
 | V12_COMPACT_214450_2024-02-02_MEDICAL_PRODUCT_REVENUE_REROUTE_CHECK | 214450 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
-| None | 214450 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
+| None | 214450 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | R7L94_C25_PHARMARESEARCH_2024_STAGE2_ACTIONABLE_MEDICAL_AESTHETIC_EXPORT_MARGIN_BRIDGE | 214450 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R7L88_C25_PHARMARESEARCH_2024_STAGE2_ACTIONABLE_AESTHETIC_EXPORT_REORDER | 214450 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | TRG_R7L77-C25-214450-PHARMARESEARCH-AESTHETIC-MEDDEVICE-EXPORT-MARGIN | 214450 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | C25 should allow aesthetic/regenerative medical-device positives when export channel reorder, approval/registration visibility, pricing and margin bridge are visible. PharmaResearch produced very large MFE with almost no entry-basis MAE, but later price pinning and post-peak drawdown require lifecycle local 4B if export/margin evidence fades. | True | True |
 | TRG_R7L77-C25-214450-PHARMARESEARCH-AESTHETIC-MEDDEVICE-EXPORT-MARGIN | 214450 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_correct | True | True |
 | R7L83_C25_214450_20240401_STAGE2_AESTHETIC_EXPORT_BRIDGE | 214450 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_correct | True | True |
 | V12_COMPACT_C25_R7L107_214450_20240603_Stage3_Yellow_214450_2024-06-03_Stage3-Yellow | 214450 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
-| None | 214450 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 214450 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | None | 214680 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | None | 214680 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 must require fresh binary/data endpoint quality; reroute commercialization, device, reimbursement, or price-only events to C23/C25/local_4B as appropriate. | True | True |
 | TRG_R7L75-C25-214680-DRTECH-XRAY-DETECTOR-EXPORT-ORDER-BETA-FADE | 214680 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
 | V12_COMPACT_C25_R7L107_214680_20240624_Local_4B_Watch_214680_2024-06-24_Local-4B-Watch | 214680 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
 | TRG_R7L75-C25-214680-DRTECH-XRAY-DETECTOR-EXPORT-ORDER-BETA-FADE | 214680 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | C25 should not treat X-ray detector/export/OEM order beta as durable Stage2 unless named export orders, OEM channel expansion, reimbursement or margin bridge is visible. DRTech had tradable MFE but later drawdown opened enough to require local 4B-watch. | True | True |
+| R7L104-C25-T08 | 214680 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
 | R7L94_C25_DRTECH_2024_STAGE4B_DIAGNOSTIC_IMAGING_DEVICE_EVENT_CAP | 214680 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_4B_too_late_if_diagnostic_imaging_device_event_premium_not_capped | True | True |
 | None | 214680 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | R13_4B4C_L12_16_214680_20240226_4B_Local_Watch | 214680 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_source_proxy_row_promotes_to_green_or_full_4B | True | True |
@@ -3075,12 +3266,13 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R9L85_C29_215360_20240401_STAGE2_FALSE_POSITIVE_EV_THERMAL_THEME | 215360 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive_if_EV_parts_theme_overcredited | True | True |
 | R13L85_REVIEW_R9_C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE_215360_2024-04-01 | 215360 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | TRG_R7L76-C24-215600-SILLAJEN-ONCOLOGY-TRIAL-DATA-POST-CA-BETA-FADE | 215600 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_false_positive | True | True |
-| None | 215600 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
+| None | 215600 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | TRG_R7L76-C24-215600-SILLAJEN-ONCOLOGY-TRIAL-DATA-POST-CA-BETA-FADE | 215600 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 should not treat oncology-trial or financing/post-CA bio beta as durable Stage2 unless endpoint quality, safety, regulatory path, financing runway and commercialization bridge are visible. SillaJen had only a small MFE after the post-CA entry and then opened a high-MAE decline. | True | True |
 | C24_R7L98_TRIG_08_215600 | 215600 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_false_positive | True | True |
 | R7L98_C24_SILLAJEN_2024_STAGE4B_ONCOLYTIC_VIRUS_TRIAL_EVENT_CAP | 215600 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_4B_too_late_if_oncology_trial_event_premium_not_capped | True | True |
+| C26-L104-07-216050-T1 | 216050 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | V12_COMPACT_216050_2024-03-22_platform_ad_budget_retention_opm_bridge_cleanup | 216050 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| None | 216050 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 216050 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | R8L89_C26_INCROSS_2024_STAGE2_FALSE_POSITIVE_ADTECH_RECOVERY | 216050 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive_if_adtech_theme_counts_without_revenue_margin_bridge | True | True |
 | T_C26_R8L106_03_216050_STAGE2ACTIONABLE_Stage2Actionable_2024-03-14 | 216050 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_data_insufficient | True | True |
 | R8L88_C26_216050_20240111_STAGE2_FALSE_POSITIVE_LEGACY_AD_PLATFORM | 216050 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive_if_legacy_ad_platform_rebound_overcredited | True | True |
@@ -3088,23 +3280,26 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | V12_COMPACT_R13L2_C26_216050_20240109_STAGE2_216050_2024-01-09_cross_archetype_high_MAE_guardrail_review | 216050 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | T_R13_STAGE2FP_L6_216050_Stage2_2024-01-09 | 216050 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_stage2_false_positive_or_overpromotion_risk | True | True |
 | R13_CROSS_216050_2024-01-09_Stage2 | 216050 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
+| R13S2_L102_T007_216050 | 216050 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
 | TRG_C06_R2_L109_217190_20240322_EMI_SHIELD_HBM_LABEL_FALSE_YELLOW | 217190 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
 | R2L91_C07_217190_20240124_STAGE2_FALSE_POSITIVE_BACKEND_HBM_POSTPROCESS | 217190 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive_if_backend_equipment_rebound_overcredited | True | True |
-| None | 217190 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 217190 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | TRG_C11_R3L105_001 | 217820 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_missed_structural | True | True |
 | R3L98-C14-001-T1 | 217820 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive_if_equipment_label_spike_overrides_EV_demand_reset | True | True |
 | R13HMG_L104_T006_217820 | 217820 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_or_late_4B_4C_under_high_MAE | True | True |
 | R11L90_C03_218410_20240122_STAGE2_FALSE_POSITIVE_RF_DEFENSE_THEME | 218410 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_RF_defense_theme_overcredited | True | True |
-| TIGERELEC_219130_2024_03_06_STAGE2_FALSE_POSITIVE_TEST_PCB_SOCKET | 219130 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | False | True |
+| TIGERELEC_219130_2024_03_06_STAGE2_FALSE_POSITIVE_TEST_PCB_SOCKET | 219130 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
 | R2L93C_C08_219130_20240213_STAGE2_TESTBOARD_REPEAT | 219130 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_correct_if_customer_qualification_repeat_demand_margin_cash_bridge_required_but_Green_strict | True | True |
 | R13_L106_T04_219130 | 219130 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_4B_too_late | True | True |
 | TRG_R7L78-C24-220100-FUTURECHEM-RADIOPHARMA-TRIAL-DATA | 220100 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 should preserve radiopharma positives when clinical-data quality, regulatory path, patient enrollment, partner/commercial route and financing bridge are visible. FutureChem produced very large MFE with controlled entry-basis MAE, but post-peak volatility still requires lifecycle local 4B if data/commercial bridge decays. | True | True |
 | None | 220260 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late_if_early_MFE_fade_ignored | True | True |
 | None | 220260 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_4B_too_late_if_customer_registration_proxy_keeps_Actionable_after_fade | True | True |
 | R5L96_C18_COSMAXNBT_2024_STAGE2_FALSE_POSITIVE_HEALTH_FUNCTIONAL_EXPORT_CHANNEL_WATCH | 222040 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive_if_health_functional_export_channel_watch_counts_without_reorder_sellthrough_margin_revision_bridge | True | True |
+| TRG_C18_R5_L103_222040_Stage2_Actionable_2024-02-15 | 222040 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | R13L96_REVIEW_R5_C18_CONSUMER_EXPORT_CHANNEL_REORDER_222040_2024_01_09_TRIGGER | 222040 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_health_functional_export_channel_watch_counts_without_reorder_sellthrough_margin_revision_bridge | True | True |
 | TRG_R3L74-C11-222080-CIS-EQUIPMENT-CAPEX-BETA-FADE | 222080 | C11_BATTERY_ORDERBOOK_RERATING | C11 should not treat battery equipment or solid-state capex beta as durable Stage2 unless orderbook, delivery, customer or margin evidence refreshes. CIS generated a sharp MFE but later gave it back and opened large MAE, making it a false Stage2 / local 4B-watch row. | True | True |
-| CIS_222080_2024_03_05_STAGE2_FALSE_POSITIVE_ORDERBOOK_SPIKE | 222080 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive | False | True |
+| CIS_222080_2024_03_05_STAGE2_FALSE_POSITIVE_ORDERBOOK_SPIKE | 222080 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive | True | True |
+| CIS_222080_2024_03_06_STAGE2_FALSE_POSITIVE_ORDERBOOK_BETA | 222080 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive | True | True |
 | None | 222080 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_missed_actionable_if_equipment_orderbook_is_zeroed_but_correct_to_block_Green_without_margin_bridge | True | True |
 | R3L89_C11_222080_20240215_STAGE2_BATTERY_EQUIPMENT_ORDERBOOK | 222080 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_correct_if_orderbook_customer_ramp_margin_bridge_required | True | True |
 | TRG_R3L74-C11-222080-CIS-EQUIPMENT-CAPEX-BETA-FADE | 222080 | C11_BATTERY_ORDERBOOK_RERATING | C11 should not treat battery equipment or solid-state capex beta as durable Stage2 unless orderbook, delivery, customer or margin evidence refreshes. CIS generated a sharp MFE but later gave it back and opened large MAE, making it a false Stage2 / local 4B-watch row. | True | True |
@@ -3118,10 +3313,11 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R9L93_C14_CIS_2024_STAGE2_FALSE_POSITIVE_BATTERY_EQUIPMENT_CAPEX_REBOUND | 222080 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive_if_battery_equipment_capex_rebound_counts_without_customer_delivery_margin_bridge | True | True |
 | R13L93_REVIEW_R9_C14_EV_DEMAND_SLOWDOWN_4B_4C_222080_2024_03_05_TRIGGER | 222080 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_battery_equipment_capex_rebound_counts_without_customer_delivery_margin_bridge | True | True |
 | TRG_R2L75-C06-222800-SIMMTECH-DDR5-HBM-SUBSTRATE-CYCLE-FADE | 222800 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
+| SIMMTECH_222800_2024_03_06_STAGE2A_HBM_PACKAGE_SUBSTRATE_CAPACITY | 222800 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | True | True |
 | TRG-C06-L110-222800-Stage2Actionable-2024-03-22 | 222800 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_missed_structural | True | True |
 | TRG_R2L75-C06-222800-SIMMTECH-DDR5-HBM-SUBSTRATE-CYCLE-FADE | 222800 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | C06 should not reward memory substrate restocking beta unless customer order, utilization, ASP or margin bridge is visible. Simmtech produced only moderate MFE and then a deep late-2024 drawdown, so it belongs in false Stage2/local 4B-watch until bridge evidence is repaired. | True | True |
 | R2L93_C06_222800_20240102_STAGE2_FALSE_POSITIVE_PCB_SUBSTRATE_CAPACITY | 222800 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive_if_PCB_substrate_capacity_vocabulary_counted_as_C06_memory_capacity_bridge | True | True |
-| None | 222800 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 222800 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | TRG_R8L78-C27-225570-NEXON-GAMES-GLOBAL-LAUNCH-LIVEOPS | 225570 | C27_CONTENT_IP_GLOBAL_MONETIZATION | C27 should allow game-IP launch positives when global launch, user traction, live-ops retention, monetization and operating-leverage bridge are visible. Nexon Games produced large MFE, but the later post-peak drawdown means user/revenue/retention evidence must refresh. Share-count changes inside the window need validation. | True | True |
 | TRG_R8L74-C27-225570-NEXONGAMES-GLOBAL-LAUNCH-RETENTION-LIFECYCLE | 225570 | C27_CONTENT_IP_GLOBAL_MONETIZATION | C27 should allow a global launch name only if launch traction converts into retention, paying-user monetization, live-ops cadence and revenue bridge. Nexon Games produced a huge launch-window MFE, but later drawdown makes lifecycle local 4B mandatory unless retention/monetization evidence refreshes. | True | True |
 | TRG_R8L74-C27-225570-NEXONGAMES-GLOBAL-LAUNCH-RETENTION-LIFECYCLE | 225570 | C27_CONTENT_IP_GLOBAL_MONETIZATION | C27 should allow a global launch name only if launch traction converts into retention, paying-user monetization, live-ops cadence and revenue bridge. Nexon Games produced a huge launch-window MFE, but later drawdown makes lifecycle local 4B mandatory unless retention/monetization evidence refreshes. | True | True |
@@ -3130,7 +3326,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13_CROSS_225570_2024-07-03_Stage4B | 225570 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | None | 226400 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | R13_CROSS_226400_2024-07-01_Stage2-Actionable-OrthopedicExportBridge | 226400 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
-| None | 228670 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | False | True |
+| None | 228670 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | R7L88_C25_RAY_2024_STAGE2_FALSE_POSITIVE_DENTAL_EXPORT_REBOUND | 228670 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive_if_dental_device_export_rebound_counts_without_order_reimbursement_margin_bridge | True | True |
 | R7L94_C25_RAY_2024_STAGE2_FALSE_POSITIVE_DENTAL_DEVICE_EXPORT_RECOVERY | 228670 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive_if_dental_device_export_recovery_counts_without_channel_margin_revision_bridge | True | True |
 | R7L83_C25_228670_20240401_STAGE2_FALSE_POSITIVE_DENTAL_DEVICE | 228670 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
@@ -3146,10 +3342,11 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R7L91_C23_229000_20240102_STAGE2_FALSE_POSITIVE_DIAGNOSTIC_COMMERCIALIZATION | 229000 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive_if_diagnostic_commercialization_vocabulary_overcredited | True | True |
 | R11L89_C02_229640_20240422_STAGE2_POWER_CABLE_EXPORT_GRID | 229640 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_correct_if_orderbook_export_margin_cash_bridge_required | True | True |
 | R4L99_C16_LSECOENERGY_2024_STAGE2_ACTIONABLE_CRITICAL_MINERAL_CABLE_SUPPLY_CHAIN_EXECUTION | 229640 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
+| C26-L104-04-230360-T1 | 230360 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_missed_structural | True | True |
 | R8L88_C26_230360_20240314_STAGE2_PERFORMANCE_MARKETING_LEVERAGE | 230360 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_correct_if_revenue_margin_retention_bridge_required | True | True |
 | V12_COMPACT_230360_2024-06-10_platform_ad_budget_retention_opm_bridge_cleanup | 230360 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | R8L83_C26_230360_20240411_STAGE2_FALSE_POSITIVE_PERFORMANCE_MARKETING_RECOVERY | 230360 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| None | 230360 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 230360 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | R13_4B4C_L101_T004_230360 | 230360 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_missed_structural | True | True |
 | R13L88_REVIEW_R8_C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE_230360_2024-03-14 | 230360 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
 | T_C06_R2L103_232140_20240415_Stage2Actionable_CROSS_C07 | 232140 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_C06_vs_C07_C08_C09_reroute_guard | True | True |
@@ -3161,32 +3358,35 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R2L77-C07-232140-YC-HBM-TESTER-ORDER-RS-LIFECYCLE | 232140 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_correct | True | True |
 | R2L84_C07_232140_20240417_STAGE2_HBM_TESTER_ORDER_BRIDGE | 232140 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_correct_if_non_price_bridge_required | True | True |
 | R2L87_C08_232140_20240228_STAGE2_MEMORY_TESTER_CUSTOMER_QUALITY | 232140 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_correct_if_customer_quality_shipment_bridge_required | True | True |
-| YC_232140_2024_03_06_STAGE2A_MEMORY_TESTER_CUSTOMER_QUALITY | 232140 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | False | True |
-| None | 232140 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| YC_232140_2024_03_06_STAGE2A_MEMORY_TESTER_CUSTOMER_QUALITY | 232140 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
+| None | 232140 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | C08_R2_L112_001_232140_Stage3_Yellow | 232140 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_missed_structural | True | True |
-| None | 232140 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 232140 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | T_C09_R2L111_04_232140_20240415 | 232140 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | R2L95_C10_YC_2024_STAGE2_ACTIONABLE_MEMORY_TESTER_ORDER_CYCLE_BRIDGE | 232140 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R13L87_REVIEW_R2_C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY_232140_2024-02-28 | 232140 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
+| TR_R13L147_4B4C_03_232140_Stage4B_2024-07-30 | 232140 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_waiting_for_second_large_order_in_C08 | False | True |
+| R13S2_L102_T002_232140 | 232140 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_missed_structural | True | True |
 | V12_COMPACT_C28_R8L104_234300_20240620_234300_2024-06-21_Stage2 | 234300 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
 | V12_COMPACT_R13_STAGE2FP_L8_10_234300_2024-06-21_STAGE2_234300_2024-06-21_stage2_source_proxy_deep_MAE_false_positive_review | 234300 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
 | C24_R7L98_TRIG_07_235980 | 235980 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_false_positive | True | True |
 | C24-R7-L100-TRIG-06-235980 | 235980 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_4C_too_late | True | True |
 | R13_4B4C_L101_T007_235980 | 235980 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R8L95_C26_NBT_2024_STAGE2_FALSE_POSITIVE_REWARD_AD_PLATFORM_WATCH | 236810 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive_if_reward_ad_platform_watch_counts_without_ad_budget_retention_margin_revision_bridge | True | True |
-| None | 236810 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 236810 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | TRG_R8L81-C26-236810-NBT-REWARD-AD-PLATFORM-THEME-FADE | 236810 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | C26 should not treat reward-ad or mobile-ad platform theme beta as durable Stage2 unless advertiser budget, DAU/MAU or conversion metrics, retention, revenue conversion and margin bridge are visible. NBT had a small/medium MFE and then a severe high-MAE fade. | True | True |
 | R8L91_C26_236810_20240103_STAGE2_FALSE_POSITIVE_REWARD_ADTECH | 236810 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive_if_reward_adtech_spike_overcredited | True | True |
 | V12_COMPACT_236810_2024-05-02_platform_ad_budget_retention_opm_bridge_cleanup | 236810 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | R13L95_REVIEW_R8_C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE_236810_2024_01_08_TRIGGER | 236810 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_reward_ad_platform_watch_counts_without_ad_budget_retention_margin_revision_bridge | True | True |
 | V12_COMPACT_237690_2024-02-05_RNA_CDMO_APPROVAL_CONTAMINANT_REROUTE | 237690 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
 | R7L90_C24_237690_20240223_STAGE2_RNA_PLATFORM_BRIDGE | 237690 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_correct_if_endpoint_partner_manufacturing_cash_bridge_required | True | True |
-| None | 237690 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
+| None | 237690 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | R1L95_C02_PNCTECH_2024_STAGE2_FALSE_POSITIVE_GRID_AUTOMATION_CAPEX_WATCH | 237750 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive_if_grid_automation_capex_watch_counts_without_customer_order_delivery_margin_revision_bridge | True | True |
 | R1L92_C02_237750_20240102_STAGE2_FALSE_POSITIVE_DIGITAL_GRID_RELAY | 237750 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive_if_digital_grid_price_MFE_overcredited | True | True |
 | R2L92_C08_237750_20240102_STAGE2_FALSE_POSITIVE_CROSSLABEL_GRID_MFE | 237750 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive_if_cross_label_price_MFE_overcredited | True | True |
 | R13L95_REVIEW_R1_C02_POWER_GRID_DATACENTER_CAPEX_237750_2024_05_08_TRIGGER | 237750 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_grid_automation_capex_watch_counts_without_customer_order_delivery_margin_revision_bridge | True | True |
-| None | 237820 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| C26-L104-03-237820-T1 | 237820 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_4B_too_late | True | True |
+| None | 237820 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | TRG_R8L77-C26-237820-PLAYD-ADTECH-ROAS-BUDGET-OPERATING-LEVERAGE | 237820 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | C26 should allow adtech/platform positives only when advertiser budget recovery, ROAS/performance evidence, media-buying platform revenue and operating leverage bridge are visible. PlayD produced very large MFE with controlled entry-basis MAE, but the later post-peak drawdown requires lifecycle local 4B if ad-budget/ROAS/margin evidence fades. | True | True |
 | TRG_R8L77-C26-237820-PLAYD-ADTECH-ROAS-BUDGET-OPERATING-LEVERAGE | 237820 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_correct | True | True |
 | TRG_R8L81-C26-237820-PLAYD-PERFORMANCE-AD-AI-MARKETING-LIFECYCLE | 237820 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | C26 should allow adtech/performance-marketing positives only when AI/digital ad attention maps to client budget, conversion metrics, recurring advertiser spend, revenue conversion and margin bridge. PlayD produced a very large MFE but later post-peak drawdown demands lifecycle 4B if the bridge fades. | True | True |
@@ -3196,18 +3396,20 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R5L88_C20_237880_20240613_STAGE2_FALSE_POSITIVE_LATE_BRAND_EXTENSION | 237880 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive_if_late_brand_extension_overcredited | True | True |
 | R13L88_REVIEW_R5_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_237880_2024-06-13 | 237880 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | V12_COMPACT_240810_2024-02-01_Stage2 | 240810 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
+| WONIKIPS_240810_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_CAPEX_RS | 240810 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | R2L86_C07_240810_20240704_STAGE2_FALSE_POSITIVE_MEMORY_EQUIPMENT_BETA | 240810 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive_if_memory_equipment_beta_overcredited | True | True |
 | R2_L110_C07 | 240810 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | True | True |
-| None | 240810 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 240810 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | TRG_R2L79-C09-240810-WONIKIPS-ADVANCED-EQUIPMENT-ORDER-QUALITY-POSITIVE | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | C09 should not block advanced-equipment positives when customer quality, tool order/backlog, delivery schedule, utilization/customer capacity and margin bridge are visible. Wonik IPS produced a meaningful MFE with bounded MAE, so it is a protected candidate after source repair rather than a pure blowoff. | True | True |
 | R2L93C_C09_240810_20240229_STAGE2_FRONTEND_ORDER | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_correct_if_order_delivery_revision_margin_cash_bridge_required_but_Green_strict | True | True |
 | R2L83_C09_240810_20240229_STAGE2_ACTIONABLE_THEN_4B_WATCH | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | True | True |
 | TRG_R2L82-C09-240810-WONIK-IPS-SEMICAP-ORDER-BRIDGE-LIFECYCLE | 240810 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | C09 should not mechanically reject all advanced-equipment MFE. Wonik IPS had a credible semicap/order-cycle price path, but promotion requires memory capex, customer order, delivery/revenue and margin evidence; later drawdown requires lifecycle 4B if bridge fades. | True | True |
+| WONIKIPS_240810_2024_03_29_STAGE2_FALSE_POSITIVE_MEMORY_EQUIP_BETA | 240810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | True | True |
 | TRG_R2L76-C10-240810-WONIK-IPS-MEMORY-PROCESS-EQUIPMENT-CYCLE | 240810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | C10 should preserve process-equipment recovery winners when memory capex/order recovery, customer schedule and margin bridge are visible. Wonik IPS produced a strong early MFE with moderate MAE, then faded, so C10 needs lifecycle local 4B after bridge decay. | True | True |
 | None | 240810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | True | True |
 | TRG_R2L76-C10-240810-WONIK-IPS-MEMORY-PROCESS-EQUIPMENT-CYCLE | 240810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_correct | True | True |
 | R13_CROSS_240810_2024-02-29_Stage2-Actionable | 240810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive | True | True |
-| WONIKIPS_240810_2024_03_06_STAGE2A_MEMORY_WFE_RECOVERY | 240810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | False | True |
+| WONIKIPS_240810_2024_03_06_STAGE2A_MEMORY_WFE_RECOVERY | 240810 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | True | True |
 | R13L86_REVIEW_R2_C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH_240810_2024-07-04 | 240810 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | None | 240810 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | None | 240810 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | None | True | True |
@@ -3216,30 +3418,37 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R1L116-C01-006 | 241560 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive_if_legacy_backlog_ignores_cycle_slowdown | True | True |
 | TRG_R12L73-C32-241560-DOOSANBOBCAT-MERGER-RATIO-MINORITY-RISK | 241560 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | C32 should not treat a chaebol restructuring headline as positive control-premium evidence for the operating subsidiary when merger-ratio and minority-shareholder dilution risk dominate. Bobcat showed a brief squeeze but then opened deep MAE. | False | True |
 | TRG_R12L73-C32-241560-DOOSANBOBCAT-MERGER-RATIO-MINORITY-RISK | 241560 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | C32 should not treat a chaebol restructuring headline as positive control-premium evidence for the operating subsidiary when merger-ratio and minority-shareholder dilution risk dominate. Bobcat showed a brief squeeze but then opened deep MAE. | False | True |
+| TR_R13L147_4B4C_07_241560_Stage4C_2024-07-12 | 241560 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4C_too_late_if_control_restructuring_is_treated_as_value_up_language | False | True |
 | R5L93_C19_HWASEUNGENTERPRISE_2024_STAGE2_ACTIONABLE_FOOTWEAR_OEM_INVENTORY_RESTOCKING_MARGIN | 241590 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | TRG_R5L82-C18-241710-COSMECCA-KOREA-ODM-EXPORT-REORDER | 241710 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | C18 should protect ODM/export positives only when export channel sell-through, customer quality, reorder cadence, revenue conversion and margin bridge are visible. Cosmecca Korea produced very large MFE with moderate interim MAE, but later drawdown requires lifecycle 4B if channel/reorder proof fades. | True | True |
-| None | 241770 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
-| None | 241840 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 241770 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| None | 241840 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | R8L90_C27_241840_20240102_STAGE2_FALSE_POSITIVE_DRAMA_IP | 241840 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive_if_drama_IP_rebound_overcredited | True | True |
+| R13_HIGHMAE_L143_241840_20220720_TRG | 241840 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_or_persistence_error_if_Stage2_Stage3_not_capped | False | True |
 | R3L97_C12_SHINHEUNGSEC_2024_STAGE2_FALSE_POSITIVE_BATTERY_CAP_CALLOFF_WATCH_POST_CA | 243840 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive_if_battery_cap_calloff_watch_counts_without_customer_calloff_delivery_utilization_margin_revision_bridge | True | True |
 | T_C13_R3L103_243840_STAGE2ACTIONABLE_20240522 | 243840 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_too_late_if_safety_component_volume_margin_bridge_exists | True | True |
 | R9L89_C13_SHINHEUNG_2024_STAGE2_FALSE_POSITIVE_BATTERY_PARTS_UTILIZATION | 243840 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive_if_battery_parts_utilization_theme_counts_without_customer_margin_bridge | True | True |
 | R13L89_REVIEW_C13_SHINHEUNG_2024_STAGE2_FALSE_POSITIVE_BATTERY_PARTS_UTILIZATION | 243840 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_if_battery_parts_utilization_theme_counts_without_customer_margin_bridge | True | True |
 | R6L95_C22_APLUSASSET_2024_STAGE2_FALSE_POSITIVE_INSURANCE_AGENCY_COMMISSION_WATCH | 244920 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive_if_insurance_agency_commission_watch_counts_without_persistency_margin_capital_return_revision_bridge | True | True |
 | R6L88_C22_244920_20240520_STAGE2_FALSE_POSITIVE_INSURANCE_DISTRIBUTION | 244920 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_false_positive_if_distribution_theme_overcredited | True | True |
+| T_C22_R6L102_002 | 244920 | C22_INSURANCE_RATE_CYCLE_RESERVE | current_profile_missed_structural | True | True |
 | R13L88_REVIEW_R6_C22_INSURANCE_RATE_CYCLE_RESERVE_244920_2024-05-20 | 244920 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L95_REVIEW_R6_C22_INSURANCE_RATE_CYCLE_RESERVE_244920_2024_05_17_TRIGGER | 244920 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_insurance_agency_commission_watch_counts_without_persistency_margin_capital_return_revision_bridge | True | True |
 | R7L91_C25_TNRBIOFAB_2024_STAGE4B_BIOPRINTING_REGENERATIVE_DEVICE_CAP | 246710 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_4B_too_late_if_bioprinting_regenerative_device_event_premium_not_capped | True | True |
 | R13L91_REVIEW_R7_C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT_246710_2024_03_11_TRIGGER | 246710 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_bioprinting_regenerative_device_event_premium_not_capped | True | True |
 | R3L85_C11_247540_20240325_STAGE2_FALSE_POSITIVE_CATHODE_ORDERBOOK | 247540 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_orderbook_headline_overcredited | True | True |
 | T_C11_R3L107_247540_STAGE4C_20240122 | 247540 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_orderbook_label_is_overcredited | True | True |
+| TRG-C12-247540-20250211-STAGE4B | 247540 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | drawdown_aware_4b_needed_hard_4c_only_if_customer_cancellation_or_cash_break | True | True |
 | V12_COMPACT_C12_R3L105_247540_20240409_03_247540_2024-04-09_Stage4C | 247540 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
-| None | 247540 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | False | True |
+| None | 247540 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | None | 247540 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | T_C13_R3L105_247540_STAGE4C_20240122 | 247540 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
-| None | 247540 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | False | True |
+| None | 247540 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | True | True |
 | R3L98_C14_ECOPROBM_2024_STAGE4C_CATHODE_DEMAND_SLOWDOWN_CALL_OFF_PROTECTION | 247540 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_kept_but_hard_4C_watch_should_block_positive_stage | True | True |
+| ECOPROBM_247540_2024_03_06_STAGE4C_EV_CATHODE_DEMAND_SLOWDOWN | 247540 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4C_too_late_if_recovery_beta_overcredited | True | True |
+| ECOPROBM_247540_2024_03_25_4C_EV_DEMAND_SLOWDOWN | 247540 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4C_too_late | True | True |
 | R3L98-C14-007-T1 | 247540 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive_if_contract_size_memory_blocks_late_cycle_4C | True | True |
+| R13L10_X03_247540_Stage4B | 247540 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late | True | True |
 | None | 247540 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | V12_COMPACT_R13L12_ACCT_PRICE_08_C31_247540_20240122_247540_2024-01-22_Stage2 | 247540 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | R13_CROSS_247540_2024-01-22_Stage2 | 247540 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
@@ -3255,18 +3464,20 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 251270 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | True | True |
 | R13L87_REVIEW_R8_C27_CONTENT_IP_GLOBAL_MONETIZATION_251270_2024-04-29 | 251270 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
 | R3L98-C14-004-T1 | 251630 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_missed_structural_if_all_battery_equipment_is_blocked_by_generic_EV_slowdown | True | True |
-| SEMCNS_252990_2024_01_23_STAGE2A_PROBE_CARD_CERAMIC_STF | 252990 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_correct | False | True |
-| SEMCNS_252990_2024_03_06_STAGE2A_PROBE_CARD_CUSTOMER_QUALITY | 252990 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | False | True |
+| SEMCNS_252990_2024_01_23_STAGE2A_PROBE_CARD_CERAMIC_STF | 252990 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_correct | True | True |
+| SEMCNS_252990_2024_03_06_STAGE2A_PROBE_CARD_CUSTOMER_QUALITY | 252990 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
 | C08_R2_L112_007_252990_Stage4C | 252990 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4C_too_late | True | True |
-| None | 253450 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 253450 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
+| STUDIODRAGON_253450_2024_03_06_STAGE2_FALSE_POSITIVE_GLOBAL_CONTENT_IP | 253450 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive_if_content_IP_platform_language_overcredited | True | True |
 | R8L93_C27_253450_20240102_STAGE2_FALSE_POSITIVE_STUDIO_PIPELINE | 253450 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive_if_studio_content_pipeline_vocabulary_overcredited | True | True |
 | None | 253450 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | True | True |
 | R2L91_C06_NEOSEM_2024_STAGE4B_CXL_SSD_MEMORY_THEME_CAP | 253590 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late_if_CXL_SSD_memory_theme_premium_not_capped | True | True |
 | R2L94_C07_NEOSEM_2024_STAGE2_FALSE_POSITIVE_MEMORY_TESTER_HEADLINE | 253590 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive_if_memory_tester_headline_counts_without_customer_order_delivery_margin_bridge | True | True |
-| NEOSEM_253590_2024_03_06_STAGE2_FALSE_POSITIVE_SSD_TESTER_EVENT | 253590 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | False | True |
+| NEOSEM_253590_2024_03_06_STAGE2_FALSE_POSITIVE_SSD_TESTER_EVENT | 253590 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
 | R2L88_C09_253590_20240704_STAGE2_FALSE_POSITIVE_LATE_TESTER_EXTENSION | 253590 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_late_tester_extension_overcredited | True | True |
 | R13L88_REVIEW_R2_C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF_253590_2024-07-04 | 253590 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | None | 253590 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
+| R13HMG_L104_T002_253590 | 253590 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_needs_high_MAE_overlay_or_green_block | False | True |
 | R13L91_REVIEW_R2_C06_HBM_MEMORY_CUSTOMER_CAPACITY_253590_2024_07_04_TRIGGER | 253590 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_CXL_SSD_memory_theme_premium_not_capped | True | True |
 | R13L94_REVIEW_R2_C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH_253590_2024_03_20_TRIGGER | 253590 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive_if_memory_tester_headline_counts_without_customer_order_delivery_margin_bridge | True | True |
 | None | 253840 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
@@ -3280,12 +3491,15 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 253840 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
 | R2L98_C06_MIRAESCM_2024_STAGE4B_MEMORY_DISTRIBUTION_HBM_EVENT_CAP | 254490 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late_if_memory_distribution_HBM_event_premium_not_capped | True | True |
 | R7L90_C24_256840_20240320_STAGE2_FALSE_POSITIVE_THERAPEUTIC_EVENT | 256840 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_false_positive_if_therapeutic_event_momentum_overcredited | True | True |
+| R5L10_C20_SILICON2_T2A_20240517 | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_correct | True | True |
 | None | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | False | True |
 | C20_R5_L102_T01_257720 | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_4B_too_late | True | True |
-| None | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | False | True |
+| None | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | True | True |
+| R5L10_C20_SILICON2_T4B_20240619 | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_correct | True | True |
 | None | 257720 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | False | True |
 | R13_4B4C_L101_T002_257720 | 257720 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_after_blowoff_not_false_positive_upfront | True | True |
 | R13_4B4C_L12_14_257720_20240612_4B_Local_Watch | 257720 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_source_proxy_row_promotes_to_green_or_full_4B | True | True |
+| TR_R13L147_4B4C_01_257720_Stage4B_2024-07-04 | 257720 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | False | True |
 | None | 257720 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | R13_CROSS_R13L4_C20_257720_20240612_INVENTORY_AR_TRUST_GUARD_257720_2024-06-12_Stage4B | 257720 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | None | 257720 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
@@ -3295,7 +3509,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R8L80-C27-259960-KRAFTON-GAME-IP-GLOBAL-LIVEOPS-MONETIZATION | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | C27 should protect game-IP positives only when global live-ops, user metrics, monetization, publishing cadence, revenue conversion and margin bridge are visible. Krafton produced strong MFE with almost no entry-basis MAE, so it should not be overblocked after source repair. | True | True |
 | TRG_R8L74-C27-259960-KRAFTON-PUBG-GLOBAL-MONETIZATION | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | C27 should allow Stage2 when global game IP monetization is tied to live-ops, regional monetization, MAU/ARPU and margin bridge. Krafton produced a large, low-MAE rerating path; this is a positive anchor that should not be overblocked by generic content-beta guards. | True | True |
 | TRG_R8L74-C27-259960-KRAFTON-PUBG-GLOBAL-MONETIZATION | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | C27 should allow Stage2 when global game IP monetization is tied to live-ops, regional monetization, MAU/ARPU and margin bridge. Krafton produced a large, low-MAE rerating path; this is a positive anchor that should not be overblocked by generic content-beta guards. | True | True |
-| KRAFTON_259960_2024_02_13_STAGE2A_GAME_IP_GLOBAL_MONETIZATION | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_4B_too_late | False | True |
+| KRAFTON_259960_2024_02_13_STAGE2A_GAME_IP_GLOBAL_MONETIZATION | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_4B_too_late | True | True |
 | None | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | True | True |
 | None | 259960 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | True | True |
 | V12_COMPACT_C25_R7L107_261200_20240529_Stage2_261200_2024-05-29_Stage2 | 261200 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
@@ -3304,7 +3518,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 263720 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | True | True |
 | R13_4B4C_L101_T008_263720 | 263720 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | TRG_R8L74-C27-263750-PEARLABYSS-TRAILER-ANTICIPATION-BETA-FADE | 263750 | C27_CONTENT_IP_GLOBAL_MONETIZATION | C27 should not treat trailer/release-expectation beta as durable Stage2 unless release date, preorder/wishlist conversion, monetization model and revenue timing are visible. Pearl Abyss had limited MFE and then large MAE, so this is a false Stage2/local 4B row. | True | True |
-| PEARLABYSS_263750_2024_07_09_STAGE2_FALSE_POSITIVE_GAME_IP_EVENT | 263750 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive | False | True |
+| PEARLABYSS_263750_2024_07_09_STAGE2_FALSE_POSITIVE_GAME_IP_EVENT | 263750 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive | True | True |
 | TRG_R8L74-C27-263750-PEARLABYSS-TRAILER-ANTICIPATION-BETA-FADE | 263750 | C27_CONTENT_IP_GLOBAL_MONETIZATION | C27 should not treat trailer/release-expectation beta as durable Stage2 unless release date, preorder/wishlist conversion, monetization model and revenue timing are visible. Pearl Abyss had limited MFE and then large MAE, so this is a false Stage2/local 4B row. | True | True |
 | C27-R8L105-010|Stage4B|2024-03-21 | 263750 | C27_CONTENT_IP_GLOBAL_MONETIZATION | residual_error_needs_C27_specific_bridge_or_guard | True | True |
 | None | 263750 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | True | True |
@@ -3316,24 +3530,29 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | C19_R5L119_09_264900_Stage3_Yellow_2024-02-26 | 264900 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | C20_R5L117_264900_20240226_Stage3_Yellow | 264900 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_error_or_stress_case | True | True |
 | R12L94_C32_HDHYUNDAI_2024_STAGE2_ACTIONABLE_HOLDCO_NAV_CAPITAL_RETURN_BRIDGE | 267250 | C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
+| HDHYUNDAIELECTRIC_267260_2024_03_06_STAGE2A_GRID_BACKLOG_MARGIN | 267260 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_4B_too_late | True | True |
 | R1L10_C02_267260_STAGE2A_2024_01_03 | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_too_late | False | True |
 | R1L95_C02_HDHYUNDAIELECTRIC_2024_STAGE2_ACTIONABLE_TRANSFORMER_GRID_BACKLOG_DATACENTER_CAPEX | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R1L92_C02_267260_20240129_STAGE2_TRANSFORMER_DATACENTER_BACKLOG | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_correct_if_customer_order_delivery_margin_cash_bridge_required | True | True |
 | R11L85_C02_267260_20240129_STAGE2_TRANSFORMER_DATACENTER_CAPEX | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_correct_if_order_capacity_margin_bridge_required | True | True |
+| HDHE_267260_2024_03_06_STAGE2A_TRANSFORMER_DATACENTER_CAPEX_BACKLOG | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late_if_CAPEX_backlog_overpromoted_to_Green | True | True |
 | None | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | None | True | True |
 | R13_CROSS_267260_2024-04-23_Stage2-Actionable | 267260 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive | True | True |
 | None | 267260 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
 | None | 267260 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
-| None | 267260 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 267260 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | None | 267260 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | None | 267260 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | R13L85_REVIEW_R11_C02_POWER_GRID_DATACENTER_CAPEX_267260_2024-01-29 | 267260 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_correct | True | True |
 | None | 267260 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
+| R13S2_L102_T001_267260 | 267260 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_correct | False | True |
+| C01-R1-L119-02-267270-STAGE2ACTIONABLE | 267270 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_too_late_without_C01_bridge_compression | True | True |
 | TRG_R5L79-C18-271560-ORION-CHINA-CHANNEL-REORDER-RESET-BOUNDARY | 271560 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | C18 should not treat all confectionery or China-channel reorder resets as durable Stage2. Orion produced bounded MAE and a modest recovery MFE, so it should not be forced into 4B, but the price path did not validate a high-conviction export/channel rerating either. | True | True |
-| C18_R5L113_271560_20240116_Stage2_2024-01-16 | 271560 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | False | True |
+| C18_R5L113_271560_20240116_Stage2_2024-01-16 | 271560 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | TRG_R5L77-C18-271560-ORION-GLOBAL-DISTRIBUTION-BETA-FADE | 271560 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | None | 271560 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
 | TRG_R5L77-C18-271560-ORION-GLOBAL-DISTRIBUTION-BETA-FADE | 271560 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | C18 should not treat global snack distribution beta as durable Stage2 unless overseas reorder, sell-through, distributor inventory, pricing and margin bridge are visible. Orion had only limited MFE and a weak range-bound path, so it is a counterexample against generic global-distribution Green. | True | True |
+| R5L12_C18_ORION_T2_REJECT_20230428 | 271560 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | C19_R5L120_02_271560_Stage2_Actionable_2024-04-11 | 271560 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | C20_R5L116_271560_20240116_Stage2 | 271560 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | True | True |
 | C20_R5_L102_T07_271560 | 271560 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | True | True |
@@ -3341,47 +3560,50 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R5L88_C20_KFOOD_GLOBAL_REORDER_003 | 271560 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | None | False | True |
 | R9L84_C29_271940_20240522_STAGE2_FALSE_POSITIVE_HYDROGEN_OPTIONALITY | 271940 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_false_positive_if_hydrogen_optionality_overcredited | True | True |
 | None | 272210 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | None | True | True |
-| T_272210_20240618_STAGE2_REPAIR | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_defense_system_label_promotes_to_stage3 | False | True |
+| T_272210_20240618_STAGE2_REPAIR | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_defense_system_label_promotes_to_stage3 | True | True |
 | TRG_R1L82-C03-272210-HANWHA-SYSTEMS-DEFENSE-ELECTRONICS-BACKLOG | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | C03 should allow defense electronics positives when radar/C4I/sensor program backlog, export customer, delivery milestones, revenue conversion and margin bridge are visible. Hanwha Systems produced strong MFE with controlled entry-basis MAE, but bridge refresh is required after post-peak drawdown. | True | True |
 | TRG_R11L77-C03-272210-HANWHA-SYSTEMS-DEFENSE-ELECTRONICS-BACKLOG | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | C03 should include defense electronics / radar / C4I names only when policy-defense demand maps to backlog, customer program, delivery schedule and margin bridge. Hanwha Systems produced solid MFE with controlled MAE, but later drawdown says C03 must lifecycle-manage the signal. | True | True |
 | TRG_R11L77-C03-272210-HANWHA-SYSTEMS-DEFENSE-ELECTRONICS-BACKLOG | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_correct | True | True |
-| T_272210_20240306_STAGE2A_REPAIR | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_stage2_actionable_without_export_backlog_cash_bridge | False | True |
+| T_272210_20240306_STAGE2A_REPAIR | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_stage2_actionable_without_export_backlog_cash_bridge | True | True |
 | R11L90_C03_272210_20240422_STAGE2_DEFENSE_ELECTRONICS_EXPORT_BACKLOG | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_correct_if_export_framework_backlog_delivery_margin_bridge_required | True | True |
 | R11L95_C03_HANWHASYSTEMS_2024_STAGE2_ACTIONABLE_DEFENSE_SPACE_EXPORT_BACKLOG_BRIDGE | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
-| None | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | V12_COMPACT_C03-R1L105-04_272210_2024-03-06_4B-Watch | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive | True | True |
 | T_C03_R1L108_272210_20240711_STAGE4B | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current profile can over-promote defense beta unless sovereign funded backlog, delivery schedule and margin/cash bridge are verified | True | True |
 | T_C03_R1L107_272210_20240912_STAGE4B | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | local_4b_real_but_full_green_needs_export_backlog_or_recurring_margin_bridge | True | True |
+| None | 272210 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
 | R12L91_C31_HANWHASYSTEMS_2024_STAGE2_ACTIONABLE_SPACE_DEFENSE_POLICY_CONTRACT_BRIDGE | 272210 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | TRG-C06-L111-272290-Stage3Yellow-2024-02-01 | 272290 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_4B_watch_despite_positive_MFE | True | True |
-| None | 272290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 272290 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | TRG_R8L77-C26-273060-WISEBIRDS-AD-PLATFORM-THEME-FADE | 273060 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| None | 273060 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 273060 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | TRG_R8L77-C26-273060-WISEBIRDS-AD-PLATFORM-THEME-FADE | 273060 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | C26 should not treat digital-ad or AI-ad platform beta as durable Stage2 unless advertiser budget, ROAS, media buying efficiency, repeat spend and margin bridge refreshes. Wisebirds had a tradable MFE but then a deep post-peak fade, making it a local 4B-watch row rather than durable Green. | True | True |
 | R8L88_C26_273060_20240220_STAGE2_FALSE_POSITIVE_ADTECH_THEME_BLOWOFF | 273060 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive_if_adtech_theme_blowoff_overcredited | True | True |
 | R8L89_C26_WISEBIRDS_2024_STAGE4B_ADTECH_AI_THEME_CAP | 273060 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_4B_too_late_if_adtech_AI_theme_premium_not_capped | True | True |
 | TR_C26_L105_273060_Stage4B_20240516 | 273060 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | V12_COMPACT_273060_2024-06-03_platform_ad_budget_retention_opm_bridge_cleanup | 273060 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | R13L88_REVIEW_R8_C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE_273060_2024-02-20 | 273060 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
-| None | 274090 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 274090 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | R11L84_C03_274090_20240118_STAGE2_FALSE_POSITIVE_AEROSPACE_THEME | 274090 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_aerospace_theme_overcredited | True | True |
 | R13_L106_T07_277880 | 277880 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
 | T_C11_R3L107_278280_STAGE4B_20240221 | 278280 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_orderbook_label_is_overcredited | True | True |
 | V12_COMPACT_C12_R3L105_278280_20240503_08_278280_2024-05-03_Stage2 | 278280 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
-| CHUNBO_278280_2024_02_21_4C_ELECTROLYTE_CALL_OFF_RISK | 278280 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_4C_too_late | False | True |
+| CHUNBO_278280_2024_02_21_4C_ELECTROLYTE_CALL_OFF_RISK | 278280 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_4C_too_late | True | True |
 | None | 278280 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_correct_if_hard_4c_requires_customer_pull_margin_break | True | True |
 | TRG_R3L76-C13-278280-CHUNBO-ELECTROLYTE-ADDITIVE-UTILIZATION-FADE | 278280 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive | True | True |
-| None | 278280 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | False | True |
+| None | 278280 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | TRG_R3L76-C13-278280-CHUNBO-ELECTROLYTE-ADDITIVE-UTILIZATION-FADE | 278280 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | C13 should not treat electrolyte/additive or IRA supply-chain beta as durable Stage2 unless customer utilization, local supply, call-off and margin evidence refreshes. Chunbo had limited MFE and then a high-MAE utilization fade. | True | True |
 | R3L93_C13_278280_20240208_STAGE2_FALSE_POSITIVE_ELECTROLYTE_CAPACITY | 278280 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive_if_electrolyte_capacity_JV_vocabulary_overcredited | True | True |
 | T_C13_R3L105_278280_STAGE4B_20240221 | 278280 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | T_C13_R3L105_278280_STAGE4C_20240221 | 278280 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | T_C14_R3L108_278280_STAGE4C_20240221 | 278280 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive | True | True |
+| CHUNBO_278280_2024_03_06_STAGE4C_ELECTROLYTE_UTILIZATION_SLOWDOWN | 278280 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4C_too_late_if_additive_recovery_beta_overcredited | True | True |
 | None | 278280 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | V12_COMPACT_R13L11-4B4C-005_278280_2024-02-21_cross_archetype_4b_4c_boundary_retest | 278280 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13_4B4C_L12_03_278280_20240221_Stage4C_Watch | 278280 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_source_proxy_row_promotes_to_green_or_full_4B | True | True |
 | R13_CROSS_278280_2024-02-21_Stage4B | 278280 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | None | 278280 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
+| R13_HIGHMAE_L143_278280_20250108_TRG | 278280 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_or_persistence_error_if_Stage2_Stage3_not_capped | False | True |
 | R13_CROSS_278280_2024-02-21_Stage4C | 278280 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | R13_CROSS_278280_2024-05-03_Stage2 | 278280 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
 | TRG_R5L75-C18-280360-LOTTE-WELLFOOD-KFOOD-EXPORT-CHANNEL-MARGIN | 280360 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | C18 should allow Stage2 when K-food/export attention is tied to channel reorder, overseas sell-through, product mix and margin bridge. Lotte Wellfood produced large MFE with controlled early MAE, but post-peak drawdown requires lifecycle local 4B if channel reorder evidence fades. | True | True |
@@ -3390,18 +3612,20 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R5L77-C18-280360-LOTTE-WELLFOOD-GLOBAL-SNACK-CHANNEL-REORDER | 280360 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_correct | True | True |
 | None | 280360 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
 | None | 281740 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | True | True |
-| None | 281820 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
-| KCTECH_281820_2024_03_06_STAGE2_FALSE_POSITIVE_CMP_PROCESS_EQUIPMENT | 281820 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | False | True |
-| KCTECH_281820_2024_02_27_STAGE2A_ADV_EQUIP_RERATING | 281820 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | False | True |
+| None | 281820 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| KCTECH_281820_2024_03_06_STAGE2_FALSE_POSITIVE_CMP_PROCESS_EQUIPMENT | 281820 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
+| KCTECH_281820_2024_02_27_STAGE2A_ADV_EQUIP_RERATING | 281820 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_4B_too_late | True | True |
 | R2L93_C10_281820_20240214_STAGE2_CMP_WETCLEAN_MEMORY_RECOVERY | 281820 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_correct_if_memory_recovery_order_delivery_margin_cash_bridge_required_but_Green_strict | True | True |
 | TRG_R5L81-C19-282330-BGF-RETAIL-CONVENIENCE-MARGIN-BOUNDED-RECOVERY | 282330 | C19_BRAND_RETAIL_INVENTORY_MARGIN | C19 should not call bounded convenience-store recovery hard 4C when no non-price margin or demand break is confirmed, but it also should not mark durable Stage2 without same-store sales, mix, cost control and margin bridge. BGF Retail is a RiskWatch/no-hard-4C boundary. | True | True |
-| BGFRETAIL_282330_2024_01_29_STAGE2_FALSE_POSITIVE_CVS_MARGIN_SLOWDOWN | 282330 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | False | True |
+| BGFRETAIL_282330_2024_01_29_STAGE2_FALSE_POSITIVE_CVS_MARGIN_SLOWDOWN | 282330 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | True | True |
 | R5L98_C19_BGFRETAIL_2024_STAGE2_FALSE_POSITIVE_CONVENIENCE_RETAIL_INVENTORY_MARGIN_WATCH | 282330 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive_if_defensive_retail_watch_counts_without_SSS_inventory_turn_OPM_revision_bridge | True | True |
 | R5L93_C19_282330_20240705_STAGE2_CONVENIENCE_INVENTORY_MARGIN | 282330 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_correct_if_sellthrough_inventory_margin_cash_bridge_required_but_Green_strict | True | True |
+| C01-R1-L119-05-282720-STAGE4B | 282720 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive_without_local_4B_watch | True | True |
 | None | 282880 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_automation_orderbook_proxy_promotes_Yellow | True | True |
 | None | 282880 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive_if_factory_automation_orderbook_proxy_promotes_Yellow_without_delivery_acceptance_margin_bridge | True | True |
 | C13_R3L102_05_282880_20240329_T1 | 282880 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive | True | True |
 | R3L92_C14_282880_20240102_STAGE2_4B_EQUIPMENT_CAPEX_DELAY | 282880 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_correct_if_capex_delay_backlog_margin_cash_drag_routes_to_4B | True | True |
+| TRG_C18_R5_L103_284740_Stage3_Yellow_2024-05-16 | 284740 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
 | T_C15_R4L105_285130_20240226_08_Stage2 | 285130 | C15_MATERIAL_SPREAD_SUPERCYCLE | current_profile_false_positive | True | True |
 | T_C17_R4L105_04_285130_Stage2_20240226 | 285130 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_false_positive | True | True |
 | None | 285130 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
@@ -3411,7 +3635,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R12L80-C31-289010-ICECREAM-EDU-AI-DIGITAL-TEXTBOOK-LIFECYCLE | 289010 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | C31 should allow under-covered education-policy rows only when AI digital textbook policy maps to direct school/customer adoption, paid conversion, subscription revenue and margin bridge. Icecream Edu produced tradable MFE but later high MAE, so it is a lifecycle candidate only after source repair. | True | True |
 | R8L96_C27_GIANTSTEP_2024_STAGE4B_VIRTUAL_PRODUCTION_AI_CONTENT_EVENT_CAP | 289220 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_4B_too_late_if_virtual_production_AI_content_event_premium_not_capped | True | True |
 | R13L96_REVIEW_R8_C27_CONTENT_IP_GLOBAL_MONETIZATION_289220_2024_01_09_TRIGGER | 289220 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_virtual_production_AI_content_event_premium_not_capped | True | True |
-| None | 290270 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 290270 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | V12_COMPACT_C28_R8L104_290270_20240321_290270_2024-03-22_Stage2 | 290270 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
 | V12_COMPACT_R13L11-4B4C-014_290270_2024-03-26_cross_archetype_4b_4c_boundary_retest | 290270 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13_CROSS_290270_2024-03-26_Stage2 | 290270 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
@@ -3429,7 +3653,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | C13_R3L102_07_290670_20240315_T1 | 290670 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive | True | True |
 | R3L98-C14-005-T1 | 290670 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_too_late_if_equipment_orderbook_memory_blocks_hard_4C | True | True |
 | R13L90_REVIEW_R3_C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK_290670_2024_02_21_TRIGGER | 290670 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_if_battery_process_equipment_theme_counts_without_customer_contract_reorder_bridge | True | True |
-| KAKAOGAMES_293490_2024_01_11_STAGE2_FALSE_POSITIVE_GAME_IP_LINEUP | 293490 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive | False | True |
+| KAKAOGAMES_293490_2024_01_11_STAGE2_FALSE_POSITIVE_GAME_IP_LINEUP | 293490 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive | True | True |
 | V12_COMPACT_C27-R8-L101-004_293490_2024-03-11_portfolio_game_pipeline_label_without_hit_revenue_conversion | 293490 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive | True | True |
 | C27-R8L105-016|Stage2-Actionable|2024-05-27 | 293490 | C27_CONTENT_IP_GLOBAL_MONETIZATION | residual_error_needs_C27_specific_bridge_or_guard | True | True |
 | TRG_R8L80-C27-293490-KAKAOGAMES-GAME-PORTFOLIO-THEME-FADE | 293490 | C27_CONTENT_IP_GLOBAL_MONETIZATION | C27 should not treat game portfolio or new-title theme beta as durable Stage2 unless global IP traction, launch metrics, user retention, revenue conversion and margin bridge are visible. Kakao Games had small MFE and then a persistent MAE/downtrend path. | True | True |
@@ -3442,7 +3666,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | T_C05_R1L108_294870_20240126_HOUSING_PF_CONTAMINANT | 294870 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | T_C05_R1L109_294870_20240126_PF_BALANCE_SHEET_REPAIR_CONTAMINANT | 294870 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | T_C05_R1L108_294870_20240826_HDC_POST_SPIKE_WATCH | 294870 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
-| V12_COMPACT_294870_2024-01-26_PF_balance_sheet_repair_rebound_with_orderbook_visibility | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive | False | True |
+| V12_COMPACT_294870_2024-01-26_PF_balance_sheet_repair_rebound_with_orderbook_visibility | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive | True | True |
 | C30_R10L104_294870_20240424_Stage2_Actionable | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_may_be_too_late_if_it_waits_for_full_4B | True | True |
 | None | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | True | True |
 | C30_R10L105_294870_20240826_4B_Local_Watch | 294870 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_error_if_C30_overcredits_price_or_low_PBR_without_balance_sheet_bridge | True | True |
@@ -3459,15 +3683,17 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R4L10_C17_298020_T1 | 298020 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_correct | False | True |
 | None | 298020 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
 | R4L10_C17_298020_T4B | 298020 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | current_profile_correct | False | True |
+| HYOSUNGHEAVY_298040_2024_03_06_STAGE2A_GRID_BACKLOG_MARGIN | 298040 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_4B_too_late | True | True |
 | None | 298040 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | None | True | True |
 | R1L10_C02_298040_STAGE2A_2024_01_03 | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_too_late | False | True |
 | R1L91_C02_HYOSUNGHEAVY_2024_STAGE2_ACTIONABLE_TRANSFORMER_DATACENTER_CAPEX | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R1L88_C02_298040_20240304_STAGE2_TRANSFORMER_CAPEX | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_correct_if_order_customer_margin_bridge_required | True | True |
+| HYOSUNGHEAVY_298040_2024_03_06_STAGE2A_US_GRID_BACKLOG_CAPEX | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late_if_grid_backlog_rerating_not_peak_audited | True | True |
 | None | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | None | True | True |
 | R13_CROSS_298040_2024-04-29_Stage2-Actionable | 298040 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive | True | True |
 | None | 298040 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
 | None | 298040 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | None | True | True |
-| None | 298040 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| None | 298040 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | R13L88_REVIEW_R1_C02_POWER_GRID_DATACENTER_CAPEX_298040_2024-03-04 | 298040 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
 | V12_COMPACT_R13L12_ACCT_PRICE_14_C02_298040_20240717_298040_2024-07-17_4B | 298040 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | None | 298040 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | None | True | True |
@@ -3477,16 +3703,18 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R7L93_C24_298380_20240222_STAGE2_BISPECIFIC_ADC_DATA | 298380 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_correct_if_data_quality_partner_validation_cash_bridge_required_but_Green_strict | True | True |
 | TRG_R7L76-C24-298380-ABL-BIO-BISPECIFIC-ADC-TRIAL-DATA-BRIDGE | 298380 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 should allow a trial-data/platform-event Stage2 when clinical data, partner validation, differentiated modality and downstream commercialization bridge are visible. ABL Bio produced high MFE with almost no entry-basis MAE, but later post-peak fading still requires lifecycle local 4B if clinical/partner bridge evidence goes stale. | True | True |
 | TRG_R7L76-C24-298380-ABL-BIO-BISPECIFIC-ADC-TRIAL-DATA-BRIDGE | 298380 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_correct | True | True |
-| ABL_298380_2024_03_06_STAGE2A_BISPECIFIC_DATA_PLATFORM | 298380 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_correct | False | True |
-| None | 298380 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
+| ABL_298380_2024_03_06_STAGE2A_BISPECIFIC_DATA_PLATFORM | 298380 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_correct | True | True |
+| None | 298380 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | TRG_R7L74-C24-298380-ABL-BISPECIFIC-PLATFORM-DATA-RERATING | 298380 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 should distinguish platform-data derisking from simple biotech beta. ABL Bio had an early tradable MFE, then later re-accelerated into a larger 180D MFE; however later drawdown and share-count change require lifecycle and validation controls. | True | True |
 | C24_R7L98_TRIG_05_298380 | 298380 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_false_positive | True | True |
 | None | 298540 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
-| 298540_2023-11-15_Stage2_C19_SINGLE_BRAND_INVENTORY_OVERHANG_FALSE_POSITIVE | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | False | True |
-| NATURE_298540_2024_04_01_STAGE2_FALSE_POSITIVE_INVENTORY_MARGIN_FAIL | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | False | True |
+| 298540_2023-11-15_Stage2_C19_SINGLE_BRAND_INVENTORY_OVERHANG_FALSE_POSITIVE | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | True | True |
+| NATURE_298540_2024_03_06_STAGE2_FALSE_POSITIVE_GROWTH_INVENTORY | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive_if_growth_inventory_overcredited_without_sell_through | True | True |
+| NATURE_298540_2024_04_01_STAGE2_FALSE_POSITIVE_INVENTORY_MARGIN_FAIL | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | True | True |
 | R5L93_C19_NATUREHOLDINGS_2024_STAGE4B_OUTDOOR_BRAND_INVENTORY_EVENT_CAP | 298540 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_4B_too_late_if_outdoor_brand_inventory_event_premium_not_capped | True | True |
 | R13L93_REVIEW_R5_C19_BRAND_RETAIL_INVENTORY_MARGIN_298540_2024_02_02_TRIGGER | 298540 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_outdoor_brand_inventory_event_premium_not_capped | True | True |
-| HANATECH_299030_2024_03_06_STAGE2_FALSE_POSITIVE_EQUIPMENT_ORDERBOOK | 299030 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive | False | True |
+| HANATECH_299030_2024_03_06_STAGE2_FALSE_POSITIVE_ORDERBOOK_EQUIPMENT_BETA | 299030 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive | True | True |
+| HANATECH_299030_2024_03_06_STAGE2_FALSE_POSITIVE_EQUIPMENT_ORDERBOOK | 299030 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive | True | True |
 | None | 299030 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_turnkey_orderbook_proxy_promotes_Yellow | True | True |
 | TRG_R3L82-C11-299030-HANA-TECH-BATTERY-EQUIPMENT-ORDERBOOK-FADE | 299030 | C11_BATTERY_ORDERBOOK_RERATING | C11 should not treat battery equipment orderbook theme beta as durable Stage2 unless customer order, delivery schedule, backlog conversion, revenue and margin bridge are visible. Hana Technology had a sharp early MFE, then severe high-MAE fade and share-count changes. | True | True |
 | T_C11_R3L107_299030_STAGE4B_20240308 | 299030 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_orderbook_label_is_overcredited | True | True |
@@ -3499,6 +3727,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | T_C14_R3L108_299030_STAGE4C_20240308 | 299030 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive | True | True |
 | R3L98-C14-006-T1 | 299030 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_too_late_if_orderbook_memory_delays_hard_4C | True | True |
 | V12_COMPACT_R13L11-4B4C-007_299030_2024-03-08_cross_archetype_4b_4c_boundary_retest | 299030 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
+| R13L100_T005_299030 | 299030 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13_4B4C_L12_06_299030_20240308_Stage4C_Watch | 299030 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_source_proxy_row_promotes_to_green_or_full_4B | True | True |
 | R13_CROSS_299030_2024-03-08_Stage4C | 299030 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | None | 299030 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
@@ -3509,6 +3738,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R10L90_C30_300720_20240129_STAGE2_CEMENT_MARGIN_CASH | 300720 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_correct_if_materials_margin_cash_bridge_required | True | True |
 | C23_R7_L209_T06 | 302440 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | False | True |
 | V12_COMPACT_302440_2024-02-02_VACCINE_PLATFORM_LABEL_WITHOUT_REVENUE_BRIDGE | 302440 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
+| SKBIO_302440_2024_03_06_STAGE2_FALSE_POSITIVE_POST_APPROVAL_PLATFORM | 302440 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive | True | True |
 | TRG_R7L81-C23-302440-SK-BIOSCIENCE-VACCINE-COMMERCIALIZATION-THEME-FADE | 302440 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | C23 should not treat vaccine platform or regulatory commercialization theme beta as durable Stage2 unless product approval, procurement/order visibility, manufacturing utilization, revenue conversion and margin bridge are visible. SK Bioscience had tiny MFE and then a high-MAE fade. | True | True |
 | R7L85_C23_302440_20240321_STAGE2_FALSE_POSITIVE_VACCINE_COMMERCIAL_THEME | 302440 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_false_positive_if_approval_commercial_theme_overcredited | True | True |
 | R13L85_REVIEW_R7_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION_302440_2024-03-21 | 302440 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
@@ -3534,7 +3764,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 316140 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | T-WOORI-S2A-20250210 | 316140 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_too_late | True | True |
 | None | 316140 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
-| None | 316140 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | False | True |
+| None | 316140 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | None | True | True |
 | R6L87_C21_316140_20240726_STAGE2_FALSE_POSITIVE_LATE_BANK_VALUEUP | 316140 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive_if_late_bank_valueup_extension_overcredited | True | True |
 | V12_COMPACT_316140_2024-04-02_policy_valueup_bank_capital_return_cash_bridge | 316140 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
 | V12_COMPACT_316140_2024-04-26_policy_valueup_bank_brokerage_ROE_PBR_capital_return_execution_bridge | 316140 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
@@ -3548,18 +3778,19 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L86_REVIEW_R3_C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK_317330_2024-02-14 | 317330 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
 | C07_R2L90_319660_20240711_STAGE2_FALSE_POSITIVE | 319660 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | R2_L110_C07 | 319660 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | None | True | True |
-| None | 319660 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 319660 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | TRG-C09-L115-03-319660-Stage2Actionable-2024-02-15 | 319660 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_correct_if_actionable_not_green | True | True |
-| PSK_319660_2024_03_06_STAGE2A_MEMORY_DRY_STRIP_RECOVERY | 319660 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | False | True |
-| PSK_319660_2024_03_06_STAGE2A_MEMORY_DRY_STRIP_EQUIPMENT_RECOVERY | 319660 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | False | True |
+| PSK_319660_2024_02_29_STAGE2A_MEMORY_RECOVERY_EQUIP_ORDER | 319660 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | True | True |
+| PSK_319660_2024_03_06_STAGE2A_MEMORY_DRY_STRIP_RECOVERY | 319660 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | True | True |
+| PSK_319660_2024_03_06_STAGE2A_MEMORY_DRY_STRIP_EQUIPMENT_RECOVERY | 319660 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_4B_too_late | True | True |
 | None | 319660 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | None | True | True |
 | T_C06_R2L103_322310_20240201_Stage2Actionable_CROSS_C07 | 322310 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_C06_vs_C07_C08_C09_reroute_guard | True | True |
 | TRG_R2L77-C07-322310-AUROS-METROLOGY-EQUIPMENT-THEME-FADE | 322310 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | V12_COMPACT_322310_2024-02-01_Stage2-Actionable | 322310 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | TRG_R2L77-C07-322310-AUROS-METROLOGY-EQUIPMENT-THEME-FADE | 322310 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | C07 should not treat metrology/overlay equipment beta as durable Stage2 unless customer order, delivery, tool adoption and margin bridge are visible. Auros Technology had a tradable early MFE, but then opened a high-MAE drawdown path, making it local 4B-watch rather than durable Green. | True | True |
-| None | 322310 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
-| None | 322310 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
-| AURAS_322310_2024_03_06_STAGE2_FALSE_POSITIVE_ADVANCED_OVERLAY_METROLOGY | 322310 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | False | True |
+| None | 322310 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| None | 322310 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| AURAS_322310_2024_03_06_STAGE2_FALSE_POSITIVE_ADVANCED_OVERLAY_METROLOGY | 322310 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | TRG_R2L82-C09-322310-AUROS-METROLOGY-VALUATION-BLOWOFF | 322310 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | C09 should cap overlay metrology/inspection equipment MFE when it is mostly valuation/theme beta. Without customer order, delivery, revenue conversion and margin bridge, Oros' early spike should be treated as local 4B/fade rather than durable Stage2. | True | True |
 | R2L93_C09_322310_20240227_STAGE2_FALSE_POSITIVE_OVERLAY_METROLOGY_MFE | 322310 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_overlay_metrology_price_MFE_overcredited | True | True |
 | None | 322310 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | True | True |
@@ -3570,12 +3801,14 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R6L85_C21_323410_20240115_STAGE2_FALSE_POSITIVE_DIGITAL_BANK_BETA | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive_if_digital_bank_beta_overcredited | True | True |
 | T-KAKAOBANK-4B-20250624 | 323410 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_4B_too_late | True | True |
 | C31_L101_T007_323410 | 323410 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
+| R13ATPV_L103_T008_323410 | 323410 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive_or_late_4C_trust_break | True | True |
 | R13L85_REVIEW_R6_C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN_323410_2024-01-15 | 323410 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
-| None | 323990 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | False | True |
+| R13HMG_L104_T008_323410 | 323410 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_or_late_4B_4C_under_high_MAE | True | True |
+| None | 323990 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | TRG_R7L80-C24-323990-VAXCELL-TRIAL-THEME-FADE | 323990 | C24_BIO_TRIAL_DATA_EVENT_RISK | C24 should not treat cell-therapy trial theme beta as durable Stage2 unless trial data quality, regulatory path, partner/commercial economics and cash runway are visible. VaxCell had a tradable MFE but then a high-MAE fade. | True | True |
 | C24-R7-L100-TRIG-04-323990 | 323990 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_4B_too_late | True | True |
 | C24-R7-L100-TRIG-07-323990 | 323990 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_4C_too_late | True | True |
-| None | 326030 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | False | True |
+| None | 326030 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | R7L91_C23_326030_20240705_STAGE2_CNS_COMMERCIALIZATION_REVENUE | 326030 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | current_profile_correct_if_launch_revenue_margin_cash_bridge_required | True | True |
 | None | 326030 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
 | None | 326030 | C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | None | True | True |
@@ -3586,16 +3819,19 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | T_R13_STAGE2FP_L5_326030_Stage2_2024-02-29 | 326030 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_stage2_false_positive_or_overpromotion_risk | True | True |
 | TRG_R1L77-C01-329180-HD-HYUNDAI-HI-SHIPBUILDING-ORDERBOOK-MARGIN | 329180 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | C01 should preserve large shipbuilding orderbook winners when customer quality, delivery slots, naval/LNG mix, ASP and margin bridge are visible. HD Hyundai Heavy produced high MFE with controlled MAE; later drawdown should be lifecycle-managed, not treated as a hard 4C without order/margin break. | True | True |
 | TRG_R1L77-C01-329180-HD-HYUNDAI-HI-SHIPBUILDING-ORDERBOOK-MARGIN | 329180 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct | True | True |
-| C01_R1L100_329180_shipbuilding_backlog_margin_bridge_T1 | 329180 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct | False | True |
-| HHI_329180_2024_04_18_STAGE2A_SHIPBUILDING_BACKLOG_MARGIN_BRIDGE | 329180 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_4B_too_late | False | True |
+| HHI_329180_2024_03_06_STAGE2A_SHIPBUILDING_BACKLOG_MARGIN | 329180 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_4B_too_late | True | True |
+| C01_R1L100_329180_shipbuilding_backlog_margin_bridge_T1 | 329180 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct | True | True |
+| HHI_329180_2024_04_18_STAGE2A_SHIPBUILDING_BACKLOG_MARGIN_BRIDGE | 329180 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_4B_too_late | True | True |
 | R1L93_C01_329180_20240418_STAGE2_SHIPBUILDING_BACKLOG_MARGIN | 329180 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_correct_if_orderbacklog_delivery_margin_cash_bridge_required_but_Green_strict | True | True |
 | TRG_R1L73-C01-329180-HDHHI-LNG-NAVAL-BACKLOG-MARGIN-BRIDGE | 329180 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | C01 should allow Stage2 when shipbuilding backlog is not just order volume but connects to LNG/naval mix, rising newbuild prices and margin conversion. The stock-web path shows structural MFE with controlled early MAE, but source repair is needed before runtime weight promotion. | True | True |
 | TRG_R1L73-C01-329180-HDHHI-LNG-NAVAL-BACKLOG-MARGIN-BRIDGE | 329180 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | C01 should allow Stage2 when shipbuilding backlog is not just order volume but connects to LNG/naval mix, rising newbuild prices and margin conversion. The stock-web path shows structural MFE with controlled early MAE, but source repair is needed before runtime weight promotion. | True | True |
 | C03_R1L111_001_TRIGGER | 329180 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_correct | True | True |
-| NEPESARK_330860_2024_03_06_STAGE2_FALSE_POSITIVE_TEST_SERVICE_PREMIUM | 330860 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | False | True |
+| C06_L112_TRG_02_330860_STAGE2A | 330860 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | True | True |
+| NEPESARK_330860_2024_03_06_STAGE2_FALSE_POSITIVE_TEST_SERVICE_PREMIUM | 330860 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
 | R2L95_C10_NEPESARK_2024_STAGE2_FALSE_POSITIVE_OSAT_TEST_RECOVERY_WATCH | 330860 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_false_positive_if_OSAT_test_recovery_watch_counts_without_customer_order_utilization_margin_revision_bridge | True | True |
 | R13L95_REVIEW_R2_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_330860_2024_02_22_TRIGGER | 330860 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_OSAT_test_recovery_watch_counts_without_customer_order_utilization_margin_revision_bridge | True | True |
 | None | 335810 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
+| R7L104-C25-T01 | 335890 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_missed_structural | True | True |
 | R7L86_C25_335890_20240216_STAGE2_AESTHETIC_DEVICE_EXPORT_BRIDGE | 335890 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_correct_if_export_channel_margin_bridge_required | True | True |
 | V12_COMPACT_C25_R7L107_335890_20240408_Stage2_Actionable_335890_2024-04-08_Stage2-Actionable | 335890 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
 | R7L97_C25_VIOL_2024_STAGE2_ACTIONABLE_AESTHETIC_DEVICE_EXPORT_CONSUMABLE_MARGIN_BRIDGE | 335890 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
@@ -3604,7 +3840,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R11L87_C31_DSFUEL_2022_STAGE2_FALSE_POSITIVE_HYDROGEN_POLICY | 336260 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive_if_policy_score_counts_without_order_revenue_bridge | True | True |
 | R12L83_C31_336260_20240522_STAGE2_FALSE_POSITIVE_HYDROGEN_POLICY_SPIKE | 336260 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_false_positive | True | True |
 | R13L87_REVIEW_C31_DSFUEL_2022_STAGE2_FALSE_POSITIVE_HYDROGEN_POLICY | 336260 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive_if_policy_score_counts_without_order_revenue_bridge | True | True |
-| SOLUS_336370_2024_03_27_STAGE2A_COPPER_FOIL_ORDERBOOK_RELIEF | 336370 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late | False | True |
+| SOLUS_336370_2024_03_27_STAGE2A_COPPER_FOIL_ORDERBOOK_RELIEF | 336370 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late | True | True |
 | TRG_R3L80-C12-336370-SOLUS-COPPERFOIL-POSTCA-CALLOFF-LIFECYCLE | 336370 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | C12 should not overblock post-CA copperfoil/material names when recovery MFE and bounded entry MAE are visible, but it still requires customer volume, utilization and margin evidence before Stage2 promotion. | True | True |
 | R3L88_C14_336370_20240701_STAGE2_FALSE_POSITIVE_COPPERFOIL_BLOWOFF | 336370 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive_if_copperfoil_rebound_overcredited | True | True |
 | R3L91_C14_SOLUS_2024_STAGE4B_COPPER_FOIL_EV_DEMAND_EVENT_CAP | 336370 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4B_too_late_if_copper_foil_EV_demand_recovery_premium_not_capped | True | True |
@@ -3612,11 +3848,14 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | C14-R3L97-03-336370-Stage4C-2024-07-31 | 336370 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_correct | True | True |
 | R4L98_C16_SOLUS_2024_STAGE2_ACTIONABLE_COPPERFOIL_CRITICAL_MATERIAL_SUPPLY_BRIDGE | 336370 | C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | R13L88_REVIEW_R3_C14_EV_DEMAND_SLOWDOWN_4B_4C_336370_2024-07-01 | 336370 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
+| TR_R13L147_4B4C_14_336370_Stage2-Actionable_2024-02-01 | 336370 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | False | True |
 | R13L91_REVIEW_R3_C14_EV_DEMAND_SLOWDOWN_4B_4C_336370_2024_04_11_TRIGGER | 336370 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_copper_foil_EV_demand_recovery_premium_not_capped | True | True |
 | V12_COMPACT_C25_R7L107_336570_20240617_Stage2_336570_2024-06-17_Stage2 | 336570 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_false_positive | True | True |
+| R7L104-C25-T02 | 336570 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | current_profile_missed_structural | True | True |
 | TRG_R7L79-C25-336570-WONTECH-AESTHETIC-DEVICE-EXPORT-MARGIN-LIFECYCLE | 336570 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | C25 should allow medical-aesthetic device positives when export demand, distributor reorder, installed-base utilization, consumables/service revenue and margin bridge are visible. Wontech produced large MFE, then a high post-peak drawdown, so it needs lifecycle 4B if export/reorder/margin evidence fades. | True | True |
 | None | 336570 | C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | None | True | True |
 | R13_CROSS_336570_2024-06-17_Stage2 | 336570 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
+| TR_R13L147_4B4C_02_337930_Stage4B_2024-08-12 | 337930 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_counted_as_fresh_Stage2 | False | True |
 | R13_CROSS_337930_2024-08-14_Stage4B | 337930 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | None | 337930 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
 | T_R13_STAGE2FP_L6_337930_Stage2Actionable_2024-05-20 | 337930 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_stage2_false_positive_or_overpromotion_risk | True | True |
@@ -3625,24 +3864,26 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R12L89_C31_IBKIMYOUNG_2024_STAGE4B_DIGITAL_EDU_POLICY_THEME_CAP | 339950 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | current_profile_4B_too_late_if_digital_education_policy_theme_premium_not_capped | True | True |
 | R13L89_REVIEW_C31_IBKIMYOUNG_2024_STAGE4B_DIGITAL_EDU_POLICY_THEME_CAP | 339950 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_digital_education_policy_theme_premium_not_capped | True | True |
 | TRG_C11_R3L105_006 | 340930 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive | True | True |
-| V12_COMPACT_348210_2024-05-22_C07_INSPECTION_EQUIPMENT_RELATIVE_STRENGTH_WEAK_BRIDGE | 348210 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | False | True |
+| V12_COMPACT_348210_2024-05-22_C07_INSPECTION_EQUIPMENT_RELATIVE_STRENGTH_WEAK_BRIDGE | 348210 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | TRG_R2L80-C07-348210-NEXTIN-INSPECTION-METROLOGY-THEME-FADE | 348210 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | C07 should not treat semiconductor inspection/metrology theme beta as durable Stage2 unless HBM/customer order, capacity expansion, delivery, recurring service and margin bridge are visible. Nextin had small early MFE and then a deep MAE path, making it a local 4B boundary rather than Green. | True | True |
-| None | 348210 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
-| NEXTEEN_348210_2024_03_06_STAGE2_FALSE_POSITIVE_ADVANCED_INSPECTION | 348210 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | False | True |
+| None | 348210 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| NEXTEEN_348210_2024_03_06_STAGE2_FALSE_POSITIVE_ADVANCED_INSPECTION | 348210 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | None | 348210 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | None | True | True |
 | None | 348370 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_too_late_if_all_electrolyte_capacity_proxy_is_discarded_but_too_loose_if_Green_after_blowoff | True | True |
 | T_C11_R3L107_348370_STAGE2ACTIONABLE_20240115 | 348370 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_too_late_if_orderbook_to_margin_bridge_is_confirmed | True | True |
+| ENCHEM_348370_2024_01_29_STAGE2A_ELECTROLYTE_ORDERBOOK_RERATING | 348370 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late | True | True |
 | R3L93_C11_348370_20240129_STAGE2_ELECTROLYTE_ORDERBOOK_FCF | 348370 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_correct_if_customer_allocation_capacity_margin_FCF_bridge_required_but_data_quality_and_Green_strict | True | True |
 | R3L83_C12_348370_20240112_STAGE2_ELECTROLYTE_CONTRACT_BRIDGE | 348370 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_correct | True | True |
 | R3L98_C12_ENCHEM_2024_STAGE2_ACTIONABLE_ELECTROLYTE_CUSTOMER_CONTRACT_CAPA_BRIDGE | 348370 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | None | 348370 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive_if_broad_calloff_guard_routes_growth_exception_to_hard_4c | True | True |
 | TRG_R3L76-C13-348370-ENCHEM-US-ELECTROLYTE-IRA-LOCAL-SUPPLY-LIFECYCLE | 348370 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_correct | True | True |
 | TRG_R3L76-C13-348370-ENCHEM-US-ELECTROLYTE-IRA-LOCAL-SUPPLY-LIFECYCLE | 348370 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | C13 should allow Stage2 when US/IRA battery supply-chain attention connects to actual electrolyte local supply, customer qualification, utilization, AMPC or margin bridge. Enchem produced extreme MFE with controlled entry-basis MAE, but the post-peak drawdown and share-count changes require lifecycle local 4B and validation. | True | True |
-| None | 348370 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | False | True |
+| None | 348370 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | None | 348370 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | R5L88_C20_352480_20240305_STAGE2_BEAUTY_ODM_GLOBAL_ORDER | 352480 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_correct_if_global_order_margin_bridge_required | True | True |
 | R13L88_REVIEW_R5_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_352480_2024-03-05 | 352480 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | True | True |
-| HYBE_352820_2024_03_25_STAGE2_FALSE_POSITIVE_FANDOM_IP_PLATFORM_RISK | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive | False | True |
+| HYBE_352820_2024_03_25_STAGE2_FALSE_POSITIVE_FANDOM_IP_PLATFORM_RISK | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive | True | True |
+| HYBE_352820_2024_03_06_STAGE2A_GLOBAL_FANDOM_IP_PLATFORM_4B | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_4B_too_late_if_IP_platform_rerating_overpromoted_to_Green | True | True |
 | R8L97_C27_HYBE_2024_STAGE2_FALSE_POSITIVE_LABEL_PLATFORM_IP_RISK_WATCH | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive_if_label_platform_IP_watch_counts_without_release_pipeline_governance_margin_revision_bridge | True | True |
 | None | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | None | True | True |
 | R8L87_C27_352820_20240401_STAGE2_FALSE_POSITIVE_PLATFORM_IP_THEME | 352820 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_false_positive_if_platform_IP_theme_overcredited | True | True |
@@ -3652,29 +3893,33 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 352820 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | None | 352820 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
 | None | 352820 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
+| DAEDUCK_353200_2024_03_06_STAGE2_FALSE_POSITIVE_HBM_PACKAGE_SUBSTRATE_CAPACITY | 353200 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
 | TRG_R2L75-C06-353200-DAEDUCK-FCBGA-MEMORY-PACKAGE-SUBSTRATE-BETA-FADE | 353200 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
 | TRG_R2L75-C06-353200-DAEDUCK-FCBGA-MEMORY-PACKAGE-SUBSTRATE-BETA-FADE | 353200 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | C06 should not treat package substrate or AI memory-adjacent beta as durable Stage2 unless customer capacity, utilization, order or margin bridge refreshes. Daeduck Electronics produced limited MFE and then a severe 180D MAE path, making it a false Stage2/local 4B row. | True | True |
-| None | 356680 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 356680 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | C28_R8L103_04_356680_Stage2_Actionable_2024-09-02 | 356680 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_missed_structural | True | True |
 | R8L97_C28_XGATE_2024_STAGE4B_NETWORK_SECURITY_GATEWAY_EVENT_CAP | 356680 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_4B_too_late_if_network_security_gateway_event_premium_not_capped | True | True |
 | V12_COMPACT_C28_R8L104_356680_20240417_356680_2024-04-18_4B-Local-Watch | 356680 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
 | V12_COMPACT_R13L12_ACCT_PRICE_13_C28_356680_20240821_356680_2024-08-21_Stage4B | 356680 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | R13_CROSS_356680_2024-01-26_Stage2 | 356680 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | R13_CROSS_356680_2024-01-26_Stage2 | 356680 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
-| TLB_356860_2024_03_06_STAGE2_FALSE_POSITIVE_HBM_PCB_CAPA_PREMIUM | 356860 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | False | True |
+| TLB_356860_2024_03_06_STAGE2_FALSE_POSITIVE_HBM_PCB_CAPA_PREMIUM | 356860 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
+| TLB_356860_2024_03_06_STAGE2_FALSE_POSITIVE_MEMORY_MODULE_PCB_CAPACITY | 356860 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
+| C06_L112_TRG_07_356860_STAGE2A | 356860 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive | True | True |
 | R8L91_C28_CYBERONE_2024_STAGE4B_MSS_SECURITY_THEME_EVENT_CAP | 356890 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_4B_too_late_if_MSS_security_theme_premium_not_capped | True | True |
 | R13L91_REVIEW_R8_C28_SOFTWARE_SECURITY_CONTRACT_RETENTION_356890_2024_06_04_TRIGGER | 356890 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_MSS_security_theme_premium_not_capped | True | True |
 | T_C06_R2L103_357780_20240401_Stage2Actionable_CROSS_C07 | 357780 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_C06_vs_C07_C08_C09_reroute_guard | True | True |
 | TRG-C06-L111-357780-Stage2Actionable-2025-01-02 | 357780 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_missed_structural | True | True |
 | V12_COMPACT_357780_2024-04-01_Stage2-Actionable | 357780 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
-| None | 357780 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| None | 357780 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
+| TRG-C09-L117-07-357780-Stage4B-2024-06-03 | 357780 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_material_leader_premium_is_treated_as_C09_equipment_bridge | True | True |
 | None | 357780 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | True | True |
 | None | 357780 | C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | None | True | True |
 | None | 358570 | C24_BIO_TRIAL_DATA_EVENT_RISK | None | True | True |
 | TRG_C11_R3L105_005 | 360070 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_too_late | True | True |
 | R11L97_C03_GENOHCO_2024_STAGE2_FALSE_POSITIVE_SPACE_DEFENSE_COMPONENT_WATCH | 361390 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_space_defense_component_watch_counts_without_prime_contract_export_backlog_delivery_margin_revision_bridge | True | True |
 | R1L94_C03_XENOCO_2024_STAGE2_FALSE_POSITIVE_SPACE_DEFENSE_COMPONENT_HEADLINE | 361390 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | current_profile_false_positive_if_space_defense_component_headline_counts_without_export_order_margin_bridge | True | True |
-| None | 361390 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 361390 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | R13L94_REVIEW_R1_C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG_361390_2024_01_24_TRIGGER | 361390 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive_if_space_defense_component_headline_counts_without_export_order_margin_bridge | True | True |
 | TRG-C11-361610-20250227-STAGE2A | 361610 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_too_early_if_green | False | True |
 | None | 361610 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late_if_separator_orderbook_label_is_treated_as_durable_C11 | True | True |
@@ -3686,26 +3931,29 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R3L80-C12-361610-SKIET-SEPARATOR-CALLOFF-UTILIZATION-LOCAL4B | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | C12 should flag separator/customer-calloff risk when customer volume, utilization, pricing and margin bridge weaken. SK IET produced only a small early MFE and then a deep high-MAE path. | True | True |
 | None | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_correct_if_hard_4c_requires_utilization_calloff_margin_break | True | True |
 | V12_COMPACT_C12_R3L105_361610_20240412_06_361610_2024-04-12_Stage4C | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
+| TRG-C12-361610-20240430-STAGE4C | 361610 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | hard_4c_correct_when_downstream_inventory_adjustment_breaks_utilization_and_margin | True | True |
 | T_C13_R3L103_361610_STAGE2_20240131 | 361610 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive_if_separator_beta_scores_like_AMPC_direct_capture | True | True |
 | R3L84_C13_361610_20240319_STAGE2_FALSE_POSITIVE_SEPARATOR_UTILIZATION | 361610 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive_if_EV_JV_optionality_overcredited | True | True |
 | T_C13_R3L105_361610_STAGE4C_20240115 | 361610 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | None | 361610 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
-| None | 361610 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | False | True |
+| None | 361610 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | True | True |
 | TRG_R3L73-C14-361610-SKIET-SEPARATOR-DEMAND-SLOWDOWN-LOCAL4B | 361610 | C14_EV_DEMAND_SLOWDOWN_4B_4C | C14 should fire local 4B-watch when EV demand slowdown translates into separator utilization pressure and the stock path opens severe MAE. Hard 4C still requires non-price evidence such as plant impairment, contract cancellation, insolvency, or structural customer loss. | True | True |
 | TRG_R3L73-C14-361610-SKIET-SEPARATOR-DEMAND-SLOWDOWN-LOCAL4B | 361610 | C14_EV_DEMAND_SLOWDOWN_4B_4C | C14 should fire local 4B-watch when EV demand slowdown translates into separator utilization pressure and the stock path opens severe MAE. Hard 4C still requires non-price evidence such as plant impairment, contract cancellation, insolvency, or structural customer loss. | True | True |
 | R3L88_C14_SKIET_2024_STAGE4C_SEPARATOR_UTILIZATION_BREAK | 361610 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_kept_true_4C_when_utilization_customer_calloff_and_margin_break_are_confirmed | True | True |
 | T_C14_R3L108_361610_STAGE4C_20240115 | 361610 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive | True | True |
 | R9L95_C14_SKIET_2024_STAGE4C_SEPARATOR_DEMAND_SLOWDOWN_THESIS_BREAK_GUARD | 361610 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_kept_but_C14_needs_earlier_4C_when_separator_utilization_and_customer_volume_bridge_breaks | True | True |
+| SKIET_361610_2024_03_06_STAGE4C_SEPARATOR_UTILIZATION_SLOWDOWN | 361610 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_4C_too_late_if_separator_recovery_beta_overcredited | True | True |
 | R13L86_REVIEW_R3_C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK_361610_2024-03-25 | 361610 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | V12_COMPACT_R13L11-4B4C-003_361610_2024-01-15_cross_archetype_4b_4c_boundary_retest | 361610 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13_4B4C_L12_02_361610_20240115_Stage4C_Watch | 361610 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_source_proxy_row_promotes_to_green_or_full_4B | True | True |
 | R13L95_REVIEW_R9_C14_EV_DEMAND_SLOWDOWN_4B_4C_361610_2024_01_24_TRIGGER | 361610 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_kept_but_C14_needs_earlier_4C_when_separator_utilization_and_customer_volume_bridge_breaks | True | True |
+| TR_R13L147_4B4C_04_361610_Stage4C_2024-04-30 | 361610 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_correct | False | True |
 | None | 361610 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | R13_CROSS_361610_2024-01-15_Stage4C | 361610 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | None | 361610 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
 | V12_COMPACT_R13L2_C12_361610_20240115_STAGE4C_361610_2024-01-15_cross_archetype_high_MAE_guardrail_review | 361610 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | TRG_R8L77-C26-363260-MOBIDAYS-POST-CA-ADTECH-THEME-FADE | 363260 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| None | 363260 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 363260 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | TRG_R8L77-C26-363260-MOBIDAYS-POST-CA-ADTECH-THEME-FADE | 363260 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | C26 should not treat post-corporate-action adtech theme spikes as durable Stage2 unless advertiser budget, campaign ROAS, platform revenue retention and operating leverage bridge are verified. Mobidays was measured only after the 2024-05-24 corporate-action candidate; the post-entry path showed weak MFE and high MAE, so it is a post-CA local 4B boundary. | True | True |
 | V12_COMPACT_363260_2024-04-18_platform_ad_budget_retention_opm_bridge_cleanup | 363260 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
 | R7L90_C24_CURACLE_2024_STAGE2_FALSE_POSITIVE_TRIAL_DATA_EVENT | 365270 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_false_positive_if_trial_data_event_counts_without_endpoint_partner_runway_bridge | True | True |
@@ -3719,20 +3967,25 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L90_REVIEW_R5_C19_BRAND_RETAIL_INVENTORY_MARGIN_366030_2024_01_31_TRIGGER | 366030 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_size_apparel_retail_theme_premium_not_capped | True | True |
 | None | 366030 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
 | R9L97_C29_FUTURENURI_2024_STAGE4B_AUTONOMOUS_CAMERA_MODULE_EVENT_CAP | 370090 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | current_profile_4B_too_late_if_autonomous_camera_module_event_premium_not_capped | True | True |
+| YUNSUNG_372170_2024_03_06_STAGE2_FALSE_POSITIVE_MIXING_EQUIPMENT_ORDERBOOK | 372170 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive | True | True |
 | T_C11_R3L107_373220_STAGE2ACTIONABLE_20240312 | 373220 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_orderbook_label_is_overcredited | True | True |
 | TRG-C11-373220-20240725-STAGE2A | 373220 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_correct_with_green_delay_risk | False | True |
 | R3L93_C12_373220_20240910_STAGE2_LARGE_CELL_CALLOFF_STABILIZATION | 373220 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_correct_if_contract_visibility_calloff_ASP_margin_cash_bridge_required_but_Green_strict | True | True |
 | V12_COMPACT_C12_R3L105_373220_20241010_01_373220_2024-10-10_Stage2-Actionable | 373220 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
 | None | 373220 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | True | True |
+| TRG-C12-373220-20240725-STAGE4B | 373220 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | hard_4c_overblock_if_no_customer_cancellation | False | True |
 | None | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
+| LGES_373220_2024_03_06_STAGE2_AMPC_SCALE_BUFFER_OVERBLOCK_COUNTEREXAMPLE | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_overblocks_if_all_AMPC_JV_risk_treated_as_hard_4C | True | True |
 | R3L92_C13_LGES_2024_STAGE2_FALSE_POSITIVE_CELL_AMPC_UTILIZATION_REBOUND | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive_if_cell_AMPC_utilization_rebound_counts_without_customer_volume_margin_bridge | True | True |
 | T_C13_R3L105_373220_STAGE2ACTIONABLE_20240312 | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
 | V12_COMPACT_C13-102-01_373220_2024-08-21_Stage2-Actionable | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive | True | True |
 | R3L84_C13_373220_20240821_STAGE2_AMPC_JV_UTILIZATION_BRIDGE | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_correct_if_utilization_bridge_required | True | True |
 | None | 373220 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | None | True | True |
-| None | 373220 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | False | True |
+| None | 373220 | C14_EV_DEMAND_SLOWDOWN_4B_4C | None | True | True |
+| LGES_373220_2024_03_06_STAGE2_OVERBLOCK_COUNTEREXAMPLE_CELL_SCALE_BUFFER | 373220 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_overblocks_if_all_EV_slowdown_equal | True | True |
 | R3L98_C14_LGES_2024_STAGE2_FALSE_POSITIVE_CELLMAKER_UTILIZATION_REBOUND_WATCH | 373220 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive_if_cellmaker_rebound_watch_counts_without_calloff_utilization_margin_revision_bridge | True | True |
-| None | 373220 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | False | True |
+| LGES_373220_2024_04_08_FALSE_4C_EV_DEMAND_SLOWDOWN | 373220 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_overprotective_4C | True | True |
+| None | 373220 | C31_POLICY_SUBSIDY_LEGISLATION_EVENT | None | True | True |
 | None | 373220 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | R13_CROSS_R13L4_C11_373220_20240201_ORDERBOOK_ACCEPTANCE_PAYMENT_373220_2024-02-01_Stage2 | 373220 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
 | None | 373220 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | None | True | True |
@@ -3740,11 +3993,12 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13_L106_T15_373220 | 373220 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
 | R13L92_REVIEW_R3_C13_BATTERY_JV_UTILIZATION_AMPC_IRA_373220_2024_02_16_TRIGGER | 373220 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive_if_cell_AMPC_utilization_rebound_counts_without_customer_volume_margin_bridge | True | True |
 | T_R13_STAGE2FP_L5_373220_Stage2Actionable_2024-03-12 | 373220 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_stage2_false_positive_or_overpromotion_risk | True | True |
+| DLEANDC_375500_2024_03_06_STAGE2_FALSE_POSITIVE_CONSTRUCTION_BACKLOG | 375500 | C01_ORDER_BACKLOG_MARGIN_BRIDGE | current_profile_false_positive | True | True |
 | T_C05_R1L109_375500_20240205_LOW_PBR_BUILDER_WITHOUT_PROJECT_MARGIN | 375500 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | T_C05_R1L108_375500_20240429_LOW_PBR_EPC_REBOUND | 375500 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
-| None | 375500 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | False | True |
+| None | 375500 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
 | T_C05_R1L108_375500_20240613_EPC_LOCAL4B_DECAY | 375500 | C05_EPC_MEGA_CONTRACT_MARGIN_GAP | None | True | True |
-| V12_COMPACT_375500_2024-04-29_low_pbr_balance_sheet_label_without_revision_followthrough | 375500 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive | False | True |
+| V12_COMPACT_375500_2024-04-29_low_pbr_balance_sheet_label_without_revision_followthrough | 375500 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive | True | True |
 | None | 375500 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | None | True | True |
 | C30_R10L105_375500_20240429_Stage2_Actionable | 375500 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_error_if_C30_overcredits_price_or_low_PBR_without_balance_sheet_bridge | True | True |
 | C30_R10L104_375500_20240613_4B_Local_Watch | 375500 | C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | current_profile_false_positive_if_full_4B | True | True |
@@ -3760,10 +4014,12 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R6L96_C21_KAKAOPAY_2024_STAGE4B_FINTECH_VALUEUP_PROFITABILITY_EVENT_CAP | 377300 | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_4B_too_late_if_fintech_valueup_profitability_event_premium_not_capped | True | True |
 | R13L96_REVIEW_R6_C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN_377300_2024_01_11_TRIGGER | 377300 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_fintech_valueup_profitability_event_premium_not_capped | True | True |
 | R13L85_REVIEW_R6_C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN_377300_2024-01-15 | 377300 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
-| GITECH_382480_2024_03_12_STAGE2_FALSE_POSITIVE_SMALLCAP_ORDERBOOK | 382480 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive | False | True |
+| GITECH_382480_2024_03_06_STAGE2_FALSE_POSITIVE_SLOT_DIE_ORDERBOOK | 382480 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive | True | True |
+| GITECH_382480_2024_03_12_STAGE2_FALSE_POSITIVE_SMALLCAP_ORDERBOOK | 382480 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive | True | True |
 | TRG_C11_R3L105_002 | 382480 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive | True | True |
 | R3L98-C14-003-T1 | 382480 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive_if_battery_equipment_theme_stays_actionable_without_delivery_bridge | True | True |
 | R13_L106_T05_382480 | 382480 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | True | True |
+| WONJUN_382840_2024_03_06_STAGE2_FALSE_POSITIVE_PROCESS_EQUIPMENT_ORDERBOOK | 382840 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive | True | True |
 | R3L89_C11_ONEJOON_2024_STAGE2_FALSE_POSITIVE_EQUIPMENT_ORDERBOOK_THEME | 382840 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_equipment_orderbook_theme_counts_without_order_margin_revision_bridge | True | True |
 | None | 382840 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_equipment_orderbook_proxy_promotes_Yellow | True | True |
 | R3L93_C11_WONJUN_2024_STAGE2_FALSE_POSITIVE_BATTERY_EQUIPMENT_ORDERBOOK_WATCH | 382840 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_false_positive_if_battery_equipment_orderbook_watch_counts_without_customer_delivery_margin_bridge | True | True |
@@ -3774,13 +4030,15 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R5L99_C18_FNF_2024_STAGE2_FALSE_POSITIVE_APPAREL_EXPORT_CHANNEL_INVENTORY_WATCH | 383220 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive_if_apparel_export_channel_watch_counts_without_sellthrough_reorder_inventory_OPM_revision_bridge | True | True |
 | None | 383220 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
 | R5_L121_C18_004 | 383220 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
-| None | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | False | True |
-| 383220_2023-05-16_Stage2_C19_PREMIUM_BRAND_INVENTORY_MARGIN_FALSE_POSITIVE | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | False | True |
+| None | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
+| 383220_2023-05-16_Stage2_C19_PREMIUM_BRAND_INVENTORY_MARGIN_FALSE_POSITIVE | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive | True | True |
+| FNF_383220_2024_03_06_STAGE2_FALSE_POSITIVE_CHANNEL_INVENTORY_MARGIN | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive_if_brand_growth_overcredited_without_inventory_margin_bridge | True | True |
 | R5L97_C19_FNF_2024_STAGE2_FALSE_POSITIVE_APPAREL_CHINA_INVENTORY_WATCH | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive_if_apparel_inventory_watch_counts_without_sellthrough_markdown_inventory_margin_revision_bridge | True | True |
 | R5L90_C19_383220_20240401_STAGE2_FALSE_POSITIVE_APPAREL_INVENTORY | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | current_profile_false_positive_if_apparel_brand_rebound_overcredited | True | True |
 | C19_R5L119_20_383220_4B_Local_Watch_2024-07-17 | 383220 | C19_BRAND_RETAIL_INVENTORY_MARGIN | None | True | True |
 | V12_COMPACT_C20_R5L120_383220_20240717_05_383220_2024-07-17_Local-4B-Watch | 383220 | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | True | True |
 | None | 383220 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | None | True | True |
+| R13S2_L102_T006_383220 | 383220 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive | False | True |
 | None | 383220 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | None | True | True |
 | R1L88_C02_388050_20240529_STAGE2_FALSE_POSITIVE_SMALLCAP_GRID_THEME | 388050 | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive_if_smallcap_grid_theme_overcredited | True | True |
 | R13L88_REVIEW_R1_C02_POWER_GRID_DATACENTER_CAPEX_388050_2024-05-29 | 388050 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
@@ -3791,7 +4049,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | None | 393890 | C11_BATTERY_ORDERBOOK_RERATING | None | True | True |
 | V12_COMPACT_C12_R3L105_393890_20240322_09_393890_2024-03-22_Stage2-False-Positive | 393890 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive | True | True |
 | TRG_R3L78-C12-393890-WCP-SEPARATOR-CUSTOMER-CALLOFF-FADE | 393890 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | C12 should not treat separator customer-calloff exposure as durable Stage2 unless customer order, utilization, shipment and margin bridge are visible. WCP had tradable MFE but then a deep post-peak drawdown, making it local 4B-watch rather than durable Green. | True | True |
-| WCP_393890_2024_02_21_4C_SEPARATOR_CALL_OFF_RISK | 393890 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_4C_too_late | False | True |
+| WCP_393890_2024_02_21_4C_SEPARATOR_CALL_OFF_RISK | 393890 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_4C_too_late | True | True |
 | T_C13_R3L103_393890_STAGE2_20240213 | 393890 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive_if_separator_contract_label_lacks_calloff | True | True |
 | R3L92_C13_WCP_2024_STAGE4B_SEPARATOR_AMPC_EVENT_CAP | 393890 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_4B_too_late_if_separator_AMPC_event_premium_not_capped | True | True |
 | R9L89_C13_WCP_2024_STAGE4B_SEPARATOR_UTILIZATION_CAP | 393890 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_4B_too_late_if_separator_utilization_event_premium_not_capped | True | True |
@@ -3802,6 +4060,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | TRG_R3L73-C14-393890-WCP-SEPARATOR-CUSTOMER-DEMAND-LOCAL4B | 393890 | C14_EV_DEMAND_SLOWDOWN_4B_4C | Separator suppliers need stricter C14 treatment than diversified cell or chemical names. WCP produced initial MFE, but the later 180D MAE and post-peak drawdown show customer demand/utilization risk converting into local 4B-watch. | True | True |
 | R13_4B4C_L12_18_393890_20240213_Stage2_Actionable | 393890 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_source_proxy_row_promotes_to_green_or_full_4B | True | True |
 | R13L95_REVIEW_R9_C14_EV_DEMAND_SLOWDOWN_4B_4C_393890_2024_02_22_TRIGGER | 393890 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_separator_capacity_recovery_watch_counts_without_customer_calloff_utilization_margin_revision_bridge | True | True |
+| TR_R13L147_4B4C_05_393890_Stage4C_2024-02-16 | 393890 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4C_too_late | False | True |
 | R13L85_REVIEW_R3_C11_BATTERY_ORDERBOOK_RERATING_393890_2024-02-21 | 393890 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_false_positive | True | True |
 | R13L89_REVIEW_C13_WCP_2024_STAGE4B_SEPARATOR_UTILIZATION_CAP | 393890 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_separator_utilization_event_premium_not_capped | True | True |
 | T_R13_STAGE2FP_L5_393890_Stage2_2024-02-13 | 393890 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_stage2_false_positive_or_overpromotion_risk | True | True |
@@ -3809,6 +4068,7 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R2L90_C06_394280_20240222_STAGE2_FALSE_POSITIVE_AI_IP_BLOWOFF | 394280 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_false_positive_if_AI_IP_blowoff_counted_as_HBM_capacity | True | True |
 | R3L90_C12_SEAMECHANICS_2024_STAGE4B_EV_PARTS_CUSTOMER_PROGRAM_CAP | 396300 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_4B_too_late_if_EV_parts_customer_program_premium_not_capped | True | True |
 | R13L90_REVIEW_R3_C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK_396300_2024_03_08_TRIGGER | 396300 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_4B_too_late_if_EV_parts_customer_program_premium_not_capped | True | True |
+| TRG-C09-L118-03-396470-Stage2-Actionable-2024-03-22 | 396470 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_missed_structural_if_newly_listed_equipment_proxy_is_blocked | True | True |
 | R13_L106_T09_396470 | 396470 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_4B_too_late | True | True |
 | R7L90_C24_APRILBIO_2024_STAGE2_ACTIONABLE_TRIAL_DATA_LICENSING_BRIDGE | 397030 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | V12_COMPACT_C28_R8L104_402030_20240419_402030_2024-04-22_4B-Local-Watch | 402030 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_false_positive | True | True |
@@ -3818,12 +4078,14 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L83_HIGHMAE_REVIEW_402340_2024-02-02 | 402340 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_correct | True | True |
 | TRG_R9L82-C29-403550-SOCAR-CARSHARING-UTILIZATION-MARGIN | 403550 | C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | C29 can protect car-sharing/platform mobility positives only when fleet utilization, active user demand, pricing, unit economics, revenue conversion and margin bridge are visible. Socar had controlled entry-basis MAE and strong MFE, but stock-web share count changes require validation before runtime promotion. | True | True |
 | T_C06_R2L103_403870_20240304_Stage4BLocal_CROSS_C07 | 403870 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_needs_C06_vs_C07_C08_C09_reroute_guard | True | True |
+| HPSP_403870_2024_03_06_STAGE2_FALSE_POSITIVE_PROCESS_EQUIPMENT_RS | 403870 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | V12_COMPACT_403870_2024-03-04_Stage4B-Local | 403870 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | R2L83_C09_403870_20240213_STAGE2_FALSE_POSITIVE_HIGH_MAE | 403870 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | TRG_R2L79-C09-403870-HPSP-ADVANCED-EQUIPMENT-VALUATION-BLOWOFF | 403870 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | C09 should detect advanced-equipment valuation blowoff when a large MFE arrives before refreshed tool order, customer capacity and margin evidence. HPSP produced a huge early MFE and then a deep MAE/post-peak drawdown; runtime ingestion also needs share-count validation. | True | True |
 | T_C09_R2L111_06_403870_20240304 | 403870 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | R2L89_C10_403870_20240118_STAGE2_HBM_EQUIPMENT_RAMP | 403870 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | current_profile_correct_if_customer_ramp_shipment_margin_bridge_required | True | True |
-| QRT_405100_2024_01_18_STAGE2A_RELIABILITY_TEST_CUSTOMER_QUALITY | 405100 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | False | True |
+| C06_L112_TRG_03_405100_STAGE2A | 405100 | C06_HBM_MEMORY_CUSTOMER_CAPACITY | current_profile_4B_too_late | True | True |
+| QRT_405100_2024_01_18_STAGE2A_RELIABILITY_TEST_CUSTOMER_QUALITY | 405100 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
 | C08_R2_L112_005_405100_Stage4B | 405100 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
 | R2L98_C09_QRT_2024_STAGE2_FALSE_POSITIVE_TEST_RELIABILITY_EQUIPMENT_WATCH | 405100 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_test_reliability_equipment_watch_counts_without_customer_order_utilization_margin_revision_bridge | True | True |
 | None | 406820 | C18_CONSUMER_EXPORT_CHANNEL_REORDER | None | True | True |
@@ -3838,7 +4100,8 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | C28_R8L103_05_411080_Stage3_Yellow_2024-04-01 | 411080 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_4B_too_late | True | True |
 | R8L98_C28_SANDSLAB_2024_STAGE4B_CYBERSECURITY_AI_EVENT_CAP | 411080 | C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | current_profile_4B_too_late_if_cybersecurity_AI_event_premium_not_capped | True | True |
 | R13HMG_L104_T003_411080 | 411080 | R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | current_profile_needs_high_MAE_overlay_or_green_block | True | True |
-| V12_COMPACT_412350_2024-04-23_C07_LASER_BONDING_EVENT_CAP_FALSE_STAGE2 | 412350 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | False | True |
+| LASERSEL_412350_2024_03_06_STAGE2_FALSE_POSITIVE_HBM_LASER_BONDING | 412350 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
+| V12_COMPACT_412350_2024-04-23_C07_LASER_BONDING_EVENT_CAP_FALSE_STAGE2 | 412350 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_false_positive | True | True |
 | R2L88_C09_412350_20240502_STAGE2_FALSE_POSITIVE_LASER_THEME | 412350 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive_if_laser_theme_overcredited | True | True |
 | R13L88_REVIEW_R2_C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF_412350_2024-05-02 | 412350 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R3L96_C11_NANOTIM_2024_STAGE4B_THERMAL_MANAGEMENT_BATTERY_ORDER_EVENT_CAP | 417010 | C11_BATTERY_ORDERBOOK_RERATING | current_profile_4B_too_late_if_thermal_management_battery_order_event_premium_not_capped | True | True |
@@ -3854,22 +4117,23 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L94_REVIEW_R3_C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK_418550_2024_02_21_TRIGGER | 418550 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_false_positive_if_CNT_material_calloff_watch_counts_without_customer_ramp_margin_revision_bridge | True | True |
 | R3L97_C12_SAMGIEV_2024_STAGE4B_BATTERY_CASE_CUSTOMER_CONTRACT_EVENT_CAP | 419050 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_4B_too_late_if_battery_case_contract_event_premium_not_capped | True | True |
 | R8L90_C27_SAMG_2024_STAGE2_ACTIONABLE_KIDS_IP_MERCH_MONETIZATION | 419530 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
+| C08_420770_2024_03_06_STAGE2_SUBSTRATE_INSPECTION_QUALITY_EVENT_FADE | 420770 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
 | R2L93C_C08_420770_20240404_STAGE2_FALSE_POSITIVE_PACKAGE_INSPECTION_SPIKE | 420770 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive_if_package_inspection_theme_spike_overcredited | True | True |
-| MICRO2NANO_424980_2024_03_06_STAGE2_FALSE_POSITIVE_PROBE_CARD_EVENT | 424980 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | False | True |
-| M2N_424980_2024_04_02_STAGE2_FALSE_POSITIVE_MEMS_PROBE_CARD | 424980 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | False | True |
+| MICRO2NANO_424980_2024_03_06_STAGE2_FALSE_POSITIVE_PROBE_CARD_EVENT | 424980 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
+| M2N_424980_2024_04_02_STAGE2_FALSE_POSITIVE_MEMS_PROBE_CARD | 424980 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
 | R2L96_C08_MICRO2NANO_2024_STAGE2_ACTIONABLE_MEMS_PROBE_CARD_CUSTOMER_QUALITY_BRIDGE | 424980 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
 | C08_R2L97_424980_STAGE4B_20240423_MEMS_PROBE_CARD_PRICE_SPIKE | 424980 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_4B_too_late | True | True |
-| TRG_C09_R2L98_M2N_20240423_MEMS_PROBE_BLOWOFF | 424980 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_too_early | False | True |
+| TRG_C09_R2L98_M2N_20240423_MEMS_PROBE_BLOWOFF | 424980 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_too_early | True | True |
 | R2L94_C07_TFE_2024_STAGE4B_HBM_SOCKET_PACKAGE_EVENT_CAP | 425420 | C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | current_profile_4B_too_late_if_HBM_socket_package_event_premium_not_capped | True | True |
-| TFE_425420_2024_03_06_STAGE2_FALSE_POSITIVE_SOCKET_PROBE_PREMIUM | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | False | True |
+| TFE_425420_2024_03_06_STAGE2_FALSE_POSITIVE_SOCKET_PROBE_PREMIUM | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
 | C08_R2L97_425420_STAGE2_20240308_TEST_SOCKET_CHANNEL_FALSE_STAGE2 | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
-| TFE_425420_2024_03_08_STAGE2_FALSE_POSITIVE_SOCKET_THEME | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | False | True |
-| None | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | False | True |
+| TFE_425420_2024_03_08_STAGE2_FALSE_POSITIVE_SOCKET_THEME | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive | True | True |
+| None | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | None | True | True |
 | TRG_R2L78-C08-425420-TFE-TEST-SOCKET-CUSTOMER-QUALITY-LIFECYCLE | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | C08 should allow test-socket / probe-pin positives only when customer quality, HBM or advanced package qualification, reorder cadence and margin bridge are visible. TFE had strong early MFE, but the later drawdown means the signal must be lifecycle-managed if quality/reorder/margin evidence fades. | True | True |
 | R2L87_C08_425420_20240320_STAGE2_FALSE_POSITIVE_SOCKET_BLOWOFF | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_false_positive_if_socket_beta_overcredited | True | True |
 | TRG_R2L81-C08-425420-TFE-TEST-SOCKET-CUSTOMER-QUALITY-LIFECYCLE | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | C08 should preserve test-socket/interface-board positives when customer quality, reorder visibility, capacity utilization, delivery cadence and margin bridge are visible. TFE produced a large MFE, but the later high-MAE drawdown forces lifecycle local 4B if reorder/margin evidence fades. | True | True |
-| C08_425420_2024_03_20_TEST_INTERFACE_PRICE_ONLY_BETA_DECAY_Stage4B | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_correct | False | True |
-| TRG_C09_R2L98_TFE_20240320_TEST_HANDLER_BLOWOFF_FAIL | 425420 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | False | True |
+| C08_425420_2024_03_20_TEST_INTERFACE_PRICE_ONLY_BETA_DECAY_Stage4B | 425420 | C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | current_profile_correct | True | True |
+| TRG_C09_R2L98_TFE_20240320_TEST_HANDLER_BLOWOFF_FAIL | 425420 | C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | current_profile_false_positive | True | True |
 | R13L87_REVIEW_R2_C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY_425420_2024-03-20 | 425420 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L94_REVIEW_R2_C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH_425420_2024_03_20_TRIGGER | 425420 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_4B_too_late_if_HBM_socket_package_event_premium_not_capped | True | True |
 | R8L96_C27_YLAB_2024_STAGE2_ACTIONABLE_WEBTOON_IP_GLOBAL_OPTIONALITY_BRIDGE | 432430 | C27_CONTENT_IP_GLOBAL_MONETIZATION | current_profile_kept_but_source_proxy_blocks_positive_delta | True | True |
@@ -3878,14 +4142,14 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R13L94_REVIEW_R8_C28_SOFTWARE_SECURITY_CONTRACT_RETENTION_434480_2024_04_03_TRIGGER | 434480 | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | current_profile_4B_too_late_if_WAF_cloud_security_event_premium_not_capped | True | True |
 | T_C26_R8L106_07_443250_STAGE2_Stage2_2024-02-26 | 443250 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_4b_too_early_high_mae | True | True |
 | V12_COMPACT_443250_2024-05-13_platform_ad_budget_retention_opm_bridge_cleanup | 443250 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | current_profile_false_positive | True | True |
-| None | 443250 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | False | True |
+| None | 443250 | C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | None | True | True |
 | None | 443250 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | None | True | True |
 | V12_COMPACT_R13L12_ACCT_PRICE_01_C26_443250_20240226_443250_2024-02-26_Stage2 | 443250 | R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION | current_profile_false_positive | True | True |
-| None | 448710 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | False | True |
+| None | 448710 | C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | None | True | True |
 | TRG_R3L80-C12-450080-ECOPRO-MATERIALS-PRECURSOR-CALLOFF-FADE | 450080 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | C12 should not treat precursor/material contract beta as durable Stage2 unless customer call-off, volume visibility, utilization, pricing and margin bridge remain visible. Ecopro Materials had an early MFE but then opened a severe high-MAE drawdown path. | True | True |
 | R3L90_C12_450080_20240213_STAGE2_FALSE_POSITIVE_PRECURSOR_REBOUND | 450080 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_false_positive_if_precursor_rebound_overcredited | True | True |
 | R3L98_C12_ECOPROMATERIALS_2024_STAGE4B_PRECURSOR_MATERIAL_CALLOFF_EVENT_CAP | 450080 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | current_profile_4B_too_late_if_precursor_material_contract_event_premium_not_capped | True | True |
-| ECOPROMAT_450080_2024_02_13_STAGE2_FALSE_POSITIVE_PRECURSOR_CAPA_IRA | 450080 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive | False | True |
+| ECOPROMAT_450080_2024_02_13_STAGE2_FALSE_POSITIVE_PRECURSOR_CAPA_IRA | 450080 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_false_positive | True | True |
 | R3L95_C13_ECOPROMATERIALS_2024_STAGE4B_PRECURSOR_IRA_EVENT_CAP | 450080 | C13_BATTERY_JV_UTILIZATION_AMPC_IRA | current_profile_4B_too_late_if_precursor_IRA_JV_utilization_event_premium_not_capped | True | True |
 | R3L99-C14-007-T1 | 450080 | C14_EV_DEMAND_SLOWDOWN_4B_4C | current_profile_false_positive_if_contract_size_memory_blocks_late_cycle_4C | True | True |
 | R13L95_REVIEW_R3_C13_BATTERY_JV_UTILIZATION_AMPC_IRA_450080_2024_06_10_TRIGGER | 450080 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_4B_too_late_if_precursor_IRA_JV_utilization_event_premium_not_capped | True | True |
@@ -3910,6 +4174,24 @@ source proxy 또는 evidence URL 한계는 positive patch를 막거나 scope 제
 | R7L87_C24_950220_20240322_STAGE2_FALSE_POSITIVE_IMMUNO_ONCOLOGY_DATA | 950220 | C24_BIO_TRIAL_DATA_EVENT_RISK | current_profile_false_positive_if_data_theme_overcredited | True | True |
 | R13L87_REVIEW_R7_C24_BIO_TRIAL_DATA_EVENT_RISK_950220_2024-03-22 | 950220 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive | True | True |
 | R13L93_REVIEW_R7_C24_BIO_TRIAL_DATA_EVENT_RISK_950220_2024_02_26_TRIGGER | 950220 | R13_CROSS_ARCHETYPE_4B_4C_REDTEAM | current_profile_false_positive_if_trial_watch_counts_without_endpoint_quality_partner_regulatory_revision_bridge | True | True |
-| T-KAKAOBANK-S2-20250210 | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive | False | True |
-| T-BNK-S2A-20250113 | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_too_late | False | True |
-| T-WOORI-S2A-20250210 | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_too_late | False | True |
+| C02-R1-L143-02-024840-Stage2 | None | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive | True | True |
+| C02-R1-L143-04-092220-Stage2 | None | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive | True | True |
+| C02-R1-L143-03-119850-Stage2_Actionable | None | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_missed_structural | True | True |
+| C02-R1-L143-01-006260-Stage2_Actionable | None | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_missed_structural | True | True |
+| C02-R1-L143-05-032820-Stage2_Actionable | None | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late | True | True |
+| C02-R1-L143-06-068240-Stage4B | None | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_4B_too_late | True | True |
+| C02-R1-L143-07-039610-Stage4B | None | C02_POWER_GRID_DATACENTER_CAPEX | current_profile_false_positive_if_stage2_on_policy_label_only | True | True |
+| R5L12_C18_NONGSHIM_T2A_20230516 | None | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_too_late | True | True |
+| R5L12_C18_BINGGRAE_T2A_20240517 | None | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_correct | True | True |
+| R5L12_C18_ORION_T2_REJECT_20230428 | None | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
+| R5L12_C18_CJFOOD_T2_REJECT_20230510 | None | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_false_positive | True | True |
+| R5L12_C18_NONGSHIM_GREEN_20231113 | None | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_too_late | True | True |
+| R5L12_C18_BINGGRAE_T4B_20240610 | None | C18_CONSUMER_EXPORT_CHANNEL_REORDER | current_profile_correct | True | True |
+| R5L10_C20_SILICON2_T2A_20240517 | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_correct | True | True |
+| R5L10_C20_SAMYANG_T2A_20240517 | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_correct | True | True |
+| R5L10_C20_AMORE_T2_20210510 | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | True | True |
+| R5L10_C20_LGHNH_T2_20210624 | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_false_positive | True | True |
+| R5L10_C20_SILICON2_T4B_20240619 | None | C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | current_profile_correct | True | True |
+| T-KAKAOBANK-S2-20250210 | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_false_positive | True | True |
+| T-BNK-S2A-20250113 | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_too_late | True | True |
+| T-WOORI-S2A-20250210 | None | C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | current_profile_too_late | True | True |

@@ -1,0 +1,2577 @@
+{
+  "focus_archetype_rows": [
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "current_runtime": {
+        "archetype_component_bottleneck_pricing": null,
+        "archetype_component_earnings_visibility": null,
+        "archetype_component_eps_fcf_explosion": null,
+        "archetype_component_information_confidence": null,
+        "archetype_component_market_mispricing": null,
+        "archetype_component_valuation_rerating": null,
+        "backlog_rpo_visibility": null,
+        "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "capa_constraint": null,
+        "contract_quality": null,
+        "current_score": "80.0131",
+        "current_stage": "3-Yellow",
+        "green_gate_deficit_summary": "total:80.01/87.00(-6.99); bottleneck:12.18/14.25(-2.07)",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_valuation_repricing": "100.0",
+        "revision_score": null,
+        "sector_profile": "MEMORY_HBM"
+      },
+      "current_stop_layer": "stage_gate",
+      "green_score_simulation_count": 22,
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_failure": "source-backed field가 일부 들어왔지만 weighted Stage3-Green 총점/과락 gate에서 막힌다.",
+      "strict_stage3_green_score_simulation_count": 11,
+      "top_green_score_keys": [
+        {
+          "candidate_runtime_fields": [
+            "price_stage_score"
+          ],
+          "family": "relative_strength",
+          "green_related_occurrence_count": 22,
+          "research_score_key": "relative_strength_score",
+          "runtime_contract_status": "exact_source_runtime_field",
+          "supported_candidate_runtime_fields": [
+            "price_stage_score"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "actual_profit_conversion_score",
+            "actual_op_yoy_pct",
+            "opm_expansion_pctp",
+            "actual_opm",
+            "high_margin_mix_improvement",
+            "pricing_power_confirmed"
+          ],
+          "family": "margin_bridge",
+          "green_related_occurrence_count": 21,
+          "research_score_key": "margin_bridge_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "actual_op_yoy_pct",
+            "actual_opm",
+            "actual_profit_conversion_score",
+            "high_margin_mix_improvement",
+            "opm_expansion_pctp",
+            "pricing_power_confirmed"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "valuation_score",
+            "market_frame_shift",
+            "target_multiple_rerating",
+            "target_multiple_before",
+            "target_multiple_after",
+            "pbr_e",
+            "est_pbr"
+          ],
+          "family": "valuation_repricing",
+          "green_related_occurrence_count": 21,
+          "research_score_key": "valuation_repricing_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "est_pbr",
+            "market_frame_shift",
+            "pbr_e",
+            "target_multiple_after",
+            "target_multiple_before",
+            "target_multiple_rerating",
+            "valuation_score"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 20,
+          "research_score_key": "execution_risk_score",
+          "runtime_contract_status": "exact_source_runtime_field",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "customer_preorder_or_allocation",
+            "minimum_revenue_guarantee",
+            "government_customer",
+            "hyperscaler_customer",
+            "retention_or_renewal",
+            "partner_economics_visible"
+          ],
+          "family": "customer_quality",
+          "green_related_occurrence_count": 19,
+          "research_score_key": "customer_quality_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "customer_preorder_or_allocation",
+            "government_customer",
+            "hyperscaler_customer",
+            "minimum_revenue_guarantee",
+            "partner_economics_visible",
+            "retention_or_renewal"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "revision_score",
+            "estimate_upgrade_mentioned",
+            "eps_revision_pct",
+            "op_revision_pct",
+            "target_price_revision_pct"
+          ],
+          "family": "revision",
+          "green_related_occurrence_count": 17,
+          "research_score_key": "revision_score",
+          "runtime_contract_status": "exact_derived_metric_only",
+          "supported_candidate_runtime_fields": [
+            "eps_revision_pct",
+            "estimate_upgrade_mentioned",
+            "op_revision_pct",
+            "revision_score",
+            "target_price_revision_pct"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "order_backlog_to_sales",
+            "backlog_to_sales",
+            "rpo_to_sales",
+            "record_backlog",
+            "backlog_record_high",
+            "ai_infra_backlog_or_rpo"
+          ],
+          "family": "backlog_orderbook",
+          "green_related_occurrence_count": 16,
+          "research_score_key": "backlog_visibility_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "backlog_record_high",
+            "backlog_to_sales",
+            "order_backlog_to_sales",
+            "record_backlog",
+            "rpo_to_sales"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 16,
+          "research_score_key": "legal_or_contract_risk_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        }
+      ]
+    },
+    {
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "current_runtime": {
+        "archetype_component_bottleneck_pricing": null,
+        "archetype_component_earnings_visibility": null,
+        "archetype_component_eps_fcf_explosion": null,
+        "archetype_component_information_confidence": null,
+        "archetype_component_market_mispricing": null,
+        "archetype_component_valuation_rerating": null,
+        "backlog_rpo_visibility": null,
+        "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+        "capa_constraint": null,
+        "contract_quality": null,
+        "current_score": "72.1181",
+        "current_stage": "2",
+        "green_gate_deficit_summary": "total:72.12/87.00(-14.88); yellow_total:72.12/75.00(-2.88); bottleneck:8.16/10.50(-2.33); visibility:13.17/13.50(-0.33)",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "0.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_valuation_repricing": "100.0",
+        "revision_score": null,
+        "sector_profile": "MEMORY_HBM"
+      },
+      "current_stop_layer": "stage_gate",
+      "green_score_simulation_count": 28,
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_failure": "source-backed field가 일부 들어왔지만 weighted Stage3-Green 총점/과락 gate에서 막힌다.",
+      "strict_stage3_green_score_simulation_count": 17,
+      "top_green_score_keys": [
+        {
+          "candidate_runtime_fields": [
+            "actual_profit_conversion_score",
+            "actual_op_yoy_pct",
+            "opm_expansion_pctp",
+            "actual_opm",
+            "high_margin_mix_improvement",
+            "pricing_power_confirmed"
+          ],
+          "family": "margin_bridge",
+          "green_related_occurrence_count": 24,
+          "research_score_key": "margin_bridge_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "actual_op_yoy_pct",
+            "actual_opm",
+            "actual_profit_conversion_score",
+            "high_margin_mix_improvement",
+            "opm_expansion_pctp",
+            "pricing_power_confirmed"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "price_stage_score"
+          ],
+          "family": "relative_strength",
+          "green_related_occurrence_count": 21,
+          "research_score_key": "relative_strength_score",
+          "runtime_contract_status": "exact_source_runtime_field",
+          "supported_candidate_runtime_fields": [
+            "price_stage_score"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 20,
+          "research_score_key": "execution_risk_score",
+          "runtime_contract_status": "exact_source_runtime_field",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "valuation_score",
+            "market_frame_shift",
+            "target_multiple_rerating",
+            "target_multiple_before",
+            "target_multiple_after",
+            "pbr_e",
+            "est_pbr"
+          ],
+          "family": "valuation_repricing",
+          "green_related_occurrence_count": 14,
+          "research_score_key": "valuation_repricing_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "est_pbr",
+            "market_frame_shift",
+            "pbr_e",
+            "target_multiple_after",
+            "target_multiple_before",
+            "target_multiple_rerating",
+            "valuation_score"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "order_backlog_to_sales",
+            "backlog_to_sales",
+            "rpo_to_sales",
+            "record_backlog",
+            "backlog_record_high",
+            "ai_infra_backlog_or_rpo"
+          ],
+          "family": "backlog_orderbook",
+          "green_related_occurrence_count": 13,
+          "research_score_key": "backlog_visibility_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "backlog_record_high",
+            "backlog_to_sales",
+            "order_backlog_to_sales",
+            "record_backlog",
+            "rpo_to_sales"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 13,
+          "research_score_key": "legal_or_contract_risk_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 13,
+          "research_score_key": "dilution_cb_risk_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "contract_quality",
+            "contract_duration_months",
+            "contract_amount_to_prior_sales",
+            "multi_year_contract",
+            "take_or_pay",
+            "customer_prepayment",
+            "contract_renewal_visible"
+          ],
+          "family": "contract_quality",
+          "green_related_occurrence_count": 13,
+          "research_score_key": "contract_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "contract_amount_to_prior_sales",
+            "contract_duration_months",
+            "contract_quality",
+            "contract_renewal_visible",
+            "customer_prepayment",
+            "multi_year_contract",
+            "take_or_pay"
+          ]
+        }
+      ]
+    },
+    {
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "current_runtime": null,
+      "current_stop_layer": "candidate_replay_archive",
+      "green_score_simulation_count": 56,
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_failure": "연구 Green은 있지만 시험지가 current replay에 없다. 점수가 낮은 게 아니라 아직 채점 자체를 못 했다.",
+      "strict_stage3_green_score_simulation_count": 36,
+      "top_green_score_keys": [
+        {
+          "candidate_runtime_fields": [
+            "price_stage_score"
+          ],
+          "family": "relative_strength",
+          "green_related_occurrence_count": 54,
+          "research_score_key": "relative_strength_score",
+          "runtime_contract_status": "exact_source_runtime_field",
+          "supported_candidate_runtime_fields": [
+            "price_stage_score"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 54,
+          "research_score_key": "execution_risk_score",
+          "runtime_contract_status": "exact_source_runtime_field",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "valuation_score",
+            "market_frame_shift",
+            "target_multiple_rerating",
+            "target_multiple_before",
+            "target_multiple_after",
+            "pbr_e",
+            "est_pbr"
+          ],
+          "family": "valuation_repricing",
+          "green_related_occurrence_count": 45,
+          "research_score_key": "valuation_repricing_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "est_pbr",
+            "market_frame_shift",
+            "pbr_e",
+            "target_multiple_after",
+            "target_multiple_before",
+            "target_multiple_rerating",
+            "valuation_score"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "actual_profit_conversion_score",
+            "actual_op_yoy_pct",
+            "opm_expansion_pctp",
+            "actual_opm",
+            "high_margin_mix_improvement",
+            "pricing_power_confirmed"
+          ],
+          "family": "margin_bridge",
+          "green_related_occurrence_count": 43,
+          "research_score_key": "margin_bridge_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "actual_op_yoy_pct",
+            "actual_opm",
+            "actual_profit_conversion_score",
+            "high_margin_mix_improvement",
+            "opm_expansion_pctp",
+            "pricing_power_confirmed"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "order_backlog_to_sales",
+            "backlog_to_sales",
+            "rpo_to_sales",
+            "record_backlog",
+            "backlog_record_high",
+            "ai_infra_backlog_or_rpo"
+          ],
+          "family": "backlog_orderbook",
+          "green_related_occurrence_count": 43,
+          "research_score_key": "backlog_visibility_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "backlog_record_high",
+            "backlog_to_sales",
+            "order_backlog_to_sales",
+            "record_backlog",
+            "rpo_to_sales"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 43,
+          "research_score_key": "legal_or_contract_risk_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 43,
+          "research_score_key": "dilution_cb_risk_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "contract_quality",
+            "contract_duration_months",
+            "contract_amount_to_prior_sales",
+            "multi_year_contract",
+            "take_or_pay",
+            "customer_prepayment",
+            "contract_renewal_visible"
+          ],
+          "family": "contract_quality",
+          "green_related_occurrence_count": 43,
+          "research_score_key": "contract_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "contract_amount_to_prior_sales",
+            "contract_duration_months",
+            "contract_quality",
+            "contract_renewal_visible",
+            "customer_prepayment",
+            "multi_year_contract",
+            "take_or_pay"
+          ]
+        }
+      ]
+    },
+    {
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "current_runtime": null,
+      "current_stop_layer": "candidate_replay_archive",
+      "green_score_simulation_count": 52,
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_failure": "연구 Green은 있지만 시험지가 current replay에 없다. 점수가 낮은 게 아니라 아직 채점 자체를 못 했다.",
+      "strict_stage3_green_score_simulation_count": 32,
+      "top_green_score_keys": [
+        {
+          "candidate_runtime_fields": [
+            "price_stage_score"
+          ],
+          "family": "relative_strength",
+          "green_related_occurrence_count": 52,
+          "research_score_key": "relative_strength_score",
+          "runtime_contract_status": "exact_source_runtime_field",
+          "supported_candidate_runtime_fields": [
+            "price_stage_score"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 52,
+          "research_score_key": "execution_risk_score",
+          "runtime_contract_status": "exact_source_runtime_field",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "actual_profit_conversion_score",
+            "actual_op_yoy_pct",
+            "opm_expansion_pctp",
+            "actual_opm",
+            "high_margin_mix_improvement",
+            "pricing_power_confirmed"
+          ],
+          "family": "margin_bridge",
+          "green_related_occurrence_count": 51,
+          "research_score_key": "margin_bridge_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "actual_op_yoy_pct",
+            "actual_opm",
+            "actual_profit_conversion_score",
+            "high_margin_mix_improvement",
+            "opm_expansion_pctp",
+            "pricing_power_confirmed"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 48,
+          "research_score_key": "dilution_cb_risk_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 48,
+          "research_score_key": "accounting_trust_risk_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "valuation_score",
+            "market_frame_shift",
+            "target_multiple_rerating",
+            "target_multiple_before",
+            "target_multiple_after",
+            "pbr_e",
+            "est_pbr"
+          ],
+          "family": "valuation_repricing",
+          "green_related_occurrence_count": 47,
+          "research_score_key": "valuation_repricing_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "est_pbr",
+            "market_frame_shift",
+            "pbr_e",
+            "target_multiple_after",
+            "target_multiple_before",
+            "target_multiple_rerating",
+            "valuation_score"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "order_backlog_to_sales",
+            "backlog_to_sales",
+            "rpo_to_sales",
+            "record_backlog",
+            "backlog_record_high",
+            "ai_infra_backlog_or_rpo"
+          ],
+          "family": "backlog_orderbook",
+          "green_related_occurrence_count": 45,
+          "research_score_key": "backlog_visibility_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "backlog_record_high",
+            "backlog_to_sales",
+            "order_backlog_to_sales",
+            "record_backlog",
+            "rpo_to_sales"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 45,
+          "research_score_key": "legal_or_contract_risk_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        }
+      ]
+    },
+    {
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "current_runtime": null,
+      "current_stop_layer": "candidate_replay_archive",
+      "green_score_simulation_count": 38,
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_failure": "연구 Green은 있지만 시험지가 current replay에 없다. 점수가 낮은 게 아니라 아직 채점 자체를 못 했다.",
+      "strict_stage3_green_score_simulation_count": 13,
+      "top_green_score_keys": [
+        {
+          "candidate_runtime_fields": [
+            "price_stage_score"
+          ],
+          "family": "relative_strength",
+          "green_related_occurrence_count": 38,
+          "research_score_key": "relative_strength_score",
+          "runtime_contract_status": "exact_source_runtime_field",
+          "supported_candidate_runtime_fields": [
+            "price_stage_score"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 38,
+          "research_score_key": "execution_risk_score",
+          "runtime_contract_status": "exact_source_runtime_field",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "actual_profit_conversion_score",
+            "actual_op_yoy_pct",
+            "opm_expansion_pctp",
+            "actual_opm",
+            "high_margin_mix_improvement",
+            "pricing_power_confirmed"
+          ],
+          "family": "margin_bridge",
+          "green_related_occurrence_count": 35,
+          "research_score_key": "margin_bridge_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "actual_op_yoy_pct",
+            "actual_opm",
+            "actual_profit_conversion_score",
+            "high_margin_mix_improvement",
+            "opm_expansion_pctp",
+            "pricing_power_confirmed"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "valuation_score",
+            "market_frame_shift",
+            "target_multiple_rerating",
+            "target_multiple_before",
+            "target_multiple_after",
+            "pbr_e",
+            "est_pbr"
+          ],
+          "family": "valuation_repricing",
+          "green_related_occurrence_count": 34,
+          "research_score_key": "valuation_repricing_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "est_pbr",
+            "market_frame_shift",
+            "pbr_e",
+            "target_multiple_after",
+            "target_multiple_before",
+            "target_multiple_rerating",
+            "valuation_score"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "order_backlog_to_sales",
+            "backlog_to_sales",
+            "rpo_to_sales",
+            "record_backlog",
+            "backlog_record_high",
+            "ai_infra_backlog_or_rpo"
+          ],
+          "family": "backlog_orderbook",
+          "green_related_occurrence_count": 31,
+          "research_score_key": "backlog_visibility_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "backlog_record_high",
+            "backlog_to_sales",
+            "order_backlog_to_sales",
+            "record_backlog",
+            "rpo_to_sales"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 31,
+          "research_score_key": "legal_or_contract_risk_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 31,
+          "research_score_key": "dilution_cb_risk_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "contract_quality",
+            "contract_duration_months",
+            "contract_amount_to_prior_sales",
+            "multi_year_contract",
+            "take_or_pay",
+            "customer_prepayment",
+            "contract_renewal_visible"
+          ],
+          "family": "contract_quality",
+          "green_related_occurrence_count": 31,
+          "research_score_key": "contract_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "contract_amount_to_prior_sales",
+            "contract_duration_months",
+            "contract_quality",
+            "contract_renewal_visible",
+            "customer_prepayment",
+            "multi_year_contract",
+            "take_or_pay"
+          ]
+        }
+      ]
+    },
+    {
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "current_runtime": {
+        "archetype_component_bottleneck_pricing": null,
+        "archetype_component_earnings_visibility": null,
+        "archetype_component_eps_fcf_explosion": null,
+        "archetype_component_information_confidence": null,
+        "archetype_component_market_mispricing": null,
+        "archetype_component_valuation_rerating": null,
+        "backlog_rpo_visibility": null,
+        "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+        "capa_constraint": null,
+        "contract_quality": null,
+        "current_score": "64.161",
+        "current_stage": "1",
+        "green_gate_deficit_summary": "total:64.16/87.00(-22.84); domain_evidence:14.29/35.00(-20.71); yellow_total:64.16/75.00(-10.84); sector_bottleneck:25.50/35.00(-9.50); bottleneck:2.89/9.00(-6.11); visibility:15.06/17.25(-2.19); valuation:7.57/8.67(-1.10); mispricing:10.60/10.67(-0.07)",
+        "research_axis_bridge_backlog": "0.0",
+        "research_axis_bridge_contract": "0.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_valuation_repricing": "100.0",
+        "revision_score": null,
+        "sector_profile": "GENERIC"
+      },
+      "current_stop_layer": "stage_gate",
+      "green_score_simulation_count": 52,
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_failure": "source-backed field가 일부 들어왔지만 weighted Stage3-Green 총점/과락 gate에서 막힌다.",
+      "strict_stage3_green_score_simulation_count": 41,
+      "top_green_score_keys": [
+        {
+          "candidate_runtime_fields": [
+            "valuation_score",
+            "market_frame_shift",
+            "target_multiple_rerating",
+            "target_multiple_before",
+            "target_multiple_after",
+            "pbr_e",
+            "est_pbr"
+          ],
+          "family": "valuation_repricing",
+          "green_related_occurrence_count": 52,
+          "research_score_key": "valuation_repricing_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "est_pbr",
+            "market_frame_shift",
+            "pbr_e",
+            "target_multiple_after",
+            "target_multiple_before",
+            "target_multiple_rerating",
+            "valuation_score"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "price_stage_score"
+          ],
+          "family": "relative_strength",
+          "green_related_occurrence_count": 52,
+          "research_score_key": "relative_strength_score",
+          "runtime_contract_status": "exact_source_runtime_field",
+          "supported_candidate_runtime_fields": [
+            "price_stage_score"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 52,
+          "research_score_key": "execution_risk_score",
+          "runtime_contract_status": "exact_source_runtime_field",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "actual_profit_conversion_score",
+            "actual_op_yoy_pct",
+            "opm_expansion_pctp",
+            "actual_opm",
+            "high_margin_mix_improvement",
+            "pricing_power_confirmed"
+          ],
+          "family": "margin_bridge",
+          "green_related_occurrence_count": 50,
+          "research_score_key": "margin_bridge_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "actual_op_yoy_pct",
+            "actual_opm",
+            "actual_profit_conversion_score",
+            "high_margin_mix_improvement",
+            "opm_expansion_pctp",
+            "pricing_power_confirmed"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "order_backlog_to_sales",
+            "backlog_to_sales",
+            "rpo_to_sales",
+            "record_backlog",
+            "backlog_record_high",
+            "ai_infra_backlog_or_rpo"
+          ],
+          "family": "backlog_orderbook",
+          "green_related_occurrence_count": 49,
+          "research_score_key": "backlog_visibility_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "backlog_record_high",
+            "backlog_to_sales",
+            "order_backlog_to_sales",
+            "record_backlog",
+            "rpo_to_sales"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 49,
+          "research_score_key": "legal_or_contract_risk_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 49,
+          "research_score_key": "dilution_cb_risk_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "contract_quality",
+            "contract_duration_months",
+            "contract_amount_to_prior_sales",
+            "multi_year_contract",
+            "take_or_pay",
+            "customer_prepayment",
+            "contract_renewal_visible"
+          ],
+          "family": "contract_quality",
+          "green_related_occurrence_count": 49,
+          "research_score_key": "contract_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "contract_amount_to_prior_sales",
+            "contract_duration_months",
+            "contract_quality",
+            "contract_renewal_visible",
+            "customer_prepayment",
+            "multi_year_contract",
+            "take_or_pay"
+          ]
+        }
+      ]
+    },
+    {
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "current_runtime": {
+        "archetype_component_bottleneck_pricing": null,
+        "archetype_component_earnings_visibility": null,
+        "archetype_component_eps_fcf_explosion": null,
+        "archetype_component_information_confidence": null,
+        "archetype_component_market_mispricing": null,
+        "archetype_component_valuation_rerating": null,
+        "backlog_rpo_visibility": null,
+        "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+        "capa_constraint": null,
+        "contract_quality": null,
+        "current_score": "72.9252",
+        "current_stage": "2",
+        "green_gate_deficit_summary": "total:72.93/87.00(-14.07); bottleneck:9.90/15.00(-5.09); contract:41.50/45.00(-3.50); yellow_total:72.93/75.00(-2.07)",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_valuation_repricing": "100.0",
+        "revision_score": null,
+        "sector_profile": "POWER_EQUIPMENT"
+      },
+      "current_stop_layer": "stage_gate",
+      "green_score_simulation_count": 34,
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_failure": "source-backed field가 일부 들어왔지만 weighted Stage3-Green 총점/과락 gate에서 막힌다.",
+      "strict_stage3_green_score_simulation_count": 21,
+      "top_green_score_keys": [
+        {
+          "candidate_runtime_fields": [
+            "price_stage_score"
+          ],
+          "family": "relative_strength",
+          "green_related_occurrence_count": 34,
+          "research_score_key": "relative_strength_score",
+          "runtime_contract_status": "exact_source_runtime_field",
+          "supported_candidate_runtime_fields": [
+            "price_stage_score"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "one_off_shortage_risk",
+            "cashflow_deterioration",
+            "binary_event_unresolved",
+            "policy_headline_only",
+            "revision_slowdown",
+            "capital_return_unconfirmed",
+            "approval_not_confirmed"
+          ],
+          "family": "guard_risk",
+          "green_related_occurrence_count": 34,
+          "research_score_key": "execution_risk_score",
+          "runtime_contract_status": "exact_source_runtime_field",
+          "supported_candidate_runtime_fields": [
+            "approval_not_confirmed",
+            "binary_event_unresolved",
+            "capital_return_unconfirmed",
+            "cashflow_deterioration",
+            "one_off_shortage_risk",
+            "policy_headline_only",
+            "revision_slowdown"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "actual_profit_conversion_score",
+            "actual_op_yoy_pct",
+            "opm_expansion_pctp",
+            "actual_opm",
+            "high_margin_mix_improvement",
+            "pricing_power_confirmed"
+          ],
+          "family": "margin_bridge",
+          "green_related_occurrence_count": 32,
+          "research_score_key": "margin_bridge_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "actual_op_yoy_pct",
+            "actual_opm",
+            "actual_profit_conversion_score",
+            "high_margin_mix_improvement",
+            "opm_expansion_pctp",
+            "pricing_power_confirmed"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "customer_preorder_or_allocation",
+            "minimum_revenue_guarantee",
+            "government_customer",
+            "hyperscaler_customer",
+            "retention_or_renewal",
+            "partner_economics_visible"
+          ],
+          "family": "customer_quality",
+          "green_related_occurrence_count": 28,
+          "research_score_key": "customer_quality_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "customer_preorder_or_allocation",
+            "government_customer",
+            "hyperscaler_customer",
+            "minimum_revenue_guarantee",
+            "partner_economics_visible",
+            "retention_or_renewal"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "valuation_score",
+            "market_frame_shift",
+            "target_multiple_rerating",
+            "target_multiple_before",
+            "target_multiple_after",
+            "pbr_e",
+            "est_pbr"
+          ],
+          "family": "valuation_repricing",
+          "green_related_occurrence_count": 25,
+          "research_score_key": "valuation_repricing_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "est_pbr",
+            "market_frame_shift",
+            "pbr_e",
+            "target_multiple_after",
+            "target_multiple_before",
+            "target_multiple_rerating",
+            "valuation_score"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "order_backlog_to_sales",
+            "backlog_to_sales",
+            "rpo_to_sales",
+            "record_backlog",
+            "backlog_record_high",
+            "ai_infra_backlog_or_rpo"
+          ],
+          "family": "backlog_orderbook",
+          "green_related_occurrence_count": 21,
+          "research_score_key": "backlog_visibility_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "backlog_record_high",
+            "backlog_to_sales",
+            "order_backlog_to_sales",
+            "record_backlog",
+            "rpo_to_sales"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "contract_quality",
+            "contract_duration_months",
+            "contract_amount_to_prior_sales",
+            "multi_year_contract",
+            "take_or_pay",
+            "customer_prepayment",
+            "contract_renewal_visible"
+          ],
+          "family": "contract_quality",
+          "green_related_occurrence_count": 21,
+          "research_score_key": "contract_score",
+          "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+          "supported_candidate_runtime_fields": [
+            "contract_amount_to_prior_sales",
+            "contract_duration_months",
+            "contract_quality",
+            "contract_renewal_visible",
+            "customer_prepayment",
+            "multi_year_contract",
+            "take_or_pay"
+          ]
+        },
+        {
+          "candidate_runtime_fields": [
+            "revision_score",
+            "estimate_upgrade_mentioned",
+            "eps_revision_pct",
+            "op_revision_pct",
+            "target_price_revision_pct"
+          ],
+          "family": "revision",
+          "green_related_occurrence_count": 21,
+          "research_score_key": "revision_score",
+          "runtime_contract_status": "exact_derived_metric_only",
+          "supported_candidate_runtime_fields": [
+            "eps_revision_pct",
+            "estimate_upgrade_mentioned",
+            "op_revision_pct",
+            "revision_score",
+            "target_price_revision_pct"
+          ]
+        }
+      ]
+    }
+  ],
+  "green_score_axis_contract_rows": [
+    {
+      "candidate_runtime_fields": [
+        "price_stage_score"
+      ],
+      "family": "relative_strength",
+      "green_related_occurrence_count": 973,
+      "research_score_key": "relative_strength_score",
+      "runtime_contract_status": "exact_source_runtime_field",
+      "supported_candidate_runtime_fields": [
+        "price_stage_score"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "one_off_shortage_risk",
+        "cashflow_deterioration",
+        "binary_event_unresolved",
+        "policy_headline_only",
+        "revision_slowdown",
+        "capital_return_unconfirmed",
+        "approval_not_confirmed"
+      ],
+      "family": "guard_risk",
+      "green_related_occurrence_count": 961,
+      "research_score_key": "execution_risk_score",
+      "runtime_contract_status": "exact_source_runtime_field",
+      "supported_candidate_runtime_fields": [
+        "approval_not_confirmed",
+        "binary_event_unresolved",
+        "capital_return_unconfirmed",
+        "cashflow_deterioration",
+        "one_off_shortage_risk",
+        "policy_headline_only",
+        "revision_slowdown"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "actual_profit_conversion_score",
+        "actual_op_yoy_pct",
+        "opm_expansion_pctp",
+        "actual_opm",
+        "high_margin_mix_improvement",
+        "pricing_power_confirmed"
+      ],
+      "family": "margin_bridge",
+      "green_related_occurrence_count": 879,
+      "research_score_key": "margin_bridge_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "actual_op_yoy_pct",
+        "actual_opm",
+        "actual_profit_conversion_score",
+        "high_margin_mix_improvement",
+        "opm_expansion_pctp",
+        "pricing_power_confirmed"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "valuation_score",
+        "market_frame_shift",
+        "target_multiple_rerating",
+        "target_multiple_before",
+        "target_multiple_after",
+        "pbr_e",
+        "est_pbr"
+      ],
+      "family": "valuation_repricing",
+      "green_related_occurrence_count": 770,
+      "research_score_key": "valuation_repricing_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "est_pbr",
+        "market_frame_shift",
+        "pbr_e",
+        "target_multiple_after",
+        "target_multiple_before",
+        "target_multiple_rerating",
+        "valuation_score"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "customer_preorder_or_allocation",
+        "minimum_revenue_guarantee",
+        "government_customer",
+        "hyperscaler_customer",
+        "retention_or_renewal",
+        "partner_economics_visible"
+      ],
+      "family": "customer_quality",
+      "green_related_occurrence_count": 748,
+      "research_score_key": "customer_quality_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "customer_preorder_or_allocation",
+        "government_customer",
+        "hyperscaler_customer",
+        "minimum_revenue_guarantee",
+        "partner_economics_visible",
+        "retention_or_renewal"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [],
+      "family": "other",
+      "green_related_occurrence_count": 708,
+      "research_score_key": "policy_or_regulatory_score",
+      "runtime_contract_status": "missing_axis_bridge_contract",
+      "supported_candidate_runtime_fields": []
+    },
+    {
+      "candidate_runtime_fields": [
+        "revision_score",
+        "estimate_upgrade_mentioned",
+        "eps_revision_pct",
+        "op_revision_pct",
+        "target_price_revision_pct"
+      ],
+      "family": "revision",
+      "green_related_occurrence_count": 706,
+      "research_score_key": "revision_score",
+      "runtime_contract_status": "exact_derived_metric_only",
+      "supported_candidate_runtime_fields": [
+        "eps_revision_pct",
+        "estimate_upgrade_mentioned",
+        "op_revision_pct",
+        "revision_score",
+        "target_price_revision_pct"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "order_backlog_to_sales",
+        "backlog_to_sales",
+        "rpo_to_sales",
+        "record_backlog",
+        "backlog_record_high",
+        "ai_infra_backlog_or_rpo"
+      ],
+      "family": "backlog_orderbook",
+      "green_related_occurrence_count": 704,
+      "research_score_key": "backlog_visibility_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "backlog_record_high",
+        "backlog_to_sales",
+        "order_backlog_to_sales",
+        "record_backlog",
+        "rpo_to_sales"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "contract_quality",
+        "contract_duration_months",
+        "contract_amount_to_prior_sales",
+        "multi_year_contract",
+        "take_or_pay",
+        "customer_prepayment",
+        "contract_renewal_visible"
+      ],
+      "family": "contract_quality",
+      "green_related_occurrence_count": 704,
+      "research_score_key": "contract_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "contract_quality",
+        "contract_renewal_visible",
+        "customer_prepayment",
+        "multi_year_contract",
+        "take_or_pay"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "one_off_shortage_risk",
+        "cashflow_deterioration",
+        "binary_event_unresolved",
+        "policy_headline_only",
+        "revision_slowdown",
+        "capital_return_unconfirmed",
+        "approval_not_confirmed"
+      ],
+      "family": "guard_risk",
+      "green_related_occurrence_count": 700,
+      "research_score_key": "accounting_trust_risk_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "approval_not_confirmed",
+        "binary_event_unresolved",
+        "capital_return_unconfirmed",
+        "cashflow_deterioration",
+        "one_off_shortage_risk",
+        "policy_headline_only",
+        "revision_slowdown"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "one_off_shortage_risk",
+        "cashflow_deterioration",
+        "binary_event_unresolved",
+        "policy_headline_only",
+        "revision_slowdown",
+        "capital_return_unconfirmed",
+        "approval_not_confirmed"
+      ],
+      "family": "guard_risk",
+      "green_related_occurrence_count": 698,
+      "research_score_key": "dilution_cb_risk_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "approval_not_confirmed",
+        "binary_event_unresolved",
+        "capital_return_unconfirmed",
+        "cashflow_deterioration",
+        "one_off_shortage_risk",
+        "policy_headline_only",
+        "revision_slowdown"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "one_off_shortage_risk",
+        "cashflow_deterioration",
+        "binary_event_unresolved",
+        "policy_headline_only",
+        "revision_slowdown",
+        "capital_return_unconfirmed",
+        "approval_not_confirmed"
+      ],
+      "family": "guard_risk",
+      "green_related_occurrence_count": 691,
+      "research_score_key": "legal_or_contract_risk_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "approval_not_confirmed",
+        "binary_event_unresolved",
+        "capital_return_unconfirmed",
+        "cashflow_deterioration",
+        "one_off_shortage_risk",
+        "policy_headline_only",
+        "revision_slowdown"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [],
+      "family": "other",
+      "green_related_occurrence_count": 193,
+      "research_score_key": "source_confidence_score",
+      "runtime_contract_status": "missing_axis_bridge_contract",
+      "supported_candidate_runtime_fields": []
+    },
+    {
+      "candidate_runtime_fields": [
+        "one_off_shortage_risk",
+        "cashflow_deterioration",
+        "binary_event_unresolved",
+        "policy_headline_only",
+        "revision_slowdown",
+        "capital_return_unconfirmed",
+        "approval_not_confirmed"
+      ],
+      "family": "guard_risk",
+      "green_related_occurrence_count": 109,
+      "research_score_key": "positioning_overheat_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "approval_not_confirmed",
+        "binary_event_unresolved",
+        "capital_return_unconfirmed",
+        "cashflow_deterioration",
+        "one_off_shortage_risk",
+        "policy_headline_only",
+        "revision_slowdown"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [],
+      "family": "other",
+      "green_related_occurrence_count": 67,
+      "research_score_key": "information_confidence",
+      "runtime_contract_status": "missing_axis_bridge_contract",
+      "supported_candidate_runtime_fields": []
+    },
+    {
+      "candidate_runtime_fields": [
+        "one_off_shortage_risk",
+        "cashflow_deterioration",
+        "binary_event_unresolved",
+        "policy_headline_only",
+        "revision_slowdown",
+        "capital_return_unconfirmed",
+        "approval_not_confirmed"
+      ],
+      "family": "guard_risk",
+      "green_related_occurrence_count": 65,
+      "research_score_key": "thesis_break_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "approval_not_confirmed",
+        "binary_event_unresolved",
+        "capital_return_unconfirmed",
+        "cashflow_deterioration",
+        "one_off_shortage_risk",
+        "policy_headline_only",
+        "revision_slowdown"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "one_off_shortage_risk",
+        "cashflow_deterioration",
+        "binary_event_unresolved",
+        "policy_headline_only",
+        "revision_slowdown",
+        "capital_return_unconfirmed",
+        "approval_not_confirmed"
+      ],
+      "family": "guard_risk",
+      "green_related_occurrence_count": 61,
+      "research_score_key": "theme_spike_risk",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "approval_not_confirmed",
+        "binary_event_unresolved",
+        "capital_return_unconfirmed",
+        "cashflow_deterioration",
+        "one_off_shortage_risk",
+        "policy_headline_only",
+        "revision_slowdown"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "sell_through_confirmed",
+        "channel_reorder_confirmed",
+        "repeat_order_confirmed",
+        "export_channel_expansion",
+        "overseas_channel_expansion"
+      ],
+      "family": "consumer_sell_through",
+      "green_related_occurrence_count": 56,
+      "research_score_key": "channel_reorder_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "channel_reorder_confirmed",
+        "export_channel_expansion",
+        "overseas_channel_expansion",
+        "repeat_order_confirmed",
+        "sell_through_confirmed"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "capital_return_execution",
+        "shareholder_return_execution",
+        "treasury_share_cancellation",
+        "buyback_executed",
+        "dividend_visibility",
+        "roe",
+        "pbr_e"
+      ],
+      "family": "capital_return",
+      "green_related_occurrence_count": 38,
+      "research_score_key": "roe_pbr_capital_return_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "buyback_executed",
+        "capital_return_execution",
+        "dividend_visibility",
+        "pbr_e",
+        "roe",
+        "shareholder_return_execution",
+        "treasury_share_cancellation"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "actual_profit_conversion_score",
+        "actual_op_yoy_pct",
+        "opm_expansion_pctp",
+        "actual_opm",
+        "high_margin_mix_improvement",
+        "pricing_power_confirmed"
+      ],
+      "family": "margin_bridge",
+      "green_related_occurrence_count": 38,
+      "research_score_key": "cash_conversion_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "actual_op_yoy_pct",
+        "actual_opm",
+        "actual_profit_conversion_score",
+        "high_margin_mix_improvement",
+        "opm_expansion_pctp",
+        "pricing_power_confirmed"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "capa_constraint",
+        "capacity_precommitted",
+        "hbm_capacity_pre_sold",
+        "hbm_capacity_constraint",
+        "capacity_utilization_pct",
+        "lead_time_months",
+        "advanced_packaging_bottleneck"
+      ],
+      "family": "capacity_conversion",
+      "green_related_occurrence_count": 38,
+      "research_score_key": "utilization_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "advanced_packaging_bottleneck",
+        "capa_constraint",
+        "capacity_precommitted",
+        "capacity_utilization_pct",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold",
+        "lead_time_months"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "capa_constraint",
+        "capacity_precommitted",
+        "hbm_capacity_pre_sold",
+        "hbm_capacity_constraint",
+        "capacity_utilization_pct",
+        "lead_time_months",
+        "advanced_packaging_bottleneck"
+      ],
+      "family": "capacity_conversion",
+      "green_related_occurrence_count": 34,
+      "research_score_key": "capacity_or_shipment_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "advanced_packaging_bottleneck",
+        "capa_constraint",
+        "capacity_precommitted",
+        "capacity_utilization_pct",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold",
+        "lead_time_months"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "one_off_shortage_risk",
+        "cashflow_deterioration",
+        "binary_event_unresolved",
+        "policy_headline_only",
+        "revision_slowdown",
+        "capital_return_unconfirmed",
+        "approval_not_confirmed"
+      ],
+      "family": "guard_risk",
+      "green_related_occurrence_count": 31,
+      "research_score_key": "dilution_or_sharecount_validation_risk",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "approval_not_confirmed",
+        "binary_event_unresolved",
+        "capital_return_unconfirmed",
+        "cashflow_deterioration",
+        "one_off_shortage_risk",
+        "policy_headline_only",
+        "revision_slowdown"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "one_off_shortage_risk",
+        "cashflow_deterioration",
+        "binary_event_unresolved",
+        "policy_headline_only",
+        "revision_slowdown",
+        "capital_return_unconfirmed",
+        "approval_not_confirmed"
+      ],
+      "family": "guard_risk",
+      "green_related_occurrence_count": 27,
+      "research_score_key": "sharecount_validation_risk",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "approval_not_confirmed",
+        "binary_event_unresolved",
+        "capital_return_unconfirmed",
+        "cashflow_deterioration",
+        "one_off_shortage_risk",
+        "policy_headline_only",
+        "revision_slowdown"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "order_backlog_to_sales",
+        "backlog_to_sales",
+        "rpo_to_sales",
+        "record_backlog",
+        "backlog_record_high",
+        "ai_infra_backlog_or_rpo"
+      ],
+      "family": "backlog_orderbook",
+      "green_related_occurrence_count": 23,
+      "research_score_key": "order_backlog_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "backlog_record_high",
+        "backlog_to_sales",
+        "order_backlog_to_sales",
+        "record_backlog",
+        "rpo_to_sales"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "csm_growth_visible",
+        "k_ics_ratio",
+        "reserve_quality_visible",
+        "loss_ratio_quality",
+        "capital_return_execution"
+      ],
+      "family": "insurance_quality",
+      "green_related_occurrence_count": 22,
+      "research_score_key": "reserve_quality_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "capital_return_execution",
+        "csm_growth_visible",
+        "k_ics_ratio",
+        "loss_ratio_quality",
+        "reserve_quality_visible"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [],
+      "family": "other",
+      "green_related_occurrence_count": 20,
+      "research_score_key": "delivery_schedule_score",
+      "runtime_contract_status": "missing_axis_bridge_contract",
+      "supported_candidate_runtime_fields": []
+    },
+    {
+      "candidate_runtime_fields": [],
+      "family": "other",
+      "green_related_occurrence_count": 20,
+      "research_score_key": "capital_buffer_score",
+      "runtime_contract_status": "missing_axis_bridge_contract",
+      "supported_candidate_runtime_fields": []
+    },
+    {
+      "candidate_runtime_fields": [
+        "one_off_shortage_risk",
+        "cashflow_deterioration",
+        "binary_event_unresolved",
+        "policy_headline_only",
+        "revision_slowdown",
+        "capital_return_unconfirmed",
+        "approval_not_confirmed"
+      ],
+      "family": "guard_risk",
+      "green_related_occurrence_count": 19,
+      "research_score_key": "high_MAE_risk_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "approval_not_confirmed",
+        "binary_event_unresolved",
+        "capital_return_unconfirmed",
+        "cashflow_deterioration",
+        "one_off_shortage_risk",
+        "policy_headline_only",
+        "revision_slowdown"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [],
+      "family": "other",
+      "green_related_occurrence_count": 19,
+      "research_score_key": "non_price_evidence_bridge_score",
+      "runtime_contract_status": "missing_axis_bridge_contract",
+      "supported_candidate_runtime_fields": []
+    },
+    {
+      "candidate_runtime_fields": [
+        "capital_return_execution",
+        "shareholder_return_execution",
+        "treasury_share_cancellation",
+        "buyback_executed",
+        "dividend_visibility",
+        "roe",
+        "pbr_e"
+      ],
+      "family": "capital_return",
+      "green_related_occurrence_count": 18,
+      "research_score_key": "capital_return_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "buyback_executed",
+        "capital_return_execution",
+        "dividend_visibility",
+        "pbr_e",
+        "roe",
+        "shareholder_return_execution",
+        "treasury_share_cancellation"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "actual_profit_conversion_score",
+        "actual_op_yoy_pct",
+        "opm_expansion_pctp",
+        "actual_opm",
+        "high_margin_mix_improvement",
+        "pricing_power_confirmed"
+      ],
+      "family": "margin_bridge",
+      "green_related_occurrence_count": 18,
+      "research_score_key": "asp_or_spread_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "actual_op_yoy_pct",
+        "actual_opm",
+        "actual_profit_conversion_score",
+        "high_margin_mix_improvement",
+        "opm_expansion_pctp",
+        "pricing_power_confirmed"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "regulatory_approval_confirmed",
+        "approval_to_revenue_bridge",
+        "royalty_route",
+        "partner_economics_visible",
+        "reimbursement_confirmed"
+      ],
+      "family": "bio_commercialization",
+      "green_related_occurrence_count": 18,
+      "research_score_key": "commercialization_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "approval_to_revenue_bridge",
+        "partner_economics_visible",
+        "regulatory_approval_confirmed",
+        "reimbursement_confirmed",
+        "royalty_route"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "actual_profit_conversion_score",
+        "actual_op_yoy_pct",
+        "opm_expansion_pctp",
+        "actual_opm",
+        "high_margin_mix_improvement",
+        "pricing_power_confirmed"
+      ],
+      "family": "margin_bridge",
+      "green_related_occurrence_count": 17,
+      "research_score_key": "revenue_margin_bridge_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "actual_op_yoy_pct",
+        "actual_opm",
+        "actual_profit_conversion_score",
+        "high_margin_mix_improvement",
+        "opm_expansion_pctp",
+        "pricing_power_confirmed"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "sell_through_confirmed",
+        "channel_reorder_confirmed",
+        "repeat_order_confirmed",
+        "export_channel_expansion",
+        "overseas_channel_expansion"
+      ],
+      "family": "consumer_sell_through",
+      "green_related_occurrence_count": 16,
+      "research_score_key": "global_distribution_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "channel_reorder_confirmed",
+        "export_channel_expansion",
+        "overseas_channel_expansion",
+        "repeat_order_confirmed",
+        "sell_through_confirmed"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [
+        "customer_preorder_or_allocation",
+        "minimum_revenue_guarantee",
+        "government_customer",
+        "hyperscaler_customer",
+        "retention_or_renewal",
+        "partner_economics_visible"
+      ],
+      "family": "customer_quality",
+      "green_related_occurrence_count": 15,
+      "research_score_key": "customer_volume_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "customer_preorder_or_allocation",
+        "government_customer",
+        "hyperscaler_customer",
+        "minimum_revenue_guarantee",
+        "partner_economics_visible",
+        "retention_or_renewal"
+      ]
+    },
+    {
+      "candidate_runtime_fields": [],
+      "family": "other",
+      "green_related_occurrence_count": 14,
+      "research_score_key": "direct_beneficiary_mapping_score",
+      "runtime_contract_status": "missing_axis_bridge_contract",
+      "supported_candidate_runtime_fields": []
+    },
+    {
+      "candidate_runtime_fields": [],
+      "family": "other",
+      "green_related_occurrence_count": 13,
+      "research_score_key": "control_premium_score",
+      "runtime_contract_status": "missing_axis_bridge_contract",
+      "supported_candidate_runtime_fields": []
+    },
+    {
+      "candidate_runtime_fields": [],
+      "family": "other",
+      "green_related_occurrence_count": 13,
+      "research_score_key": "rate_cycle_score",
+      "runtime_contract_status": "missing_axis_bridge_contract",
+      "supported_candidate_runtime_fields": []
+    },
+    {
+      "candidate_runtime_fields": [
+        "one_off_shortage_risk",
+        "cashflow_deterioration",
+        "binary_event_unresolved",
+        "policy_headline_only",
+        "revision_slowdown",
+        "capital_return_unconfirmed",
+        "approval_not_confirmed"
+      ],
+      "family": "guard_risk",
+      "green_related_occurrence_count": 12,
+      "research_score_key": "dilution_or_sharecount_risk_score",
+      "runtime_contract_status": "requires_axis_bridge_to_runtime_primitives",
+      "supported_candidate_runtime_fields": [
+        "approval_not_confirmed",
+        "binary_event_unresolved",
+        "capital_return_unconfirmed",
+        "cashflow_deterioration",
+        "one_off_shortage_risk",
+        "policy_headline_only",
+        "revision_slowdown"
+      ]
+    }
+  ],
+  "green_score_simulation_archetype_counts": {
+    "C01_ORDER_BACKLOG_MARGIN_BRIDGE": 30,
+    "C02_POWER_GRID_DATACENTER_CAPEX": 34,
+    "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 31,
+    "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY": 19,
+    "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 16,
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 22,
+    "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH": 24,
+    "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": 18,
+    "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF": 14,
+    "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": 28,
+    "C11_BATTERY_ORDERBOOK_RERATING": 33,
+    "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK": 18,
+    "C13_BATTERY_JV_UTILIZATION_AMPC_IRA": 11,
+    "C14_EV_DEMAND_SLOWDOWN_4B_4C": 2,
+    "C15_MATERIAL_SPREAD_SUPERCYCLE": 27,
+    "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY": 12,
+    "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": 40,
+    "C18_CONSUMER_EXPORT_CHANNEL_REORDER": 31,
+    "C19_BRAND_RETAIL_INVENTORY_MARGIN": 18,
+    "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION": 52,
+    "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN": 56,
+    "C22_INSURANCE_RATE_CYCLE_RESERVE": 51,
+    "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": 52,
+    "C24_BIO_TRIAL_DATA_EVENT_RISK": 30,
+    "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT": 18,
+    "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE": 38,
+    "C27_CONTENT_IP_GLOBAL_MONETIZATION": 35,
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": 15,
+    "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": 31,
+    "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK": 15,
+    "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": 49,
+    "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP": 31,
+    "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM": 83,
+    "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION": 8,
+    "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL": 8,
+    "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": 8,
+    "UNKNOWN": 15
+  },
+  "schema_version": "v12_green_score_axis_runtime_contract_audit_v1",
+  "strict_stage3_green_score_simulation_archetype_counts": {
+    "C01_ORDER_BACKLOG_MARGIN_BRIDGE": 19,
+    "C02_POWER_GRID_DATACENTER_CAPEX": 21,
+    "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 9,
+    "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY": 6,
+    "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 11,
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 11,
+    "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH": 8,
+    "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": 2,
+    "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF": 4,
+    "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": 17,
+    "C11_BATTERY_ORDERBOOK_RERATING": 14,
+    "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK": 1,
+    "C13_BATTERY_JV_UTILIZATION_AMPC_IRA": 1,
+    "C15_MATERIAL_SPREAD_SUPERCYCLE": 15,
+    "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY": 2,
+    "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": 30,
+    "C18_CONSUMER_EXPORT_CHANNEL_REORDER": 16,
+    "C19_BRAND_RETAIL_INVENTORY_MARGIN": 5,
+    "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION": 41,
+    "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN": 36,
+    "C22_INSURANCE_RATE_CYCLE_RESERVE": 33,
+    "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": 32,
+    "C24_BIO_TRIAL_DATA_EVENT_RISK": 10,
+    "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT": 7,
+    "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE": 13,
+    "C27_CONTENT_IP_GLOBAL_MONETIZATION": 17,
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": 5,
+    "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": 8,
+    "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK": 2,
+    "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": 10,
+    "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP": 19,
+    "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM": 40,
+    "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION": 6,
+    "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL": 2,
+    "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": 2,
+    "UNKNOWN": 11
+  },
+  "summary": {
+    "green_related_score_simulation_row_count": 1023,
+    "green_score_key_exact_derived_metric_only_count": 1,
+    "green_score_key_exact_derived_metric_only_matches": [
+      "revision_score"
+    ],
+    "green_score_key_exact_source_field_count": 6,
+    "green_score_key_exact_source_field_matches": [
+      "accounting_trust_risk",
+      "backlog_visibility",
+      "capital_return_execution",
+      "execution_risk_score",
+      "relative_strength_score",
+      "thesis_break_confirmed"
+    ],
+    "plain_conclusion": "예전 Green 연구는 score_simulation 축을 많이 썼지만, 그 축 대부분은 현재 runtime source field와 1:1로 맞지 않는다. 따라서 누적 연구는 weight까지는 들어갔어도, Green 축을 source-backed primitive로 번역하는 계약이 없으면 현재 scorer에서는 빈칸처럼 남는다.",
+    "runtime_derived_metric_count": 20,
+    "runtime_source_field_key_count": 304,
+    "score_simulation_row_count": 9052,
+    "strict_stage3_green_score_simulation_row_count": 486,
+    "top40_contract_status_counts": {
+      "exact_derived_metric_only": 1,
+      "exact_source_runtime_field": 2,
+      "missing_axis_bridge_contract": 9,
+      "requires_axis_bridge_to_runtime_primitives": 28
+    },
+    "unique_green_research_score_key_count": 960,
+    "unique_research_score_key_count": 2039
+  },
+  "top_changed_components": [
+    {
+      "count": 522,
+      "key": "execution_risk_score"
+    },
+    {
+      "count": 397,
+      "key": "margin_bridge_score"
+    },
+    {
+      "count": 198,
+      "key": "valuation_repricing_score"
+    },
+    {
+      "count": 173,
+      "key": "revision_score"
+    },
+    {
+      "count": 165,
+      "key": "customer_quality_score"
+    },
+    {
+      "count": 98,
+      "key": "backlog_visibility_score"
+    },
+    {
+      "count": 95,
+      "key": "policy_or_regulatory_score"
+    },
+    {
+      "count": 94,
+      "key": "legal_or_contract_risk_score"
+    },
+    {
+      "count": 90,
+      "key": "relative_strength_score"
+    },
+    {
+      "count": 54,
+      "key": "positioning_overheat_score"
+    },
+    {
+      "count": 47,
+      "key": "channel_reorder_score"
+    },
+    {
+      "count": 34,
+      "key": "contract_score"
+    },
+    {
+      "count": 29,
+      "key": "accounting_trust_risk_score"
+    },
+    {
+      "count": 29,
+      "key": "roe_pbr_capital_return_score"
+    },
+    {
+      "count": 19,
+      "key": "order_backlog_score"
+    },
+    {
+      "count": 17,
+      "key": "revenue_margin_bridge_score"
+    },
+    {
+      "count": 16,
+      "key": "commercialization_score"
+    },
+    {
+      "count": 15,
+      "key": "reserve_quality_score"
+    },
+    {
+      "count": 15,
+      "key": "utilization_score"
+    },
+    {
+      "count": 15,
+      "key": "capital_return_score"
+    },
+    {
+      "count": 14,
+      "key": "direct_beneficiary_mapping_score"
+    },
+    {
+      "count": 14,
+      "key": "capital_buffer_score"
+    },
+    {
+      "count": 13,
+      "key": "control_premium_score"
+    },
+    {
+      "count": 13,
+      "key": "capacity_or_shipment_score"
+    },
+    {
+      "count": 13,
+      "key": "customer_volume_score"
+    },
+    {
+      "count": 12,
+      "key": "c09_blowoff_guard_score"
+    },
+    {
+      "count": 12,
+      "key": "customer_quality_score_guard"
+    },
+    {
+      "count": 12,
+      "key": "revision_score_guard"
+    },
+    {
+      "count": 10,
+      "key": "dilution_cb_risk_score"
+    },
+    {
+      "count": 10,
+      "key": "thesis_break_score"
+    },
+    {
+      "count": 10,
+      "key": "delivery_revenue_score"
+    },
+    {
+      "count": 10,
+      "key": "non_price_evidence_bridge_score"
+    },
+    {
+      "count": 10,
+      "key": "global_distribution_score"
+    },
+    {
+      "count": 10,
+      "key": "revenue_conversion_score"
+    },
+    {
+      "count": 10,
+      "key": "shareholder_return_score"
+    },
+    {
+      "count": 10,
+      "key": "mix_pricing_score"
+    },
+    {
+      "count": 9,
+      "key": "delivery_schedule_score"
+    },
+    {
+      "count": 9,
+      "key": "high_MAE_risk_score"
+    },
+    {
+      "count": 9,
+      "key": "sell_through_score"
+    },
+    {
+      "count": 8,
+      "key": "capital_return_execution_score"
+    }
+  ],
+  "top_green_research_score_keys": [
+    {
+      "count": 973,
+      "key": "relative_strength_score"
+    },
+    {
+      "count": 961,
+      "key": "execution_risk_score"
+    },
+    {
+      "count": 879,
+      "key": "margin_bridge_score"
+    },
+    {
+      "count": 770,
+      "key": "valuation_repricing_score"
+    },
+    {
+      "count": 748,
+      "key": "customer_quality_score"
+    },
+    {
+      "count": 708,
+      "key": "policy_or_regulatory_score"
+    },
+    {
+      "count": 706,
+      "key": "revision_score"
+    },
+    {
+      "count": 704,
+      "key": "backlog_visibility_score"
+    },
+    {
+      "count": 704,
+      "key": "contract_score"
+    },
+    {
+      "count": 700,
+      "key": "accounting_trust_risk_score"
+    },
+    {
+      "count": 698,
+      "key": "dilution_cb_risk_score"
+    },
+    {
+      "count": 691,
+      "key": "legal_or_contract_risk_score"
+    },
+    {
+      "count": 193,
+      "key": "source_confidence_score"
+    },
+    {
+      "count": 109,
+      "key": "positioning_overheat_score"
+    },
+    {
+      "count": 67,
+      "key": "information_confidence"
+    },
+    {
+      "count": 65,
+      "key": "thesis_break_score"
+    },
+    {
+      "count": 61,
+      "key": "theme_spike_risk"
+    },
+    {
+      "count": 56,
+      "key": "channel_reorder_score"
+    },
+    {
+      "count": 38,
+      "key": "roe_pbr_capital_return_score"
+    },
+    {
+      "count": 38,
+      "key": "cash_conversion_score"
+    },
+    {
+      "count": 38,
+      "key": "utilization_score"
+    },
+    {
+      "count": 34,
+      "key": "capacity_or_shipment_score"
+    },
+    {
+      "count": 31,
+      "key": "dilution_or_sharecount_validation_risk"
+    },
+    {
+      "count": 27,
+      "key": "sharecount_validation_risk"
+    },
+    {
+      "count": 23,
+      "key": "order_backlog_score"
+    },
+    {
+      "count": 22,
+      "key": "reserve_quality_score"
+    },
+    {
+      "count": 20,
+      "key": "delivery_schedule_score"
+    },
+    {
+      "count": 20,
+      "key": "capital_buffer_score"
+    },
+    {
+      "count": 19,
+      "key": "high_MAE_risk_score"
+    },
+    {
+      "count": 19,
+      "key": "non_price_evidence_bridge_score"
+    },
+    {
+      "count": 18,
+      "key": "capital_return_score"
+    },
+    {
+      "count": 18,
+      "key": "asp_or_spread_score"
+    },
+    {
+      "count": 18,
+      "key": "commercialization_score"
+    },
+    {
+      "count": 17,
+      "key": "revenue_margin_bridge_score"
+    },
+    {
+      "count": 16,
+      "key": "global_distribution_score"
+    },
+    {
+      "count": 15,
+      "key": "customer_volume_score"
+    },
+    {
+      "count": 14,
+      "key": "direct_beneficiary_mapping_score"
+    },
+    {
+      "count": 13,
+      "key": "control_premium_score"
+    },
+    {
+      "count": 13,
+      "key": "rate_cycle_score"
+    },
+    {
+      "count": 12,
+      "key": "dilution_or_sharecount_risk_score"
+    }
+  ]
+}

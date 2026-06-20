@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `344`
+- stage_transition_summary_rows: `337`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -239,13 +239,6 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C10_L232_08_089790 | 089790 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | 6930.0 | None | None | no_valid_stage_transition |
 | C10_LOTVACUUM_083310_2024_02_22_MEMORY_EQUIPMENT_RECOVERY_FALSE_POSITIVE | 083310 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 23350.0 | None | None | 4.71 | None | stage2_captured_most_upside |
 | C10_LOTVACUUM_083310_2024_03_06_VACUUM_EQUIPMENT_MEMORY_RECOVERY_BETA_FAIL | 083310 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 22650.0 | None | None | 6.18 | None | stage2_captured_most_upside |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_R2L111_005290_HBM_CMP_SLURRY_OPTIONALITY_C09_C10_BOUNDARY_20241024 | 005290 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 26700.0 | None | None | 29.4 | None | stage2_captured_most_upside |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_R2L111_059090_CERAMIC_HEATER_SUBSIDIARY_SYNERGY_PRICE_BLOWOFF_20240509 | 059090 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | 12630.0 | None | None | 4b_good_peak_capture |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_R2L111_101160_NAND_AFTERMARKET_PARTS_LOW_MFE_STAGE2_BLOCK_20240213 | 101160 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 24000.0 | None | None | 8.96 | None | stage2_captured_most_upside |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_R2L111_104830_SPECIALTY_GAS_MEMORY_UTILIZATION_MIX_FAST_MFE_HIGH_MAE_20240228 | 104830 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | 31350.0 | None | None | 4b_good_peak_capture |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_R2L111_166090_NAND_SI_PARTS_NEW_ETCHER_TEST_FIRST_YEAR_20240206 | 166090 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | None | None | None | no_valid_stage_transition |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_R2L111_183300_CLEANING_COATING_MEMORY_UTILIZATION_FAST_MFE_FULL_WINDOW_4B_20240402 | 183300 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | None | None | 75200.0 | None | None | 4b_good_peak_capture |
-| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_R2L111_357780_MEMORY_UTILIZATION_UNCERTAINTY_STAGE2_DOWNROUTE_20241125 | 357780 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 197200.0 | None | None | 29.31 | None | stage2_captured_most_upside |
 | C10_NPP_144960_2024_03_06_PLASMA_POWER_MEMORY_EQUIPMENT_RECOVERY_4B | 144960 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 4965.0 | None | None | 46.02 | None | stage2_actionable_best_entry |
 | C10_PSK_319660_2024_02_29_MEMORY_RECOVERY_EQUIPMENT_ORDER_RERATING | 319660 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 25400.0 | None | None | 53.94 | None | stage2_actionable_best_entry |
 | C10_PSK_319660_2024_03_06_MEMORY_DRY_STRIP_EQUIPMENT_CYCLE_RERATING | 319660 | C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 26250.0 | None | None | 48.95 | None | stage2_actionable_best_entry |

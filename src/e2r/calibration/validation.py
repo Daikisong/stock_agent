@@ -7,6 +7,8 @@ from typing import Any
 import math
 import re
 
+from .evidence_flags import normalise_evidence_quality_flags
+
 
 POSITIVE_TRIGGER_TYPES = {"Stage2", "Stage2-Actionable", "Stage3-Yellow", "Stage3-Green"}
 FOUR_B_TYPES = {"Stage4B", "4B", "4B-watch", "Stage4B-watch"}
@@ -364,12 +366,9 @@ def validate_v12_trigger_rows(trigger_rows: list[dict[str, Any]]) -> ValidationB
         if not canonical_archetype_id:
             reasons.append("missing_canonical_archetype_id")
 
-        evidence_url_pending = _v12_bool_flag(validated, "evidence_url_pending") or _contains_any(
-            validated, ("evidence url pending", "url pending")
-        )
-        source_proxy_only = _v12_bool_flag(validated, "source_proxy_only") or _contains_any(
-            validated, ("source-name-level", "event proxies", "public-event proxies")
-        )
+        validated = normalise_evidence_quality_flags(validated)
+        evidence_url_pending = bool(validated.get("evidence_url_pending"))
+        source_proxy_only = bool(validated.get("source_proxy_only"))
         duplicate_low_value = _contains_any(validated, ("duplicate_low_value_loop",))
         rematerialization = _contains_any(validated, ("schema_rematerialization_only",))
         do_not_count = parse_bool(validated.get("do_not_count_as_new_case"), False) is True

@@ -14,6 +14,7 @@ from typing import Any, Callable, Mapping, Sequence
 
 from e2r.audit import AuditFinding, audit_parser_outputs
 from e2r.briefing import MorningBrief, generate_morning_briefing
+from e2r.calibration.scoring_profile import get_active_scoring_profile
 from e2r.cheap_scan import KoreaCheapScanConfig, KoreaCheapScanResult, KoreaCheapScanSources, KoreaCheapScanner
 from e2r.cheap_scan.korea_sources import DataGoKrFSCConnector
 from e2r.cheap_scan.models import CheapScanCandidate, RecommendedNextLayer
@@ -63,6 +64,7 @@ from e2r.sources.source_errors import SourceRequest, load_fixture_records
 
 
 DEFAULT_FIXTURE_ROOT = Path("data/raw/korea_cheap_scan")
+_CROSS_EVIDENCE_STAGE3_GREEN_REASON = "live-lite Stage 3-Green requires at least two independent evidence types"
 
 
 @dataclass(frozen=True)
@@ -3039,17 +3041,24 @@ def _enforce_cross_evidence_stage3_green(
 ) -> WebResearchPipelineResult:
     if not config.require_cross_evidence_for_stage3_green:
         return result
-    if result.stage.stage != Stage.STAGE_3_GREEN:
-        return result
     evidence_types = _independent_evidence_types(evidence)
     if len(evidence_types) >= 2:
+        return result
+    if result.stage.stage not in {Stage.STAGE_3_GREEN, Stage.STAGE_3_YELLOW}:
+        return result
+    if (
+        result.stage.stage == Stage.STAGE_3_YELLOW
+        and result.score.total_score < get_active_scoring_profile().threshold("stage3_green_total_min", 85.0)
+    ):
+        return result
+    reasons = tuple(result.stage.stage_reason)
+    if _CROSS_EVIDENCE_STAGE3_GREEN_REASON in reasons:
         return result
     new_stage = replace(
         result.stage,
         stage=Stage.STAGE_3_YELLOW,
-        grade="cross-evidence-required",
-        stage_reason=tuple(result.stage.stage_reason)
-        + ("live-lite Stage 3-Green requires at least two independent evidence types",),
+        grade="cross-evidence-required" if result.stage.stage == Stage.STAGE_3_GREEN else result.stage.grade,
+        stage_reason=reasons + (_CROSS_EVIDENCE_STAGE3_GREEN_REASON,),
         evidence_ids=tuple(dict.fromkeys(result.stage.evidence_ids + tuple(item.evidence_id for item in evidence))),
     )
     return replace(result, stage=new_stage)

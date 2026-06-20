@@ -1,6 +1,7 @@
 from datetime import date
 import io
 from pathlib import Path
+import tempfile
 import unittest
 import zipfile
 
@@ -125,6 +126,28 @@ class SourceConnectorTests(unittest.TestCase):
         self.assertEqual(consensus[0].fcf_e, 430000)
         self.assertEqual(revisions[0].street_high_eps_revision_1m, 40)
         self.assertEqual(revisions[0].street_low_eps_revision_1m, 20)
+
+    def test_consensus_csv_connector_ignores_non_finite_optional_numbers(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            (root / "kr_consensus_revisions.csv").write_text(
+                "\n".join(
+                    (
+                        "symbol,date,fiscal_year,as_of_date,eps_revision_1m,op_revision_1m,analyst_count_change,source",
+                        "CASE,2024-01-05,2024,2024-01-05,nan,inf,nan,file",
+                    )
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            connector = ConsensusCSVConnector(fixture_root=root)
+            revisions = connector.get_consensus_revisions("CASE", date(2024, 1, 5))
+
+        self.assertEqual(len(revisions), 1)
+        self.assertIsNone(revisions[0].eps_revision_1m)
+        self.assertIsNone(revisions[0].op_revision_1m)
+        self.assertIsNone(revisions[0].analyst_count_change)
 
     def test_company_guide_parses_samsung_and_hynix_consensus_snapshot(self):
         connector = CompanyGuideConnector()

@@ -12,6 +12,7 @@ CANDIDATE_SOURCE_PATHS = frozenset(
     {
         "official_cheap_scan",
         "report_radar",
+        "runtime_fixture_spec",
         "targeted_smoke",
         "top_trading_value_probe",
     }

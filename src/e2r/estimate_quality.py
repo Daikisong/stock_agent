@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import date
+import math
 from typing import Any, Mapping, Sequence
 
 from .evidence_ids import stable_consensus_evidence_id, stable_revision_evidence_id
@@ -434,9 +435,12 @@ def _to_float(value: Any) -> float | None:
     if value in (None, ""):
         return None
     try:
-        return float(value)
+        number = float(value)
     except (TypeError, ValueError):
         return None
+    if not math.isfinite(number):
+        return None
+    return number
 
 
 def _percent_value(value: float | None) -> float | None:

@@ -6,24 +6,24 @@
   "active_default_profile_after_apply": "e2r_2_2_rolling_calibrated",
   "sector_shadow_candidate_count": 30,
   "archetype_shadow_candidate_count": 103,
-  "stage_transition_summary_rows": 10660,
+  "stage_transition_summary_rows": 10645,
   "promotion_ready": false,
   "promotion_blockers": [
     {
       "blocker": "evidence_url_pending",
-      "count": 3906,
+      "count": 4188,
       "reason": "v12 rows can support shadow analysis but need exact public evidence URLs before default promotion.",
       "needed_to_clear": "Attach verified DART/IR/report/news URLs or mark rows as evidence-verified."
     },
     {
       "blocker": "source_proxy_only",
-      "count": 3723,
+      "count": 5118,
       "reason": "Some evidence is source-name-level historical event proxy, not verified production evidence.",
       "needed_to_clear": "Replace proxy rows with verified as-of evidence records."
     },
     {
       "blocker": "rejected_rows",
-      "count": 8186,
+      "count": 8177,
       "reason": "Some rows failed validation or were not usable for shadow calibration.",
       "needed_to_clear": "Fix missing sector/archetype IDs, price fields, or evidence flags."
     }

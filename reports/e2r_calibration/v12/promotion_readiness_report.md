@@ -9,7 +9,7 @@ source proxy / evidence URL 한계가 있으면 positive patch는 막고 guardra
 - default_promotion_ready: `False`
 - next_patch_ready: `True`
 - apply_next_patch_count: `112`
-- stage_transition_summary_rows: `10660`
+- stage_transition_summary_rows: `10645`
 
 ## Promotion Decisions
 
@@ -150,6 +150,6 @@ source proxy / evidence URL 한계가 있으면 positive patch는 막고 guardra
 | earlier_thesis_break_watch | R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW | apply_next_patch | Type1_safety_guardrail | True | none | implement_defensive_guardrail |
 
 ## Blockers
-- evidence_url_pending: 3906 / v12 rows can support shadow analysis but need exact public evidence URLs before default promotion. / needed: Attach verified DART/IR/report/news URLs or mark rows as evidence-verified.
-- source_proxy_only: 3723 / Some evidence is source-name-level historical event proxy, not verified production evidence. / needed: Replace proxy rows with verified as-of evidence records.
-- rejected_rows: 8186 / Some rows failed validation or were not usable for shadow calibration. / needed: Fix missing sector/archetype IDs, price fields, or evidence flags.
+- evidence_url_pending: 4188 / v12 rows can support shadow analysis but need exact public evidence URLs before default promotion. / needed: Attach verified DART/IR/report/news URLs or mark rows as evidence-verified.
+- source_proxy_only: 5118 / Some evidence is source-name-level historical event proxy, not verified production evidence. / needed: Replace proxy rows with verified as-of evidence records.
+- rejected_rows: 8177 / Some rows failed validation or were not usable for shadow calibration. / needed: Fix missing sector/archetype IDs, price fields, or evidence flags.

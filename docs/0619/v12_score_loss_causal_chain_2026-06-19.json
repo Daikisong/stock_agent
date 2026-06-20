@@ -1,0 +1,490 @@
+{
+  "focus_archetype_rows": [
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "case_label": "하닉 HBM 예시이지만 HBM 특례가 아니라 bridge 이후 gate 검증까지 보는 문제",
+      "code_owners": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "diagnosis": "weighted_stage3_gate_blocks_after_fields_present",
+      "first_slice_role_gap_classes": [
+        "exact_candidate_reached_but_research_snapshot_missing",
+        "runtime_symbol_reached_but_schedule_date_mismatch"
+      ],
+      "missing_required_bridge_axes": [],
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_failure": "source-backed field가 일부 들어왔지만 weighted Stage3-Green 총점/과락 gate에서 막힌다.",
+      "research_axis_signal_counts": {
+        "backlog": 3,
+        "contract": 1,
+        "customer": 5,
+        "margin": 1
+      },
+      "research_clean_green_count": 5,
+      "research_raw_stage3_green_count": 9,
+      "runtime_best_row": {
+        "archetype_component_bottleneck_pricing": null,
+        "archetype_component_earnings_visibility": null,
+        "archetype_component_eps_fcf_explosion": null,
+        "archetype_component_information_confidence": null,
+        "archetype_component_market_mispricing": null,
+        "archetype_component_valuation_rerating": null,
+        "backlog_rpo_visibility": null,
+        "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "capa_constraint": null,
+        "contract_quality": null,
+        "current_score": "80.0131",
+        "current_stage": "3-Yellow",
+        "green_gate_deficit_summary": "total:80.01/87.00(-6.99); bottleneck:12.18/14.25(-2.07)",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_valuation_repricing": "100.0",
+        "revision_score": null,
+        "sector_profile": "MEMORY_HBM"
+      },
+      "runtime_candidate_count": 19,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 80.0131,
+      "runtime_zero_or_missing_bridge_fields": [],
+      "stop_layer": "stage_gate",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "earnings_visibility",
+        "bottleneck_pricing"
+      ],
+      "weight_support_counterexample_count": 56,
+      "weight_support_positive_case_count": 32,
+      "weight_support_row_count": 229
+    },
+    {
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "case_label": "삼성전자 memory recovery route 예시",
+      "code_owners": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "diagnosis": "weighted_stage3_gate_blocks_after_fields_present",
+      "first_slice_role_gap_classes": [
+        "archive_or_candidate_funnel_missing"
+      ],
+      "missing_required_bridge_axes": [],
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_failure": "source-backed field가 일부 들어왔지만 weighted Stage3-Green 총점/과락 gate에서 막힌다.",
+      "research_axis_signal_counts": {
+        "backlog": 1,
+        "customer": 0,
+        "margin": 0,
+        "valuation_repricing": 1
+      },
+      "research_clean_green_count": 4,
+      "research_raw_stage3_green_count": 4,
+      "runtime_best_row": {
+        "archetype_component_bottleneck_pricing": null,
+        "archetype_component_earnings_visibility": null,
+        "archetype_component_eps_fcf_explosion": null,
+        "archetype_component_information_confidence": null,
+        "archetype_component_market_mispricing": null,
+        "archetype_component_valuation_rerating": null,
+        "backlog_rpo_visibility": null,
+        "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+        "capa_constraint": null,
+        "contract_quality": null,
+        "current_score": "72.1181",
+        "current_stage": "2",
+        "green_gate_deficit_summary": "total:72.12/87.00(-14.88); yellow_total:72.12/75.00(-2.88); bottleneck:8.16/10.50(-2.33); visibility:13.17/13.50(-0.33)",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "0.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_valuation_repricing": "100.0",
+        "revision_score": null,
+        "sector_profile": "MEMORY_HBM"
+      },
+      "runtime_candidate_count": 1,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 72.1181,
+      "runtime_zero_or_missing_bridge_fields": [
+        "research_axis_bridge_contract"
+      ],
+      "stop_layer": "stage_gate",
+      "top_weight_axes": [
+        "eps_fcf_explosion",
+        "information_confidence",
+        "earnings_visibility"
+      ],
+      "weight_support_counterexample_count": 79,
+      "weight_support_positive_case_count": 60,
+      "weight_support_row_count": 366
+    },
+    {
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "case_label": "금융 capital return 후보/replay gap 예시",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "first_slice_role_gap_classes": [
+        "archive_or_candidate_funnel_missing"
+      ],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_failure": "연구 Green은 있지만 시험지가 current replay에 없다. 점수가 낮은 게 아니라 아직 채점 자체를 못 했다.",
+      "research_axis_signal_counts": {
+        "capital_return": 16,
+        "guard_risk": 14,
+        "valuation_repricing": 20
+      },
+      "research_clean_green_count": 23,
+      "research_raw_stage3_green_count": 37,
+      "runtime_best_row": null,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "runtime_zero_or_missing_bridge_fields": [],
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "valuation_rerating",
+        "earnings_visibility",
+        "eps_fcf_explosion"
+      ],
+      "weight_support_counterexample_count": 43,
+      "weight_support_positive_case_count": 44,
+      "weight_support_row_count": 413
+    },
+    {
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "case_label": "바이오 approval-to-revenue 후보/replay gap 예시",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "first_slice_role_gap_classes": [
+        "archive_or_candidate_funnel_missing"
+      ],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_failure": "연구 Green은 있지만 시험지가 current replay에 없다. 점수가 낮은 게 아니라 아직 채점 자체를 못 했다.",
+      "research_axis_signal_counts": {
+        "bio_commercialization": 15,
+        "guard_risk": 7
+      },
+      "research_clean_green_count": 16,
+      "research_raw_stage3_green_count": 30,
+      "runtime_best_row": null,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "runtime_zero_or_missing_bridge_fields": [],
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "information_confidence",
+        "earnings_visibility",
+        "eps_fcf_explosion"
+      ],
+      "weight_support_counterexample_count": 24,
+      "weight_support_positive_case_count": 27,
+      "weight_support_row_count": 269
+    },
+    {
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "case_label": "플랫폼 광고/레버리지 후보/replay gap과 field contract 후속 예시",
+      "code_owners": [
+        "src/e2r/backtest/asof_stage_promotion_autopsy.py",
+        "src/e2r/pipeline/korea_live_lite.py"
+      ],
+      "diagnosis": "research_green_fixture_not_archived_for_runtime_replay",
+      "first_slice_role_gap_classes": [
+        "archive_or_candidate_funnel_missing"
+      ],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "next_fix": "Green/guard fixture를 local official/search/report archive와 exact symbol+date replay 후보로 고정한다.",
+      "plain_failure": "연구 Green은 있지만 시험지가 current replay에 없다. 점수가 낮은 게 아니라 아직 채점 자체를 못 했다.",
+      "research_axis_signal_counts": {
+        "customer": 1,
+        "margin": 4,
+        "software_retention": 3
+      },
+      "research_clean_green_count": 11,
+      "research_raw_stage3_green_count": 19,
+      "runtime_best_row": null,
+      "runtime_candidate_count": 0,
+      "runtime_gap_status": "not_in_current_benchmark",
+      "runtime_max_score": null,
+      "runtime_zero_or_missing_bridge_fields": [],
+      "stop_layer": "candidate_replay_archive",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "market_mispricing"
+      ],
+      "weight_support_counterexample_count": 65,
+      "weight_support_positive_case_count": 35,
+      "weight_support_row_count": 334
+    },
+    {
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "case_label": "전 아키타입 공통 점검 대상",
+      "code_owners": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "diagnosis": "weighted_stage3_gate_blocks_after_fields_present",
+      "first_slice_role_gap_classes": [
+        "archive_or_candidate_funnel_missing"
+      ],
+      "missing_required_bridge_axes": [],
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_failure": "source-backed field가 일부 들어왔지만 weighted Stage3-Green 총점/과락 gate에서 막힌다.",
+      "research_axis_signal_counts": {
+        "consumer_sell_through": 21,
+        "customer": 17,
+        "margin": 15
+      },
+      "research_clean_green_count": 22,
+      "research_raw_stage3_green_count": 33,
+      "runtime_best_row": {
+        "archetype_component_bottleneck_pricing": null,
+        "archetype_component_earnings_visibility": null,
+        "archetype_component_eps_fcf_explosion": null,
+        "archetype_component_information_confidence": null,
+        "archetype_component_market_mispricing": null,
+        "archetype_component_valuation_rerating": null,
+        "backlog_rpo_visibility": null,
+        "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+        "capa_constraint": null,
+        "contract_quality": null,
+        "current_score": "64.161",
+        "current_stage": "1",
+        "green_gate_deficit_summary": "total:64.16/87.00(-22.84); domain_evidence:14.29/35.00(-20.71); yellow_total:64.16/75.00(-10.84); sector_bottleneck:25.50/35.00(-9.50); bottleneck:2.89/9.00(-6.11); visibility:15.06/17.25(-2.19); valuation:7.57/8.67(-1.10); mispricing:10.60/10.67(-0.07)",
+        "research_axis_bridge_backlog": "0.0",
+        "research_axis_bridge_contract": "0.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_valuation_repricing": "100.0",
+        "revision_score": null,
+        "sector_profile": "GENERIC"
+      },
+      "runtime_candidate_count": 22,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 64.161,
+      "runtime_zero_or_missing_bridge_fields": [
+        "research_axis_bridge_backlog",
+        "research_axis_bridge_contract"
+      ],
+      "stop_layer": "stage_gate",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "market_mispricing"
+      ],
+      "weight_support_counterexample_count": 45,
+      "weight_support_positive_case_count": 42,
+      "weight_support_row_count": 358
+    },
+    {
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "case_label": "field가 일부 있어도 weighted gate가 막는 예시",
+      "code_owners": [
+        "src/e2r/scoring.py::_apply_archetype_runtime_weights",
+        "src/e2r/staging.py::StageClassifier._is_stage_3_green",
+        "src/e2r/stage_gate_diagnostics.py::diagnose_stage_gates"
+      ],
+      "diagnosis": "weighted_stage3_gate_blocks_after_fields_present",
+      "first_slice_role_gap_classes": [
+        "archive_or_candidate_funnel_missing",
+        "exact_candidate_reached_but_readiness_inputs_missing"
+      ],
+      "missing_required_bridge_axes": [],
+      "next_fix": "source-backed field가 들어온 뒤에도 Green이 막히는지 weighted gate threshold와 component balance를 검증한다.",
+      "plain_failure": "source-backed field가 일부 들어왔지만 weighted Stage3-Green 총점/과락 gate에서 막힌다.",
+      "research_axis_signal_counts": {
+        "backlog": 2,
+        "contract": 3,
+        "customer": 2,
+        "margin": 3
+      },
+      "research_clean_green_count": 3,
+      "research_raw_stage3_green_count": 5,
+      "runtime_best_row": {
+        "archetype_component_bottleneck_pricing": null,
+        "archetype_component_earnings_visibility": null,
+        "archetype_component_eps_fcf_explosion": null,
+        "archetype_component_information_confidence": null,
+        "archetype_component_market_mispricing": null,
+        "archetype_component_valuation_rerating": null,
+        "backlog_rpo_visibility": null,
+        "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+        "capa_constraint": null,
+        "contract_quality": null,
+        "current_score": "72.9252",
+        "current_stage": "2",
+        "green_gate_deficit_summary": "total:72.93/87.00(-14.07); bottleneck:9.90/15.00(-5.09); contract:41.50/45.00(-3.50); yellow_total:72.93/75.00(-2.07)",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_valuation_repricing": "100.0",
+        "revision_score": null,
+        "sector_profile": "POWER_EQUIPMENT"
+      },
+      "runtime_candidate_count": 44,
+      "runtime_gap_status": "runtime_stage3_gate_blocked",
+      "runtime_max_score": 72.9252,
+      "runtime_zero_or_missing_bridge_fields": [],
+      "stop_layer": "stage_gate",
+      "top_weight_axes": [
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "bottleneck_pricing"
+      ],
+      "weight_support_counterexample_count": 58,
+      "weight_support_positive_case_count": 50,
+      "weight_support_row_count": 277
+    }
+  ],
+  "hbm_symbol_rows": [
+    {
+      "causal_chain": [
+        "누적 연구 row와 positive/Green-worthy 사례는 존재한다.",
+        "아키타입 weight layer에는 이미 반영됐지만, weight는 배점표일 뿐 runtime field를 채우지 않는다.",
+        "runtime best row에서 source-backed bridge field가 0이면 score/stage gate는 해당 증거를 없는 것으로 본다.",
+        "따라서 해결은 이름 보너스가 아니라 research signal -> parser field -> feature field -> gate axis 연결이다."
+      ],
+      "company_label": "SK하이닉스",
+      "gap_signals": [],
+      "plain_answer": "하닉은 EPS/revision이 깎인 것이 아니다. runtime best row가 revision, margin, customer/backlog/contract를 강하게 잡은 뒤에도 Green gate가 `total:80.01/87.00(-6.99); bottleneck:12.18/14.25(-2.07)`에서 막힌다.",
+      "positive_signal_counts": {
+        "capacity_lock": 45,
+        "direct_hbm": 55,
+        "lag_or_guard": 8,
+        "margin_or_mix": 25,
+        "named_customer": 52,
+        "order_or_contract": 32,
+        "revision_or_fcf": 18
+      },
+      "research_hbm_row_count": 159,
+      "research_positive_or_green_worthy_count": 59,
+      "research_raw_stage3_green_count": 8,
+      "runtime_best_row": {
+        "archetype_component_bottleneck_pricing": "12.1827",
+        "archetype_component_earnings_visibility": "17.724",
+        "archetype_component_eps_fcf_explosion": "24.0",
+        "archetype_component_information_confidence": "3.0",
+        "archetype_component_market_mispricing": "13.041",
+        "archetype_component_valuation_rerating": "9.9846",
+        "backlog_rpo_visibility": "55.0",
+        "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "capa_constraint": "15.0",
+        "contract_quality": "0.0",
+        "current_score": "80.0131",
+        "current_stage": "3-Yellow",
+        "green_gate_deficit_summary": "total:80.01/87.00(-6.99); bottleneck:12.18/14.25(-2.07)",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "100.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_valuation_repricing": "100.0",
+        "revision_score": "100.0",
+        "sector_profile": "MEMORY_HBM"
+      },
+      "runtime_zero_or_missing_bridge_fields": [
+        "contract_quality"
+      ],
+      "symbol": "000660"
+    },
+    {
+      "causal_chain": [
+        "누적 연구 row와 positive/Green-worthy 사례는 존재한다.",
+        "아키타입 weight layer에는 이미 반영됐지만, weight는 배점표일 뿐 runtime field를 채우지 않는다.",
+        "runtime best row에서 source-backed bridge field가 0이면 score/stage gate는 해당 증거를 없는 것으로 본다.",
+        "따라서 해결은 이름 보너스가 아니라 research signal -> parser field -> feature field -> gate axis 연결이다."
+      ],
+      "company_label": "삼성전자",
+      "gap_signals": [],
+      "plain_answer": "삼성은 누적 HBM 장부에서도 direct C06 Green보다 qualification lag/catch-up 성격이 강하다. runtime은 C10 memory recovery route로 남고 customer/backlog/contract가 0이라 Stage 2와 `total:72.12/87.00(-14.88); yellow_total:72.12/75.00(-2.88); bottleneck:8.16/10.50(-2.33); visibility:13.17/13.50(-0.33)`에 머문다.",
+      "positive_signal_counts": {
+        "capacity_lock": 3,
+        "direct_hbm": 3,
+        "margin_or_mix": 1,
+        "named_customer": 2,
+        "order_or_contract": 1
+      },
+      "research_hbm_row_count": 75,
+      "research_positive_or_green_worthy_count": 3,
+      "research_raw_stage3_green_count": 0,
+      "runtime_best_row": {
+        "archetype_component_bottleneck_pricing": "8.165",
+        "archetype_component_earnings_visibility": "13.1685",
+        "archetype_component_eps_fcf_explosion": "22.0",
+        "archetype_component_information_confidence": "11.4",
+        "archetype_component_market_mispricing": "9.4296",
+        "archetype_component_valuation_rerating": "7.8935",
+        "backlog_rpo_visibility": "40.0",
+        "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+        "capa_constraint": "15.0",
+        "contract_quality": "0.0",
+        "current_score": "72.1181",
+        "current_stage": "2",
+        "green_gate_deficit_summary": "total:72.12/87.00(-14.88); yellow_total:72.12/75.00(-2.88); bottleneck:8.16/10.50(-2.33); visibility:13.17/13.50(-0.33)",
+        "research_axis_bridge_backlog": "100.0",
+        "research_axis_bridge_contract": "0.0",
+        "research_axis_bridge_customer": "100.0",
+        "research_axis_bridge_margin": "100.0",
+        "research_axis_bridge_valuation_repricing": "100.0",
+        "revision_score": "80.0",
+        "sector_profile": "MEMORY_HBM"
+      },
+      "runtime_zero_or_missing_bridge_fields": [
+        "research_axis_bridge_contract",
+        "contract_quality"
+      ],
+      "symbol": "005930"
+    }
+  ],
+  "schema_version": "v12_score_loss_causal_chain_v1",
+  "summary": {
+    "archetype_weight_count": 36,
+    "first_slice_input_gap_counts": {
+      "archive_or_candidate_funnel_missing": 13,
+      "exact_candidate_reached_but_readiness_inputs_missing": 1,
+      "exact_candidate_reached_but_research_snapshot_missing": 1,
+      "runtime_symbol_reached_but_schedule_date_mismatch": 1,
+      "selected_manual_row_without_fixture_spec": 3
+    },
+    "hbm_generalization_guard": "삼전/하닉은 대표 테스트 케이스다. HBM만 통과시키는 패치는 실패이며, 비-HBM focus rows도 같은 chain에서 통과해야 한다.",
+    "plain_answer": "점수표가 누적 연구를 잊은 것이 아니다. 누적 연구는 weight layer까지 들어갔지만, current pipeline은 candidate/archive, parser-feature bridge, stage gate 중 하나에서 멈춘다.",
+    "research_counterexamples": 2628,
+    "research_positive_cases": 1495,
+    "research_support_rows": 12471,
+    "runtime_gap_status_counts": {
+      "fixture_not_ready": 3,
+      "not_in_current_benchmark": 24,
+      "runtime_input_evidence_missing": 2,
+      "runtime_stage3_gate_blocked": 4
+    },
+    "stop_layer_counts": {
+      "candidate_replay_archive": 29,
+      "manual_review": 3,
+      "stage_gate": 4
+    }
+  }
+}

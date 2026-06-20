@@ -9,6 +9,7 @@ from datetime import date, datetime
 from enum import Enum
 from typing import Any, Mapping, Sequence
 
+from e2r.diagnostic_values import diagnostic_value
 from e2r.models import ScoreSnapshot
 
 
@@ -1096,12 +1097,7 @@ def _route_num(value: object) -> float:
 
 
 def _diagnostic_value(value: object) -> float:
-    if isinstance(value, bool):
-        return 100.0 if value else 0.0
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return 0.0
+    return diagnostic_value(value)
 
 
 __all__ = [

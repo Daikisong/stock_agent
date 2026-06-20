@@ -3,7 +3,7 @@
 v12 stage transition은 rolling calibration의 근거 장부입니다. Stage2->4B 단순수익률과 4B peak capture를 구분합니다.
 case_fixture나 historical research 성공은 live discovery 증명이 아니며, safe patch만 scope 제한으로 반영합니다.
 
-- stage_transition_summary_rows: `248`
+- stage_transition_summary_rows: `242`
 
 | case_id | symbol | archetype | Stage2 entry | Green entry | 4B entry | peak return from Stage2 | 4B peak capture | verdict |
 |---|---|---|---:|---:|---:|---:|---:|---|
@@ -120,12 +120,6 @@ case_fixture나 historical research 성공은 live discovery 증명이 아니며
 | C12_L153_365340_SUNGIL_20240308_FACTORY_SUPPLY_APPROVAL | 365340 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 92500.0 | None | None | 3.24 | None | stage2_actionable_best_entry |
 | C12_NANOMATERIALS_121600_2024_02_21_CNT_CUSTOMER_RAMP_STAGE2_FALSE_POSITIVE | 121600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 134000.0 | None | None | 17.76 | None | stage2_captured_most_upside |
 | C12_NANO_121600_2024_03_06_CNT_CUSTOMER_CONTRACT_CALL_OFF_4B_TO_4C | 121600 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | 4c_too_late |
-| C12_R3L100_003670_POSCOFM_20230131 | 003670 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
-| C12_R3L100_083930_AVACO_20230915 | 083930 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 18140.0 | None | None | 16.3175 | None | stage2_actionable_best_entry |
-| C12_R3L100_217820_WONIKPNE_20231024 | 217820 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 7060.0 | None | None | 8.4986 | None | stage2_actionable_best_entry |
-| C12_R3L100_282880_COWINTECH_20231031 | 282880 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 29200.0 | None | None | 13.3562 | None | stage2_actionable_best_entry |
-| C12_R3L100_290670_DAEBOMAG_20230519 | 290670 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | 61000.0 | None | None | no_valid_stage_transition |
-| C12_R3L100_382480_GITECH_20231122 | 382480 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 3200.0 | None | None | 14.2187 | None | stage2_actionable_best_entry |
 | C12_R3L101_001530_ALUMINIUM_FOIL_CAPACITY_CONVERSION_POSITIVE_20230518 | 001530 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C12_R3L101_002710_BATTERY_CAN_MATERIAL_CUSTOMER_CONVERSION_POSITIVE_20230310 | 002710 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | None | None | None | None | None | no_valid_stage_transition |
 | C12_R3L101_014820_CAPACITY_FINANCING_WITHOUT_NAMED_SHIPMENT_COUNTEREXAMPLE_20230502 | 014820 | C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK | 43400.0 | None | None | 3.34 | None | stage2_actionable_best_entry |

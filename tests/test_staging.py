@@ -198,6 +198,87 @@ class StageClassifierTests(unittest.TestCase):
 
         self.assertEqual(snapshot.stage, Stage.STAGE_3_GREEN)
 
+    def test_date_unverified_only_evidence_blocks_green_even_outside_emerging_theme(self):
+        score = make_score(
+            diagnostic_scores={"revision_score": 82.0, "report_date_confidence": 0.0},
+            eps_fcf_explosion=20,
+            earnings_visibility=18,
+            bottleneck_pricing=18,
+            market_mispricing=13,
+            valuation_rerating=12,
+            capital_allocation=4,
+            information_confidence=4,
+        )
+
+        snapshot = StageClassifier().classify(StageClassificationInput(score=score))
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_3_YELLOW)
+
+    def test_date_unverified_document_blocks_green_even_with_verified_report_confidence(self):
+        score = make_score(
+            diagnostic_scores={
+                "revision_score": 82.0,
+                "report_date_confidence": 100.0,
+                "date_unverified_document_count_capped": 1.0,
+            },
+            eps_fcf_explosion=20,
+            earnings_visibility=18,
+            bottleneck_pricing=18,
+            market_mispricing=13,
+            valuation_rerating=12,
+            capital_allocation=4,
+            information_confidence=4,
+        )
+
+        snapshot = StageClassifier().classify(StageClassificationInput(score=score))
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_3_YELLOW)
+
+    def test_emerging_theme_date_unverified_snippet_blocks_green_after_unlock(self):
+        score = make_score(
+            diagnostic_scores={
+                "revision_score": 82.0,
+                "emerging_theme_active": 100.0,
+                "llm_deep_research_completed": 100.0,
+                "green_unlock_evidence_score": 80.0,
+                "date_unverified_snippet_news_count_capped": 1.0,
+                "report_date_confidence": 100.0,
+            },
+            eps_fcf_explosion=20,
+            earnings_visibility=18,
+            bottleneck_pricing=18,
+            market_mispricing=13,
+            valuation_rerating=12,
+            capital_allocation=4,
+            information_confidence=4,
+        )
+
+        snapshot = StageClassifier().classify(StageClassificationInput(score=score))
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_3_YELLOW)
+
+    def test_malformed_explicit_diagnostic_blocks_green_without_crashing(self):
+        score = make_score(
+            diagnostic_scores={
+                "revision_score": 82.0,
+                "report_date_confidence": 100.0,
+            },
+            eps_fcf_explosion=20,
+            earnings_visibility=18,
+            bottleneck_pricing=18,
+            market_mispricing=13,
+            valuation_rerating=12,
+            capital_allocation=4,
+            information_confidence=4,
+        )
+        diagnostics = dict(score.diagnostic_scores)
+        diagnostics["report_date_confidence"] = "unknown"
+        object.__setattr__(score, "diagnostic_scores", diagnostics)
+
+        snapshot = StageClassifier().classify(StageClassificationInput(score=score))
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_3_YELLOW)
+
     def test_stage_3_yellow_when_score_is_high_but_green_is_incomplete(self):
         score = make_score(
             eps_fcf_explosion=20,
@@ -223,6 +304,26 @@ class StageClassifierTests(unittest.TestCase):
             valuation_rerating=12,
             capital_allocation=4,
             information_confidence=4,
+        )
+
+        snapshot = StageClassifier().classify(StageClassificationInput(score=score))
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_3_YELLOW)
+
+    def test_stage_3_green_is_blocked_by_archetype_green_restriction(self):
+        score = make_score(
+            diagnostic_scores={
+                "revision_score": 90.0,
+                "structural_visibility_quality": 90.0,
+                "archetype_green_restricted_by_profile": 1.0,
+            },
+            eps_fcf_explosion=20,
+            earnings_visibility=20,
+            bottleneck_pricing=20,
+            market_mispricing=15,
+            valuation_rerating=15,
+            capital_allocation=5,
+            information_confidence=5,
         )
 
         snapshot = StageClassifier().classify(StageClassificationInput(score=score))

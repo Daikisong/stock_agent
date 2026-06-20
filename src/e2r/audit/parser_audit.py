@@ -147,6 +147,8 @@ def _audit_contract_score_inputs(score: ScoreSnapshot, evidence: Sequence[Eviden
     has_duration = any(_has_field(item.parsed_fields, "contract_duration_months", "lta_duration_months") for item in evidence)
     if has_amount and has_duration:
         return ()
+    if _has_source_backed_contract_proxy(score, evidence):
+        return ()
     severity = "hard" if contract_score >= 45.0 else "warning"
     action = "block_green" if severity == "hard" else "manual_review"
     missing = "amount and duration"
@@ -166,6 +168,42 @@ def _audit_contract_score_inputs(score: ScoreSnapshot, evidence: Sequence[Eviden
             observed_value=contract_score,
         ),
     )
+
+
+def _has_source_backed_contract_proxy(score: ScoreSnapshot, evidence: Sequence[Evidence]) -> bool:
+    bridge_raw = _num(score.diagnostic_scores.get("source_backed_green_bridge_raw")) or 0.0
+    guard_risk = _num(score.diagnostic_scores.get("research_axis_bridge_guard_risk")) or 0.0
+    contract_required = _num(score.diagnostic_scores.get("contract_required_for_green")) or 0.0
+    if bridge_raw >= 80.0 and guard_risk <= 0.0 and contract_required <= 0.0:
+        return True
+    for item in evidence:
+        fields = item.parsed_fields
+        has_customer_or_capacity = any(
+            _has_field(fields, key)
+            for key in (
+                "customer_preorder_or_allocation",
+                "capacity_precommitted",
+                "booked_out_capacity",
+                "order_slot_locked",
+                "revenue_visibility_contract",
+                "customer_contract_visible",
+                "named_customer_quality",
+            )
+        )
+        has_delivery_or_backlog = any(
+            _has_field(fields, key)
+            for key in (
+                "delivery_schedule",
+                "order_to_revenue_bridge",
+                "revenue_recognition_path",
+                "record_backlog",
+                "backlog_visibility",
+                "order_backlog_to_sales",
+            )
+        )
+        if has_customer_or_capacity and has_delivery_or_backlog:
+            return True
+    return False
 
 
 def _audit_stage_confidence(

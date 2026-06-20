@@ -1,0 +1,537 @@
+{
+  "rows": [
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c21_financial_roe_pbr_capital_return_green_guard_pair_has_exact_asof_inputs",
+        "test_c21_financial_roe_pbr_capital_return_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c21_financial_roe_pbr_capital_return_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "priority_score": 83.8,
+      "repair_sequence": [
+        "Archive exact as-of official universe, price history, report text snapshot, and search snapshot.",
+        "Make the Green/guard symbols reach current replay by exact symbol+as_of_date.",
+        "Run Green/guard replay; Green must reach Stage3-Green or emit field deficit, guard must not promote."
+      ],
+      "replay_fixture_candidates": [
+        {
+          "as_of_date": "2025-05-26",
+          "case_id": "R13L22_C21_KBFG_105560_2025_CAPITAL_RETURN_CONFIRMED",
+          "current_missing_required_bridge_axes": [
+            "capital_return",
+            "valuation_repricing",
+            "guard_risk"
+          ],
+          "current_runtime_gap_status": "not_in_current_benchmark",
+          "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+          "role": "green",
+          "symbol": "105560",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2024-02-26",
+          "case_id": "R6L60_C21_KAKAOBANK_2024_POLICYONLY_COUNTEREXAMPLE",
+          "current_missing_required_bridge_axes": [
+            "capital_return",
+            "valuation_repricing",
+            "guard_risk"
+          ],
+          "current_runtime_gap_status": "not_in_current_benchmark",
+          "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+          "role": "guard",
+          "symbol": "323410",
+          "trigger_type": "Stage2-PolicyOnly"
+        }
+      ],
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "selection_reason": "candidate/funnel top priority and non-HBM financial capital-return example"
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_r13_cross_archetype_4b_4c_redteam_green_guard_pair_has_exact_asof_inputs",
+        "test_r13_cross_archetype_4b_4c_redteam_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_r13_cross_archetype_4b_4c_redteam_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "guard_risk"
+      ],
+      "priority_score": 67.8,
+      "repair_sequence": [
+        "Archive exact as-of official universe, price history, report text snapshot, and search snapshot.",
+        "Make the Green/guard symbols reach current replay by exact symbol+as_of_date.",
+        "Run Green/guard replay; Green must reach Stage3-Green or emit field deficit, guard must not promote."
+      ],
+      "replay_fixture_candidates": [
+        {
+          "as_of_date": "2024-08-20",
+          "case_id": "R13L11_XCASE__R7L11_C23_000100_YUHAN_LAZCLUZE_APPROVAL_COMMERCIALIZATION_20240820",
+          "current_missing_required_bridge_axes": [
+            "guard_risk"
+          ],
+          "current_runtime_gap_status": "not_in_current_benchmark",
+          "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+          "role": "green",
+          "symbol": "000100",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2024-03-08",
+          "case_id": "R13L11_XCASE__R2L11_C08_095340_ISC_SOCKET_BLOWOFF",
+          "current_missing_required_bridge_axes": [
+            "guard_risk"
+          ],
+          "current_runtime_gap_status": "not_in_current_benchmark",
+          "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+          "role": "guard",
+          "symbol": "095340",
+          "trigger_type": "Stage3-Green"
+        }
+      ],
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "selection_reason": "top 3 priority row for 01_fixture_archive_and_candidate_funnel"
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c23_bio_regulatory_approval_commercialization_green_guard_pair_has_exact_asof_inputs",
+        "test_c23_bio_regulatory_approval_commercialization_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c23_bio_regulatory_approval_commercialization_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "priority_score": 65.0,
+      "repair_sequence": [
+        "Archive exact as-of official universe, price history, report text snapshot, and search snapshot.",
+        "Make the Green/guard symbols reach current replay by exact symbol+as_of_date.",
+        "Run Green/guard replay; Green must reach Stage3-Green or emit field deficit, guard must not promote."
+      ],
+      "replay_fixture_candidates": [
+        {
+          "as_of_date": "2024-09-24",
+          "case_id": "R7L10_C23_YUHAN_LAZCLUZE_FDA_20240821",
+          "current_missing_required_bridge_axes": [
+            "bio_commercialization",
+            "guard_risk"
+          ],
+          "current_runtime_gap_status": "not_in_current_benchmark",
+          "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+          "role": "green",
+          "symbol": "000100",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2024-04-30",
+          "case_id": "R7L10_C23_HLB_PRE_PDUFA_FALSE_GREEN_20240430",
+          "current_missing_required_bridge_axes": [
+            "bio_commercialization",
+            "guard_risk"
+          ],
+          "current_runtime_gap_status": "not_in_current_benchmark",
+          "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+          "role": "guard",
+          "symbol": "028300",
+          "trigger_type": "Stage3-Green"
+        }
+      ],
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "selection_reason": "non-HBM bio commercialization candidate/funnel example"
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c26_platform_ad_revenue_operating_leverage_green_guard_pair_has_exact_asof_inputs",
+        "test_c26_platform_ad_revenue_operating_leverage_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c26_platform_ad_revenue_operating_leverage_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "priority_score": 54.6,
+      "repair_sequence": [
+        "Archive exact as-of official universe, price history, report text snapshot, and search snapshot.",
+        "Make the Green/guard symbols reach current replay by exact symbol+as_of_date.",
+        "Run Green/guard replay; Green must reach Stage3-Green or emit field deficit, guard must not promote."
+      ],
+      "replay_fixture_candidates": [
+        {
+          "as_of_date": "2021-07-27",
+          "case_id": "C26_SOOP_2021_CREATOR_PLATFORM_OPERATING_LEVERAGE",
+          "current_missing_required_bridge_axes": [
+            "software_retention",
+            "customer",
+            "margin"
+          ],
+          "current_runtime_gap_status": "not_in_current_benchmark",
+          "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+          "role": "green",
+          "symbol": "067160",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2021-06-24",
+          "case_id": "R8L15_C26_KAKAO_2021_REG_CAP",
+          "current_missing_required_bridge_axes": [
+            "software_retention",
+            "customer",
+            "margin"
+          ],
+          "current_runtime_gap_status": "not_in_current_benchmark",
+          "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+          "role": "guard",
+          "symbol": "035720",
+          "trigger_type": "Stage3-Green"
+        }
+      ],
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "selection_reason": "non-HBM platform example with candidate/funnel plus parser primitive gaps"
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c04_nuclear_policy_project_legal_delay_green_guard_pair_has_exact_asof_inputs",
+        "test_c04_nuclear_policy_project_legal_delay_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c04_nuclear_policy_project_legal_delay_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "priority_score": 7.0,
+      "repair_sequence": [
+        "Archive exact as-of official universe, price history, report text snapshot, and search snapshot.",
+        "Make the Green/guard symbols reach current replay by exact symbol+as_of_date.",
+        "Run Green/guard replay; Green must reach Stage3-Green or emit field deficit, guard must not promote."
+      ],
+      "replay_fixture_candidates": [],
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "selection_reason": "manual classification example for policy/project lane"
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c12_battery_customer_contract_call_off_risk_green_guard_pair_has_exact_asof_inputs",
+        "test_c12_battery_customer_contract_call_off_risk_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c12_battery_customer_contract_call_off_risk_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "priority_score": 7.0,
+      "repair_sequence": [
+        "Archive exact as-of official universe, price history, report text snapshot, and search snapshot.",
+        "Make the Green/guard symbols reach current replay by exact symbol+as_of_date.",
+        "Run Green/guard replay; Green must reach Stage3-Green or emit field deficit, guard must not promote."
+      ],
+      "replay_fixture_candidates": [],
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "selection_reason": "manual classification example for battery call-off lane"
+    },
+    {
+      "acceptance_status_current": "blocked_missing_exact_fixture_archive_or_candidate_funnel",
+      "acceptance_tests_to_add": [
+        "test_c16_strategic_resource_policy_supply_green_guard_pair_has_exact_asof_inputs",
+        "test_c16_strategic_resource_policy_supply_fixtures_reach_runtime_candidate_set_by_exact_symbol_date",
+        "test_c16_strategic_resource_policy_supply_guard_does_not_promote_when_green_candidate_is_unlocked"
+      ],
+      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "do_not_accept": "Green 연구 row를 production score 입력으로 바로 쓰지 않는다. point-in-time archive로 재현 가능해야 한다.",
+      "implementation_lane": "01_fixture_archive_and_candidate_funnel",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "priority_score": 7.0,
+      "repair_sequence": [
+        "Archive exact as-of official universe, price history, report text snapshot, and search snapshot.",
+        "Make the Green/guard symbols reach current replay by exact symbol+as_of_date.",
+        "Run Green/guard replay; Green must reach Stage3-Green or emit field deficit, guard must not promote."
+      ],
+      "replay_fixture_candidates": [],
+      "required_proof_artifacts": [
+        "local official universe row",
+        "370d as-of price history with a recent price anchor",
+        "point-in-time report/search snapshots",
+        "exact Green/guard replay output"
+      ],
+      "runtime_candidate_count": 0,
+      "runtime_max_score": null,
+      "selection_reason": "manual classification example for strategic-resource policy lane"
+    },
+    {
+      "acceptance_status_current": "blocked_weighted_gate_after_fields_present",
+      "acceptance_tests_to_add": [
+        "test_c20_beauty_food_global_distribution_weighted_gate_uses_archetype_components_after_fields_present",
+        "test_c20_beauty_food_global_distribution_positive_guard_pair_validates_threshold_or_balance_change"
+      ],
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "do_not_accept": "field가 비어 있는 상태에서 Green threshold를 낮추지 않는다. positive/guard pair가 준비된 뒤 조정한다.",
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "priority_score": 84.2,
+      "repair_sequence": [
+        "Prove source-backed required axes are nonzero before changing thresholds.",
+        "Compare archetype_component_* deficits with StageClassifier gate output.",
+        "Only then validate any threshold or component balance adjustment with Green/guard pair."
+      ],
+      "replay_fixture_candidates": [
+        {
+          "as_of_date": "2025-02-24",
+          "case_id": "C20-R5L135-02",
+          "current_missing_required_bridge_axes": [],
+          "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+          "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+          "role": "green",
+          "symbol": "192820",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2023-06-08",
+          "case_id": "C20_R5L25_439090",
+          "current_missing_required_bridge_axes": [],
+          "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+          "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+          "role": "guard",
+          "symbol": "439090",
+          "trigger_type": "IPO/theme trigger"
+        }
+      ],
+      "required_proof_artifacts": [
+        "ScoreSnapshot archetype_component_* values",
+        "StageClassifier gate diagnostics",
+        "positive/guard parity result"
+      ],
+      "runtime_candidate_count": 22,
+      "runtime_max_score": 64.161,
+      "selection_reason": "top parser-feature bridge priority outside HBM"
+    },
+    {
+      "acceptance_status_current": "blocked_weighted_gate_after_fields_present",
+      "acceptance_tests_to_add": [
+        "test_c06_hbm_memory_customer_capacity_weighted_gate_uses_archetype_components_after_fields_present",
+        "test_c06_hbm_memory_customer_capacity_positive_guard_pair_validates_threshold_or_balance_change"
+      ],
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "do_not_accept": "field가 비어 있는 상태에서 Green threshold를 낮추지 않는다. positive/guard pair가 준비된 뒤 조정한다.",
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "priority_score": 40.6,
+      "repair_sequence": [
+        "Prove source-backed required axes are nonzero before changing thresholds.",
+        "Compare archetype_component_* deficits with StageClassifier gate output.",
+        "Only then validate any threshold or component balance adjustment with Green/guard pair."
+      ],
+      "replay_fixture_candidates": [
+        {
+          "as_of_date": "2024-04-25",
+          "case_id": "C06_R2L108_000660_HBM3E_CUSTOMER_CAPACITY_SOLDOUT_20240425",
+          "current_missing_required_bridge_axes": [],
+          "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+          "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+          "role": "green",
+          "symbol": "000660",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2024-07-11",
+          "case_id": "C06_005930_SAMSUNG_20240711_HBM_QUALIFICATION_LAG_FALSE_GREEN",
+          "current_missing_required_bridge_axes": [],
+          "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+          "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+          "role": "guard",
+          "symbol": "005930",
+          "trigger_type": "Stage3-Yellow"
+        }
+      ],
+      "required_proof_artifacts": [
+        "ScoreSnapshot archetype_component_* values",
+        "StageClassifier gate diagnostics",
+        "positive/guard parity result"
+      ],
+      "runtime_candidate_count": 19,
+      "runtime_max_score": 80.0131,
+      "selection_reason": "SK Hynix HBM field-bridge example; must not become name-specific bonus"
+    },
+    {
+      "acceptance_status_current": "blocked_weighted_gate_after_fields_present",
+      "acceptance_tests_to_add": [
+        "test_c10_memory_recovery_equipment_cycle_weighted_gate_uses_archetype_components_after_fields_present",
+        "test_c10_memory_recovery_equipment_cycle_positive_guard_pair_validates_threshold_or_balance_change"
+      ],
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "do_not_accept": "field가 비어 있는 상태에서 Green threshold를 낮추지 않는다. positive/guard pair가 준비된 뒤 조정한다.",
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "priority_score": 36.6,
+      "repair_sequence": [
+        "Prove source-backed required axes are nonzero before changing thresholds.",
+        "Compare archetype_component_* deficits with StageClassifier gate output.",
+        "Only then validate any threshold or component balance adjustment with Green/guard pair."
+      ],
+      "replay_fixture_candidates": [
+        {
+          "as_of_date": "2024-01-02",
+          "case_id": "C10_L228_05_317330_ADVANCED_ELECTRONIC_MATERIALS_ROUTE_EARLY_RESET_WITH_STRONG_ASYMMETRY",
+          "current_missing_required_bridge_axes": [],
+          "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+          "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+          "role": "green",
+          "symbol": "317330",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2024-07-22",
+          "case_id": "C10_L232_08_089790",
+          "current_missing_required_bridge_axes": [],
+          "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+          "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+          "role": "guard",
+          "symbol": "089790",
+          "trigger_type": "Stage4B"
+        }
+      ],
+      "required_proof_artifacts": [
+        "ScoreSnapshot archetype_component_* values",
+        "StageClassifier gate diagnostics",
+        "positive/guard parity result"
+      ],
+      "runtime_candidate_count": 1,
+      "runtime_max_score": 72.1181,
+      "selection_reason": "Samsung memory-recovery route example; checks HBM-adjacent route guard"
+    },
+    {
+      "acceptance_status_current": "blocked_weighted_gate_after_fields_present",
+      "acceptance_tests_to_add": [
+        "test_c02_power_grid_datacenter_capex_weighted_gate_uses_archetype_components_after_fields_present",
+        "test_c02_power_grid_datacenter_capex_positive_guard_pair_validates_threshold_or_balance_change"
+      ],
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "do_not_accept": "field가 비어 있는 상태에서 Green threshold를 낮추지 않는다. positive/guard pair가 준비된 뒤 조정한다.",
+      "implementation_lane": "03_weighted_gate_validation_after_fields",
+      "missing_feature_parser_contract_primitives": [],
+      "missing_required_bridge_axes": [],
+      "priority_score": 35.0,
+      "repair_sequence": [
+        "Prove source-backed required axes are nonzero before changing thresholds.",
+        "Compare archetype_component_* deficits with StageClassifier gate output.",
+        "Only then validate any threshold or component balance adjustment with Green/guard pair."
+      ],
+      "replay_fixture_candidates": [
+        {
+          "as_of_date": "2024-02-16",
+          "case_id": "C02_R1L144_267260_C02_transformer_backlog_margin_bridge_clean_positive_20240216",
+          "current_missing_required_bridge_axes": [],
+          "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+          "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+          "role": "green",
+          "symbol": "267260",
+          "trigger_type": "Stage3-Green"
+        },
+        {
+          "as_of_date": "2024-05-14",
+          "case_id": "C02_006340_20240516_power_grid_theme_overhang_blowoff_counterexample",
+          "current_missing_required_bridge_axes": [],
+          "current_runtime_gap_status": "runtime_stage3_gate_blocked",
+          "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+          "role": "guard",
+          "symbol": "006340",
+          "trigger_type": "Stage4B"
+        }
+      ],
+      "required_proof_artifacts": [
+        "ScoreSnapshot archetype_component_* values",
+        "StageClassifier gate diagnostics",
+        "positive/guard parity result"
+      ],
+      "runtime_candidate_count": 44,
+      "runtime_max_score": 72.9252,
+      "selection_reason": "weighted gate example after runtime candidates and fields are partly present"
+    }
+  ],
+  "schema_version": "v12_runtime_first_repair_slice_v1",
+  "summary": {
+    "plain_conclusion": "첫 수리 slice는 C06/C10을 포함하지만, C21/C23/C26/C20/C02도 같이 묶어 HBM 보너스가 아닌 전 아키타입 runtime 수리로 검증해야 한다.",
+    "selected_acceptance_status_counts": {
+      "blocked_missing_exact_fixture_archive_or_candidate_funnel": 7,
+      "blocked_weighted_gate_after_fields_present": 4
+    },
+    "selected_archetype_count": 11,
+    "selected_hbm_or_samsung_related_count": 2,
+    "selected_lane_counts": {
+      "01_fixture_archive_and_candidate_funnel": 7,
+      "03_weighted_gate_validation_after_fields": 4
+    },
+    "selected_non_hbm_count": 9
+  }
+}

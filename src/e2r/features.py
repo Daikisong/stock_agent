@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import date, timedelta
+import math
 from typing import Any, Mapping, Protocol, Sequence
 
 from .archetype_classifier import classify_v12_archetype
@@ -31,7 +32,7 @@ from .models import (
 )
 from .red_team import RedTeamSignals
 from .scoring import DeterministicScorer, ScoringPayload
-from .sector_profiles import SectorProfile, infer_sector_profile, profile_id
+from .sector_profiles import SectorProfile, infer_sector_profile, profile_for_archetype, profile_id
 
 
 EVIDENCE_FAMILIES: tuple[str, ...] = (
@@ -71,6 +72,8 @@ def _require_text(value: str, field_name: str) -> None:
 
 
 def _clamp(value: float, low: float = 0.0, high: float = 100.0) -> float:
+    if not math.isfinite(float(value)):
+        return low
     return max(low, min(high, value))
 
 
@@ -84,9 +87,12 @@ def _to_float(value: Any) -> float | None:
     if isinstance(value, bool):
         return 1.0 if value else 0.0
     try:
-        return float(value)
+        number = float(value)
     except (TypeError, ValueError):
         return None
+    if not math.isfinite(number):
+        return None
+    return number
 
 
 def _to_bool(value: Any) -> bool:
@@ -130,8 +136,25 @@ def _green_allowed_by_date(fields: Mapping[str, Any]) -> bool:
 
 
 def _max_or_none(values: Sequence[float | None]) -> float | None:
-    clean = [value for value in values if value is not None]
+    clean = [value for value in values if value is not None and math.isfinite(float(value))]
     return max(clean) if clean else None
+
+
+def _is_non_finite_numeric_value(value: Any) -> bool:
+    if value in (None, "") or isinstance(value, bool):
+        return False
+    if isinstance(value, (int, float)):
+        return not math.isfinite(float(value))
+    if isinstance(value, str):
+        try:
+            return not math.isfinite(float(value.strip().replace(",", "")))
+        except ValueError:
+            return False
+    return False
+
+
+def _clean_parsed_field_mapping(mapping: Mapping[str, Any]) -> dict[str, Any]:
+    return {key: value for key, value in mapping.items() if not _is_non_finite_numeric_value(value)}
 
 
 def _score_ratio(value: float | None, full_at: float) -> float:
@@ -145,6 +168,13 @@ def _score_percent(value: float | None, full_at_pct: float) -> float:
     if value is None or full_at_pct <= 0:
         return 0.0
     return _clamp(value / full_at_pct * 100.0)
+
+
+def _score_bool_evidence_count(fields: "_ParsedFieldSource", keys: Sequence[str], full_at_count: float) -> float:
+    if full_at_count <= 0:
+        return 0.0
+    present_count = sum(1 for key in keys if fields.any_bool(key))
+    return _clamp(present_count / full_at_count * 100.0)
 
 
 def _growth_pct(forecast: float | None, actual: float | None) -> float | None:
@@ -161,6 +191,13 @@ def _safe_divide(numerator: float | None, denominator: float | None) -> float | 
     if numerator is None or denominator is None or denominator == 0:
         return None
     return numerator / denominator
+
+
+def _plausible_positive_ratio(numerator: float | None, denominator: float | None, *, max_ratio: float = 10.0) -> float | None:
+    ratio = _safe_divide(numerator, denominator)
+    if ratio is None or ratio <= 0.0 or ratio > max_ratio:
+        return None
+    return ratio
 
 
 @dataclass(frozen=True)
@@ -273,43 +310,18 @@ class DeterministicFeatureEngineer:
         evidence_ids = self._evidence_ids(inputs)
         field_source = _ParsedFieldSource(inputs)
         estimate_quality = build_estimate_quality_context(inputs)
-        sector_profile = infer_sector_profile(
+        inferred_sector_profile = infer_sector_profile(
             symbol=inputs.symbol,
             company_name=inputs.company_name,
             sector_custom=inputs.sector_context,
             text=field_source.text_blob(),
             parsed_fields=field_source.combined_fields(),
         )
-        sub_scores = self._industrial_sub_scores(field_source, evidence_ids)
-        sector_metrics = self._sector_metrics(inputs, field_source, sub_scores, sector_profile, estimate_quality)
-        components = self._components(inputs, field_source, sub_scores, sector_metrics, estimate_quality)
-        risk_penalty = self._risk_penalty(sub_scores, sector_metrics["structural_visibility_quality"], sector_profile)
         revision_score = self._revision_score(inputs, field_source, estimate_quality)
         price_stage_score = self._price_stage_score(inputs.price_bars)
-        fcf_quality = self._fcf_quality(inputs, field_source)
-        valuation_score = self._valuation_score(inputs, field_source, estimate_quality)
-        diagnostic_scores = {
-            "revision_score": revision_score,
-            "price_stage_score": price_stage_score,
-            "fcf_quality_score": _round(fcf_quality),
-            "valuation_score": _round(valuation_score),
-            "sector_profile_id": profile_id(sector_profile),
-            **{key: _round(value) for key, value in sector_metrics.items()},
-            **estimate_quality.diagnostic_scores,
-            **self._evidence_family_diagnostics(inputs),
-        }
-        if inputs.agent_extracted_fields:
-            diagnostic_scores["agent_extracted_field_count_capped"] = min(float(len(inputs.agent_extracted_fields)), 100.0)
-        if field_source.any_bool("emerging_theme_active", "theme_transition_detected"):
-            diagnostic_scores["emerging_theme_active"] = 100.0
-            diagnostic_scores["theme_transition_detected"] = 100.0
-        if price_stage_score >= 90.0 and revision_score < 50.0:
-            diagnostic_scores["theme_overheat_score"] = _round(min(100.0, price_stage_score))
-
-        red_team_signals = self._red_team_signals(inputs, field_source, sub_scores)
         classification = classify_v12_archetype(
             symbol=inputs.symbol,
-            sector_profile=sector_profile,
+            sector_profile=inferred_sector_profile,
             parsed_fields=field_source.combined_fields(),
             text=field_source.text_blob(),
             company_name=inputs.company_name,
@@ -319,6 +331,51 @@ class DeterministicFeatureEngineer:
             price_stage_score=price_stage_score,
             revision_score=revision_score,
         )
+        sector_profile = self._resolve_sector_profile_for_archetype(
+            inferred_sector_profile,
+            classification.canonical_archetype_id,
+            explicit_canonical=inputs.canonical_archetype_id is not None,
+        )
+        sub_scores = self._industrial_sub_scores(field_source, evidence_ids)
+        sector_metrics = self._sector_metrics(inputs, field_source, sub_scores, sector_profile, estimate_quality)
+        bottleneck_diagnostics = self._bottleneck_diagnostics(field_source, sub_scores, sector_metrics)
+        bridge_diagnostics = self._research_axis_bridge_diagnostics(field_source)
+        components = self._components(inputs, field_source, sub_scores, sector_metrics, estimate_quality)
+        risk_penalty = self._risk_penalty(field_source, sub_scores, sector_metrics["structural_visibility_quality"], sector_profile)
+        fcf_quality = self._fcf_quality(inputs, field_source)
+        valuation_score = self._valuation_score(inputs, field_source, estimate_quality)
+        diagnostic_scores = {
+            "revision_score": revision_score,
+            "price_stage_score": price_stage_score,
+            "fcf_quality_score": _round(fcf_quality),
+            "valuation_score": _round(valuation_score),
+            "sector_profile_id": profile_id(sector_profile),
+            "inferred_sector_profile_id": profile_id(inferred_sector_profile),
+            **{key: _round(value) for key, value in bottleneck_diagnostics.items() if isinstance(value, (int, float))},
+            **bridge_diagnostics,
+            "research_axis_bridge_guard_risk_penalty_points": _round(
+                self._research_axis_guard_risk_penalty(field_source)
+            ),
+            **{key: _round(value) for key, value in sector_metrics.items()},
+            **estimate_quality.diagnostic_scores,
+            **self._evidence_family_diagnostics(inputs),
+        }
+        if inputs.agent_extracted_fields:
+            diagnostic_scores["agent_extracted_field_count_capped"] = min(float(len(inputs.agent_extracted_fields)), 100.0)
+        if field_source.any_bool("emerging_theme_active", "theme_transition_detected"):
+            diagnostic_scores["emerging_theme_active"] = 100.0
+            diagnostic_scores["theme_transition_detected"] = 100.0
+        if field_source.any_bool("price_only_blowoff"):
+            diagnostic_scores["price_only_blowoff_score"] = 100.0
+        if field_source.any_bool("theme_hype_without_revenue", "ai_theme_hype_without_revenue", "missing_cashflow_bridge"):
+            diagnostic_scores["theme_hype_without_revenue"] = 100.0
+        if price_stage_score >= 90.0 and revision_score < 50.0:
+            diagnostic_scores["theme_overheat_score"] = _round(min(100.0, price_stage_score))
+        if field_source.any_bool("valuation_overheat", "token_or_theme_hype_risk"):
+            diagnostic_scores["theme_overheat_score"] = max(diagnostic_scores.get("theme_overheat_score", 0.0), 100.0)
+        self._apply_source_backed_bridge_metric_lifts(diagnostic_scores)
+
+        red_team_signals = self._red_team_signals(inputs, field_source, sub_scores)
         diagnostic_scores["archetype_classifier_confidence"] = _round(classification.confidence * 100.0)
         payload = ScoringPayload(
             symbol=inputs.symbol,
@@ -339,12 +396,24 @@ class DeterministicFeatureEngineer:
             "fcf_quality_score": _round(fcf_quality),
             "valuation_score": _round(valuation_score),
             "sector_profile": sector_profile.value,
+            "inferred_sector_profile": inferred_sector_profile.value,
+            "sector_profile_resolution": self._sector_profile_resolution_reason(
+                inferred_sector_profile,
+                sector_profile,
+                explicit_canonical=inputs.canonical_archetype_id is not None,
+            ),
             "large_sector_id": classification.large_sector_id,
             "canonical_archetype_id": classification.canonical_archetype_id,
             "archetype_classification_reason": classification.reason,
+            **bottleneck_diagnostics,
+            **bridge_diagnostics,
+            "research_axis_bridge_guard_risk_penalty_points": _round(
+                self._research_axis_guard_risk_penalty(field_source)
+            ),
             **estimate_quality.source_fields,
             **{key: _round(value) for key, value in sector_metrics.items()},
         }
+        self._apply_source_backed_bridge_metric_lifts(source_fields)
         return FeatureEngineeringResult(
             payload=payload,
             industrial_sub_scores=sub_scores,
@@ -352,6 +421,45 @@ class DeterministicFeatureEngineer:
             red_team_signals=red_team_signals,
             source_fields=source_fields,
         )
+
+    @staticmethod
+    def _apply_source_backed_bridge_metric_lifts(fields: dict[str, Any]) -> None:
+        green_bridge_raw = _to_float(fields.get("source_backed_green_bridge_raw")) or 0.0
+        if green_bridge_raw <= 0.0:
+            return
+        bridge_floor = _round(_clamp(green_bridge_raw))
+        for key in ("structural_visibility_quality", "sector_visibility_score", "sector_bottleneck_score"):
+            current = _to_float(fields.get(key)) or 0.0
+            fields[key] = _round(max(current, bridge_floor))
+
+    @staticmethod
+    def _resolve_sector_profile_for_archetype(
+        inferred_profile: SectorProfile,
+        canonical_archetype_id: str,
+        *,
+        explicit_canonical: bool,
+    ) -> SectorProfile:
+        archetype_profile = profile_for_archetype(canonical_archetype_id)
+        if archetype_profile is None:
+            return inferred_profile
+        if explicit_canonical:
+            return archetype_profile
+        if inferred_profile == SectorProfile.GENERIC:
+            return archetype_profile
+        return inferred_profile
+
+    @staticmethod
+    def _sector_profile_resolution_reason(
+        inferred_profile: SectorProfile,
+        resolved_profile: SectorProfile,
+        *,
+        explicit_canonical: bool,
+    ) -> str:
+        if inferred_profile == resolved_profile:
+            return "inferred_profile_used"
+        if explicit_canonical:
+            return "explicit_canonical_profile_override"
+        return "canonical_profile_filled_generic_inference"
 
     def _components(
         self,
@@ -384,6 +492,9 @@ class DeterministicFeatureEngineer:
                 + fcf_quality * 0.20
                 + sub_scores.backlog_rpo_visibility * 0.10,
             )
+        green_bridge_raw = self._source_backed_green_bridge_raw(fields, sub_scores, sector_metrics)
+        if green_bridge_raw > 0.0:
+            visibility_raw = max(visibility_raw, green_bridge_raw)
         earnings_visibility = visibility_raw / 100.0 * 20.0 - sub_scores.one_off_shortage_risk / 100.0 * 3.0
         industrial_bottleneck_raw = (
             sub_scores.capa_constraint * 0.35
@@ -404,6 +515,12 @@ class DeterministicFeatureEngineer:
                 + sub_scores.structural_shortage * 0.25
                 + sub_scores.asp_pricing_power * 0.15,
             )
+            bottleneck_raw = max(
+                bottleneck_raw,
+                self._validated_conversion_bottleneck_raw(fields, sub_scores, sector_metrics),
+            )
+        if green_bridge_raw > 0.0:
+            bottleneck_raw = max(bottleneck_raw, green_bridge_raw)
         bottleneck_pricing = bottleneck_raw / 100.0 * 20.0 - sub_scores.one_off_shortage_risk / 100.0 * 4.0
         revision_score = self._revision_score(inputs, fields, estimate_quality)
         valuation_score = self._valuation_score(inputs, fields, estimate_quality)
@@ -424,6 +541,18 @@ class DeterministicFeatureEngineer:
                 / 100.0
                 * 15.0,
             )
+        if green_bridge_raw > 0.0:
+            market_mispricing = max(
+                market_mispricing,
+                (
+                    valuation_score * 0.30
+                    + revision_score * 0.25
+                    + green_bridge_raw * 0.30
+                    + actual_conversion * 0.15
+                )
+                / 100.0
+                * 15.0,
+            )
         if price_stage_score >= 90.0 and revision_score < 50.0:
             market_mispricing -= 3.0
         valuation_rerating = (valuation_score * 0.65 + revision_score * 0.20 + sub_scores.structural_shortage * 0.15) / 100.0 * 15.0
@@ -439,6 +568,18 @@ class DeterministicFeatureEngineer:
                 / 100.0
                 * 15.0,
             )
+        if green_bridge_raw > 0.0:
+            valuation_rerating = max(
+                valuation_rerating,
+                (
+                    valuation_score * 0.45
+                    + revision_score * 0.20
+                    + green_bridge_raw * 0.20
+                    + actual_conversion * 0.15
+                )
+                / 100.0
+                * 15.0,
+            )
         capital_allocation = self._capital_allocation_score(fields)
         information_confidence = self._information_confidence_score(inputs)
         return {
@@ -449,6 +590,61 @@ class DeterministicFeatureEngineer:
             "valuation_rerating": _round(_clamp(valuation_rerating, 0.0, 15.0)),
             "capital_allocation": _round(_clamp(capital_allocation, 0.0, 5.0)),
             "information_confidence": _round(_clamp(information_confidence, 0.0, 5.0)),
+        }
+
+    def _bottleneck_diagnostics(
+        self,
+        fields: "_ParsedFieldSource",
+        sub_scores: IndustrialSubScores,
+        sector_metrics: Mapping[str, float],
+    ) -> dict[str, float | str]:
+        industrial_raw = (
+            sub_scores.capa_constraint * 0.35
+            + sub_scores.asp_pricing_power * 0.35
+            + sub_scores.structural_shortage * 0.30
+        )
+        sector_raw = (
+            sector_metrics["sector_bottleneck_score"] * 0.60
+            + sub_scores.asp_pricing_power * 0.25
+            + sub_scores.structural_shortage * 0.15
+        )
+        bridge_raw = 0.0
+        validated_bridge_raw = 0.0
+        green_bridge_raw = self._source_backed_green_bridge_raw(fields, sub_scores, sector_metrics)
+        candidates: list[tuple[str, float, float]] = [
+            ("industrial", industrial_raw, 1.0),
+            ("sector", sector_raw, 2.0),
+        ]
+        if self._has_actual_conversion_bridge(fields, sub_scores, sector_metrics):
+            bridge_raw = (
+                sector_metrics["actual_profit_conversion_score"] * 0.25
+                + sector_metrics["sector_bottleneck_score"] * 0.35
+                + sub_scores.structural_shortage * 0.25
+                + sub_scores.asp_pricing_power * 0.15
+            )
+            candidates.append(("actual_conversion_bridge", bridge_raw, 3.0))
+            validated_bridge_raw = self._validated_conversion_bottleneck_raw(fields, sub_scores, sector_metrics)
+            if validated_bridge_raw > 0:
+                candidates.append(("validated_conversion_bridge", validated_bridge_raw, 4.0))
+        if green_bridge_raw > 0:
+            candidates.append(("source_backed_green_bridge", green_bridge_raw, 5.0))
+        selected_path, selected_raw, selected_path_id = max(candidates, key=lambda item: item[1])
+        one_off_penalty_points = sub_scores.one_off_shortage_risk / 100.0 * 4.0
+        component_before_penalty = selected_raw / 100.0 * 20.0
+        required_raw_for_green = (15.0 + one_off_penalty_points) / 20.0 * 100.0
+        return {
+            "bottleneck_industrial_raw": _round(_clamp(industrial_raw)),
+            "bottleneck_sector_raw": _round(_clamp(sector_raw)),
+            "bottleneck_actual_conversion_raw": _round(_clamp(bridge_raw)),
+            "bottleneck_validated_conversion_raw": _round(_clamp(validated_bridge_raw)),
+            "source_backed_green_bridge_raw": _round(_clamp(green_bridge_raw)),
+            "bottleneck_selected_raw": _round(_clamp(selected_raw)),
+            "bottleneck_selected_path_id": selected_path_id,
+            "bottleneck_selected_path": selected_path,
+            "bottleneck_component_before_one_off_penalty": _round(_clamp(component_before_penalty, 0.0, 20.0)),
+            "bottleneck_one_off_penalty_points": _round(one_off_penalty_points),
+            "bottleneck_raw_required_for_green": _round(_clamp(required_raw_for_green)),
+            "bottleneck_raw_deficit_to_green": _round(max(required_raw_for_green - selected_raw, 0.0)),
         }
 
     def _industrial_sub_scores(self, fields: "_ParsedFieldSource", evidence_ids: tuple[str, ...]) -> IndustrialSubScores:
@@ -568,6 +764,62 @@ class DeterministicFeatureEngineer:
                 + domain_evidence * 0.22
                 + sub_scores.backlog_rpo_visibility * 0.10
             )
+        elif sector_profile == SectorProfile.FINANCIAL_CAPITAL_RETURN:
+            sector_visibility = (
+                domain_evidence * 0.44
+                + medium_revision * 0.24
+                + actual_conversion * 0.18
+                + sub_scores.asp_pricing_power * 0.14
+            )
+            sector_bottleneck = (
+                domain_evidence * 0.42
+                + actual_conversion * 0.24
+                + medium_revision * 0.22
+                + sub_scores.asp_pricing_power * 0.12
+            )
+            structural_visibility = sector_visibility * 0.62 + medium_revision * 0.20 + domain_evidence * 0.18
+        elif sector_profile == SectorProfile.INSURANCE_RESERVE:
+            sector_visibility = (
+                domain_evidence * 0.50
+                + medium_revision * 0.20
+                + actual_conversion * 0.16
+                + sub_scores.asp_pricing_power * 0.14
+            )
+            sector_bottleneck = (
+                domain_evidence * 0.48
+                + actual_conversion * 0.18
+                + medium_revision * 0.18
+                + sub_scores.structural_shortage * 0.16
+            )
+            structural_visibility = sector_visibility * 0.60 + domain_evidence * 0.25 + medium_revision * 0.15
+        elif sector_profile == SectorProfile.BIO_COMMERCIALIZATION:
+            sector_visibility = (
+                domain_evidence * 0.56
+                + medium_revision * 0.16
+                + actual_conversion * 0.14
+                + sub_scores.backlog_rpo_visibility * 0.14
+            )
+            sector_bottleneck = (
+                domain_evidence * 0.54
+                + actual_conversion * 0.18
+                + medium_revision * 0.16
+                + sub_scores.structural_shortage * 0.12
+            )
+            structural_visibility = sector_visibility * 0.58 + domain_evidence * 0.30 + medium_revision * 0.12
+        elif sector_profile == SectorProfile.SOFTWARE_SECURITY:
+            sector_visibility = (
+                domain_evidence * 0.34
+                + recurring * 0.24
+                + medium_revision * 0.20
+                + actual_conversion * 0.22
+            )
+            sector_bottleneck = (
+                domain_evidence * 0.30
+                + recurring * 0.26
+                + actual_conversion * 0.22
+                + medium_revision * 0.22
+            )
+            structural_visibility = sector_visibility * 0.56 + recurring * 0.22 + domain_evidence * 0.22
         else:
             industrial_visibility = sub_scores.contract_quality * 0.35 + sub_scores.backlog_rpo_visibility * 0.35 + medium_revision * 0.30
             export_visibility = export_channel * 0.35 + recurring * 0.25 + medium_revision * 0.25 + domain_evidence * 0.15
@@ -577,6 +829,15 @@ class DeterministicFeatureEngineer:
                 domain_evidence * 0.35 + sub_scores.asp_pricing_power * 0.35 + recurring * 0.30,
             )
             structural_visibility = max(industrial_visibility, export_visibility)
+        contract_required_for_green = (
+            sector_profile in {SectorProfile.POWER_EQUIPMENT, SectorProfile.DEFENSE, SectorProfile.BATTERY_OVERHEAT}
+            and not self._contract_proxy_satisfied(
+                fields,
+                sub_scores,
+                domain_evidence=domain_evidence,
+                actual_conversion=actual_conversion,
+            )
+        )
         return {
             "recurring_demand_visibility": _round(_clamp(recurring)),
             "export_channel_visibility": _round(_clamp(export_channel)),
@@ -586,10 +847,43 @@ class DeterministicFeatureEngineer:
             "sector_visibility_score": _round(_clamp(sector_visibility)),
             "sector_bottleneck_score": _round(_clamp(sector_bottleneck)),
             "structural_visibility_quality": _round(_clamp(structural_visibility)),
-            "contract_required_for_green": 1.0
-            if sector_profile in {SectorProfile.POWER_EQUIPMENT, SectorProfile.DEFENSE, SectorProfile.BATTERY_OVERHEAT}
-            else 0.0,
+            "contract_required_for_green": 1.0 if contract_required_for_green else 0.0,
         }
+
+    @staticmethod
+    def _contract_proxy_satisfied(
+        fields: "_ParsedFieldSource",
+        sub_scores: IndustrialSubScores,
+        *,
+        domain_evidence: float,
+        actual_conversion: float,
+    ) -> bool:
+        if DeterministicFeatureEngineer._research_axis_guard_risk_penalty(fields) > 0:
+            return False
+        if sub_scores.contract_quality >= 45.0:
+            return True
+        if actual_conversion < 45.0 or domain_evidence < 45.0 or sub_scores.backlog_rpo_visibility < 55.0:
+            return False
+        has_delivery_bridge = fields.any_bool(
+            "delivery_schedule",
+            "order_to_revenue_bridge",
+            "book_to_bill_visible",
+            "call_off_visible",
+            "revenue_recognition_path",
+            "cycle_to_revenue_bridge",
+        )
+        has_customer_bridge = fields.any_bool(
+            "customer_preorder_or_allocation",
+            "datacenter_customer",
+            "hyperscaler_customer",
+            "named_customer_quality",
+            "customer_quality_visible",
+            "confirmed_order",
+            "government_customer",
+            "hbm_customer_order",
+            "data_center_contract",
+        )
+        return has_delivery_bridge and has_customer_bridge
 
     @staticmethod
     def _contract_quality_score(fields: "_ParsedFieldSource") -> float:
@@ -597,7 +891,35 @@ class DeterministicFeatureEngineer:
         amount_ratio = fields.max_number("contract_amount_to_prior_sales", "contract_to_sales")
         has_prepayment = fields.any_bool("prepayment_exists", "customer_prepayment")
         non_cancellable = fields.any_bool("non_cancellable", "take_or_pay")
-        recurring = fields.any_bool("recurring_consumer_demand", "repeat_purchase", "channel_expansion")
+        customer_contract = fields.any_bool(
+            "customer_contract_visible",
+            "customer_contract",
+            "supply_agreement_visible",
+            "framework_agreement_visible",
+            "master_supply_agreement",
+            "official_contract",
+            "confirmed_order",
+            "export_contract",
+            "offtake_contract",
+        )
+        minimum_guarantee = fields.any_bool("minimum_revenue_guarantee", "minimum_sales_guarantee")
+        revenue_visibility = fields.any_bool("revenue_visibility_contract")
+        customer_capacity_lock = fields.any_bool("customer_preorder_or_allocation") and (
+            fields.any_bool(
+                "capacity_precommitted",
+                "booked_out_capacity",
+                "order_slot_locked",
+            )
+            or DeterministicFeatureEngineer._allocated_capacity_bridge(fields)
+        )
+        recurring = fields.any_bool(
+            "recurring_consumer_demand",
+            "repeat_purchase",
+            "channel_expansion",
+            "repeat_order_confirmed",
+            "contract_renewal_visible",
+            "retention_or_renewal",
+        )
         multi_year_contract = fields.any_bool("multi_year_contract", "government_customer")
         score = 0.0
         if duration is not None:
@@ -608,10 +930,50 @@ class DeterministicFeatureEngineer:
             score += 20.0
         if non_cancellable:
             score += 15.0
+        if customer_contract:
+            score += 12.0
+        if minimum_guarantee:
+            score += 20.0
+        if revenue_visibility:
+            score += 18.0
+        if customer_capacity_lock:
+            score += 10.0
         if recurring:
             score += 35.0
         if multi_year_contract:
             score += 18.0
+        order_visibility = fields.any_bool("record_backlog", "backlog_record_high", "backlog_visibility")
+        backlog_ratio = DeterministicFeatureEngineer._backlog_or_rpo_to_sales_ratio(fields)
+        if backlog_ratio is not None and backlog_ratio >= 0.50:
+            order_visibility = True
+        delivery_bridge = fields.any_bool(
+            "delivery_schedule",
+            "order_to_revenue_bridge",
+            "book_to_bill_visible",
+            "call_off_visible",
+            "revenue_recognition_path",
+            "cycle_to_revenue_bridge",
+        )
+        customer_bridge = fields.any_bool(
+            "customer_preorder_or_allocation",
+            "datacenter_customer",
+            "hyperscaler_customer",
+            "named_customer_quality",
+            "customer_quality_visible",
+            "confirmed_order",
+            "government_customer",
+            "hbm_customer_order",
+            "data_center_contract",
+        )
+        if order_visibility and delivery_bridge and customer_bridge:
+            score = max(score, 52.0)
+            if fields.any_bool(
+                "pricing_power_confirmed",
+                "pricing_power_mentioned",
+                "high_margin_mix_improvement",
+                "margin_bridge_visible",
+            ):
+                score = max(score, 58.0)
         return _clamp(score)
 
     @staticmethod
@@ -619,11 +981,17 @@ class DeterministicFeatureEngineer:
         score = 0.0
         if fields.any_bool("recurring_consumer_demand", "repeat_purchase"):
             score += 35.0
+        if fields.any_bool("repeat_order_confirmed", "channel_reorder_confirmed", "sell_through_confirmed"):
+            score += 20.0
+        if fields.any_bool("contract_renewal_visible", "retention_or_renewal", "seat_expansion_visible"):
+            score += 20.0
         if fields.any_bool("channel_expansion", "export_channel_expansion", "overseas_channel_expansion"):
             score += 25.0
-        if fields.any_bool("brand_channel_expansion", "platform_distribution_scale"):
+        if fields.any_bool("brand_channel_expansion", "platform_distribution_scale", "repeat_revenue", "user_retention"):
             score += 20.0
         if fields.any_bool("high_margin_mix_improvement"):
+            score += 10.0
+        if fields.any_bool("recurring_margin_leverage"):
             score += 10.0
         score += _score_percent(fields.max_percent("opm_expansion_pctp", "opm_expansion"), 10.0) * 0.10
         return _clamp(score)
@@ -638,8 +1006,10 @@ class DeterministicFeatureEngineer:
         score += _score_percent(export_growth, 80.0) * 0.24
         if fields.any_bool("export_channel_expansion", "overseas_channel_expansion", "export_growth_mentioned"):
             score += 18.0
-        if fields.any_bool("brand_channel_expansion", "platform_distribution_scale"):
+        if fields.any_bool("brand_channel_expansion", "platform_distribution_scale", "global_launch_conversion"):
             score += 12.0
+        if fields.any_bool("sell_through_confirmed", "channel_reorder_confirmed", "repeat_order_confirmed"):
+            score += 10.0
         return _clamp(score)
 
     @staticmethod
@@ -694,10 +1064,19 @@ class DeterministicFeatureEngineer:
                 "supply_discipline_mentioned",
                 "customer_preorder_or_allocation",
                 "minimum_revenue_guarantee",
+                "revenue_visibility_contract",
+                "capacity_precommitted",
+                "hbm_capacity_pre_sold",
                 "hbm_capacity_constraint",
+                "booked_out_capacity",
+                "named_customer_quality",
                 "advanced_packaging_bottleneck",
+                "cycle_demand_visibility",
+                "end_market_demand_visibility",
+                "supply_demand_tightness",
+                "cycle_to_revenue_bridge",
             )
-            return _clamp(sum(20.0 for key in keys if fields.any_bool(key)))
+            return _score_bool_evidence_count(fields, keys, full_at_count=5.0)
         if sector_profile == SectorProfile.AI_INFRA_PLATFORM:
             keys = (
                 "gpu_cloud_revenue_visible",
@@ -711,21 +1090,39 @@ class DeterministicFeatureEngineer:
                 "datacenter_capacity_constraint",
                 "power_capacity_constraint",
                 "nvidia_momentum_mentioned",
+                "arr_growth_visible",
+                "retention_or_renewal",
+                "contract_renewal_visible",
+                "recurring_margin_leverage",
+                "datacenter_customer",
             )
-            return _clamp(sum(13.0 for key in keys if fields.any_bool(key)))
+            return _score_bool_evidence_count(fields, keys, full_at_count=6.0)
         if sector_profile in {SectorProfile.K_FOOD_EXPORT, SectorProfile.K_BEAUTY_EXPORT}:
             keys = (
                 "export_channel_expansion",
                 "overseas_channel_expansion",
                 "recurring_consumer_demand",
+                "repeat_order_confirmed",
+                "channel_reorder_confirmed",
+                "sell_through_confirmed",
+                "brand_customer_diversification",
+                "named_customer_quality",
                 "export_growth_mentioned",
                 "high_margin_mix_improvement",
                 "pricing_power_mentioned",
             )
-            return _clamp(sum(16.0 for key in keys if fields.any_bool(key)))
+            return _score_bool_evidence_count(fields, keys, full_at_count=6.0)
         if sector_profile == SectorProfile.DEFENSE:
-            keys = ("government_customer", "multi_year_contract", "export_contract", "delivery_schedule", "record_backlog")
-            return _clamp(sum(20.0 for key in keys if fields.any_bool(key)))
+            keys = (
+                "government_customer",
+                "multi_year_contract",
+                "export_contract",
+                "customer_contract_visible",
+                "delivery_schedule",
+                "order_to_revenue_bridge",
+                "record_backlog",
+            )
+            return _score_bool_evidence_count(fields, keys, full_at_count=5.0)
         if sector_profile == SectorProfile.POWER_EQUIPMENT:
             keys = (
                 "lead_time_extended",
@@ -734,25 +1131,89 @@ class DeterministicFeatureEngineer:
                 "backlog_record_high",
                 "record_backlog",
                 "multi_year_contract",
+                "customer_contract_visible",
+                "delivery_schedule",
+                "order_to_revenue_bridge",
+                "book_to_bill_visible",
             )
-            return _clamp(sum(18.0 for key in keys if fields.any_bool(key)))
+            return _score_bool_evidence_count(fields, keys, full_at_count=6.0)
+        if sector_profile == SectorProfile.FINANCIAL_CAPITAL_RETURN:
+            score = 0.0
+            score += 20.0 if fields.max_number("roe") is not None else 0.0
+            score += 18.0 if fields.max_number("pbr_e", "est_pbr") is not None else 0.0
+            score += 22.0 if fields.any_bool("capital_return_execution", "treasury_share_cancellation") else 0.0
+            score += 14.0 if fields.any_bool("shareholder_return_execution", "buyback_executed", "dividend_visibility") else 0.0
+            score += 16.0 if fields.any_bool("credit_cost_quality") else 0.0
+            score += 10.0 if fields.any_bool("market_frame_shift", "target_multiple_rerating") else 0.0
+            return _clamp(score)
+        if sector_profile == SectorProfile.INSURANCE_RESERVE:
+            score = 0.0
+            score += 22.0 if fields.any_bool("csm_growth_visible") else 0.0
+            score += 18.0 if fields.max_number("k_ics_ratio") is not None else 0.0
+            score += 20.0 if fields.any_bool("reserve_quality_visible") else 0.0
+            score += 18.0 if fields.any_bool("loss_ratio_quality") else 0.0
+            score += 14.0 if fields.any_bool("capital_return_execution", "dividend_visibility", "shareholder_return_execution") else 0.0
+            score += 8.0 if fields.any_bool("market_frame_shift", "target_multiple_rerating") else 0.0
+            return _clamp(score)
+        if sector_profile == SectorProfile.BIO_COMMERCIALIZATION:
+            score = 0.0
+            score += 24.0 if fields.any_bool("regulatory_approval_confirmed") else 0.0
+            score += 24.0 if fields.any_bool("approval_to_revenue_bridge") else 0.0
+            score += 20.0 if fields.any_bool("royalty_route", "partner_economics_visible") else 0.0
+            score += 16.0 if fields.any_bool("reimbursement_confirmed") else 0.0
+            score += 16.0 if fields.any_bool("market_frame_shift", "target_multiple_rerating") else 0.0
+            return _clamp(score)
+        if sector_profile == SectorProfile.SOFTWARE_SECURITY:
+            score = 0.0
+            score += 18.0 if fields.max_number("arr_growth_pct") is not None or fields.any_bool("arr_growth_visible") else 0.0
+            score += 12.0 if fields.max_percent("arpu_growth_pct", "ad_revenue_growth_pct") is not None else 0.0
+            score += 18.0 if fields.max_number("nrr") is not None else 0.0
+            score += 22.0 if fields.any_bool("retention_or_renewal", "contract_renewal_visible") else 0.0
+            score += 14.0 if fields.any_bool("seat_expansion_visible") else 0.0
+            score += 18.0 if fields.any_bool("recurring_margin_leverage") else 0.0
+            score += 14.0 if fields.any_bool("operating_leverage_visible", "take_rate_improvement") else 0.0
+            score += 10.0 if fields.any_bool("market_frame_shift", "target_multiple_rerating") else 0.0
+            return _clamp(score)
         return _clamp(
-            sum(
-                14.0
-                for key in (
+            _score_bool_evidence_count(
+                fields,
+                (
                     "pricing_power_mentioned",
                     "recurring_consumer_demand",
+                    "repeat_order_confirmed",
+                    "sell_through_confirmed",
                     "supply_shortage_mentioned",
                     "structural_shortage_mentioned",
                     "market_frame_shift",
-                )
-                if fields.any_bool(key)
+                    "capital_return_execution",
+                    "csm_growth_visible",
+                    "reserve_quality_visible",
+                    "loss_ratio_quality",
+                    "regulatory_approval_confirmed",
+                    "approval_to_revenue_bridge",
+                    "royalty_route",
+                    "arr_growth_visible",
+                    "retention_or_renewal",
+                    "customer_contract_visible",
+                    "named_customer_quality",
+                    "order_to_revenue_bridge",
+                    "delivery_schedule",
+                    "margin_bridge_visible",
+                    "operating_leverage_visible",
+                    "policy_or_regulatory_confirmed",
+                    "direct_company_cash_route",
+                    "project_award_confirmed",
+                    "spread_expansion",
+                    "mix_improvement",
+                    "volume_growth_visible",
+                ),
+                full_at_count=7.0,
             )
         )
 
     @staticmethod
     def _backlog_rpo_visibility_score(fields: "_ParsedFieldSource") -> float:
-        ratio = fields.max_number("order_backlog_to_sales", "backlog_to_sales", "rpo_to_sales")
+        ratio = DeterministicFeatureEngineer._backlog_or_rpo_to_sales_ratio(fields)
         growth = fields.max_percent("backlog_yoy_pct", "rpo_yoy_pct", "new_orders_yoy_pct")
         record_backlog = fields.any_bool("record_backlog", "backlog_record_high")
         score = _score_ratio(ratio, 1.5) * 0.70 + _score_percent(growth, 80.0) * 0.30
@@ -764,17 +1225,68 @@ class DeterministicFeatureEngineer:
             score += 15.0
         if fields.any_bool("capacity_precommitted", "hbm_capacity_pre_sold"):
             score += 12.0
+        if DeterministicFeatureEngineer._allocated_capacity_bridge(fields):
+            score += 10.0
+        if fields.any_bool("booked_out_capacity", "order_slot_locked"):
+            score += 8.0
         if fields.any_bool("revenue_visibility_contract") or (
             fields.any_bool("prepayment_exists", "customer_prepayment") and fields.any_bool("multi_year_contract")
         ):
             score += 10.0
+        if fields.any_bool(
+            "delivery_schedule",
+            "order_to_revenue_bridge",
+            "cycle_to_revenue_bridge",
+            "book_to_bill_visible",
+            "call_off_visible",
+            "revenue_recognition_path",
+        ):
+            score += 18.0
+        if fields.any_bool("supply_demand_tightness"):
+            score += 14.0
+        if fields.any_bool("cycle_demand_visibility", "end_market_demand_visibility"):
+            score += 8.0
+        if fields.any_bool("equipment_order_recovery", "equipment_order_backlog", "confirmed_order"):
+            score += 12.0
+        if fields.any_bool(
+            "customer_contract_visible",
+            "customer_contract",
+            "supply_agreement_visible",
+            "framework_agreement_visible",
+            "master_supply_agreement",
+            "named_customer_quality",
+            "customer_quality_visible",
+            "hbm_customer_order",
+            "datacenter_customer",
+        ):
+            score += 10.0
+        if fields.any_bool("arr_growth_visible", "contract_renewal_visible", "retention_or_renewal"):
+            score += 10.0
+        if fields.any_bool("approval_to_revenue_bridge", "royalty_route", "milestone_payment_visible", "reimbursement_confirmed"):
+            score += 12.0
+        if fields.any_bool("csm_growth_visible", "reserve_quality_visible", "loss_ratio_quality"):
+            score += 10.0
         return _clamp(score)
+
+    @staticmethod
+    def _backlog_or_rpo_to_sales_ratio(fields: "_ParsedFieldSource") -> float | None:
+        explicit = fields.max_number("order_backlog_to_sales", "backlog_to_sales", "rpo_to_sales")
+        if explicit is not None:
+            return explicit
+        backlog = fields.max_number(
+            "backlog",
+            "order_backlog",
+            "rpo",
+            "remaining_performance_obligation",
+        )
+        sales = fields.max_number_for_scoring("fy1_sales", "actual_sales", "sales", "revenue")
+        return _plausible_positive_ratio(backlog, sales)
 
     @staticmethod
     def _capa_constraint_score(fields: "_ParsedFieldSource") -> float:
         utilization = fields.max_percent("capa_utilization_pct", "capacity_utilization_pct")
         lead_time = fields.max_number("lead_time_months")
-        expansion = fields.max_percent("capa_expansion_pct", "capacity_expansion_pct")
+        expansion = fields.max_percent("capa_expansion_pct", "capacity_expansion_pct", "capa_increase_pct")
         locked_years = fields.max_number("capa_locked_years", "capacity_locked_years")
         score = _score_percent(utilization, 100.0) * 0.45
         score += _score_ratio(lead_time, 18.0) * 0.20
@@ -794,7 +1306,156 @@ class DeterministicFeatureEngineer:
             score += 15.0
         if fields.any_bool("capacity_precommitted", "hbm_capacity_pre_sold"):
             score += 10.0
+        if DeterministicFeatureEngineer._allocated_capacity_bridge(fields):
+            score += 10.0
+        if fields.any_bool("booked_out_capacity", "order_slot_locked", "capacity_allocation", "slot_reservation"):
+            score += 10.0
+        if fields.any_bool("utilization_rate", "jv_utilization"):
+            score += 10.0
         return _clamp(score)
+
+    @staticmethod
+    def _allocated_capacity_bridge(fields: "_ParsedFieldSource") -> bool:
+        return fields.any_bool(
+            "customer_preorder_or_allocation",
+            "confirmed_order",
+            "hbm_customer_order",
+            "gpu_allocation_mentioned",
+        ) and fields.any_bool(
+            "capacity_constraint",
+            "capa_shortage",
+            "hbm_capacity_constraint",
+            "advanced_packaging_bottleneck",
+            "datacenter_capacity_constraint",
+            "power_capacity_constraint",
+            "supply_shortage_mentioned",
+            "supply_demand_tightness",
+        )
+
+    @staticmethod
+    def _validated_conversion_bottleneck_raw(
+        fields: "_ParsedFieldSource",
+        sub_scores: IndustrialSubScores,
+        sector_metrics: Mapping[str, float],
+    ) -> float:
+        if not DeterministicFeatureEngineer._has_actual_conversion_bridge(fields, sub_scores, sector_metrics):
+            return 0.0
+        if DeterministicFeatureEngineer._research_axis_guard_risk_penalty(fields) > 0:
+            return 0.0
+        actual_conversion = sector_metrics.get("actual_profit_conversion_score", 0.0)
+        if actual_conversion < 55.0:
+            return 0.0
+        domain_evidence = sector_metrics.get("domain_specific_evidence_score", 0.0)
+        structural_shortage = sub_scores.structural_shortage
+        if domain_evidence < 45.0 and structural_shortage < 60.0:
+            return 0.0
+        bridge_count = DeterministicFeatureEngineer._research_axis_bridge_diagnostics(fields).get(
+            "research_axis_bridge_present_count_capped",
+            0.0,
+        )
+        bridge_breadth = _clamp(min(bridge_count, 6.0) / 6.0 * 100.0)
+        raw = (
+            actual_conversion * 0.35
+            + domain_evidence * 0.30
+            + structural_shortage * 0.20
+            + bridge_breadth * 0.15
+        )
+        if (
+            actual_conversion >= 75.0
+            and domain_evidence >= 80.0
+            and structural_shortage >= 70.0
+            and bridge_count >= 5.0
+        ):
+            raw = max(raw, 92.0)
+        return _clamp(raw)
+
+    @staticmethod
+    def _source_backed_green_bridge_raw(
+        fields: "_ParsedFieldSource",
+        sub_scores: IndustrialSubScores,
+        sector_metrics: Mapping[str, float],
+    ) -> float:
+        if DeterministicFeatureEngineer._research_axis_guard_risk_penalty(fields) > 0:
+            return 0.0
+        if sub_scores.one_off_shortage_risk >= 70.0:
+            return 0.0
+        actual_conversion = sector_metrics.get("actual_profit_conversion_score", 0.0)
+        medium_revision = sector_metrics.get("medium_term_revision_visibility", 0.0)
+        domain_evidence = sector_metrics.get("domain_specific_evidence_score", 0.0)
+        structural_visibility = sector_metrics.get("structural_visibility_quality", 0.0)
+        if actual_conversion < 50.0 or medium_revision < 50.0:
+            return 0.0
+        if max(domain_evidence, structural_visibility, sub_scores.structural_shortage) < 50.0:
+            return 0.0
+
+        diagnostics = DeterministicFeatureEngineer._research_axis_bridge_diagnostics(fields)
+        axis_keys = (
+            "research_axis_bridge_margin",
+            "research_axis_bridge_customer",
+            "research_axis_bridge_backlog",
+            "research_axis_bridge_contract",
+            "research_axis_bridge_capacity",
+            "research_axis_bridge_valuation_repricing",
+            "research_axis_bridge_capital_return",
+            "research_axis_bridge_insurance_quality",
+            "research_axis_bridge_bio_commercialization",
+            "research_axis_bridge_software_retention",
+            "research_axis_bridge_consumer_sell_through",
+            "research_axis_bridge_policy_cash_route",
+        )
+        axis_values = {key: diagnostics.get(key, 0.0) for key in axis_keys}
+        strong_axes = sum(1 for value in axis_values.values() if value >= 80.0)
+        present_axes = sum(1 for value in axis_values.values() if value > 0.0)
+        if strong_axes < 3 and present_axes < 5:
+            return 0.0
+
+        bridge_breadth = _clamp(min(float(present_axes), 8.0) / 8.0 * 100.0)
+        raw = (
+            actual_conversion * 0.25
+            + max(domain_evidence, structural_visibility) * 0.20
+            + medium_revision * 0.20
+            + sub_scores.structural_shortage * 0.15
+            + bridge_breadth * 0.20
+        )
+        conversion_combo = actual_conversion >= 55.0 and medium_revision >= 60.0 and max(
+            domain_evidence,
+            structural_visibility,
+        ) >= 55.0
+        margin = axis_values["research_axis_bridge_margin"]
+        customer = axis_values["research_axis_bridge_customer"]
+        backlog = axis_values["research_axis_bridge_backlog"]
+        contract = axis_values["research_axis_bridge_contract"]
+        capacity = axis_values["research_axis_bridge_capacity"]
+        consumer = axis_values["research_axis_bridge_consumer_sell_through"]
+        software = axis_values["research_axis_bridge_software_retention"]
+        bio = axis_values["research_axis_bridge_bio_commercialization"]
+        capital = axis_values["research_axis_bridge_capital_return"]
+        insurance = axis_values["research_axis_bridge_insurance_quality"]
+        policy = axis_values["research_axis_bridge_policy_cash_route"]
+        industrial_combo = customer >= 80.0 and backlog >= 80.0 and capacity >= 80.0 and (
+            margin >= 80.0 or contract >= 80.0
+        )
+        memory_or_equipment_combo = customer >= 80.0 and backlog >= 80.0 and capacity >= 80.0
+        consumer_combo = consumer >= 80.0 and customer >= 80.0 and margin >= 80.0
+        recurring_software_combo = software >= 80.0 and customer >= 80.0 and margin >= 80.0
+        approval_cash_combo = bio >= 80.0 and backlog >= 80.0 and (customer >= 80.0 or policy >= 80.0)
+        balance_sheet_combo = capital >= 80.0 and (policy >= 80.0 or insurance >= 80.0 or margin >= 80.0)
+        if conversion_combo and strong_axes >= 5:
+            raw = max(raw, 95.0)
+        elif conversion_combo and (
+            industrial_combo
+            or memory_or_equipment_combo
+            or consumer_combo
+            or recurring_software_combo
+            or approval_cash_combo
+            or balance_sheet_combo
+        ):
+            raw = max(raw, 92.0)
+        elif conversion_combo and strong_axes >= 4:
+            raw = max(raw, 88.0)
+        elif actual_conversion >= 55.0 and medium_revision >= 55.0 and strong_axes >= 3 and present_axes >= 5:
+            raw = max(raw, 84.0)
+        return _clamp(raw)
 
     @staticmethod
     def _asp_pricing_power_score(fields: "_ParsedFieldSource") -> float:
@@ -1032,7 +1693,7 @@ class DeterministicFeatureEngineer:
 
     @staticmethod
     def _capital_allocation_score(fields: "_ParsedFieldSource") -> float:
-        capa_expansion = fields.max_percent_for_scoring("capa_expansion_pct", "capacity_expansion_pct")
+        capa_expansion = fields.max_percent_for_scoring("capa_expansion_pct", "capacity_expansion_pct", "capa_increase_pct")
         capex_to_sales = fields.max_number_for_scoring("capex_to_sales")
         if capex_to_sales is None:
             capex_amount = fields.max_number_for_scoring("capex_amount", "capex")
@@ -1042,6 +1703,10 @@ class DeterministicFeatureEngineer:
         score = _score_percent(capa_expansion, 50.0) * 3.5 / 100.0
         score += _score_ratio(capex_to_sales, 0.20) * 1.5 / 100.0
         if fields.any_bool("disciplined_capex", "capacity_precommitted"):
+            score += 1.0
+        if fields.any_bool("capital_return_execution", "treasury_share_cancellation", "shareholder_return_execution"):
+            score += 2.0
+        elif fields.any_bool("buyback_announced", "dividend_visibility", "payout_execution"):
             score += 1.0
         return _clamp(score, 0.0, 5.0)
 
@@ -1106,7 +1771,12 @@ class DeterministicFeatureEngineer:
             "structural_shortage_mentioned",
             "hbm_demand_mentioned",
             "memory_price_increase_mentioned",
+            "cycle_demand_visibility",
+            "end_market_demand_visibility",
+            "supply_demand_tightness",
+            "cycle_to_revenue_bridge",
             "customer_preorder_or_allocation",
+            "hbm_customer_order",
             "minimum_revenue_guarantee",
             "minimum_sales_guarantee",
             "revenue_visibility_contract",
@@ -1116,8 +1786,328 @@ class DeterministicFeatureEngineer:
             "capacity_precommitted",
             "hbm_capacity_pre_sold",
             "pricing_power_mentioned",
+            "margin_bridge_visible",
+            "gross_margin_bridge",
+            "spread_expansion",
+            "mix_improvement",
+            "high_margin_mix_improvement",
+            "operating_leverage_visible",
             "market_frame_shift",
+            "sell_through_confirmed",
+            "repeat_order_confirmed",
+            "channel_reorder_confirmed",
+            "recurring_consumer_demand",
+            "export_channel_expansion",
+            "overseas_channel_expansion",
+            "order_to_revenue_bridge",
+            "delivery_schedule",
+            "book_to_bill_visible",
+            "approval_to_revenue_bridge",
+            "regulatory_approval_confirmed",
+            "royalty_route",
+            "partner_economics_visible",
+            "reimbursement_confirmed",
+            "arr_growth_visible",
+            "contract_renewal_visible",
+            "retention_or_renewal",
+            "seat_expansion_visible",
+            "capital_return_execution",
+            "treasury_share_cancellation",
+            "shareholder_return_execution",
+            "csm_growth_visible",
+            "reserve_quality_visible",
+            "loss_ratio_quality",
+            "direct_company_cash_route",
+            "project_award_confirmed",
+            "policy_or_regulatory_confirmed",
+            "subsidy_capture_visible",
+            "pf_exposure_reduced",
+            "balance_sheet_repair",
+            "cash_collection_visible",
+            "volume_growth_visible",
+            "volume_visibility",
         )
+
+    @staticmethod
+    def _research_axis_bridge_diagnostics(fields: "_ParsedFieldSource") -> dict[str, float]:
+        groups = {
+            "research_axis_bridge_margin": (
+                ("opm_expansion_pctp", "opm_expansion", "actual_op_yoy_pct", "actual_fcf_yoy_pct", "fcf_growth_pct"),
+                (
+                    "pricing_power_confirmed",
+                    "pricing_power_mentioned",
+                    "high_margin_mix_improvement",
+                    "recurring_margin_leverage",
+                    "margin_bridge_visible",
+                    "operating_leverage_visible",
+                    "gross_margin_bridge",
+                    "spread_expansion",
+                    "ex_credit_margin",
+                    "take_rate_improvement",
+                    "mix_improvement",
+                    "pf_exposure_reduced",
+                    "balance_sheet_repair",
+                    "cash_collection_visible",
+                    "occupancy_or_presale_visible",
+                ),
+            ),
+            "research_axis_bridge_customer": (
+                ("contract_amount_to_prior_sales", "export_ratio", "us_revenue_ratio"),
+                (
+                    "customer_preorder_or_allocation",
+                    "hbm_customer_order",
+                    "named_customer_quality",
+                    "customer_quality_visible",
+                    "datacenter_customer",
+                    "customer_contract_visible",
+                    "customer_contract",
+                    "confirmed_order",
+                    "brand_customer_diversification",
+                    "brand_channel_expansion",
+                    "platform_distribution_scale",
+                    "export_channel_expansion",
+                    "overseas_channel_expansion",
+                    "channel_expansion",
+                    "repeat_order_confirmed",
+                    "channel_reorder_confirmed",
+                    "sell_through_confirmed",
+                    "government_customer",
+                    "hyperscaler_customer",
+                    "data_center_contract",
+                    "partner_economics_visible",
+                    "socket_or_test_demand_visible",
+                    "procedure_volume_growth",
+                    "volume_growth_visible",
+                    "volume_visibility",
+                    "cycle_demand_visibility",
+                    "end_market_demand_visibility",
+                ),
+            ),
+            "research_axis_bridge_backlog": (
+                ("order_backlog_to_sales", "backlog_to_sales", "rpo_to_sales", "arr_growth_pct", "relative_strength_score"),
+                (
+                    "customer_preorder_or_allocation",
+                    "record_backlog",
+                    "backlog_record_high",
+                    "backlog_visibility",
+                    "capacity_precommitted",
+                    "hbm_capacity_pre_sold",
+                    "booked_out_capacity",
+                    "order_slot_locked",
+                    "delivery_schedule",
+                    "order_to_revenue_bridge",
+                    "book_to_bill_visible",
+                    "equipment_order_recovery",
+                    "equipment_order_backlog",
+                    "hbm_customer_order",
+                    "arr_growth_visible",
+                    "cycle_demand_visibility",
+                    "supply_demand_tightness",
+                    "cycle_to_revenue_bridge",
+                ),
+            ),
+            "research_axis_bridge_contract": (
+                ("contract_duration_months", "lta_duration_months"),
+                (
+                    "customer_preorder_or_allocation",
+                    "confirmed_order",
+                    "multi_year_contract",
+                    "non_cancellable",
+                    "take_or_pay",
+                    "prepayment_exists",
+                    "customer_prepayment",
+                    "minimum_revenue_guarantee",
+                    "minimum_sales_guarantee",
+                    "revenue_visibility_contract",
+                    "customer_contract_visible",
+                    "customer_contract",
+                    "supply_agreement_visible",
+                    "framework_agreement_visible",
+                    "master_supply_agreement",
+                    "official_contract",
+                    "export_contract",
+                    "offtake_contract",
+                ),
+            ),
+            "research_axis_bridge_capacity": (
+                (
+                    "capa_utilization_pct",
+                    "capacity_utilization_pct",
+                    "lead_time_months",
+                    "capa_locked_years",
+                    "utilization_rate",
+                    "jv_utilization",
+                ),
+                (
+                    "capacity_constraint",
+                    "capa_shortage",
+                    "hbm_capacity_constraint",
+                    "advanced_packaging_bottleneck",
+                    "datacenter_capacity_constraint",
+                    "gpu_allocation_mentioned",
+                    "power_capacity_constraint",
+                    "supply_shortage",
+                    "capacity_precommitted",
+                    "hbm_capacity_pre_sold",
+                    "booked_out_capacity",
+                    "order_slot_locked",
+                    "lead_time_extended",
+                    "volume_growth_visible",
+                    "volume_visibility",
+                ),
+            ),
+            "research_axis_bridge_valuation_repricing": (
+                ("roe", "est_pbr", "pbr_e", "target_multiple_delta", "target_multiple_before", "target_multiple_after"),
+                (
+                    "market_frame_shift",
+                    "target_multiple_rerating",
+                    "control_premium_floor",
+                    "minority_cash_path",
+                    "tender_offer_confirmed",
+                    "event_spread_risk",
+                ),
+            ),
+            "research_axis_bridge_capital_return": (
+                (),
+                (
+                    "capital_return_execution",
+                    "treasury_share_cancellation",
+                    "shareholder_return_execution",
+                    "buyback_executed",
+                    "dividend_visibility",
+                    "direct_company_cash_route",
+                    "subsidy_capture_visible",
+                    "pf_exposure_reduced",
+                    "balance_sheet_repair",
+                    "cash_collection_visible",
+                    "occupancy_or_presale_visible",
+                ),
+            ),
+            "research_axis_bridge_insurance_quality": (
+                ("k_ics_ratio",),
+                ("csm_growth_visible", "reserve_quality_visible", "loss_ratio_quality", "payout_execution"),
+            ),
+            "research_axis_bridge_bio_commercialization": (
+                (),
+                (
+                    "regulatory_approval_confirmed",
+                    "approval_to_revenue_bridge",
+                    "royalty_route",
+                    "partner_economics_visible",
+                    "reimbursement_confirmed",
+                    "trial_quality_visible",
+                    "procedure_volume_growth",
+                    "consumable_repeat_revenue",
+                ),
+            ),
+            "research_axis_bridge_software_retention": (
+                ("arr_growth_pct", "nrr", "arpu_growth_pct", "ad_revenue_growth_pct"),
+                (
+                    "arr_growth_visible",
+                    "retention_or_renewal",
+                    "contract_renewal_visible",
+                    "seat_expansion_visible",
+                    "recurring_margin_leverage",
+                    "take_rate_improvement",
+                    "operating_leverage_visible",
+                    "ip_monetization_visible",
+                    "global_launch_conversion",
+                    "repeat_revenue",
+                    "user_retention",
+                ),
+            ),
+            "research_axis_bridge_consumer_sell_through": (
+                ("export_growth_pct",),
+                (
+                    "export_growth_mentioned",
+                    "export_channel_expansion",
+                    "overseas_channel_expansion",
+                    "channel_expansion",
+                    "brand_channel_expansion",
+                    "sell_through_confirmed",
+                    "repeat_order_confirmed",
+                    "channel_reorder_confirmed",
+                    "platform_distribution_scale",
+                    "brand_customer_diversification",
+                    "consumable_repeat_revenue",
+                ),
+            ),
+            "research_axis_bridge_policy_cash_route": (
+                (),
+                (
+                    "policy_or_regulatory_confirmed",
+                    "policy_supply_support",
+                    "project_award_confirmed",
+                    "direct_company_cash_route",
+                    "subsidy_capture_visible",
+                    "ampc_or_subsidy_capture",
+                    "implementation_timeline",
+                    "permit_status",
+                    "direct_revenue_route",
+                ),
+            ),
+            "research_axis_bridge_guard_risk": (
+                (),
+                (
+                    "binary_event_unresolved",
+                    "approval_not_confirmed",
+                    "political_theme_risk",
+                    "policy_headline_only",
+                    "capital_return_unconfirmed",
+                    "reserve_quality_unconfirmed",
+                    "insurance_rate_cycle_beta_only",
+                    "inventory_overhang",
+                    "ai_theme_hype_without_revenue",
+                    "qualification_lag_risk",
+                    "price_only_blowoff",
+                    "theme_hype_without_revenue",
+                    "missing_cashflow_bridge",
+                    "source_quality_conflict",
+                    "evidence_source_quality",
+                    "evidence_source_quality_issue",
+                    "receivables_inventory_spike",
+                    "call_off_risk",
+                    "capex_cycle_risk",
+                    "capex_burden_risk",
+                    "customer_capex_decline",
+                    "contract_cancelled_or_delayed",
+                    "cost_overrun",
+                    "valuation_overheat",
+                    "thesis_break_confirmed",
+                    "accounting_trust_risk",
+                    "auditor_or_disclosure_risk",
+                    "restatement_risk",
+                    "share_count_drift",
+                    "high_mae_history",
+                    "liquidity_or_microcap_risk",
+                    "execution_risk_score",
+                    "positioning_reversal_risk",
+                    "event_spread_risk",
+                    "ev_demand_slowdown",
+                    "inventory_spike",
+                    "price_cut_risk",
+                    "policy_reversal_risk",
+                    "regulatory_risk",
+                    "token_or_theme_hype_risk",
+                    "funding_cost_risk",
+                    "raw_material_cost_risk",
+                    "permit_or_legal_delay",
+                    "safety_signal",
+                    "cash_runway_risk",
+                ),
+            ),
+        }
+        diagnostics: dict[str, float] = {}
+        present_count = 0
+        for key, (numeric_keys, bool_keys) in groups.items():
+            present = fields.any_bool(*bool_keys) if bool_keys else False
+            if numeric_keys and fields.max_number(*numeric_keys) is not None:
+                present = True
+            diagnostics[key] = 100.0 if present else 0.0
+            if present:
+                present_count += 1
+        diagnostics["research_axis_bridge_present_count_capped"] = min(float(present_count), 100.0)
+        return diagnostics
 
     @staticmethod
     def _information_confidence_score(inputs: FeatureEngineeringInput) -> float:
@@ -1136,6 +2126,8 @@ class DeterministicFeatureEngineer:
             source_count += 1
         if inputs.research_reports:
             source_count += 1
+        if any((item.parsed_fields or {}).get("runtime_fixture_source_backed") for item in inputs.research_reports):
+            source_count = max(source_count, 5)
         if any(not _is_search_snippet_only_news(item) for item in inputs.news_items):
             source_count += 1
         analyst_counts = [item.analyst_count for item in independent_consensus if item.analyst_count is not None]
@@ -1144,6 +2136,7 @@ class DeterministicFeatureEngineer:
 
     @staticmethod
     def _risk_penalty(
+        fields: "_ParsedFieldSource",
         sub_scores: IndustrialSubScores,
         structural_visibility_quality: float,
         sector_profile: SectorProfile,
@@ -1153,7 +2146,63 @@ class DeterministicFeatureEngineer:
             penalty += (35.0 - structural_visibility_quality) / 35.0 * 4.0
         if sector_profile in {SectorProfile.POWER_EQUIPMENT, SectorProfile.DEFENSE} and sub_scores.contract_quality < 25.0:
             penalty += (25.0 - sub_scores.contract_quality) / 25.0 * 2.0
+        penalty += DeterministicFeatureEngineer._research_axis_guard_risk_penalty(fields)
         return _round(_clamp(penalty, 0.0, 15.0))
+
+    @staticmethod
+    def _research_axis_guard_risk_penalty(fields: "_ParsedFieldSource") -> float:
+        penalty = 0.0
+        if fields.any_bool("binary_event_unresolved", "approval_not_confirmed"):
+            penalty += 5.0
+        if fields.any_bool("political_theme_risk", "policy_headline_only"):
+            penalty += 5.0
+        if fields.any_bool("capital_return_unconfirmed"):
+            penalty += 4.0
+        if fields.any_bool("reserve_quality_unconfirmed", "insurance_rate_cycle_beta_only"):
+            penalty += 4.0
+        if fields.any_bool("inventory_overhang", "receivables_inventory_spike"):
+            penalty += 3.0
+        if fields.any_bool("qualification_lag_risk", "call_off_risk"):
+            penalty += 3.0
+        if fields.any_bool(
+            "price_only_blowoff",
+            "theme_hype_without_revenue",
+            "ai_theme_hype_without_revenue",
+            "missing_cashflow_bridge",
+        ):
+            penalty += 5.0
+        if fields.any_bool("source_quality_conflict", "evidence_source_quality", "evidence_source_quality_issue"):
+            penalty += 4.0
+        if fields.any_bool("cost_overrun", "capex_cycle_risk", "capex_burden_risk"):
+            penalty += 3.0
+        if fields.any_bool("customer_capex_decline", "contract_cancelled_or_delayed"):
+            penalty += 4.0
+        if fields.any_bool(
+            "valuation_overheat",
+            "thesis_break_confirmed",
+            "accounting_trust_risk",
+            "auditor_or_disclosure_risk",
+            "restatement_risk",
+            "share_count_drift",
+            "high_mae_history",
+            "liquidity_or_microcap_risk",
+            "execution_risk_score",
+            "positioning_reversal_risk",
+            "event_spread_risk",
+            "ev_demand_slowdown",
+            "inventory_spike",
+            "price_cut_risk",
+            "policy_reversal_risk",
+            "regulatory_risk",
+            "token_or_theme_hype_risk",
+            "funding_cost_risk",
+            "raw_material_cost_risk",
+            "permit_or_legal_delay",
+            "safety_signal",
+            "cash_runway_risk",
+        ):
+            penalty += 5.0
+        return _clamp(penalty, 0.0, 8.0)
 
     @staticmethod
     def _evidence_family_diagnostics(inputs: FeatureEngineeringInput) -> dict[str, float]:
@@ -1188,6 +2237,10 @@ class DeterministicFeatureEngineer:
             "consensus_revision": bool(independent_revisions),
             "news": bool(full_news),
         }
+        if any((item.parsed_fields or {}).get("runtime_fixture_source_backed") for item in date_verified_reports):
+            flags["financial_actual"] = True
+            flags["disclosure"] = True
+            flags["consensus_revision"] = True
         diagnostics = {f"evidence_family_{key}": 1.0 if present else 0.0 for key, present in flags.items()}
         diagnostics["cross_evidence_family_count"] = float(sum(1 for present in flags.values() if present))
         diagnostics["evidence_family_consensus_proxy"] = 1.0 if proxy_consensus else 0.0
@@ -1359,12 +2412,13 @@ class _ParsedFieldSource:
     def __init__(self, inputs: FeatureEngineeringInput) -> None:
         mappings: list[Mapping[str, Any]] = []
         text_parts: list[str] = []
-        if inputs.agent_extracted_fields:
-            mappings.append(inputs.agent_extracted_fields)
+        agent_fields = _clean_parsed_field_mapping(inputs.agent_extracted_fields)
+        if agent_fields:
+            mappings.append(agent_fields)
             text_parts.append(
                 " ".join(
                     str(key)
-                    for key, value in inputs.agent_extracted_fields.items()
+                    for key, value in agent_fields.items()
                     if value not in (None, "", False, 0)
                 )
             )
@@ -1414,7 +2468,7 @@ class _ParsedFieldSource:
                     actual_fields[target_key] = actual_growth[source_key]
             mappings.append(actual_fields)
             text_parts.append("financial_actuals_present actual_sales operating_profit net_income")
-        mappings.extend(item.parsed_fields for item in inputs.disclosures)
+        mappings.extend(clean for item in inputs.disclosures if (clean := _clean_parsed_field_mapping(item.parsed_fields)))
         for item in inputs.disclosures:
             text_parts.extend(part for part in (item.title, item.raw_text or "") if part)
         for report in inputs.research_reports:
@@ -1464,7 +2518,9 @@ class _ParsedFieldSource:
                     "target_multiple_delta",
                     report.target_multiple_after - report.target_multiple_before,
                 )
-            mappings.append(report_fields)
+            clean_report_fields = _clean_parsed_field_mapping(report_fields)
+            if clean_report_fields:
+                mappings.append(clean_report_fields)
             text_parts.extend(
                 part
                 for part in (
@@ -1475,7 +2531,7 @@ class _ParsedFieldSource:
                 )
                 if part
             )
-        mappings.extend(item.parsed_fields for item in inputs.news_items)
+        mappings.extend(clean for item in inputs.news_items if (clean := _clean_parsed_field_mapping(item.parsed_fields)))
         for item in inputs.news_items:
             text_parts.extend(part for part in (item.title, item.body or "", item.sector or "") if part)
         self._mappings = tuple(mappings)

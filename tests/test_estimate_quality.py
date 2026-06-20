@@ -137,6 +137,29 @@ class EstimateQualityTests(unittest.TestCase):
         self.assertEqual(context.diagnostic_scores["estimate_revision_outlier_count_capped"], 1.0)
         self.assertEqual(context.diagnostic_scores["estimate_missing_fcf_source"], 100.0)
 
+    def test_non_finite_revision_values_are_ignored(self):
+        as_of = date(2026, 6, 11)
+        inputs = FeatureEngineeringInput(
+            symbol="CASE",
+            as_of_date=as_of,
+            consensus_revisions=(
+                ConsensusRevision(
+                    symbol="CASE",
+                    date=as_of,
+                    fiscal_year=2026,
+                    as_of_date=as_of,
+                    source="consensus-csv",
+                    eps_revision_1m=float("nan"),
+                    parsed_fields={"parser_confidence": float("inf")},
+                ),
+            ),
+        )
+
+        context = build_estimate_quality_context(inputs)
+
+        self.assertIsNone(context.revision_selection.selected_value)
+        self.assertEqual(context.diagnostic_scores["estimate_missing_revision_source"], 100.0)
+
 
 if __name__ == "__main__":
     unittest.main()

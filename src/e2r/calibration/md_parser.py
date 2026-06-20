@@ -10,6 +10,7 @@ import json
 import re
 from typing import Any
 
+from .evidence_flags import normalise_evidence_quality_flags, text_has_evidence_url_pending
 from .md_discovery import MarkdownDocument
 from .taxonomy import normalise_canonical_archetype_id, normalise_large_sector_id
 
@@ -418,7 +419,7 @@ def _line_number_for_offset(text: str, offset: int) -> int:
 def _v12_document_flags(text: str) -> dict[str, bool]:
     lower = text.lower()
     return {
-        "evidence_url_pending": "evidence url pending" in lower or "url pending" in lower or "urls pending" in lower,
+        "evidence_url_pending": text_has_evidence_url_pending(lower),
         "source_proxy_only": "source-name-level" in lower
         or "historical public-event proxies" in lower
         or "event proxies" in lower,
@@ -810,9 +811,12 @@ def parse_markdown_document(document: MarkdownDocument) -> ParsedMarkdown:
             )
             _synthesise_v12_review_only_audit_trigger(rows_by_type, document)
             for typed_rows in rows_by_type.values():
-                for row in typed_rows:
-                    row.setdefault("evidence_url_pending", doc_flags["evidence_url_pending"])
-                    row.setdefault("source_proxy_only", doc_flags["source_proxy_only"])
+                for index, row in enumerate(typed_rows):
+                    if doc_flags["evidence_url_pending"]:
+                        row["evidence_url_pending"] = True
+                    if doc_flags["source_proxy_only"]:
+                        row["source_proxy_only"] = True
+                    typed_rows[index] = normalise_evidence_quality_flags(row)
     except Exception as exc:  # pragma: no cover - defensive registry path
         return ParsedMarkdown(
             registry_row=_registry_row(document, metadata, rows_by_type, "failed", str(exc)),
