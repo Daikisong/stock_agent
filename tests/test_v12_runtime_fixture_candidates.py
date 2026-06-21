@@ -257,6 +257,94 @@ class V12RuntimeFixtureCandidateTests(unittest.TestCase):
                 "source_proxy_only": False,
                 "evidence_url_pending": False,
             },
+            {
+                "case_id": "C12_ENCHEM_CUSTOMER_SUPPLY",
+                "trigger_id": "C12_T2",
+                "symbol": "348370",
+                "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+                "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+                "trigger_type": "Stage3-Yellow",
+                "trigger_date": "2024-01-25",
+                "MFE_180D_pct": 247.27,
+                "MAE_180D_pct": -5.55,
+                "positive_or_counterexample": "positive",
+                "case_type": "structural_success",
+                "trigger_outcome_label": "north_america_customer_supply_positive_with_4b_exit_guard",
+                "current_profile_verdict": "current_profile_missed_structural_then_needs_local_4b_overlay",
+                "stage2_evidence_fields": ["named_cell_customers", "north_america_supply_chain"],
+                "stage3_evidence_fields": ["customer_supply_conversion", "shipment_and_capacity_bridge"],
+                "stage4b_evidence_fields": ["post_peak_drawdown_watch_after_fast_rerating"],
+                "evidence_available_at_that_date": (
+                    "North America electrolyte supply: Georgia plant capacity expansion and shipments to "
+                    "LGES, SK On, Ultium Cells and BlueOvalSK customers."
+                ),
+                "evidence_source": "https://example.com/enchem",
+                "source_proxy_only": False,
+                "evidence_url_pending": False,
+            },
+            {
+                "case_id": "C14_DAEJOO_SURVIVOR",
+                "trigger_id": "C14_T1",
+                "symbol": "078600",
+                "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+                "canonical_archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+                "trigger_type": "Stage2-Actionable",
+                "trigger_date": "2024-04-02",
+                "MFE_180D_pct": 80.75,
+                "MAE_180D_pct": -18.58,
+                "case_type": "structural_success / positive",
+                "trigger_outcome_label": "survivor_reopen_positive_silicon_anode",
+                "current_profile_verdict": "current_profile_missed_structural_if_generic_ev_slowdown_blocks_survivor",
+                "stage2_evidence_fields": ["customer_or_order_quality", "capacity_or_volume_route"],
+                "stage3_evidence_fields": ["financial_visibility", "durable_customer_confirmation"],
+                "stage4b_evidence_fields": [],
+                "stage4c_evidence_fields": [],
+                "evidence_available_at_that_date": (
+                    "Silicon-anode sales were expected to exceed the prior full year; coverage expanded "
+                    "from two vehicle models to nine and SK On adoption was referenced."
+                ),
+                "evidence_source": "EV_C14_FU123_DAEJOO_20240402_ETNEWS",
+                "source_proxy_only": False,
+                "evidence_url_pending": False,
+            },
+            {
+                "case_id": "C24_FALSE_GREEN",
+                "trigger_id": "C24_FALSE_GREEN_T1",
+                "symbol": "028300",
+                "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+                "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+                "trigger_type": "Stage3-Green",
+                "trigger_date": "2024-05-16",
+                "MFE_180D_pct": 11.59,
+                "MAE_180D_pct": -52.87,
+                "case_type": "counterexample",
+                "trigger_outcome_label": "false_positive_green",
+                "current_profile_verdict": "current_profile_false_positive",
+                "stage4c_evidence_fields": ["regulatory_rejection", "thesis_evidence_broken"],
+                "evidence_available_at_that_date": "Pre-event anticipation existed, but endpoint confirmation was absent.",
+                "evidence_source": "https://example.com/c24",
+                "source_proxy_only": False,
+                "evidence_url_pending": False,
+            },
+            {
+                "case_id": "R13_HDHE_CONTROL",
+                "trigger_id": "R13_T1",
+                "symbol": "267260",
+                "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+                "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+                "trigger_type": "Stage3-Green",
+                "trigger_date": "2025-04-22",
+                "MFE_180D_pct": 228.07,
+                "MAE_180D_pct": -2.02,
+                "trigger_outcome_label": "positive_control_order_backlog_earnings_conversion",
+                "current_profile_verdict": "current_profile_should_accept",
+                "stage2_evidence_fields": ["official/direct source", "accounting-to-cash bridge"],
+                "stage3_evidence_fields": ["multi-field evidence bridge", "forward price validation"],
+                "evidence_available_at_that_date": "HD Hyundai Electric Q1 sales, OP, orders and backlog.",
+                "evidence_source": "https://example.com/hdhe",
+                "source_proxy_only": False,
+                "evidence_url_pending": False,
+            },
         ]
 
         payload = build_v12_green_runtime_fixture_candidates(rows)
@@ -272,8 +360,76 @@ class V12RuntimeFixtureCandidateTests(unittest.TestCase):
         )
 
         c12 = by_arch["C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK"]
-        self.assertEqual(c12["green_row_count"], 0)
-        self.assertEqual(c12["fixture_status"], "needs_green_row")
+        self.assertEqual(c12["green_row_count"], 1)
+        self.assertEqual(c12["fixture_status"], "needs_guard_pair")
+        self.assertEqual(c12["green_fixture_candidate"]["case_id"], "C12_ENCHEM_CUSTOMER_SUPPLY")
+        self.assertIn(
+            "shipment_and_capacity_bridge",
+            c12["green_fixture_candidate"]["source_expected_runtime_primitives"],
+        )
+
+        c14 = by_arch["C14_EV_DEMAND_SLOWDOWN_4B_4C"]
+        self.assertEqual(c14["green_row_count"], 1)
+        self.assertEqual(c14["fixture_status"], "needs_guard_pair")
+        self.assertIn(
+            "survivor_reopen_positive",
+            c14["green_fixture_candidate"]["source_expected_runtime_primitives"],
+        )
+
+        c24 = by_arch["C24_BIO_TRIAL_DATA_EVENT_RISK"]
+        self.assertEqual(c24["green_row_count"], 0)
+        self.assertGreaterEqual(c24["guard_row_count"], 1)
+
+        r13 = by_arch["R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION"]
+        self.assertEqual(r13["green_row_count"], 1)
+        self.assertEqual(
+            r13["green_fixture_candidate"]["source_canonical_archetype_id"],
+            "C02_POWER_GRID_DATACENTER_CAPEX",
+        )
+
+    def test_r13_green_candidate_preserves_source_archetype_primitives(self) -> None:
+        rows = [
+            {
+                "case_id": "R13_C23_YUHAN",
+                "trigger_id": "R13_T_C23",
+                "symbol": "000100",
+                "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+                "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+                "source_large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+                "source_canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+                "trigger_type": "Stage3-Green",
+                "trigger_date": "2024-08-20",
+                "MFE_180D_pct": 77.55,
+                "MAE_180D_pct": -2.66,
+                "trigger_outcome_label": "direct_approval_commercialization_bridge",
+                "current_profile_verdict": "current_profile_too_late",
+                "stage2_evidence_fields": ["FDA approval", "direct economics"],
+                "stage3_evidence_fields": ["commercialization", "partner economics", "royalty route"],
+                "evidence_available_at_that_date": "FDA approval of Lazcluze/Rybrevant based on MARIPOSA created direct economics commercialization evidence.",
+                "evidence_source": "FDA/J&J/Yuhan public approval source",
+                "source_proxy_only": False,
+                "evidence_url_pending": False,
+            }
+        ]
+
+        payload = build_v12_green_runtime_fixture_candidates(rows)
+        r13 = {
+            row["canonical_archetype_id"]: row
+            for row in payload["archetypes"]
+        }["R13_CROSS_ARCHETYPE_4B_4C_REDTEAM"]
+
+        self.assertEqual(
+            r13["green_fixture_candidate"]["source_canonical_archetype_id"],
+            "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+        )
+        self.assertIn(
+            "royalty_route",
+            r13["green_fixture_candidate"]["source_expected_runtime_primitives"],
+        )
+        self.assertIn(
+            "partner_economics_visible",
+            r13["green_fixture_candidate"]["source_expected_runtime_primitives"],
+        )
 
 
 if __name__ == "__main__":

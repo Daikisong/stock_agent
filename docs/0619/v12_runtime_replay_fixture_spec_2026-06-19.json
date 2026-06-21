@@ -1,25 +1,85 @@
 {
   "schema_version": "v12_runtime_replay_spec_manifest_v1",
-  "spec_row_count": 68,
+  "spec_row_count": 62,
   "ready_archetype_count": 34,
+  "covered_archetype_count": 36,
   "role_counts": {
-    "green": 32,
+    "green": 26,
     "guard": 36
   },
   "current_runtime_gap_status_counts": {
-    "fixture_not_ready": 8,
-    "not_in_current_benchmark": 48,
-    "runtime_input_evidence_missing": 4,
-    "runtime_stage3_gate_blocked": 8
+    "null": 62
   },
   "skipped_archetypes": [
     {
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "included_roles": [],
+      "skipped_green_candidate_trigger_type": "Stage2-Actionable",
+      "skip_reason": "green_replay_role_requires_raw_stage3_green_trigger"
+    },
+    {
+      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "included_roles": [],
+      "skipped_green_candidate_trigger_type": "Stage2-Actionable",
+      "skip_reason": "green_replay_role_requires_raw_stage3_green_trigger"
+    },
+    {
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "included_roles": [],
+      "skipped_green_candidate_trigger_type": "Stage2-Actionable",
+      "skip_reason": "green_replay_role_requires_raw_stage3_green_trigger"
+    },
+    {
+      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "included_roles": [],
+      "skipped_green_candidate_trigger_type": "Stage2-Actionable",
+      "skip_reason": "green_replay_role_requires_raw_stage3_green_trigger"
+    },
+    {
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "fixture_status": "needs_verified_green_source",
+      "included_roles": [
+        "guard"
+      ]
+    },
+    {
       "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
-      "fixture_status": "needs_green_row"
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "included_roles": [],
+      "skipped_green_candidate_trigger_type": "Stage3-Yellow",
+      "skip_reason": "green_replay_role_requires_raw_stage3_green_trigger"
     },
     {
       "canonical_archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
-      "fixture_status": "needs_verified_green_source"
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "included_roles": [],
+      "skipped_green_candidate_trigger_type": "Stage2-Actionable",
+      "skip_reason": "green_replay_role_requires_raw_stage3_green_trigger"
+    },
+    {
+      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "included_roles": [],
+      "skipped_green_candidate_trigger_type": "Stage3-Yellow",
+      "skip_reason": "green_replay_role_requires_raw_stage3_green_trigger"
+    },
+    {
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "included_roles": [],
+      "skipped_green_candidate_trigger_type": "Stage2-Actionable",
+      "skip_reason": "green_replay_role_requires_raw_stage3_green_trigger"
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "fixture_status": "needs_green_row",
+      "included_roles": [
+        "guard"
+      ]
     }
   ],
   "rows": [
@@ -39,59 +99,13 @@
         "opm_expansion_pctp",
         "fcf_quality_score"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer"
-      ],
-      "current_runtime_gap_status": "runtime_input_evidence_missing",
-      "current_runtime_candidate_count": 11,
-      "current_runtime_stage_distribution": {
-        "0": 7,
-        "1": 4
-      },
-      "current_runtime_max_score": 4.4554,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer"
-      ],
-      "current_top_failed_gates": [
-        {
-          "gate": "failed_stage2_total_score",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage2_eps_fcf",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage2_valuation",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage2_information_confidence",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_total_score",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_eps_fcf",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_visibility",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_bottleneck",
-          "count": 11
-        }
-      ],
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
+      "current_missing_required_bridge_axes": [],
+      "current_top_failed_gates": [],
       "candidate": {
         "case_id": "C01-R1-L211-07",
         "trigger_id": "C01-R1-L211-07-T1",
@@ -113,8 +127,8 @@
     },
     {
       "schema_version": "v12_runtime_replay_spec_v1",
-      "role": "green",
-      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
+      "role": "guard",
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
       "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
       "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
       "runtime_bridge_group": "industrial_backlog_margin_bridge",
@@ -127,70 +141,24 @@
         "opm_expansion_pctp",
         "fcf_quality_score"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer"
-      ],
-      "current_runtime_gap_status": "runtime_input_evidence_missing",
-      "current_runtime_candidate_count": 11,
-      "current_runtime_stage_distribution": {
-        "0": 7,
-        "1": 4
-      },
-      "current_runtime_max_score": 4.4554,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer"
-      ],
-      "current_top_failed_gates": [
-        {
-          "gate": "failed_stage2_total_score",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage2_eps_fcf",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage2_valuation",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage2_information_confidence",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_total_score",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_eps_fcf",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_visibility",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_bottleneck",
-          "count": 11
-        }
-      ],
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
+      "current_missing_required_bridge_axes": [],
+      "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C01_R1L214_005_103230_SNW_20240516_REPORT_BACKLOG_TEXT_FALSE_POSITIVE",
-        "trigger_id": "C01_R1L214_TRG005_103230_20240517",
-        "symbol": "103230",
-        "as_of_date": "2024-05-16",
+        "case_id": "C01_R1L126_CASE_07_077970",
+        "trigger_id": "C01_R1L126_T07_077970_2023-09-12",
+        "symbol": "077970",
+        "as_of_date": "2023-09-12",
         "trigger_type": "Stage2",
-        "MFE_180D_pct": 3.42,
-        "MAE_180D_pct": -46.64,
-        "evidence_available_at_that_date": null,
-        "evidence_source": null,
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R1_loop_214_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C01_ORDER_BACKLOG_MARGIN_BRIDGE_research.md",
+        "MFE_180D_pct": 13.74,
+        "MAE_180D_pct": -20.46,
+        "evidence_available_at_that_date": "STX Engine developed eco-friendly ship engine targeting LNG carriers and LNG-powered large container ships; source does not give fresh order, backlog, delivery schedule, or margin conversion.",
+        "evidence_source": "https://www.asiae.co.kr/en/article/2023091210415895357",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R1_loop_126_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C01_ORDER_BACKLOG_MARGIN_BRIDGE_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -211,63 +179,22 @@
         "capacity_constraint",
         "pricing_power_confirmed"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer"
-      ],
-      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
-      "current_runtime_candidate_count": 44,
-      "current_runtime_stage_distribution": {
-        "1": 11,
-        "2": 33
-      },
-      "current_runtime_max_score": 72.9252,
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
       "current_missing_required_bridge_axes": [],
-      "current_top_failed_gates": [
-        {
-          "gate": "failed_stage3_total_score",
-          "count": 44
-        },
-        {
-          "gate": "failed_stage3_bottleneck",
-          "count": 44
-        },
-        {
-          "gate": "failed_stage3_contract_quality",
-          "count": 33
-        },
-        {
-          "gate": "failed_stage3_visibility",
-          "count": 22
-        },
-        {
-          "gate": "failed_sector_visibility",
-          "count": 22
-        },
-        {
-          "gate": "failed_domain_specific_evidence",
-          "count": 22
-        },
-        {
-          "gate": "failed_sector_bottleneck",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage2_total_score",
-          "count": 11
-        }
-      ],
+      "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C02_R1L144_267260_C02_transformer_backlog_margin_bridge_clean_positive_20240216",
-        "trigger_id": "C02_R1L144_267260_C02_transformer_backlog_margin_bridge_clean_positive_20240216_T1",
-        "symbol": "267260",
-        "as_of_date": "2024-02-16",
-        "trigger_type": "Stage3-Green",
-        "MFE_180D_pct": 256.7731,
-        "MAE_180D_pct": -0.5177,
-        "evidence_available_at_that_date": "Mirae Asset report dated 2024-02-16 noted end-4Q23 order backlog jumped 59% YoY to KRW 5.5tn and linked demand to AI/datacenter/server power consumption and global customers.",
+        "case_id": "C02_R1L144_006340_C02_cable_grid_theme_event_premium_4b_counterexample_20240627",
+        "trigger_id": "C02_R1L144_006340_C02_cable_grid_theme_event_premium_4b_counterexample_20240627_T1",
+        "symbol": "006340",
+        "as_of_date": "2024-06-27",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 9.7701,
+        "MAE_180D_pct": -49.3103,
+        "evidence_available_at_that_date": "Mirae Asset AI-generated report dated 2024-06-27 summarized AI/datacenter power-management theme and cable-stock rally narratives, but without named order or margin bridge confirmation.",
         "evidence_source": null,
         "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R1_loop_144_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C02_POWER_GRID_DATACENTER_CAPEX_research.md",
         "source_proxy_only": false,
@@ -279,76 +206,73 @@
       "schema_version": "v12_runtime_replay_spec_v1",
       "role": "guard",
       "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
-      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
       "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
       "runtime_bridge_group": "industrial_backlog_margin_bridge",
       "fixture_status": "ready_for_runtime_replay_fixture",
       "expected_runtime_primitives": [
-        "datacenter_customer",
+        "export_contract",
+        "government_customer",
         "order_backlog_to_sales",
-        "lead_time_extended",
-        "capacity_constraint",
-        "pricing_power_confirmed"
+        "delivery_schedule",
+        "cost_overrun"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer"
-      ],
-      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
-      "current_runtime_candidate_count": 44,
-      "current_runtime_stage_distribution": {
-        "1": 11,
-        "2": 33
-      },
-      "current_runtime_max_score": 72.9252,
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
       "current_missing_required_bridge_axes": [],
-      "current_top_failed_gates": [
-        {
-          "gate": "failed_stage3_total_score",
-          "count": 44
-        },
-        {
-          "gate": "failed_stage3_bottleneck",
-          "count": 44
-        },
-        {
-          "gate": "failed_stage3_contract_quality",
-          "count": 33
-        },
-        {
-          "gate": "failed_stage3_visibility",
-          "count": 22
-        },
-        {
-          "gate": "failed_sector_visibility",
-          "count": 22
-        },
-        {
-          "gate": "failed_domain_specific_evidence",
-          "count": 22
-        },
-        {
-          "gate": "failed_sector_bottleneck",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage2_total_score",
-          "count": 11
-        }
-      ],
+      "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C02_006340_20240516_power_grid_theme_overhang_blowoff_counterexample",
-        "trigger_id": "C02_006340_20240516_power_grid_theme_overhang_blowoff_counterexample_Stage4B_2024-05-16",
-        "symbol": "006340",
-        "as_of_date": "2024-05-14",
+        "case_id": "C03_272210_HANWHASYSTEMS_20220729_DEFENSE_ELECTRONICS_EXPORT_FALSE_GREEN",
+        "trigger_id": null,
+        "symbol": "272210",
+        "as_of_date": "2022-07-29",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 11.34,
+        "MAE_180D_pct": -30.24,
+        "evidence_available_at_that_date": null,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG_k2_ifv_c4i_component_export_backlog_2022_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
+    },
+    {
+      "schema_version": "v12_runtime_replay_spec_v1",
+      "role": "guard",
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "policy_project_cash_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "expected_runtime_primitives": [
+        "policy_or_regulatory_confirmed",
+        "project_award_confirmed",
+        "permit_or_legal_delay",
+        "direct_company_cash_route",
+        "cost_overrun"
+      ],
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
+      "current_missing_required_bridge_axes": [],
+      "current_top_failed_gates": [],
+      "candidate": {
+        "case_id": "C04_189860_SEOJEON_20240718_NUCLEAR_SWITCHGEAR_LEGAL_DELAY_4B",
+        "trigger_id": null,
+        "symbol": "189860",
+        "as_of_date": "2024-07-18",
         "trigger_type": "Stage4B",
-        "MFE_180D_pct": 3.26,
-        "MAE_180D_pct": -55.09,
-        "evidence_available_at_that_date": "2024-05-14 Newsis article said the stock had quadrupled in roughly six weeks, the largest shareholder block deal created overhang concern, and investor caution was needed.",
-        "evidence_source": "https://www.newsis.com/view/NISX20240514_0002734557",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R1_loop_139_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C02_POWER_GRID_DATACENTER_CAPEX_research.md",
+        "MFE_180D_pct": 22.7,
+        "MAE_180D_pct": -51.19,
+        "evidence_available_at_that_date": null,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY_smallcap_nuclear_project_delay_2024_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -369,22 +293,12 @@
         "cost_overrun",
         "delivery_schedule"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "C05_L129_375500_20241031_STAGE3G",
@@ -417,34 +331,24 @@
         "cost_overrun",
         "delivery_schedule"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C05_R1L218_CASE003_103230_20240516",
-        "trigger_id": "C05_R1L218_TRG003_103230_20240516_Stage2",
-        "symbol": "103230",
-        "as_of_date": "2024-05-16",
+        "case_id": "CASE_R1L127_C05_028050_20240403_FADHILI_CONTRACT_MARGIN_GAP",
+        "trigger_id": "TRG_R1L127_C05_028050_20240403_01",
+        "symbol": "028050",
+        "as_of_date": "2024-04-03",
         "trigger_type": "Stage2",
-        "MFE_180D_pct": 2.85,
-        "MAE_180D_pct": -47.2,
-        "evidence_available_at_that_date": "선박 디젤엔진 부품 exposure와 수주 성장 문맥은 있으나 issuer-level margin/cash 전환 근거가 약했다. 가격경로도 180D MFE가 거의 없이 큰 MAE를 남겨 report-text만으로 Actionable bonus를 주면 오류가 커진다.",
-        "evidence_source": "https://kind.krx.co.kr/common/disclsviewer.do?acptno=20240516000245&docno=&method=search&viewerhost=",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R1_loop_218_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C05_EPC_MEGA_CONTRACT_MARGIN_GAP_research.md",
+        "MFE_180D_pct": 15.81,
+        "MAE_180D_pct": -35.57,
+        "evidence_available_at_that_date": "SAMSUNG E&A won Fadhili Gas Increment Program Packages #1 and #4; the contract was a large EPC award but the 180D path showed a deep drawdown before later 2025 profit proof arrived.",
+        "evidence_source": "https://www.samsungena.com/en/newsroom/news/view?idx=15577; https://www.reuters.com/markets/commodities/aramco-awards-77-bln-contracts-fadhili-gas-expansion-2024-04-02/",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R1_loop_127_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C05_EPC_MEGA_CONTRACT_MARGIN_GAP_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -466,37 +370,13 @@
         "memory_price_increase_mentioned",
         "medium_term_revision_visibility"
       ],
-      "required_bridge_axes": [
-        "customer",
-        "backlog",
-        "contract",
-        "margin"
-      ],
-      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
-      "current_runtime_candidate_count": 19,
-      "current_runtime_stage_distribution": {
-        "3-Yellow": 19
-      },
-      "current_runtime_max_score": 80.0131,
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
       "current_missing_required_bridge_axes": [],
-      "current_top_failed_gates": [
-        {
-          "gate": "failed_stage3_total_score",
-          "count": 19
-        },
-        {
-          "gate": "failed_stage3_bottleneck",
-          "count": 19
-        },
-        {
-          "gate": "failed_stage2_information_confidence",
-          "count": 7
-        },
-        {
-          "gate": "failed_green_cross_evidence",
-          "count": 7
-        }
-      ],
+      "current_top_failed_gates": [],
       "candidate": {
         "case_id": "C06_R2L108_000660_HBM3E_CUSTOMER_CAPACITY_SOLDOUT_20240425",
         "trigger_id": "C06_R2L108_000660_T1",
@@ -529,48 +409,24 @@
         "memory_price_increase_mentioned",
         "medium_term_revision_visibility"
       ],
-      "required_bridge_axes": [
-        "customer",
-        "backlog",
-        "contract",
-        "margin"
-      ],
-      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
-      "current_runtime_candidate_count": 19,
-      "current_runtime_stage_distribution": {
-        "3-Yellow": 19
-      },
-      "current_runtime_max_score": 80.0131,
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
       "current_missing_required_bridge_axes": [],
-      "current_top_failed_gates": [
-        {
-          "gate": "failed_stage3_total_score",
-          "count": 19
-        },
-        {
-          "gate": "failed_stage3_bottleneck",
-          "count": 19
-        },
-        {
-          "gate": "failed_stage2_information_confidence",
-          "count": 7
-        },
-        {
-          "gate": "failed_green_cross_evidence",
-          "count": 7
-        }
-      ],
+      "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C06_005930_SAMSUNG_20240711_HBM_QUALIFICATION_LAG_FALSE_GREEN",
+        "case_id": "C06_000660_SKHYNIX_20240711_HBM_CAPACITY_PRICE_PREMIUM_4B",
         "trigger_id": null,
-        "symbol": "005930",
+        "symbol": "000660",
         "as_of_date": "2024-07-11",
-        "trigger_type": "Stage3-Yellow",
-        "MFE_180D_pct": 1.37,
-        "MAE_180D_pct": -43.04,
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 3.11,
+        "MAE_180D_pct": -39.96,
         "evidence_available_at_that_date": null,
         "evidence_source": null,
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_sk_hynix_samsung_hbm_capacity_2023_2024_research.md",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_hbm_customer_capacity_green_4b_guard_2023_2024_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -578,47 +434,38 @@
     },
     {
       "schema_version": "v12_runtime_replay_spec_v1",
-      "role": "green",
-      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
-      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "role": "guard",
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
       "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
       "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
       "fixture_status": "ready_for_runtime_replay_fixture",
       "expected_runtime_primitives": [
-        "named_customer_quality",
-        "qualification_confirmed",
-        "repeat_order_confirmed",
-        "socket_or_test_demand_visible",
-        "margin_bridge_visible"
+        "hbm_customer_order",
+        "customer_contract_visible",
+        "equipment_order_backlog",
+        "advanced_packaging_bottleneck",
+        "relative_strength_score",
+        "order_to_revenue_bridge"
       ],
-      "required_bridge_axes": [
-        "customer",
-        "backlog",
-        "contract",
-        "margin"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "customer",
-        "backlog",
-        "contract",
-        "margin"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "R2L11_C08_131290_TSE_HBM_PROBE_CARD",
-        "trigger_id": "R2L11_T02B_TSE_LATE_GREEN_4B_OVERLAY",
-        "symbol": "131290",
-        "as_of_date": "2024-04-26",
-        "trigger_type": "Stage3-Green",
-        "MFE_180D_pct": 11.14,
-        "MAE_180D_pct": -51.84,
-        "evidence_available_at_that_date": "Late confirmation/price breakout after most of the TSE upside had already appeared.",
-        "evidence_source": "public analyst/media summary; exact original URL enrichment required before production promotion",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_11_L2_AI_SEMICONDUCTOR_ELECTRONICS_C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY_research(1).md",
+        "case_id": "C07_031980_PSKH_20240614_HBM_PACKAGING_EQUIPMENT_PREMIUM_4B",
+        "trigger_id": null,
+        "symbol": "031980",
+        "as_of_date": "2024-06-14",
+        "trigger_type": "Stage3-Yellow",
+        "MFE_180D_pct": 6.62,
+        "MAE_180D_pct": -65.38,
+        "evidence_available_at_that_date": null,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH_di_yc_pskh_hbm_equipment_4b_2024_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -631,7 +478,7 @@
       "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
       "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
-      "fixture_status": "ready_for_runtime_replay_fixture",
+      "fixture_status": "needs_verified_green_source",
       "expected_runtime_primitives": [
         "named_customer_quality",
         "qualification_confirmed",
@@ -639,34 +486,24 @@
         "socket_or_test_demand_visible",
         "margin_bridge_visible"
       ],
-      "required_bridge_axes": [
-        "customer",
-        "backlog",
-        "contract",
-        "margin"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "customer",
-        "backlog",
-        "contract",
-        "margin"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C08_098120_MICROCONTACT_20240426_SECOND_WAVE_TEST_SOCKET_FALSE_GREEN",
+        "case_id": "C08_080580_OKINS_20240123_TEST_SOCKET_PRICE_PREMIUM_4B",
         "trigger_id": null,
-        "symbol": "098120",
-        "as_of_date": "2024-04-26",
-        "trigger_type": "Stage3-Yellow",
-        "MFE_180D_pct": 4.02,
-        "MAE_180D_pct": -60.33,
+        "symbol": "080580",
+        "as_of_date": "2024-01-23",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 8.28,
+        "MAE_180D_pct": -64.67,
         "evidence_available_at_that_date": null,
         "evidence_source": null,
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L2_AI_SEMICONDUCTOR_ELECTRONICS_C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY_second_wave_micro_socket_burnin_pcb_4b_2024_research.md",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L2_AI_SEMICONDUCTOR_ELECTRONICS_C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY_test_socket_customer_quality_2023_2024_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -687,20 +524,12 @@
         "customer_quality_visible",
         "capex_cycle_risk"
       ],
-      "required_bridge_axes": [
-        "guard_risk",
-        "valuation_repricing",
-        "customer"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "guard_risk",
-        "valuation_repricing",
-        "customer"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R2L14_C09_131290_TSE_LATE_GREEN_VALUATION_BLOWOFF",
@@ -733,32 +562,24 @@
         "customer_quality_visible",
         "capex_cycle_risk"
       ],
-      "required_bridge_axes": [
-        "guard_risk",
-        "valuation_repricing",
-        "customer"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "guard_risk",
-        "valuation_repricing",
-        "customer"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C09_036930_JUSUNG_20240408_DEPOSITION_EQUIPMENT_VALUATION_BLOWOFF",
+        "case_id": "C09_064760_TCK_20240614_PARTS_VALUATION_BLOWOFF_4B",
         "trigger_id": null,
-        "symbol": "036930",
-        "as_of_date": "2024-04-08",
-        "trigger_type": "Stage3-Yellow",
-        "MFE_180D_pct": 13.56,
-        "MAE_180D_pct": -39.59,
+        "symbol": "064760",
+        "as_of_date": "2024-06-14",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 6.01,
+        "MAE_180D_pct": -52.97,
         "evidence_available_at_that_date": null,
         "evidence_source": null,
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L2_AI_SEMICONDUCTOR_ELECTRONICS_C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF_hbm_equipment_blowoff_2024_research.md",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L2_AI_SEMICONDUCTOR_ELECTRONICS_C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF_deposition_parts_valuation_blowoff_2024_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -785,33 +606,13 @@
         "inventory_cycle_repair",
         "fcf_quality_score"
       ],
-      "required_bridge_axes": [
-        "customer",
-        "backlog",
-        "margin",
-        "valuation_repricing"
-      ],
-      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
-      "current_runtime_candidate_count": 1,
-      "current_runtime_stage_distribution": {
-        "2": 1
-      },
-      "current_runtime_max_score": 72.1181,
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
       "current_missing_required_bridge_axes": [],
-      "current_top_failed_gates": [
-        {
-          "gate": "failed_stage3_total_score",
-          "count": 1
-        },
-        {
-          "gate": "failed_stage3_visibility",
-          "count": 1
-        },
-        {
-          "gate": "failed_stage3_bottleneck",
-          "count": 1
-        }
-      ],
+      "current_top_failed_gates": [],
       "candidate": {
         "case_id": "C10_L228_05_317330_ADVANCED_ELECTRONIC_MATERIALS_ROUTE_EARLY_RESET_WITH_STRONG_ASYMMETRY",
         "trigger_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE|317330|Stage3-Green|2024-01-02",
@@ -849,44 +650,24 @@
         "inventory_cycle_repair",
         "fcf_quality_score"
       ],
-      "required_bridge_axes": [
-        "customer",
-        "backlog",
-        "margin",
-        "valuation_repricing"
-      ],
-      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
-      "current_runtime_candidate_count": 1,
-      "current_runtime_stage_distribution": {
-        "2": 1
-      },
-      "current_runtime_max_score": 72.1181,
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
       "current_missing_required_bridge_axes": [],
-      "current_top_failed_gates": [
-        {
-          "gate": "failed_stage3_total_score",
-          "count": 1
-        },
-        {
-          "gate": "failed_stage3_visibility",
-          "count": 1
-        },
-        {
-          "gate": "failed_stage3_bottleneck",
-          "count": 1
-        }
-      ],
+      "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C10_L232_08_089790",
-        "trigger_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE|089790|Stage4B|2024-07-23",
-        "symbol": "089790",
-        "as_of_date": "2024-07-22",
+        "case_id": "C10_L229_05_033640_AI_ADVANCED_PACKAGING_POP_COMMERCIALIZATION_ROUTE_WITHOUT_REVENUE_CONVERSION",
+        "trigger_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE|033640|Stage4B|2024-05-21",
+        "symbol": "033640",
+        "as_of_date": "2024-05-20",
         "trigger_type": "Stage4B",
-        "MFE_180D_pct": 1.59,
-        "MAE_180D_pct": -56.35,
-        "evidence_available_at_that_date": "burn-in handler patent/commercialization and HBM/DDR5 handler possibility; order finality absent",
-        "evidence_source": "https://www.theinvest.co.kr/brdview.php?ud=IC0722080008561a315eirn_45",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_232_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_research.md",
+        "MFE_180D_pct": 3.55,
+        "MAE_180D_pct": -66.52,
+        "evidence_available_at_that_date": "AI/HBM 2.5D 패키징 기반기술과 PoP 상용화 추진은 route evidence지만, 가격경로는 거의 MFE 없이 깊게 깨졌다.",
+        "evidence_source": "https://www.nepes.co.kr/kr/ir/overview.php?bgu=view&idx=1018",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_229_L2_AI_SEMICONDUCTOR_ELECTRONICS_C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -907,24 +688,12 @@
         "ex_credit_margin",
         "fcf_quality_score"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "C11_121600_NANOSINSO_20230209_CNT_ORDERBOOK_RERATING_GREEN",
@@ -957,36 +726,62 @@
         "ex_credit_margin",
         "fcf_quality_score"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C11_006110_SAMAAL_20230726_ALUMINUMFOIL_ORDERBOOK_FALSE_GREEN",
+        "case_id": "CASE_R3L130_C11_290670_20240611_06",
+        "trigger_id": "TRG_R3L130_C11_290670_20240611_06",
+        "symbol": "290670",
+        "as_of_date": "2024-06-11",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 5.56,
+        "MAE_180D_pct": -61.85,
+        "evidence_available_at_that_date": "Daebo Magnetic manufactures de-ironing / magnetic filters used in secondary-battery materials/cell processes. That is a real process link, but the 2024 sector-backlog trigger lacked named orderbook and produced large MAE. C11 should not over-credit de-ironing process identity.",
+        "evidence_source": "https://www.daebo.com/en/pr/news.php?boardid=news_en&category=&idx=1&mode=view&offset=6&sk=&sw= ; https://ca.finance.yahoo.com/quote/290670.KQ/profile/",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R3_loop_130_L3_BATTERY_EV_GREEN_MOBILITY_C11_BATTERY_ORDERBOOK_RERATING_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
+    },
+    {
+      "schema_version": "v12_runtime_replay_spec_v1",
+      "role": "guard",
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "expected_runtime_primitives": [
+        "customer_contract",
+        "call_off_risk",
+        "customer_capex_decline",
+        "contract_cancelled_or_delayed",
+        "volume_visibility"
+      ],
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
+      "current_missing_required_bridge_axes": [],
+      "current_top_failed_gates": [],
+      "candidate": {
+        "case_id": "C12_006110_SAMAAL_20231012_ALUMINUMFOIL_CALLOFF_LATECYCLE_4C_WATCH",
         "trigger_id": null,
         "symbol": "006110",
-        "as_of_date": "2023-07-26",
-        "trigger_type": "Stage3-Yellow",
-        "MFE_180D_pct": 15.52,
-        "MAE_180D_pct": -31.63,
+        "as_of_date": "2023-10-12",
+        "trigger_type": "Stage4C",
+        "MFE_180D_pct": 4.27,
+        "MAE_180D_pct": -64.37,
         "evidence_available_at_that_date": null,
         "evidence_source": null,
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L3_BATTERY_EV_GREEN_MOBILITY_C11_BATTERY_ORDERBOOK_RERATING_cathode_separator_foil_orderbook_4b_2023_research.md",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L3_BATTERY_EV_GREEN_MOBILITY_C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK_separator_aluminumfoil_calloff_risk_2023_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -1007,24 +802,12 @@
         "customer_contract",
         "policy_reversal_risk"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "C13_R3L235_CASE006_051490",
@@ -1057,36 +840,62 @@
         "customer_contract",
         "policy_reversal_risk"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C13_R3L190_006400_GM_JV_2023_LONG_LEAD_FALSE_POSITIVE",
-        "trigger_id": "R3L190_C13_006400_20230426_STAGE2",
-        "symbol": "006400",
-        "as_of_date": "2023-04-25",
+        "case_id": "C13_L232_04_452400_IPO_BATTERY_SAFETY_PARTS_CUSTOMER_ROUTE_WITH_VALUATION_PHASE_TRAP",
+        "trigger_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA|452400|Stage2|2024-02-01",
+        "symbol": "452400",
+        "as_of_date": "2024-01-19",
         "trigger_type": "Stage2",
-        "MFE_180D_pct": 5.97,
-        "MAE_180D_pct": -47.72,
-        "evidence_available_at_that_date": "Samsung SDI and GM agreed to form a U.S. EV battery-cell JV. Evidence quality was real but mostly long-lead customer/JV optionality; no near-term utilization, AMPC dollar capture, or margin conversion bridge was visible by entry.",
-        "evidence_source": "https://www.samsungsdi.com/sdi-now/sdi-news/3162.html?idx=3162&pageIndex=2&pagesize=15",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R3_loop_190_L3_BATTERY_EV_GREEN_MOBILITY_C13_BATTERY_JV_UTILIZATION_AMPC_IRA_research.md",
+        "MFE_180D_pct": 39.35,
+        "MAE_180D_pct": -76.42,
+        "evidence_available_at_that_date": null,
+        "evidence_source": "배터리 safety parts와 Hyundai Mobis / H Green Power route는 있었지만 IPO valuation phase가 과열되었고, utilization/cash proof가 부족했다.",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R3_loop_232_L3_BATTERY_EV_GREEN_MOBILITY_C13_BATTERY_JV_UTILIZATION_AMPC_IRA_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
+    },
+    {
+      "schema_version": "v12_runtime_replay_spec_v1",
+      "role": "guard",
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "canonical_archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "expected_runtime_primitives": [
+        "ev_demand_slowdown",
+        "inventory_spike",
+        "price_cut_risk",
+        "customer_capex_decline",
+        "thesis_break_confirmed"
+      ],
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
+      "current_missing_required_bridge_axes": [],
+      "current_top_failed_gates": [],
+      "candidate": {
+        "case_id": "C14_R3L127_003670_20240124",
+        "trigger_id": "TRG_C14_R3L127_003670_20240124",
+        "symbol": "003670",
+        "as_of_date": "2024-01-23",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 30.65,
+        "MAE_180D_pct": -25.1,
+        "evidence_available_at_that_date": "Yonhap News, 2024-01-23, POSCO Future M 2023 earnings shock / EV demand slowdown / customer inventory / lithium price decline, https://www.yna.co.kr/view/AKR20240123125451003",
+        "evidence_source": "Yonhap News, 2024-01-23, POSCO Future M 2023 earnings shock / EV demand slowdown / customer inventory / lithium price decline, https://www.yna.co.kr/view/AKR20240123125451003",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R3_loop_127_L3_BATTERY_EV_GREEN_MOBILITY_C14_EV_DEMAND_SLOWDOWN_4B_4C_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -1107,20 +916,12 @@
         "pricing_power_confirmed",
         "fcf_quality_score"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "C15_298020_HYOSUNG_TNC_20210114_SPANDEX_SPREAD_SUPERCYCLE",
@@ -1153,32 +954,62 @@
         "pricing_power_confirmed",
         "fcf_quality_score"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C15_004020_20240207_STEEL_SPREAD_SUPERCYCLE_FALSE_POSITIVE",
-        "trigger_id": "C15_004020_20240207_S2_FALSE_POSITIVE",
-        "symbol": "004020",
-        "as_of_date": "2024-02-07",
+        "case_id": "R4L16_C15_018470_CHOIL_ALUMINUM_SUPERCYCLE_20210713",
+        "trigger_id": "R4L16_C15_018470_T1",
+        "symbol": "018470",
+        "as_of_date": "2021-07-13",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 264.11,
+        "MAE_180D_pct": -1.44,
+        "evidence_available_at_that_date": "Aluminum sheet/rolled-product spread and tight supply narrative produced a genuine supercycle leg. The row sequence from 2021-07-13 to 2021-09-08 shows a move from 1,045 close to a 3,805 high, but the later drawdown argues for a separate 4B overlay rather than rejecting the entry signal.",
+        "evidence_source": "Songdaiki/stock-web tradable rows; historical aluminum/product spread context; exact contemporaneous report URL enrichment pending",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R4_loop_16_L4_MATERIALS_SPREAD_RESOURCE_C15_MATERIAL_SPREAD_SUPERCYCLE_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false
+      },
+      "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
+    },
+    {
+      "schema_version": "v12_runtime_replay_spec_v1",
+      "role": "guard",
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "fixture_status": "ready_for_runtime_replay_fixture",
+      "expected_runtime_primitives": [
+        "offtake_contract",
+        "supply_shortage",
+        "policy_supply_support",
+        "permit_status",
+        "direct_company_cash_route"
+      ],
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
+      "current_missing_required_bridge_axes": [],
+      "current_top_failed_gates": [],
+      "candidate": {
+        "case_id": "R4L71_C16_000910_RARE_EARTH_POLICY_PRICE_ONLY_COUNTER",
+        "trigger_id": "TR_R4L71_C16_000910_FALSE_S2_20230704",
+        "symbol": "000910",
+        "as_of_date": "2023-07-04",
         "trigger_type": "Stage2",
-        "MFE_180D_pct": 1.35,
-        "MAE_180D_pct": -45.68,
-        "evidence_available_at_that_date": null,
-        "evidence_source": null,
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R4_loop_100_L4_MATERIALS_SPREAD_RESOURCE_C15_MATERIAL_SPREAD_SUPERCYCLE_research(1).md",
+        "MFE_180D_pct": 21.74,
+        "MAE_180D_pct": -26.71,
+        "evidence_available_at_that_date": "China rare-earth/gallium/germanium policy headline created resource-theme attention, but company-level order/offtake/margin bridge was missing.",
+        "evidence_source": "historical_public_policy_event + stock-web price path; no company-level supply contract evidence used for promotion",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R4_loop_71_L4_MATERIALS_SPREAD_RESOURCE_C16_STRATEGIC_RESOURCE_POLICY_SUPPLY_research(2).md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -1199,20 +1030,12 @@
         "inventory_cycle",
         "opm_expansion_pctp"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R4L11_C17_011780_KUMHO_NB_LATEX_SPREAD_SUPERCYCLE_20210121",
@@ -1245,20 +1068,12 @@
         "inventory_cycle",
         "opm_expansion_pctp"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R4L11_C17_DAEHAN_NCC_SPREAD_FALSE_GREEN_2021",
@@ -1291,20 +1106,12 @@
         "channel_reorder_confirmed",
         "opm_expansion_pctp"
       ],
-      "required_bridge_axes": [
-        "consumer_sell_through",
-        "margin",
-        "customer"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "consumer_sell_through",
-        "margin",
-        "customer"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R13L41_C18_SAMYANG_003230_EXPORT_REORDER",
@@ -1337,32 +1144,24 @@
         "channel_reorder_confirmed",
         "opm_expansion_pctp"
       ],
-      "required_bridge_axes": [
-        "consumer_sell_through",
-        "margin",
-        "customer"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "consumer_sell_through",
-        "margin",
-        "customer"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "R5L15-C18-097950-CJ-LEGACY-FOOD-FALSE-GREEN",
-        "trigger_id": "R5L15-C18-097950-T1",
-        "symbol": "097950",
-        "as_of_date": "2024-05-16",
-        "trigger_type": "Stage3-Yellow",
-        "MFE_180D_pct": 22.19,
-        "MAE_180D_pct": -30.28,
-        "evidence_available_at_that_date": "K-food/global brand distribution narrative and early result improvement visible, but channel reorder was not cleanly separable from legacy food, commodity, and base effects.",
-        "evidence_source": "historical public quarterly result / disclosure-family evidence; stock-web price row confirmed in atlas/ohlcv_tradable_by_symbol_year/097/097950/2024.csv",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R5_loop_15_L5_CONSUMER_BRAND_DISTRIBUTION_C18_CONSUMER_EXPORT_CHANNEL_REORDER_research.md",
+        "case_id": "C18_017810_PULMUONE_20240628_FROZEN_FOOD_EXPORT_CHANNEL_4B",
+        "trigger_id": null,
+        "symbol": "017810",
+        "as_of_date": "2024-06-28",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 8.49,
+        "MAE_180D_pct": -40.25,
+        "evidence_available_at_that_date": null,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L5_CONSUMER_BRAND_DISTRIBUTION_C18_CONSUMER_EXPORT_CHANNEL_REORDER_kfood_export_channel_reorder_2024_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -1383,31 +1182,23 @@
         "channel_reorder_confirmed",
         "raw_material_cost_risk"
       ],
-      "required_bridge_axes": [
-        "consumer_sell_through",
-        "margin",
-        "customer"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "consumer_sell_through",
-        "margin",
-        "customer"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "R13L45_C19_036620_GAMSUNG_RETAIL_MARGIN_SUCCESS",
-        "trigger_id": "R13L45_036620_STAGE3_GREEN_2024-05-21",
-        "symbol": "036620",
-        "as_of_date": "2024-05-21",
+        "case_id": "R13L45_C19_337930_BRANDX_DTC_REORDER_SUCCESS_4B",
+        "trigger_id": "R13L45_337930_STAGE3_GREEN_2024-08-09",
+        "symbol": "337930",
+        "as_of_date": "2024-08-09",
         "trigger_type": "Stage3-Green",
-        "MFE_180D_pct": 12.07,
-        "MAE_180D_pct": -33.45,
-        "evidence_available_at_that_date": "Later confirmation after most of the upside had already been captured by Stage2.",
-        "evidence_source": "DART/market confirmation + stock-web 2024 shard rows around 2024-05-21",
+        "MFE_180D_pct": 17.06,
+        "MAE_180D_pct": -55.82,
+        "evidence_available_at_that_date": "Later confirmation after July/August vertical price move.",
+        "evidence_source": "DART/market confirmation + stock-web 2024 shard rows around 2024-08-09",
         "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_45_L5_CONSUMER_BRAND_DISTRIBUTION_C19_BRAND_RETAIL_INVENTORY_MARGIN_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
@@ -1429,32 +1220,24 @@
         "channel_reorder_confirmed",
         "raw_material_cost_risk"
       ],
-      "required_bridge_axes": [
-        "consumer_sell_through",
-        "margin",
-        "customer"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "consumer_sell_through",
-        "margin",
-        "customer"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "R5L31_C19_FNF_20230516_CHINA_INVENTORY_FALSE_GREEN",
-        "trigger_id": "R5L31_T03_FNF_STAGE2_INVENTORY_RISK_20230516",
-        "symbol": "383220",
-        "as_of_date": "2023-05-16",
-        "trigger_type": "Stage2-Actionable",
-        "MFE_180D_pct": 2.76,
-        "MAE_180D_pct": -37.2,
-        "evidence_available_at_that_date": "quarterly earnings / brand retail inventory and margin bridge signal available by trigger date; price not used for promotion",
-        "evidence_source": "company/DART/KIND earnings-disclosure family; analyst/public reporting family; stock-web OHLC for outcome validation only",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R5_loop_31_L5_CONSUMER_BRAND_DISTRIBUTION_C19_BRAND_RETAIL_INVENTORY_MARGIN_research.md",
+        "case_id": "C19_081660_FILA_20240801_BRAND_INVENTORY_PRICE_PREMIUM_4B",
+        "trigger_id": null,
+        "symbol": "081660",
+        "as_of_date": "2024-08-01",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 1.12,
+        "MAE_180D_pct": -24.52,
+        "evidence_available_at_that_date": null,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L5_CONSUMER_BRAND_DISTRIBUTION_C19_BRAND_RETAIL_INVENTORY_MARGIN_apparel_inventory_margin_2023_2024_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -1475,52 +1258,13 @@
         "repeat_order_confirmed",
         "high_margin_mix_improvement"
       ],
-      "required_bridge_axes": [
-        "consumer_sell_through",
-        "margin",
-        "customer"
-      ],
-      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
-      "current_runtime_candidate_count": 22,
-      "current_runtime_stage_distribution": {
-        "1": 22
-      },
-      "current_runtime_max_score": 64.161,
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
       "current_missing_required_bridge_axes": [],
-      "current_top_failed_gates": [
-        {
-          "gate": "failed_stage2_total_score",
-          "count": 22
-        },
-        {
-          "gate": "failed_stage3_total_score",
-          "count": 22
-        },
-        {
-          "gate": "failed_stage3_visibility",
-          "count": 22
-        },
-        {
-          "gate": "failed_stage3_bottleneck",
-          "count": 22
-        },
-        {
-          "gate": "failed_stage3_market_mispricing",
-          "count": 22
-        },
-        {
-          "gate": "failed_stage3_valuation",
-          "count": 22
-        },
-        {
-          "gate": "failed_sector_bottleneck",
-          "count": 11
-        },
-        {
-          "gate": "failed_domain_specific_evidence",
-          "count": 11
-        }
-      ],
+      "current_top_failed_gates": [],
       "candidate": {
         "case_id": "C20-R5L135-02",
         "trigger_id": "e2r_stock_web_v12_residual_round_R5_loop_135_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
@@ -1552,63 +1296,24 @@
         "repeat_order_confirmed",
         "high_margin_mix_improvement"
       ],
-      "required_bridge_axes": [
-        "consumer_sell_through",
-        "margin",
-        "customer"
-      ],
-      "current_runtime_gap_status": "runtime_stage3_gate_blocked",
-      "current_runtime_candidate_count": 22,
-      "current_runtime_stage_distribution": {
-        "1": 22
-      },
-      "current_runtime_max_score": 64.161,
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
       "current_missing_required_bridge_axes": [],
-      "current_top_failed_gates": [
-        {
-          "gate": "failed_stage2_total_score",
-          "count": 22
-        },
-        {
-          "gate": "failed_stage3_total_score",
-          "count": 22
-        },
-        {
-          "gate": "failed_stage3_visibility",
-          "count": 22
-        },
-        {
-          "gate": "failed_stage3_bottleneck",
-          "count": 22
-        },
-        {
-          "gate": "failed_stage3_market_mispricing",
-          "count": 22
-        },
-        {
-          "gate": "failed_stage3_valuation",
-          "count": 22
-        },
-        {
-          "gate": "failed_sector_bottleneck",
-          "count": 11
-        },
-        {
-          "gate": "failed_domain_specific_evidence",
-          "count": 11
-        }
-      ],
+      "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C20_R5L25_439090",
-        "trigger_id": "TR_C20_439090_20230608_IPO",
-        "symbol": "439090",
-        "as_of_date": "2023-06-08",
-        "trigger_type": "IPO/theme trigger",
-        "MFE_180D_pct": 27.4,
-        "MAE_180D_pct": -52.0,
-        "evidence_available_at_that_date": "new listing and global K-beauty brand narrative; no repeat-order confirmation on trigger date",
-        "evidence_source": "stock-web first trading row/profile; public IPO source to be attached before production",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R5_loop_25_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_research.md",
+        "case_id": "R5L10_C20_362320_CHEONGDAM_GLOBAL_REOPENING_COUNTER_20230119",
+        "trigger_id": "R5L10_C20_362320_T1_STAGE2_NARRATIVE_GUARD_20230119",
+        "symbol": "362320",
+        "as_of_date": "2023-01-19",
+        "trigger_type": "Stage2-Guard",
+        "MFE_180D_pct": 12.75,
+        "MAE_180D_pct": -52.29,
+        "evidence_available_at_that_date": "China/reopening/beauty-distribution story showed price response, but lacked multi-region reorder proof and margin/revision bridge.",
+        "evidence_source": "historical public filing/news evidence map; price rows from stock-web",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R5_loop_10_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_research(1).md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -1629,20 +1334,12 @@
         "capital_return_execution",
         "credit_cost_quality"
       ],
-      "required_bridge_axes": [
-        "capital_return",
-        "valuation_repricing",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "capital_return",
-        "valuation_repricing",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R13L22_C21_KBFG_105560_2025_CAPITAL_RETURN_CONFIRMED",
@@ -1675,32 +1372,24 @@
         "capital_return_execution",
         "credit_cost_quality"
       ],
-      "required_bridge_axes": [
-        "capital_return",
-        "valuation_repricing",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "capital_return",
-        "valuation_repricing",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "R6L60_C21_KAKAOBANK_2024_POLICYONLY_COUNTEREXAMPLE",
-        "trigger_id": "R6L60_C21_KAKAOBANK_POLICYONLY_20240226",
-        "symbol": "323410",
-        "as_of_date": "2024-02-26",
-        "trigger_type": "Stage2-PolicyOnly",
-        "MFE_180D_pct": 1.66,
-        "MAE_180D_pct": -38.67,
-        "evidence_available_at_that_date": "Policy/value-up narrative applied to financial names, but company-specific capital return and ROE-to-PBR bridge were not confirmed.",
-        "evidence_source": "policy/date context plus stock-web shard 323/323410/2024.csv; no company-specific shareholder-return disclosure used for positive promotion",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R6_loop_60_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN_research.md",
+        "case_id": "R6L14_C21_JEJUBANK_PRICEONLY_2023",
+        "trigger_id": "R6L14_T005_JEJUBANK_PRICEONLY_STAGE2",
+        "symbol": "006220",
+        "as_of_date": "2023-01-17",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 87.45,
+        "MAE_180D_pct": -45.76,
+        "evidence_available_at_that_date": "Price-only regional-bank/low-float financial theme. No verified capital-return, ROE/PBR, or shareholder-return evidence at trigger date.",
+        "evidence_source": "Narrative-only market theme label plus stock-web row trace: 2023-01-17 close 13,550 in atlas/ohlcv_tradable_by_symbol_year/006/006220/2023.csv.",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R6_loop_14_L6_FINANCIAL_CAPITAL_RETURN_DIGITAL_C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -1721,20 +1410,12 @@
         "loss_ratio_quality",
         "capital_return_execution"
       ],
-      "required_bridge_axes": [
-        "insurance_quality",
-        "capital_return",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "insurance_quality",
-        "capital_return",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R6L47_C22_032830_SAMSUNG_LIFE_VALUEUP_RESERVE_BRIDGE",
@@ -1767,20 +1448,12 @@
         "loss_ratio_quality",
         "capital_return_execution"
       ],
-      "required_bridge_axes": [
-        "insurance_quality",
-        "capital_return",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "insurance_quality",
-        "capital_return",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "C22_088350_2024-07-11_Stage2-FalsePositive_life_insurance_valueup_label_without_reserve_capital_return_bridge",
@@ -1813,32 +1486,35 @@
         "partner_economics_visible",
         "reimbursement_confirmed"
       ],
-      "required_bridge_axes": [
-        "bio_commercialization",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "bio_commercialization",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R7L10_C23_YUHAN_LAZCLUZE_FDA_20240821",
-        "trigger_id": "T_YUHAN_20240821_STAGE2_APPROVAL",
+        "trigger_id": "T_YUHAN_20240924_GREEN_LABEL_COMPARISON",
         "symbol": "000100",
-        "as_of_date": "2024-08-20",
-        "trigger_type": "Stage2-Actionable",
-        "MFE_180D_pct": 76.99,
-        "MAE_180D_pct": -2.97,
+        "as_of_date": "2024-09-24",
+        "trigger_type": "Stage3-Green",
+        "MFE_180D_pct": 6.31,
+        "MAE_180D_pct": -36.05,
         "evidence_available_at_that_date": "FDA/J&J approval converted optionality into label-backed commercialization route; waiting for revision confirmation would enter after much of the first-leg MFE.",
         "evidence_source": "public regulatory approval/rejection reporting and stock-web OHLC validation",
         "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R7_loop_10_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION_research(1).md",
         "source_proxy_only": false,
-        "evidence_url_pending": false
+        "evidence_url_pending": false,
+        "source_expected_runtime_primitives": [
+          "regulatory_approval_confirmed",
+          "approval_to_revenue_bridge",
+          "royalty_route",
+          "partner_economics_visible",
+          "reimbursement_confirmed",
+          "medium_term_revision_visibility",
+          "low_red_team_risk"
+        ]
       },
       "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
     },
@@ -1857,30 +1533,24 @@
         "partner_economics_visible",
         "reimbursement_confirmed"
       ],
-      "required_bridge_axes": [
-        "bio_commercialization",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "bio_commercialization",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "R7L10_C23_HLB_PRE_PDUFA_FALSE_GREEN_20240430",
-        "trigger_id": "T_HLB_20240430_PRE_PDUFA_FALSE_GREEN",
-        "symbol": "028300",
-        "as_of_date": "2024-04-30",
-        "trigger_type": "Stage3-Green",
-        "MFE_180D_pct": 2.79,
-        "MAE_180D_pct": -59.4,
-        "evidence_available_at_that_date": "Pre-PDUFA optionality and relative strength should not be allowed to become Green before label approval and commercialization economics are public.",
-        "evidence_source": "public regulatory approval/rejection reporting and stock-web OHLC validation",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R7_loop_10_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION_research(1).md",
+        "case_id": "C23-R7L100-04",
+        "trigger_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION|128940|Stage2-Actionable|2022-09-13",
+        "symbol": "128940",
+        "as_of_date": "2022-09-13",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 11.3115,
+        "MAE_180D_pct": -26.7213,
+        "evidence_available_at_that_date": true,
+        "evidence_source": null,
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R7_loop_100_L7_BIO_HEALTHCARE_MEDICAL_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION_research(2).md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -1901,62 +1571,12 @@
         "safety_signal",
         "cash_runway_risk"
       ],
-      "required_bridge_axes": [
-        "bio_commercialization",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "bio_commercialization",
-        "guard_risk"
-      ],
-      "current_top_failed_gates": [],
-      "candidate": {
-        "case_id": "R7L12-C24-028300-HLB-BINARY-READOUT-REGULATORY-REUSE",
-        "trigger_id": "R7L12-C24-028300-T1-PRE-EVENT-FALSE-GREEN-20240516",
-        "symbol": "028300",
-        "as_of_date": "2024-05-16",
-        "trigger_type": "Stage3-Green",
-        "MFE_180D_pct": 11.59,
-        "MAE_180D_pct": -52.87,
-        "evidence_available_at_that_date": "Pre-event anticipation and price strength existed, but endpoint/regulatory confirmation was absent; this row was already used in C23 and is included here only as a C24 guardrail comparison.",
-        "evidence_source": "local R7 loop11 stock-web computed row; stock-web 028300 2024-05-16 c=95,800 and 2024-05-17 c=67,100",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R7_loop_12_L7_BIO_HEALTHCARE_MEDICAL_C24_BIO_TRIAL_DATA_EVENT_RISK_research.md",
-        "source_proxy_only": false,
-        "evidence_url_pending": false
-      },
-      "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
-    },
-    {
-      "schema_version": "v12_runtime_replay_spec_v1",
-      "role": "guard",
-      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
-      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
-      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
-      "fixture_status": "ready_for_runtime_replay_fixture",
-      "expected_runtime_primitives": [
-        "trial_quality_visible",
-        "binary_event_unresolved",
-        "approval_not_confirmed",
-        "safety_signal",
-        "cash_runway_risk"
-      ],
-      "required_bridge_axes": [
-        "bio_commercialization",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
-      "current_runtime_candidate_count": 0,
-      "current_runtime_stage_distribution": {},
-      "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "bio_commercialization",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R7L15-C24-288330-BRIDGEBIO-BBT877-RESET-20230623",
@@ -1989,18 +1609,12 @@
         "consumable_repeat_revenue",
         "gross_margin_bridge"
       ],
-      "required_bridge_axes": [
-        "bio_commercialization",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "bio_commercialization",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "C25_335890_VIOL_20230113_AESTHETIC_RF_EXPORT_CONSUMABLE_RERATING",
@@ -2033,29 +1647,23 @@
         "consumable_repeat_revenue",
         "gross_margin_bridge"
       ],
-      "required_bridge_axes": [
-        "bio_commercialization",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "bio_commercialization",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C25_209_DENTIUM_4Q23_EXPORT_RECOVERY_FALSE_POSITIVE",
-        "trigger_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT_210_06",
-        "symbol": "145720",
-        "as_of_date": "2024-02-29",
-        "trigger_type": "Stage2-Actionable",
-        "MFE_180D_pct": 2.98,
-        "MAE_180D_pct": -62.55,
-        "evidence_available_at_that_date": "Dentium 4Q23 looked strong on revenue/OP and export recovery, but dental implant export recovery still carried China/VBP and digital-dentistry quality risk.",
-        "evidence_source": "https://securities.miraeasset.com/newir/view/pc/en/investor/researchReportsView.jsp?messageId=2318824 ; https://www.asiae.co.kr/en/article/2023042008253300248",
+        "case_id": "C25_209_LUNIT_SAMSUNG_DISTRIBUTION_HIGH_MAE",
+        "trigger_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT_210_02",
+        "symbol": "328130",
+        "as_of_date": "2024-01-16",
+        "trigger_type": "Stage2",
+        "MFE_180D_pct": 4.35,
+        "MAE_180D_pct": -59.16,
+        "evidence_available_at_that_date": "Lunit announced Samsung X-ray device integration targeting US/Canada/Europe, but this was distribution option value rather than realized reimbursement or procedure-volume conversion.",
+        "evidence_source": "https://www.lunit.io/en/media-hub/lunit-ai-solutions-to-power-samsungs-x-ray-devices-for-advanced-chest-screening/",
         "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R7_loop_210_L7_BIO_HEALTHCARE_MEDICAL_C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
@@ -2077,20 +1685,12 @@
         "operating_leverage_visible",
         "regulatory_risk"
       ],
-      "required_bridge_axes": [
-        "software_retention",
-        "customer",
-        "margin"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "software_retention",
-        "customer",
-        "margin"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "C26_SOOP_2021_CREATOR_PLATFORM_OPERATING_LEVERAGE",
@@ -2123,20 +1723,12 @@
         "operating_leverage_visible",
         "regulatory_risk"
       ],
-      "required_bridge_axes": [
-        "software_retention",
-        "customer",
-        "margin"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "software_retention",
-        "customer",
-        "margin"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R8L15_C26_KAKAO_2021_REG_CAP",
@@ -2169,20 +1761,12 @@
         "user_retention",
         "token_or_theme_hype_risk"
       ],
-      "required_bridge_axes": [
-        "software_retention",
-        "customer",
-        "margin"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "software_retention",
-        "customer",
-        "margin"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "C27_194480_DEVSISTERS_20210121_COOKIE_RUN_KINGDOM_GLOBAL_IP_RERATING",
@@ -2215,32 +1799,24 @@
         "user_retention",
         "token_or_theme_hype_risk"
       ],
-      "required_bridge_axes": [
-        "software_retention",
-        "customer",
-        "margin"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "software_retention",
-        "customer",
-        "margin"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C27_259960_KRAFTON_20211112_GLOBAL_GAME_IP_RELEASE_FALSE_GREEN",
-        "trigger_id": null,
-        "symbol": "259960",
-        "as_of_date": "2021-11-12",
-        "trigger_type": "Stage3-Yellow",
-        "MFE_180D_pct": 8.41,
-        "MAE_180D_pct": -60.28,
-        "evidence_available_at_that_date": null,
-        "evidence_source": null,
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L8_PLATFORM_CONTENT_SW_SECURITY_C27_CONTENT_IP_GLOBAL_MONETIZATION_game_ip_launch_nft_retention_2021_2022_research.md",
+        "case_id": "C27_STUDIO_DRAGON_2021_OTT_NARRATIVE",
+        "trigger_id": "T_C27_STUDIO_2021_STAGE2_20211119",
+        "symbol": "253450",
+        "as_of_date": "2021-11-19",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 2.59,
+        "MAE_180D_pct": -34.44,
+        "evidence_available_at_that_date": "K-content/OTT narrative was highly visible after global Korean drama momentum, but margin bridge and owned-IP monetization visibility were weak.",
+        "evidence_source": "public K-content/OTT narrative and stock-web OHLC row; later path shows narrative without margin conversion.",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R8_loop_22_L8_PLATFORM_CONTENT_SW_SECURITY_C27_CONTENT_IP_GLOBAL_MONETIZATION_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -2261,20 +1837,12 @@
         "rpo_to_sales",
         "recurring_margin_leverage"
       ],
-      "required_bridge_axes": [
-        "software_retention",
-        "customer",
-        "margin"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "software_retention",
-        "customer",
-        "margin"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "C28_058970_EMRO_20230315_SCM_SAAS_CONTRACT_RERATING",
@@ -2307,20 +1875,12 @@
         "rpo_to_sales",
         "recurring_margin_leverage"
       ],
-      "required_bridge_axes": [
-        "software_retention",
-        "customer",
-        "margin"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "software_retention",
-        "customer",
-        "margin"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R8L10_C28_CASE_003_HANCOM_2024_AI_OFFICE_FALSE_GREEN",
@@ -2353,24 +1913,12 @@
         "pricing_power_confirmed",
         "fcf_quality_score"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R9L33-C29-000270-KIA-2023-FY22-VOLUME-MIX-MARGIN",
@@ -2403,24 +1951,12 @@
         "pricing_power_confirmed",
         "fcf_quality_score"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R9L11_C29_011210_ENGINE_PARTS_FALSE_STAGE2",
@@ -2453,20 +1989,12 @@
         "occupancy_or_presale_visible",
         "funding_cost_risk"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R10L15_C30_000720_POS_20210405",
@@ -2499,29 +2027,21 @@
         "occupancy_or_presale_visible",
         "funding_cost_risk"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C30_014790_HLDNI_20230925_PF_BALANCE_SHEET_YELLOW_FALSE_GREEN",
+        "case_id": "C30_004960_HANSHIN_20230915_PF_CREDIT_PRICE_PREMIUM_4B",
         "trigger_id": null,
-        "symbol": "014790",
-        "as_of_date": "2023-09-25",
-        "trigger_type": "Stage3-Yellow",
-        "MFE_180D_pct": 1.54,
-        "MAE_180D_pct": -14.46,
+        "symbol": "004960",
+        "as_of_date": "2023-09-15",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 0.39,
+        "MAE_180D_pct": -20.72,
         "evidence_available_at_that_date": null,
         "evidence_source": null,
         "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L9_CONSTRUCTION_REAL_ESTATE_PF_CREDIT_C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK_ty_hl_hanshin_pf_liquidity_4c_2023_research.md",
@@ -2545,20 +2065,12 @@
         "implementation_timeline",
         "policy_headline_only"
       ],
-      "required_bridge_axes": [
-        "guard_risk",
-        "valuation_repricing",
-        "contract"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "guard_risk",
-        "valuation_repricing",
-        "contract"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "C31_112610_202208",
@@ -2591,32 +2103,24 @@
         "implementation_timeline",
         "policy_headline_only"
       ],
-      "required_bridge_axes": [
-        "guard_risk",
-        "valuation_repricing",
-        "contract"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "guard_risk",
-        "valuation_repricing",
-        "contract"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "C31_011930_SHINSUNGENG_20220811_SOLAR_CLEANROOM_POLICY_FALSE_GREEN",
-        "trigger_id": null,
-        "symbol": "011930",
-        "as_of_date": "2022-08-11",
-        "trigger_type": "Stage3-Yellow",
-        "MFE_180D_pct": 8.75,
-        "MAE_180D_pct": -38.57,
-        "evidence_available_at_that_date": null,
-        "evidence_source": null,
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L10_POLICY_SUBSIDY_GOVERNANCE_EVENT_C31_POLICY_SUBSIDY_LEGISLATION_EVENT_ira_solar_manufacturing_tax_credit_4b_2022_research.md",
+        "case_id": "R11L15-C31-389260-IRA-DEVELOPER-HIGHMAE",
+        "trigger_id": "R11L15-C31-389260-S2A-20220816",
+        "symbol": "389260",
+        "as_of_date": "2022-08-16",
+        "trigger_type": "Stage2-Actionable",
+        "MFE_180D_pct": 39.89,
+        "MAE_180D_pct": -38.56,
+        "evidence_available_at_that_date": "IRA renewable subsidy event and local renewable developer optionality created fast repricing, but the forward path was price-volatility dominated and needed early 4B overlay.",
+        "evidence_source": "historical public law/event plus developer policy-beta route; price rows from stock-web shard",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R11_loop_15_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C31_POLICY_SUBSIDY_LEGISLATION_EVENT_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -2637,18 +2141,12 @@
         "regulatory_approval_confirmed",
         "event_spread_risk"
       ],
-      "required_bridge_axes": [
-        "capital_return",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "capital_return",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": null,
@@ -2681,30 +2179,24 @@
         "regulatory_approval_confirmed",
         "event_spread_risk"
       ],
-      "required_bridge_axes": [
-        "capital_return",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "capital_return",
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "R13_C32_HANMI_008930_2024_OCI_FAMILY_CONTROL_DISPUTE",
-        "trigger_id": "R13_C32_HANMI_2024_T1_OVERLAY",
+        "case_id": "C32_HANMI_2024_CONTROL_DISPUTE",
+        "trigger_id": "C32_HANMI_2024_T1",
         "symbol": "008930",
         "as_of_date": "2024-01-15",
-        "trigger_type": "4C",
+        "trigger_type": "Stage2_event_premium_risk_watch",
         "MFE_180D_pct": 29.79,
-        "MAE_180D_pct": -29.91,
-        "evidence_available_at_that_date": "Governance/strategic-investor and family-control dispute produced a short event premium, but there was no stable operating bridge; subsequent price path gave back the premium.",
-        "evidence_source": "historical public-event timeline; price row verified from Songdaiki/stock-web shard",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_10_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP_research.md",
+        "MAE_180D_pct": -30.02,
+        "evidence_available_at_that_date": "OCI-Hanmi integration/control-dispute evidence created event premium, but no binding tender closeout or low-red-team governance path existed.",
+        "evidence_source": "public merger/control-dispute chronology; stock-web shard row 2024-01-15 c=43300",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R11_loop_10_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -2725,52 +2217,13 @@
         "missing_cashflow_bridge",
         "theme_hype_without_revenue"
       ],
-      "required_bridge_axes": [
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "runtime_input_evidence_missing",
-      "current_runtime_candidate_count": 11,
-      "current_runtime_stage_distribution": {
-        "1": 11
-      },
-      "current_runtime_max_score": 9.308,
-      "current_missing_required_bridge_axes": [
-        "guard_risk"
-      ],
-      "current_top_failed_gates": [
-        {
-          "gate": "failed_stage2_total_score",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage2_eps_fcf",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage2_valuation",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage2_information_confidence",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_total_score",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_eps_fcf",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_visibility",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_bottleneck",
-          "count": 11
-        }
-      ],
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
+      "current_missing_required_bridge_axes": [],
+      "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R13SFP_267260_HDHE_ORDER_BACKLOG_CONTROL",
         "trigger_id": null,
@@ -2781,23 +2234,23 @@
         "MAE_180D_pct": -2.02,
         "evidence_available_at_that_date": null,
         "evidence_source": null,
-        "source_large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
-        "source_canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_153_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false,
         "source_expected_runtime_primitives": [
+          "datacenter_customer",
           "order_backlog_to_sales",
-          "contract_amount_to_prior_sales",
-          "contract_duration_months",
-          "customer_contract_visible",
-          "record_backlog",
+          "lead_time_extended",
+          "capacity_constraint",
+          "pricing_power_confirmed",
           "delivery_schedule",
           "order_to_revenue_bridge",
           "margin_bridge_visible",
-          "opm_expansion_pctp",
-          "capacity_constraint"
+          "medium_term_revision_visibility",
+          "cash_collection_visible"
         ],
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_153_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW_research.md",
-        "source_proxy_only": false,
-        "evidence_url_pending": false
+        "source_canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+        "source_large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID"
       },
       "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
     },
@@ -2816,52 +2269,13 @@
         "missing_cashflow_bridge",
         "theme_hype_without_revenue"
       ],
-      "required_bridge_axes": [
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "runtime_input_evidence_missing",
-      "current_runtime_candidate_count": 11,
-      "current_runtime_stage_distribution": {
-        "1": 11
-      },
-      "current_runtime_max_score": 9.308,
-      "current_missing_required_bridge_axes": [
-        "guard_risk"
-      ],
-      "current_top_failed_gates": [
-        {
-          "gate": "failed_stage2_total_score",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage2_eps_fcf",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage2_valuation",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage2_information_confidence",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_total_score",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_eps_fcf",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_visibility",
-          "count": 11
-        },
-        {
-          "gate": "failed_stage3_bottleneck",
-          "count": 11
-        }
-      ],
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
+      "current_missing_required_bridge_axes": [],
+      "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R13_STAGE2_FALSE_POSITIVE_L134_000100_2024-08-30_C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
         "trigger_id": "R13_STAGE2_L134_T03_000100",
@@ -2893,16 +2307,12 @@
         "accounting_trust_risk",
         "valuation_overheat"
       ],
-      "required_bridge_axes": [
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R13L11_XCASE__R7L11_C23_000100_YUHAN_LAZCLUZE_APPROVAL_COMMERCIALIZATION_20240820",
@@ -2916,7 +2326,18 @@
         "evidence_source": "FDA/J&J/Reuters approval and CRL event family; issuer-specific filing URLs should be enriched before production promotion; stock-web used only for OHLC",
         "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_11_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_research.md",
         "source_proxy_only": false,
-        "evidence_url_pending": false
+        "evidence_url_pending": false,
+        "source_expected_runtime_primitives": [
+          "regulatory_approval_confirmed",
+          "approval_to_revenue_bridge",
+          "royalty_route",
+          "partner_economics_visible",
+          "reimbursement_confirmed",
+          "medium_term_revision_visibility",
+          "low_red_team_risk"
+        ],
+        "source_canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+        "source_large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL"
       },
       "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
     },
@@ -2935,28 +2356,24 @@
         "accounting_trust_risk",
         "valuation_overheat"
       ],
-      "required_bridge_axes": [
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "R13L11_XCASE__R2L11_C08_095340_ISC_SOCKET_BLOWOFF",
-        "trigger_id": "R13L11_REDTEAM__R2L11_T03_ISC_STAGE3_FALSE_GREEN_SOCKET_BLOWOFF",
-        "symbol": "095340",
-        "as_of_date": "2024-03-08",
-        "trigger_type": "Stage3-Green",
-        "MFE_180D_pct": 13.68,
-        "MAE_180D_pct": -56.74,
-        "evidence_available_at_that_date": "HBM/test-socket narrative and sharp relative strength, but insufficient fresh customer mix/revision bridge; valuation/positioning risk dominated.",
-        "evidence_source": "public analyst/media summary; exact original URL enrichment required before production promotion",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_11_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_research.md",
+        "case_id": "R13L10_CROSS_SAMYANG_003230_PRICE_ONLY_4B_TOO_EARLY",
+        "trigger_id": "R13L10_T06_SAMYANG_PRICE_ONLY_4B_TOO_EARLY",
+        "symbol": "003230",
+        "as_of_date": "2024-06-18",
+        "trigger_type": "R13-4B_overlay",
+        "MFE_180D_pct": 29.2,
+        "MAE_180D_pct": -36.0,
+        "evidence_available_at_that_date": "Price-only local high after explosive rerating; no non-price revision slowdown, channel saturation, or margin rollover evidence yet.",
+        "evidence_source": "stock-web price row; non-price 4B evidence absent",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_10_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_4B_4C_REDTEAM_research(1).md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -2977,16 +2394,12 @@
         "price_only_blowoff",
         "source_quality_conflict"
       ],
-      "required_bridge_axes": [
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
         "case_id": "R13ATPV153_267260_HDHE_2025_ORDER_BACKLOG_EARNINGS_CONTROL",
@@ -2998,23 +2411,23 @@
         "MAE_180D_pct": -2.02,
         "evidence_available_at_that_date": true,
         "evidence_source": "Yonhap, 2025-04-22, HD Hyundai Electric Q1 sales, OP, orders and backlog",
-        "source_large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
-        "source_canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_153_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_research.md",
+        "source_proxy_only": false,
+        "evidence_url_pending": false,
         "source_expected_runtime_primitives": [
+          "datacenter_customer",
           "order_backlog_to_sales",
-          "contract_amount_to_prior_sales",
-          "contract_duration_months",
-          "customer_contract_visible",
-          "record_backlog",
+          "lead_time_extended",
+          "capacity_constraint",
+          "pricing_power_confirmed",
           "delivery_schedule",
           "order_to_revenue_bridge",
           "margin_bridge_visible",
-          "opm_expansion_pctp",
-          "capacity_constraint"
+          "medium_term_revision_visibility",
+          "cash_collection_visible"
         ],
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_153_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_research.md",
-        "source_proxy_only": false,
-        "evidence_url_pending": false
+        "source_canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+        "source_large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID"
       },
       "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
     },
@@ -3033,114 +2446,24 @@
         "price_only_blowoff",
         "source_quality_conflict"
       ],
-      "required_bridge_axes": [
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
       "current_runtime_candidate_count": 0,
       "current_runtime_stage_distribution": {},
       "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "guard_risk"
-      ],
+      "current_missing_required_bridge_axes": [],
       "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "R13L13_ACC_CASE_X07_090430_20210512",
-        "trigger_id": "R13L13_ACC_X07_090430_20210512",
-        "symbol": "090430",
-        "as_of_date": "2021-05-12",
-        "trigger_type": "Stage2-Actionable",
-        "MFE_180D_pct": 2.56,
-        "MAE_180D_pct": -46.84,
-        "evidence_available_at_that_date": "China/beauty reopening and premium-brand recovery narrative created a price-led setup, but no durable reorder/margin bridge followed.",
-        "evidence_source": "source_loop=R5/L13; source_canonical=C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION; source_trigger_id=R5L13_C20_090430_20210512_STAGE2_FALSE_POSITIVE; source_file=e2r_stock_web_v12_residual_round_R5_loop_13_L5_CONSUMER_BRAND_DISTRIBUTION_C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION_research.md; source row already uses Songdaiki/stock-web tradable shard",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_13_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_research.md",
-        "source_proxy_only": false,
-        "evidence_url_pending": false
-      },
-      "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
-    },
-    {
-      "schema_version": "v12_runtime_replay_spec_v1",
-      "role": "guard",
-      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
-      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
-      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
-      "runtime_bridge_group": "cross_archetype_guard_bridge",
-      "fixture_status": "ready_for_runtime_replay_fixture",
-      "expected_runtime_primitives": [
-        "high_mae_history",
-        "valuation_overheat",
-        "liquidity_or_microcap_risk",
-        "execution_risk_score",
-        "positioning_reversal_risk"
-      ],
-      "required_bridge_axes": [
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
-      "current_runtime_candidate_count": 0,
-      "current_runtime_stage_distribution": {},
-      "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "guard_risk"
-      ],
-      "current_top_failed_gates": [],
-      "candidate": {
-        "case_id": "R13-HMAE-L217-01-373220_20241029",
-        "trigger_id": "R13-HMAE-L217-01-373220_20241029-T01",
-        "symbol": "373220",
-        "as_of_date": "2024-10-28",
-        "trigger_type": "Stage3-Green",
-        "MFE_180D_pct": 6.48,
-        "MAE_180D_pct": -34.96,
-        "evidence_available_at_that_date": "company release date had no machine-verified intraday timestamp in this run; use next stock-web tradable close",
-        "evidence_source": [
-          "https://news.lgensol.com/company-news/press-releases/3343/"
-        ],
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_217_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_research.md",
-        "source_proxy_only": false,
-        "evidence_url_pending": false
-      },
-      "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
-    },
-    {
-      "schema_version": "v12_runtime_replay_spec_v1",
-      "role": "guard",
-      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
-      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
-      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
-      "runtime_bridge_group": "cross_archetype_guard_bridge",
-      "fixture_status": "ready_for_runtime_replay_fixture",
-      "expected_runtime_primitives": [
-        "high_mae_history",
-        "valuation_overheat",
-        "liquidity_or_microcap_risk",
-        "execution_risk_score",
-        "positioning_reversal_risk"
-      ],
-      "required_bridge_axes": [
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "not_in_current_benchmark",
-      "current_runtime_candidate_count": 0,
-      "current_runtime_stage_distribution": {},
-      "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "guard_risk"
-      ],
-      "current_top_failed_gates": [],
-      "candidate": {
-        "case_id": "R13_HIGHMAE_C10_160980_20240425",
-        "trigger_id": "R13L152_HIGHMAE_T04_160980_20240425",
-        "symbol": "160980",
-        "as_of_date": "2024-04-24",
+        "case_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_001570_2024-03-05_accounting_trust_v123",
+        "trigger_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_001570_2024-03-05_accounting_trust_v123_Stage4B",
+        "symbol": "001570",
+        "as_of_date": "2024-03-05",
         "trigger_type": "Stage4B",
-        "MFE_180D_pct": 7.2235,
-        "MAE_180D_pct": -66.5463,
-        "evidence_available_at_that_date": true,
-        "evidence_source": "",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_152_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_research.md",
+        "MFE_180D_pct": 7.0231,
+        "MAE_180D_pct": -78.4118,
+        "evidence_available_at_that_date": "4695 battery technology success was real technology optionality, but not sufficient C11 orderbook/revenue evidence; price path required cap before Stage3.",
+        "evidence_source": "https://www.yna.co.kr/view/AKR20240305048700051",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_123_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },
@@ -3148,490 +2471,37 @@
     },
     {
       "schema_version": "v12_runtime_replay_spec_v1",
-      "role": "green",
-      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
-      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
-      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
-      "runtime_bridge_group": "industrial_backlog_margin_bridge",
-      "fixture_status": "ready_for_runtime_replay_fixture",
+      "role": "guard",
+      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "fixture_status": "needs_green_row",
       "expected_runtime_primitives": [
-        "export_contract",
-        "government_customer",
-        "order_backlog_to_sales",
-        "delivery_schedule",
-        "cost_overrun"
+        "high_mae_history",
+        "valuation_overheat",
+        "liquidity_or_microcap_risk",
+        "execution_risk_score",
+        "positioning_reversal_risk"
       ],
-      "required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer"
-      ],
-      "current_runtime_gap_status": "fixture_not_ready",
-      "current_runtime_candidate_count": 12,
-      "current_runtime_stage_distribution": {
-        "1": 12
-      },
-      "current_runtime_max_score": 35.6473,
+      "required_bridge_axes": [],
+      "current_runtime_gap_status": null,
+      "current_runtime_candidate_count": 0,
+      "current_runtime_stage_distribution": {},
+      "current_runtime_max_score": null,
       "current_missing_required_bridge_axes": [],
-      "current_top_failed_gates": [
-        {
-          "gate": "failed_stage2_total_score",
-          "count": 12
-        },
-        {
-          "gate": "failed_stage2_eps_fcf",
-          "count": 12
-        },
-        {
-          "gate": "failed_stage2_information_confidence",
-          "count": 12
-        },
-        {
-          "gate": "failed_stage3_total_score",
-          "count": 12
-        },
-        {
-          "gate": "failed_stage3_eps_fcf",
-          "count": 12
-        },
-        {
-          "gate": "failed_stage3_visibility",
-          "count": 12
-        },
-        {
-          "gate": "failed_stage3_bottleneck",
-          "count": 12
-        },
-        {
-          "gate": "failed_stage3_market_mispricing",
-          "count": 12
-        }
-      ],
+      "current_top_failed_gates": [],
       "candidate": {
-        "case_id": "R1L13-C03-079550-LIG-IRAQ-MSAMI-20240919",
-        "trigger_id": "R1L13-LIGNEX1-20240919-S2A",
-        "symbol": "079550",
-        "as_of_date": "2024-09-19",
-        "trigger_type": "Stage2-Actionable",
-        "MFE_180D_pct": 200.73,
-        "MAE_180D_pct": -18.26,
-        "evidence_available_at_that_date": "Reuters reported that LIG Nex1 won a USD 2.8bn Iraq missile-system export deal and noted the prior Saudi M-SAM II order, making the event a repeat-export/backlog framework rather than a one-off domestic defense headline. citeturn448930news0",
-        "evidence_source": "Reuters 2024-09-19; stock-web 079550 2024/2025 shards",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R1_loop_13_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG_research.md",
-        "source_proxy_only": false,
-        "evidence_url_pending": false,
-        "source_expected_runtime_primitives": [
-          "export_contract",
-          "government_customer",
-          "contract_amount_to_prior_sales",
-          "contract_duration_months",
-          "customer_contract_visible",
-          "record_backlog",
-          "delivery_schedule",
-          "order_to_revenue_bridge",
-          "margin_bridge_visible",
-          "medium_term_revision_visibility"
-        ]
-      },
-      "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
-    },
-    {
-      "schema_version": "v12_runtime_replay_spec_v1",
-      "role": "guard",
-      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
-      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
-      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
-      "runtime_bridge_group": "industrial_backlog_margin_bridge",
-      "fixture_status": "ready_for_runtime_replay_fixture",
-      "expected_runtime_primitives": [
-        "export_contract",
-        "government_customer",
-        "order_backlog_to_sales",
-        "delivery_schedule",
-        "cost_overrun"
-      ],
-      "required_bridge_axes": [
-        "margin",
-        "backlog",
-        "contract",
-        "customer"
-      ],
-      "current_runtime_gap_status": "fixture_not_ready",
-      "current_runtime_candidate_count": 12,
-      "current_runtime_stage_distribution": {
-        "1": 12
-      },
-      "current_runtime_max_score": 35.6473,
-      "current_missing_required_bridge_axes": [],
-      "current_top_failed_gates": [
-        {
-          "gate": "failed_stage2_total_score",
-          "count": 12
-        },
-        {
-          "gate": "failed_stage2_eps_fcf",
-          "count": 12
-        },
-        {
-          "gate": "failed_stage2_information_confidence",
-          "count": 12
-        },
-        {
-          "gate": "failed_stage3_total_score",
-          "count": 12
-        },
-        {
-          "gate": "failed_stage3_eps_fcf",
-          "count": 12
-        },
-        {
-          "gate": "failed_stage3_visibility",
-          "count": 12
-        },
-        {
-          "gate": "failed_stage3_bottleneck",
-          "count": 12
-        },
-        {
-          "gate": "failed_stage3_market_mispricing",
-          "count": 12
-        }
-      ],
-      "candidate": {
-        "case_id": "C03_272210_HANWHASYSTEMS_20220729_DEFENSE_ELECTRONICS_EXPORT_FALSE_GREEN",
-        "trigger_id": null,
-        "symbol": "272210",
-        "as_of_date": "2022-07-29",
-        "trigger_type": "Stage3-Yellow",
-        "MFE_180D_pct": 11.34,
-        "MAE_180D_pct": -30.24,
+        "case_id": "R13_HIGHMAE_L118_CASE_11_003550",
+        "trigger_id": "R13_HIGHMAE_L118_T11_003550",
+        "symbol": "003550",
+        "as_of_date": "2024-02-26",
+        "trigger_type": "Stage4B",
+        "MFE_180D_pct": 8.0937,
+        "MAE_180D_pct": -24.3876,
         "evidence_available_at_that_date": null,
-        "evidence_source": null,
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG_k2_ifv_c4i_component_export_backlog_2022_research.md",
-        "source_proxy_only": false,
-        "evidence_url_pending": false
-      },
-      "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
-    },
-    {
-      "schema_version": "v12_runtime_replay_spec_v1",
-      "role": "green",
-      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
-      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
-      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
-      "runtime_bridge_group": "policy_project_cash_bridge",
-      "fixture_status": "ready_for_runtime_replay_fixture",
-      "expected_runtime_primitives": [
-        "policy_or_regulatory_confirmed",
-        "project_award_confirmed",
-        "permit_or_legal_delay",
-        "direct_company_cash_route",
-        "cost_overrun"
-      ],
-      "required_bridge_axes": [
-        "guard_risk",
-        "valuation_repricing",
-        "contract"
-      ],
-      "current_runtime_gap_status": "fixture_not_ready",
-      "current_runtime_candidate_count": 0,
-      "current_runtime_stage_distribution": {},
-      "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "guard_risk",
-        "valuation_repricing",
-        "contract"
-      ],
-      "current_top_failed_gates": [],
-      "candidate": {
-        "case_id": "C04-142-CASE-01",
-        "trigger_id": "C04-142-T01",
-        "symbol": "034020",
-        "as_of_date": "2025-01-17",
-        "trigger_type": "Stage2-Actionable",
-        "MFE_180D_pct": 289.43,
-        "MAE_180D_pct": -8.23,
-        "evidence_available_at_that_date": "KEPCO/KHNP-Westinghouse IP dispute settlement removes export/legal overhang and changes Czech project probability from policy option to executable contract path.",
-        "evidence_source": "https://www.reuters.com/business/energy/south-korean-nuclear-power-plant-operator-agrees-with-us-westinghouse-end-2025-01-17/ ; https://www.energy.gov/articles/signing-settlement-agreement-between-westinghouse-korea-electric-power-corporation-kepco",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R1_loop_142_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY_research.md",
-        "source_proxy_only": false,
-        "evidence_url_pending": false,
-        "source_expected_runtime_primitives": [
-          "policy_or_regulatory_confirmed",
-          "project_award_confirmed",
-          "legal_overhang_removed",
-          "project_export_route_reopened",
-          "direct_company_cash_route",
-          "direct_revenue_route",
-          "implementation_timeline",
-          "official_contract",
-          "customer_contract_visible",
-          "contract_amount_to_prior_sales",
-          "contract_duration_months",
-          "government_customer",
-          "order_to_revenue_bridge",
-          "margin_bridge_visible",
-          "medium_term_revision_visibility"
-        ]
-      },
-      "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
-    },
-    {
-      "schema_version": "v12_runtime_replay_spec_v1",
-      "role": "guard",
-      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
-      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
-      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
-      "runtime_bridge_group": "policy_project_cash_bridge",
-      "fixture_status": "ready_for_runtime_replay_fixture",
-      "expected_runtime_primitives": [
-        "policy_or_regulatory_confirmed",
-        "project_award_confirmed",
-        "permit_or_legal_delay",
-        "direct_company_cash_route",
-        "cost_overrun"
-      ],
-      "required_bridge_axes": [
-        "guard_risk",
-        "valuation_repricing",
-        "contract"
-      ],
-      "current_runtime_gap_status": "fixture_not_ready",
-      "current_runtime_candidate_count": 0,
-      "current_runtime_stage_distribution": {},
-      "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "guard_risk",
-        "valuation_repricing",
-        "contract"
-      ],
-      "current_top_failed_gates": [],
-      "candidate": {
-        "case_id": "C04_094820_ILJINPOWER_20240718_NUCLEAR_MAINTENANCE_POLICY_LEGAL_DELAY_FALSE_GREEN",
-        "trigger_id": null,
-        "symbol": "094820",
-        "as_of_date": "2024-07-18",
-        "trigger_type": "Stage3-Yellow",
-        "MFE_180D_pct": 12.02,
-        "MAE_180D_pct": -38.9,
-        "evidence_available_at_that_date": null,
-        "evidence_source": null,
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L1_INDUSTRIALS_INFRA_DEFENSE_GRID_C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY_nuclear_policy_legal_delay_smallcap_2024_research.md",
-        "source_proxy_only": false,
-        "evidence_url_pending": false
-      },
-      "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
-    },
-    {
-      "schema_version": "v12_runtime_replay_spec_v1",
-      "role": "green",
-      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
-      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
-      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
-      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
-      "fixture_status": "ready_for_runtime_replay_fixture",
-      "expected_runtime_primitives": [
-        "hbm_customer_order",
-        "customer_contract_visible",
-        "equipment_order_backlog",
-        "advanced_packaging_bottleneck",
-        "relative_strength_score",
-        "order_to_revenue_bridge"
-      ],
-      "required_bridge_axes": [
-        "customer",
-        "backlog",
-        "contract",
-        "margin"
-      ],
-      "current_runtime_gap_status": "fixture_not_ready",
-      "current_runtime_candidate_count": 0,
-      "current_runtime_stage_distribution": {},
-      "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "customer",
-        "backlog",
-        "contract",
-        "margin"
-      ],
-      "current_top_failed_gates": [],
-      "candidate": {
-        "case_id": "R2L12_C07_042700_HANMI_TCBONDER",
-        "trigger_id": "R2L12_T01_HANMI_STAGE2_TCBONDER_ORDER_RS",
-        "symbol": "042700",
-        "as_of_date": "2024-02-08",
-        "trigger_type": "Stage2-Actionable",
-        "MFE_180D_pct": 150.0,
-        "MAE_180D_pct": -10.32,
-        "evidence_available_at_that_date": "TC-bonder / HBM packaging equipment demand was already a public order-quality narrative. The price row shows the first decisive gap-up day; this trigger tests whether direct equipment route + relative strength deserved Yellow before strict Green confirmation.",
-        "evidence_source": "company disclosure/media/analyst-public narrative; exact production URL enrichment required before promotion; stock-web shard rows 2024-02-08~2024-09-26 inspected",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_12_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH_research.md",
-        "source_proxy_only": false,
-        "evidence_url_pending": false,
-        "source_expected_runtime_primitives": [
-          "hbm_customer_order",
-          "customer_contract_visible",
-          "equipment_order_backlog",
-          "advanced_packaging_bottleneck",
-          "relative_strength_score",
-          "order_to_revenue_bridge",
-          "margin_bridge_visible",
-          "medium_term_revision_visibility",
-          "capacity_constraint"
-        ]
-      },
-      "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
-    },
-    {
-      "schema_version": "v12_runtime_replay_spec_v1",
-      "role": "guard",
-      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
-      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
-      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
-      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
-      "fixture_status": "ready_for_runtime_replay_fixture",
-      "expected_runtime_primitives": [
-        "hbm_customer_order",
-        "customer_contract_visible",
-        "equipment_order_backlog",
-        "advanced_packaging_bottleneck",
-        "relative_strength_score",
-        "order_to_revenue_bridge"
-      ],
-      "required_bridge_axes": [
-        "customer",
-        "backlog",
-        "contract",
-        "margin"
-      ],
-      "current_runtime_gap_status": "fixture_not_ready",
-      "current_runtime_candidate_count": 0,
-      "current_runtime_stage_distribution": {},
-      "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "customer",
-        "backlog",
-        "contract",
-        "margin"
-      ],
-      "current_top_failed_gates": [],
-      "candidate": {
-        "case_id": "C07_031980_PSKH_20240614_HBM_PACKAGING_EQUIPMENT_PREMIUM_4B",
-        "trigger_id": null,
-        "symbol": "031980",
-        "as_of_date": "2024-06-14",
-        "trigger_type": "Stage3-Yellow",
-        "MFE_180D_pct": 6.62,
-        "MAE_180D_pct": -65.38,
-        "evidence_available_at_that_date": null,
-        "evidence_source": null,
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_no_repeat_standalone_L2_AI_SEMICONDUCTOR_ELECTRONICS_C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH_di_yc_pskh_hbm_equipment_4b_2024_research.md",
-        "source_proxy_only": false,
-        "evidence_url_pending": false
-      },
-      "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
-    },
-    {
-      "schema_version": "v12_runtime_replay_spec_v1",
-      "role": "green",
-      "expected_outcome": "green_candidate_should_reach_stage3_green_or_emit_field_level_deficit",
-      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
-      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
-      "runtime_bridge_group": "materials_spread_supply_bridge",
-      "fixture_status": "ready_for_runtime_replay_fixture",
-      "expected_runtime_primitives": [
-        "offtake_contract",
-        "supply_shortage",
-        "policy_supply_support",
-        "permit_status",
-        "direct_company_cash_route"
-      ],
-      "required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "fixture_not_ready",
-      "current_runtime_candidate_count": 0,
-      "current_runtime_stage_distribution": {},
-      "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
-      "current_top_failed_gates": [],
-      "candidate": {
-        "case_id": "C16_010130_20240807_Q2_MARGIN_BRIDGE",
-        "trigger_id": "010130_20240807_stage3_yellow",
-        "symbol": "010130",
-        "as_of_date": "2024-08-07",
-        "trigger_type": "Stage3-Yellow",
-        "MFE_180D_pct": 373.82,
-        "MAE_180D_pct": -10.24,
-        "evidence_available_at_that_date": "Korea Zinc Q2 2024 summary showed consolidated sales KRW 3.058tn, OP KRW 269bn, OPM 8.8%, driven by higher metal prices/strong USD, with subsidiary OP turning positive.",
-        "evidence_source": "https://quartr.com/events/korea-zinc-company-ltd-010130-q2-2024_F4ETb4BT",
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R4_loop_140_L4_MATERIALS_SPREAD_RESOURCE_C16_STRATEGIC_RESOURCE_POLICY_SUPPLY_research.md",
-        "source_proxy_only": false,
-        "evidence_url_pending": false,
-        "source_expected_runtime_primitives": [
-          "offtake_contract",
-          "supply_shortage",
-          "named_counterparty_TC_benchmark",
-          "zinc_concentrate_supply_tightness",
-          "direct_smelter_economics",
-          "policy_supply_support",
-          "direct_company_cash_route",
-          "direct_revenue_route",
-          "margin_bridge_visible",
-          "medium_term_revision_visibility",
-          "pricing_power_confirmed"
-        ]
-      },
-      "replay_note": "diagnostic_only_not_production_scoring_input; convert_to_historical_or_asof_fixture_with_point_in_time_sources_before using as proof"
-    },
-    {
-      "schema_version": "v12_runtime_replay_spec_v1",
-      "role": "guard",
-      "expected_outcome": "guard_candidate_must_not_reach_stage3_green",
-      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
-      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
-      "runtime_bridge_group": "materials_spread_supply_bridge",
-      "fixture_status": "ready_for_runtime_replay_fixture",
-      "expected_runtime_primitives": [
-        "offtake_contract",
-        "supply_shortage",
-        "policy_supply_support",
-        "permit_status",
-        "direct_company_cash_route"
-      ],
-      "required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
-      "current_runtime_gap_status": "fixture_not_ready",
-      "current_runtime_candidate_count": 0,
-      "current_runtime_stage_distribution": {},
-      "current_runtime_max_score": null,
-      "current_missing_required_bridge_axes": [
-        "margin",
-        "contract",
-        "guard_risk"
-      ],
-      "current_top_failed_gates": [],
-      "candidate": {
-        "case_id": "R4L72-C16-005490-POSCOHOLDINGS-CHINA-GRAPHITE-CONTROL-LITHIUM-BETA",
-        "trigger_id": null,
-        "symbol": "005490",
-        "as_of_date": "2023-10-20",
-        "trigger_type": "Stage2-FalsePositive / StrategicResourcePolicyWatch",
-        "MFE_180D_pct": 16.59,
-        "MAE_180D_pct": -21.46,
-        "evidence_available_at_that_date": null,
-        "evidence_source": null,
-        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R4_loop_72_L4_MATERIALS_SPREAD_RESOURCE_C16_STRATEGIC_RESOURCE_POLICY_SUPPLY_research.md",
+        "evidence_source": "https://koreajoongangdaily.joins.com/news/2024-02-26/business/finance/Regulators-outline-Valueup-program-to-solve-stock-undervaluation/1988863",
+        "source_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R13_loop_118_L10_POLICY_EVENT_CROSS_REDTEAM_MISC_R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL_research.md",
         "source_proxy_only": false,
         "evidence_url_pending": false
       },

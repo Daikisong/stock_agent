@@ -11,6 +11,7 @@ from typing import Mapping, Sequence
 from e2r.audit import AuditFinding, audit_parser_outputs
 from e2r.cheap_scan import KoreaCheapScanConfig, KoreaCheapScanResult, KoreaCheapScanSources, KoreaCheapScanner
 from e2r.cheap_scan.models import CheapScanCandidate, RecommendedNextLayer
+from e2r.features import FeatureEngineeringInput
 from e2r.llm import (
     LLMAnalystInput,
     LLMAnalystOutput,
@@ -20,7 +21,8 @@ from e2r.llm import (
     build_theme_route_provider_from_env,
 )
 from e2r.llm.theme_provider import ThemeRouteProvider
-from e2r.models import Evidence, Market, RedTeamFinding, ScoreSnapshot, StageSnapshot
+from e2r.models import Evidence, Instrument, Market, RedTeamFinding, ScoreSnapshot, StageSnapshot
+from e2r.pipeline.evidence_builder import evidence_from_feature_domains
 from e2r.research.free_web_research_runner import FreeWebResearchInput, FreeWebResearchRunner, WebResearchPipelineResult
 from e2r.research.report_radar import ReportRadar, ReportRadarCandidate
 from e2r.research.search_budget import SearchBudget
@@ -118,10 +120,21 @@ class E2RStandardFlow:
                 report_radar_enabled=config.report_radar_enabled,
             )
         )
-        radar_candidates = self._run_report_radar(config, sources)
+        instruments = sources.list_instruments(config.market, config.as_of_date)
+        radar_candidates = self._run_report_radar(config, instruments)
         candidates = _merge_candidates(cheap_scan.candidates, tuple(item.to_cheap_scan_candidate() for item in radar_candidates))
-        web_results = self._run_web_research(config, candidates)
-        evidence = tuple(item for result in web_results for item in result.web_result.evidence)
+        base_feature_inputs = _base_feature_inputs_for_candidates(
+            candidates=candidates,
+            sources=sources,
+            instruments=instruments,
+            config=config,
+        )
+        web_results = self._run_web_research(config, candidates, base_feature_inputs)
+        base_evidence_by_symbol = _base_evidence_by_symbol(config.market, base_feature_inputs)
+        evidence = _dedupe_evidence(
+            tuple(item for items in base_evidence_by_symbol.values() for item in items)
+            + tuple(item for result in web_results for item in result.web_result.evidence)
+        )
         scores = tuple(result.score for result in web_results)
         stages = tuple(result.stage for result in web_results)
         red_team_findings = _dedupe_red_team_findings(
@@ -154,12 +167,11 @@ class E2RStandardFlow:
     def _run_report_radar(
         self,
         config: E2RStandardConfig,
-        sources: KoreaCheapScanSources,
+        instruments: Sequence[Instrument],
     ) -> tuple[ReportRadarCandidate, ...]:
         if not config.report_radar_enabled:
             return ()
         provider = config.free_search_provider or EmptySearchProvider()
-        instruments = sources.list_instruments(config.market, config.as_of_date)
         return ReportRadar(provider).run(
             instruments=instruments,
             as_of_date=config.as_of_date,
@@ -171,6 +183,7 @@ class E2RStandardFlow:
         self,
         config: E2RStandardConfig,
         candidates: Sequence[CheapScanCandidate],
+        base_feature_inputs: Mapping[str, FeatureEngineeringInput],
     ) -> tuple[WebResearchPipelineResult, ...]:
         runner = FreeWebResearchRunner(
             browser_provider=config.browser_provider or EmptySearchProvider(),
@@ -185,12 +198,14 @@ class E2RStandardFlow:
         for candidate in candidates:
             if candidate.recommended_next_layer not in {RecommendedNextLayer.EVENT_SEARCH, RecommendedNextLayer.DEEP_RESEARCH}:
                 continue
+            base_feature_input = base_feature_inputs.get(candidate.symbol)
+            sector_context = base_feature_input.sector_context if base_feature_input is not None else None
             results.append(
                 runner.run(
                     FreeWebResearchInput(
                         company_name=candidate.company_name,
                         symbol=candidate.symbol,
-                        sector=None,
+                        sector=sector_context,
                         market=candidate.market,
                         as_of_date=candidate.as_of_date,
                         company_aliases=(candidate.company_name, candidate.symbol),
@@ -204,6 +219,7 @@ class E2RStandardFlow:
                         theme_route_provider=theme_route_provider,
                         max_theme_expansion_rounds=config.max_theme_expansion_rounds,
                         theme_evidence_review_enabled=config.theme_evidence_review_enabled,
+                        base_feature_input=base_feature_input,
                     )
                 )
             )
@@ -245,6 +261,88 @@ def _merge_candidates(
         if existing is None or item.cheap_scan_total_score > existing.cheap_scan_total_score:
             by_key[key] = item
     return tuple(sorted(by_key.values(), key=lambda item: (-item.cheap_scan_total_score, item.symbol)))
+
+
+def _base_feature_inputs_for_candidates(
+    *,
+    candidates: Sequence[CheapScanCandidate],
+    sources: KoreaCheapScanSources,
+    instruments: Sequence[Instrument],
+    config: E2RStandardConfig,
+) -> Mapping[str, FeatureEngineeringInput]:
+    return {
+        candidate.symbol: base_input
+        for candidate in candidates
+        if (
+            base_input := _base_feature_input_for_candidate(
+                candidate=candidate,
+                sources=sources,
+                instruments=instruments,
+                config=config,
+            )
+        )
+        is not None
+    }
+
+
+def _base_feature_input_for_candidate(
+    *,
+    candidate: CheapScanCandidate,
+    sources: KoreaCheapScanSources,
+    instruments: Sequence[Instrument],
+    config: E2RStandardConfig,
+) -> FeatureEngineeringInput | None:
+    instrument = {item.symbol: item for item in instruments}.get(candidate.symbol)
+    price_bars = sources.get_price_bars(candidate.symbol, candidate.as_of_date, config.cheap_scan_lookback_days)
+    disclosures = sources.get_disclosures(
+        candidate.symbol,
+        candidate.as_of_date,
+        max(config.disclosure_lookback_days, 30),
+    )
+    financial_actuals = sources.get_financial_actuals(candidate.symbol, candidate.as_of_date)
+    if not price_bars and not disclosures and not financial_actuals:
+        return None
+    return FeatureEngineeringInput(
+        symbol=candidate.symbol,
+        as_of_date=candidate.as_of_date,
+        company_name=instrument.name if instrument is not None else candidate.company_name,
+        sector_context=_instrument_sector_context(instrument),
+        price_bars=price_bars,
+        financial_actuals=financial_actuals,
+        disclosures=disclosures,
+    )
+
+
+def _instrument_sector_context(instrument: Instrument | None) -> str | None:
+    if instrument is None:
+        return None
+    return " ".join(part for part in (instrument.sector_custom, instrument.sector_exchange) if part) or None
+
+
+def _base_evidence_by_symbol(
+    market: Market,
+    base_feature_inputs: Mapping[str, FeatureEngineeringInput],
+) -> Mapping[str, tuple[Evidence, ...]]:
+    return {
+        symbol: evidence_from_feature_domains(
+            market=market,
+            fallback_symbol=symbol,
+            financial_actuals=base_input.financial_actuals,
+            consensus=base_input.consensus,
+            consensus_revisions=base_input.consensus_revisions,
+            disclosures=base_input.disclosures,
+            research_reports=base_input.research_reports,
+            news_items=base_input.news_items,
+        )
+        for symbol, base_input in base_feature_inputs.items()
+    }
+
+
+def _dedupe_evidence(items: Sequence[Evidence]) -> tuple[Evidence, ...]:
+    by_id: dict[str, Evidence] = {}
+    for item in items:
+        by_id.setdefault(item.evidence_id, item)
+    return tuple(by_id.values())
 
 
 def _default_theme_rebalance_enabled(config: E2RStandardConfig) -> bool:

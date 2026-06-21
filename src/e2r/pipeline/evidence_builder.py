@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import date, datetime
 from typing import Iterable
 
+from e2r.agentic import claim_backed_parsed_fields
 from e2r.models import (
     ConsensusRevision,
     ConsensusSnapshot,
@@ -34,8 +35,20 @@ def _estimate_source_tier_and_confidence(source: str, parsed_fields) -> tuple[So
 
 
 def evidence_from_financial_actual(item: FinancialActual, market: Market) -> Evidence:
+    evidence_id = f"actual:{item.symbol}:{item.period_end.isoformat()}"
+    parsed_fields = {
+        "sales": item.sales,
+        "operating_profit": item.operating_profit,
+        "net_income": item.net_income,
+        "eps": item.eps,
+        "bps": item.bps,
+        "equity": item.equity,
+        "cashflow_from_operations": item.cashflow_from_operations,
+        "capex": item.capex,
+        "fcf": item.fcf,
+    }
     return Evidence(
-        evidence_id=f"actual:{item.symbol}:{item.period_end.isoformat()}",
+        evidence_id=evidence_id,
         source_type="financial_actual",
         source_name=item.source,
         source_tier=SourceTier.TIER_0,
@@ -46,17 +59,16 @@ def evidence_from_financial_actual(item: FinancialActual, market: Market) -> Evi
         market=market,
         symbol=item.symbol,
         title=f"Reported financials {item.period_end.isoformat()}",
-        parsed_fields={
-            "sales": item.sales,
-            "operating_profit": item.operating_profit,
-            "net_income": item.net_income,
-            "eps": item.eps,
-            "bps": item.bps,
-            "equity": item.equity,
-            "cashflow_from_operations": item.cashflow_from_operations,
-            "capex": item.capex,
-            "fcf": item.fcf,
-        },
+        parsed_fields=_claim_backed_fields(
+            evidence_id=evidence_id,
+            symbol=item.symbol,
+            as_of_date=item.as_of_date,
+            parsed_fields=parsed_fields,
+            subject=item.symbol,
+            quote_text=f"Reported financials {item.period_end.isoformat()}",
+            source_tier=SourceTier.TIER_0,
+            confidence=1.0,
+        ),
         confidence=1.0,
     )
 
@@ -70,6 +82,15 @@ def evidence_from_consensus(item: ConsensusSnapshot, market: Market) -> Evidence
         source=item.source,
     )
     source_tier, confidence = _estimate_source_tier_and_confidence(item.source, item.parsed_fields)
+    parsed_fields = {
+        **item.parsed_fields,
+        "legacy_evidence_id": f"consensus:{item.symbol}:{item.date.isoformat()}:{item.fiscal_year}",
+        "sales_e": item.sales_e,
+        "op_e": item.op_e,
+        "eps_e": item.eps_e,
+        "fcf_e": item.fcf_e,
+        "target_price": item.target_price,
+    }
     return Evidence(
         evidence_id=evidence_id,
         source_type="consensus",
@@ -82,15 +103,16 @@ def evidence_from_consensus(item: ConsensusSnapshot, market: Market) -> Evidence
         market=market,
         symbol=item.symbol,
         title=f"Consensus FY{item.fiscal_year}",
-        parsed_fields={
-            **item.parsed_fields,
-            "legacy_evidence_id": f"consensus:{item.symbol}:{item.date.isoformat()}:{item.fiscal_year}",
-            "sales_e": item.sales_e,
-            "op_e": item.op_e,
-            "eps_e": item.eps_e,
-            "fcf_e": item.fcf_e,
-            "target_price": item.target_price,
-        },
+        parsed_fields=_claim_backed_fields(
+            evidence_id=evidence_id,
+            symbol=item.symbol,
+            as_of_date=item.as_of_date,
+            parsed_fields=parsed_fields,
+            subject=item.symbol,
+            quote_text=f"Consensus FY{item.fiscal_year}",
+            source_tier=source_tier,
+            confidence=confidence,
+        ),
         confidence=confidence,
     )
 
@@ -104,6 +126,16 @@ def evidence_from_consensus_revision(item: ConsensusRevision, market: Market) ->
         source=item.source,
     )
     source_tier, confidence = _estimate_source_tier_and_confidence(item.source, item.parsed_fields)
+    parsed_fields = {
+        **item.parsed_fields,
+        "legacy_evidence_id": f"revision:{item.symbol}:{item.date.isoformat()}:{item.fiscal_year}",
+        "eps_revision_1m": item.eps_revision_1m,
+        "op_revision_1m": item.op_revision_1m,
+        "fcf_revision_1m": item.fcf_revision_1m,
+        "target_price_revision_1m": item.target_price_revision_1m,
+        "street_high_eps_revision_1m": item.street_high_eps_revision_1m,
+        "street_low_eps_revision_1m": item.street_low_eps_revision_1m,
+    }
     return Evidence(
         evidence_id=evidence_id,
         source_type="consensus_revision",
@@ -116,23 +148,25 @@ def evidence_from_consensus_revision(item: ConsensusRevision, market: Market) ->
         market=market,
         symbol=item.symbol,
         title=f"Consensus revision FY{item.fiscal_year}",
-        parsed_fields={
-            **item.parsed_fields,
-            "legacy_evidence_id": f"revision:{item.symbol}:{item.date.isoformat()}:{item.fiscal_year}",
-            "eps_revision_1m": item.eps_revision_1m,
-            "op_revision_1m": item.op_revision_1m,
-            "fcf_revision_1m": item.fcf_revision_1m,
-            "target_price_revision_1m": item.target_price_revision_1m,
-            "street_high_eps_revision_1m": item.street_high_eps_revision_1m,
-            "street_low_eps_revision_1m": item.street_low_eps_revision_1m,
-        },
+        parsed_fields=_claim_backed_fields(
+            evidence_id=evidence_id,
+            symbol=item.symbol,
+            as_of_date=item.as_of_date,
+            parsed_fields=parsed_fields,
+            subject=item.symbol,
+            quote_text=f"Consensus revision FY{item.fiscal_year}",
+            source_tier=source_tier,
+            confidence=confidence,
+        ),
         confidence=confidence,
     )
 
 
 def evidence_from_disclosure(item: DisclosureEvent, market: Market) -> Evidence:
+    evidence_id = f"disclosure:{item.symbol}:{item.published_at.date().isoformat()}:{item.report_type}"
+    confidence = float(item.parsed_fields.get("parser_confidence", 0.8))
     return Evidence(
-        evidence_id=f"disclosure:{item.symbol}:{item.published_at.date().isoformat()}:{item.report_type}",
+        evidence_id=evidence_id,
         source_type="disclosure",
         source_name=item.source,
         source_tier=SourceTier.TIER_0,
@@ -145,15 +179,27 @@ def evidence_from_disclosure(item: DisclosureEvent, market: Market) -> Evidence:
         title=item.title,
         url_or_identifier=item.rcept_no,
         excerpt_or_value=item.raw_text[:240] if item.raw_text else None,
-        parsed_fields=item.parsed_fields,
-        confidence=float(item.parsed_fields.get("parser_confidence", 0.8)),
+        parsed_fields=_claim_backed_fields(
+            evidence_id=evidence_id,
+            symbol=item.symbol,
+            as_of_date=item.as_of_date,
+            parsed_fields=item.parsed_fields,
+            subject=item.symbol,
+            quote_text=item.raw_text[:1_000] if item.raw_text else item.title,
+            source_url=item.rcept_no,
+            source_tier=SourceTier.TIER_0,
+            confidence=confidence,
+        ),
+        confidence=confidence,
     )
 
 
 def evidence_from_research_report(item: ResearchReport, market: Market) -> Evidence:
     timestamp = datetime(item.publish_date.year, item.publish_date.month, item.publish_date.day, 8, 0)
+    evidence_id = f"research:{item.symbol}:{item.publish_date.isoformat()}:{item.broker}"
+    confidence = float(item.parsed_fields.get("parser_confidence", 0.8))
     return Evidence(
-        evidence_id=f"research:{item.symbol}:{item.publish_date.isoformat()}:{item.broker}",
+        evidence_id=evidence_id,
         source_type="research_report",
         source_name=item.broker,
         source_tier=SourceTier.TIER_1,
@@ -165,8 +211,17 @@ def evidence_from_research_report(item: ResearchReport, market: Market) -> Evide
         symbol=item.symbol,
         title=item.title,
         excerpt_or_value=item.raw_text[:240] if item.raw_text else None,
-        parsed_fields=item.parsed_fields,
-        confidence=float(item.parsed_fields.get("parser_confidence", 0.8)),
+        parsed_fields=_claim_backed_fields(
+            evidence_id=evidence_id,
+            symbol=item.symbol,
+            as_of_date=item.as_of_date,
+            parsed_fields=item.parsed_fields,
+            subject=item.symbol,
+            quote_text=item.raw_text[:1_000] if item.raw_text else item.title,
+            source_tier=SourceTier.TIER_1,
+            confidence=confidence,
+        ),
+        confidence=confidence,
     )
 
 
@@ -180,6 +235,7 @@ def evidence_from_news_item(item: NewsItem, market: Market, fallback_symbol: str
         source_url=source_url,
         title=item.title,
     )
+    confidence = float(item.parsed_fields.get("confidence", 0.7))
     return Evidence(
         evidence_id=evidence_id,
         source_type="news",
@@ -194,8 +250,43 @@ def evidence_from_news_item(item: NewsItem, market: Market, fallback_symbol: str
         title=item.title,
         url_or_identifier=source_url,
         excerpt_or_value=item.body[:240] if item.body else None,
-        parsed_fields=item.parsed_fields,
-        confidence=float(item.parsed_fields.get("confidence", 0.7)),
+        parsed_fields=_claim_backed_fields(
+            evidence_id=evidence_id,
+            symbol=symbol,
+            as_of_date=item.as_of_date,
+            parsed_fields=item.parsed_fields,
+            subject=symbol,
+            quote_text=item.body[:1_000] if item.body else item.title,
+            source_url=source_url,
+            source_tier=item.source_tier,
+            confidence=confidence,
+        ),
+        confidence=confidence,
+    )
+
+
+def _claim_backed_fields(
+    *,
+    evidence_id: str,
+    symbol: str,
+    as_of_date: date,
+    parsed_fields,
+    subject: str,
+    quote_text: str,
+    source_tier: SourceTier,
+    confidence: float,
+    source_url: str | None = None,
+):
+    return claim_backed_parsed_fields(
+        evidence_id=evidence_id,
+        symbol=symbol,
+        as_of_date=as_of_date,
+        parsed_fields=parsed_fields,
+        subject=subject,
+        quote_text=quote_text,
+        source_url=source_url,
+        source_tier=int(source_tier),
+        confidence=confidence,
     )
 
 

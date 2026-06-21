@@ -179,6 +179,136 @@ class StageGateDiagnosticsTests(unittest.TestCase):
         self.assertTrue(diag.stage3_green_gate_passed)
         self.assertEqual(stage.stage, Stage.STAGE_3_GREEN)
 
+    def test_evidence_contract_positive_gap_blocks_stage3_green_diagnostic(self):
+        score = ScoreSnapshot(
+            symbol="CONTRACT_GAP",
+            as_of_date=date(2024, 5, 1),
+            eps_fcf_explosion_score=20,
+            earnings_visibility_score=20,
+            bottleneck_pricing_score=20,
+            market_mispricing_score=15,
+            valuation_rerating_score=15,
+            capital_allocation_score=5,
+            information_confidence_score=5,
+            risk_penalty=0,
+            total_score=95,
+            diagnostic_scores={
+                "score_valid": 100,
+                "revision_score": 100,
+                "structural_visibility_quality": 90,
+                "contract_quality": 90,
+                "one_off_shortage_risk": 0,
+                "evidence_contract_green_gate_required_primitive_count_capped": 3,
+                "evidence_contract_green_gate_coverage_pct": 66.6667,
+                "evidence_contract_green_gate_missing_primitive_count_capped": 1,
+            },
+        )
+        red_team = RedTeamAssessment.empty("CONTRACT_GAP", date(2024, 5, 1))
+
+        diag = diagnose_stage_gates(score, red_team)
+        stage = StageClassifier().classify(StageClassificationInput(score=score, red_team=red_team))
+
+        self.assertIn("failed_evidence_contract_positive_coverage", diag.failed_gate_names)
+        self.assertFalse(diag.stage3_green_gate_passed)
+        self.assertEqual(stage.stage, Stage.STAGE_3_YELLOW)
+
+    def test_claim_backed_gap_blocks_stage3_green_diagnostic(self):
+        score = ScoreSnapshot(
+            symbol="ORPHAN_GREEN",
+            as_of_date=date(2024, 5, 1),
+            eps_fcf_explosion_score=20,
+            earnings_visibility_score=20,
+            bottleneck_pricing_score=20,
+            market_mispricing_score=15,
+            valuation_rerating_score=15,
+            capital_allocation_score=5,
+            information_confidence_score=5,
+            risk_penalty=0,
+            total_score=95,
+            diagnostic_scores={
+                "score_valid": 100,
+                "revision_score": 100,
+                "structural_visibility_quality": 90,
+                "contract_quality": 90,
+                "one_off_shortage_risk": 0,
+                "claim_backed_claim_count_capped": 0,
+                "score_claim_backed_component_ratio": 0,
+                "orphan_score_component_count_capped": 7,
+                "evidence_contract_required_primitive_count_capped": 6,
+            },
+        )
+        red_team = RedTeamAssessment.empty("ORPHAN_GREEN", date(2024, 5, 1))
+
+        diag = diagnose_stage_gates(score, red_team)
+        stage = StageClassifier().classify(StageClassificationInput(score=score, red_team=red_team))
+
+        self.assertIn("failed_claim_backed_green_score", diag.failed_gate_names)
+        self.assertFalse(diag.stage3_green_gate_passed)
+        self.assertEqual(stage.stage, Stage.STAGE_3_YELLOW)
+
+    def test_evidence_contract_guard_blocks_stage3_green_diagnostic(self):
+        score = ScoreSnapshot(
+            symbol="GUARD_PRESENT",
+            as_of_date=date(2024, 5, 1),
+            eps_fcf_explosion_score=20,
+            earnings_visibility_score=20,
+            bottleneck_pricing_score=20,
+            market_mispricing_score=15,
+            valuation_rerating_score=15,
+            capital_allocation_score=5,
+            information_confidence_score=5,
+            risk_penalty=0,
+            total_score=95,
+            diagnostic_scores={
+                "score_valid": 100,
+                "revision_score": 100,
+                "structural_visibility_quality": 90,
+                "contract_quality": 90,
+                "one_off_shortage_risk": 0,
+                "evidence_contract_guard_present_primitive_count_capped": 1,
+            },
+        )
+        red_team = RedTeamAssessment.empty("GUARD_PRESENT", date(2024, 5, 1))
+
+        diag = diagnose_stage_gates(score, red_team)
+        stage = StageClassifier().classify(StageClassificationInput(score=score, red_team=red_team))
+
+        self.assertIn("failed_evidence_contract_guard_present", diag.failed_gate_names)
+        self.assertFalse(diag.stage3_green_gate_passed)
+        self.assertEqual(stage.stage, Stage.STAGE_3_YELLOW)
+
+    def test_unverified_evidence_contract_guard_blocks_stage3_green_diagnostic(self):
+        score = ScoreSnapshot(
+            symbol="GUARD_UNVERIFIED",
+            as_of_date=date(2024, 5, 1),
+            eps_fcf_explosion_score=20,
+            earnings_visibility_score=20,
+            bottleneck_pricing_score=20,
+            market_mispricing_score=15,
+            valuation_rerating_score=15,
+            capital_allocation_score=5,
+            information_confidence_score=5,
+            risk_penalty=0,
+            total_score=95,
+            diagnostic_scores={
+                "score_valid": 100,
+                "revision_score": 100,
+                "structural_visibility_quality": 90,
+                "contract_quality": 90,
+                "one_off_shortage_risk": 0,
+                "evidence_contract_guard_required_primitive_count_capped": 1,
+                "evidence_contract_guard_missing_primitive_count_capped": 1,
+            },
+        )
+        red_team = RedTeamAssessment.empty("GUARD_UNVERIFIED", date(2024, 5, 1))
+
+        diag = diagnose_stage_gates(score, red_team)
+        stage = StageClassifier().classify(StageClassificationInput(score=score, red_team=red_team))
+
+        self.assertIn("failed_evidence_contract_guard_unverified", diag.failed_gate_names)
+        self.assertFalse(diag.stage3_green_gate_passed)
+        self.assertEqual(stage.stage, Stage.STAGE_3_YELLOW)
+
     def test_archetype_green_restriction_is_reported_as_stage3_gate(self):
         score = ScoreSnapshot(
             symbol="EVENT_ONLY_CASE",

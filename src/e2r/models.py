@@ -544,6 +544,30 @@ class IndustrialSubScores:
 
 
 @dataclass(frozen=True)
+class ScoreContribution:
+    """Auditable score contribution for one canonical score component."""
+
+    component_key: str
+    criterion_id: str
+    raw_points: float
+    max_points: float
+    support_claim_ids: tuple[str, ...] = field(default_factory=tuple)
+    counter_claim_ids: tuple[str, ...] = field(default_factory=tuple)
+    rationale: str = ""
+    confidence: float = 1.0
+    cap_reason: str | None = None
+
+    def __post_init__(self) -> None:
+        _require_text(self.component_key, "component_key")
+        _require_text(self.criterion_id, "criterion_id")
+        _require_positive(self.max_points, "max_points")
+        _require_score(self.raw_points, "raw_points", self.max_points)
+        _require_score(self.confidence, "confidence", 1.0)
+        object.__setattr__(self, "support_claim_ids", _copy_tuple(self.support_claim_ids))
+        object.__setattr__(self, "counter_claim_ids", _copy_tuple(self.counter_claim_ids))
+
+
+@dataclass(frozen=True)
 class ScoreSnapshot:
     """Deterministic score result for one instrument and date."""
 
@@ -560,6 +584,8 @@ class ScoreSnapshot:
     total_score: float
     diagnostic_scores: Mapping[str, float] = field(default_factory=dict)
     evidence_ids: tuple[str, ...] = field(default_factory=tuple)
+    score_contribution_claim_ids: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
+    score_contribution_ledger: tuple[ScoreContribution, ...] = field(default_factory=tuple)
     scoring_version: str = "e2r-2.0-cp1"
 
     def __post_init__(self) -> None:
@@ -586,6 +612,17 @@ class ScoreSnapshot:
             diagnostics[key] = number
         object.__setattr__(self, "diagnostic_scores", diagnostics)
         object.__setattr__(self, "evidence_ids", _copy_tuple(self.evidence_ids))
+        contribution_claims: dict[str, tuple[str, ...]] = {}
+        for key, claim_ids in self.score_contribution_claim_ids.items():
+            _require_text(key, "score contribution component key")
+            values = tuple(dict.fromkeys(str(item) for item in claim_ids if str(item).strip()))
+            if values:
+                contribution_claims[key] = values
+        object.__setattr__(self, "score_contribution_claim_ids", contribution_claims)
+        for item in self.score_contribution_ledger:
+            if not isinstance(item, ScoreContribution):
+                raise ValueError("score_contribution_ledger must contain ScoreContribution instances")
+        object.__setattr__(self, "score_contribution_ledger", tuple(self.score_contribution_ledger))
 
 
 @dataclass(frozen=True)

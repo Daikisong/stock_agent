@@ -201,6 +201,9 @@ def _research_report_from_row(row: Mapping[str, Any], *, symbol: str, as_of_date
     recommend_action = text_or_none(row.get("RECOMM_ACTION_TYP_NM"))
     target_price_direction = _action_direction(target_price_action)
     eps_direction = _action_direction(eps_action)
+    broker = str(row.get("BRK_NM_SHORT_KOR") or row.get("BRK_NM_KOR") or "CompanyGuide")
+    title = str(row.get("RPT_TITLE") or "CompanyGuide report")
+    comment = _strip_html(text_or_none(row.get("COMMENT")) or "")
     parsed_fields = {
         "source": "company_guide_recent_report",
         "report_id": row.get("RPT_ID"),
@@ -208,7 +211,7 @@ def _research_report_from_row(row: Mapping[str, Any], *, symbol: str, as_of_date
         "file_name": text_or_none(row.get("FILE_NM")),
         "page_count": _safe_int(row.get("PAGE_CNT")),
         "close_price": _safe_float(row.get("CLOSE_PRC")),
-        "comment": _strip_html(text_or_none(row.get("COMMENT")) or ""),
+        "comment": comment,
         "target_price_action": target_price_action,
         "eps_action": eps_action,
         "recommend_action": recommend_action,
@@ -219,19 +222,24 @@ def _research_report_from_row(row: Mapping[str, Any], *, symbol: str, as_of_date
         "eps_revision_up_mentioned": eps_direction == "up",
         "eps_revision_down_mentioned": eps_direction == "down",
     }
+    forward_fields = _recent_report_forward_fields(f"{title}\n{comment}")
+    merged_fields = dict(forward_fields)
+    merged_fields.update({key: value for key, value in parsed_fields.items() if value not in (None, "")})
     return ResearchReport(
         symbol=symbol,
         publish_date=publish_date,
-        broker=str(row.get("BRK_NM_SHORT_KOR") or row.get("BRK_NM_KOR") or "CompanyGuide"),
-        title=str(row.get("RPT_TITLE") or "CompanyGuide report"),
+        broker=broker,
+        title=title,
         as_of_date=as_of_date,
         analyst=text_or_none(row.get("ANL_NM_KOR")),
         current_price=_safe_float(row.get("CLOSE_PRC")),
         target_price=_safe_float(row.get("TARGET_PRC")),
         rating=text_or_none(row.get("RECOMM")),
         fy1_eps=_safe_float(row.get("EPS")),
-        raw_text=parsed_fields["comment"],
-        parsed_fields={key: value for key, value in parsed_fields.items() if value not in (None, "")},
+        fy1_sales=forward_fields.get("fy1_sales"),
+        fy1_op=forward_fields.get("fy1_op"),
+        raw_text=comment,
+        parsed_fields={key: value for key, value in merged_fields.items() if value not in (None, "")},
     )
 
 
@@ -253,6 +261,92 @@ def _action_direction(value: str | None) -> str | None:
     if any(token in text for token in ("변동없음", "유지", "없음", "unchanged", "maintain")):
         return "unchanged"
     return None
+
+
+def _recent_report_forward_fields(text: str) -> dict[str, Any]:
+    fields: dict[str, Any] = {}
+    lowered = text.lower()
+    if not any(
+        token in lowered
+        for token in (
+            "예상",
+            "전망",
+            "전망치",
+            "추정",
+            "추정치",
+            "가이던스",
+            "forecast",
+            "estimate",
+            "expected",
+            "guidance",
+        )
+    ):
+        return fields
+    op = _forward_money_after(text, ("영업이익", "영업익", "OP", "operating profit"))
+    if op is not None:
+        fields["fy1_op"] = op
+        fields["forward_op_estimate"] = op
+        fields["forward_estimate_present"] = True
+    sales = _forward_money_after(text, ("매출액", "매출", "Sales", "Revenue"))
+    if sales is not None:
+        fields["fy1_sales"] = sales
+        fields["forward_sales_estimate"] = sales
+        fields["forward_estimate_present"] = True
+    if _estimate_upgrade_mentioned(text):
+        fields["estimate_upgrade_mentioned"] = True
+    return fields
+
+
+def _forward_money_after(text: str, labels: tuple[str, ...]) -> float | None:
+    for label in labels:
+        label_pattern = re.escape(label)
+        patterns = (
+            rf"(?P<label>{label_pattern})[^\n]{{0,48}}?(?P<number>-?[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<unit>조원|조|억원|억|백만원|만원|원|trillion|billion|million)\s*(?:으로|로)?[^\n]{{0,96}}?(?:예상|전망|전망치|추정|추정치|가이던스|상향|forecast|estimate|expected|guidance|raised)",
+            rf"(?:예상|전망|전망치|추정|추정치|가이던스|상향|forecast|estimate|expected|guidance|raised)[^\n]{{0,48}}?(?P<label>{label_pattern})[^\n]{{0,48}}?(?P<number>-?[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<unit>조원|조|억원|억|백만원|만원|원|trillion|billion|million)",
+            rf"(?:FY[1-3]|20[0-9]{{2}}E|[1-4]\s*Q\s*'?[0-9]{{2,4}}|Q\s*[1-4]\s*'?[0-9]{{2,4}})[^\n]{{0,80}}?(?P<label>{label_pattern})[^\n]{{0,48}}?(?P<number>-?[0-9][0-9,]*(?:\.[0-9]+)?)\s*(?P<unit>조원|조|억원|억|백만원|만원|원|trillion|billion|million)",
+        )
+        for pattern in patterns:
+            match = re.search(pattern, text, re.IGNORECASE)
+            if not match:
+                continue
+            if _estimate_number_crosses_target_price_label(text, match):
+                continue
+            value = _safe_float(match.group("number"))
+            if value is None:
+                continue
+            return _scale_amount(value, match.group("unit"))
+    return None
+
+
+def _estimate_number_crosses_target_price_label(text: str, match: re.Match[str]) -> bool:
+    context = text[match.start("label") : match.start("number")].lower()
+    return any(token in context for token in ("목표주가", "목표가", "적정주가", "target price"))
+
+
+def _scale_amount(value: float, unit: str | None) -> float:
+    normalized = (unit or "").lower()
+    if normalized in {"조원", "조", "trillion"}:
+        return value * 1_000_000_000_000.0
+    if normalized in {"억원", "억", "billion"}:
+        return value * 100_000_000.0
+    if normalized in {"백만원", "million"}:
+        return value * 1_000_000.0
+    if normalized == "만원":
+        return value * 10_000.0
+    return value
+
+
+def _estimate_upgrade_mentioned(text: str) -> bool:
+    lowered = text.lower()
+    return (
+        "실적 전망치 상향" in text
+        or "실적 추정치 상향" in text
+        or "영업이익 전망치 상향" in text
+        or "영업이익 추정치 상향" in text
+        or "eps 상향" in lowered
+        or "estimate upgrade" in lowered
+        or "estimate raised" in lowered
+    )
 
 
 def _yy_mm_dd_date(value: str, as_of_date: date) -> date:

@@ -759,7 +759,10 @@ def _add_qualitative_e2r_fields(text: str, fields: dict[str, Any]) -> None:
         fields["share_count_drift"] = True
     if any(token in text for token in ("고 MAE", "high mae")):
         fields["high_mae_history"] = True
-    if any(token in text for token in ("유동성 리스크", "초소형주 리스크", "liquidity risk", "microcap risk")):
+    if any(token in text for token in ("유동성 리스크", "초소형주 리스크", "liquidity risk", "microcap risk")) and not _risk_mitigated_context(
+        text,
+        lowered,
+    ):
         fields["liquidity_or_microcap_risk"] = True
     if any(token in text for token in ("실행 리스크", "execution risk")):
         fields["execution_risk_score"] = True
@@ -813,6 +816,7 @@ def _add_qualitative_e2r_fields(text: str, fields: dict[str, Any]) -> None:
         fields["arpu_growth_pct"] = fields.get("arpu_growth_pct", 1.0)
     if any(token in text for token in ("광고 매출 성장", "ad revenue growth")):
         fields["ad_revenue_growth_pct"] = fields.get("ad_revenue_growth_pct", 1.0)
+
     if any(token in text for token in ("take rate 개선", "take-rate improvement", "take rate improvement")):
         fields["take_rate_improvement"] = True
     if any(token in text for token in ("IP 수익화", "ip monetization")):
@@ -836,6 +840,36 @@ def _add_qualitative_e2r_fields(text: str, fields: dict[str, Any]) -> None:
     if any(token in text for token in ("매출총이익률 브릿지", "gross margin bridge")):
         fields["gross_margin_bridge"] = True
         fields["margin_bridge_visible"] = True
+
+
+def _risk_mitigated_context(text: str, lowered: str) -> bool:
+    return any(
+        token in text
+        for token in (
+            "리스크 상대 우위",
+            "리스크 관리",
+            "리스크 완화",
+            "리스크 축소",
+            "리스크 해소",
+            "상대 우위",
+            "재무구조 개선",
+            "현금 회수 가시성",
+            "PF 익스포저 축소",
+        )
+    ) or any(
+        token in lowered
+        for token in (
+            "risk monitored",
+            "risk managed",
+            "risk mitigated",
+            "risk reduced",
+            "risk resolved",
+            "relative advantage",
+            "balance sheet repair",
+            "cash collection visible",
+            "pf exposure reduced",
+        )
+    )
 
 
 def _report_date(text: str, metadata: Mapping[str, Any]) -> date:

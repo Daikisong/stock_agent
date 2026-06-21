@@ -1,5 +1,22 @@
 # 0619 Score Failure Investigation Index
 
+## 2026-06-20 패치 후 검증
+
+6월 19일 문서들은 대부분 패치 전 실패 진단이다. 2026-06-20 기준 최신 goalcheck는 `v12_operational_research_parity_goalcheck_2026-06-20.md`를 먼저 본다.
+
+최신 검증 요약:
+
+- SK하이닉스 `000660 / C06 / 2024-04-25`는 운영 replay에서 `3-Green / 97.423`으로 복원됐다. 이전 ledger fixture 산출물에는 `3-Green / 97.3447`이 있었고, 최신 claim-backed fixture replay 기준 ledger 값은 `3-Green / 98.173`이다.
+- SK하이닉스 `000660 / C06 / 2024-04-30`은 운영 replay에서 `3-Green / 98.2804`로 복원됐다. 과거 `97.9877` 값은 2024-04-25 source fixture를 carried-forward한 runtime fixture 값이다.
+- 두 replay 모두 `runtime_fixture_injected=false`, `score_source_mode=operational_merged`, `claim-backed ratio=100`, `orphan score=0`이다.
+- raw `Stage3-Green` 연구 row를 다시 검사한 뒤 최신 guard-present correction 기준 전체 준비 fixture parity는 Green `15/26 near_parity_green`, guard `36/36 guard_pass`다. 나머지 Green fixture 11개는 `cost_overrun`, `valuation_overheat`, `call_off_risk` 같은 guard primitive가 같이 있어 `3-Yellow`로 막는 것이 맞다.
+- 이전 `30/34 + 4 ledger_only_green` 판정은 `Stage3-Yellow`/`Stage2-Actionable` row까지 Green fixture처럼 센 과집계였다. 예를 들어 C12/C16/C24 일부 row는 "좋은 후보지만 아직 Green은 아님"이라는 연구 라벨이므로, 운영에서 Yellow로 막히는 것이 맞다.
+- C08 Green과 R13 high-MAE Green은 누락이 아니라 검증 범위상 제외다. C08 연구 row는 대부분 Actionable/Green brake이고, R13 high-MAE는 Green 발굴이 아니라 guardrail이다. 단, R13 positive-control row가 C23/C02 같은 원천 아키타입을 재사용하는 경우에는 원천 아키타입 primitive가 보존되도록 고쳤다.
+- 36개 아키타입 Evidence Contract가 runtime config로 승격됐고, route 이후 LLM gap search 문맥에 required primitive와 bridge axis가 들어간다.
+- 운영 replay row에 `evidence_contract_coverage_pct`와 `evidence_contract_missing_primitives`가 저장된다. 하닉 C06 2024-04-25/04-30은 둘 다 required primitive `6/6`, missing `0`, coverage `100`이다.
+- positive primitive, Green gate primitive, guard primitive를 분리했다. `call_off_risk`, `price_only_blowoff`, `high_mae_history` 같은 항목은 좋은 증거 부족이 아니라 Green 차단 확인용 guard로 표시된다. Green gate primitive가 필요한 아키타입은 missing이 있으면 총점이 높아도 Stage 3-Green으로 승격하지 않는다.
+- claim compiler는 `date_verified`, `green_allowed_by_date`, `runtime_fixture_source_backed`, `canonical_archetype_id` 같은 운영 메타데이터를 claim으로 세지 않는다. 추가로 guard primitive가 PRESENT이거나 UNKNOWN이면 총점이 높아도 Green을 막는다. 최신 guard-unverified replay에서 operational Green 378개와 ledger Green 551개 모두 claim ledger 누락, orphan score, unknown claim ref, Green guard finding이 `0`이다.
+
 ## 현재 결론
 
 삼전/하닉은 HBM 과적합 대상이 아니라 전체 runtime 점수 변환 문제를 보여주는 예시다.

@@ -11,16 +11,25 @@ from e2r.backtest.asof_research_replay import (
     AsOfReplayCandidate,
     AsOfResearchReplay,
     AsOfResearchReplayConfig,
+    _merge_candidates,
     _scheduled_replay_dates,
     _theme_route_provider_for_config,
     _write_candidates,
 )
 from e2r.backtest.historical_universe_replay import ReplayFrequency
+from e2r.backtest.runtime_fixture_evidence import RuntimeFixtureEvidenceStore
+from e2r.cheap_scan.models import CheapScanCandidate, RecommendedNextLayer
+from e2r.features import DeterministicFeatureEngineer, FeatureEngineeringInput
 from e2r.cli.run_asof_research_replay import build_parser, config_from_args, load_extra_replay_dates_file
-from e2r.models import Stage
+from e2r.models import Market, Stage
+from e2r.red_team import RedTeamEngine
 from e2r.research.report_snapshot_store import ReportSnapshotStore
 from e2r.research.search_provider import SearchResult
 from e2r.research.search_snapshot_store import SearchSnapshotStore, snapshot_from_search_result
+from e2r.staging import StageClassifier, StageClassificationInput
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
 class AsOfResearchReplayTests(unittest.TestCase):
@@ -211,6 +220,34 @@ class AsOfResearchReplayTests(unittest.TestCase):
         trace = result.snapshots[0].flow_traces[0]
         self.assertFalse(trace.reached("passed_official_cheap_scan"))
         self.assertTrue(trace.reached("report_radar_candidate"))
+
+    def test_report_radar_candidate_replaces_weaker_same_symbol_scan_candidate(self):
+        official = CheapScanCandidate(
+            symbol="267260",
+            company_name="HD현대일렉트릭",
+            market=Market.KR,
+            as_of_date=date(2025, 4, 22),
+            reason_codes=("FINANCIAL_CONTEXT_ONLY",),
+            cheap_scan_total_score=10.0,
+            recommended_next_layer=RecommendedNextLayer.NONE,
+            candidate_source_path="official_cheap_scan",
+        )
+        radar = CheapScanCandidate(
+            symbol="267260",
+            company_name="HD현대일렉트릭",
+            market=Market.KR,
+            as_of_date=date(2025, 4, 22),
+            reason_codes=("REPORT_RADAR_MATCH",),
+            cheap_scan_total_score=100.0,
+            recommended_next_layer=RecommendedNextLayer.DEEP_RESEARCH,
+            candidate_source_path="report_radar",
+        )
+
+        merged = _merge_candidates((official,), (radar,))
+
+        self.assertEqual(len(merged), 1)
+        self.assertEqual(merged[0].candidate_source_path, "report_radar")
+        self.assertEqual(merged[0].recommended_next_layer, RecommendedNextLayer.DEEP_RESEARCH)
 
     def test_snapshot_derived_universe_rejects_future_published_snapshot(self):
         with tempfile.TemporaryDirectory() as root:
@@ -428,9 +465,135 @@ class AsOfResearchReplayTests(unittest.TestCase):
         row = result.discovered_candidates[0]
         self.assertEqual(row.symbol, "267260")
         self.assertEqual(row.candidate_source_path, "runtime_fixture_spec")
+        self.assertEqual(row.score_source_mode, "runtime_fixture_injected")
+        self.assertTrue(row.runtime_fixture_injected)
+        self.assertGreater(row.runtime_fixture_evidence_count, 0)
         self.assertIn("research_report", row.evidence_types_seen)
         self.assertTrue(row.score_valid)
         self.assertEqual(row.stage, Stage.STAGE_3_GREEN)
+
+    def test_runtime_fixture_spec_carries_green_evidence_to_active_later_candidate(self):
+        with tempfile.TemporaryDirectory() as root:
+            source_path = Path(root) / "fixture_research.md"
+            trigger = {
+                "row_type": "trigger",
+                "trigger_id": "fixture-green",
+                "case_id": "fixture-case",
+                "symbol": "267260",
+                "company_name": "HD현대일렉트릭",
+                "market": "KR",
+                "trigger_type": "Stage3-Green",
+                "trigger_date": "2024-02-16",
+                "stage2_evidence_fields": ["public_event_or_disclosure", "customer_or_order_quality"],
+                "stage3_evidence_fields": ["named backlog/order evidence", "delivery/revenue/margin bridge"],
+                "evidence_available_at_that_date": "source-backed backlog, global customers, delivery and margin bridge",
+            }
+            source_path.write_text(json.dumps(trigger, ensure_ascii=False) + "\n", encoding="utf-8")
+            spec_path = Path(root) / "runtime_fixture_spec.json"
+            spec_path.write_text(
+                json.dumps(
+                    {
+                        "rows": [
+                            {
+                                "role": "green",
+                                "fixture_status": "ready_for_runtime_replay_fixture",
+                                "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+                                "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+                                "expected_runtime_primitives": ["order_backlog_to_sales", "customer_contract_visible"],
+                                "candidate": {
+                                    "symbol": "267260",
+                                    "as_of_date": "2024-02-16",
+                                    "trigger_id": "fixture-green",
+                                    "case_id": "fixture-case",
+                                    "trigger_type": "Stage3-Green",
+                                    "source_file": str(source_path),
+                                    "source_proxy_only": False,
+                                    "evidence_url_pending": False,
+                                },
+                            }
+                        ]
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+            store = RuntimeFixtureEvidenceStore((spec_path,), project_root=Path(root))
+
+        without_active_symbol = store.candidates(market=Market.KR, as_of_date=date(2024, 2, 20))
+        carried = store.candidates(
+            market=Market.KR,
+            as_of_date=date(2024, 2, 20),
+            carry_forward_symbols=("267260",),
+        )
+
+        self.assertEqual(without_active_symbol, ())
+        self.assertEqual(len(carried), 1)
+        self.assertEqual(carried[0].symbol, "267260")
+        self.assertEqual(carried[0].as_of_date, date(2024, 2, 20))
+        self.assertEqual(carried[0].candidate_source_path, "runtime_fixture_spec")
+        self.assertIn("fixture_source_date:2024-02-16", carried[0].reason_codes)
+        self.assertIn("fixture_carried_forward", carried[0].reason_codes)
+        evidence = store.evidence_for(
+            symbol="267260",
+            as_of_date=date(2024, 2, 20),
+            canonical_archetype_id="C02_POWER_GRID_DATACENTER_CAPEX",
+            role="green",
+        )
+        fields = evidence[0].parsed_fields
+        self.assertEqual(fields["claim_ledger_version"], "e2r-claim-ledger-v1")
+        self.assertIn("order_backlog_to_sales", fields["compiled_claim_ids_by_primitive"])
+        self.assertEqual(fields["compiled_primitive_states"]["order_backlog_to_sales"]["status"], "PRESENT")
+        self.assertTrue(fields["compiled_primitive_states"]["order_backlog_to_sales"]["support_claim_ids"])
+
+    def test_runtime_fixture_spec_keeps_guard_only_rows_for_not_ready_archetype(self):
+        with tempfile.TemporaryDirectory() as root:
+            source_path = Path(root) / "fixture_research.md"
+            trigger = {
+                "row_type": "trigger",
+                "trigger_id": "fixture-guard",
+                "case_id": "fixture-guard-case",
+                "symbol": "080580",
+                "company_name": "가드후보",
+                "trigger_type": "Stage4B",
+                "entry_date": "2024-01-23",
+                "stage4b_evidence_fields": ["price-only rerating", "customer concentration watch"],
+            }
+            source_path.write_text(json.dumps(trigger, ensure_ascii=False) + "\n", encoding="utf-8")
+            spec_path = Path(root) / "runtime_fixture_spec.json"
+            base_row = {
+                "fixture_status": "needs_verified_green_source",
+                "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+                "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+                "expected_runtime_primitives": [],
+                "candidate": {
+                    "symbol": "080580",
+                    "as_of_date": "2024-01-23",
+                    "trigger_id": "fixture-guard",
+                    "case_id": "fixture-guard-case",
+                    "trigger_type": "Stage4B",
+                    "source_file": str(source_path),
+                    "source_proxy_only": False,
+                    "evidence_url_pending": False,
+                },
+            }
+            spec_path.write_text(
+                json.dumps(
+                    {
+                        "rows": [
+                            {**base_row, "role": "green"},
+                            {**base_row, "role": "guard"},
+                        ]
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            store = RuntimeFixtureEvidenceStore((spec_path,), project_root=Path(root))
+
+        self.assertEqual(len(store.rows), 1)
+        self.assertEqual(store.rows[0].role, "guard")
+        self.assertEqual(store.rows[0].canonical_archetype_id, "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY")
 
     def test_v12_runtime_fixture_spec_acceptance_covers_green_and_guard_rows(self):
         spec_path = Path("docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json")
@@ -457,19 +620,128 @@ class AsOfResearchReplayTests(unittest.TestCase):
             )
 
         fixture_rows = [item for item in result.discovered_candidates if item.candidate_source_path == "runtime_fixture_spec"]
-        stage_counts = Counter((_fixture_candidate_role(item), item.stage) for item in fixture_rows)
+        exact_fixture_rows = [item for item in fixture_rows if "fixture_carried_forward" not in item.reason_codes]
+        stage_counts = Counter((_fixture_candidate_role(item), item.stage) for item in exact_fixture_rows)
 
-        self.assertEqual(len(fixture_rows), len(spec_rows))
-        self.assertEqual(stage_counts[("green", Stage.STAGE_3_GREEN)], expected_roles["green"])
+        self.assertEqual(len(exact_fixture_rows), len(spec_rows))
+        blocked_green_rows = [
+            item
+            for item in exact_fixture_rows
+            if _fixture_candidate_role(item) == "green"
+            and item.stage != Stage.STAGE_3_GREEN
+            and (
+                (item.evidence_contract_green_gate_missing_primitive_count or 0.0) > 0.0
+                or (item.evidence_contract_guard_present_primitive_count or 0.0) > 0.0
+                or (item.evidence_contract_guard_missing_primitive_count or 0.0) > 0.0
+            )
+        ]
+        unexpected_green_failures = [
+            item
+            for item in exact_fixture_rows
+            if _fixture_candidate_role(item) == "green"
+            and item.stage != Stage.STAGE_3_GREEN
+            and (item.evidence_contract_green_gate_missing_primitive_count or 0.0) <= 0.0
+            and (item.evidence_contract_guard_present_primitive_count or 0.0) <= 0.0
+            and (item.evidence_contract_guard_missing_primitive_count or 0.0) <= 0.0
+        ]
         self.assertEqual(
-            sum(count for (role, stage), count in stage_counts.items() if role == "green" and stage != Stage.STAGE_3_GREEN),
-            0,
+            stage_counts[("green", Stage.STAGE_3_GREEN)] + len(blocked_green_rows),
+            expected_roles["green"],
         )
+        self.assertEqual(unexpected_green_failures, [])
         self.assertEqual(
             sum(count for (role, stage), count in stage_counts.items() if role == "guard" and stage == Stage.STAGE_3_GREEN),
             0,
         )
         self.assertEqual(sum(count for (role, _stage), count in stage_counts.items() if role == "guard"), expected_roles["guard"])
+
+    def test_v12_runtime_fixture_spec_has_claim_backed_score_contributions(self):
+        spec_path = PROJECT_ROOT / "docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json"
+        store = RuntimeFixtureEvidenceStore((spec_path,), project_root=PROJECT_ROOT)
+        feature_engineer = DeterministicFeatureEngineer()
+        red_team_engine = RedTeamEngine()
+        stage_classifier = StageClassifier()
+        failures: list[dict[str, object]] = []
+
+        for row in store.rows:
+            feature_result = feature_engineer.engineer(
+                FeatureEngineeringInput(
+                    symbol=row.symbol,
+                    as_of_date=row.as_of_date,
+                    company_name=row.company_name,
+                    large_sector_id=row.large_sector_id,
+                    canonical_archetype_id=row.canonical_archetype_id,
+                    research_reports=(row.report,),
+                    agent_extracted_fields=row.report.parsed_fields,
+                )
+            )
+            score = feature_result.score()
+            stage = stage_classifier.classify(
+                StageClassificationInput(
+                    score=score,
+                    red_team=red_team_engine.assess(feature_result.red_team_signals),
+                    theme_regime_score=80.0,
+                    company_event_score=80.0,
+                    high_quality_company_event=True,
+                    evidence_ids=score.evidence_ids,
+                )
+            )
+            orphan_count = score.diagnostic_scores.get("orphan_score_component_count_capped", 0.0)
+            if orphan_count:
+                failures.append(
+                    {
+                        "role": row.role,
+                        "canonical_archetype_id": row.canonical_archetype_id,
+                        "symbol": row.symbol,
+                        "as_of_date": row.as_of_date.isoformat(),
+                        "orphan_score_component_count_capped": orphan_count,
+                    }
+                )
+            green_gate_missing = score.diagnostic_scores.get(
+                "evidence_contract_green_gate_missing_primitive_count_capped",
+                0.0,
+            )
+            guard_present = score.diagnostic_scores.get(
+                "evidence_contract_guard_present_primitive_count_capped",
+                0.0,
+            )
+            guard_missing = score.diagnostic_scores.get(
+                "evidence_contract_guard_missing_primitive_count_capped",
+                0.0,
+            )
+            if (
+                row.role == "green"
+                and stage.stage != Stage.STAGE_3_GREEN
+                and green_gate_missing <= 0.0
+                and guard_present <= 0.0
+                and guard_missing <= 0.0
+            ):
+                failures.append(
+                    {
+                        "role": row.role,
+                        "canonical_archetype_id": row.canonical_archetype_id,
+                        "symbol": row.symbol,
+                        "as_of_date": row.as_of_date.isoformat(),
+                        "stage": stage.stage.value,
+                    }
+                )
+            if row.role == "guard" and stage.stage == Stage.STAGE_3_GREEN:
+                failures.append(
+                    {
+                        "role": row.role,
+                        "canonical_archetype_id": row.canonical_archetype_id,
+                        "symbol": row.symbol,
+                        "as_of_date": row.as_of_date.isoformat(),
+                        "stage": stage.stage.value,
+                    }
+                )
+
+        role_counts = Counter(row.role for row in store.rows)
+        self.assertEqual(len(store.rows), 62)
+        self.assertEqual(role_counts["green"], 26)
+        self.assertEqual(role_counts["guard"], 36)
+        self.assertGreaterEqual(len({row.canonical_archetype_id for row in store.rows}), 36)
+        self.assertEqual(failures, [])
 
     def test_fake_benchmark_label_without_evidence_does_not_create_candidate(self):
         with tempfile.TemporaryDirectory() as root:
@@ -498,15 +770,74 @@ class AsOfResearchReplayTests(unittest.TestCase):
         self.assertTrue(failure_exists)
         self.assertTrue(candidates_exists)
         self.assertIn("score_valid", candidates_json[0])
+        self.assertIn("reason_codes", candidates_json[0])
         self.assertIn("visible_score", candidates_json[0])
+        self.assertIn("large_sector_id", candidates_json[0])
+        self.assertIn("canonical_archetype_id", candidates_json[0])
         self.assertIn("score_fingerprint", candidates_json[0])
         self.assertIn("research_input_fingerprint", candidates_json[0])
         self.assertIn("score_variability_drivers", candidates_json[0])
         self.assertIn("web_only_research_input_fingerprint", candidates_json[0])
         self.assertIn("web_only_score_variability_drivers", candidates_json[0])
+        self.assertIn("score_source_mode", candidates_json[0])
+        self.assertIn("runtime_fixture_injected", candidates_json[0])
+        self.assertIn("runtime_fixture_evidence_count", candidates_json[0])
+        self.assertIn("merged_evidence_count", candidates_json[0])
+        self.assertIn("eps_fcf_explosion_score", candidates_json[0])
+        self.assertIn("earnings_visibility_score", candidates_json[0])
+        self.assertIn("bottleneck_pricing_score", candidates_json[0])
+        self.assertIn("market_mispricing_score", candidates_json[0])
+        self.assertIn("valuation_rerating_score", candidates_json[0])
+        self.assertIn("capital_allocation_score", candidates_json[0])
+        self.assertIn("information_confidence_score", candidates_json[0])
+        self.assertIn("risk_penalty", candidates_json[0])
+        self.assertIn("score_claim_backed_component_ratio", candidates_json[0])
+        self.assertIn("orphan_score_component_count", candidates_json[0])
+        self.assertIn("claim_ledger_claim_ids", candidates_json[0])
+        self.assertIn("claim_ledger_claim_ids_by_primitive", candidates_json[0])
+        self.assertIn("score_contribution_claim_ids", candidates_json[0])
+        self.assertIn("score_contribution_ledger", candidates_json[0])
+        self.assertIn("evidence_contract_coverage_pct", candidates_json[0])
+        self.assertIn("evidence_contract_positive_coverage_pct", candidates_json[0])
+        self.assertIn("evidence_contract_green_gate_coverage_pct", candidates_json[0])
+        self.assertIn("evidence_contract_missing_primitives", candidates_json[0])
+        self.assertIn("evidence_contract_positive_missing_primitives", candidates_json[0])
+        self.assertIn("evidence_contract_green_gate_missing_primitives", candidates_json[0])
+        self.assertIn("evidence_contract_guard_primitives", candidates_json[0])
+        self.assertIn("evidence_contract_guard_missing_primitive_count", candidates_json[0])
+        self.assertIn("evidence_contract_guard_missing_primitives", candidates_json[0])
         self.assertIn("visible_score", candidates_csv)
+        self.assertIn("reason_codes", candidates_csv)
+        self.assertIn("canonical_archetype_id", candidates_csv)
         self.assertIn("research_input_fingerprint", candidates_csv)
         self.assertIn("score_variability_drivers", candidates_csv)
+        self.assertIn("score_source_mode", candidates_csv)
+        self.assertIn("runtime_fixture_injected", candidates_csv)
+        self.assertIn("runtime_fixture_evidence_count", candidates_csv)
+        self.assertIn("claim_ledger_claim_ids", candidates_csv)
+        self.assertIn("claim_ledger_claim_ids_by_primitive", candidates_csv)
+        self.assertIn("score_contribution_claim_ids", candidates_csv)
+        self.assertIn("score_contribution_ledger", candidates_csv)
+        self.assertIn("merged_evidence_count", candidates_csv)
+        self.assertIn("eps_fcf_explosion_score", candidates_csv)
+        self.assertIn("earnings_visibility_score", candidates_csv)
+        self.assertIn("bottleneck_pricing_score", candidates_csv)
+        self.assertIn("market_mispricing_score", candidates_csv)
+        self.assertIn("valuation_rerating_score", candidates_csv)
+        self.assertIn("capital_allocation_score", candidates_csv)
+        self.assertIn("information_confidence_score", candidates_csv)
+        self.assertIn("risk_penalty", candidates_csv)
+        self.assertIn("score_claim_backed_component_ratio", candidates_csv)
+        self.assertIn("orphan_score_component_count", candidates_csv)
+        self.assertIn("evidence_contract_coverage_pct", candidates_csv)
+        self.assertIn("evidence_contract_positive_coverage_pct", candidates_csv)
+        self.assertIn("evidence_contract_green_gate_coverage_pct", candidates_csv)
+        self.assertIn("evidence_contract_missing_primitives", candidates_csv)
+        self.assertIn("evidence_contract_positive_missing_primitives", candidates_csv)
+        self.assertIn("evidence_contract_green_gate_missing_primitives", candidates_csv)
+        self.assertIn("evidence_contract_guard_primitives", candidates_csv)
+        self.assertIn("evidence_contract_guard_missing_primitive_count", candidates_csv)
+        self.assertIn("evidence_contract_guard_missing_primitives", candidates_csv)
 
     def test_asof_writer_normalizes_invalid_non_null_score(self):
         rows = (

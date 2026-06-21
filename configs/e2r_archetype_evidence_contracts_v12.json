@@ -1,0 +1,1027 @@
+{
+  "schema_version": "e2r_archetype_evidence_contracts_v1",
+  "generated_from": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+  "contract_count": 36,
+  "contracts": [
+    {
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "required_primitives": [
+        "order_backlog_to_sales",
+        "named_customer_quality",
+        "contract_quality",
+        "delivery_schedule",
+        "opm_expansion_pctp",
+        "fcf_quality_score"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "order_backlog_to_sales",
+        "named_customer_quality",
+        "contract_quality",
+        "delivery_schedule",
+        "opm_expansion_pctp",
+        "fcf_quality_score"
+      ],
+      "guard_primitives": []
+    },
+    {
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "required_primitives": [
+        "datacenter_customer",
+        "order_backlog_to_sales",
+        "lead_time_extended",
+        "capacity_constraint",
+        "pricing_power_confirmed"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+    "positive_primitives": [
+      "datacenter_customer",
+      "order_backlog_to_sales",
+      "lead_time_extended",
+      "capacity_constraint",
+      "pricing_power_confirmed"
+    ],
+    "green_gate_primitives": [
+      "order_backlog_to_sales",
+      "capacity_constraint",
+      "pricing_power_confirmed"
+    ],
+    "guard_primitives": []
+  },
+    {
+      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "required_primitives": [
+        "export_contract",
+        "government_customer",
+        "order_backlog_to_sales",
+        "delivery_schedule",
+        "cost_overrun"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "export_contract",
+        "government_customer",
+        "order_backlog_to_sales",
+        "delivery_schedule"
+      ],
+      "guard_primitives": [
+        "cost_overrun"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "policy_project_cash_bridge",
+      "required_primitives": [
+        "policy_or_regulatory_confirmed",
+        "project_award_confirmed",
+        "permit_or_legal_delay",
+        "direct_company_cash_route",
+        "cost_overrun"
+      ],
+      "required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "policy_or_regulatory_confirmed",
+        "project_award_confirmed",
+        "direct_company_cash_route"
+      ],
+      "guard_primitives": [
+        "permit_or_legal_delay",
+        "cost_overrun"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "runtime_bridge_group": "industrial_backlog_margin_bridge",
+      "required_primitives": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible",
+        "cost_overrun",
+        "delivery_schedule"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible",
+        "delivery_schedule"
+      ],
+      "guard_primitives": [
+        "cost_overrun"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "required_primitives": [
+        "customer_preorder_or_allocation",
+        "revenue_visibility_contract",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold",
+        "memory_price_increase_mentioned",
+        "medium_term_revision_visibility"
+      ],
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+    "positive_primitives": [
+      "customer_preorder_or_allocation",
+      "revenue_visibility_contract",
+      "hbm_capacity_constraint",
+      "hbm_capacity_pre_sold",
+      "memory_price_increase_mentioned",
+      "medium_term_revision_visibility"
+    ],
+    "green_gate_primitives": [
+      "customer_preorder_or_allocation",
+      "revenue_visibility_contract",
+      "hbm_capacity_constraint",
+      "hbm_capacity_pre_sold"
+    ],
+    "guard_primitives": []
+  },
+    {
+      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "required_primitives": [
+        "hbm_customer_order",
+        "customer_contract_visible",
+        "equipment_order_backlog",
+        "advanced_packaging_bottleneck",
+        "relative_strength_score",
+        "order_to_revenue_bridge"
+      ],
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "hbm_customer_order",
+        "customer_contract_visible",
+        "equipment_order_backlog",
+        "advanced_packaging_bottleneck",
+        "relative_strength_score",
+        "order_to_revenue_bridge"
+      ],
+      "guard_primitives": []
+    },
+    {
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_customer_capacity_bridge",
+      "required_primitives": [
+        "named_customer_quality",
+        "qualification_confirmed",
+        "repeat_order_confirmed",
+        "socket_or_test_demand_visible",
+        "margin_bridge_visible"
+      ],
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "contract",
+        "margin"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "named_customer_quality",
+        "qualification_confirmed",
+        "repeat_order_confirmed",
+        "socket_or_test_demand_visible",
+        "margin_bridge_visible"
+      ],
+      "guard_primitives": []
+    },
+    {
+      "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "valuation_blowoff_guard_bridge",
+      "required_primitives": [
+        "valuation_overheat",
+        "price_only_blowoff",
+        "order_to_revenue_bridge",
+        "customer_quality_visible",
+        "capex_cycle_risk"
+      ],
+      "required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "customer"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "order_to_revenue_bridge",
+        "customer_quality_visible"
+      ],
+      "guard_primitives": [
+        "valuation_overheat",
+        "price_only_blowoff",
+        "capex_cycle_risk"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "runtime_bridge_group": "semiconductor_memory_recovery_bridge",
+      "required_primitives": [
+        "memory_price_increase_mentioned",
+        "supply_discipline_mentioned",
+        "cycle_demand_visibility",
+        "end_market_demand_visibility",
+        "supply_demand_tightness",
+        "cycle_to_revenue_bridge",
+        "advanced_packaging_bottleneck",
+        "equipment_order_recovery",
+        "order_to_revenue_bridge",
+        "inventory_cycle_repair",
+        "fcf_quality_score"
+      ],
+      "required_bridge_axes": [
+        "customer",
+        "backlog",
+        "margin",
+        "valuation_repricing"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+    "positive_primitives": [
+      "memory_price_increase_mentioned",
+      "supply_discipline_mentioned",
+      "cycle_demand_visibility",
+      "end_market_demand_visibility",
+      "supply_demand_tightness",
+      "cycle_to_revenue_bridge",
+      "advanced_packaging_bottleneck",
+      "equipment_order_recovery",
+      "order_to_revenue_bridge",
+      "inventory_cycle_repair",
+      "fcf_quality_score"
+    ],
+    "green_gate_primitives": [
+      "memory_price_increase_mentioned",
+      "supply_discipline_mentioned",
+      "cycle_demand_visibility",
+      "end_market_demand_visibility",
+      "supply_demand_tightness",
+      "cycle_to_revenue_bridge",
+      "advanced_packaging_bottleneck",
+      "equipment_order_recovery",
+      "order_to_revenue_bridge",
+      "inventory_cycle_repair"
+    ],
+    "guard_primitives": []
+  },
+    {
+      "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "required_primitives": [
+        "order_backlog_to_sales",
+        "customer_contract",
+        "call_off_risk",
+        "ex_credit_margin",
+        "fcf_quality_score"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+    "positive_primitives": [
+      "order_backlog_to_sales",
+      "customer_contract",
+      "ex_credit_margin",
+      "fcf_quality_score"
+    ],
+    "green_gate_primitives": [
+      "order_backlog_to_sales",
+      "customer_contract"
+    ],
+    "guard_primitives": [
+      "call_off_risk"
+    ]
+    },
+    {
+      "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "required_primitives": [
+        "customer_contract",
+        "call_off_risk",
+        "customer_capex_decline",
+        "contract_cancelled_or_delayed",
+        "volume_visibility"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+    "positive_primitives": [
+      "customer_contract",
+      "volume_visibility"
+    ],
+    "green_gate_primitives": [
+      "customer_contract",
+      "volume_visibility"
+    ],
+    "guard_primitives": [
+        "call_off_risk",
+        "customer_capex_decline",
+        "contract_cancelled_or_delayed"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "required_primitives": [
+        "jv_utilization",
+        "ampc_or_subsidy_capture",
+        "ex_credit_margin",
+        "customer_contract",
+        "policy_reversal_risk"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "jv_utilization",
+        "ampc_or_subsidy_capture",
+        "ex_credit_margin",
+        "customer_contract"
+      ],
+      "guard_primitives": [
+        "policy_reversal_risk"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "required_primitives": [
+        "ev_demand_slowdown",
+        "inventory_spike",
+        "price_cut_risk",
+        "customer_capex_decline",
+        "thesis_break_confirmed"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [],
+      "guard_primitives": [
+        "ev_demand_slowdown",
+        "inventory_spike",
+        "price_cut_risk",
+        "customer_capex_decline",
+        "thesis_break_confirmed"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "required_primitives": [
+        "spread_expansion",
+        "utilization_rate",
+        "inventory_cycle",
+        "pricing_power_confirmed",
+        "fcf_quality_score"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "spread_expansion",
+        "utilization_rate",
+        "inventory_cycle",
+        "pricing_power_confirmed",
+        "fcf_quality_score"
+      ],
+      "guard_primitives": []
+    },
+    {
+      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "required_primitives": [
+        "offtake_contract",
+        "supply_shortage",
+        "policy_supply_support",
+        "permit_status",
+        "direct_company_cash_route"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+    "positive_primitives": [
+      "offtake_contract",
+      "supply_shortage",
+      "policy_supply_support",
+      "permit_status",
+      "direct_company_cash_route"
+    ],
+    "green_gate_primitives": [
+      "offtake_contract",
+      "permit_status",
+      "direct_company_cash_route"
+    ],
+    "guard_primitives": []
+  },
+    {
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "runtime_bridge_group": "materials_spread_supply_bridge",
+      "required_primitives": [
+        "spread_expansion",
+        "raw_material_cost_risk",
+        "utilization_rate",
+        "inventory_cycle",
+        "opm_expansion_pctp"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "spread_expansion",
+        "utilization_rate",
+        "inventory_cycle",
+        "opm_expansion_pctp"
+      ],
+      "guard_primitives": [
+        "raw_material_cost_risk"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "required_primitives": [
+        "export_growth_pct",
+        "sell_through_confirmed",
+        "repeat_order_confirmed",
+        "channel_reorder_confirmed",
+        "opm_expansion_pctp"
+      ],
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "export_growth_pct",
+        "sell_through_confirmed",
+        "repeat_order_confirmed",
+        "channel_reorder_confirmed",
+        "opm_expansion_pctp"
+      ],
+      "guard_primitives": []
+    },
+    {
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "required_primitives": [
+        "inventory_spike",
+        "sell_through_confirmed",
+        "pricing_power_confirmed",
+        "channel_reorder_confirmed",
+        "raw_material_cost_risk"
+      ],
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "sell_through_confirmed",
+        "pricing_power_confirmed",
+        "channel_reorder_confirmed"
+      ],
+      "guard_primitives": [
+        "inventory_spike",
+        "raw_material_cost_risk"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "runtime_bridge_group": "consumer_sellthrough_reorder_bridge",
+      "required_primitives": [
+        "export_growth_pct",
+        "platform_distribution_scale",
+        "brand_customer_diversification",
+        "repeat_order_confirmed",
+        "high_margin_mix_improvement"
+      ],
+      "required_bridge_axes": [
+        "consumer_sell_through",
+        "margin",
+        "customer"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "export_growth_pct",
+        "platform_distribution_scale",
+        "brand_customer_diversification",
+        "repeat_order_confirmed",
+        "high_margin_mix_improvement"
+      ],
+      "guard_primitives": []
+    },
+    {
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "runtime_bridge_group": "financial_capital_return_bridge",
+      "required_primitives": [
+        "roe",
+        "pbr_e",
+        "treasury_share_cancellation",
+        "capital_return_execution",
+        "credit_cost_quality"
+      ],
+      "required_bridge_axes": [
+        "capital_return",
+        "valuation_repricing",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "roe",
+        "pbr_e",
+        "treasury_share_cancellation",
+        "capital_return_execution",
+        "credit_cost_quality"
+      ],
+      "guard_primitives": []
+    },
+    {
+      "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "runtime_bridge_group": "insurance_reserve_capital_bridge",
+      "required_primitives": [
+        "csm_growth_visible",
+        "k_ics_ratio",
+        "reserve_quality_visible",
+        "loss_ratio_quality",
+        "capital_return_execution"
+      ],
+      "required_bridge_axes": [
+        "insurance_quality",
+        "capital_return",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "csm_growth_visible",
+        "k_ics_ratio",
+        "reserve_quality_visible",
+        "loss_ratio_quality",
+        "capital_return_execution"
+      ],
+      "guard_primitives": []
+    },
+    {
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "required_primitives": [
+        "regulatory_approval_confirmed",
+        "approval_to_revenue_bridge",
+        "royalty_route",
+        "partner_economics_visible",
+        "reimbursement_confirmed"
+      ],
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+    "positive_primitives": [
+      "regulatory_approval_confirmed",
+      "approval_to_revenue_bridge",
+      "royalty_route",
+      "partner_economics_visible",
+      "reimbursement_confirmed"
+    ],
+    "green_gate_primitives": [
+      "regulatory_approval_confirmed",
+      "approval_to_revenue_bridge",
+      "royalty_route",
+      "partner_economics_visible"
+    ],
+    "guard_primitives": []
+  },
+    {
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "required_primitives": [
+        "trial_quality_visible",
+        "binary_event_unresolved",
+        "approval_not_confirmed",
+        "safety_signal",
+        "cash_runway_risk"
+      ],
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+    "positive_primitives": [
+      "trial_quality_visible"
+    ],
+    "green_gate_primitives": [
+      "trial_quality_visible"
+    ],
+    "guard_primitives": [
+        "binary_event_unresolved",
+        "approval_not_confirmed",
+        "safety_signal",
+        "cash_runway_risk"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "runtime_bridge_group": "bio_commercialization_reimbursement_bridge",
+      "required_primitives": [
+        "reimbursement_confirmed",
+        "procedure_volume_growth",
+        "export_growth_pct",
+        "consumable_repeat_revenue",
+        "gross_margin_bridge"
+      ],
+      "required_bridge_axes": [
+        "bio_commercialization",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "reimbursement_confirmed",
+        "procedure_volume_growth",
+        "export_growth_pct",
+        "consumable_repeat_revenue",
+        "gross_margin_bridge"
+      ],
+      "guard_primitives": []
+    },
+    {
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "required_primitives": [
+        "arpu_growth_pct",
+        "ad_revenue_growth_pct",
+        "take_rate_improvement",
+        "operating_leverage_visible",
+        "regulatory_risk"
+      ],
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "arpu_growth_pct",
+        "ad_revenue_growth_pct",
+        "take_rate_improvement",
+        "operating_leverage_visible"
+      ],
+      "guard_primitives": [
+        "regulatory_risk"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "required_primitives": [
+        "ip_monetization_visible",
+        "global_launch_conversion",
+        "repeat_revenue",
+        "user_retention",
+        "token_or_theme_hype_risk"
+      ],
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "ip_monetization_visible",
+        "global_launch_conversion",
+        "repeat_revenue",
+        "user_retention"
+      ],
+      "guard_primitives": [
+        "token_or_theme_hype_risk"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+      "required_primitives": [
+        "arr_growth_visible",
+        "nrr",
+        "retention_or_renewal",
+        "rpo_to_sales",
+        "recurring_margin_leverage"
+      ],
+      "required_bridge_axes": [
+        "software_retention",
+        "customer",
+        "margin"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "arr_growth_visible",
+        "nrr",
+        "retention_or_renewal",
+        "rpo_to_sales",
+        "recurring_margin_leverage"
+      ],
+      "guard_primitives": []
+    },
+    {
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "runtime_bridge_group": "battery_mobility_contract_bridge",
+      "required_primitives": [
+        "volume_growth_visible",
+        "mix_improvement",
+        "operating_leverage_visible",
+        "pricing_power_confirmed",
+        "fcf_quality_score"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "backlog",
+        "contract",
+        "customer",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "volume_growth_visible",
+        "mix_improvement",
+        "operating_leverage_visible",
+        "pricing_power_confirmed",
+        "fcf_quality_score"
+      ],
+      "guard_primitives": []
+    },
+    {
+      "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "runtime_bridge_group": "construction_pf_cash_bridge",
+      "required_primitives": [
+        "pf_exposure_reduced",
+        "balance_sheet_repair",
+        "cash_collection_visible",
+        "occupancy_or_presale_visible",
+        "funding_cost_risk"
+      ],
+      "required_bridge_axes": [
+        "margin",
+        "contract",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "pf_exposure_reduced",
+        "balance_sheet_repair",
+        "cash_collection_visible",
+        "occupancy_or_presale_visible"
+      ],
+      "guard_primitives": [
+        "funding_cost_risk"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "policy_project_cash_bridge",
+      "required_primitives": [
+        "policy_or_regulatory_confirmed",
+        "direct_company_cash_route",
+        "subsidy_capture_visible",
+        "implementation_timeline",
+        "policy_headline_only"
+      ],
+      "required_bridge_axes": [
+        "guard_risk",
+        "valuation_repricing",
+        "contract"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "policy_or_regulatory_confirmed",
+        "direct_company_cash_route",
+        "subsidy_capture_visible",
+        "implementation_timeline"
+      ],
+      "guard_primitives": [
+        "policy_headline_only"
+      ]
+    },
+    {
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "governance_tender_cash_bridge",
+      "required_primitives": [
+        "tender_offer_confirmed",
+        "minority_cash_path",
+        "control_premium_floor",
+        "regulatory_approval_confirmed",
+        "event_spread_risk"
+      ],
+      "required_bridge_axes": [
+        "capital_return",
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [
+        "tender_offer_confirmed",
+        "minority_cash_path",
+        "control_premium_floor",
+        "regulatory_approval_confirmed"
+      ],
+      "guard_primitives": [
+        "event_spread_risk"
+      ]
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "required_primitives": [
+        "price_only_blowoff",
+        "policy_headline_only",
+        "evidence_source_quality",
+        "missing_cashflow_bridge",
+        "theme_hype_without_revenue"
+      ],
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [],
+      "guard_primitives": [
+        "price_only_blowoff",
+        "policy_headline_only",
+        "evidence_source_quality",
+        "missing_cashflow_bridge",
+        "theme_hype_without_revenue"
+      ]
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "required_primitives": [
+        "thesis_break_confirmed",
+        "contract_cancelled_or_delayed",
+        "revision_slowdown",
+        "accounting_trust_risk",
+        "valuation_overheat"
+      ],
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [],
+      "guard_primitives": [
+        "thesis_break_confirmed",
+        "contract_cancelled_or_delayed",
+        "revision_slowdown",
+        "accounting_trust_risk",
+        "valuation_overheat"
+      ]
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "required_primitives": [
+        "auditor_or_disclosure_risk",
+        "restatement_risk",
+        "share_count_drift",
+        "price_only_blowoff",
+        "source_quality_conflict"
+      ],
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [],
+      "guard_primitives": [
+        "auditor_or_disclosure_risk",
+        "restatement_risk",
+        "share_count_drift",
+        "price_only_blowoff",
+        "source_quality_conflict"
+      ]
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "runtime_bridge_group": "cross_archetype_guard_bridge",
+      "required_primitives": [
+        "high_mae_history",
+        "valuation_overheat",
+        "liquidity_or_microcap_risk",
+        "execution_risk_score",
+        "positioning_reversal_risk"
+      ],
+      "required_bridge_axes": [
+        "guard_risk"
+      ],
+      "source_matrix": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "positive_primitives": [],
+      "guard_primitives": [
+        "high_mae_history",
+        "valuation_overheat",
+        "liquidity_or_microcap_risk",
+        "execution_risk_score",
+        "positioning_reversal_risk"
+      ]
+    }
+  ]
+}

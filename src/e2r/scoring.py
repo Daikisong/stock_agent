@@ -15,7 +15,7 @@ from .calibration.archetype_weight_profile import (
 from .calibration.scoring_profile import get_active_scoring_profile
 from .calibration.taxonomy import large_sector_for_archetype, normalise_canonical_archetype_id, normalise_large_sector_id
 from .diagnostic_values import numeric_diagnostic
-from .models import IndustrialSubScores, ScoreSnapshot
+from .models import IndustrialSubScores, ScoreContribution, ScoreSnapshot
 
 
 @dataclass(frozen=True)
@@ -56,6 +56,7 @@ class ScoringPayload:
     diagnostic_scores: Mapping[str, float] = field(default_factory=dict)
     industrial_sub_scores: IndustrialSubScores | None = None
     evidence_ids: tuple[str, ...] = field(default_factory=tuple)
+    score_contribution_claim_ids: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
     scoring_version: str = "e2r-2.0-cp1"
     large_sector_id: str | None = None
     canonical_archetype_id: str | None = None
@@ -105,6 +106,11 @@ class ScoringPayload:
             diagnostic_copy[key] = number
         if self.industrial_sub_scores is not None and not isinstance(self.industrial_sub_scores, IndustrialSubScores):
             raise ValueError("industrial_sub_scores must be an IndustrialSubScores instance")
+        contribution_claims: dict[str, tuple[str, ...]] = {}
+        for key, claim_ids in self.score_contribution_claim_ids.items():
+            if key not in _MAX_POINTS_BY_KEY:
+                raise ValueError(f"unknown score contribution component: {key}")
+            contribution_claims[key] = tuple(dict.fromkeys(str(item) for item in claim_ids if str(item).strip()))
         if not isinstance(self.scoring_version, str) or not self.scoring_version.strip():
             raise ValueError("scoring_version must be a non-empty string")
         if self.large_sector_id is not None and (
@@ -119,6 +125,7 @@ class ScoringPayload:
         object.__setattr__(self, "risk_penalty", risk_penalty)
         object.__setattr__(self, "diagnostic_scores", diagnostic_copy)
         object.__setattr__(self, "evidence_ids", tuple(self.evidence_ids))
+        object.__setattr__(self, "score_contribution_claim_ids", contribution_claims)
         if self.large_sector_id is not None:
             object.__setattr__(self, "large_sector_id", normalise_large_sector_id(self.large_sector_id))
         if self.canonical_archetype_id is not None:
@@ -170,28 +177,49 @@ class DeterministicScorer:
         )
         diagnostic_scores["calibration_total_adjustment"] = round(calibration_bonus - calibration_risk_penalty, 4)
         diagnostic_scores.setdefault("score_valid", 100.0)
+        contribution_audit = _score_contribution_claim_diagnostics(payload)
+        diagnostic_scores.update(contribution_audit)
+        contribution_blocked = contribution_audit.get("score_blocked_by_orphan_score_contribution", 0.0) > 0.0
+        if contribution_blocked:
+            diagnostic_scores["score_valid"] = 0.0
+        _apply_source_backed_deep_research_unlock(diagnostic_scores)
 
         raw_total = sum(weighted.components.values()) + calibration_bonus - payload.risk_penalty - calibration_risk_penalty
+        source_backed_floor = None if contribution_blocked else _source_backed_green_total_floor(payload, diagnostic_scores, profile, raw_total)
+        if source_backed_floor is not None:
+            raw_total = max(raw_total, source_backed_floor)
+            diagnostic_scores["source_backed_green_total_floor_applied"] = 1.0
+            diagnostic_scores["source_backed_green_total_floor"] = round(source_backed_floor, 4)
+        if contribution_blocked:
+            raw_total = 0.0
         total_score = round(max(0.0, min(100.0, raw_total)), 4)
         if payload.industrial_sub_scores is not None:
             diagnostic_scores.update(payload.industrial_sub_scores.as_diagnostic_scores())
         evidence_ids = payload.evidence_ids + (
             payload.industrial_sub_scores.evidence_ids if payload.industrial_sub_scores else ()
         )
+        snapshot_components = dict(payload.components)
+        if contribution_blocked:
+            snapshot_components = {key: 0.0 for key in snapshot_components}
         return ScoreSnapshot(
             symbol=payload.symbol,
             as_of_date=payload.as_of_date,
-            eps_fcf_explosion_score=payload.components["eps_fcf_explosion"],
-            earnings_visibility_score=payload.components["earnings_visibility"],
-            bottleneck_pricing_score=payload.components["bottleneck_pricing"],
-            market_mispricing_score=payload.components["market_mispricing"],
-            valuation_rerating_score=payload.components["valuation_rerating"],
-            capital_allocation_score=payload.components["capital_allocation"],
-            information_confidence_score=payload.components["information_confidence"],
-            risk_penalty=payload.risk_penalty,
+            eps_fcf_explosion_score=snapshot_components["eps_fcf_explosion"],
+            earnings_visibility_score=snapshot_components["earnings_visibility"],
+            bottleneck_pricing_score=snapshot_components["bottleneck_pricing"],
+            market_mispricing_score=snapshot_components["market_mispricing"],
+            valuation_rerating_score=snapshot_components["valuation_rerating"],
+            capital_allocation_score=snapshot_components["capital_allocation"],
+            information_confidence_score=snapshot_components["information_confidence"],
+            risk_penalty=0.0 if contribution_blocked else payload.risk_penalty,
             total_score=total_score,
             diagnostic_scores=diagnostic_scores,
             evidence_ids=tuple(dict.fromkeys(evidence_ids)),
+            score_contribution_claim_ids=payload.score_contribution_claim_ids,
+            score_contribution_ledger=_score_contribution_ledger(
+                snapshot_components,
+                payload.score_contribution_claim_ids,
+            ),
             scoring_version=_scoring_version(payload.scoring_version, profile.profile_id, weighted),
         )
 
@@ -217,6 +245,125 @@ def _apply_archetype_runtime_weights(payload: ScoringPayload, profile) -> Weight
         100.0,
     )
     return WeightedComponents(components=weighted.components, diagnostics=diagnostics, match=weighted.match)
+
+
+def _score_contribution_claim_diagnostics(payload: ScoringPayload) -> dict[str, float]:
+    nonzero_components = tuple(key for key, value in payload.components.items() if float(value) > 0.0)
+    claim_backed_components = tuple(
+        key
+        for key in nonzero_components
+        if payload.score_contribution_claim_ids.get(key)
+    )
+    orphan_components = tuple(key for key in nonzero_components if key not in claim_backed_components)
+    require_claims = _claim_backed_score_required(payload.diagnostic_scores)
+    nonzero_count = len(nonzero_components)
+    claim_backed_count = len(claim_backed_components)
+    orphan_count = len(orphan_components)
+    ratio = claim_backed_count / nonzero_count * 100.0 if nonzero_count else 100.0
+    diagnostics = {
+        "score_nonzero_component_count_capped": min(float(nonzero_count), 100.0),
+        "score_claim_backed_component_count_capped": min(float(claim_backed_count), 100.0),
+        "orphan_score_component_count_capped": min(float(orphan_count), 100.0),
+        "score_claim_backed_component_ratio": round(min(max(ratio, 0.0), 100.0), 4),
+        "score_claim_backed_required": 100.0 if require_claims else 0.0,
+    }
+    if require_claims and orphan_count:
+        diagnostics["score_blocked_by_orphan_score_contribution"] = 100.0
+    return diagnostics
+
+
+def _claim_backed_score_required(diagnostics: Mapping[str, float]) -> bool:
+    return any(
+        numeric_diagnostic(diagnostics, key) > 0.0
+        for key in (
+            "require_claim_backed_score_contributions",
+            "source_backed_green_bridge_raw",
+            "source_backed_deep_research_completed",
+            "evidence_contract_green_gate_required_primitive_count_capped",
+        )
+    )
+
+
+def _score_contribution_ledger(
+    components: Mapping[str, float],
+    claim_ids_by_component: Mapping[str, tuple[str, ...]],
+) -> tuple[ScoreContribution, ...]:
+    rows: list[ScoreContribution] = []
+    for spec in CANONICAL_SCORE_COMPONENTS:
+        raw_points = float(components[spec.key])
+        support_claim_ids = tuple(claim_ids_by_component.get(spec.key, ()))
+        if raw_points <= 0.0:
+            rationale = "zero component score"
+            confidence = 1.0
+        elif support_claim_ids:
+            rationale = "component score has claim-backed support"
+            confidence = 1.0
+        else:
+            rationale = "component score has no support_claim_ids"
+            confidence = 0.0
+        rows.append(
+            ScoreContribution(
+                component_key=spec.key,
+                criterion_id=spec.key,
+                raw_points=raw_points,
+                max_points=spec.max_points,
+                support_claim_ids=support_claim_ids,
+                rationale=rationale,
+                confidence=confidence,
+                cap_reason=None if support_claim_ids or raw_points <= 0.0 else "missing_support_claim_ids",
+            )
+        )
+    return tuple(rows)
+
+
+def _apply_source_backed_deep_research_unlock(diagnostics: dict[str, float]) -> None:
+    unlock_score = _source_backed_deep_research_unlock_score(diagnostics)
+    if unlock_score < 60.0:
+        return
+    diagnostics["source_backed_deep_research_completed"] = 100.0
+    diagnostics["green_unlock_evidence_score"] = round(
+        max(numeric_diagnostic(diagnostics, "green_unlock_evidence_score"), unlock_score),
+        4,
+    )
+
+
+def _source_backed_deep_research_unlock_score(diagnostics: Mapping[str, float]) -> float:
+    source_bridge = numeric_diagnostic(diagnostics, "source_backed_green_bridge_raw")
+    if source_bridge < 90.0:
+        return 0.0
+    if numeric_diagnostic(diagnostics, "score_claim_backed_component_ratio") < 100.0:
+        return 0.0
+    if numeric_diagnostic(diagnostics, "orphan_score_component_count_capped") > 0.0:
+        return 0.0
+    claim_count = numeric_diagnostic(diagnostics, "claim_backed_claim_count_capped")
+    if claim_count < 20.0:
+        return 0.0
+    if numeric_diagnostic(diagnostics, "report_date_confidence") < 1.0:
+        return 0.0
+    if numeric_diagnostic(diagnostics, "date_unverified_snippet_news_count_capped") > 0.0:
+        return 0.0
+    if numeric_diagnostic(diagnostics, "date_unverified_document_count_capped") > 0.0:
+        return 0.0
+
+    actual_conversion = numeric_diagnostic(diagnostics, "actual_profit_conversion_score")
+    medium_revision = numeric_diagnostic(diagnostics, "medium_term_revision_visibility")
+    structural_visibility = numeric_diagnostic(
+        diagnostics,
+        "structural_visibility_quality",
+        numeric_diagnostic(diagnostics, "contract_quality"),
+    )
+    domain_evidence = numeric_diagnostic(diagnostics, "domain_specific_evidence_score")
+    bridge_count = numeric_diagnostic(diagnostics, "research_axis_bridge_present_count_capped")
+    family_count = numeric_diagnostic(diagnostics, "cross_evidence_family_count")
+    if family_count < 3.0 and (source_bridge < 95.0 or claim_count < 50.0 or bridge_count < 5.0):
+        return 0.0
+    if actual_conversion < 55.0 or medium_revision < 55.0:
+        return 0.0
+    if max(structural_visibility, domain_evidence) < 55.0:
+        return 0.0
+    if bridge_count < 5.0:
+        return 0.0
+    return min(100.0, source_bridge)
 
 
 def _green_policy_diagnostics(payload: ScoringPayload, weighted: WeightedComponents) -> dict[str, float]:
@@ -260,14 +407,70 @@ def _green_policy_requires_unlock(green_policy: str) -> bool:
 
 
 def _source_backed_green_policy_override(payload: ScoringPayload, green_policy: str) -> bool:
-    if green_policy != "red_watch":
+    if green_policy not in {"red_watch", "event_only_red_watch"}:
         return False
     diagnostics = payload.diagnostic_scores
     source_bridge = numeric_diagnostic(diagnostics, "source_backed_green_bridge_raw")
     guard_risk = numeric_diagnostic(diagnostics, "research_axis_bridge_guard_risk")
     guard_penalty = numeric_diagnostic(diagnostics, "research_axis_bridge_guard_risk_penalty_points")
     bridge_count = numeric_diagnostic(diagnostics, "research_axis_bridge_present_count_capped")
+    if green_policy == "event_only_red_watch":
+        bio_bridge = numeric_diagnostic(diagnostics, "research_axis_bridge_bio_commercialization")
+        actual_conversion = numeric_diagnostic(diagnostics, "actual_profit_conversion_score")
+        return (
+            source_bridge >= 95.0
+            and bio_bridge >= 80.0
+            and actual_conversion >= 55.0
+            and guard_risk <= 0.0
+            and guard_penalty <= 0.0
+            and bridge_count >= 5.0
+        )
     return source_bridge >= 85.0 and guard_risk <= 0.0 and guard_penalty <= 0.0 and bridge_count >= 3.0
+
+
+def _source_backed_green_total_floor(
+    payload: ScoringPayload,
+    diagnostics: Mapping[str, float],
+    profile,
+    raw_total: float,
+) -> float | None:
+    green_total_min = profile.threshold("stage3_green_total_min", 85.0)
+    near_green = raw_total >= green_total_min - 2.5
+    source_backed_policy_override = numeric_diagnostic(diagnostics, "archetype_green_policy_source_backed_override") > 0.0
+    rich_source_backed = (
+        (raw_total >= 70.0 or source_backed_policy_override)
+        and numeric_diagnostic(diagnostics, "source_backed_deep_research_completed") >= 100.0
+        and numeric_diagnostic(diagnostics, "score_claim_backed_component_ratio") >= 100.0
+        and numeric_diagnostic(diagnostics, "orphan_score_component_count_capped") <= 0.0
+        and numeric_diagnostic(diagnostics, "claim_backed_claim_count_capped") >= 20.0
+    )
+    if not near_green and not rich_source_backed:
+        return None
+    source_bridge = numeric_diagnostic(diagnostics, "source_backed_green_bridge_raw")
+    guard_risk = numeric_diagnostic(diagnostics, "research_axis_bridge_guard_risk")
+    guard_penalty = numeric_diagnostic(diagnostics, "research_axis_bridge_guard_risk_penalty_points")
+    bridge_count = numeric_diagnostic(diagnostics, "research_axis_bridge_present_count_capped")
+    actual_conversion = numeric_diagnostic(diagnostics, "actual_profit_conversion_score")
+    medium_revision = numeric_diagnostic(diagnostics, "medium_term_revision_visibility")
+    structural_visibility = numeric_diagnostic(diagnostics, "structural_visibility_quality")
+    domain_evidence = numeric_diagnostic(diagnostics, "domain_specific_evidence_score")
+    if (
+        source_bridge >= 95.0
+        and guard_risk <= 0.0
+        and guard_penalty <= 0.0
+        and bridge_count >= 5.0
+        and actual_conversion >= 55.0
+        and medium_revision >= 55.0
+        and max(structural_visibility, domain_evidence) >= 55.0
+    ):
+        if source_backed_policy_override and payload.canonical_archetype_id == "C24_BIO_TRIAL_DATA_EVENT_RISK":
+            floor = green_total_min
+        else:
+            floor = max(green_total_min, min(source_bridge, green_total_min + 5.25))
+        if raw_total >= floor:
+            return None
+        return floor
+    return None
 
 
 def _green_policy_unlock_score(payload: ScoringPayload, weighted: WeightedComponents) -> float:

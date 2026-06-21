@@ -52,18 +52,21 @@ def classify_v12_archetype(
     """
 
     del symbol  # Symbol-specific historical winner lookup is intentionally forbidden.
-    normalised_canonical = normalise_canonical_archetype_id(canonical_archetype_id)
-    normalised_large = normalise_large_sector_id(large_sector_id)
+    field_canonical = _string_field(parsed_fields.get("canonical_archetype_id"))
+    field_large = _string_field(parsed_fields.get("large_sector_id"))
+    canonical_source = "explicit_canonical_archetype" if canonical_archetype_id else "source_backed_canonical_archetype"
+    normalised_canonical = normalise_canonical_archetype_id(canonical_archetype_id or field_canonical)
+    normalised_large = normalise_large_sector_id(large_sector_id or field_large)
     resolution_note: str | None = None
     if normalised_canonical:
         if normalised_canonical in CANONICAL_ARCHETYPE_IDS:
             expected_large = large_sector_for_archetype(normalised_canonical)
             if expected_large is None:
                 raise ArchetypeResolutionError(f"canonical_archetype_id has no large sector: {normalised_canonical}")
-            reason = "explicit_canonical_archetype"
+            reason = canonical_source
             confidence = 1.0
             if normalised_large and normalised_large != expected_large:
-                reason = "explicit_canonical_corrected_large_sector_mismatch"
+                reason = f"{canonical_source}_corrected_large_sector_mismatch"
                 confidence = 0.95
             return ArchetypeClassification(
                 large_sector_id=expected_large,
@@ -247,6 +250,11 @@ def _classify_from_context(
     if _has_operating_evidence(parsed_fields):
         return "C01_ORDER_BACKLOG_MARGIN_BRIDGE"
     return "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW"
+
+
+def _string_field(value: Any) -> str | None:
+    text = str(value or "").strip()
+    return text or None
 
 
 def _has_accounting_trust_risk(haystack: str, parsed_fields: Mapping[str, Any]) -> bool:

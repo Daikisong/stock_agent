@@ -8,12 +8,14 @@ runtime pipeline can be tested against the accumulated research ledger.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import hashlib
 import json
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+from e2r.agentic import claim_metadata_from_claims, compile_claims_from_parsed_fields, compile_claims_from_primitives
+from e2r.agentic.evidence_contract import evidence_contract_for_archetype
 from e2r.cheap_scan.models import CheapScanCandidate, RecommendedNextLayer
 from e2r.models import Evidence, Instrument, Market, ResearchReport, SourceTier
 
@@ -34,6 +36,9 @@ class RuntimeFixtureEvidenceRow:
     case_id: str | None
     report: ResearchReport
     evidence: Evidence
+
+
+DEFAULT_CARRY_FORWARD_DAYS = 180
 
 
 class RuntimeFixtureEvidenceStore:
@@ -64,19 +69,33 @@ class RuntimeFixtureEvidenceStore:
             for row in sorted(by_symbol.values(), key=lambda item: item.symbol)
         )
 
-    def candidates(self, *, market: Market, as_of_date: date) -> tuple[CheapScanCandidate, ...]:
+    def candidates(
+        self,
+        *,
+        market: Market,
+        as_of_date: date,
+        carry_forward_symbols: Sequence[str] = (),
+        carry_forward_days: int = DEFAULT_CARRY_FORWARD_DAYS,
+    ) -> tuple[CheapScanCandidate, ...]:
         exact_rows = [row for row in self.rows if row.market == market and row.as_of_date == as_of_date]
+        carry_forward_set = {str(symbol) for symbol in carry_forward_symbols}
+        carry_forward_cutoff = as_of_date - timedelta(days=max(carry_forward_days, 0))
+        carried_rows = [
+            row
+            for row in self.rows
+            if row.market == market
+            and row.role == "green"
+            and row.symbol in carry_forward_set
+            and carry_forward_cutoff <= row.as_of_date < as_of_date
+        ]
+        candidate_rows = _dedupe_fixture_candidate_rows((*exact_rows, *carried_rows))
         return tuple(
             CheapScanCandidate(
                 symbol=row.symbol,
                 company_name=row.company_name,
                 market=row.market,
                 as_of_date=as_of_date,
-                reason_codes=(
-                    "V12_RUNTIME_FIXTURE_SPEC",
-                    row.canonical_archetype_id,
-                    f"fixture_role:{row.role}",
-                ),
+                reason_codes=_candidate_reason_codes(row, replay_date=as_of_date),
                 cheap_scan_total_score=80.0,
                 evidence_ids=(row.evidence.evidence_id,),
                 recommended_next_layer=RecommendedNextLayer.DEEP_RESEARCH,
@@ -84,7 +103,7 @@ class RuntimeFixtureEvidenceStore:
                 test_injected=True,
                 production_candidate=False,
             )
-            for row in sorted(exact_rows, key=lambda item: (item.symbol, item.canonical_archetype_id, item.role))
+            for row in sorted(candidate_rows, key=lambda item: (item.symbol, item.canonical_archetype_id, item.role, item.as_of_date))
         )
 
     def reports_for(
@@ -165,6 +184,26 @@ class RuntimeFixtureEvidenceStore:
         )
 
 
+def _dedupe_fixture_candidate_rows(rows: Sequence[RuntimeFixtureEvidenceRow]) -> tuple[RuntimeFixtureEvidenceRow, ...]:
+    by_key: dict[tuple[str, str, str, str], RuntimeFixtureEvidenceRow] = {}
+    for row in rows:
+        key = (row.symbol, row.canonical_archetype_id, row.role, row.evidence.evidence_id)
+        by_key.setdefault(key, row)
+    return tuple(by_key.values())
+
+
+def _candidate_reason_codes(row: RuntimeFixtureEvidenceRow, *, replay_date: date) -> tuple[str, ...]:
+    codes = [
+        "V12_RUNTIME_FIXTURE_SPEC",
+        row.canonical_archetype_id,
+        f"fixture_role:{row.role}",
+        f"fixture_source_date:{row.as_of_date.isoformat()}",
+    ]
+    if row.as_of_date != replay_date:
+        codes.append("fixture_carried_forward")
+    return tuple(codes)
+
+
 def _rows_from_spec_path(path: Path, *, project_root: Path) -> tuple[RuntimeFixtureEvidenceRow, ...]:
     raw_rows = _load_spec_rows(path)
     rows: list[RuntimeFixtureEvidenceRow] = []
@@ -194,7 +233,9 @@ def _load_spec_rows(path: Path) -> tuple[Mapping[str, Any], ...]:
 
 
 def _fixture_row_from_spec(raw: Mapping[str, Any], *, project_root: Path) -> RuntimeFixtureEvidenceRow | None:
-    if raw.get("fixture_status") != "ready_for_runtime_replay_fixture":
+    role = str(raw.get("role") or "").strip().lower() or "fixture"
+    is_ready_pair = raw.get("fixture_status") == "ready_for_runtime_replay_fixture"
+    if not is_ready_pair and role != "guard":
         return None
     candidate = raw.get("candidate")
     if not isinstance(candidate, Mapping):
@@ -220,28 +261,83 @@ def _fixture_row_from_spec(raw: Mapping[str, Any], *, project_root: Path) -> Run
         or candidate.get("company_name")
         or symbol
     ).strip()
-    role = str(raw.get("role") or "").strip().lower() or "fixture"
     canonical_archetype_id, large_sector_id = _fixture_taxonomy(raw, trigger, role=role)
     if not canonical_archetype_id:
         return None
     market = _market_value(trigger.get("market") or candidate.get("market"))
-    parsed_fields = _runtime_fields_from_fixture_row(raw, trigger)
+    parsed_fields = _runtime_fields_from_fixture_row(raw, trigger, canonical_archetype_id=canonical_archetype_id)
     text = _fixture_text(raw, trigger)
     published_at = datetime(row_date.year, row_date.month, row_date.day, 8, 0)
     source_url = _source_identifier(candidate, trigger, source_file)
     evidence_id = _evidence_id(symbol, row_date, canonical_archetype_id, role, candidate.get("trigger_id") or candidate.get("case_id"))
+    runtime_primitives, cleared_guard_primitives = _claim_primitives_from_fixture(
+        raw,
+        trigger,
+        parsed_fields,
+        canonical_archetype_id=canonical_archetype_id,
+    )
+    primitive_claims = compile_claims_from_primitives(
+        evidence_id=evidence_id,
+        symbol=symbol,
+        as_of_date=row_date,
+        primitive_ids=runtime_primitives,
+        archetype_id=canonical_archetype_id,
+        subject=company_name,
+        quote_text=text[:1_000],
+        source_url=source_url,
+        source_tier=int(SourceTier.TIER_1),
+        confidence=0.92,
+        verified=True,
+    )
+    cleared_guard_claims = compile_claims_from_primitives(
+        evidence_id=evidence_id,
+        symbol=symbol,
+        as_of_date=row_date,
+        primitive_ids=cleared_guard_primitives,
+        archetype_id=canonical_archetype_id,
+        subject=company_name,
+        quote_text=text[:1_000],
+        source_url=source_url,
+        source_tier=int(SourceTier.TIER_1),
+        confidence=0.92,
+        verified=True,
+        polarity="negative",
+    )
+    field_claims = compile_claims_from_parsed_fields(
+        evidence_id=evidence_id,
+        symbol=symbol,
+        as_of_date=row_date,
+        parsed_fields=parsed_fields,
+        archetype_id=canonical_archetype_id,
+        subject=company_name,
+        quote_text=text[:1_000],
+        source_url=source_url,
+        source_tier=int(SourceTier.TIER_1),
+        confidence=0.92,
+        max_claims=160,
+    )
+    compiled_claims = tuple(
+        {
+            claim.claim_id: claim
+            for claim in (*primitive_claims, *cleared_guard_claims, *field_claims)
+        }.values()
+    )
     parsed_fields.update(
         {
             "source_url": source_url,
             "source_file": source_file,
             "source_trigger_id": candidate.get("trigger_id") or trigger.get("trigger_id"),
             "source_case_id": candidate.get("case_id") or trigger.get("case_id"),
+            "source_runtime_primitives": list(runtime_primitives),
+            "source_cleared_guard_primitives": list(cleared_guard_primitives),
             "date_verified": True,
             "green_allowed_by_date": True,
             "runtime_fixture_source_backed": True,
             "canonical_archetype_id": canonical_archetype_id,
         }
     )
+    if compiled_claims:
+        parsed_fields.update(claim_metadata_from_claims(compiled_claims, as_of_date=row_date))
     if large_sector_id:
         parsed_fields["large_sector_id"] = large_sector_id
     report = ResearchReport(
@@ -308,7 +404,7 @@ def _fixture_scope_from_candidate(candidate: CheapScanCandidate) -> tuple[str, s
         text = str(code)
         if text.startswith("fixture_role:"):
             role = text.split(":", 1)[1].strip().lower()
-        elif text and text != "V12_RUNTIME_FIXTURE_SPEC":
+        elif text and text != "V12_RUNTIME_FIXTURE_SPEC" and not text.startswith("fixture_"):
             canonical_archetype_id = text
     if not canonical_archetype_id:
         return None
@@ -370,23 +466,89 @@ def _source_trigger_row(path: Path, *, trigger_id: Any, case_id: Any) -> dict[st
     return fallback
 
 
-def _runtime_fields_from_fixture_row(raw: Mapping[str, Any], trigger: Mapping[str, Any]) -> dict[str, Any]:
+def _runtime_fields_from_fixture_row(
+    raw: Mapping[str, Any],
+    trigger: Mapping[str, Any],
+    *,
+    canonical_archetype_id: str | None = None,
+) -> dict[str, Any]:
     role = str(raw.get("role") or "").strip().lower()
     fields: dict[str, Any] = {}
     if role == "green":
         _apply_green_fixture_baseline(fields)
-        source_primitives = _source_expected_runtime_primitives(raw)
-        if source_primitives:
-            for primitive in source_primitives:
-                _apply_research_primitive(fields, str(primitive), positive=True)
-        elif not _green_fixture_uses_source_taxonomy(raw, trigger):
-            for primitive in raw.get("expected_runtime_primitives") or ():
-                _apply_research_primitive(fields, str(primitive), positive=True)
+        positive_primitives, _ = _fixture_runtime_primitive_groups(
+            raw,
+            trigger,
+            canonical_archetype_id=canonical_archetype_id,
+            role=role,
+        )
+        for primitive in positive_primitives:
+            _apply_research_primitive(fields, str(primitive), positive=True)
     for phrase in _evidence_phrases(raw, trigger):
         _apply_research_evidence_phrase(fields, phrase)
     if role != "green":
         _apply_guard_fixture_fields(fields, raw, trigger)
     return fields
+
+
+def _claim_primitives_from_fixture(
+    raw: Mapping[str, Any],
+    trigger: Mapping[str, Any],
+    parsed_fields: Mapping[str, Any],
+    *,
+    canonical_archetype_id: str | None,
+) -> tuple[tuple[str, ...], tuple[str, ...]]:
+    role = str(raw.get("role") or "").strip().lower()
+    primitives, cleared_guard_primitives = _fixture_runtime_primitive_groups(
+        raw,
+        trigger,
+        canonical_archetype_id=canonical_archetype_id,
+        role=role,
+    )
+    primitive_list = list(primitives)
+    if role != "green":
+        primitive_list.extend(
+            key
+            for key in (
+                "missing_cashflow_bridge",
+                "price_only_blowoff",
+                "valuation_overheat",
+                "theme_hype_without_revenue",
+                "source_quality_conflict",
+                "receivables_inventory_spike",
+                "contract_cancelled_or_delayed",
+            )
+            if parsed_fields.get(key)
+        )
+    return (
+        tuple(dict.fromkeys(str(item).strip() for item in primitive_list if str(item).strip())),
+        tuple(dict.fromkeys(str(item).strip() for item in cleared_guard_primitives if str(item).strip())),
+    )
+
+
+def _fixture_runtime_primitive_groups(
+    raw: Mapping[str, Any],
+    trigger: Mapping[str, Any],
+    *,
+    canonical_archetype_id: str | None,
+    role: str,
+) -> tuple[tuple[str, ...], tuple[str, ...]]:
+    primitives = list(_source_expected_runtime_primitives(raw))
+    if not primitives and (role != "green" or not _green_fixture_uses_source_taxonomy(raw, trigger)):
+        value = raw.get("expected_runtime_primitives")
+        if isinstance(value, list):
+            primitives.extend(str(item) for item in value)
+    clean_primitives = tuple(dict.fromkeys(str(item).strip() for item in primitives if str(item).strip()))
+    if role != "green":
+        return clean_primitives, ()
+    guard_primitives: set[str] = set()
+    if canonical_archetype_id:
+        contract = evidence_contract_for_archetype(canonical_archetype_id)
+        if contract is not None:
+            guard_primitives = set(contract.guard_primitives)
+    positive_primitives = tuple(item for item in clean_primitives if item not in guard_primitives)
+    cleared_guard_primitives = tuple(item for item in clean_primitives if item in guard_primitives)
+    return positive_primitives, cleared_guard_primitives
 
 
 def _source_expected_runtime_primitives(raw: Mapping[str, Any]) -> tuple[Any, ...]:
@@ -524,6 +686,7 @@ def _apply_primitive_semantic_aliases(fields: dict[str, Any], primitive: str, lo
         fields["approval_to_revenue_bridge"] = True
         fields["reimbursement_confirmed"] = True
         fields["royalty_route"] = True
+        fields["partner_economics_visible"] = True
     if any(token in lowered for token in ("capital", "dividend", "buyback", "roe", "pbr", "treasury")):
         fields["capital_return_execution"] = True
         fields["shareholder_return_execution"] = True
@@ -592,6 +755,42 @@ def _apply_primitive_semantic_aliases(fields: dict[str, Any], primitive: str, lo
         fields["booked_out_capacity"] = True
         fields["customer_preorder_or_allocation"] = True
     if primitive in {
+        "named_cell_customers",
+        "sk_on_customer",
+        "silicon_anode_customer_adoption",
+        "customer_supply_conversion",
+        "regional_proximity_advantage",
+    }:
+        fields["named_customer_quality"] = True
+        fields["customer_quality_visible"] = True
+        fields["customer_contract_visible"] = True
+        fields["revenue_visibility_contract"] = True
+    if primitive in {
+        "shipment_and_capacity_bridge",
+        "shipment_visibility",
+        "capacity_or_volume_route",
+        "vehicle_model_coverage_expansion",
+        "volume_visibility",
+    }:
+        fields["delivery_schedule"] = True
+        fields["order_to_revenue_bridge"] = True
+        fields["revenue_recognition_path"] = True
+        fields["capacity_constraint"] = True
+        fields["capacity_precommitted"] = True
+        fields["volume_visibility"] = True
+        fields["volume_growth_visible"] = True
+        fields.setdefault("volume_growth_pct", 35.0)
+    if primitive in {"survivor_reopen_positive", "silicon_anode_customer_adoption"}:
+        fields["market_frame_shift"] = True
+        fields["customer_quality_visible"] = True
+        fields["capacity_precommitted"] = True
+        fields["volume_visibility"] = True
+    if primitive in {"cash_collection_visible", "accounting_to_cash_bridge", "multi_field_evidence_bridge"}:
+        fields["cash_collection_visible"] = True
+        fields["margin_bridge_visible"] = True
+        fields["high_margin_mix_improvement"] = True
+        fields["actual_fcf_yoy_pct"] = max(float(fields.get("actual_fcf_yoy_pct", 0.0)), 60.0)
+    if primitive in {
         "direct_revenue_route",
         "implementation_timeline",
         "legal_overhang_removed",
@@ -623,6 +822,9 @@ def _apply_primitive_semantic_aliases(fields: dict[str, Any], primitive: str, lo
     if primitive in {"high_margin_mix_improvement", "mix_improvement", "margin_bridge_visible"}:
         fields["margin_bridge_visible"] = True
         fields["high_margin_mix_improvement"] = True
+    if primitive in {"partner_economics_visible", "low_red_team_risk"}:
+        fields["partner_economics_visible"] = True
+        fields["source_quality_conflict"] = False
 
 
 def _evidence_phrases(raw: Mapping[str, Any], trigger: Mapping[str, Any]) -> tuple[str, ...]:

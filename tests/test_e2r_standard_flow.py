@@ -38,6 +38,41 @@ class E2RStandardFlowTests(unittest.TestCase):
         self.assertIn("case_fixture", DIAGNOSTIC_REPLAY_MODES)
         self.assertIn("hybrid", DIAGNOSTIC_REPLAY_MODES)
 
+    def test_standard_flow_passes_official_context_into_web_research(self):
+        result = E2RStandardFlow().run(
+            E2RStandardConfig(
+                as_of_date=AS_OF,
+                sources=_sources(),
+                universe_limit=2,
+                report_radar_enabled=False,
+                browser_provider=EmptySearchProvider(),
+                free_search_provider=EmptySearchProvider(),
+                search_budget=SearchBudget(max_total_queries_per_day=3, max_queries_per_symbol=3),
+            )
+        )
+
+        self.assertTrue(result.web_results)
+        result_evidence_ids = {item.evidence_id for item in result.evidence}
+        self.assertTrue(any(item.parsed_fields.get("claim_ledger_version") for item in result.evidence))
+        for web_result in result.web_results:
+            feature_input = web_result.feature_input
+            self.assertEqual(feature_input.as_of_date, AS_OF)
+            self.assertEqual(feature_input.sector_context, "전기장비")
+            self.assertTrue(feature_input.price_bars)
+            self.assertTrue(feature_input.disclosures)
+            self.assertEqual(web_result.feature_result.source_fields["large_sector_id"], "L1_INDUSTRIALS_INFRA_DEFENSE_GRID")
+            self.assertIn(
+                web_result.feature_result.source_fields["canonical_archetype_id"],
+                {"C01_ORDER_BACKLOG_MARGIN_BRIDGE", "C02_POWER_GRID_DATACENTER_CAPEX"},
+            )
+            self.assertIn("archetype_weight:", web_result.score.scoring_version)
+            self.assertGreater(
+                web_result.score.diagnostic_scores["evidence_contract_required_primitive_count_capped"],
+                0.0,
+            )
+            self.assertIn("evidence_contract_required_primitives", web_result.feature_result.source_fields)
+            self.assertTrue(set(web_result.score.evidence_ids).issubset(result_evidence_ids))
+
     def test_diagnostic_modes_are_not_default_production_flow(self):
         self.assertEqual(E2RStandardFlow.flow_name, E2R_STANDARD)
         self.assertNotIn(E2R_STANDARD, DIAGNOSTIC_REPLAY_MODES)

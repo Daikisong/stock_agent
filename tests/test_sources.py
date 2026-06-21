@@ -277,7 +277,11 @@ class SourceConnectorTests(unittest.TestCase):
                         "RPT_TITLE": "(깐부)치킨게임 시작",
                         "TARGET_PRC": "3,800,000",
                         "RECOMM": "매수",
-                        "COMMENT": "본격적인 장기공급계약 체결 시작<br/>27년 HBM 수요 확대와 고객 다변화",
+                        "COMMENT": (
+                            "본격적인 장기공급계약 체결 시작<br/>"
+                            "2분기 매출액 81.8조원(+56% QoQ), 영업이익 63.4조원(+69%) 전망<br/>"
+                            "27년 HBM 수요 확대와 고객 다변화"
+                        ),
                         "PAGE_CNT": 10,
                         "FILE_NM": "1F01420260609_000660_c.pdf",
                         "CLOSE_PRC": "2,101,000",
@@ -306,9 +310,40 @@ class SourceConnectorTests(unittest.TestCase):
         self.assertEqual(hynix[0].target_price, 2950000)
         self.assertEqual(hynix[0].fy1_eps, 325071)
         self.assertEqual(hynix[1].broker, "미래에셋")
+        self.assertEqual(hynix[1].fy1_sales, 81_800_000_000_000.0)
+        self.assertEqual(hynix[1].fy1_op, 63_400_000_000_000.0)
+        self.assertTrue(hynix[1].parsed_fields["forward_estimate_present"])
+        self.assertEqual(hynix[1].parsed_fields["forward_op_estimate"], 63_400_000_000_000.0)
         self.assertEqual(hynix[1].parsed_fields["target_price_revision_direction"], "unchanged")
         self.assertEqual(hynix[1].parsed_fields["eps_revision_direction"], "up")
         self.assertIn("장기공급계약", hynix[1].raw_text or "")
+
+    def test_company_guide_recent_report_does_not_treat_target_price_as_op_estimate(self):
+        connector = CompanyGuideConnector()
+
+        reports = connector.parse_recent_reports_payload(
+            {
+                "lists": [
+                    {
+                        "RPT_ID": 1200000,
+                        "ANL_DT": "26/06/10",
+                        "RPT_TITLE": "실적 전망치 상향",
+                        "TARGET_PRC": "2,600,000",
+                        "COMMENT": "영업이익 전망치 상향, 목표주가 260만원 상향",
+                        "BRK_NM_SHORT_KOR": "테스트",
+                        "PRC_ACTION_TYP_NM": "목표주가 상향",
+                        "EPS_ACTION_TYP_NM": "추정EPS 상향",
+                    }
+                ]
+            },
+            symbol="999999",
+            as_of_date=date(2026, 6, 11),
+        )
+
+        self.assertEqual(len(reports), 1)
+        self.assertIsNone(reports[0].fy1_op)
+        self.assertNotIn("forward_op_estimate", reports[0].parsed_fields)
+        self.assertTrue(reports[0].parsed_fields["estimate_upgrade_mentioned"])
 
     def test_company_guide_request_metadata_stays_fixture_first(self):
         connector = CompanyGuideConnector()

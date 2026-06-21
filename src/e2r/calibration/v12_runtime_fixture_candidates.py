@@ -26,12 +26,20 @@ GUARD_TRIGGER_TYPES = {
 }
 GUARD_CASE_TYPES = {"one_off", "overheat", "failed_rerating", "4c_thesis_break", "boom_bust"}
 GREEN_GUARD_MARKERS = (
+    "counterexample",
+    "false-green",
+    "false green",
     "false_green",
     "false-positive",
     "false_positive",
+    "false positive",
+    "false_positive_green",
     "falsepositive",
     "false_stage",
     "false_stage2",
+    "hmae",
+    "high-mae",
+    "high_mae",
     "policy_only",
     "policyonly",
     "headline_only",
@@ -44,8 +52,12 @@ GREEN_EQUIVALENT_POSITIVE_MARKERS = (
     "large_mfe_success",
     "direct_supply_tightness_positive",
     "direct_project_bridge_positive",
+    "customer_supply_positive",
+    "survivor_reopen_positive",
     "named_sk_hynix",
     "repeat_export_order_to_large_mfe_success",
+    "positive_control_order_backlog_earnings_conversion",
+    "current_profile_should_accept",
 )
 GREEN_EQUIVALENT_BLOCK_MARKERS = (
     "counterexample",
@@ -67,6 +79,18 @@ GREEN_EQUIVALENT_BLOCK_MARKERS = (
 )
 
 SOURCE_GREEN_PRIMITIVES_BY_ARCHETYPE: dict[str, tuple[str, ...]] = {
+    "C02_POWER_GRID_DATACENTER_CAPEX": (
+        "datacenter_customer",
+        "order_backlog_to_sales",
+        "lead_time_extended",
+        "capacity_constraint",
+        "pricing_power_confirmed",
+        "delivery_schedule",
+        "order_to_revenue_bridge",
+        "margin_bridge_visible",
+        "medium_term_revision_visibility",
+        "cash_collection_visible",
+    ),
     "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": (
         "export_contract",
         "government_customer",
@@ -120,8 +144,90 @@ SOURCE_GREEN_PRIMITIVES_BY_ARCHETYPE: dict[str, tuple[str, ...]] = {
         "medium_term_revision_visibility",
         "pricing_power_confirmed",
     ),
+    "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": (
+        "regulatory_approval_confirmed",
+        "approval_to_revenue_bridge",
+        "royalty_route",
+        "partner_economics_visible",
+        "reimbursement_confirmed",
+        "medium_term_revision_visibility",
+        "low_red_team_risk",
+    ),
+    "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK": (
+        "named_cell_customers",
+        "customer_contract_visible",
+        "customer_supply_conversion",
+        "shipment_and_capacity_bridge",
+        "delivery_schedule",
+        "order_to_revenue_bridge",
+        "volume_visibility",
+        "capacity_precommitted",
+        "margin_bridge_visible",
+        "medium_term_revision_visibility",
+        "regional_proximity_advantage",
+    ),
+    "C14_EV_DEMAND_SLOWDOWN_4B_4C": (
+        "survivor_reopen_positive",
+        "silicon_anode_customer_adoption",
+        "vehicle_model_coverage_expansion",
+        "sk_on_customer",
+        "customer_contract_visible",
+        "delivery_schedule",
+        "order_to_revenue_bridge",
+        "volume_visibility",
+        "capacity_precommitted",
+        "margin_bridge_visible",
+        "medium_term_revision_visibility",
+    ),
+    "C24_BIO_TRIAL_DATA_EVENT_RISK": (
+        "regulatory_approval_confirmed",
+        "approval_to_revenue_bridge",
+        "royalty_route",
+        "partner_economics_visible",
+        "customer_contract_visible",
+        "official_contract",
+        "market_frame_shift",
+        "medium_term_revision_visibility",
+        "low_red_team_risk",
+    ),
+    "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION": (
+        "datacenter_customer",
+        "order_backlog_to_sales",
+        "record_backlog",
+        "customer_contract_visible",
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "delivery_schedule",
+        "order_to_revenue_bridge",
+        "margin_bridge_visible",
+        "cash_collection_visible",
+        "medium_term_revision_visibility",
+    ),
+    "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": (
+        "datacenter_customer",
+        "order_backlog_to_sales",
+        "record_backlog",
+        "customer_contract_visible",
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "delivery_schedule",
+        "order_to_revenue_bridge",
+        "margin_bridge_visible",
+        "cash_collection_visible",
+        "medium_term_revision_visibility",
+    ),
 }
 SOURCE_GREEN_REQUIRED_MARKERS_BY_ARCHETYPE: dict[str, tuple[str, ...]] = {
+    "C02_POWER_GRID_DATACENTER_CAPEX": (
+        "order_backlog",
+        "orders and backlog",
+        "order_backlog_earnings_control",
+        "datacenter",
+        "data center",
+        "transformer",
+        "hd hyundai electric",
+        "hd현대일렉트릭",
+    ),
     "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": (
         "repeat_export",
         "export_order",
@@ -147,6 +253,57 @@ SOURCE_GREEN_REQUIRED_MARKERS_BY_ARCHETYPE: dict[str, tuple[str, ...]] = {
         "zinc_concentrate",
         "direct_smelter",
         "direct_supply_tightness_positive",
+    ),
+    "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK": (
+        "north_america",
+        "customer_supply_conversion",
+        "shipment_and_capacity_bridge",
+        "lge",
+        "sk on",
+        "ultium",
+        "blueovalsk",
+    ),
+    "C14_EV_DEMAND_SLOWDOWN_4B_4C": (
+        "survivor_reopen_positive",
+        "silicon-anode",
+        "silicon_anode",
+        "sk on",
+        "vehicle models",
+    ),
+    "C24_BIO_TRIAL_DATA_EVENT_RISK": (
+        "fda",
+        "approval",
+        "mariposa",
+        "lazertinib",
+    ),
+    "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": (
+        "fda",
+        "approval",
+        "lazcluze",
+        "lazertinib",
+        "rybrevant",
+        "direct_economics",
+        "commercialization",
+    ),
+    "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION": (
+        "order_backlog_earnings_control",
+        "positive_control_order_backlog_earnings_conversion",
+        "orders and backlog",
+    ),
+    "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": (
+        "order_backlog_control",
+        "order_backlog_earnings_control",
+        "current_profile_should_accept",
+    ),
+}
+SOURCE_GREEN_SOURCE_TAXONOMY_BY_ARCHETYPE: dict[str, tuple[str, str]] = {
+    "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION": (
+        "C02_POWER_GRID_DATACENTER_CAPEX",
+        "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+    ),
+    "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": (
+        "C02_POWER_GRID_DATACENTER_CAPEX",
+        "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     ),
 }
 
@@ -562,6 +719,10 @@ def _marker_text(row: dict[str, Any]) -> str:
             "trigger_type",
             "case_type",
             "positive_or_counterexample",
+            "trigger_outcome_label",
+            "current_profile_verdict",
+            "stage4b_evidence_fields",
+            "stage4c_evidence_fields",
             "evidence_available_at_that_date",
             "evidence_source",
         )
@@ -625,8 +786,7 @@ def _is_green_equivalent_positive_row(row: dict[str, Any]) -> bool:
     if trigger_type not in GREEN_EQUIVALENT_TRIGGER_TYPES:
         return False
     archetype = str(row.get("canonical_archetype_id") or "")
-    required_markers = SOURCE_GREEN_REQUIRED_MARKERS_BY_ARCHETYPE.get(archetype)
-    if not required_markers:
+    if not _matches_source_green_required_markers(row, archetype):
         return False
     if _has_green_guard_marker(row):
         return False
@@ -634,14 +794,21 @@ def _is_green_equivalent_positive_row(row: dict[str, Any]) -> bool:
     risk_text = _green_equivalent_risk_text(row)
     if not any(marker in positive_text for marker in GREEN_EQUIVALENT_POSITIVE_MARKERS):
         return False
-    if not any(marker in positive_text for marker in required_markers):
-        return False
     if any(marker in risk_text for marker in GREEN_EQUIVALENT_BLOCK_MARKERS):
         return False
     stage3_fields = row.get("stage3_evidence_fields")
     if not stage3_fields:
         return False
     return _safe_float(row.get("MFE_180D_pct")) >= 80.0
+
+
+def _matches_source_green_required_markers(row: dict[str, Any], archetype: str | None = None) -> bool:
+    current_archetype = archetype or str(row.get("canonical_archetype_id") or "")
+    required_markers = SOURCE_GREEN_REQUIRED_MARKERS_BY_ARCHETYPE.get(current_archetype)
+    if not required_markers:
+        return False
+    positive_text = _green_equivalent_positive_text(row)
+    return any(marker in positive_text for marker in required_markers)
 
 
 def _is_green_row(row: dict[str, Any]) -> bool:
@@ -796,16 +963,36 @@ def _row_view(row: dict[str, Any]) -> dict[str, Any]:
     source_primitives = _source_expected_runtime_primitives_for_row(row)
     if source_primitives:
         view["source_expected_runtime_primitives"] = list(source_primitives)
+    source_taxonomy = _source_taxonomy_for_row(row)
+    if source_taxonomy:
+        source_canonical, source_large = source_taxonomy
+        view["source_canonical_archetype_id"] = source_canonical
+        view["source_large_sector_id"] = source_large
     return view
 
 
 def _source_expected_runtime_primitives_for_row(row: dict[str, Any]) -> tuple[str, ...]:
-    if _is_raw_green_trigger(row):
-        return ()
     if not _is_green_equivalent_positive_row(row):
+        if not (_is_raw_green_trigger(row) and _is_green_row(row)):
+            return ()
+    source_taxonomy = _source_taxonomy_for_row(row)
+    archetype = source_taxonomy[0] if source_taxonomy else str(row.get("canonical_archetype_id") or "")
+    if not _matches_source_green_required_markers(row, archetype):
         return ()
-    archetype = str(row.get("canonical_archetype_id") or "")
     return SOURCE_GREEN_PRIMITIVES_BY_ARCHETYPE.get(archetype, ())
+
+
+def _source_taxonomy_for_row(row: dict[str, Any]) -> tuple[str, str] | None:
+    if not (_is_raw_green_trigger(row) and _is_green_row(row)):
+        return None
+    archetype = str(row.get("canonical_archetype_id") or "")
+    source_canonical = str(row.get("source_canonical_archetype_id") or "").strip()
+    source_large = str(row.get("source_large_sector_id") or "").strip()
+    if archetype.startswith("R13_") and source_canonical and not source_canonical.startswith("R13_"):
+        return source_canonical, source_large or ARCHETYPE_TO_LARGE_SECTOR.get(source_canonical, "")
+    if not _matches_source_green_required_markers(row, archetype):
+        return None
+    return SOURCE_GREEN_SOURCE_TAXONOMY_BY_ARCHETYPE.get(archetype)
 
 
 def _bridge_spec_for_archetype(archetype: str) -> dict[str, Any]:

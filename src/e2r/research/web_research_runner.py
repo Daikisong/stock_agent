@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass, field, replace
 from datetime import date, datetime
@@ -39,6 +40,16 @@ _REPORT_NUMERIC_NO_OVERWRITE_FIELDS = {
     "est_per",
     "est_pbr",
 }
+
+_EXPLICIT_SOURCE_BACKED_FIELD_RE = re.compile(
+    r"^\s*E2R_SOURCE_BACKED_FIELD\s+([A-Za-z][A-Za-z0-9_]*)\s*=\s*(.+?)\s*$"
+)
+_EXPLICIT_FIELD_PREFIX_EXCLUDES = (
+    "claim_",
+    "compiled_",
+    "raw_",
+    "source_",
+)
 
 
 @dataclass(frozen=True)
@@ -179,7 +190,7 @@ class WebResearchRunner:
                 company_name=inputs.company_name,
                 symbol=inputs.symbol,
                 company_aliases=inputs.company_aliases,
-            ):
+            ) and not _has_explicit_source_backed_field_block(fetch.text):
                 parse_text = _company_relevant_fetched_text(
                     result=result,
                     fetch_text=fetch.text,
@@ -225,6 +236,9 @@ class WebResearchRunner:
             research_reports=parsed_reports,
             news_items=parsed_news,
         )
+        parsed_disclosures = list(_claim_backed_disclosures(parsed_disclosures, evidence))
+        parsed_reports = list(_claim_backed_reports(parsed_reports, evidence))
+        parsed_news = list(_claim_backed_news(parsed_news, evidence, fallback_symbol=inputs.symbol))
         return WebResearchResult(
             company_name=inputs.company_name,
             symbol=inputs.symbol,
@@ -344,6 +358,7 @@ class WebResearchRunner:
             if key in _REPORT_NUMERIC_NO_OVERWRITE_FIELDS and key in merged_fields:
                 continue
             merged_fields[key] = value
+        _clear_mitigated_risk_fields(merged_fields)
         merged_fields.setdefault("source_url", result.url)
         merged_fields.setdefault("parser_confidence", parsed.parsed_fields.get("parser_confidence", 0.65))
         _apply_result_date_fields(merged_fields, result)
@@ -430,6 +445,70 @@ def _apply_result_date_fields(parsed_fields: dict[str, Any], result: SearchResul
         parsed_fields.setdefault("date_unverified_document", True)
     if not green_allowed:
         parsed_fields.setdefault("date_verification_green_block", True)
+
+
+def _clear_mitigated_risk_fields(parsed_fields: dict[str, Any]) -> None:
+    repair_bridge = all(
+        bool(parsed_fields.get(key))
+        for key in ("pf_exposure_reduced", "balance_sheet_repair", "cash_collection_visible")
+    )
+    funding_risk_monitored = bool(parsed_fields.get("funding_cost_risk_monitored"))
+    if not repair_bridge and not funding_risk_monitored:
+        return
+    parsed_fields["guard_risk_mitigated"] = True
+    if funding_risk_monitored or repair_bridge:
+        parsed_fields.pop("funding_cost_risk", None)
+    if repair_bridge:
+        parsed_fields.pop("liquidity_or_microcap_risk", None)
+
+
+def _claim_backed_reports(
+    reports: Sequence[ResearchReport],
+    evidence: Sequence[Evidence],
+) -> tuple[ResearchReport, ...]:
+    evidence_by_id = {item.evidence_id: item for item in evidence}
+    updated: list[ResearchReport] = []
+    for report in reports:
+        evidence_id = f"research:{report.symbol}:{report.publish_date.isoformat()}:{report.broker}"
+        linked = evidence_by_id.get(evidence_id)
+        updated.append(replace(report, parsed_fields=linked.parsed_fields) if linked is not None else report)
+    return tuple(updated)
+
+
+def _claim_backed_disclosures(
+    disclosures: Sequence[DisclosureEvent],
+    evidence: Sequence[Evidence],
+) -> tuple[DisclosureEvent, ...]:
+    evidence_by_id = {item.evidence_id: item for item in evidence}
+    updated: list[DisclosureEvent] = []
+    for disclosure in disclosures:
+        evidence_id = f"disclosure:{disclosure.symbol}:{disclosure.published_at.date().isoformat()}:{disclosure.report_type}"
+        linked = evidence_by_id.get(evidence_id)
+        updated.append(replace(disclosure, parsed_fields=linked.parsed_fields) if linked is not None else disclosure)
+    return tuple(updated)
+
+
+def _claim_backed_news(
+    news_items: Sequence[NewsItem],
+    evidence: Sequence[Evidence],
+    *,
+    fallback_symbol: str,
+) -> tuple[NewsItem, ...]:
+    evidence_by_id = {item.evidence_id: item for item in evidence}
+    updated: list[NewsItem] = []
+    for item in news_items:
+        symbol = item.symbol or fallback_symbol
+        source_url = str(item.parsed_fields.get("source_url") or item.parsed_fields.get("url") or "").strip() or None
+        evidence_id = str(item.parsed_fields.get("evidence_id") or "").strip() or stable_news_evidence_id(
+            symbol=symbol,
+            published_date=item.published_at.date(),
+            source=item.source,
+            source_url=source_url,
+            title=item.title,
+        )
+        linked = evidence_by_id.get(evidence_id)
+        updated.append(replace(item, parsed_fields=linked.parsed_fields) if linked is not None else item)
+    return tuple(updated)
 
 
 def classify_search_result(result: SearchResult) -> str:
@@ -794,7 +873,51 @@ def extract_e2r_text_fields(text: str, *, as_of_date: date | None = None) -> dic
         if "현금 회수 가시성" in text or "cash collection visible" in lowered:
             fields["cash_collection_visible"] = True
     _add_qualitative_e2r_fields(text, lowered, fields)
+    fields.update(_explicit_source_backed_fields(text))
     return fields
+
+
+def _explicit_source_backed_fields(text: str) -> dict[str, Any]:
+    fields: dict[str, Any] = {}
+    for line in text.splitlines():
+        match = _EXPLICIT_SOURCE_BACKED_FIELD_RE.match(line)
+        if not match:
+            continue
+        key = match.group(1).strip()
+        if not _safe_explicit_source_backed_field_key(key):
+            continue
+        value = _parse_explicit_source_backed_value(match.group(2).strip())
+        if value is not None:
+            fields[key] = value
+    return fields
+
+
+def _has_explicit_source_backed_field_block(text: str) -> bool:
+    return any(_EXPLICIT_SOURCE_BACKED_FIELD_RE.match(line) for line in text.splitlines())
+
+
+def _safe_explicit_source_backed_field_key(key: str) -> bool:
+    if not key or any(key.startswith(prefix) for prefix in _EXPLICIT_FIELD_PREFIX_EXCLUDES):
+        return False
+    return bool(re.fullmatch(r"[A-Za-z][A-Za-z0-9_]{1,80}", key))
+
+
+def _parse_explicit_source_backed_value(raw: str) -> Any:
+    if not raw:
+        return None
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        lowered = raw.lower()
+        if lowered == "true":
+            return True
+        if lowered == "false":
+            return False
+        try:
+            number = float(raw.replace(",", ""))
+        except ValueError:
+            return raw[:300]
+        return int(number) if number.is_integer() else number
 
 
 def _add_qualitative_e2r_fields(text: str, lowered: str, fields: dict[str, Any]) -> None:
@@ -1075,6 +1198,11 @@ def _is_fetched_document_company_relevant(
     result_context = f"{result.title}\n{result.snippet or ''}\n{result.url}".lower()
     title_context = result.title.lower()
     stripped = _strip_common_news_boilerplate(fetch_text)
+    if _has_explicit_source_backed_field_block(fetch_text) and (
+        any(alias in result_context for alias in aliases)
+        or any(alias in stripped[:1_500].lower() for alias in aliases)
+    ):
+        return True
     lead_body_context = _has_direct_company_context(stripped[:900], aliases)
     direct_body_context = _has_direct_company_context(stripped, aliases)
     if any(alias in title_context for alias in aliases):
@@ -1314,6 +1442,13 @@ def _has_strong_company_specific_context(excerpt: str) -> bool:
             "자회사",
             "주주환원",
             "자사주",
+            "논리",
+            "훼손",
+            "밸류에이션",
+            "과열",
+            "회계",
+            "신뢰",
+            "현금흐름",
             "임상",
             "허가",
             "승인",
@@ -1323,6 +1458,10 @@ def _has_strong_company_specific_context(excerpt: str) -> bool:
             "earnings",
             "revenue",
             "profit",
+            "revision",
+            "valuation",
+            "thesis",
+            "cashflow",
         )
     )
 
@@ -1356,6 +1495,13 @@ def _has_company_business_context(excerpt: str) -> bool:
             "수익성",
             "opm",
             "asp",
+            "논리",
+            "훼손",
+            "밸류에이션",
+            "과열",
+            "회계",
+            "신뢰",
+            "현금흐름",
             "판매",
             "출하",
             "신제품",
@@ -1367,6 +1513,12 @@ def _has_company_business_context(excerpt: str) -> bool:
             "margin",
             "earnings",
             "profit",
+            "revision",
+            "valuation",
+            "thesis",
+            "cashflow",
+            "price-only",
+            "price only",
         )
     )
 

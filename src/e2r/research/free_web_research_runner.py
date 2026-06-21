@@ -9,6 +9,7 @@ from pathlib import Path
 from time import sleep
 from typing import Any, Callable, Mapping, Protocol, Sequence
 
+from e2r.agentic import claim_metadata_from_claims, compile_claims_from_primitives, evidence_contract_gap_context
 from e2r.diagnostic_values import diagnostic_value
 from e2r.features import DeterministicFeatureEngineer, FeatureEngineeringInput, FeatureEngineeringResult
 from e2r.llm.codex_theme_provider import build_default_codex_theme_route_provider
@@ -309,6 +310,13 @@ class FreeWebResearchRunner:
         )
         route_large_sector_id, route_canonical_archetype_id = _theme_route_scoring_ids(theme_route)
         agent_extracted_fields = _theme_route_agent_extracted_fields(theme_route)
+        theme_route_diagnostics = dict(theme_route_diagnostics)
+        agent_extracted_fields, agent_field_claim_diagnostics = _claim_backed_theme_route_agent_fields(
+            route=theme_route,
+            inputs=inputs,
+            agent_extracted_fields=agent_extracted_fields,
+        )
+        theme_route_diagnostics.update(agent_field_claim_diagnostics)
         proxy = build_report_consensus_proxy(web_result.parsed_reports, as_of_date=inputs.as_of_date)
         web_result = _with_report_consensus_proxy_evidence(inputs=inputs, web_result=web_result, proxy=proxy)
         feature_input = _merge_feature_input(
@@ -335,6 +343,26 @@ class FreeWebResearchRunner:
         theme_route_diagnostics["post_score_gap_unresolved_gaps"] = ()
         theme_route_diagnostics["post_score_gap_rejection_reasons"] = ()
         while True:
+            gap_signature = _score_gap_state_signature(score, red_team, feature_result.source_fields)
+            if gap_signature in seen_score_gap_signatures:
+                score_gap_expansion_result = _ScoreGapExpansionResult(
+                    status="no_progress",
+                    unresolved_gaps=tuple(dict.fromkeys((*_score_gap_missing_information(score), *_stage_gate_missing_information(score, red_team)))),
+                    rejection_reasons=("score_gap_state_repeated",),
+                )
+                theme_route_diagnostics = _with_score_gap_expansion_diagnostics(
+                    theme_route_diagnostics,
+                    score_gap_expansion_result,
+                    score_gap_queries,
+                )
+                _emit_phase_event(
+                    inputs,
+                    "post_score_gap_stop_no_progress",
+                    round_index=score_gap_round_index,
+                    score_gap_query_count=len(score_gap_queries),
+                    unresolved_gap_count=len(score_gap_expansion_result.unresolved_gaps),
+                )
+                break
             if (
                 inputs.max_score_gap_expansion_rounds is not None
                 and score_gap_round_index >= inputs.max_score_gap_expansion_rounds
@@ -352,26 +380,6 @@ class FreeWebResearchRunner:
                 _emit_phase_event(
                     inputs,
                     "post_score_gap_stop_round_limit",
-                    round_index=score_gap_round_index,
-                    score_gap_query_count=len(score_gap_queries),
-                    unresolved_gap_count=len(score_gap_expansion_result.unresolved_gaps),
-                )
-                break
-            gap_signature = _score_gap_state_signature(score, red_team)
-            if gap_signature in seen_score_gap_signatures:
-                score_gap_expansion_result = _ScoreGapExpansionResult(
-                    status="no_progress",
-                    unresolved_gaps=tuple(dict.fromkeys((*_score_gap_missing_information(score), *_stage_gate_missing_information(score, red_team)))),
-                    rejection_reasons=("score_gap_state_repeated",),
-                )
-                theme_route_diagnostics = _with_score_gap_expansion_diagnostics(
-                    theme_route_diagnostics,
-                    score_gap_expansion_result,
-                    score_gap_queries,
-                )
-                _emit_phase_event(
-                    inputs,
-                    "post_score_gap_stop_no_progress",
                     round_index=score_gap_round_index,
                     score_gap_query_count=len(score_gap_queries),
                     unresolved_gap_count=len(score_gap_expansion_result.unresolved_gaps),
@@ -395,6 +403,7 @@ class FreeWebResearchRunner:
                 red_team=red_team,
                 web_result=web_result,
                 theme_route=theme_route,
+                source_fields=feature_result.source_fields,
             )
             theme_route_diagnostics = _with_score_gap_expansion_diagnostics(
                 theme_route_diagnostics,
@@ -448,6 +457,13 @@ class FreeWebResearchRunner:
             )
             route_large_sector_id, route_canonical_archetype_id = _theme_route_scoring_ids(theme_route)
             agent_extracted_fields = _theme_route_agent_extracted_fields(theme_route)
+            theme_route_diagnostics = dict(theme_route_diagnostics)
+            agent_extracted_fields, agent_field_claim_diagnostics = _claim_backed_theme_route_agent_fields(
+                route=theme_route,
+                inputs=inputs,
+                agent_extracted_fields=agent_extracted_fields,
+            )
+            theme_route_diagnostics.update(agent_field_claim_diagnostics)
             proxy = build_report_consensus_proxy(web_result.parsed_reports, as_of_date=inputs.as_of_date)
             web_result = _with_report_consensus_proxy_evidence(inputs=inputs, web_result=web_result, proxy=proxy)
             feature_input = _merge_feature_input(
@@ -921,6 +937,7 @@ class FreeWebResearchRunner:
         red_team: RedTeamAssessment,
         web_result: WebResearchResult,
         theme_route: ThemeRouteOutput | None,
+        source_fields: Mapping[str, Any],
     ) -> _ScoreGapExpansionResult:
         if not _post_score_gap_expansion_allowed(inputs, score):
             return _ScoreGapExpansionResult(status="disabled")
@@ -938,6 +955,7 @@ class FreeWebResearchRunner:
                 score_gaps=_score_gap_context_for_retry(score_gaps, retry_index, previous_rejections),
                 web_result=web_result,
                 theme_route=theme_route,
+                source_fields=source_fields,
             )
             query_texts = _post_parse_gap_queries(inputs=inputs, route=route)
             if route.status in {"provider_error", "invalid_provider_output", "disabled_no_provider"}:
@@ -1206,7 +1224,14 @@ def _post_parse_gap_retry_route(
                 phase="post_parse_gap",
                 retry_index=retry_index,
                 previous_rejections=previous_rejections,
-                missing_information=existing_route.missing_information if existing_route else (),
+                missing_information=tuple(
+                    dict.fromkeys(
+                        (
+                            *(existing_route.missing_information if existing_route else ()),
+                            *_theme_route_contract_gap_context(existing_route),
+                        )
+                    )
+                ),
             ),
         )
     )
@@ -1219,6 +1244,7 @@ def _score_gap_route(
     score_gaps: Sequence[str],
     web_result: WebResearchResult,
     theme_route: ThemeRouteOutput | None,
+    source_fields: Mapping[str, Any],
 ) -> ThemeRouteOutput:
     if inputs.theme_route_provider is None:
         return ThemeRouteOutput(status="disabled_no_provider", blocked_reason="score_gap_expansion_without_provider")
@@ -1251,7 +1277,15 @@ def _score_gap_route(
             current_canonical_archetype_id=theme_route.canonical_archetype_id if theme_route else None,
             search_results=search_results,
             documents=documents,
-            score_gap_context=tuple(score_gaps),
+            score_gap_context=tuple(
+                dict.fromkeys(
+                    (
+                        *score_gaps,
+                        *_source_field_contract_gap_context(source_fields),
+                        *_theme_route_contract_gap_context(theme_route),
+                    )
+                )
+            ),
         )
     )
 
@@ -1260,6 +1294,46 @@ def _score_gap_reason_codes(score: ScoreSnapshot, gaps: Sequence[str]) -> tuple[
     codes = [f"SCORE_GAP:{item}" for item in gaps]
     codes.append(f"RAW_SCORE_TOTAL_BEFORE_GAP:{round(float(score.total_score), 4)}")
     return tuple(codes)
+
+
+def _source_field_contract_gap_context(source_fields: Mapping[str, Any]) -> tuple[str, ...]:
+    canonical = str(source_fields.get("canonical_archetype_id") or "").strip()
+    missing = str(source_fields.get("evidence_contract_missing_primitives") or "").strip()
+    required = str(source_fields.get("evidence_contract_required_primitives") or "").strip()
+    axes = str(source_fields.get("evidence_contract_required_bridge_axes") or "").strip()
+    bridge_group = str(source_fields.get("evidence_contract_runtime_bridge_group") or "").strip()
+    positive_missing = str(source_fields.get("evidence_contract_positive_missing_primitives") or "").strip()
+    positive_required = str(source_fields.get("evidence_contract_positive_primitives") or "").strip()
+    green_gate_missing = str(source_fields.get("evidence_contract_green_gate_missing_primitives") or "").strip()
+    green_gate_required = str(source_fields.get("evidence_contract_green_gate_primitives") or "").strip()
+    guard_required = str(source_fields.get("evidence_contract_guard_primitives") or "").strip()
+    guard_present = str(source_fields.get("evidence_contract_guard_present_primitives") or "").strip()
+    guard_missing = str(source_fields.get("evidence_contract_guard_missing_primitives") or "").strip()
+    if not canonical or not required:
+        return ()
+    if positive_required:
+        missing_text = positive_missing or "none"
+    elif "evidence_contract_positive_primitives" in source_fields:
+        missing_text = "none"
+    else:
+        missing_text = missing or "none"
+    return (
+        (
+            f"archetype_evidence_contract:{canonical}; "
+            f"bridge_group={bridge_group or 'unknown'}; "
+            f"required_primitives={required}; "
+            f"missing_required_primitives={missing or 'none'}; "
+            f"positive_primitives={positive_required or 'none'}; "
+            f"missing_positive_primitives={missing_text}; "
+            f"green_gate_primitives={green_gate_required or 'none'}; "
+            f"missing_green_gate_primitives={green_gate_missing or 'none'}; "
+            f"guard_primitives_to_check={guard_required or 'none'}; "
+            f"present_guard_primitives={guard_present or 'none'}; "
+            f"missing_guard_primitives={guard_missing or 'none'}; "
+            f"required_bridge_axes={axes or 'unknown'}; "
+            "expand source-backed issuer-scoped claims for missing positive primitives where applicable and verify guard primitives before score/stage finalisation"
+        ),
+    )
 
 
 def _llm_query_retry_context(
@@ -1434,7 +1508,11 @@ def _score_gap_missing_information(score: ScoreSnapshot) -> tuple[str, ...]:
     return tuple(dict.fromkeys(gaps))
 
 
-def _score_gap_state_signature(score: ScoreSnapshot, red_team: RedTeamAssessment) -> tuple[str, ...]:
+def _score_gap_state_signature(
+    score: ScoreSnapshot,
+    red_team: RedTeamAssessment,
+    source_fields: Mapping[str, Any] | None = None,
+) -> tuple[str, ...]:
     gaps = tuple(dict.fromkeys((*_score_gap_missing_information(score), *_stage_gate_missing_information(score, red_team))))
     components = (
         f"total={round(float(score.total_score), 4)}",
@@ -1447,7 +1525,25 @@ def _score_gap_state_signature(score: ScoreSnapshot, red_team: RedTeamAssessment
         f"info={round(float(score.information_confidence_score), 4)}",
         f"risk={round(float(score.risk_penalty), 4)}",
     )
-    return tuple((*components, *gaps))
+    return tuple((*components, *_source_field_contract_state_signature(source_fields or {}), *gaps))
+
+
+def _source_field_contract_state_signature(source_fields: Mapping[str, Any]) -> tuple[str, ...]:
+    keys = (
+        "canonical_archetype_id",
+        "evidence_contract_required_primitives",
+        "evidence_contract_missing_primitives",
+        "evidence_contract_positive_missing_primitives",
+        "evidence_contract_green_gate_missing_primitives",
+        "evidence_contract_guard_present_primitives",
+        "evidence_contract_guard_missing_primitives",
+    )
+    parts: list[str] = []
+    for key in keys:
+        value = str(source_fields.get(key) or "").strip()
+        if value:
+            parts.append(f"{key}={value}")
+    return tuple(parts)
 
 
 _STAGE_GATE_GAP_CONTEXT = {
@@ -1481,6 +1577,10 @@ _STAGE_GATE_GAP_CONTEXT = {
     "failed_emerging_theme_green_unlock_evidence": "emerging-theme Green unlock gate failed; expand source-backed revenue bridge, FCF bridge, contract/customer bridge, capacity/pricing bridge, and valuation runway evidence",
     "failed_emerging_theme_date_verified_evidence": "emerging-theme date verification gate failed; expand date-verified documents visible by as_of_date rather than undated snippets",
     "failed_theme_overheat_risk": "theme-overheat guard failed; expand source-backed fundamental bridge and contradiction evidence so theme momentum is not treated as unsupported rerating",
+    "failed_evidence_contract_positive_coverage": "evidence contract Green gate primitive coverage failed; expand source-backed issuer-scoped claims for missing archetype positive and Green-gate primitives before final score/stage classification",
+    "failed_evidence_contract_guard_present": "evidence contract guard primitive is present; expand source-backed contradiction, mitigation, cancellation, slowdown, thesis-break, and guard verification evidence before Green promotion",
+    "failed_evidence_contract_guard_unverified": "evidence contract guard primitive is missing or unverified; expand source-backed issuer-scoped claims that verify or refute the configured guard primitives before Green promotion",
+    "failed_claim_backed_green_score": "claim-backed Green score gate failed; expand source-backed claim evidence and component-to-claim mapping for every nonzero score contribution before final score/stage classification",
 }
 
 
@@ -1939,6 +2039,7 @@ def _theme_route_run_diagnostics(
         "large_sector_id": route.large_sector_id,
         "canonical_archetype_id": route.canonical_archetype_id,
         "missing_information": route.missing_information,
+        "evidence_contract_gap_context": _theme_route_contract_gap_context(route),
         "suggested_queries": route.suggested_queries,
         "expansion_queries_run": tuple(expansion_queries_run),
         "expansion_query_count": len(expansion_queries_run),
@@ -1970,6 +2071,16 @@ def _theme_route_can_contribute_fields(route: ThemeRouteOutput | None) -> bool:
     return _has_source_backed_theme_slot(route)
 
 
+def _theme_route_contract_gap_context(route: ThemeRouteOutput | None) -> tuple[str, ...]:
+    if route is None or not route.canonical_archetype_id:
+        return ()
+    present_primitives = tuple(_theme_route_agent_extracted_fields(route))
+    return evidence_contract_gap_context(
+        route.canonical_archetype_id,
+        present_primitives=present_primitives,
+    )
+
+
 _UNSAFE_AGENT_FIELD_KEYS = {
     "stage",
     "deterministic_stage",
@@ -1984,9 +2095,12 @@ def _theme_route_agent_extracted_fields(route: ThemeRouteOutput | None) -> dict[
     if not _theme_route_can_contribute_fields(route):
         return {}
     fields: dict[str, bool | float | str] = {}
+    source_backed_slots = _source_backed_theme_slot_names(route)
     for key, value in route.normalized_parsed_fields.items():
         key_text = str(key).strip()
         if not key_text or key_text in _UNSAFE_AGENT_FIELD_KEYS:
+            continue
+        if not _field_matches_source_backed_slot(key_text, source_backed_slots):
             continue
         if isinstance(value, bool):
             if value:
@@ -2005,8 +2119,172 @@ def _theme_route_agent_extracted_fields(route: ThemeRouteOutput | None) -> dict[
     return fields
 
 
+_SYNTHETIC_AGENT_FIELD_KEYS = {
+    "theme_transition_detected",
+    "emerging_theme_active",
+    "emerging_theme_id",
+}
+
+
+def _theme_route_agent_field_claim_diagnostics(
+    *,
+    route: ThemeRouteOutput | None,
+    inputs: FreeWebResearchInput,
+    agent_extracted_fields: Mapping[str, bool | float | str],
+) -> Mapping[str, object]:
+    if route is None or not agent_extracted_fields:
+        return {}
+    evidence_refs_by_field = _agent_field_evidence_refs_by_field(route, agent_extracted_fields)
+    claims = []
+    for field_key, refs in evidence_refs_by_field.items():
+        for evidence_ref in refs:
+            claims.extend(
+                compile_claims_from_primitives(
+                    evidence_id=evidence_ref,
+                    symbol=inputs.symbol,
+                    as_of_date=inputs.as_of_date,
+                    primitive_ids=(field_key,),
+                    archetype_id=route.canonical_archetype_id,
+                    subject=inputs.company_name,
+                    quote_text=f"LLM route normalized field: {field_key}",
+                    confidence=route.route_confidence,
+                    verified=True,
+                )
+            )
+    if not claims:
+        return {}
+    metadata = dict(claim_metadata_from_claims(tuple(claims), as_of_date=inputs.as_of_date))
+    return {
+        "agent_field_claim_ledger_version": metadata["claim_ledger_version"],
+        "agent_field_claim_count": metadata["compiled_claim_count"],
+        "agent_field_claim_ids_by_primitive": metadata["compiled_claim_ids_by_primitive"],
+        "agent_field_primitive_states": metadata["compiled_primitive_states"],
+        "agent_field_evidence_refs_by_field": evidence_refs_by_field,
+    }
+
+
+def _claim_backed_theme_route_agent_fields(
+    *,
+    route: ThemeRouteOutput | None,
+    inputs: FreeWebResearchInput,
+    agent_extracted_fields: Mapping[str, bool | float | str],
+) -> tuple[dict[str, Any], Mapping[str, object]]:
+    fields = dict(agent_extracted_fields)
+    diagnostics = _theme_route_agent_field_claim_diagnostics(
+        route=route,
+        inputs=inputs,
+        agent_extracted_fields=agent_extracted_fields,
+    )
+    claim_ids_by_primitive = diagnostics.get("agent_field_claim_ids_by_primitive")
+    if not isinstance(claim_ids_by_primitive, Mapping):
+        return fields, diagnostics
+    compiled_claim_ids = tuple(
+        dict.fromkeys(
+            str(claim_id).strip()
+            for claim_ids in claim_ids_by_primitive.values()
+            for claim_id in (claim_ids if isinstance(claim_ids, (list, tuple)) else (claim_ids,))
+            if str(claim_id).strip()
+        )
+    )
+    if not compiled_claim_ids:
+        return fields, diagnostics
+    fields.update(
+        {
+            "claim_ledger_version": diagnostics.get("agent_field_claim_ledger_version"),
+            "compiled_claim_count": diagnostics.get("agent_field_claim_count"),
+            "compiled_claim_ids": list(compiled_claim_ids),
+            "compiled_claim_ids_by_primitive": {
+                str(primitive): list(claim_ids if isinstance(claim_ids, (list, tuple)) else (claim_ids,))
+                for primitive, claim_ids in claim_ids_by_primitive.items()
+            },
+            "compiled_primitive_states": diagnostics.get("agent_field_primitive_states"),
+        }
+    )
+    return fields, diagnostics
+
+
+def _agent_field_evidence_refs_by_field(
+    route: ThemeRouteOutput,
+    agent_extracted_fields: Mapping[str, bool | float | str],
+) -> Mapping[str, tuple[str, ...]]:
+    refs_by_field: dict[str, tuple[str, ...]] = {}
+    for field_key in agent_extracted_fields:
+        if field_key in _SYNTHETIC_AGENT_FIELD_KEYS:
+            continue
+        refs: list[str] = []
+        for slot in route.evidence_slots:
+            if slot.status != "present" or not slot.evidence_refs:
+                continue
+            if _field_matches_source_backed_slot(field_key, (slot.slot,)):
+                refs.extend(slot.evidence_refs)
+        if refs:
+            refs_by_field[field_key] = tuple(dict.fromkeys(refs))
+    return refs_by_field
+
+
 def _has_source_backed_theme_slot(route: ThemeRouteOutput) -> bool:
     return any(slot.status == "present" and slot.evidence_refs for slot in route.evidence_slots)
+
+
+def _source_backed_theme_slot_names(route: ThemeRouteOutput) -> tuple[str, ...]:
+    return tuple(
+        str(slot.slot).strip()
+        for slot in route.evidence_slots
+        if slot.status == "present" and slot.evidence_refs and str(slot.slot).strip()
+    )
+
+
+def _field_matches_source_backed_slot(field_key: str, source_backed_slots: Sequence[str]) -> bool:
+    field_tokens = _evidence_slot_tokens(field_key)
+    if not field_tokens:
+        return False
+    for slot in source_backed_slots:
+        slot_tokens = _evidence_slot_tokens(slot)
+        if not slot_tokens:
+            continue
+        if _ordered_tokens_contain(field_tokens, slot_tokens):
+            return True
+    return False
+
+
+def _ordered_tokens_contain(container_tokens: Sequence[str], target_tokens: Sequence[str]) -> bool:
+    if not container_tokens or not target_tokens:
+        return False
+    target_index = 0
+    for token in container_tokens:
+        if token == target_tokens[target_index]:
+            target_index += 1
+            if target_index == len(target_tokens):
+                return True
+    return False
+
+
+def _evidence_slot_tokens(value: str) -> tuple[str, ...]:
+    stop_words = {
+        "and",
+        "or",
+        "the",
+        "a",
+        "an",
+        "visible",
+        "visibility",
+        "confirmed",
+        "confirm",
+        "mentioned",
+        "score",
+        "pct",
+        "percent",
+        "growth",
+        "route",
+        "bridge",
+        "evidence",
+        "slot",
+    }
+    return tuple(
+        token
+        for token in re.split(r"[^A-Za-z0-9]+", str(value).lower())
+        if token and token not in stop_words and len(token) > 1
+    )
 
 
 _THEME_STATUS_CODES = {
@@ -2082,6 +2360,9 @@ _MATERIAL_SCORE_GAP_MARKERS = (
     "snippet-only",
     "emerging theme requires completed deep research",
     "emerging theme Green unlock evidence",
+    "evidence contract Green gate",
+    "evidence contract guard primitive",
+    "claim-backed Green score",
 )
 
 
@@ -2180,8 +2461,6 @@ def _score_gap_score_block_reason(
             return None
         return "score_gap_round_limit"
     if status == "no_progress":
-        if _score_gap_warning_reason(inputs=inputs, expansion=expansion, queries_run_count=queries_run_count):
-            return None
         return "score_gap_no_progress"
     if status in {"captcha_or_block_detected", "daily_query_budget_exhausted", "symbol_query_budget_exhausted", "deep_research_symbol_budget_exhausted", "active_monitoring_symbol_budget_exhausted"}:
         return "score_gap_search_blocked"
@@ -2208,8 +2487,6 @@ def _score_gap_warning_reason(
         return None
     if expansion.status == "round_limit_reached":
         return "score_gap_round_limit"
-    if expansion.status == "no_progress":
-        return "score_gap_no_progress"
     return None
 
 

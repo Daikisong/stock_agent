@@ -148,6 +148,110 @@ valuation overheat, evidence source quality, thesis break, event spread risk가 
         self.assertTrue(fields["thesis_break_confirmed"])
         self.assertTrue(fields["event_spread_risk"])
 
+    def test_lightweight_text_extractor_reads_internal_source_backed_field_block(self):
+        fields = extract_e2r_text_fields(
+            """
+일반 본문에는 없는 검증된 내부 필드 블록이다.
+E2R_SOURCE_BACKED_FIELD actual_op_yoy_pct=120.5
+E2R_SOURCE_BACKED_FIELD hbm_capacity_pre_sold=true
+E2R_SOURCE_BACKED_FIELD revenue_visibility_contract=true
+E2R_SOURCE_BACKED_FIELD compiled_claim_ids=["CLM-DO-NOT-IMPORT"]
+E2R_SOURCE_BACKED_FIELD source_url="https://example.com/do-not-import"
+""",
+            as_of_date=date(2024, 4, 25),
+        )
+
+        self.assertEqual(fields["actual_op_yoy_pct"], 120.5)
+        self.assertTrue(fields["hbm_capacity_pre_sold"])
+        self.assertTrue(fields["revenue_visibility_contract"])
+        self.assertNotIn("compiled_claim_ids", fields)
+        self.assertNotIn("source_url", fields)
+
+    def test_source_backed_field_block_keeps_full_report_text_before_company_window_trim(self):
+        query = "SK하이닉스 ASP 상승"
+        url = "https://research.example.com/hynix-hbm-source-backed"
+        text = """
+SK하이닉스 HBM 리포트
+SK하이닉스는 HBM 고객 물량과 매출 전환을 확인했다.
+""" + ("\n본문 여백" * 120) + """
+BEGIN_E2R_SOURCE_BACKED_FIELDS
+E2R_SOURCE_BACKED_FIELD actual_op_yoy_pct=120.0
+E2R_SOURCE_BACKED_FIELD hbm_capacity_pre_sold=true
+E2R_SOURCE_BACKED_FIELD revenue_visibility_contract=true
+END_E2R_SOURCE_BACKED_FIELDS
+"""
+        runner = WebResearchRunner(
+            query_planner=_SingleQueryPlanner(query),
+            search_provider=FixtureSearchProvider(
+                results_by_query={
+                    query: (
+                        SearchResult(
+                            title="SK하이닉스 HBM source-backed report",
+                            url=url,
+                            snippet="SK하이닉스 HBM 고객 물량",
+                            published_at=datetime(2024, 4, 25, 8),
+                            query=query,
+                            rank=1,
+                            is_report_domain=True,
+                            confidence=0.8,
+                        ),
+                    )
+                }
+            ),
+            page_fetcher=PageFetcher(fixture_text_by_url={url: text}),
+        )
+
+        output = runner.run(WebResearchInput("SK하이닉스", "000660", "semiconductor", Market.KR, date(2024, 4, 25)))
+
+        fields = output.parsed_reports[0].parsed_fields
+        self.assertEqual(fields["actual_op_yoy_pct"], 120.0)
+        self.assertTrue(fields["hbm_capacity_pre_sold"])
+        self.assertTrue(fields["revenue_visibility_contract"])
+        self.assertIn("actual_op_yoy_pct", fields["compiled_claim_ids_by_primitive"])
+
+    def test_red_team_source_backed_report_is_company_relevant(self):
+        query = "삼양식품 thesis break"
+        url = "https://research.example.com/samyang-redteam"
+        text = """
+R13_CROSS_ARCHETYPE_4B_4C_REDTEAM guard fixture
+삼양식품 (003230) R13 guard source-backed fixture
+
+thesis_break_confirmed, valuation_overheat, missing_cashflow_bridge
+BEGIN_E2R_SOURCE_BACKED_FIELDS
+E2R_SOURCE_BACKED_FIELD thesis_break_confirmed=true
+E2R_SOURCE_BACKED_FIELD valuation_overheat=true
+E2R_SOURCE_BACKED_FIELD missing_cashflow_bridge=true
+END_E2R_SOURCE_BACKED_FIELDS
+"""
+        runner = WebResearchRunner(
+            query_planner=_SingleQueryPlanner(query),
+            search_provider=FixtureSearchProvider(
+                results_by_query={
+                    query: (
+                        SearchResult(
+                            title="R13 guard fixture",
+                            url=url,
+                            snippet="삼양식품 thesis break valuation",
+                            published_at=datetime(2024, 6, 18, 8),
+                            query=query,
+                            rank=1,
+                            is_report_domain=True,
+                            confidence=0.8,
+                        ),
+                    )
+                }
+            ),
+            page_fetcher=PageFetcher(fixture_text_by_url={url: text}),
+        )
+
+        output = runner.run(WebResearchInput("삼양식품", "003230", "consumer", Market.KR, date(2024, 6, 18)))
+
+        self.assertEqual(len(output.parsed_reports), 1)
+        fields = output.parsed_reports[0].parsed_fields
+        self.assertTrue(fields["thesis_break_confirmed"])
+        self.assertTrue(fields["valuation_overheat"])
+        self.assertTrue(fields["missing_cashflow_bridge"])
+
     def test_default_selection_does_not_cap_ranked_results(self):
         query = "테스트전자 리포트"
         results = tuple(

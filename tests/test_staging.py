@@ -8,7 +8,13 @@ from e2r.scoring import DeterministicScorer, ScoringPayload
 from e2r.staging import StageClassificationInput, StageClassifier
 
 
-def make_score(symbol="CASE", as_of_date=date(2026, 5, 13), diagnostic_scores=None, **components):
+def make_score(
+    symbol="CASE",
+    as_of_date=date(2026, 5, 13),
+    diagnostic_scores=None,
+    claim_backed_components=False,
+    **components,
+):
     defaults = {
         "eps_fcf_explosion": 12.0,
         "earnings_visibility": 13.0,
@@ -19,6 +25,11 @@ def make_score(symbol="CASE", as_of_date=date(2026, 5, 13), diagnostic_scores=No
         "information_confidence": 5.0,
     }
     defaults.update(components)
+    score_contribution_claim_ids = (
+        {key: (f"CLM-{key}",) for key, value in defaults.items() if float(value) > 0.0}
+        if claim_backed_components
+        else {}
+    )
     with patch.dict("os.environ", {"E2R_SCORING_PROFILE": "calibrated"}):
         return DeterministicScorer().score(
             ScoringPayload(
@@ -27,6 +38,7 @@ def make_score(symbol="CASE", as_of_date=date(2026, 5, 13), diagnostic_scores=No
                 components=defaults,
                 diagnostic_scores=diagnostic_scores or {},
                 evidence_ids=("ev-score",),
+                score_contribution_claim_ids=score_contribution_claim_ids,
             )
         )
 
@@ -161,6 +173,137 @@ class StageClassifierTests(unittest.TestCase):
         self.assertEqual(snapshot.stage, Stage.STAGE_3_GREEN)
         self.assertEqual(snapshot.red_team_status, "low")
 
+    def test_stage_3_green_requires_claim_backed_components_when_audited(self):
+        score = make_score(
+            diagnostic_scores={
+                "revision_score": 82.0,
+                "claim_backed_claim_count_capped": 0.0,
+                "score_claim_backed_component_ratio": 0.0,
+                "orphan_score_component_count_capped": 7.0,
+                "evidence_contract_required_primitive_count_capped": 6.0,
+            },
+            eps_fcf_explosion=20,
+            earnings_visibility=18,
+            bottleneck_pricing=18,
+            market_mispricing=13,
+            valuation_rerating=12,
+            capital_allocation=4,
+            information_confidence=4,
+        )
+
+        snapshot = StageClassifier().classify(StageClassificationInput(score=score))
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_3_YELLOW)
+
+    def test_stage_3_green_allows_complete_claim_backed_component_audit(self):
+        score = make_score(
+            claim_backed_components=True,
+            diagnostic_scores={
+                "revision_score": 82.0,
+                "claim_backed_claim_count_capped": 12.0,
+                "score_claim_backed_component_ratio": 100.0,
+                "orphan_score_component_count_capped": 0.0,
+                "evidence_contract_required_primitive_count_capped": 6.0,
+            },
+            eps_fcf_explosion=20,
+            earnings_visibility=18,
+            bottleneck_pricing=18,
+            market_mispricing=13,
+            valuation_rerating=12,
+            capital_allocation=4,
+            information_confidence=4,
+        )
+
+        snapshot = StageClassifier().classify(StageClassificationInput(score=score))
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_3_GREEN)
+
+    def test_stage_3_green_requires_complete_positive_evidence_contract(self):
+        score = make_score(
+            claim_backed_components=True,
+            diagnostic_scores={
+                "revision_score": 82.0,
+                "claim_backed_claim_count_capped": 7.0,
+                "score_claim_backed_component_ratio": 100.0,
+                "orphan_score_component_count_capped": 0.0,
+                "evidence_contract_green_gate_required_primitive_count_capped": 2.0,
+                "evidence_contract_green_gate_coverage_pct": 50.0,
+                "evidence_contract_green_gate_missing_primitive_count_capped": 1.0,
+            },
+            eps_fcf_explosion=20,
+            earnings_visibility=18,
+            bottleneck_pricing=18,
+            market_mispricing=13,
+            valuation_rerating=12,
+            capital_allocation=4,
+            information_confidence=4,
+        )
+
+        snapshot = StageClassifier().classify(StageClassificationInput(score=score))
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_3_YELLOW)
+
+    def test_stage_3_green_blocks_when_evidence_contract_guard_is_present(self):
+        score = make_score(
+            diagnostic_scores={
+                "revision_score": 82.0,
+                "evidence_contract_guard_present_primitive_count_capped": 1.0,
+            },
+            eps_fcf_explosion=20,
+            earnings_visibility=18,
+            bottleneck_pricing=18,
+            market_mispricing=13,
+            valuation_rerating=12,
+            capital_allocation=4,
+            information_confidence=4,
+        )
+
+        snapshot = StageClassifier().classify(StageClassificationInput(score=score))
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_3_YELLOW)
+
+    def test_stage_3_green_blocks_when_evidence_contract_guard_is_unverified(self):
+        score = make_score(
+            diagnostic_scores={
+                "revision_score": 82.0,
+                "evidence_contract_guard_required_primitive_count_capped": 1.0,
+                "evidence_contract_guard_missing_primitive_count_capped": 1.0,
+            },
+            eps_fcf_explosion=20,
+            earnings_visibility=18,
+            bottleneck_pricing=18,
+            market_mispricing=13,
+            valuation_rerating=12,
+            capital_allocation=4,
+            information_confidence=4,
+        )
+
+        snapshot = StageClassifier().classify(StageClassificationInput(score=score))
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_3_YELLOW)
+
+    def test_stage_3_green_allows_when_evidence_contract_guard_is_cleared(self):
+        score = make_score(
+            diagnostic_scores={
+                "revision_score": 82.0,
+                "evidence_contract_guard_required_primitive_count_capped": 1.0,
+                "evidence_contract_guard_present_primitive_count_capped": 0.0,
+                "evidence_contract_guard_cleared_primitive_count_capped": 1.0,
+                "evidence_contract_guard_missing_primitive_count_capped": 0.0,
+            },
+            eps_fcf_explosion=20,
+            earnings_visibility=18,
+            bottleneck_pricing=18,
+            market_mispricing=13,
+            valuation_rerating=12,
+            capital_allocation=4,
+            information_confidence=4,
+        )
+
+        snapshot = StageClassifier().classify(StageClassificationInput(score=score))
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_3_GREEN)
+
     def test_emerging_theme_blocks_green_until_deep_research_is_complete(self):
         score = make_score(
             diagnostic_scores={"revision_score": 82.0, "emerging_theme_active": 100.0},
@@ -184,6 +327,29 @@ class StageClassifierTests(unittest.TestCase):
                 "emerging_theme_active": 100.0,
                 "llm_deep_research_completed": 100.0,
                 "green_unlock_evidence_score": 80.0,
+            },
+            eps_fcf_explosion=20,
+            earnings_visibility=18,
+            bottleneck_pricing=18,
+            market_mispricing=13,
+            valuation_rerating=12,
+            capital_allocation=4,
+            information_confidence=4,
+        )
+
+        snapshot = StageClassifier().classify(StageClassificationInput(score=score))
+
+        self.assertEqual(snapshot.stage, Stage.STAGE_3_GREEN)
+
+    def test_emerging_theme_can_be_green_after_source_backed_deep_research(self):
+        score = make_score(
+            claim_backed_components=True,
+            diagnostic_scores={
+                "revision_score": 82.0,
+                "emerging_theme_active": 100.0,
+                "source_backed_deep_research_completed": 100.0,
+                "green_unlock_evidence_score": 80.0,
+                "claim_backed_claim_count_capped": 7.0,
             },
             eps_fcf_explosion=20,
             earnings_visibility=18,

@@ -1,0 +1,215 @@
+{
+  "schema_version": "v12_goal_completion_audit_v1",
+  "as_of_date": "2026-06-21",
+  "objective": "Research-ledger historical examples, especially SK hynix C06 2024-04-25/2024-04-30, should replay through the current operational pipeline with source-backed evidence, near-parity score/stage, component visibility, and without evidence-missing score collapse.",
+  "overall_status": "complete_for_claim_backed_guard_status_fixture_scope",
+  "summary": {
+    "proven_green_fixture_scope": "15 guard-safe raw Stage3-Green source-backed replay fixtures reached near_parity_green; 11 guard-bearing raw Green fixtures now become ledger_only_green when research-ledger guard-cleared counterclaims are attached, while operational-only remains conservative Yellow when guard-clearing evidence is absent.",
+    "proven_guard_scope": "36 guard replay fixtures",
+        "green_parity_result": "15/26 near_parity_green; 11/26 ledger_only_green because ledger fixture rows now carry guard-cleared counterclaims and operational-only rows correctly remain Yellow when guard verification is missing.",
+    "guard_result": "36/36 guard_pass",
+    "evidence_contract_scope": "36 canonical archetype contracts loaded from configs/e2r_archetype_evidence_contracts_v12.json and exposed to post-parse/post-score LLM gap context",
+    "evidence_contract_config_integrity": "The runtime loader rejects duplicate canonical_archetype_id rows and contract_count mismatches; tests assert the loaded contract keys exactly match CANONICAL_ARCHETYPE_IDS.",
+    "all_archetype_llm_gap_context": "Tests assert every canonical archetype produces an LLM contract gap-context string with required primitives, missing positive primitives, Green-gate primitives, guard primitives, bridge group, and bridge axes.",
+    "unbacked_llm_primitive_gap_guard": "Theme-route normalized fields only remove primitives from missing gap context when they match source-backed evidence slots; unbacked LLM fields remain missing and can still trigger further search.",
+    "evidence_contract_stage_gate_material_gap": "Evidence Contract Green-gate coverage failures, guard-present failures, and claim-backed Green-score failures are converted into material LLM score-gap context so unresolved archetype primitive gaps can trigger further search or score-pending blocking.",
+    "post_score_search_no_progress_guard": "If post-score gap search executes but the score/gap signature repeats, the result is score_gap_no_progress with score_valid=false instead of a round-limit warning.",
+    "contract_primitive_name_progress_signature": "Post-score no-progress detection includes Evidence Contract missing primitive names and guard-present names so partial primitive progress is not mistaken for repeated no-progress when aggregate coverage counts stay the same.",
+    "all_archetype_source_field_gap_context": "Tests assert source_fields-derived post-score gap context preserves each canonical archetype's required primitives, missing positives, Green-gate misses, guard primitives, bridge group, and bridge axes.",
+    "all_archetype_score_contribution_unknown_ref_guard": "All-archetype output-contract tests now flag score_contribution_ledger support_claim_ids that are not present in the claim ledger, not only score_contribution_claim_ids mappings.",
+        "guard_only_source_field_gap_context": "Guard-only archetypes keep missing_positive_primitives=none in source_fields-derived gap context while preserving missing_required_primitives and guard_primitives_to_check, avoiding false Green-positive search framing.",
+        "guard_only_evidence_contract_gap_context": "EvidenceContract.gap_context now also reports missing_required_primitives and phrases missing-positive search as applicable-only, so guard-only contracts are framed as guard verification rather than Green-positive evidence.",
+        "direct_evidence_contract_positive_split": "EvidenceContract.gap_context now includes positive_primitives separately from missing_positive_primitives, so LLM context can distinguish the full positive contract from currently unresolved positive primitives.",
+        "source_backed_slot_match_strictness": "Source-backed theme-route field matching rejects token-only and reversed-token overlap; for example, margin_quality evidence cannot back unbacked_margin_bridge or broad margin only because they share margin.",
+        "runtime_contract_coverage_output": "discovered_candidates JSON/CSV now expose evidence_contract_coverage_pct and evidence_contract_missing_primitives",
+        "primitive_role_split": "positive_primitives, green_gate_primitives, and guard_primitives are separated so guard-only archetypes are not interpreted as positive coverage 100; Stage 3-Green now requires complete Green gate coverage, guard_present=0, and guard_missing=0 when guard primitives are configured, while guard_cleared counterclaims can satisfy verification without marking the risk present.",
+    "claim_backed_green_gate": "Operational source-backed/evidence-contract scores must have claim-backed component ratio 100, orphan score components 0, and claim count > 0 before Stage 3-Green promotion; otherwise the row stays Yellow with failed_claim_backed_green_score.",
+    "high_confidence_score_output_contract": "Serialized score outputs now flag valid Stage3 rows or visible_score>=65 rows as valid_high_confidence_claim_backed_gap when source-backed/evidence-contract context has claim-backed gaps.",
+        "latest_skhynix_c06_parity": "2024-04-25 latest claim-backed fixture ledger is 3-Green 98.173 and latest operational replay is 3-Green 97.423, gap 0.75; 2024-04-30 latest operational replay is 3-Green 98.2804; both rows have guard_missing 0. Older fixture artifacts recorded 3-Green 97.3447 and carried-forward 97.9877.",
+    "claim_compiler_metadata_filter": "Compiled claim primitives exclude runtime bookkeeping fields such as date_verified, green_allowed_by_date, runtime_fixture_source_backed, canonical_archetype_id, large_sector_id, and evidence_contract_* so claim counts are based on score-relevant primitive evidence, not metadata.",
+    "score_contribution_claim_ledger_output": "ScoreSnapshot and replay JSON/CSV now preserve score_contribution_claim_ids so each nonzero score component can be audited back to support claim IDs.",
+    "score_contribution_claim_output_contract": "High-confidence source-backed/evidence-contract rows now fail score-state output contract with valid_high_confidence_score_contribution_claim_ids_missing if score_contribution_claim_ids are absent or do not cover every nonzero component.",
+    "score_contribution_row_ledger_output": "ScoreSnapshot and replay JSON/CSV now preserve score_contribution_ledger rows with component_key, raw_points, max_points, support_claim_ids, and cap_reason.",
+    "score_contribution_row_output_contract": "High-confidence source-backed/evidence-contract rows now fail score-state output contract with valid_high_confidence_score_contribution_ledger_missing if score_contribution_ledger is absent or does not cover every nonzero component with support claims.",
+        "guard_present_green_block": "Latest guard-status replay: operational 3827 candidates / 378 Stage 3-Green / 335 Stage 3-Yellow; ledger 4191 candidates / 677 Stage 3-Green / 346 Stage 3-Yellow; 126 ledger Green rows carry guard_cleared counterclaims across 11 guard-bearing archetypes; Green claim ledger missing/orphan/unknown-ref/guard-present/guard-missing findings are all 0.",
+    "raw_agent_numeric_score_guard": "Unbacked agent_extracted_fields numeric values such as contract_duration_months, capa_utilization_pct, lead_time_months, asp_yoy_pct, and target_multiple_delta now flow through scoring-safe accessors and do not lift contract_quality/capa_constraint/asp_pricing_power/total_score without claim ledger metadata.",
+    "raw_agent_text_route_guard": "Unbacked agent_extracted_fields key names are not added to the feature text blob, so evidence-free HBM-like field names do not alter archetype routing.",
+    "source_backed_orphan_score_guard": "Source-backed Green bridge or Green-gate contexts with orphan score contributions are marked score_valid=false before Stage promotion; latest replay has no Stage2+/Green orphan rows.",
+    "skhynix_c06_contract_coverage": "2024-04-25 and 2024-04-30 operational rows both show 6/6 required primitives, missing 0, coverage 100",
+    "corrected_fixture_scope": "Stage3-Yellow and Stage2-Actionable rows are not counted as Green replay fixtures even when MFE was high; prior 30/34 + 4 ledger_only_green accounting overcounted non-Green research labels as Green fixtures.",
+    "known_exclusions": [
+      "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY has no clean Green source-backed fixture; current direct-URL rows are Actionable/green-brake boundaries.",
+      "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL is a guardrail archetype, not a Green discovery archetype."
+    ]
+  },
+  "requirements": [
+    {
+      "id": "R1_skhynix_20240425_research_value",
+      "requirement": "Confirm whether SK hynix C06 2024-04-25 Stage 3-Green 97.3447 was in our research/ledger data.",
+      "status": "proven",
+      "evidence": [
+        "docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.jsonl contains C06_R2L108_000660_HBM3E_CUSTOMER_CAPACITY_SOLDOUT_20240425 with Reuters evidence URL.",
+        "/tmp/e2r_v12_parity_ledger_fixture/2020-01-01_to_2026-05-14/discovered_candidates.csv contains 000660 2024-04-25 runtime_fixture_spec score 97.3447.",
+        "/tmp/e2r_goalcheck_parity_structured_v2/v12_research_ledger_operational_parity.json records ledger_score 97.3447.",
+        "/tmp/e2r_v12_parity_ledger_after_claim_gate_v3/2020-01-01_to_2026-05-14/discovered_candidates.json records the latest claim-backed fixture replay as 000660 2024-04-25 C06 3-Green 98.173.",
+        "/tmp/e2r_goalcheck_parity_after_claim_gate_v3/v12_research_ledger_operational_parity.json records the latest parity as operational 97.423 vs ledger 98.173, gap 0.75.",
+        "/tmp/e2r_goalcheck_parity_after_claim_metadata_filter_v4/v12_research_ledger_operational_parity.json records the post metadata-filter parity as operational 97.423 vs ledger 98.173, gap 0.75."
+      ]
+    },
+    {
+      "id": "R2_skhynix_20240430_979877_value",
+      "requirement": "Confirm whether SK hynix C06 2024-04-30 Stage 3-Green 97.9877 was a current local research/ledger value.",
+      "status": "proven_as_carried_forward_fixture_not_independent_4_30_row",
+      "evidence": [
+        "/tmp/e2r_v12_parity_ledger_fixture/2020-01-01_to_2026-05-14/discovered_candidates.csv contains 000660 rows with score 97.9877 and reason code fixture_carried_forward.",
+        "The 97.9877 rows are runtime_fixture_spec rows carried forward from fixture_source_date:2024-04-25, not an independent 2024-04-30 raw research row.",
+        "The current operational replay for 2024-04-30 produced 3-Green 98.2804 for 000660 C06.",
+        "Treat 97.9877 as an old carried-forward fixture-family value; the current operational proof is fixture-free 98.2804."
+      ]
+    },
+    {
+      "id": "R3_skhynix_current_operational_replay",
+      "requirement": "Current operational replay should not collapse SK hynix C06 2024-04-25/2024-04-30 into low-score Yellow due to missing evidence.",
+      "status": "proven",
+      "evidence": [
+        "2024-04-25 operational replay: 000660 C06 3-Green 97.423, runtime_fixture_injected=false, score_source_mode=operational_merged.",
+        "2024-04-30 operational replay: 000660 C06 3-Green 98.2804, runtime_fixture_injected=false, score_source_mode=operational_merged.",
+        "Both rows have claim-backed score ratio 100 and orphan_score_component_count 0.",
+        "Both rows have C06 evidence contract coverage 6/6, evidence_contract_missing_primitive_count 0, and evidence_contract_coverage_pct 100.",
+        "After excluding runtime bookkeeping fields from compiled claims, /tmp/e2r_verify_hynix_claim_metadata_filter_20260621 still produced 2024-04-25 3-Green 97.423 and 2024-04-30 3-Green 98.2804 with claim-backed ratio 100 and orphan_score_component_count 0.",
+        "/tmp/e2r_verify_hynix_score_contribution_ledger_20260621 shows 2024-04-25 and 2024-04-30 both have score_contribution_claim_ids for all 7 score components, score_claim_backed_component_ratio 100, and orphan_score_component_count 0.",
+        "/tmp/e2r_goalcheck_parity_after_score_contribution_ledger_v5/v12_research_ledger_operational_parity.json records parity as operational 97.423 vs ledger 98.173, gap 0.75.",
+        "/tmp/e2r_verify_hynix_score_contribution_rows_20260621 shows 2024-04-25 contribution rows including eps_fcf_explosion 20.0/20.0 with 58 claims, earnings_visibility 19.0851/20.0 with 50 claims, and bottleneck_pricing 19.0851/20.0 with 29 claims.",
+        "/tmp/e2r_goalcheck_parity_after_score_contribution_rows_v6/v12_research_ledger_operational_parity.json records the latest parity as operational 97.423 vs ledger 98.173, gap 0.75."
+      ]
+    },
+    {
+      "id": "R4_component_weight_visibility",
+      "requirement": "Operational output should show score components so 'score weight parity' is auditable without parsing explanation strings.",
+      "status": "proven",
+      "evidence": [
+        "AsOfReplayCandidate now stores eps_fcf_explosion_score, earnings_visibility_score, bottleneck_pricing_score, market_mispricing_score, valuation_rerating_score, capital_allocation_score, information_confidence_score, and risk_penalty.",
+        "2024-04-30 000660 component output: EPS/FCF 20.0, visibility 19.5138, bottleneck 19.5138, mispricing 14.8455, valuation 14.8841, capital 5.0, confidence 3.0, risk 0.0.",
+        "AsOfReplayCandidate now stores score_contribution_claim_ids, preserving component-to-claim support IDs in JSON and CSV output.",
+        "AsOfReplayCandidate now stores score_contribution_ledger, preserving component raw_points/max_points/support_claim_ids/cap_reason rows in JSON and CSV output."
+      ]
+    },
+    {
+      "id": "R5_claim_backed_score_guard",
+      "requirement": "Nonzero operational score should be auditable through claim-backed evidence, not orphan component points.",
+      "status": "proven_for_verified_replay_scope",
+      "evidence": [
+        "Score diagnostics expose claim_backed_claim_count, claim_backed_primitive_count, score_claim_backed_component_count, orphan_score_component_count, and score_claim_backed_component_ratio.",
+        "SK hynix 2024-04-25 and 2024-04-30 both show score_claim_backed_component_ratio 100 and orphan_score_component_count 0.",
+        "Scoring tests cover orphan contribution blocking when require_claim_backed_score_contributions is enabled."
+      ]
+    },
+    {
+      "id": "R6_prepared_research_fixture_parity",
+      "requirement": "Prepared historical research Green/guard fixtures should replay near the research ledger rather than fail due to missing runtime fields.",
+      "status": "proven_for_raw_stage3_green_fixture_scope",
+      "evidence": [
+        "Full operational replay after claim gate v3: 3827 discovered candidates, 713 Stage 3-Green, 0 Stage 3-Yellow, 126770 date-verified documents, 0 rejected after as_of.",
+        "Ledger fixture replay after claim gate v3: 4191 discovered candidates, 1015 Stage 3-Green, 11 Stage 3-Yellow, 140081 date-verified documents, 12 rejected after as_of.",
+        "Parity audit after claim gate v3: green_case_count 26, guard_case_count 36, green_bucket_counts {'near_parity_green': 26}, guard_bucket_counts {'guard_pass': 36}.",
+        "Post metadata-filter replay v4: operational 3827 discovered candidates, 713 Stage 3-Green; ledger 4191 discovered candidates, 1015 Stage 3-Green and 11 Stage 3-Yellow.",
+        "Post metadata-filter parity v4: green_case_count 26, guard_case_count 36, green_bucket_counts {'near_parity_green': 26}, guard_bucket_counts {'guard_pass': 36}; operational, ledger, and Hynix score output contract findings are all 0.",
+        "Post score-contribution-ledger replay v5: operational 3827 discovered candidates, 713 Stage 3-Green; ledger 4191 discovered candidates, 1015 Stage 3-Green and 11 Stage 3-Yellow.",
+        "Post score-contribution-ledger parity v5: green_case_count 26, guard_case_count 36, green_bucket_counts {'near_parity_green': 26}, guard_bucket_counts {'guard_pass': 36}; operational, ledger, and Hynix score output contract findings are all 0, and high-confidence missing component claim mapping rows are 0.",
+        "Post score-contribution-row replay v6: operational 3827 discovered candidates, 713 Stage 3-Green; ledger 4191 discovered candidates, 1015 Stage 3-Green and 11 Stage 3-Yellow.",
+                "Post score-contribution-row parity v6: green_case_count 26, guard_case_count 36, green_bucket_counts {'near_parity_green': 26}, guard_bucket_counts {'guard_pass': 36}; operational, ledger, and Hynix score output contract findings are all 0, and high-confidence missing score contribution ledger rows are 0.",
+                "Previous guard-unverified replay before guard_cleared polarity split: operational 3827 discovered candidates, 378 Stage 3-Green and 335 Stage 3-Yellow; ledger 4191 discovered candidates, 551 Stage 3-Green and 472 Stage 3-Yellow.",
+                "Latest guard-status parity after guard_cleared polarity split: green_case_count 26, guard_case_count 36, green_bucket_counts {'near_parity_green': 15, 'ledger_only_green': 11}, guard_bucket_counts {'guard_pass': 36}; the 11 ledger_only_green rows become Green only when research-ledger guard-cleared counterclaims are attached.",
+                "The former 4 ledger_only_green rows were not raw Stage3-Green fixtures; their source trigger labels were Stage3-Yellow or Stage2-Actionable, so Green parity should not require them to become Green."
+      ]
+    },
+    {
+      "id": "R7_all_archetype_scope",
+      "requirement": "All archetypes should avoid the research-to-runtime evidence collapse.",
+      "status": "proven_for_fixture_scope_not_universal_live",
+      "evidence": [
+        "Guard coverage is proven for 36/36 fixture rows.",
+        "Green parity is proven for 26 raw Stage3-Green source-backed ready Green rows.",
+        "Stage3-Yellow and Stage2-Actionable rows are excluded from Green fixture parity instead of being treated as missed Green rows.",
+        "C08 lacks clean source-backed Green and should not be promoted from Actionable/green-brake rows.",
+        "R13 high-MAE is a Green-blocking guardrail archetype, so Green parity is not the right acceptance shape."
+      ],
+      "remaining_work": [
+        "If future research adds clean C08 Green source-backed rows, add them to the runtime fixture spec and rerun parity.",
+        "Keep R13 high-MAE evaluated as guard-pass unless a separate positive-control contract is defined."
+      ]
+    },
+    {
+      "id": "R8_no_archetype_mismatch_false_pass",
+      "requirement": "A high operational score should not pass parity if it was scored under the wrong non-R13 archetype.",
+      "status": "proven",
+      "evidence": [
+        "v12_research_ledger_operational_parity.py classifies non-R13 mismatches as operational_archetype_mismatch.",
+        "tests.test_v12_research_ledger_operational_parity includes a mismatch test where C06 spec with C02 operational archetype fails parity."
+      ]
+    },
+    {
+      "id": "R9_archetype_evidence_contract_runtime_context",
+      "requirement": "Operational research should not rely only on common keywords; once an archetype route is known, LLM gap search should see the archetype-specific primitive contract.",
+      "status": "proven_as_runtime_gap_context",
+      "evidence": [
+        "configs/e2r_archetype_evidence_contracts_v12.json contains 36 canonical archetype contracts derived from docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json.",
+        "src/e2r/agentic/evidence_contract.py validates every canonical archetype has required_primitives and required_bridge_axes.",
+        "src/e2r/research/free_web_research_runner.py appends archetype_evidence_contract context to post-parse retry and post-score gap LLM score_gap_context.",
+        "tests.test_evidence_claim verifies C06 contract loading; tests.test_free_web_research_runner verifies C26 route diagnostics and C06 present/missing primitive handling."
+      ],
+      "remaining_work": [
+        "This is not a full LLM sentence-level claim extractor/verifier yet.",
+        "Initial generic query planning remains common-keyword based until an archetype route exists; deterministic archetype-specific query templates remain intentionally avoided."
+      ]
+    },
+    {
+      "id": "R10_runtime_contract_coverage_output",
+      "requirement": "Operational replay outputs should make missing archetype primitives auditable row-by-row.",
+      "status": "proven",
+      "evidence": [
+        "src/e2r/features.py computes evidence_contract_required_primitive_count_capped, evidence_contract_present_primitive_count_capped, evidence_contract_missing_primitive_count_capped, and evidence_contract_coverage_pct from source-backed score-eligible claim primitives.",
+        "src/e2r/backtest/asof_research_replay.py writes evidence_contract_coverage_pct, evidence_contract_missing_primitives, evidence_contract_required_primitives, and evidence_contract_required_bridge_axes to discovered_candidates JSON/CSV.",
+        "SK hynix 000660 2024-04-25 and 2024-04-30 operational replay rows show C06 required primitives 6, present 6, missing 0, coverage 100.",
+        "tests.test_asof_research_replay verifies the output columns exist."
+      ],
+      "remaining_work": [
+        "This exposes row-level primitive gaps; it does not by itself guarantee every future live candidate will find all primitives."
+      ]
+    },
+    {
+      "id": "R11_positive_guard_primitive_split",
+      "requirement": "Evidence contracts should not confuse positive score-building primitives with guard/risk primitives.",
+      "status": "proven",
+      "evidence": [
+        "configs/e2r_archetype_evidence_contracts_v12.json includes positive_primitives and guard_primitives for every canonical archetype, and green_gate_primitives for archetypes where a strict Green subset is required.",
+        "src/e2r/agentic/evidence_contract.py validates that positive and guard primitives do not overlap and together cover required_primitives.",
+        "src/e2r/features.py emits evidence_contract_positive_coverage_pct, evidence_contract_green_gate_coverage_pct, evidence_contract_green_gate_missing_primitives, evidence_contract_guard_primitives, evidence_contract_guard_present_primitives, evidence_contract_guard_cleared_primitives, evidence_contract_guard_missing_primitives, and evidence_contract_guard_only_contract.",
+        "src/e2r/staging.py blocks Stage 3-Green when green_gate_primitives are configured but evidence_contract_green_gate_coverage_pct is below 100 or missing Green gate primitive count is above 0.",
+        "tests.test_evidence_claim verifies C11 customer_contract is positive while call_off_risk is guard, C14 guard-only contracts do not report positive coverage 100, and a guard counterclaim clears guard_missing without marking guard_present.",
+        "tests.test_staging and tests.test_stage_gate_diagnostics cover the positive Evidence Contract Green gate; tests.test_staging also verifies that guard_cleared can allow Green while guard_present and guard_missing block Green.",
+        "tests.test_runtime_generalization_guards verifies all 20 guard-bearing archetypes do not become permanently Yellow when guard_cleared counterclaims are present and guard_present/guard_missing are zero."
+      ],
+      "remaining_work": [
+        "The role split is contract-level; final contradiction resolution still needs a full claim verifier/resolver in a later patch."
+      ]
+    }
+  ],
+  "verification_commands": [
+    "PYTHONPATH=src python -m unittest discover -s tests -q",
+    "PYTHONPATH=src python -m unittest tests.test_staging tests.test_stage_gate_diagnostics tests.test_evidence_claim tests.test_v12_research_ledger_operational_parity -q",
+    "git diff --check",
+    "PYTHONPATH=src python -m e2r.cli.run_asof_research_replay --start-date 2024-04-30 --end-date 2024-04-30 --frequency daily --output-directory /tmp/e2r_single_hynix_20240430_components --official-root data/historical_official --search-snapshot-root /tmp/e2r_v12_backfilled_snapshots/search --report-snapshot-root /tmp/e2r_v12_backfilled_snapshots/reports --max-results-per-query 100 --fixture-search --allow-snapshot-derived-universe --no-theme-evidence-review",
+    "PYTHONPATH=src python -m e2r.cli.run_asof_research_replay --start-date 2020-01-01 --end-date 2026-05-14 --frequency monthly --extra-replay-dates-file docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json --output-directory /tmp/e2r_v12_parity_after_claim_metadata_filter_v4 --official-root data/historical_official --search-snapshot-root /tmp/e2r_v12_backfilled_snapshots/search --report-snapshot-root /tmp/e2r_v12_backfilled_snapshots/reports --max-results-per-query 100 --fixture-search --allow-snapshot-derived-universe --no-theme-evidence-review",
+    "PYTHONPATH=src python -m e2r.cli.run_asof_research_replay --start-date 2020-01-01 --end-date 2026-05-14 --frequency monthly --extra-replay-dates-file docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json --runtime-fixture-spec-file docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json --output-directory /tmp/e2r_v12_parity_ledger_after_claim_metadata_filter_v4 --official-root data/historical_official --search-snapshot-root /tmp/e2r_v12_backfilled_snapshots/search --report-snapshot-root /tmp/e2r_v12_backfilled_snapshots/reports --max-results-per-query 100 --fixture-search --allow-snapshot-derived-universe --no-theme-evidence-review",
+    "PYTHONPATH=src python -m e2r.cli.run_asof_research_replay --start-date 2020-01-01 --end-date 2026-05-14 --frequency monthly --extra-replay-dates-file docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json --output-directory /tmp/e2r_v12_parity_after_score_contribution_ledger_v5 --official-root data/historical_official --search-snapshot-root /tmp/e2r_v12_backfilled_snapshots/search --report-snapshot-root /tmp/e2r_v12_backfilled_snapshots/reports --max-results-per-query 100 --fixture-search --allow-snapshot-derived-universe --no-theme-evidence-review",
+    "PYTHONPATH=src python -m e2r.cli.run_asof_research_replay --start-date 2020-01-01 --end-date 2026-05-14 --frequency monthly --extra-replay-dates-file docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json --runtime-fixture-spec-file docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json --output-directory /tmp/e2r_v12_parity_ledger_after_score_contribution_ledger_v5 --official-root data/historical_official --search-snapshot-root /tmp/e2r_v12_backfilled_snapshots/search --report-snapshot-root /tmp/e2r_v12_backfilled_snapshots/reports --max-results-per-query 100 --fixture-search --allow-snapshot-derived-universe --no-theme-evidence-review",
+    "PYTHONPATH=src python -m e2r.cli.run_asof_research_replay --start-date 2020-01-01 --end-date 2026-05-14 --frequency monthly --extra-replay-dates-file docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json --output-directory /tmp/e2r_v12_parity_after_score_contribution_rows_v6 --official-root data/historical_official --search-snapshot-root /tmp/e2r_v12_backfilled_snapshots/search --report-snapshot-root /tmp/e2r_v12_backfilled_snapshots/reports --max-results-per-query 100 --fixture-search --allow-snapshot-derived-universe --no-theme-evidence-review",
+    "PYTHONPATH=src python -m e2r.cli.run_asof_research_replay --start-date 2020-01-01 --end-date 2026-05-14 --frequency monthly --extra-replay-dates-file docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json --runtime-fixture-spec-file docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json --output-directory /tmp/e2r_v12_parity_ledger_after_score_contribution_rows_v6 --official-root data/historical_official --search-snapshot-root /tmp/e2r_v12_backfilled_snapshots/search --report-snapshot-root /tmp/e2r_v12_backfilled_snapshots/reports --max-results-per-query 100 --fixture-search --allow-snapshot-derived-universe --no-theme-evidence-review",
+    "PYTHONPATH=src python -m unittest discover -s tests -v",
+    "PYTHONPATH=src python -m e2r.cli.run_asof_research_replay --start-date 2024-04-25 --end-date 2024-04-30 --frequency daily --output-directory /tmp/e2r_goal_current_hynix_guard_status_20260621 --official-root data/historical_official --search-snapshot-root /tmp/e2r_v12_backfilled_snapshots/search --report-snapshot-root /tmp/e2r_v12_backfilled_snapshots/reports --max-results-per-query 100 --fixture-search --allow-snapshot-derived-universe --no-theme-evidence-review",
+    "PYTHONPATH=src python -m e2r.cli.run_asof_research_replay --start-date 2020-01-01 --end-date 2026-05-14 --frequency monthly --extra-replay-dates-file docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json --output-directory /tmp/e2r_goal_operational_guard_status_20260621 --official-root data/historical_official --search-snapshot-root /tmp/e2r_v12_backfilled_snapshots/search --report-snapshot-root /tmp/e2r_v12_backfilled_snapshots/reports --max-results-per-query 100 --fixture-search --allow-snapshot-derived-universe --no-theme-evidence-review",
+    "PYTHONPATH=src python -m e2r.cli.run_asof_research_replay --start-date 2020-01-01 --end-date 2026-05-14 --frequency monthly --extra-replay-dates-file docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json --runtime-fixture-spec-file docs/0619/v12_runtime_replay_fixture_spec_2026-06-19.json --output-directory /tmp/e2r_goal_ledger_guard_status_20260621 --official-root data/historical_official --search-snapshot-root /tmp/e2r_v12_backfilled_snapshots/search --report-snapshot-root /tmp/e2r_v12_backfilled_snapshots/reports --max-results-per-query 100 --fixture-search --allow-snapshot-derived-universe --no-theme-evidence-review",
+    "PYTHONPATH=src python -m unittest tests.test_runtime_generalization_guards -v"
+  ]
+}

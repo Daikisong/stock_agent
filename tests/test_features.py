@@ -4,6 +4,7 @@ import math
 from pathlib import Path
 import unittest
 
+from e2r.agentic import claim_backed_parsed_fields
 from e2r.connectors import CSVJSONDataConnector
 from e2r.features import DeterministicFeatureEngineer, FeatureEngineeringInput, engineer_score_from_connector
 from e2r.models import ConsensusRevision, ConsensusSnapshot, FinancialActual, NewsItem, PriceBar, ResearchReport, ShortageType, Stage
@@ -97,6 +98,20 @@ def base_input(parsed_fields):
                 parsed_fields=parsed_fields,
             ),
         ),
+    )
+
+
+def claim_backed_agent_fields(raw_fields, *, as_of_date, archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY"):
+    return claim_backed_parsed_fields(
+        evidence_id=f"agent-fixture:CASE:{as_of_date.isoformat()}:{archetype_id}",
+        symbol="CASE",
+        as_of_date=as_of_date,
+        parsed_fields=raw_fields,
+        archetype_id=archetype_id,
+        subject="CASE",
+        quote_text="source-backed agent fixture fields",
+        source_tier=2,
+        confidence=0.9,
     )
 
 
@@ -844,17 +859,20 @@ class FeatureEngineeringTests(unittest.TestCase):
                         equity=1200,
                     ),
                 ),
-                agent_extracted_fields={
-                    "hbm_demand_mentioned": True,
-                    "memory_price_increase_mentioned": True,
-                    "customer_preorder_or_allocation": True,
-                    "hbm_capacity_constraint": True,
-                    "capacity_precommitted": True,
-                    "hbm_capacity_pre_sold": True,
-                    "multi_year_contract": True,
-                    "pricing_power_mentioned": True,
-                    "market_frame_shift": True,
-                },
+                agent_extracted_fields=claim_backed_agent_fields(
+                    {
+                        "hbm_demand_mentioned": True,
+                        "memory_price_increase_mentioned": True,
+                        "customer_preorder_or_allocation": True,
+                        "hbm_capacity_constraint": True,
+                        "capacity_precommitted": True,
+                        "hbm_capacity_pre_sold": True,
+                        "multi_year_contract": True,
+                        "pricing_power_mentioned": True,
+                        "market_frame_shift": True,
+                    },
+                    as_of_date=as_of_date,
+                ),
             )
         )
         score = result.score()
@@ -870,6 +888,89 @@ class FeatureEngineeringTests(unittest.TestCase):
         self.assertGreater(score.diagnostic_scores["actual_profit_conversion_score"], 0)
         self.assertGreaterEqual(score.total_score, 65)
         self.assertNotEqual(stage.stage, Stage.STAGE_1)
+
+    def test_unbacked_agent_extracted_fields_do_not_create_claim_backed_score(self):
+        as_of_date = date(2026, 6, 9)
+        raw_agent_fields = {
+            "contract_duration_months": 48,
+            "contract_amount_to_prior_sales": 0.6,
+            "order_backlog_to_sales": 1.5,
+            "capa_utilization_pct": 96,
+            "lead_time_months": 18,
+            "asp_yoy_pct": 30,
+            "target_multiple_delta": 6,
+            "hbm_demand_mentioned": True,
+            "memory_price_increase_mentioned": True,
+            "customer_preorder_or_allocation": True,
+            "hbm_capacity_constraint": True,
+            "capacity_precommitted": True,
+            "hbm_capacity_pre_sold": True,
+            "multi_year_contract": True,
+            "pricing_power_mentioned": True,
+            "market_frame_shift": True,
+        }
+        unbacked = DeterministicFeatureEngineer().engineer(
+            FeatureEngineeringInput(
+                symbol="CASE",
+                as_of_date=as_of_date,
+                canonical_archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                agent_extracted_fields=raw_agent_fields,
+            )
+        )
+        baseline = DeterministicFeatureEngineer().engineer(
+            FeatureEngineeringInput(
+                symbol="CASE",
+                as_of_date=as_of_date,
+                canonical_archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            )
+        )
+        backed = DeterministicFeatureEngineer().engineer(
+            FeatureEngineeringInput(
+                symbol="CASE",
+                as_of_date=as_of_date,
+                canonical_archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                agent_extracted_fields=claim_backed_agent_fields(raw_agent_fields, as_of_date=as_of_date),
+            )
+        )
+
+        unbacked_score = unbacked.score()
+        baseline_score = baseline.score()
+        backed_score = backed.score()
+
+        self.assertEqual(unbacked_score.total_score, baseline_score.total_score)
+        self.assertEqual(unbacked_score.diagnostic_scores["contract_quality"], 0.0)
+        self.assertEqual(unbacked_score.diagnostic_scores["capa_constraint"], 0.0)
+        self.assertEqual(unbacked_score.diagnostic_scores["asp_pricing_power"], 0.0)
+        self.assertEqual(unbacked_score.diagnostic_scores["claim_backed_claim_count_capped"], 0.0)
+        self.assertEqual(unbacked_score.diagnostic_scores["evidence_contract_present_primitive_count_capped"], 0.0)
+        self.assertEqual(unbacked.payload.score_contribution_claim_ids, {})
+        self.assertNotIn("hbm_capacity_pre_sold", unbacked.source_fields["evidence_contract_present_primitives"])
+        self.assertGreater(backed_score.diagnostic_scores["claim_backed_claim_count_capped"], 0.0)
+        self.assertGreater(backed_score.total_score, unbacked_score.total_score)
+        self.assertIn("hbm_capacity_pre_sold", backed.source_fields["evidence_contract_present_primitives"])
+
+    def test_unbacked_agent_extracted_fields_do_not_route_archetype_from_text(self):
+        as_of_date = date(2026, 6, 9)
+        raw_agent_fields = {
+            "hbm_demand_mentioned": True,
+            "customer_preorder_or_allocation": True,
+            "hbm_capacity_pre_sold": True,
+            "market_frame_shift": True,
+        }
+        baseline = DeterministicFeatureEngineer().engineer(
+            FeatureEngineeringInput(symbol="CASE", as_of_date=as_of_date)
+        )
+        unbacked = DeterministicFeatureEngineer().engineer(
+            FeatureEngineeringInput(
+                symbol="CASE",
+                as_of_date=as_of_date,
+                agent_extracted_fields=raw_agent_fields,
+            )
+        )
+
+        self.assertEqual(unbacked.source_fields["canonical_archetype_id"], baseline.source_fields["canonical_archetype_id"])
+        self.assertEqual(unbacked.source_fields["large_sector_id"], baseline.source_fields["large_sector_id"])
+        self.assertEqual(unbacked.score().total_score, baseline.score().total_score)
 
     def test_actual_equity_feeds_valuation_without_consensus_or_bps(self):
         as_of_date = date(2024, 5, 1)
@@ -1074,7 +1175,7 @@ class FeatureEngineeringTests(unittest.TestCase):
         self.assertEqual(result.source_fields["canonical_archetype_id"], "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION")
         self.assertEqual(
             result.source_fields["archetype_classification_reason"],
-            "explicit_canonical_corrected_large_sector_mismatch",
+            "explicit_canonical_archetype_corrected_large_sector_mismatch",
         )
         self.assertIn("archetype_weight:C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION", score.scoring_version)
 

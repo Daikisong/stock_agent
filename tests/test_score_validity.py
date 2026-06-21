@@ -168,7 +168,16 @@ class ScoreValidityTests(unittest.TestCase):
         self.assertIn("llm_expansion_query_count:0", drivers)
 
     def test_score_variability_drivers_explain_valid_run_state(self):
-        score = _score({"score_valid": 100.0})
+        score = _score(
+            {
+                "score_valid": 100.0,
+                "claim_backed_claim_count_capped": 6.0,
+                "claim_backed_primitive_count_capped": 4.0,
+                "score_claim_backed_component_count_capped": 7.0,
+                "orphan_score_component_count_capped": 0.0,
+                "score_claim_backed_component_ratio": 100.0,
+            }
+        )
 
         drivers = score_variability_drivers(
             score,
@@ -205,6 +214,11 @@ class ScoreValidityTests(unittest.TestCase):
         self.assertIn("input_count:news_item=5", drivers)
         self.assertIn("evidence_count:9", drivers)
         self.assertIn("score_evidence_count:0", drivers)
+        self.assertIn("claim_backed_claim_count:6", drivers)
+        self.assertIn("claim_backed_primitive_count:4", drivers)
+        self.assertIn("score_claim_backed_component_count:7", drivers)
+        self.assertIn("orphan_score_component_count:0", drivers)
+        self.assertIn("score_claim_backed_component_ratio:100", drivers)
         self.assertIn("llm_expansion_query_count:6", drivers)
 
     def test_research_input_fingerprint_is_stable_and_changes_with_inputs(self):
@@ -634,6 +648,300 @@ class ScoreValidityTests(unittest.TestCase):
                 }
             ),
             ("valid_raw_block_marker_present:raw_score_before_block", "invalid_visible_score_present"),
+        )
+
+    def test_score_state_contract_violations_flag_high_confidence_orphan_claim_score(self):
+        self.assertIn(
+            "valid_high_confidence_claim_backed_gap",
+            score_state_contract_violations(
+                {
+                    "stage": "3-Green",
+                    "visible_score": 92.0,
+                    "score_valid": True,
+                    "evidence_contract_required_primitive_count": 6,
+                    "claim_backed_claim_count": 0,
+                    "score_claim_backed_component_ratio": 0,
+                    "orphan_score_component_count": 7,
+                }
+            ),
+        )
+        self.assertIn(
+            "valid_high_confidence_claim_backed_gap",
+            score_state_contract_violations(
+                {
+                    "stage": "2",
+                    "visible_score": 70.0,
+                    "score_valid": True,
+                    "source_backed_green_bridge_raw": 90,
+                    "claim_backed_claim_count": 3,
+                    "score_claim_backed_component_ratio": 80,
+                    "orphan_score_component_count": 1,
+                }
+            ),
+        )
+        self.assertNotIn(
+            "valid_high_confidence_claim_backed_gap",
+            score_state_contract_violations(
+                {
+                    "stage": "1",
+                    "visible_score": 12.0,
+                    "score_valid": True,
+                    "evidence_contract_required_primitive_count": 6,
+                    "claim_backed_claim_count": 0,
+                    "score_claim_backed_component_ratio": 0,
+                    "orphan_score_component_count": 7,
+                }
+            ),
+        )
+
+    def test_score_state_contract_violations_require_component_claim_id_output(self):
+        high_confidence_row = {
+            "stage": "3-Green",
+            "visible_score": 92.0,
+            "score_valid": True,
+            "evidence_contract_required_primitive_count": 6,
+            "claim_backed_claim_count": 4,
+            "score_claim_backed_component_ratio": 100,
+            "orphan_score_component_count": 0,
+            "eps_fcf_explosion_score": 20,
+            "earnings_visibility_score": 18,
+            "bottleneck_pricing_score": 0,
+        }
+
+        self.assertIn(
+            "valid_high_confidence_score_contribution_claim_ids_missing",
+            score_state_contract_violations(high_confidence_row),
+        )
+        self.assertIn(
+            "valid_high_confidence_score_contribution_claim_ids_missing",
+            score_state_contract_violations(
+                {
+                    **high_confidence_row,
+                    "score_contribution_claim_ids": {
+                        "eps_fcf_explosion": ["CLM-EPS"],
+                    },
+                }
+            ),
+        )
+        self.assertNotIn(
+            "valid_high_confidence_score_contribution_claim_ids_missing",
+            score_state_contract_violations(
+                {
+                    **high_confidence_row,
+                    "score_contribution_claim_ids": {
+                        "eps_fcf_explosion": ["CLM-EPS"],
+                        "earnings_visibility": ["CLM-VIS"],
+                    },
+                }
+            ),
+        )
+        self.assertNotIn(
+            "valid_high_confidence_score_contribution_claim_ids_missing",
+            score_state_contract_violations(
+                {
+                    **high_confidence_row,
+                    "score_contribution_claim_ids": "{\"eps_fcf_explosion\":[\"CLM-EPS\"],\"earnings_visibility\":[\"CLM-VIS\"]}",
+                }
+            ),
+        )
+
+    def test_score_state_contract_violations_require_score_contribution_ledger_output(self):
+        high_confidence_row = {
+            "stage": "3-Green",
+            "visible_score": 92.0,
+            "score_valid": True,
+            "evidence_contract_required_primitive_count": 6,
+            "claim_backed_claim_count": 4,
+            "score_claim_backed_component_ratio": 100,
+            "orphan_score_component_count": 0,
+            "eps_fcf_explosion_score": 20,
+            "earnings_visibility_score": 18,
+            "score_contribution_claim_ids": {
+                "eps_fcf_explosion": ["CLM-EPS"],
+                "earnings_visibility": ["CLM-VIS"],
+            },
+        }
+
+        self.assertIn(
+            "valid_high_confidence_score_contribution_ledger_missing",
+            score_state_contract_violations(high_confidence_row),
+        )
+        self.assertIn(
+            "valid_high_confidence_score_contribution_ledger_missing",
+            score_state_contract_violations(
+                {
+                    **high_confidence_row,
+                    "score_contribution_ledger": [
+                        {
+                            "component_key": "eps_fcf_explosion",
+                            "raw_points": 20,
+                            "max_points": 20,
+                            "support_claim_ids": ["CLM-EPS"],
+                        },
+                        {
+                            "component_key": "earnings_visibility",
+                            "raw_points": 18,
+                            "max_points": 20,
+                            "support_claim_ids": [],
+                        },
+                    ],
+                }
+            ),
+        )
+        self.assertNotIn(
+            "valid_high_confidence_score_contribution_ledger_missing",
+            score_state_contract_violations(
+                {
+                    **high_confidence_row,
+                    "score_contribution_ledger": [
+                        {
+                            "component_key": "eps_fcf_explosion",
+                            "raw_points": 20,
+                            "max_points": 20,
+                            "support_claim_ids": ["CLM-EPS"],
+                        },
+                        {
+                            "component_key": "earnings_visibility",
+                            "raw_points": 18,
+                            "max_points": 20,
+                            "support_claim_ids": ["CLM-VIS"],
+                        },
+                    ],
+                }
+            ),
+        )
+        self.assertNotIn(
+            "valid_high_confidence_score_contribution_ledger_missing",
+            score_state_contract_violations(
+                {
+                    **high_confidence_row,
+                    "score_contribution_ledger": "[{\"component_key\":\"eps_fcf_explosion\",\"raw_points\":20,\"max_points\":20,\"support_claim_ids\":[\"CLM-EPS\"]},{\"component_key\":\"earnings_visibility\",\"raw_points\":18,\"max_points\":20,\"support_claim_ids\":[\"CLM-VIS\"]}]",
+                }
+            ),
+        )
+
+    def test_score_state_contract_violations_require_contribution_claims_in_claim_ledger(self):
+        high_confidence_row = {
+            "stage": "3-Green",
+            "visible_score": 92.0,
+            "score_valid": True,
+            "evidence_contract_required_primitive_count": 6,
+            "claim_backed_claim_count": 4,
+            "score_claim_backed_component_ratio": 100,
+            "orphan_score_component_count": 0,
+            "eps_fcf_explosion_score": 20,
+            "earnings_visibility_score": 18,
+            "score_contribution_claim_ids": {
+                "eps_fcf_explosion": ["CLM-EPS"],
+                "earnings_visibility": ["CLM-VIS"],
+            },
+            "score_contribution_ledger": [
+                {
+                    "component_key": "eps_fcf_explosion",
+                    "raw_points": 20,
+                    "max_points": 20,
+                    "support_claim_ids": ["CLM-EPS"],
+                },
+                {
+                    "component_key": "earnings_visibility",
+                    "raw_points": 18,
+                    "max_points": 20,
+                    "support_claim_ids": ["CLM-VIS"],
+                },
+            ],
+        }
+
+        self.assertIn(
+            "valid_high_confidence_claim_ledger_ids_missing",
+            score_state_contract_violations(high_confidence_row),
+        )
+        self.assertIn(
+            "valid_high_confidence_score_contribution_claim_ids_unknown",
+            score_state_contract_violations(
+                {
+                    **high_confidence_row,
+                    "claim_ledger_claim_ids": ["CLM-EPS"],
+                }
+            ),
+        )
+        self.assertNotIn(
+            "valid_high_confidence_score_contribution_claim_ids_unknown",
+            score_state_contract_violations(
+                {
+                    **high_confidence_row,
+                    "claim_ledger_claim_ids": ["CLM-EPS", "CLM-VIS"],
+                }
+            ),
+        )
+        self.assertNotIn(
+            "valid_high_confidence_score_contribution_claim_ids_unknown",
+            score_state_contract_violations(
+                {
+                    **high_confidence_row,
+                    "claim_ledger_claim_ids_by_primitive": "{\"actual_eps_yoy_pct\":[\"CLM-EPS\"],\"revenue_visibility_contract\":[\"CLM-VIS\"]}",
+                }
+            ),
+        )
+
+    def test_score_state_contract_violations_flag_stage3_green_unverified_guard_primitives(self):
+        row = {
+            "stage": "3-Green",
+            "visible_score": 92.0,
+            "score_valid": True,
+            "evidence_contract_required_primitive_count": 5,
+            "evidence_contract_guard_missing_primitive_count": 1,
+            "claim_backed_claim_count": 7,
+            "score_claim_backed_component_ratio": 100,
+            "orphan_score_component_count": 0,
+            "claim_ledger_claim_ids": ["CLM-EPS"],
+            "eps_fcf_explosion_score": 20,
+            "score_contribution_claim_ids": {"eps_fcf_explosion": ["CLM-EPS"]},
+            "score_contribution_ledger": [
+                {
+                    "component_key": "eps_fcf_explosion",
+                    "raw_points": 20,
+                    "max_points": 20,
+                    "support_claim_ids": ["CLM-EPS"],
+                }
+            ],
+        }
+
+        self.assertIn(
+            "valid_stage3_green_guard_primitives_unverified",
+            score_state_contract_violations(row),
+        )
+
+    def test_score_state_contract_violations_flag_stage3_green_present_guard_primitives(self):
+        row = {
+            "stage": "3-Green",
+            "visible_score": 92.0,
+            "score_valid": True,
+            "evidence_contract_required_primitive_count": 5,
+            "evidence_contract_guard_present_primitive_count": 1,
+            "evidence_contract_guard_missing_primitive_count": 0,
+            "claim_backed_claim_count": 7,
+            "score_claim_backed_component_ratio": 100,
+            "orphan_score_component_count": 0,
+            "claim_ledger_claim_ids": ["CLM-EPS"],
+            "eps_fcf_explosion_score": 20,
+            "score_contribution_claim_ids": {"eps_fcf_explosion": ["CLM-EPS"]},
+            "score_contribution_ledger": [
+                {
+                    "component_key": "eps_fcf_explosion",
+                    "raw_points": 20,
+                    "max_points": 20,
+                    "support_claim_ids": ["CLM-EPS"],
+                }
+            ],
+        }
+
+        self.assertIn(
+            "valid_stage3_green_guard_primitives_present",
+            score_state_contract_violations(row),
+        )
+        self.assertNotIn(
+            "valid_stage3_green_guard_primitives_unverified",
+            score_state_contract_violations({**row, "stage": "3-Yellow"}),
         )
 
     def test_normalized_score_state_payload_removes_invalid_visible_and_compat_scores(self):

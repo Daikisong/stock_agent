@@ -448,9 +448,15 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
             "domain_specific_evidence_score": 100.0,
             "green_unlock_evidence_score": 100.0,
             "source_backed_green_bridge_raw": 92.0,
+            "claim_backed_claim_count_capped": 20.0,
             "research_axis_bridge_guard_risk": 0.0,
             "research_axis_bridge_guard_risk_penalty_points": 0.0,
             "research_axis_bridge_present_count_capped": 5.0,
+        }
+        source_backed_claims = {
+            key: (f"CLM-{key}",)
+            for key, value in high_components.items()
+            if float(value) > 0.0
         }
 
         with tempfile.TemporaryDirectory() as tmp:
@@ -470,6 +476,7 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
                         as_of_date=date(2026, 5, 14),
                         components=high_components,
                         diagnostic_scores=source_backed_bridge_diagnostics,
+                        score_contribution_claim_ids=source_backed_claims,
                         large_sector_id=large_sector_for_archetype(canonical_archetype_id),
                         canonical_archetype_id=canonical_archetype_id,
                     )
@@ -495,6 +502,7 @@ class ArchetypeWeightRuntimeTests(unittest.TestCase):
                         as_of_date=date(2026, 5, 14),
                         components=high_components,
                         diagnostic_scores=source_backed_bridge_diagnostics,
+                        score_contribution_claim_ids=source_backed_claims,
                         large_sector_id=large_sector_for_archetype(canonical_archetype_id),
                         canonical_archetype_id=canonical_archetype_id,
                     )

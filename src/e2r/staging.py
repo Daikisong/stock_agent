@@ -277,6 +277,12 @@ class StageClassifier:
             return False
         if not _emerging_theme_green_allowed(score):
             return False
+        if not _claim_backed_green_allowed(score):
+            return False
+        if not _evidence_contract_positive_green_allowed(score):
+            return False
+        if not _evidence_contract_guard_green_allowed(score):
+            return False
         revision_score = _score_diagnostic(score, "revision_score")
         structural_visibility_quality = _score_diagnostic(
             score,
@@ -342,6 +348,45 @@ def _contract_required_for_green(score: ScoreSnapshot) -> float:
     return 1.0 if sector_profile in {"POWER_EQUIPMENT", "DEFENSE", "BATTERY_OVERHEAT"} else 0.0
 
 
+def _evidence_contract_positive_green_allowed(score: ScoreSnapshot) -> bool:
+    green_gate_required = _score_diagnostic(
+        score,
+        "evidence_contract_green_gate_required_primitive_count_capped",
+        invalid_default=0.0,
+    )
+    if green_gate_required <= 0.0:
+        return True
+    green_gate_coverage = _score_diagnostic(score, "evidence_contract_green_gate_coverage_pct")
+    green_gate_missing = _score_diagnostic(score, "evidence_contract_green_gate_missing_primitive_count_capped")
+    return green_gate_coverage >= 100.0 and green_gate_missing <= 0.0
+
+
+def _evidence_contract_guard_green_allowed(score: ScoreSnapshot) -> bool:
+    return (
+        _score_diagnostic(score, "evidence_contract_guard_present_primitive_count_capped") <= 0.0
+        and _score_diagnostic(score, "evidence_contract_guard_missing_primitive_count_capped") <= 0.0
+    )
+
+
+def _claim_backed_green_allowed(score: ScoreSnapshot) -> bool:
+    """Require source-backed contribution provenance when claim diagnostics exist."""
+
+    diagnostics = score.diagnostic_scores
+    claim_backed_required = (
+        _score_diagnostic(score, "score_claim_backed_required") > 0.0
+        or _score_diagnostic(score, "source_backed_green_bridge_raw") > 0.0
+        or _score_diagnostic(score, "source_backed_deep_research_completed") > 0.0
+        or _score_diagnostic(score, "evidence_contract_required_primitive_count_capped") > 0.0
+        or _score_diagnostic(score, "evidence_contract_green_gate_required_primitive_count_capped") > 0.0
+    )
+    if not claim_backed_required:
+        return True
+    claim_count = _score_diagnostic(score, "claim_backed_claim_count_capped")
+    ratio = _score_diagnostic(score, "score_claim_backed_component_ratio", invalid_default=0.0)
+    orphan_count = _score_diagnostic(score, "orphan_score_component_count_capped", invalid_default=1.0)
+    return claim_count > 0.0 and ratio >= 100.0 and orphan_count <= 0.0
+
+
 def _effective_component_threshold(score: ScoreSnapshot, key: str, canonical_threshold: float) -> float:
     if _score_diagnostic(score, "archetype_weight_profile_applied", invalid_default=1.0) <= 0:
         return canonical_threshold
@@ -368,8 +413,12 @@ def _emerging_theme_green_allowed(score: ScoreSnapshot) -> bool:
         return False
     if _score_diagnostic(score, "emerging_theme_active", invalid_default=100.0) <= 0:
         return True
+    deep_research_completed = max(
+        _score_diagnostic(score, "llm_deep_research_completed"),
+        _score_diagnostic(score, "source_backed_deep_research_completed"),
+    )
     return (
-        _score_diagnostic(score, "llm_deep_research_completed") >= 100.0
+        deep_research_completed >= 100.0
         and _score_diagnostic(score, "green_unlock_evidence_score") >= 60.0
         and _score_diagnostic(score, "date_unverified_snippet_news_count_capped", invalid_default=1.0) <= 0.0
     )

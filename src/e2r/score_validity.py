@@ -33,6 +33,15 @@ _BLOCK_REASON_BY_RAW_KEY = {
 
 _VISIBLE_SCORE_ALIAS_KEYS = ("visible_score", "current_score", "merged_score")
 _COMPAT_SCORE_KEYS = ("score", "score_total", "total_score")
+_COMPONENT_SCORE_FIELD_KEYS = {
+    "eps_fcf_explosion_score": "eps_fcf_explosion",
+    "earnings_visibility_score": "earnings_visibility",
+    "bottleneck_pricing_score": "bottleneck_pricing",
+    "market_mispricing_score": "market_mispricing",
+    "valuation_rerating_score": "valuation_rerating",
+    "capital_allocation_score": "capital_allocation",
+    "information_confidence_score": "information_confidence",
+}
 
 
 @dataclass(frozen=True)
@@ -368,6 +377,20 @@ def score_state_contract_violations(state: Mapping[str, object] | object | None)
         for key in (*_RAW_BLOCK_SCORE_KEYS, "raw_score_before_block"):
             if _state_value(state, key) not in (None, ""):
                 violations.append(f"valid_raw_block_marker_present:{key}")
+        if _valid_high_confidence_row_has_claim_backed_gap(state):
+            violations.append("valid_high_confidence_claim_backed_gap")
+        if _valid_high_confidence_row_missing_score_contribution_claim_ids(state):
+            violations.append("valid_high_confidence_score_contribution_claim_ids_missing")
+        if _valid_high_confidence_row_missing_score_contribution_ledger(state):
+            violations.append("valid_high_confidence_score_contribution_ledger_missing")
+        if _valid_high_confidence_row_missing_claim_ledger_ids(state):
+            violations.append("valid_high_confidence_claim_ledger_ids_missing")
+        if _valid_high_confidence_row_has_unknown_score_contribution_claim_ids(state):
+            violations.append("valid_high_confidence_score_contribution_claim_ids_unknown")
+        if _valid_stage3_green_has_present_guard_primitives(state):
+            violations.append("valid_stage3_green_guard_primitives_present")
+        if _valid_stage3_green_has_unverified_guard_primitives(state):
+            violations.append("valid_stage3_green_guard_primitives_unverified")
     return tuple(violations)
 
 
@@ -511,6 +534,7 @@ def score_variability_drivers(
         drivers.append("score_evidence_missing")
     if score is not None:
         drivers.append(f"score_evidence_count:{len(score.evidence_ids)}")
+    _append_claim_contribution_drivers(drivers, diagnostics)
     if expansion_query_count is not None:
         drivers.append(f"llm_expansion_query_count:{expansion_query_count}")
         if expansion_query_count <= 0:
@@ -522,6 +546,19 @@ def score_variability_drivers(
     if post_gap_status and post_gap_count <= 0.0 and post_gap_status not in {"disabled", "no_gaps"}:
         drivers.append(f"score_gap_expansion_status:{post_gap_status}")
     return tuple(dict.fromkeys(drivers))
+
+
+def _append_claim_contribution_drivers(drivers: list[str], diagnostics: Mapping[str, object]) -> None:
+    for diagnostic_key, label in (
+        ("claim_backed_claim_count_capped", "claim_backed_claim_count"),
+        ("claim_backed_primitive_count_capped", "claim_backed_primitive_count"),
+        ("score_claim_backed_component_count_capped", "score_claim_backed_component_count"),
+        ("orphan_score_component_count_capped", "orphan_score_component_count"),
+        ("score_claim_backed_component_ratio", "score_claim_backed_component_ratio"),
+    ):
+        value = _route_num(diagnostics.get(diagnostic_key))
+        if value > 0.0 or diagnostic_key in diagnostics:
+            drivers.append(f"{label}:{value:g}")
 
 
 def _evidence_fingerprint_row(item: Any) -> Mapping[str, object]:
@@ -833,6 +870,152 @@ def _state_has_any_score_value(state: Mapping[str, object] | object | None) -> b
     return False
 
 
+def _valid_high_confidence_row_has_claim_backed_gap(state: Mapping[str, object] | object | None) -> bool:
+    if _state_bool(state, "score_valid") is not True:
+        return False
+    if not _state_requires_claim_backed_high_confidence_score(state):
+        return False
+    if not _state_is_high_confidence_candidate_score(state):
+        return False
+    claim_count = _score_numeric_value(_state_value(state, "claim_backed_claim_count"))
+    if claim_count is None:
+        claim_count = _score_numeric_value(_state_value(state, "claim_backed_claim_count_capped"))
+    ratio = _score_numeric_value(_state_value(state, "score_claim_backed_component_ratio"))
+    orphan_count = _score_numeric_value(_state_value(state, "orphan_score_component_count"))
+    if orphan_count is None:
+        orphan_count = _score_numeric_value(_state_value(state, "orphan_score_component_count_capped"))
+    return (claim_count is not None and claim_count <= 0.0) or (ratio is not None and ratio < 100.0) or (
+        orphan_count is not None and orphan_count > 0.0
+    )
+
+
+def _valid_high_confidence_row_missing_score_contribution_claim_ids(
+    state: Mapping[str, object] | object | None,
+) -> bool:
+    if _state_bool(state, "score_valid") is not True:
+        return False
+    if not _state_requires_claim_backed_high_confidence_score(state):
+        return False
+    if not _state_is_high_confidence_candidate_score(state):
+        return False
+    contribution_claims = _state_score_contribution_claim_ids(state)
+    if not contribution_claims:
+        return True
+    nonzero_components = tuple(
+        component
+        for component, value in _state_component_scores(state).items()
+        if value > 0.0
+    )
+    if not nonzero_components:
+        return False
+    return any(component not in contribution_claims for component in nonzero_components)
+
+
+def _valid_high_confidence_row_missing_score_contribution_ledger(
+    state: Mapping[str, object] | object | None,
+) -> bool:
+    if _state_bool(state, "score_valid") is not True:
+        return False
+    if not _state_requires_claim_backed_high_confidence_score(state):
+        return False
+    if not _state_is_high_confidence_candidate_score(state):
+        return False
+    ledger = _state_score_contribution_ledger(state)
+    if not ledger:
+        return True
+    nonzero_components = tuple(
+        component
+        for component, value in _state_component_scores(state).items()
+        if value > 0.0
+    )
+    if not nonzero_components:
+        return False
+    return any(component not in ledger or not ledger[component] for component in nonzero_components)
+
+
+def _valid_high_confidence_row_missing_claim_ledger_ids(
+    state: Mapping[str, object] | object | None,
+) -> bool:
+    if _state_bool(state, "score_valid") is not True:
+        return False
+    if not _state_requires_claim_backed_high_confidence_score(state):
+        return False
+    if not _state_is_high_confidence_candidate_score(state):
+        return False
+    return not _state_claim_ledger_claim_ids(state)
+
+
+def _valid_high_confidence_row_has_unknown_score_contribution_claim_ids(
+    state: Mapping[str, object] | object | None,
+) -> bool:
+    if _state_bool(state, "score_valid") is not True:
+        return False
+    if not _state_requires_claim_backed_high_confidence_score(state):
+        return False
+    if not _state_is_high_confidence_candidate_score(state):
+        return False
+    known_claim_ids = set(_state_claim_ledger_claim_ids(state))
+    if not known_claim_ids:
+        return False
+    referenced_claim_ids: set[str] = set()
+    for claim_ids in _state_score_contribution_claim_ids(state).values():
+        referenced_claim_ids.update(claim_ids)
+    for claim_ids in _state_score_contribution_ledger(state).values():
+        referenced_claim_ids.update(claim_ids)
+    return bool(referenced_claim_ids - known_claim_ids)
+
+
+def _valid_stage3_green_has_unverified_guard_primitives(state: Mapping[str, object] | object | None) -> bool:
+    if _state_bool(state, "score_valid") is not True:
+        return False
+    stage = str(_state_value(state, "stage") or _state_value(state, "merged_stage") or "").strip()
+    if stage != "3-Green":
+        return False
+    guard_missing = _score_numeric_value(_state_value(state, "evidence_contract_guard_missing_primitive_count"))
+    if guard_missing is None:
+        guard_missing = _score_numeric_value(
+            _state_value(state, "evidence_contract_guard_missing_primitive_count_capped")
+        )
+    return guard_missing is not None and guard_missing > 0.0
+
+
+def _valid_stage3_green_has_present_guard_primitives(state: Mapping[str, object] | object | None) -> bool:
+    if _state_bool(state, "score_valid") is not True:
+        return False
+    stage = str(_state_value(state, "stage") or _state_value(state, "merged_stage") or "").strip()
+    if stage != "3-Green":
+        return False
+    guard_present = _score_numeric_value(_state_value(state, "evidence_contract_guard_present_primitive_count"))
+    if guard_present is None:
+        guard_present = _score_numeric_value(
+            _state_value(state, "evidence_contract_guard_present_primitive_count_capped")
+        )
+    return guard_present is not None and guard_present > 0.0
+
+
+def _state_requires_claim_backed_high_confidence_score(state: Mapping[str, object] | object | None) -> bool:
+    return any(
+        (_score_numeric_value(_state_value(state, key)) or 0.0) > 0.0
+        for key in (
+            "score_claim_backed_required",
+            "source_backed_green_bridge_raw",
+            "source_backed_deep_research_completed",
+            "evidence_contract_required_primitive_count",
+            "evidence_contract_required_primitive_count_capped",
+            "evidence_contract_green_gate_required_primitive_count",
+            "evidence_contract_green_gate_required_primitive_count_capped",
+        )
+    )
+
+
+def _state_is_high_confidence_candidate_score(state: Mapping[str, object] | object | None) -> bool:
+    stage = str(_state_value(state, "stage") or _state_value(state, "merged_stage") or "").strip()
+    if stage in {"3-Green", "3-Yellow"}:
+        return True
+    visible = serialized_visible_score(state)
+    return visible is not None and visible >= 65.0
+
+
 def _score_numeric_value(value: object) -> float | None:
     if value in (None, ""):
         return None
@@ -888,7 +1071,129 @@ def _state_component_scores(state: Mapping[str, object] | object | None) -> Mapp
             except (TypeError, ValueError):
                 continue
         return row
+    row = {}
+    for field_key, component_key in _COMPONENT_SCORE_FIELD_KEYS.items():
+        value = _state_value(state, field_key)
+        if value in (None, ""):
+            continue
+        try:
+            row[component_key] = float(value)
+        except (TypeError, ValueError):
+            continue
+    if row:
+        return row
     return {}
+
+
+def _state_score_contribution_claim_ids(state: Mapping[str, object] | object | None) -> Mapping[str, tuple[str, ...]]:
+    value = _state_value(state, "score_contribution_claim_ids")
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return {}
+        try:
+            value = json.loads(text)
+        except json.JSONDecodeError:
+            return {}
+    if not isinstance(value, Mapping):
+        return {}
+    row: dict[str, tuple[str, ...]] = {}
+    for key, raw_ids in value.items():
+        component = _component_key(key)
+        if not component:
+            continue
+        if isinstance(raw_ids, str):
+            claim_ids = (raw_ids,)
+        elif isinstance(raw_ids, Sequence):
+            claim_ids = tuple(str(item) for item in raw_ids)
+        else:
+            claim_ids = ()
+        clean = tuple(dict.fromkeys(item.strip() for item in claim_ids if item.strip()))
+        if clean:
+            row[component] = clean
+    return row
+
+
+def _state_score_contribution_ledger(state: Mapping[str, object] | object | None) -> Mapping[str, tuple[str, ...]]:
+    value = _state_value(state, "score_contribution_ledger")
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return {}
+        try:
+            value = json.loads(text)
+        except json.JSONDecodeError:
+            return {}
+    if not isinstance(value, Sequence) or isinstance(value, (str, bytes, bytearray)):
+        return {}
+    row: dict[str, tuple[str, ...]] = {}
+    for item in value:
+        if not isinstance(item, Mapping):
+            continue
+        component = _component_key(item.get("component_key") or item.get("criterion_id") or "")
+        if not component:
+            continue
+        raw_points = _score_numeric_value(item.get("raw_points"))
+        if raw_points is not None and raw_points <= 0.0:
+            continue
+        raw_claims = item.get("support_claim_ids")
+        if isinstance(raw_claims, str):
+            claim_ids = (raw_claims,)
+        elif isinstance(raw_claims, Sequence):
+            claim_ids = tuple(str(claim) for claim in raw_claims)
+        else:
+            claim_ids = ()
+        clean = tuple(dict.fromkeys(claim.strip() for claim in claim_ids if claim.strip()))
+        if clean:
+            row[component] = clean
+    return row
+
+
+def _state_claim_ledger_claim_ids(state: Mapping[str, object] | object | None) -> tuple[str, ...]:
+    claim_ids: list[str] = []
+    for key in ("claim_ledger_claim_ids", "claim_ledger_score_eligible_claim_ids", "compiled_claim_ids"):
+        claim_ids.extend(_claim_id_values(_state_value(state, key)))
+    for key in ("claim_ledger_claim_ids_by_primitive", "compiled_claim_ids_by_primitive"):
+        value = _json_state_value(_state_value(state, key))
+        if not isinstance(value, Mapping):
+            continue
+        for raw_claims in value.values():
+            claim_ids.extend(_claim_id_values(raw_claims))
+    compiled_claims = _json_state_value(_state_value(state, "compiled_claims"))
+    if isinstance(compiled_claims, list):
+        for item in compiled_claims:
+            if isinstance(item, Mapping):
+                claim_ids.extend(_claim_id_values(item.get("claim_id")))
+    return tuple(dict.fromkeys(claim_id for claim_id in claim_ids if claim_id))
+
+
+def _claim_id_values(value: object) -> tuple[str, ...]:
+    if value in (None, ""):
+        return ()
+    parsed = _json_state_value(value)
+    if parsed in (None, ""):
+        return ()
+    if isinstance(parsed, Mapping):
+        return ()
+    if isinstance(parsed, str):
+        raw_values = parsed.split(",")
+    elif isinstance(parsed, (list, tuple)):
+        raw_values = parsed
+    else:
+        raw_values = (parsed,)
+    return tuple(dict.fromkeys(str(item).strip() for item in raw_values if str(item).strip()))
+
+
+def _json_state_value(value: object) -> object:
+    if not isinstance(value, str):
+        return value
+    text = value.strip()
+    if not text or not text.startswith(("[", "{")):
+        return value
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        return value
 
 
 def _component_score_deltas(

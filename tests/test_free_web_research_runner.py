@@ -5,6 +5,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
+from e2r.agentic import load_evidence_contracts
+from e2r.calibration.taxonomy import CANONICAL_ARCHETYPE_IDS
 from e2r.evidence_ids import stable_consensus_evidence_id, stable_news_evidence_id
 from e2r.models import Market, ScoreSnapshot, Stage
 from e2r.llm import EvidenceSlotStatus, FakeThemeRouteProvider, ThemeRouteOutput
@@ -20,7 +22,11 @@ from e2r.research.free_web_research_runner import (
     _score_gap_reason_codes,
     _score_gap_score_block_reason,
     _score_gap_missing_information,
+    _score_gap_state_signature,
     _stage_gate_missing_information,
+    _field_matches_source_backed_slot,
+    _source_field_contract_gap_context,
+    _theme_route_contract_gap_context,
 )
 from e2r.research.manual_source_provider import ManualSource, ManualSourceProvider
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
@@ -182,7 +188,7 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertEqual(len(llm_results), 5)
         self.assertEqual({item.query for item in llm_results}, {query.query for query in queries})
 
-    def test_score_gap_expansion_stops_at_round_limit_with_warning_after_search(self):
+    def test_score_gap_expansion_blocks_when_search_makes_no_progress(self):
         as_of = date(2026, 6, 8)
         query = QuerySpec(
             group="test",
@@ -234,15 +240,14 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         )
 
         self.assertEqual(result.stage.stage, Stage.STAGE_0)
-        self.assertTrue(result.theme_route_diagnostics["score_valid"])
-        self.assertNotIn("score_blocked_reason", result.theme_route_diagnostics)
-        self.assertEqual(result.score.diagnostic_scores["score_valid"], 100.0)
-        self.assertEqual(result.score.diagnostic_scores["score_blocked_by_score_gap"], 0.0)
-        self.assertEqual(result.score.diagnostic_scores["score_gap_unresolved_warning"], 100.0)
-        self.assertEqual(result.theme_route_diagnostics["post_score_gap_warning_reason"], "score_gap_round_limit")
-        self.assertEqual(result.theme_route_diagnostics["post_score_gap_expansion_status"], "round_limit_reached")
+        self.assertFalse(result.theme_route_diagnostics["score_valid"])
+        self.assertEqual(result.theme_route_diagnostics["score_blocked_reason"], "score_gap_no_progress")
+        self.assertNotIn("post_score_gap_warning_reason", result.theme_route_diagnostics)
+        self.assertEqual(result.score.diagnostic_scores["score_valid"], 0.0)
+        self.assertEqual(result.score.diagnostic_scores["score_blocked_by_score_gap"], 100.0)
+        self.assertEqual(result.theme_route_diagnostics["post_score_gap_expansion_status"], "no_progress")
         self.assertEqual(result.theme_route_diagnostics["post_score_gap_expansion_count"], 1)
-        self.assertTrue(any(event["phase"] == "post_score_gap_stop_round_limit" for event in phase_events))
+        self.assertTrue(any(event["phase"] == "post_score_gap_stop_no_progress" for event in phase_events))
 
     def test_provider_error_theme_route_blocks_score_and_stage(self):
         route_provider = FakeThemeRouteProvider(
@@ -757,8 +762,11 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         fields = result.web_result.parsed_news[0].parsed_fields
         self.assertFalse(fields["search_snippet_only"])
         self.assertTrue(fields["document_type_inferred_from_fetched_text"])
+        self.assertEqual(fields["claim_ledger_version"], "e2r-claim-ledger-v1")
+        self.assertGreater(fields["compiled_claim_count"], 0)
         self.assertTrue(result.web_result.fetched_documents[0].ok)
         self.assertGreater(result.score.diagnostic_scores["evidence_family_news"], 0.0)
+        self.assertGreater(result.score.diagnostic_scores["claim_backed_claim_count_capped"], 0.0)
         self.assertEqual(result.score.diagnostic_scores.get("snippet_only_green_block", 0.0), 0.0)
 
     def test_theme_rebalance_enabled_without_provider_uses_default_codex_provider(self):
@@ -1965,6 +1973,161 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertTrue(any("consensus revision" in item for item in gaps))
         self.assertTrue(any("missing independent evidence families" in item for item in gaps))
 
+    def test_evidence_contract_stage_gate_failures_are_material_llm_gap_context(self):
+        green_gate_score = ScoreSnapshot(
+            symbol="888884",
+            as_of_date=date(2026, 6, 8),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=20.0,
+            bottleneck_pricing_score=20.0,
+            market_mispricing_score=15.0,
+            valuation_rerating_score=15.0,
+            capital_allocation_score=5.0,
+            information_confidence_score=5.0,
+            risk_penalty=0.0,
+            total_score=95.0,
+            diagnostic_scores={
+                "score_valid": 100.0,
+                "revision_score": 100.0,
+                "structural_visibility_quality": 100.0,
+                "contract_quality": 100.0,
+                "cross_evidence_family_count": 4.0,
+                "report_date_confidence": 100.0,
+                "date_unverified_snippet_news_count_capped": 0.0,
+                "date_unverified_document_count_capped": 0.0,
+                "domain_specific_evidence_score": 100.0,
+                "evidence_contract_green_gate_required_primitive_count_capped": 3.0,
+                "evidence_contract_green_gate_present_primitive_count_capped": 2.0,
+                "evidence_contract_green_gate_missing_primitive_count_capped": 1.0,
+                "evidence_contract_green_gate_coverage_pct": 66.6667,
+            },
+        )
+        guard_score = ScoreSnapshot(
+            symbol="888883",
+            as_of_date=date(2026, 6, 8),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=20.0,
+            bottleneck_pricing_score=20.0,
+            market_mispricing_score=15.0,
+            valuation_rerating_score=15.0,
+            capital_allocation_score=5.0,
+            information_confidence_score=5.0,
+            risk_penalty=0.0,
+            total_score=95.0,
+            diagnostic_scores={
+                "score_valid": 100.0,
+                "revision_score": 100.0,
+                "structural_visibility_quality": 100.0,
+                "contract_quality": 100.0,
+                "cross_evidence_family_count": 4.0,
+                "report_date_confidence": 100.0,
+                "date_unverified_snippet_news_count_capped": 0.0,
+                "date_unverified_document_count_capped": 0.0,
+                "domain_specific_evidence_score": 100.0,
+                "evidence_contract_green_gate_required_primitive_count_capped": 3.0,
+                "evidence_contract_green_gate_present_primitive_count_capped": 3.0,
+                "evidence_contract_green_gate_missing_primitive_count_capped": 0.0,
+                "evidence_contract_green_gate_coverage_pct": 100.0,
+                "evidence_contract_guard_present_primitive_count_capped": 1.0,
+            },
+        )
+        guard_unverified_score = ScoreSnapshot(
+            symbol="888881",
+            as_of_date=date(2026, 6, 8),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=20.0,
+            bottleneck_pricing_score=20.0,
+            market_mispricing_score=15.0,
+            valuation_rerating_score=15.0,
+            capital_allocation_score=5.0,
+            information_confidence_score=5.0,
+            risk_penalty=0.0,
+            total_score=95.0,
+            diagnostic_scores={
+                "score_valid": 100.0,
+                "revision_score": 100.0,
+                "structural_visibility_quality": 100.0,
+                "contract_quality": 100.0,
+                "cross_evidence_family_count": 4.0,
+                "report_date_confidence": 100.0,
+                "date_unverified_snippet_news_count_capped": 0.0,
+                "date_unverified_document_count_capped": 0.0,
+                "domain_specific_evidence_score": 100.0,
+                "evidence_contract_guard_required_primitive_count_capped": 1.0,
+                "evidence_contract_guard_missing_primitive_count_capped": 1.0,
+            },
+        )
+
+        green_gate_gaps = _stage_gate_missing_information(
+            green_gate_score,
+            RedTeamAssessment.empty("888884", date(2026, 6, 8)),
+        )
+        guard_gaps = _stage_gate_missing_information(
+            guard_score,
+            RedTeamAssessment.empty("888883", date(2026, 6, 8)),
+        )
+        guard_unverified_gaps = _stage_gate_missing_information(
+            guard_unverified_score,
+            RedTeamAssessment.empty("888881", date(2026, 6, 8)),
+        )
+
+        self.assertTrue(any("failed_evidence_contract_positive_coverage" in item for item in green_gate_gaps))
+        self.assertTrue(any("evidence contract Green gate primitive coverage failed" in item for item in green_gate_gaps))
+        self.assertTrue(any("failed_evidence_contract_guard_present" in item for item in guard_gaps))
+        self.assertTrue(any("evidence contract guard primitive is present" in item for item in guard_gaps))
+        self.assertTrue(any("failed_evidence_contract_guard_unverified" in item for item in guard_unverified_gaps))
+        self.assertTrue(any("evidence contract guard primitive is missing or unverified" in item for item in guard_unverified_gaps))
+        self.assertTrue(_material_score_gaps(green_gate_gaps))
+        self.assertTrue(_material_score_gaps(guard_gaps))
+        self.assertTrue(_material_score_gaps(guard_unverified_gaps))
+
+    def test_score_gap_no_progress_signature_tracks_contract_primitive_names(self):
+        score = ScoreSnapshot(
+            symbol="888882",
+            as_of_date=date(2026, 6, 8),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=20.0,
+            bottleneck_pricing_score=20.0,
+            market_mispricing_score=15.0,
+            valuation_rerating_score=15.0,
+            capital_allocation_score=5.0,
+            information_confidence_score=5.0,
+            risk_penalty=0.0,
+            total_score=95.0,
+            diagnostic_scores={
+                "score_valid": 100.0,
+                "revision_score": 100.0,
+                "structural_visibility_quality": 100.0,
+                "contract_quality": 100.0,
+                "cross_evidence_family_count": 4.0,
+                "report_date_confidence": 100.0,
+                "date_unverified_snippet_news_count_capped": 0.0,
+                "date_unverified_document_count_capped": 0.0,
+                "domain_specific_evidence_score": 100.0,
+                "evidence_contract_green_gate_required_primitive_count_capped": 3.0,
+                "evidence_contract_green_gate_present_primitive_count_capped": 2.0,
+                "evidence_contract_green_gate_missing_primitive_count_capped": 1.0,
+                "evidence_contract_green_gate_coverage_pct": 66.6667,
+            },
+        )
+        red_team = RedTeamAssessment.empty("888882", date(2026, 6, 8))
+        before = {
+            "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            "evidence_contract_required_primitives": "hbm_capacity_pre_sold,customer_preorder_or_allocation,hbm_capacity_constraint",
+            "evidence_contract_positive_missing_primitives": "hbm_capacity_pre_sold",
+            "evidence_contract_green_gate_missing_primitives": "hbm_capacity_pre_sold",
+        }
+        after = {
+            **before,
+            "evidence_contract_positive_missing_primitives": "customer_preorder_or_allocation",
+            "evidence_contract_green_gate_missing_primitives": "customer_preorder_or_allocation",
+        }
+
+        self.assertNotEqual(
+            _score_gap_state_signature(score, red_team, before),
+            _score_gap_state_signature(score, red_team, after),
+        )
+
     def test_price_only_and_emerging_theme_guards_are_returned_as_llm_gap_context(self):
         score = ScoreSnapshot(
             symbol="888885",
@@ -2222,6 +2385,7 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
                     "gpu_cloud_revenue_visible": True,
                     "cloud_revenue_growth_visible": True,
                     "cloud_revenue_growth_pct": 40.0,
+                    "unbacked_margin_bridge": True,
                 },
                 evidence_slots=(
                     EvidenceSlotStatus(
@@ -2267,9 +2431,196 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         )
 
         self.assertTrue(result.feature_input.agent_extracted_fields["gpu_cloud_revenue_visible"])
+        self.assertNotIn("unbacked_margin_bridge", result.feature_input.agent_extracted_fields)
         self.assertEqual(result.theme_route_diagnostics["theme_evidence_gate_status"], "source_backed")
+        self.assertEqual(result.theme_route_diagnostics["agent_field_claim_ledger_version"], "e2r-claim-ledger-v1")
+        self.assertIn("gpu_cloud_revenue_visible", result.theme_route_diagnostics["agent_field_claim_ids_by_primitive"])
+        self.assertNotIn("unbacked_margin_bridge", result.theme_route_diagnostics["agent_field_claim_ids_by_primitive"])
+        self.assertEqual(result.theme_route_diagnostics["agent_field_evidence_refs_by_field"]["gpu_cloud_revenue_visible"], (route_ref,))
+        contract_context = result.theme_route_diagnostics["evidence_contract_gap_context"][0]
+        self.assertIn("C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE", contract_context)
+        self.assertIn("arpu_growth_pct", contract_context)
+        self.assertIn("operating_leverage_visible", contract_context)
         self.assertEqual(result.score.diagnostic_scores["theme_route_applied_to_scoring"], 100.0)
         self.assertGreater(result.score.diagnostic_scores["agent_extracted_field_count_capped"], 0.0)
+
+    def test_source_backed_slot_matching_rejects_token_only_overlap(self):
+        self.assertTrue(
+            _field_matches_source_backed_slot(
+                "cloud_revenue_growth_pct",
+                ("cloud_revenue",),
+            )
+        )
+        self.assertTrue(
+            _field_matches_source_backed_slot(
+                "customer_preorder_or_allocation",
+                ("customer",),
+            )
+        )
+        self.assertFalse(
+            _field_matches_source_backed_slot(
+                "unbacked_margin_bridge",
+                ("margin_quality",),
+            )
+        )
+        self.assertFalse(
+            _field_matches_source_backed_slot(
+                "cloud_revenue_growth_pct",
+                ("revenue_cloud",),
+            )
+        )
+        self.assertFalse(
+            _field_matches_source_backed_slot(
+                "margin",
+                ("margin_quality",),
+            )
+        )
+
+    def test_theme_route_contract_gap_context_marks_source_backed_primitives_present(self):
+        route = ThemeRouteOutput(
+            status="transition_detected",
+            transition_detected=True,
+            route_confidence=0.82,
+            canonical_archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            normalized_parsed_fields={"hbm_capacity_pre_sold": True},
+            evidence_slots=(
+                EvidenceSlotStatus(
+                    slot="hbm_capacity_pre_sold",
+                    status="present",
+                    evidence_refs=("news:000660:2024-04-25:reuters:hbm",),
+                    confidence=0.9,
+                ),
+            ),
+        )
+
+        context = _theme_route_contract_gap_context(route)[0]
+        missing = context.split("missing_positive_primitives=", 1)[1].split("; guard_primitives", 1)[0]
+
+        self.assertIn("C06_HBM_MEMORY_CUSTOMER_CAPACITY", context)
+        self.assertIn("customer_preorder_or_allocation", missing)
+        self.assertNotIn("hbm_capacity_pre_sold", missing)
+
+    def test_theme_route_contract_gap_context_ignores_unbacked_normalized_fields(self):
+        route = ThemeRouteOutput(
+            status="transition_detected",
+            transition_detected=True,
+            route_confidence=0.82,
+            canonical_archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            normalized_parsed_fields={"hbm_capacity_pre_sold": True},
+        )
+
+        context = _theme_route_contract_gap_context(route)[0]
+        missing = context.split("missing_positive_primitives=", 1)[1].split("; guard_primitives", 1)[0]
+
+        self.assertIn("hbm_capacity_pre_sold", missing)
+
+    def test_theme_route_contract_gap_context_covers_every_archetype(self):
+        contracts = load_evidence_contracts()
+
+        self.assertEqual(set(contracts), set(CANONICAL_ARCHETYPE_IDS))
+        for canonical_archetype_id, contract in contracts.items():
+            with self.subTest(canonical_archetype_id=canonical_archetype_id):
+                context = _theme_route_contract_gap_context(
+                    ThemeRouteOutput(
+                        status="transition_detected",
+                        transition_detected=True,
+                        route_confidence=0.82,
+                        canonical_archetype_id=canonical_archetype_id,
+                    )
+                )[0]
+
+                missing_positive = context.split("missing_positive_primitives=", 1)[1].split(
+                    "; missing_green_gate_primitives",
+                    1,
+                )[0]
+                missing_green_gate = context.split("missing_green_gate_primitives=", 1)[1].split(
+                    "; guard_primitives_to_check",
+                    1,
+                )[0]
+                guard_context = context.split("guard_primitives_to_check=", 1)[1].split(
+                    "; present_guard_primitives",
+                    1,
+                )[0]
+
+                self.assertIn(f"archetype_evidence_contract:{canonical_archetype_id}", context)
+                self.assertIn(f"bridge_group={contract.runtime_bridge_group}", context)
+                for primitive in contract.required_primitives:
+                    self.assertIn(primitive, context)
+                for axis in contract.required_bridge_axes:
+                    self.assertIn(axis, context)
+                for primitive in contract.positive_primitives:
+                    self.assertIn(primitive, missing_positive)
+                if not contract.positive_primitives:
+                    self.assertEqual(missing_positive, "none")
+                for primitive in contract.green_gate_primitives:
+                    self.assertIn(primitive, missing_green_gate)
+                for primitive in contract.guard_primitives:
+                    self.assertIn(primitive, guard_context)
+                if not contract.guard_primitives:
+                    self.assertEqual(guard_context, "none")
+
+    def test_source_field_contract_gap_context_uses_resolved_runtime_archetype(self):
+        context = _source_field_contract_gap_context(
+            {
+                "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+                "evidence_contract_runtime_bridge_group": "software_platform_recurring_revenue_bridge",
+                "evidence_contract_required_primitives": "arr_growth_visible,nrr,retention_or_renewal,rpo_to_sales,recurring_margin_leverage",
+                "evidence_contract_missing_primitives": "nrr,rpo_to_sales",
+                "evidence_contract_positive_primitives": "arr_growth_visible,nrr,retention_or_renewal,rpo_to_sales,recurring_margin_leverage",
+                "evidence_contract_positive_missing_primitives": "nrr,rpo_to_sales",
+                "evidence_contract_guard_primitives": "",
+                "evidence_contract_guard_present_primitives": "",
+                "evidence_contract_required_bridge_axes": "software_retention,customer,margin",
+            }
+        )[0]
+
+        self.assertIn("C28_SOFTWARE_SECURITY_CONTRACT_RETENTION", context)
+        self.assertIn("missing_required_primitives=nrr,rpo_to_sales", context)
+        self.assertIn("missing_positive_primitives=nrr,rpo_to_sales", context)
+        self.assertIn("guard_primitives_to_check=none", context)
+        self.assertIn("required_bridge_axes=software_retention,customer,margin", context)
+
+    def test_source_field_contract_gap_context_covers_every_archetype(self):
+        contracts = load_evidence_contracts()
+
+        for canonical_archetype_id, contract in contracts.items():
+            with self.subTest(canonical_archetype_id=canonical_archetype_id):
+                context = _source_field_contract_gap_context(
+                    {
+                        "canonical_archetype_id": canonical_archetype_id,
+                        "evidence_contract_runtime_bridge_group": contract.runtime_bridge_group,
+                        "evidence_contract_required_primitives": ",".join(contract.required_primitives),
+                        "evidence_contract_missing_primitives": ",".join(contract.required_primitives),
+                        "evidence_contract_positive_primitives": ",".join(contract.positive_primitives),
+                        "evidence_contract_positive_missing_primitives": ",".join(contract.positive_primitives),
+                        "evidence_contract_green_gate_primitives": ",".join(contract.green_gate_primitives),
+                        "evidence_contract_green_gate_missing_primitives": ",".join(contract.green_gate_primitives),
+                        "evidence_contract_guard_primitives": ",".join(contract.guard_primitives),
+                        "evidence_contract_guard_present_primitives": ",".join(contract.guard_primitives),
+                        "evidence_contract_required_bridge_axes": ",".join(contract.required_bridge_axes),
+                    }
+                )[0]
+
+                self.assertIn(f"archetype_evidence_contract:{canonical_archetype_id}", context)
+                self.assertIn(f"bridge_group={contract.runtime_bridge_group}", context)
+                for primitive in contract.required_primitives:
+                    self.assertIn(primitive, context)
+                for axis in contract.required_bridge_axes:
+                    self.assertIn(axis, context)
+                if contract.positive_primitives:
+                    for primitive in contract.positive_primitives:
+                        self.assertIn(primitive, context)
+                else:
+                    self.assertIn("positive_primitives=none", context)
+                    self.assertIn("missing_positive_primitives=none", context)
+                for primitive in contract.green_gate_primitives:
+                    self.assertIn(primitive, context)
+                if contract.guard_primitives:
+                    for primitive in contract.guard_primitives:
+                        self.assertIn(primitive, context)
+                else:
+                    self.assertIn("guard_primitives_to_check=none", context)
+                    self.assertIn("present_guard_primitives=none", context)
 
     def test_low_confidence_theme_route_canonical_is_not_applied_to_scoring(self):
         url = "https://news.example.com/company-route-low-confidence"

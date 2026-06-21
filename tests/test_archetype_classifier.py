@@ -6,6 +6,28 @@ from e2r.sector_profiles import SectorProfile
 
 
 class ArchetypeClassifierTests(unittest.TestCase):
+    def test_source_backed_canonical_field_overrides_generic_financial_context(self):
+        classification = classify_v12_archetype(
+            symbol="CASE",
+            sector_profile=SectorProfile.GENERIC,
+            parsed_fields={
+                "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+                "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+                "roe": 12.0,
+                "pbr_e": 0.8,
+                "pf_exposure_reduced": True,
+                "balance_sheet_repair": True,
+                "cash_collection_visible": True,
+            },
+            text="financial ROE PBR PF exposure reduced balance sheet repair cash collection visible",
+            price_stage_score=0.0,
+            revision_score=70.0,
+        )
+
+        self.assertEqual(classification.canonical_archetype_id, "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK")
+        self.assertEqual(classification.large_sector_id, "L9_CONSTRUCTION_REALESTATE_HOUSING")
+        self.assertEqual(classification.reason, "source_backed_canonical_archetype")
+
     def test_price_blowoff_does_not_override_semiconductor_route_context(self):
         classification = classify_v12_archetype(
             symbol="CASE",

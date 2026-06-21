@@ -17,6 +17,7 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from e2r.cheap_scan.models import CheapScanCandidate
+from e2r.features import FeatureEngineeringInput
 from e2r.llm.theme_provider import ThemeRouteProvider
 from e2r.models import Stage
 from e2r.research.free_web_research_runner import FreeWebResearchInput, FreeWebResearchRunner, WebResearchPipelineResult
@@ -98,10 +99,18 @@ class RetrospectiveSnapshotSearchProvider:
         self.company_name = company_name
 
     def search(self, query: str, as_of_date: date, max_results: int = 100) -> tuple[SearchResult, ...]:
-        snapshots = self.store.load_snapshots(symbol=self.symbol, company_name=self.company_name)
+        snapshots = _candidate_snapshots(
+            self.store,
+            symbol=self.symbol,
+            company_name=self.company_name,
+        )
         if not snapshots and (self.symbol or self.company_name):
             snapshots = self.store.load_snapshots()
-        matched = [item for item in snapshots if _snapshot_matches(item, query, self.symbol, self.company_name)]
+        query_matched = [item for item in snapshots if _query_matches(item, query, self.symbol, self.company_name)]
+        matched = query_matched or _latest_candidate_snapshots(
+            [item for item in snapshots if _candidate_identity_matches(item, self.symbol, self.company_name)],
+            as_of_date,
+        )
         rows = [_snapshot_to_search_result(item, query=query, rank=index) for index, item in enumerate(matched, start=1)]
         return tuple(rows[:max_results])
 
@@ -172,6 +181,7 @@ class AsOfWebResearchRunner:
         search_provider: SearchProvider,
         fixture_text_by_url: Mapping[str, str | Path] | None = None,
         config: AsOfWebResearchConfig,
+        base_feature_input: FeatureEngineeringInput | None = None,
     ) -> AsOfWebResearchResult:
         filtered = AsOfDateFilteredSearchProvider(search_provider, config.as_of_date)
         budget = SearchBudget(
@@ -187,7 +197,7 @@ class AsOfWebResearchRunner:
             FreeWebResearchInput(
                 company_name=candidate.company_name,
                 symbol=candidate.symbol,
-                sector=None,
+                sector=base_feature_input.sector_context if base_feature_input is not None else None,
                 market=candidate.market,
                 as_of_date=config.as_of_date,
                 company_aliases=(candidate.company_name, candidate.symbol),
@@ -199,6 +209,7 @@ class AsOfWebResearchRunner:
                 theme_route_provider=config.theme_route_provider,
                 max_theme_expansion_rounds=config.max_theme_expansion_rounds,
                 theme_evidence_review_enabled=config.theme_evidence_review_enabled,
+                base_feature_input=base_feature_input,
             )
         )
         pipeline = _downgrade_green_if_date_unverified_only(pipeline, filtered.decisions, config)
@@ -229,7 +240,36 @@ def fixture_text_by_url_for_candidate(
     date filtering, not by the snapshot save date.
     """
 
-    return (store or ReportSnapshotStore()).fixture_text_by_url(symbol=symbol, company_name=company_name)
+    report_store = store or ReportSnapshotStore()
+    mapping: dict[str, str | Path] = {}
+    for item_symbol, item_company in (
+        (symbol, company_name),
+        (symbol, None),
+        (None, company_name),
+    ):
+        if not item_symbol and not item_company:
+            continue
+        mapping.update(report_store.fixture_text_by_url(symbol=item_symbol, company_name=item_company))
+    return mapping
+
+
+def _candidate_snapshots(
+    store: SearchSnapshotStore,
+    *,
+    symbol: str | None,
+    company_name: str | None,
+) -> tuple[SearchSnapshot, ...]:
+    by_url: dict[str, SearchSnapshot] = {}
+    for item_symbol, item_company in (
+        (symbol, company_name),
+        (symbol, None),
+        (None, company_name),
+    ):
+        if not item_symbol and not item_company:
+            continue
+        for snapshot in store.load_snapshots(symbol=item_symbol, company_name=item_company):
+            by_url.setdefault(snapshot.url, snapshot)
+    return tuple(by_url.values())
 
 
 def _downgrade_green_if_date_unverified_only(
@@ -352,20 +392,32 @@ def _source_type(result: SearchResult) -> str:
     return "search_result"
 
 
-def _snapshot_matches(snapshot: SearchSnapshot, query: str, symbol: str | None, company_name: str | None) -> bool:
-    if symbol and snapshot.symbol == symbol:
-        return _query_matches(snapshot, query) or bool(snapshot.company_name and snapshot.company_name in query)
-    if company_name and snapshot.company_name == company_name:
-        return True
-    return _query_matches(snapshot, query)
+def _candidate_identity_matches(snapshot: SearchSnapshot, symbol: str | None, company_name: str | None) -> bool:
+    return bool((symbol and snapshot.symbol == symbol) or (company_name and snapshot.company_name == company_name))
 
 
-def _query_matches(snapshot: SearchSnapshot, query: str) -> bool:
-    haystack = f"{snapshot.query} {snapshot.title} {snapshot.snippet or ''}"
-    if snapshot.company_name and snapshot.company_name in query:
-        return True
-    terms = {term for term in query.split() if len(term) >= 2}
+def _query_matches(snapshot: SearchSnapshot, query: str, symbol: str | None, company_name: str | None) -> bool:
+    haystack = f"{snapshot.query} {snapshot.title} {snapshot.snippet or ''}".lower()
+    terms = _non_identity_query_terms(query, symbol=symbol, company_name=company_name)
     return bool(terms and sum(1 for term in terms if term in haystack) >= 2)
+
+
+def _non_identity_query_terms(query: str, *, symbol: str | None, company_name: str | None) -> set[str]:
+    identity_terms = {str(symbol or "").lower()}
+    identity_terms.update(term for term in str(company_name or "").lower().split() if term)
+    return {
+        term
+        for term in str(query or "").lower().split()
+        if len(term) >= 2 and term not in identity_terms
+    }
+
+
+def _latest_candidate_snapshots(snapshots: Sequence[SearchSnapshot], as_of_date: date) -> tuple[SearchSnapshot, ...]:
+    eligible = [item for item in snapshots if item.published_at is None or item.published_at.date() <= as_of_date]
+    if not eligible:
+        return ()
+    latest = max((item.published_at.date() if item.published_at else item.search_date) for item in eligible)
+    return tuple(item for item in eligible if (item.published_at.date() if item.published_at else item.search_date) == latest)
 
 
 def _snapshot_to_search_result(snapshot: SearchSnapshot, *, query: str, rank: int) -> SearchResult:

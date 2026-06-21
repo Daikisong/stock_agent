@@ -4,9 +4,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import date, timedelta
+import json
 import math
 from typing import Any, Mapping, Protocol, Sequence
 
+from .agentic import claim_backed_parsed_fields, evidence_contract_for_archetype
 from .archetype_classifier import classify_v12_archetype
 from .calibration.taxonomy import normalise_canonical_archetype_id, normalise_large_sector_id
 from .estimate_quality import (
@@ -44,6 +46,17 @@ EVIDENCE_FAMILIES: tuple[str, ...] = (
     "consensus_revision",
     "news",
 )
+_AGENT_EXTRACTED_FIELD_SOURCE_KEY = "agent_extracted_field_source"
+_AGENT_FIELD_TEXT_EXCLUDE_PREFIXES = ("compiled_", "claim_")
+_AGENT_FIELD_TEXT_EXCLUDE_KEYS = {
+    _AGENT_EXTRACTED_FIELD_SOURCE_KEY,
+    "claim_ledger_version",
+}
+_AGENT_SCORE_ELIGIBLE_SYNTHETIC_KEYS = {
+    "theme_transition_detected",
+    "emerging_theme_active",
+    "emerging_theme_id",
+}
 
 _REVISION_NUMERIC_FIELD_KEYS = {
     "eps_revision_pct",
@@ -58,6 +71,215 @@ _REVISION_NUMERIC_FIELD_KEYS = {
     "target_price_revision_pct",
     "target_revision_pct",
     "target_price_revision_1m",
+}
+
+_SCORE_COMPONENT_CLAIM_KEYWORDS: Mapping[str, tuple[str, ...]] = {
+    "eps_fcf_explosion": (
+        "actual",
+        "cashflow",
+        "cash_flow",
+        "earnings",
+        "eps",
+        "fcf",
+        "financial",
+        "margin",
+        "net_income",
+        "op_",
+        "operating_profit",
+        "opm",
+        "profit",
+        "revision",
+        "sales",
+    ),
+    "earnings_visibility": (
+        "actual",
+        "allocation",
+        "arr",
+        "backlog",
+        "booked",
+        "cashflow",
+        "cash_flow",
+        "balance_sheet",
+        "channel",
+        "contract",
+        "customer",
+        "delivery",
+        "demand",
+        "direct_company_cash",
+        "export",
+        "fcf",
+        "financial",
+        "hbm",
+        "implementation",
+        "order",
+        "platform",
+        "policy",
+        "preorder",
+        "pre_sold",
+        "project",
+        "reimbursement",
+        "recurring",
+        "regulatory",
+        "retention",
+        "revenue",
+        "royalty",
+        "rpo",
+        "shipment",
+        "subsidy",
+        "visibility",
+        "volume",
+    ),
+    "bottleneck_pricing": (
+        "allocation",
+        "approval",
+        "arpu",
+        "arr",
+        "asp",
+        "balance_sheet",
+        "bottleneck",
+        "call_off",
+        "capacity",
+        "capa",
+        "cash_collection",
+        "channel",
+        "constraint",
+        "csm",
+        "direct_company_cash",
+        "export",
+        "hbm",
+        "insurance",
+        "inventory",
+        "k_ics",
+        "lead_time",
+        "loss_ratio",
+        "margin",
+        "occupancy",
+        "operating_leverage",
+        "pf_",
+        "platform",
+        "policy",
+        "pre_sold",
+        "presale",
+        "project",
+        "pricing",
+        "regulatory",
+        "reimbursement",
+        "repeat",
+        "reserve",
+        "retention",
+        "revenue",
+        "risk",
+        "royalty",
+        "shortage",
+        "software",
+        "sold",
+        "spread",
+        "subsidy",
+        "supply",
+        "tightness",
+        "trial",
+        "volume",
+    ),
+    "market_mispricing": (
+        "allocation",
+        "capacity",
+        "customer",
+        "estimate",
+        "approval",
+        "arpu",
+        "arr",
+        "balance_sheet",
+        "cash",
+        "channel",
+        "csm",
+        "hbm",
+        "insurance",
+        "k_ics",
+        "loss_ratio",
+        "mispricing",
+        "operating_leverage",
+        "pf_",
+        "platform",
+        "policy",
+        "price",
+        "pricing",
+        "project",
+        "rerating",
+        "regulatory",
+        "reimbursement",
+        "repeat",
+        "reserve",
+        "retention",
+        "revision",
+        "risk",
+        "royalty",
+        "shortage",
+        "software",
+        "structural",
+        "subsidy",
+        "target",
+        "trial",
+        "upside",
+        "valuation",
+        "volume",
+    ),
+    "valuation_rerating": (
+        "allocation",
+        "approval",
+        "arpu",
+        "arr",
+        "balance_sheet",
+        "capacity",
+        "cash",
+        "channel",
+        "control_premium",
+        "csm",
+        "customer",
+        "estimate",
+        "hbm",
+        "insurance",
+        "k_ics",
+        "loss_ratio",
+        "multiple",
+        "pbr",
+        "per",
+        "pf_",
+        "platform",
+        "policy",
+        "premium",
+        "project",
+        "rerating",
+        "regulatory",
+        "reimbursement",
+        "reserve",
+        "retention",
+        "revision",
+        "risk",
+        "roe",
+        "royalty",
+        "shortage",
+        "software",
+        "structural",
+        "subsidy",
+        "target",
+        "tender",
+        "trial",
+        "upside",
+        "valuation",
+        "volume",
+    ),
+    "capital_allocation": (
+        "buyback",
+        "cancellation",
+        "capex",
+        "capital",
+        "capacity_expansion",
+        "capacity_precommitted",
+        "dividend",
+        "payout",
+        "shareholder",
+        "treasury",
+    ),
 }
 
 
@@ -155,6 +377,11 @@ def _is_non_finite_numeric_value(value: Any) -> bool:
 
 def _clean_parsed_field_mapping(mapping: Mapping[str, Any]) -> dict[str, Any]:
     return {key: value for key, value in mapping.items() if not _is_non_finite_numeric_value(value)}
+
+
+def _primitive_matches_component(primitive_id: str, keywords: Sequence[str]) -> bool:
+    normalized = primitive_id.lower()
+    return any(keyword in normalized for keyword in keywords)
 
 
 def _score_ratio(value: float | None, full_at: float) -> float:
@@ -340,6 +567,7 @@ class DeterministicFeatureEngineer:
         sector_metrics = self._sector_metrics(inputs, field_source, sub_scores, sector_profile, estimate_quality)
         bottleneck_diagnostics = self._bottleneck_diagnostics(field_source, sub_scores, sector_metrics)
         bridge_diagnostics = self._research_axis_bridge_diagnostics(field_source)
+        contract_coverage = self._evidence_contract_coverage(classification.canonical_archetype_id, field_source)
         components = self._components(inputs, field_source, sub_scores, sector_metrics, estimate_quality)
         risk_penalty = self._risk_penalty(field_source, sub_scores, sector_metrics["structural_visibility_quality"], sector_profile)
         fcf_quality = self._fcf_quality(inputs, field_source)
@@ -359,6 +587,8 @@ class DeterministicFeatureEngineer:
             **{key: _round(value) for key, value in sector_metrics.items()},
             **estimate_quality.diagnostic_scores,
             **self._evidence_family_diagnostics(inputs),
+            **self._claim_backed_diagnostics(field_source),
+            **contract_coverage["diagnostics"],
         }
         if inputs.agent_extracted_fields:
             diagnostic_scores["agent_extracted_field_count_capped"] = min(float(len(inputs.agent_extracted_fields)), 100.0)
@@ -385,6 +615,7 @@ class DeterministicFeatureEngineer:
             diagnostic_scores=diagnostic_scores,
             industrial_sub_scores=sub_scores,
             evidence_ids=evidence_ids,
+            score_contribution_claim_ids=self._score_contribution_claim_ids(field_source, components),
             scoring_version=self.scoring_version,
             large_sector_id=classification.large_sector_id,
             canonical_archetype_id=classification.canonical_archetype_id,
@@ -405,8 +636,21 @@ class DeterministicFeatureEngineer:
             "large_sector_id": classification.large_sector_id,
             "canonical_archetype_id": classification.canonical_archetype_id,
             "archetype_classification_reason": classification.reason,
+            "claim_ledger_claim_ids": ",".join(field_source.claim_ids()),
+            "claim_ledger_score_eligible_claim_ids": ",".join(
+                _claim_ids_from_primitive_map(field_source.score_claim_ids_by_primitive())
+            ),
+            "claim_ledger_claim_ids_by_primitive": json.dumps(
+                {
+                    primitive: list(claim_ids)
+                    for primitive, claim_ids in field_source.score_claim_ids_by_primitive().items()
+                },
+                ensure_ascii=False,
+                sort_keys=True,
+            ),
             **bottleneck_diagnostics,
             **bridge_diagnostics,
+            **contract_coverage["source_fields"],
             "research_axis_bridge_guard_risk_penalty_points": _round(
                 self._research_axis_guard_risk_penalty(field_source)
             ),
@@ -431,6 +675,135 @@ class DeterministicFeatureEngineer:
         for key in ("structural_visibility_quality", "sector_visibility_score", "sector_bottleneck_score"):
             current = _to_float(fields.get(key)) or 0.0
             fields[key] = _round(max(current, bridge_floor))
+
+    @staticmethod
+    def _claim_backed_diagnostics(fields: "_ParsedFieldSource") -> dict[str, float]:
+        claim_count = len(fields.claim_ids())
+        primitive_count = len(fields.claim_ids_by_primitive())
+        return {
+            "claim_backed_claim_count_capped": min(float(claim_count), 100.0),
+            "claim_backed_primitive_count_capped": min(float(primitive_count), 100.0),
+        }
+
+    @staticmethod
+    def _evidence_contract_coverage(
+        canonical_archetype_id: str,
+        fields: "_ParsedFieldSource",
+    ) -> Mapping[str, Mapping[str, float | str]]:
+        contract = evidence_contract_for_archetype(canonical_archetype_id)
+        if contract is None:
+            return {"diagnostics": {}, "source_fields": {}}
+        support_by_primitive = _score_support_claim_ids_by_primitive(fields)
+        counter_by_primitive = _score_counter_claim_ids_by_primitive(fields)
+        verified_by_primitive: dict[str, tuple[str, ...]] = {}
+        for primitive in set(support_by_primitive) | set(counter_by_primitive):
+            verified_by_primitive[primitive] = tuple(
+                dict.fromkeys(
+                    (*support_by_primitive.get(primitive, ()), *counter_by_primitive.get(primitive, ()))
+                )
+            )
+        present = tuple(item for item in contract.required_primitives if verified_by_primitive.get(item))
+        missing = tuple(item for item in contract.required_primitives if item not in present)
+        positive_present = tuple(item for item in contract.positive_primitives if support_by_primitive.get(item))
+        positive_missing = tuple(item for item in contract.positive_primitives if item not in positive_present)
+        guard_present = tuple(item for item in contract.guard_primitives if support_by_primitive.get(item))
+        guard_cleared = tuple(
+            item
+            for item in contract.guard_primitives
+            if counter_by_primitive.get(item) and item not in guard_present
+        )
+        guard_missing = tuple(
+            item
+            for item in contract.guard_primitives
+            if item not in guard_present and item not in guard_cleared
+        )
+        green_gate_present = tuple(item for item in contract.green_gate_primitives if support_by_primitive.get(item))
+        green_gate_missing = tuple(item for item in contract.green_gate_primitives if item not in green_gate_present)
+        required_count = len(contract.required_primitives)
+        present_count = len(present)
+        coverage = present_count / required_count * 100.0 if required_count else 100.0
+        positive_required_count = len(contract.positive_primitives)
+        positive_present_count = len(positive_present)
+        positive_coverage = (
+            positive_present_count / positive_required_count * 100.0
+            if positive_required_count
+            else 0.0
+        )
+        green_gate_required_count = len(contract.green_gate_primitives)
+        green_gate_present_count = len(green_gate_present)
+        green_gate_coverage = (
+            green_gate_present_count / green_gate_required_count * 100.0
+            if green_gate_required_count
+            else 0.0
+        )
+        diagnostics = {
+            "evidence_contract_required_primitive_count_capped": min(float(required_count), 100.0),
+            "evidence_contract_present_primitive_count_capped": min(float(present_count), 100.0),
+            "evidence_contract_missing_primitive_count_capped": min(float(len(missing)), 100.0),
+            "evidence_contract_coverage_pct": _round(_clamp(coverage)),
+            "evidence_contract_positive_required_primitive_count_capped": min(float(positive_required_count), 100.0),
+            "evidence_contract_positive_present_primitive_count_capped": min(float(positive_present_count), 100.0),
+            "evidence_contract_positive_missing_primitive_count_capped": min(float(len(positive_missing)), 100.0),
+            "evidence_contract_positive_coverage_pct": _round(_clamp(positive_coverage)),
+            "evidence_contract_green_gate_required_primitive_count_capped": min(float(green_gate_required_count), 100.0),
+            "evidence_contract_green_gate_present_primitive_count_capped": min(float(green_gate_present_count), 100.0),
+            "evidence_contract_green_gate_missing_primitive_count_capped": min(float(len(green_gate_missing)), 100.0),
+            "evidence_contract_green_gate_coverage_pct": _round(_clamp(green_gate_coverage)),
+            "evidence_contract_guard_required_primitive_count_capped": min(float(len(contract.guard_primitives)), 100.0),
+            "evidence_contract_guard_present_primitive_count_capped": min(float(len(guard_present)), 100.0),
+            "evidence_contract_guard_cleared_primitive_count_capped": min(float(len(guard_cleared)), 100.0),
+            "evidence_contract_guard_missing_primitive_count_capped": min(float(len(guard_missing)), 100.0),
+            "evidence_contract_guard_only_contract": 100.0 if positive_required_count == 0 and contract.guard_primitives else 0.0,
+        }
+        source_fields = {
+            "evidence_contract_runtime_bridge_group": contract.runtime_bridge_group,
+            "evidence_contract_required_primitives": ",".join(contract.required_primitives),
+            "evidence_contract_present_primitives": ",".join(present),
+            "evidence_contract_missing_primitives": ",".join(missing),
+            "evidence_contract_positive_primitives": ",".join(contract.positive_primitives),
+            "evidence_contract_positive_present_primitives": ",".join(positive_present),
+            "evidence_contract_positive_missing_primitives": ",".join(positive_missing),
+            "evidence_contract_green_gate_primitives": ",".join(contract.green_gate_primitives),
+            "evidence_contract_green_gate_present_primitives": ",".join(green_gate_present),
+            "evidence_contract_green_gate_missing_primitives": ",".join(green_gate_missing),
+            "evidence_contract_guard_primitives": ",".join(contract.guard_primitives),
+            "evidence_contract_guard_present_primitives": ",".join(guard_present),
+            "evidence_contract_guard_cleared_primitives": ",".join(guard_cleared),
+            "evidence_contract_guard_missing_primitives": ",".join(guard_missing),
+            "evidence_contract_required_bridge_axes": ",".join(contract.required_bridge_axes),
+        }
+        return {"diagnostics": diagnostics, "source_fields": source_fields}
+
+    @staticmethod
+    def _score_contribution_claim_ids(
+        fields: "_ParsedFieldSource",
+        components: Mapping[str, float],
+    ) -> Mapping[str, tuple[str, ...]]:
+        by_primitive = fields.score_claim_ids_by_primitive()
+        if not by_primitive:
+            return {}
+        all_claim_ids = tuple(
+            dict.fromkeys(
+                claim_id
+                for claim_ids in by_primitive.values()
+                for claim_id in claim_ids
+            )
+        )
+        result: dict[str, tuple[str, ...]] = {}
+        for component_key, value in components.items():
+            if float(value) <= 0.0:
+                continue
+            if component_key == "information_confidence":
+                result[component_key] = all_claim_ids
+                continue
+            keywords = _SCORE_COMPONENT_CLAIM_KEYWORDS.get(component_key, ())
+            matched_claim_ids: list[str] = []
+            for primitive_id, claim_ids in by_primitive.items():
+                if _primitive_matches_component(primitive_id, keywords):
+                    matched_claim_ids.extend(claim_ids)
+            if matched_claim_ids:
+                result[component_key] = tuple(dict.fromkeys(matched_claim_ids))
+        return result
 
     @staticmethod
     def _resolve_sector_profile_for_archetype(
@@ -2414,12 +2787,15 @@ class _ParsedFieldSource:
         text_parts: list[str] = []
         agent_fields = _clean_parsed_field_mapping(inputs.agent_extracted_fields)
         if agent_fields:
+            agent_fields[_AGENT_EXTRACTED_FIELD_SOURCE_KEY] = True
             mappings.append(agent_fields)
             text_parts.append(
                 " ".join(
                     str(key)
                     for key, value in agent_fields.items()
                     if value not in (None, "", False, 0)
+                    and _agent_field_text_key_allowed(str(key))
+                    and _agent_field_key_score_eligible(agent_fields, str(key))
                 )
             )
         if inputs.financial_actuals:
@@ -2466,9 +2842,110 @@ class _ParsedFieldSource:
             ):
                 if source_key in actual_growth:
                     actual_fields[target_key] = actual_growth[source_key]
+            actual_evidence_date = latest_actual.period_end if latest_actual is not None else inputs.as_of_date
+            actual_fields = dict(
+                claim_backed_parsed_fields(
+                    evidence_id=f"actual:{inputs.symbol}:{actual_evidence_date.isoformat()}",
+                    symbol=inputs.symbol,
+                    as_of_date=inputs.as_of_date,
+                    parsed_fields=actual_fields,
+                    archetype_id=inputs.canonical_archetype_id,
+                    subject=inputs.company_name or inputs.symbol,
+                    quote_text="reported financial actuals",
+                    source_tier=0,
+                    confidence=1.0,
+                )
+            )
             mappings.append(actual_fields)
             text_parts.append("financial_actuals_present actual_sales operating_profit net_income")
-        mappings.extend(clean for item in inputs.disclosures if (clean := _clean_parsed_field_mapping(item.parsed_fields)))
+        for item in inputs.consensus:
+            consensus_fields = _clean_parsed_field_mapping(
+                {
+                    **dict(item.parsed_fields),
+                    "consensus_sales_estimate": item.sales_e,
+                    "consensus_operating_profit_estimate": item.op_e,
+                    "consensus_net_income_estimate": item.net_income_e,
+                    "consensus_eps_estimate": item.eps_e,
+                    "consensus_fcf_estimate": item.fcf_e,
+                    "consensus_bps_estimate": item.bps_e,
+                    "consensus_roe_estimate": item.roe_e,
+                    "consensus_per_estimate": item.per_e,
+                    "consensus_pbr_estimate": item.pbr_e,
+                    "consensus_target_price": item.target_price,
+                    "consensus_target_multiple": item.target_multiple,
+                }
+            )
+            if consensus_fields:
+                mappings.append(
+                    claim_backed_parsed_fields(
+                        evidence_id=stable_consensus_evidence_id(
+                            symbol=item.symbol,
+                            estimate_date=item.date,
+                            fiscal_year=item.fiscal_year,
+                            source=item.source,
+                        ),
+                        symbol=item.symbol,
+                        as_of_date=inputs.as_of_date,
+                        parsed_fields=consensus_fields,
+                        archetype_id=inputs.canonical_archetype_id,
+                        subject=inputs.company_name or inputs.symbol,
+                        quote_text=f"consensus estimate from {item.source}",
+                        source_tier=2,
+                        confidence=0.85,
+                    )
+                )
+        for item in inputs.consensus_revisions:
+            revision_fields = _clean_parsed_field_mapping(
+                {
+                    **dict(item.parsed_fields),
+                    "consensus_eps_revision_1w": item.eps_revision_1w,
+                    "consensus_eps_revision_1m": item.eps_revision_1m,
+                    "consensus_eps_revision_3m": item.eps_revision_3m,
+                    "consensus_op_revision_1w": item.op_revision_1w,
+                    "consensus_op_revision_1m": item.op_revision_1m,
+                    "consensus_op_revision_3m": item.op_revision_3m,
+                    "consensus_fcf_revision_1m": item.fcf_revision_1m,
+                    "consensus_target_price_revision_1m": item.target_price_revision_1m,
+                    "consensus_analyst_count_change": item.analyst_count_change,
+                    "consensus_street_high_eps_revision_1m": item.street_high_eps_revision_1m,
+                    "consensus_street_low_eps_revision_1m": item.street_low_eps_revision_1m,
+                }
+            )
+            if revision_fields:
+                mappings.append(
+                    claim_backed_parsed_fields(
+                        evidence_id=stable_revision_evidence_id(
+                            symbol=item.symbol,
+                            estimate_date=item.date,
+                            fiscal_year=item.fiscal_year,
+                            source=item.source,
+                        ),
+                        symbol=item.symbol,
+                        as_of_date=inputs.as_of_date,
+                        parsed_fields=revision_fields,
+                        archetype_id=inputs.canonical_archetype_id,
+                        subject=inputs.company_name or inputs.symbol,
+                        quote_text=f"consensus revision from {item.source}",
+                        source_tier=2,
+                        confidence=0.85,
+                    )
+                )
+        for item in inputs.disclosures:
+            clean = _clean_parsed_field_mapping(item.parsed_fields)
+            if clean:
+                mappings.append(
+                    claim_backed_parsed_fields(
+                        evidence_id=f"disclosure:{item.symbol}:{item.published_at.date().isoformat()}:{item.report_type}",
+                        symbol=item.symbol,
+                        as_of_date=inputs.as_of_date,
+                        parsed_fields=clean,
+                        archetype_id=inputs.canonical_archetype_id,
+                        subject=inputs.company_name or inputs.symbol,
+                        quote_text=item.raw_text or item.title,
+                        source_tier=0,
+                        confidence=1.0,
+                    )
+                )
         for item in inputs.disclosures:
             text_parts.extend(part for part in (item.title, item.raw_text or "") if part)
         for report in inputs.research_reports:
@@ -2520,7 +2997,19 @@ class _ParsedFieldSource:
                 )
             clean_report_fields = _clean_parsed_field_mapping(report_fields)
             if clean_report_fields:
-                mappings.append(clean_report_fields)
+                mappings.append(
+                    claim_backed_parsed_fields(
+                        evidence_id=f"research:{report.symbol}:{report.publish_date.isoformat()}:{report.broker}",
+                        symbol=report.symbol,
+                        as_of_date=inputs.as_of_date,
+                        parsed_fields=clean_report_fields,
+                        archetype_id=inputs.canonical_archetype_id,
+                        subject=inputs.company_name or inputs.symbol,
+                        quote_text=report.raw_text or report.title,
+                        source_tier=2,
+                        confidence=0.85,
+                    )
+                )
             text_parts.extend(
                 part
                 for part in (
@@ -2531,7 +3020,23 @@ class _ParsedFieldSource:
                 )
                 if part
             )
-        mappings.extend(clean for item in inputs.news_items if (clean := _clean_parsed_field_mapping(item.parsed_fields)))
+        for item in inputs.news_items:
+            clean = _clean_parsed_field_mapping(item.parsed_fields)
+            if clean:
+                mappings.append(
+                    claim_backed_parsed_fields(
+                        evidence_id=_news_evidence_id(item, inputs.symbol),
+                        symbol=item.symbol or inputs.symbol,
+                        as_of_date=inputs.as_of_date,
+                        parsed_fields=clean,
+                        archetype_id=inputs.canonical_archetype_id,
+                        subject=inputs.company_name or inputs.symbol,
+                        quote_text=item.body or item.title,
+                        source_url=_news_source_url(item),
+                        source_tier=int(item.source_tier),
+                        confidence=0.75,
+                    )
+                )
         for item in inputs.news_items:
             text_parts.extend(part for part in (item.title, item.body or "", item.sector or "") if part)
         self._mappings = tuple(mappings)
@@ -2546,10 +3051,10 @@ class _ParsedFieldSource:
         return tuple(values)
 
     def max_number(self, *keys: str) -> float | None:
-        return _max_or_none(tuple(_to_float(value) for value in self.values(*keys)))
+        return self.max_number_for_scoring(*keys)
 
     def max_percent(self, *keys: str) -> float | None:
-        return _max_or_none(tuple(_percent_value(_to_float(value)) for value in self.values(*keys)))
+        return self.max_percent_for_scoring(*keys)
 
     def values_for_scoring(self, *keys: str) -> tuple[Any, ...]:
         values: list[Any] = []
@@ -2557,6 +3062,8 @@ class _ParsedFieldSource:
             if not self._mapping_score_eligible(mapping):
                 continue
             for key in keys:
+                if not _agent_field_key_score_eligible(mapping, key):
+                    continue
                 if key not in mapping or mapping[key] in (None, ""):
                     continue
                 value = mapping[key]
@@ -2582,13 +3089,15 @@ class _ParsedFieldSource:
             return False
         if mapping.get("consensus_proxy_score_eligible") is False:
             return False
+        if _is_agent_extracted_mapping(mapping) and not isinstance(mapping.get("compiled_claim_ids_by_primitive"), Mapping):
+            return False
         return True
 
     def any_bool(self, *keys: str) -> bool:
-        return any(_to_bool(value) for value in self.values(*keys))
+        return any(_to_bool(value) for value in self.values_for_scoring(*keys))
 
     def first_text(self, *keys: str) -> str | None:
-        for value in self.values(*keys):
+        for value in self.values_for_scoring(*keys):
             if value is not None and str(value).strip():
                 return str(value).strip()
         return None
@@ -2596,13 +3105,191 @@ class _ParsedFieldSource:
     def combined_fields(self) -> dict[str, Any]:
         combined: dict[str, Any] = {}
         for mapping in self._mappings:
+            if _is_agent_extracted_mapping(mapping) and not self._mapping_score_eligible(mapping):
+                continue
             for key, value in mapping.items():
+                if _is_agent_extracted_mapping(mapping) and (
+                    not _agent_field_key_score_eligible(mapping, str(key)) or not _agent_field_text_key_allowed(str(key))
+                ):
+                    continue
                 if value not in (None, "") and key not in combined:
                     combined[key] = value
         return combined
 
+    def claim_ids(self) -> tuple[str, ...]:
+        claim_ids: list[str] = []
+        for mapping in self._mappings:
+            raw_claims = mapping.get("compiled_claim_ids")
+            if isinstance(raw_claims, (list, tuple)):
+                claim_ids.extend(str(item) for item in raw_claims if str(item).strip())
+        return tuple(dict.fromkeys(claim_ids))
+
+    def claim_ids_by_primitive(self) -> Mapping[str, tuple[str, ...]]:
+        return self._claim_ids_by_primitive(score_eligible_only=False)
+
+    def score_claim_ids_by_primitive(self) -> Mapping[str, tuple[str, ...]]:
+        support = self.score_support_claim_ids_by_primitive()
+        if support:
+            return support
+        return self._claim_ids_by_primitive(score_eligible_only=True)
+
+    def support_claim_ids_by_primitive(self) -> Mapping[str, tuple[str, ...]]:
+        support = self._primitive_state_claim_ids_by_primitive(
+            state_key="support_claim_ids",
+            score_eligible_only=False,
+        )
+        if support:
+            return support
+        return self._claim_ids_by_primitive(score_eligible_only=False)
+
+    def score_support_claim_ids_by_primitive(self) -> Mapping[str, tuple[str, ...]]:
+        support = self._primitive_state_claim_ids_by_primitive(
+            state_key="support_claim_ids",
+            score_eligible_only=True,
+        )
+        if support:
+            return support
+        return self._claim_ids_by_primitive(score_eligible_only=True)
+
+    def counter_claim_ids_by_primitive(self) -> Mapping[str, tuple[str, ...]]:
+        return self._primitive_state_claim_ids_by_primitive(
+            state_key="counter_claim_ids",
+            score_eligible_only=False,
+        )
+
+    def score_counter_claim_ids_by_primitive(self) -> Mapping[str, tuple[str, ...]]:
+        return self._primitive_state_claim_ids_by_primitive(
+            state_key="counter_claim_ids",
+            score_eligible_only=True,
+        )
+
+    def _claim_ids_by_primitive(self, *, score_eligible_only: bool) -> Mapping[str, tuple[str, ...]]:
+        by_primitive: dict[str, list[str]] = {}
+        for mapping in self._mappings:
+            if score_eligible_only and not self._mapping_score_eligible(mapping):
+                continue
+            raw = mapping.get("compiled_claim_ids_by_primitive")
+            if not isinstance(raw, Mapping):
+                continue
+            for primitive, claim_ids in raw.items():
+                primitive_id = str(primitive).strip()
+                if not primitive_id:
+                    continue
+                values = claim_ids if isinstance(claim_ids, (list, tuple)) else (claim_ids,)
+                by_primitive.setdefault(primitive_id, []).extend(str(item) for item in values if str(item).strip())
+        _add_claim_primitive_aliases(by_primitive)
+        return {
+            primitive: tuple(dict.fromkeys(claim_ids))
+            for primitive, claim_ids in sorted(by_primitive.items())
+        }
+
+    def _primitive_state_claim_ids_by_primitive(
+        self,
+        *,
+        state_key: str,
+        score_eligible_only: bool,
+    ) -> Mapping[str, tuple[str, ...]]:
+        by_primitive: dict[str, list[str]] = {}
+        for mapping in self._mappings:
+            if score_eligible_only and not self._mapping_score_eligible(mapping):
+                continue
+            raw = mapping.get("compiled_primitive_states")
+            if not isinstance(raw, Mapping):
+                continue
+            for primitive, state in raw.items():
+                primitive_id = str(primitive).strip()
+                if not primitive_id or not isinstance(state, Mapping):
+                    continue
+                claim_ids = state.get(state_key)
+                if not isinstance(claim_ids, (list, tuple)):
+                    continue
+                by_primitive.setdefault(primitive_id, []).extend(
+                    str(item) for item in claim_ids if str(item).strip()
+                )
+        _add_claim_primitive_aliases(by_primitive)
+        return {
+            primitive: tuple(dict.fromkeys(claim_ids))
+            for primitive, claim_ids in sorted(by_primitive.items())
+        }
+
     def text_blob(self) -> str:
         return self._text
+
+
+_CLAIM_PRIMITIVE_ALIASES = {
+    "capacity_constraint": (
+        "capacity_precommitted",
+        "capa_constraint",
+        "capa_locked_years",
+        "capa_utilization_pct",
+        "datacenter_capacity_constraint",
+        "power_capacity_constraint",
+    ),
+    "lead_time_extended": (
+        "lead_time_months",
+    ),
+    "customer_contract": (
+        "customer_contract_visible",
+        "customer_supply_conversion",
+        "official_contract",
+        "revenue_visibility_contract",
+    ),
+}
+
+
+def _add_claim_primitive_aliases(by_primitive: dict[str, list[str]]) -> None:
+    for target, sources in _CLAIM_PRIMITIVE_ALIASES.items():
+        alias_claims: list[str] = []
+        for source in sources:
+            if source == target:
+                continue
+            alias_claims.extend(by_primitive.get(source, ()))
+        if alias_claims:
+            by_primitive.setdefault(target, []).extend(alias_claims)
+
+
+def _claim_ids_from_primitive_map(by_primitive: Mapping[str, tuple[str, ...]]) -> tuple[str, ...]:
+    return tuple(
+        dict.fromkeys(
+            claim_id
+            for claim_ids in by_primitive.values()
+            for claim_id in claim_ids
+            if str(claim_id).strip()
+        )
+    )
+
+
+def _score_support_claim_ids_by_primitive(fields: Any) -> Mapping[str, tuple[str, ...]]:
+    method = getattr(fields, "score_support_claim_ids_by_primitive", None)
+    if callable(method):
+        return method()
+    return fields.score_claim_ids_by_primitive()
+
+
+def _score_counter_claim_ids_by_primitive(fields: Any) -> Mapping[str, tuple[str, ...]]:
+    method = getattr(fields, "score_counter_claim_ids_by_primitive", None)
+    if callable(method):
+        return method()
+    return {}
+
+
+def _is_agent_extracted_mapping(mapping: Mapping[str, Any]) -> bool:
+    return _to_bool(mapping.get(_AGENT_EXTRACTED_FIELD_SOURCE_KEY))
+
+
+def _agent_field_text_key_allowed(key: str) -> bool:
+    return key not in _AGENT_FIELD_TEXT_EXCLUDE_KEYS and not key.startswith(_AGENT_FIELD_TEXT_EXCLUDE_PREFIXES)
+
+
+def _agent_field_key_score_eligible(mapping: Mapping[str, Any], key: str) -> bool:
+    if not _is_agent_extracted_mapping(mapping):
+        return True
+    raw = mapping.get("compiled_claim_ids_by_primitive")
+    if not isinstance(raw, Mapping) or not raw:
+        return False
+    if key in raw:
+        return True
+    return key in _AGENT_SCORE_ELIGIBLE_SYNTHETIC_KEYS
 
 
 def build_feature_input_from_connector(

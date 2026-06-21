@@ -34,6 +34,10 @@ def _case_identity(candidate: dict[str, Any] | None) -> dict[str, Any]:
     source_primitives = candidate.get("source_expected_runtime_primitives")
     if isinstance(source_primitives, list):
         identity["source_expected_runtime_primitives"] = list(source_primitives)
+    for key in ("source_canonical_archetype_id", "source_large_sector_id"):
+        value = candidate.get(key)
+        if value:
+            identity[key] = value
     return identity
 
 
@@ -81,6 +85,10 @@ def _spec_row(
     }
 
 
+def _is_stage3_green_candidate(candidate: dict[str, Any] | None) -> bool:
+    return str((candidate or {}).get("trigger_type") or "") == "Stage3-Green"
+
+
 def build_v12_runtime_replay_spec(
     *,
     fixture_payload: dict[str, Any],
@@ -96,30 +104,49 @@ def build_v12_runtime_replay_spec(
     rows: list[dict[str, Any]] = []
     skipped: list[dict[str, Any]] = []
     for archetype in fixture_payload.get("archetypes", []):
+        coverage_row = coverage.get(str(archetype.get("canonical_archetype_id")), {})
+        green = archetype.get("green_fixture_candidate")
+        guard = archetype.get("guard_fixture_candidate")
         if archetype.get("fixture_status") != "ready_for_runtime_replay_fixture":
             skipped.append(
                 {
                     "canonical_archetype_id": archetype.get("canonical_archetype_id"),
                     "fixture_status": archetype.get("fixture_status"),
+                    "included_roles": ["guard"] if guard else [],
                 }
             )
+            if guard:
+                rows.append(_spec_row(archetype_row=archetype, coverage_row=coverage_row, role="guard", candidate=guard))
             continue
-        coverage_row = coverage.get(str(archetype.get("canonical_archetype_id")), {})
-        green = archetype.get("green_fixture_candidate")
-        guard = archetype.get("guard_fixture_candidate")
-        if green:
+        if green and _is_stage3_green_candidate(green):
             rows.append(_spec_row(archetype_row=archetype, coverage_row=coverage_row, role="green", candidate=green))
+        elif green:
+            skipped.append(
+                {
+                    "canonical_archetype_id": archetype.get("canonical_archetype_id"),
+                    "fixture_status": archetype.get("fixture_status"),
+                    "included_roles": [],
+                    "skipped_green_candidate_trigger_type": green.get("trigger_type"),
+                    "skip_reason": "green_replay_role_requires_raw_stage3_green_trigger",
+                }
+            )
         if guard:
             rows.append(_spec_row(archetype_row=archetype, coverage_row=coverage_row, role="guard", candidate=guard))
 
     role_counts = Counter(row["role"] for row in rows)
     gap_counts = Counter(row["current_runtime_gap_status"] for row in rows)
+    ready_archetypes = {
+        row.get("canonical_archetype_id")
+        for row in fixture_payload.get("archetypes", [])
+        if row.get("fixture_status") == "ready_for_runtime_replay_fixture"
+    }
     return {
         "schema_version": "v12_runtime_replay_spec_manifest_v1",
         "spec_row_count": len(rows),
-        "ready_archetype_count": len({row["canonical_archetype_id"] for row in rows}),
+        "ready_archetype_count": len(ready_archetypes),
+        "covered_archetype_count": len({row["canonical_archetype_id"] for row in rows}),
         "role_counts": dict(sorted(role_counts.items())),
-        "current_runtime_gap_status_counts": dict(sorted(gap_counts.items())),
+        "current_runtime_gap_status_counts": dict(sorted(gap_counts.items(), key=lambda item: str(item[0]))),
         "skipped_archetypes": skipped,
         "rows": rows,
     }
@@ -137,6 +164,7 @@ def render_v12_runtime_replay_spec(payload: dict[str, Any]) -> str:
         "",
         f"- spec_row_count: `{payload.get('spec_row_count', 0)}`",
         f"- ready_archetype_count: `{payload.get('ready_archetype_count', 0)}`",
+        f"- covered_archetype_count: `{payload.get('covered_archetype_count', payload.get('ready_archetype_count', 0))}`",
         f"- role_counts: `{payload.get('role_counts', {})}`",
         f"- current_runtime_gap_status_counts: `{payload.get('current_runtime_gap_status_counts', {})}`",
         f"- skipped_archetypes: `{len(payload.get('skipped_archetypes', []))}`",

@@ -88,8 +88,57 @@ def diagnose_stage_gates(score: ScoreSnapshot, red_team: RedTeamAssessment) -> S
     theme_overheat_score = _diagnostic(score, "theme_overheat_score")
     snippet_only_green_block = _diagnostic(score, "snippet_only_green_block", invalid_default=1.0)
     archetype_green_restricted = _diagnostic(score, "archetype_green_restricted_by_profile", invalid_default=1.0)
+    evidence_contract_green_gate_required = _diagnostic(
+        score,
+        "evidence_contract_green_gate_required_primitive_count_capped",
+        invalid_default=0.0,
+    )
+    evidence_contract_green_gate_coverage = _diagnostic(score, "evidence_contract_green_gate_coverage_pct")
+    evidence_contract_green_gate_missing = _diagnostic(
+        score,
+        "evidence_contract_green_gate_missing_primitive_count_capped",
+    )
+    evidence_contract_green_gate_passed = (
+        evidence_contract_green_gate_required <= 0.0
+        or (
+            evidence_contract_green_gate_coverage >= 100.0
+            and evidence_contract_green_gate_missing <= 0.0
+        )
+    )
+    evidence_contract_guard_present_count = _diagnostic(
+        score,
+        "evidence_contract_guard_present_primitive_count_capped",
+    )
+    evidence_contract_guard_missing_count = _diagnostic(
+        score,
+        "evidence_contract_guard_missing_primitive_count_capped",
+    )
+    evidence_contract_guard_passed = (
+        evidence_contract_guard_present_count <= 0.0
+        and evidence_contract_guard_missing_count <= 0.0
+    )
+    claim_backed_gate_required = (
+        _diagnostic(score, "score_claim_backed_required") > 0.0
+        or _diagnostic(score, "source_backed_green_bridge_raw") > 0.0
+        or _diagnostic(score, "source_backed_deep_research_completed") > 0.0
+        or _diagnostic(score, "evidence_contract_required_primitive_count_capped") > 0.0
+        or _diagnostic(score, "evidence_contract_green_gate_required_primitive_count_capped") > 0.0
+    )
+    claim_backed_claim_count = _diagnostic(score, "claim_backed_claim_count_capped")
+    score_claim_backed_ratio = _diagnostic(score, "score_claim_backed_component_ratio", invalid_default=0.0)
+    orphan_score_component_count = _diagnostic(score, "orphan_score_component_count_capped", invalid_default=1.0)
+    claim_backed_green_passed = (
+        not claim_backed_gate_required
+        or (
+            claim_backed_claim_count > 0.0
+            and score_claim_backed_ratio >= 100.0
+            and orphan_score_component_count <= 0.0
+        )
+    )
     emerging_theme_active = _diagnostic(score, "emerging_theme_active", invalid_default=100.0)
     llm_deep_research_completed = _diagnostic(score, "llm_deep_research_completed")
+    source_backed_deep_research_completed = _diagnostic(score, "source_backed_deep_research_completed")
+    deep_research_completed = max(llm_deep_research_completed, source_backed_deep_research_completed)
     green_unlock_evidence_score = _diagnostic(score, "green_unlock_evidence_score")
     date_unverified_snippet_count = _diagnostic(
         score,
@@ -226,6 +275,34 @@ def diagnose_stage_gates(score: ScoreSnapshot, red_team: RedTeamAssessment) -> S
             0.0,
             archetype_green_restricted <= 0.0,
         ),
+        "failed_evidence_contract_positive_coverage": (
+            (
+                f"coverage={evidence_contract_green_gate_coverage}; "
+                f"missing={evidence_contract_green_gate_missing}; "
+                f"required={evidence_contract_green_gate_required}"
+            ),
+            "green gate coverage=100 and missing=0 when green_gate_primitives are configured",
+            evidence_contract_green_gate_passed,
+        ),
+        "failed_evidence_contract_guard_present": (
+            f"guard_present_count={evidence_contract_guard_present_count}",
+            "guard primitive present count=0",
+            evidence_contract_guard_present_count <= 0.0,
+        ),
+        "failed_evidence_contract_guard_unverified": (
+            f"guard_missing_count={evidence_contract_guard_missing_count}",
+            "guard primitive missing/unverified count=0",
+            evidence_contract_guard_missing_count <= 0.0,
+        ),
+        "failed_claim_backed_green_score": (
+            (
+                f"claim_count={claim_backed_claim_count}; "
+                f"component_ratio={score_claim_backed_ratio}; "
+                f"orphan_components={orphan_score_component_count}"
+            ),
+            "claim_count>0, score_claim_backed_component_ratio=100, orphan_score_component_count=0",
+            claim_backed_green_passed,
+        ),
         "failed_stage3_red_team": (
             red_team.risk_level.value,
             RedTeamRiskLevel.LOW.value,
@@ -257,9 +334,9 @@ def diagnose_stage_gates(score: ScoreSnapshot, red_team: RedTeamAssessment) -> S
     )
     if emerging_theme_active > 0:
         checks["failed_emerging_theme_deep_research"] = (
-            llm_deep_research_completed,
+            deep_research_completed,
             100.0,
-            llm_deep_research_completed >= 100.0,
+            deep_research_completed >= 100.0,
         )
         checks["failed_emerging_theme_green_unlock_evidence"] = (
             green_unlock_evidence_score,
@@ -305,6 +382,10 @@ def diagnose_stage_gates(score: ScoreSnapshot, red_team: RedTeamAssessment) -> S
         "failed_report_date_confidence",
         "failed_date_unverified_green_evidence",
         "failed_archetype_green_policy_restriction",
+        "failed_evidence_contract_positive_coverage",
+        "failed_evidence_contract_guard_present",
+        "failed_evidence_contract_guard_unverified",
+        "failed_claim_backed_green_score",
         "failed_stage3_one_off_shortage_risk",
         "failed_stage3_red_team",
         "failed_positive_stage_price_only_blowoff",

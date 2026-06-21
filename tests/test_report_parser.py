@@ -166,6 +166,26 @@ PF 익스포저 축소, 재무구조 개선, 현금 회수 가시성, 분양률 
         self.assertTrue(fields["restatement_risk"])
         self.assertTrue(fields["event_spread_risk"])
 
+    def test_mitigated_pf_liquidity_context_is_not_guard_risk(self):
+        text = """2021.05.27
+제목: 현대건설 C30 PF cash bridge
+PF 익스포저 축소, 재무구조 개선, 현금 회수 가시성이 확인된다.
+대형사 PF·유동성 리스크 상대 우위가 있고 분양률 가시성도 있다.
+"""
+        result = parse_research_report_text(
+            symbol="000720",
+            market=Market.KR,
+            text=text,
+            metadata={"publish_date": date(2021, 5, 27), "as_of_date": date(2021, 5, 27)},
+        )
+        fields = result.parsed_fields
+
+        self.assertTrue(fields["pf_exposure_reduced"])
+        self.assertTrue(fields["balance_sheet_repair"])
+        self.assertTrue(fields["cash_collection_visible"])
+        self.assertTrue(fields["occupancy_or_presale_visible"])
+        self.assertNotIn("liquidity_or_microcap_risk", fields)
+
     def test_target_revision_label_does_not_leak_next_line_date(self):
         text = """2024.05.16
 제목: 삼양식품 1Q24 Review 컨센서스 상회 목표주가 상향

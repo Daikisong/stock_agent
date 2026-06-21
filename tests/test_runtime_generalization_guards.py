@@ -6,10 +6,12 @@ from datetime import date
 from pathlib import Path
 from unittest.mock import patch
 
+from e2r.agentic import load_evidence_contracts
 from e2r.calibration.taxonomy import CANONICAL_ARCHETYPE_IDS, large_sector_for_archetype
 from e2r.features import DeterministicFeatureEngineer
 from e2r.models import Stage
 from e2r.red_team import RedTeamAssessment
+from e2r.score_validity import score_state_contract_violations
 from e2r.scoring import CANONICAL_SCORE_COMPONENTS, DeterministicScorer, ScoringPayload
 from e2r.sector_profiles import profile_for_archetype
 from e2r.stage_gate_diagnostics import diagnose_stage_gates
@@ -29,10 +31,23 @@ CORE_RUNTIME_FILES = (
     "src/e2r/research/web_research_runner.py",
     "src/e2r/pipeline/korea_live_lite.py",
 )
+RUNTIME_HARDCODE_SCAN_PATHS = (
+    "src/e2r/pipeline",
+    "src/e2r/research",
+    "src/e2r/agentic",
+    "src/e2r/backtest",
+    "src/e2r/archetype_classifier.py",
+    "src/e2r/sector_profiles.py",
+    "src/e2r/features.py",
+    "src/e2r/scoring.py",
+    "src/e2r/staging.py",
+    "src/e2r/stage_gate_diagnostics.py",
+    "src/e2r/score_validity.py",
+)
 
 
 class RuntimeGeneralizationGuardTests(unittest.TestCase):
-    def test_core_runtime_modules_do_not_hardcode_representative_winner_symbols(self) -> None:
+    def test_operational_runtime_modules_do_not_hardcode_representative_winner_symbols(self) -> None:
         forbidden_terms = (
             "000660",
             "005930",
@@ -44,7 +59,7 @@ class RuntimeGeneralizationGuardTests(unittest.TestCase):
         )
 
         offenders: list[str] = []
-        for relative_path in CORE_RUNTIME_FILES:
+        for relative_path in _runtime_hardcode_scan_files():
             text = (PROJECT_ROOT / relative_path).read_text(encoding="utf-8").lower()
             for term in forbidden_terms:
                 if term in text:
@@ -150,13 +165,30 @@ class RuntimeGeneralizationGuardTests(unittest.TestCase):
             "price_only_blowoff": {"price_only_blowoff_score": 80.0},
             "one_off_shortage": {"one_off_shortage_risk": 80.0},
             "revision_missing": {"revision_score": 0.0},
+            "evidence_contract_guard_present": {
+                "evidence_contract_guard_present_primitive_count_capped": 1.0,
+            },
+            "evidence_contract_guard_unverified": {
+                "evidence_contract_guard_required_primitive_count_capped": 1.0,
+                "evidence_contract_guard_missing_primitive_count_capped": 1.0,
+            },
+            "evidence_contract_green_gate_missing": {
+                "evidence_contract_green_gate_required_primitive_count_capped": 3.0,
+                "evidence_contract_green_gate_present_primitive_count_capped": 2.0,
+                "evidence_contract_green_gate_missing_primitive_count_capped": 1.0,
+                "evidence_contract_green_gate_coverage_pct": 66.6667,
+            },
         }
 
         with patch.dict("os.environ", {"E2R_SCORING_PROFILE": "rolling"}):
             for canonical_archetype_id in CANONICAL_ARCHETYPE_IDS:
                 for case_name, diagnostic_overrides in blocker_cases.items():
                     with self.subTest(canonical_archetype_id=canonical_archetype_id, case_name=case_name):
-                        score = _clean_green_score_for_archetype(canonical_archetype_id, diagnostic_overrides)
+                        score = _clean_green_score_for_archetype(
+                            canonical_archetype_id,
+                            diagnostic_overrides,
+                            claim_backed_components=case_name == "evidence_contract_green_gate_missing",
+                        )
                         red_team = RedTeamAssessment.empty(score.symbol, score.as_of_date)
                         stage = StageClassifier().classify(StageClassificationInput(score=score, red_team=red_team))
                         diagnostics = diagnose_stage_gates(score, red_team)
@@ -171,6 +203,184 @@ class RuntimeGeneralizationGuardTests(unittest.TestCase):
                         ):
                             self.assertEqual(stage.stage, Stage.STAGE_3_GREEN)
                             self.assertTrue(diagnostics.stage3_green_gate_passed)
+                        if case_name == "evidence_contract_guard_present":
+                            self.assertNotEqual(stage.stage, Stage.STAGE_3_GREEN)
+                            self.assertIn(
+                                "failed_evidence_contract_guard_present",
+                                diagnostics.failed_gate_names,
+                            )
+                        if case_name == "evidence_contract_guard_unverified":
+                            self.assertNotEqual(stage.stage, Stage.STAGE_3_GREEN)
+                            self.assertIn(
+                                "failed_evidence_contract_guard_unverified",
+                                diagnostics.failed_gate_names,
+                            )
+                        if case_name == "evidence_contract_green_gate_missing":
+                            self.assertNotEqual(stage.stage, Stage.STAGE_3_GREEN)
+                            self.assertIn(
+                                "failed_evidence_contract_positive_coverage",
+                                diagnostics.failed_gate_names,
+                            )
+
+    def test_guard_cleared_does_not_make_guard_archetypes_permanently_yellow(self) -> None:
+        guard_contracts = {
+            archetype_id: contract
+            for archetype_id, contract in load_evidence_contracts().items()
+            if contract.guard_primitives
+        }
+
+        self.assertEqual(len(guard_contracts), 20)
+        with patch.dict("os.environ", {"E2R_SCORING_PROFILE": "rolling"}):
+            for canonical_archetype_id, contract in guard_contracts.items():
+                with self.subTest(canonical_archetype_id=canonical_archetype_id):
+                    clean_score = _clean_green_score_for_archetype(canonical_archetype_id)
+                    clean_stage = StageClassifier().classify(
+                        StageClassificationInput(
+                            score=clean_score,
+                            red_team=RedTeamAssessment.empty(clean_score.symbol, clean_score.as_of_date),
+                        )
+                    )
+                    guard_count = float(len(contract.guard_primitives))
+                    cleared_score = _clean_green_score_for_archetype(
+                        canonical_archetype_id,
+                        {
+                            "evidence_contract_guard_required_primitive_count_capped": guard_count,
+                            "evidence_contract_guard_present_primitive_count_capped": 0.0,
+                            "evidence_contract_guard_cleared_primitive_count_capped": guard_count,
+                            "evidence_contract_guard_missing_primitive_count_capped": 0.0,
+                        },
+                    )
+                    red_team = RedTeamAssessment.empty(cleared_score.symbol, cleared_score.as_of_date)
+                    cleared_stage = StageClassifier().classify(
+                        StageClassificationInput(score=cleared_score, red_team=red_team)
+                    )
+                    diagnostics = diagnose_stage_gates(cleared_score, red_team)
+
+                    self.assertNotIn("failed_evidence_contract_guard_present", diagnostics.failed_gate_names)
+                    self.assertNotIn("failed_evidence_contract_guard_unverified", diagnostics.failed_gate_names)
+                    if clean_stage.stage == Stage.STAGE_3_GREEN:
+                        self.assertEqual(cleared_stage.stage, Stage.STAGE_3_GREEN)
+
+    def test_claim_ledger_output_contract_applies_to_every_archetype(self) -> None:
+        for canonical_archetype_id in CANONICAL_ARCHETYPE_IDS:
+            with self.subTest(canonical_archetype_id=canonical_archetype_id):
+                row = _complete_claim_ledger_score_row(canonical_archetype_id)
+
+                self.assertNotIn(
+                    "valid_high_confidence_claim_ledger_ids_missing",
+                    score_state_contract_violations(row),
+                )
+                self.assertNotIn(
+                    "valid_high_confidence_score_contribution_claim_ids_unknown",
+                    score_state_contract_violations(row),
+                )
+                self.assertIn(
+                    "valid_high_confidence_claim_ledger_ids_missing",
+                    score_state_contract_violations({**row, "claim_ledger_claim_ids": ()}),
+                )
+                self.assertIn(
+                    "valid_high_confidence_score_contribution_claim_ids_unknown",
+                    score_state_contract_violations({**row, "claim_ledger_claim_ids": ("CLM-only-one-known",)}),
+                )
+                ledger_with_unknown_ref = {
+                    **row,
+                    "score_contribution_ledger": [
+                        (
+                            {**item, "support_claim_ids": ("CLM-ledger-ref-not-in-claim-ledger",)}
+                            if index == 0
+                            else dict(item)
+                        )
+                        for index, item in enumerate(row["score_contribution_ledger"])
+                    ],
+                }
+                self.assertIn(
+                    "valid_high_confidence_score_contribution_claim_ids_unknown",
+                    score_state_contract_violations(ledger_with_unknown_ref),
+                )
+
+    def test_source_backed_orphan_score_is_invalid_for_every_archetype(self) -> None:
+        diagnostics = {
+            "source_backed_green_bridge_raw": 95.0,
+            "claim_backed_claim_count_capped": 100.0,
+            "cross_evidence_family_count": 4.0,
+            "report_date_confidence": 100.0,
+            "date_unverified_snippet_news_count_capped": 0.0,
+            "date_unverified_document_count_capped": 0.0,
+            "actual_profit_conversion_score": 90.0,
+            "medium_term_revision_visibility": 90.0,
+            "structural_visibility_quality": 95.0,
+            "domain_specific_evidence_score": 95.0,
+            "research_axis_bridge_present_count_capped": 6.0,
+        }
+
+        with patch.dict("os.environ", {"E2R_SCORING_PROFILE": "rolling"}):
+            for canonical_archetype_id in CANONICAL_ARCHETYPE_IDS:
+                with self.subTest(canonical_archetype_id=canonical_archetype_id):
+                    score = DeterministicScorer().score(
+                        ScoringPayload(
+                            symbol="SOURCE_BACKED_ORPHAN_CASE",
+                            as_of_date=date(2026, 5, 14),
+                            components={component.key: component.max_points for component in CANONICAL_SCORE_COMPONENTS},
+                            diagnostic_scores=diagnostics,
+                            large_sector_id=large_sector_for_archetype(canonical_archetype_id),
+                            canonical_archetype_id=canonical_archetype_id,
+                        )
+                    )
+
+                    self.assertEqual(score.total_score, 0.0)
+                    self.assertEqual(score.diagnostic_scores["score_valid"], 0.0)
+                    self.assertEqual(score.diagnostic_scores["score_claim_backed_required"], 100.0)
+                    self.assertEqual(score.diagnostic_scores["score_blocked_by_orphan_score_contribution"], 100.0)
+                    self.assertEqual(score.diagnostic_scores["score_claim_backed_component_ratio"], 0.0)
+                    self.assertGreater(score.diagnostic_scores["orphan_score_component_count_capped"], 0.0)
+                    self.assertNotIn("source_backed_green_total_floor_applied", score.diagnostic_scores)
+                    self.assertTrue(all(item.raw_points == 0.0 for item in score.score_contribution_ledger))
+
+    def test_source_backed_full_claim_score_remains_valid_for_every_archetype(self) -> None:
+        components = {component.key: component.max_points for component in CANONICAL_SCORE_COMPONENTS}
+        claim_ids = {key: (f"CLM-FULL-{key}",) for key in components}
+        diagnostics = {
+            "source_backed_green_bridge_raw": 95.0,
+            "claim_backed_claim_count_capped": 100.0,
+            "cross_evidence_family_count": 4.0,
+            "report_date_confidence": 100.0,
+            "date_unverified_snippet_news_count_capped": 0.0,
+            "date_unverified_document_count_capped": 0.0,
+            "actual_profit_conversion_score": 90.0,
+            "medium_term_revision_visibility": 90.0,
+            "structural_visibility_quality": 95.0,
+            "domain_specific_evidence_score": 95.0,
+            "research_axis_bridge_present_count_capped": 6.0,
+        }
+
+        with patch.dict("os.environ", {"E2R_SCORING_PROFILE": "rolling"}):
+            for canonical_archetype_id in CANONICAL_ARCHETYPE_IDS:
+                with self.subTest(canonical_archetype_id=canonical_archetype_id):
+                    score = DeterministicScorer().score(
+                        ScoringPayload(
+                            symbol="SOURCE_BACKED_FULL_CLAIM_CASE",
+                            as_of_date=date(2026, 5, 14),
+                            components=components,
+                            diagnostic_scores=diagnostics,
+                            score_contribution_claim_ids=claim_ids,
+                            large_sector_id=large_sector_for_archetype(canonical_archetype_id),
+                            canonical_archetype_id=canonical_archetype_id,
+                        )
+                    )
+
+                    self.assertGreater(score.total_score, 0.0)
+                    self.assertEqual(score.diagnostic_scores["score_valid"], 100.0)
+                    self.assertEqual(score.diagnostic_scores["score_claim_backed_required"], 100.0)
+                    self.assertNotIn("score_blocked_by_orphan_score_contribution", score.diagnostic_scores)
+                    self.assertEqual(score.diagnostic_scores["score_claim_backed_component_ratio"], 100.0)
+                    self.assertEqual(score.diagnostic_scores["orphan_score_component_count_capped"], 0.0)
+                    self.assertEqual(set(score.score_contribution_claim_ids), set(components))
+                    self.assertTrue(
+                        all(
+                            item.raw_points > 0.0 and item.support_claim_ids and item.cap_reason is None
+                            for item in score.score_contribution_ledger
+                        )
+                    )
 
     def test_research_fixture_green_primitives_promote_without_symbol_special_case(self) -> None:
         fixture_archetypes = (
@@ -359,6 +569,8 @@ class RuntimeGeneralizationGuardTests(unittest.TestCase):
 def _clean_green_score_for_archetype(
     canonical_archetype_id: str,
     diagnostic_overrides: dict[str, object] | None = None,
+    *,
+    claim_backed_components: bool = False,
 ):
     diagnostics = {
         "revision_score": 100.0,
@@ -387,10 +599,58 @@ def _clean_green_score_for_archetype(
             as_of_date=date(2026, 5, 14),
             components={component.key: component.max_points for component in CANONICAL_SCORE_COMPONENTS},
             diagnostic_scores=diagnostics,
+            score_contribution_claim_ids=(
+                {component.key: (f"CLM-{component.key}",) for component in CANONICAL_SCORE_COMPONENTS}
+                if claim_backed_components
+                else {}
+            ),
             large_sector_id=large_sector_for_archetype(canonical_archetype_id),
             canonical_archetype_id=canonical_archetype_id,
         )
     )
+
+
+def _complete_claim_ledger_score_row(canonical_archetype_id: str) -> dict[str, object]:
+    component_claims = {
+        component.key: (f"CLM-{canonical_archetype_id}-{component.key}",)
+        for component in CANONICAL_SCORE_COMPONENTS
+    }
+    claim_ids = tuple(claim_id for claim_group in component_claims.values() for claim_id in claim_group)
+    return {
+        "symbol": "GENERALIZATION_CASE",
+        "as_of_date": "2026-05-14",
+        "stage": "3-Green",
+        "visible_score": 92.0,
+        "score_valid": True,
+        "canonical_archetype_id": canonical_archetype_id,
+        "evidence_contract_required_primitive_count": 1,
+        "claim_backed_claim_count": float(len(claim_ids)),
+        "score_claim_backed_component_ratio": 100.0,
+        "orphan_score_component_count": 0.0,
+        "claim_ledger_claim_ids": claim_ids,
+        "score_contribution_claim_ids": component_claims,
+        "score_contribution_ledger": [
+            {
+                "component_key": component.key,
+                "raw_points": component.max_points,
+                "max_points": component.max_points,
+                "support_claim_ids": list(component_claims[component.key]),
+            }
+            for component in CANONICAL_SCORE_COMPONENTS
+        ],
+        **{f"{component.key}_score": component.max_points for component in CANONICAL_SCORE_COMPONENTS},
+    }
+
+
+def _runtime_hardcode_scan_files() -> tuple[str, ...]:
+    files: list[str] = []
+    for relative_path in RUNTIME_HARDCODE_SCAN_PATHS:
+        path = PROJECT_ROOT / relative_path
+        if path.is_file():
+            files.append(relative_path)
+            continue
+        files.extend(str(item.relative_to(PROJECT_ROOT)) for item in sorted(path.rglob("*.py")))
+    return tuple(dict.fromkeys(files))
 
 
 def _green_runtime_fixture(canonical_archetype_id: str) -> dict[str, object]:

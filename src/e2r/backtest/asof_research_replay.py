@@ -33,7 +33,7 @@ from e2r.cheap_scan import KoreaCheapScanConfig, KoreaCheapScanner
 from e2r.cheap_scan.models import CheapScanCandidate, RecommendedNextLayer
 from e2r.llm import build_default_codex_theme_route_provider, build_theme_route_provider_from_env
 from e2r.llm.theme_provider import ThemeRouteProvider
-from e2r.models import Instrument, Market, Stage
+from e2r.models import Instrument, Market, ScoreContribution, Stage
 from e2r.research.asof_web_research import (
     AsOfDateFilteredSearchProvider,
     AsOfWebResearchConfig,
@@ -157,6 +157,8 @@ class AsOfReplayCandidate:
     evidence_types_seen: tuple[str, ...]
     reason_codes: tuple[str, ...]
     candidate_source_path: str
+    large_sector_id: str | None = None
+    canonical_archetype_id: str | None = None
     date_verified_documents: int = 0
     date_unverified_documents: int = 0
     rejected_future_documents: int = 0
@@ -176,6 +178,49 @@ class AsOfReplayCandidate:
     web_only_score_variability_drivers: tuple[str, ...] = field(default_factory=tuple)
     promotion_delta: str = "none"
     promotion_band: str = "Stage 1"
+    score_source_mode: str = "operational_merged"
+    runtime_fixture_injected: bool = False
+    runtime_fixture_evidence_count: int = 0
+    merged_evidence_count: int = 0
+    eps_fcf_explosion_score: float | None = None
+    earnings_visibility_score: float | None = None
+    bottleneck_pricing_score: float | None = None
+    market_mispricing_score: float | None = None
+    valuation_rerating_score: float | None = None
+    capital_allocation_score: float | None = None
+    information_confidence_score: float | None = None
+    risk_penalty: float | None = None
+    claim_backed_claim_count: float | None = None
+    claim_backed_primitive_count: float | None = None
+    score_claim_backed_component_count: float | None = None
+    orphan_score_component_count: float | None = None
+    score_claim_backed_component_ratio: float | None = None
+    claim_ledger_claim_ids: tuple[str, ...] = field(default_factory=tuple)
+    claim_ledger_claim_ids_by_primitive: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
+    score_contribution_claim_ids: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
+    score_contribution_ledger: tuple[ScoreContribution, ...] = field(default_factory=tuple)
+    source_backed_green_bridge_raw: float | None = None
+    evidence_contract_required_primitive_count: float | None = None
+    evidence_contract_present_primitive_count: float | None = None
+    evidence_contract_missing_primitive_count: float | None = None
+    evidence_contract_coverage_pct: float | None = None
+    evidence_contract_positive_coverage_pct: float | None = None
+    evidence_contract_positive_missing_primitive_count: float | None = None
+    evidence_contract_green_gate_coverage_pct: float | None = None
+    evidence_contract_green_gate_missing_primitive_count: float | None = None
+    evidence_contract_guard_present_primitive_count: float | None = None
+    evidence_contract_guard_cleared_primitive_count: float | None = None
+    evidence_contract_guard_missing_primitive_count: float | None = None
+    evidence_contract_missing_primitives: str | None = None
+    evidence_contract_positive_missing_primitives: str | None = None
+    evidence_contract_green_gate_primitives: str | None = None
+    evidence_contract_green_gate_missing_primitives: str | None = None
+    evidence_contract_guard_primitives: str | None = None
+    evidence_contract_guard_present_primitives: str | None = None
+    evidence_contract_guard_cleared_primitives: str | None = None
+    evidence_contract_guard_missing_primitives: str | None = None
+    evidence_contract_required_primitives: str | None = None
+    evidence_contract_required_bridge_axes: str | None = None
 
 
 @dataclass(frozen=True)
@@ -308,7 +353,12 @@ class AsOfResearchReplay:
             search_store=search_store,
             instruments=tuple(item for item in snapshot_universe if item.symbol in replay_universe_symbols),
         )
-        fixture_candidates = fixture_store.candidates(market=config.market, as_of_date=replay_date)
+        active_replay_symbols = {item.symbol for item in (*cheap_scan.candidates, *radar_candidates)}
+        fixture_candidates = fixture_store.candidates(
+            market=config.market,
+            as_of_date=replay_date,
+            carry_forward_symbols=tuple(active_replay_symbols),
+        )
         layer1 = tuple(
             item
             for item in _merge_candidates(cheap_scan.candidates, radar_candidates, fixture_candidates)
@@ -329,10 +379,12 @@ class AsOfResearchReplay:
                     symbol=candidate.symbol,
                     company_name=candidate.company_name,
                 )
+                base_feature_input = build_asof_evidence_bundle(candidate=candidate, store=store).feature_input()
                 web_result = AsOfWebResearchRunner().run(
                     candidate=candidate,
                     search_provider=provider,
                     fixture_text_by_url=fixture_text,
+                    base_feature_input=base_feature_input,
                     config=AsOfWebResearchConfig(
                         as_of_date=replay_date,
                         max_queries_per_candidate=config.max_queries_per_candidate,
@@ -486,7 +538,10 @@ def _merge_candidates(*groups: Sequence[CheapScanCandidate]) -> tuple[CheapScanC
     by_symbol: dict[tuple[object, ...], CheapScanCandidate] = {}
     for group in groups:
         for item in group:
-            by_symbol.setdefault(_candidate_merge_key(item), item)
+            key = _candidate_merge_key(item)
+            existing = by_symbol.get(key)
+            if existing is None or _candidate_rank(item) > _candidate_rank(existing):
+                by_symbol[key] = item
     return tuple(by_symbol.values())
 
 
@@ -500,6 +555,21 @@ def _candidate_merge_key(candidate: CheapScanCandidate) -> tuple[object, ...]:
             candidate.evidence_ids,
         )
     return ("symbol", candidate.symbol)
+
+
+def _candidate_rank(candidate: CheapScanCandidate) -> tuple[int, float, int]:
+    layer_rank = {
+        RecommendedNextLayer.NONE: 0,
+        RecommendedNextLayer.EVENT_SEARCH: 1,
+        RecommendedNextLayer.DEEP_RESEARCH: 2,
+    }.get(candidate.recommended_next_layer, 0)
+    source_rank = {
+        "official_cheap_scan": 0,
+        "top_trading_value_probe": 0,
+        "targeted_smoke": 1,
+        "report_radar": 2,
+    }.get(candidate.candidate_source_path, 0)
+    return (layer_rank, float(candidate.cheap_scan_total_score), source_rank)
 
 
 def _candidate_row(
@@ -538,10 +608,18 @@ def _candidate_row(
         if pipeline is not None
         else None
     )
+    runtime_fixture_evidence_count = _runtime_fixture_evidence_count(merged_scoring.bundle.evidence)
+    runtime_fixture_injected = (
+        candidate.candidate_source_path == "runtime_fixture_spec"
+        or runtime_fixture_evidence_count > 0
+        or any(_runtime_fixture_report(report) for report in merged_scoring.bundle.research_reports)
+    )
     return AsOfReplayCandidate(
         symbol=candidate.symbol,
         company_name=candidate.company_name,
         as_of_date=candidate.as_of_date,
+        large_sector_id=merged_scoring.feature_result.payload.large_sector_id,
+        canonical_archetype_id=merged_scoring.feature_result.payload.canonical_archetype_id,
         layer=candidate.recommended_next_layer.value,
         stage=merged_stage,
         rank=rank,
@@ -582,7 +660,188 @@ def _candidate_row(
         else (),
         promotion_delta=_promotion_delta(web_only_stage, merged_stage),
         promotion_band=promotion_band(merged_scoring.score, merged_stage),
+        score_source_mode="runtime_fixture_injected" if runtime_fixture_injected else "operational_merged",
+        runtime_fixture_injected=runtime_fixture_injected,
+        runtime_fixture_evidence_count=runtime_fixture_evidence_count,
+        merged_evidence_count=len(merged_scoring.bundle.evidence),
+        eps_fcf_explosion_score=merged_scoring.score.eps_fcf_explosion_score,
+        earnings_visibility_score=merged_scoring.score.earnings_visibility_score,
+        bottleneck_pricing_score=merged_scoring.score.bottleneck_pricing_score,
+        market_mispricing_score=merged_scoring.score.market_mispricing_score,
+        valuation_rerating_score=merged_scoring.score.valuation_rerating_score,
+        capital_allocation_score=merged_scoring.score.capital_allocation_score,
+        information_confidence_score=merged_scoring.score.information_confidence_score,
+        risk_penalty=merged_scoring.score.risk_penalty,
+        claim_backed_claim_count=_diagnostic_score(merged_scoring.score, "claim_backed_claim_count_capped"),
+        claim_backed_primitive_count=_diagnostic_score(merged_scoring.score, "claim_backed_primitive_count_capped"),
+        score_claim_backed_component_count=_diagnostic_score(
+            merged_scoring.score,
+            "score_claim_backed_component_count_capped",
+        ),
+        orphan_score_component_count=_diagnostic_score(merged_scoring.score, "orphan_score_component_count_capped"),
+        score_claim_backed_component_ratio=_diagnostic_score(
+            merged_scoring.score,
+            "score_claim_backed_component_ratio",
+        ),
+        claim_ledger_claim_ids=_source_field_claim_ids(merged_scoring.feature_result, "claim_ledger_score_eligible_claim_ids"),
+        claim_ledger_claim_ids_by_primitive=_source_field_claim_ids_by_primitive(
+            merged_scoring.feature_result,
+            "claim_ledger_claim_ids_by_primitive",
+        ),
+        score_contribution_claim_ids=merged_scoring.score.score_contribution_claim_ids,
+        score_contribution_ledger=merged_scoring.score.score_contribution_ledger,
+        source_backed_green_bridge_raw=_diagnostic_score(merged_scoring.score, "source_backed_green_bridge_raw"),
+        evidence_contract_required_primitive_count=_diagnostic_score(
+            merged_scoring.score,
+            "evidence_contract_required_primitive_count_capped",
+        ),
+        evidence_contract_present_primitive_count=_diagnostic_score(
+            merged_scoring.score,
+            "evidence_contract_present_primitive_count_capped",
+        ),
+        evidence_contract_missing_primitive_count=_diagnostic_score(
+            merged_scoring.score,
+            "evidence_contract_missing_primitive_count_capped",
+        ),
+        evidence_contract_coverage_pct=_diagnostic_score(merged_scoring.score, "evidence_contract_coverage_pct"),
+        evidence_contract_positive_coverage_pct=_diagnostic_score(
+            merged_scoring.score,
+            "evidence_contract_positive_coverage_pct",
+        ),
+        evidence_contract_positive_missing_primitive_count=_diagnostic_score(
+            merged_scoring.score,
+            "evidence_contract_positive_missing_primitive_count_capped",
+        ),
+        evidence_contract_green_gate_coverage_pct=_diagnostic_score(
+            merged_scoring.score,
+            "evidence_contract_green_gate_coverage_pct",
+        ),
+        evidence_contract_green_gate_missing_primitive_count=_diagnostic_score(
+            merged_scoring.score,
+            "evidence_contract_green_gate_missing_primitive_count_capped",
+        ),
+        evidence_contract_guard_present_primitive_count=_diagnostic_score(
+            merged_scoring.score,
+            "evidence_contract_guard_present_primitive_count_capped",
+        ),
+        evidence_contract_guard_cleared_primitive_count=_diagnostic_score(
+            merged_scoring.score,
+            "evidence_contract_guard_cleared_primitive_count_capped",
+        ),
+        evidence_contract_guard_missing_primitive_count=_diagnostic_score(
+            merged_scoring.score,
+            "evidence_contract_guard_missing_primitive_count_capped",
+        ),
+        evidence_contract_missing_primitives=_source_field_text(
+            merged_scoring.feature_result,
+            "evidence_contract_missing_primitives",
+        ),
+        evidence_contract_positive_missing_primitives=_source_field_text(
+            merged_scoring.feature_result,
+            "evidence_contract_positive_missing_primitives",
+        ),
+        evidence_contract_green_gate_primitives=_source_field_text(
+            merged_scoring.feature_result,
+            "evidence_contract_green_gate_primitives",
+        ),
+        evidence_contract_green_gate_missing_primitives=_source_field_text(
+            merged_scoring.feature_result,
+            "evidence_contract_green_gate_missing_primitives",
+        ),
+        evidence_contract_guard_primitives=_source_field_text(
+            merged_scoring.feature_result,
+            "evidence_contract_guard_primitives",
+        ),
+        evidence_contract_guard_present_primitives=_source_field_text(
+            merged_scoring.feature_result,
+            "evidence_contract_guard_present_primitives",
+        ),
+        evidence_contract_guard_cleared_primitives=_source_field_text(
+            merged_scoring.feature_result,
+            "evidence_contract_guard_cleared_primitives",
+        ),
+        evidence_contract_guard_missing_primitives=_source_field_text(
+            merged_scoring.feature_result,
+            "evidence_contract_guard_missing_primitives",
+        ),
+        evidence_contract_required_primitives=_source_field_text(
+            merged_scoring.feature_result,
+            "evidence_contract_required_primitives",
+        ),
+        evidence_contract_required_bridge_axes=_source_field_text(
+            merged_scoring.feature_result,
+            "evidence_contract_required_bridge_axes",
+        ),
     )
+
+
+def _diagnostic_score(score: Any, key: str) -> float | None:
+    diagnostics = getattr(score, "diagnostic_scores", None)
+    if not isinstance(diagnostics, Mapping) or key not in diagnostics:
+        return None
+    try:
+        return float(diagnostics[key])
+    except (TypeError, ValueError):
+        return None
+
+
+def _source_field_text(feature_result: Any, key: str) -> str | None:
+    source_fields = getattr(feature_result, "source_fields", None)
+    if not isinstance(source_fields, Mapping):
+        return None
+    value = source_fields.get(key)
+    if value in (None, ""):
+        return None
+    return str(value)
+
+
+def _source_field_claim_ids(feature_result: Any, key: str) -> tuple[str, ...]:
+    value = _source_field_text(feature_result, key)
+    if not value:
+        return ()
+    try:
+        parsed = json.loads(value)
+    except json.JSONDecodeError:
+        parsed = None
+    if isinstance(parsed, list):
+        values = parsed
+    else:
+        values = value.split(",")
+    return tuple(dict.fromkeys(str(item).strip() for item in values if str(item).strip()))
+
+
+def _source_field_claim_ids_by_primitive(feature_result: Any, key: str) -> Mapping[str, tuple[str, ...]]:
+    value = _source_field_text(feature_result, key)
+    if not value:
+        return {}
+    try:
+        parsed = json.loads(value)
+    except json.JSONDecodeError:
+        return {}
+    if not isinstance(parsed, Mapping):
+        return {}
+    result: dict[str, tuple[str, ...]] = {}
+    for primitive, raw_claims in parsed.items():
+        primitive_id = str(primitive).strip()
+        if not primitive_id:
+            continue
+        values = raw_claims if isinstance(raw_claims, (list, tuple)) else (raw_claims,)
+        claims = tuple(dict.fromkeys(str(item).strip() for item in values if str(item).strip()))
+        if claims:
+            result[primitive_id] = claims
+    return result
+
+
+def _runtime_fixture_evidence_count(evidence: Sequence[Any]) -> int:
+    return sum(1 for item in evidence if _runtime_fixture_fields(getattr(item, "parsed_fields", {})))
+
+
+def _runtime_fixture_report(report: Any) -> bool:
+    return _runtime_fixture_fields(getattr(report, "parsed_fields", {}))
+
+
+def _runtime_fixture_fields(fields: Any) -> bool:
+    return isinstance(fields, Mapping) and bool(fields.get("runtime_fixture_source_backed"))
 
 
 def _normalized_bundle_counts(counts: Mapping[str, int]) -> Mapping[str, int]:
@@ -960,9 +1219,12 @@ def _write_candidates(csv_path: Path, json_path: Path, rows: Sequence[AsOfReplay
                 "symbol",
                 "company_name",
                 "as_of_date",
+                "large_sector_id",
+                "canonical_archetype_id",
                 "layer",
                 "stage",
                 "rank",
+                "reason_codes",
                 "score",
                 "visible_score",
                 "candidate_source_path",
@@ -985,6 +1247,49 @@ def _write_candidates(csv_path: Path, json_path: Path, rows: Sequence[AsOfReplay
                 "web_only_score_variability_drivers",
                 "promotion_delta",
                 "promotion_band",
+                "score_source_mode",
+                "runtime_fixture_injected",
+                "runtime_fixture_evidence_count",
+                "merged_evidence_count",
+                "eps_fcf_explosion_score",
+                "earnings_visibility_score",
+                "bottleneck_pricing_score",
+                "market_mispricing_score",
+                "valuation_rerating_score",
+                "capital_allocation_score",
+                "information_confidence_score",
+                "risk_penalty",
+                "claim_backed_claim_count",
+                "claim_backed_primitive_count",
+                "score_claim_backed_component_count",
+                "orphan_score_component_count",
+                "score_claim_backed_component_ratio",
+                "claim_ledger_claim_ids",
+                "claim_ledger_claim_ids_by_primitive",
+                "score_contribution_claim_ids",
+                "score_contribution_ledger",
+                "source_backed_green_bridge_raw",
+                "evidence_contract_required_primitive_count",
+                "evidence_contract_present_primitive_count",
+                "evidence_contract_missing_primitive_count",
+                "evidence_contract_coverage_pct",
+                "evidence_contract_positive_coverage_pct",
+                "evidence_contract_positive_missing_primitive_count",
+                "evidence_contract_green_gate_coverage_pct",
+                "evidence_contract_green_gate_missing_primitive_count",
+                "evidence_contract_guard_present_primitive_count",
+                "evidence_contract_guard_cleared_primitive_count",
+                "evidence_contract_guard_missing_primitive_count",
+                "evidence_contract_missing_primitives",
+                "evidence_contract_positive_missing_primitives",
+                "evidence_contract_green_gate_primitives",
+                "evidence_contract_green_gate_missing_primitives",
+                "evidence_contract_guard_primitives",
+                "evidence_contract_guard_present_primitives",
+                "evidence_contract_guard_cleared_primitives",
+                "evidence_contract_guard_missing_primitives",
+                "evidence_contract_required_primitives",
+                "evidence_contract_required_bridge_axes",
             ),
         )
         writer.writeheader()
@@ -1017,9 +1322,12 @@ def _write_candidates(csv_path: Path, json_path: Path, rows: Sequence[AsOfReplay
                     "symbol": item.symbol,
                     "company_name": item.company_name,
                     "as_of_date": item.as_of_date.isoformat(),
+                    "large_sector_id": item.large_sector_id or "",
+                    "canonical_archetype_id": item.canonical_archetype_id or "",
                     "layer": item.layer,
                     "stage": item.stage.value,
                     "rank": item.rank,
+                    "reason_codes": "|".join(item.reason_codes),
                     "score": score if score is not None else "",
                     "visible_score": visible_score if visible_score is not None else "",
                     "candidate_source_path": item.candidate_source_path,
@@ -1042,6 +1350,49 @@ def _write_candidates(csv_path: Path, json_path: Path, rows: Sequence[AsOfReplay
                     "web_only_score_variability_drivers": "|".join(item.web_only_score_variability_drivers),
                     "promotion_delta": item.promotion_delta,
                     "promotion_band": item.promotion_band,
+                    "score_source_mode": item.score_source_mode,
+                    "runtime_fixture_injected": item.runtime_fixture_injected,
+                    "runtime_fixture_evidence_count": item.runtime_fixture_evidence_count,
+                    "merged_evidence_count": item.merged_evidence_count,
+                    "eps_fcf_explosion_score": item.eps_fcf_explosion_score if item.eps_fcf_explosion_score is not None else "",
+                    "earnings_visibility_score": item.earnings_visibility_score if item.earnings_visibility_score is not None else "",
+                    "bottleneck_pricing_score": item.bottleneck_pricing_score if item.bottleneck_pricing_score is not None else "",
+                    "market_mispricing_score": item.market_mispricing_score if item.market_mispricing_score is not None else "",
+                    "valuation_rerating_score": item.valuation_rerating_score if item.valuation_rerating_score is not None else "",
+                    "capital_allocation_score": item.capital_allocation_score if item.capital_allocation_score is not None else "",
+                    "information_confidence_score": item.information_confidence_score if item.information_confidence_score is not None else "",
+                    "risk_penalty": item.risk_penalty if item.risk_penalty is not None else "",
+                    "claim_backed_claim_count": item.claim_backed_claim_count if item.claim_backed_claim_count is not None else "",
+                    "claim_backed_primitive_count": item.claim_backed_primitive_count if item.claim_backed_primitive_count is not None else "",
+                    "score_claim_backed_component_count": item.score_claim_backed_component_count if item.score_claim_backed_component_count is not None else "",
+                    "orphan_score_component_count": item.orphan_score_component_count if item.orphan_score_component_count is not None else "",
+                    "score_claim_backed_component_ratio": item.score_claim_backed_component_ratio if item.score_claim_backed_component_ratio is not None else "",
+                    "claim_ledger_claim_ids": json.dumps(_jsonable(item.claim_ledger_claim_ids), ensure_ascii=False, sort_keys=True),
+                    "claim_ledger_claim_ids_by_primitive": json.dumps(_jsonable(item.claim_ledger_claim_ids_by_primitive), ensure_ascii=False, sort_keys=True),
+                    "score_contribution_claim_ids": json.dumps(_jsonable(item.score_contribution_claim_ids), ensure_ascii=False, sort_keys=True),
+                    "score_contribution_ledger": json.dumps(_jsonable(item.score_contribution_ledger), ensure_ascii=False, sort_keys=True),
+                    "source_backed_green_bridge_raw": item.source_backed_green_bridge_raw if item.source_backed_green_bridge_raw is not None else "",
+                    "evidence_contract_required_primitive_count": item.evidence_contract_required_primitive_count if item.evidence_contract_required_primitive_count is not None else "",
+                    "evidence_contract_present_primitive_count": item.evidence_contract_present_primitive_count if item.evidence_contract_present_primitive_count is not None else "",
+                    "evidence_contract_missing_primitive_count": item.evidence_contract_missing_primitive_count if item.evidence_contract_missing_primitive_count is not None else "",
+                    "evidence_contract_coverage_pct": item.evidence_contract_coverage_pct if item.evidence_contract_coverage_pct is not None else "",
+                    "evidence_contract_positive_coverage_pct": item.evidence_contract_positive_coverage_pct if item.evidence_contract_positive_coverage_pct is not None else "",
+                    "evidence_contract_positive_missing_primitive_count": item.evidence_contract_positive_missing_primitive_count if item.evidence_contract_positive_missing_primitive_count is not None else "",
+                    "evidence_contract_green_gate_coverage_pct": item.evidence_contract_green_gate_coverage_pct if item.evidence_contract_green_gate_coverage_pct is not None else "",
+                    "evidence_contract_green_gate_missing_primitive_count": item.evidence_contract_green_gate_missing_primitive_count if item.evidence_contract_green_gate_missing_primitive_count is not None else "",
+                    "evidence_contract_guard_present_primitive_count": item.evidence_contract_guard_present_primitive_count if item.evidence_contract_guard_present_primitive_count is not None else "",
+                    "evidence_contract_guard_cleared_primitive_count": item.evidence_contract_guard_cleared_primitive_count if item.evidence_contract_guard_cleared_primitive_count is not None else "",
+                    "evidence_contract_guard_missing_primitive_count": item.evidence_contract_guard_missing_primitive_count if item.evidence_contract_guard_missing_primitive_count is not None else "",
+                    "evidence_contract_missing_primitives": item.evidence_contract_missing_primitives or "",
+                    "evidence_contract_positive_missing_primitives": item.evidence_contract_positive_missing_primitives or "",
+                    "evidence_contract_green_gate_primitives": item.evidence_contract_green_gate_primitives or "",
+                    "evidence_contract_green_gate_missing_primitives": item.evidence_contract_green_gate_missing_primitives or "",
+                    "evidence_contract_guard_primitives": item.evidence_contract_guard_primitives or "",
+                    "evidence_contract_guard_present_primitives": item.evidence_contract_guard_present_primitives or "",
+                    "evidence_contract_guard_cleared_primitives": item.evidence_contract_guard_cleared_primitives or "",
+                    "evidence_contract_guard_missing_primitives": item.evidence_contract_guard_missing_primitives or "",
+                    "evidence_contract_required_primitives": item.evidence_contract_required_primitives or "",
+                    "evidence_contract_required_bridge_axes": item.evidence_contract_required_bridge_axes or "",
                 }
             )
 
