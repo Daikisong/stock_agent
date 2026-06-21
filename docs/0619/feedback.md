@@ -46,6 +46,12 @@
 - 삼성전자 `005930`: initial fetched `1355`, post-parse gap `+18`, score-gap round0 `+18`, score-gap round1 `+13`. 최종 `63.2499`, Stage `4C`, score valid `true`.
 - SK하이닉스 `000660`: initial fetched `1079`, post-parse gap `+16`, score-gap round0 `+17`, score-gap round1 `+28`. 최종 `63.8662`, Stage `3-Red`, score valid `true`.
 
+Stage4 전이 확인:
+
+- 삼성전자 `005930`: `4A=false` (`63.2499 < 65`, hard break 존재), `4B=false` (`soft_4b=20 < 60`), `4C=true` (`red_team_hard_break=true`). 즉 Green 미달 후 4C hard break 경로가 실제로 계산됐다.
+- SK하이닉스 `000660`: `4A=false` (`63.8662 < 65`, red-team continuation은 통과), `4B=false` (`soft_4b=20 < 60`), `4C=false` (`red_team_hard_break=false`, `thesis_break=25`). 즉 Green/4A/4B/4C 문턱을 모두 본 뒤 Stage `3-Red`에 남았다.
+- 두 종목 모두 score-gap은 `round_limit_reached`, warning은 `score_gap_round_limit`이었다. 낮은 점수를 정상 확정한 것이 아니라, 추가 조사 라운드 한도까지 gap을 재조회했지만 Green/Stage4 문턱을 충족하지 못한 상태로 기록됐다.
+
 검증:
 
 - `PYTHONPATH=src python -m unittest tests.test_free_web_research_runner -v`
