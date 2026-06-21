@@ -2562,12 +2562,8 @@ def _score_gap_score_block_reason(
     if status == "no_gaps" or status == "executed":
         return None
     if status == "provider_error":
-        if _score_gap_warning_reason(inputs=inputs, expansion=expansion, queries_run_count=queries_run_count):
-            return None
         return "score_gap_provider_error"
     if status == "invalid_provider_output":
-        if _score_gap_warning_reason(inputs=inputs, expansion=expansion, queries_run_count=queries_run_count):
-            return None
         return "score_gap_invalid_provider_output"
     if status == "disabled_no_provider":
         return "score_gap_disabled_no_provider"
@@ -2578,8 +2574,6 @@ def _score_gap_score_block_reason(
     if status == "budget_blocked":
         return "score_gap_budget_blocked"
     if status == "round_limit_reached":
-        if _score_gap_warning_reason(inputs=inputs, expansion=expansion, queries_run_count=queries_run_count):
-            return None
         return "score_gap_round_limit"
     if status == "no_progress":
         return "score_gap_no_progress"

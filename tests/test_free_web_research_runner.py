@@ -1703,6 +1703,104 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertLess(len(result.web_result.fetched_documents), len(initial_results) + len(gap_results))
         self.assertGreaterEqual(result.score.diagnostic_scores["revision_score"], 80.0)
 
+    def test_score_gap_round_limit_blocks_even_after_fetching_gap_queries(self):
+        as_of = date(2026, 6, 8)
+        initial_query = "테스트라운드 데이터센터 수주"
+        gap_query = "테스트라운드 EPS OP 추정치 상향 리포트"
+        initial_url = "https://news.example.com/test-round-limit-demand"
+        gap_url = "https://finance.example.com/research/test-round-limit-revision"
+        plan = QueryPlan(
+            company_name="테스트라운드",
+            symbol="777778",
+            sector="semiconductor",
+            market=Market.KR,
+            as_of_date=as_of,
+            queries=(
+                QuerySpec(
+                    group="discovery",
+                    query=initial_query,
+                    priority=10,
+                    company_name="테스트라운드",
+                    symbol="777778",
+                    sector="semiconductor",
+                    market=Market.KR,
+                    as_of_date=as_of,
+                ),
+            ),
+        )
+        route_provider = FakeThemeRouteProvider(
+            outputs=[
+                ThemeRouteOutput(status="no_transition"),
+                ThemeRouteOutput(status="no_transition"),
+                ThemeRouteOutput(
+                    status="needs_more_evidence",
+                    missing_information=("revision estimate consensus target price EPS OP",),
+                    suggested_queries=(gap_query,),
+                ),
+                ThemeRouteOutput(status="no_transition"),
+            ]
+        )
+
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=FixtureSearchProvider(
+                results_by_query={
+                    initial_query: (
+                        SearchResult(
+                            title="테스트라운드 데이터센터 수요",
+                            url=initial_url,
+                            snippet="테스트라운드 데이터센터 수요가 확대된다.",
+                            source="fixture-news",
+                            published_at=datetime(2026, 6, 8, 8),
+                            query=initial_query,
+                            is_news=True,
+                            confidence=0.8,
+                        ),
+                    ),
+                    gap_query: (
+                        SearchResult(
+                            title="테스트라운드 추정치 상향 리포트",
+                            url=gap_url,
+                            snippet="테스트라운드 EPS 상향 33%, 영업이익 추정치 상향 36%, 목표주가 상향 18%",
+                            source="fixture-research",
+                            published_at=datetime(2026, 6, 8, 9),
+                            query=gap_query,
+                            is_report_domain=True,
+                            confidence=0.9,
+                        ),
+                    ),
+                }
+            ),
+            query_planner=_FixedQueryPlanner(plan),
+        ).run(
+            FreeWebResearchInput(
+                company_name="테스트라운드",
+                symbol="777778",
+                sector="semiconductor",
+                market=Market.KR,
+                as_of_date=as_of,
+                top_results=5,
+                fixture_text_by_url={
+                    initial_url: "테스트라운드 데이터센터 수요 확대.",
+                    gap_url: "테스트라운드 리포트. EPS 상향 33%, 영업이익 추정치 상향 36%, 목표주가 상향 18%.",
+                },
+                max_theme_expansion_rounds=0,
+                max_score_gap_expansion_rounds=1,
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                require_resolved_score_gaps_for_scoring=True,
+            )
+        )
+
+        self.assertEqual(result.theme_route_diagnostics["post_score_gap_expansion_status"], "round_limit_reached")
+        self.assertEqual(result.theme_route_diagnostics["score_blocked_reason"], "score_gap_round_limit")
+        self.assertEqual(result.stage.stage, Stage.STAGE_0)
+        self.assertEqual(result.score.total_score, 0.0)
+        self.assertEqual(result.score.diagnostic_scores["score_valid"], 0.0)
+        self.assertEqual(result.score.diagnostic_scores["score_blocked_by_score_gap"], 100.0)
+        self.assertIn("raw_score_total_before_score_gap_block", result.score.diagnostic_scores)
+        self.assertGreater(result.score.diagnostic_scores["raw_score_total_before_score_gap_block"], 0.0)
+
     def test_post_gap_top_results_uses_targeted_gap_limit(self):
         inputs = FreeWebResearchInput(
             company_name="테스트",
@@ -2078,8 +2176,9 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
             _score_gap_score_block_reason(inputs=inputs, expansion=round_limit, queries_run_count=0),
             "score_gap_round_limit",
         )
-        self.assertIsNone(
+        self.assertEqual(
             _score_gap_score_block_reason(inputs=inputs, expansion=round_limit, queries_run_count=1),
+            "score_gap_round_limit",
         )
 
         provider_error = _ScoreGapExpansionResult(
@@ -2087,8 +2186,9 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
             unresolved_gaps=(gap,),
             blocked_reason="codex_cli_timeout",
         )
-        self.assertIsNone(
+        self.assertEqual(
             _score_gap_score_block_reason(inputs=inputs, expansion=provider_error, queries_run_count=0),
+            "score_gap_provider_error",
         )
 
     def test_stage_gate_failures_are_returned_as_llm_gap_context(self):

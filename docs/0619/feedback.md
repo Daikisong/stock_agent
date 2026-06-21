@@ -50,7 +50,9 @@ Stage4 전이 확인:
 
 - 삼성전자 `005930`: `4A=false` (`63.2499 < 65`, hard break 존재), `4B=false` (`soft_4b=20 < 60`), `4C=true` (`red_team_hard_break=true`). 즉 Green 미달 후 4C hard break 경로가 실제로 계산됐다.
 - SK하이닉스 `000660`: `4A=false` (`63.8662 < 65`, red-team continuation은 통과), `4B=false` (`soft_4b=20 < 60`), `4C=false` (`red_team_hard_break=false`, `thesis_break=25`). 즉 Green/4A/4B/4C 문턱을 모두 본 뒤 Stage `3-Red`에 남았다.
-- 두 종목 모두 score-gap은 `round_limit_reached`, warning은 `score_gap_round_limit`이었다. 낮은 점수를 정상 확정한 것이 아니라, 추가 조사 라운드 한도까지 gap을 재조회했지만 Green/Stage4 문턱을 충족하지 못한 상태로 기록됐다.
+- 정정: 위 실행은 `score-gap round_limit_reached`와 material gap이 남았는데도 `score_valid=true`로 확정되는 버그를 드러낸다. `sector_visibility_score=88~91`, `sector_bottleneck_score=91.5`, `revision_score=100` 같은 보조 진단점수를 최종 `visible_score`로 설명하면 안 된다.
+- 패치 후 정책: material score gap이 남은 `round_limit_reached`, provider error, invalid provider output은 경고가 아니라 차단이다. 최종 출력은 `score_valid=false`, `visible_score=None`, `score_blocked_reason=score_gap_round_limit`, raw 점수는 `raw_score_total_before_score_gap_block`에 참고값으로만 남아야 한다.
+- 즉 `63점대 valid Stage`도, `90점대 Yellow 확정`도 올바른 최종 상태가 아니다. score-gap이 미해결이면 Stage는 확정하지 않고 pending/block 상태로 둔다.
 
 검증:
 
