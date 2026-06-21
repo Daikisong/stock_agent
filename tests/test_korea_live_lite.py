@@ -18,7 +18,7 @@ from e2r.cli.review_korea_run import (
 )
 from e2r.features import FeatureEngineeringInput
 from e2r.llm import FakeThemeRouteProvider, ThemeRouteOutput
-from e2r.models import DisclosureEvent, ScoreSnapshot, Stage
+from e2r.models import DisclosureEvent, ScoreContribution, ScoreSnapshot, Stage
 from e2r.pipeline.korea_live_lite import (
     KoreaLiveLiteBudget,
     KoreaLiveLiteConfig,
@@ -999,6 +999,15 @@ class KoreaLiveLiteTests(unittest.TestCase):
             feature_result=SimpleNamespace(payload=SimpleNamespace(large_sector_id=None, canonical_archetype_id=None), source_fields={}),
             feature_input=FeatureEngineeringInput(symbol="009999", as_of_date=AS_OF),
             expansion_queries_run=(),
+            red_team=SimpleNamespace(
+                risk_level=SimpleNamespace(value="low"),
+                soft_4b_score=0.0,
+                soft_4b_status=SimpleNamespace(value="none"),
+                thesis_break_score=0.0,
+                has_hard_break=False,
+                evidence_ids=(),
+                findings=(),
+            ),
         )
 
         row = _targeted_smoke_result_row(candidate, result)
@@ -1018,25 +1027,50 @@ class KoreaLiveLiteTests(unittest.TestCase):
         self.assertEqual(score_state_contract_violations(row), ())
 
     def test_targeted_smoke_explains_valid_score_variability_inputs(self):
+        component_scores = {
+            "eps_fcf_explosion": 20,
+            "earnings_visibility": 10,
+            "bottleneck_pricing": 12,
+            "market_mispricing": 8,
+            "valuation_rerating": 9,
+            "capital_allocation": 2,
+            "information_confidence": 4,
+        }
+        component_claims = {key: (f"CLM-{key}",) for key, value in component_scores.items() if value > 0}
         score = ScoreSnapshot(
             symbol="009999",
             as_of_date=AS_OF,
-            eps_fcf_explosion_score=20,
-            earnings_visibility_score=10,
-            bottleneck_pricing_score=12,
-            market_mispricing_score=8,
-            valuation_rerating_score=9,
-            capital_allocation_score=2,
-            information_confidence_score=4,
+            eps_fcf_explosion_score=component_scores["eps_fcf_explosion"],
+            earnings_visibility_score=component_scores["earnings_visibility"],
+            bottleneck_pricing_score=component_scores["bottleneck_pricing"],
+            market_mispricing_score=component_scores["market_mispricing"],
+            valuation_rerating_score=component_scores["valuation_rerating"],
+            capital_allocation_score=component_scores["capital_allocation"],
+            information_confidence_score=component_scores["information_confidence"],
             risk_penalty=0,
             total_score=65,
             diagnostic_scores={
                 "score_valid": 100.0,
+                "score_claim_backed_required": 100.0,
+                "claim_backed_claim_count_capped": float(len(component_claims)),
+                "score_claim_backed_component_ratio": 100.0,
+                "orphan_score_component_count_capped": 0.0,
                 "estimate_missing_fcf_source": 100.0,
                 "estimate_missing_revision_source": 100.0,
                 "estimate_missing_op_source": 100.0,
                 "estimate_conflict_count_capped": 2.0,
             },
+            score_contribution_claim_ids=component_claims,
+            score_contribution_ledger=tuple(
+                ScoreContribution(
+                    component_key=key,
+                    criterion_id=key,
+                    raw_points=value,
+                    max_points=20 if key in {"eps_fcf_explosion", "earnings_visibility", "bottleneck_pricing"} else 15 if key in {"market_mispricing", "valuation_rerating"} else 5,
+                    support_claim_ids=component_claims[key],
+                )
+                for key, value in component_scores.items()
+            ),
         )
         candidate = SimpleNamespace(
             symbol="009999",
@@ -1060,10 +1094,32 @@ class KoreaLiveLiteTests(unittest.TestCase):
             stage=SimpleNamespace(stage=Stage.STAGE_2, stage_reason=("valid but incomplete evidence",)),
             feature_result=SimpleNamespace(
                 payload=SimpleNamespace(large_sector_id="R2_AI_SEMICONDUCTOR_ELECTRONICS", canonical_archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY"),
-                source_fields={"estimate_selected_eps_source": "company_guide_snapshot"},
+                source_fields={
+                    "estimate_selected_eps_source": "company_guide_snapshot",
+                    "claim_ledger_claim_ids": ",".join(claim_id for ids in component_claims.values() for claim_id in ids),
+                    "claim_ledger_score_eligible_claim_ids": ",".join(claim_id for ids in component_claims.values() for claim_id in ids),
+                    "claim_ledger_claim_ids_by_primitive": json.dumps(
+                        {key: list(value) for key, value in component_claims.items()},
+                        ensure_ascii=False,
+                        sort_keys=True,
+                    ),
+                    "evidence_contract_runtime_bridge_group": "hbm_memory_customer_capacity_bridge",
+                    "evidence_contract_required_primitives": "hbm_capacity_pre_sold",
+                    "evidence_contract_present_primitives": "hbm_capacity_pre_sold",
+                    "evidence_contract_missing_primitives": "",
+                },
             ),
             feature_input=FeatureEngineeringInput(symbol="009999", as_of_date=AS_OF),
             expansion_queries_run=(),
+            red_team=SimpleNamespace(
+                risk_level=SimpleNamespace(value="low"),
+                soft_4b_score=0.0,
+                soft_4b_status=SimpleNamespace(value="none"),
+                thesis_break_score=0.0,
+                has_hard_break=False,
+                evidence_ids=(),
+                findings=(),
+            ),
         )
 
         row = _targeted_smoke_result_row(candidate, result)
@@ -1079,6 +1135,12 @@ class KoreaLiveLiteTests(unittest.TestCase):
         self.assertIn("llm_expansion_query_count:0", row["score_variability_drivers"])
         self.assertIn("score_gap_expansion_status:not_attempted", row["score_variability_drivers"])
         self.assertIn(f"research_input_fingerprint:{row['research_input_fingerprint']}", row["score_variability_drivers"])
+        self.assertEqual(row["score_claim_backed_required"], 100.0)
+        self.assertEqual(row["score_claim_backed_component_ratio"], 100.0)
+        self.assertEqual(set(row["score_contribution_claim_ids"]), set(component_claims))
+        self.assertEqual(len(row["score_contribution_ledger"]), len(component_claims))
+        self.assertTrue(row["claim_ledger_claim_ids"])
+        self.assertIn("stage4b_overlay_gate_passed", row["stage4_transition_diagnostics"])
         self.assertEqual(score_state_contract_violations(row), ())
 
     def test_top_trading_value_probe_selects_highest_value_without_production_pollution(self):

@@ -215,9 +215,19 @@ class RedTeamEngine:
         has_hard_break = any(finding.is_hard_break for finding in findings) or thesis_break_score >= 60.0
         risk_level = self._risk_level(thesis_break_score, has_hard_break)
         evidence_ids = tuple(
-            evidence_id
-            for finding in findings
-            for evidence_id in finding.evidence_ids
+            dict.fromkeys(
+                tuple(
+                    evidence_id
+                    for signal, factor in signals.soft_4b_factors.items()
+                    if factor > 0.0
+                    for evidence_id in signals.evidence_ids_by_signal.get(signal, ())
+                )
+                + tuple(
+                    evidence_id
+                    for finding in findings
+                    for evidence_id in finding.evidence_ids
+                )
+            )
         )
         return RedTeamAssessment(
             symbol=signals.symbol,

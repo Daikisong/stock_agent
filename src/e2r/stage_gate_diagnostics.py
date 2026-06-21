@@ -44,6 +44,9 @@ class StageGateDiagnostics:
     stage3_green_gate_passed: bool
     failed_gate_names: tuple[str, ...]
     values_vs_thresholds: Mapping[str, Mapping[str, float | str | bool]]
+    stage4a_continuation_gate_passed: bool = False
+    stage4b_overlay_gate_passed: bool = False
+    stage4c_thesis_break_gate_passed: bool = False
     sector_profile: str = "GENERIC"
     structural_visibility_quality: float = 0.0
     sector_visibility_score: float = 0.0
@@ -359,6 +362,63 @@ def diagnose_stage_gates(score: ScoreSnapshot, red_team: RedTeamAssessment) -> S
             theme_overheat_score < 70.0,
         )
 
+    stage4a_continuation_gate_passed = (
+        score.total_score >= stage2_total_min
+        and red_team.soft_4b_score < 60.0
+        and red_team.thesis_break_score < 40.0
+        and not red_team.has_hard_break
+    )
+    stage4b_overlay_gate_passed = (
+        red_team.soft_4b_score >= 60.0
+        and _full_4b_allowed_by_diagnostic_guard(score, red_team, profile)
+    )
+    stage4c_thesis_break_gate_passed = (
+        red_team.has_hard_break
+        or _diagnostic(score, "hard_4c_thesis_break_score") >= 80.0
+        or (
+            profile.guardrail_enabled("rolling_calibration_enabled")
+            and _diagnostic(score, "v12_scope_hard_4c_confirmation_match") > 0.0
+            and _has_non_price_thesis_break_confirmation(score)
+        )
+    )
+    stage4_checks: dict[str, tuple[float | str | bool, float | str | bool, bool]] = {
+        "stage4a_score_continuation": (
+            score.total_score,
+            stage2_total_min,
+            score.total_score >= stage2_total_min,
+        ),
+        "stage4a_red_team_continuation": (
+            f"soft_4b={red_team.soft_4b_score}; thesis_break={red_team.thesis_break_score}; hard_break={red_team.has_hard_break}",
+            "soft_4b<60, thesis_break<40, hard_break=false",
+            red_team.soft_4b_score < 60.0 and red_team.thesis_break_score < 40.0 and not red_team.has_hard_break,
+        ),
+        "stage4b_soft_overlay_score": (
+            red_team.soft_4b_score,
+            60.0,
+            red_team.soft_4b_score >= 60.0,
+        ),
+        "stage4b_full_overlay_non_price_gate": (
+            _non_price_bridge_count(score),
+            "non-price bridge present when full 4B overlay scope requires it",
+            _full_4b_allowed_by_diagnostic_guard(score, red_team, profile),
+        ),
+        "stage4c_red_team_hard_break": (
+            red_team.has_hard_break,
+            True,
+            red_team.has_hard_break,
+        ),
+        "stage4c_hard_4c_score": (
+            _diagnostic(score, "hard_4c_thesis_break_score"),
+            80.0,
+            _diagnostic(score, "hard_4c_thesis_break_score") >= 80.0,
+        ),
+        "stage4c_non_price_thesis_break_confirmation": (
+            _diagnostic(score, "thesis_break_non_price_evidence"),
+            "non-price thesis-break evidence when rolling 4C confirmation scope is active",
+            _has_non_price_thesis_break_confirmation(score),
+        ),
+    }
+
     failed = tuple(name for name, (_, _, passed) in checks.items() if not passed)
     stage2_names = {
         "failed_stage2_total_score",
@@ -396,7 +456,7 @@ def diagnose_stage_gates(score: ScoreSnapshot, red_team: RedTeamAssessment) -> S
         "failed_theme_overheat_risk",
     }
     values = {}
-    for name, (value, threshold, passed) in checks.items():
+    for name, (value, threshold, passed) in {**checks, **stage4_checks}.items():
         detail: dict[str, float | str | bool] = {"value": value, "threshold": threshold, "passed": passed}
         if component_key := _COMPONENT_GATE_NAMES.get(name):
             raw_value = _raw_component_score(score, component_key)
@@ -415,6 +475,9 @@ def diagnose_stage_gates(score: ScoreSnapshot, red_team: RedTeamAssessment) -> S
     return StageGateDiagnostics(
         stage2_gate_passed=stage2_gate_passed,
         stage3_green_gate_passed=stage3_green_gate_passed,
+        stage4a_continuation_gate_passed=stage4a_continuation_gate_passed,
+        stage4b_overlay_gate_passed=stage4b_overlay_gate_passed,
+        stage4c_thesis_break_gate_passed=stage4c_thesis_break_gate_passed,
         failed_gate_names=failed,
         values_vs_thresholds=values,
         sector_profile=sector_profile,
@@ -545,6 +608,36 @@ def _has_non_price_stage2_bridge(score: ScoreSnapshot) -> bool:
     if _diagnostic(score, "credible_order_or_policy_evidence") > 0:
         return True
     return _non_price_bridge_count(score) >= 2.0 or _diagnostic(score, "cross_evidence_family_count") >= 3.0
+
+
+def _has_non_price_thesis_break_confirmation(score: ScoreSnapshot) -> bool:
+    if _diagnostic(score, "hard_4c_thesis_break_score") < 75.0:
+        return False
+    return any(
+        _diagnostic(score, key) > 0.0
+        for key in (
+            "thesis_break_non_price_evidence",
+            "evidence_family_disclosure",
+            "evidence_family_research_report",
+            "evidence_family_financial_actual",
+            "evidence_family_news",
+        )
+    )
+
+
+def _full_4b_allowed_by_diagnostic_guard(score: ScoreSnapshot, red_team: RedTeamAssessment, profile) -> bool:
+    if not profile.guardrail_enabled("rolling_calibration_enabled"):
+        return True
+    if _diagnostic(score, "v12_scope_local_4b_watch_guard_match") > 0.0 and _diagnostic(
+        score,
+        "price_only_blowoff_score",
+    ) >= 60.0:
+        return False
+    if _diagnostic(score, "v12_scope_full_4b_overlay_match") <= 0.0:
+        return True
+    if profile.guardrail_enabled("full_4b_requires_non_price_evidence"):
+        return _has_non_price_stage2_bridge(score) or red_team.thesis_break_score >= 40.0
+    return True
 
 
 def promotion_band(score: ScoreSnapshot, deterministic_stage: Stage | None = None) -> str:

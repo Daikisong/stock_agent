@@ -2773,6 +2773,7 @@ def _targeted_smoke_result_row(
         "raw_score_before_block": raw_score_before_block,
         "score_components": _score_component_row(result.score) if score_valid_bool else None,
         "raw_score_components_before_block": _raw_score_component_row(result.score) if not score_valid_bool else None,
+        **_score_audit_row(result),
         "estimate_quality": _estimate_quality_row(result),
         "feature_input_counts": _feature_input_count_row(result.feature_input),
         "evidence_count": evidence_count,
@@ -2806,6 +2807,154 @@ def _targeted_smoke_result_row(
             else "evidence_found"
         ),
     }
+
+
+def _score_audit_row(result: WebResearchPipelineResult) -> Mapping[str, Any]:
+    score = result.score
+    diagnostics = score.diagnostic_scores
+    source_fields = result.feature_result.source_fields
+    contract_keys = (
+        "evidence_contract_required_primitive_count",
+        "evidence_contract_required_primitive_count_capped",
+        "evidence_contract_present_primitive_count_capped",
+        "evidence_contract_missing_primitive_count_capped",
+        "evidence_contract_coverage_pct",
+        "evidence_contract_positive_required_primitive_count_capped",
+        "evidence_contract_positive_present_primitive_count_capped",
+        "evidence_contract_positive_missing_primitive_count_capped",
+        "evidence_contract_positive_coverage_pct",
+        "evidence_contract_green_gate_required_primitive_count",
+        "evidence_contract_green_gate_required_primitive_count_capped",
+        "evidence_contract_green_gate_present_primitive_count_capped",
+        "evidence_contract_green_gate_missing_primitive_count_capped",
+        "evidence_contract_green_gate_coverage_pct",
+        "evidence_contract_guard_required_primitive_count_capped",
+        "evidence_contract_guard_present_primitive_count_capped",
+        "evidence_contract_guard_cleared_primitive_count_capped",
+        "evidence_contract_guard_missing_primitive_count",
+        "evidence_contract_guard_missing_primitive_count_capped",
+    )
+    contract_text_keys = (
+        "evidence_contract_runtime_bridge_group",
+        "evidence_contract_required_primitives",
+        "evidence_contract_present_primitives",
+        "evidence_contract_missing_primitives",
+        "evidence_contract_positive_primitives",
+        "evidence_contract_positive_present_primitives",
+        "evidence_contract_positive_missing_primitives",
+        "evidence_contract_green_gate_primitives",
+        "evidence_contract_green_gate_present_primitives",
+        "evidence_contract_green_gate_missing_primitives",
+        "evidence_contract_guard_primitives",
+        "evidence_contract_guard_present_primitives",
+        "evidence_contract_guard_cleared_primitives",
+        "evidence_contract_guard_missing_primitives",
+        "evidence_contract_required_bridge_axes",
+    )
+    row: dict[str, Any] = {
+        "score_claim_backed_required": diagnostics.get("score_claim_backed_required"),
+        "claim_backed_claim_count": diagnostics.get("claim_backed_claim_count_capped"),
+        "claim_backed_claim_count_capped": diagnostics.get("claim_backed_claim_count_capped"),
+        "claim_backed_primitive_count": diagnostics.get("claim_backed_primitive_count_capped"),
+        "claim_backed_primitive_count_capped": diagnostics.get("claim_backed_primitive_count_capped"),
+        "score_claim_backed_component_count": diagnostics.get("score_claim_backed_component_count_capped"),
+        "score_claim_backed_component_count_capped": diagnostics.get("score_claim_backed_component_count_capped"),
+        "score_claim_backed_component_ratio": diagnostics.get("score_claim_backed_component_ratio"),
+        "orphan_score_component_count": diagnostics.get("orphan_score_component_count_capped"),
+        "orphan_score_component_count_capped": diagnostics.get("orphan_score_component_count_capped"),
+        "claim_ledger_claim_ids": _csv_tuple(source_fields.get("claim_ledger_claim_ids")),
+        "claim_ledger_score_eligible_claim_ids": _csv_tuple(source_fields.get("claim_ledger_score_eligible_claim_ids")),
+        "claim_ledger_claim_ids_by_primitive": _json_mapping(source_fields.get("claim_ledger_claim_ids_by_primitive")),
+        "score_contribution_claim_ids": {
+            key: tuple(value)
+            for key, value in score.score_contribution_claim_ids.items()
+        },
+        "score_contribution_ledger": tuple(
+            {
+                "component_key": item.component_key,
+                "criterion_id": item.criterion_id,
+                "raw_points": item.raw_points,
+                "max_points": item.max_points,
+                "support_claim_ids": item.support_claim_ids,
+                "counter_claim_ids": item.counter_claim_ids,
+                "rationale": item.rationale,
+                "confidence": item.confidence,
+                "cap_reason": item.cap_reason,
+            }
+            for item in score.score_contribution_ledger
+        ),
+        "red_team_status": result.red_team.risk_level.value,
+        "soft_4b_score": result.red_team.soft_4b_score,
+        "soft_4b_status": result.red_team.soft_4b_status.value,
+        "thesis_break_score": result.red_team.thesis_break_score,
+        "red_team_has_hard_break": result.red_team.has_hard_break,
+        "red_team_evidence_ids": result.red_team.evidence_ids,
+        "red_team_findings": tuple(
+            {
+                "risk_type": finding.risk_type,
+                "severity": finding.severity,
+                "is_hard_break": finding.is_hard_break,
+                "description": finding.description,
+                "evidence_ids": finding.evidence_ids,
+            }
+            for finding in result.red_team.findings
+        ),
+        "stage4_transition_diagnostics": _stage4_transition_diagnostics_row(result),
+    }
+    for key in contract_keys:
+        row[key] = diagnostics.get(key)
+    for key in contract_text_keys:
+        row[key] = source_fields.get(key)
+    return row
+
+
+def _stage4_transition_diagnostics_row(result: WebResearchPipelineResult) -> Mapping[str, Any]:
+    diagnostics = result.theme_route_diagnostics.get("stage_gate_diagnostics")
+    values = diagnostics.get("values_vs_thresholds", {}) if isinstance(diagnostics, Mapping) else {}
+    return {
+        "stage4a_continuation_gate_passed": (
+            diagnostics.get("stage4a_continuation_gate_passed") if isinstance(diagnostics, Mapping) else None
+        ),
+        "stage4b_overlay_gate_passed": (
+            diagnostics.get("stage4b_overlay_gate_passed") if isinstance(diagnostics, Mapping) else None
+        ),
+        "stage4c_thesis_break_gate_passed": (
+            diagnostics.get("stage4c_thesis_break_gate_passed") if isinstance(diagnostics, Mapping) else None
+        ),
+        "stage4a_score_continuation": values.get("stage4a_score_continuation") if isinstance(values, Mapping) else None,
+        "stage4a_red_team_continuation": values.get("stage4a_red_team_continuation") if isinstance(values, Mapping) else None,
+        "stage4b_soft_overlay_score": values.get("stage4b_soft_overlay_score") if isinstance(values, Mapping) else None,
+        "stage4b_full_overlay_non_price_gate": (
+            values.get("stage4b_full_overlay_non_price_gate") if isinstance(values, Mapping) else None
+        ),
+        "stage4c_red_team_hard_break": values.get("stage4c_red_team_hard_break") if isinstance(values, Mapping) else None,
+        "stage4c_hard_4c_score": values.get("stage4c_hard_4c_score") if isinstance(values, Mapping) else None,
+        "stage4c_non_price_thesis_break_confirmation": (
+            values.get("stage4c_non_price_thesis_break_confirmation") if isinstance(values, Mapping) else None
+        ),
+    }
+
+
+def _csv_tuple(value: Any) -> tuple[str, ...]:
+    if value in (None, ""):
+        return ()
+    if isinstance(value, (list, tuple)):
+        raw = value
+    else:
+        raw = str(value).split(",")
+    return tuple(dict.fromkeys(str(item).strip() for item in raw if str(item).strip()))
+
+
+def _json_mapping(value: Any) -> Mapping[str, Any]:
+    if isinstance(value, Mapping):
+        return value
+    if value in (None, ""):
+        return {}
+    try:
+        decoded = json.loads(str(value))
+    except (TypeError, json.JSONDecodeError):
+        return {}
+    return decoded if isinstance(decoded, Mapping) else {}
 
 
 def _result_score_valid(result: WebResearchPipelineResult) -> bool:

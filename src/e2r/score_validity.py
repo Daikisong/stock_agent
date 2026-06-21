@@ -968,7 +968,7 @@ def _valid_high_confidence_row_has_unknown_score_contribution_claim_ids(
 def _valid_stage3_green_has_unverified_guard_primitives(state: Mapping[str, object] | object | None) -> bool:
     if _state_bool(state, "score_valid") is not True:
         return False
-    stage = str(_state_value(state, "stage") or _state_value(state, "merged_stage") or "").strip()
+    stage = _state_stage_text(state)
     if stage != "3-Green":
         return False
     guard_missing = _score_numeric_value(_state_value(state, "evidence_contract_guard_missing_primitive_count"))
@@ -982,7 +982,7 @@ def _valid_stage3_green_has_unverified_guard_primitives(state: Mapping[str, obje
 def _valid_stage3_green_has_present_guard_primitives(state: Mapping[str, object] | object | None) -> bool:
     if _state_bool(state, "score_valid") is not True:
         return False
-    stage = str(_state_value(state, "stage") or _state_value(state, "merged_stage") or "").strip()
+    stage = _state_stage_text(state)
     if stage != "3-Green":
         return False
     guard_present = _score_numeric_value(_state_value(state, "evidence_contract_guard_present_primitive_count"))
@@ -994,6 +994,9 @@ def _valid_stage3_green_has_present_guard_primitives(state: Mapping[str, object]
 
 
 def _state_requires_claim_backed_high_confidence_score(state: Mapping[str, object] | object | None) -> bool:
+    stage = _state_stage_text(state)
+    if _state_bool(state, "score_valid") is True and stage in {"3-Green", "3-Yellow", "3-Red", "4A", "4B", "4C"}:
+        return True
     return any(
         (_score_numeric_value(_state_value(state, key)) or 0.0) > 0.0
         for key in (
@@ -1009,11 +1012,20 @@ def _state_requires_claim_backed_high_confidence_score(state: Mapping[str, objec
 
 
 def _state_is_high_confidence_candidate_score(state: Mapping[str, object] | object | None) -> bool:
-    stage = str(_state_value(state, "stage") or _state_value(state, "merged_stage") or "").strip()
+    stage = _state_stage_text(state)
     if stage in {"3-Green", "3-Yellow"}:
         return True
     visible = serialized_visible_score(state)
     return visible is not None and visible >= 65.0
+
+
+def _state_stage_text(state: Mapping[str, object] | object | None) -> str:
+    value = _state_value(state, "stage")
+    if value in (None, ""):
+        value = _state_value(state, "merged_stage")
+    if isinstance(value, Enum):
+        value = value.value
+    return str(value or "").strip()
 
 
 def _score_numeric_value(value: object) -> float | None:

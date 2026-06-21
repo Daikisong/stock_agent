@@ -2640,13 +2640,35 @@ class DeterministicFeatureEngineer:
     ) -> RedTeamSignals:
         soft_4b_factors: dict[str, float] = {}
         thesis_break_factors: dict[str, float] = {}
+        evidence_ids_by_signal: dict[str, tuple[str, ...]] = {}
+        claim_ids_by_primitive = fields.score_claim_ids_by_primitive()
+
+        def _claim_ids_for_signal(signal: str) -> tuple[str, ...]:
+            return tuple(dict.fromkeys(claim_ids_by_primitive.get(signal, ())))
+
+        def _set_soft_4b(signal: str, value: float, evidence_ids: tuple[str, ...] = ()) -> None:
+            soft_4b_factors[signal] = value
+            ids = tuple(dict.fromkeys((*evidence_ids, *_claim_ids_for_signal(signal))))
+            if ids:
+                evidence_ids_by_signal[signal] = ids
+
+        def _set_thesis_break(signal: str, value: float) -> None:
+            thesis_break_factors[signal] = value
+            ids = _claim_ids_for_signal(signal)
+            if ids:
+                evidence_ids_by_signal[signal] = ids
+
         price_stage = DeterministicFeatureEngineer._price_stage_score(inputs.price_bars)
         if price_stage >= 90.0:
-            soft_4b_factors["return_since_stage3"] = min(1.0, price_stage / 100.0)
+            _set_soft_4b(
+                "return_since_stage3",
+                min(1.0, price_stage / 100.0),
+                _price_bar_evidence_ids(inputs.price_bars),
+            )
         if fields.any_bool("extreme_forward_valuation"):
-            soft_4b_factors["extreme_forward_valuation"] = 1.0
+            _set_soft_4b("extreme_forward_valuation", 1.0)
         if fields.any_bool("revision_slowdown"):
-            soft_4b_factors["revision_slowdown"] = 1.0
+            _set_soft_4b("revision_slowdown", 1.0)
         for key in (
             "return_since_stage3",
             "return_12_24m",
@@ -2657,11 +2679,11 @@ class DeterministicFeatureEngineer:
         ):
             value = fields.max_percent(key)
             if value is not None and value > 0:
-                soft_4b_factors[key] = min(1.0, value / 100.0)
+                _set_soft_4b(key, min(1.0, value / 100.0))
             elif fields.any_bool(key):
-                soft_4b_factors[key] = 1.0
+                _set_soft_4b(key, 1.0)
         if sub_scores.one_off_shortage_risk >= 75.0:
-            soft_4b_factors["market_crowding"] = 0.5
+            _set_soft_4b("market_crowding", 0.5)
         for key in (
             "eps_fcf_revision_down",
             "backlog_or_rpo_decline",
@@ -2677,14 +2699,15 @@ class DeterministicFeatureEngineer:
         ):
             value = fields.max_percent(key)
             if value is not None and value > 0:
-                thesis_break_factors[key] = min(1.0, value / 100.0)
+                _set_thesis_break(key, min(1.0, value / 100.0))
             elif fields.any_bool(key):
-                thesis_break_factors[key] = 1.0
+                _set_thesis_break(key, 1.0)
         return RedTeamSignals(
             symbol=inputs.symbol,
             as_of_date=inputs.as_of_date,
             soft_4b_factors=soft_4b_factors,
             thesis_break_factors=thesis_break_factors,
+            evidence_ids_by_signal=evidence_ids_by_signal,
         )
 
     @staticmethod
@@ -3257,6 +3280,14 @@ def _claim_ids_from_primitive_map(by_primitive: Mapping[str, tuple[str, ...]]) -
             if str(claim_id).strip()
         )
     )
+
+
+def _price_bar_evidence_ids(price_bars: Sequence[PriceBar]) -> tuple[str, ...]:
+    if not price_bars:
+        return ()
+    latest = sorted(price_bars, key=lambda item: item.date)[-1]
+    source = str(latest.source or "price").replace(" ", "_")
+    return (f"price:{source}:{latest.symbol}:{latest.date.isoformat()}",)
 
 
 def _score_support_claim_ids_by_primitive(fields: Any) -> Mapping[str, tuple[str, ...]]:

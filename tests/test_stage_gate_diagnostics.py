@@ -3,7 +3,7 @@ import unittest
 from unittest.mock import patch
 
 from e2r.models import ScoreSnapshot, Stage
-from e2r.red_team import RedTeamAssessment
+from e2r.red_team import RedTeamAssessment, RedTeamEngine, RedTeamSignals
 from e2r.scoring import CANONICAL_SCORE_COMPONENTS, DeterministicScorer, ScoringPayload
 from e2r.sector_profiles import SectorProfile, profile_id
 from e2r.staging import StageClassificationInput, StageClassifier
@@ -81,6 +81,61 @@ class StageGateDiagnosticsTests(unittest.TestCase):
         self.assertIn("failed_structural_visibility_quality", diag.failed_gate_names)
         self.assertEqual(diag.sector_profile, "GENERIC")
         self.assertEqual(diag.values_vs_thresholds["failed_stage3_revision"]["passed"], True)
+
+    def test_reports_stage4_transition_readiness_separately_from_green_gate(self):
+        score = ScoreSnapshot(
+            symbol="CASE",
+            as_of_date=date(2026, 5, 13),
+            eps_fcf_explosion_score=20,
+            earnings_visibility_score=18,
+            bottleneck_pricing_score=18,
+            market_mispricing_score=12,
+            valuation_rerating_score=11,
+            capital_allocation_score=4,
+            information_confidence_score=4,
+            risk_penalty=0,
+            total_score=87,
+            diagnostic_scores={
+                "score_valid": 100,
+                "revision_score": 90,
+                "structural_visibility_quality": 90,
+                "report_date_confidence": 100,
+                "date_unverified_snippet_news_count_capped": 0,
+                "date_unverified_document_count_capped": 0,
+                "cross_evidence_family_count": 4,
+            },
+        )
+        continuation = diagnose_stage_gates(score, RedTeamAssessment.empty("CASE", date(2026, 5, 13)))
+        soft_4b = RedTeamEngine().assess(
+            RedTeamSignals(
+                symbol="CASE",
+                as_of_date=date(2026, 5, 13),
+                soft_4b_factors={
+                    "return_since_stage3": 1.0,
+                    "return_12_24m": 1.0,
+                    "extreme_forward_valuation": 1.0,
+                    "revision_slowdown": 0.5,
+                    "market_crowding": 0.5,
+                },
+            )
+        )
+        overlay = diagnose_stage_gates(score, soft_4b)
+        hard_4c = RedTeamEngine().assess(
+            RedTeamSignals(
+                symbol="CASE",
+                as_of_date=date(2026, 5, 13),
+                thesis_break_factors={"contract_cancelled_or_delayed": 1.0},
+                evidence_ids_by_signal={"contract_cancelled_or_delayed": ("ev-contract-cancel",)},
+            )
+        )
+        thesis_break = diagnose_stage_gates(score, hard_4c)
+
+        self.assertTrue(continuation.stage4a_continuation_gate_passed)
+        self.assertFalse(continuation.stage4b_overlay_gate_passed)
+        self.assertTrue(overlay.stage4b_overlay_gate_passed)
+        self.assertTrue(thesis_break.stage4c_thesis_break_gate_passed)
+        self.assertIn("stage4b_soft_overlay_score", overlay.values_vs_thresholds)
+        self.assertIn("stage4c_red_team_hard_break", thesis_break.values_vs_thresholds)
 
     def test_component_gate_diagnostics_use_archetype_weighted_values(self):
         score = ScoreSnapshot(

@@ -16,6 +16,10 @@ class RedTeamEngineTests(unittest.TestCase):
                 "revision_slowdown": 0.5,
                 "market_crowding": 0.5,
             },
+            evidence_ids_by_signal={
+                "return_since_stage3": ("ev-price-runup",),
+                "revision_slowdown": ("ev-revision-slowdown",),
+            },
         )
 
         assessment = RedTeamEngine().assess(signals)
@@ -25,6 +29,8 @@ class RedTeamEngineTests(unittest.TestCase):
         self.assertEqual(assessment.thesis_break_score, 0.0)
         self.assertEqual(assessment.risk_level, RedTeamRiskLevel.LOW)
         self.assertFalse(assessment.has_hard_break)
+        self.assertIn("ev-price-runup", assessment.evidence_ids)
+        self.assertIn("ev-revision-slowdown", assessment.evidence_ids)
 
     def test_soft_4b_status_splits_watch_elevated_and_graduated(self):
         engine = RedTeamEngine()

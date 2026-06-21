@@ -11,7 +11,7 @@ from e2r.backtest import asof_research_replay, blind_discovery_replay
 from e2r.backtest.e2r_standard_replay import E2RStandardReplayCandidate, _candidate_rows, jsonable
 from e2r.backtest.historical_source_adapter import HistoricalSourceCoverage
 from e2r.features import FeatureEngineeringInput
-from e2r.models import ScoreSnapshot, Stage
+from e2r.models import ScoreContribution, ScoreSnapshot, Stage
 from e2r.score_validity import score_state_contract_violations
 
 
@@ -334,6 +334,19 @@ class ScoreOutputContractTests(unittest.TestCase):
             candidate_source_path="fixture",
             score_valid=True,
             score_blocked_reason=None,
+            claim_ledger_claim_ids=("fixture-claim-1",),
+            claim_ledger_claim_ids_by_primitive={"fixture_positive_bridge": ("fixture-claim-1",)},
+            score_contribution_claim_ids={"score_total": ("fixture-claim-1",)},
+            score_contribution_ledger=(
+                ScoreContribution(
+                    component_key="score_total",
+                    criterion_id="score_total",
+                    raw_points=65.0,
+                    max_points=100.0,
+                    support_claim_ids=("fixture-claim-1",),
+                    rationale="fixture claim-backed score alias reconciliation",
+                ),
+            ),
         )
 
         with tempfile.TemporaryDirectory() as directory:

@@ -1611,6 +1611,9 @@ def _with_stage_gate_diagnostics(
     payload = {
         "stage2_gate_passed": stage_gates.stage2_gate_passed,
         "stage3_green_gate_passed": stage_gates.stage3_green_gate_passed,
+        "stage4a_continuation_gate_passed": stage_gates.stage4a_continuation_gate_passed,
+        "stage4b_overlay_gate_passed": stage_gates.stage4b_overlay_gate_passed,
+        "stage4c_thesis_break_gate_passed": stage_gates.stage4c_thesis_break_gate_passed,
         "failed_gate_names": tuple(stage_gates.failed_gate_names),
         "values_vs_thresholds": {
             name: dict(values)
@@ -1632,6 +1635,10 @@ def _with_stage_gate_diagnostics(
         "failed_report_date_confidence",
         "failed_date_unverified_green_evidence",
         "failed_domain_specific_evidence",
+        "failed_evidence_contract_positive_coverage",
+        "failed_evidence_contract_guard_present",
+        "failed_evidence_contract_guard_unverified",
+        "failed_claim_backed_green_score",
         "failed_positive_stage_price_only_blowoff",
         "failed_snippet_only_green_block",
         "failed_emerging_theme_deep_research",
