@@ -84,6 +84,8 @@ class FreeWebResearchInput:
     theme_evidence_review_enabled: bool = True
     post_parse_gap_expansion_enabled: bool = True
     post_parse_gap_expansion_max_queries: int | None = 10
+    post_gap_fetch_results_per_query: int = 5
+    post_gap_fetch_min_results: int = 20
     llm_query_retry_max: int | None = _LLM_QUERY_RETRY_MAX
     score_gap_query_retry_max: int | None = _SCORE_GAP_QUERY_RETRY_MAX
     require_valid_theme_route_for_scoring: bool | None = None
@@ -124,6 +126,10 @@ class FreeWebResearchInput:
             raise ValueError("theme_expansion_reserve_queries must be non-negative")
         if self.post_parse_gap_expansion_max_queries is not None and self.post_parse_gap_expansion_max_queries < 0:
             raise ValueError("post_parse_gap_expansion_max_queries must be non-negative")
+        if self.post_gap_fetch_results_per_query <= 0:
+            raise ValueError("post_gap_fetch_results_per_query must be positive")
+        if self.post_gap_fetch_min_results < 0:
+            raise ValueError("post_gap_fetch_min_results must be non-negative")
         if self.llm_query_retry_max is not None and self.llm_query_retry_max < 0:
             raise ValueError("llm_query_retry_max must be non-negative")
         if self.score_gap_query_retry_max is not None and self.score_gap_query_retry_max < 0:
@@ -278,19 +284,23 @@ class FreeWebResearchRunner:
             final_query_specs.extend(gap_specs)
             expansion_queries_run = tuple(dict.fromkeys((*expansion_queries_run, *gap_queries)))
             final_query_plan = replace(query_plan, queries=tuple(dict.fromkeys(final_query_specs)))
+            gap_top_results = _post_gap_top_results(inputs, gap_specs)
             _emit_phase_event(
                 inputs,
                 "post_parse_gap_web_research_start",
                 new_query_count=len(gap_specs),
                 total_query_count=len(final_query_plan.queries),
-                top_results_override=_post_gap_top_results(inputs, gap_specs),
+                top_results_override=gap_top_results,
+                gap_fetch_mode="incremental",
             )
-            web_result = self._run_web_research(
+            web_result = self._run_gap_web_research(
                 inputs=inputs,
                 query_plan=final_query_plan,
+                base_web_result=web_result,
+                gap_specs=gap_specs,
                 results_by_query=results_by_query,
                 text_mapping=text_mapping,
-                top_results_override=_post_gap_top_results(inputs, gap_specs),
+                top_results_override=gap_top_results,
             )
             _emit_web_result_phase(inputs, "post_parse_gap_web_research_complete", web_result)
             theme_route, theme_route_diagnostics = self._run_theme_evidence_review(
@@ -332,7 +342,6 @@ class FreeWebResearchRunner:
         score = feature_result.score()
         red_team = RedTeamEngine().assess(feature_result.red_team_signals)
         score_gap_queries: tuple[str, ...] = ()
-        score_gap_specs_total: list[QuerySpec] = []
         score_gap_expansion_result = _ScoreGapExpansionResult(status="not_attempted")
         score_gap_round_index = 0
         seen_score_gap_signatures: set[tuple[str, ...]] = set()
@@ -412,25 +421,28 @@ class FreeWebResearchRunner:
             )
             if not score_gap_expansion_result.specs:
                 break
-            score_gap_specs_total.extend(score_gap_expansion_result.specs)
             score_gap_queries = tuple(dict.fromkeys((*score_gap_queries, *score_gap_expansion_result.queries_run)))
             final_query_specs.extend(score_gap_expansion_result.specs)
             expansion_queries_run = tuple(dict.fromkeys((*expansion_queries_run, *score_gap_queries)))
             final_query_plan = replace(query_plan, queries=tuple(dict.fromkeys(final_query_specs)))
+            score_gap_top_results = _post_gap_top_results(inputs, score_gap_expansion_result.specs)
             _emit_phase_event(
                 inputs,
                 "post_score_gap_web_research_start",
                 round_index=score_gap_round_index,
                 new_query_count=len(score_gap_expansion_result.specs),
                 total_score_gap_query_count=len(score_gap_queries),
-                top_results_override=_post_gap_top_results(inputs, (*gap_specs, *tuple(score_gap_specs_total))),
+                top_results_override=score_gap_top_results,
+                gap_fetch_mode="incremental",
             )
-            web_result = self._run_web_research(
+            web_result = self._run_gap_web_research(
                 inputs=inputs,
                 query_plan=final_query_plan,
+                base_web_result=web_result,
+                gap_specs=score_gap_expansion_result.specs,
                 results_by_query=results_by_query,
                 text_mapping=text_mapping,
-                top_results_override=_post_gap_top_results(inputs, (*gap_specs, *tuple(score_gap_specs_total))),
+                top_results_override=score_gap_top_results,
             )
             _emit_web_result_phase(inputs, "post_score_gap_web_research_complete", web_result)
             theme_route, theme_route_diagnostics = self._run_theme_evidence_review(
@@ -593,6 +605,32 @@ class FreeWebResearchRunner:
                 max_results_per_query=inputs.max_results_per_query,
                 top_results=top_results_override if top_results_override is not None else inputs.top_results,
             )
+        )
+
+    def _run_gap_web_research(
+        self,
+        *,
+        inputs: FreeWebResearchInput,
+        query_plan: QueryPlan,
+        base_web_result: WebResearchResult,
+        gap_specs: Sequence[QuerySpec],
+        results_by_query: Mapping[str, tuple[SearchResult, ...]],
+        text_mapping: Mapping[str, str | Path],
+        top_results_override: int | None,
+    ) -> WebResearchResult:
+        gap_query_plan = replace(query_plan, queries=tuple(gap_specs))
+        gap_results_by_query = {spec.query: tuple(results_by_query.get(spec.query, ())) for spec in gap_specs}
+        gap_web_result = self._run_web_research(
+            inputs=inputs,
+            query_plan=gap_query_plan,
+            results_by_query=gap_results_by_query,
+            text_mapping=text_mapping,
+            top_results_override=top_results_override,
+        )
+        return _merge_web_research_results(
+            base=base_web_result,
+            incremental=gap_web_result,
+            combined_query_plan=query_plan,
         )
 
     def _search_providers(
@@ -1703,9 +1741,85 @@ def _post_score_gap_query_spec(
 
 
 def _post_gap_top_results(inputs: FreeWebResearchInput, gap_specs: Sequence[QuerySpec]) -> int | None:
-    if inputs.top_results is None:
-        return None
-    return max(inputs.top_results, inputs.top_results + len(gap_specs))
+    query_count = len(tuple(dict.fromkeys(spec.query for spec in gap_specs)))
+    if query_count <= 0:
+        return 0
+    return max(inputs.post_gap_fetch_min_results, query_count * inputs.post_gap_fetch_results_per_query)
+
+
+def _merge_web_research_results(
+    *,
+    base: WebResearchResult,
+    incremental: WebResearchResult,
+    combined_query_plan: QueryPlan,
+) -> WebResearchResult:
+    selected_results, fetched_documents = _merge_selected_fetch_pairs(base, incremental)
+    evidence_by_id = {item.evidence_id: item for item in (*base.evidence, *incremental.evidence)}
+    return replace(
+        base,
+        query_plan=combined_query_plan,
+        queries_run=tuple(dict.fromkeys((*base.queries_run, *incremental.queries_run))),
+        search_results=_dedupe_search_results_by_url((*incremental.search_results, *base.search_results)),
+        ranked_results=_dedupe_ranked_results_by_url((*incremental.ranked_results, *base.ranked_results)),
+        selected_results=selected_results,
+        fetched_documents=fetched_documents,
+        parsed_reports=_dedupe_reports((*base.parsed_reports, *incremental.parsed_reports)),
+        parsed_news=_dedupe_news((*base.parsed_news, *incremental.parsed_news)),
+        parsed_disclosures=_dedupe_disclosures((*base.parsed_disclosures, *incremental.parsed_disclosures)),
+        evidence=tuple(evidence_by_id.values()),
+        red_team_findings=_dedupe_red_team_findings((*base.red_team_findings, *incremental.red_team_findings)),
+        dropped_results=_dedupe_dropped_results((*base.dropped_results, *incremental.dropped_results)),
+    )
+
+
+def _merge_selected_fetch_pairs(
+    base: WebResearchResult,
+    incremental: WebResearchResult,
+) -> tuple[tuple[RankedSearchResult, ...], tuple[Any, ...]]:
+    pairs: list[tuple[RankedSearchResult, Any]] = []
+    seen_urls: set[str] = set()
+    for web_result in (incremental, base):
+        for ranked, fetched in zip(web_result.selected_results, web_result.fetched_documents):
+            url = ranked.result.url
+            if url in seen_urls:
+                continue
+            pairs.append((ranked, fetched))
+            seen_urls.add(url)
+    return tuple(item[0] for item in pairs), tuple(item[1] for item in pairs)
+
+
+def _dedupe_search_results_by_url(items: Sequence[SearchResult]) -> tuple[SearchResult, ...]:
+    by_url: dict[str, SearchResult] = {}
+    for item in items:
+        by_url.setdefault(item.url, item)
+    return tuple(by_url.values())
+
+
+def _dedupe_ranked_results_by_url(items: Sequence[RankedSearchResult]) -> tuple[RankedSearchResult, ...]:
+    by_url: dict[str, RankedSearchResult] = {}
+    for item in items:
+        by_url.setdefault(item.result.url, item)
+    return tuple(by_url.values())
+
+
+def _dedupe_red_team_findings(items: Sequence[RedTeamFinding]) -> tuple[RedTeamFinding, ...]:
+    by_key = {
+        (item.risk_type, item.description, item.is_hard_break, tuple(item.evidence_ids)): item
+        for item in items
+    }
+    return tuple(by_key.values())
+
+
+def _dedupe_dropped_results(items: Sequence[Any]) -> tuple[Any, ...]:
+    by_key: dict[tuple[str, str], Any] = {}
+    for item in items:
+        result = getattr(item, "result", None)
+        url = getattr(result, "url", None)
+        reason = getattr(item, "reason", None)
+        if not url:
+            continue
+        by_key.setdefault((str(url), str(reason or "")), item)
+    return tuple(by_key.values())
 
 
 def _merge_feature_input(

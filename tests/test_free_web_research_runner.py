@@ -18,6 +18,7 @@ from e2r.research.free_web_research_runner import (
     _ScoreGapExpansionResult,
     _FixedQueryPlanner,
     _material_score_gaps,
+    _post_gap_top_results,
     _post_score_gap_expansion_allowed,
     _score_gap_reason_codes,
     _score_gap_score_block_reason,
@@ -118,6 +119,8 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertEqual(inputs.theme_route_search_result_limit, 80)
         self.assertEqual(inputs.theme_route_document_limit, 32)
         self.assertEqual(inputs.theme_route_document_excerpt_chars, 1200)
+        self.assertEqual(inputs.post_gap_fetch_results_per_query, 5)
+        self.assertEqual(inputs.post_gap_fetch_min_results, 20)
         self.assertTrue(inputs.require_valid_theme_route_for_scoring)
         self.assertTrue(inputs.require_resolved_score_gaps_for_scoring)
 
@@ -1583,6 +1586,149 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertTrue(any("revision" in item for item in route_provider.calls[2].score_gap_context))
         self.assertTrue(result.feature_input.consensus_revisions)
         self.assertGreaterEqual(result.score.diagnostic_scores["revision_score"], 80.0)
+
+    def test_score_gap_incremental_fetch_is_bounded_when_initial_fetch_is_uncapped(self):
+        as_of = date(2026, 6, 8)
+        initial_query = "테스트스코어 데이터센터 수주"
+        gap_query = "테스트스코어 EPS OP FCF 추정치 상향 컨센서스 변화 리포트"
+        plan = QueryPlan(
+            company_name="테스트스코어",
+            symbol="777777",
+            sector="semiconductor",
+            market=Market.KR,
+            as_of_date=as_of,
+            queries=(
+                QuerySpec(
+                    group="discovery",
+                    query=initial_query,
+                    priority=10,
+                    company_name="테스트스코어",
+                    symbol="777777",
+                    sector="semiconductor",
+                    market=Market.KR,
+                    as_of_date=as_of,
+                ),
+            ),
+        )
+        initial_results = tuple(
+            SearchResult(
+                title=f"테스트스코어 데이터센터 수요 {index}",
+                url=f"https://news.example.com/test-score-gap-demand-{index}",
+                snippet="테스트스코어 데이터센터 수요가 확대된다.",
+                source="fixture-news",
+                published_at=datetime(2026, 6, 8, 8),
+                query=initial_query,
+                rank=index,
+                is_news=True,
+                confidence=0.8,
+            )
+            for index in range(30)
+        )
+        gap_results = tuple(
+            SearchResult(
+                title=f"테스트스코어 추정치 상향 리포트 {index}",
+                url=f"https://finance.example.com/research/test-score-gap-revision-{index}",
+                snippet="테스트스코어 EPS 상향 33%, 영업이익 추정치 상향 36%, FCF 상향 28%",
+                source="fixture-research",
+                published_at=datetime(2026, 6, 8, 9),
+                query=gap_query,
+                rank=index,
+                is_report_domain=True,
+                confidence=0.9,
+            )
+            for index in range(12)
+        )
+        route_provider = FakeThemeRouteProvider(
+            outputs=[
+                ThemeRouteOutput(status="no_transition"),
+                ThemeRouteOutput(status="no_transition"),
+                ThemeRouteOutput(
+                    status="needs_more_evidence",
+                    missing_information=("revision estimate consensus target price EPS OP FCF",),
+                    suggested_queries=(gap_query,),
+                ),
+                ThemeRouteOutput(status="no_transition"),
+            ]
+        )
+        phase_events = []
+
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=FixtureSearchProvider(
+                results_by_query={
+                    initial_query: initial_results,
+                    gap_query: gap_results,
+                }
+            ),
+            query_planner=_FixedQueryPlanner(plan),
+        ).run(
+            FreeWebResearchInput(
+                company_name="테스트스코어",
+                symbol="777777",
+                sector="semiconductor",
+                market=Market.KR,
+                as_of_date=as_of,
+                top_results=None,
+                fixture_text_by_url={
+                    item.url: (
+                        "테스트스코어 리포트. EPS 상향 33%, 영업이익 추정치 상향 36%, "
+                        "FCF 상향 28%, 목표주가 상향 18%."
+                    )
+                    for item in gap_results
+                },
+                post_gap_fetch_min_results=6,
+                post_gap_fetch_results_per_query=3,
+                max_theme_expansion_rounds=0,
+                max_score_gap_expansion_rounds=1,
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                require_resolved_score_gaps_for_scoring=False,
+                phase_event_sink=phase_events.append,
+            )
+        )
+
+        selected_by_gap_query = [
+            item for item in result.web_result.selected_results
+            if item.result.query == gap_query
+        ]
+        start_events = [
+            event for event in phase_events
+            if event["phase"] == "post_score_gap_web_research_start"
+        ]
+        self.assertEqual(start_events[-1]["gap_fetch_mode"], "incremental")
+        self.assertEqual(start_events[-1]["top_results_override"], 6)
+        self.assertEqual(len(selected_by_gap_query), 6)
+        self.assertEqual(len(result.web_result.selected_results), len(initial_results) + 6)
+        self.assertEqual(len(result.web_result.fetched_documents), len(result.web_result.selected_results))
+        self.assertLess(len(result.web_result.fetched_documents), len(initial_results) + len(gap_results))
+        self.assertGreaterEqual(result.score.diagnostic_scores["revision_score"], 80.0)
+
+    def test_post_gap_top_results_uses_targeted_gap_limit(self):
+        inputs = FreeWebResearchInput(
+            company_name="테스트",
+            symbol="123456",
+            sector=None,
+            market=Market.KR,
+            as_of_date=date(2026, 6, 8),
+            top_results=None,
+            post_gap_fetch_min_results=12,
+            post_gap_fetch_results_per_query=4,
+        )
+        specs = tuple(
+            QuerySpec(
+                group="post_score_gap",
+                query=f"테스트 gap query {index}",
+                priority=170 + index,
+                company_name="테스트",
+                symbol="123456",
+                sector=None,
+                market=Market.KR,
+                as_of_date=date(2026, 6, 8),
+            )
+            for index in range(5)
+        )
+
+        self.assertEqual(_post_gap_top_results(inputs, specs), 20)
 
     def test_score_gap_expansion_reasks_llm_when_query_is_empty(self):
         initial_url = "https://news.example.com/test-retry-demand"
