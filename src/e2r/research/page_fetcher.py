@@ -103,16 +103,16 @@ class PageFetcher:
             except OSError:
                 pass
 
-        req = request.Request(
-            url,
-            headers={
-                "User-Agent": self.user_agent,
-                "Accept": "text/html, text/plain;q=0.9, */*;q=0.1",
-                "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.6,en;q=0.5",
-            },
-            method="GET",
-        )
         try:
+            req = request.Request(
+                _http_request_url(url),
+                headers={
+                    "User-Agent": self.user_agent,
+                    "Accept": "text/html, text/plain;q=0.9, */*;q=0.1",
+                    "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.6,en;q=0.5",
+                },
+                method="GET",
+            )
             with request.urlopen(req, timeout=self.timeout_seconds) as response:
                 content_type = _content_type(response)
                 if "pdf" in content_type.lower():
@@ -127,7 +127,7 @@ class PageFetcher:
                 if len(body) > self.max_body_bytes:
                     body = body[: self.max_body_bytes]
                 charset = _charset(response) or "utf-8"
-        except (error.HTTPError, error.URLError, TimeoutError, OSError) as exc:
+        except (error.HTTPError, error.URLError, TimeoutError, OSError, UnicodeError, ValueError) as exc:
             return FetchResult(
                 url=url,
                 ok=False,
@@ -162,6 +162,14 @@ def _path_exists(value: str) -> bool:
         return Path(value).exists()
     except OSError:
         return False
+
+
+def _http_request_url(url: str) -> str:
+    parts = parse.urlsplit(url)
+    netloc = parts.netloc.encode("idna").decode("ascii") if parts.netloc else ""
+    path = parse.quote(parts.path or "/", safe="/%:@&+$,;=-_.!~*'()")
+    query = parse.quote(parts.query, safe="=&?/:;+,%@-._~!$'()*[]")
+    return parse.urlunsplit((parts.scheme, netloc, path, query, ""))
 
 
 def _looks_like_pdf_url(url: str) -> bool:
