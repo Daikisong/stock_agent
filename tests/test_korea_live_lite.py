@@ -9,6 +9,7 @@ from unittest.mock import patch
 import zipfile
 
 from e2r.cheap_scan import DataGoKrFSCConnector, KoreaCheapScanSources
+from e2r.cheap_scan.models import CheapScanCandidate, RecommendedNextLayer
 from e2r.cli.review_korea_run import (
     KoreaRunReviewSummary,
     _targeted_score_changes,
@@ -18,11 +19,12 @@ from e2r.cli.review_korea_run import (
 )
 from e2r.features import FeatureEngineeringInput
 from e2r.llm import FakeThemeRouteProvider, ThemeRouteOutput
-from e2r.models import DisclosureEvent, ScoreContribution, ScoreSnapshot, Stage
+from e2r.models import DisclosureEvent, Market, ScoreContribution, ScoreSnapshot, Stage
 from e2r.pipeline.korea_live_lite import (
     KoreaLiveLiteBudget,
     KoreaLiveLiteConfig,
     KoreaLiveLiteRunner,
+    _query_planner_for_candidate,
     _result_score_valid,
     _score_blocked_status,
     _score_state_contract_findings_for_outputs,
@@ -89,6 +91,30 @@ class KoreaLiveLiteTests(unittest.TestCase):
         self.assertEqual(config.theme_route_search_result_limit, 80)
         self.assertEqual(config.theme_route_document_limit, 32)
         self.assertEqual(config.theme_route_document_excerpt_chars, 1200)
+
+    def test_targeted_query_planner_preserves_sector_context(self):
+        candidate = CheapScanCandidate(
+            symbol="005930",
+            company_name="삼성전자",
+            market=Market.KR,
+            as_of_date=AS_OF,
+            reason_codes=("TARGETED_SMOKE",),
+            cheap_scan_total_score=0.0,
+            recommended_next_layer=RecommendedNextLayer.EVENT_SEARCH,
+            candidate_source_path="targeted_smoke",
+            test_injected=True,
+            production_candidate=False,
+        )
+        config = KoreaLiveLiteConfig(
+            as_of_date=AS_OF,
+            targeted_smoke_queries=("삼성전자 HBM",),
+        )
+
+        plan = _query_planner_for_candidate(candidate, config, sector_context="반도체").plan()
+
+        self.assertEqual(plan.sector, "반도체")
+        self.assertTrue(plan.queries)
+        self.assertEqual({item.sector for item in plan.queries}, {"반도체"})
 
     def test_live_lite_tiny_smoke_preset_keeps_research_budget_uncapped(self):
         config = KoreaLiveLiteConfig.smoke_preset("tiny", as_of_date=AS_OF)

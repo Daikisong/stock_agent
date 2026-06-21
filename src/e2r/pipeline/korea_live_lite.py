@@ -591,16 +591,18 @@ class KoreaLiveLiteRunner:
             if remaining_queries is not None and remaining_queries <= 0:
                 skipped_candidates.append(_skip(candidate, "naver_search_budget_exhausted"))
                 continue
+            base_feature_input = base_feature_inputs.get(candidate.symbol)
+            sector_context = base_feature_input.sector_context if base_feature_input is not None else None
             runner = FreeWebResearchRunner(
                 browser_provider=config.browser_provider or EmptySearchProvider(),
                 free_search_provider=free_search_provider,
-                query_planner=_query_planner_for_candidate(candidate, config),
+                query_planner=_query_planner_for_candidate(candidate, config, sector_context=sector_context),
             )
             result = runner.run(
                 FreeWebResearchInput(
                     company_name=candidate.company_name,
                     symbol=candidate.symbol,
-                    sector=None,
+                    sector=sector_context,
                     market=candidate.market,
                     as_of_date=candidate.as_of_date,
                     company_aliases=(candidate.company_name, candidate.symbol),
@@ -625,7 +627,7 @@ class KoreaLiveLiteRunner:
                     post_parse_gap_expansion_max_queries=config.post_parse_gap_expansion_max_queries,
                     score_gap_query_retry_max=config.score_gap_query_retry_max,
                     theme_evidence_review_enabled=config.theme_evidence_review_enabled,
-                    base_feature_input=base_feature_inputs.get(candidate.symbol),
+                    base_feature_input=base_feature_input,
                     phase_event_sink=phase_event_sink,
                 )
             )
@@ -2688,12 +2690,21 @@ def _search_budget(
     )
 
 
-def _query_planner_for_candidate(candidate: CheapScanCandidate, config: KoreaLiveLiteConfig):
+def _query_planner_for_candidate(
+    candidate: CheapScanCandidate,
+    config: KoreaLiveLiteConfig,
+    *,
+    sector_context: str | None = None,
+):
     if candidate.candidate_source_path == "targeted_smoke" and config.targeted_smoke_queries:
-        return _FixedCandidateQueryPlanner(candidate, config.targeted_smoke_queries)
+        return _FixedCandidateQueryPlanner(candidate, config.targeted_smoke_queries, sector_context=sector_context)
     if candidate.candidate_source_path == "top_trading_value_probe" and config.top_trading_value_probe_queries:
-        return _FixedCandidateQueryPlanner(candidate, _format_probe_queries(candidate, config.top_trading_value_probe_queries))
-    return EscalationQueryPlanner(candidate)
+        return _FixedCandidateQueryPlanner(
+            candidate,
+            _format_probe_queries(candidate, config.top_trading_value_probe_queries),
+            sector_context=sector_context,
+        )
+    return EscalationQueryPlanner(candidate, sector=sector_context)
 
 
 def _format_probe_queries(candidate: CheapScanCandidate, queries: Sequence[str]) -> tuple[str, ...]:
@@ -2704,9 +2715,16 @@ def _format_probe_queries(candidate: CheapScanCandidate, queries: Sequence[str])
 
 
 class _FixedCandidateQueryPlanner:
-    def __init__(self, candidate: CheapScanCandidate, queries: Sequence[str]) -> None:
+    def __init__(
+        self,
+        candidate: CheapScanCandidate,
+        queries: Sequence[str],
+        *,
+        sector_context: str | None = None,
+    ) -> None:
         self._candidate = candidate
         self._queries = tuple(queries)
+        self._sector_context = sector_context
 
     def plan(self, **kwargs) -> QueryPlan:
         specs = tuple(
@@ -2716,7 +2734,7 @@ class _FixedCandidateQueryPlanner:
                 priority=10 + index,
                 company_name=self._candidate.company_name,
                 symbol=self._candidate.symbol,
-                sector=None,
+                sector=self._sector_context,
                 market=self._candidate.market,
                 as_of_date=self._candidate.as_of_date,
             )
@@ -2725,7 +2743,7 @@ class _FixedCandidateQueryPlanner:
         return QueryPlan(
             company_name=self._candidate.company_name,
             symbol=self._candidate.symbol,
-            sector=None,
+            sector=self._sector_context,
             market=self._candidate.market,
             as_of_date=self._candidate.as_of_date,
             queries=specs,
