@@ -2,10 +2,10 @@
 
 ## 1. Commit
 
-- commit_sha: ce4e24b49ff25eda2629725f07c877491ca90e9a (implementation commit before metadata amend; final pushed SHA is reported in the chat response)
+- commit_sha: d4cce0bb13af4b28ded9b449d1c3406e182d9604 (implementation/report commit; final metadata commit SHA is reported in the chat response)
 - commit_message: Research Brain v1 운영 두뇌 계층 구현
-- push_status: pending final push
-- working_tree_status: clean after final amend/push verification
+- push_status: pushed to origin/main
+- working_tree_status: clean after final verification
 
 ## 2. Tests
 
