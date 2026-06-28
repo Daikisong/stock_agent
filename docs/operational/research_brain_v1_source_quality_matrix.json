@@ -1,36 +1,36 @@
 {
   "rows": [
     {
-      "fixture_usable_count": 2922,
-      "memory_record_count": 11968,
-      "ontology_usable_count": 11968,
+      "fixture_usable_count": 56042,
+      "memory_record_count": 202547,
+      "ontology_usable_count": 202547,
       "production_score_eligible_count": 0,
       "source_quality_class": "A_URL_BACKED_REPLAY_READY"
     },
     {
       "fixture_usable_count": 0,
-      "memory_record_count": 16986,
-      "ontology_usable_count": 16986,
+      "memory_record_count": 31158,
+      "ontology_usable_count": 31158,
       "production_score_eligible_count": 0,
       "source_quality_class": "B_URL_BACKED_REPAIR_NEEDED"
     },
     {
       "fixture_usable_count": 0,
-      "memory_record_count": 136321,
-      "ontology_usable_count": 136321,
+      "memory_record_count": 860101,
+      "ontology_usable_count": 860101,
       "production_score_eligible_count": 0,
       "source_quality_class": "C_SOURCE_PROXY_ONTOLOGY_ONLY"
     },
     {
       "fixture_usable_count": 0,
-      "memory_record_count": 118221,
-      "ontology_usable_count": 118221,
+      "memory_record_count": 361665,
+      "ontology_usable_count": 361665,
       "production_score_eligible_count": 0,
       "source_quality_class": "D_PRICE_PATH_ONLY_OR_FUTURE_LEAKAGE_RISK"
     },
     {
       "fixture_usable_count": 0,
-      "memory_record_count": 24821,
+      "memory_record_count": 100483,
       "ontology_usable_count": 0,
       "production_score_eligible_count": 0,
       "source_quality_class": "E_INVALID_OR_DUPLICATE"
@@ -38,10 +38,10 @@
   ],
   "schema_version": "research_brain_source_quality_matrix_v1",
   "summary": {
-    "A_URL_BACKED_REPLAY_READY": 11968,
-    "B_URL_BACKED_REPAIR_NEEDED": 16986,
-    "C_SOURCE_PROXY_ONTOLOGY_ONLY": 136321,
-    "D_PRICE_PATH_ONLY_OR_FUTURE_LEAKAGE_RISK": 118221,
-    "E_INVALID_OR_DUPLICATE": 24821
+    "A_URL_BACKED_REPLAY_READY": 202547,
+    "B_URL_BACKED_REPAIR_NEEDED": 31158,
+    "C_SOURCE_PROXY_ONTOLOGY_ONLY": 860101,
+    "D_PRICE_PATH_ONLY_OR_FUTURE_LEAKAGE_RISK": 361665,
+    "E_INVALID_OR_DUPLICATE": 100483
   }
 }

@@ -2,8 +2,8 @@
   "rows": [
     {
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-      "general_search_task_count": 3,
-      "must_verify_primitive_count": 13,
+      "general_search_task_count": 2,
+      "must_verify_primitive_count": 19,
       "official_source_task_count": 6,
       "primary_archetype_hypothesis": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
       "recalled_memory_count": 12,
@@ -15,8 +15,8 @@
     },
     {
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
-      "general_search_task_count": 3,
-      "must_verify_primitive_count": 13,
+      "general_search_task_count": 2,
+      "must_verify_primitive_count": 19,
       "official_source_task_count": 6,
       "primary_archetype_hypothesis": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
       "recalled_memory_count": 12,
@@ -28,8 +28,8 @@
     },
     {
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
-      "general_search_task_count": 3,
-      "must_verify_primitive_count": 13,
+      "general_search_task_count": 2,
+      "must_verify_primitive_count": 19,
       "official_source_task_count": 6,
       "primary_archetype_hypothesis": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
       "recalled_memory_count": 12,
@@ -41,8 +41,8 @@
     },
     {
       "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
-      "general_search_task_count": 3,
-      "must_verify_primitive_count": 13,
+      "general_search_task_count": 2,
+      "must_verify_primitive_count": 19,
       "official_source_task_count": 6,
       "primary_archetype_hypothesis": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
       "recalled_memory_count": 12,
@@ -54,8 +54,8 @@
     },
     {
       "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-      "general_search_task_count": 0,
-      "must_verify_primitive_count": 13,
+      "general_search_task_count": 4,
+      "must_verify_primitive_count": 21,
       "official_source_task_count": 6,
       "primary_archetype_hypothesis": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
       "recalled_memory_count": 12,
@@ -67,8 +67,8 @@
     },
     {
       "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
-      "general_search_task_count": 3,
-      "must_verify_primitive_count": 9,
+      "general_search_task_count": 4,
+      "must_verify_primitive_count": 16,
       "official_source_task_count": 6,
       "primary_archetype_hypothesis": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
       "recalled_memory_count": 12,

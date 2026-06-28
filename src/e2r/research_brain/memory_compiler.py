@@ -95,10 +95,9 @@ def _artifact_may_contain_research_memory(artifact: ArtifactInventoryRow) -> boo
 
 
 def _raw_row_may_contain_research_memory(text: str, path: str) -> bool:
-    haystack = f"{path} {text}"
-    if _ROW_ARCHETYPE_RE.search(haystack):
+    if _ROW_ARCHETYPE_RE.search(text):
         return True
-    lower = haystack.lower()
+    lower = text.lower()
     return any(
         token in lower
         for token in (
@@ -106,9 +105,17 @@ def _raw_row_may_contain_research_memory(text: str, path: str) -> bool:
             "evidence_url_pending",
             "archetype_id",
             "canonical_archetype_id",
+            "source_url",
+            "evidence_url",
+            "primitive",
+            "green",
+            "stage",
             "green blocker",
             "false positive",
             "source route",
+            "query",
+            "4b",
+            "4c",
         )
     )
 

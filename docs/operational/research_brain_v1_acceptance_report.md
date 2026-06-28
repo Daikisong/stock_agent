@@ -2,10 +2,11 @@
 
 ## 1. Commit
 
-- commit_sha: d4cce0bb13af4b28ded9b449d1c3406e182d9604 (implementation/report commit; final metadata commit SHA is reported in the chat response)
-- commit_message: Research Brain v1 운영 두뇌 계층 구현
-- push_status: pushed to origin/main
-- working_tree_status: clean after final verification
+- report_base_commit_sha: 796ad04bb61a3ee9da1e91bcf9fa9b7e4b942e9c
+- final_commit_sha: see `git rev-parse HEAD` after the report commit is checked out
+- commit_message: Research Brain v1 전체 메모리 재컴파일 보강
+- push_status: completed by final git push
+- working_tree_status: clean after final push verification
 
 ## 2. Tests
 
@@ -23,29 +24,29 @@
 
 ## 4. Research artifact inventory
 
-- scanned_file_count: 22474
-- parsed_artifact_count: 22474
-- parsed_row_count: 119362
+- scanned_file_count: 22486
+- parsed_artifact_count: 22486
+- parsed_row_count: 1067633
 - parse_error_count: 0
 - duplicate_count: 3684
-- source_proxy_count: 74126
-- evidence_url_pending_count: 63009
-- url_backed_count: 11968
-- production_fixture_count: 2922
+- source_proxy_count: 177228
+- evidence_url_pending_count: 155089
+- url_backed_count: 202547
+- production_fixture_count: 56042
 
 ## 5. Memory store
 
-- memory_record_count: 308317
-- memory_type_counts: `{"4b_watch_condition": 34315, "4c_thesis_break_condition": 21311, "counterexample": 4448, "evidence_contract_candidate": 848, "false_positive_pattern": 4448, "green_blocker": 8343, "hard_break_pattern": 21311, "ontology_only_rule_candidate": 21986, "primitive_failure_case": 10347, "primitive_partial_case": 2, "primitive_success_case": 35689, "production_fixture_candidate": 1461, "query_success_pattern": 48119, "replay_fixture_candidate": 1461, "score_weight_support": 19285, "source_family_reliability": 28412, "source_gap": 9990, "source_route_pattern": 28412, "stage2_watch_cap": 8129}`
-- source_quality_class_counts: `{"A_URL_BACKED_REPLAY_READY": 11968, "B_URL_BACKED_REPAIR_NEEDED": 16986, "C_SOURCE_PROXY_ONTOLOGY_ONLY": 136321, "D_PRICE_PATH_ONLY_OR_FUTURE_LEAKAGE_RISK": 118221, "E_INVALID_OR_DUPLICATE": 24821}`
-- usage_policy_counts: `{"allowed_for_evidence_extraction_prompt": 0, "allowed_for_ontology": 283496, "allowed_for_query_planning": 165275, "allowed_for_red_team_planning": 283496, "allowed_for_replay_fixture": 11968, "allowed_for_runtime_planning": 283496, "allowed_for_score_contribution": 0}`
+- memory_record_count: 1555954
+- memory_type_counts: `{"4b_watch_condition": 153040, "4c_thesis_break_condition": 108193, "counterexample": 12079, "evidence_contract_candidate": 27621, "false_positive_pattern": 12079, "green_blocker": 42995, "hard_break_pattern": 108193, "ontology_only_rule_candidate": 172166, "primitive_failure_case": 88249, "primitive_partial_case": 9, "primitive_success_case": 174830, "production_fixture_candidate": 28021, "query_success_pattern": 199113, "replay_fixture_candidate": 28021, "score_weight_support": 63600, "source_family_reliability": 130474, "source_gap": 34254, "source_route_pattern": 130474, "stage2_watch_cap": 42543}`
+- source_quality_class_counts: `{"A_URL_BACKED_REPLAY_READY": 202547, "B_URL_BACKED_REPAIR_NEEDED": 31158, "C_SOURCE_PROXY_ONTOLOGY_ONLY": 860101, "D_PRICE_PATH_ONLY_OR_FUTURE_LEAKAGE_RISK": 361665, "E_INVALID_OR_DUPLICATE": 100483}`
+- usage_policy_counts: `{"allowed_for_evidence_extraction_prompt": 0, "allowed_for_ontology": 1455471, "allowed_for_query_planning": 1093806, "allowed_for_red_team_planning": 1455471, "allowed_for_replay_fixture": 202547, "allowed_for_runtime_planning": 1455471, "allowed_for_score_contribution": 0}`
 - idempotency result: frozen_import_duplicate_growth_count=0
 
 ## 6. Archetype matrix
 
 - C01-C36 profile coverage: 36/36
-- ready_profile_count: 31
-- planning_only_profile_count: 5
+- ready_profile_count: 36
+- planning_only_profile_count: 0
 - source_gap_profile_count: 0
 
 ## 7. Leakage audit
@@ -66,7 +67,7 @@
 - candidate_event_count: 8
 - candidate_event_requirement_status: provider_or_source_gap_recorded
 - source_task_count: 48
-- official/general source ratio: 1.0 / 0.5
+- official/general source ratio: 1.0 / 0.520833
 - Evidence OS accepted claim count: 5
 
 ## 10. Source router audit

@@ -22,6 +22,8 @@ class ResearchMemoryStore:
     def __init__(self, path: str | Path):
         self.path = Path(path)
         self._records: dict[str, ResearchMemoryRecord] | None = None
+        self._by_archetype: dict[str, tuple[ResearchMemoryRecord, ...]] | None = None
+        self._by_large_sector: dict[str, tuple[ResearchMemoryRecord, ...]] | None = None
 
     def add_records(self, records: Iterable[ResearchMemoryRecord]) -> Mapping[str, int]:
         loaded = self._load()
@@ -31,6 +33,8 @@ class ResearchMemoryStore:
             loaded.setdefault(record.record_id, record)
         after = len(loaded)
         self._records = loaded
+        self._by_archetype = None
+        self._by_large_sector = None
         self._write()
         return {
             "before_count": before,
@@ -52,7 +56,7 @@ class ResearchMemoryStore:
         limit: int | None = None,
     ) -> tuple[ResearchMemoryRecord, ...]:
         rows = []
-        for record in self._load().values():
+        for record in self._candidate_records(archetype_id=archetype_id, large_sector_id=large_sector_id):
             if archetype_id and record.canonical_archetype_id != archetype_id:
                 continue
             if large_sector_id and record.large_sector_id != large_sector_id:
@@ -73,7 +77,7 @@ class ResearchMemoryStore:
         return tuple(rows)
 
     def get_archetype_profile(self, archetype_id: str) -> ArchetypeMemoryProfile:
-        return build_archetype_profile(archetype_id, self.query(archetype_id=archetype_id, limit=None))
+        return build_archetype_profile(archetype_id, self._records_by_archetype().get(archetype_id, ()))
 
     def get_source_routes(self, archetype_id: str, primitive_id: str | None = None) -> tuple[ResearchMemoryRecord, ...]:
         return self.query(
@@ -133,6 +137,34 @@ class ResearchMemoryStore:
                     records.setdefault(record.record_id, record)
         self._records = records
         return records
+
+    def _candidate_records(
+        self,
+        *,
+        archetype_id: str | None,
+        large_sector_id: str | None,
+    ) -> Iterable[ResearchMemoryRecord]:
+        if archetype_id:
+            return self._records_by_archetype().get(archetype_id, ())
+        if large_sector_id:
+            return self._records_by_large_sector().get(large_sector_id, ())
+        return self._load().values()
+
+    def _records_by_archetype(self) -> dict[str, tuple[ResearchMemoryRecord, ...]]:
+        if self._by_archetype is None:
+            grouped: dict[str, list[ResearchMemoryRecord]] = {}
+            for record in self._load().values():
+                grouped.setdefault(record.canonical_archetype_id, []).append(record)
+            self._by_archetype = {key: tuple(value) for key, value in grouped.items()}
+        return self._by_archetype
+
+    def _records_by_large_sector(self) -> dict[str, tuple[ResearchMemoryRecord, ...]]:
+        if self._by_large_sector is None:
+            grouped: dict[str, list[ResearchMemoryRecord]] = {}
+            for record in self._load().values():
+                grouped.setdefault(record.large_sector_id, []).append(record)
+            self._by_large_sector = {key: tuple(value) for key, value in grouped.items()}
+        return self._by_large_sector
 
     def _write(self) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
