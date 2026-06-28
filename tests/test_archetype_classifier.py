@@ -76,6 +76,41 @@ class ArchetypeClassifierTests(unittest.TestCase):
 
         self.assertEqual(classification.canonical_archetype_id, "C01_ORDER_BACKLOG_MARGIN_BRIDGE")
 
+    def test_legacy_accounting_text_does_not_route_without_v2_claim(self):
+        classification = classify_v12_archetype(
+            symbol="CASE",
+            sector_profile=SectorProfile.GENERIC,
+            parsed_fields={"accounting_or_trust_issue": True},
+            text="월덱스 주요 고객사는 삼성전자이며 감사의견은 적정이다.",
+            price_stage_score=0.0,
+            revision_score=0.0,
+        )
+
+        self.assertNotEqual(
+            classification.canonical_archetype_id,
+            "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        )
+
+    def test_v2_claim_backed_accounting_primitive_routes_to_accounting_archetype(self):
+        classification = classify_v12_archetype(
+            symbol="CASE",
+            sector_profile=SectorProfile.GENERIC,
+            parsed_fields={
+                "accounting_or_trust_issue": True,
+                "evidence_os_v2_score_eligible_claim_ids_by_primitive": {
+                    "accounting_trust_break": ("CLM-ACCOUNTING",),
+                },
+            },
+            text="Target issuer disclosed that its auditor issued an adverse opinion.",
+            price_stage_score=0.0,
+            revision_score=0.0,
+        )
+
+        self.assertEqual(
+            classification.canonical_archetype_id,
+            "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        )
+
     def test_control_premium_event_routes_to_governance_archetype(self):
         classification = classify_v12_archetype(
             symbol="CASE",

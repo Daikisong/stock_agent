@@ -115,6 +115,8 @@ def source_name_for_request(request: SourceRequest) -> str:
     url = request.url.lower()
     if "OPENDART" in credential or "opendart" in url:
         return "opendart"
+    if "NAVER_FINANCE" in credential or "finance.naver.com" in url:
+        return "naver_finance"
     if "NAVER" in credential or "openapi.naver.com" in url:
         return "naver_search"
     if "DATA_GO_KR" in credential or "apis.data.go.kr" in url:

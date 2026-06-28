@@ -12,6 +12,8 @@ from pathlib import Path
 from urllib import error, parse, request
 from typing import Mapping
 
+from e2r.research.pdf_text_extractor import PDFTextExtractor
+
 
 @dataclass(frozen=True)
 class FetchResult:
@@ -34,6 +36,7 @@ class PageFetcher:
     live_enabled: bool = False
     timeout_seconds: float = 10.0
     cache_directory: str | Path | None = None
+    pdf_text_extractor: PDFTextExtractor | None = None
     max_body_bytes: int = 2_000_000
     max_text_chars: int = 200_000
     user_agent: str = (
@@ -79,13 +82,6 @@ class PageFetcher:
                 fetched_at=fetched_at,
                 reason="unsupported_url_scheme_for_live_fetch",
             )
-        if _looks_like_pdf_url(url):
-            return FetchResult(
-                url=url,
-                ok=False,
-                fetched_at=fetched_at,
-                reason="live_pdf_text_extraction_not_implemented",
-            )
 
         cache_path = _cache_path(self.cache_directory, url, as_of_date)
         if cache_path is not None and cache_path.exists():
@@ -108,21 +104,13 @@ class PageFetcher:
                 _http_request_url(url),
                 headers={
                     "User-Agent": self.user_agent,
-                    "Accept": "text/html, text/plain;q=0.9, */*;q=0.1",
+                    "Accept": "text/html, text/plain, application/pdf;q=0.9, */*;q=0.1",
                     "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.6,en;q=0.5",
                 },
                 method="GET",
             )
             with request.urlopen(req, timeout=self.timeout_seconds) as response:
                 content_type = _content_type(response)
-                if "pdf" in content_type.lower():
-                    return FetchResult(
-                        url=url,
-                        ok=False,
-                        content_type=content_type,
-                        fetched_at=fetched_at,
-                        reason="live_pdf_text_extraction_not_implemented",
-                    )
                 body = response.read(max(1, self.max_body_bytes + 1))
                 if len(body) > self.max_body_bytes:
                     body = body[: self.max_body_bytes]
@@ -133,6 +121,28 @@ class PageFetcher:
                 ok=False,
                 fetched_at=fetched_at,
                 reason=f"live_fetch_failed:{type(exc).__name__}:{exc}",
+            )
+
+        if _looks_like_pdf_url(url) or "pdf" in content_type.lower():
+            extraction = (self.pdf_text_extractor or PDFTextExtractor()).extract_text_from_bytes(body)
+            if not extraction.ok or not (extraction.text or "").strip():
+                reason = extraction.reason or "empty_pdf_text"
+                return FetchResult(
+                    url=url,
+                    ok=False,
+                    content_type=content_type or "application/pdf",
+                    fetched_at=fetched_at,
+                    reason=f"live_pdf_text_extraction_failed:{reason}",
+                )
+            text = (extraction.text or "")[: self.max_text_chars]
+            source_path = _write_cache(cache_path, text)
+            return FetchResult(
+                url=url,
+                ok=True,
+                text=text,
+                content_type=content_type or "application/pdf",
+                fetched_at=fetched_at,
+                source_path=source_path,
             )
 
         decoded = body.decode(charset, errors="replace")

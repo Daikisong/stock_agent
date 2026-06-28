@@ -16,6 +16,18 @@ from e2r.calibration.taxonomy import (
 from e2r.sector_profiles import SectorProfile
 
 
+_V2_SCORE_ELIGIBLE_CLAIMS_KEY = "evidence_os_v2_score_eligible_claim_ids_by_primitive"
+_ACCOUNTING_TRUST_PRIMITIVES = frozenset(
+    {
+        "accounting_or_trust_issue",
+        "accounting_trust_break",
+        "accounting_trust_risk",
+        "auditor_or_disclosure_risk",
+        "restatement_risk",
+    }
+)
+
+
 @dataclass(frozen=True)
 class ArchetypeClassification:
     """Resolved v12 taxonomy scope used by runtime scoring."""
@@ -258,42 +270,20 @@ def _string_field(value: Any) -> str | None:
 
 
 def _has_accounting_trust_risk(haystack: str, parsed_fields: Mapping[str, Any]) -> bool:
-    if parsed_fields.get("accounting_or_trust_issue"):
-        return True
-    risk_phrases = (
-        "회계 이슈",
-        "회계 문제",
-        "회계 부정",
-        "회계 조작",
-        "분식회계",
-        "감사의견",
-        "감사 의견",
-        "의견거절",
-        "한정의견",
-        "부적정의견",
-        "내부회계",
-        "내부 회계",
-        "감사보고서 미제출",
-        "감사보고서 제출 지연",
-        "공매도 리포트",
-        "공매도 보고서",
-        "공매도 공격",
-        "숏리포트",
-        "short seller report",
-        "short-seller report",
-        "short report",
-        "short attack",
-        "accounting issue",
-        "accounting irregularity",
-        "accounting fraud",
-        "audit opinion",
-        "qualified opinion",
-        "adverse opinion",
-        "material weakness",
-        "internal control weakness",
-        "going concern",
-    )
-    return _has_any(haystack, risk_phrases)
+    del haystack
+    return _has_v2_score_eligible_claim(parsed_fields, _ACCOUNTING_TRUST_PRIMITIVES)
+
+
+def _has_v2_score_eligible_claim(parsed_fields: Mapping[str, Any], primitive_ids: frozenset[str]) -> bool:
+    raw = parsed_fields.get(_V2_SCORE_ELIGIBLE_CLAIMS_KEY)
+    if not isinstance(raw, Mapping):
+        return False
+    for primitive_id in primitive_ids:
+        claim_ids = raw.get(primitive_id)
+        values = claim_ids if isinstance(claim_ids, (list, tuple)) else (claim_ids,)
+        if any(str(item).strip() for item in values):
+            return True
+    return False
 
 
 def _has_defense_export_evidence(haystack: str, parsed_fields: Mapping[str, Any]) -> bool:

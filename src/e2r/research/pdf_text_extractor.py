@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from io import BytesIO
+import logging
 from pathlib import Path
 from typing import Mapping
 
@@ -57,12 +58,24 @@ class PDFTextExtractor:
                 text = "\n".join(page.extract_text() or "" for page in pdf.pages)
             return PDFTextExtractionResult(ok=True, text=text, extractor="pdfplumber")
         except ImportError:
-            return PDFTextExtractionResult(
-                ok=False,
-                reason="PDF extraction requires PyMuPDF or pdfplumber, or a local .txt fixture",
-            )
+            pass
         except Exception as exc:  # pragma: no cover - depends on optional library internals
             return PDFTextExtractionResult(ok=False, reason=f"pdfplumber extraction failed: {exc}", extractor="pdfplumber")
+
+        try:
+            from pypdf import PdfReader  # type: ignore
+
+            logging.getLogger("pypdf").setLevel(logging.ERROR)
+            reader = PdfReader(BytesIO(payload))
+            text = "\n".join(page.extract_text() or "" for page in reader.pages)
+            return PDFTextExtractionResult(ok=True, text=text, extractor="pypdf")
+        except ImportError:
+            return PDFTextExtractionResult(
+                ok=False,
+                reason="PDF extraction requires PyMuPDF, pdfplumber, pypdf, or a local .txt fixture",
+            )
+        except Exception as exc:  # pragma: no cover - depends on optional library internals
+            return PDFTextExtractionResult(ok=False, reason=f"pypdf extraction failed: {exc}", extractor="pypdf")
 
     def _fixture_text(self, key: str) -> str | None:
         if not self.fixture_text_by_path:

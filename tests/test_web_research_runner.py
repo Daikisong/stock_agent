@@ -6,11 +6,12 @@ import unittest
 from unittest.mock import patch
 
 from e2r.features import DeterministicFeatureEngineer, FeatureEngineeringInput
-from e2r.models import Market, Stage
+from e2r.models import Market, NewsItem, Stage
 from e2r.red_team import RedTeamEngine
 from e2r.research import (
     FixtureSearchProvider,
     PageFetcher,
+    PDFTextExtractionResult,
     PDFTextExtractor,
     RequestOnlySearchProvider,
     SearchResult,
@@ -90,6 +91,16 @@ HD현대일렉트릭은 북미 전력기기 공급 부족과 변압기 리드타
 
 
 class WebResearchRunnerTests(unittest.TestCase):
+    def test_web_research_input_bounds_fetch_selection_by_default(self):
+        inputs = WebResearchInput("테스트", "123456", "semiconductor", Market.KR, date(2026, 6, 8))
+
+        self.assertEqual(inputs.max_results_per_query, 100)
+        self.assertEqual(inputs.top_results, 60)
+        with self.assertRaisesRegex(ValueError, "top_results must be bounded"):
+            WebResearchInput("테스트", "123456", "semiconductor", Market.KR, date(2026, 6, 8), top_results=None)
+        with self.assertRaisesRegex(ValueError, "top_results must be non-negative"):
+            WebResearchInput("테스트", "123456", "semiconductor", Market.KR, date(2026, 6, 8), top_results=-1)
+
     def test_lightweight_text_extractor_recognizes_v12_common_bridge_aliases(self):
         fields = extract_e2r_text_fields(
             """
@@ -455,7 +466,69 @@ OPM 개선폭 6%
 
         self.assertTrue(result.red_team_findings)
         self.assertEqual(result.red_team_findings[0].risk_type, "accounting_or_trust_issue")
+        self.assertFalse(result.red_team_findings[0].is_hard_break)
         self.assertTrue(any(item.parsed_fields.get("accounting_or_trust_issue") for item in result.evidence))
+
+    def test_worldex_audit_opinion_with_samsung_customer_mention_does_not_create_samsung_4c(self):
+        url = "https://news.example.com/worldex-audit-opinion"
+        text = "월덱스는 삼성전자를 주요 고객사로 두고 있으며 2020년 감사의견은 적정이었다."
+        runner = _runner(
+            {
+                "삼성전자 감사의견": (
+                    SearchResult(
+                        title="월덱스 감사의견 적정",
+                        url=url,
+                        source="Naver News",
+                        published_at=datetime(2026, 6, 9, 8),
+                        query="삼성전자 감사의견",
+                        rank=1,
+                        is_news=True,
+                        confidence=0.85,
+                    ),
+                )
+            },
+            {url: text},
+        )
+
+        web_result = runner.run(WebResearchInput("삼성전자", "005930", "semiconductor", Market.KR, date(2026, 6, 9)))
+        contaminated_news = NewsItem(
+            symbol="005930",
+            sector="semiconductor",
+            published_at=datetime(2026, 6, 9, 8),
+            source="fixture-news",
+            title="월덱스 감사의견 적정",
+            as_of_date=date(2026, 6, 9),
+            body=text,
+            parsed_fields={"accounting_or_trust_issue": True},
+        )
+        feature_result = DeterministicFeatureEngineer().engineer(
+            FeatureEngineeringInput(
+                symbol="005930",
+                company_name="삼성전자",
+                sector_context="semiconductor",
+                as_of_date=date(2026, 6, 9),
+                news_items=(contaminated_news,),
+            )
+        )
+        score = feature_result.score()
+        red_team = RedTeamEngine().assess(feature_result.red_team_signals)
+        stage = StageClassifier().classify(StageClassificationInput(score=score, red_team=red_team))
+
+        self.assertEqual(web_result.parsed_news, ())
+        self.assertEqual(web_result.red_team_findings, ())
+        self.assertTrue(any(item.reason == "company_not_found_in_fetched_document" for item in web_result.dropped_results))
+        self.assertEqual(
+            score.diagnostic_scores["legacy_direct_score_field_without_v2_claim_count_capped"],
+            1.0,
+        )
+        self.assertEqual(score.diagnostic_scores["research_axis_bridge_guard_risk"], 0.0)
+        self.assertNotEqual(
+            feature_result.source_fields["canonical_archetype_id"],
+            "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        )
+        self.assertFalse(red_team.has_hard_break)
+        self.assertFalse(any(item.risk_type == "accounting_or_trust_issue" for item in red_team.findings))
+        self.assertNotEqual(stage.stage, Stage.STAGE_4C)
 
     def test_site_boilerplate_does_not_create_ai_or_accounting_route(self):
         url = "https://news.example.com/hyundai-auto-brief"
@@ -708,6 +781,33 @@ OPM 개선폭 6%
 
             self.assertTrue(second.ok)
             self.assertEqual(second.text, first.text)
+
+    def test_page_fetcher_live_extracts_pdf_text_and_uses_cache(self):
+        extractor = _FakePDFExtractor("HBM 완판과 고객 물량 배정")
+        with tempfile.TemporaryDirectory() as tmpdir:
+            fetcher = PageFetcher(
+                live_enabled=True,
+                cache_directory=tmpdir,
+                pdf_text_extractor=extractor,
+            )
+            with patch(
+                "e2r.research.page_fetcher.request.urlopen",
+                return_value=_FakeHTTPResponse("%PDF-1.4 fixture", content_type="application/pdf"),
+            ):
+                first = fetcher.fetch("https://broker.example.com/hbm.pdf", as_of_date=date(2026, 6, 8))
+
+            self.assertTrue(first.ok)
+            self.assertIn("HBM 완판", first.text)
+            self.assertEqual(extractor.payload_count, 1)
+            self.assertIsNotNone(first.source_path)
+
+            with patch("e2r.research.page_fetcher.request.urlopen") as urlopen:
+                second = fetcher.fetch("https://broker.example.com/hbm.pdf", as_of_date=date(2026, 6, 8))
+
+            self.assertTrue(second.ok)
+            self.assertEqual(second.text, first.text)
+            self.assertEqual(extractor.payload_count, 1)
+            urlopen.assert_not_called()
             urlopen.assert_not_called()
 
     def test_page_fetcher_percent_encodes_non_ascii_live_url(self):
@@ -1475,6 +1575,16 @@ class _FakeHTTPResponse:
         if size is None or size < 0:
             return self._body
         return self._body[:size]
+
+
+class _FakePDFExtractor:
+    def __init__(self, text: str) -> None:
+        self.text = text
+        self.payload_count = 0
+
+    def extract_text_from_bytes(self, payload: bytes) -> PDFTextExtractionResult:
+        self.payload_count += 1
+        return PDFTextExtractionResult(ok=True, text=self.text, extractor="fake")
 
 
 if __name__ == "__main__":

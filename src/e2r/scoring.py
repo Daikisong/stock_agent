@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import date
 import math
 from typing import Mapping, Protocol
@@ -15,6 +15,7 @@ from .calibration.archetype_weight_profile import (
 from .calibration.scoring_profile import get_active_scoring_profile
 from .calibration.taxonomy import large_sector_for_archetype, normalise_canonical_archetype_id, normalise_large_sector_id
 from .diagnostic_values import numeric_diagnostic
+from .agentic import ScoreContributionV2
 from .models import IndustrialSubScores, ScoreContribution, ScoreSnapshot
 
 
@@ -57,6 +58,7 @@ class ScoringPayload:
     industrial_sub_scores: IndustrialSubScores | None = None
     evidence_ids: tuple[str, ...] = field(default_factory=tuple)
     score_contribution_claim_ids: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
+    score_contributions_v2: tuple[ScoreContributionV2, ...] = field(default_factory=tuple)
     scoring_version: str = "e2r-2.0-cp1"
     large_sector_id: str | None = None
     canonical_archetype_id: str | None = None
@@ -111,6 +113,11 @@ class ScoringPayload:
             if key not in _MAX_POINTS_BY_KEY:
                 raise ValueError(f"unknown score contribution component: {key}")
             contribution_claims[key] = tuple(dict.fromkeys(str(item) for item in claim_ids if str(item).strip()))
+        for item in self.score_contributions_v2:
+            if not isinstance(item, ScoreContributionV2):
+                raise ValueError("score_contributions_v2 must contain ScoreContributionV2 instances")
+            if item.component_key not in _MAX_POINTS_BY_KEY:
+                raise ValueError(f"unknown v2 score contribution component: {item.component_key}")
         if not isinstance(self.scoring_version, str) or not self.scoring_version.strip():
             raise ValueError("scoring_version must be a non-empty string")
         if self.large_sector_id is not None and (
@@ -126,6 +133,7 @@ class ScoringPayload:
         object.__setattr__(self, "diagnostic_scores", diagnostic_copy)
         object.__setattr__(self, "evidence_ids", tuple(self.evidence_ids))
         object.__setattr__(self, "score_contribution_claim_ids", contribution_claims)
+        object.__setattr__(self, "score_contributions_v2", tuple(self.score_contributions_v2))
         if self.large_sector_id is not None:
             object.__setattr__(self, "large_sector_id", normalise_large_sector_id(self.large_sector_id))
         if self.canonical_archetype_id is not None:
@@ -143,10 +151,37 @@ class ArchetypeClassificationError(ValueError):
     """Raised when rolling scoring is requested without a resolved v12 taxonomy."""
 
 
+def _payload_with_v2_score_components(payload: ScoringPayload) -> ScoringPayload:
+    if not payload.score_contributions_v2:
+        return payload
+    components = _components_from_v2_contributions(payload.score_contributions_v2)
+    diagnostics = dict(payload.diagnostic_scores)
+    diagnostics["score_contribution_v2_component_input_used"] = 100.0
+    risk_penalty = 0.0
+    if payload.risk_penalty > 0.0:
+        diagnostics["score_contribution_v2_legacy_risk_penalty_quarantined"] = 100.0
+        diagnostics["raw_legacy_risk_penalty_before_v2_quarantine"] = round(float(payload.risk_penalty), 4)
+    return replace(payload, components=components, risk_penalty=risk_penalty, diagnostic_scores=diagnostics)
+
+
+def _components_from_v2_contributions(
+    score_contributions_v2: tuple[ScoreContributionV2, ...],
+) -> dict[str, float]:
+    components = {spec.key: 0.0 for spec in CANONICAL_SCORE_COMPONENTS}
+    for item in score_contributions_v2:
+        max_points = _MAX_POINTS_BY_KEY[item.component_key]
+        components[item.component_key] = min(
+            max_points,
+            components[item.component_key] + max(float(item.raw_points), 0.0),
+        )
+    return {key: round(value, 4) for key, value in components.items()}
+
+
 class DeterministicScorer:
     """Canonical E2R 2.0 component scorer."""
 
     def score(self, payload: ScoringPayload) -> ScoreSnapshot:
+        payload = _payload_with_v2_score_components(payload)
         profile = get_active_scoring_profile()
         diagnostic_scores = dict(payload.diagnostic_scores)
         weighted = _apply_archetype_runtime_weights(payload, profile)
@@ -215,10 +250,11 @@ class DeterministicScorer:
             total_score=total_score,
             diagnostic_scores=diagnostic_scores,
             evidence_ids=tuple(dict.fromkeys(evidence_ids)),
-            score_contribution_claim_ids=payload.score_contribution_claim_ids,
+            score_contribution_claim_ids=_score_contribution_claim_ids_for_snapshot(payload, snapshot_components),
             score_contribution_ledger=_score_contribution_ledger(
                 snapshot_components,
-                payload.score_contribution_claim_ids,
+                _legacy_score_contribution_claim_ids_for_components(payload.score_contribution_claim_ids, snapshot_components),
+                payload.score_contributions_v2,
             ),
             scoring_version=_scoring_version(payload.scoring_version, profile.profile_id, weighted),
         )
@@ -249,13 +285,16 @@ def _apply_archetype_runtime_weights(payload: ScoringPayload, profile) -> Weight
 
 def _score_contribution_claim_diagnostics(payload: ScoringPayload) -> dict[str, float]:
     nonzero_components = tuple(key for key, value in payload.components.items() if float(value) > 0.0)
+    v2_claim_ids = _score_contribution_claim_ids_from_v2(payload.score_contributions_v2)
+    require_v2 = _v2_score_contributions_required(payload.diagnostic_scores)
+    claim_ids_by_component = v2_claim_ids if require_v2 else (v2_claim_ids or payload.score_contribution_claim_ids)
     claim_backed_components = tuple(
         key
         for key in nonzero_components
-        if payload.score_contribution_claim_ids.get(key)
+        if claim_ids_by_component.get(key)
     )
     orphan_components = tuple(key for key in nonzero_components if key not in claim_backed_components)
-    require_claims = _claim_backed_score_required(payload.diagnostic_scores)
+    require_claims = require_v2 or _claim_backed_score_required(payload.diagnostic_scores)
     nonzero_count = len(nonzero_components)
     claim_backed_count = len(claim_backed_components)
     orphan_count = len(orphan_components)
@@ -266,10 +305,23 @@ def _score_contribution_claim_diagnostics(payload: ScoringPayload) -> dict[str, 
         "orphan_score_component_count_capped": min(float(orphan_count), 100.0),
         "score_claim_backed_component_ratio": round(min(max(ratio, 0.0), 100.0), 4),
         "score_claim_backed_required": 100.0 if require_claims else 0.0,
+        "score_contribution_v2_required": 100.0 if require_v2 else 0.0,
+        "score_contribution_v2_input_count_capped": min(float(len(payload.score_contributions_v2)), 100.0),
+        "score_contribution_v2_used": 100.0 if v2_claim_ids else 0.0,
     }
     if require_claims and orphan_count:
         diagnostics["score_blocked_by_orphan_score_contribution"] = 100.0
     return diagnostics
+
+
+def _v2_score_contributions_required(diagnostics: Mapping[str, float]) -> bool:
+    return any(
+        numeric_diagnostic(diagnostics, key) > 0.0
+        for key in (
+            "require_v2_score_contributions",
+            "agentic_evidence_required_for_scoring",
+        )
+    )
 
 
 def _claim_backed_score_required(diagnostics: Mapping[str, float]) -> bool:
@@ -287,7 +339,11 @@ def _claim_backed_score_required(diagnostics: Mapping[str, float]) -> bool:
 def _score_contribution_ledger(
     components: Mapping[str, float],
     claim_ids_by_component: Mapping[str, tuple[str, ...]],
+    score_contributions_v2: tuple[ScoreContributionV2, ...] = (),
 ) -> tuple[ScoreContribution, ...]:
+    v2_rows = _score_contribution_ledger_from_v2(components, score_contributions_v2)
+    if v2_rows is not None:
+        return v2_rows
     rows: list[ScoreContribution] = []
     for spec in CANONICAL_SCORE_COMPONENTS:
         raw_points = float(components[spec.key])
@@ -311,6 +367,96 @@ def _score_contribution_ledger(
                 rationale=rationale,
                 confidence=confidence,
                 cap_reason=None if support_claim_ids or raw_points <= 0.0 else "missing_support_claim_ids",
+            )
+        )
+    return tuple(rows)
+
+
+def _score_contribution_claim_ids_for_snapshot(
+    payload: ScoringPayload,
+    components: Mapping[str, float],
+) -> Mapping[str, tuple[str, ...]]:
+    return _score_contribution_claim_ids_from_v2(
+        payload.score_contributions_v2,
+        components=components,
+    ) or _legacy_score_contribution_claim_ids_for_components(payload.score_contribution_claim_ids, components)
+
+
+def _score_contribution_claim_ids_from_v2(
+    score_contributions_v2: tuple[ScoreContributionV2, ...],
+    *,
+    components: Mapping[str, float] | None = None,
+) -> dict[str, tuple[str, ...]]:
+    by_component: dict[str, list[str]] = {}
+    for item in score_contributions_v2:
+        if item.raw_points <= 0.0:
+            continue
+        if components is not None and float(components.get(item.component_key, 0.0)) <= 0.0:
+            continue
+        by_component.setdefault(item.component_key, []).extend(item.support_claim_ids)
+    return {
+        component: tuple(dict.fromkeys(claim_ids))
+        for component, claim_ids in by_component.items()
+        if claim_ids
+    }
+
+
+def _legacy_score_contribution_claim_ids_for_components(
+    claim_ids_by_component: Mapping[str, tuple[str, ...]],
+    components: Mapping[str, float],
+) -> Mapping[str, tuple[str, ...]]:
+    return {
+        component: tuple(dict.fromkeys(claim_ids))
+        for component, claim_ids in claim_ids_by_component.items()
+        if float(components.get(component, 0.0)) > 0.0 and claim_ids
+    }
+
+
+def _score_contribution_ledger_from_v2(
+    components: Mapping[str, float],
+    score_contributions_v2: tuple[ScoreContributionV2, ...],
+) -> tuple[ScoreContribution, ...] | None:
+    if not score_contributions_v2:
+        return None
+    by_component: dict[str, list[ScoreContributionV2]] = {}
+    for item in score_contributions_v2:
+        by_component.setdefault(item.component_key, []).append(item)
+    rows: list[ScoreContribution] = []
+    for spec in CANONICAL_SCORE_COMPONENTS:
+        raw_points = float(components[spec.key])
+        rows_for_component = by_component.get(spec.key, ())
+        support_claim_ids = tuple(
+            dict.fromkeys(
+                claim_id
+                for item in rows_for_component
+                if item.raw_points > 0.0
+                for claim_id in item.support_claim_ids
+            )
+        )
+        counter_claim_ids = tuple(
+            dict.fromkeys(claim_id for item in rows_for_component for claim_id in item.counter_claim_ids)
+        )
+        cap_reasons = tuple(dict.fromkeys(str(item.cap_reason) for item in rows_for_component if item.cap_reason))
+        if raw_points <= 0.0:
+            rationale = "zero component score"
+            confidence = 1.0
+        elif support_claim_ids:
+            rationale = "component score has v2 claim-backed support"
+            confidence = 1.0
+        else:
+            rationale = "component score has no v2 support_claim_ids"
+            confidence = 0.0
+        rows.append(
+            ScoreContribution(
+                component_key=spec.key,
+                criterion_id=spec.key,
+                raw_points=raw_points,
+                max_points=spec.max_points,
+                support_claim_ids=support_claim_ids,
+                counter_claim_ids=counter_claim_ids,
+                rationale=rationale,
+                confidence=confidence,
+                cap_reason=";".join(cap_reasons) if cap_reasons else (None if support_claim_ids or raw_points <= 0.0 else "missing_v2_support_claim_ids"),
             )
         )
     return tuple(rows)

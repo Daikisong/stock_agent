@@ -8,7 +8,17 @@ import json
 import math
 from typing import Any, Mapping, Protocol, Sequence
 
-from .agentic import claim_backed_parsed_fields, evidence_contract_for_archetype
+from .agentic import (
+    LEGACY_DIRECT_RISK_FIELDS,
+    V2_HARD_BREAK_SOURCE_QUORUM_KEY,
+    MentionSourceKind,
+    V2_SCORE_ELIGIBLE_CLAIMS_KEY,
+    audit_legacy_direct_score_fields,
+    audit_legacy_parser_score_claim_fields,
+    claim_backed_parsed_fields,
+    evidence_contract_for_archetype,
+    mentions_from_parsed_fields,
+)
 from .archetype_classifier import classify_v12_archetype
 from .calibration.taxonomy import normalise_canonical_archetype_id, normalise_large_sector_id
 from .estimate_quality import (
@@ -32,7 +42,7 @@ from .models import (
     ResearchReport,
     ShortageType,
 )
-from .red_team import RedTeamSignals
+from .red_team import HARD_BREAK_SIGNALS, RedTeamSignals
 from .scoring import DeterministicScorer, ScoringPayload
 from .sector_profiles import SectorProfile, infer_sector_profile, profile_for_archetype, profile_id
 
@@ -72,6 +82,8 @@ _REVISION_NUMERIC_FIELD_KEYS = {
     "target_revision_pct",
     "target_price_revision_1m",
 }
+
+_LEGACY_SEVERE_RISK_FIELDS_REQUIRING_V2 = set(LEGACY_DIRECT_RISK_FIELDS)
 
 _SCORE_COMPONENT_CLAIM_KEYWORDS: Mapping[str, tuple[str, ...]] = {
     "eps_fcf_explosion": (
@@ -567,6 +579,10 @@ class DeterministicFeatureEngineer:
         sector_metrics = self._sector_metrics(inputs, field_source, sub_scores, sector_profile, estimate_quality)
         bottleneck_diagnostics = self._bottleneck_diagnostics(field_source, sub_scores, sector_metrics)
         bridge_diagnostics = self._research_axis_bridge_diagnostics(field_source)
+        parser_output_mentions = field_source.parser_output_mentions()
+        legacy_direct_findings = field_source.legacy_direct_score_findings()
+        legacy_parser_score_findings = field_source.legacy_parser_score_claim_findings()
+        legacy_direct_mentions = field_source.legacy_direct_score_mentions(legacy_direct_findings)
         contract_coverage = self._evidence_contract_coverage(classification.canonical_archetype_id, field_source)
         components = self._components(inputs, field_source, sub_scores, sector_metrics, estimate_quality)
         risk_penalty = self._risk_penalty(field_source, sub_scores, sector_metrics["structural_visibility_quality"], sector_profile)
@@ -589,6 +605,16 @@ class DeterministicFeatureEngineer:
             **self._evidence_family_diagnostics(inputs),
             **self._claim_backed_diagnostics(field_source),
             **contract_coverage["diagnostics"],
+            "parser_output_mention_count_capped": min(float(len(parser_output_mentions)), 100.0),
+            "legacy_direct_score_field_without_v2_claim_count_capped": min(
+                float(len(legacy_direct_findings)),
+                100.0,
+            ),
+            "legacy_parser_score_claim_without_v2_count_capped": min(
+                float(len(legacy_parser_score_findings)),
+                100.0,
+            ),
+            "legacy_direct_score_mention_count_capped": min(float(len(legacy_direct_mentions)), 100.0),
         }
         if inputs.agent_extracted_fields:
             diagnostic_scores["agent_extracted_field_count_capped"] = min(float(len(inputs.agent_extracted_fields)), 100.0)
@@ -648,6 +674,17 @@ class DeterministicFeatureEngineer:
                 ensure_ascii=False,
                 sort_keys=True,
             ),
+            "legacy_direct_score_fields_without_v2_claim": ",".join(
+                tuple(dict.fromkeys(item.field_name for item in legacy_direct_findings))
+            ),
+            "legacy_parser_score_claim_fields_without_v2": ",".join(
+                tuple(dict.fromkeys(item.field_name for item in legacy_parser_score_findings))
+            ),
+            "parser_output_mention_ids": ",".join(item.mention_id for item in parser_output_mentions[:200]),
+            "parser_output_mention_field_names": ",".join(
+                tuple(dict.fromkeys(item.field_name for item in parser_output_mentions[:200]))
+            ),
+            "legacy_direct_score_mention_ids": ",".join(item.mention_id for item in legacy_direct_mentions),
             **bottleneck_diagnostics,
             **bridge_diagnostics,
             **contract_coverage["source_fields"],
@@ -2642,6 +2679,7 @@ class DeterministicFeatureEngineer:
         thesis_break_factors: dict[str, float] = {}
         evidence_ids_by_signal: dict[str, tuple[str, ...]] = {}
         claim_ids_by_primitive = fields.score_claim_ids_by_primitive()
+        hard_break_quorum_by_primitive = fields.hard_break_source_quorum_by_primitive()
 
         def _claim_ids_for_signal(signal: str) -> tuple[str, ...]:
             return tuple(dict.fromkeys(claim_ids_by_primitive.get(signal, ())))
@@ -2708,6 +2746,11 @@ class DeterministicFeatureEngineer:
             soft_4b_factors=soft_4b_factors,
             thesis_break_factors=thesis_break_factors,
             evidence_ids_by_signal=evidence_ids_by_signal,
+            hard_break_quorum_by_signal={
+                signal: hard_break_quorum_by_primitive.get(signal, False)
+                for signal in HARD_BREAK_SIGNALS
+                if signal in thesis_break_factors
+            },
         )
 
     @staticmethod
@@ -3166,6 +3209,9 @@ class _ParsedFieldSource:
         return self._claim_ids_by_primitive(score_eligible_only=False)
 
     def score_support_claim_ids_by_primitive(self) -> Mapping[str, tuple[str, ...]]:
+        v2_support = self._v2_score_claim_ids_by_primitive()
+        if v2_support:
+            return v2_support
         support = self._primitive_state_claim_ids_by_primitive(
             state_key="support_claim_ids",
             score_eligible_only=True,
@@ -3173,6 +3219,43 @@ class _ParsedFieldSource:
         if support:
             return support
         return self._claim_ids_by_primitive(score_eligible_only=True)
+
+    def _v2_score_claim_ids_by_primitive(self) -> Mapping[str, tuple[str, ...]]:
+        by_primitive: dict[str, list[str]] = {}
+        for mapping in self._mappings:
+            if not self._mapping_score_eligible(mapping):
+                continue
+            raw = mapping.get(V2_SCORE_ELIGIBLE_CLAIMS_KEY)
+            if not isinstance(raw, Mapping):
+                continue
+            for primitive, claim_ids in raw.items():
+                primitive_id = str(primitive).strip()
+                if not primitive_id:
+                    continue
+                values = claim_ids if isinstance(claim_ids, (list, tuple)) else (claim_ids,)
+                by_primitive.setdefault(primitive_id, []).extend(
+                    str(item).strip() for item in values if str(item).strip()
+                )
+        _add_claim_primitive_aliases(by_primitive)
+        return {
+            primitive: tuple(dict.fromkeys(claim_ids))
+            for primitive, claim_ids in sorted(by_primitive.items())
+        }
+
+    def hard_break_source_quorum_by_primitive(self) -> Mapping[str, bool]:
+        by_primitive: dict[str, bool] = {}
+        for mapping in self._mappings:
+            if not self._mapping_score_eligible(mapping):
+                continue
+            raw = mapping.get(V2_HARD_BREAK_SOURCE_QUORUM_KEY)
+            if not isinstance(raw, Mapping):
+                continue
+            for primitive, value in raw.items():
+                primitive_id = str(primitive).strip()
+                if not primitive_id:
+                    continue
+                by_primitive[primitive_id] = by_primitive.get(primitive_id, False) or _to_bool(value)
+        return dict(sorted(by_primitive.items()))
 
     def counter_claim_ids_by_primitive(self) -> Mapping[str, tuple[str, ...]]:
         return self._primitive_state_claim_ids_by_primitive(
@@ -3237,6 +3320,43 @@ class _ParsedFieldSource:
 
     def text_blob(self) -> str:
         return self._text
+
+    def legacy_direct_score_findings(self):
+        return audit_legacy_direct_score_fields(tuple(self._mappings))
+
+    def legacy_parser_score_claim_findings(self):
+        return audit_legacy_parser_score_claim_fields(tuple(self._mappings))
+
+    def parser_output_mentions(self):
+        mentions = []
+        for index, mapping in enumerate(self._mappings):
+            source_kind = (
+                MentionSourceKind.LEGACY_AGENT_FIELD
+                if _is_agent_extracted_mapping(mapping)
+                else MentionSourceKind.LEGACY_PARSER_FIELD
+            )
+            mentions.extend(
+                mentions_from_parsed_fields(
+                    evidence_id=f"parser-output:{index}",
+                    parsed_fields=mapping,
+                    source_kind=source_kind,
+                    max_mentions=120,
+                )
+            )
+        return tuple(mentions)
+
+    def legacy_direct_score_mentions(self, findings=None):
+        legacy_findings = tuple(findings) if findings is not None else self.legacy_direct_score_findings()
+        mentions = []
+        for finding in legacy_findings:
+            mentions.extend(
+                mentions_from_parsed_fields(
+                    evidence_id=f"legacy-parser:{finding.mapping_index}:{finding.field_name}",
+                    parsed_fields={finding.field_name: finding.value},
+                    source_kind=MentionSourceKind.LEGACY_PARSER_FIELD,
+                )
+            )
+        return tuple(mentions)
 
 
 _CLAIM_PRIMITIVE_ALIASES = {
@@ -3313,6 +3433,8 @@ def _agent_field_text_key_allowed(key: str) -> bool:
 
 
 def _agent_field_key_score_eligible(mapping: Mapping[str, Any], key: str) -> bool:
+    if key in _LEGACY_SEVERE_RISK_FIELDS_REQUIRING_V2:
+        return _has_v2_score_eligible_claim_for_key(mapping, key)
     if not _is_agent_extracted_mapping(mapping):
         return True
     raw = mapping.get("compiled_claim_ids_by_primitive")
@@ -3321,6 +3443,15 @@ def _agent_field_key_score_eligible(mapping: Mapping[str, Any], key: str) -> boo
     if key in raw:
         return True
     return key in _AGENT_SCORE_ELIGIBLE_SYNTHETIC_KEYS
+
+
+def _has_v2_score_eligible_claim_for_key(mapping: Mapping[str, Any], key: str) -> bool:
+    raw = mapping.get(V2_SCORE_ELIGIBLE_CLAIMS_KEY)
+    if not isinstance(raw, Mapping):
+        return False
+    claim_ids = raw.get(key)
+    values = claim_ids if isinstance(claim_ids, (list, tuple)) else (claim_ids,)
+    return any(str(item).strip() for item in values)
 
 
 def build_feature_input_from_connector(

@@ -1,3 +1,4 @@
+from dataclasses import dataclass, field
 from datetime import date, datetime
 from email.message import Message
 from pathlib import Path
@@ -5,29 +6,49 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from e2r.agentic import load_evidence_contracts
+from e2r.agentic import (
+    CodexCLIAgenticEvidenceProvider,
+    PrimitiveStateV2,
+    PrimitiveStatus,
+    ScoreContributionV2,
+    load_evidence_contracts,
+)
 from e2r.calibration.taxonomy import CANONICAL_ARCHETYPE_IDS
 from e2r.evidence_ids import stable_consensus_evidence_id, stable_news_evidence_id
 from e2r.models import Market, ScoreSnapshot, Stage
-from e2r.llm import EvidenceSlotStatus, FakeThemeRouteProvider, ThemeRouteOutput
+from e2r.features import FeatureEngineeringResult
+from e2r.llm import CodexCLIThemeRouteProvider, EvidenceSlotStatus, FakeThemeRouteProvider, ThemeRouteOutput
 from e2r.research import EmptySearchProvider
 from e2r.research.browser_search_provider import BrowserSearchProvider
 from e2r.research.free_web_research_runner import (
+    AgenticEvidenceRuntimeTrace,
     FreeWebResearchInput,
     FreeWebResearchRunner,
     _ScoreGapExpansionResult,
     _FixedQueryPlanner,
+    _asof_safe_theme_query,
+    _combined_score_gap_context,
     _material_score_gaps,
     _post_gap_top_results,
     _post_score_gap_expansion_allowed,
+    _record_agentic_workflow_metrics,
+    _agentic_score_contribution_diagnostics,
+    _agentic_score_contribution_archetype_id,
+    _agentic_score_contributions_from_trace,
+    _score_gap_audit_event,
     _score_gap_reason_codes,
     _score_gap_score_block_reason,
     _score_gap_missing_information,
+    _score_gap_progress_diagnostics,
+    _score_gap_state_repeated_rejection_reasons,
     _score_gap_state_signature,
     _stage_gate_missing_information,
     _field_matches_source_backed_slot,
     _source_field_contract_gap_context,
     _theme_route_contract_gap_context,
+    _theme_route_provider_for_timeout,
+    _with_score_gap_expansion_diagnostics,
+    _with_agentic_score_contributions,
 )
 from e2r.research.manual_source_provider import ManualSource, ManualSourceProvider
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
@@ -35,6 +56,7 @@ from e2r.research.query_planner import QueryPlan, QuerySpec
 from e2r.research.search_budget import SearchBudget
 from e2r.research.search_provider import FixtureSearchProvider, SearchResult
 from e2r.red_team import RedTeamAssessment
+from e2r.scoring import ScoringPayload
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,7 +74,104 @@ SMCI_GUIDANCE_URL = "https://reuters.example.com/smci-raised-guidance"
 SMCI_ACCOUNTING_URL = "https://news.example.com/smci-accounting-issue"
 
 
+@dataclass
+class TimeoutRecordingThemeProvider:
+    timeout_seconds: float = 180.0
+    observed_timeouts: list[float] = field(default_factory=list)
+
+    def route(self, inputs):
+        self.observed_timeouts.append(float(self.timeout_seconds))
+        return ThemeRouteOutput(status="no_transition")
+
+
 class FreeWebResearchRunnerTests(unittest.TestCase):
+    def test_agentic_workflow_metrics_records_fallback_full_map_and_empty_mapper_output(self):
+        metrics = {
+            "mapping_prefilter_original_task_count": 0,
+            "mapping_prefilter_filtered_task_count": 0,
+            "mapping_prefilter_skipped_input_count": 0,
+            "mapping_prefilter_fallback_full_map_count": 0,
+            "mapping_empty_output_count": 0,
+            "mapping_empty_output_retry_count": 0,
+            "mapping_empty_output_recovered_count": 0,
+            "mapping_empty_output_summaries": [],
+            "mapping_empty_output_retry_summaries": [],
+            "mapping_prefilter_fallback_full_map_summaries": [],
+        }
+
+        _record_agentic_workflow_metrics(
+            "agentic_evidence_mapping_prefilter_complete",
+            {
+                "document_id": "DOC-A",
+                "mapping_prefilter_original_task_count": 18,
+                "mapping_prefilter_filtered_task_count": 7,
+                "mapping_prefilter_skipped_input_count": 1,
+                "mapping_prefilter_fallback_full_map_count": 2,
+                "mapping_prefilter_reason_by_claim": (
+                    {
+                        "claim_id": "CLM-A",
+                        "raw_assertion_id": "RA-A",
+                        "fallback_full_map": True,
+                        "reason": "fallback_full_map_unstructured_source",
+                        "original_candidate_count": 9,
+                    },
+                    {
+                        "claim_id": "CLM-B",
+                        "raw_assertion_id": "RA-B",
+                        "fallback_full_map": False,
+                        "reason": "unstructured_claim_semantic_topic_matches_primitive_family",
+                        "original_candidate_count": 9,
+                    },
+                ),
+            },
+            metrics=metrics,
+        )
+        _record_agentic_workflow_metrics(
+            "agentic_evidence_mapping_chunk_empty_retry_start",
+            {
+                "document_id": "DOC-A",
+                "round_index": 1,
+                "retry_index": 1,
+                "chunk_index": 2,
+                "mapping_input_count": 3,
+            },
+            metrics=metrics,
+        )
+        _record_agentic_workflow_metrics(
+            "agentic_evidence_mapping_chunk_empty_retry_recovered",
+            {
+                "document_id": "DOC-A",
+                "round_index": 1,
+                "retry_index": 1,
+                "chunk_index": 2,
+                "mapping_input_count": 3,
+                "mapping_output_count": 2,
+            },
+            metrics=metrics,
+        )
+        _record_agentic_workflow_metrics(
+            "agentic_evidence_mapping_chunk_complete",
+            {
+                "document_id": "DOC-A",
+                "round_index": 1,
+                "chunk_index": 2,
+                "mapping_input_count": 3,
+                "mapping_output_count": 0,
+            },
+            metrics=metrics,
+        )
+
+        self.assertEqual(metrics["mapping_prefilter_original_task_count"], 18)
+        self.assertEqual(metrics["mapping_prefilter_filtered_task_count"], 7)
+        self.assertEqual(metrics["mapping_prefilter_skipped_input_count"], 1)
+        self.assertEqual(metrics["mapping_prefilter_fallback_full_map_count"], 2)
+        self.assertEqual(metrics["mapping_empty_output_count"], 1)
+        self.assertEqual(metrics["mapping_empty_output_retry_count"], 1)
+        self.assertEqual(metrics["mapping_empty_output_recovered_count"], 1)
+        self.assertIn("fallback_full_map", metrics["mapping_prefilter_fallback_full_map_summaries"][0])
+        self.assertIn("empty_mapper_retry", metrics["mapping_empty_output_retry_summaries"][0])
+        self.assertIn("document=DOC-A", metrics["mapping_empty_output_summaries"][0])
+
     def test_score_gap_reason_code_marks_score_as_raw_reference(self):
         score = ScoreSnapshot(
             symbol="123456",
@@ -99,6 +218,92 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertIn("revision estimate consensus target price EPS OP FCF", gaps)
         self.assertIn("contract backlog RPO prepayment order allocation", gaps)
 
+    def test_combined_score_gap_context_drops_fcf_gap_when_agentic_cash_bridge_is_present(self):
+        score = ScoreSnapshot(
+            symbol="123456",
+            as_of_date=date(2026, 6, 12),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=20.0,
+            bottleneck_pricing_score=20.0,
+            market_mispricing_score=15.0,
+            valuation_rerating_score=15.0,
+            capital_allocation_score=5.0,
+            information_confidence_score=5.0,
+            risk_penalty=0.0,
+            total_score=100.0,
+            diagnostic_scores={"estimate_missing_fcf_source": 100.0},
+        )
+        trace = AgenticEvidenceRuntimeTrace(
+            status="completed",
+            primitive_states=(
+                PrimitiveStateV2("cash_or_revision_conversion", PrimitiveStatus.PRESENT_CURRENT),
+                PrimitiveStateV2("memory_price_increase_mentioned", PrimitiveStatus.UNKNOWN),
+            ),
+        )
+
+        gaps = _combined_score_gap_context(score, RedTeamAssessment.empty("123456", date(2026, 6, 12)), trace)
+
+        self.assertFalse(any("selected_fcf_source_missing" in item for item in gaps))
+        self.assertTrue(any("agentic primitive gap:memory_price_increase_mentioned" in item for item in gaps))
+
+    def test_combined_score_gap_context_keeps_fcf_gap_when_agentic_cash_bridge_is_unknown(self):
+        score = ScoreSnapshot(
+            symbol="123456",
+            as_of_date=date(2026, 6, 12),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=20.0,
+            bottleneck_pricing_score=20.0,
+            market_mispricing_score=15.0,
+            valuation_rerating_score=15.0,
+            capital_allocation_score=5.0,
+            information_confidence_score=5.0,
+            risk_penalty=0.0,
+            total_score=100.0,
+            diagnostic_scores={"estimate_missing_fcf_source": 100.0},
+        )
+        trace = AgenticEvidenceRuntimeTrace(
+            status="completed",
+            primitive_states=(PrimitiveStateV2("cash_or_revision_conversion", PrimitiveStatus.UNKNOWN),),
+        )
+
+        gaps = _combined_score_gap_context(score, RedTeamAssessment.empty("123456", date(2026, 6, 12)), trace)
+
+        self.assertTrue(any("selected_fcf_source_missing" in item for item in gaps))
+
+    def test_combined_score_gap_context_includes_agentic_rejection_reasons(self):
+        score = ScoreSnapshot(
+            symbol="123456",
+            as_of_date=date(2026, 6, 12),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=20.0,
+            bottleneck_pricing_score=20.0,
+            market_mispricing_score=15.0,
+            valuation_rerating_score=15.0,
+            capital_allocation_score=5.0,
+            information_confidence_score=5.0,
+            risk_penalty=0.0,
+            total_score=100.0,
+        )
+        trace = AgenticEvidenceRuntimeTrace(
+            status="completed",
+            primitive_states=(PrimitiveStateV2("hbm_capacity_pre_sold", PrimitiveStatus.UNKNOWN),),
+            eligibility_rejection_summaries=(
+                "MAP-1|claim=CLM-1|primitive=hbm_capacity_pre_sold|mapping_status=ACCEPTED|"
+                "eligibility_reasons=temporal_not_allowed:HISTORICAL",
+            ),
+            rejected_mapping_summaries=(
+                "MAP-2|claim=CLM-2|primitive=memory_price_increase_mentioned|status=REJECTED|"
+                "reason=price increase not directly stated",
+            ),
+        )
+
+        gaps = _combined_score_gap_context(score, RedTeamAssessment.empty("123456", date(2026, 6, 12)), trace)
+
+        self.assertTrue(any(item.startswith("agentic primitive gap:hbm_capacity_pre_sold") for item in gaps))
+        self.assertTrue(any("agentic eligibility rejection:" in item for item in gaps))
+        self.assertTrue(any("temporal_not_allowed:HISTORICAL" in item for item in gaps))
+        self.assertTrue(any("agentic mapping rejection:" in item for item in gaps))
+
     def test_free_web_research_defaults_evidence_review_on_for_gap_expansion(self):
         inputs = FreeWebResearchInput(
             company_name="테스트",
@@ -112,17 +317,157 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertTrue(inputs.theme_rebalance_enabled)
         self.assertTrue(inputs.theme_evidence_review_enabled)
         self.assertEqual(inputs.max_theme_expansion_rounds, 2)
+        self.assertEqual(inputs.top_results, 60)
         self.assertEqual(inputs.post_parse_gap_expansion_max_queries, 10)
-        self.assertIsNone(inputs.llm_query_retry_max)
-        self.assertIsNone(inputs.score_gap_query_retry_max)
+        self.assertEqual(inputs.llm_query_retry_max, 2)
+        self.assertEqual(inputs.score_gap_query_retry_max, 2)
         self.assertEqual(inputs.max_score_gap_expansion_rounds, 2)
+        self.assertTrue(inputs.agentic_mapper_self_consistency_use_batch)
+        self.assertEqual(inputs.agentic_mapper_batch_max_tasks, 12)
         self.assertEqual(inputs.theme_route_search_result_limit, 80)
         self.assertEqual(inputs.theme_route_document_limit, 32)
         self.assertEqual(inputs.theme_route_document_excerpt_chars, 1200)
+        self.assertEqual(inputs.theme_evidence_review_timeout_seconds, 60.0)
         self.assertEqual(inputs.post_gap_fetch_results_per_query, 5)
         self.assertEqual(inputs.post_gap_fetch_min_results, 20)
+        self.assertIsNone(inputs.agentic_provider_timeout_seconds)
         self.assertTrue(inputs.require_valid_theme_route_for_scoring)
         self.assertTrue(inputs.require_resolved_score_gaps_for_scoring)
+
+    def test_free_web_research_rejects_unbounded_retry_settings(self):
+        with self.assertRaisesRegex(ValueError, "llm_query_retry_max must be bounded"):
+            FreeWebResearchInput(
+                company_name="테스트",
+                symbol="123456",
+                sector=None,
+                market=Market.KR,
+                as_of_date=date(2024, 1, 1),
+                llm_query_retry_max=None,
+            )
+        with self.assertRaisesRegex(ValueError, "score_gap_query_retry_max must be bounded"):
+            FreeWebResearchInput(
+                company_name="테스트",
+                symbol="123456",
+                sector=None,
+                market=Market.KR,
+                as_of_date=date(2024, 1, 1),
+                score_gap_query_retry_max=None,
+            )
+        with self.assertRaisesRegex(ValueError, "top_results must be bounded"):
+            FreeWebResearchInput(
+                company_name="테스트",
+                symbol="123456",
+                sector=None,
+                market=Market.KR,
+                as_of_date=date(2024, 1, 1),
+                top_results=None,
+            )
+        with self.assertRaisesRegex(ValueError, "theme_evidence_review_timeout_seconds must be positive"):
+            FreeWebResearchInput(
+                company_name="테스트",
+                symbol="123456",
+                sector=None,
+                market=Market.KR,
+                as_of_date=date(2024, 1, 1),
+                theme_evidence_review_timeout_seconds=0,
+            )
+        with self.assertRaisesRegex(ValueError, "agentic_mapper_batch_max_tasks must be positive"):
+            FreeWebResearchInput(
+                company_name="테스트",
+                symbol="123456",
+                sector=None,
+                market=Market.KR,
+                as_of_date=date(2024, 1, 1),
+                agentic_mapper_batch_max_tasks=0,
+            )
+        with self.assertRaisesRegex(ValueError, "agentic_evidence_document_limit must be positive"):
+            FreeWebResearchInput(
+                company_name="테스트",
+                symbol="123456",
+                sector=None,
+                market=Market.KR,
+                as_of_date=date(2024, 1, 1),
+                agentic_evidence_document_limit=0,
+            )
+        with self.assertRaisesRegex(ValueError, "agentic_provider_timeout_seconds must be positive"):
+            FreeWebResearchInput(
+                company_name="테스트",
+                symbol="123456",
+                sector=None,
+                market=Market.KR,
+                as_of_date=date(2024, 1, 1),
+                agentic_provider_timeout_seconds=0,
+            )
+
+    def test_theme_evidence_review_timeout_uses_shorter_codex_provider_copy(self):
+        provider = CodexCLIThemeRouteProvider(timeout_seconds=180.0)
+
+        bounded = _theme_route_provider_for_timeout(provider, timeout_seconds=45.0)
+        already_short = _theme_route_provider_for_timeout(provider, timeout_seconds=240.0)
+        fake = FakeThemeRouteProvider()
+
+        self.assertIsNot(bounded, provider)
+        self.assertEqual(bounded.timeout_seconds, 45.0)
+        self.assertIs(already_short, provider)
+        self.assertIs(_theme_route_provider_for_timeout(fake, timeout_seconds=45.0), fake)
+
+    def test_agentic_provider_timeout_uses_shorter_codex_provider_copy(self):
+        provider = CodexCLIAgenticEvidenceProvider(timeout_seconds=180.0)
+
+        inputs = FreeWebResearchInput(
+            company_name="타임아웃테스트",
+            symbol="123456",
+            sector=None,
+            market=Market.KR,
+            as_of_date=date(2026, 6, 26),
+            agentic_evidence_enabled=True,
+            agentic_claim_extractor_provider=provider,
+            agentic_claim_adjudicator_provider=provider,
+            agentic_primitive_mapper_provider=provider,
+            agentic_follow_up_planner_provider=provider,
+            agentic_provider_timeout_seconds=7.0,
+        )
+
+        self.assertIsNot(inputs.agentic_claim_extractor_provider, provider)
+        self.assertEqual(inputs.agentic_claim_extractor_provider.timeout_seconds, 7.0)
+        self.assertEqual(inputs.agentic_claim_adjudicator_provider.timeout_seconds, 7.0)
+        self.assertEqual(inputs.agentic_primitive_mapper_provider.timeout_seconds, 7.0)
+        self.assertEqual(inputs.agentic_follow_up_planner_provider.timeout_seconds, 7.0)
+
+    def test_initial_theme_rebalance_route_uses_configured_timeout(self):
+        provider = TimeoutRecordingThemeProvider(timeout_seconds=180.0)
+
+        FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=EmptySearchProvider(),
+            query_planner=_FixedQueryPlanner(
+                QueryPlan(
+                    company_name="타임아웃테스트",
+                    symbol="123456",
+                    sector=None,
+                    market=Market.KR,
+                    as_of_date=date(2026, 6, 26),
+                    queries=(),
+                )
+            ),
+        ).run(
+            FreeWebResearchInput(
+                company_name="타임아웃테스트",
+                symbol="123456",
+                sector=None,
+                market=Market.KR,
+                as_of_date=date(2026, 6, 26),
+                theme_rebalance_enabled=True,
+                theme_route_provider=provider,
+                theme_evidence_review_timeout_seconds=12.0,
+                max_theme_expansion_rounds=1,
+                require_valid_theme_route_for_scoring=False,
+                require_resolved_score_gaps_for_scoring=False,
+            )
+        )
+
+        self.assertTrue(provider.observed_timeouts)
+        self.assertEqual(set(provider.observed_timeouts), {12.0})
 
     def test_llm_route_input_is_compacted_with_query_coverage(self):
         as_of = date(2026, 6, 8)
@@ -288,7 +633,7 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         route_provider = FakeThemeRouteProvider(
             output=ThemeRouteOutput(
                 status="needs_more_evidence",
-                suggested_queries=("테스트 2027 미래 실적 리포트",),
+                suggested_queries=("테스트 after:2027-01-01 미래 발간 리포트",),
             )
         )
 
@@ -316,7 +661,7 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         route_provider = FakeThemeRouteProvider(
             output=ThemeRouteOutput(
                 status="needs_more_evidence",
-                suggested_queries=("테스트 2027 미래 실적 리포트",),
+                suggested_queries=("테스트 after:2027-01-01 미래 발간 리포트",),
             )
         )
 
@@ -433,7 +778,7 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertGreaterEqual(result.score.diagnostic_scores["one_off_shortage_risk"], 80)
         self.assertEqual(result.stage.stage, Stage.STAGE_3_RED)
 
-    def test_smci_fixture_html_triggers_4b_before_4c(self):
+    def test_smci_fixture_html_stays_4b_without_v2_hard_break_claim(self):
         fixture_html = {
             "SMCI 영업이익 컨센서스 상회": HTML_ROOT / "smci_4b_4c_search.html",
             "SMCI 회계 이슈": HTML_ROOT / "smci_4b_4c_search.html",
@@ -467,8 +812,8 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         )
 
         self.assertEqual(stage4b.stage.stage, Stage.STAGE_4B)
-        self.assertEqual(stage4c.stage.stage, Stage.STAGE_4C)
-        self.assertTrue(stage4c.red_team.has_hard_break)
+        self.assertEqual(stage4c.stage.stage, Stage.STAGE_4B)
+        self.assertFalse(stage4c.red_team.has_hard_break)
 
     def test_search_budget_skips_queries_after_symbol_limit(self):
         result = _run_free(
@@ -568,6 +913,26 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
 
     def test_report_title_snippet_forward_estimate_flows_to_consensus_proxy(self):
         url = "https://finance.example.com/research/company_read.naver?nid=77"
+        as_of = date(2026, 6, 8)
+        plan = QueryPlan(
+            company_name="테스트전자",
+            symbol="123456",
+            sector="semiconductor",
+            market=Market.KR,
+            as_of_date=as_of,
+            queries=(
+                QuerySpec(
+                    group="fixture",
+                    query="테스트전자 2Q Review 영업이익 컨센서스 PDF",
+                    priority=1,
+                    company_name="테스트전자",
+                    symbol="123456",
+                    sector="semiconductor",
+                    market=Market.KR,
+                    as_of_date=as_of,
+                ),
+            ),
+        )
         provider = FixtureSearchProvider(
             results_by_query={
                 "테스트전자 2Q Review 영업이익 컨센서스 PDF": (
@@ -589,13 +954,14 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         result = FreeWebResearchRunner(
             browser_provider=EmptySearchProvider(),
             free_search_provider=provider,
+            query_planner=_FixedQueryPlanner(plan),
         ).run(
             FreeWebResearchInput(
                 company_name="테스트전자",
                 symbol="123456",
                 sector="semiconductor",
                 market=Market.KR,
-                as_of_date=date(2026, 6, 8),
+                as_of_date=as_of,
                 top_results=5,
                 fixture_text_by_url={url: "테스트전자는 HBM 수요 증가를 근거로 리포트가 발간됐다."},
             )
@@ -827,7 +1193,11 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
                 transition_detected=True,
                 route_confidence=0.8,
                 emerging_theme_id="AI_INFRA_PLATFORM_DATACENTER",
-                suggested_queries=("AI 클라우드 매출", "NAVER AI 데이터센터 매출 2027"),
+                suggested_queries=(
+                    "AI 클라우드 매출",
+                    "NAVER AI 데이터센터 매출 2027",
+                    "NAVER after:2026-06-09 미래 발간 리포트",
+                ),
                 evidence_slots=(
                     EvidenceSlotStatus(
                         slot="cloud_revenue",
@@ -860,6 +1230,16 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
                         confidence=0.8,
                     ),
                 ),
+                "NAVER AI 데이터센터 매출 2027": (
+                    SearchResult(
+                        title="NAVER AI 데이터센터 2027 매출 전망",
+                        url="https://news.example.com/naver-ai-dc-2027e",
+                        snippet="2026년 현재 공개된 2027년 매출 전망",
+                        source="fixture-news",
+                        query="NAVER AI 데이터센터 매출 2027",
+                        confidence=0.8,
+                    ),
+                ),
             }
         )
 
@@ -880,11 +1260,22 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
             )
         )
 
-        self.assertEqual(result.expansion_queries_run, ("NAVER AI 클라우드 매출",))
+        self.assertEqual(result.expansion_queries_run, ("NAVER AI 클라우드 매출", "NAVER AI 데이터센터 매출 2027"))
         self.assertTrue(any(item.reason == "future_query_rejected" for item in result.skipped_queries))
-        self.assertIn("NAVER AI 클라우드 매출", result.web_result.query_plan.queries[-1].query)
+        query_texts = tuple(spec.query for spec in result.web_result.query_plan.queries)
+        self.assertIn("NAVER AI 클라우드 매출", query_texts)
+        self.assertIn("NAVER AI 데이터센터 매출 2027", query_texts)
         self.assertEqual(result.score.diagnostic_scores["theme_rebalance_enabled"], 100.0)
         self.assertEqual(result.score.diagnostic_scores["llm_deep_research_completed"], 100.0)
+
+    def test_asof_query_validator_allows_forward_estimate_period_but_blocks_future_publication_filter(self):
+        self.assertEqual(
+            _asof_safe_theme_query("테스트 2027년 영업이익 전망", date(2026, 6, 8)),
+            "테스트 2027년 영업이익 전망",
+        )
+        self.assertIsNone(
+            _asof_safe_theme_query("테스트 after:2026-06-09 발간 리포트", date(2026, 6, 8))
+        )
 
     def test_theme_route_reasks_llm_when_expansion_query_is_duplicate(self):
         retry_url = "https://news.example.com/test-initial-theme-retry"
@@ -1092,6 +1483,202 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertFalse(result.web_result.parsed_news[0].parsed_fields["search_snippet_only"])
         self.assertEqual(result.theme_route_diagnostics["theme_evidence_review_status"], "completed")
         self.assertEqual(result.score.diagnostic_scores["green_unlock_evidence_score"], 100.0)
+
+    def test_theme_evidence_review_provider_error_records_timeout_without_overwriting_route(self):
+        url = "https://news.example.com/sk-hynix-hbm"
+        route_provider = FakeThemeRouteProvider(
+            outputs=[
+                ThemeRouteOutput(
+                    status="transition_detected",
+                    transition_detected=True,
+                    route_confidence=0.72,
+                    emerging_theme_id="AI_HBM_DATACENTER_MEMORY",
+                    large_sector_id="R2_AI_SEMICONDUCTOR_ELECTRONICS",
+                    canonical_archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                    suggested_queries=("SK하이닉스 HBM 추가 근거",),
+                ),
+                ThemeRouteOutput(status="provider_error", blocked_reason="codex_cli_timeout"),
+            ]
+        )
+        provider = FixtureSearchProvider(
+            results_by_query={
+                "SK하이닉스 HBM": (
+                    SearchResult(
+                        title="SK하이닉스 HBM 고객 배정",
+                        url=url,
+                        snippet="HBM 고객 allocation",
+                        source="fixture-news",
+                        query="SK하이닉스 HBM",
+                        confidence=0.8,
+                    ),
+                ),
+                "SK하이닉스 HBM 추가 근거": (
+                    SearchResult(
+                        title="SK하이닉스 HBM 추가 고객 배정",
+                        url=f"{url}?extra=1",
+                        snippet="HBM 추가 고객 allocation",
+                        source="fixture-news",
+                        query="SK하이닉스 HBM 추가 근거",
+                        confidence=0.8,
+                    ),
+                )
+            }
+        )
+        plan = QueryPlan(
+            company_name="SK하이닉스",
+            symbol="000660",
+            sector="semiconductor",
+            market=Market.KR,
+            as_of_date=date(2026, 6, 21),
+            queries=(
+                QuerySpec(
+                    group="fixture",
+                    query="SK하이닉스 HBM",
+                    priority=1,
+                    company_name="SK하이닉스",
+                    symbol="000660",
+                    sector="semiconductor",
+                    market=Market.KR,
+                    as_of_date=date(2026, 6, 21),
+                ),
+            ),
+        )
+
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=provider,
+            query_planner=_FixedQueryPlanner(plan),
+        ).run(
+            FreeWebResearchInput(
+                company_name="SK하이닉스",
+                symbol="000660",
+                sector="semiconductor",
+                market=Market.KR,
+                as_of_date=date(2026, 6, 21),
+                top_results=1,
+                fixture_text_by_url={
+                    url: "SK하이닉스 HBM 고객 배정 원문",
+                    f"{url}?extra=1": "SK하이닉스 HBM 추가 고객 배정 원문",
+                },
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                max_theme_expansion_rounds=1,
+                require_resolved_score_gaps_for_scoring=False,
+                theme_evidence_review_enabled=True,
+                theme_evidence_review_timeout_seconds=30.0,
+            )
+        )
+
+        self.assertGreaterEqual(len(route_provider.calls), 2)
+        self.assertNotEqual(result.theme_route.status, "provider_error")
+        self.assertEqual(result.theme_route_diagnostics["theme_evidence_review_status"], "provider_error")
+        self.assertEqual(result.theme_route_diagnostics["theme_evidence_review_blocked_reason"], "codex_cli_timeout")
+        self.assertEqual(result.theme_route_diagnostics["theme_evidence_review_timeout_seconds"], 30.0)
+        self.assertEqual(result.theme_route_diagnostics["score_blocked_reason"], "theme_route_needs_more_evidence")
+
+    def test_theme_route_document_anchor_can_back_route_without_legacy_field_score(self):
+        url = "https://news.example.com/samsung-hbm-document"
+        as_of = date(2026, 6, 21)
+        plan = QueryPlan(
+            company_name="삼성전자",
+            symbol="005930",
+            sector="semiconductor",
+            market=Market.KR,
+            as_of_date=as_of,
+            queries=(
+                QuerySpec(
+                    group="fixture",
+                    query="삼성전자 HBM",
+                    priority=1,
+                    company_name="삼성전자",
+                    symbol="005930",
+                    sector="semiconductor",
+                    market=Market.KR,
+                    as_of_date=as_of,
+                ),
+            ),
+        )
+
+        class DocumentAnchorRouteProvider:
+            def __init__(self):
+                self.calls = []
+
+            def route(self, inputs):
+                self.calls.append(inputs)
+                if inputs.documents:
+                    document_ref = next(ref for ref in inputs.documents[0].evidence_ids if str(ref).startswith("document_anchor:"))
+                    return ThemeRouteOutput(
+                        status="transition_detected",
+                        transition_detected=True,
+                        route_confidence=0.86,
+                        emerging_theme_id="AI_HBM_DATACENTER_MEMORY",
+                        large_sector_id="R2_AI_SEMICONDUCTOR_ELECTRONICS",
+                        canonical_archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                        normalized_parsed_fields={"customer_allocation": True},
+                        evidence_slots=(
+                            EvidenceSlotStatus(
+                                slot="customer_allocation",
+                                status="present",
+                                evidence_refs=(document_ref,),
+                                confidence=0.8,
+                            ),
+                        ),
+                    )
+                return ThemeRouteOutput(
+                    status="transition_detected",
+                    transition_detected=True,
+                    route_confidence=0.72,
+                    emerging_theme_id="AI_HBM_DATACENTER_MEMORY",
+                    suggested_queries=(),
+                )
+
+        route_provider = DocumentAnchorRouteProvider()
+        provider = FixtureSearchProvider(
+            results_by_query={
+                "삼성전자 HBM": (
+                    SearchResult(
+                        title="삼성전자 원문 문서",
+                        url=url,
+                        snippet="원문 확인",
+                        source="fixture-web",
+                        query="삼성전자 HBM",
+                        confidence=0.8,
+                    ),
+                )
+            }
+        )
+
+        result = FreeWebResearchRunner(
+            browser_provider=EmptySearchProvider(),
+            free_search_provider=provider,
+            query_planner=_FixedQueryPlanner(plan),
+        ).run(
+            FreeWebResearchInput(
+                company_name="삼성전자",
+                symbol="005930",
+                sector="semiconductor",
+                market=Market.KR,
+                as_of_date=as_of,
+                top_results=1,
+                fixture_text_by_url={
+                    url: "삼성전자 원문 문서다. "
+                    "이 문장은 parser가 점수 primitive를 직접 만들지 않아야 한다."
+                },
+                theme_rebalance_enabled=True,
+                theme_route_provider=route_provider,
+                max_theme_expansion_rounds=0,
+                max_score_gap_expansion_rounds=0,
+                theme_evidence_review_enabled=True,
+            )
+        )
+
+        review_call = next(call for call in route_provider.calls if call.documents)
+        self.assertTrue(any(ref.startswith("document_anchor:") for ref in review_call.documents[0].evidence_ids))
+        self.assertEqual(result.theme_route_diagnostics["theme_evidence_gate_status"], "source_backed")
+        self.assertEqual(result.theme_route_diagnostics["theme_document_ref_available_count"], 1)
+        self.assertEqual(result.theme_route_diagnostics["theme_evidence_ref_match_count"], 1)
+        self.assertEqual(result.feature_result.payload.canonical_archetype_id, "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
+        self.assertNotIn("customer_allocation", result.feature_input.agent_extracted_fields)
 
     def test_post_parse_gap_expansion_runs_review_suggested_report_query(self):
         initial_url = "https://news.example.com/test-electronics-hbm"
@@ -1668,7 +2255,7 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
                 sector="semiconductor",
                 market=Market.KR,
                 as_of_date=as_of,
-                top_results=None,
+                top_results=60,
                 fixture_text_by_url={
                     item.url: (
                         "테스트스코어 리포트. EPS 상향 33%, 영업이익 추정치 상향 36%, "
@@ -1697,6 +2284,18 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         ]
         self.assertEqual(start_events[-1]["gap_fetch_mode"], "incremental")
         self.assertEqual(start_events[-1]["top_results_override"], 6)
+        merged_complete_events = [
+            event for event in phase_events
+            if event["phase"] == "post_score_gap_web_research_complete"
+        ]
+        new_only_complete_events = [
+            event for event in phase_events
+            if event["phase"] == "post_score_gap_web_research_new_only_complete"
+        ]
+        self.assertEqual(merged_complete_events[-1]["fetched_document_count"], len(initial_results) + 6)
+        self.assertEqual(new_only_complete_events[-1]["query_count"], 1)
+        self.assertEqual(new_only_complete_events[-1]["fetched_document_count"], 6)
+        self.assertEqual(new_only_complete_events[-1]["selected_result_count"], 6)
         self.assertEqual(len(selected_by_gap_query), 6)
         self.assertEqual(len(result.web_result.selected_results), len(initial_results) + 6)
         self.assertEqual(len(result.web_result.fetched_documents), len(result.web_result.selected_results))
@@ -1808,7 +2407,7 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
             sector=None,
             market=Market.KR,
             as_of_date=date(2026, 6, 8),
-            top_results=None,
+            top_results=60,
             post_gap_fetch_min_results=12,
             post_gap_fetch_results_per_query=4,
         )
@@ -2035,6 +2634,533 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertIn("raw_score_total_before_score_gap_block", result.score.diagnostic_scores)
         self.assertTrue(result.theme_route_diagnostics["material_score_gap_unresolved_gaps"])
 
+    def test_score_gap_diagnostics_always_include_material_unresolved_gaps(self):
+        diagnostics = _with_score_gap_expansion_diagnostics(
+            {"score_blocked_reason": "theme_route_needs_more_evidence"},
+            _ScoreGapExpansionResult(
+                status="no_progress",
+                unresolved_gaps=(
+                    "agentic primitive gap:customer_preorder_or_allocation; status:UNKNOWN",
+                    "nonmaterial note",
+                ),
+                rejection_reasons=("score_gap_state_repeated",),
+            ),
+            ("SK하이닉스 HBM 고객 배정",),
+        )
+
+        self.assertEqual(
+            diagnostics["material_score_gap_unresolved_gaps"],
+            ("agentic primitive gap:customer_preorder_or_allocation; status:UNKNOWN",),
+        )
+        self.assertEqual(diagnostics["score_blocked_reason"], "theme_route_needs_more_evidence")
+
+    def test_score_gap_progress_diagnostics_explain_new_documents_without_score_progress(self):
+        previous = AgenticEvidenceRuntimeTrace(
+            status="completed",
+            document_ids=("DOC-A", "DOC-B"),
+            claim_ids=("CLM-A",),
+            mapping_ids=("MAP-A",),
+            rejected_mapping_ids=("MAP-OLD-REJECTED",),
+            rejected_mapping_summaries=(
+                "MAP-OLD-REJECTED|claim=CLM-A|primitive=qualification_status|status=REJECTED|reason=old",
+            ),
+            eligibility_rejection_summaries=("old eligibility rejection",),
+        )
+        current = AgenticEvidenceRuntimeTrace(
+            status="partial_error",
+            document_ids=("DOC-C", "DOC-D"),
+            claim_ids=("CLM-C",),
+            mapping_ids=(),
+            rejected_mapping_count=1,
+            rejected_mapping_ids=("MAP-C-REJECTED",),
+            rejected_mapping_summaries=(
+                "MAP-C-REJECTED|claim=CLM-C|primitive=qualification_status|status=REJECTED|reason=target_scope_not_allowed:CUSTOMER",
+            ),
+            eligibility_rejection_summaries=(
+                "MAP-C-REJECTED|claim=CLM-C|primitive=qualification_status|mapping_status=REJECTED|eligibility_reasons=source_date_missing",
+            ),
+            mapping_prefilter_original_task_count=18,
+            mapping_prefilter_filtered_task_count=7,
+            mapping_prefilter_skipped_input_count=1,
+            mapping_prefilter_fallback_full_map_count=2,
+            mapping_prefilter_fallback_full_map_summaries=(
+                "fallback_full_map|document=DOC-C|claim=CLM-C|reason=fallback_full_map_unstructured_source",
+            ),
+            mapping_empty_output_count=1,
+            mapping_empty_output_retry_count=2,
+            mapping_empty_output_recovered_count=1,
+            mapping_empty_output_summaries=(
+                "empty_mapper_output|phase=agentic_evidence_mapping_chunk_complete|document=DOC-D",
+            ),
+            mapping_empty_output_retry_summaries=(
+                "empty_mapper_retry|phase=agentic_evidence_mapping_chunk_empty_retry_recovered|document=DOC-C",
+            ),
+            skipped_existing_document_count=2,
+            error_count=1,
+            errors=("DOC-D:ValueError:claim_extractor_provider_error:usage_limit",),
+        )
+
+        diagnostics = _score_gap_progress_diagnostics(
+            previous_trace=previous,
+            current_trace=current,
+            previous_signature=("total=0", "gap=qualification_status"),
+            current_signature=("total=0", "gap=qualification_status"),
+        )
+
+        self.assertFalse(diagnostics["post_score_gap_score_state_changed"])
+        self.assertEqual(diagnostics["post_score_gap_progress_reason"], "score_gap_new_claims_without_accepted_mappings")
+        self.assertEqual(diagnostics["post_score_gap_new_document_count"], 2)
+        self.assertEqual(diagnostics["post_score_gap_new_document_ids"], ("DOC-C", "DOC-D"))
+        self.assertEqual(diagnostics["post_score_gap_new_claim_count"], 1)
+        self.assertEqual(diagnostics["post_score_gap_new_claim_ids"], ("CLM-C",))
+        self.assertEqual(diagnostics["post_score_gap_new_accepted_mapping_count"], 0)
+        self.assertEqual(diagnostics["post_score_gap_new_rejected_mapping_count"], 1)
+        self.assertEqual(diagnostics["post_score_gap_new_rejected_mapping_ids"], ("MAP-C-REJECTED",))
+        self.assertIn(
+            "target_scope_not_allowed:CUSTOMER",
+            diagnostics["post_score_gap_new_rejected_mapping_summaries"][0],
+        )
+        self.assertIn(
+            "source_date_missing",
+            diagnostics["post_score_gap_new_eligibility_rejection_summaries"][0],
+        )
+        self.assertEqual(diagnostics["post_score_gap_new_trace_status"], "partial_error")
+        self.assertEqual(diagnostics["post_score_gap_new_trace_error_count"], 1)
+        self.assertIn("usage_limit", diagnostics["post_score_gap_new_trace_errors"][0])
+        self.assertEqual(diagnostics["post_score_gap_new_trace_skipped_existing_document_count"], 2)
+        self.assertEqual(diagnostics["post_score_gap_new_trace_mapping_prefilter_original_task_count"], 18)
+        self.assertEqual(diagnostics["post_score_gap_new_trace_mapping_prefilter_filtered_task_count"], 7)
+        self.assertEqual(diagnostics["post_score_gap_new_trace_mapping_prefilter_skipped_input_count"], 1)
+        self.assertEqual(diagnostics["post_score_gap_new_trace_mapping_prefilter_fallback_full_map_count"], 2)
+        self.assertIn(
+            "fallback_full_map",
+            diagnostics["post_score_gap_new_trace_mapping_prefilter_fallback_full_map_summaries"][0],
+        )
+        self.assertEqual(diagnostics["post_score_gap_new_trace_mapping_empty_output_count"], 1)
+        self.assertEqual(diagnostics["post_score_gap_new_trace_mapping_empty_output_retry_count"], 2)
+        self.assertEqual(diagnostics["post_score_gap_new_trace_mapping_empty_output_recovered_count"], 1)
+        self.assertIn(
+            "empty_mapper_output",
+            diagnostics["post_score_gap_new_trace_mapping_empty_output_summaries"][0],
+        )
+        self.assertIn(
+            "empty_mapper_retry",
+            diagnostics["post_score_gap_new_trace_mapping_empty_output_retry_summaries"][0],
+        )
+        self.assertFalse(diagnostics["post_score_gap_primitive_state_changed"])
+        self.assertEqual(diagnostics["post_score_gap_primitive_delta_summaries"], ())
+        self.assertEqual(
+            _score_gap_state_repeated_rejection_reasons(diagnostics),
+            ("score_gap_state_repeated", "score_gap_new_claims_without_accepted_mappings"),
+        )
+
+    def test_score_gap_progress_diagnostics_flags_append_only_document_reprocessing(self):
+        diagnostics = _score_gap_progress_diagnostics(
+            previous_trace=AgenticEvidenceRuntimeTrace(
+                status="completed",
+                document_ids=("DOC-A",),
+                claim_ids=("CLM-A",),
+            ),
+            current_trace=AgenticEvidenceRuntimeTrace(
+                status="completed",
+                document_ids=("DOC-A", "DOC-B"),
+                claim_ids=("CLM-A", "CLM-B"),
+            ),
+            previous_signature=("total=80", "gap=revision"),
+            current_signature=("total=80", "gap=revision"),
+        )
+
+        self.assertTrue(diagnostics["post_score_gap_append_only_violation"])
+        self.assertEqual(diagnostics["post_score_gap_reprocessed_document_count"], 1)
+        self.assertEqual(diagnostics["post_score_gap_reprocessed_document_ids"], ("DOC-A",))
+        self.assertEqual(
+            diagnostics["post_score_gap_progress_reason"],
+            "score_gap_reprocessed_existing_documents",
+        )
+        self.assertEqual(
+            _score_gap_state_repeated_rejection_reasons(diagnostics),
+            ("score_gap_state_repeated", "score_gap_reprocessed_existing_documents"),
+        )
+
+    def test_score_gap_progress_diagnostics_explain_accepted_mapping_without_score_state_change(self):
+        previous = AgenticEvidenceRuntimeTrace(
+            status="completed",
+            document_ids=("DOC-A",),
+            claim_ids=("CLM-A",),
+            mapping_ids=("MAP-A",),
+            primitive_states=(
+                PrimitiveStateV2(
+                    "customer_preorder_or_allocation",
+                    PrimitiveStatus.PRESENT_CURRENT,
+                    support_claim_ids=("CLM-A",),
+                ),
+                PrimitiveStateV2(
+                    "qualification_status",
+                    PrimitiveStatus.UNKNOWN,
+                    materiality_remaining_points=8.0,
+                ),
+            ),
+        )
+        current = AgenticEvidenceRuntimeTrace(
+            status="completed",
+            document_ids=("DOC-B",),
+            claim_ids=("CLM-B",),
+            mapping_ids=("MAP-B",),
+            skipped_existing_document_count=1,
+            primitive_states=(
+                PrimitiveStateV2(
+                    "customer_preorder_or_allocation",
+                    PrimitiveStatus.PRESENT_CURRENT,
+                    support_claim_ids=("CLM-B",),
+                ),
+                PrimitiveStateV2(
+                    "qualification_status",
+                    PrimitiveStatus.UNKNOWN,
+                    materiality_remaining_points=8.0,
+                ),
+            ),
+        )
+        merged = AgenticEvidenceRuntimeTrace(
+            status="completed",
+            document_ids=("DOC-A", "DOC-B"),
+            claim_ids=("CLM-A", "CLM-B"),
+            mapping_ids=("MAP-A", "MAP-B"),
+            skipped_existing_document_count=1,
+            primitive_states=(
+                PrimitiveStateV2(
+                    "customer_preorder_or_allocation",
+                    PrimitiveStatus.PRESENT_CURRENT,
+                    support_claim_ids=("CLM-A", "CLM-B"),
+                ),
+                PrimitiveStateV2(
+                    "qualification_status",
+                    PrimitiveStatus.UNKNOWN,
+                    materiality_remaining_points=8.0,
+                ),
+            ),
+        )
+
+        diagnostics = _score_gap_progress_diagnostics(
+            previous_trace=previous,
+            current_trace=current,
+            merged_trace=merged,
+            previous_signature=("total=0", "gap=qualification_status"),
+            current_signature=("total=0", "gap=qualification_status"),
+            previous_score_contributions=(
+                ScoreContributionV2.build(
+                    component_key="earnings_visibility",
+                    criterion_id="agentic_v2_rubric_earnings_visibility",
+                    raw_points=0.0,
+                    max_points=20.0,
+                    support_claim_ids=(),
+                    cap_reason="qualification_status:primitive_status:UNKNOWN",
+                ),
+            ),
+            current_score_contributions=(
+                ScoreContributionV2.build(
+                    component_key="earnings_visibility",
+                    criterion_id="agentic_v2_rubric_earnings_visibility",
+                    raw_points=0.0,
+                    max_points=20.0,
+                    support_claim_ids=(),
+                    cap_reason="qualification_status:primitive_status:UNKNOWN",
+                ),
+            ),
+        )
+
+        self.assertEqual(
+            diagnostics["post_score_gap_progress_reason"],
+            "score_gap_evidence_progress_without_score_state_change",
+        )
+        self.assertFalse(diagnostics["post_score_gap_score_state_changed"])
+        self.assertTrue(diagnostics["post_score_gap_primitive_state_changed"])
+        self.assertEqual(diagnostics["post_score_gap_new_accepted_mapping_ids"], ("MAP-B",))
+        self.assertEqual(
+            diagnostics["post_score_gap_primitive_delta_summaries"],
+            (
+                "customer_preorder_or_allocation:PRESENT_CURRENT->PRESENT_CURRENT; "
+                "support+=CLM-B",
+            ),
+        )
+        self.assertEqual(
+            diagnostics["post_score_gap_unchanged_gap_primitive_summaries"],
+            ("qualification_status:UNKNOWN; support=0; counter=0; materiality=8.0",),
+        )
+        self.assertFalse(diagnostics["post_score_gap_score_contribution_changed"])
+        self.assertEqual(diagnostics["post_score_gap_score_contribution_delta_summaries"], ())
+
+    def test_score_gap_progress_diagnostics_uses_contract_materiality_for_unchanged_gaps(self):
+        previous = AgenticEvidenceRuntimeTrace(
+            status="completed",
+            primitive_states=(
+                PrimitiveStateV2("hbm_capacity_pre_sold", PrimitiveStatus.UNKNOWN),
+                PrimitiveStateV2("qualification_status", PrimitiveStatus.UNKNOWN),
+            ),
+        )
+        current = AgenticEvidenceRuntimeTrace(
+            status="completed",
+            primitive_states=(
+                PrimitiveStateV2("hbm_capacity_pre_sold", PrimitiveStatus.UNKNOWN),
+                PrimitiveStateV2("qualification_status", PrimitiveStatus.UNKNOWN),
+            ),
+        )
+
+        diagnostics = _score_gap_progress_diagnostics(
+            previous_trace=previous,
+            current_trace=current,
+            archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            previous_signature=("total=70", "gap=hbm_capacity_pre_sold"),
+            current_signature=("total=70", "gap=hbm_capacity_pre_sold"),
+        )
+
+        summaries = diagnostics["post_score_gap_unchanged_gap_primitive_summaries"]
+        self.assertIn(
+            "hbm_capacity_pre_sold:UNKNOWN; support=0; counter=0; materiality=5.0",
+            summaries,
+        )
+        self.assertIn(
+            "qualification_status:UNKNOWN; support=0; counter=0; materiality=0.0",
+            summaries,
+        )
+
+    def test_score_gap_progress_diagnostics_report_score_contribution_delta(self):
+        diagnostics = _score_gap_progress_diagnostics(
+            previous_trace=AgenticEvidenceRuntimeTrace(status="completed"),
+            current_trace=AgenticEvidenceRuntimeTrace(status="completed"),
+            previous_signature=("total=0",),
+            current_signature=("total=10",),
+            previous_score_contributions=(
+                ScoreContributionV2.build(
+                    component_key="earnings_visibility",
+                    criterion_id="agentic_v2_rubric_earnings_visibility",
+                    raw_points=0.0,
+                    max_points=20.0,
+                    support_claim_ids=(),
+                    cap_reason="qualification_status:primitive_status:UNKNOWN",
+                ),
+            ),
+            current_score_contributions=(
+                ScoreContributionV2.build(
+                    component_key="earnings_visibility",
+                    criterion_id="agentic_v2_rubric_earnings_visibility",
+                    raw_points=10.0,
+                    max_points=20.0,
+                    support_claim_ids=("CLM-B",),
+                ),
+            ),
+        )
+
+        self.assertTrue(diagnostics["post_score_gap_score_state_changed"])
+        self.assertTrue(diagnostics["post_score_gap_score_contribution_changed"])
+        self.assertEqual(
+            diagnostics["post_score_gap_score_contribution_delta_summaries"],
+            (
+                "earnings_visibility/agentic_v2_rubric_earnings_visibility:raw=0.0->10.0; "
+                "support+=CLM-B; cap=qualification_status:primitive_status:UNKNOWN->none",
+            ),
+        )
+
+    def test_score_gap_audit_event_records_round_delta_artifact(self):
+        progress = {
+            "post_score_gap_progress_reason": "score_gap_changed_score_state",
+            "post_score_gap_score_state_changed": True,
+            "post_score_gap_new_document_ids": ("DOC-B",),
+            "post_score_gap_new_claim_ids": ("CLM-B",),
+            "post_score_gap_new_accepted_mapping_ids": ("MAP-B",),
+            "post_score_gap_primitive_state_changed": True,
+            "post_score_gap_primitive_delta_summaries": (
+                "qualification_status:UNKNOWN->PRESENT_CURRENT; support+=CLM-B",
+            ),
+            "post_score_gap_unchanged_gap_primitive_summaries": (),
+            "post_score_gap_score_contribution_changed": True,
+            "post_score_gap_score_contribution_delta_summaries": (
+                "earnings_visibility/agentic_v2_rubric_earnings_visibility:raw=0.0->10.0; support+=CLM-B",
+            ),
+        }
+
+        event = _score_gap_audit_event(
+            inputs=FreeWebResearchInput(
+                company_name="삼성전자",
+                symbol="005930",
+                sector=None,
+                market=Market.KR,
+                as_of_date=date(2026, 6, 26),
+            ),
+            round_index=1,
+            expansion=_ScoreGapExpansionResult(
+                status="executed",
+                queries_run=("삼성전자 HBM qualification",),
+                unresolved_gaps=("agentic primitive gap:qualification_status; status:UNKNOWN",),
+            ),
+            progress_diagnostics=progress,
+            previous_signature=("total=0", "gap=qualification_status"),
+            current_signature=("total=10",),
+        )
+
+        self.assertTrue(str(event["event_id"]).startswith("SGAUD-"))
+        self.assertEqual(event["symbol"], "005930")
+        self.assertEqual(event["round_index"], 1)
+        self.assertEqual(event["progress_reason"], "score_gap_changed_score_state")
+        self.assertEqual(event["new_claim_ids"], ("CLM-B",))
+        self.assertIn("support+=CLM-B", event["primitive_delta_summaries"][0])
+        self.assertIn("raw=0.0->10.0", event["score_contribution_delta_summaries"][0])
+        self.assertNotEqual(event["previous_score_gap_signature_hash"], event["current_score_gap_signature_hash"])
+
+    def test_agentic_score_contribution_diagnostics_explain_caps_and_support(self):
+        contributions = (
+            ScoreContributionV2.build(
+                component_key="earnings_visibility",
+                criterion_id="agentic_v2_rubric_earnings_visibility",
+                raw_points=0.0,
+                max_points=20.0,
+                support_claim_ids=(),
+                cap_reason="qualification_status:primitive_status:UNKNOWN",
+            ),
+            ScoreContributionV2.build(
+                component_key="bottleneck_pricing",
+                criterion_id="agentic_v2_rubric_bottleneck_pricing",
+                raw_points=10.0,
+                max_points=20.0,
+                support_claim_ids=("CLM-SUPPORT",),
+            ),
+        )
+
+        diagnostics = _agentic_score_contribution_diagnostics(contributions)
+
+        self.assertEqual(diagnostics["agentic_score_contribution_v2_count"], 2)
+        self.assertEqual(diagnostics["agentic_score_contribution_v2_nonzero_count"], 1)
+        self.assertEqual(
+            diagnostics["agentic_score_contribution_v2_cap_summaries"],
+            (
+                "earnings_visibility/agentic_v2_rubric_earnings_visibility:raw=0.0; "
+                "cap=qualification_status:primitive_status:UNKNOWN",
+            ),
+        )
+        self.assertEqual(
+            diagnostics["agentic_score_contribution_v2_support_summaries"],
+            (
+                "bottleneck_pricing/agentic_v2_rubric_bottleneck_pricing:raw=10.0; "
+                "claims=CLM-SUPPORT",
+            ),
+        )
+
+    def test_agentic_score_contributions_use_trace_archetype_over_feature_fallback(self):
+        trace = AgenticEvidenceRuntimeTrace(
+            status="completed",
+            archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            primitive_states=(
+                PrimitiveStateV2(
+                    primitive_id="customer_preorder_or_allocation",
+                    status=PrimitiveStatus.PRESENT_CURRENT,
+                    support_claim_ids=("CLM-C06-CUSTOMER",),
+                    support_mapping_ids=("MAP-C06-CUSTOMER",),
+                    support_source_family_ids=("SRC-C06-CUSTOMER",),
+                ),
+                PrimitiveStateV2(
+                    primitive_id="hbm_capacity_pre_sold",
+                    status=PrimitiveStatus.PRESENT_CURRENT,
+                    support_claim_ids=("CLM-C06-CAPACITY",),
+                    support_mapping_ids=("MAP-C06-CAPACITY",),
+                    support_source_family_ids=("SRC-C06-CAPACITY",),
+                ),
+                PrimitiveStateV2(
+                    primitive_id="revenue_visibility_contract",
+                    status=PrimitiveStatus.PRESENT_CURRENT,
+                    support_claim_ids=("CLM-C06-REVENUE",),
+                    support_mapping_ids=("MAP-C06-REVENUE",),
+                    support_source_family_ids=("SRC-C06-REVENUE",),
+                ),
+            ),
+        )
+
+        rubric_archetype = _agentic_score_contribution_archetype_id(
+            "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+            trace,
+        )
+        contributions = _agentic_score_contributions_from_trace(
+            components={
+                "eps_fcf_explosion": 20.0,
+                "earnings_visibility": 20.0,
+                "bottleneck_pricing": 20.0,
+                "market_mispricing": 15.0,
+                "valuation_rerating": 15.0,
+                "capital_allocation": 5.0,
+                "information_confidence": 5.0,
+            },
+            canonical_archetype_id=rubric_archetype,
+            trace=trace,
+        )
+
+        self.assertEqual(rubric_archetype, "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
+        self.assertTrue(any(item.raw_points > 0.0 for item in contributions))
+        cap_reasons = " ".join(str(item.cap_reason or "") for item in contributions)
+        self.assertNotIn("roe:primitive_missing_from_state", cap_reasons)
+        self.assertTrue(
+            any("CLM-C06-CUSTOMER" in item.support_claim_ids for item in contributions)
+        )
+
+    def test_agentic_score_contribution_quarantines_legacy_parser_score_audit_count(self):
+        trace = AgenticEvidenceRuntimeTrace(
+            status="completed",
+            archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            primitive_states=(
+                PrimitiveStateV2(
+                    primitive_id="customer_preorder_or_allocation",
+                    status=PrimitiveStatus.PRESENT_CURRENT,
+                    support_claim_ids=("CLM-C06-CUSTOMER",),
+                    support_mapping_ids=("MAP-C06-CUSTOMER",),
+                    support_source_family_ids=("SRC-C06-CUSTOMER",),
+                ),
+                PrimitiveStateV2(
+                    primitive_id="hbm_capacity_pre_sold",
+                    status=PrimitiveStatus.PRESENT_CURRENT,
+                    support_claim_ids=("CLM-C06-CAPACITY",),
+                    support_mapping_ids=("MAP-C06-CAPACITY",),
+                    support_source_family_ids=("SRC-C06-CAPACITY",),
+                ),
+            ),
+        )
+        feature_result = FeatureEngineeringResult(
+            payload=ScoringPayload(
+                symbol="005930",
+                as_of_date=date(2026, 6, 28),
+                components={
+                    "eps_fcf_explosion": 20.0,
+                    "earnings_visibility": 20.0,
+                    "bottleneck_pricing": 20.0,
+                    "market_mispricing": 15.0,
+                    "valuation_rerating": 15.0,
+                    "capital_allocation": 5.0,
+                    "information_confidence": 5.0,
+                },
+                diagnostic_scores={
+                    "score_valid": 100.0,
+                    "legacy_parser_score_claim_without_v2_count_capped": 7.0,
+                },
+                canonical_archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            ),
+            industrial_sub_scores=None,
+            shortage_type=None,
+            red_team_signals=None,
+            source_fields={
+                "legacy_parser_score_claim_fields_without_v2": "hbm_capacity_pre_sold,customer_preorder_or_allocation",
+            },
+        )
+
+        updated = _with_agentic_score_contributions(feature_result, trace)
+
+        self.assertEqual(updated.payload.diagnostic_scores["legacy_parser_score_claim_without_v2_count_capped"], 0.0)
+        self.assertEqual(
+            updated.payload.diagnostic_scores["legacy_parser_score_claim_without_v2_quarantined_count_capped"],
+            7.0,
+        )
+        self.assertEqual(
+            updated.source_fields["legacy_parser_score_claim_fields_quarantined_by_v2"],
+            "hbm_capacity_pre_sold,customer_preorder_or_allocation",
+        )
+        self.assertEqual(updated.source_fields["legacy_parser_score_claim_fields_without_v2"], "")
+        self.assertGreater(len(updated.payload.score_contributions_v2), 0)
+
     def test_score_gap_expansion_does_not_stop_just_because_total_score_is_high(self):
         inputs = FreeWebResearchInput(
             company_name="테스트고점수",
@@ -2144,6 +3270,50 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertTrue(any("inventory receivables" in item for item in gaps))
         self.assertTrue(any("consensus revision EPS OP FCF" in item for item in gaps))
 
+    def test_score_gap_missing_information_does_not_treat_consensus_proxy_as_independent_family(self):
+        score = ScoreSnapshot(
+            symbol="999997",
+            as_of_date=date(2026, 6, 8),
+            eps_fcf_explosion_score=20.0,
+            earnings_visibility_score=20.0,
+            bottleneck_pricing_score=20.0,
+            market_mispricing_score=15.0,
+            valuation_rerating_score=15.0,
+            capital_allocation_score=5.0,
+            information_confidence_score=5.0,
+            risk_penalty=0.0,
+            total_score=90.0,
+            diagnostic_scores={
+                "revision_score": 100.0,
+                "structural_visibility_quality": 100.0,
+                "contract_quality": 100.0,
+                "backlog_rpo_visibility": 100.0,
+                "capa_constraint": 100.0,
+                "asp_pricing_power": 100.0,
+                "actual_profit_conversion_score": 100.0,
+                "fcf_quality_score": 100.0,
+                "valuation_score": 100.0,
+                "domain_specific_evidence_score": 100.0,
+                "medium_term_revision_visibility": 100.0,
+                "sector_visibility_score": 100.0,
+                "sector_bottleneck_score": 100.0,
+                "evidence_family_price": 1.0,
+                "evidence_family_financial_actual": 1.0,
+                "evidence_family_disclosure": 1.0,
+                "evidence_family_research_report": 1.0,
+                "evidence_family_consensus": 0.0,
+                "evidence_family_consensus_proxy": 1.0,
+                "evidence_family_consensus_revision": 0.0,
+                "evidence_family_consensus_revision_proxy": 1.0,
+                "evidence_family_news": 1.0,
+            },
+        )
+
+        gaps = _score_gap_missing_information(score)
+
+        self.assertTrue(any("consensus FY1 FY2" in item for item in gaps))
+        self.assertTrue(any("consensus revision EPS OP FCF" in item for item in gaps))
+
     def test_independent_evidence_family_gap_is_material_when_llm_cannot_expand(self):
         inputs = FreeWebResearchInput(
             company_name="테스트증거부족",
@@ -2189,6 +3359,49 @@ class FreeWebResearchRunnerTests(unittest.TestCase):
         self.assertEqual(
             _score_gap_score_block_reason(inputs=inputs, expansion=provider_error, queries_run_count=0),
             "score_gap_provider_error",
+        )
+
+        agentic_no_executable = _ScoreGapExpansionResult(
+            status="agentic_follow_up_no_executable_searches",
+            unresolved_gaps=(gap,),
+            rejection_reasons=("future_query_rejected",),
+        )
+        self.assertEqual(
+            _score_gap_score_block_reason(inputs=inputs, expansion=agentic_no_executable, queries_run_count=0),
+            "score_gap_no_executable_searches",
+        )
+
+        agentic_no_queries = _ScoreGapExpansionResult(
+            status="agentic_follow_up_no_suggested_queries",
+            unresolved_gaps=(gap,),
+            rejection_reasons=("agentic_follow_up_no_suggested_queries",),
+        )
+        self.assertEqual(
+            _score_gap_score_block_reason(inputs=inputs, expansion=agentic_no_queries, queries_run_count=0),
+            "score_gap_llm_no_suggested_queries",
+        )
+
+        no_progress_with_evidence_delta = _ScoreGapExpansionResult(
+            status="no_progress",
+            unresolved_gaps=(gap,),
+            rejection_reasons=(
+                "score_gap_state_repeated",
+                "score_gap_evidence_progress_without_score_state_change",
+            ),
+            diagnostic_details={
+                "post_score_gap_progress_reason": "score_gap_evidence_progress_without_score_state_change",
+                "post_score_gap_score_state_changed": False,
+                "post_score_gap_primitive_state_changed": True,
+                "post_score_gap_score_contribution_changed": True,
+            },
+        )
+        self.assertEqual(
+            _score_gap_score_block_reason(
+                inputs=inputs,
+                expansion=no_progress_with_evidence_delta,
+                queries_run_count=1,
+            ),
+            "score_gap_material_gaps_pending",
         )
 
     def test_stage_gate_failures_are_returned_as_llm_gap_context(self):

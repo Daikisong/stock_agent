@@ -386,6 +386,7 @@ def build_fixture_cases() -> tuple[FixtureCase, ...]:
                 as_of_date=peak_date,
                 thesis_break_factors={"contract_cancelled_or_delayed": 1.0},
                 evidence_ids_by_signal={"contract_cancelled_or_delayed": ("KR-PEAK-4C-thesis",)},
+                hard_break_quorum_by_signal={"contract_cancelled_or_delayed": True},
             ),
             price_bars=_bars("KR-PEAK-4C", BOOM_BUST_PATH),
             stage3_date=stage3_date,

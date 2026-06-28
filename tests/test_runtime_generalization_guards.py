@@ -6,7 +6,13 @@ from datetime import date
 from pathlib import Path
 from unittest.mock import patch
 
-from e2r.agentic import load_evidence_contracts
+from e2r.agentic import LEGACY_DIRECT_RISK_FIELDS, V2_SCORE_ELIGIBLE_CLAIMS_KEY, load_evidence_contracts
+from e2r.calibration.scoring_profile import (
+    BASELINE_PROFILE_PATH,
+    CALIBRATED_PROFILE_PATH,
+    V2_2_PROFILE_PATH,
+    load_scoring_profile,
+)
 from e2r.calibration.taxonomy import CANONICAL_ARCHETYPE_IDS, large_sector_for_archetype
 from e2r.features import DeterministicFeatureEngineer
 from e2r.models import Stage
@@ -15,7 +21,7 @@ from e2r.score_validity import score_state_contract_violations
 from e2r.scoring import CANONICAL_SCORE_COMPONENTS, DeterministicScorer, ScoringPayload
 from e2r.sector_profiles import profile_for_archetype
 from e2r.stage_gate_diagnostics import diagnose_stage_gates
-from e2r.staging import StageClassificationInput, StageClassifier
+from e2r.staging import STAGE_3_GREEN_MIN_REVISION_SCORE, StageClassificationInput, StageClassifier
 from tests.test_features import base_input
 
 
@@ -41,12 +47,55 @@ RUNTIME_HARDCODE_SCAN_PATHS = (
     "src/e2r/features.py",
     "src/e2r/scoring.py",
     "src/e2r/staging.py",
+    "src/e2r/red_team.py",
     "src/e2r/stage_gate_diagnostics.py",
     "src/e2r/score_validity.py",
 )
 
 
 class RuntimeGeneralizationGuardTests(unittest.TestCase):
+    def test_score_weights_and_stage_thresholds_are_frozen_while_evidence_os_is_repaired(self) -> None:
+        expected_components = {
+            "eps_fcf_explosion": 20.0,
+            "earnings_visibility": 20.0,
+            "bottleneck_pricing": 20.0,
+            "market_mispricing": 15.0,
+            "valuation_rerating": 15.0,
+            "capital_allocation": 5.0,
+            "information_confidence": 5.0,
+        }
+        expected_baseline_thresholds = {
+            "stage2_total_min": 65.0,
+            "stage2_eps_fcf_min": 10.0,
+            "stage2_valuation_min": 7.0,
+            "stage2_information_confidence_min": 3.0,
+            "stage3_yellow_total_min": 80.0,
+            "stage3_green_total_min": 85.0,
+            "stage3_green_eps_fcf_min": 17.0,
+            "stage3_green_visibility_min": 15.0,
+            "stage3_green_bottleneck_min": 15.0,
+            "stage3_green_mispricing_min": 10.0,
+            "stage3_green_valuation_min": 10.0,
+            "stage3_green_revision_min": 50.0,
+            "stage3_green_structural_visibility_min": 45.0,
+        }
+        expected_calibrated_thresholds = {
+            **expected_baseline_thresholds,
+            "stage3_yellow_total_min": 75.0,
+            "stage3_green_total_min": 87.0,
+            "stage3_green_revision_min": 55.0,
+        }
+
+        self.assertEqual(
+            {component.key: component.max_points for component in CANONICAL_SCORE_COMPONENTS},
+            expected_components,
+        )
+        self.assertEqual(sum(expected_components.values()), 100.0)
+        self.assertEqual(STAGE_3_GREEN_MIN_REVISION_SCORE, 50.0)
+        self.assertEqual(load_scoring_profile(BASELINE_PROFILE_PATH).thresholds, expected_baseline_thresholds)
+        self.assertEqual(load_scoring_profile(CALIBRATED_PROFILE_PATH).thresholds, expected_calibrated_thresholds)
+        self.assertEqual(load_scoring_profile(V2_2_PROFILE_PATH).thresholds, expected_calibrated_thresholds)
+
     def test_operational_runtime_modules_do_not_hardcode_representative_winner_symbols(self) -> None:
         forbidden_terms = (
             "000660",
@@ -449,6 +498,13 @@ class RuntimeGeneralizationGuardTests(unittest.TestCase):
                     self.assertFalse(guard["evidence_url_pending"])
                     fields = _runtime_fields_from_research_fixture(fixture)
                     fields.update(overrides)
+                    v2_guard_claims = {
+                        key: (f"CLM-GUARD-{canonical_archetype_id}-{key}",)
+                        for key, value in overrides.items()
+                        if value is True and key in LEGACY_DIRECT_RISK_FIELDS
+                    }
+                    if v2_guard_claims:
+                        fields[V2_SCORE_ELIGIBLE_CLAIMS_KEY] = v2_guard_claims
                     result = DeterministicFeatureEngineer().engineer(
                         replace(
                             base_input(fields),

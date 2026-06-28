@@ -9,6 +9,7 @@ from datetime import date, datetime
 from enum import Enum
 from typing import Any, Mapping, Sequence
 
+from e2r.agentic import ScoreContributionV2, audit_unexplained_score_deltas
 from e2r.diagnostic_values import diagnostic_value
 from e2r.models import ScoreSnapshot
 
@@ -23,6 +24,11 @@ _RAW_BLOCK_SCORE_KEYS = (
     "raw_score_total_before_theme_route_block",
     "raw_score_total_before_score_gap_block",
     "raw_score_total_before_asof_web_block",
+)
+
+_AUDIT_BLOCK_COUNT_KEYS = (
+    "legacy_parser_score_claim_without_v2_count",
+    "legacy_parser_score_claim_without_v2_count_capped",
 )
 
 _BLOCK_REASON_BY_RAW_KEY = {
@@ -59,6 +65,7 @@ class ScoreStateComparison:
     research_input_fingerprint_before: str | None
     research_input_fingerprint_after: str | None
     component_deltas: Mapping[str, float]
+    score_delta_audit_findings: tuple[str, ...]
     drivers: tuple[str, ...]
 
 
@@ -70,6 +77,14 @@ class ScoreStateRowChange:
     before: Mapping[str, object] | object | None
     after: Mapping[str, object] | object | None
     comparison: ScoreStateComparison
+
+
+@dataclass(frozen=True)
+class ScoreStateAuditFailure:
+    """One score comparison failure that should fail runtime/CI acceptance."""
+
+    key: str
+    violation: str
 
 
 @dataclass(frozen=True)
@@ -88,6 +103,10 @@ def is_score_valid(score: ScoreSnapshot | None) -> bool:
         return False
     if any(key in diagnostics for key in _RAW_BLOCK_SCORE_KEYS):
         return False
+    if _diagnostics_require_agentic_evidence(diagnostics) and any(
+        _diagnostic_value(diagnostics.get(key)) > 0.0 for key in _AUDIT_BLOCK_COUNT_KEYS
+    ):
+        return False
     return _diagnostic_value(diagnostics.get("score_valid")) > 0.0
 
 
@@ -103,6 +122,10 @@ def score_block_reason(score: ScoreSnapshot | None) -> str | None:
     for key, reason in _BLOCK_REASON_BY_RAW_KEY.items():
         if key in score.diagnostic_scores:
             return reason
+    if _diagnostics_require_agentic_evidence(score.diagnostic_scores) and any(
+        _diagnostic_value(score.diagnostic_scores.get(key)) > 0.0 for key in _AUDIT_BLOCK_COUNT_KEYS
+    ):
+        return "legacy_parser_score_claim_without_v2"
     if is_score_valid(score):
         return None
     return "score_invalid"
@@ -152,6 +175,13 @@ def compare_score_states(
     delta = None
     if before_visible is not None and after_visible is not None:
         delta = after_visible - before_visible
+    score_delta_audit_findings = _score_delta_audit_findings(
+        before,
+        after,
+        delta=delta,
+        component_deltas=component_deltas,
+        materiality=materiality,
+    )
 
     drivers: list[str] = []
     if before is None:
@@ -175,6 +205,11 @@ def compare_score_states(
             drivers.append("component_scores_missing:after")
     for key, value in component_deltas.items():
         drivers.append(f"component_delta:{key}={value:g}")
+    for finding in score_delta_audit_findings:
+        if finding.startswith("unavailable:"):
+            drivers.append(f"score_delta_audit_{finding}")
+        else:
+            drivers.append(f"score_delta_audit:{finding}")
     _append_variability_driver_changes(drivers, before, after)
     if before_fp and after_fp:
         drivers.append("score_fingerprint_same" if before_fp == after_fp else "score_fingerprint_changed")
@@ -192,6 +227,7 @@ def compare_score_states(
             before_visible=before_visible,
             after_visible=after_visible,
             delta=delta,
+            component_deltas=component_deltas,
             materiality=materiality,
             score_fingerprint_before=before_fp,
             score_fingerprint_after=after_fp,
@@ -210,6 +246,7 @@ def compare_score_states(
         research_input_fingerprint_before=before_input_fp,
         research_input_fingerprint_after=after_input_fp,
         component_deltas=component_deltas,
+        score_delta_audit_findings=score_delta_audit_findings,
         drivers=tuple(dict.fromkeys(drivers)),
     )
 
@@ -240,6 +277,41 @@ def compare_score_state_rows(
     return tuple(changes)
 
 
+def score_state_comparison_audit_failures(
+    comparison: ScoreStateComparison,
+    *,
+    include_unavailable: bool = True,
+) -> tuple[str, ...]:
+    """Return score-delta audit findings that should fail acceptance."""
+
+    failures = []
+    for finding in comparison.score_delta_audit_findings:
+        if finding.startswith("unavailable:"):
+            if include_unavailable:
+                failures.append(finding)
+            continue
+        if ":" in finding:
+            failures.append(finding)
+    return tuple(failures)
+
+
+def find_score_state_row_audit_failures(
+    changes: Sequence[ScoreStateRowChange],
+    *,
+    include_unavailable: bool = True,
+) -> tuple[ScoreStateAuditFailure, ...]:
+    """Return row-level score-delta audit failures for runtime/CI gates."""
+
+    failures: list[ScoreStateAuditFailure] = []
+    for change in changes:
+        for finding in score_state_comparison_audit_failures(
+            change.comparison,
+            include_unavailable=include_unavailable,
+        ):
+            failures.append(ScoreStateAuditFailure(key=change.key, violation=finding))
+    return tuple(failures)
+
+
 def serialized_visible_score(state: Mapping[str, object] | object | None) -> float | None:
     """Return only the score that is safe to display as visible score."""
 
@@ -255,6 +327,8 @@ def serialized_score_valid(state: Mapping[str, object] | object | None) -> bool 
     if _state_invalid_score_marker(state):
         return False
     if _score_alias_conflict_marker(state):
+        return False
+    if _agentic_evidence_score_block_reason(state):
         return False
     raw_valid = _state_bool(state, "score_valid")
     if raw_valid is True:
@@ -274,6 +348,9 @@ def serialized_score_block_reason(state: Mapping[str, object] | object | None) -
     conflict = _score_alias_conflict_marker(state)
     if conflict:
         return explicit_reason or conflict
+    agentic_reason = _agentic_evidence_score_block_reason(state)
+    if agentic_reason:
+        return explicit_reason or agentic_reason
     if _state_bool(state, "score_valid") is True and serialized_visible_score(state) is None:
         return explicit_reason or "visible_score_missing"
     return explicit_reason
@@ -286,6 +363,9 @@ def normalized_score_state_payload(state: Mapping[str, object]) -> dict[str, obj
     marker = _state_invalid_score_marker(payload)
     if marker:
         return _normalized_blocked_score_payload(payload, marker)
+    agentic_reason = _agentic_evidence_score_block_reason(payload)
+    if agentic_reason:
+        return _normalized_blocked_score_payload(payload, agentic_reason, force_invalid=True)
     conflict = _score_alias_conflict_marker(payload)
     if conflict:
         return _normalized_blocked_score_payload(payload, conflict, force_invalid=True)
@@ -335,6 +415,7 @@ def score_state_contract_violations(state: Mapping[str, object] | object | None)
     if state is None:
         return ("state_missing",)
     violations: list[str] = []
+    violations.extend(_stage_output_contract_violations(state))
     valid = _state_bool(state, "score_valid")
     marker = _state_invalid_score_marker(state)
     visible_value = _state_primary_visible_score(state)
@@ -391,7 +472,54 @@ def score_state_contract_violations(state: Mapping[str, object] | object | None)
             violations.append("valid_stage3_green_guard_primitives_present")
         if _valid_stage3_green_has_unverified_guard_primitives(state):
             violations.append("valid_stage3_green_guard_primitives_unverified")
+        agentic_violation = _valid_row_agentic_evidence_contract_violation(state)
+        if agentic_violation:
+            violations.append(f"valid_agentic_evidence_{agentic_violation}")
     return tuple(violations)
+
+
+def _stage_output_contract_violations(state: Mapping[str, object] | object | None) -> tuple[str, ...]:
+    if not _stage_output_fields_present(state):
+        return ()
+
+    violations: list[str] = []
+    effective_valid = serialized_score_valid(state)
+    stage_status = _state_text(state, "stage_output_status")
+    stage_is_final = _state_bool(state, "stage_is_final")
+    stage_display = _state_value(state, "stage_display_stage")
+    stage_pending_reason = _state_text(state, "stage_pending_reason")
+
+    if stage_status and stage_status not in {"final", "pending_invalid_score", "pending_agentic_evidence"}:
+        violations.append("stage_output_status_unknown")
+
+    if effective_valid is False:
+        if stage_status == "final":
+            violations.append("invalid_stage_status_final")
+        if stage_is_final is True:
+            violations.append("invalid_stage_marked_final")
+        if stage_display not in (None, ""):
+            violations.append("invalid_stage_display_present")
+        if not stage_pending_reason:
+            violations.append("invalid_stage_pending_reason_missing")
+        return tuple(violations)
+
+    if effective_valid is True:
+        if stage_status and stage_status != "final":
+            violations.append("valid_stage_status_pending")
+        if stage_is_final is False:
+            violations.append("valid_stage_marked_pending")
+        if stage_display in (None, ""):
+            violations.append("valid_stage_display_missing")
+        if stage_pending_reason not in (None, "", "none"):
+            violations.append("valid_stage_pending_reason_present")
+    return tuple(violations)
+
+
+def _stage_output_fields_present(state: Mapping[str, object] | object | None) -> bool:
+    return any(
+        _state_value(state, key) not in (None, "")
+        for key in ("stage_output_status", "stage_is_final", "stage_display_stage", "stage_pending_reason")
+    )
 
 
 def score_state_output_contract_violations(state: Mapping[str, object] | object | None) -> tuple[str, ...]:
@@ -554,6 +682,7 @@ def _append_claim_contribution_drivers(drivers: list[str], diagnostics: Mapping[
         ("claim_backed_primitive_count_capped", "claim_backed_primitive_count"),
         ("score_claim_backed_component_count_capped", "score_claim_backed_component_count"),
         ("orphan_score_component_count_capped", "orphan_score_component_count"),
+        ("legacy_parser_score_claim_without_v2_count_capped", "legacy_parser_score_claim_without_v2_count"),
         ("score_claim_backed_component_ratio", "score_claim_backed_component_ratio"),
     ):
         value = _route_num(diagnostics.get(diagnostic_key))
@@ -616,6 +745,7 @@ def _score_state_comparison_status(
     before_visible: float | None,
     after_visible: float | None,
     delta: float | None,
+    component_deltas: Mapping[str, float],
     materiality: float,
     score_fingerprint_before: str | None,
     score_fingerprint_after: str | None,
@@ -638,7 +768,7 @@ def _score_state_comparison_status(
         return "visible_score_missing_after"
     if score_valid_before is True and score_valid_after is True and before_visible is None and after_visible is None:
         return "visible_score_missing_both"
-    changed = delta is not None and abs(delta) >= materiality
+    changed = (delta is not None and abs(delta) >= materiality) or bool(component_deltas)
     if score_fingerprint_before and score_fingerprint_after and score_fingerprint_before == score_fingerprint_after:
         return "same_score_snapshot" if not changed else "inconsistent_output_same_score_fingerprint"
     if not changed and score_valid_before == score_valid_after:
@@ -663,6 +793,11 @@ def _state_visible_score(state: Mapping[str, object] | object | None) -> tuple[f
         if _state_value(state, "visible_score") not in (None, ""):
             return None, f"visible_score_ignored_{conflict_marker}"
         return None, f"{conflict_marker}_without_visible_score"
+    agentic_reason = _agentic_evidence_score_block_reason(state)
+    if agentic_reason:
+        if _state_value(state, "visible_score") not in (None, ""):
+            return None, f"visible_score_ignored_{agentic_reason}"
+        return None, f"{agentic_reason}_without_visible_score"
     for key in _VISIBLE_SCORE_ALIAS_KEYS:
         value = _state_value(state, key)
         if value in (None, ""):
@@ -798,12 +933,15 @@ def _path_key(key: object) -> str:
 def _state_invalid_score_marker(state: Mapping[str, object] | object | None) -> str | None:
     valid = _state_bool(state, "score_valid")
     reason = _state_text(state, "score_blocked_reason")
+    audit_marker = _state_audit_block_marker(state)
     if valid is True:
         if reason and reason.strip().lower() not in {"valid", "none"}:
             return "score_blocked_reason"
         for key in (*_RAW_BLOCK_SCORE_KEYS, "raw_score_before_block"):
             if _state_value(state, key) not in (None, ""):
                 return _BLOCK_REASON_BY_RAW_KEY.get(key, "raw_score_before_block")
+        if audit_marker:
+            return audit_marker
         return None
     if valid is False:
         return "score_valid_false"
@@ -812,9 +950,29 @@ def _state_invalid_score_marker(state: Mapping[str, object] | object | None) -> 
     for key in (*_RAW_BLOCK_SCORE_KEYS, "raw_score_before_block"):
         if _state_value(state, key) not in (None, ""):
             return _BLOCK_REASON_BY_RAW_KEY.get(key, "raw_score_before_block")
+    if audit_marker:
+        return audit_marker
     if _state_has_any_score_value(state):
         return "score_valid_missing"
     return None
+
+
+def _state_audit_block_marker(state: Mapping[str, object] | object | None) -> str | None:
+    if not _state_requires_agentic_evidence_trace(state):
+        return None
+    if _state_bool(state, "legacy_parser_score_claim_without_v2") is True:
+        return "legacy_parser_score_claim_without_v2"
+    for key in _AUDIT_BLOCK_COUNT_KEYS:
+        value = _score_numeric_value(_state_value(state, key))
+        if value is not None and value > 0.0:
+            return "legacy_parser_score_claim_without_v2"
+    return None
+
+
+def _diagnostics_require_agentic_evidence(diagnostics: Mapping[str, object]) -> bool:
+    return _diagnostic_value(diagnostics.get("agentic_evidence_enabled")) > 0.0 or _diagnostic_value(
+        diagnostics.get("agentic_evidence_required_for_scoring")
+    ) > 0.0
 
 
 def _score_alias_conflict_marker(state: Mapping[str, object] | object | None) -> str | None:
@@ -989,8 +1147,83 @@ def _valid_stage3_green_has_present_guard_primitives(state: Mapping[str, object]
     if guard_present is None:
         guard_present = _score_numeric_value(
             _state_value(state, "evidence_contract_guard_present_primitive_count_capped")
-        )
+    )
     return guard_present is not None and guard_present > 0.0
+
+
+_AGENTIC_EVIDENCE_INVALID_STATUSES = {
+    "disabled_no_provider": "status_disabled_no_provider",
+    "provider_error": "status_provider_error",
+    "contract_load_error": "status_contract_load_error",
+    "contract_missing": "status_contract_missing",
+    "no_fetched_documents": "status_no_fetched_documents",
+    "skipped_no_archetype": "status_skipped_no_archetype",
+    "completed_budget_limited": "status_budget_limited",
+    "partial_error_budget_limited": "status_budget_limited",
+}
+
+
+_AGENTIC_EVIDENCE_BLOCK_REASON_BY_VIOLATION = {
+    "status_missing": "agentic_evidence_missing_trace",
+    "status_disabled": "agentic_evidence_missing_trace",
+    "status_unknown": "agentic_evidence_invalid_trace_status",
+    "status_disabled_no_provider": "agentic_evidence_provider_error",
+    "status_provider_error": "agentic_evidence_provider_error",
+    "status_contract_load_error": "agentic_evidence_provider_error",
+    "status_contract_missing": "agentic_evidence_provider_error",
+    "status_no_fetched_documents": "agentic_evidence_no_fetched_documents",
+    "status_skipped_no_archetype": "agentic_evidence_missing_archetype",
+    "status_budget_limited": "agentic_evidence_claim_budget_limited",
+    "accepted_mapping_count_missing": "agentic_evidence_no_accepted_mappings",
+    "no_accepted_mappings": "agentic_evidence_no_accepted_mappings",
+    "v2_score_contribution_input_missing": "agentic_evidence_missing_v2_score_contributions",
+}
+
+
+def _agentic_evidence_score_block_reason(state: Mapping[str, object] | object | None) -> str | None:
+    violation = _valid_row_agentic_evidence_contract_violation(state)
+    if not violation:
+        return None
+    return _AGENTIC_EVIDENCE_BLOCK_REASON_BY_VIOLATION.get(violation, f"agentic_evidence_{violation}")
+
+
+def _valid_row_agentic_evidence_contract_violation(state: Mapping[str, object] | object | None) -> str | None:
+    if _state_bool(state, "score_valid") is not True:
+        return None
+    status = (_state_text(state, "agentic_evidence_status") or "").strip().lower()
+    if not status:
+        if _state_requires_agentic_evidence_trace(state):
+            return "status_missing"
+        return None
+    if status == "disabled":
+        if _state_requires_agentic_evidence_trace(state):
+            return "status_disabled"
+        return None
+    if status in _AGENTIC_EVIDENCE_INVALID_STATUSES:
+        return _AGENTIC_EVIDENCE_INVALID_STATUSES[status]
+    if status not in {"completed", "partial_error"}:
+        return "status_unknown"
+    accepted = _score_numeric_value(_state_value(state, "agentic_evidence_accepted_mapping_count"))
+    if accepted is None:
+        return "accepted_mapping_count_missing"
+    if accepted <= 0.0:
+        return "no_accepted_mappings"
+    runtime_v2 = _score_numeric_value(_state_value(state, "agentic_score_contribution_v2_runtime_input"))
+    if runtime_v2 is None:
+        runtime_v2 = _score_numeric_value(_state_value(state, "score_contribution_v2_component_input_used"))
+    if runtime_v2 is None:
+        runtime_v2 = _score_numeric_value(_state_value(state, "score_contribution_v2_used"))
+    if runtime_v2 is None or runtime_v2 <= 0.0:
+        if _state_score_contribution_ledger(state) or _state_score_contribution_claim_ids(state):
+            return None
+        return "v2_score_contribution_input_missing"
+    return None
+
+
+def _state_requires_agentic_evidence_trace(state: Mapping[str, object] | object | None) -> bool:
+    return _state_bool(state, "agentic_evidence_enabled") is True or _state_bool(
+        state, "agentic_evidence_required_for_scoring"
+    ) is True
 
 
 def _state_requires_claim_backed_high_confidence_score(state: Mapping[str, object] | object | None) -> bool:
@@ -1159,6 +1392,118 @@ def _state_score_contribution_ledger(state: Mapping[str, object] | object | None
         if clean:
             row[component] = clean
     return row
+
+
+def _score_delta_audit_findings(
+    before: Mapping[str, object] | object | None,
+    after: Mapping[str, object] | object | None,
+    *,
+    delta: float | None,
+    component_deltas: Mapping[str, float],
+    materiality: float,
+) -> tuple[str, ...]:
+    visible_delta_material = delta is not None and abs(delta) >= materiality
+    component_delta_material = bool(component_deltas)
+    if not visible_delta_material and not component_delta_material:
+        return ()
+    before_contributions = _state_score_contributions_v2(before)
+    after_contributions = _state_score_contributions_v2(after)
+    unavailable = _score_delta_audit_unavailable_reasons(
+        before,
+        after,
+        before_contributions=before_contributions,
+        after_contributions=after_contributions,
+    )
+    if unavailable:
+        return unavailable
+    findings = audit_unexplained_score_deltas(
+        before=before_contributions,
+        after=after_contributions,
+    )
+    return tuple(
+        f"{finding.severity}:{finding.component_key}/{finding.criterion_id}={finding.delta:g}"
+        for finding in findings
+    )
+
+
+def _score_delta_audit_unavailable_reasons(
+    before: Mapping[str, object] | object | None,
+    after: Mapping[str, object] | object | None,
+    *,
+    before_contributions: Sequence[ScoreContributionV2],
+    after_contributions: Sequence[ScoreContributionV2],
+) -> tuple[str, ...]:
+    missing = []
+    unparseable = []
+    before_raw = _state_value(before, "score_contribution_ledger")
+    after_raw = _state_value(after, "score_contribution_ledger")
+    before_raw_count = _score_contribution_ledger_raw_row_count(before)
+    after_raw_count = _score_contribution_ledger_raw_row_count(after)
+    if before_raw in (None, ""):
+        missing.append("before")
+    elif not before_contributions or (before_raw_count is not None and len(before_contributions) < before_raw_count):
+        unparseable.append("before")
+    if after_raw in (None, ""):
+        missing.append("after")
+    elif not after_contributions or (after_raw_count is not None and len(after_contributions) < after_raw_count):
+        unparseable.append("after")
+    findings = []
+    if missing:
+        findings.append(f"unavailable:score_contribution_ledger_missing:{','.join(missing)}")
+    if unparseable:
+        findings.append(f"unavailable:score_contribution_ledger_unparseable:{','.join(unparseable)}")
+    return tuple(findings)
+
+
+def _score_contribution_ledger_raw_row_count(state: Mapping[str, object] | object | None) -> int | None:
+    value = _json_state_value(_state_value(state, "score_contribution_ledger"))
+    if not isinstance(value, Sequence) or isinstance(value, (str, bytes, bytearray)):
+        return None
+    return sum(1 for item in value if isinstance(item, Mapping))
+
+
+def _state_score_contributions_v2(
+    state: Mapping[str, object] | object | None,
+) -> tuple[ScoreContributionV2, ...]:
+    value = _json_state_value(_state_value(state, "score_contribution_ledger"))
+    if not isinstance(value, Sequence) or isinstance(value, (str, bytes, bytearray)):
+        return ()
+    contributions: list[ScoreContributionV2] = []
+    for item in value:
+        if not isinstance(item, Mapping):
+            continue
+        component = _component_key(item.get("component_key") or "")
+        if not component:
+            component = _component_key(item.get("criterion_id") or "")
+        if not component:
+            continue
+        criterion = str(item.get("criterion_id") or component).strip()
+        if not criterion:
+            criterion = component
+        raw_points = _score_numeric_value(item.get("raw_points"))
+        if raw_points is None:
+            continue
+        max_points = _score_numeric_value(item.get("max_points"))
+        if max_points is None:
+            max_points = raw_points
+        support_claim_ids = _claim_id_values(item.get("support_claim_ids"))
+        counter_claim_ids = _claim_id_values(item.get("counter_claim_ids"))
+        if raw_points != 0 and not support_claim_ids:
+            continue
+        try:
+            contributions.append(
+                ScoreContributionV2.build(
+                    component_key=component,
+                    criterion_id=criterion,
+                    raw_points=raw_points,
+                    max_points=max_points,
+                    support_claim_ids=support_claim_ids,
+                    counter_claim_ids=counter_claim_ids,
+                )
+            )
+        except ValueError:
+            continue
+    return tuple(contributions)
 
 
 def _state_claim_ledger_claim_ids(state: Mapping[str, object] | object | None) -> tuple[str, ...]:
@@ -1418,11 +1763,13 @@ def _diagnostic_value(value: object) -> float:
 
 
 __all__ = [
+    "ScoreStateAuditFailure",
     "ScoreStateComparison",
     "ScoreStateContractFinding",
     "ScoreStateRowChange",
     "compare_score_state_rows",
     "compare_score_states",
+    "find_score_state_row_audit_failures",
     "find_score_state_contract_violations",
     "is_score_valid",
     "normalized_score_alias_value",
@@ -1431,6 +1778,7 @@ __all__ = [
     "raw_score_total_before_block",
     "score_block_reason",
     "score_fingerprint",
+    "score_state_comparison_audit_failures",
     "score_state_contract_violations",
     "score_state_output_contract_violations",
     "score_variability_drivers",

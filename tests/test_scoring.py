@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 
 from e2r.calibration.taxonomy import large_sector_for_archetype
+from e2r.agentic import ScoreContributionV2
 from e2r.models import ScoreSnapshot
 from e2r.scoring import CANONICAL_SCORE_COMPONENTS, DeterministicScorer, ScoringPayload
 
@@ -105,6 +106,141 @@ class ScoringPayloadTests(unittest.TestCase):
         self.assertEqual(ledger["eps_fcf_explosion"].support_claim_ids, ("CLM-EPS",))
         self.assertEqual(ledger["bottleneck_pricing"].support_claim_ids, ("CLM-HBM",))
         self.assertEqual(ledger["earnings_visibility"].cap_reason, "missing_support_claim_ids")
+
+    def test_scorer_does_not_emit_claim_ids_for_zero_point_components(self):
+        score = DeterministicScorer().score(
+            ScoringPayload(
+                symbol="TEST",
+                as_of_date=date(2026, 5, 13),
+                components=complete_components(
+                    eps_fcf_explosion=0.0,
+                    earnings_visibility=0.0,
+                    bottleneck_pricing=0.0,
+                    market_mispricing=0.0,
+                    valuation_rerating=0.0,
+                    capital_allocation=0.0,
+                    information_confidence=0.0,
+                ),
+                score_contribution_claim_ids={
+                    "eps_fcf_explosion": ("CLM-ZERO-EPS",),
+                    "information_confidence": ("CLM-ZERO-CONFIDENCE",),
+                },
+                large_sector_id=large_sector_for_archetype("C06_HBM_MEMORY_CUSTOMER_CAPACITY"),
+                canonical_archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            )
+        )
+
+        ledger = {item.component_key: item for item in score.score_contribution_ledger}
+        self.assertEqual(score.total_score, 0.0)
+        self.assertEqual(score.score_contribution_claim_ids, {})
+        self.assertEqual(ledger["eps_fcf_explosion"].support_claim_ids, ())
+        self.assertEqual(ledger["information_confidence"].support_claim_ids, ())
+
+    def test_scorer_uses_score_contribution_v2_as_primary_ledger_input(self):
+        v2_contributions = (
+            ScoreContributionV2.build(
+                component_key="eps_fcf_explosion",
+                criterion_id="actual_eps_claim",
+                raw_points=12.0,
+                max_points=20.0,
+                support_claim_ids=("CLM-V2-EPS",),
+                rationale="v2 claim-backed actual EPS",
+            ),
+            ScoreContributionV2.build(
+                component_key="earnings_visibility",
+                criterion_id="missing_contract_bridge",
+                raw_points=0.0,
+                max_points=20.0,
+                support_claim_ids=(),
+                cap_reason="primitive_status:UNKNOWN",
+                rationale="v2 missing contract primitive",
+            ),
+        )
+
+        score = DeterministicScorer().score(
+            ScoringPayload(
+                symbol="TEST",
+                as_of_date=date(2026, 5, 13),
+                components=complete_components(eps_fcf_explosion=20.0),
+                score_contribution_claim_ids={"eps_fcf_explosion": ("CLM-V1-IGNORED",)},
+                score_contributions_v2=v2_contributions,
+                large_sector_id=large_sector_for_archetype("C06_HBM_MEMORY_CUSTOMER_CAPACITY"),
+                canonical_archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            )
+        )
+
+        ledger = {item.component_key: item for item in score.score_contribution_ledger}
+        self.assertEqual(score.eps_fcf_explosion_score, 12.0)
+        self.assertEqual(score.earnings_visibility_score, 0.0)
+        self.assertEqual(score.bottleneck_pricing_score, 0.0)
+        self.assertEqual(score.diagnostic_scores["score_contribution_v2_component_input_used"], 100.0)
+        self.assertEqual(score.score_contribution_claim_ids["eps_fcf_explosion"], ("CLM-V2-EPS",))
+        self.assertEqual(ledger["eps_fcf_explosion"].support_claim_ids, ("CLM-V2-EPS",))
+        self.assertEqual(ledger["eps_fcf_explosion"].rationale, "component score has v2 claim-backed support")
+        self.assertEqual(ledger["earnings_visibility"].cap_reason, "primitive_status:UNKNOWN")
+        self.assertEqual(score.diagnostic_scores["score_contribution_v2_used"], 100.0)
+        self.assertEqual(score.diagnostic_scores["score_contribution_v2_input_count_capped"], 2.0)
+
+    def test_scorer_requires_v2_contributions_when_cutover_flag_is_set(self):
+        score = DeterministicScorer().score(
+            ScoringPayload(
+                symbol="TEST",
+                as_of_date=date(2026, 5, 13),
+                components=complete_components(
+                    eps_fcf_explosion=12.0,
+                    earnings_visibility=0.0,
+                    bottleneck_pricing=0.0,
+                    market_mispricing=0.0,
+                    valuation_rerating=0.0,
+                    capital_allocation=0.0,
+                    information_confidence=0.0,
+                ),
+                diagnostic_scores={"require_v2_score_contributions": 100.0},
+                score_contribution_claim_ids={"eps_fcf_explosion": ("CLM-V1-PARSER",)},
+                large_sector_id=large_sector_for_archetype("C06_HBM_MEMORY_CUSTOMER_CAPACITY"),
+                canonical_archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            )
+        )
+
+        self.assertEqual(score.total_score, 0.0)
+        self.assertEqual(score.eps_fcf_explosion_score, 0.0)
+        self.assertEqual(score.risk_penalty, 0.0)
+        self.assertEqual(score.diagnostic_scores["score_valid"], 0.0)
+        self.assertEqual(score.diagnostic_scores["score_contribution_v2_required"], 100.0)
+        self.assertEqual(score.diagnostic_scores["score_contribution_v2_used"], 0.0)
+        self.assertEqual(score.diagnostic_scores["score_blocked_by_orphan_score_contribution"], 100.0)
+        self.assertEqual(score.score_contribution_claim_ids, {})
+
+    def test_scorer_quarantines_legacy_risk_penalty_when_v2_components_are_primary(self):
+        v2_contributions = (
+            ScoreContributionV2.build(
+                component_key="earnings_visibility",
+                criterion_id="current_revision_claim",
+                raw_points=4.0,
+                max_points=20.0,
+                support_claim_ids=("CLM-V2-REVISION",),
+                rationale="v2 claim-backed revision visibility",
+            ),
+        )
+
+        score = DeterministicScorer().score(
+            ScoringPayload(
+                symbol="TEST",
+                as_of_date=date(2026, 5, 13),
+                components=complete_components(earnings_visibility=0.0),
+                risk_penalty=15.0,
+                score_contributions_v2=v2_contributions,
+                large_sector_id=large_sector_for_archetype("C06_HBM_MEMORY_CUSTOMER_CAPACITY"),
+                canonical_archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            )
+        )
+
+        self.assertEqual(score.earnings_visibility_score, 4.0)
+        self.assertEqual(score.risk_penalty, 0.0)
+        self.assertGreater(score.total_score, 0.0)
+        self.assertEqual(score.diagnostic_scores["score_contribution_v2_component_input_used"], 100.0)
+        self.assertEqual(score.diagnostic_scores["score_contribution_v2_legacy_risk_penalty_quarantined"], 100.0)
+        self.assertEqual(score.diagnostic_scores["raw_legacy_risk_penalty_before_v2_quarantine"], 15.0)
 
     def test_payload_rejects_non_finite_component_and_diagnostic_values(self):
         with self.assertRaisesRegex(ValueError, "eps_fcf_explosion must be between 0 and 20.0"):

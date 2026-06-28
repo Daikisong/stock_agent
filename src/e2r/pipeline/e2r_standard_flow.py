@@ -9,6 +9,15 @@ from pathlib import Path
 from typing import Mapping, Sequence
 
 from e2r.audit import AuditFinding, audit_parser_outputs
+from e2r.agentic import (
+    AgenticEvidenceProviderBundle,
+    ClaimAdjudicatorProvider,
+    ClaimExtractorProvider,
+    FollowUpPlannerProvider,
+    PrimitiveMapperProvider,
+    build_agentic_evidence_provider_bundle_from_env,
+    build_default_codex_agentic_evidence_provider_bundle,
+)
 from e2r.cheap_scan import KoreaCheapScanConfig, KoreaCheapScanResult, KoreaCheapScanSources, KoreaCheapScanner
 from e2r.cheap_scan.models import CheapScanCandidate, RecommendedNextLayer
 from e2r.features import FeatureEngineeringInput
@@ -24,6 +33,7 @@ from e2r.llm.theme_provider import ThemeRouteProvider
 from e2r.models import Evidence, Instrument, Market, RedTeamFinding, ScoreSnapshot, StageSnapshot
 from e2r.pipeline.evidence_builder import evidence_from_feature_domains
 from e2r.research.free_web_research_runner import FreeWebResearchInput, FreeWebResearchRunner, WebResearchPipelineResult
+from e2r.research.official_follow_up_provider import KoreaOfficialFollowUpSourceProvider
 from e2r.research.report_radar import ReportRadar, ReportRadarCandidate
 from e2r.research.search_budget import SearchBudget
 from e2r.research.search_provider import EmptySearchProvider, SearchProvider
@@ -61,6 +71,13 @@ class E2RStandardConfig:
     theme_route_provider: ThemeRouteProvider | None = None
     max_theme_expansion_rounds: int | None = None
     theme_evidence_review_enabled: bool = True
+    agentic_evidence_enabled: bool | None = None
+    agentic_claim_extractor_provider: ClaimExtractorProvider | None = None
+    agentic_claim_adjudicator_provider: ClaimAdjudicatorProvider | None = None
+    agentic_primitive_mapper_provider: PrimitiveMapperProvider | None = None
+    agentic_follow_up_planner_provider: FollowUpPlannerProvider | None = None
+    agentic_follow_up_source_provider: SearchProvider | None = None
+    agentic_evidence_document_limit: int = 12
 
     def __post_init__(self) -> None:
         if type(self.as_of_date) is not date:
@@ -75,6 +92,10 @@ class E2RStandardConfig:
             raise ValueError("report_radar_universe_limit must be positive")
         if self.max_theme_expansion_rounds is not None and self.max_theme_expansion_rounds < 0:
             raise ValueError("max_theme_expansion_rounds must be non-negative")
+        if self.agentic_evidence_document_limit <= 0:
+            raise ValueError("agentic_evidence_document_limit must be positive")
+        if self.agentic_evidence_enabled is None:
+            object.__setattr__(self, "agentic_evidence_enabled", _default_agentic_evidence_enabled(self))
 
 
 @dataclass(frozen=True)
@@ -194,12 +215,18 @@ class E2RStandardFlow:
             theme_route_provider = build_theme_route_provider_from_env(working_directory=Path.cwd())
         if theme_route_provider is None and _should_default_to_codex_theme_provider(config):
             theme_route_provider = build_default_codex_theme_route_provider(working_directory=Path.cwd())
+        agentic_bundle = _agentic_provider_bundle(config)
         results: list[WebResearchPipelineResult] = []
         for candidate in candidates:
             if candidate.recommended_next_layer not in {RecommendedNextLayer.EVENT_SEARCH, RecommendedNextLayer.DEEP_RESEARCH}:
                 continue
             base_feature_input = base_feature_inputs.get(candidate.symbol)
             sector_context = base_feature_input.sector_context if base_feature_input is not None else None
+            follow_up_source_provider = config.agentic_follow_up_source_provider or _korea_official_follow_up_source_provider(
+                config=config,
+                candidate=candidate,
+                sources=config.sources,
+            )
             results.append(
                 runner.run(
                     FreeWebResearchInput(
@@ -220,6 +247,25 @@ class E2RStandardFlow:
                         max_theme_expansion_rounds=config.max_theme_expansion_rounds,
                         theme_evidence_review_enabled=config.theme_evidence_review_enabled,
                         base_feature_input=base_feature_input,
+                        agentic_evidence_enabled=config.agentic_evidence_enabled,
+                        agentic_claim_extractor_provider=(
+                            config.agentic_claim_extractor_provider
+                            or (agentic_bundle.extractor if agentic_bundle is not None else None)
+                        ),
+                        agentic_claim_adjudicator_provider=(
+                            config.agentic_claim_adjudicator_provider
+                            or (agentic_bundle.adjudicator if agentic_bundle is not None else None)
+                        ),
+                        agentic_primitive_mapper_provider=(
+                            config.agentic_primitive_mapper_provider
+                            or (agentic_bundle.mapper if agentic_bundle is not None else None)
+                        ),
+                        agentic_follow_up_planner_provider=(
+                            config.agentic_follow_up_planner_provider
+                            or (agentic_bundle.follow_up_planner if agentic_bundle is not None else None)
+                        ),
+                        agentic_follow_up_source_provider=follow_up_source_provider,
+                        agentic_evidence_document_limit=config.agentic_evidence_document_limit,
                     )
                 )
             )
@@ -355,6 +401,55 @@ def _default_theme_rebalance_enabled(config: E2RStandardConfig) -> bool:
 
 def _should_default_to_codex_theme_provider(config: E2RStandardConfig) -> bool:
     return bool(config.theme_rebalance_enabled and not config.fixture_mode)
+
+
+def _default_agentic_evidence_enabled(config: E2RStandardConfig) -> bool:
+    return bool(
+        config.agentic_claim_extractor_provider is not None
+        or config.agentic_claim_adjudicator_provider is not None
+        or config.agentic_primitive_mapper_provider is not None
+        or config.agentic_follow_up_planner_provider is not None
+        or os.environ.get("E2R_AGENTIC_EVIDENCE_PROVIDER")
+    )
+
+
+def _korea_official_follow_up_source_provider(
+    *,
+    config: E2RStandardConfig,
+    candidate: CheapScanCandidate,
+    sources: KoreaCheapScanSources | None,
+) -> SearchProvider | None:
+    if candidate.market != Market.KR:
+        return None
+    source_bundle = sources or KoreaCheapScanSources.local_defaults()
+    opendart = getattr(source_bundle, "opendart", None)
+    kind = getattr(source_bundle, "kind", None)
+    if opendart is None and kind is None:
+        return None
+    return KoreaOfficialFollowUpSourceProvider(
+        symbol=candidate.symbol,
+        company_name=candidate.company_name,
+        market=candidate.market,
+        opendart=opendart,
+        kind=kind,
+        lookback_days=config.cheap_scan_lookback_days,
+    )
+
+
+def _agentic_provider_bundle(config: E2RStandardConfig) -> AgenticEvidenceProviderBundle | None:
+    if not config.agentic_evidence_enabled:
+        return None
+    if (
+        config.agentic_claim_extractor_provider is not None
+        and config.agentic_claim_adjudicator_provider is not None
+        and config.agentic_primitive_mapper_provider is not None
+        and config.agentic_follow_up_planner_provider is not None
+    ):
+        return None
+    bundle = build_agentic_evidence_provider_bundle_from_env(working_directory=Path.cwd())
+    if bundle is not None:
+        return bundle
+    return build_default_codex_agentic_evidence_provider_bundle(working_directory=Path.cwd())
 
 
 def _dedupe_red_team_findings(findings) -> tuple[RedTeamFinding, ...]:

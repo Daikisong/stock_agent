@@ -277,14 +277,15 @@ def _json_object_from_text(text: str) -> Mapping[str, object] | None:
         return parsed if isinstance(parsed, Mapping) else None
     except json.JSONDecodeError:
         pass
-    match = re.search(r"\{.*\}", clean, re.DOTALL)
-    if not match:
-        return None
-    try:
-        parsed = json.loads(match.group(0))
-    except json.JSONDecodeError:
-        return None
-    return parsed if isinstance(parsed, Mapping) else None
+    decoder = json.JSONDecoder()
+    for match in re.finditer(r"\{", clean):
+        try:
+            parsed, _ = decoder.raw_decode(clean[match.start() :])
+        except json.JSONDecodeError:
+            continue
+        if isinstance(parsed, Mapping):
+            return parsed
+    return None
 
 
 def _normalise_schema_maps(data: Mapping[str, object]) -> Mapping[str, object]:
@@ -305,7 +306,12 @@ def _normalise_schema_maps(data: Mapping[str, object]) -> Mapping[str, object]:
 
 
 def _clean_error(text: str) -> str:
-    return re.sub(r"\s+", " ", text).strip()[:240] or "codex_cli_failed"
+    clean = re.sub(r"\s+", " ", text).strip()
+    if not clean:
+        return "codex_cli_failed"
+    if len(clean) <= 360:
+        return clean
+    return f"{clean[:180]} ... {clean[-180:]}"
 
 
 def _optional_env(env: Mapping[str, str], key: str) -> str | None:

@@ -13,6 +13,7 @@ from typing import Any, Mapping, Sequence
 from e2r.score_validity import (
     ScoreStateRowChange,
     compare_score_state_rows,
+    find_score_state_row_audit_failures,
     find_score_state_contract_violations,
     score_state_output_contract_violations,
     serialized_score_block_reason,
@@ -44,6 +45,7 @@ class KoreaRunReviewSummary:
     score_state_contract_findings: tuple[str, ...] = field(default_factory=tuple)
     targeted_score_states: tuple[str, ...] = field(default_factory=tuple)
     targeted_score_changes: tuple[str, ...] = field(default_factory=tuple)
+    targeted_score_audit_failures: tuple[str, ...] = field(default_factory=tuple)
 
 
 def build_review_summary(
@@ -95,6 +97,7 @@ def build_review_summary(
         ),
         targeted_score_states=_targeted_score_states(targeted_rows),
         targeted_score_changes=_targeted_score_changes(previous_targeted_rows, targeted_rows),
+        targeted_score_audit_failures=_targeted_score_audit_failures(previous_targeted_rows, targeted_rows),
     )
 
 
@@ -120,6 +123,7 @@ def render_review_summary(summary: KoreaRunReviewSummary) -> str:
         f"score state contract: {' | '.join(summary.score_state_contract_findings) if summary.score_state_contract_findings else 'ok'}",
         f"targeted score states: {' | '.join(summary.targeted_score_states) if summary.targeted_score_states else 'none'}",
         f"targeted score changes: {' | '.join(summary.targeted_score_changes) if summary.targeted_score_changes else 'none'}",
+        f"targeted score audit failures: {' | '.join(summary.targeted_score_audit_failures) if summary.targeted_score_audit_failures else 'none'}",
     ]
     return "\n".join(lines) + "\n"
 
@@ -130,18 +134,21 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--output-directory", default="output", help="Output root or output/korea_live_lite directory")
     parser.add_argument("--previous-output-directory", help="Previous output root or output/korea_live_lite directory")
     parser.add_argument("--previous-as-of-date", help="Previous run date; defaults to as_of_date when previous output is provided")
-    args = parser.parse_args(argv)
-    print(
-        render_review_summary(
-            build_review_summary(
-                args.output_directory,
-                args.as_of_date,
-                previous_output_directory=args.previous_output_directory,
-                previous_as_of_date=args.previous_as_of_date,
-            )
-        ),
-        end="",
+    parser.add_argument(
+        "--fail-on-score-delta-audit",
+        action="store_true",
+        help="Return non-zero when targeted smoke score changes are not explained by claim deltas.",
     )
+    args = parser.parse_args(argv)
+    summary = build_review_summary(
+        args.output_directory,
+        args.as_of_date,
+        previous_output_directory=args.previous_output_directory,
+        previous_as_of_date=args.previous_as_of_date,
+    )
+    print(render_review_summary(summary), end="")
+    if args.fail_on_score_delta_audit and summary.targeted_score_audit_failures:
+        return 2
     return 0
 
 
@@ -218,7 +225,11 @@ def _targeted_score_states(rows: Sequence[Mapping[str, Any]]) -> tuple[str, ...]
     items: list[str] = []
     for row in rows:
         symbol = str(row.get("symbol") or "unknown")
-        stage = str(row.get("stage") or "unknown")
+        stage = _stage_text(row.get("stage") or "unknown")
+        stage_status = str(row.get("stage_output_status") or _inferred_stage_output_status(row))
+        stage_final = _serialized_stage_is_final(row)
+        display_stage = _serialized_stage_display(row)
+        stage_pending_reason = _serialized_stage_pending_reason(row)
         score_text = _score_text(serialized_visible_score(row))
         valid = serialized_score_valid(row)
         reason = serialized_score_block_reason(row) or "valid"
@@ -228,10 +239,60 @@ def _targeted_score_states(rows: Sequence[Mapping[str, Any]]) -> tuple[str, ...]
         driver_text = ",".join(drivers[:4]) if drivers else "none"
         contract = score_state_output_contract_violations(row)
         contract_text = ",".join(contract[:3]) if contract else "ok"
+        agentic_status = row.get("agentic_evidence_status") or "unknown"
+        agentic_archetype = row.get("agentic_evidence_archetype_id") or "none"
+        agentic_source = row.get("agentic_evidence_archetype_source") or "none"
         items.append(
-            f"{symbol} stage={stage} visible_score={score_text} valid={valid} reason={reason} fingerprint={fingerprint} input_fingerprint={input_fingerprint} drivers={driver_text} contract={contract_text}"
+            f"{symbol} stage={stage} stage_status={stage_status} stage_final={stage_final} "
+            f"display_stage={display_stage} stage_pending_reason={stage_pending_reason} "
+            f"visible_score={score_text} valid={valid} reason={reason} "
+            f"fingerprint={fingerprint} input_fingerprint={input_fingerprint} drivers={driver_text} "
+            f"agentic_status={agentic_status} agentic_archetype={agentic_archetype} "
+            f"agentic_source={agentic_source} "
+            f"contract={contract_text}"
         )
     return _limited_items(items, limit=5)
+
+
+def _inferred_stage_output_status(row: Mapping[str, Any]) -> str:
+    if serialized_score_valid(row) is False:
+        return "pending_invalid_score"
+    return "final"
+
+
+def _serialized_stage_is_final(row: Mapping[str, Any]) -> bool:
+    value = row.get("stage_is_final")
+    if isinstance(value, bool):
+        return value
+    if value is not None:
+        lowered = str(value).strip().lower()
+        if lowered in {"true", "1", "yes", "final"}:
+            return True
+        if lowered in {"false", "0", "no", "pending"}:
+            return False
+    return serialized_score_valid(row) is True
+
+
+def _serialized_stage_display(row: Mapping[str, Any]) -> str:
+    value = row.get("stage_display_stage")
+    if value not in (None, ""):
+        return _stage_text(value)
+    if _serialized_stage_is_final(row):
+        return _stage_text(row.get("stage") or "unknown")
+    return "pending"
+
+
+def _serialized_stage_pending_reason(row: Mapping[str, Any]) -> str:
+    value = row.get("stage_pending_reason")
+    if value not in (None, ""):
+        return str(value)
+    if _serialized_stage_is_final(row):
+        return "none"
+    return serialized_score_block_reason(row) or "pending"
+
+
+def _stage_text(value: object) -> str:
+    return str(getattr(value, "value", value))
 
 
 def _previous_targeted_rows(
@@ -255,6 +316,17 @@ def _targeted_score_changes(
     changes = compare_score_state_rows(before_rows, after_rows, key_fields=("symbol",))
     items = [_score_change_text(change) for change in changes]
     return _limited_items(items, limit=5)
+
+
+def _targeted_score_audit_failures(
+    before_rows: Sequence[Mapping[str, Any]],
+    after_rows: Sequence[Mapping[str, Any]],
+) -> tuple[str, ...]:
+    if not before_rows:
+        return ()
+    changes = compare_score_state_rows(before_rows, after_rows, key_fields=("symbol",))
+    failures = find_score_state_row_audit_failures(changes)
+    return _limited_items(tuple(f"{item.key}:{item.violation}" for item in failures), limit=10)
 
 
 def _score_change_text(change: ScoreStateRowChange) -> str:

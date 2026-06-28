@@ -4,7 +4,11 @@ import math
 from pathlib import Path
 import unittest
 
-from e2r.agentic import claim_backed_parsed_fields
+from e2r.agentic import (
+    V2_HARD_BREAK_SOURCE_QUORUM_KEY,
+    V2_SCORE_ELIGIBLE_CLAIMS_KEY,
+    claim_backed_parsed_fields,
+)
 from e2r.connectors import CSVJSONDataConnector
 from e2r.features import DeterministicFeatureEngineer, FeatureEngineeringInput, engineer_score_from_connector
 from e2r.models import ConsensusRevision, ConsensusSnapshot, FinancialActual, NewsItem, PriceBar, ResearchReport, ShortageType, Stage
@@ -641,6 +645,192 @@ class FeatureEngineeringTests(unittest.TestCase):
         self.assertEqual(guarded.diagnostic_scores["research_axis_bridge_guard_risk"], 100.0)
         self.assertGreater(guarded.diagnostic_scores["research_axis_bridge_guard_risk_penalty_points"], 0)
         self.assertGreater(guarded.risk_penalty, baseline.risk_penalty)
+
+    def test_legacy_direct_risk_field_diagnostic_requires_v2_claim(self):
+        baseline = DeterministicFeatureEngineer().engineer(base_input({}))
+        legacy_result = DeterministicFeatureEngineer().engineer(
+            base_input({"accounting_or_trust_issue": True})
+        )
+        v2_result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "accounting_or_trust_issue": True,
+                    V2_SCORE_ELIGIBLE_CLAIMS_KEY: {
+                        "accounting_or_trust_issue": ("CLM-V2",),
+                    },
+                }
+            )
+        )
+
+        self.assertEqual(
+            legacy_result.score().diagnostic_scores["legacy_direct_score_field_without_v2_claim_count_capped"],
+            1.0,
+        )
+        self.assertEqual(
+            legacy_result.score().diagnostic_scores["legacy_direct_score_mention_count_capped"],
+            1.0,
+        )
+        self.assertIn("accounting_or_trust_issue", legacy_result.source_fields["legacy_direct_score_fields_without_v2_claim"])
+        self.assertTrue(legacy_result.source_fields["legacy_direct_score_mention_ids"].startswith("MEN-"))
+        self.assertEqual(legacy_result.score().risk_penalty, baseline.score().risk_penalty)
+        legacy_red_team = RedTeamEngine().assess(legacy_result.red_team_signals)
+        self.assertFalse(legacy_red_team.has_hard_break)
+        self.assertFalse(any(item.risk_type == "accounting_or_trust_issue" for item in legacy_red_team.findings))
+        self.assertEqual(
+            v2_result.score().diagnostic_scores["legacy_direct_score_field_without_v2_claim_count_capped"],
+            0.0,
+        )
+        self.assertEqual(
+            v2_result.score().diagnostic_scores["legacy_direct_score_mention_count_capped"],
+            0.0,
+        )
+        v2_red_team = RedTeamEngine().assess(v2_result.red_team_signals)
+        accounting_findings = tuple(item for item in v2_red_team.findings if item.risk_type == "accounting_or_trust_issue")
+        self.assertEqual(len(accounting_findings), 1)
+        self.assertEqual(accounting_findings[0].evidence_ids, ("CLM-V2",))
+
+    def test_legacy_guard_risk_fields_require_v2_claim_before_penalty(self):
+        baseline = DeterministicFeatureEngineer().engineer(base_input({})).score()
+        legacy_result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "qualification_lag_risk": True,
+                    "source_quality_conflict": True,
+                    "receivables_inventory_spike": True,
+                }
+            )
+        )
+        v2_result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "qualification_lag_risk": True,
+                    "source_quality_conflict": True,
+                    "receivables_inventory_spike": True,
+                    V2_SCORE_ELIGIBLE_CLAIMS_KEY: {
+                        "qualification_lag_risk": ("CLM-QUAL-LAG",),
+                        "source_quality_conflict": ("CLM-SOURCE-CONFLICT",),
+                        "receivables_inventory_spike": ("CLM-WC-SPIKE",),
+                    },
+                }
+            )
+        )
+
+        legacy_score = legacy_result.score()
+        v2_score = v2_result.score()
+
+        self.assertEqual(
+            legacy_score.diagnostic_scores["legacy_direct_score_field_without_v2_claim_count_capped"],
+            3.0,
+        )
+        self.assertEqual(legacy_score.diagnostic_scores["research_axis_bridge_guard_risk"], 0.0)
+        self.assertEqual(legacy_score.risk_penalty, baseline.risk_penalty)
+        self.assertEqual(
+            v2_score.diagnostic_scores["legacy_direct_score_field_without_v2_claim_count_capped"],
+            0.0,
+        )
+        self.assertEqual(v2_score.diagnostic_scores["research_axis_bridge_guard_risk"], 100.0)
+        self.assertGreater(v2_score.risk_penalty, baseline.risk_penalty)
+
+    def test_legacy_parser_score_claim_diagnostic_tracks_positive_fields_without_v2(self):
+        baseline = DeterministicFeatureEngineer().engineer(base_input({}))
+        legacy_result = DeterministicFeatureEngineer().engineer(
+            base_input({"customer_preorder_or_allocation": True})
+        )
+        v2_result = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "customer_preorder_or_allocation": True,
+                    V2_SCORE_ELIGIBLE_CLAIMS_KEY: {
+                        "customer_preorder_or_allocation": ("CLM-V2-CUSTOMER",),
+                    },
+                }
+            )
+        )
+
+        baseline_count = baseline.score().diagnostic_scores["legacy_parser_score_claim_without_v2_count_capped"]
+        legacy_count = legacy_result.score().diagnostic_scores["legacy_parser_score_claim_without_v2_count_capped"]
+        v2_count = v2_result.score().diagnostic_scores["legacy_parser_score_claim_without_v2_count_capped"]
+
+        self.assertEqual(legacy_count, baseline_count + 1.0)
+        self.assertEqual(v2_count, baseline_count)
+        self.assertIn(
+            "customer_preorder_or_allocation",
+            legacy_result.source_fields["legacy_parser_score_claim_fields_without_v2"],
+        )
+        self.assertNotIn(
+            "customer_preorder_or_allocation",
+            v2_result.source_fields["legacy_parser_score_claim_fields_without_v2"],
+        )
+
+    def test_legacy_contract_hard_break_requires_v2_claim(self):
+        legacy_result = DeterministicFeatureEngineer().engineer(
+            base_input({"contract_cancelled_or_delayed": True})
+        )
+        v2_without_quorum = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "contract_cancelled_or_delayed": True,
+                    V2_SCORE_ELIGIBLE_CLAIMS_KEY: {
+                        "contract_cancelled_or_delayed": ("CLM-CONTRACT-V2",),
+                    },
+                }
+            )
+        )
+        v2_with_quorum = DeterministicFeatureEngineer().engineer(
+            base_input(
+                {
+                    "contract_cancelled_or_delayed": True,
+                    V2_SCORE_ELIGIBLE_CLAIMS_KEY: {
+                        "contract_cancelled_or_delayed": ("CLM-CONTRACT-V2",),
+                    },
+                    V2_HARD_BREAK_SOURCE_QUORUM_KEY: {
+                        "contract_cancelled_or_delayed": True,
+                    },
+                }
+            )
+        )
+
+        legacy_red_team = RedTeamEngine().assess(legacy_result.red_team_signals)
+        self.assertFalse(legacy_red_team.has_hard_break)
+        self.assertFalse(any(item.risk_type == "contract_cancelled_or_delayed" for item in legacy_red_team.findings))
+
+        without_quorum_red_team = RedTeamEngine().assess(v2_without_quorum.red_team_signals)
+        without_quorum_findings = tuple(
+            item for item in without_quorum_red_team.findings if item.risk_type == "contract_cancelled_or_delayed"
+        )
+        self.assertEqual(len(without_quorum_findings), 1)
+        self.assertEqual(without_quorum_findings[0].evidence_ids, ("CLM-CONTRACT-V2",))
+        self.assertFalse(without_quorum_findings[0].is_hard_break)
+        self.assertFalse(without_quorum_red_team.has_hard_break)
+
+        with_quorum_red_team = RedTeamEngine().assess(v2_with_quorum.red_team_signals)
+        with_quorum_findings = tuple(
+            item for item in with_quorum_red_team.findings if item.risk_type == "contract_cancelled_or_delayed"
+        )
+        self.assertEqual(len(with_quorum_findings), 1)
+        self.assertEqual(with_quorum_findings[0].evidence_ids, ("CLM-CONTRACT-V2",))
+        self.assertTrue(with_quorum_findings[0].is_hard_break)
+        self.assertTrue(with_quorum_red_team.has_hard_break)
+
+    def test_parser_outputs_are_reported_as_stable_quarantined_mentions(self):
+        parsed_fields = {
+            "customer_preorder_or_allocation": True,
+            "order_to_revenue_bridge": True,
+            "claim_ledger_version": "legacy-metadata",
+        }
+        result = DeterministicFeatureEngineer().engineer(base_input(parsed_fields))
+        replay = DeterministicFeatureEngineer().engineer(base_input(parsed_fields))
+        score = result.score()
+
+        self.assertGreater(score.diagnostic_scores["parser_output_mention_count_capped"], 0.0)
+        self.assertIn("customer_preorder_or_allocation", result.source_fields["parser_output_mention_field_names"])
+        self.assertIn("order_to_revenue_bridge", result.source_fields["parser_output_mention_field_names"])
+        self.assertNotIn("claim_ledger_version", result.source_fields["parser_output_mention_field_names"])
+        self.assertTrue(result.source_fields["parser_output_mention_ids"].startswith("MEN-"))
+        self.assertEqual(
+            result.source_fields["parser_output_mention_ids"],
+            replay.source_fields["parser_output_mention_ids"],
+        )
 
     def test_policy_material_software_and_redteam_aliases_feed_common_bridge_axes(self):
         result = DeterministicFeatureEngineer().engineer(

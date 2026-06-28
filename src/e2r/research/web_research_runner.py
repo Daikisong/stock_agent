@@ -64,7 +64,15 @@ class WebResearchInput:
     stage_context: str | None = None
     company_aliases: tuple[str, ...] = field(default_factory=tuple)
     max_results_per_query: int = 100
-    top_results: int | None = None
+    top_results: int | None = 60
+
+    def __post_init__(self) -> None:
+        if self.max_results_per_query <= 0:
+            raise ValueError("max_results_per_query must be positive")
+        if self.top_results is None:
+            raise ValueError("top_results must be bounded")
+        if self.top_results < 0:
+            raise ValueError("top_results must be non-negative")
 
 
 @dataclass(frozen=True)

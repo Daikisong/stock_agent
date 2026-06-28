@@ -69,6 +69,14 @@ DEFAULT_SOURCE_LICENSE_METADATA: tuple[SourceLicenseMetadata, ...] = (
         non_commercial_only="unknown",
         notes="Operator-review comment only. Used to enrich consensus and broker report metadata; verify WiseReport/FnGuide terms before any non-personal or commercial operation.",
     ),
+    SourceLicenseMetadata(
+        source_name="naver_finance",
+        license_label="Naver Finance/FnGuide-derived page terms, verify before production",
+        commercial_allowed="unknown",
+        attribution_required="unknown",
+        non_commercial_only="unknown",
+        notes="Operator-review comment only. Used to parse the public item-page financial-analysis consensus table; verify Naver Finance and FnGuide terms before production use.",
+    ),
 )
 
 

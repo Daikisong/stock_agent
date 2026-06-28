@@ -238,7 +238,7 @@ class NaverNewsConnector:
             as_of_date=news.as_of_date,
             risk_type=risk_type,
             severity=severity,
-            is_hard_break=risk_type == "accounting_or_trust_issue",
+            is_hard_break=False,
             description=risk_comment or "negative event surfaced in news",
             evidence_ids=(evidence_id,),
         )

@@ -580,6 +580,7 @@ class StageClassifierTests(unittest.TestCase):
                 as_of_date=date(2026, 5, 13),
                 thesis_break_factors={"contract_cancelled_or_delayed": 1.0},
                 evidence_ids_by_signal={"contract_cancelled_or_delayed": ("ev-contract",)},
+                hard_break_quorum_by_signal={"contract_cancelled_or_delayed": True},
             )
         )
 

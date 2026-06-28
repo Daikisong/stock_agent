@@ -6,6 +6,7 @@ from e2r.models import ScoreSnapshot
 from e2r.score_validity import (
     compare_score_state_rows,
     compare_score_states,
+    find_score_state_row_audit_failures,
     find_score_state_contract_violations,
     is_score_valid,
     normalized_score_alias_value,
@@ -15,6 +16,7 @@ from e2r.score_validity import (
     research_input_fingerprint,
     score_block_reason,
     score_fingerprint,
+    score_state_comparison_audit_failures,
     score_state_contract_violations,
     score_state_output_contract_violations,
     score_variability_drivers,
@@ -82,6 +84,19 @@ class ScoreValidityTests(unittest.TestCase):
         self.assertEqual(visible_score_total(score), 100.0)
         self.assertIsNone(score_block_reason(score))
         self.assertIsNone(raw_score_total_before_block(score))
+
+    def test_legacy_parser_score_without_v2_claim_blocks_visible_score(self):
+        score = _score(
+            {
+                "score_valid": 100.0,
+                "agentic_evidence_required_for_scoring": 100.0,
+                "legacy_parser_score_claim_without_v2_count_capped": 1.0,
+            }
+        )
+
+        self.assertFalse(is_score_valid(score))
+        self.assertIsNone(visible_score_total(score))
+        self.assertEqual(score_block_reason(score), "legacy_parser_score_claim_without_v2")
 
     def test_score_snapshot_without_score_valid_is_not_visible(self):
         score = _score({})
@@ -319,6 +334,336 @@ class ScoreValidityTests(unittest.TestCase):
         self.assertIn("research_input_fingerprint_same", comparison.drivers)
         self.assertIn("score_fingerprint_changed", comparison.drivers)
 
+    def test_compare_score_states_audits_score_delta_without_claim_delta(self):
+        comparison = compare_score_states(
+            {
+                "visible_score": 92,
+                "score_valid": True,
+                "score_fingerprint": "score-a",
+                "research_input_fingerprint": "input-a",
+                "score_contribution_ledger": [
+                    {
+                        "component_key": "total",
+                        "criterion_id": "verified_score",
+                        "raw_points": 92,
+                        "max_points": 100,
+                        "support_claim_ids": ["CLM-SAME"],
+                    }
+                ],
+            },
+            {
+                "visible_score": 63,
+                "score_valid": True,
+                "score_fingerprint": "score-b",
+                "research_input_fingerprint": "input-a",
+                "score_contribution_ledger": [
+                    {
+                        "component_key": "total",
+                        "criterion_id": "verified_score",
+                        "raw_points": 63,
+                        "max_points": 100,
+                        "support_claim_ids": ["CLM-SAME"],
+                    }
+                ],
+            },
+        )
+
+        self.assertEqual(comparison.status, "scoring_changed_same_input")
+        self.assertEqual(comparison.score_delta_audit_findings, ("critical:total/verified_score=-29",))
+        self.assertIn("score_delta_audit:critical:total/verified_score=-29", comparison.drivers)
+        self.assertEqual(
+            score_state_comparison_audit_failures(comparison),
+            ("critical:total/verified_score=-29",),
+        )
+
+    def test_compare_score_states_treats_small_unexplained_delta_as_audit_failure(self):
+        comparison = compare_score_states(
+            {
+                "visible_score": 80,
+                "score_valid": True,
+                "score_fingerprint": "score-a",
+                "research_input_fingerprint": "input-a",
+                "score_contribution_ledger": [
+                    {
+                        "component_key": "earnings_visibility",
+                        "criterion_id": "visibility_bridge",
+                        "raw_points": 12,
+                        "max_points": 20,
+                        "support_claim_ids": ["CLM-SAME"],
+                    }
+                ],
+            },
+            {
+                "visible_score": 77,
+                "score_valid": True,
+                "score_fingerprint": "score-b",
+                "research_input_fingerprint": "input-a",
+                "score_contribution_ledger": [
+                    {
+                        "component_key": "earnings_visibility",
+                        "criterion_id": "visibility_bridge",
+                        "raw_points": 9,
+                        "max_points": 20,
+                        "support_claim_ids": ["CLM-SAME"],
+                    }
+                ],
+            },
+        )
+
+        self.assertEqual(
+            comparison.score_delta_audit_findings,
+            ("warning:earnings_visibility/visibility_bridge=-3",),
+        )
+        self.assertEqual(
+            score_state_comparison_audit_failures(comparison),
+            ("warning:earnings_visibility/visibility_bridge=-3",),
+        )
+
+    def test_compare_score_states_accepts_score_delta_with_claim_delta(self):
+        comparison = compare_score_states(
+            {
+                "visible_score": 63,
+                "score_valid": True,
+                "score_fingerprint": "score-a",
+                "research_input_fingerprint": "input-a",
+                "score_contribution_ledger": [
+                    {
+                        "component_key": "visibility",
+                        "criterion_id": "cash_bridge",
+                        "raw_points": 0,
+                        "max_points": 10,
+                        "support_claim_ids": [],
+                    }
+                ],
+            },
+            {
+                "visible_score": 71,
+                "score_valid": True,
+                "score_fingerprint": "score-b",
+                "research_input_fingerprint": "input-a",
+                "score_contribution_ledger": [
+                    {
+                        "component_key": "visibility",
+                        "criterion_id": "cash_bridge",
+                        "raw_points": 8,
+                        "max_points": 10,
+                        "support_claim_ids": ["CLM-NEW"],
+                    }
+                ],
+            },
+        )
+
+        self.assertEqual(comparison.score_delta_audit_findings, ())
+        self.assertEqual(score_state_comparison_audit_failures(comparison), ())
+        self.assertFalse(any(driver.startswith("score_delta_audit:") for driver in comparison.drivers))
+
+    def test_compare_score_states_audits_component_delta_when_visible_score_is_same(self):
+        comparison = compare_score_states(
+            {
+                "visible_score": 80,
+                "score_valid": True,
+                "score_fingerprint": "score-a",
+                "research_input_fingerprint": "input-a",
+                "component_scores": {
+                    "earnings_visibility": 20,
+                    "bottleneck_pricing": 0,
+                },
+                "score_contribution_ledger": [
+                    {
+                        "component_key": "earnings_visibility",
+                        "criterion_id": "visibility_bridge",
+                        "raw_points": 20,
+                        "max_points": 20,
+                        "support_claim_ids": ["CLM-SAME"],
+                    },
+                    {
+                        "component_key": "bottleneck_pricing",
+                        "criterion_id": "capacity_bridge",
+                        "raw_points": 0,
+                        "max_points": 20,
+                        "support_claim_ids": [],
+                    },
+                ],
+            },
+            {
+                "visible_score": 80,
+                "score_valid": True,
+                "score_fingerprint": "score-b",
+                "research_input_fingerprint": "input-a",
+                "component_scores": {
+                    "earnings_visibility": 10,
+                    "bottleneck_pricing": 10,
+                },
+                "score_contribution_ledger": [
+                    {
+                        "component_key": "earnings_visibility",
+                        "criterion_id": "visibility_bridge",
+                        "raw_points": 10,
+                        "max_points": 20,
+                        "support_claim_ids": ["CLM-SAME"],
+                    },
+                    {
+                        "component_key": "bottleneck_pricing",
+                        "criterion_id": "capacity_bridge",
+                        "raw_points": 10,
+                        "max_points": 20,
+                        "support_claim_ids": ["CLM-CAPACITY"],
+                    },
+                ],
+            },
+        )
+
+        self.assertEqual(comparison.visible_score_delta, 0)
+        self.assertEqual(comparison.status, "scoring_changed_same_input")
+        self.assertEqual(comparison.component_deltas["earnings_visibility"], -10)
+        self.assertEqual(comparison.component_deltas["bottleneck_pricing"], 10)
+        self.assertEqual(
+            comparison.score_delta_audit_findings,
+            ("critical:earnings_visibility/visibility_bridge=-10",),
+        )
+        self.assertEqual(
+            score_state_comparison_audit_failures(comparison),
+            ("critical:earnings_visibility/visibility_bridge=-10",),
+        )
+        self.assertIn(
+            "score_delta_audit:critical:earnings_visibility/visibility_bridge=-10",
+            comparison.drivers,
+        )
+
+    def test_compare_score_states_reports_missing_score_delta_ledger(self):
+        comparison = compare_score_states(
+            {
+                "visible_score": 92,
+                "score_valid": True,
+                "score_fingerprint": "score-a",
+                "research_input_fingerprint": "input-a",
+            },
+            {
+                "visible_score": 63,
+                "score_valid": True,
+                "score_fingerprint": "score-b",
+                "research_input_fingerprint": "input-a",
+            },
+        )
+
+        self.assertEqual(
+            comparison.score_delta_audit_findings,
+            ("unavailable:score_contribution_ledger_missing:before,after",),
+        )
+        self.assertIn(
+            "score_delta_audit_unavailable:score_contribution_ledger_missing:before,after",
+            comparison.drivers,
+        )
+        self.assertEqual(
+            score_state_comparison_audit_failures(comparison),
+            ("unavailable:score_contribution_ledger_missing:before,after",),
+        )
+        self.assertEqual(score_state_comparison_audit_failures(comparison, include_unavailable=False), ())
+
+    def test_compare_score_states_reports_partially_unparseable_score_delta_ledger(self):
+        comparison = compare_score_states(
+            {
+                "visible_score": 80,
+                "score_valid": True,
+                "score_fingerprint": "score-a",
+                "research_input_fingerprint": "input-a",
+                "score_contribution_ledger": [
+                    {
+                        "component_key": "eps_fcf_explosion",
+                        "criterion_id": "eps_bridge",
+                        "raw_points": 12,
+                        "max_points": 20,
+                        "support_claim_ids": ["CLM-EPS"],
+                    },
+                    {
+                        "component_key": "earnings_visibility",
+                        "criterion_id": "visibility_bridge",
+                        "raw_points": 10,
+                        "max_points": 20,
+                        "support_claim_ids": [],
+                    },
+                ],
+            },
+            {
+                "visible_score": 77,
+                "score_valid": True,
+                "score_fingerprint": "score-b",
+                "research_input_fingerprint": "input-a",
+                "score_contribution_ledger": [
+                    {
+                        "component_key": "eps_fcf_explosion",
+                        "criterion_id": "eps_bridge",
+                        "raw_points": 12,
+                        "max_points": 20,
+                        "support_claim_ids": ["CLM-EPS"],
+                    },
+                    {
+                        "component_key": "earnings_visibility",
+                        "criterion_id": "visibility_bridge",
+                        "raw_points": 7,
+                        "max_points": 20,
+                        "support_claim_ids": [],
+                    },
+                ],
+            },
+        )
+
+        self.assertEqual(
+            comparison.score_delta_audit_findings,
+            ("unavailable:score_contribution_ledger_unparseable:before,after",),
+        )
+        self.assertEqual(
+            score_state_comparison_audit_failures(comparison),
+            ("unavailable:score_contribution_ledger_unparseable:before,after",),
+        )
+
+    def test_score_state_row_audit_failures_are_ci_gate_ready(self):
+        changes = compare_score_state_rows(
+            (
+                {
+                    "symbol": "005930",
+                    "visible_score": 92,
+                    "score_valid": True,
+                    "score_fingerprint": "score-a",
+                    "research_input_fingerprint": "input-a",
+                    "score_contribution_ledger": [
+                        {
+                            "component_key": "total",
+                            "criterion_id": "verified_score",
+                            "raw_points": 92,
+                            "max_points": 100,
+                            "support_claim_ids": ["CLM-SAME"],
+                        }
+                    ],
+                },
+            ),
+            (
+                {
+                    "symbol": "005930",
+                    "visible_score": 63,
+                    "score_valid": True,
+                    "score_fingerprint": "score-b",
+                    "research_input_fingerprint": "input-a",
+                    "score_contribution_ledger": [
+                        {
+                            "component_key": "total",
+                            "criterion_id": "verified_score",
+                            "raw_points": 63,
+                            "max_points": 100,
+                            "support_claim_ids": ["CLM-SAME"],
+                        }
+                    ],
+                },
+            ),
+            key_fields=("symbol",),
+        )
+
+        failures = find_score_state_row_audit_failures(changes)
+
+        self.assertEqual(len(failures), 1)
+        self.assertEqual(failures[0].key, "005930")
+        self.assertEqual(failures[0].violation, "critical:total/verified_score=-29")
+
     def test_compare_score_states_flags_inconsistent_output_when_same_score_fingerprint_moves(self):
         comparison = compare_score_states(
             {
@@ -548,6 +893,25 @@ class ScoreValidityTests(unittest.TestCase):
         self.assertIsNone(serialized_visible_score({"score": 82, "score_total": 90, "score_valid": True}))
         self.assertIsNone(serialized_visible_score({"current_score": 82, "merged_score": 65, "score_valid": True}))
         self.assertIsNone(serialized_visible_score({"score": "not-a-score", "score_valid": True}))
+        self.assertIsNone(
+            serialized_visible_score(
+                {
+                    "visible_score": 70,
+                    "score_valid": True,
+                    "agentic_evidence_status": "skipped_no_archetype",
+                }
+            )
+        )
+        self.assertIsNone(
+            serialized_visible_score(
+                {
+                    "visible_score": 68,
+                    "score_valid": True,
+                    "agentic_evidence_status": "completed",
+                    "agentic_evidence_accepted_mapping_count": 0,
+                }
+            )
+        )
 
     def test_serialized_score_valid_and_reason_match_visible_score_contract(self):
         self.assertFalse(serialized_score_valid({"score": 82, "score_valid": True}))
@@ -648,6 +1012,186 @@ class ScoreValidityTests(unittest.TestCase):
                 }
             ),
             ("valid_raw_block_marker_present:raw_score_before_block", "invalid_visible_score_present"),
+        )
+
+    def test_score_state_contract_violations_flag_stage_output_contradictions(self):
+        self.assertEqual(
+            score_state_contract_violations(
+                {
+                    "stage": "0",
+                    "stage_output_status": "pending_invalid_score",
+                    "stage_is_final": False,
+                    "stage_display_stage": None,
+                    "stage_pending_reason": "score_gap_unresolved",
+                    "visible_score": None,
+                    "score_valid": False,
+                    "score_blocked_reason": "score_gap_unresolved",
+                }
+            ),
+            (),
+        )
+        self.assertEqual(
+            score_state_contract_violations(
+                {
+                    "stage": "0",
+                    "stage_output_status": "final",
+                    "stage_is_final": True,
+                    "stage_display_stage": "0",
+                    "visible_score": None,
+                    "score_valid": False,
+                    "score_blocked_reason": "score_gap_unresolved",
+                }
+            ),
+            (
+                "invalid_stage_status_final",
+                "invalid_stage_marked_final",
+                "invalid_stage_display_present",
+                "invalid_stage_pending_reason_missing",
+            ),
+        )
+        self.assertEqual(
+            score_state_contract_violations(
+                {
+                    "stage": "1",
+                    "stage_output_status": "final",
+                    "stage_is_final": True,
+                    "stage_display_stage": "1",
+                    "stage_pending_reason": None,
+                    "visible_score": 12,
+                    "score_valid": True,
+                }
+            ),
+            (),
+        )
+        self.assertEqual(
+            score_state_contract_violations(
+                {
+                    "stage": "1",
+                    "stage_output_status": "pending_agentic_evidence",
+                    "stage_is_final": False,
+                    "stage_display_stage": None,
+                    "stage_pending_reason": "PENDING_MATERIAL_GAPS",
+                    "visible_score": 12,
+                    "score_valid": True,
+                }
+            ),
+            (
+                "valid_stage_status_pending",
+                "valid_stage_marked_pending",
+                "valid_stage_display_missing",
+                "valid_stage_pending_reason_present",
+            ),
+        )
+
+    def test_score_state_contract_violations_flag_valid_agentic_evidence_block_states(self):
+        self.assertIn(
+            "valid_agentic_evidence_status_skipped_no_archetype",
+            score_state_contract_violations(
+                {
+                    "visible_score": 12,
+                    "score_valid": True,
+                    "agentic_evidence_status": "skipped_no_archetype",
+                }
+            ),
+        )
+        self.assertIn(
+            "valid_agentic_evidence_status_missing",
+            score_state_contract_violations(
+                {
+                    "visible_score": 12,
+                    "score_valid": True,
+                    "agentic_evidence_enabled": True,
+                }
+            ),
+        )
+        self.assertIn(
+            "valid_agentic_evidence_status_disabled",
+            score_state_contract_violations(
+                {
+                    "visible_score": 12,
+                    "score_valid": True,
+                    "agentic_evidence_status": "disabled",
+                    "agentic_evidence_enabled": True,
+                }
+            ),
+        )
+        self.assertIn(
+            "valid_agentic_evidence_status_unknown",
+            score_state_contract_violations(
+                {
+                    "visible_score": 12,
+                    "score_valid": True,
+                    "agentic_evidence_status": "complete",
+                }
+            ),
+        )
+        self.assertIn(
+            "valid_agentic_evidence_no_accepted_mappings",
+            score_state_contract_violations(
+                {
+                    "visible_score": 12,
+                    "score_valid": True,
+                    "agentic_evidence_status": "completed",
+                    "agentic_evidence_accepted_mapping_count": 0,
+                }
+            ),
+        )
+        self.assertIn(
+            "valid_agentic_evidence_status_budget_limited",
+            score_state_contract_violations(
+                {
+                    "visible_score": 12,
+                    "score_valid": True,
+                    "agentic_evidence_status": "completed_budget_limited",
+                    "agentic_evidence_accepted_mapping_count": 2,
+                }
+            ),
+        )
+        self.assertIn(
+            "valid_agentic_evidence_v2_score_contribution_input_missing",
+            score_state_contract_violations(
+                {
+                    "visible_score": 12,
+                    "score_valid": True,
+                    "agentic_evidence_status": "completed",
+                    "agentic_evidence_accepted_mapping_count": 2,
+                    "agentic_score_contribution_v2_runtime_input": 0,
+                }
+            ),
+        )
+        self.assertEqual(
+            score_state_contract_violations(
+                {
+                    "visible_score": 12,
+                    "score_valid": True,
+                    "agentic_evidence_status": "completed",
+                    "agentic_evidence_accepted_mapping_count": 2,
+                    "agentic_score_contribution_v2_runtime_input": 100,
+                }
+            ),
+            (),
+        )
+        self.assertEqual(
+            score_state_contract_violations(
+                {
+                    "visible_score": 12,
+                    "score_valid": True,
+                    "agentic_evidence_status": "disabled",
+                    "agentic_evidence_enabled": False,
+                }
+            ),
+            (),
+        )
+        self.assertEqual(
+            score_state_contract_violations(
+                {
+                    "visible_score": 12,
+                    "score_valid": True,
+                    "agentic_evidence_document_count": 0,
+                    "agentic_evidence_accepted_mapping_count": 0,
+                }
+            ),
+            (),
         )
 
     def test_score_state_contract_violations_flag_high_confidence_orphan_claim_score(self):
@@ -1072,6 +1616,120 @@ class ScoreValidityTests(unittest.TestCase):
         self.assertEqual(payload["score_blocked_reason"], "score_alias_not_numeric")
         self.assertIsNone(payload["visible_score"])
         self.assertIsNone(payload["score"])
+        self.assertEqual(score_state_contract_violations(payload), ())
+
+    def test_normalized_score_state_payload_blocks_invalid_agentic_evidence_valid_rows(self):
+        cases = (
+            (
+                "missing_archetype",
+                {
+                    "symbol": "005930",
+                    "visible_score": 70,
+                    "score": 70,
+                    "score_valid": True,
+                    "agentic_evidence_status": "skipped_no_archetype",
+                },
+                "agentic_evidence_missing_archetype",
+            ),
+            (
+                "missing_trace",
+                {
+                    "symbol": "005930",
+                    "visible_score": 70,
+                    "score": 70,
+                    "score_valid": True,
+                    "agentic_evidence_enabled": True,
+                },
+                "agentic_evidence_missing_trace",
+            ),
+            (
+                "disabled_while_required",
+                {
+                    "symbol": "005930",
+                    "visible_score": 70,
+                    "score": 70,
+                    "score_valid": True,
+                    "agentic_evidence_status": "disabled",
+                    "agentic_evidence_required_for_scoring": True,
+                },
+                "agentic_evidence_missing_trace",
+            ),
+            (
+                "unknown_status",
+                {
+                    "symbol": "005930",
+                    "visible_score": 70,
+                    "score": 70,
+                    "score_valid": True,
+                    "agentic_evidence_status": "complete",
+                },
+                "agentic_evidence_invalid_trace_status",
+            ),
+            (
+                "no_accepted_mappings",
+                {
+                    "symbol": "000660",
+                    "visible_score": 68,
+                    "score": 68,
+                    "score_valid": True,
+                    "agentic_evidence_status": "completed",
+                    "agentic_evidence_accepted_mapping_count": 0,
+                },
+                "agentic_evidence_no_accepted_mappings",
+            ),
+            (
+                "missing_v2_contributions",
+                {
+                    "symbol": "000660",
+                    "visible_score": 72,
+                    "score": 72,
+                    "score_valid": True,
+                    "agentic_evidence_status": "completed",
+                    "agentic_evidence_accepted_mapping_count": 2,
+                    "agentic_score_contribution_v2_runtime_input": 0,
+                },
+                "agentic_evidence_missing_v2_score_contributions",
+            ),
+        )
+
+        for name, raw, expected_reason in cases:
+            with self.subTest(name=name):
+                self.assertFalse(serialized_score_valid(raw))
+                self.assertEqual(serialized_score_block_reason(raw), expected_reason)
+                self.assertIsNone(serialized_visible_score(raw))
+
+                payload = normalized_score_state_payload(raw)
+
+                self.assertFalse(payload["score_valid"])
+                self.assertEqual(payload["score_blocked_reason"], expected_reason)
+                self.assertIsNone(payload["visible_score"])
+                self.assertIsNone(payload["score"])
+                self.assertEqual(serialized_visible_score(payload), None)
+                self.assertEqual(score_state_contract_violations(payload), ())
+
+    def test_normalized_score_state_payload_blocks_legacy_parser_score_without_v2_claims(self):
+        raw = {
+            "symbol": "005930",
+            "visible_score": 56.1667,
+            "score": 56.1667,
+            "score_total": 56.1667,
+            "score_valid": True,
+            "agentic_evidence_enabled": True,
+            "legacy_parser_score_claim_without_v2_count": 100.0,
+            "legacy_parser_score_claim_fields_without_v2": ("eps_revision_direction", "hbm_capacity_pre_sold"),
+        }
+
+        self.assertFalse(serialized_score_valid(raw))
+        self.assertEqual(serialized_score_block_reason(raw), "legacy_parser_score_claim_without_v2")
+        self.assertIsNone(serialized_visible_score(raw))
+
+        payload = normalized_score_state_payload(raw)
+
+        self.assertFalse(payload["score_valid"])
+        self.assertEqual(payload["score_blocked_reason"], "legacy_parser_score_claim_without_v2")
+        self.assertIsNone(payload["visible_score"])
+        self.assertIsNone(payload["score"])
+        self.assertIsNone(payload["score_total"])
         self.assertEqual(score_state_contract_violations(payload), ())
 
     def test_normalized_score_state_payload_keeps_visible_valid_and_reason_consistent_across_alias_cases(self):

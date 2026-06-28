@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any, Callable, Sequence
 
 from e2r.backtesting import BacktestEngine, Stage3BacktestInput
+from e2r.agentic import ClaimAdjudicatorProvider, ClaimExtractorProvider, FollowUpPlannerProvider, PrimitiveMapperProvider
 from e2r.features import DeterministicFeatureEngineer, FeatureEngineeringInput, FeatureEngineeringResult
 from e2r.historical_cases import HistoricalCase
 from e2r.llm.codex_theme_provider import build_default_codex_theme_route_provider, build_theme_route_provider_from_env
@@ -31,6 +32,7 @@ from e2r.pipeline.evidence_builder import evidence_from_feature_domains
 from e2r.pipeline.stage_update import StageUpdateEngine, StageUpdateInput
 from e2r.red_team import RedTeamAssessment, RedTeamEngine
 from e2r.research.free_web_research_runner import FreeWebResearchInput, FreeWebResearchRunner
+from e2r.research.official_follow_up_provider import KoreaOfficialFollowUpSourceProvider
 from e2r.research.report_parser import parse_research_report_text
 from e2r.research.search_budget import SearchBudget
 from e2r.research.search_provider import EmptySearchProvider, SearchProvider, SearchResult
@@ -93,6 +95,17 @@ class CompanyResearchInput:
     theme_evidence_review_enabled: bool = True
     max_theme_expansion_rounds: int | None = None
     free_search_provider: SearchProvider | None = None
+    agentic_evidence_enabled: bool | None = None
+    agentic_claim_extractor_provider: ClaimExtractorProvider | None = None
+    agentic_claim_adjudicator_provider: ClaimAdjudicatorProvider | None = None
+    agentic_primitive_mapper_provider: PrimitiveMapperProvider | None = None
+    agentic_follow_up_planner_provider: FollowUpPlannerProvider | None = None
+    agentic_follow_up_source_provider: SearchProvider | None = None
+    agentic_evidence_document_limit: int = 12
+
+    def __post_init__(self) -> None:
+        if self.agentic_evidence_document_limit <= 0:
+            raise ValueError("agentic_evidence_document_limit must be positive")
 
 
 @dataclass(frozen=True)
@@ -263,6 +276,13 @@ class CompanyResearchPipeline:
                 max_theme_expansion_rounds=inputs.max_theme_expansion_rounds,
                 theme_evidence_review_enabled=inputs.theme_evidence_review_enabled,
                 base_feature_input=base_feature_input,
+                agentic_evidence_enabled=inputs.agentic_evidence_enabled,
+                agentic_claim_extractor_provider=inputs.agentic_claim_extractor_provider,
+                agentic_claim_adjudicator_provider=inputs.agentic_claim_adjudicator_provider,
+                agentic_primitive_mapper_provider=inputs.agentic_primitive_mapper_provider,
+                agentic_follow_up_planner_provider=inputs.agentic_follow_up_planner_provider,
+                agentic_follow_up_source_provider=_effective_agentic_follow_up_source_provider(inputs),
+                agentic_evidence_document_limit=inputs.agentic_evidence_document_limit,
             )
         )
         return result
@@ -500,6 +520,23 @@ def _effective_theme_route_provider(inputs: CompanyResearchInput) -> ThemeRouteP
     if inputs.theme_rebalance_enabled or not inputs.fixture_mode:
         return build_default_codex_theme_route_provider(working_directory=Path.cwd())
     return None
+
+
+def _effective_agentic_follow_up_source_provider(inputs: CompanyResearchInput) -> SearchProvider | None:
+    if inputs.agentic_follow_up_source_provider is not None:
+        return inputs.agentic_follow_up_source_provider
+    if inputs.instrument.market != Market.KR:
+        return None
+    if inputs.connectors.opendart is None and inputs.connectors.kind is None:
+        return None
+    return KoreaOfficialFollowUpSourceProvider(
+        symbol=inputs.instrument.symbol,
+        company_name=inputs.instrument.name,
+        market=inputs.instrument.market,
+        opendart=inputs.connectors.opendart,
+        kind=inputs.connectors.kind,
+        lookback_days=inputs.lookback_days,
+    )
 
 
 @dataclass(frozen=True)

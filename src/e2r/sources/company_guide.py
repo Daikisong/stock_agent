@@ -104,6 +104,15 @@ class CompanyGuideConnector:
         return CompanyGuideConsensusResult(consensus=consensus, broker_targets=broker_targets)
 
     @staticmethod
+    def parse_broker_targets_html(html_text: str, *, symbol: str, as_of_date: date) -> tuple[BrokerTargetRow, ...]:
+        tables = _parse_html_tables(html_text)
+        return _parse_broker_target_table(
+            tables.get("cTB24", ()),
+            symbol=symbol,
+            as_of_date=as_of_date,
+        )
+
+    @staticmethod
     def parse_recent_reports_payload(payload: str | Mapping[str, Any], *, symbol: str, as_of_date: date) -> tuple[ResearchReport, ...]:
         data = json.loads(payload) if isinstance(payload, str) else dict(payload)
         rows = data.get("lists") or ()

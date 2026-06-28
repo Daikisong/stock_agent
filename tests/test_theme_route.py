@@ -14,10 +14,18 @@ from e2r.llm import (
     build_theme_route_provider_from_env,
     validate_theme_route_output,
 )
+from e2r.llm.codex_theme_provider import _json_object_from_text as _theme_json_object_from_text
 from e2r.llm.prompts import E2R_RESEARCH_ANALYST_SYSTEM_PROMPT, E2R_THEME_ROUTE_SYSTEM_PROMPT
 
 
 class ThemeRouteTests(unittest.TestCase):
+    def test_codex_theme_json_repair_reads_first_valid_balanced_object(self):
+        payload = 'warning {not json}\\n```json\\n{"status":"needs_more_evidence"}\\n```\\ntrailing {bad'
+
+        parsed = _theme_json_object_from_text(payload)
+
+        self.assertEqual(parsed, {"status": "needs_more_evidence"})
+
     def test_validate_theme_route_output_strips_stage_override_and_coerces_fields(self):
         output = validate_theme_route_output(
             {

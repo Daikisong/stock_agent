@@ -94,6 +94,7 @@ class RedTeamEngineTests(unittest.TestCase):
             as_of_date=date(2026, 5, 13),
             thesis_break_factors={"accounting_or_trust_issue": 1.0},
             evidence_ids_by_signal={"accounting_or_trust_issue": ("ev-accounting",)},
+            hard_break_quorum_by_signal={"accounting_or_trust_issue": True},
         )
 
         assessment = RedTeamEngine().assess(signals)
@@ -101,6 +102,61 @@ class RedTeamEngineTests(unittest.TestCase):
         self.assertTrue(assessment.has_hard_break)
         self.assertEqual(assessment.risk_level, RedTeamRiskLevel.HARD_BREAK)
         self.assertTrue(assessment.findings[0].is_hard_break)
+
+    def test_hard_break_signal_without_evidence_id_does_not_become_hard_break(self):
+        signals = RedTeamSignals(
+            symbol="CASE",
+            as_of_date=date(2026, 5, 13),
+            thesis_break_factors={"accounting_or_trust_issue": 1.0},
+        )
+
+        assessment = RedTeamEngine().assess(signals)
+
+        self.assertFalse(assessment.has_hard_break)
+        self.assertEqual(assessment.risk_level, RedTeamRiskLevel.MODERATE)
+        self.assertFalse(assessment.findings[0].is_hard_break)
+
+    def test_hard_break_signal_without_source_quorum_stays_regular_finding(self):
+        signals = RedTeamSignals(
+            symbol="CASE",
+            as_of_date=date(2026, 5, 13),
+            thesis_break_factors={"accounting_or_trust_issue": 1.0},
+            evidence_ids_by_signal={"accounting_or_trust_issue": ("ev-accounting",)},
+        )
+
+        assessment = RedTeamEngine().assess(signals)
+
+        self.assertFalse(assessment.has_hard_break)
+        self.assertEqual(assessment.risk_level, RedTeamRiskLevel.MODERATE)
+        self.assertEqual(assessment.findings[0].evidence_ids, ("ev-accounting",))
+        self.assertFalse(assessment.findings[0].is_hard_break)
+
+    def test_high_cumulative_non_hard_break_signals_do_not_become_hard_break(self):
+        signals = RedTeamSignals(
+            symbol="CASE",
+            as_of_date=date(2026, 5, 13),
+            thesis_break_factors={
+                "eps_fcf_revision_down": 1.0,
+                "backlog_or_rpo_decline": 1.0,
+                "new_orders_slowdown": 1.0,
+                "opm_decline": 1.0,
+                "asp_decline": 1.0,
+            },
+            evidence_ids_by_signal={
+                "eps_fcf_revision_down": ("CLM-EPS",),
+                "backlog_or_rpo_decline": ("CLM-BACKLOG",),
+                "new_orders_slowdown": ("CLM-ORDERS",),
+                "opm_decline": ("CLM-OPM",),
+                "asp_decline": ("CLM-ASP",),
+            },
+        )
+
+        assessment = RedTeamEngine().assess(signals)
+
+        self.assertEqual(assessment.thesis_break_score, 65.0)
+        self.assertFalse(assessment.has_hard_break)
+        self.assertEqual(assessment.risk_level, RedTeamRiskLevel.HIGH)
+        self.assertFalse(any(finding.is_hard_break for finding in assessment.findings))
 
     def test_unknown_signal_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "unknown thesis_break_factors"):

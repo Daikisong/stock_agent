@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
 from e2r.audit import AuditFinding, audit_parser_outputs
+from e2r.agentic import ClaimAdjudicatorProvider, ClaimExtractorProvider, FollowUpPlannerProvider, PrimitiveMapperProvider
 from e2r.briefing import MorningBrief, generate_morning_briefing
 from e2r.calibration.scoring_profile import get_active_scoring_profile
 from e2r.cheap_scan import KoreaCheapScanConfig, KoreaCheapScanResult, KoreaCheapScanSources, KoreaCheapScanner
@@ -41,6 +42,11 @@ from e2r.models import (
 from e2r.pipeline.evidence_builder import evidence_from_feature_domains
 from e2r.research.free_web_research_runner import FreeWebResearchInput, FreeWebResearchRunner, WebResearchPipelineResult
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
+from e2r.research.official_follow_up_provider import (
+    CompositeFollowUpSourceProvider,
+    KoreaOfficialFollowUpSourceProvider,
+    OpenDARTDetailFollowUpSourceProvider,
+)
 from e2r.research.report_radar import REPORT_RADAR_PHRASES, ReportRadar, ReportRadarCandidate
 from e2r.research.query_planner import QueryPlan, QuerySpec
 from e2r.research.search_budget import SearchBudget
@@ -56,7 +62,17 @@ from e2r.score_validity import (
     score_variability_drivers as build_score_variability_drivers,
     visible_score_total,
 )
-from e2r.sources import DEFAULT_SOURCE_LICENSE_METADATA, BrokerTargetRow, CompanyGuideConnector, KINDConnector, KRXConnector, OpenDARTConnector, SourceLicenseMetadata
+from e2r.sources import (
+    DEFAULT_SOURCE_LICENSE_METADATA,
+    BrokerTargetRow,
+    CompanyGuideConnector,
+    ConsensusCSVConnector,
+    KINDConnector,
+    KRXConnector,
+    NaverFinanceConnector,
+    OpenDARTConnector,
+    SourceLicenseMetadata,
+)
 from e2r.sources.http_client import HttpClient, HttpClientStats
 from e2r.sources.opendart import extract_document_text, normalize_disclosure_detail
 from e2r.sources.rate_limit import RateLimiter, SourceRateLimit
@@ -80,6 +96,7 @@ class KoreaLiveLiteBudget:
     max_krx_calls_per_day: int | None = None
     max_data_go_kr_calls_per_day: int | None = None
     max_naver_search_calls_per_day: int | None = None
+    max_naver_finance_calls_per_day: int | None = None
     max_company_guide_calls_per_day: int | None = None
     max_symbols_for_event_search: int | None = None
     max_symbols_for_deep_research: int | None = None
@@ -91,6 +108,7 @@ class KoreaLiveLiteBudget:
             "max_krx_calls_per_day",
             "max_data_go_kr_calls_per_day",
             "max_naver_search_calls_per_day",
+            "max_naver_finance_calls_per_day",
             "max_company_guide_calls_per_day",
             "max_symbols_for_event_search",
             "max_symbols_for_deep_research",
@@ -101,6 +119,7 @@ class KoreaLiveLiteBudget:
             "max_krx_calls_per_day",
             "max_data_go_kr_calls_per_day",
             "max_naver_search_calls_per_day",
+            "max_naver_finance_calls_per_day",
             "max_company_guide_calls_per_day",
             "max_symbols_for_event_search",
             "max_symbols_for_deep_research",
@@ -168,12 +187,31 @@ class KoreaLiveLiteConfig:
     theme_route_document_limit: int | None = 32
     theme_route_document_excerpt_chars: int = 1_200
     post_parse_gap_expansion_max_queries: int | None = 10
-    score_gap_query_retry_max: int | None = None
+    score_gap_query_retry_max: int | None = 2
     theme_evidence_review_enabled: bool = True
+    theme_evidence_review_timeout_seconds: float | None = 60.0
+    agentic_evidence_enabled: bool | None = None
+    agentic_claim_extractor_provider: ClaimExtractorProvider | None = None
+    agentic_claim_adjudicator_provider: ClaimAdjudicatorProvider | None = None
+    agentic_primitive_mapper_provider: PrimitiveMapperProvider | None = None
+    agentic_follow_up_planner_provider: FollowUpPlannerProvider | None = None
+    agentic_follow_up_source_provider: SearchProvider | None = None
+    agentic_mapper_self_consistency_rounds: int = 3
+    agentic_mapper_self_consistency_min_agreement: int = 2
+    agentic_mapper_self_consistency_use_batch: bool = True
+    agentic_mapper_batch_max_tasks: int = 12
+    agentic_evidence_document_limit: int = 12
+    agentic_max_raw_assertions_per_run: int | None = 72
+    agentic_provider_timeout_seconds: float | None = None
     phase_log_enabled: bool = True
+    naver_finance_enabled: bool = True
+    naver_finance_connector: NaverFinanceConnector | None = None
     company_guide_enabled: bool = True
     company_guide_connector: CompanyGuideConnector | None = None
+    consensus_connector: ConsensusCSVConnector | None = field(default_factory=ConsensusCSVConnector)
     company_guide_recent_reports_per_page: int = 20
+    opendart_detail_fetch_max_per_symbol: int | None = 3
+    opendart_detail_fetch_stop_on_resolved_report_type: bool = True
 
     def __post_init__(self) -> None:
         if type(self.as_of_date) is not date:
@@ -188,7 +226,9 @@ class KoreaLiveLiteConfig:
             raise ValueError("lookback_days must be positive")
         if self.max_results_per_query <= 0:
             raise ValueError("max_results_per_query must be positive")
-        if self.top_results is not None and self.top_results <= 0:
+        if self.top_results is None:
+            raise ValueError("top_results must be bounded")
+        if self.top_results <= 0:
             raise ValueError("top_results must be positive")
         if self.max_global_live_workers <= 0:
             raise ValueError("max_global_live_workers must be positive")
@@ -219,10 +259,33 @@ class KoreaLiveLiteConfig:
             raise ValueError("theme_route_document_excerpt_chars must be positive")
         if self.post_parse_gap_expansion_max_queries is not None and self.post_parse_gap_expansion_max_queries < 0:
             raise ValueError("post_parse_gap_expansion_max_queries must be non-negative")
-        if self.score_gap_query_retry_max is not None and self.score_gap_query_retry_max < 0:
+        if self.theme_evidence_review_timeout_seconds is not None and self.theme_evidence_review_timeout_seconds <= 0:
+            raise ValueError("theme_evidence_review_timeout_seconds must be positive when set")
+        if self.score_gap_query_retry_max is None:
+            raise ValueError("score_gap_query_retry_max must be bounded")
+        if self.score_gap_query_retry_max < 0:
             raise ValueError("score_gap_query_retry_max must be non-negative")
+        if self.agentic_mapper_self_consistency_rounds <= 0:
+            raise ValueError("agentic_mapper_self_consistency_rounds must be positive")
+        if self.agentic_mapper_self_consistency_min_agreement <= 0:
+            raise ValueError("agentic_mapper_self_consistency_min_agreement must be positive")
+        if self.agentic_mapper_self_consistency_min_agreement > self.agentic_mapper_self_consistency_rounds:
+            raise ValueError(
+                "agentic_mapper_self_consistency_min_agreement cannot exceed "
+                "agentic_mapper_self_consistency_rounds"
+            )
+        if self.agentic_mapper_batch_max_tasks <= 0:
+            raise ValueError("agentic_mapper_batch_max_tasks must be positive")
+        if self.agentic_evidence_document_limit <= 0:
+            raise ValueError("agentic_evidence_document_limit must be positive")
+        if self.agentic_max_raw_assertions_per_run is not None and self.agentic_max_raw_assertions_per_run <= 0:
+            raise ValueError("agentic_max_raw_assertions_per_run must be positive when set")
+        if self.agentic_provider_timeout_seconds is not None and self.agentic_provider_timeout_seconds <= 0:
+            raise ValueError("agentic_provider_timeout_seconds must be positive when set")
         if self.company_guide_recent_reports_per_page <= 0:
             raise ValueError("company_guide_recent_reports_per_page must be positive")
+        if self.opendart_detail_fetch_max_per_symbol is not None and self.opendart_detail_fetch_max_per_symbol < 0:
+            raise ValueError("opendart_detail_fetch_max_per_symbol must be non-negative")
 
     @classmethod
     def smoke_preset(
@@ -255,8 +318,30 @@ class KoreaLiveLiteConfig:
                 "budget": KoreaLiveLiteBudget(),
                 "live_smoke_preset_used": "standard_shadow",
             }
+        elif preset == "timeout_diagnostic":
+            values = {
+                "as_of_date": as_of_date,
+                "universe_limit": 1,
+                "budget": KoreaLiveLiteBudget(),
+                "max_results_per_query": 20,
+                "top_results": 5,
+                "max_theme_expansion_rounds": 1,
+                "max_score_gap_expansion_rounds": 0,
+                "theme_route_search_result_limit": 5,
+                "theme_route_document_limit": 1,
+                "post_parse_gap_expansion_max_queries": 0,
+                "score_gap_query_retry_max": 0,
+                "theme_evidence_review_timeout_seconds": 5.0,
+                "agentic_mapper_self_consistency_rounds": 1,
+                "agentic_mapper_self_consistency_min_agreement": 1,
+                "agentic_mapper_batch_max_tasks": 3,
+                "agentic_evidence_document_limit": 1,
+                "agentic_max_raw_assertions_per_run": 1,
+                "agentic_provider_timeout_seconds": 5.0,
+                "live_smoke_preset_used": "timeout_diagnostic",
+            }
         else:
-            raise ValueError("preset must be tiny, small, or standard_shadow")
+            raise ValueError("preset must be tiny, small, standard_shadow, or timeout_diagnostic")
         values.update(overrides)
         return cls(**values)
 
@@ -295,6 +380,8 @@ class KoreaLiveLiteRunLog:
     audit_findings: tuple[AuditFinding, ...] = field(default_factory=tuple)
     planned_opendart_detail_requests: tuple[SourceRequest, ...] = field(default_factory=tuple)
     executed_opendart_detail_requests: tuple[SourceRequest, ...] = field(default_factory=tuple)
+    skipped_opendart_detail_requests: tuple[Mapping[str, Any], ...] = field(default_factory=tuple)
+    opendart_detail_fetch_policy: Mapping[str, Any] = field(default_factory=dict)
     opendart_detail_evidence_ids: tuple[str, ...] = field(default_factory=tuple)
     report_radar_candidates: tuple[Mapping[str, Any], ...] = field(default_factory=tuple)
     targeted_smoke_results: tuple[Mapping[str, Any], ...] = field(default_factory=tuple)
@@ -303,6 +390,8 @@ class KoreaLiveLiteRunLog:
     theme_expansion_queries: tuple[Mapping[str, Any], ...] = field(default_factory=tuple)
     theme_missing_slots: tuple[Mapping[str, Any], ...] = field(default_factory=tuple)
     theme_route_status_counts: Mapping[str, int] = field(default_factory=dict)
+    score_gap_audit_events: tuple[Mapping[str, Any], ...] = field(default_factory=tuple)
+    score_gap_source_route_plans: tuple[Mapping[str, Any], ...] = field(default_factory=tuple)
     audit_summary: Mapping[str, Any] = field(default_factory=dict)
     score_state_contract_findings: tuple[str, ...] = field(default_factory=tuple)
     rate_limit_waits: int = 0
@@ -383,7 +472,9 @@ class KoreaLiveLiteRunner:
             "data_go_kr_calls": 0,
             "data_go_kr_financial_actual_calls": 0,
             "naver_search_queries": 0,
+            "naver_finance_item_main_calls": 0,
             "company_guide_snapshot_calls": 0,
+            "company_guide_snapshot_empty_consensus_count": 0,
             "company_guide_recent_report_calls": 0,
         }
 
@@ -423,7 +514,7 @@ class KoreaLiveLiteRunner:
             fallback_reasons=fallback_reasons,
         )
         planned_opendart_detail_requests = plan_opendart_detail_fetches(date_disclosures, config.as_of_date)
-        detail_disclosures, executed_opendart_detail_requests = _execute_opendart_detail_fetches(
+        detail_disclosures, executed_opendart_detail_requests, skipped_opendart_detail_requests = _execute_opendart_detail_fetches(
             base_disclosures=date_disclosures,
             planned_requests=planned_opendart_detail_requests,
             as_of_date=config.as_of_date,
@@ -533,6 +624,16 @@ class KoreaLiveLiteRunner:
             source_modes=source_modes,
             fallback_reasons=fallback_reasons,
         )
+        naver_finance_data = _execute_naver_finance_for_candidates(
+            candidates=selected_candidates,
+            config=config,
+            effective_fixture_mode=effective_fixture_mode,
+            http_client=http_client,
+            built_requests=built_requests,
+            source_call_counts=source_call_counts,
+            source_modes=source_modes,
+            fallback_reasons=fallback_reasons,
+        )
         base_feature_inputs = {
             candidate.symbol: base_input
             for candidate in selected_candidates
@@ -546,10 +647,15 @@ class KoreaLiveLiteRunner:
                         tuple(live_financial_actuals.get(candidate.symbol, ()))
                         + tuple(opendart_financial_actuals.get(candidate.symbol, ()))
                     ),
-                    extra_consensus=company_guide_data.get(candidate.symbol, _EMPTY_COMPANY_GUIDE_FEATURE_DATA).consensus,
+                    extra_consensus=(
+                        tuple(company_guide_data.get(candidate.symbol, _EMPTY_COMPANY_GUIDE_FEATURE_DATA).consensus)
+                        + tuple(naver_finance_data.get(candidate.symbol, _EMPTY_COMPANY_GUIDE_FEATURE_DATA).consensus)
+                    ),
                     extra_consensus_revisions=company_guide_data.get(
                         candidate.symbol, _EMPTY_COMPANY_GUIDE_FEATURE_DATA
                     ).consensus_revisions,
+                    connector_consensus=_consensus_connector_snapshots_for_candidate(candidate, config),
+                    connector_consensus_revisions=_consensus_connector_revisions_for_candidate(candidate, config),
                     extra_research_reports=company_guide_data.get(candidate.symbol, _EMPTY_COMPANY_GUIDE_FEATURE_DATA).research_reports,
                 )
             )
@@ -598,6 +704,12 @@ class KoreaLiveLiteRunner:
                 free_search_provider=free_search_provider,
                 query_planner=_query_planner_for_candidate(candidate, config, sector_context=sector_context),
             )
+            follow_up_source_provider = config.agentic_follow_up_source_provider or _official_follow_up_source_provider(
+                config=config,
+                sources=scan_sources,
+                candidate=candidate,
+                detail_disclosures=all_date_disclosures,
+            )
             result = runner.run(
                 FreeWebResearchInput(
                     company_name=candidate.company_name,
@@ -627,7 +739,26 @@ class KoreaLiveLiteRunner:
                     post_parse_gap_expansion_max_queries=config.post_parse_gap_expansion_max_queries,
                     score_gap_query_retry_max=config.score_gap_query_retry_max,
                     theme_evidence_review_enabled=config.theme_evidence_review_enabled,
+                    theme_evidence_review_timeout_seconds=config.theme_evidence_review_timeout_seconds,
                     base_feature_input=base_feature_input,
+                    agentic_evidence_enabled=_default_agentic_evidence_enabled(
+                        config,
+                        effective_fixture_mode=effective_fixture_mode,
+                    ),
+                    agentic_claim_extractor_provider=config.agentic_claim_extractor_provider,
+                    agentic_claim_adjudicator_provider=config.agentic_claim_adjudicator_provider,
+                    agentic_primitive_mapper_provider=config.agentic_primitive_mapper_provider,
+                    agentic_follow_up_planner_provider=config.agentic_follow_up_planner_provider,
+                    agentic_follow_up_source_provider=follow_up_source_provider,
+                    agentic_mapper_self_consistency_rounds=config.agentic_mapper_self_consistency_rounds,
+                    agentic_mapper_self_consistency_min_agreement=(
+                        config.agentic_mapper_self_consistency_min_agreement
+                    ),
+                    agentic_mapper_self_consistency_use_batch=config.agentic_mapper_self_consistency_use_batch,
+                    agentic_mapper_batch_max_tasks=config.agentic_mapper_batch_max_tasks,
+                    agentic_evidence_document_limit=config.agentic_evidence_document_limit,
+                    agentic_max_raw_assertions_per_run=config.agentic_max_raw_assertions_per_run,
+                    agentic_provider_timeout_seconds=config.agentic_provider_timeout_seconds,
                     phase_event_sink=phase_event_sink,
                 )
             )
@@ -695,6 +826,8 @@ class KoreaLiveLiteRunner:
             audit_findings=tuple(audit_findings),
             planned_opendart_detail_requests=tuple(planned_opendart_detail_requests),
             executed_opendart_detail_requests=tuple(executed_opendart_detail_requests),
+            skipped_opendart_detail_requests=tuple(skipped_opendart_detail_requests),
+            opendart_detail_fetch_policy=_opendart_detail_fetch_policy(config),
             opendart_detail_evidence_ids=tuple(OpenDARTConnector.to_evidence(item, Market.KR).evidence_id for item in detail_disclosures),
             report_radar_candidates=tuple(_report_radar_row(item) for item in radar_candidates),
             targeted_smoke_results=tuple(targeted_smoke_results),
@@ -703,6 +836,14 @@ class KoreaLiveLiteRunner:
             theme_expansion_queries=tuple(theme_expansion_queries),
             theme_missing_slots=tuple(theme_missing_slots),
             theme_route_status_counts=dict(theme_route_status_counts),
+            score_gap_audit_events=_score_gap_audit_events_from_rows(
+                tuple(targeted_smoke_results),
+                tuple(theme_routes),
+            ),
+            score_gap_source_route_plans=_score_gap_source_route_plans_from_rows(
+                tuple(targeted_smoke_results),
+                tuple(theme_routes),
+            ),
             audit_summary=_audit_summary(audit_findings, evidence),
             score_state_contract_findings=_score_state_contract_findings_for_outputs(
                 as_of_date=config.as_of_date,
@@ -791,6 +932,12 @@ def _should_default_to_codex_theme_provider(config: KoreaLiveLiteConfig, *, effe
     return bool(config.theme_rebalance_enabled and config.live_enabled and not effective_fixture_mode)
 
 
+def _default_agentic_evidence_enabled(config: KoreaLiveLiteConfig, *, effective_fixture_mode: bool) -> bool:
+    if config.agentic_evidence_enabled is not None:
+        return bool(config.agentic_evidence_enabled)
+    return bool(config.theme_rebalance_enabled and config.live_enabled and not effective_fixture_mode)
+
+
 def _krx_openapi_source_mode(config: KoreaLiveLiteConfig) -> str:
     if not config.enable_krx_openapi_source:
         return "disabled_optional"
@@ -816,6 +963,13 @@ def _rate_limiter_for_config(config: KoreaLiveLiteConfig) -> RateLimiter:
                 max_requests_per_day=config.budget.max_naver_search_calls_per_day,
                 max_requests_per_second=3.0,
                 min_interval_seconds=0.3,
+                max_concurrency=1,
+            ),
+            SourceRateLimit(
+                source_name="naver_finance",
+                max_requests_per_day=config.budget.max_naver_finance_calls_per_day,
+                max_requests_per_second=1.0,
+                min_interval_seconds=1.0,
                 max_concurrency=1,
             ),
             SourceRateLimit(
@@ -1496,9 +1650,13 @@ def _opendart_financial_statement_call_reserve(config: KoreaLiveLiteConfig) -> i
         return 0
     selected_symbol_cap = _selected_candidate_symbol_cap(config)
     if config.targeted_smoke_enabled:
-        selected_symbol_cap += 1
+        selected_symbol_cap = None if selected_symbol_cap is None else selected_symbol_cap + 1
     if config.top_trading_value_probe_enabled:
-        selected_symbol_cap += config.top_trading_value_probe_count
+        selected_symbol_cap = (
+            None
+            if selected_symbol_cap is None
+            else selected_symbol_cap + config.top_trading_value_probe_count
+        )
     if selected_symbol_cap is not None and selected_symbol_cap <= 0:
         return 0
     # corpCode.xml은 선택 종목 전체가 공유하는 공식 식별자 조회다.
@@ -1626,24 +1784,41 @@ def _execute_opendart_detail_fetches(
     http_client: HttpClient,
     built_requests: list[SourceRequest],
     source_call_counts: dict[str, int],
-) -> tuple[tuple[DisclosureEvent, ...], tuple[SourceRequest, ...]]:
+) -> tuple[tuple[DisclosureEvent, ...], tuple[SourceRequest, ...], tuple[Mapping[str, Any], ...]]:
     """Execute capped OpenDART document.xml requests for watch disclosures."""
 
     cap = config.budget.max_opendart_detail_fetches_per_run
     if (cap is not None and cap <= 0) or not planned_requests:
-        return (), ()
+        return (), (), ()
     if not _can_execute_live_opendart(config):
-        return (), ()
+        return (), (), ()
     if not hasattr(http_client, "get_text"):
-        return (), ()
+        return (), (), ()
     base_by_receipt = {item.rcept_no: item for item in base_disclosures if item.rcept_no}
     detail_events: list[DisclosureEvent] = []
     executed: list[SourceRequest] = []
+    skipped: list[Mapping[str, Any]] = []
+    executed_by_symbol: dict[str, int] = {}
+    resolved_report_types: set[tuple[str, str]] = set()
     requests_to_run = planned_requests if cap is None else planned_requests[:cap]
     for request in requests_to_run:
         receipt_no = str(request.params.get("rcept_no") or "")
+        symbol = str(request.params.get("symbol") or "").strip()
+        report_type = str(request.params.get("report_type") or "").strip()
         base_event = base_by_receipt.get(receipt_no)
         if base_event is None:
+            skipped.append(_opendart_detail_skip_row(request, reason="base_disclosure_missing"))
+            continue
+        if _opendart_detail_fetch_per_symbol_exhausted(config, executed_by_symbol, symbol):
+            skipped.append(_opendart_detail_skip_row(request, reason="per_symbol_detail_fetch_cap_reached"))
+            continue
+        if (
+            config.opendart_detail_fetch_stop_on_resolved_report_type
+            and symbol
+            and report_type
+            and (symbol, report_type) in resolved_report_types
+        ):
+            skipped.append(_opendart_detail_skip_row(request, reason="report_type_already_resolved_for_symbol"))
             continue
         public_request = SourceRequest(
             method=request.method,
@@ -1658,14 +1833,60 @@ def _execute_opendart_detail_fetches(
         cache_path = Path(config.cache_directory) / "opendart_detail" / as_of_date.isoformat() / f"{receipt_no}.xml"
         result = http_client.get_text(live_request, cache_path=cache_path)
         source_call_counts["opendart_detail_fetches"] += 1
+        if symbol:
+            executed_by_symbol[symbol] = executed_by_symbol.get(symbol, 0) + 1
         if not result.ok or result.text is None:
             continue
         text_cache_path = cache_path.with_suffix(".txt")
         text_cache_path.parent.mkdir(parents=True, exist_ok=True)
         text_cache_path.write_text(extract_document_text(result.text), encoding="utf-8")
-        detail_events.append(normalize_disclosure_detail(base_event, result.text, as_of_date=as_of_date))
+        detail_event = normalize_disclosure_detail(base_event, result.text, as_of_date=as_of_date)
+        detail_events.append(detail_event)
         executed.append(public_request)
-    return tuple(detail_events), tuple(executed)
+        if _opendart_detail_resolution_satisfied(detail_event) and symbol and report_type:
+            resolved_report_types.add((symbol, report_type))
+    if cap is not None and len(planned_requests) > len(requests_to_run):
+        for request in planned_requests[len(requests_to_run):]:
+            skipped.append(_opendart_detail_skip_row(request, reason="global_detail_fetch_cap_reached"))
+    return tuple(detail_events), tuple(executed), tuple(skipped)
+
+
+def _opendart_detail_fetch_per_symbol_exhausted(
+    config: KoreaLiveLiteConfig,
+    executed_by_symbol: Mapping[str, int],
+    symbol: str,
+) -> bool:
+    cap = config.opendart_detail_fetch_max_per_symbol
+    if cap is None or not symbol:
+        return False
+    return int(executed_by_symbol.get(symbol, 0)) >= cap
+
+
+def _opendart_detail_resolution_satisfied(event: DisclosureEvent) -> bool:
+    fields = event.parsed_fields or {}
+    if fields.get("detail_fetched"):
+        return True
+    if str(event.raw_text or "").strip() and str(event.source).strip().lower() == "opendart detail":
+        return True
+    return False
+
+
+def _opendart_detail_skip_row(request: SourceRequest, *, reason: str) -> Mapping[str, Any]:
+    return {
+        "reason": reason,
+        "symbol": request.params.get("symbol"),
+        "report_type": request.params.get("report_type"),
+        "rcept_no": request.params.get("rcept_no"),
+        "url": request.url,
+    }
+
+
+def _opendart_detail_fetch_policy(config: KoreaLiveLiteConfig) -> Mapping[str, Any]:
+    return {
+        "global_cap": config.budget.max_opendart_detail_fetches_per_run,
+        "per_symbol_cap": config.opendart_detail_fetch_max_per_symbol,
+        "stop_on_resolved_report_type": config.opendart_detail_fetch_stop_on_resolved_report_type,
+    }
 
 
 def _merge_detail_disclosures(
@@ -1814,6 +2035,7 @@ def _logical_queries_by_source(
         "krx": int(source_call_counts.get("krx_calls", 0)),
         "data_go_kr": int(source_call_counts.get("data_go_kr_calls", 0)),
         "naver_search": int(source_call_counts.get("naver_search_queries", 0)),
+        "naver_finance": int(source_call_counts.get("naver_finance_item_main_calls", 0)),
         "company_guide": int(source_call_counts.get("company_guide_snapshot_calls", 0))
         + int(source_call_counts.get("company_guide_recent_report_calls", 0)),
     }
@@ -1895,6 +2117,41 @@ def _free_search_provider(
 
 def _live_page_fetch_enabled(config: KoreaLiveLiteConfig) -> bool:
     return bool(config.live_page_fetch_enabled or (config.live_enabled and not config.fixture_mode))
+
+
+def _official_follow_up_source_provider(
+    *,
+    config: KoreaLiveLiteConfig,
+    sources: KoreaCheapScanSources,
+    candidate: CheapScanCandidate,
+    detail_disclosures: Sequence[DisclosureEvent] = (),
+) -> SearchProvider | None:
+    if candidate.market != Market.KR:
+        return None
+    if sources.opendart is None and sources.kind is None:
+        return None
+    official_provider = KoreaOfficialFollowUpSourceProvider(
+        symbol=candidate.symbol,
+        company_name=candidate.company_name,
+        market=candidate.market,
+        opendart=sources.opendart,
+        kind=sources.kind,
+        lookback_days=config.lookback_days,
+    )
+    detail_provider = OpenDARTDetailFollowUpSourceProvider(
+        symbol=candidate.symbol,
+        company_name=candidate.company_name,
+        market=candidate.market,
+        detail_disclosures=tuple(detail_disclosures),
+    )
+    if any(
+        item.symbol == candidate.symbol
+        and item.available_at.date() <= candidate.as_of_date
+        and (str(item.source).strip().lower() == "opendart detail" or bool((item.parsed_fields or {}).get("detail_fetched")))
+        for item in detail_disclosures
+    ):
+        return CompositeFollowUpSourceProvider((detail_provider, official_provider))
+    return official_provider
 
 
 def _page_fetch_cache_directory(config: KoreaLiveLiteConfig) -> Path:
@@ -2174,7 +2431,25 @@ def _execute_company_guide_for_candidates(
                     )
                     any_success = True
                 except (TypeError, ValueError) as exc:
-                    last_error = f"company_guide_snapshot_parse_failed:{type(exc).__name__}"
+                    if _is_company_guide_empty_consensus_error(exc):
+                        source_call_counts["company_guide_snapshot_empty_consensus_count"] = (
+                            source_call_counts.get("company_guide_snapshot_empty_consensus_count", 0) + 1
+                        )
+                        last_error = "company_guide_snapshot_empty_consensus"
+                        broker_targets = connector.parse_broker_targets_html(
+                            result.text,
+                            symbol=candidate.symbol,
+                            as_of_date=config.as_of_date,
+                        )
+                        revisions = _company_guide_revisions_from_broker_targets(
+                            broker_targets,
+                            symbol=candidate.symbol,
+                            as_of_date=config.as_of_date,
+                        )
+                        if revisions:
+                            any_success = True
+                    else:
+                        last_error = f"company_guide_snapshot_parse_failed:{type(exc).__name__}"
             elif result.error:
                 last_error = f"company_guide_snapshot_fetch_failed:{result.error}"
 
@@ -2220,17 +2495,92 @@ def _execute_company_guide_for_candidates(
     return fetched
 
 
+def _execute_naver_finance_for_candidates(
+    *,
+    candidates: Sequence[CheapScanCandidate],
+    config: KoreaLiveLiteConfig,
+    effective_fixture_mode: bool,
+    http_client: HttpClient,
+    built_requests: list[SourceRequest],
+    source_call_counts: dict[str, int],
+    source_modes: dict[str, str],
+    fallback_reasons: dict[str, str],
+) -> dict[str, _CompanyGuideFeatureData]:
+    if not config.naver_finance_enabled:
+        source_modes["naver_finance"] = "disabled_optional"
+        return {}
+    if not candidates:
+        source_modes["naver_finance"] = "not_configured"
+        return {}
+    if effective_fixture_mode or not config.live_enabled or config.fixture_mode:
+        source_modes["naver_finance"] = "fixture"
+        return {}
+    if config.budget.max_naver_finance_calls_per_day is not None and config.budget.max_naver_finance_calls_per_day <= 0:
+        source_modes["naver_finance"] = "fallback"
+        fallback_reasons["naver_finance"] = "naver_finance_budget_exhausted"
+        return {}
+
+    connector = config.naver_finance_connector or NaverFinanceConnector(fixture_mode=False)
+    remaining_calls = config.budget.max_naver_finance_calls_per_day
+    fetched: dict[str, _CompanyGuideFeatureData] = {}
+    any_success = False
+    last_error: str | None = None
+    seen_symbols: set[str] = set()
+    for candidate in candidates:
+        if candidate.symbol in seen_symbols:
+            continue
+        seen_symbols.add(candidate.symbol)
+        if not _has_remaining_calls(remaining_calls):
+            break
+        request = connector.build_item_main_request(candidate.symbol, config.as_of_date)
+        public_request = _naver_finance_public_request(request)
+        built_requests.append(public_request)
+        cache_path = _naver_finance_cache_path(config, candidate.symbol, "item_main", "html")
+        result = http_client.get_text(public_request, cache_path=cache_path)
+        source_call_counts["naver_finance_item_main_calls"] += 1
+        remaining_calls = _consume_remaining_call(remaining_calls)
+        if result.ok and result.text:
+            try:
+                consensus = connector.parse_item_main_html(
+                    result.text,
+                    symbol=candidate.symbol,
+                    as_of_date=config.as_of_date,
+                )
+            except (TypeError, ValueError) as exc:
+                last_error = f"naver_finance_item_main_parse_failed:{type(exc).__name__}"
+                continue
+            fetched[candidate.symbol] = _CompanyGuideFeatureData(
+                consensus=_dedupe_consensus_snapshots((consensus,)),
+            )
+            any_success = True
+        elif result.error:
+            last_error = f"naver_finance_item_main_fetch_failed:{result.error}"
+
+    source_modes["naver_finance"] = "live_executed" if any_success else "fallback"
+    if not any_success:
+        fallback_reasons["naver_finance"] = last_error or "naver_finance_no_data"
+    return fetched
+
+
+def _is_company_guide_empty_consensus_error(exc: BaseException) -> bool:
+    if not isinstance(exc, ValueError):
+        return False
+    return "consensus table cTB15 does not contain a parsable value row" in str(exc)
+
+
 def _company_guide_revisions_from_broker_targets(
     rows: Sequence[BrokerTargetRow],
     *,
     symbol: str,
     as_of_date: date,
 ) -> tuple[ConsensusRevision, ...]:
+    window_start = as_of_date - timedelta(days=31)
     usable = tuple(
         row
         for row in rows
         if row.symbol == symbol
         and row.date <= as_of_date
+        and row.date >= window_start
         and row.target_price_revision_pct is not None
     )
     if not usable:
@@ -2251,12 +2601,14 @@ def _company_guide_revisions_from_broker_targets(
             source="company_guide_snapshot",
             parsed_fields={
                 "source": "company_guide_snapshot",
-                "company_guide_broker_target_revision_proxy": True,
-                "revision_proxy_method": "average_broker_target_price_revision_pct",
+                "source_family": "company_guide_broker_target_snapshot",
+                "company_guide_broker_target_revision_structured": True,
+                "structured_consensus_revision_source": True,
+                "revision_method": "average_broker_target_price_revision_pct",
+                "broker_target_revision_window_days": 31,
                 "broker_target_revision_count": len(values),
                 "broker_target_revision_min": min(values),
                 "broker_target_revision_max": max(values),
-                "consensus_proxy_score_eligible": True,
             },
         ),
     )
@@ -2273,10 +2625,30 @@ def _company_guide_public_request(request: SourceRequest) -> SourceRequest:
     )
 
 
+def _naver_finance_public_request(request: SourceRequest) -> SourceRequest:
+    return SourceRequest(
+        method=request.method,
+        url=request.url,
+        params=dict(request.params),
+        headers=dict(request.headers),
+        fixture_mode=False,
+        credential_name="NAVER_FINANCE",
+    )
+
+
 def _company_guide_cache_path(config: KoreaLiveLiteConfig, symbol: str, stem: str, suffix: str) -> Path:
     return (
         Path(config.cache_directory)
         / "company_guide"
+        / config.as_of_date.isoformat()
+        / f"{_safe_filename(symbol)}_{stem}.{suffix}"
+    )
+
+
+def _naver_finance_cache_path(config: KoreaLiveLiteConfig, symbol: str, stem: str, suffix: str) -> Path:
+    return (
+        Path(config.cache_directory)
+        / "naver_finance"
         / config.as_of_date.isoformat()
         / f"{_safe_filename(symbol)}_{stem}.{suffix}"
     )
@@ -2475,6 +2847,8 @@ def _base_feature_input_for_candidate(
     extra_financial_actuals: Sequence[FinancialActual] = (),
     extra_consensus: Sequence[ConsensusSnapshot] = (),
     extra_consensus_revisions: Sequence[ConsensusRevision] = (),
+    connector_consensus: Sequence[ConsensusSnapshot] = (),
+    connector_consensus_revisions: Sequence[ConsensusRevision] = (),
     extra_research_reports: Sequence[ResearchReport] = (),
 ) -> FeatureEngineeringInput | None:
     instrument = {item.symbol: item for item in instruments}.get(candidate.symbol)
@@ -2487,8 +2861,10 @@ def _base_feature_input_for_candidate(
     financial_actuals = _dedupe_financial_actuals(
         tuple(sources.get_financial_actuals(candidate.symbol, config.as_of_date)) + tuple(extra_financial_actuals)
     )
-    consensus = _dedupe_consensus_snapshots(tuple(extra_consensus))
-    consensus_revisions = _dedupe_consensus_revisions(tuple(extra_consensus_revisions))
+    consensus = _dedupe_consensus_snapshots(tuple(connector_consensus) + tuple(extra_consensus))
+    consensus_revisions = _dedupe_consensus_revisions(
+        tuple(connector_consensus_revisions) + tuple(extra_consensus_revisions)
+    )
     research_reports = _dedupe_research_reports(tuple(extra_research_reports))
     if not price_bars and not disclosures and not financial_actuals and not consensus and not consensus_revisions and not research_reports:
         return None
@@ -2504,6 +2880,32 @@ def _base_feature_input_for_candidate(
         disclosures=disclosures,
         research_reports=research_reports,
     )
+
+
+def _consensus_connector_snapshots_for_candidate(
+    candidate: CheapScanCandidate,
+    config: KoreaLiveLiteConfig,
+) -> tuple[ConsensusSnapshot, ...]:
+    connector = config.consensus_connector
+    if connector is None:
+        return ()
+    try:
+        return tuple(connector.get_consensus(candidate.symbol, config.as_of_date))
+    except Exception:
+        return ()
+
+
+def _consensus_connector_revisions_for_candidate(
+    candidate: CheapScanCandidate,
+    config: KoreaLiveLiteConfig,
+) -> tuple[ConsensusRevision, ...]:
+    connector = config.consensus_connector
+    if connector is None:
+        return ()
+    try:
+        return tuple(connector.get_consensus_revisions(candidate.symbol, config.as_of_date))
+    except Exception:
+        return ()
 
 
 def _instrument_sector_context(instrument: Instrument | None) -> str | None:
@@ -2756,11 +3158,20 @@ def _targeted_smoke_result_row(
     combined_evidence: Sequence[Evidence] = (),
 ) -> Mapping[str, Any]:
     diagnostics = result.theme_route_diagnostics
+    source_fields = getattr(getattr(result, "feature_result", None), "source_fields", {}) or {}
+    legacy_stage = getattr(result, "legacy_stage_before_agentic_court", None)
+    legacy_stage_value = None
+    if legacy_stage is not None:
+        legacy_stage_value = getattr(getattr(legacy_stage, "stage", None), "value", getattr(legacy_stage, "stage", None))
+    final_stage_value = getattr(result.stage.stage, "value", result.stage.stage)
     evidence_count = len(tuple(_dedupe_evidence(tuple(combined_evidence)))) if combined_evidence else len(result.web_result.evidence)
     score_valid_bool = _result_score_valid(result)
-    blocked_reason = diagnostics.get("score_blocked_reason") or score_block_reason(result.score)
+    blocked_reason = diagnostics.get("score_blocked_reason") or score_block_reason(result.score) or _result_score_block_reason(result)
     raw_score_before_block = raw_score_total_before_block(result.score)
-    visible_score = visible_score_total(result.score)
+    visible_score = visible_score_total(result.score) if score_valid_bool else None
+    stage_court_score_status = diagnostics.get("agentic_stage_court_runtime_score_status")
+    stage_court_verified_score = diagnostics.get("agentic_stage_court_verified_score")
+    stage_court_upper_score = diagnostics.get("agentic_stage_court_potential_score_upper_bound")
     input_fingerprint = _research_input_fingerprint(result, combined_evidence)
     variability_drivers = _score_variability_drivers(
         result,
@@ -2776,6 +3187,7 @@ def _targeted_smoke_result_row(
         "test_injected": candidate.test_injected,
         "production_candidate": candidate.production_candidate,
         "stage": result.stage.stage,
+        **_stage_output_row(result, score_valid=score_valid_bool, blocked_reason=blocked_reason),
         "stage_reason": result.stage.stage_reason,
         "visible_score": visible_score,
         "score_total": visible_score,
@@ -2789,6 +3201,11 @@ def _targeted_smoke_result_row(
         "raw_score_total_before_score_gap_block": diagnostics.get("raw_score_total_before_score_gap_block")
         or result.score.diagnostic_scores.get("raw_score_total_before_score_gap_block"),
         "raw_score_before_block": raw_score_before_block,
+        "score_status": stage_court_score_status,
+        "verified_score": stage_court_verified_score,
+        "provisional_score": raw_score_before_block if not score_valid_bool else visible_score,
+        "score_interval_lower": stage_court_verified_score,
+        "score_interval_upper": stage_court_upper_score,
         "score_components": _score_component_row(result.score) if score_valid_bool else None,
         "raw_score_components_before_block": _raw_score_component_row(result.score) if not score_valid_bool else None,
         **_score_audit_row(result),
@@ -2801,9 +3218,158 @@ def _targeted_smoke_result_row(
         "queries_run": result.web_result.queries_run,
         "theme_rebalance_status": diagnostics.get("theme_rebalance_status"),
         "theme_route_status": diagnostics.get("theme_route_status"),
+        "theme_route_blocked_reason": diagnostics.get("theme_route_blocked_reason")
+        or diagnostics.get("blocked_reason"),
+        "theme_route_timeout_seconds": diagnostics.get("theme_route_timeout_seconds"),
         "theme_route_confidence": diagnostics.get("theme_route_confidence"),
+        "theme_evidence_review_status": diagnostics.get("theme_evidence_review_status"),
+        "theme_evidence_review_blocked_reason": diagnostics.get("theme_evidence_review_blocked_reason"),
+        "theme_evidence_review_timeout_seconds": diagnostics.get("theme_evidence_review_timeout_seconds"),
         "theme_evidence_gate_status": diagnostics.get("theme_evidence_gate_status"),
         "theme_evidence_ref_match_count": diagnostics.get("theme_evidence_ref_match_count"),
+        "theme_evidence_ref_unmatched_count": diagnostics.get("theme_evidence_ref_unmatched_count"),
+        "theme_document_ref_available_count": diagnostics.get("theme_document_ref_available_count"),
+        "agentic_evidence_enabled": diagnostics.get("agentic_evidence_enabled"),
+        "agentic_evidence_required_for_scoring": diagnostics.get("agentic_evidence_required_for_scoring"),
+        "agentic_evidence_provider_configured": diagnostics.get("agentic_evidence_provider_configured"),
+        "agentic_evidence_mapper_self_consistency_rounds": diagnostics.get(
+            "agentic_evidence_mapper_self_consistency_rounds"
+        ),
+        "agentic_evidence_mapper_self_consistency_min_agreement": diagnostics.get(
+            "agentic_evidence_mapper_self_consistency_min_agreement"
+        ),
+        "agentic_evidence_mapper_self_consistency_use_batch": diagnostics.get(
+            "agentic_evidence_mapper_self_consistency_use_batch"
+        ),
+        "agentic_evidence_mapper_batch_max_tasks": diagnostics.get(
+            "agentic_evidence_mapper_batch_max_tasks"
+        ),
+        "agentic_evidence_provider_timeout_seconds": diagnostics.get(
+            "agentic_evidence_provider_timeout_seconds"
+        ),
+        "agentic_evidence_status": diagnostics.get("agentic_evidence_status"),
+        "agentic_evidence_archetype_id": diagnostics.get("agentic_evidence_archetype_id"),
+        "agentic_evidence_archetype_source": diagnostics.get("agentic_evidence_archetype_source"),
+        "agentic_evidence_max_raw_assertions_per_run": diagnostics.get(
+            "agentic_evidence_max_raw_assertions_per_run"
+        ),
+        "agentic_evidence_raw_assertion_budget_limited": diagnostics.get(
+            "agentic_evidence_raw_assertion_budget_limited"
+        ),
+        "agentic_evidence_raw_assertion_budget_limit": diagnostics.get(
+            "agentic_evidence_raw_assertion_budget_limit"
+        ),
+        "agentic_evidence_block_reason": diagnostics.get("agentic_evidence_block_reason"),
+        "agentic_evidence_document_limit": diagnostics.get("agentic_evidence_document_limit"),
+        "agentic_evidence_document_count": diagnostics.get("agentic_evidence_document_count", 0),
+        "agentic_evidence_document_ids": diagnostics.get("agentic_evidence_document_ids", ()),
+        "agentic_evidence_skipped_existing_document_count": diagnostics.get(
+            "agentic_evidence_skipped_existing_document_count",
+            0,
+        ),
+        "agentic_evidence_raw_assertion_count": diagnostics.get("agentic_evidence_raw_assertion_count", 0),
+        "agentic_evidence_claim_count": diagnostics.get("agentic_evidence_claim_count", 0),
+        "agentic_evidence_claim_ids": diagnostics.get("agentic_evidence_claim_ids", ()),
+        "agentic_evidence_accepted_mapping_count": diagnostics.get("agentic_evidence_accepted_mapping_count", 0),
+        "agentic_evidence_mapping_prefilter_original_task_count": diagnostics.get(
+            "agentic_evidence_mapping_prefilter_original_task_count",
+            0,
+        ),
+        "agentic_evidence_mapping_prefilter_filtered_task_count": diagnostics.get(
+            "agentic_evidence_mapping_prefilter_filtered_task_count",
+            0,
+        ),
+        "agentic_evidence_mapping_prefilter_skipped_input_count": diagnostics.get(
+            "agentic_evidence_mapping_prefilter_skipped_input_count",
+            0,
+        ),
+        "agentic_evidence_mapping_prefilter_fallback_full_map_count": diagnostics.get(
+            "agentic_evidence_mapping_prefilter_fallback_full_map_count",
+            0,
+        ),
+        "agentic_evidence_mapping_prefilter_fallback_full_map_summaries": diagnostics.get(
+            "agentic_evidence_mapping_prefilter_fallback_full_map_summaries",
+            (),
+        ),
+        "agentic_evidence_mapping_empty_output_count": diagnostics.get(
+            "agentic_evidence_mapping_empty_output_count",
+            0,
+        ),
+        "agentic_evidence_mapping_empty_output_retry_count": diagnostics.get(
+            "agentic_evidence_mapping_empty_output_retry_count",
+            0,
+        ),
+        "agentic_evidence_mapping_empty_output_recovered_count": diagnostics.get(
+            "agentic_evidence_mapping_empty_output_recovered_count",
+            0,
+        ),
+        "agentic_evidence_mapping_empty_output_summaries": diagnostics.get(
+            "agentic_evidence_mapping_empty_output_summaries",
+            (),
+        ),
+        "agentic_evidence_mapping_empty_output_retry_summaries": diagnostics.get(
+            "agentic_evidence_mapping_empty_output_retry_summaries",
+            (),
+        ),
+        "agentic_evidence_mapping_ids": diagnostics.get("agentic_evidence_mapping_ids", ()),
+        "agentic_evidence_rejected_mapping_count": diagnostics.get("agentic_evidence_rejected_mapping_count", 0),
+        "agentic_evidence_rejected_mapping_ids": diagnostics.get("agentic_evidence_rejected_mapping_ids", ()),
+        "agentic_evidence_rejected_mapping_summaries": diagnostics.get(
+            "agentic_evidence_rejected_mapping_summaries",
+            (),
+        ),
+        "agentic_evidence_eligibility_rejection_summaries": diagnostics.get(
+            "agentic_evidence_eligibility_rejection_summaries",
+            (),
+        ),
+        "agentic_evidence_document_selection_summaries": diagnostics.get(
+            "agentic_evidence_document_selection_summaries",
+            (),
+        ),
+        "agentic_evidence_error_count": diagnostics.get("agentic_evidence_error_count", 0),
+        "agentic_evidence_errors": diagnostics.get("agentic_evidence_errors", ()),
+        "agentic_evidence_present_primitives": diagnostics.get("agentic_evidence_present_primitives", ()),
+        "agentic_evidence_primitive_statuses": diagnostics.get("agentic_evidence_primitive_statuses", ()),
+        "agentic_stage_court_runtime_stage": diagnostics.get("agentic_stage_court_runtime_stage"),
+        "agentic_stage_court_runtime_investigation_status": diagnostics.get(
+            "agentic_stage_court_runtime_investigation_status"
+        ),
+        "agentic_stage_court_runtime_score_status": stage_court_score_status,
+        "agentic_stage_court_verified_score": stage_court_verified_score,
+        "agentic_stage_court_potential_score_upper_bound": stage_court_upper_score,
+        "agentic_stage_court_unresolved_material_gap_points": diagnostics.get(
+            "agentic_stage_court_unresolved_material_gap_points"
+        ),
+        "agentic_stage_court_score_interval_width": diagnostics.get("agentic_stage_court_score_interval_width"),
+        "agentic_stage_court_material_stage_boundaries_crossed": diagnostics.get(
+            "agentic_stage_court_material_stage_boundaries_crossed",
+            (),
+        ),
+        "agentic_stage_court_material_stage_boundary_crossed_count": diagnostics.get(
+            "agentic_stage_court_material_stage_boundary_crossed_count",
+            0,
+        ),
+        "agentic_score_contribution_v2_count": diagnostics.get("agentic_score_contribution_v2_count", 0),
+        "agentic_score_contribution_v2_nonzero_count": diagnostics.get(
+            "agentic_score_contribution_v2_nonzero_count",
+            0,
+        ),
+        "agentic_score_contribution_v2_cap_summaries": diagnostics.get(
+            "agentic_score_contribution_v2_cap_summaries",
+            (),
+        ),
+        "agentic_score_contribution_v2_support_summaries": diagnostics.get(
+            "agentic_score_contribution_v2_support_summaries",
+            (),
+        ),
+        "agentic_score_contribution_v2_archetype_id": source_fields.get(
+            "agentic_score_contribution_v2_archetype_id"
+        ),
+        "agentic_score_contribution_v2_archetype_mismatch": source_fields.get(
+            "agentic_score_contribution_v2_archetype_mismatch"
+        ),
+        "legacy_stage_before_agentic_court": legacy_stage_value,
+        "final_stage_after_agentic_court": final_stage_value,
         "theme_large_sector_id": diagnostics.get("large_sector_id"),
         "theme_canonical_archetype_id": diagnostics.get("canonical_archetype_id"),
         "scoring_large_sector_id": result.feature_result.payload.large_sector_id,
@@ -2813,7 +3379,122 @@ def _targeted_smoke_result_row(
         "post_score_gap_expansion_count": diagnostics.get("post_score_gap_expansion_count", 0),
         "post_score_gap_expansion_status": diagnostics.get("post_score_gap_expansion_status", "not_attempted"),
         "post_score_gap_expansion_queries": diagnostics.get("post_score_gap_expansion_queries", ()),
+        "post_score_gap_unresolved_gaps": diagnostics.get("post_score_gap_unresolved_gaps", ()),
+        "post_score_gap_rejection_reasons": diagnostics.get("post_score_gap_rejection_reasons", ()),
+        "post_score_gap_blocked_reason": diagnostics.get("post_score_gap_blocked_reason"),
         "post_score_gap_warning_reason": diagnostics.get("post_score_gap_warning_reason"),
+        "post_score_gap_progress_reason": diagnostics.get("post_score_gap_progress_reason"),
+        "post_score_gap_score_state_changed": diagnostics.get("post_score_gap_score_state_changed"),
+        "post_score_gap_append_only_violation": diagnostics.get(
+            "post_score_gap_append_only_violation",
+            False,
+        ),
+        "post_score_gap_reprocessed_document_count": diagnostics.get(
+            "post_score_gap_reprocessed_document_count",
+            0,
+        ),
+        "post_score_gap_reprocessed_document_ids": diagnostics.get(
+            "post_score_gap_reprocessed_document_ids",
+            (),
+        ),
+        "post_score_gap_new_document_count": diagnostics.get("post_score_gap_new_document_count", 0),
+        "post_score_gap_new_document_ids": diagnostics.get("post_score_gap_new_document_ids", ()),
+        "post_score_gap_new_claim_count": diagnostics.get("post_score_gap_new_claim_count", 0),
+        "post_score_gap_new_claim_ids": diagnostics.get("post_score_gap_new_claim_ids", ()),
+        "post_score_gap_new_accepted_mapping_count": diagnostics.get(
+            "post_score_gap_new_accepted_mapping_count",
+            0,
+        ),
+        "post_score_gap_new_accepted_mapping_ids": diagnostics.get(
+            "post_score_gap_new_accepted_mapping_ids",
+            (),
+        ),
+        "post_score_gap_new_rejected_mapping_count": diagnostics.get(
+            "post_score_gap_new_rejected_mapping_count",
+            0,
+        ),
+        "post_score_gap_new_rejected_mapping_ids": diagnostics.get(
+            "post_score_gap_new_rejected_mapping_ids",
+            (),
+        ),
+        "post_score_gap_new_rejected_mapping_summaries": diagnostics.get(
+            "post_score_gap_new_rejected_mapping_summaries",
+            (),
+        ),
+        "post_score_gap_new_eligibility_rejection_summaries": diagnostics.get(
+            "post_score_gap_new_eligibility_rejection_summaries",
+            (),
+        ),
+        "post_score_gap_new_trace_status": diagnostics.get("post_score_gap_new_trace_status"),
+        "post_score_gap_new_trace_skipped_existing_document_count": diagnostics.get(
+            "post_score_gap_new_trace_skipped_existing_document_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_prefilter_original_task_count": diagnostics.get(
+            "post_score_gap_new_trace_mapping_prefilter_original_task_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_prefilter_filtered_task_count": diagnostics.get(
+            "post_score_gap_new_trace_mapping_prefilter_filtered_task_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_prefilter_skipped_input_count": diagnostics.get(
+            "post_score_gap_new_trace_mapping_prefilter_skipped_input_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_prefilter_fallback_full_map_count": diagnostics.get(
+            "post_score_gap_new_trace_mapping_prefilter_fallback_full_map_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_prefilter_fallback_full_map_summaries": diagnostics.get(
+            "post_score_gap_new_trace_mapping_prefilter_fallback_full_map_summaries",
+            (),
+        ),
+        "post_score_gap_new_trace_mapping_empty_output_count": diagnostics.get(
+            "post_score_gap_new_trace_mapping_empty_output_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_empty_output_retry_count": diagnostics.get(
+            "post_score_gap_new_trace_mapping_empty_output_retry_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_empty_output_recovered_count": diagnostics.get(
+            "post_score_gap_new_trace_mapping_empty_output_recovered_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_empty_output_summaries": diagnostics.get(
+            "post_score_gap_new_trace_mapping_empty_output_summaries",
+            (),
+        ),
+        "post_score_gap_new_trace_mapping_empty_output_retry_summaries": diagnostics.get(
+            "post_score_gap_new_trace_mapping_empty_output_retry_summaries",
+            (),
+        ),
+        "post_score_gap_new_trace_error_count": diagnostics.get("post_score_gap_new_trace_error_count", 0),
+        "post_score_gap_new_trace_errors": diagnostics.get("post_score_gap_new_trace_errors", ()),
+        "post_score_gap_primitive_state_changed": diagnostics.get("post_score_gap_primitive_state_changed"),
+        "post_score_gap_primitive_delta_summaries": diagnostics.get(
+            "post_score_gap_primitive_delta_summaries",
+            (),
+        ),
+        "post_score_gap_unchanged_gap_primitive_summaries": diagnostics.get(
+            "post_score_gap_unchanged_gap_primitive_summaries",
+            (),
+        ),
+        "post_score_gap_score_contribution_changed": diagnostics.get(
+            "post_score_gap_score_contribution_changed"
+        ),
+        "post_score_gap_score_contribution_delta_summaries": diagnostics.get(
+            "post_score_gap_score_contribution_delta_summaries",
+            (),
+        ),
+        "post_score_gap_audit_events": diagnostics.get("post_score_gap_audit_events", ()),
+        "post_score_gap_source_route_plans": diagnostics.get("post_score_gap_source_route_plans", ()),
+        "post_score_gap_query_origins": diagnostics.get("post_score_gap_query_origins", ()),
+        "post_score_gap_deterministic_fallback_query_used": diagnostics.get(
+            "post_score_gap_deterministic_fallback_query_used",
+            False,
+        ),
         "material_score_gap_unresolved_gaps": diagnostics.get("material_score_gap_unresolved_gaps", ()),
         "failed_green_gates": diagnostics.get("failed_green_gates", ()),
         "stage_gate_diagnostics": diagnostics.get("stage_gate_diagnostics"),
@@ -2880,6 +3561,28 @@ def _score_audit_row(result: WebResearchPipelineResult) -> Mapping[str, Any]:
         "score_claim_backed_component_ratio": diagnostics.get("score_claim_backed_component_ratio"),
         "orphan_score_component_count": diagnostics.get("orphan_score_component_count_capped"),
         "orphan_score_component_count_capped": diagnostics.get("orphan_score_component_count_capped"),
+        "legacy_parser_score_claim_without_v2_count": diagnostics.get(
+            "legacy_parser_score_claim_without_v2_count_capped"
+        ),
+        "legacy_parser_score_claim_without_v2_count_capped": diagnostics.get(
+            "legacy_parser_score_claim_without_v2_count_capped"
+        ),
+        "legacy_parser_score_claim_without_v2_quarantined_count": diagnostics.get(
+            "legacy_parser_score_claim_without_v2_quarantined_count_capped"
+        ),
+        "legacy_parser_score_claim_without_v2_quarantined_count_capped": diagnostics.get(
+            "legacy_parser_score_claim_without_v2_quarantined_count_capped"
+        ),
+        "legacy_parser_score_claim_fields_without_v2": _csv_tuple(
+            source_fields.get("legacy_parser_score_claim_fields_without_v2")
+        ),
+        "legacy_parser_score_claim_fields_quarantined_by_v2": _csv_tuple(
+            source_fields.get("legacy_parser_score_claim_fields_quarantined_by_v2")
+        ),
+        "parser_output_mention_count": diagnostics.get("parser_output_mention_count_capped"),
+        "parser_output_mention_count_capped": diagnostics.get("parser_output_mention_count_capped"),
+        "parser_output_mention_ids": _csv_tuple(source_fields.get("parser_output_mention_ids")),
+        "parser_output_mention_field_names": _csv_tuple(source_fields.get("parser_output_mention_field_names")),
         "claim_ledger_claim_ids": _csv_tuple(source_fields.get("claim_ledger_claim_ids")),
         "claim_ledger_score_eligible_claim_ids": _csv_tuple(source_fields.get("claim_ledger_score_eligible_claim_ids")),
         "claim_ledger_claim_ids_by_primitive": _json_mapping(source_fields.get("claim_ledger_claim_ids_by_primitive")),
@@ -2923,7 +3626,65 @@ def _score_audit_row(result: WebResearchPipelineResult) -> Mapping[str, Any]:
         row[key] = diagnostics.get(key)
     for key in contract_text_keys:
         row[key] = source_fields.get(key)
+    row.update(_evidence_family_audit_row(diagnostics))
     return row
+
+
+_EVIDENCE_FAMILY_KEYS = (
+    "price",
+    "financial_actual",
+    "disclosure",
+    "research_report",
+    "consensus",
+    "consensus_revision",
+    "news",
+)
+
+_EVIDENCE_FAMILY_PROXY_KEYS = (
+    "evidence_family_consensus_proxy",
+    "evidence_family_consensus_structured",
+    "evidence_family_consensus_revision_proxy",
+    "evidence_family_search_snippet_news",
+)
+
+
+def _evidence_family_audit_row(diagnostics: Mapping[str, Any]) -> Mapping[str, Any]:
+    row: dict[str, Any] = {
+        "cross_evidence_family_count": diagnostics.get("cross_evidence_family_count"),
+    }
+    present: list[str] = []
+    missing: list[str] = []
+    for family in _EVIDENCE_FAMILY_KEYS:
+        key = f"evidence_family_{family}"
+        value = diagnostics.get(key)
+        row[key] = value
+        if _diagnostic_is_present(value):
+            present.append(family)
+        else:
+            missing.append(family)
+    proxy_present: list[str] = []
+    for key in _EVIDENCE_FAMILY_PROXY_KEYS:
+        value = diagnostics.get(key)
+        row[key] = value
+        if _diagnostic_is_present(value):
+            proxy_present.append(key.removeprefix("evidence_family_"))
+    row["evidence_family_present_families"] = tuple(present)
+    row["evidence_family_missing_families"] = tuple(missing)
+    row["evidence_family_proxy_present_families"] = tuple(proxy_present)
+    return row
+
+
+def _diagnostic_is_present(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        return float(value) > 0.0
+    if value in (None, ""):
+        return False
+    try:
+        return float(str(value)) > 0.0
+    except ValueError:
+        return str(value).strip().lower() in {"true", "yes", "present"}
 
 
 def _stage4_transition_diagnostics_row(result: WebResearchPipelineResult) -> Mapping[str, Any]:
@@ -2977,6 +3738,8 @@ def _json_mapping(value: Any) -> Mapping[str, Any]:
 
 def _result_score_valid(result: WebResearchPipelineResult) -> bool:
     base_valid = is_score_valid(result.score)
+    if base_valid and _result_legacy_parser_score_without_v2_count(result) > 0.0:
+        base_valid = False
     value = result.theme_route_diagnostics.get("score_valid")
     if value is None:
         return base_valid
@@ -2992,12 +3755,89 @@ def _result_score_valid(result: WebResearchPipelineResult) -> bool:
     return base_valid
 
 
+def _result_score_block_reason(result: WebResearchPipelineResult) -> str | None:
+    if _result_legacy_parser_score_without_v2_count(result) > 0.0:
+        return "legacy_parser_score_claim_without_v2"
+    return None
+
+
+def _result_legacy_parser_score_without_v2_count(result: WebResearchPipelineResult) -> float:
+    diagnostics = getattr(result, "theme_route_diagnostics", {}) or {}
+    if not (
+        _diagnostic_is_present(diagnostics.get("agentic_evidence_enabled"))
+        or _diagnostic_is_present(diagnostics.get("agentic_evidence_required_for_scoring"))
+    ):
+        return 0.0
+    score_diagnostics = getattr(getattr(result, "score", None), "diagnostic_scores", {}) or {}
+    for key in ("legacy_parser_score_claim_without_v2_count", "legacy_parser_score_claim_without_v2_count_capped"):
+        value = score_diagnostics.get(key, diagnostics.get(key))
+        if _diagnostic_is_present(value):
+            try:
+                return float(value)
+            except (TypeError, ValueError):
+                return 1.0
+    return 0.0
+
+
 def _score_blocked_status(reason: str | None) -> str:
     if reason and str(reason).startswith("score_gap"):
         return "score_blocked_score_gap"
     if reason and str(reason).startswith("asof_web"):
         return "score_blocked_asof_web"
     return "score_blocked_theme_route"
+
+
+def _stage_output_row(
+    result: WebResearchPipelineResult,
+    *,
+    score_valid: bool | None = None,
+    blocked_reason: str | None = None,
+) -> Mapping[str, Any]:
+    """Expose whether the serialized stage is a final decision or a pending shell."""
+
+    diagnostics = getattr(result, "theme_route_diagnostics", {}) or {}
+    stage = getattr(getattr(result, "stage", None), "stage", None)
+    stage_value = getattr(stage, "value", stage)
+    runtime_score_status = diagnostics.get("agentic_stage_court_runtime_score_status")
+    runtime_investigation_status = diagnostics.get("agentic_stage_court_runtime_investigation_status")
+
+    if score_valid is False:
+        reason = blocked_reason or runtime_score_status or diagnostics.get("agentic_evidence_block_reason")
+        return {
+            "stage_output_status": "pending_invalid_score",
+            "stage_is_final": False,
+            "stage_display_stage": None,
+            "stage_pending_reason": reason or "score_invalid",
+        }
+
+    if _is_pending_status(runtime_score_status) or _is_pending_status(runtime_investigation_status):
+        reason = (
+            runtime_score_status
+            if _is_pending_status(runtime_score_status)
+            else runtime_investigation_status
+            if _is_pending_status(runtime_investigation_status)
+            else blocked_reason
+        )
+        return {
+            "stage_output_status": "pending_agentic_evidence",
+            "stage_is_final": False,
+            "stage_display_stage": None,
+            "stage_pending_reason": reason or "agentic_evidence_pending",
+        }
+
+    return {
+        "stage_output_status": "final",
+        "stage_is_final": True,
+        "stage_display_stage": stage_value,
+        "stage_pending_reason": None,
+    }
+
+
+def _is_pending_status(value: object) -> bool:
+    if value in (None, ""):
+        return False
+    normalized = str(value).strip().upper()
+    return normalized.startswith("PENDING") or normalized in {"INVALID_EVIDENCE", "PROVIDER_FAILURE", "FAILED"}
 
 
 def _score_variability_drivers(
@@ -3126,6 +3966,7 @@ def _diagnostic_float(value: object) -> float:
 
 def _theme_route_row(candidate: CheapScanCandidate, result: WebResearchPipelineResult) -> Mapping[str, Any]:
     diagnostics = result.theme_route_diagnostics
+    source_fields = getattr(getattr(result, "feature_result", None), "source_fields", {}) or {}
     route = result.theme_route
     return {
         "symbol": candidate.symbol,
@@ -3134,10 +3975,291 @@ def _theme_route_row(candidate: CheapScanCandidate, result: WebResearchPipelineR
         "theme_rebalance_status": diagnostics.get("theme_rebalance_status"),
         "theme_route_status": diagnostics.get("theme_route_status"),
         "theme_route_confidence": diagnostics.get("theme_route_confidence"),
+        "theme_evidence_review_status": diagnostics.get("theme_evidence_review_status"),
+        "theme_evidence_review_blocked_reason": diagnostics.get("theme_evidence_review_blocked_reason"),
+        "theme_evidence_review_timeout_seconds": diagnostics.get("theme_evidence_review_timeout_seconds"),
+        "theme_evidence_gate_status": diagnostics.get("theme_evidence_gate_status"),
+        "theme_evidence_ref_match_count": diagnostics.get("theme_evidence_ref_match_count"),
+        "theme_evidence_ref_unmatched_count": diagnostics.get("theme_evidence_ref_unmatched_count"),
+        "theme_document_ref_available_count": diagnostics.get("theme_document_ref_available_count"),
         "emerging_theme_id": diagnostics.get("emerging_theme_id"),
         "primary_route_id": diagnostics.get("primary_route_id"),
         "expansion_query_count": diagnostics.get("expansion_query_count", 0),
         "post_parse_gap_expansion_count": diagnostics.get("post_parse_gap_expansion_count", 0),
+        "agentic_evidence_enabled": diagnostics.get("agentic_evidence_enabled"),
+        "agentic_evidence_required_for_scoring": diagnostics.get("agentic_evidence_required_for_scoring"),
+        "agentic_evidence_provider_configured": diagnostics.get("agentic_evidence_provider_configured"),
+        "agentic_evidence_mapper_self_consistency_rounds": diagnostics.get(
+            "agentic_evidence_mapper_self_consistency_rounds"
+        ),
+        "agentic_evidence_mapper_self_consistency_min_agreement": diagnostics.get(
+            "agentic_evidence_mapper_self_consistency_min_agreement"
+        ),
+        "agentic_evidence_mapper_self_consistency_use_batch": diagnostics.get(
+            "agentic_evidence_mapper_self_consistency_use_batch"
+        ),
+        "agentic_evidence_mapper_batch_max_tasks": diagnostics.get(
+            "agentic_evidence_mapper_batch_max_tasks"
+        ),
+        "agentic_evidence_provider_timeout_seconds": diagnostics.get(
+            "agentic_evidence_provider_timeout_seconds"
+        ),
+        "agentic_evidence_status": diagnostics.get("agentic_evidence_status"),
+        "agentic_evidence_archetype_id": diagnostics.get("agentic_evidence_archetype_id"),
+        "agentic_evidence_archetype_source": diagnostics.get("agentic_evidence_archetype_source"),
+        "agentic_evidence_max_raw_assertions_per_run": diagnostics.get(
+            "agentic_evidence_max_raw_assertions_per_run"
+        ),
+        "agentic_evidence_raw_assertion_budget_limited": diagnostics.get(
+            "agentic_evidence_raw_assertion_budget_limited"
+        ),
+        "agentic_evidence_raw_assertion_budget_limit": diagnostics.get(
+            "agentic_evidence_raw_assertion_budget_limit"
+        ),
+        "agentic_evidence_block_reason": diagnostics.get("agentic_evidence_block_reason"),
+        "agentic_evidence_document_limit": diagnostics.get("agentic_evidence_document_limit"),
+        "agentic_evidence_document_count": diagnostics.get("agentic_evidence_document_count", 0),
+        "agentic_evidence_document_ids": diagnostics.get("agentic_evidence_document_ids", ()),
+        "agentic_evidence_skipped_existing_document_count": diagnostics.get(
+            "agentic_evidence_skipped_existing_document_count",
+            0,
+        ),
+        "agentic_evidence_raw_assertion_count": diagnostics.get("agentic_evidence_raw_assertion_count", 0),
+        "agentic_evidence_claim_count": diagnostics.get("agentic_evidence_claim_count", 0),
+        "agentic_evidence_claim_ids": diagnostics.get("agentic_evidence_claim_ids", ()),
+        "agentic_evidence_accepted_mapping_count": diagnostics.get("agentic_evidence_accepted_mapping_count", 0),
+        "agentic_evidence_mapping_prefilter_original_task_count": diagnostics.get(
+            "agentic_evidence_mapping_prefilter_original_task_count",
+            0,
+        ),
+        "agentic_evidence_mapping_prefilter_filtered_task_count": diagnostics.get(
+            "agentic_evidence_mapping_prefilter_filtered_task_count",
+            0,
+        ),
+        "agentic_evidence_mapping_prefilter_skipped_input_count": diagnostics.get(
+            "agentic_evidence_mapping_prefilter_skipped_input_count",
+            0,
+        ),
+        "agentic_evidence_mapping_prefilter_fallback_full_map_count": diagnostics.get(
+            "agentic_evidence_mapping_prefilter_fallback_full_map_count",
+            0,
+        ),
+        "agentic_evidence_mapping_prefilter_fallback_full_map_summaries": diagnostics.get(
+            "agentic_evidence_mapping_prefilter_fallback_full_map_summaries",
+            (),
+        ),
+        "agentic_evidence_mapping_empty_output_count": diagnostics.get(
+            "agentic_evidence_mapping_empty_output_count",
+            0,
+        ),
+        "agentic_evidence_mapping_empty_output_retry_count": diagnostics.get(
+            "agentic_evidence_mapping_empty_output_retry_count",
+            0,
+        ),
+        "agentic_evidence_mapping_empty_output_recovered_count": diagnostics.get(
+            "agentic_evidence_mapping_empty_output_recovered_count",
+            0,
+        ),
+        "agentic_evidence_mapping_empty_output_summaries": diagnostics.get(
+            "agentic_evidence_mapping_empty_output_summaries",
+            (),
+        ),
+        "agentic_evidence_mapping_empty_output_retry_summaries": diagnostics.get(
+            "agentic_evidence_mapping_empty_output_retry_summaries",
+            (),
+        ),
+        "agentic_evidence_mapping_ids": diagnostics.get("agentic_evidence_mapping_ids", ()),
+        "agentic_evidence_rejected_mapping_count": diagnostics.get("agentic_evidence_rejected_mapping_count", 0),
+        "agentic_evidence_rejected_mapping_ids": diagnostics.get("agentic_evidence_rejected_mapping_ids", ()),
+        "agentic_evidence_rejected_mapping_summaries": diagnostics.get(
+            "agentic_evidence_rejected_mapping_summaries",
+            (),
+        ),
+        "agentic_evidence_eligibility_rejection_summaries": diagnostics.get(
+            "agentic_evidence_eligibility_rejection_summaries",
+            (),
+        ),
+        "agentic_evidence_document_selection_summaries": diagnostics.get(
+            "agentic_evidence_document_selection_summaries",
+            (),
+        ),
+        "agentic_evidence_error_count": diagnostics.get("agentic_evidence_error_count", 0),
+        "agentic_evidence_errors": diagnostics.get("agentic_evidence_errors", ()),
+        "agentic_evidence_present_primitives": diagnostics.get("agentic_evidence_present_primitives", ()),
+        "agentic_evidence_primitive_statuses": diagnostics.get("agentic_evidence_primitive_statuses", ()),
+        "agentic_stage_court_runtime_stage": diagnostics.get("agentic_stage_court_runtime_stage"),
+        "agentic_stage_court_runtime_investigation_status": diagnostics.get("agentic_stage_court_runtime_investigation_status"),
+        "agentic_stage_court_runtime_score_status": diagnostics.get("agentic_stage_court_runtime_score_status"),
+        "agentic_stage_court_verified_score": diagnostics.get("agentic_stage_court_verified_score"),
+        "agentic_stage_court_potential_score_upper_bound": diagnostics.get(
+            "agentic_stage_court_potential_score_upper_bound"
+        ),
+        "agentic_stage_court_unresolved_material_gap_points": diagnostics.get(
+            "agentic_stage_court_unresolved_material_gap_points"
+        ),
+        "agentic_stage_court_score_interval_width": diagnostics.get("agentic_stage_court_score_interval_width"),
+        "agentic_stage_court_material_stage_boundaries_crossed": diagnostics.get(
+            "agentic_stage_court_material_stage_boundaries_crossed",
+            (),
+        ),
+        "agentic_stage_court_material_stage_boundary_crossed_count": diagnostics.get(
+            "agentic_stage_court_material_stage_boundary_crossed_count",
+            0,
+        ),
+        "agentic_score_contribution_v2_count": diagnostics.get("agentic_score_contribution_v2_count", 0),
+        "agentic_score_contribution_v2_nonzero_count": diagnostics.get(
+            "agentic_score_contribution_v2_nonzero_count",
+            0,
+        ),
+        "agentic_score_contribution_v2_cap_summaries": diagnostics.get(
+            "agentic_score_contribution_v2_cap_summaries",
+            (),
+        ),
+        "agentic_score_contribution_v2_support_summaries": diagnostics.get(
+            "agentic_score_contribution_v2_support_summaries",
+            (),
+        ),
+        "agentic_score_contribution_v2_archetype_id": source_fields.get(
+            "agentic_score_contribution_v2_archetype_id"
+        ),
+        "agentic_score_contribution_v2_archetype_mismatch": source_fields.get(
+            "agentic_score_contribution_v2_archetype_mismatch"
+        ),
+        "legacy_parser_score_claim_without_v2_count": getattr(
+            getattr(result, "score", None),
+            "diagnostic_scores",
+            {},
+        ).get("legacy_parser_score_claim_without_v2_count_capped"),
+        "legacy_parser_score_claim_fields_without_v2": _csv_tuple(
+            source_fields.get("legacy_parser_score_claim_fields_without_v2")
+        ),
+        "post_score_gap_expansion_count": diagnostics.get("post_score_gap_expansion_count", 0),
+        "post_score_gap_expansion_status": diagnostics.get("post_score_gap_expansion_status", "not_attempted"),
+        "post_score_gap_expansion_queries": diagnostics.get("post_score_gap_expansion_queries", ()),
+        "post_score_gap_unresolved_gaps": diagnostics.get("post_score_gap_unresolved_gaps", ()),
+        "post_score_gap_rejection_reasons": diagnostics.get("post_score_gap_rejection_reasons", ()),
+        "post_score_gap_blocked_reason": diagnostics.get("post_score_gap_blocked_reason"),
+        "post_score_gap_warning_reason": diagnostics.get("post_score_gap_warning_reason"),
+        "post_score_gap_progress_reason": diagnostics.get("post_score_gap_progress_reason"),
+        "post_score_gap_score_state_changed": diagnostics.get("post_score_gap_score_state_changed"),
+        "post_score_gap_append_only_violation": diagnostics.get(
+            "post_score_gap_append_only_violation",
+            False,
+        ),
+        "post_score_gap_reprocessed_document_count": diagnostics.get(
+            "post_score_gap_reprocessed_document_count",
+            0,
+        ),
+        "post_score_gap_reprocessed_document_ids": diagnostics.get(
+            "post_score_gap_reprocessed_document_ids",
+            (),
+        ),
+        "post_score_gap_new_document_count": diagnostics.get("post_score_gap_new_document_count", 0),
+        "post_score_gap_new_document_ids": diagnostics.get("post_score_gap_new_document_ids", ()),
+        "post_score_gap_new_claim_count": diagnostics.get("post_score_gap_new_claim_count", 0),
+        "post_score_gap_new_claim_ids": diagnostics.get("post_score_gap_new_claim_ids", ()),
+        "post_score_gap_new_accepted_mapping_count": diagnostics.get(
+            "post_score_gap_new_accepted_mapping_count",
+            0,
+        ),
+        "post_score_gap_new_accepted_mapping_ids": diagnostics.get(
+            "post_score_gap_new_accepted_mapping_ids",
+            (),
+        ),
+        "post_score_gap_new_rejected_mapping_count": diagnostics.get(
+            "post_score_gap_new_rejected_mapping_count",
+            0,
+        ),
+        "post_score_gap_new_rejected_mapping_ids": diagnostics.get(
+            "post_score_gap_new_rejected_mapping_ids",
+            (),
+        ),
+        "post_score_gap_new_rejected_mapping_summaries": diagnostics.get(
+            "post_score_gap_new_rejected_mapping_summaries",
+            (),
+        ),
+        "post_score_gap_new_eligibility_rejection_summaries": diagnostics.get(
+            "post_score_gap_new_eligibility_rejection_summaries",
+            (),
+        ),
+        "post_score_gap_new_trace_status": diagnostics.get("post_score_gap_new_trace_status"),
+        "post_score_gap_new_trace_skipped_existing_document_count": diagnostics.get(
+            "post_score_gap_new_trace_skipped_existing_document_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_prefilter_original_task_count": diagnostics.get(
+            "post_score_gap_new_trace_mapping_prefilter_original_task_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_prefilter_filtered_task_count": diagnostics.get(
+            "post_score_gap_new_trace_mapping_prefilter_filtered_task_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_prefilter_skipped_input_count": diagnostics.get(
+            "post_score_gap_new_trace_mapping_prefilter_skipped_input_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_prefilter_fallback_full_map_count": diagnostics.get(
+            "post_score_gap_new_trace_mapping_prefilter_fallback_full_map_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_prefilter_fallback_full_map_summaries": diagnostics.get(
+            "post_score_gap_new_trace_mapping_prefilter_fallback_full_map_summaries",
+            (),
+        ),
+        "post_score_gap_new_trace_mapping_empty_output_count": diagnostics.get(
+            "post_score_gap_new_trace_mapping_empty_output_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_empty_output_retry_count": diagnostics.get(
+            "post_score_gap_new_trace_mapping_empty_output_retry_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_empty_output_recovered_count": diagnostics.get(
+            "post_score_gap_new_trace_mapping_empty_output_recovered_count",
+            0,
+        ),
+        "post_score_gap_new_trace_mapping_empty_output_summaries": diagnostics.get(
+            "post_score_gap_new_trace_mapping_empty_output_summaries",
+            (),
+        ),
+        "post_score_gap_new_trace_mapping_empty_output_retry_summaries": diagnostics.get(
+            "post_score_gap_new_trace_mapping_empty_output_retry_summaries",
+            (),
+        ),
+        "post_score_gap_new_trace_error_count": diagnostics.get("post_score_gap_new_trace_error_count", 0),
+        "post_score_gap_new_trace_errors": diagnostics.get("post_score_gap_new_trace_errors", ()),
+        "post_score_gap_primitive_state_changed": diagnostics.get("post_score_gap_primitive_state_changed"),
+        "post_score_gap_primitive_delta_summaries": diagnostics.get(
+            "post_score_gap_primitive_delta_summaries",
+            (),
+        ),
+        "post_score_gap_unchanged_gap_primitive_summaries": diagnostics.get(
+            "post_score_gap_unchanged_gap_primitive_summaries",
+            (),
+        ),
+        "post_score_gap_score_contribution_changed": diagnostics.get(
+            "post_score_gap_score_contribution_changed"
+        ),
+        "post_score_gap_score_contribution_delta_summaries": diagnostics.get(
+            "post_score_gap_score_contribution_delta_summaries",
+            (),
+        ),
+        "post_score_gap_audit_events": diagnostics.get("post_score_gap_audit_events", ()),
+        "post_score_gap_source_route_plans": diagnostics.get("post_score_gap_source_route_plans", ()),
+        "post_score_gap_query_origins": diagnostics.get("post_score_gap_query_origins", ()),
+        "post_score_gap_deterministic_fallback_query_used": diagnostics.get(
+            "post_score_gap_deterministic_fallback_query_used",
+            False,
+        ),
+        "material_score_gap_unresolved_gaps": diagnostics.get("material_score_gap_unresolved_gaps", ()),
+        "legacy_stage_before_agentic_court": (
+            result.legacy_stage_before_agentic_court.stage.value
+            if result.legacy_stage_before_agentic_court is not None
+            else None
+        ),
+        "final_stage_after_agentic_court": result.stage.stage.value,
+        **_stage_output_row(result),
         "missing_information": diagnostics.get("missing_information", ()),
         "blocked_reason": diagnostics.get("blocked_reason"),
         "evidence_slot_count": len(route.evidence_slots) if route is not None else 0,
@@ -3350,7 +4472,7 @@ def _missing_credentials(config: KoreaLiveLiteConfig) -> tuple[str, ...]:
 
 
 def _initial_source_status(config: KoreaLiveLiteConfig, missing_credentials: Sequence[str]) -> tuple[dict[str, str], dict[str, str], tuple[str, ...]]:
-    sources = ("opendart", "krx", "data_go_kr", "naver_search", "company_guide")
+    sources = ("opendart", "krx", "data_go_kr", "naver_search", "naver_finance", "company_guide")
     if config.fixture_mode or not config.live_enabled:
         return {source: "fixture" for source in sources}, {}, ()
     if missing_credentials:
@@ -3362,6 +4484,7 @@ def _initial_source_status(config: KoreaLiveLiteConfig, missing_credentials: Seq
             "krx": "request_only",
             "data_go_kr": "request_only",
             "naver_search": "request_only",
+            "naver_finance": "request_only",
             "company_guide": "request_only",
         },
         {},
@@ -3377,6 +4500,8 @@ def _run_notes(config: KoreaLiveLiteConfig, effective_fixture_mode: bool) -> tup
         notes.append("stock issuance API is disabled_optional; dilution risk uses OpenDART, FSC disclosure info, and Naver search fallback")
     if config.company_guide_enabled:
         notes.append("CompanyGuide/WiseReport enrichment is enabled for selected candidates; license metadata is operator-review only")
+    if config.naver_finance_enabled:
+        notes.append("Naver Finance item-page consensus enrichment is enabled for selected candidates; license metadata is operator-review only")
     if effective_fixture_mode:
         notes.append("running in fixture/fallback mode")
     if config.require_cross_evidence_for_stage3_green:
@@ -3426,6 +4551,73 @@ def _score_state_contract_findings_for_outputs(
         )
     )
     return tuple(f"{finding.path}:{finding.violation}" for finding in findings)
+
+
+def _score_gap_audit_events_from_rows(
+    targeted_smoke_results: Sequence[Mapping[str, Any]],
+    theme_routes: Sequence[Mapping[str, Any]],
+) -> tuple[Mapping[str, Any], ...]:
+    events: list[Mapping[str, Any]] = []
+    seen: set[str] = set()
+    for row_group, row_path in (
+        (targeted_smoke_results, "targeted_smoke_results"),
+        (theme_routes, "theme_routes"),
+    ):
+        for row_index, row in enumerate(row_group):
+            raw_events = row.get("post_score_gap_audit_events", ()) if isinstance(row, Mapping) else ()
+            if isinstance(raw_events, Mapping) or isinstance(raw_events, (str, bytes)):
+                continue
+            for event_index, event in enumerate(raw_events or ()):
+                if not isinstance(event, Mapping):
+                    continue
+                event_id = str(event.get("event_id") or "").strip()
+                if not event_id:
+                    event_id = f"{row_path}:{row_index}:{event_index}"
+                if event_id in seen:
+                    continue
+                seen.add(event_id)
+                enriched = dict(event)
+                enriched.setdefault("row_path", row_path)
+                enriched.setdefault("row_index", row_index)
+                events.append(enriched)
+    return tuple(events)
+
+
+def _score_gap_source_route_plans_from_rows(
+    targeted_smoke_results: Sequence[Mapping[str, Any]],
+    theme_routes: Sequence[Mapping[str, Any]],
+) -> tuple[Mapping[str, Any], ...]:
+    plans: list[Mapping[str, Any]] = []
+    seen: set[str] = set()
+    for row_group, row_path in (
+        (targeted_smoke_results, "targeted_smoke_results"),
+        (theme_routes, "theme_routes"),
+    ):
+        for row_index, row in enumerate(row_group):
+            raw_plans = row.get("post_score_gap_source_route_plans", ()) if isinstance(row, Mapping) else ()
+            if isinstance(raw_plans, Mapping) or isinstance(raw_plans, (str, bytes)):
+                continue
+            for plan_index, plan in enumerate(raw_plans or ()):
+                if not isinstance(plan, Mapping):
+                    continue
+                key = "|".join(
+                    (
+                        str(plan.get("task_id") or ""),
+                        str(plan.get("query") or ""),
+                        ",".join(str(item) for item in (plan.get("selected_candidate_ids") or ())),
+                        str(plan.get("stop_reason") or ""),
+                    )
+                )
+                if not key.strip("|,"):
+                    key = f"{row_path}:{row_index}:{plan_index}"
+                if key in seen:
+                    continue
+                seen.add(key)
+                enriched = dict(plan)
+                enriched.setdefault("row_path", row_path)
+                enriched.setdefault("row_index", row_index)
+                plans.append(enriched)
+    return tuple(plans)
 
 
 def _write_outputs(

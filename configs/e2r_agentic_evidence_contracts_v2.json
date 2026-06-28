@@ -1,0 +1,6272 @@
+{
+  "schema_version": "e2r_agentic_evidence_contracts_v2",
+  "generated_from": "configs/e2r_archetype_evidence_contracts_v12.json",
+  "contract_count": 36,
+  "contracts": [
+    {
+      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "order_backlog_to_sales",
+        "named_customer_quality",
+        "contract_quality",
+        "delivery_schedule",
+        "opm_expansion_pctp",
+        "fcf_quality_score"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "order_backlog_to_sales"
+          },
+          {
+            "primitive": "named_customer_quality"
+          },
+          {
+            "primitive": "contract_quality"
+          },
+          {
+            "primitive": "delivery_schedule"
+          },
+          {
+            "primitive": "opm_expansion_pctp"
+          },
+          {
+            "primitive": "fcf_quality_score"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "contract_visibility": [
+          "order_backlog_to_sales",
+          "contract_quality"
+        ],
+        "cash_or_revision_conversion": [
+          "opm_expansion_pctp",
+          "fcf_quality_score"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "order_backlog_to_sales": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "named_customer_quality": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "contract_quality": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "delivery_schedule": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "opm_expansion_pctp": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "fcf_quality_score": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "opm_expansion_pctp",
+          "fcf_quality_score"
+        ],
+        "earnings_visibility": [
+          "order_backlog_to_sales",
+          "named_customer_quality",
+          "contract_quality",
+          "delivery_schedule",
+          "opm_expansion_pctp",
+          "fcf_quality_score"
+        ],
+        "bottleneck_pricing": [
+          "order_backlog_to_sales",
+          "named_customer_quality",
+          "contract_quality",
+          "delivery_schedule",
+          "opm_expansion_pctp",
+          "fcf_quality_score"
+        ],
+        "market_mispricing": [
+          "order_backlog_to_sales",
+          "named_customer_quality",
+          "contract_quality",
+          "delivery_schedule",
+          "opm_expansion_pctp",
+          "fcf_quality_score"
+        ],
+        "valuation_rerating": [
+          "order_backlog_to_sales",
+          "named_customer_quality",
+          "contract_quality",
+          "delivery_schedule",
+          "opm_expansion_pctp",
+          "fcf_quality_score"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "order_backlog_to_sales",
+          "named_customer_quality",
+          "contract_quality",
+          "delivery_schedule",
+          "opm_expansion_pctp",
+          "fcf_quality_score"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "datacenter_customer",
+        "order_backlog_to_sales",
+        "lead_time_extended",
+        "capacity_constraint",
+        "pricing_power_confirmed"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "order_backlog_to_sales"
+          },
+          {
+            "primitive": "capacity_constraint"
+          },
+          {
+            "primitive": "pricing_power_confirmed"
+          }
+        ]
+      },
+      "alternative_primitives": {},
+      "allowed_target_scopes": [
+        "DIRECT",
+        "SUBSIDIARY"
+      ],
+      "allowed_directness": [
+        "DIRECT",
+        "INDIRECT"
+      ],
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "datacenter_customer": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "order_backlog_to_sales": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "lead_time_extended": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "capacity_constraint": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "pricing_power_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "datacenter_customer",
+          "order_backlog_to_sales",
+          "lead_time_extended",
+          "capacity_constraint",
+          "pricing_power_confirmed"
+        ],
+        "bottleneck_pricing": [
+          "order_backlog_to_sales",
+          "capacity_constraint",
+          "pricing_power_confirmed"
+        ],
+        "market_mispricing": [
+          "order_backlog_to_sales",
+          "capacity_constraint",
+          "pricing_power_confirmed"
+        ],
+        "valuation_rerating": [
+          "order_backlog_to_sales",
+          "capacity_constraint",
+          "pricing_power_confirmed"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "datacenter_customer",
+          "order_backlog_to_sales",
+          "lead_time_extended",
+          "capacity_constraint",
+          "pricing_power_confirmed"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "export_contract",
+        "government_customer",
+        "order_backlog_to_sales",
+        "delivery_schedule",
+        "cost_overrun"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "export_contract"
+          },
+          {
+            "primitive": "government_customer"
+          },
+          {
+            "primitive": "order_backlog_to_sales"
+          },
+          {
+            "primitive": "delivery_schedule"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "contract_visibility": [
+          "export_contract",
+          "order_backlog_to_sales"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "export_contract": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "government_customer": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "order_backlog_to_sales": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "delivery_schedule": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "cost_overrun": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {
+        "cost_overrun": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "export_contract",
+          "government_customer",
+          "order_backlog_to_sales",
+          "delivery_schedule",
+          "cost_overrun"
+        ],
+        "bottleneck_pricing": [
+          "export_contract",
+          "government_customer",
+          "order_backlog_to_sales",
+          "delivery_schedule"
+        ],
+        "market_mispricing": [
+          "export_contract",
+          "government_customer",
+          "order_backlog_to_sales",
+          "delivery_schedule"
+        ],
+        "valuation_rerating": [
+          "export_contract",
+          "government_customer",
+          "order_backlog_to_sales",
+          "delivery_schedule"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "export_contract",
+          "government_customer",
+          "order_backlog_to_sales",
+          "delivery_schedule",
+          "cost_overrun"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "policy_or_regulatory_confirmed",
+        "project_award_confirmed",
+        "permit_or_legal_delay",
+        "direct_company_cash_route",
+        "cost_overrun"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "policy_or_regulatory_confirmed"
+          },
+          {
+            "primitive": "project_award_confirmed"
+          },
+          {
+            "primitive": "direct_company_cash_route"
+          }
+        ]
+      },
+      "alternative_primitives": {},
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "policy_or_regulatory_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_regulatory_or_company_update",
+          "closure_conditions": [
+            "approval_granted_or_rejected",
+            "policy_expired_or_replaced"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS"
+          ]
+        },
+        "project_award_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "permit_or_legal_delay": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_regulatory_or_company_update",
+          "closure_conditions": [
+            "approval_granted_or_rejected",
+            "policy_expired_or_replaced"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS"
+          ]
+        },
+        "direct_company_cash_route": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "cost_overrun": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {
+        "permit_or_legal_delay": "block_green_if_current",
+        "cost_overrun": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "policy_or_regulatory_confirmed",
+          "project_award_confirmed",
+          "permit_or_legal_delay",
+          "direct_company_cash_route",
+          "cost_overrun"
+        ],
+        "bottleneck_pricing": [
+          "policy_or_regulatory_confirmed",
+          "project_award_confirmed",
+          "direct_company_cash_route"
+        ],
+        "market_mispricing": [
+          "policy_or_regulatory_confirmed",
+          "project_award_confirmed",
+          "direct_company_cash_route"
+        ],
+        "valuation_rerating": [
+          "policy_or_regulatory_confirmed",
+          "project_award_confirmed",
+          "direct_company_cash_route"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "policy_or_regulatory_confirmed",
+          "project_award_confirmed",
+          "permit_or_legal_delay",
+          "direct_company_cash_route",
+          "cost_overrun"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible",
+        "cost_overrun",
+        "delivery_schedule"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "contract_amount_to_prior_sales"
+          },
+          {
+            "primitive": "contract_duration_months"
+          },
+          {
+            "primitive": "margin_bridge_visible"
+          },
+          {
+            "primitive": "delivery_schedule"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "contract_visibility": [
+          "contract_amount_to_prior_sales",
+          "contract_duration_months"
+        ],
+        "cash_or_revision_conversion": [
+          "margin_bridge_visible"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "contract_amount_to_prior_sales": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "contract_duration_months": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "margin_bridge_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "cost_overrun": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "delivery_schedule": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {
+        "cost_overrun": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "margin_bridge_visible"
+        ],
+        "earnings_visibility": [
+          "contract_amount_to_prior_sales",
+          "contract_duration_months",
+          "margin_bridge_visible",
+          "cost_overrun",
+          "delivery_schedule"
+        ],
+        "bottleneck_pricing": [
+          "contract_amount_to_prior_sales",
+          "contract_duration_months",
+          "margin_bridge_visible",
+          "delivery_schedule"
+        ],
+        "market_mispricing": [
+          "contract_amount_to_prior_sales",
+          "contract_duration_months",
+          "margin_bridge_visible",
+          "delivery_schedule"
+        ],
+        "valuation_rerating": [
+          "contract_amount_to_prior_sales",
+          "contract_duration_months",
+          "margin_bridge_visible",
+          "delivery_schedule"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "contract_amount_to_prior_sales",
+          "contract_duration_months",
+          "margin_bridge_visible",
+          "cost_overrun",
+          "delivery_schedule"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "customer_preorder_or_allocation",
+        "revenue_visibility_contract",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold",
+        "memory_price_increase_mentioned",
+        "medium_term_revision_visibility"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "customer_preorder_or_allocation"
+          },
+          {
+            "primitive": "revenue_visibility_contract"
+          },
+          {
+            "primitive": "hbm_capacity_constraint"
+          },
+          {
+            "primitive": "hbm_capacity_pre_sold"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "qualification_status": [],
+        "contract_visibility": [
+          "customer_preorder_or_allocation",
+          "revenue_visibility_contract"
+        ],
+        "cash_or_revision_conversion": [
+          "revenue_visibility_contract"
+        ]
+      },
+      "primitive_aliases": {
+        "customer_preorder_or_allocation": [
+          "customer allocation",
+          "customer commitment",
+          "customer preorder",
+          "customer pre-order",
+          "allocated volume",
+          "customer volume commitment",
+          "customer volume allocated",
+          "named customer shipment",
+          "고객 배정",
+          "고객사 물량",
+          "고객사 확정 물량",
+          "고객 주문",
+          "고객사 주문",
+          "물량 배정",
+          "고객 확약",
+          "고객사 확약",
+          "선주문",
+          "예약 물량",
+          "선수주",
+          "선수주 후증설",
+          "선 수주",
+          "수주 후 증설",
+          "pre-order before expansion",
+          "customer order before expansion"
+        ],
+        "qualification_status": [
+          "qualification",
+          "customer qualification",
+          "qualification pass",
+          "customer approval",
+          "customer validation",
+          "customer certification",
+          "product qualification",
+          "HBM3E qualification",
+          "HBM4 qualification",
+          "Nvidia qualification",
+          "NVIDIA approval",
+          "고객 인증",
+          "고객 승인",
+          "고객 검증",
+          "품질 테스트",
+          "품질 검증",
+          "퀄 테스트",
+          "퀄테스트",
+          "퀄 통과",
+          "인증 통과",
+          "엔비디아 인증",
+          "엔비디아 승인",
+          "양산 승인"
+        ],
+        "revenue_visibility_contract": [
+          "long-term supply agreement",
+          "long term supply agreement",
+          "long-term contract",
+          "LTA",
+          "supply agreement",
+          "contracted revenue",
+          "장기공급계약",
+          "장기 공급계약",
+          "장기계약",
+          "공급계약",
+          "계약 체결",
+          "장기 안정성"
+        ],
+        "hbm_capacity_constraint": [
+          "capacity constraint",
+          "capacity constrained",
+          "supply constraint",
+          "supply constraints",
+          "supply shortage",
+          "supply tightness",
+          "supply tight",
+          "capacity bottleneck",
+          "demand exceeds supply",
+          "supply-demand imbalance",
+          "supply demand imbalance",
+          "공급 제약",
+          "공급부족",
+          "공급 부족",
+          "공급 타이트",
+          "타이트한 공급",
+          "수급 불균형",
+          "수급불균형",
+          "수요 초과",
+          "병목",
+          "품귀",
+          "CAPA 제약",
+          "생산능력 부족"
+        ],
+        "hbm_capacity_pre_sold": [
+          "pre-sold capacity",
+          "presold capacity",
+          "sold-out capacity",
+          "sold out capacity",
+          "booked capacity",
+          "reserved capacity",
+          "committed capacity",
+          "capacity allocated",
+          "capacity fully booked",
+          "fully booked",
+          "fully allocated",
+          "production fully booked",
+          "pre-order before expansion",
+          "customer order before expansion",
+          "완판",
+          "매진",
+          "전량 판매",
+          "판매 완료",
+          "생산분 예약",
+          "생산분 확약",
+          "생산분 대부분 예약",
+          "물량 확정",
+          "선수주",
+          "선수주 후증설",
+          "후증설",
+          "선점",
+          "예약",
+          "확약",
+          "할당"
+        ],
+        "memory_price_increase_mentioned": [
+          "ASP increase",
+          "price increase",
+          "price increases",
+          "prolonged price increases",
+          "pricing uplift",
+          "HBM price",
+          "HBM ASP",
+          "판가",
+          "판가 상승",
+          "가격 상승",
+          "가격 인상",
+          "HBM 판가"
+        ],
+        "medium_term_revision_visibility": [
+          "estimate revision",
+          "earnings revision",
+          "guidance revision",
+          "revision visibility",
+          "추정치 상향",
+          "실적 상향",
+          "가이던스 상향",
+          "리비전"
+        ]
+      },
+      "route_hints": {
+        "emerging_theme_ids": [
+          "HBM_AI_MEMORY",
+          "AI_HBM_DATACENTER_MEMORY"
+        ],
+        "primary_route_ids": [
+          "memory_semiconductor_cycle"
+        ],
+        "evidence_context_terms": [
+          "HBM3E",
+          "HBM4",
+          "HBM qualification",
+          "customer qualification",
+          "Nvidia qualification",
+          "NVIDIA approval",
+          "고객 인증",
+          "고객 승인",
+          "품질 테스트",
+          "퀄 테스트",
+          "퀄 통과",
+          "엔비디아 인증",
+          "엔비디아 승인",
+          "고대역폭메모리",
+          "양산 공급"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "customer_preorder_or_allocation": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "revenue_visibility_contract": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "hbm_capacity_constraint": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "hbm_capacity_pre_sold": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "memory_price_increase_mentioned": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "medium_term_revision_visibility": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "revenue_visibility_contract"
+        ],
+        "earnings_visibility": [
+          "customer_preorder_or_allocation",
+          "revenue_visibility_contract",
+          "hbm_capacity_constraint",
+          "hbm_capacity_pre_sold",
+          "memory_price_increase_mentioned",
+          "medium_term_revision_visibility"
+        ],
+        "bottleneck_pricing": [
+          "customer_preorder_or_allocation",
+          "revenue_visibility_contract",
+          "hbm_capacity_constraint",
+          "hbm_capacity_pre_sold"
+        ],
+        "market_mispricing": [
+          "customer_preorder_or_allocation",
+          "revenue_visibility_contract",
+          "hbm_capacity_constraint",
+          "hbm_capacity_pre_sold"
+        ],
+        "valuation_rerating": [
+          "customer_preorder_or_allocation",
+          "revenue_visibility_contract",
+          "hbm_capacity_constraint",
+          "hbm_capacity_pre_sold"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "customer_preorder_or_allocation",
+          "revenue_visibility_contract",
+          "hbm_capacity_constraint",
+          "hbm_capacity_pre_sold",
+          "memory_price_increase_mentioned",
+          "medium_term_revision_visibility"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "hbm_customer_order",
+        "customer_contract_visible",
+        "equipment_order_backlog",
+        "advanced_packaging_bottleneck",
+        "relative_strength_score",
+        "order_to_revenue_bridge"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "hbm_customer_order"
+          },
+          {
+            "primitive": "customer_contract_visible"
+          },
+          {
+            "primitive": "equipment_order_backlog"
+          },
+          {
+            "primitive": "advanced_packaging_bottleneck"
+          },
+          {
+            "primitive": "relative_strength_score"
+          },
+          {
+            "primitive": "order_to_revenue_bridge"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "contract_visibility": [
+          "hbm_customer_order",
+          "customer_contract_visible",
+          "equipment_order_backlog",
+          "order_to_revenue_bridge"
+        ],
+        "cash_or_revision_conversion": [
+          "order_to_revenue_bridge"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "hbm_customer_order": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "customer_contract_visible": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "equipment_order_backlog": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "advanced_packaging_bottleneck": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "relative_strength_score": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "order_to_revenue_bridge": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "order_to_revenue_bridge"
+        ],
+        "earnings_visibility": [
+          "hbm_customer_order",
+          "customer_contract_visible",
+          "equipment_order_backlog",
+          "advanced_packaging_bottleneck",
+          "relative_strength_score",
+          "order_to_revenue_bridge"
+        ],
+        "bottleneck_pricing": [
+          "hbm_customer_order",
+          "customer_contract_visible",
+          "equipment_order_backlog",
+          "advanced_packaging_bottleneck",
+          "relative_strength_score",
+          "order_to_revenue_bridge"
+        ],
+        "market_mispricing": [
+          "hbm_customer_order",
+          "customer_contract_visible",
+          "equipment_order_backlog",
+          "advanced_packaging_bottleneck",
+          "relative_strength_score",
+          "order_to_revenue_bridge"
+        ],
+        "valuation_rerating": [
+          "hbm_customer_order",
+          "customer_contract_visible",
+          "equipment_order_backlog",
+          "advanced_packaging_bottleneck",
+          "relative_strength_score",
+          "order_to_revenue_bridge"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "hbm_customer_order",
+          "customer_contract_visible",
+          "equipment_order_backlog",
+          "advanced_packaging_bottleneck",
+          "relative_strength_score",
+          "order_to_revenue_bridge"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "named_customer_quality",
+        "qualification_confirmed",
+        "repeat_order_confirmed",
+        "socket_or_test_demand_visible",
+        "margin_bridge_visible"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "named_customer_quality"
+          },
+          {
+            "primitive": "qualification_confirmed"
+          },
+          {
+            "primitive": "repeat_order_confirmed"
+          },
+          {
+            "primitive": "socket_or_test_demand_visible"
+          },
+          {
+            "primitive": "margin_bridge_visible"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "cash_or_revision_conversion": [
+          "margin_bridge_visible"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "named_customer_quality": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "qualification_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "repeat_order_confirmed": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "socket_or_test_demand_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "margin_bridge_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "margin_bridge_visible"
+        ],
+        "earnings_visibility": [
+          "named_customer_quality",
+          "qualification_confirmed",
+          "repeat_order_confirmed",
+          "socket_or_test_demand_visible",
+          "margin_bridge_visible"
+        ],
+        "bottleneck_pricing": [
+          "named_customer_quality",
+          "qualification_confirmed",
+          "repeat_order_confirmed",
+          "socket_or_test_demand_visible",
+          "margin_bridge_visible"
+        ],
+        "market_mispricing": [
+          "named_customer_quality",
+          "qualification_confirmed",
+          "repeat_order_confirmed",
+          "socket_or_test_demand_visible",
+          "margin_bridge_visible"
+        ],
+        "valuation_rerating": [
+          "named_customer_quality",
+          "qualification_confirmed",
+          "repeat_order_confirmed",
+          "socket_or_test_demand_visible",
+          "margin_bridge_visible"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "named_customer_quality",
+          "qualification_confirmed",
+          "repeat_order_confirmed",
+          "socket_or_test_demand_visible",
+          "margin_bridge_visible"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "valuation_overheat",
+        "price_only_blowoff",
+        "order_to_revenue_bridge",
+        "customer_quality_visible",
+        "capex_cycle_risk"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "order_to_revenue_bridge"
+          },
+          {
+            "primitive": "customer_quality_visible"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "cash_or_revision_conversion": [
+          "order_to_revenue_bridge"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "valuation_overheat": {
+          "max_age_days": 180,
+          "supersession_rule": "latest_market_state",
+          "closure_conditions": [
+            "market_state_changed"
+          ],
+          "authoritative_followup_sources": [
+            "API",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "price_only_blowoff": {
+          "max_age_days": 180,
+          "supersession_rule": "latest_market_state",
+          "closure_conditions": [
+            "market_state_changed"
+          ],
+          "authoritative_followup_sources": [
+            "API",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "order_to_revenue_bridge": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "customer_quality_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "capex_cycle_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {
+        "valuation_overheat": "block_green_if_current",
+        "price_only_blowoff": "block_green_if_current",
+        "capex_cycle_risk": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "order_to_revenue_bridge"
+        ],
+        "earnings_visibility": [
+          "valuation_overheat",
+          "price_only_blowoff",
+          "order_to_revenue_bridge",
+          "customer_quality_visible",
+          "capex_cycle_risk"
+        ],
+        "bottleneck_pricing": [
+          "order_to_revenue_bridge",
+          "customer_quality_visible"
+        ],
+        "market_mispricing": [
+          "order_to_revenue_bridge",
+          "customer_quality_visible"
+        ],
+        "valuation_rerating": [
+          "order_to_revenue_bridge",
+          "customer_quality_visible"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "valuation_overheat",
+          "price_only_blowoff",
+          "order_to_revenue_bridge",
+          "customer_quality_visible",
+          "capex_cycle_risk"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "memory_price_increase_mentioned",
+        "supply_discipline_mentioned",
+        "cycle_demand_visibility",
+        "end_market_demand_visibility",
+        "supply_demand_tightness",
+        "cycle_to_revenue_bridge",
+        "advanced_packaging_bottleneck",
+        "equipment_order_recovery",
+        "order_to_revenue_bridge",
+        "inventory_cycle_repair",
+        "fcf_quality_score"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "memory_price_increase_mentioned"
+          },
+          {
+            "primitive": "supply_discipline_mentioned"
+          },
+          {
+            "primitive": "cycle_demand_visibility"
+          },
+          {
+            "primitive": "end_market_demand_visibility"
+          },
+          {
+            "primitive": "supply_demand_tightness"
+          },
+          {
+            "primitive": "cycle_to_revenue_bridge"
+          },
+          {
+            "primitive": "advanced_packaging_bottleneck"
+          },
+          {
+            "primitive": "equipment_order_recovery"
+          },
+          {
+            "primitive": "order_to_revenue_bridge"
+          },
+          {
+            "primitive": "inventory_cycle_repair"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "cash_or_revision_conversion": [
+          "cycle_to_revenue_bridge",
+          "order_to_revenue_bridge",
+          "fcf_quality_score"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "memory_price_increase_mentioned": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "supply_discipline_mentioned": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "cycle_demand_visibility": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "end_market_demand_visibility": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "supply_demand_tightness": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "cycle_to_revenue_bridge": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "advanced_packaging_bottleneck": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "equipment_order_recovery": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "order_to_revenue_bridge": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "inventory_cycle_repair": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "fcf_quality_score": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "cycle_to_revenue_bridge",
+          "order_to_revenue_bridge",
+          "fcf_quality_score"
+        ],
+        "earnings_visibility": [
+          "memory_price_increase_mentioned",
+          "supply_discipline_mentioned",
+          "cycle_demand_visibility",
+          "end_market_demand_visibility",
+          "supply_demand_tightness",
+          "cycle_to_revenue_bridge",
+          "advanced_packaging_bottleneck",
+          "equipment_order_recovery",
+          "order_to_revenue_bridge",
+          "inventory_cycle_repair",
+          "fcf_quality_score"
+        ],
+        "bottleneck_pricing": [
+          "memory_price_increase_mentioned",
+          "supply_discipline_mentioned",
+          "cycle_demand_visibility",
+          "end_market_demand_visibility",
+          "supply_demand_tightness",
+          "cycle_to_revenue_bridge",
+          "advanced_packaging_bottleneck",
+          "equipment_order_recovery",
+          "order_to_revenue_bridge",
+          "inventory_cycle_repair"
+        ],
+        "market_mispricing": [
+          "memory_price_increase_mentioned",
+          "supply_discipline_mentioned",
+          "cycle_demand_visibility",
+          "end_market_demand_visibility",
+          "supply_demand_tightness",
+          "cycle_to_revenue_bridge",
+          "advanced_packaging_bottleneck",
+          "equipment_order_recovery",
+          "order_to_revenue_bridge",
+          "inventory_cycle_repair",
+          "fcf_quality_score"
+        ],
+        "valuation_rerating": [
+          "memory_price_increase_mentioned",
+          "supply_discipline_mentioned",
+          "cycle_demand_visibility",
+          "end_market_demand_visibility",
+          "supply_demand_tightness",
+          "cycle_to_revenue_bridge",
+          "advanced_packaging_bottleneck",
+          "equipment_order_recovery",
+          "order_to_revenue_bridge",
+          "inventory_cycle_repair",
+          "fcf_quality_score"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "memory_price_increase_mentioned",
+          "supply_discipline_mentioned",
+          "cycle_demand_visibility",
+          "end_market_demand_visibility",
+          "supply_demand_tightness",
+          "cycle_to_revenue_bridge",
+          "advanced_packaging_bottleneck",
+          "equipment_order_recovery",
+          "order_to_revenue_bridge",
+          "inventory_cycle_repair",
+          "fcf_quality_score"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "order_backlog_to_sales",
+        "customer_contract",
+        "call_off_risk",
+        "ex_credit_margin",
+        "fcf_quality_score"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "order_backlog_to_sales"
+          },
+          {
+            "primitive": "customer_contract"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "contract_visibility": [
+          "order_backlog_to_sales",
+          "customer_contract"
+        ],
+        "cash_or_revision_conversion": [
+          "ex_credit_margin",
+          "fcf_quality_score"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "order_backlog_to_sales": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "customer_contract": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "call_off_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "ex_credit_margin": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "fcf_quality_score": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        }
+      },
+      "guard_modes": {
+        "call_off_risk": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "ex_credit_margin",
+          "fcf_quality_score"
+        ],
+        "earnings_visibility": [
+          "order_backlog_to_sales",
+          "customer_contract",
+          "call_off_risk",
+          "ex_credit_margin",
+          "fcf_quality_score"
+        ],
+        "bottleneck_pricing": [
+          "order_backlog_to_sales",
+          "customer_contract"
+        ],
+        "market_mispricing": [
+          "order_backlog_to_sales",
+          "customer_contract",
+          "ex_credit_margin",
+          "fcf_quality_score"
+        ],
+        "valuation_rerating": [
+          "order_backlog_to_sales",
+          "customer_contract",
+          "ex_credit_margin",
+          "fcf_quality_score"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "order_backlog_to_sales",
+          "customer_contract",
+          "call_off_risk",
+          "ex_credit_margin",
+          "fcf_quality_score"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "customer_contract",
+        "call_off_risk",
+        "customer_capex_decline",
+        "contract_cancelled_or_delayed",
+        "volume_visibility"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "customer_contract"
+          },
+          {
+            "primitive": "volume_visibility"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "contract_visibility": [
+          "customer_contract",
+          "contract_cancelled_or_delayed"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "customer_contract": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "call_off_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "customer_capex_decline": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "contract_cancelled_or_delayed": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "volume_visibility": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {
+        "call_off_risk": "block_green_if_current",
+        "customer_capex_decline": "block_green_if_current",
+        "contract_cancelled_or_delayed": "hard_break_if_current_and_quorum"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "customer_contract",
+          "call_off_risk",
+          "customer_capex_decline",
+          "contract_cancelled_or_delayed",
+          "volume_visibility"
+        ],
+        "bottleneck_pricing": [
+          "customer_contract",
+          "volume_visibility",
+          "contract_cancelled_or_delayed"
+        ],
+        "market_mispricing": [
+          "customer_contract",
+          "volume_visibility"
+        ],
+        "valuation_rerating": [
+          "customer_contract",
+          "volume_visibility"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "customer_contract",
+          "call_off_risk",
+          "customer_capex_decline",
+          "contract_cancelled_or_delayed",
+          "volume_visibility"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "jv_utilization",
+        "ampc_or_subsidy_capture",
+        "ex_credit_margin",
+        "customer_contract",
+        "policy_reversal_risk"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "jv_utilization"
+          },
+          {
+            "primitive": "ampc_or_subsidy_capture"
+          },
+          {
+            "primitive": "ex_credit_margin"
+          },
+          {
+            "primitive": "customer_contract"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "contract_visibility": [
+          "customer_contract"
+        ],
+        "cash_or_revision_conversion": [
+          "ex_credit_margin"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "jv_utilization": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "ampc_or_subsidy_capture": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "ex_credit_margin": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "customer_contract": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "policy_reversal_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_regulatory_or_company_update",
+          "closure_conditions": [
+            "approval_granted_or_rejected",
+            "policy_expired_or_replaced"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS"
+          ]
+        }
+      },
+      "guard_modes": {
+        "policy_reversal_risk": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "ex_credit_margin"
+        ],
+        "earnings_visibility": [
+          "jv_utilization",
+          "ampc_or_subsidy_capture",
+          "ex_credit_margin",
+          "customer_contract",
+          "policy_reversal_risk"
+        ],
+        "bottleneck_pricing": [
+          "jv_utilization",
+          "ampc_or_subsidy_capture",
+          "ex_credit_margin",
+          "customer_contract"
+        ],
+        "market_mispricing": [
+          "jv_utilization",
+          "ampc_or_subsidy_capture",
+          "ex_credit_margin",
+          "customer_contract"
+        ],
+        "valuation_rerating": [
+          "jv_utilization",
+          "ampc_or_subsidy_capture",
+          "ex_credit_margin",
+          "customer_contract"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "jv_utilization",
+          "ampc_or_subsidy_capture",
+          "ex_credit_margin",
+          "customer_contract",
+          "policy_reversal_risk"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "ev_demand_slowdown",
+        "inventory_spike",
+        "price_cut_risk",
+        "customer_capex_decline",
+        "thesis_break_confirmed"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "ev_demand_slowdown"
+          },
+          {
+            "primitive": "inventory_spike"
+          },
+          {
+            "primitive": "price_cut_risk"
+          },
+          {
+            "primitive": "customer_capex_decline"
+          },
+          {
+            "primitive": "thesis_break_confirmed"
+          }
+        ]
+      },
+      "alternative_primitives": {},
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "ev_demand_slowdown": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "inventory_spike": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "price_cut_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "customer_capex_decline": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "thesis_break_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {
+        "ev_demand_slowdown": "block_green_if_current",
+        "inventory_spike": "block_green_if_current",
+        "price_cut_risk": "block_green_if_current",
+        "customer_capex_decline": "block_green_if_current",
+        "thesis_break_confirmed": "hard_break_if_current_and_quorum"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "ev_demand_slowdown",
+          "inventory_spike",
+          "price_cut_risk",
+          "customer_capex_decline",
+          "thesis_break_confirmed"
+        ],
+        "bottleneck_pricing": [
+          "ev_demand_slowdown",
+          "inventory_spike",
+          "price_cut_risk",
+          "customer_capex_decline",
+          "thesis_break_confirmed"
+        ],
+        "market_mispricing": [
+          "ev_demand_slowdown",
+          "inventory_spike",
+          "price_cut_risk",
+          "customer_capex_decline",
+          "thesis_break_confirmed"
+        ],
+        "valuation_rerating": [
+          "ev_demand_slowdown",
+          "inventory_spike",
+          "price_cut_risk",
+          "customer_capex_decline",
+          "thesis_break_confirmed"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "ev_demand_slowdown",
+          "inventory_spike",
+          "price_cut_risk",
+          "customer_capex_decline",
+          "thesis_break_confirmed"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "spread_expansion",
+        "utilization_rate",
+        "inventory_cycle",
+        "pricing_power_confirmed",
+        "fcf_quality_score"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "spread_expansion"
+          },
+          {
+            "primitive": "utilization_rate"
+          },
+          {
+            "primitive": "inventory_cycle"
+          },
+          {
+            "primitive": "pricing_power_confirmed"
+          },
+          {
+            "primitive": "fcf_quality_score"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "cash_or_revision_conversion": [
+          "fcf_quality_score"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "spread_expansion": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "utilization_rate": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "inventory_cycle": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "pricing_power_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "fcf_quality_score": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "fcf_quality_score"
+        ],
+        "earnings_visibility": [
+          "spread_expansion",
+          "utilization_rate",
+          "inventory_cycle",
+          "pricing_power_confirmed",
+          "fcf_quality_score"
+        ],
+        "bottleneck_pricing": [
+          "spread_expansion",
+          "utilization_rate",
+          "inventory_cycle",
+          "pricing_power_confirmed",
+          "fcf_quality_score"
+        ],
+        "market_mispricing": [
+          "spread_expansion",
+          "utilization_rate",
+          "inventory_cycle",
+          "pricing_power_confirmed",
+          "fcf_quality_score"
+        ],
+        "valuation_rerating": [
+          "spread_expansion",
+          "utilization_rate",
+          "inventory_cycle",
+          "pricing_power_confirmed",
+          "fcf_quality_score"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "spread_expansion",
+          "utilization_rate",
+          "inventory_cycle",
+          "pricing_power_confirmed",
+          "fcf_quality_score"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "offtake_contract",
+        "supply_shortage",
+        "policy_supply_support",
+        "permit_status",
+        "direct_company_cash_route"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "offtake_contract"
+          },
+          {
+            "primitive": "permit_status"
+          },
+          {
+            "primitive": "direct_company_cash_route"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "contract_visibility": [
+          "offtake_contract"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "offtake_contract": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "supply_shortage": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "policy_supply_support": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_regulatory_or_company_update",
+          "closure_conditions": [
+            "approval_granted_or_rejected",
+            "policy_expired_or_replaced"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS"
+          ]
+        },
+        "permit_status": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_regulatory_or_company_update",
+          "closure_conditions": [
+            "approval_granted_or_rejected",
+            "policy_expired_or_replaced"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS"
+          ]
+        },
+        "direct_company_cash_route": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "offtake_contract",
+          "supply_shortage",
+          "policy_supply_support",
+          "permit_status",
+          "direct_company_cash_route"
+        ],
+        "bottleneck_pricing": [
+          "offtake_contract",
+          "permit_status",
+          "direct_company_cash_route"
+        ],
+        "market_mispricing": [
+          "offtake_contract",
+          "permit_status",
+          "direct_company_cash_route"
+        ],
+        "valuation_rerating": [
+          "offtake_contract",
+          "permit_status",
+          "direct_company_cash_route"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "offtake_contract",
+          "supply_shortage",
+          "policy_supply_support",
+          "permit_status",
+          "direct_company_cash_route"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "spread_expansion",
+        "raw_material_cost_risk",
+        "utilization_rate",
+        "inventory_cycle",
+        "opm_expansion_pctp"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "spread_expansion"
+          },
+          {
+            "primitive": "utilization_rate"
+          },
+          {
+            "primitive": "inventory_cycle"
+          },
+          {
+            "primitive": "opm_expansion_pctp"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "cash_or_revision_conversion": [
+          "opm_expansion_pctp"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "spread_expansion": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "raw_material_cost_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "utilization_rate": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "inventory_cycle": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "opm_expansion_pctp": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        }
+      },
+      "guard_modes": {
+        "raw_material_cost_risk": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "opm_expansion_pctp"
+        ],
+        "earnings_visibility": [
+          "spread_expansion",
+          "raw_material_cost_risk",
+          "utilization_rate",
+          "inventory_cycle",
+          "opm_expansion_pctp"
+        ],
+        "bottleneck_pricing": [
+          "spread_expansion",
+          "utilization_rate",
+          "inventory_cycle",
+          "opm_expansion_pctp"
+        ],
+        "market_mispricing": [
+          "spread_expansion",
+          "utilization_rate",
+          "inventory_cycle",
+          "opm_expansion_pctp"
+        ],
+        "valuation_rerating": [
+          "spread_expansion",
+          "utilization_rate",
+          "inventory_cycle",
+          "opm_expansion_pctp"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "spread_expansion",
+          "raw_material_cost_risk",
+          "utilization_rate",
+          "inventory_cycle",
+          "opm_expansion_pctp"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "export_growth_pct",
+        "sell_through_confirmed",
+        "repeat_order_confirmed",
+        "channel_reorder_confirmed",
+        "opm_expansion_pctp"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "export_growth_pct"
+          },
+          {
+            "primitive": "sell_through_confirmed"
+          },
+          {
+            "primitive": "repeat_order_confirmed"
+          },
+          {
+            "primitive": "channel_reorder_confirmed"
+          },
+          {
+            "primitive": "opm_expansion_pctp"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "cash_or_revision_conversion": [
+          "opm_expansion_pctp"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "export_growth_pct": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "sell_through_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "repeat_order_confirmed": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "channel_reorder_confirmed": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "opm_expansion_pctp": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "opm_expansion_pctp"
+        ],
+        "earnings_visibility": [
+          "export_growth_pct",
+          "sell_through_confirmed",
+          "repeat_order_confirmed",
+          "channel_reorder_confirmed",
+          "opm_expansion_pctp"
+        ],
+        "bottleneck_pricing": [
+          "export_growth_pct",
+          "sell_through_confirmed",
+          "repeat_order_confirmed",
+          "channel_reorder_confirmed",
+          "opm_expansion_pctp"
+        ],
+        "market_mispricing": [
+          "export_growth_pct",
+          "sell_through_confirmed",
+          "repeat_order_confirmed",
+          "channel_reorder_confirmed",
+          "opm_expansion_pctp"
+        ],
+        "valuation_rerating": [
+          "export_growth_pct",
+          "sell_through_confirmed",
+          "repeat_order_confirmed",
+          "channel_reorder_confirmed",
+          "opm_expansion_pctp"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "export_growth_pct",
+          "sell_through_confirmed",
+          "repeat_order_confirmed",
+          "channel_reorder_confirmed",
+          "opm_expansion_pctp"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "inventory_spike",
+        "sell_through_confirmed",
+        "pricing_power_confirmed",
+        "channel_reorder_confirmed",
+        "raw_material_cost_risk"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "sell_through_confirmed"
+          },
+          {
+            "primitive": "pricing_power_confirmed"
+          },
+          {
+            "primitive": "channel_reorder_confirmed"
+          }
+        ]
+      },
+      "alternative_primitives": {},
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "inventory_spike": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "sell_through_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "pricing_power_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "channel_reorder_confirmed": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "raw_material_cost_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {
+        "inventory_spike": "block_green_if_current",
+        "raw_material_cost_risk": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "inventory_spike",
+          "sell_through_confirmed",
+          "pricing_power_confirmed",
+          "channel_reorder_confirmed",
+          "raw_material_cost_risk"
+        ],
+        "bottleneck_pricing": [
+          "sell_through_confirmed",
+          "pricing_power_confirmed",
+          "channel_reorder_confirmed"
+        ],
+        "market_mispricing": [
+          "sell_through_confirmed",
+          "pricing_power_confirmed",
+          "channel_reorder_confirmed"
+        ],
+        "valuation_rerating": [
+          "sell_through_confirmed",
+          "pricing_power_confirmed",
+          "channel_reorder_confirmed"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "inventory_spike",
+          "sell_through_confirmed",
+          "pricing_power_confirmed",
+          "channel_reorder_confirmed",
+          "raw_material_cost_risk"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "export_growth_pct",
+        "platform_distribution_scale",
+        "brand_customer_diversification",
+        "repeat_order_confirmed",
+        "high_margin_mix_improvement"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "export_growth_pct"
+          },
+          {
+            "primitive": "platform_distribution_scale"
+          },
+          {
+            "primitive": "brand_customer_diversification"
+          },
+          {
+            "primitive": "repeat_order_confirmed"
+          },
+          {
+            "primitive": "high_margin_mix_improvement"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "cash_or_revision_conversion": [
+          "high_margin_mix_improvement"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "export_growth_pct": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "platform_distribution_scale": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "brand_customer_diversification": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "repeat_order_confirmed": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "high_margin_mix_improvement": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "high_margin_mix_improvement"
+        ],
+        "earnings_visibility": [
+          "export_growth_pct",
+          "platform_distribution_scale",
+          "brand_customer_diversification",
+          "repeat_order_confirmed",
+          "high_margin_mix_improvement"
+        ],
+        "bottleneck_pricing": [
+          "export_growth_pct",
+          "platform_distribution_scale",
+          "brand_customer_diversification",
+          "repeat_order_confirmed",
+          "high_margin_mix_improvement"
+        ],
+        "market_mispricing": [
+          "export_growth_pct",
+          "platform_distribution_scale",
+          "brand_customer_diversification",
+          "repeat_order_confirmed",
+          "high_margin_mix_improvement"
+        ],
+        "valuation_rerating": [
+          "export_growth_pct",
+          "platform_distribution_scale",
+          "brand_customer_diversification",
+          "repeat_order_confirmed",
+          "high_margin_mix_improvement"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "export_growth_pct",
+          "platform_distribution_scale",
+          "brand_customer_diversification",
+          "repeat_order_confirmed",
+          "high_margin_mix_improvement"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "roe",
+        "pbr_e",
+        "treasury_share_cancellation",
+        "capital_return_execution",
+        "credit_cost_quality"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "roe"
+          },
+          {
+            "primitive": "pbr_e"
+          },
+          {
+            "primitive": "treasury_share_cancellation"
+          },
+          {
+            "primitive": "capital_return_execution"
+          },
+          {
+            "primitive": "credit_cost_quality"
+          }
+        ]
+      },
+      "alternative_primitives": {},
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "roe": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "pbr_e": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "treasury_share_cancellation": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "capital_return_execution": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "credit_cost_quality": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "roe",
+          "pbr_e",
+          "treasury_share_cancellation",
+          "capital_return_execution",
+          "credit_cost_quality"
+        ],
+        "bottleneck_pricing": [
+          "roe",
+          "pbr_e",
+          "treasury_share_cancellation",
+          "capital_return_execution",
+          "credit_cost_quality"
+        ],
+        "market_mispricing": [
+          "roe",
+          "pbr_e",
+          "treasury_share_cancellation",
+          "capital_return_execution",
+          "credit_cost_quality"
+        ],
+        "valuation_rerating": [
+          "roe",
+          "pbr_e",
+          "treasury_share_cancellation",
+          "capital_return_execution",
+          "credit_cost_quality"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "roe",
+          "pbr_e",
+          "treasury_share_cancellation",
+          "capital_return_execution",
+          "credit_cost_quality"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "csm_growth_visible",
+        "k_ics_ratio",
+        "reserve_quality_visible",
+        "loss_ratio_quality",
+        "capital_return_execution"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "csm_growth_visible"
+          },
+          {
+            "primitive": "k_ics_ratio"
+          },
+          {
+            "primitive": "reserve_quality_visible"
+          },
+          {
+            "primitive": "loss_ratio_quality"
+          },
+          {
+            "primitive": "capital_return_execution"
+          }
+        ]
+      },
+      "alternative_primitives": {},
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "csm_growth_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "k_ics_ratio": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "reserve_quality_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "loss_ratio_quality": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "capital_return_execution": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "csm_growth_visible",
+          "k_ics_ratio",
+          "reserve_quality_visible",
+          "loss_ratio_quality",
+          "capital_return_execution"
+        ],
+        "bottleneck_pricing": [
+          "csm_growth_visible",
+          "k_ics_ratio",
+          "reserve_quality_visible",
+          "loss_ratio_quality",
+          "capital_return_execution"
+        ],
+        "market_mispricing": [
+          "csm_growth_visible",
+          "k_ics_ratio",
+          "reserve_quality_visible",
+          "loss_ratio_quality",
+          "capital_return_execution"
+        ],
+        "valuation_rerating": [
+          "csm_growth_visible",
+          "k_ics_ratio",
+          "reserve_quality_visible",
+          "loss_ratio_quality",
+          "capital_return_execution"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "csm_growth_visible",
+          "k_ics_ratio",
+          "reserve_quality_visible",
+          "loss_ratio_quality",
+          "capital_return_execution"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "regulatory_approval_confirmed",
+        "approval_to_revenue_bridge",
+        "royalty_route",
+        "partner_economics_visible",
+        "reimbursement_confirmed"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "regulatory_approval_confirmed"
+          },
+          {
+            "primitive": "approval_to_revenue_bridge"
+          },
+          {
+            "primitive": "royalty_route"
+          },
+          {
+            "primitive": "partner_economics_visible"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "cash_or_revision_conversion": [
+          "approval_to_revenue_bridge"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "regulatory_approval_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_regulatory_or_company_update",
+          "closure_conditions": [
+            "approval_granted_or_rejected",
+            "policy_expired_or_replaced"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS"
+          ]
+        },
+        "approval_to_revenue_bridge": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "royalty_route": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "partner_economics_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "reimbursement_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_regulatory_or_company_update",
+          "closure_conditions": [
+            "approval_granted_or_rejected",
+            "policy_expired_or_replaced"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "approval_to_revenue_bridge"
+        ],
+        "earnings_visibility": [
+          "regulatory_approval_confirmed",
+          "approval_to_revenue_bridge",
+          "royalty_route",
+          "partner_economics_visible",
+          "reimbursement_confirmed"
+        ],
+        "bottleneck_pricing": [
+          "regulatory_approval_confirmed",
+          "approval_to_revenue_bridge",
+          "royalty_route",
+          "partner_economics_visible"
+        ],
+        "market_mispricing": [
+          "regulatory_approval_confirmed",
+          "approval_to_revenue_bridge",
+          "royalty_route",
+          "partner_economics_visible"
+        ],
+        "valuation_rerating": [
+          "regulatory_approval_confirmed",
+          "approval_to_revenue_bridge",
+          "royalty_route",
+          "partner_economics_visible"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "regulatory_approval_confirmed",
+          "approval_to_revenue_bridge",
+          "royalty_route",
+          "partner_economics_visible",
+          "reimbursement_confirmed"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "trial_quality_visible",
+        "binary_event_unresolved",
+        "approval_not_confirmed",
+        "safety_signal",
+        "cash_runway_risk"
+      ],
+      "green_gate": {
+        "primitive": "trial_quality_visible"
+      },
+      "alternative_primitives": {},
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "trial_quality_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "binary_event_unresolved": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "approval_not_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_regulatory_or_company_update",
+          "closure_conditions": [
+            "approval_granted_or_rejected",
+            "policy_expired_or_replaced"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS"
+          ]
+        },
+        "safety_signal": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "cash_runway_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {
+        "binary_event_unresolved": "hard_break_if_current_and_quorum",
+        "approval_not_confirmed": "hard_break_if_current_and_quorum",
+        "safety_signal": "hard_break_if_current_and_quorum",
+        "cash_runway_risk": "hard_break_if_current_and_quorum"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "trial_quality_visible",
+          "binary_event_unresolved",
+          "approval_not_confirmed",
+          "safety_signal",
+          "cash_runway_risk"
+        ],
+        "bottleneck_pricing": [
+          "trial_quality_visible"
+        ],
+        "market_mispricing": [
+          "trial_quality_visible"
+        ],
+        "valuation_rerating": [
+          "trial_quality_visible"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "trial_quality_visible",
+          "binary_event_unresolved",
+          "approval_not_confirmed",
+          "safety_signal",
+          "cash_runway_risk"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "reimbursement_confirmed",
+        "procedure_volume_growth",
+        "export_growth_pct",
+        "consumable_repeat_revenue",
+        "gross_margin_bridge"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "reimbursement_confirmed"
+          },
+          {
+            "primitive": "procedure_volume_growth"
+          },
+          {
+            "primitive": "export_growth_pct"
+          },
+          {
+            "primitive": "consumable_repeat_revenue"
+          },
+          {
+            "primitive": "gross_margin_bridge"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "cash_or_revision_conversion": [
+          "consumable_repeat_revenue",
+          "gross_margin_bridge"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "reimbursement_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_regulatory_or_company_update",
+          "closure_conditions": [
+            "approval_granted_or_rejected",
+            "policy_expired_or_replaced"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS"
+          ]
+        },
+        "procedure_volume_growth": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "export_growth_pct": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "consumable_repeat_revenue": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "gross_margin_bridge": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "consumable_repeat_revenue",
+          "gross_margin_bridge"
+        ],
+        "earnings_visibility": [
+          "reimbursement_confirmed",
+          "procedure_volume_growth",
+          "export_growth_pct",
+          "consumable_repeat_revenue",
+          "gross_margin_bridge"
+        ],
+        "bottleneck_pricing": [
+          "reimbursement_confirmed",
+          "procedure_volume_growth",
+          "export_growth_pct",
+          "consumable_repeat_revenue",
+          "gross_margin_bridge"
+        ],
+        "market_mispricing": [
+          "reimbursement_confirmed",
+          "procedure_volume_growth",
+          "export_growth_pct",
+          "consumable_repeat_revenue",
+          "gross_margin_bridge"
+        ],
+        "valuation_rerating": [
+          "reimbursement_confirmed",
+          "procedure_volume_growth",
+          "export_growth_pct",
+          "consumable_repeat_revenue",
+          "gross_margin_bridge"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "reimbursement_confirmed",
+          "procedure_volume_growth",
+          "export_growth_pct",
+          "consumable_repeat_revenue",
+          "gross_margin_bridge"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "arpu_growth_pct",
+        "ad_revenue_growth_pct",
+        "take_rate_improvement",
+        "operating_leverage_visible",
+        "regulatory_risk"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "arpu_growth_pct"
+          },
+          {
+            "primitive": "ad_revenue_growth_pct"
+          },
+          {
+            "primitive": "take_rate_improvement"
+          },
+          {
+            "primitive": "operating_leverage_visible"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "cash_or_revision_conversion": [
+          "ad_revenue_growth_pct"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "arpu_growth_pct": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "ad_revenue_growth_pct": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "take_rate_improvement": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "operating_leverage_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "regulatory_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_regulatory_or_company_update",
+          "closure_conditions": [
+            "approval_granted_or_rejected",
+            "policy_expired_or_replaced"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS"
+          ]
+        }
+      },
+      "guard_modes": {
+        "regulatory_risk": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "ad_revenue_growth_pct"
+        ],
+        "earnings_visibility": [
+          "arpu_growth_pct",
+          "ad_revenue_growth_pct",
+          "take_rate_improvement",
+          "operating_leverage_visible",
+          "regulatory_risk"
+        ],
+        "bottleneck_pricing": [
+          "arpu_growth_pct",
+          "ad_revenue_growth_pct",
+          "take_rate_improvement",
+          "operating_leverage_visible"
+        ],
+        "market_mispricing": [
+          "arpu_growth_pct",
+          "ad_revenue_growth_pct",
+          "take_rate_improvement",
+          "operating_leverage_visible"
+        ],
+        "valuation_rerating": [
+          "arpu_growth_pct",
+          "ad_revenue_growth_pct",
+          "take_rate_improvement",
+          "operating_leverage_visible"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "arpu_growth_pct",
+          "ad_revenue_growth_pct",
+          "take_rate_improvement",
+          "operating_leverage_visible",
+          "regulatory_risk"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "ip_monetization_visible",
+        "global_launch_conversion",
+        "repeat_revenue",
+        "user_retention",
+        "token_or_theme_hype_risk"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "ip_monetization_visible"
+          },
+          {
+            "primitive": "global_launch_conversion"
+          },
+          {
+            "primitive": "repeat_revenue"
+          },
+          {
+            "primitive": "user_retention"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "cash_or_revision_conversion": [
+          "repeat_revenue"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "ip_monetization_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "global_launch_conversion": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "repeat_revenue": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "user_retention": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "token_or_theme_hype_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {
+        "token_or_theme_hype_risk": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "repeat_revenue"
+        ],
+        "earnings_visibility": [
+          "ip_monetization_visible",
+          "global_launch_conversion",
+          "repeat_revenue",
+          "user_retention",
+          "token_or_theme_hype_risk"
+        ],
+        "bottleneck_pricing": [
+          "ip_monetization_visible",
+          "global_launch_conversion",
+          "repeat_revenue",
+          "user_retention"
+        ],
+        "market_mispricing": [
+          "ip_monetization_visible",
+          "global_launch_conversion",
+          "repeat_revenue",
+          "user_retention"
+        ],
+        "valuation_rerating": [
+          "ip_monetization_visible",
+          "global_launch_conversion",
+          "repeat_revenue",
+          "user_retention"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "ip_monetization_visible",
+          "global_launch_conversion",
+          "repeat_revenue",
+          "user_retention",
+          "token_or_theme_hype_risk"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "arr_growth_visible",
+        "nrr",
+        "retention_or_renewal",
+        "rpo_to_sales",
+        "recurring_margin_leverage"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "arr_growth_visible"
+          },
+          {
+            "primitive": "nrr"
+          },
+          {
+            "primitive": "retention_or_renewal"
+          },
+          {
+            "primitive": "rpo_to_sales"
+          },
+          {
+            "primitive": "recurring_margin_leverage"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "cash_or_revision_conversion": [
+          "recurring_margin_leverage"
+        ],
+        "subscription_monthly_billing": [
+          "arr_growth_visible",
+          "retention_or_renewal"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "arr_growth_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "nrr": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "retention_or_renewal": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "rpo_to_sales": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "recurring_margin_leverage": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        },
+        "subscription_monthly_billing": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "primitive_aliases": {
+        "subscription_monthly_billing": [
+          "subscription model",
+          "monthly billing",
+          "usage-based subscription",
+          "recurring subscription",
+          "managed service subscription",
+          "cloud managed service",
+          "cloud NAC managed service",
+          "SECaaS",
+          "구독형",
+          "서브스크립션",
+          "월과금",
+          "사용한 만큼 지불",
+          "매니지드 서비스",
+          "클라우드 NAC 매니지드 서비스",
+          "유지보수",
+          "기술지원 용역"
+        ]
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "recurring_margin_leverage"
+        ],
+        "earnings_visibility": [
+          "arr_growth_visible",
+          "nrr",
+          "retention_or_renewal",
+          "rpo_to_sales",
+          "recurring_margin_leverage",
+          "subscription_monthly_billing"
+        ],
+        "bottleneck_pricing": [
+          "arr_growth_visible",
+          "nrr",
+          "retention_or_renewal",
+          "rpo_to_sales",
+          "recurring_margin_leverage"
+        ],
+        "market_mispricing": [
+          "arr_growth_visible",
+          "nrr",
+          "retention_or_renewal",
+          "rpo_to_sales",
+          "recurring_margin_leverage"
+        ],
+        "valuation_rerating": [
+          "arr_growth_visible",
+          "nrr",
+          "retention_or_renewal",
+          "rpo_to_sales",
+          "recurring_margin_leverage"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "arr_growth_visible",
+          "nrr",
+          "retention_or_renewal",
+          "rpo_to_sales",
+          "recurring_margin_leverage",
+          "subscription_monthly_billing"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "volume_growth_visible",
+        "mix_improvement",
+        "operating_leverage_visible",
+        "pricing_power_confirmed",
+        "fcf_quality_score"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "volume_growth_visible"
+          },
+          {
+            "primitive": "mix_improvement"
+          },
+          {
+            "primitive": "operating_leverage_visible"
+          },
+          {
+            "primitive": "pricing_power_confirmed"
+          },
+          {
+            "primitive": "fcf_quality_score"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "cash_or_revision_conversion": [
+          "fcf_quality_score"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "volume_growth_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "mix_improvement": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "operating_leverage_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "pricing_power_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "fcf_quality_score": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        }
+      },
+      "guard_modes": {},
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "fcf_quality_score"
+        ],
+        "earnings_visibility": [
+          "volume_growth_visible",
+          "mix_improvement",
+          "operating_leverage_visible",
+          "pricing_power_confirmed",
+          "fcf_quality_score"
+        ],
+        "bottleneck_pricing": [
+          "volume_growth_visible",
+          "mix_improvement",
+          "operating_leverage_visible",
+          "pricing_power_confirmed",
+          "fcf_quality_score"
+        ],
+        "market_mispricing": [
+          "volume_growth_visible",
+          "mix_improvement",
+          "operating_leverage_visible",
+          "pricing_power_confirmed",
+          "fcf_quality_score"
+        ],
+        "valuation_rerating": [
+          "volume_growth_visible",
+          "mix_improvement",
+          "operating_leverage_visible",
+          "pricing_power_confirmed",
+          "fcf_quality_score"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "volume_growth_visible",
+          "mix_improvement",
+          "operating_leverage_visible",
+          "pricing_power_confirmed",
+          "fcf_quality_score"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "pf_exposure_reduced",
+        "balance_sheet_repair",
+        "cash_collection_visible",
+        "occupancy_or_presale_visible",
+        "funding_cost_risk"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "pf_exposure_reduced"
+          },
+          {
+            "primitive": "balance_sheet_repair"
+          },
+          {
+            "primitive": "cash_collection_visible"
+          },
+          {
+            "primitive": "occupancy_or_presale_visible"
+          }
+        ]
+      },
+      "alternative_primitives": {},
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "pf_exposure_reduced": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "balance_sheet_repair": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "cash_collection_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "occupancy_or_presale_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "funding_cost_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {
+        "funding_cost_risk": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "pf_exposure_reduced",
+          "balance_sheet_repair",
+          "cash_collection_visible",
+          "occupancy_or_presale_visible",
+          "funding_cost_risk"
+        ],
+        "bottleneck_pricing": [
+          "pf_exposure_reduced",
+          "balance_sheet_repair",
+          "cash_collection_visible",
+          "occupancy_or_presale_visible"
+        ],
+        "market_mispricing": [
+          "pf_exposure_reduced",
+          "balance_sheet_repair",
+          "cash_collection_visible",
+          "occupancy_or_presale_visible"
+        ],
+        "valuation_rerating": [
+          "pf_exposure_reduced",
+          "balance_sheet_repair",
+          "cash_collection_visible",
+          "occupancy_or_presale_visible"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "pf_exposure_reduced",
+          "balance_sheet_repair",
+          "cash_collection_visible",
+          "occupancy_or_presale_visible",
+          "funding_cost_risk"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "policy_or_regulatory_confirmed",
+        "direct_company_cash_route",
+        "subsidy_capture_visible",
+        "implementation_timeline",
+        "policy_headline_only"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "policy_or_regulatory_confirmed"
+          },
+          {
+            "primitive": "direct_company_cash_route"
+          },
+          {
+            "primitive": "subsidy_capture_visible"
+          },
+          {
+            "primitive": "implementation_timeline"
+          }
+        ]
+      },
+      "alternative_primitives": {},
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "policy_or_regulatory_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_regulatory_or_company_update",
+          "closure_conditions": [
+            "approval_granted_or_rejected",
+            "policy_expired_or_replaced"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS"
+          ]
+        },
+        "direct_company_cash_route": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "subsidy_capture_visible": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "implementation_timeline": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "policy_headline_only": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_regulatory_or_company_update",
+          "closure_conditions": [
+            "approval_granted_or_rejected",
+            "policy_expired_or_replaced"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS"
+          ]
+        }
+      },
+      "guard_modes": {
+        "policy_headline_only": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "policy_or_regulatory_confirmed",
+          "direct_company_cash_route",
+          "subsidy_capture_visible",
+          "implementation_timeline",
+          "policy_headline_only"
+        ],
+        "bottleneck_pricing": [
+          "policy_or_regulatory_confirmed",
+          "direct_company_cash_route",
+          "subsidy_capture_visible",
+          "implementation_timeline"
+        ],
+        "market_mispricing": [
+          "policy_or_regulatory_confirmed",
+          "direct_company_cash_route",
+          "subsidy_capture_visible",
+          "implementation_timeline"
+        ],
+        "valuation_rerating": [
+          "policy_or_regulatory_confirmed",
+          "direct_company_cash_route",
+          "subsidy_capture_visible",
+          "implementation_timeline"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "policy_or_regulatory_confirmed",
+          "direct_company_cash_route",
+          "subsidy_capture_visible",
+          "implementation_timeline",
+          "policy_headline_only"
+        ]
+      }
+    },
+    {
+      "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "tender_offer_confirmed",
+        "minority_cash_path",
+        "control_premium_floor",
+        "regulatory_approval_confirmed",
+        "event_spread_risk"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "tender_offer_confirmed"
+          },
+          {
+            "primitive": "minority_cash_path"
+          },
+          {
+            "primitive": "control_premium_floor"
+          },
+          {
+            "primitive": "regulatory_approval_confirmed"
+          }
+        ]
+      },
+      "alternative_primitives": {},
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "tender_offer_confirmed": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "minority_cash_path": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "control_premium_floor": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "regulatory_approval_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_regulatory_or_company_update",
+          "closure_conditions": [
+            "approval_granted_or_rejected",
+            "policy_expired_or_replaced"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS"
+          ]
+        },
+        "event_spread_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        }
+      },
+      "guard_modes": {
+        "event_spread_risk": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "tender_offer_confirmed",
+          "minority_cash_path",
+          "control_premium_floor",
+          "regulatory_approval_confirmed",
+          "event_spread_risk"
+        ],
+        "bottleneck_pricing": [
+          "tender_offer_confirmed",
+          "minority_cash_path",
+          "control_premium_floor",
+          "regulatory_approval_confirmed"
+        ],
+        "market_mispricing": [
+          "tender_offer_confirmed",
+          "minority_cash_path",
+          "control_premium_floor",
+          "regulatory_approval_confirmed"
+        ],
+        "valuation_rerating": [
+          "tender_offer_confirmed",
+          "minority_cash_path",
+          "control_premium_floor",
+          "regulatory_approval_confirmed"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "tender_offer_confirmed",
+          "minority_cash_path",
+          "control_premium_floor",
+          "regulatory_approval_confirmed",
+          "event_spread_risk"
+        ]
+      }
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "price_only_blowoff",
+        "policy_headline_only",
+        "evidence_source_quality",
+        "missing_cashflow_bridge",
+        "theme_hype_without_revenue"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "price_only_blowoff"
+          },
+          {
+            "primitive": "policy_headline_only"
+          },
+          {
+            "primitive": "evidence_source_quality"
+          },
+          {
+            "primitive": "missing_cashflow_bridge"
+          },
+          {
+            "primitive": "theme_hype_without_revenue"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "cash_or_revision_conversion": [
+          "theme_hype_without_revenue"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "price_only_blowoff": {
+          "max_age_days": 180,
+          "supersession_rule": "latest_market_state",
+          "closure_conditions": [
+            "market_state_changed"
+          ],
+          "authoritative_followup_sources": [
+            "API",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "policy_headline_only": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_regulatory_or_company_update",
+          "closure_conditions": [
+            "approval_granted_or_rejected",
+            "policy_expired_or_replaced"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS"
+          ]
+        },
+        "evidence_source_quality": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "missing_cashflow_bridge": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "theme_hype_without_revenue": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_reported_financial_period",
+          "closure_conditions": [
+            "newer_financial_period_reported"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "XBRL",
+            "API",
+            "IR"
+          ]
+        }
+      },
+      "guard_modes": {
+        "price_only_blowoff": "block_green_if_current",
+        "policy_headline_only": "block_green_if_current",
+        "evidence_source_quality": "block_green_if_current",
+        "missing_cashflow_bridge": "block_green_if_current",
+        "theme_hype_without_revenue": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [
+          "theme_hype_without_revenue"
+        ],
+        "earnings_visibility": [
+          "price_only_blowoff",
+          "policy_headline_only",
+          "evidence_source_quality",
+          "missing_cashflow_bridge",
+          "theme_hype_without_revenue"
+        ],
+        "bottleneck_pricing": [
+          "price_only_blowoff",
+          "policy_headline_only",
+          "evidence_source_quality",
+          "missing_cashflow_bridge",
+          "theme_hype_without_revenue"
+        ],
+        "market_mispricing": [
+          "price_only_blowoff",
+          "policy_headline_only",
+          "evidence_source_quality",
+          "missing_cashflow_bridge",
+          "theme_hype_without_revenue"
+        ],
+        "valuation_rerating": [
+          "price_only_blowoff",
+          "policy_headline_only",
+          "evidence_source_quality",
+          "missing_cashflow_bridge",
+          "theme_hype_without_revenue"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "price_only_blowoff",
+          "policy_headline_only",
+          "evidence_source_quality",
+          "missing_cashflow_bridge",
+          "theme_hype_without_revenue"
+        ]
+      }
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "thesis_break_confirmed",
+        "contract_cancelled_or_delayed",
+        "revision_slowdown",
+        "accounting_trust_risk",
+        "valuation_overheat"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "thesis_break_confirmed"
+          },
+          {
+            "primitive": "contract_cancelled_or_delayed"
+          },
+          {
+            "primitive": "revision_slowdown"
+          },
+          {
+            "primitive": "accounting_trust_risk"
+          },
+          {
+            "primitive": "valuation_overheat"
+          }
+        ]
+      },
+      "alternative_primitives": {
+        "contract_visibility": [
+          "contract_cancelled_or_delayed"
+        ]
+      },
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "thesis_break_confirmed": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "contract_cancelled_or_delayed": {
+          "max_age_days": 730,
+          "supersession_rule": "contract_amendment_cancellation_delivery_or_expiry",
+          "closure_conditions": [
+            "contract_expired",
+            "contract_cancelled",
+            "delivery_completed",
+            "newer_contract_update"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "revision_slowdown": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "accounting_trust_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_audit_or_regulator_status",
+          "closure_conditions": [
+            "latest_unqualified_audit",
+            "investigation_closed",
+            "restatement_completed"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "NEWS",
+            "API"
+          ]
+        },
+        "valuation_overheat": {
+          "max_age_days": 180,
+          "supersession_rule": "latest_market_state",
+          "closure_conditions": [
+            "market_state_changed"
+          ],
+          "authoritative_followup_sources": [
+            "API",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {
+        "thesis_break_confirmed": "hard_break_if_current_and_quorum",
+        "contract_cancelled_or_delayed": "hard_break_if_current_and_quorum",
+        "revision_slowdown": "block_green_if_current",
+        "accounting_trust_risk": "hard_break_if_current_and_quorum",
+        "valuation_overheat": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "thesis_break_confirmed",
+          "contract_cancelled_or_delayed",
+          "revision_slowdown",
+          "accounting_trust_risk",
+          "valuation_overheat"
+        ],
+        "bottleneck_pricing": [
+          "thesis_break_confirmed",
+          "contract_cancelled_or_delayed",
+          "revision_slowdown",
+          "accounting_trust_risk",
+          "valuation_overheat"
+        ],
+        "market_mispricing": [
+          "thesis_break_confirmed",
+          "contract_cancelled_or_delayed",
+          "revision_slowdown",
+          "accounting_trust_risk",
+          "valuation_overheat"
+        ],
+        "valuation_rerating": [
+          "thesis_break_confirmed",
+          "contract_cancelled_or_delayed",
+          "revision_slowdown",
+          "accounting_trust_risk",
+          "valuation_overheat"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "thesis_break_confirmed",
+          "contract_cancelled_or_delayed",
+          "revision_slowdown",
+          "accounting_trust_risk",
+          "valuation_overheat"
+        ]
+      }
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "auditor_or_disclosure_risk",
+        "restatement_risk",
+        "share_count_drift",
+        "price_only_blowoff",
+        "source_quality_conflict"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "auditor_or_disclosure_risk"
+          },
+          {
+            "primitive": "restatement_risk"
+          },
+          {
+            "primitive": "share_count_drift"
+          },
+          {
+            "primitive": "price_only_blowoff"
+          },
+          {
+            "primitive": "source_quality_conflict"
+          }
+        ]
+      },
+      "alternative_primitives": {},
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "auditor_or_disclosure_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_audit_or_regulator_status",
+          "closure_conditions": [
+            "latest_unqualified_audit",
+            "investigation_closed",
+            "restatement_completed"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "NEWS",
+            "API"
+          ]
+        },
+        "restatement_risk": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_audit_or_regulator_status",
+          "closure_conditions": [
+            "latest_unqualified_audit",
+            "investigation_closed",
+            "restatement_completed"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "NEWS",
+            "API"
+          ]
+        },
+        "share_count_drift": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "price_only_blowoff": {
+          "max_age_days": 180,
+          "supersession_rule": "latest_market_state",
+          "closure_conditions": [
+            "market_state_changed"
+          ],
+          "authoritative_followup_sources": [
+            "API",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "source_quality_conflict": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {
+        "auditor_or_disclosure_risk": "hard_break_if_current_and_quorum",
+        "restatement_risk": "hard_break_if_current_and_quorum",
+        "share_count_drift": "block_green_if_current",
+        "price_only_blowoff": "block_green_if_current",
+        "source_quality_conflict": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "auditor_or_disclosure_risk",
+          "restatement_risk",
+          "share_count_drift",
+          "price_only_blowoff",
+          "source_quality_conflict"
+        ],
+        "bottleneck_pricing": [
+          "auditor_or_disclosure_risk",
+          "restatement_risk",
+          "share_count_drift",
+          "price_only_blowoff",
+          "source_quality_conflict"
+        ],
+        "market_mispricing": [
+          "auditor_or_disclosure_risk",
+          "restatement_risk",
+          "share_count_drift",
+          "price_only_blowoff",
+          "source_quality_conflict"
+        ],
+        "valuation_rerating": [
+          "auditor_or_disclosure_risk",
+          "restatement_risk",
+          "share_count_drift",
+          "price_only_blowoff",
+          "source_quality_conflict"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "auditor_or_disclosure_risk",
+          "restatement_risk",
+          "share_count_drift",
+          "price_only_blowoff",
+          "source_quality_conflict"
+        ]
+      }
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "generated_from_v1_contract": "docs/0619/v12_research_green_runtime_gap_matrix_2026-06-19.json",
+      "required_primitives": [
+        "high_mae_history",
+        "valuation_overheat",
+        "liquidity_or_microcap_risk",
+        "execution_risk_score",
+        "positioning_reversal_risk"
+      ],
+      "green_gate": {
+        "all": [
+          {
+            "primitive": "high_mae_history"
+          },
+          {
+            "primitive": "valuation_overheat"
+          },
+          {
+            "primitive": "liquidity_or_microcap_risk"
+          },
+          {
+            "primitive": "execution_risk_score"
+          },
+          {
+            "primitive": "positioning_reversal_risk"
+          }
+        ]
+      },
+      "alternative_primitives": {},
+      "source_quorum": {
+        "score_contribution": {
+          "min_independent_tier2": 1
+        },
+        "green_gate": {
+          "min_independent_tier2": 1
+        },
+        "hard_break": {
+          "min_official": 1
+        }
+      },
+      "freshness": {
+        "high_mae_history": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "valuation_overheat": {
+          "max_age_days": 180,
+          "supersession_rule": "latest_market_state",
+          "closure_conditions": [
+            "market_state_changed"
+          ],
+          "authoritative_followup_sources": [
+            "API",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "liquidity_or_microcap_risk": {
+          "max_age_days": 180,
+          "supersession_rule": "latest_market_state",
+          "closure_conditions": [
+            "market_state_changed"
+          ],
+          "authoritative_followup_sources": [
+            "API",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "execution_risk_score": {
+          "max_age_days": 365,
+          "supersession_rule": "latest_authoritative_update",
+          "closure_conditions": [
+            "superseded_by_newer_direct_claim",
+            "resolved_by_authoritative_followup"
+          ],
+          "authoritative_followup_sources": [
+            "FILING",
+            "IR",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        },
+        "positioning_reversal_risk": {
+          "max_age_days": 180,
+          "supersession_rule": "latest_market_state",
+          "closure_conditions": [
+            "market_state_changed"
+          ],
+          "authoritative_followup_sources": [
+            "API",
+            "NEWS",
+            "RESEARCH_REPORT"
+          ]
+        }
+      },
+      "guard_modes": {
+        "high_mae_history": "hard_break_if_current_and_quorum",
+        "valuation_overheat": "block_green_if_current",
+        "liquidity_or_microcap_risk": "block_green_if_current",
+        "execution_risk_score": "block_green_if_current",
+        "positioning_reversal_risk": "block_green_if_current"
+      },
+      "aggregation_rules": [
+        "source_family_dedupe_before_quorum",
+        "syndicated_articles_count_as_one",
+        "source_proxy_only_not_score_eligible",
+        "unknown_not_absent",
+        "append_only_claim_ledger"
+      ],
+      "score_rubric": {
+        "eps_fcf_explosion": [],
+        "earnings_visibility": [
+          "high_mae_history",
+          "valuation_overheat",
+          "liquidity_or_microcap_risk",
+          "execution_risk_score",
+          "positioning_reversal_risk"
+        ],
+        "bottleneck_pricing": [
+          "high_mae_history",
+          "valuation_overheat",
+          "liquidity_or_microcap_risk",
+          "execution_risk_score",
+          "positioning_reversal_risk"
+        ],
+        "market_mispricing": [
+          "high_mae_history",
+          "valuation_overheat",
+          "liquidity_or_microcap_risk",
+          "execution_risk_score",
+          "positioning_reversal_risk"
+        ],
+        "valuation_rerating": [
+          "high_mae_history",
+          "valuation_overheat",
+          "liquidity_or_microcap_risk",
+          "execution_risk_score",
+          "positioning_reversal_risk"
+        ],
+        "capital_allocation": [],
+        "information_confidence": [
+          "high_mae_history",
+          "valuation_overheat",
+          "liquidity_or_microcap_risk",
+          "execution_risk_score",
+          "positioning_reversal_risk"
+        ]
+      }
+    }
+  ]
+}

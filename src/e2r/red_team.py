@@ -118,6 +118,7 @@ class RedTeamSignals:
     soft_4b_factors: Mapping[str, float] = field(default_factory=dict)
     thesis_break_factors: Mapping[str, float] = field(default_factory=dict)
     evidence_ids_by_signal: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
+    hard_break_quorum_by_signal: Mapping[str, bool] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         _require_text(self.symbol, "symbol")
@@ -139,6 +140,12 @@ class RedTeamSignals:
                 raise ValueError(f"unknown evidence signal: {key}")
             normalized_evidence[key] = tuple(evidence_ids)
         object.__setattr__(self, "evidence_ids_by_signal", normalized_evidence)
+        normalized_quorum: dict[str, bool] = {}
+        for key, value in self.hard_break_quorum_by_signal.items():
+            if key not in HARD_BREAK_SIGNALS:
+                raise ValueError(f"unknown hard-break quorum signal: {key}")
+            normalized_quorum[key] = bool(value)
+        object.__setattr__(self, "hard_break_quorum_by_signal", normalized_quorum)
 
 
 @dataclass(frozen=True)
@@ -199,7 +206,9 @@ class RedTeamEngine:
             if factor <= 0:
                 continue
             severity = round(THESIS_BREAK_WEIGHTS[risk_type] * factor, 4)
-            is_hard_break = risk_type in HARD_BREAK_SIGNALS
+            evidence_ids = signals.evidence_ids_by_signal.get(risk_type, ())
+            source_quorum_satisfied = signals.hard_break_quorum_by_signal.get(risk_type, False)
+            is_hard_break = risk_type in HARD_BREAK_SIGNALS and bool(evidence_ids) and source_quorum_satisfied
             findings.append(
                 RedTeamFinding(
                     symbol=signals.symbol,
@@ -208,11 +217,11 @@ class RedTeamEngine:
                     severity=severity,
                     is_hard_break=is_hard_break,
                     description=FINDING_DESCRIPTIONS[risk_type],
-                    evidence_ids=signals.evidence_ids_by_signal.get(risk_type, ()),
+                    evidence_ids=evidence_ids,
                 )
             )
 
-        has_hard_break = any(finding.is_hard_break for finding in findings) or thesis_break_score >= 60.0
+        has_hard_break = any(finding.is_hard_break for finding in findings)
         risk_level = self._risk_level(thesis_break_score, has_hard_break)
         evidence_ids = tuple(
             dict.fromkeys(
