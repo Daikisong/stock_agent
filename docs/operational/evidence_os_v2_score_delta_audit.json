@@ -1,0 +1,32 @@
+{
+  "comparisons": [
+    {
+      "accepted_stage": "3-Green",
+      "accepted_verified_score": 97.5,
+      "company_name": "삼성전자",
+      "comparison_class": "NON_COMPARABLE",
+      "deprecated_score": 63.2499,
+      "deprecated_stage": "4C",
+      "reason": "legacy run lacked canonical_archetype_id/claim_backed_component_ratio and is rejected; score changes cannot be treated as a deterministic delta unless code/config/query/corpus/fetch fingerprints are comparable.",
+      "symbol": "005930"
+    },
+    {
+      "accepted_stage": "3-Green",
+      "accepted_verified_score": 97.5,
+      "company_name": "SK하이닉스",
+      "comparison_class": "NON_COMPARABLE",
+      "deprecated_score": 63.8662,
+      "deprecated_stage": "3-Red",
+      "reason": "legacy run lacked canonical_archetype_id/claim_backed_component_ratio and is rejected; score changes cannot be treated as a deterministic delta unless code/config/query/corpus/fetch fingerprints are comparable.",
+      "symbol": "000660"
+    }
+  ],
+  "schema_version": "e2r_operational_score_delta_audit_v1",
+  "summary": {
+    "all_score_changes_require_claim_delta": true,
+    "critical_unexplained_score_delta_count": 0,
+    "non_comparable_legacy_comparison_count": 2,
+    "score_delta_audit_ready": true,
+    "score_delta_without_claim_delta_count": 0
+  }
+}

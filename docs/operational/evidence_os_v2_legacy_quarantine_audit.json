@@ -1,0 +1,19 @@
+{
+  "policy": {
+    "example": "A parser may say a document mentioned audit opinion, but that mention cannot become accounting risk unless Evidence OS v2 accepts a current, direct-target, source-backed claim.",
+    "legacy_parser_mentions_allowed": true,
+    "legacy_parser_to_score_allowed": false
+  },
+  "schema_version": "e2r_operational_legacy_quarantine_audit_v1",
+  "summary": {
+    "active_legacy_parser_score_claim_without_v2_count": 0,
+    "evidence_mention_direct_score_path_count": 0,
+    "legacy_parser_score_audit_missing_count": 0,
+    "legacy_quarantine_ready": true,
+    "llm_raw_output_direct_score_path_count": 0,
+    "old_risk_field_direct_score_path_count": 0,
+    "parser_keyword_direct_score_path_count": 0,
+    "quarantined_legacy_parser_field_count": 200,
+    "quarantined_legacy_parser_row_count": 2
+  }
+}

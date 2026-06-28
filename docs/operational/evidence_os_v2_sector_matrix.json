@@ -1,0 +1,114 @@
+{
+  "discovery_smoke": {
+    "actual_candidate_discovery_path_exercised": true,
+    "candidate_source_paths": [
+      "official_cheap_scan"
+    ],
+    "production_discovery_candidate_count": 8,
+    "source_call_counts": {
+      "company_guide_recent_report_calls": 0,
+      "company_guide_snapshot_calls": 0,
+      "company_guide_snapshot_empty_consensus_count": 0,
+      "data_go_kr_calls": 9,
+      "data_go_kr_financial_actual_calls": 0,
+      "krx_calls": 9,
+      "naver_finance_item_main_calls": 0,
+      "naver_search_queries": 32,
+      "opendart_company_code_calls": 0,
+      "opendart_detail_fetches": 0,
+      "opendart_disclosure_date_range": 1,
+      "opendart_financial_statement_calls": 0,
+      "opendart_symbol_disclosure_calls": 0
+    },
+    "targeted_smoke_only": false
+  },
+  "rows": [
+    {
+      "bounded_smoke_ready_archetype_count": 3,
+      "bounded_smoke_status": "pass",
+      "canonical_archetype_count": 5,
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "required_bounded_smoke_archetype_count": 3,
+      "topology_note": null
+    },
+    {
+      "bounded_smoke_ready_archetype_count": 3,
+      "bounded_smoke_status": "pass",
+      "canonical_archetype_count": 5,
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "required_bounded_smoke_archetype_count": 3,
+      "topology_note": null
+    },
+    {
+      "bounded_smoke_ready_archetype_count": 3,
+      "bounded_smoke_status": "pass",
+      "canonical_archetype_count": 5,
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "required_bounded_smoke_archetype_count": 3,
+      "topology_note": null
+    },
+    {
+      "bounded_smoke_ready_archetype_count": 3,
+      "bounded_smoke_status": "pass",
+      "canonical_archetype_count": 3,
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "required_bounded_smoke_archetype_count": 3,
+      "topology_note": null
+    },
+    {
+      "bounded_smoke_ready_archetype_count": 3,
+      "bounded_smoke_status": "pass",
+      "canonical_archetype_count": 3,
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "required_bounded_smoke_archetype_count": 3,
+      "topology_note": null
+    },
+    {
+      "bounded_smoke_ready_archetype_count": 2,
+      "bounded_smoke_status": "pass",
+      "canonical_archetype_count": 2,
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "required_bounded_smoke_archetype_count": 2,
+      "topology_note": "canonical archetype count is below three, so the bounded-smoke requirement is capped by topology"
+    },
+    {
+      "bounded_smoke_ready_archetype_count": 3,
+      "bounded_smoke_status": "pass",
+      "canonical_archetype_count": 3,
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "required_bounded_smoke_archetype_count": 3,
+      "topology_note": null
+    },
+    {
+      "bounded_smoke_ready_archetype_count": 3,
+      "bounded_smoke_status": "pass",
+      "canonical_archetype_count": 3,
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "required_bounded_smoke_archetype_count": 3,
+      "topology_note": null
+    },
+    {
+      "bounded_smoke_ready_archetype_count": 1,
+      "bounded_smoke_status": "pass",
+      "canonical_archetype_count": 1,
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "required_bounded_smoke_archetype_count": 1,
+      "topology_note": "canonical archetype count is below three, so the bounded-smoke requirement is capped by topology"
+    },
+    {
+      "bounded_smoke_ready_archetype_count": 3,
+      "bounded_smoke_status": "pass",
+      "canonical_archetype_count": 6,
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "required_bounded_smoke_archetype_count": 3,
+      "topology_note": null
+    }
+  ],
+  "schema_version": "e2r_operational_sector_matrix_v1",
+  "summary": {
+    "actual_candidate_discovery_path_exercised": true,
+    "bounded_sector_smoke_pass_count": 10,
+    "large_sector_count": 10,
+    "production_discovery_candidate_count": 8
+  }
+}

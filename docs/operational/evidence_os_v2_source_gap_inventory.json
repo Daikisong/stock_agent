@@ -1,0 +1,12 @@
+{
+  "gap_tasks": [],
+  "schema_version": "e2r_operational_source_gap_inventory_v1",
+  "summary": {
+    "replay_gap_task_count": 0,
+    "source_backed_candidate_archetype_count": 36,
+    "source_backed_candidate_row_count": 47208,
+    "source_proxy_or_pending_row_count": 34749,
+    "unresolved_source_gap_count": 0,
+    "unsupported_source_gap_count": 0
+  }
+}
