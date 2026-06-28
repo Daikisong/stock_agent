@@ -1,0 +1,13 @@
+{
+  "findings": [],
+  "schema_version": "research_brain_hardcoding_audit_v1",
+  "summary": {
+    "archetype_fixed_query_count": 0,
+    "company_exception_count": 0,
+    "hardcoding_audit_pass": true,
+    "hardcoding_finding_count": 0,
+    "missing_primitive_fixed_query_count": 0,
+    "source_proxy_auto_promotion_count": 0,
+    "symbol_exception_count": 0
+  }
+}

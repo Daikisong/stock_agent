@@ -1,0 +1,44 @@
+{
+  "schema_version": "e2r_research_memory_usage_policy_v1",
+  "policy": {
+    "research_brain_can_plan": true,
+    "research_brain_can_score": false,
+    "research_brain_can_stage": false,
+    "research_brain_can_mutate_feature_input": false,
+    "research_brain_can_write_score_contribution": false,
+    "evidence_os_required_for_score": true
+  },
+  "source_quality_policy": {
+    "A_URL_BACKED_REPLAY_READY": {
+      "allowed_for_runtime_planning": true,
+      "allowed_for_replay_fixture": true,
+      "allowed_for_score_contribution": false
+    },
+    "B_URL_BACKED_REPAIR_NEEDED": {
+      "allowed_for_runtime_planning": true,
+      "allowed_for_replay_fixture": false,
+      "allowed_for_score_contribution": false
+    },
+    "C_SOURCE_PROXY_ONTOLOGY_ONLY": {
+      "allowed_for_runtime_planning": true,
+      "allowed_for_replay_fixture": false,
+      "allowed_for_score_contribution": false
+    },
+    "D_PRICE_PATH_ONLY_OR_FUTURE_LEAKAGE_RISK": {
+      "allowed_for_runtime_planning": true,
+      "allowed_for_replay_fixture": false,
+      "allowed_for_score_contribution": false
+    },
+    "E_INVALID_OR_DUPLICATE": {
+      "allowed_for_runtime_planning": false,
+      "allowed_for_replay_fixture": false,
+      "allowed_for_score_contribution": false
+    }
+  },
+  "leakage_policy": {
+    "mfe_mae_allowed_in_extraction_prompt": false,
+    "future_outcome_allowed_in_extraction_prompt": false,
+    "source_proxy_only_allowed_as_current_claim": false,
+    "planner_may_see_pattern_summary": true
+  }
+}

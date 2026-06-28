@@ -1,0 +1,88 @@
+{
+  "rows": [
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "general_search_task_count": 3,
+      "must_verify_primitive_count": 13,
+      "official_source_task_count": 6,
+      "primary_archetype_hypothesis": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "recalled_memory_count": 12,
+      "result": "pass",
+      "score_output_key_count": 0,
+      "source_task_count": 6,
+      "stage_override_key_count": 0,
+      "unbounded_source_task_count": 0
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "general_search_task_count": 3,
+      "must_verify_primitive_count": 13,
+      "official_source_task_count": 6,
+      "primary_archetype_hypothesis": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "recalled_memory_count": 12,
+      "result": "pass",
+      "score_output_key_count": 0,
+      "source_task_count": 6,
+      "stage_override_key_count": 0,
+      "unbounded_source_task_count": 0
+    },
+    {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "general_search_task_count": 3,
+      "must_verify_primitive_count": 13,
+      "official_source_task_count": 6,
+      "primary_archetype_hypothesis": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "recalled_memory_count": 12,
+      "result": "pass",
+      "score_output_key_count": 0,
+      "source_task_count": 6,
+      "stage_override_key_count": 0,
+      "unbounded_source_task_count": 0
+    },
+    {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "general_search_task_count": 3,
+      "must_verify_primitive_count": 13,
+      "official_source_task_count": 6,
+      "primary_archetype_hypothesis": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "recalled_memory_count": 12,
+      "result": "pass",
+      "score_output_key_count": 0,
+      "source_task_count": 6,
+      "stage_override_key_count": 0,
+      "unbounded_source_task_count": 0
+    },
+    {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "general_search_task_count": 0,
+      "must_verify_primitive_count": 13,
+      "official_source_task_count": 6,
+      "primary_archetype_hypothesis": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "recalled_memory_count": 12,
+      "result": "pass",
+      "score_output_key_count": 0,
+      "source_task_count": 6,
+      "stage_override_key_count": 0,
+      "unbounded_source_task_count": 0
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "general_search_task_count": 3,
+      "must_verify_primitive_count": 9,
+      "official_source_task_count": 6,
+      "primary_archetype_hypothesis": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "recalled_memory_count": 12,
+      "result": "pass",
+      "score_output_key_count": 0,
+      "source_task_count": 6,
+      "stage_override_key_count": 0,
+      "unbounded_source_task_count": 0
+    }
+  ],
+  "schema_version": "research_brain_planner_replay_results_v1",
+  "summary": {
+    "planner_replay_pass": true,
+    "replay_case_count": 6,
+    "replay_pass_count": 6
+  }
+}

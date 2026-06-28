@@ -1,0 +1,26 @@
+{
+  "schema_version": "e2r_research_brain_v1_config",
+  "default_memory_store_path": "output/research_brain_v1/research_memory_records.jsonl",
+  "default_output_directory": "output/research_brain_v1",
+  "discovery_roots": [
+    "docs",
+    "output",
+    "reports/e2r_calibration",
+    "fixtures/historical",
+    "configs"
+  ],
+  "planner": {
+    "max_memory_patterns": 12,
+    "source_task_defaults": {
+      "max_queries": 3,
+      "max_candidates": 20,
+      "max_fetches": 5
+    },
+    "score_or_stage_output_allowed": false
+  },
+  "dry_run": {
+    "targeted_smoke_only": false,
+    "minimum_candidate_event_count": 30,
+    "candidate_event_gap_policy": "record_provider_or_source_gap"
+  }
+}

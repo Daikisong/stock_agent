@@ -1,0 +1,71 @@
+{
+  "archetype_source_gaps": [],
+  "provider_or_source_gaps": [
+    {
+      "gap_id": "candidate_event_count_below_30",
+      "observed": 8,
+      "reason": "available dry-run fixture/source universe produced fewer than 30 production candidate events",
+      "required": 30
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 1,
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 1,
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 2,
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    }
+  ],
+  "schema_version": "research_brain_gap_inventory_v1",
+  "summary": {
+    "archetype_source_gap_count": 0,
+    "provider_or_source_gap_count": 10,
+    "total_gap_count": 10
+  }
+}

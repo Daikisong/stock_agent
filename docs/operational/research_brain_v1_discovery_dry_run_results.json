@@ -1,0 +1,2426 @@
+{
+  "provider_or_source_gaps": [
+    {
+      "gap_id": "candidate_event_count_below_30",
+      "observed": 8,
+      "reason": "available dry-run fixture/source universe produced fewer than 30 production candidate events",
+      "required": 30
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 1,
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 1,
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 2,
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    }
+  ],
+  "rows": [
+    {
+      "accepted_claim_count": 1,
+      "base_stage": "0",
+      "candidate_event_id": "CEVT-dc344a1ca70bfb38796fdb35",
+      "company_name": "케이전력",
+      "event_date": "2024-05-21",
+      "event_type": "supply_contract",
+      "follow_up_tasks": [
+        {
+          "allowed_domains": [],
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "candidate_event_id": "CEVT-dc344a1ca70bfb38796fdb35",
+          "company_name": "케이전력",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "GeneralWebBeforeOfficialDisclosure"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-004945d012fec5d1f2a7843d",
+            "RMEM-0060b2d76ebc655d725c8169",
+            "RMEM-008bfa65423fbdc43bd0c141",
+            "RMEM-00925e5c6513e0eaca4572e2",
+            "RMEM-009fb32bbc52c10be6ee48a1"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "KIND",
+            "IR"
+          ],
+          "primitive_gap": "revenue_visibility_contract",
+          "reason_from_memory": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:revenue_visibility_contract",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "222222",
+          "task_id": "RSTASK-90b800a2b8bd17157a33c840",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "candidate_event_id": "CEVT-dc344a1ca70bfb38796fdb35",
+          "company_name": "케이전력",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "NewsOnlyForFCF"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-004945d012fec5d1f2a7843d",
+            "RMEM-0060b2d76ebc655d725c8169",
+            "RMEM-008bfa65423fbdc43bd0c141",
+            "RMEM-00925e5c6513e0eaca4572e2",
+            "RMEM-009fb32bbc52c10be6ee48a1"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "CompanyGuide",
+            "IR"
+          ],
+          "primitive_gap": "cash_or_revision_conversion",
+          "reason_from_memory": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:cash_or_revision_conversion",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "222222",
+          "task_id": "RSTASK-912fae6565a3053ac10730c6",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "candidate_event_id": "CEVT-dc344a1ca70bfb38796fdb35",
+          "company_name": "케이전력",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-004945d012fec5d1f2a7843d",
+            "RMEM-0060b2d76ebc655d725c8169",
+            "RMEM-008bfa65423fbdc43bd0c141",
+            "RMEM-00925e5c6513e0eaca4572e2",
+            "RMEM-009fb32bbc52c10be6ee48a1"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "Official",
+            "TrustedNews",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "realized_margin_bridge",
+          "reason_from_memory": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:realized_margin_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "222222",
+          "task_id": "RSTASK-e217d8147f03826ce61a51a8",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "candidate_event_id": "CEVT-dc344a1ca70bfb38796fdb35",
+          "company_name": "케이전력",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-004945d012fec5d1f2a7843d",
+            "RMEM-0060b2d76ebc655d725c8169",
+            "RMEM-008bfa65423fbdc43bd0c141",
+            "RMEM-00925e5c6513e0eaca4572e2",
+            "RMEM-009fb32bbc52c10be6ee48a1"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "Official",
+            "TrustedNews",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "retention_or_renewal_bridge",
+          "reason_from_memory": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:retention_or_renewal_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "222222",
+          "task_id": "RSTASK-c22c0dc860312a2744bcf1d0",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "candidate_event_id": "CEVT-dc344a1ca70bfb38796fdb35",
+          "company_name": "케이전력",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-004945d012fec5d1f2a7843d",
+            "RMEM-0060b2d76ebc655d725c8169",
+            "RMEM-008bfa65423fbdc43bd0c141",
+            "RMEM-00925e5c6513e0eaca4572e2",
+            "RMEM-009fb32bbc52c10be6ee48a1"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "Official",
+            "TrustedNews",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "source_quorum",
+          "reason_from_memory": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:source_quorum",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "222222",
+          "task_id": "RSTASK-7be4f37809fab924cbe17eed",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "candidate_event_id": "CEVT-dc344a1ca70bfb38796fdb35",
+          "company_name": "케이전력",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "BrokerPDF",
+            "TrustedNews"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-004945d012fec5d1f2a7843d",
+            "RMEM-0060b2d76ebc655d725c8169",
+            "RMEM-008bfa65423fbdc43bd0c141",
+            "RMEM-00925e5c6513e0eaca4572e2",
+            "RMEM-009fb32bbc52c10be6ee48a1"
+          ],
+          "preferred_source_classes": [
+            "Official",
+            "DART",
+            "IR"
+          ],
+          "primitive_gap": "regulatory_endpoint_bridge",
+          "reason_from_memory": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:regulatory_endpoint_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "222222",
+          "task_id": "RSTASK-e64ac3f5d8c5177134933eec",
+          "task_type": "positive_verify"
+        }
+      ],
+      "general_search_task_count": 3,
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "blocks green"
+      ],
+      "investigation_status": "PENDING",
+      "official_source_task_count": 6,
+      "primary_archetype_hypothesis": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "provisional_score": null,
+      "recalled_memory_count": 12,
+      "red_team_checks": [
+        "price-only",
+        "false positive"
+      ],
+      "score_valid_status": "pending_evidence_os_claims",
+      "source_task_count": 6,
+      "symbol": "222222",
+      "transition_overlay": "NONE",
+      "verified_score": null
+    },
+    {
+      "accepted_claim_count": 0,
+      "base_stage": "0",
+      "candidate_event_id": "CEVT-498cf925eca54a0f63346b22",
+      "company_name": "실적턴어라운드",
+      "event_date": "2024-05-21",
+      "event_type": "earnings_surprise",
+      "follow_up_tasks": [
+        {
+          "allowed_domains": [],
+          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+          "candidate_event_id": "CEVT-498cf925eca54a0f63346b22",
+          "company_name": "실적턴어라운드",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "GeneralWebBeforeOfficialDisclosure"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0007820b7b5a8d69fdda01f0",
+            "RMEM-001d436f138599a0123ba2c9",
+            "RMEM-005cb4e9379828efb2d094e6",
+            "RMEM-008ec666dd9200cf9549530f",
+            "RMEM-009c328b3acce03ed6f59146"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "KIND",
+            "IR"
+          ],
+          "primitive_gap": "revenue_visibility_contract",
+          "reason_from_memory": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE:revenue_visibility_contract",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "777777",
+          "task_id": "RSTASK-4bbdbbc0b9ea3b79c2345b1f",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+          "candidate_event_id": "CEVT-498cf925eca54a0f63346b22",
+          "company_name": "실적턴어라운드",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "NewsOnlyForFCF"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0007820b7b5a8d69fdda01f0",
+            "RMEM-001d436f138599a0123ba2c9",
+            "RMEM-005cb4e9379828efb2d094e6",
+            "RMEM-008ec666dd9200cf9549530f",
+            "RMEM-009c328b3acce03ed6f59146"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "CompanyGuide",
+            "IR"
+          ],
+          "primitive_gap": "cash_or_revision_conversion",
+          "reason_from_memory": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE:cash_or_revision_conversion",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "777777",
+          "task_id": "RSTASK-f5b20c90e414492e20c308eb",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+          "candidate_event_id": "CEVT-498cf925eca54a0f63346b22",
+          "company_name": "실적턴어라운드",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0007820b7b5a8d69fdda01f0",
+            "RMEM-001d436f138599a0123ba2c9",
+            "RMEM-005cb4e9379828efb2d094e6",
+            "RMEM-008ec666dd9200cf9549530f",
+            "RMEM-009c328b3acce03ed6f59146"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "TrustedNews",
+            "Official",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "realized_margin_bridge",
+          "reason_from_memory": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE:realized_margin_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "777777",
+          "task_id": "RSTASK-2153a6e996720abec7753309",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+          "candidate_event_id": "CEVT-498cf925eca54a0f63346b22",
+          "company_name": "실적턴어라운드",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0007820b7b5a8d69fdda01f0",
+            "RMEM-001d436f138599a0123ba2c9",
+            "RMEM-005cb4e9379828efb2d094e6",
+            "RMEM-008ec666dd9200cf9549530f",
+            "RMEM-009c328b3acce03ed6f59146"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "TrustedNews",
+            "Official",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "source_quorum",
+          "reason_from_memory": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE:source_quorum",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "777777",
+          "task_id": "RSTASK-ab1847889f8a204c7da4a494",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+          "candidate_event_id": "CEVT-498cf925eca54a0f63346b22",
+          "company_name": "실적턴어라운드",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0007820b7b5a8d69fdda01f0",
+            "RMEM-001d436f138599a0123ba2c9",
+            "RMEM-005cb4e9379828efb2d094e6",
+            "RMEM-008ec666dd9200cf9549530f",
+            "RMEM-009c328b3acce03ed6f59146"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "TrustedNews",
+            "Official",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "retention_or_renewal_bridge",
+          "reason_from_memory": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE:retention_or_renewal_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "777777",
+          "task_id": "RSTASK-227da2dfe9b96e25ca561d82",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+          "candidate_event_id": "CEVT-498cf925eca54a0f63346b22",
+          "company_name": "실적턴어라운드",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0007820b7b5a8d69fdda01f0",
+            "RMEM-001d436f138599a0123ba2c9",
+            "RMEM-005cb4e9379828efb2d094e6",
+            "RMEM-008ec666dd9200cf9549530f",
+            "RMEM-009c328b3acce03ed6f59146"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "TrustedNews",
+            "Official",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "yellow",
+          "reason_from_memory": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE:yellow",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "777777",
+          "task_id": "RSTASK-9be2fd81f81f5f6ce0727d2b",
+          "task_type": "positive_verify"
+        }
+      ],
+      "general_search_task_count": 4,
+      "green_blockers": [
+        "yellow",
+        "green requires"
+      ],
+      "investigation_status": "PENDING",
+      "official_source_task_count": 6,
+      "primary_archetype_hypothesis": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "provisional_score": null,
+      "recalled_memory_count": 12,
+      "red_team_checks": [
+        "false positive",
+        "price-only",
+        "hard_break_pattern"
+      ],
+      "score_valid_status": "pending_evidence_os_claims",
+      "source_task_count": 6,
+      "symbol": "777777",
+      "transition_overlay": "NONE",
+      "verified_score": null
+    },
+    {
+      "accepted_claim_count": 1,
+      "base_stage": "0",
+      "candidate_event_id": "CEVT-9308eeccf7af93b32a2b781f",
+      "company_name": "한전변압기",
+      "event_date": "2024-05-21",
+      "event_type": "supply_contract",
+      "follow_up_tasks": [
+        {
+          "allowed_domains": [],
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "candidate_event_id": "CEVT-9308eeccf7af93b32a2b781f",
+          "company_name": "한전변압기",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "GeneralWebBeforeOfficialDisclosure"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-004945d012fec5d1f2a7843d",
+            "RMEM-0060b2d76ebc655d725c8169",
+            "RMEM-008bfa65423fbdc43bd0c141",
+            "RMEM-00925e5c6513e0eaca4572e2",
+            "RMEM-009fb32bbc52c10be6ee48a1"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "KIND",
+            "IR"
+          ],
+          "primitive_gap": "revenue_visibility_contract",
+          "reason_from_memory": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:revenue_visibility_contract",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "111111",
+          "task_id": "RSTASK-13d387bda4a79c79c354c76f",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "candidate_event_id": "CEVT-9308eeccf7af93b32a2b781f",
+          "company_name": "한전변압기",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "NewsOnlyForFCF"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-004945d012fec5d1f2a7843d",
+            "RMEM-0060b2d76ebc655d725c8169",
+            "RMEM-008bfa65423fbdc43bd0c141",
+            "RMEM-00925e5c6513e0eaca4572e2",
+            "RMEM-009fb32bbc52c10be6ee48a1"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "CompanyGuide",
+            "IR"
+          ],
+          "primitive_gap": "cash_or_revision_conversion",
+          "reason_from_memory": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:cash_or_revision_conversion",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "111111",
+          "task_id": "RSTASK-92fb58a76b190b8ffa3c4820",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "candidate_event_id": "CEVT-9308eeccf7af93b32a2b781f",
+          "company_name": "한전변압기",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-004945d012fec5d1f2a7843d",
+            "RMEM-0060b2d76ebc655d725c8169",
+            "RMEM-008bfa65423fbdc43bd0c141",
+            "RMEM-00925e5c6513e0eaca4572e2",
+            "RMEM-009fb32bbc52c10be6ee48a1"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "Official",
+            "TrustedNews",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "realized_margin_bridge",
+          "reason_from_memory": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:realized_margin_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "111111",
+          "task_id": "RSTASK-e7455be923dc89f4793b726e",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "candidate_event_id": "CEVT-9308eeccf7af93b32a2b781f",
+          "company_name": "한전변압기",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-004945d012fec5d1f2a7843d",
+            "RMEM-0060b2d76ebc655d725c8169",
+            "RMEM-008bfa65423fbdc43bd0c141",
+            "RMEM-00925e5c6513e0eaca4572e2",
+            "RMEM-009fb32bbc52c10be6ee48a1"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "Official",
+            "TrustedNews",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "retention_or_renewal_bridge",
+          "reason_from_memory": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:retention_or_renewal_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "111111",
+          "task_id": "RSTASK-161a28ac6887acd100ba3695",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "candidate_event_id": "CEVT-9308eeccf7af93b32a2b781f",
+          "company_name": "한전변압기",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-004945d012fec5d1f2a7843d",
+            "RMEM-0060b2d76ebc655d725c8169",
+            "RMEM-008bfa65423fbdc43bd0c141",
+            "RMEM-00925e5c6513e0eaca4572e2",
+            "RMEM-009fb32bbc52c10be6ee48a1"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "Official",
+            "TrustedNews",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "source_quorum",
+          "reason_from_memory": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:source_quorum",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "111111",
+          "task_id": "RSTASK-47bb021ab5123a0fc99bde88",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "candidate_event_id": "CEVT-9308eeccf7af93b32a2b781f",
+          "company_name": "한전변압기",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "BrokerPDF",
+            "TrustedNews"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-004945d012fec5d1f2a7843d",
+            "RMEM-0060b2d76ebc655d725c8169",
+            "RMEM-008bfa65423fbdc43bd0c141",
+            "RMEM-00925e5c6513e0eaca4572e2",
+            "RMEM-009fb32bbc52c10be6ee48a1"
+          ],
+          "preferred_source_classes": [
+            "Official",
+            "DART",
+            "IR"
+          ],
+          "primitive_gap": "regulatory_endpoint_bridge",
+          "reason_from_memory": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:regulatory_endpoint_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "111111",
+          "task_id": "RSTASK-75270553fd93a36f9dd6d856",
+          "task_type": "positive_verify"
+        }
+      ],
+      "general_search_task_count": 3,
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "blocks green"
+      ],
+      "investigation_status": "PENDING",
+      "official_source_task_count": 6,
+      "primary_archetype_hypothesis": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "provisional_score": null,
+      "recalled_memory_count": 12,
+      "red_team_checks": [
+        "price-only",
+        "false positive"
+      ],
+      "score_valid_status": "pending_evidence_os_claims",
+      "source_task_count": 6,
+      "symbol": "111111",
+      "transition_overlay": "NONE",
+      "verified_score": null
+    },
+    {
+      "accepted_claim_count": 1,
+      "base_stage": "0",
+      "candidate_event_id": "CEVT-b4cddd15b24c008dc14f91e9",
+      "company_name": "씨파워설비",
+      "event_date": "2024-05-21",
+      "event_type": "facility_investment",
+      "follow_up_tasks": [
+        {
+          "allowed_domains": [],
+          "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "candidate_event_id": "CEVT-b4cddd15b24c008dc14f91e9",
+          "company_name": "씨파워설비",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0001f28ab00565c4afbdbba6",
+            "RMEM-0006224f8fda0d6f79ab0851",
+            "RMEM-000715e5ca5dc9d9fc2f467a",
+            "RMEM-0009fec142c189936fc315e9",
+            "RMEM-00158787301f48cd5a0a6413"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "BrokerPDF",
+            "TrustedNews",
+            "Official"
+          ],
+          "primitive_gap": "retention_or_renewal_bridge",
+          "reason_from_memory": "C06_HBM_MEMORY_CUSTOMER_CAPACITY:retention_or_renewal_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "333333",
+          "task_id": "RSTASK-9345ccd56d1e26c6458f9ab8",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "candidate_event_id": "CEVT-b4cddd15b24c008dc14f91e9",
+          "company_name": "씨파워설비",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0001f28ab00565c4afbdbba6",
+            "RMEM-0006224f8fda0d6f79ab0851",
+            "RMEM-000715e5ca5dc9d9fc2f467a",
+            "RMEM-0009fec142c189936fc315e9",
+            "RMEM-00158787301f48cd5a0a6413"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "BrokerPDF",
+            "TrustedNews",
+            "Official"
+          ],
+          "primitive_gap": "customer_preorder_or_allocation",
+          "reason_from_memory": "C06_HBM_MEMORY_CUSTOMER_CAPACITY:customer_preorder_or_allocation",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "333333",
+          "task_id": "RSTASK-b5a0943deb04ee63da605e07",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "candidate_event_id": "CEVT-b4cddd15b24c008dc14f91e9",
+          "company_name": "씨파워설비",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "GeneralWebBeforeOfficialDisclosure"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0001f28ab00565c4afbdbba6",
+            "RMEM-0006224f8fda0d6f79ab0851",
+            "RMEM-000715e5ca5dc9d9fc2f467a",
+            "RMEM-0009fec142c189936fc315e9",
+            "RMEM-00158787301f48cd5a0a6413"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "KIND",
+            "IR"
+          ],
+          "primitive_gap": "revenue_visibility_contract",
+          "reason_from_memory": "C06_HBM_MEMORY_CUSTOMER_CAPACITY:revenue_visibility_contract",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "333333",
+          "task_id": "RSTASK-05e4ce526caf7391dd29b905",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "candidate_event_id": "CEVT-b4cddd15b24c008dc14f91e9",
+          "company_name": "씨파워설비",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0001f28ab00565c4afbdbba6",
+            "RMEM-0006224f8fda0d6f79ab0851",
+            "RMEM-000715e5ca5dc9d9fc2f467a",
+            "RMEM-0009fec142c189936fc315e9",
+            "RMEM-00158787301f48cd5a0a6413"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "BrokerPDF",
+            "TrustedNews",
+            "Official"
+          ],
+          "primitive_gap": "realized_margin_bridge",
+          "reason_from_memory": "C06_HBM_MEMORY_CUSTOMER_CAPACITY:realized_margin_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "333333",
+          "task_id": "RSTASK-791c3cc0e6fa872778565ded",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "candidate_event_id": "CEVT-b4cddd15b24c008dc14f91e9",
+          "company_name": "씨파워설비",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0001f28ab00565c4afbdbba6",
+            "RMEM-0006224f8fda0d6f79ab0851",
+            "RMEM-000715e5ca5dc9d9fc2f467a",
+            "RMEM-0009fec142c189936fc315e9",
+            "RMEM-00158787301f48cd5a0a6413"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "BrokerPDF",
+            "TrustedNews",
+            "Official"
+          ],
+          "primitive_gap": "source_quorum",
+          "reason_from_memory": "C06_HBM_MEMORY_CUSTOMER_CAPACITY:source_quorum",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "333333",
+          "task_id": "RSTASK-b04bfe3801f78d30ac88eec2",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "candidate_event_id": "CEVT-b4cddd15b24c008dc14f91e9",
+          "company_name": "씨파워설비",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0001f28ab00565c4afbdbba6",
+            "RMEM-0006224f8fda0d6f79ab0851",
+            "RMEM-000715e5ca5dc9d9fc2f467a",
+            "RMEM-0009fec142c189936fc315e9",
+            "RMEM-00158787301f48cd5a0a6413"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "BrokerPDF",
+            "TrustedNews",
+            "Official"
+          ],
+          "primitive_gap": "hbm_capacity_pre_sold",
+          "reason_from_memory": "C06_HBM_MEMORY_CUSTOMER_CAPACITY:hbm_capacity_pre_sold",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "333333",
+          "task_id": "RSTASK-3f7c9ce8963fed0f20f9610c",
+          "task_type": "positive_verify"
+        }
+      ],
+      "general_search_task_count": 5,
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "blocks green"
+      ],
+      "investigation_status": "PENDING",
+      "official_source_task_count": 6,
+      "primary_archetype_hypothesis": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "provisional_score": null,
+      "recalled_memory_count": 12,
+      "red_team_checks": [
+        "false positive",
+        "price-only",
+        "sympathy"
+      ],
+      "score_valid_status": "pending_evidence_os_claims",
+      "source_task_count": 6,
+      "symbol": "333333",
+      "transition_overlay": "NONE",
+      "verified_score": null
+    },
+    {
+      "accepted_claim_count": 0,
+      "base_stage": "0",
+      "candidate_event_id": "CEVT-60e439a06c10e8c789802a5a",
+      "company_name": "가격만강세",
+      "event_date": "2024-05-21",
+      "event_type": "relative_strength",
+      "follow_up_tasks": [
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-60e439a06c10e8c789802a5a",
+          "company_name": "가격만강세",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "GeneralWebBeforeOfficialDisclosure"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "KIND",
+            "IR"
+          ],
+          "primitive_gap": "revenue_visibility_contract",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:revenue_visibility_contract",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "444444",
+          "task_id": "RSTASK-01d3c379fe7e2ce16d7c87d6",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-60e439a06c10e8c789802a5a",
+          "company_name": "가격만강세",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "TrustedNews",
+            "Official",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "source_quorum",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:source_quorum",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "444444",
+          "task_id": "RSTASK-79c19e001da9ed0e419ecac8",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-60e439a06c10e8c789802a5a",
+          "company_name": "가격만강세",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "TrustedNews",
+            "Official",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "realized_margin_bridge",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:realized_margin_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "444444",
+          "task_id": "RSTASK-532217ec13be9fe28ee70687",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-60e439a06c10e8c789802a5a",
+          "company_name": "가격만강세",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "TrustedNews",
+            "Official",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "retention_or_renewal_bridge",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:retention_or_renewal_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "444444",
+          "task_id": "RSTASK-04a984d9ec58b5c463cbba78",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-60e439a06c10e8c789802a5a",
+          "company_name": "가격만강세",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "BrokerPDF",
+            "TrustedNews"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "Official",
+            "DART",
+            "IR"
+          ],
+          "primitive_gap": "regulatory_endpoint_bridge",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:regulatory_endpoint_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "444444",
+          "task_id": "RSTASK-7ce83efa21826e8403d9f66e",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-60e439a06c10e8c789802a5a",
+          "company_name": "가격만강세",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "NewsOnlyForFCF"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "CompanyGuide",
+            "IR"
+          ],
+          "primitive_gap": "cash_or_revision_conversion",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:cash_or_revision_conversion",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "444444",
+          "task_id": "RSTASK-36cadf06521b6e1a93ba0bcc",
+          "task_type": "positive_verify"
+        }
+      ],
+      "general_search_task_count": 3,
+      "green_blockers": [
+        "yellow",
+        "blocks green",
+        "green requires",
+        "green blocked",
+        "green blocker"
+      ],
+      "investigation_status": "PENDING",
+      "official_source_task_count": 6,
+      "primary_archetype_hypothesis": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "provisional_score": null,
+      "recalled_memory_count": 12,
+      "red_team_checks": [
+        "sympathy",
+        "false positive",
+        "price-only"
+      ],
+      "score_valid_status": "pending_evidence_os_claims",
+      "source_task_count": 6,
+      "symbol": "444444",
+      "transition_overlay": "NONE",
+      "verified_score": null
+    },
+    {
+      "accepted_claim_count": 0,
+      "base_stage": "0",
+      "candidate_event_id": "CEVT-ffcd8c39244298ab34f1a190",
+      "company_name": "금융위소스",
+      "event_date": "2024-05-21",
+      "event_type": "relative_strength",
+      "follow_up_tasks": [
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-ffcd8c39244298ab34f1a190",
+          "company_name": "금융위소스",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "GeneralWebBeforeOfficialDisclosure"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "KIND",
+            "IR"
+          ],
+          "primitive_gap": "revenue_visibility_contract",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:revenue_visibility_contract",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "888888",
+          "task_id": "RSTASK-0cf2f982b0504e6d5ffe9b4c",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-ffcd8c39244298ab34f1a190",
+          "company_name": "금융위소스",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "TrustedNews",
+            "Official",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "source_quorum",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:source_quorum",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "888888",
+          "task_id": "RSTASK-e7f143a41ec7c8a6c2e25d53",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-ffcd8c39244298ab34f1a190",
+          "company_name": "금융위소스",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "TrustedNews",
+            "Official",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "realized_margin_bridge",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:realized_margin_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "888888",
+          "task_id": "RSTASK-153f794e54814db7449a4184",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-ffcd8c39244298ab34f1a190",
+          "company_name": "금융위소스",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "TrustedNews",
+            "Official",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "retention_or_renewal_bridge",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:retention_or_renewal_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "888888",
+          "task_id": "RSTASK-06c97c7610c9cbea65e9beba",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-ffcd8c39244298ab34f1a190",
+          "company_name": "금융위소스",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "BrokerPDF",
+            "TrustedNews"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "Official",
+            "DART",
+            "IR"
+          ],
+          "primitive_gap": "regulatory_endpoint_bridge",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:regulatory_endpoint_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "888888",
+          "task_id": "RSTASK-f2c3cb83a5b010fae0b9410e",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-ffcd8c39244298ab34f1a190",
+          "company_name": "금융위소스",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "NewsOnlyForFCF"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "CompanyGuide",
+            "IR"
+          ],
+          "primitive_gap": "cash_or_revision_conversion",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:cash_or_revision_conversion",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "888888",
+          "task_id": "RSTASK-84dd7ad080e050aea917bc5a",
+          "task_type": "positive_verify"
+        }
+      ],
+      "general_search_task_count": 3,
+      "green_blockers": [
+        "yellow",
+        "blocks green",
+        "green requires",
+        "green blocked",
+        "green blocker"
+      ],
+      "investigation_status": "PENDING",
+      "official_source_task_count": 6,
+      "primary_archetype_hypothesis": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "provisional_score": null,
+      "recalled_memory_count": 12,
+      "red_team_checks": [
+        "sympathy",
+        "false positive",
+        "price-only"
+      ],
+      "score_valid_status": "pending_evidence_os_claims",
+      "source_task_count": 6,
+      "symbol": "888888",
+      "transition_overlay": "NONE",
+      "verified_score": null
+    },
+    {
+      "accepted_claim_count": 1,
+      "base_stage": "0",
+      "candidate_event_id": "CEVT-f49dc0a9d6840465a89a7c79",
+      "company_name": "관리위험",
+      "event_date": "2024-05-21",
+      "event_type": "risk_event",
+      "follow_up_tasks": [
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+          "candidate_event_id": "CEVT-f49dc0a9d6840465a89a7c79",
+          "company_name": "관리위험",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "TrustedNews"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0007f4182444b90cf62e4a9a",
+            "RMEM-000afea2893a35a87f95896a",
+            "RMEM-00113533511403782dabd969",
+            "RMEM-0014b191688d90d0ed4d5477",
+            "RMEM-0015e6eb79834b4da029abf6"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "Official",
+            "BrokerPDF",
+            "KIND"
+          ],
+          "primitive_gap": "retention_or_renewal_bridge",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL:retention_or_renewal_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "555555",
+          "task_id": "RSTASK-a622c1e0caf443fca1c0ebbf",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+          "candidate_event_id": "CEVT-f49dc0a9d6840465a89a7c79",
+          "company_name": "관리위험",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "GeneralWebBeforeOfficialDisclosure"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0007f4182444b90cf62e4a9a",
+            "RMEM-000afea2893a35a87f95896a",
+            "RMEM-00113533511403782dabd969",
+            "RMEM-0014b191688d90d0ed4d5477",
+            "RMEM-0015e6eb79834b4da029abf6"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "KIND",
+            "IR"
+          ],
+          "primitive_gap": "revenue_visibility_contract",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL:revenue_visibility_contract",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "555555",
+          "task_id": "RSTASK-26a02eacdd64e1bad5d99ea5",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+          "candidate_event_id": "CEVT-f49dc0a9d6840465a89a7c79",
+          "company_name": "관리위험",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "TrustedNews"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0007f4182444b90cf62e4a9a",
+            "RMEM-000afea2893a35a87f95896a",
+            "RMEM-00113533511403782dabd969",
+            "RMEM-0014b191688d90d0ed4d5477",
+            "RMEM-0015e6eb79834b4da029abf6"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "Official",
+            "BrokerPDF",
+            "KIND"
+          ],
+          "primitive_gap": "source_quorum",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL:source_quorum",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "555555",
+          "task_id": "RSTASK-49cdc72889b7f46f9b617c5d",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+          "candidate_event_id": "CEVT-f49dc0a9d6840465a89a7c79",
+          "company_name": "관리위험",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "TrustedNews"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0007f4182444b90cf62e4a9a",
+            "RMEM-000afea2893a35a87f95896a",
+            "RMEM-00113533511403782dabd969",
+            "RMEM-0014b191688d90d0ed4d5477",
+            "RMEM-0015e6eb79834b4da029abf6"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "Official",
+            "BrokerPDF",
+            "KIND"
+          ],
+          "primitive_gap": "realized_margin_bridge",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL:realized_margin_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "555555",
+          "task_id": "RSTASK-8ffdd40487aa5711d9622927",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+          "candidate_event_id": "CEVT-f49dc0a9d6840465a89a7c79",
+          "company_name": "관리위험",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "BrokerPDF",
+            "TrustedNews"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0007f4182444b90cf62e4a9a",
+            "RMEM-000afea2893a35a87f95896a",
+            "RMEM-00113533511403782dabd969",
+            "RMEM-0014b191688d90d0ed4d5477",
+            "RMEM-0015e6eb79834b4da029abf6"
+          ],
+          "preferred_source_classes": [
+            "Official",
+            "DART",
+            "IR"
+          ],
+          "primitive_gap": "regulatory_endpoint_bridge",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL:regulatory_endpoint_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "555555",
+          "task_id": "RSTASK-265001eeea118fcfcb73d283",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+          "candidate_event_id": "CEVT-f49dc0a9d6840465a89a7c79",
+          "company_name": "관리위험",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "NewsOnlyForFCF"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-0007f4182444b90cf62e4a9a",
+            "RMEM-000afea2893a35a87f95896a",
+            "RMEM-00113533511403782dabd969",
+            "RMEM-0014b191688d90d0ed4d5477",
+            "RMEM-0015e6eb79834b4da029abf6"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "CompanyGuide",
+            "IR"
+          ],
+          "primitive_gap": "cash_or_revision_conversion",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL:cash_or_revision_conversion",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "555555",
+          "task_id": "RSTASK-0ab733b99b4a6f9c96f6b693",
+          "task_type": "positive_verify"
+        }
+      ],
+      "general_search_task_count": 0,
+      "green_blockers": [
+        "yellow",
+        "blocks green",
+        "green requires",
+        "green blocked",
+        "green blocker"
+      ],
+      "investigation_status": "PENDING",
+      "official_source_task_count": 6,
+      "primary_archetype_hypothesis": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "provisional_score": null,
+      "recalled_memory_count": 12,
+      "red_team_checks": [
+        "price-only",
+        "false positive"
+      ],
+      "score_valid_status": "pending_evidence_os_claims",
+      "source_task_count": 6,
+      "symbol": "555555",
+      "transition_overlay": "NONE",
+      "verified_score": null
+    },
+    {
+      "accepted_claim_count": 1,
+      "base_stage": "0",
+      "candidate_event_id": "CEVT-ccbe4bddf29e01a2235f07fe",
+      "company_name": "희석테크",
+      "event_date": "2024-05-21",
+      "event_type": "relative_strength",
+      "follow_up_tasks": [
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-ccbe4bddf29e01a2235f07fe",
+          "company_name": "희석테크",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "GeneralWebBeforeOfficialDisclosure"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "KIND",
+            "IR"
+          ],
+          "primitive_gap": "revenue_visibility_contract",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:revenue_visibility_contract",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "666666",
+          "task_id": "RSTASK-876260583433561233326925",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-ccbe4bddf29e01a2235f07fe",
+          "company_name": "희석테크",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "TrustedNews",
+            "Official",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "source_quorum",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:source_quorum",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "666666",
+          "task_id": "RSTASK-dc4f1f619a4aac9a66533789",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-ccbe4bddf29e01a2235f07fe",
+          "company_name": "희석테크",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "TrustedNews",
+            "Official",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "realized_margin_bridge",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:realized_margin_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "666666",
+          "task_id": "RSTASK-67376bc94002d71afd772d9e",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-ccbe4bddf29e01a2235f07fe",
+          "company_name": "희석테크",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": true,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "IR",
+            "TrustedNews",
+            "Official",
+            "BrokerPDF"
+          ],
+          "primitive_gap": "retention_or_renewal_bridge",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:retention_or_renewal_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "666666",
+          "task_id": "RSTASK-1dc63bfab271008c99a766af",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-ccbe4bddf29e01a2235f07fe",
+          "company_name": "희석테크",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "BrokerPDF",
+            "TrustedNews"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "Official",
+            "DART",
+            "IR"
+          ],
+          "primitive_gap": "regulatory_endpoint_bridge",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:regulatory_endpoint_bridge",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "666666",
+          "task_id": "RSTASK-3e7337e25721ee39f57c0285",
+          "task_type": "positive_verify"
+        },
+        {
+          "allowed_domains": [],
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "candidate_event_id": "CEVT-ccbe4bddf29e01a2235f07fe",
+          "company_name": "희석테크",
+          "date_window": {
+            "end": "2024-05-21",
+            "lookback_days": 540
+          },
+          "fallback_source_classes": [
+            "Official",
+            "BrokerPDF"
+          ],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "NewsOnlyForFCF"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": true,
+          "max_candidates": 20,
+          "max_fetches": 5,
+          "max_queries": 3,
+          "memory_record_ids": [
+            "RMEM-00112b96058c9e47cbb90028",
+            "RMEM-001b1f65b93893330b7f7757",
+            "RMEM-002a5133de2bbffecd7cf332",
+            "RMEM-002ac19c6eabb04f437c3d2f",
+            "RMEM-002cbc964bb0c94558a1b5b0"
+          ],
+          "preferred_source_classes": [
+            "DART",
+            "CompanyGuide",
+            "IR"
+          ],
+          "primitive_gap": "cash_or_revision_conversion",
+          "reason_from_memory": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:cash_or_revision_conversion",
+          "stop_condition": {
+            "accepted_claim_count": 1,
+            "counter_claim_check_done": true
+          },
+          "symbol": "666666",
+          "task_id": "RSTASK-24f8af1e22ee6ff8ddf6419e",
+          "task_type": "positive_verify"
+        }
+      ],
+      "general_search_task_count": 3,
+      "green_blockers": [
+        "yellow",
+        "blocks green",
+        "green requires",
+        "green blocked",
+        "green blocker"
+      ],
+      "investigation_status": "PENDING",
+      "official_source_task_count": 6,
+      "primary_archetype_hypothesis": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "provisional_score": null,
+      "recalled_memory_count": 12,
+      "red_team_checks": [
+        "sympathy",
+        "false positive",
+        "price-only"
+      ],
+      "score_valid_status": "pending_evidence_os_claims",
+      "source_task_count": 6,
+      "symbol": "666666",
+      "transition_overlay": "NONE",
+      "verified_score": null
+    }
+  ],
+  "schema_version": "research_brain_discovery_dry_run_results_v1",
+  "sector_rows": [
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 1,
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 1,
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 2,
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "required_attempt_count": 3,
+      "status": "provider_or_fixture_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 4,
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "required_attempt_count": 3,
+      "status": "pass"
+    }
+  ],
+  "summary": {
+    "accepted_claim_count": 5,
+    "candidate_event_count": 8,
+    "candidate_event_requirement_status": "provider_or_source_gap_recorded",
+    "deterministic_stage_output_count": 8,
+    "discovery_dry_run_pass": true,
+    "general_search_task_count": 24,
+    "general_search_task_ratio": 0.5,
+    "official_source_task_count": 48,
+    "official_task_ratio": 1.0,
+    "sector_gap_count": 9,
+    "source_task_count": 48,
+    "targeted_smoke_only": false
+  }
+}

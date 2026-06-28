@@ -1,0 +1,4632 @@
+{
+  "rows": [
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "failure_patterns": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence12:L2",
+        "fence4:L7",
+        "fence17:row2",
+        "L142-L147",
+        "L446-L465"
+      ],
+      "false_positive_patterns": [
+        "false positive",
+        "price-only",
+        "profile only",
+        "가격만",
+        "sympathy"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "L258:table6",
+        "fence10:row2",
+        "L92:table8",
+        "L103:table3",
+        "L93:table1",
+        "fence14:L3",
+        "fence1",
+        "fence3:L2"
+      ],
+      "four_c_thesis_break_conditions": [
+        "fence8:L21",
+        "L5-L25",
+        "fence9:L10",
+        "fence15:L6",
+        "L228:table1",
+        "L128:table5",
+        "source_proxy_only row is ontology/planning only.",
+        "fence3:L12"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "보류",
+        "green blocker",
+        "green blocked"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "memory_record_count": 13843,
+      "ontology_only_count": 1003,
+      "optional_primitives_observed": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "positive_patterns": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence3:L20",
+        "L446-L465",
+        "L288:table1",
+        "L286-L299",
+        "L104-L109"
+      ],
+      "price_path_only_count": 5449,
+      "production_fixture_count": 39,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first"
+      ],
+      "required_primitives_observed": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "CompanyGuide",
+        "DART",
+        "BrokerPDF",
+        "KIND"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "L242:table7"
+      ],
+      "source_proxy_count": 5923,
+      "source_routes": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "BrokerPDF",
+        "CompanyGuide",
+        "DART",
+        "KIND"
+      ],
+      "stage2_cap_conditions": [
+        "L318-L321",
+        "fence10:L23",
+        "fence1:row2",
+        "fence14:L1",
+        "L183-L188",
+        "fence4:L16",
+        "L272-L303",
+        "L229-L231"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 1106,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "failure_patterns": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence9",
+        "L550-L554",
+        "L137-L142",
+        "L158-L158",
+        "L35:table7",
+        "fence20:L3"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "false positive",
+        "profile only",
+        "sympathy"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "L275:table1",
+        "source_proxy_only row is ontology/planning only.",
+        "L118-L164",
+        "fence19",
+        "fence7:L11",
+        "L5-L40"
+      ],
+      "four_c_thesis_break_conditions": [
+        "L114-L121",
+        "source_proxy_only row is ontology/planning only.",
+        "$.sample_green_case_rows[15]",
+        "fence14:L8",
+        "L187-L198"
+      ],
+      "green_blockers": [
+        "yellow",
+        "blocks green",
+        "green blocked",
+        "green blocker",
+        "green requires"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "contract_cancellation",
+        "accounting_trust_break"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "memory_record_count": 16031,
+      "ontology_only_count": 1267,
+      "optional_primitives_observed": [
+        "realized_margin_bridge",
+        "revenue_visibility_contract",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "hbm_capacity_pre_sold",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "positive_patterns": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence3:L4",
+        "fence6:L1",
+        "$.archetype_pair_rows[1]",
+        "fence13:L2",
+        "L526-L531"
+      ],
+      "price_path_only_count": 5961,
+      "production_fixture_count": 83,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first",
+        "llm_generated_context_query"
+      ],
+      "required_primitives_observed": [
+        "realized_margin_bridge",
+        "revenue_visibility_contract",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "hbm_capacity_pre_sold",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "R1",
+        "DART",
+        "company_news",
+        "TrustedNews",
+        "BrokerPDF",
+        "CompanyGuide",
+        "KIND",
+        "company_ir",
+        "`C02_POWER_GRID_DATACENTER_CAPEX`",
+        "https://www.hyosung.com/en/newsroom/view/18994",
+        "official_disclosure_plus_broker_supplement",
+        "https://www.taihan.com/en/news/pr/taihanNews",
+        "broker_news_proxy",
+        "Songdaiki/stock-web",
+        "company_ir_pdf",
+        "https://www.hd-hyundaielectric.com/elect/en/IR/IRdata1.jsp",
+        "https://www.ls-electric.com/ko/company/data/24_4Q_Results.pdf",
+        "https://securities.miraeasset.com/bbs/download/2129191.pdf?attachmentId=2129191 ; supplemental=https://securities.miraeasset.com/bbs/download/2125425.pdf?attachmentId=2125425",
+        "https://kind.krx.co.kr/common/disclsviewer.do?acptno=20240318000363&docno=&method=search&viewerhost= ; supplemental=https://www.myasset.com/myasset/research/rs_list/rs_view.cmd?SEQ=193547&cd006=&cd007=RE01&cd008="
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "L345-L351",
+        "fence2:row1"
+      ],
+      "source_proxy_count": 7558,
+      "source_routes": [
+        "IR",
+        "BrokerPDF",
+        "Official",
+        "TrustedNews",
+        "DART",
+        "KIND",
+        "CompanyGuide"
+      ],
+      "stage2_cap_conditions": [
+        "fence22:L23",
+        "fence16:L2",
+        "L279-L310",
+        "source_proxy_only row is ontology/planning only.",
+        "fence18:L4",
+        "fence3:L2",
+        "fence9:L2",
+        "fence10"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 1219,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [
+        "news_only_cashflow_query"
+      ],
+      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "failure_patterns": [
+        "source_proxy_only row is ontology/planning only.",
+        "L48:table25",
+        "fence15:L4",
+        "fence3:L6",
+        "L380-L389",
+        "L189-L191"
+      ],
+      "false_positive_patterns": [
+        "sympathy",
+        "price-only",
+        "false positive",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L21-L58",
+        "fence31:L2",
+        "L219-L224",
+        "fence4",
+        "fence8:L3",
+        "L65-L73"
+      ],
+      "four_c_thesis_break_conditions": [
+        "fence2",
+        "source_proxy_only row is ontology/planning only.",
+        "fence20:row3",
+        "fence38",
+        "L190:table1",
+        "L238:table1"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "blocks green"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "contract_cancellation",
+        "accounting_trust_break"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "memory_record_count": 12052,
+      "ontology_only_count": 1004,
+      "optional_primitives_observed": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge",
+        "hbm_capacity_pre_sold",
+        "customer_preorder_or_allocation"
+      ],
+      "positive_patterns": [
+        "fence17:row2",
+        "L297-L304",
+        "L94-L103",
+        "fence7:L8",
+        "fence18:L4",
+        "fence4",
+        "L77:table1",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "price_path_only_count": 4387,
+      "production_fixture_count": 29,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first"
+      ],
+      "required_primitives_observed": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge",
+        "hbm_capacity_pre_sold",
+        "customer_preorder_or_allocation"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "BrokerPDF",
+        "Official",
+        "CompanyGuide",
+        "TrustedNews",
+        "DART"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence19"
+      ],
+      "source_proxy_count": 6277,
+      "source_routes": [
+        "IR",
+        "BrokerPDF",
+        "TrustedNews",
+        "Official",
+        "CompanyGuide",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "fence5:L17",
+        "fence41:L2",
+        "fence3:L6",
+        "fence5:L2",
+        "L99-L125",
+        "fence41:L3",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 465,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "failure_patterns": [
+        "L184-L189",
+        "L86-L91",
+        "fence17:L2",
+        "L196-L200",
+        "source_proxy_only row is ontology/planning only.",
+        "L128-L132"
+      ],
+      "false_positive_patterns": [
+        "false positive",
+        "price-only",
+        "sympathy",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L25-L30",
+        "fence11:L32",
+        "L97-L130",
+        "L146-L151",
+        "fence9:L2"
+      ],
+      "four_c_thesis_break_conditions": [
+        "L251:table4",
+        "source_proxy_only row is ontology/planning only.",
+        "L179-L201",
+        "fence10:$",
+        "L255-L260",
+        "L65-L73",
+        "fence40:L3"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green blocked",
+        "green requires",
+        "blocks green"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "contract_cancellation",
+        "accounting_trust_break"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "memory_record_count": 10379,
+      "ontology_only_count": 829,
+      "optional_primitives_observed": [
+        "customer_preorder_or_allocation",
+        "revenue_visibility_contract",
+        "regulatory_endpoint_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "retention_or_renewal_bridge",
+        "realized_margin_bridge"
+      ],
+      "positive_patterns": [
+        "fence11",
+        "L253-L259",
+        "L74:table3",
+        "fence12",
+        "fence9:L1",
+        "L304-L324",
+        "fence40:L3",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "price_path_only_count": 3919,
+      "production_fixture_count": 29,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "customer_preorder_or_allocation",
+        "revenue_visibility_contract",
+        "regulatory_endpoint_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "retention_or_renewal_bridge",
+        "realized_margin_bridge"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "CompanyGuide",
+        "Official",
+        "TrustedNews",
+        "BrokerPDF",
+        "KIND"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "L210-L226"
+      ],
+      "source_proxy_count": 5222,
+      "source_routes": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "CompanyGuide",
+        "BrokerPDF",
+        "KIND"
+      ],
+      "stage2_cap_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence18:L2",
+        "fence5:L4"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 435,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "failure_patterns": [
+        "fence1",
+        "L278-L292",
+        "L183-L188",
+        "source_proxy_only row is ontology/planning only.",
+        "fence41:L2",
+        "fence13:L3",
+        "fence18:L2",
+        "L274-L281"
+      ],
+      "false_positive_patterns": [
+        "false positive",
+        "profile only",
+        "price-only",
+        "weather"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "L108:table1",
+        "source_proxy_only row is ontology/planning only.",
+        "fence5:L2",
+        "fence15:L3",
+        "L150-L153",
+        "L113:table3",
+        "fence3:L13",
+        "fence3:L27"
+      ],
+      "four_c_thesis_break_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L192:table2",
+        "L85-L89",
+        "fence2:L3",
+        "L135:table4",
+        "L129:table5"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "green blocked",
+        "보류",
+        "green blocker",
+        "blocks green"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "memory_record_count": 15468,
+      "ontology_only_count": 957,
+      "optional_primitives_observed": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "positive_patterns": [
+        "L97:table2",
+        "L194:table4",
+        "source_proxy_only row is ontology/planning only.",
+        "L125:table1",
+        "fence2:L13",
+        "L98:table3"
+      ],
+      "price_path_only_count": 6397,
+      "production_fixture_count": 83,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first"
+      ],
+      "required_primitives_observed": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "DART",
+        "TrustedNews",
+        "https://www.marketscreener.com/quote/stock/TAE-KWANG-CORPORATION-6496662/company/",
+        "CompanyGuide",
+        "BrokerPDF",
+        "KIND",
+        "Official",
+        "https://www.doosanenerbility.com/en/investment/ir/down/460",
+        "https://www.sejinheavy.com/eng_sub0_0.asp",
+        "https://english.hy-lok.com/industries/Lng.hylok",
+        "https://www.opco.co.kr/eng/main/main.php",
+        "https://stock.pstatic.net/stock-research/company/31/20250516_company_757449000.pdf",
+        "https://www.hisnt.com/eng/main/main.html",
+        "https://www.yna.co.kr/view/AKR20241125031800051",
+        "https://www.hanwhaocean.com/en/investors/fi/cfs/",
+        "https://www.deepsearch.com/analytics/company-analysis/KRX%3A103230?c-symbol=KRX%3A103230",
+        "https://market.edaily.co.kr/stock/014620/investments/",
+        "https://news.nate.com/view/20240403n07160?mid=n0304",
+        "https://w4.kirs.or.kr/download/research/240611_%EB%8C%80%EC%96%91%EC%A0%84%EA%B8%B0%EA%B3%B5%EC%97%85.pdf",
+        "https://www.imarinenews.com/20846.html",
+        "https://en.yna.co.kr/view/AEN20240725007000320",
+        "https://www.yna.co.kr/view/AKR20240424097951527",
+        "https://www.hd.com/en/newsroom/media-hub/press/view?detailsKey=3176",
+        "https://hd-hhi.com/en/investors/ir-data/earnings-release",
+        "https://www.tradingview.com/symbols/KRX-099410/",
+        "https://file.alphasquare.co.kr/media/pdfs/company-report/_20071451-033500.pdf",
+        "https://www.lscns.co.kr/en/pr/news_view.asp?brd_id=news1&idx=118000&lang_cd=en&mode=MOD",
+        "https://v.daum.net/v/8PVykLNfvD?f=p",
+        "https://www.businesspost.co.kr/BP?command=article_view&num=370154",
+        "https://kspvalve.tradekorea.com/company.do",
+        "https://kind.krx.co.kr/common/disclsviewer.do?acptno=20250317001055&docno=&method=search&viewerhost="
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 5615,
+      "source_routes": [
+        "IR",
+        "DART",
+        "KIND",
+        "Official",
+        "BrokerPDF",
+        "TrustedNews",
+        "CompanyGuide"
+      ],
+      "stage2_cap_conditions": [
+        "L204:table3",
+        "L172:table4",
+        "fence5:L1",
+        "fence3:L25",
+        "L146-L153",
+        "L109:table12",
+        "L93-L100",
+        "fence11:L16"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 1520,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_patterns": [
+        "L26:table9",
+        "L146:table3",
+        "source_proxy_only row is ontology/planning only.",
+        "fence20:L2",
+        "fence25:L12",
+        "L26:table7",
+        "L282-L306"
+      ],
+      "false_positive_patterns": [
+        "sympathy",
+        "false positive",
+        "price-only",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence7:L4",
+        "fence6:L20",
+        "fence41",
+        "L327:table1"
+      ],
+      "four_c_thesis_break_conditions": [
+        "L77-L85",
+        "source_proxy_only row is ontology/planning only.",
+        "L138:table5",
+        "L113-L117",
+        "L134-L139",
+        "fence25:L7"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "blocks green"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "memory_record_count": 12752,
+      "ontology_only_count": 1161,
+      "optional_primitives_observed": [
+        "retention_or_renewal_bridge",
+        "customer_preorder_or_allocation",
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "source_quorum",
+        "hbm_capacity_pre_sold",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge"
+      ],
+      "positive_patterns": [
+        "fence7:L2",
+        "fence15",
+        "fence3:L5",
+        "L402-L404",
+        "source_proxy_only row is ontology/planning only.",
+        "fence14:L3"
+      ],
+      "price_path_only_count": 3996,
+      "production_fixture_count": 24,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first",
+        "llm_generated_context_query"
+      ],
+      "required_primitives_observed": [
+        "retention_or_renewal_bridge",
+        "customer_preorder_or_allocation",
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "source_quorum",
+        "hbm_capacity_pre_sold",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "TrustedNews",
+        "Official",
+        "CompanyGuide",
+        "DART",
+        "BrokerPDF",
+        "KIND"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence14:L6"
+      ],
+      "source_proxy_count": 7103,
+      "source_routes": [
+        "IR",
+        "BrokerPDF",
+        "TrustedNews",
+        "Official",
+        "CompanyGuide",
+        "DART",
+        "KIND"
+      ],
+      "stage2_cap_conditions": [
+        "L172:table1",
+        "L45:table16",
+        "fence5:L2",
+        "fence3:L7",
+        "fence11:row3",
+        "L40:table11",
+        "$.runtime_rows[19]",
+        "fence10"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 814,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "failure_patterns": [
+        "fence18",
+        "fence19:L2",
+        "source_proxy_only row is ontology/planning only.",
+        "L68:table18",
+        "fence8:L18",
+        "L130-L134",
+        "fence4:L16",
+        "fence20:L3"
+      ],
+      "false_positive_patterns": [
+        "profile only",
+        "price-only",
+        "false positive"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "L25-L30",
+        "L184:table2",
+        "source_proxy_only row is ontology/planning only.",
+        "L270-L270",
+        "fence7:L16",
+        "fence4:L9"
+      ],
+      "four_c_thesis_break_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L197:table5",
+        "fence12:L2",
+        "fence18"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "green blocker",
+        "blocks green",
+        "green blocked"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "memory_record_count": 11822,
+      "ontology_only_count": 999,
+      "optional_primitives_observed": [
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "realized_margin_bridge",
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "customer_preorder_or_allocation",
+        "regulatory_endpoint_bridge",
+        "hbm_capacity_pre_sold"
+      ],
+      "positive_patterns": [
+        "L214-L216",
+        "L98-L131",
+        "L76:table7",
+        "fence26",
+        "L112:table1",
+        "L76:table3",
+        "source_proxy_only row is ontology/planning only.",
+        "$.rows[25]"
+      ],
+      "price_path_only_count": 4301,
+      "production_fixture_count": 17,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first"
+      ],
+      "required_primitives_observed": [
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "realized_margin_bridge",
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "customer_preorder_or_allocation",
+        "regulatory_endpoint_bridge",
+        "hbm_capacity_pre_sold"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "BrokerPDF",
+        "IR",
+        "TrustedNews",
+        "CompanyGuide",
+        "DART",
+        "Official"
+      ],
+      "source_gap_summary": [
+        "L324-L328",
+        "source_proxy_only row is ontology/planning only.",
+        "L107-L117"
+      ],
+      "source_proxy_count": 6019,
+      "source_routes": [
+        "BrokerPDF",
+        "IR",
+        "TrustedNews",
+        "CompanyGuide",
+        "DART",
+        "Official"
+      ],
+      "stage2_cap_conditions": [
+        "L279-L287",
+        "source_proxy_only row is ontology/planning only.",
+        "fence17:L9",
+        "L59-L66",
+        "fence11:L1",
+        "fence7:L19",
+        "fence7:L20"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 774,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "failure_patterns": [
+        "fence1",
+        "fence18:L4",
+        "fence39:L3",
+        "source_proxy_only row is ontology/planning only.",
+        "L76:table4"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "false positive",
+        "profile only",
+        "sympathy",
+        "테마만"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": false
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence14:L3",
+        "L4-L18",
+        "fence9:L5",
+        "fence1",
+        "L73:table10"
+      ],
+      "four_c_thesis_break_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence5:L4",
+        "fence22",
+        "L274-L305",
+        "L130:table4",
+        "L187:table8"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green blocked",
+        "green requires",
+        "blocks green"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "memory_record_count": 12797,
+      "ontology_only_count": 1136,
+      "optional_primitives_observed": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge",
+        "source_quorum",
+        "customer_preorder_or_allocation",
+        "retention_or_renewal_bridge",
+        "cash_or_revision_conversion",
+        "hbm_capacity_pre_sold"
+      ],
+      "positive_patterns": [
+        "source_proxy_only row is ontology/planning only.",
+        "L373-L375",
+        "L362-L364",
+        "L111-L115",
+        "L266:table2",
+        "fence8"
+      ],
+      "price_path_only_count": 4572,
+      "production_fixture_count": 6,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first",
+        "llm_generated_context_query"
+      ],
+      "required_primitives_observed": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge",
+        "source_quorum",
+        "customer_preorder_or_allocation",
+        "retention_or_renewal_bridge",
+        "cash_or_revision_conversion",
+        "hbm_capacity_pre_sold"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "CompanyGuide",
+        "BrokerPDF",
+        "KIND",
+        "DART",
+        "Songdaiki/stock-web"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 6987,
+      "source_routes": [
+        "IR",
+        "Official",
+        "BrokerPDF",
+        "TrustedNews",
+        "CompanyGuide",
+        "KIND",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "fence31:L1",
+        "L258:table3",
+        "source_proxy_only row is ontology/planning only.",
+        "fence15:L4",
+        "fence13:row3",
+        "L344-L346",
+        "L108-L112"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 570,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "failure_patterns": [
+        "fence6:L2",
+        "L374-L403",
+        "L77:table5",
+        "fence3:L11",
+        "L135-L139",
+        "L116:table2",
+        "fence3:L6",
+        "fence4"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "profile only",
+        "false positive",
+        "sympathy"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence7:L6",
+        "fence3:L26",
+        "fence6:$",
+        "L84:table3"
+      ],
+      "four_c_thesis_break_conditions": [
+        "L37-L44",
+        "source_proxy_only row is ontology/planning only.",
+        "fence16:L3",
+        "L192-L205",
+        "L250-L252"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "blocks green",
+        "green blocked"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "memory_record_count": 13124,
+      "ontology_only_count": 997,
+      "optional_primitives_observed": [
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "revenue_visibility_contract",
+        "retention_or_renewal_bridge",
+        "customer_preorder_or_allocation",
+        "regulatory_endpoint_bridge",
+        "hbm_capacity_pre_sold"
+      ],
+      "positive_patterns": [
+        "L305-L343",
+        "fence8:L8",
+        "fence9",
+        "source_proxy_only row is ontology/planning only.",
+        "L341-L341",
+        "L330-L335",
+        "fence5:L3",
+        "fence4:L43"
+      ],
+      "price_path_only_count": 4819,
+      "production_fixture_count": 100,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "revenue_visibility_contract",
+        "retention_or_renewal_bridge",
+        "customer_preorder_or_allocation",
+        "regulatory_endpoint_bridge",
+        "hbm_capacity_pre_sold"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "CompanyGuide",
+        "BrokerPDF",
+        "TrustedNews",
+        "KIND"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence4:L2",
+        "fence10:row1"
+      ],
+      "source_proxy_count": 6154,
+      "source_routes": [
+        "IR",
+        "Official",
+        "BrokerPDF",
+        "CompanyGuide",
+        "TrustedNews",
+        "KIND"
+      ],
+      "stage2_cap_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence7:L11",
+        "fence3:L18",
+        "fence10:L27",
+        "fence27:L4",
+        "fence5:L14",
+        "fence6:L9"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 1285,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "failure_patterns": [
+        "fence6:L35",
+        "fence11:L11",
+        "L133-L142",
+        "L182-L184",
+        "source_proxy_only row is ontology/planning only.",
+        "L54:table5"
+      ],
+      "false_positive_patterns": [
+        "false positive",
+        "profile only",
+        "price-only",
+        "weather",
+        "sympathy",
+        "가격만"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence20:L1",
+        "L526-L534",
+        "fence3",
+        "fence19:L16",
+        "L104:table4",
+        "fence7:L1",
+        "fence2:L10"
+      ],
+      "four_c_thesis_break_conditions": [
+        "fence4:L20",
+        "fence2:L17",
+        "source_proxy_only row is ontology/planning only.",
+        "fence26:L9",
+        "fence6:L3",
+        "fence6:L6",
+        "fence4:L28"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green blocked",
+        "보류",
+        "green requires",
+        "green blocker",
+        "blocks green"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "memory_record_count": 15731,
+      "ontology_only_count": 968,
+      "optional_primitives_observed": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation",
+        "hbm_capacity_pre_sold"
+      ],
+      "positive_patterns": [
+        "fence6:L9",
+        "fence8:L6",
+        "fence31:L1",
+        "L114:table1",
+        "L196-L202",
+        "L139:table5",
+        "fence19:L6",
+        "fence6:L6"
+      ],
+      "price_path_only_count": 6731,
+      "production_fixture_count": 137,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "llm_generated_context_query",
+        "official_disclosure_first"
+      ],
+      "required_primitives_observed": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation",
+        "hbm_capacity_pre_sold"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "direct_or_company_specific",
+        "Official",
+        "direct_research_pdf",
+        "CompanyGuide",
+        "BrokerPDF",
+        "TrustedNews",
+        "company_ir",
+        "news_product_article",
+        "direct_news",
+        "KIND",
+        "R2",
+        "broker_news_summary_pdf",
+        "`C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE`",
+        "kirs_company_report",
+        "DART",
+        "news_research_article",
+        "news_interview",
+        "company_news_release",
+        "news_contract_disclosure",
+        "news_report_summary",
+        "news_disclosure_summary",
+        "company_profile_news",
+        "news_direct_company_comment",
+        "Naver-hosted company report, TES 2024-05-08",
+        "company_ir_news",
+        "company_brochure",
+        "research_pdf",
+        "company_business_page",
+        "company_rnd_page",
+        "news_research_summary",
+        "company_ir_pdf",
+        "news_company_interview",
+        "news_repost",
+        "ir_note_news",
+        "news_report_pdf"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "L64:table12",
+        "L324-L329"
+      ],
+      "source_proxy_count": 5693,
+      "source_routes": [
+        "IR",
+        "BrokerPDF",
+        "TrustedNews",
+        "Official",
+        "CompanyGuide",
+        "KIND",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "$.runtime_rows[6]",
+        "L293:table3",
+        "L236-L242",
+        "L383-L387",
+        "fence4:L9",
+        "fence4",
+        "L191:table3",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 2222,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "failure_patterns": [
+        "L49:table21",
+        "source_proxy_only row is ontology/planning only.",
+        "$.rows[7]",
+        "L37:table20",
+        "L36:table4",
+        "$.archetype_rows[18]"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "false positive"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": false,
+        "old_risk_resolved": true,
+        "positive_url_backed": false,
+        "source_missing_pending": true,
+        "wrong_subject": false
+      },
+      "four_b_watch_conditions": [
+        "fence6:$",
+        "L163:table10",
+        "source_proxy_only row is ontology/planning only.",
+        "L236-L249",
+        "L75:table2",
+        "L150:table31",
+        "fence2",
+        "L68:table3"
+      ],
+      "four_c_thesis_break_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence2",
+        "fence20:L3",
+        "fence7",
+        "fence11:L8"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "memory_record_count": 1895,
+      "ontology_only_count": 176,
+      "optional_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "revenue_visibility_contract",
+        "customer_preorder_or_allocation",
+        "regulatory_endpoint_bridge"
+      ],
+      "positive_patterns": [
+        "fence7:$",
+        "fence11",
+        "source_proxy_only row is ontology/planning only.",
+        "L116:table3",
+        "fence1",
+        "$.rows[1]",
+        "fence6:$"
+      ],
+      "price_path_only_count": 614,
+      "production_fixture_count": 0,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "revenue_visibility_contract",
+        "customer_preorder_or_allocation",
+        "regulatory_endpoint_bridge"
+      ],
+      "runtime_usage_policy": "planning_only",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "DART"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 1146,
+      "source_routes": [
+        "IR",
+        "BrokerPDF",
+        "TrustedNews",
+        "Official",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L139:table3",
+        "$.rows[15]",
+        "L132:table5"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 0,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "failure_patterns": [
+        "$.rows[34]",
+        "L30:table6",
+        "source_proxy_only row is ontology/planning only.",
+        "L198-L202",
+        "fence19"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "false positive"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": false,
+        "old_risk_resolved": true,
+        "positive_url_backed": false,
+        "source_missing_pending": true,
+        "wrong_subject": false
+      },
+      "four_b_watch_conditions": [
+        "L258:table6",
+        "L72:table5",
+        "fence5:L3",
+        "source_proxy_only row is ontology/planning only.",
+        "L215-L224",
+        "fence12",
+        "fence19:L3"
+      ],
+      "four_c_thesis_break_conditions": [
+        "fence11",
+        "L198-L202",
+        "source_proxy_only row is ontology/planning only.",
+        "L90-L107",
+        "$.archetype_rows[9]",
+        "L154:table6"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "memory_record_count": 2049,
+      "ontology_only_count": 177,
+      "optional_primitives_observed": [
+        "revenue_visibility_contract",
+        "source_quorum",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "positive_patterns": [
+        "L71:table3",
+        "L76:table2",
+        "source_proxy_only row is ontology/planning only.",
+        "fence12",
+        "L65-L65",
+        "L66-L83",
+        "L39:table6"
+      ],
+      "price_path_only_count": 650,
+      "production_fixture_count": 0,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "revenue_visibility_contract",
+        "source_quorum",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "runtime_usage_policy": "planning_only",
+      "source_family_reliability": [
+        "IR",
+        "TrustedNews",
+        "BrokerPDF",
+        "R3",
+        "393890",
+        "R3/C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+        "011790",
+        "Official"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 1219,
+      "source_routes": [
+        "IR",
+        "Official",
+        "BrokerPDF",
+        "TrustedNews"
+      ],
+      "stage2_cap_conditions": [
+        "L153:table5",
+        "source_proxy_only row is ontology/planning only.",
+        "L66-L83",
+        "L69-L87"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 13,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "failure_patterns": [
+        "source_proxy_only row is ontology/planning only.",
+        "L94:table3",
+        "L79:table7",
+        "fence11",
+        "L175:table8"
+      ],
+      "false_positive_patterns": [
+        "false positive",
+        "price-only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": false,
+        "old_risk_resolved": true,
+        "positive_url_backed": false,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "L160-L166",
+        "L83:table1",
+        "L87:table17",
+        "L74:table1",
+        "source_proxy_only row is ontology/planning only.",
+        "L42:table11"
+      ],
+      "four_c_thesis_break_conditions": [
+        "L81-L94",
+        "L174:table4",
+        "L112:table4",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "green blocked"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "memory_record_count": 1679,
+      "ontology_only_count": 110,
+      "optional_primitives_observed": [
+        "cash_or_revision_conversion",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "regulatory_endpoint_bridge"
+      ],
+      "positive_patterns": [
+        "L85:table3",
+        "L83:table1",
+        "source_proxy_only row is ontology/planning only.",
+        "L129:table6",
+        "L104:table3"
+      ],
+      "price_path_only_count": 688,
+      "production_fixture_count": 0,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "cash_or_revision_conversion",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "regulatory_endpoint_bridge"
+      ],
+      "runtime_usage_policy": "planning_only",
+      "source_family_reliability": [
+        "IR",
+        "DART",
+        "`C13_BATTERY_JV_UTILIZATION_AMPC_IRA`"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 796,
+      "source_routes": [
+        "IR",
+        "BrokerPDF",
+        "Official",
+        "TrustedNews",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L149:table8",
+        "L267:table6",
+        "L139:table8"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 114,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "failure_patterns": [
+        "$.rows[23]",
+        "L58:table6",
+        "$.rows[19]",
+        "fence25:L6",
+        "source_proxy_only row is ontology/planning only.",
+        "$.rows[13]"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": false,
+        "old_risk_resolved": true,
+        "positive_url_backed": false,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "L402-L410",
+        "source_proxy_only row is ontology/planning only.",
+        "fence8:row2",
+        "L42-L49",
+        "fence5",
+        "fence1",
+        "fence10"
+      ],
+      "four_c_thesis_break_conditions": [
+        "fence6:$",
+        "L161:table42",
+        "source_proxy_only row is ontology/planning only.",
+        "L93:table3",
+        "L107:table16",
+        "$.archetype_rows[22]"
+      ],
+      "green_blockers": [
+        "yellow"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "memory_record_count": 2764,
+      "ontology_only_count": 207,
+      "optional_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "revenue_visibility_contract",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "positive_patterns": [
+        "L72:table7",
+        "L82:table1",
+        "fence24:L3",
+        "L73:table7",
+        "L89-L93",
+        "fence12:L1",
+        "L51:table1",
+        "fence11:L1"
+      ],
+      "price_path_only_count": 1023,
+      "production_fixture_count": 0,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "revenue_visibility_contract",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "runtime_usage_policy": "planning_only",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "BrokerPDF",
+        "`C14_EV_DEMAND_SLOWDOWN_4B_4C`",
+        "KIND"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 1483,
+      "source_routes": [
+        "IR",
+        "TrustedNews",
+        "Official",
+        "BrokerPDF",
+        "KIND"
+      ],
+      "stage2_cap_conditions": [
+        "L201:table5",
+        "L185:table1",
+        "source_proxy_only row is ontology/planning only.",
+        "L183-L185",
+        "L278:table17"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 120,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "failure_patterns": [
+        "$.archetype_pair_rows[9]",
+        "L27:table10",
+        "source_proxy_only row is ontology/planning only.",
+        "$.archetypes[14]",
+        "fence3:L10",
+        "L34:table11"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "false positive",
+        "weather",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L74:table1",
+        "L99-L118",
+        "fence1",
+        "fence19:L4",
+        "fence3:L12"
+      ],
+      "four_c_thesis_break_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence3:L4",
+        "L175:table5",
+        "fence2",
+        "L258-L266"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "memory_record_count": 2122,
+      "ontology_only_count": 193,
+      "optional_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "revenue_visibility_contract",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge"
+      ],
+      "positive_patterns": [
+        "fence12",
+        "L131:table7",
+        "source_proxy_only row is ontology/planning only.",
+        "L160-L165",
+        "fence14",
+        "fence3:L11"
+      ],
+      "price_path_only_count": 669,
+      "production_fixture_count": 1,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "revenue_visibility_contract",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "`C15_MATERIAL_SPREAD_SUPERCYCLE`",
+        "R4/C15_MATERIAL_SPREAD_SUPERCYCLE",
+        "BrokerPDF",
+        "TrustedNews",
+        "005490",
+        "DART"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "L184:table15"
+      ],
+      "source_proxy_count": 1191,
+      "source_routes": [
+        "IR",
+        "BrokerPDF",
+        "Official",
+        "TrustedNews",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L160-L165",
+        "L76:table10",
+        "L203:table7",
+        "L267:table8"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 88,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "failure_patterns": [
+        "$.rows[31]",
+        "$.rows[6]",
+        "source_proxy_only row is ontology/planning only.",
+        "L81:table5",
+        "L61:table33",
+        "L62:table31"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "false positive",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": false
+      },
+      "four_b_watch_conditions": [
+        "L104-L143",
+        "L169-L177",
+        "source_proxy_only row is ontology/planning only.",
+        "L113-L155",
+        "L69-L73"
+      ],
+      "four_c_thesis_break_conditions": [
+        "L72:table2",
+        "source_proxy_only row is ontology/planning only.",
+        "L127:table11",
+        "L25-L30"
+      ],
+      "green_blockers": [
+        "yellow",
+        "blocks green",
+        "green requires",
+        "green blocked"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "memory_record_count": 2413,
+      "ontology_only_count": 226,
+      "optional_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "regulatory_endpoint_bridge",
+        "cash_or_revision_conversion",
+        "customer_preorder_or_allocation"
+      ],
+      "positive_patterns": [
+        "source_proxy_only row is ontology/planning only.",
+        "L82:table6",
+        "L156-L161",
+        "fence6:$",
+        "fence7:$",
+        "L223-L227"
+      ],
+      "price_path_only_count": 665,
+      "production_fixture_count": 1,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "regulatory_endpoint_bridge",
+        "cash_or_revision_conversion",
+        "customer_preorder_or_allocation"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "R4",
+        "BrokerPDF",
+        "TrustedNews"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 1446,
+      "source_routes": [
+        "IR",
+        "Official",
+        "BrokerPDF",
+        "TrustedNews"
+      ],
+      "stage2_cap_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence15:L15",
+        "fence11"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 74,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "failure_patterns": [
+        "$.archetypes[16]",
+        "source_proxy_only row is ontology/planning only.",
+        "$.rows[9]",
+        "L39:table7"
+      ],
+      "false_positive_patterns": [
+        "profile only",
+        "price-only",
+        "false positive"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "fence7:$",
+        "source_proxy_only row is ontology/planning only.",
+        "L111:table4",
+        "fence2:L5",
+        "L71-L75",
+        "L169:table16",
+        "L234-L255",
+        "$.archetype_rows[12]"
+      ],
+      "four_c_thesis_break_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence11:L12",
+        "L167:table14",
+        "L193-L195",
+        "L197:table7",
+        "L205-L207"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "blocks green"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "memory_record_count": 2590,
+      "ontology_only_count": 228,
+      "optional_primitives_observed": [
+        "realized_margin_bridge",
+        "revenue_visibility_contract",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge"
+      ],
+      "positive_patterns": [
+        "fence2:L6",
+        "fence2:L9",
+        "fence2:L16",
+        "source_proxy_only row is ontology/planning only.",
+        "fence2:L14",
+        "L36-L36"
+      ],
+      "price_path_only_count": 785,
+      "production_fixture_count": 2,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "realized_margin_bridge",
+        "revenue_visibility_contract",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "CompanyGuide",
+        "Official",
+        "BrokerPDF",
+        "DART"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 1475,
+      "source_routes": [
+        "IR",
+        "CompanyGuide",
+        "TrustedNews",
+        "Official",
+        "BrokerPDF",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "L155:table7",
+        "source_proxy_only row is ontology/planning only.",
+        "L19-L24"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 141,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "failure_patterns": [
+        "fence15:L3",
+        "source_proxy_only row is ontology/planning only.",
+        "L427-L432",
+        "fence17:L3",
+        "fence18:row1",
+        "fence17:L9",
+        "L158:table10",
+        "fence11:L15"
+      ],
+      "false_positive_patterns": [
+        "false positive",
+        "price-only",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": false,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": false
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L315-L317",
+        "L87:table27",
+        "L125:table6",
+        "L423-L429",
+        "fence16:L10"
+      ],
+      "four_c_thesis_break_conditions": [
+        "L158:table9",
+        "fence4:L7",
+        "source_proxy_only row is ontology/planning only.",
+        "fence17:L11",
+        "fence1:row3",
+        "fence16"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "blocks green"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "memory_record_count": 2818,
+      "ontology_only_count": 220,
+      "optional_primitives_observed": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "source_quorum",
+        "retention_or_renewal_bridge",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "positive_patterns": [
+        "$.rows[12]",
+        "fence19:L1",
+        "fence26:L4",
+        "source_proxy_only row is ontology/planning only.",
+        "L114:table5",
+        "fence3",
+        "L34:table8",
+        "fence17:L11"
+      ],
+      "price_path_only_count": 1054,
+      "production_fixture_count": 1,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "source_quorum",
+        "retention_or_renewal_bridge",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "BrokerPDF",
+        "DART"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "L187:table18",
+        "L59:table7"
+      ],
+      "source_proxy_count": 1292,
+      "source_routes": [
+        "IR",
+        "BrokerPDF",
+        "TrustedNews",
+        "Official",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "fence26:L20",
+        "L406-L411",
+        "L79:table19",
+        "fence26:L16",
+        "L227-L233",
+        "fence5:L1",
+        "fence16:row1",
+        "L184:table4"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 381,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "failure_patterns": [
+        "fence11:L13",
+        "fence21:L4",
+        "fence21:L5",
+        "$.archetypes[18]",
+        "L325-L349",
+        "$.rows[34]",
+        "L251-L257",
+        "$.rows[17]"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "false positive",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": false
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence12:L6",
+        "L270-L272",
+        "L129:table13",
+        "L359-L369",
+        "fence21:L3"
+      ],
+      "four_c_thesis_break_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L37:table15",
+        "L243:table2",
+        "L47:table29",
+        "$.rows[12]",
+        "L66:table7"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "memory_record_count": 2199,
+      "ontology_only_count": 191,
+      "optional_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge"
+      ],
+      "positive_patterns": [
+        "L325-L349",
+        "fence14:L12",
+        "L198:table19",
+        "L127:table8",
+        "$.rows[24]",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "price_path_only_count": 677,
+      "production_fixture_count": 2,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first"
+      ],
+      "required_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "DART",
+        "Official",
+        "CompanyGuide",
+        "R5",
+        "BrokerPDF"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "L188:table19"
+      ],
+      "source_proxy_count": 1195,
+      "source_routes": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "DART",
+        "CompanyGuide",
+        "BrokerPDF",
+        "KIND"
+      ],
+      "stage2_cap_conditions": [
+        "L262:table10",
+        "source_proxy_only row is ontology/planning only.",
+        "fence14:L17",
+        "L264-L271",
+        "L176:table10",
+        "fence21:L1"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 208,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "failure_patterns": [
+        "source_proxy_only row is ontology/planning only.",
+        "L51:table27",
+        "fence7:row2",
+        "L316-L322",
+        "L28-L65",
+        "$.sector_rows[1]"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "false positive",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": false
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence14:L9",
+        "fence5:L1",
+        "fence11:L59",
+        "L96:table6",
+        "fence4:L2",
+        "fence17:L12",
+        "fence17:L7"
+      ],
+      "four_c_thesis_break_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence5:L3",
+        "fence17:L18",
+        "fence11:L58",
+        "fence11:L15",
+        "fence7:L4",
+        "L282-L285"
+      ],
+      "green_blockers": [
+        "yellow",
+        "blocks green"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "memory_record_count": 2659,
+      "ontology_only_count": 190,
+      "optional_primitives_observed": [
+        "realized_margin_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "retention_or_renewal_bridge",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge"
+      ],
+      "positive_patterns": [
+        "L72:table4",
+        "source_proxy_only row is ontology/planning only.",
+        "fence17:L2",
+        "L318:table1",
+        "L109-L114",
+        "L144:table4",
+        "L343:table1",
+        "L32:table1"
+      ],
+      "price_path_only_count": 1058,
+      "production_fixture_count": 3,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first"
+      ],
+      "required_primitives_observed": [
+        "realized_margin_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "retention_or_renewal_bridge",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "DART",
+        "Official",
+        "CompanyGuide",
+        "BrokerPDF",
+        "R5/C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+        "003230",
+        "090430",
+        "051900"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 1082,
+      "source_routes": [
+        "IR",
+        "BrokerPDF",
+        "DART",
+        "KIND",
+        "Official",
+        "TrustedNews",
+        "CompanyGuide"
+      ],
+      "stage2_cap_conditions": [
+        "L62-L78",
+        "fence17:L24",
+        "L109:table5",
+        "L304-L312",
+        "L309-L315",
+        "L71-L87",
+        "L270:table11",
+        "fence7:L11"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 481,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "failure_patterns": [
+        "source_proxy_only row is ontology/planning only.",
+        "L198:table8",
+        "$.rows[14]",
+        "L31:table2",
+        "fence12:L15",
+        "fence11:L18",
+        "L51:table33",
+        "fence12:L14"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "false positive",
+        "가격만",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "fence18:L6",
+        "fence3",
+        "L16-L28",
+        "L419-L424",
+        "L83:table11",
+        "fence12:L6",
+        "L363:table1",
+        "L183:table3"
+      ],
+      "four_c_thesis_break_conditions": [
+        "fence18:L9",
+        "fence18:L11",
+        "fence18:L10",
+        "L74:table6",
+        "L179-L185",
+        "L60:table8",
+        "L116:table1",
+        "L25-L30"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "blocks green"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "memory_record_count": 3693,
+      "ontology_only_count": 295,
+      "optional_primitives_observed": [
+        "source_quorum",
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge",
+        "retention_or_renewal_bridge",
+        "cash_or_revision_conversion"
+      ],
+      "positive_patterns": [
+        "source_proxy_only row is ontology/planning only.",
+        "L39-L56",
+        "L76:table3",
+        "L477-L483",
+        "fence10:L3",
+        "fence16",
+        "L28-L31"
+      ],
+      "price_path_only_count": 1388,
+      "production_fixture_count": 5,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "source_quorum",
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge",
+        "retention_or_renewal_bridge",
+        "cash_or_revision_conversion"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "BrokerPDF",
+        "055550",
+        "DART",
+        "R6/C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+        "138040",
+        "377300"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "L177:table4",
+        "L190:table21"
+      ],
+      "source_proxy_count": 1679,
+      "source_routes": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "BrokerPDF",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "L366-L373",
+        "L264:table12",
+        "fence11:L2",
+        "fence18:L14",
+        "fence12:L15",
+        "fence15:L18",
+        "fence12:L11",
+        "L83:table2"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 543,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "failure_patterns": [
+        "source_proxy_only row is ontology/planning only.",
+        "L55:table11",
+        "L135-L140",
+        "L41:table13",
+        "L44:table18",
+        "$.rows[9]",
+        "L56:table22",
+        "fence11:L17"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "false positive",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L361:table1",
+        "fence23:L5",
+        "fence23:L3",
+        "L131:table6"
+      ],
+      "four_c_thesis_break_conditions": [
+        "fence26:L7",
+        "L144:table6",
+        "fence26:L1",
+        "fence3",
+        "L25-L30",
+        "L271:table12",
+        "source_proxy_only row is ontology/planning only.",
+        "fence16:L10"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "target_scope_guard",
+        "source_quality_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "memory_record_count": 1919,
+      "ontology_only_count": 152,
+      "optional_primitives_observed": [
+        "source_quorum",
+        "revenue_visibility_contract",
+        "regulatory_endpoint_bridge",
+        "retention_or_renewal_bridge",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge"
+      ],
+      "positive_patterns": [
+        "fence16:L10",
+        "L525-L533",
+        "L117:table16",
+        "L359-L361",
+        "fence28:row1",
+        "fence18:L6",
+        "L279-L281",
+        "L51:table31"
+      ],
+      "price_path_only_count": 775,
+      "production_fixture_count": 3,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first"
+      ],
+      "required_primitives_observed": [
+        "source_quorum",
+        "revenue_visibility_contract",
+        "regulatory_endpoint_bridge",
+        "retention_or_renewal_bridge",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "R6",
+        "Official",
+        "IR",
+        "BrokerPDF",
+        "DART",
+        "TrustedNews"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "L191:table22"
+      ],
+      "source_proxy_count": 869,
+      "source_routes": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "BrokerPDF",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "fence24:L3",
+        "fence16:L15",
+        "fence16:L13",
+        "L537-L542",
+        "fence27:L2",
+        "fence16:L12",
+        "L272:table11",
+        "L464-L469"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 227,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "failure_patterns": [
+        "L486-L505",
+        "L45:table5",
+        "source_proxy_only row is ontology/planning only.",
+        "$.rows[2]",
+        "$.focus_archetype_rows[3]",
+        "L65:table21",
+        "fence24:L5"
+      ],
+      "false_positive_patterns": [
+        "false positive",
+        "price-only",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": false
+      },
+      "four_b_watch_conditions": [
+        "L275:table14",
+        "L139:table14",
+        "fence5",
+        "L150:table33",
+        "L36-L45",
+        "L413:table10",
+        "fence10:L7",
+        "L271:table11"
+      ],
+      "four_c_thesis_break_conditions": [
+        "fence24:L11",
+        "$.archetypes[22]",
+        "source_proxy_only row is ontology/planning only.",
+        "fence5:L5",
+        "fence5:L4",
+        "L526-L531",
+        "L44:table12"
+      ],
+      "green_blockers": [
+        "yellow",
+        "blocks green",
+        "green requires"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break"
+      ],
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "memory_record_count": 1742,
+      "ontology_only_count": 139,
+      "optional_primitives_observed": [
+        "regulatory_endpoint_bridge",
+        "source_quorum",
+        "retention_or_renewal_bridge",
+        "realized_margin_bridge",
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion"
+      ],
+      "positive_patterns": [
+        "$.rows[3]",
+        "source_proxy_only row is ontology/planning only.",
+        "L66-L82",
+        "fence11:L79",
+        "fence23",
+        "fence22:L15",
+        "L70:table3"
+      ],
+      "price_path_only_count": 695,
+      "production_fixture_count": 2,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "regulatory_endpoint_bridge",
+        "source_quorum",
+        "retention_or_renewal_bridge",
+        "realized_margin_bridge",
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "DART"
+      ],
+      "source_gap_summary": [
+        "L55:table3",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 814,
+      "source_routes": [
+        "IR",
+        "Official",
+        "BrokerPDF",
+        "TrustedNews",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "L209:table13",
+        "fence22:L8",
+        "source_proxy_only row is ontology/planning only.",
+        "L141:table14",
+        "fence22:L10",
+        "L210:table14",
+        "fence24:L13"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 209,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "failure_patterns": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence18:row3",
+        "L75:table3",
+        "L40:table17",
+        "L58:table30",
+        "$.archetype_rows[25]",
+        "fence2",
+        "L56:table27"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": false
+      },
+      "four_b_watch_conditions": [
+        "L144:table27",
+        "source_proxy_only row is ontology/planning only.",
+        "L125:table7",
+        "fence11:L20",
+        "L140:table23",
+        "fence3",
+        "fence12:L10"
+      ],
+      "four_c_thesis_break_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L116:table10",
+        "fence6:$",
+        "fence10:L7",
+        "L122:table16",
+        "fence19:L6"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green blocked",
+        "green requires"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break"
+      ],
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "memory_record_count": 1706,
+      "ontology_only_count": 143,
+      "optional_primitives_observed": [
+        "regulatory_endpoint_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "retention_or_renewal_bridge",
+        "realized_margin_bridge"
+      ],
+      "positive_patterns": [
+        "L98:table4",
+        "fence19:L10",
+        "fence21:L11",
+        "L116:table6",
+        "$.rows[22]",
+        "L114:table7",
+        "source_proxy_only row is ontology/planning only.",
+        "L142:table25"
+      ],
+      "price_path_only_count": 649,
+      "production_fixture_count": 2,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "regulatory_endpoint_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "retention_or_renewal_bridge",
+        "realized_margin_bridge"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "BrokerPDF"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 881,
+      "source_routes": [
+        "IR",
+        "Official",
+        "BrokerPDF",
+        "TrustedNews"
+      ],
+      "stage2_cap_conditions": [
+        "fence3",
+        "L272:table13",
+        "fence21:L14",
+        "source_proxy_only row is ontology/planning only.",
+        "fence5:L4",
+        "L180:table14",
+        "fence19:L7"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 128,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "failure_patterns": [
+        "$.archetype_rows[24]",
+        "L30:table7",
+        "source_proxy_only row is ontology/planning only.",
+        "L49-L68",
+        "L24:table7",
+        "$.rows[21]"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "profile only",
+        "false positive"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": false
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L225:table2",
+        "L161:table44",
+        "L199-L203",
+        "L93-L110",
+        "L135:table19",
+        "fence11"
+      ],
+      "four_c_thesis_break_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L141:table5",
+        "L46:table14",
+        "fence11:L82"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break"
+      ],
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "memory_record_count": 2282,
+      "ontology_only_count": 207,
+      "optional_primitives_observed": [
+        "realized_margin_bridge",
+        "source_quorum",
+        "retention_or_renewal_bridge",
+        "revenue_visibility_contract",
+        "regulatory_endpoint_bridge",
+        "cash_or_revision_conversion"
+      ],
+      "positive_patterns": [
+        "fence15:L3",
+        "fence11",
+        "L4-L18",
+        "fence15:L18",
+        "source_proxy_only row is ontology/planning only.",
+        "$.archetype_rows[24]",
+        "fence21:L15"
+      ],
+      "price_path_only_count": 738,
+      "production_fixture_count": 2,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "realized_margin_bridge",
+        "source_quorum",
+        "retention_or_renewal_bridge",
+        "revenue_visibility_contract",
+        "regulatory_endpoint_bridge",
+        "cash_or_revision_conversion"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "TrustedNews",
+        "R7",
+        "Official",
+        "BrokerPDF",
+        "DART"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 1255,
+      "source_routes": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "BrokerPDF",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "L25-L32",
+        "fence16",
+        "source_proxy_only row is ontology/planning only.",
+        "fence21:L12",
+        "fence21:L14",
+        "fence15:L20",
+        "L132:table7",
+        "L72-L91"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 157,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "failure_patterns": [
+        "L43:table21",
+        "L207-L215",
+        "source_proxy_only row is ontology/planning only.",
+        "L167:table5",
+        "fence11:L91",
+        "L270-L274",
+        "L211:table3",
+        "fence14:L3"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "profile only",
+        "false positive"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "L214:table7",
+        "source_proxy_only row is ontology/planning only.",
+        "fence11:L90",
+        "L161:table2",
+        "fence11:L89",
+        "fence14:L3",
+        "L16-L25",
+        "L269:table1"
+      ],
+      "four_c_thesis_break_conditions": [
+        "L410-L416",
+        "L277:table16",
+        "L16-L25",
+        "L281:table2",
+        "L25-L30",
+        "L193:table5",
+        "L149:table5",
+        "L159:table3"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break"
+      ],
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "memory_record_count": 2929,
+      "ontology_only_count": 275,
+      "optional_primitives_observed": [
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion"
+      ],
+      "positive_patterns": [
+        "L213:table5",
+        "L235-L240",
+        "L209:table2",
+        "L164:table2",
+        "source_proxy_only row is ontology/planning only.",
+        "L28:table5",
+        "L209:table1"
+      ],
+      "price_path_only_count": 1065,
+      "production_fixture_count": 1,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first",
+        "llm_generated_context_query"
+      ],
+      "required_primitives_observed": [
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "CompanyGuide",
+        "BrokerPDF",
+        "DART"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "L240:table5"
+      ],
+      "source_proxy_count": 1496,
+      "source_routes": [
+        "IR",
+        "Official",
+        "BrokerPDF",
+        "CompanyGuide",
+        "TrustedNews",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "fence14:L18",
+        "L185-L194",
+        "L433-L439",
+        "L16-L25",
+        "L337:table5",
+        "fence16:L2",
+        "fence12:L18",
+        "L401-L406"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 298,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "failure_patterns": [
+        "source_proxy_only row is ontology/planning only.",
+        "L262-L265",
+        "L65:table41",
+        "L44:table22",
+        "fence11:L4",
+        "L55:table27"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "false positive",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": false
+      },
+      "four_b_watch_conditions": [
+        "L266:table2",
+        "L195:table1",
+        "L67:table1",
+        "L63:table2",
+        "fence17:L19",
+        "L165-L174",
+        "L232-L241",
+        "L367:table6"
+      ],
+      "four_c_thesis_break_conditions": [
+        "L457-L480",
+        "L62:table44",
+        "L108:table14",
+        "L283-L287",
+        "source_proxy_only row is ontology/planning only.",
+        "L187:table7",
+        "L146:table3",
+        "L167:table4"
+      ],
+      "green_blockers": [
+        "green requires",
+        "yellow",
+        "보류"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "memory_record_count": 2959,
+      "ontology_only_count": 255,
+      "optional_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "positive_patterns": [
+        "L125:table4",
+        "$.archetype_rows[23]",
+        "L90:table15",
+        "fence16:row1",
+        "L135:table14",
+        "fence7",
+        "L162:table10",
+        "L381-L383"
+      ],
+      "price_path_only_count": 1104,
+      "production_fixture_count": 3,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "BrokerPDF",
+        "DART"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "L196:table27"
+      ],
+      "source_proxy_count": 1422,
+      "source_routes": [
+        "IR",
+        "Official",
+        "BrokerPDF",
+        "TrustedNews",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence11:L98",
+        "fence5:L2",
+        "fence10:L11",
+        "L302-L361",
+        "L182:table16",
+        "fence12:L4"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 343,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [
+        "theme_keyword_only_query"
+      ],
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "failure_patterns": [
+        "$.archetype_pair_rows[21]",
+        "fence26:L5",
+        "$.archetypes[27]",
+        "L153-L158",
+        "fence29:row2",
+        "$.archetype_rows[19]",
+        "L45:table14",
+        "fence5:L4"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "false positive",
+        "signboard",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "L4-L18",
+        "L257-L263",
+        "L284-L294",
+        "L214:table4",
+        "L71-L75",
+        "L164:table16",
+        "fence11:L105",
+        "L362:table1"
+      ],
+      "four_c_thesis_break_conditions": [
+        "fence27:L9",
+        "source_proxy_only row is ontology/planning only.",
+        "fence20:L7",
+        "L139:table23",
+        "fence27:L4",
+        "fence11:L104",
+        "fence27:L5",
+        "L207:table28"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "blocks green"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break"
+      ],
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "memory_record_count": 2900,
+      "ontology_only_count": 249,
+      "optional_primitives_observed": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "regulatory_endpoint_bridge"
+      ],
+      "positive_patterns": [
+        "fence20:L11",
+        "fence20:L14",
+        "L71-L75",
+        "source_proxy_only row is ontology/planning only.",
+        "L76:table1",
+        "L115:table8",
+        "fence11",
+        "fence30:L1"
+      ],
+      "price_path_only_count": 982,
+      "production_fixture_count": 1,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "regulatory_endpoint_bridge"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "R8",
+        "DART",
+        "BrokerPDF",
+        "CompanyGuide"
+      ],
+      "source_gap_summary": [
+        "L241:table6",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 1415,
+      "source_routes": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "BrokerPDF",
+        "DART",
+        "CompanyGuide"
+      ],
+      "stage2_cap_conditions": [
+        "fence5:L1",
+        "fence5:L2",
+        "L55:table3",
+        "fence24:row1",
+        "fence28:L1",
+        "L503-L509",
+        "fence3"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 425,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "failure_patterns": [
+        "L51:table25",
+        "L51:table7",
+        "source_proxy_only row is ontology/planning only.",
+        "fence11:L26",
+        "L37:table8",
+        "$.rows[22]",
+        "$.rows[7]"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "false positive"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": false,
+        "old_risk_resolved": true,
+        "positive_url_backed": false,
+        "source_missing_pending": true,
+        "wrong_subject": false
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence10:L9",
+        "L76:table13",
+        "L141:table18",
+        "fence11:L25",
+        "L211-L215"
+      ],
+      "four_c_thesis_break_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence11:L26",
+        "L214:table18"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "memory_record_count": 2241,
+      "ontology_only_count": 179,
+      "optional_primitives_observed": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "source_quorum",
+        "retention_or_renewal_bridge"
+      ],
+      "positive_patterns": [
+        "$.rows[6]",
+        "source_proxy_only row is ontology/planning only.",
+        "L273:table18",
+        "L36:table13",
+        "L77:table2",
+        "L140:table18"
+      ],
+      "price_path_only_count": 827,
+      "production_fixture_count": 0,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "source_quorum",
+        "retention_or_renewal_bridge"
+      ],
+      "runtime_usage_policy": "planning_only",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "R9",
+        "DART"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 1259,
+      "source_routes": [
+        "IR",
+        "TrustedNews",
+        "Official",
+        "BrokerPDF",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "L134:table9",
+        "L76:table13",
+        "L273:table18",
+        "L279:table18",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 6,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "failure_patterns": [
+        "L300-L305",
+        "$.archetype_rows[25]",
+        "fence11:L10",
+        "L85-L97",
+        "L144:table20",
+        "fence29:L1",
+        "L380-L389",
+        "L458-L481"
+      ],
+      "false_positive_patterns": [
+        "price-only",
+        "profile only",
+        "sympathy",
+        "false positive"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence19:L2",
+        "fence29:L1",
+        "L357-L361",
+        "fence1",
+        "fence29:L3",
+        "fence7:L3",
+        "fence5:L2"
+      ],
+      "four_c_thesis_break_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "L421-L424",
+        "fence10:L10",
+        "L26-L26",
+        "L150-L154",
+        "L415:table12",
+        "L387-L390"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green blocked",
+        "green requires",
+        "blocks green",
+        "보류"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "memory_record_count": 21526,
+      "ontology_only_count": 1608,
+      "optional_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "positive_patterns": [
+        "L304-L306",
+        "L226-L231",
+        "L209-L214",
+        "fence4:L22",
+        "fence18",
+        "source_proxy_only row is ontology/planning only.",
+        "L245-L247",
+        "fence16"
+      ],
+      "price_path_only_count": 8700,
+      "production_fixture_count": 79,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first"
+      ],
+      "required_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "BrokerPDF",
+        "Official",
+        "CompanyGuide",
+        "TrustedNews",
+        "DART",
+        "025950",
+        "R10/C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+        "R10",
+        "KIND",
+        "010780"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 9780,
+      "source_routes": [
+        "IR",
+        "TrustedNews",
+        "BrokerPDF",
+        "Official",
+        "CompanyGuide",
+        "DART",
+        "KIND"
+      ],
+      "stage2_cap_conditions": [
+        "fence21:L3",
+        "fence18:L1",
+        "source_proxy_only row is ontology/planning only.",
+        "L394-L398",
+        "fence11:L14",
+        "L543-L547",
+        "fence39:L3",
+        "L251:table5"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 1435,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [
+        "news_only_cashflow_query"
+      ],
+      "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "failure_patterns": [
+        "fence10:L3",
+        "L360-L376",
+        "fence5:L28",
+        "source_proxy_only row is ontology/planning only.",
+        "fence22",
+        "L130-L136",
+        "fence42:L2",
+        "$.rows[16]"
+      ],
+      "false_positive_patterns": [
+        "false positive",
+        "price-only",
+        "profile only",
+        "sympathy"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "fence32:L1",
+        "L165:table16",
+        "L200-L200",
+        "fence7:L9",
+        "source_proxy_only row is ontology/planning only.",
+        "fence7:L20",
+        "fence5:L18",
+        "L357-L361"
+      ],
+      "four_c_thesis_break_conditions": [
+        "fence15:L8",
+        "fence29",
+        "source_proxy_only row is ontology/planning only.",
+        "L105:table4",
+        "fence7:L7",
+        "fence23:L1",
+        "fence1",
+        "fence4:L18"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green blocked",
+        "green requires",
+        "blocks green"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "contract_cancellation",
+        "accounting_trust_break"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "memory_record_count": 22160,
+      "ontology_only_count": 1735,
+      "optional_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "regulatory_endpoint_bridge",
+        "cash_or_revision_conversion",
+        "customer_preorder_or_allocation"
+      ],
+      "positive_patterns": [
+        "fence37:L1",
+        "fence6:L6",
+        "L468-L488",
+        "source_proxy_only row is ontology/planning only.",
+        "L148:table32",
+        "L111-L115",
+        "L478-L499",
+        "fence5"
+      ],
+      "price_path_only_count": 8593,
+      "production_fixture_count": 48,
+      "query_pattern_hints": [
+        "issuer_ir_context_query"
+      ],
+      "required_primitives_observed": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "regulatory_endpoint_bridge",
+        "cash_or_revision_conversion",
+        "customer_preorder_or_allocation"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "R11",
+        "Official",
+        "CompanyGuide",
+        "TrustedNews",
+        "BrokerPDF"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence16:L6",
+        "fence23",
+        "L87-L97"
+      ],
+      "source_proxy_count": 10096,
+      "source_routes": [
+        "IR",
+        "Official",
+        "BrokerPDF",
+        "TrustedNews",
+        "CompanyGuide"
+      ],
+      "stage2_cap_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence13:L4",
+        "fence14:L12",
+        "L181:table4",
+        "L239:table5",
+        "L233-L240"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 1700,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "failure_patterns": [
+        "fence19:L12",
+        "L367-L371",
+        "L156-L161",
+        "L102-L112",
+        "source_proxy_only row is ontology/planning only.",
+        "fence13:L2",
+        "L554-L558",
+        "L317-L321"
+      ],
+      "false_positive_patterns": [
+        "false positive",
+        "price-only",
+        "profile only",
+        "sympathy"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "fence16:L3",
+        "fence19:L17",
+        "source_proxy_only row is ontology/planning only.",
+        "fence4:L3"
+      ],
+      "four_c_thesis_break_conditions": [
+        "L317-L321",
+        "L82:table8",
+        "L266-L268",
+        "fence20:L5",
+        "source_proxy_only row is ontology/planning only.",
+        "fence5:L8",
+        "fence6",
+        "fence40"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "blocks green"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "memory_record_count": 16608,
+      "ontology_only_count": 1388,
+      "optional_primitives_observed": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge"
+      ],
+      "positive_patterns": [
+        "fence5:L6",
+        "fence4:L4",
+        "L332-L336",
+        "fence13:L5",
+        "L415-L421",
+        "fence11:L4",
+        "fence10:L24",
+        "L78:table3"
+      ],
+      "price_path_only_count": 6346,
+      "production_fixture_count": 41,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first",
+        "llm_generated_context_query"
+      ],
+      "required_primitives_observed": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "TrustedNews",
+        "Official",
+        "DART",
+        "CompanyGuide",
+        "BrokerPDF",
+        "R12",
+        "R12/C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+        "011200"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence19:L6"
+      ],
+      "source_proxy_count": 7882,
+      "source_routes": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "BrokerPDF",
+        "DART",
+        "CompanyGuide"
+      ],
+      "stage2_cap_conditions": [
+        "fence21:L3",
+        "source_proxy_only row is ontology/planning only.",
+        "L272-L278",
+        "fence16:L3",
+        "L381-L385",
+        "L198:table2",
+        "L170:table4"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 1273,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [
+        "news_only_cashflow_query"
+      ],
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "failure_patterns": [
+        "fence6:L1",
+        "fence5:L56",
+        "fence6:L11",
+        "fence19:L21",
+        "fence9",
+        "fence5:L34",
+        "fence8:L59",
+        "fence5:L25"
+      ],
+      "false_positive_patterns": [
+        "false positive",
+        "price-only",
+        "weather",
+        "sympathy",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence14:L12",
+        "fence9:L13",
+        "fence6:L37",
+        "L351-L365",
+        "L62:table12",
+        "fence6:L4"
+      ],
+      "four_c_thesis_break_conditions": [
+        "fence10",
+        "fence7:L13",
+        "fence7:L9",
+        "fence1",
+        "fence5:L23",
+        "L310-L312",
+        "L209-L235",
+        "fence4:L42"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green blocked",
+        "blocks green",
+        "green blocker",
+        "green requires"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "memory_record_count": 12056,
+      "ontology_only_count": 764,
+      "optional_primitives_observed": [
+        "revenue_visibility_contract",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation",
+        "hbm_capacity_pre_sold"
+      ],
+      "positive_patterns": [
+        "fence6:L14",
+        "source_proxy_only row is ontology/planning only.",
+        "fence6:L27",
+        "fence5:L30",
+        "fence5:L25",
+        "fence7:L1",
+        "fence21:L19"
+      ],
+      "price_path_only_count": 4093,
+      "production_fixture_count": 123,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first"
+      ],
+      "required_primitives_observed": [
+        "revenue_visibility_contract",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "regulatory_endpoint_bridge",
+        "customer_preorder_or_allocation",
+        "hbm_capacity_pre_sold"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "TrustedNews",
+        "Official",
+        "BrokerPDF",
+        "KIND",
+        "C25",
+        "CompanyGuide",
+        "DART"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 4700,
+      "source_routes": [
+        "IR",
+        "TrustedNews",
+        "BrokerPDF",
+        "Official",
+        "KIND",
+        "CompanyGuide",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence11:L14",
+        "fence11:L15",
+        "fence3:L47",
+        "fence11:L5",
+        "fence7:L2"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 1462,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [
+        "news_only_cashflow_query"
+      ],
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "failure_patterns": [
+        "fence4:L16",
+        "source_proxy_only row is ontology/planning only.",
+        "fence6:L25",
+        "fence11:L21",
+        "fence4:L13",
+        "fence4:L27",
+        "fence21:L7"
+      ],
+      "false_positive_patterns": [
+        "false positive",
+        "price-only",
+        "profile only",
+        "sympathy",
+        "weather"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "L221-L221",
+        "fence4:L31",
+        "fence41:L2",
+        "fence21:L21",
+        "fence9",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "four_c_thesis_break_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence4:L1",
+        "fence22:L42",
+        "fence22:L6",
+        "fence10:L24",
+        "fence15:L21",
+        "fence9:L16"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green requires",
+        "blocks green",
+        "green blocked",
+        "green blocker"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "memory_record_count": 29100,
+      "ontology_only_count": 1165,
+      "optional_primitives_observed": [
+        "retention_or_renewal_bridge",
+        "regulatory_endpoint_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "customer_preorder_or_allocation",
+        "cash_or_revision_conversion",
+        "hbm_capacity_pre_sold"
+      ],
+      "positive_patterns": [
+        "L483-L489",
+        "source_proxy_only row is ontology/planning only.",
+        "L506-L527",
+        "fence6:L12",
+        "fence21:L15",
+        "fence4:L31"
+      ],
+      "price_path_only_count": 13572,
+      "production_fixture_count": 201,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first"
+      ],
+      "required_primitives_observed": [
+        "retention_or_renewal_bridge",
+        "regulatory_endpoint_bridge",
+        "source_quorum",
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "customer_preorder_or_allocation",
+        "cash_or_revision_conversion",
+        "hbm_capacity_pre_sold"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "CompanyGuide",
+        "Official",
+        "TrustedNews",
+        "KIND",
+        "BrokerPDF",
+        "C25",
+        "DART"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 9288,
+      "source_routes": [
+        "IR",
+        "Official",
+        "TrustedNews",
+        "CompanyGuide",
+        "BrokerPDF",
+        "KIND",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "fence12:L17",
+        "fence6:L2",
+        "fence43",
+        "source_proxy_only row is ontology/planning only.",
+        "fence7:L4",
+        "fence27:L28",
+        "fence4:L42",
+        "fence3"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 4802,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [],
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "failure_patterns": [
+        "L151-L164",
+        "fence5:L30",
+        "source_proxy_only row is ontology/planning only.",
+        "fence9",
+        "L49-L65",
+        "fence6:L13"
+      ],
+      "false_positive_patterns": [
+        "false positive",
+        "price-only",
+        "profile only"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence5:L11",
+        "fence5:L42",
+        "fence5:L20",
+        "fence2",
+        "fence3:row2"
+      ],
+      "four_c_thesis_break_conditions": [
+        "fence6:L38",
+        "L266-L280",
+        "source_proxy_only row is ontology/planning only.",
+        "fence3:L6",
+        "L199-L207",
+        "fence5:L3",
+        "fence6:L33",
+        "fence7:L19"
+      ],
+      "green_blockers": [
+        "yellow",
+        "green blocked",
+        "green requires",
+        "green blocker",
+        "blocks green",
+        "보류"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation",
+        "clinical_binary_failure"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "memory_record_count": 10216,
+      "ontology_only_count": 707,
+      "optional_primitives_observed": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "customer_preorder_or_allocation"
+      ],
+      "positive_patterns": [
+        "fence5:L3",
+        "fence8:L15",
+        "fence4:L15",
+        "fence5:L20",
+        "L25-L26",
+        "L272-L325",
+        "L85:table1",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "price_path_only_count": 2275,
+      "production_fixture_count": 161,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first"
+      ],
+      "required_primitives_observed": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "customer_preorder_or_allocation"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "BrokerPDF",
+        "KIND",
+        "CompanyGuide",
+        "DART",
+        "TrustedNews",
+        "C21",
+        "C22"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_count": 4428,
+      "source_routes": [
+        "IR",
+        "Official",
+        "BrokerPDF",
+        "TrustedNews",
+        "KIND",
+        "CompanyGuide",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence5:L2",
+        "L180-L189",
+        "fence6:L36",
+        "fence4:L4"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 1736,
+      "yellow_blockers": []
+    },
+    {
+      "bad_query_patterns": [
+        "news_only_cashflow_query"
+      ],
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "failure_patterns": [
+        "L116-L123",
+        "source_proxy_only row is ontology/planning only.",
+        "L76-L83",
+        "fence10:L6"
+      ],
+      "false_positive_patterns": [
+        "false positive",
+        "price-only",
+        "sympathy",
+        "profile only",
+        "weather"
+      ],
+      "fixture_status": {
+        "current_hard_break": true,
+        "guard_url_backed": true,
+        "old_risk_resolved": true,
+        "positive_url_backed": true,
+        "source_missing_pending": true,
+        "wrong_subject": true
+      },
+      "four_b_watch_conditions": [
+        "fence2",
+        "source_proxy_only row is ontology/planning only.",
+        "L239-L244",
+        "fence19:L10",
+        "fence7:L12",
+        "fence4:L35"
+      ],
+      "four_c_thesis_break_conditions": [
+        "source_proxy_only row is ontology/planning only.",
+        "evidence_url_pending row requires source repair before fixture use.",
+        "fence21:L1",
+        "fence19:L13",
+        "fence5:L4",
+        "fence4:L18"
+      ],
+      "green_blockers": [
+        "yellow",
+        "blocks green",
+        "green requires",
+        "green blocked",
+        "green blocker"
+      ],
+      "guard_primitives_observed": [
+        "temporal_lifecycle_guard",
+        "source_quality_guard",
+        "target_scope_guard"
+      ],
+      "hard_break_primitives_observed": [
+        "accounting_trust_break",
+        "contract_cancellation"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "memory_record_count": 17093,
+      "ontology_only_count": 486,
+      "optional_primitives_observed": [
+        "revenue_visibility_contract",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge",
+        "cash_or_revision_conversion",
+        "customer_preorder_or_allocation",
+        "hbm_capacity_pre_sold"
+      ],
+      "positive_patterns": [
+        "fence21:L5",
+        "source_proxy_only row is ontology/planning only.",
+        "fence7:L78",
+        "L3-L21",
+        "fence11:L6",
+        "fence6"
+      ],
+      "price_path_only_count": 8004,
+      "production_fixture_count": 232,
+      "query_pattern_hints": [
+        "issuer_ir_context_query",
+        "official_disclosure_first"
+      ],
+      "required_primitives_observed": [
+        "revenue_visibility_contract",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge",
+        "cash_or_revision_conversion",
+        "customer_preorder_or_allocation",
+        "hbm_capacity_pre_sold"
+      ],
+      "runtime_usage_policy": "ready",
+      "source_family_reliability": [
+        "IR",
+        "Official",
+        "KIND",
+        "CompanyGuide",
+        "DART",
+        "TrustedNews",
+        "BrokerPDF",
+        "C25"
+      ],
+      "source_gap_summary": [
+        "source_proxy_only row is ontology/planning only.",
+        "evidence_url_pending row requires source repair before fixture use."
+      ],
+      "source_proxy_count": 4181,
+      "source_routes": [
+        "IR",
+        "Official",
+        "BrokerPDF",
+        "KIND",
+        "TrustedNews",
+        "CompanyGuide",
+        "DART"
+      ],
+      "stage2_cap_conditions": [
+        "fence7:L9",
+        "fence6:L11",
+        "source_proxy_only row is ontology/planning only.",
+        "fence22:L8"
+      ],
+      "stage2_unlock_conditions": [],
+      "url_backed_count": 2180,
+      "yellow_blockers": []
+    }
+  ],
+  "schema_version": "research_brain_archetype_matrix_v1",
+  "summary": {
+    "archetype_profile_count": 36,
+    "memory_record_count": 308317,
+    "planning_only_profile_count": 5,
+    "ready_profile_count": 31,
+    "source_gap_profile_count": 0
+  }
+}

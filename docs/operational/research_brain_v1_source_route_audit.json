@@ -1,0 +1,15 @@
+{
+  "schema_version": "research_brain_source_route_audit_v1",
+  "summary": {
+    "DART_solvable_gap_sent_to_web_count": 0,
+    "FCF_gap_sent_to_news_count": 0,
+    "IR_solvable_gap_sent_to_web_count": 0,
+    "general_search_task_count": 24,
+    "general_search_task_ratio": 0.5,
+    "official_source_task_count": 48,
+    "official_task_ratio": 1.0,
+    "source_task_count": 48,
+    "stop_on_resolution_success_count": 48,
+    "unbounded_source_task_count": 0
+  }
+}

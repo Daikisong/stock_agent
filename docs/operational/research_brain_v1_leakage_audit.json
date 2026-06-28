@@ -1,0 +1,12 @@
+{
+  "schema_version": "research_brain_leakage_audit_v1",
+  "summary": {
+    "future_outcome_in_extraction_prompt_count": 0,
+    "leakage_audit_pass": true,
+    "memory_record_without_usage_policy_count": 0,
+    "planner_prompt_future_pattern_summary_only": true,
+    "research_brain_score_output_keys_count": 0,
+    "runtime_llm_seen_forbidden_future_field_count": 0,
+    "source_proxy_to_score_count": 0
+  }
+}
