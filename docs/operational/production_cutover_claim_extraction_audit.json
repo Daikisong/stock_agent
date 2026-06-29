@@ -1,0 +1,18 @@
+{
+  "schema_version": "production_cutover_claim_extraction_audit_v1",
+  "summary": {
+    "accepted_claim_count": 50,
+    "accepted_claim_without_anchor_count": 0,
+    "assertion_to_claim_count": 50,
+    "contract_visible_to_raw_extractor_count": 0,
+    "event_summary_used_as_exact_quote_count": 0,
+    "forced_current_temporal_count": 0,
+    "forced_positive_polarity_count": 0,
+    "forced_target_subject_count": 0,
+    "historical_only_rejected_count": 0,
+    "primitive_gap_direct_to_mapping_count": 0,
+    "real_document_to_assertion_count": 50,
+    "source_field_existence_to_score_without_adjudication_count": 0,
+    "wrong_subject_rejected_count": 0
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-381970-20260629801242",
+    "company_name": "케이카",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "케이카(381970) OpenDART disclosure: [기재정정]투자판단관련주요경영사항",
+    "event_title": "[기재정정]투자판단관련주요경영사항",
+    "event_type": "[기재정정]투자판단관련주요경영사항",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "[기재정정]투자판단관련주요경영사항"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801242",
+    "structured_payload": {
+      "corp_cls": "Y",
+      "corp_code": "01323032",
+      "corp_name": "케이카",
+      "flr_nm": "케이카",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629801242",
+      "report_nm": "[기재정정]투자판단관련주요경영사항              ",
+      "rm": "유",
+      "stock_code": "381970"
+    },
+    "symbol": "381970"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}

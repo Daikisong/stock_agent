@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-248070-20260629000482",
+    "company_name": "솔루엠",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "솔루엠(248070) OpenDART disclosure: 자기주식처분결과보고서",
+    "event_title": "자기주식처분결과보고서",
+    "event_type": "자기주식처분결과보고서",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "자기주식처분결과보고서"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000482",
+    "structured_payload": {
+      "corp_cls": "Y",
+      "corp_code": "01159233",
+      "corp_name": "솔루엠",
+      "flr_nm": "솔루엠",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629000482",
+      "report_nm": "자기주식처분결과보고서",
+      "rm": "",
+      "stock_code": "248070"
+    },
+    "symbol": "248070"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}

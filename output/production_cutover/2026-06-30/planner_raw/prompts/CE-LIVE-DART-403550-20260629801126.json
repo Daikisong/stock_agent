@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-403550-20260629801126",
+    "company_name": "쏘카",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "쏘카(403550) OpenDART disclosure: [기재정정]유상증자결정(종속회사의주요경영사항)",
+    "event_title": "[기재정정]유상증자결정(종속회사의주요경영사항)",
+    "event_type": "[기재정정]유상증자결정(종속회사의주요경영사항)",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "[기재정정]유상증자결정(종속회사의주요경영사항)"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801126",
+    "structured_payload": {
+      "corp_cls": "Y",
+      "corp_code": "01026157",
+      "corp_name": "쏘카",
+      "flr_nm": "쏘카",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629801126",
+      "report_nm": "[기재정정]유상증자결정(종속회사의주요경영사항)              ",
+      "rm": "유",
+      "stock_code": "403550"
+    },
+    "symbol": "403550"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}

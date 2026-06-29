@@ -1,0 +1,3 @@
+from test_cutover_daily_shadow_entrypoint import CutoverDailyShadowEntrypointTests
+
+__all__ = ["CutoverDailyShadowEntrypointTests"]

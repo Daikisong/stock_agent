@@ -1,0 +1,1202 @@
+[
+  {
+    "accepted_claim_ids": [
+      "CLM-88be8a74ac78555141f2"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-148250-20260629000586",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-8eadff5c64d79584869c"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-f03364189d74b9a49c7e"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-083660-20260629000561",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-7ded16261682113dc1d1"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-b7acca3024e92a00a220"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-006050-20260629901292",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-98f5ac0748f426e1785c"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-451cdab75926c4b7cdd7"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-083660-20260629000553",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-92b642d279dfa12c72ee"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-2c51e09b28a70366b93c"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-006050-20260629901282",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-4ebda6370c1a2de4afd2"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-78a24c36a074e5265138"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-208640-20260629901297",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-9bfa8a75c5432f7cf8e2"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-d9655243ac86e0cabd80"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-175250-20260629000562",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-5f39c98218648ef25d46"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-f84b5652b4d6b9e755eb"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-377030-20260629901255",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-ca966230ce5b2ee22699"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-42a98d620ec33b881263"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-377030-20260629901251",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-0114b1a586521047198e"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-1817eedca0fe5e07669c"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-381970-20260629801242",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-4ea00841b961b426bd40"
+    ],
+    "score_interval": {
+      "lower": 1.5,
+      "upper": 1.5
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-bc277ec31863d972d26c"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-021960-20260629000554",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-0877e50ee9d9d557a206"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-0cdd70f98e1bce630904"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-104040-20260629901236",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-c4513128d5691cbff6a9"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-338dc22943e536d6c5f1"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-260870-20260629601196",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-e96df1e8f0a8947953c8"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-5875f4ff5818d69db47f"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-060900-20260629901198",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-a20dd1e2078ec299ae6c"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-4ce03ee1ba9dcdd8dea0"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-097230-20260629801171",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-9cfa854d9585de67473e"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-400e47ba7c01512e177e"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-347700-20260629901175",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-f3adf98df8085d8cedb2"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-e9b398ac64c3b12ff639"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-347700-20260629901169",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-818ecad21ac2caf760b4"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-375981675c7b54104128"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-347700-20260629901164",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-c1f0996406692da488d6"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-dba2224e74d55cae3d97"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-368970-20260629000506",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-26f499815d76801a8986"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-730b38c062c7cf5d7aa9"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-007460-20260629801147",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-24a7baaab3f71c0366e2"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-9ab370a7b71ec7eec665"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-003530-20260629000520",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-70e8fe9629d6ccd941ba"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-f0d41379372b5702d9cf"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-003380-20260629901161",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-4614ed9e272aeea1275f"
+    ],
+    "score_interval": {
+      "lower": 1.5,
+      "upper": 1.5
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-e20d0ccbd55304af54aa"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-208640-20260629000512",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-15dc9ab43e2692db9a06"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-f67c3e13f6084075577f"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-003530-20260629000517",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-14abf651b706defca8ab"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-57ad653597853c2e2623"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-003530-20260629000514",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-4eb7121fb96dc0ed21c3"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-0f0b25eb4474605ea3c7"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-130660-20260629801144",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-d9a130c8c16ed4c0582a"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-859d44a0aa803829c00f"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-003530-20260629000513",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-08b2f730410c60cb924d"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-66cc1e2d4ef33da98ae1"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-028670-20260629801140",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-333633710c6e22014553"
+    ],
+    "score_interval": {
+      "lower": 1.5,
+      "upper": 1.5
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-0ebbace26745639aec67"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-360070-20260629901095",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-d046a911f6d3deab14bf"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-d063cbae0baa7318afe0"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-063170-20260629901142",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-de5460fc7725c74a1a4f"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-26123c5e738c9e718b0b"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-270520-20260629000502",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-7987f588afadc4a404c2"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-ed24dd1ce8293440dc2a"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-226950-20260629000494",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-cffb0d789838061bb0d7"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-4556d2272074524b29f1"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-351320-20260629901083",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-b315d0b9a27506e77a60"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-a6372b8dbf9cb216953c"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-208640-20260629901135",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-5be61e18de76111abad1"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-51ff96d4efd1bcfe9f4b"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-130660-20260629801125",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-244ad1c71d8c9b603568"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-285e1e55903674f38ced"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-216080-20260629901133",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-490e3fdd696df5f2038b"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-084e7b11a5ff3184475d"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-403550-20260629801126",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-1156abb37a40c0b3b42c"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-eccd0be816cd58a643f3"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-216080-20260629901130",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-1009b99a3e878f9542ec"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-09c0ec64eefb3aaf2e76"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-440320-20260629901092",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-a5cf5c352d7686126f3c"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-08f527876cd0fe0510a9"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-417840-20260629000499",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-406cf6ce93eddce4fe28"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-8bc1a1459c6c598aeffa"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-037350-20260629900991",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-b4ffb699d940523b70ba"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-b8e9e24a588aa7d3a1d4"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-226950-20260629901106",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-d1e7d32ba8a73ba71830"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-01816f9e1c63aa1709cb"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-226950-20260629000459",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-653bce4a4029fec5c755"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-fef6a67c2e44a3b55767"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-248070-20260629000482",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-00ee06cf2f729c5867da"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-4911ac5f76af3fdff516"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-003540-20260629000478",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-8f2d9fe6142d8bf738a7"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-141cd2b0e758133a5af0"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-060900-20260629900964",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-393fd3e68b951cab9a94"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-eb0d6967e79b1572b2a7"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-378340-20260629900849",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-75c9f7e9aedfcf5e1004"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-ffe8f55a67385cdb0e43"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-003540-20260629000475",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-5ae0f18612149fa30254"
+    ],
+    "score_interval": {
+      "lower": 3.2,
+      "upper": 3.2
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-e64f734ea3e44dfdab15"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-282720-20260629900997",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-09bb0a4fd997898ecd3f"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-a923c3fc34248a9091fb"
+    ],
+    "base_stage": "1",
+    "candidate_event_id": "CE-LIVE-DART-357550-20260629000448",
+    "hard_break_status": "NONE",
+    "missing_green_primitives": [
+      "repeat_evidence_family",
+      "cash_or_revision_conversion"
+    ],
+    "missing_yellow_primitives": [
+      "multi_source_confirmation"
+    ],
+    "score_contribution_ids": [
+      "SCON-b2419335e3e0c15d83ed"
+    ],
+    "score_interval": {
+      "lower": 4.4,
+      "upper": 4.4
+    },
+    "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+    "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge"
+  }
+]

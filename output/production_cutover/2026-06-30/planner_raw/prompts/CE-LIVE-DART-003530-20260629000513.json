@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-003530-20260629000513",
+    "company_name": "한화투자증권",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서",
+    "event_title": "증권발행실적보고서",
+    "event_type": "증권발행실적보고서",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "증권발행실적보고서"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000513",
+    "structured_payload": {
+      "corp_cls": "Y",
+      "corp_code": "00148610",
+      "corp_name": "한화투자증권",
+      "flr_nm": "한화투자증권",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629000513",
+      "report_nm": "증권발행실적보고서",
+      "rm": "",
+      "stock_code": "003530"
+    },
+    "symbol": "003530"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}

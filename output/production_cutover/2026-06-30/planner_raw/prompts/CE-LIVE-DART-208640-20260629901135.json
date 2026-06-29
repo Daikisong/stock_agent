@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-208640-20260629901135",
+    "company_name": "썸에이지",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "썸에이지(208640) OpenDART disclosure: 유상증자1차발행가액결정",
+    "event_title": "유상증자1차발행가액결정",
+    "event_type": "유상증자1차발행가액결정",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "유상증자1차발행가액결정"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901135",
+    "structured_payload": {
+      "corp_cls": "K",
+      "corp_code": "01049422",
+      "corp_name": "썸에이지",
+      "flr_nm": "썸에이지",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629901135",
+      "report_nm": "유상증자1차발행가액결정              ",
+      "rm": "코",
+      "stock_code": "208640"
+    },
+    "symbol": "208640"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}

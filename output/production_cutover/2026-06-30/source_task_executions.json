@@ -1,0 +1,2752 @@
+[
+  {
+    "accepted_claim_ids": [
+      "CLM-88be8a74ac78555141f2"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-88be8a74ac78555141f2"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "8802970f47425ce0113ae9f4a10c7da7b7d87b0784054cf3e7d9430c7e280529"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000586"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-9a40a5f24bb65f9f86ff"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-8802970f47425ce0113a"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-d2bffe83f4b1562b46fa"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-148250-20260629000586",
+      "company_name": "알엔투테크놀로지",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "148250",
+      "task_id": "SRC-TASK-efe745c3a9a394228abc"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-efe745c3a9a394228abc"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-f03364189d74b9a49c7e"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-f03364189d74b9a49c7e"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "7f3cac3b1099adaececc5fe3c14d2f2fd5becd8608186b36e3e09b80aba6aaef"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000561"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-0a151aecf906a012f434"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-7f3cac3b1099adaececc"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-9a66445d5d52d828486c"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-083660-20260629000561",
+      "company_name": "CSA 코스믹",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "083660",
+      "task_id": "SRC-TASK-5aefe7c839bb089f140b"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-5aefe7c839bb089f140b"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-b7acca3024e92a00a220"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-b7acca3024e92a00a220"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "91cd7d096dcf84ac71504e62c6ba6285a72e90fcab4b478e3736ea4ebab9cd18"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901292"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-771fcd908d424509d7a5"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-91cd7d096dcf84ac7150"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-d45a2fa4366fb867b3c7"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-006050-20260629901292",
+      "company_name": "국영지앤엠",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "006050",
+      "task_id": "SRC-TASK-8c02d4c037b18727f145"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-8c02d4c037b18727f145"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-451cdab75926c4b7cdd7"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-451cdab75926c4b7cdd7"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "d5d275dce80c7e6823295f6c1c87b50edd2f3cc2cba0f61ff16080642a6de1ab"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000553"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-1c9d859970f6effe5c48"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-d5d275dce80c7e682329"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-6a0f22accdedbcf22698"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-083660-20260629000553",
+      "company_name": "CSA 코스믹",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "083660",
+      "task_id": "SRC-TASK-567d248f7714b41c02e3"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-567d248f7714b41c02e3"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-2c51e09b28a70366b93c"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-2c51e09b28a70366b93c"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "fc566650e4b1dc6e3fbc359046a8643f15cb079739044a4e3db8e94ea9bbac60"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901282"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-7a5453263f164931718f"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-fc566650e4b1dc6e3fbc"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-c6d8f48d9fb2880a49f0"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-006050-20260629901282",
+      "company_name": "국영지앤엠",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "006050",
+      "task_id": "SRC-TASK-cf784f70400100246b2d"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-cf784f70400100246b2d"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-78a24c36a074e5265138"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-78a24c36a074e5265138"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "7677e7dd7161ceca0ecd89c8b9168b2c02077659c107e9436820612664c37f60"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901297"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-9d4a9c0b451ba9c3edb3"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-7677e7dd7161ceca0ecd"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-6fc43680ecec29102cf9"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-208640-20260629901297",
+      "company_name": "썸에이지",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "208640",
+      "task_id": "SRC-TASK-36e25cd0fc2fe8fa874b"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-36e25cd0fc2fe8fa874b"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-d9655243ac86e0cabd80"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-d9655243ac86e0cabd80"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "9d284e20289857b4e40c5ba1ebb5ae39e8cd2fc30614dd1c5addc8679703bc33"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000562"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-d00fe829ab3566a1ba8f"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-9d284e20289857b4e40c"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-37fbe776b3e8eb5d1378"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-175250-20260629000562",
+      "company_name": "아이큐어",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "175250",
+      "task_id": "SRC-TASK-c7cd61b0142d81a852d6"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-c7cd61b0142d81a852d6"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-f84b5652b4d6b9e755eb"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-f84b5652b4d6b9e755eb"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "d12fe2e4f90a3259431c98337c6a1ab0cd458f57e6cac8cc12c1f90835808532"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901255"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-233eadcc937326c65eb9"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-d12fe2e4f90a3259431c"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-d17ee183d81d4b8b0a30"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-377030-20260629901255",
+      "company_name": "비트맥스",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "377030",
+      "task_id": "SRC-TASK-bb0dde60c9ebc9e5ee9f"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-bb0dde60c9ebc9e5ee9f"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-42a98d620ec33b881263"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-42a98d620ec33b881263"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "975133519df71e934fae8cd4af887e486075a10d8ca115319713b19d52ac4b99"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901251"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-48e2236a962fad21263e"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-975133519df71e934fae"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-0656012b5e8db2bb1598"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-377030-20260629901251",
+      "company_name": "비트맥스",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "377030",
+      "task_id": "SRC-TASK-76aa88a936ee15a093cd"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-76aa88a936ee15a093cd"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-1817eedca0fe5e07669c"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-1817eedca0fe5e07669c"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "6715917edd7987b17401da2b289d557dcda7add31973798668b84dac5c90f6ae"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801242"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-4e0d903a491a8f6bcbd1"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-6715917edd7987b17401"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-22ce0490d97bbe1dca14"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-381970-20260629801242",
+      "company_name": "케이카",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capacity_expansion",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "381970",
+      "task_id": "SRC-TASK-1a8fd9be3f41f796d821"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-1a8fd9be3f41f796d821"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-bc277ec31863d972d26c"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-bc277ec31863d972d26c"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "08cf7c3b796742d05a35634704f11f54d07b386b05608513249e2cc4cffc36e7"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000554"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-2300087a7a2d7524d56d"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-08cf7c3b796742d05a35"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-7f2152f4a054e63c9191"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-021960-20260629000554",
+      "company_name": "케이비캐피탈",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "information_confidence",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "021960",
+      "task_id": "SRC-TASK-72e9ba5565bd6d612f91"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-72e9ba5565bd6d612f91"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-0cdd70f98e1bce630904"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-0cdd70f98e1bce630904"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "0f379d217d81448386e87f5911b4feb946b49677fa377e89beb0f379668f596e"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901236"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-3320ca1f5f854302292a"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-0f379d217d81448386e8"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-62b1e5ab7aff7fc7322f"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-104040-20260629901236",
+      "company_name": "디에스엠",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "information_confidence",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "104040",
+      "task_id": "SRC-TASK-1d5bb4d5d68635a74b00"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-1d5bb4d5d68635a74b00"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-338dc22943e536d6c5f1"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-338dc22943e536d6c5f1"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "36dacac95eed79943953629bd241ee016d6241d5dfc2ecd840e00f71a0371254"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629601196"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-432638a4c772da98916d"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-36dacac95eed79943953"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-60ad7f8dcc8012019dec"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-260870-20260629601196",
+      "company_name": "SK시그넷",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "260870",
+      "task_id": "SRC-TASK-500d9bd44cc1429512c8"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-500d9bd44cc1429512c8"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-5875f4ff5818d69db47f"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-5875f4ff5818d69db47f"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "09c0ef7bfb66fbac0f7a93112febd45a22aa1195089882b22da83ee11b5fdf20"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901198"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-ecbeee88563a06d29bf9"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-09c0ef7bfb66fbac0f7a"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-e9b1dce3fd5b7cc26131"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-060900-20260629901198",
+      "company_name": "에이전트AI",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "060900",
+      "task_id": "SRC-TASK-9abb1d88a72031a5dc5e"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-9abb1d88a72031a5dc5e"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-4ce03ee1ba9dcdd8dea0"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-4ce03ee1ba9dcdd8dea0"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "403d2ebb6f846b8fb4c68e69ab45983ea76183b093b310585d99efde0f3ddb90"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801171"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-60297c601ce4f9dcaeb1"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-403d2ebb6f846b8fb4c6"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-3e7d5911093671bad13a"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-097230-20260629801171",
+      "company_name": "HJ중공업",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "097230",
+      "task_id": "SRC-TASK-634cfbd54fd3304369a2"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-634cfbd54fd3304369a2"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-400e47ba7c01512e177e"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-400e47ba7c01512e177e"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "331b3d5a50a2b9bfe9737661d61050c249b06e4c12e86b171043c73b52f91c32"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901175"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-16d7ed2633dfbeb15bfd"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-331b3d5a50a2b9bfe973"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-476af647d424f034b767"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-347700-20260629901175",
+      "company_name": "스피어",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "347700",
+      "task_id": "SRC-TASK-20ef2a10cee454cd74ca"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-20ef2a10cee454cd74ca"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-e9b398ac64c3b12ff639"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-e9b398ac64c3b12ff639"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "39b5e9d4a6ca384b8c752f83ba4f5c0313fad39e4e85e274796eb3e37a5629d3"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901169"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-451908608c4a49f57f29"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-39b5e9d4a6ca384b8c75"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-bfe42570f277edbf217d"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-347700-20260629901169",
+      "company_name": "스피어",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "347700",
+      "task_id": "SRC-TASK-06ad5143d518320ff83d"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-06ad5143d518320ff83d"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-375981675c7b54104128"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-375981675c7b54104128"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "19424d6b798642cd357b6d5986b186f24d40568495303294bf92563d69ceaa1f"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901164"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-7071b0110233ac5fbe5d"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-19424d6b798642cd357b"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-5459674e1f090b7bf8d8"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-347700-20260629901164",
+      "company_name": "스피어",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "347700",
+      "task_id": "SRC-TASK-f60fe0791618199610ad"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-f60fe0791618199610ad"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-dba2224e74d55cae3d97"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-dba2224e74d55cae3d97"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "c35a0d64f85cb8a3d66135453b8c9b513d04b5c9e5703299dace13e1794c105a"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000506"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-b2eed89d11346b5055e0"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-c35a0d64f85cb8a3d661"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-47fd7d4f351d46406ef1"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-368970-20260629000506",
+      "company_name": "오에스피",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "368970",
+      "task_id": "SRC-TASK-4e994ada1ee7c93b75aa"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-4e994ada1ee7c93b75aa"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-730b38c062c7cf5d7aa9"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-730b38c062c7cf5d7aa9"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "e1d12db9295d40f74bb95816dcde9ccfa070517ddeb7c3b4c80ef0664b19bfbe"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801147"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-e8815f8c3a7aa7a00efe"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-e1d12db9295d40f74bb9"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-ede4ed24da23cc15afcc"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-007460-20260629801147",
+      "company_name": "에이프로젠",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "007460",
+      "task_id": "SRC-TASK-a4d90e02d211b27ab391"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-a4d90e02d211b27ab391"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-9ab370a7b71ec7eec665"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-9ab370a7b71ec7eec665"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "65a4ec432c3043b0ef0f882daada9c39aeb3ba1ba1aa689b16b2e8310ea94d5c"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000520"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-5454f297e1fd06e3a7a7"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-65a4ec432c3043b0ef0f"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-7817c48e61c4a5f8d3ff"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-003530-20260629000520",
+      "company_name": "한화투자증권",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "information_confidence",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "003530",
+      "task_id": "SRC-TASK-1c046d78ae56e3beda1f"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-1c046d78ae56e3beda1f"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-f0d41379372b5702d9cf"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-f0d41379372b5702d9cf"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "af9f680d7c08db2d4e4083bf43e6c2bab9738d593a0252b4791a6264a66fd2ee"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901161"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-28227fbf6f7d88800f86"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-af9f680d7c08db2d4e40"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-02e0f041c4e0095c5634"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-003380-20260629901161",
+      "company_name": "하림지주",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capacity_expansion",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "003380",
+      "task_id": "SRC-TASK-6a90470567cfd0097076"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-6a90470567cfd0097076"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-e20d0ccbd55304af54aa"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-e20d0ccbd55304af54aa"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "c0a38a01c94a3fcb15faf6a032d4809cbba965d066903b94674346216d163b67"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000512"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-2774fb366040bf430a49"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-c0a38a01c94a3fcb15fa"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-bbec17f1771835843e99"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-208640-20260629000512",
+      "company_name": "썸에이지",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "208640",
+      "task_id": "SRC-TASK-e518cdc9f89aae4592f1"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-e518cdc9f89aae4592f1"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-f67c3e13f6084075577f"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-f67c3e13f6084075577f"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "81454aa5918d2f119e1791e7e06239658c00dabad8803ea2f47a99c63eb158b8"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000517"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-1eda91dfbd89263f5b58"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-81454aa5918d2f119e17"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-0a872137329f6663c6e0"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-003530-20260629000517",
+      "company_name": "한화투자증권",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "information_confidence",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "003530",
+      "task_id": "SRC-TASK-641e51e1a3f5653cd474"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-641e51e1a3f5653cd474"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-57ad653597853c2e2623"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-57ad653597853c2e2623"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "d9c04daa7afe10d53dea33bb7816f08e3e7d66bb8f0e342b6e6e0afd32b5d0a4"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000514"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-b132aef1d4a73bc16c3e"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-d9c04daa7afe10d53dea"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-9f44ee195af0addaf70b"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-003530-20260629000514",
+      "company_name": "한화투자증권",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "information_confidence",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "003530",
+      "task_id": "SRC-TASK-9e6e7e5e041b5d473e95"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-9e6e7e5e041b5d473e95"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-0f0b25eb4474605ea3c7"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-0f0b25eb4474605ea3c7"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "c5fe4a7ddb232cac197309b5008108d1993565fa37815fcf5bfa6ae9486b1a5c"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801144"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-86de502720ee0d780a09"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-c5fe4a7ddb232cac1973"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-74a2a00dfa85e540d1f1"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-130660-20260629801144",
+      "company_name": "한전산업",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "130660",
+      "task_id": "SRC-TASK-bef8fd91f676bc310463"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-bef8fd91f676bc310463"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-859d44a0aa803829c00f"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-859d44a0aa803829c00f"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "36bbcee888985e1285603c0ff3ea5caaee647c80694cc0a4bbe38930f9b1edbc"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000513"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-9a0860349e93ba044713"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-36bbcee888985e128560"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-6d472547eba5f966f785"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-003530-20260629000513",
+      "company_name": "한화투자증권",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "information_confidence",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "003530",
+      "task_id": "SRC-TASK-5909d27ee8fad9c3adbd"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-5909d27ee8fad9c3adbd"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-66cc1e2d4ef33da98ae1"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-66cc1e2d4ef33da98ae1"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "3ab8f5f71e2836e634504d8dab2de2c3a56b3b6e87bae885e1f80fa425972f5b"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801140"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-1dd4b08d9c6827799348"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-3ab8f5f71e2836e63450"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-a318ac304a410ba63dbd"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-028670-20260629801140",
+      "company_name": "팬오션",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capacity_expansion",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "028670",
+      "task_id": "SRC-TASK-def1b04306e4adbff32c"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-def1b04306e4adbff32c"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-0ebbace26745639aec67"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-0ebbace26745639aec67"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "1998df14c1084572cb05c7757b143f91544587bd31d37d8242c9b129d43a1900"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901095"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-3c02e480c387ee2c2488"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-1998df14c1084572cb05"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-1d92b7e4995e34c6a91c"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-360070-20260629901095",
+      "company_name": "탑머티리얼",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "360070",
+      "task_id": "SRC-TASK-e3d3a8e4a146403793d6"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-e3d3a8e4a146403793d6"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-d063cbae0baa7318afe0"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-d063cbae0baa7318afe0"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "58e78be2b7f36b0826c3be0dada7c93964b93e0e39da3023b8c0bce9196a4708"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901142"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-68958fd9f68e381ff818"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-58e78be2b7f36b0826c3"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-2d31026b5a3893840ff5"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-063170-20260629901142",
+      "company_name": "서울옥션",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "063170",
+      "task_id": "SRC-TASK-6e2771315b65b1ab4a6f"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-6e2771315b65b1ab4a6f"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-26123c5e738c9e718b0b"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-26123c5e738c9e718b0b"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "bfa19d9a2791dd4d94f5562a22e3dbe45081c8438b1dfb0d24a67707143f059f"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000502"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-fc8215e1884716bf6107"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-bfa19d9a2791dd4d94f5"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-0c174a916ba4e6f91662"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-270520-20260629000502",
+      "company_name": "앱튼",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "270520",
+      "task_id": "SRC-TASK-e47c3ced42f6795fc86d"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-e47c3ced42f6795fc86d"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-ed24dd1ce8293440dc2a"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-ed24dd1ce8293440dc2a"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "75d9d712f831e4236fca46e646d2621aa46818fefc3c1d7b35ba7deff227af0c"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000494"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-82ea1fed4986b5f8f876"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-75d9d712f831e4236fca"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-b9f3c6a4152f2f7e2c71"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-226950-20260629000494",
+      "company_name": "올릭스",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "226950",
+      "task_id": "SRC-TASK-b76c1395d1fa4b35c570"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-b76c1395d1fa4b35c570"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-4556d2272074524b29f1"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-4556d2272074524b29f1"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "652080823f5c08588d170933519e7ef44565e0d8133bc76032f3edd4dca00ecd"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901083"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-74ff55e0cb2f758f93ee"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-652080823f5c08588d17"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-b2351789902f50cbceb8"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-351320-20260629901083",
+      "company_name": "넥사다이내믹스",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "351320",
+      "task_id": "SRC-TASK-9e08aba614de03a6e32e"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-9e08aba614de03a6e32e"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-a6372b8dbf9cb216953c"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-a6372b8dbf9cb216953c"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "3ab3a3b37bd03a2aa8e6bc091b66d7dd9888bba2f02913976f94c7a2b389dab3"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901135"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-790bba756af3a8060ad5"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-3ab3a3b37bd03a2aa8e6"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-ea61b0f5fe6254698cc6"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-208640-20260629901135",
+      "company_name": "썸에이지",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "208640",
+      "task_id": "SRC-TASK-49861d430c72da637e56"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-49861d430c72da637e56"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-51ff96d4efd1bcfe9f4b"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-51ff96d4efd1bcfe9f4b"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "6dc2e9008469131359cb8becf87105e0c315e3849c1d95f355ea48657af2ac1c"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801125"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-f1ca070a9ecd6b9c0950"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-6dc2e9008469131359cb"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-499e3991e32ec9e19290"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-130660-20260629801125",
+      "company_name": "한전산업",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "130660",
+      "task_id": "SRC-TASK-d9dfe4562f47264f4aa7"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-d9dfe4562f47264f4aa7"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-285e1e55903674f38ced"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-285e1e55903674f38ced"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "fcfe92061e3f4520393950a58641622cee39649f1561023bd458b3ce4639acef"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901133"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-68dde748a9e8960641cd"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-fcfe92061e3f45203939"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-92bba705e870496015aa"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-216080-20260629901133",
+      "company_name": "제테마",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "information_confidence",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "216080",
+      "task_id": "SRC-TASK-613075ca476aed25ceb4"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-613075ca476aed25ceb4"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-084e7b11a5ff3184475d"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-084e7b11a5ff3184475d"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "b48adb0134697960621e6f7123ba8409f9683da4651ee0d2a73ae694caf4ff16"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801126"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-8c9fe2a9e7835d3625d3"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-b48adb0134697960621e"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-00c999910d583860099a"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-403550-20260629801126",
+      "company_name": "쏘카",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "403550",
+      "task_id": "SRC-TASK-deb7945f63f8c18055fa"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-deb7945f63f8c18055fa"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-eccd0be816cd58a643f3"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-eccd0be816cd58a643f3"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "da752544447ca2c26402ed859ec7200b03bf3b9adbbebad50556002fa13c061d"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901130"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-26bdf9fa2c8a92de0326"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-da752544447ca2c26402"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-d9e069e50c855bc63de1"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-216080-20260629901130",
+      "company_name": "제테마",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "information_confidence",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "216080",
+      "task_id": "SRC-TASK-b6cd0adda5530b59eca2"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-b6cd0adda5530b59eca2"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-09c0ec64eefb3aaf2e76"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-09c0ec64eefb3aaf2e76"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "0a1053c472cb21e59dc3976ab220d7ea0b52c02e8d6cf483ff818c010c0d15d0"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901092"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-da25867d31200fbc82e7"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-0a1053c472cb21e59dc3"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-ff25d6de5d6afe846ca1"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-440320-20260629901092",
+      "company_name": "오픈놀",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "information_confidence",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "440320",
+      "task_id": "SRC-TASK-dfd06a864bd323094b1a"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-dfd06a864bd323094b1a"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-08f527876cd0fe0510a9"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-08f527876cd0fe0510a9"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "9321cffbdc6584f3344c10eaa1d3718ad520c1bb7bd92e57218ee408ce1f25a4"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000499"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-0a0edcc5b15522ced6fd"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-9321cffbdc6584f3344c"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-e5b6224ec8759606ca4d"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-417840-20260629000499",
+      "company_name": "저스템",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "417840",
+      "task_id": "SRC-TASK-bcbfda8a62f10b1d1d93"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-bcbfda8a62f10b1d1d93"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-8bc1a1459c6c598aeffa"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-8bc1a1459c6c598aeffa"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "f78597817e631876067570149a3306d98055e50b2653bdd49fee62c68f1bc035"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629900991"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-013abbbed5bfaa7b3482"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-f78597817e6318760675"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-f00f297f818de7c29a64"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-037350-20260629900991",
+      "company_name": "성도이엔지",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "037350",
+      "task_id": "SRC-TASK-ad2e9d4d158e4857b770"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-ad2e9d4d158e4857b770"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-b8e9e24a588aa7d3a1d4"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-b8e9e24a588aa7d3a1d4"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "d4e21b9fc3c1e80579458c6729d8c191415878eaac5bdfc9b587a842b66a9148"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901106"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-c36712e24cced560640e"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-d4e21b9fc3c1e8057945"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-231d2c1df28a64d4963d"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-226950-20260629901106",
+      "company_name": "올릭스",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "information_confidence",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "226950",
+      "task_id": "SRC-TASK-f1ee2ce5b508d730877d"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-f1ee2ce5b508d730877d"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-01816f9e1c63aa1709cb"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-01816f9e1c63aa1709cb"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "96cbd991af84aeada2147207ed98a475429549e0fac269f0e548f40a9519ba83"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000459"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-cc7b53327db3c6ce221e"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-96cbd991af84aeada214"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-0fef2500fd51efbbdfad"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-226950-20260629000459",
+      "company_name": "올릭스",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "226950",
+      "task_id": "SRC-TASK-a1ecfd63f850e741c049"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-a1ecfd63f850e741c049"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-fef6a67c2e44a3b55767"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-fef6a67c2e44a3b55767"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "bc40763d2a152eb3d89d0d44d1961b528d4fb24dfd389ac88686c29586fa2b97"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000482"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-8b33f469d77f7377a074"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-bc40763d2a152eb3d89d"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-268a648ddba880757794"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-248070-20260629000482",
+      "company_name": "솔루엠",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "248070",
+      "task_id": "SRC-TASK-5564fc6c5b264e347cc5"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-5564fc6c5b264e347cc5"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-4911ac5f76af3fdff516"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-4911ac5f76af3fdff516"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "6dca6635c91e82ea8b8b9a4ae59d24f276b33c176a0b922791ce8a986972d744"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000478"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-b6f79eeb0b0da84b6d0a"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-6dca6635c91e82ea8b8b"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-fdb4cbce4e9bc4cae244"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-003540-20260629000478",
+      "company_name": "대신증권",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "information_confidence",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "003540",
+      "task_id": "SRC-TASK-adab0eea4bb40a83fbe8"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-adab0eea4bb40a83fbe8"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-141cd2b0e758133a5af0"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-141cd2b0e758133a5af0"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "3468940a3cee9a1df36068ecb3d0178ff474676ba660e0c988186a40e39c2555"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629900964"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-4844912053fe5aa2cb68"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-3468940a3cee9a1df360"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-ec9efa3ee70920a854d1"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-060900-20260629900964",
+      "company_name": "에이전트AI",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "information_confidence",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "060900",
+      "task_id": "SRC-TASK-29cdc4a72d2289cf0ec8"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-29cdc4a72d2289cf0ec8"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-eb0d6967e79b1572b2a7"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-eb0d6967e79b1572b2a7"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "5b021f345ed3894536b43e00862dd75c16194967905889bc459c49cf0778fc63"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629900849"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-dcfcd64716030a772a61"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-5b021f345ed3894536b4"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-08964c0bd6f61919f73d"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-378340-20260629900849",
+      "company_name": "필에너지",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "378340",
+      "task_id": "SRC-TASK-e1155c7c0cb7b7f68a6f"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-e1155c7c0cb7b7f68a6f"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-ffe8f55a67385cdb0e43"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-ffe8f55a67385cdb0e43"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "db94b4e59ec23ba6281ffa42d9a3b1f3283dfe610c8ee57a9332f0a106ef35d8"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000475"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-6aa296db3975d588e401"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-db94b4e59ec23ba6281f"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-afd6ea0d3ee5c7b408bf"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-003540-20260629000475",
+      "company_name": "대신증권",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "information_confidence",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "003540",
+      "task_id": "SRC-TASK-5bf1abb3d08b9c8001f8"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-5bf1abb3d08b9c8001f8"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-e64f734ea3e44dfdab15"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-e64f734ea3e44dfdab15"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "3a2c9eba5592f97d0be80c51c7243c0642970bfa4c38c56cb814674f205b698a"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629900997"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-5320c4116255a579ca2d"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-3a2c9eba5592f97d0be8"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-8c2494ad630f79c0fe02"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-282720-20260629900997",
+      "company_name": "금양그린파워",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "contract_quality",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "282720",
+      "task_id": "SRC-TASK-5dca712076c2c65d3a54"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-5dca712076c2c65d3a54"
+  },
+  {
+    "accepted_claim_ids": [
+      "CLM-a923c3fc34248a9091fb"
+    ],
+    "adjudicated_claim_ids": [
+      "CLM-a923c3fc34248a9091fb"
+    ],
+    "budget_used": {
+      "candidates": 1,
+      "fetches": 1,
+      "queries": 1
+    },
+    "document_hashes": [
+      "56736cb11b563767cb2e9d5a77bdfa250bb75e1d24ba44f55b91388671a0b856"
+    ],
+    "document_urls": [
+      "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000448"
+    ],
+    "evidence_anchor_ids": [
+      "ANCHOR-DART-8aae9a198f5e47e24fed"
+    ],
+    "fetched_document_ids": [
+      "DOC-DART-56736cb11b563767cb2e"
+    ],
+    "provider_errors": [],
+    "raw_assertion_ids": [
+      "RAWPROD-364838e13997f7eeeeb9"
+    ],
+    "source_task": {
+      "candidate_event_id": "CE-LIVE-DART-357550-20260629000448",
+      "company_name": "석경에이티",
+      "fallback_source_classes": [
+        "IssuerOfficial"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "general_search_allowed": false,
+      "max_candidates": 1,
+      "max_fetches": 1,
+      "max_queries": 1,
+      "preferred_source_classes": [
+        "DART"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "stop_condition": {
+        "accepted_claim_count": 1
+      },
+      "symbol": "357550",
+      "task_id": "SRC-TASK-487339df2fd306b8d8dd"
+    },
+    "status": "EVIDENCE_OS_ACCEPTED",
+    "stop_reason": "accepted_contract_blind_claim",
+    "task_id": "SRC-TASK-487339df2fd306b8d8dd"
+  }
+]

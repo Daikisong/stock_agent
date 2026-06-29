@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-226950-20260629901106",
+    "company_name": "올릭스",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "올릭스(226950) OpenDART disclosure: 증권발행결과(자율공시)",
+    "event_title": "증권발행결과(자율공시)",
+    "event_type": "증권발행결과(자율공시)",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "증권발행결과(자율공시)"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901106",
+    "structured_payload": {
+      "corp_cls": "K",
+      "corp_code": "01113718",
+      "corp_name": "올릭스",
+      "flr_nm": "올릭스",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629901106",
+      "report_nm": "증권발행결과(자율공시)              ",
+      "rm": "코",
+      "stock_code": "226950"
+    },
+    "symbol": "226950"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}

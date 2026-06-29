@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-216080-20260629901133",
+    "company_name": "제테마",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "제테마(216080) OpenDART disclosure: 증권발행결과(자율공시)",
+    "event_title": "증권발행결과(자율공시)",
+    "event_type": "증권발행결과(자율공시)",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "증권발행결과(자율공시)"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901133",
+    "structured_payload": {
+      "corp_cls": "K",
+      "corp_code": "01222867",
+      "corp_name": "제테마",
+      "flr_nm": "제테마",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629901133",
+      "report_nm": "증권발행결과(자율공시)              ",
+      "rm": "코",
+      "stock_code": "216080"
+    },
+    "symbol": "216080"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}

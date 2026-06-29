@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-006050-20260629901282",
+    "company_name": "국영지앤엠",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "국영지앤엠(006050) OpenDART disclosure: 단일판매ㆍ공급계약체결(자율공시)",
+    "event_title": "단일판매ㆍ공급계약체결(자율공시)",
+    "event_type": "단일판매ㆍ공급계약체결(자율공시)",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "단일판매ㆍ공급계약체결(자율공시)"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901282",
+    "structured_payload": {
+      "corp_cls": "K",
+      "corp_code": "00104537",
+      "corp_name": "국영지앤엠",
+      "flr_nm": "국영지앤엠",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629901282",
+      "report_nm": "단일판매ㆍ공급계약체결(자율공시)              ",
+      "rm": "코",
+      "stock_code": "006050"
+    },
+    "symbol": "006050"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "production_cutover_research_memory_usage_audit_v1",
+  "summary": {
+    "A2_REAL_REPLAY_VERIFIED_count": 0,
+    "A2_source_provider_gap": true,
+    "evidence_url_pending_to_fixture_count": 0,
+    "price_outcome_in_extraction_prompt_count": 0,
+    "raw_future_label_in_planner_prompt_count": 0,
+    "source_proxy_to_A2_count": 0,
+    "source_proxy_to_score_count": 0
+  }
+}

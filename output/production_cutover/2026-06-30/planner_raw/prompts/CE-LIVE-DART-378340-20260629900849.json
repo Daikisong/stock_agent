@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-378340-20260629900849",
+    "company_name": "필에너지",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "필에너지(378340) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
+    "event_title": "[기재정정]단일판매ㆍ공급계약체결",
+    "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "[기재정정]단일판매ㆍ공급계약체결"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629900849",
+    "structured_payload": {
+      "corp_cls": "K",
+      "corp_code": "01488320",
+      "corp_name": "필에너지",
+      "flr_nm": "필에너지",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629900849",
+      "report_nm": "[기재정정]단일판매ㆍ공급계약체결              ",
+      "rm": "코",
+      "stock_code": "378340"
+    },
+    "symbol": "378340"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}

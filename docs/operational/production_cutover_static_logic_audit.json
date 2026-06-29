@@ -1,0 +1,48 @@
+{
+  "schema_version": "production_cutover_static_logic_audit_v1",
+  "summary": {
+    "MFE_MAE_in_current_prompt_count": 0,
+    "accepted_claim_without_anchor_count": 0,
+    "accepted_claim_without_date_count": 0,
+    "accepted_claim_without_subject_target_adjudication_count": 0,
+    "cached_fixture_source_in_production_count": 0,
+    "cheap_scan_score_as_verified_score_count": 0,
+    "contract_visible_to_raw_extractor_count": 0,
+    "critical_audit_pass": true,
+    "critical_count_sum": 0,
+    "current_head_sha_mismatch_count": 0,
+    "default_current_temporal_count": 0,
+    "default_positive_polarity_count": 0,
+    "default_target_subject_count": 0,
+    "deterministic_scorer_output_below_min_count": 0,
+    "dirty_worktree_ready_count": 0,
+    "event_summary_used_as_quote_count": 0,
+    "evidence_url_pending_to_fixture_count": 0,
+    "fixture_candidate_in_production_count": 0,
+    "future_outcome_in_extraction_prompt_count": 0,
+    "hard_break_without_current_open_direct_claim_count": 0,
+    "one_line_large_report_count": 0,
+    "pending_material_gap_final_reject_count": 0,
+    "primitive_gap_direct_mapping_count": 0,
+    "production_blockers": [
+      "working tree dirty at report generation, so PRODUCTION_CUTOVER_READY is forbidden"
+    ],
+    "production_ready_with_blockers_count": 0,
+    "provider_failed_final_score_count": 0,
+    "score_without_claim_count": 0,
+    "snapshot_only_counted_as_live_count": 0,
+    "source_proxy_to_A2_count": 0,
+    "source_proxy_to_score_count": 0,
+    "source_task_accepted_without_provider_fetch_count": 0,
+    "synthetic_assertion_count": 0,
+    "unbounded_fetch_config_count": 0,
+    "warning_counts": {
+      "A2_REAL_REPLAY_VERIFIED_count": 0,
+      "cached_path_count": 0,
+      "deterministic_scorer_output_count": 50,
+      "fixture_candidate_event_count": 0,
+      "planner_provider_model_null_count": 0,
+      "raw_prompt_response_file_missing_count": 0
+    }
+  }
+}

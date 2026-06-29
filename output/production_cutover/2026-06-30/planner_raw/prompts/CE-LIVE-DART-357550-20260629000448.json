@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-357550-20260629000448",
+    "company_name": "석경에이티",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "석경에이티(357550) OpenDART disclosure: 주요사항보고서(자기주식취득신탁계약체결결정)",
+    "event_title": "주요사항보고서(자기주식취득신탁계약체결결정)",
+    "event_type": "주요사항보고서(자기주식취득신탁계약체결결정)",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "주요사항보고서(자기주식취득신탁계약체결결정)"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000448",
+    "structured_payload": {
+      "corp_cls": "K",
+      "corp_code": "00921916",
+      "corp_name": "석경에이티",
+      "flr_nm": "석경에이티",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629000448",
+      "report_nm": "주요사항보고서(자기주식취득신탁계약체결결정)",
+      "rm": "",
+      "stock_code": "357550"
+    },
+    "symbol": "357550"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}

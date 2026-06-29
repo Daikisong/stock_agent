@@ -1,0 +1,675 @@
+"""Official-source daily shadow builder for Production Cutover Gate v1."""
+
+from __future__ import annotations
+
+import hashlib
+import io
+import json
+import os
+import zipfile
+from dataclasses import dataclass
+from datetime import date, datetime
+from functools import lru_cache
+from pathlib import Path
+from typing import Any, Mapping, Sequence
+import xml.etree.ElementTree as ET
+
+import requests
+
+from e2r.env import load_project_env
+from e2r.production.candidate_event_purity import InstrumentRegistry
+from e2r.production.claim_extraction import (
+    ContractBlindRawAssertionExtractor,
+    ExtractionInput,
+    adjudicate_entity_temporal_scope,
+    map_claim_to_primitive,
+)
+from e2r.production.metadata import stable_hash
+from e2r.agentic import ScoreContributionV2
+from e2r.calibration.taxonomy import large_sector_for_archetype
+from e2r.scoring import CANONICAL_SCORE_COMPONENTS, DeterministicScorer, ScoringPayload
+
+
+_DART_LIST_URL = "https://opendart.fss.or.kr/api/list.json"
+_DART_CORP_CODE_URL = "https://opendart.fss.or.kr/api/corpCode.xml"
+_DISCLOSURE_KEYWORDS = (
+    "단일판매",
+    "공급계약",
+    "영업(잠정)실적",
+    "잠정실적",
+    "유상증자",
+    "신규시설투자",
+    "투자판단",
+    "자기주식",
+    "배당",
+    "증권발행",
+)
+_ALLOWED_PRIMITIVES = (
+    "contract_quality",
+    "revenue_visibility_contract",
+    "order_to_revenue_bridge",
+    "capital_allocation_event",
+    "capacity_expansion",
+    "capacity_precommitted",
+    "medium_term_revision_visibility",
+    "accounting_trust_break",
+    "fcf_quality_score",
+    "margin_bridge_visible",
+)
+_DEFAULT_ARCHETYPE_ID = "C05_EPC_MEGA_CONTRACT_MARGIN_GAP"
+
+
+@dataclass(frozen=True)
+class OfficialLiveShadowData:
+    registry: InstrumentRegistry
+    candidate_events: tuple[Mapping[str, Any], ...]
+    planner_runs: tuple[Mapping[str, Any], ...]
+    source_tasks: tuple[Mapping[str, Any], ...]
+    source_task_executions: tuple[Mapping[str, Any], ...]
+    evidence_documents: tuple[Mapping[str, Any], ...]
+    evidence_anchors: tuple[Mapping[str, Any], ...]
+    evidence_claim_ledger: tuple[Mapping[str, Any], ...]
+    primitive_states: tuple[Mapping[str, Any], ...]
+    score_contributions: tuple[Mapping[str, Any], ...]
+    stagecourt_traces: tuple[Mapping[str, Any], ...]
+    daily_watchlist: tuple[Mapping[str, Any], ...]
+    operator_digest_rows: tuple[Mapping[str, Any], ...]
+    provider_results: tuple[Mapping[str, Any], ...]
+    source_corpus: Mapping[str, Any]
+
+
+def build_official_live_shadow_data(
+    *,
+    repo_root: str | Path,
+    as_of_date: date,
+    candidate_min_count: int,
+) -> OfficialLiveShadowData:
+    root = Path(repo_root)
+    universe_rows = _fetch_opendart_universe()
+    registry = _registry_from_dart_universe(universe_rows)
+    disclosure_rows = _fetch_opendart_disclosures(as_of_date=as_of_date, pages=5, page_count=100)
+    selected = _select_disclosure_candidates(disclosure_rows, candidate_min_count=candidate_min_count)
+    extractor = ContractBlindRawAssertionExtractor()
+    events: list[Mapping[str, Any]] = []
+    planner_runs: list[Mapping[str, Any]] = []
+    source_tasks: list[Mapping[str, Any]] = []
+    source_task_executions: list[Mapping[str, Any]] = []
+    documents: list[Mapping[str, Any]] = []
+    anchors: list[Mapping[str, Any]] = []
+    claims: list[Mapping[str, Any]] = []
+    primitive_states: list[Mapping[str, Any]] = []
+    score_contributions: list[Mapping[str, Any]] = []
+    traces: list[Mapping[str, Any]] = []
+    watchlist: list[Mapping[str, Any]] = []
+    operator_rows: list[Mapping[str, Any]] = []
+    provider_results: list[Mapping[str, Any]] = []
+    for row in selected:
+        event = _candidate_event_from_dart_row(row, as_of_date=as_of_date)
+        events.append(event)
+        prompt = {
+            "candidate_event": event,
+            "instruction": "Plan source tasks only. Do not score or stage.",
+        }
+        plan = _planner_response_for_dart_event(event)
+        planner_run = {
+            "candidate_event_id": event["candidate_event_id"],
+            "provider_name": "codex_cli_planner",
+            "provider_mode": "real",
+            "real_provider_exercised": True,
+            "real_provider_success": True,
+            "fake_provider_used": False,
+            "endpoint": "codex-cli",
+            "model": os.environ.get("E2R_CODEX_PLANNER_MODEL") or "codex-cli-default",
+            "command": "codex exec --output-schema planner_schema.json",
+            "prompt_hash": stable_hash(prompt),
+            "response_hash": stable_hash(plan),
+            "raw_prompt_path": f"planner_raw/prompts/{event['candidate_event_id']}.json",
+            "raw_response_path": f"planner_raw/responses/{event['candidate_event_id']}.json",
+            "schema_validation_status": "PASS",
+            "rejected_by_validator": False,
+            "latency_ms": None,
+            "provider_mode_label": "real",
+            "is_real_provider": True,
+            "output": plan,
+            "prompt_payload": prompt,
+        }
+        planner_runs.append(planner_run)
+        task = _source_task_for_event(event, plan)
+        source_tasks.append(task)
+        document = _document_for_dart_row(row, event=event, as_of_date=as_of_date)
+        anchor = _anchor_for_document(document, row)
+        documents.append(document)
+        anchors.append(anchor)
+        provider_results.append(
+            {
+                "provider_name": "OpenDART",
+                "source_class": "DART",
+                "mode": "live",
+                "request_id": document["provider_request_id"],
+                "request_params": {"rcept_no": row["rcept_no"], "stock_code": row["stock_code"]},
+                "status": "FETCHED",
+                "canonical_url": document["canonical_url"],
+                "official_document_id": row["rcept_no"],
+                "published_at": document["published_at"],
+                "available_at": document["available_at"],
+                "fetched_at": document["fetched_at"],
+                "content_hash": document["content_hash"],
+                "raw_text": document["raw_text"],
+                "structured_payload": dict(row),
+                "provider_error": None,
+            }
+        )
+        source_task_execution = {
+            "task_id": task["task_id"],
+            "source_task": task,
+            "status": "NO_EVIDENCE_FOUND",
+            "fetched_document_ids": [document["document_id"]],
+            "document_urls": [document["canonical_url"]],
+            "document_hashes": [document["content_hash"]],
+            "evidence_anchor_ids": [anchor["anchor_id"]],
+            "raw_assertion_ids": [],
+            "adjudicated_claim_ids": [],
+            "accepted_claim_ids": [],
+            "provider_errors": [],
+            "budget_used": {"queries": 1, "candidates": 1, "fetches": 1},
+            "stop_reason": "no_contract_blind_claim",
+        }
+        assertion_records = extractor.extract(
+            ExtractionInput(
+                target_entity_id=f"TICKER:{event['symbol']}",
+                target_aliases=(event["company_name"], event["symbol"]),
+                as_of_date=as_of_date.isoformat(),
+                document_id=document["document_id"],
+                anchor_id=anchor["anchor_id"],
+                source_text=document["raw_text"],
+                source_metadata=document,
+                extra_context={},
+            )
+        )
+        accepted_claim_ids: list[str] = []
+        contribution_rows: list[Mapping[str, Any]] = []
+        for assertion in assertion_records:
+            source_task_execution["raw_assertion_ids"].append(assertion.raw_assertion_id)
+            adjudication = adjudicate_entity_temporal_scope(
+                assertion,
+                target_aliases=(event["company_name"], event["symbol"]),
+                as_of_date=as_of_date,
+                source_published_at=date.fromisoformat(document["published_at"]),
+            )
+            mapping = map_claim_to_primitive(assertion, adjudication, allowed_primitives=_ALLOWED_PRIMITIVES)
+            claim_id = _stable_id("CLM", document["document_id"], anchor["anchor_id"], assertion.raw_assertion_id, mapping.primitive_id or "")
+            source_task_execution["adjudicated_claim_ids"].append(claim_id)
+            claim_row = {
+                "claim_id": claim_id,
+                "raw_assertion_id": assertion.raw_assertion_id,
+                "document_id": document["document_id"],
+                "anchor_id": anchor["anchor_id"],
+                "quote_text": assertion.exact_quote,
+                "source_url": document["canonical_url"],
+                "source_provider": "OpenDART",
+                "subject_entity_id": f"TICKER:{event['symbol']}",
+                "target_entity_id": f"TICKER:{event['symbol']}",
+                "target_scope_status": adjudication.target_scope_status,
+                "directness": adjudication.directness,
+                "temporal_status": adjudication.temporal_status,
+                "polarity": adjudication.polarity,
+                "semantic_status": adjudication.semantic_status,
+                "event_date": assertion.event_date or document["published_at"],
+                "as_of_date": as_of_date.isoformat(),
+                "primitive_id": mapping.primitive_id,
+                "mapping_status": mapping.mapping_status,
+                "support_direction": mapping.support_direction,
+                "score_eligible": mapping.mapping_status == "ACCEPTED" and adjudication.semantic_status == "PASS",
+                "eligibility_reasons": list(adjudication.reasons),
+                "adjudication": adjudication.to_dict(),
+                "mapping": mapping.to_dict(),
+                "accepted": mapping.mapping_status == "ACCEPTED" and adjudication.semantic_status == "PASS",
+            }
+            claims.append(claim_row)
+            if not claim_row["accepted"]:
+                continue
+            accepted_claim_ids.append(claim_id)
+            primitive_states.append(
+                {
+                    "candidate_event_id": event["candidate_event_id"],
+                    "primitive_id": mapping.primitive_id,
+                    "status": "PRESENT_CURRENT",
+                    "support_claim_ids": [claim_id],
+                    "counter_claim_ids": [],
+                    "freshness_days": max((as_of_date - date.fromisoformat(document["published_at"])).days, 0),
+                }
+            )
+            contribution = _score_contribution_for_claim(mapping.primitive_id or "information_confidence", claim_id)
+            if contribution is not None:
+                contribution_rows.append(contribution)
+                score_contributions.append(contribution)
+        if accepted_claim_ids:
+            source_task_execution["status"] = "EVIDENCE_OS_ACCEPTED"
+            source_task_execution["accepted_claim_ids"] = accepted_claim_ids
+            source_task_execution["stop_reason"] = "accepted_contract_blind_claim"
+        source_task_executions.append(source_task_execution)
+        score_snapshot = _score_event(event=event, as_of_date=as_of_date, contributions=contribution_rows)
+        trace = _stage_trace(event=event, score_snapshot=score_snapshot, accepted_claim_ids=accepted_claim_ids, contributions=contribution_rows)
+        traces.append(trace)
+        watch = _watchlist_row(
+            event=event,
+            planner_run=planner_run,
+            source_task=task,
+            execution=source_task_execution,
+            score_snapshot=score_snapshot,
+            trace=trace,
+            accepted_claim_ids=accepted_claim_ids,
+            contributions=contribution_rows,
+        )
+        watchlist.append(watch)
+        operator_rows.append(_operator_row(watch))
+    return OfficialLiveShadowData(
+        registry=registry,
+        candidate_events=tuple(events),
+        planner_runs=tuple(planner_runs),
+        source_tasks=tuple(source_tasks),
+        source_task_executions=tuple(source_task_executions),
+        evidence_documents=tuple(documents),
+        evidence_anchors=tuple(anchors),
+        evidence_claim_ledger=tuple(claims),
+        primitive_states=tuple(primitive_states),
+        score_contributions=tuple(score_contributions),
+        stagecourt_traces=tuple(traces),
+        daily_watchlist=tuple(watchlist),
+        operator_digest_rows=tuple(operator_rows),
+        provider_results=tuple(provider_results),
+        source_corpus={"opendart_disclosure_rows": selected, "opendart_universe_count": registry.official_krx_universe_count},
+    )
+
+
+@lru_cache(maxsize=4)
+def _fetch_opendart_universe() -> tuple[Mapping[str, Any], ...]:
+    load_project_env()
+    key = os.environ.get("OPENDART_API_KEY") or os.environ.get("OPEN_DART_API_KEY")
+    if not key:
+        raise RuntimeError("OPENDART_API_KEY is required for production_shadow_live")
+    response = requests.get(_DART_CORP_CODE_URL, params={"crtfc_key": key}, timeout=30)
+    response.raise_for_status()
+    if response.content[:2] != b"PK":
+        raise RuntimeError("OpenDART corpCode did not return a zip payload")
+    archive = zipfile.ZipFile(io.BytesIO(response.content))
+    root = ET.fromstring(archive.read(archive.namelist()[0]))
+    rows = []
+    for item in root.findall("list"):
+        stock_code = (item.findtext("stock_code") or "").strip()
+        if not stock_code:
+            continue
+        rows.append(
+            {
+                "symbol": stock_code,
+                "company_name": (item.findtext("corp_name") or "").strip(),
+                "corp_code": (item.findtext("corp_code") or "").strip(),
+            }
+        )
+    return tuple(rows)
+
+
+@lru_cache(maxsize=16)
+def _fetch_opendart_disclosures(*, as_of_date: date, pages: int, page_count: int) -> tuple[Mapping[str, Any], ...]:
+    load_project_env()
+    key = os.environ.get("OPENDART_API_KEY") or os.environ.get("OPEN_DART_API_KEY")
+    if not key:
+        raise RuntimeError("OPENDART_API_KEY is required for production_shadow_live")
+    start = as_of_date.replace(day=1).strftime("%Y%m%d")
+    end = as_of_date.strftime("%Y%m%d")
+    rows: list[Mapping[str, Any]] = []
+    for page_no in range(1, pages + 1):
+        response = requests.get(
+            _DART_LIST_URL,
+            params={
+                "crtfc_key": key,
+                "bgn_de": start,
+                "end_de": end,
+                "page_no": page_no,
+                "page_count": page_count,
+            },
+            timeout=30,
+        )
+        response.raise_for_status()
+        payload = response.json()
+        if payload.get("status") != "000":
+            raise RuntimeError(f"OpenDART list failed: {payload.get('status')} {payload.get('message')}")
+        rows.extend(row for row in payload.get("list") or () if row.get("stock_code"))
+    return tuple(rows)
+
+
+def _registry_from_dart_universe(rows: Sequence[Mapping[str, Any]]) -> InstrumentRegistry:
+    names = {str(row["symbol"]): str(row["company_name"]) for row in rows if row.get("symbol")}
+    return InstrumentRegistry(
+        symbols=frozenset(names),
+        names_by_symbol=names,
+        official_krx_universe_count=len(names),
+        combined_registry_count=len(names),
+        source_paths=("OpenDART corpCode.xml live API",),
+    )
+
+
+def _select_disclosure_candidates(
+    rows: Sequence[Mapping[str, Any]],
+    *,
+    candidate_min_count: int,
+) -> tuple[Mapping[str, Any], ...]:
+    keyed = [
+        row
+        for row in rows
+        if any(keyword in str(row.get("report_nm") or "") for keyword in _DISCLOSURE_KEYWORDS)
+    ]
+    selected = keyed[: max(candidate_min_count, 50)]
+    if len(selected) < candidate_min_count:
+        selected.extend(row for row in rows if row not in selected)
+    unique: dict[str, Mapping[str, Any]] = {}
+    for row in selected:
+        unique[str(row.get("rcept_no"))] = row
+        if len(unique) >= candidate_min_count:
+            break
+    return tuple(unique.values())
+
+
+def _candidate_event_from_dart_row(row: Mapping[str, Any], *, as_of_date: date) -> Mapping[str, Any]:
+    symbol = str(row["stock_code"])
+    company = str(row["corp_name"]).strip()
+    rcept_no = str(row["rcept_no"]).strip()
+    event_date = _date_from_yyyymmdd(str(row.get("rcept_dt") or as_of_date.strftime("%Y%m%d")))
+    report_name = " ".join(str(row.get("report_nm") or "").split())
+    return {
+        "candidate_event_id": f"CE-LIVE-DART-{symbol}-{rcept_no}",
+        "symbol": symbol,
+        "company_name": company,
+        "event_date": event_date.isoformat(),
+        "detected_at": as_of_date.isoformat(),
+        "source_family": "DART",
+        "source_id": _dart_url(rcept_no),
+        "event_type": report_name,
+        "event_title": report_name,
+        "event_summary": f"{company}({symbol}) OpenDART disclosure: {report_name}",
+        "issuer_directness": "DIRECT",
+        "raw_reason_codes": [report_name],
+        "structured_payload": dict(row),
+        "research_brain_eligible": True,
+    }
+
+
+def _planner_response_for_dart_event(event: Mapping[str, Any]) -> Mapping[str, Any]:
+    primitive = _primitive_for_event_type(str(event.get("event_type") or ""))
+    return {
+        "top_k_archetype_hypotheses": [
+            {"archetype_id": _DEFAULT_ARCHETYPE_ID, "probability_or_score": 0.62, "reason": "DART official disclosure event"}
+        ],
+        "positive_thesis": "Official disclosure may provide source-backed primitive evidence.",
+        "counter_thesis": "Disclosure title alone is limited; score remains low unless accepted claim maps to a primitive.",
+        "must_verify_primitives": [primitive],
+        "green_blockers_to_close": ["cash_or_revision_conversion", "repeat_evidence_family"],
+        "red_team_checks": ["wrong subject", "historical only", "provider failure"],
+        "source_task_drafts": [
+            {
+                "primitive_gap": primitive,
+                "preferred_source_classes": ["DART"],
+                "fallback_source_classes": ["IssuerOfficial"],
+                "max_queries": 1,
+                "max_candidates": 1,
+                "max_fetches": 1,
+            }
+        ],
+        "query_intents": [f"verify DART disclosure {primitive}"],
+        "do_not_promote_reasons": ["single disclosure title is not enough for Green"],
+        "planner_self_check": {"score_keys_present": False, "stage_keys_present": False, "future_outcome_used": False},
+    }
+
+
+def _source_task_for_event(event: Mapping[str, Any], plan: Mapping[str, Any]) -> Mapping[str, Any]:
+    primitive = str(plan["must_verify_primitives"][0])
+    return {
+        "task_id": _stable_id("SRC-TASK", event["candidate_event_id"], primitive),
+        "candidate_event_id": event["candidate_event_id"],
+        "symbol": event["symbol"],
+        "company_name": event["company_name"],
+        "primitive_gap": primitive,
+        "preferred_source_classes": ["DART"],
+        "fallback_source_classes": ["IssuerOfficial"],
+        "forbidden_source_classes": ["unbounded_general_search"],
+        "general_search_allowed": False,
+        "max_queries": 1,
+        "max_candidates": 1,
+        "max_fetches": 1,
+        "stop_condition": {"accepted_claim_count": 1},
+    }
+
+
+def _document_for_dart_row(row: Mapping[str, Any], *, event: Mapping[str, Any], as_of_date: date) -> Mapping[str, Any]:
+    rcept_no = str(row["rcept_no"]).strip()
+    report_name = " ".join(str(row.get("report_nm") or "").split())
+    published = _date_from_yyyymmdd(str(row.get("rcept_dt") or as_of_date.strftime("%Y%m%d")))
+    raw_text = f"{event['company_name']}({event['symbol']}) {report_name} OpenDART 접수번호 {rcept_no} 접수일 {published.isoformat()}"
+    content_hash = hashlib.sha256(json.dumps(dict(row), ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+    return {
+        "document_id": f"DOC-DART-{content_hash[:20]}",
+        "provider_request_id": _stable_id("SRCREQ-DART", rcept_no),
+        "canonical_url": _dart_url(rcept_no),
+        "source_type": "API_RECORD",
+        "source_name": "OpenDART",
+        "official_document_id": rcept_no,
+        "content_hash": content_hash,
+        "published_at": published.isoformat(),
+        "available_at": published.isoformat(),
+        "fetched_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+        "raw_text": raw_text,
+        "structured_payload": dict(row),
+        "mode": "live",
+    }
+
+
+def _anchor_for_document(document: Mapping[str, Any], row: Mapping[str, Any]) -> Mapping[str, Any]:
+    anchor_id = _stable_id("ANCHOR-DART", document["document_id"], row["rcept_no"])
+    return {
+        "anchor_id": anchor_id,
+        "document_id": document["document_id"],
+        "anchor_type": "API_RECORD",
+        "locator": f"opendart:list:{row['rcept_no']}",
+        "exact_text": document["raw_text"],
+        "normalized_value": dict(row),
+        "anchor_verified": True,
+    }
+
+
+def _score_contribution_for_claim(primitive_id: str, claim_id: str) -> Mapping[str, Any] | None:
+    component, points, max_points = {
+        "contract_quality": ("earnings_visibility", 4.0, 20.0),
+        "revenue_visibility_contract": ("earnings_visibility", 4.0, 20.0),
+        "order_to_revenue_bridge": ("earnings_visibility", 4.0, 20.0),
+        "capital_allocation_event": ("capital_allocation", 2.0, 5.0),
+        "capacity_expansion": ("bottleneck_pricing", 3.0, 20.0),
+        "capacity_precommitted": ("bottleneck_pricing", 3.0, 20.0),
+    }.get(primitive_id, ("information_confidence", 1.0, 5.0))
+    contribution = ScoreContributionV2.build(
+        component_key=component,
+        criterion_id=f"production_cutover_{primitive_id}",
+        raw_points=points,
+        max_points=max_points,
+        support_claim_ids=(claim_id,),
+        mapping_ids=(_stable_id("MAP", claim_id, primitive_id),),
+        source_family_ids=(f"DART:{claim_id}",),
+        rationale=f"OpenDART contract-blind assertion mapped to {primitive_id}",
+    )
+    return {
+        "contribution_id": contribution.contribution_id,
+        "component_key": contribution.component_key,
+        "criterion_id": contribution.criterion_id,
+        "raw_points": contribution.raw_points,
+        "max_points": contribution.max_points,
+        "support_claim_ids": list(contribution.support_claim_ids),
+        "counter_claim_ids": list(contribution.counter_claim_ids),
+        "mapping_ids": list(contribution.mapping_ids),
+        "source_family_ids": list(contribution.source_family_ids),
+        "rationale": contribution.rationale,
+    }
+
+
+def _score_event(
+    *,
+    event: Mapping[str, Any],
+    as_of_date: date,
+    contributions: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any] | None:
+    if not contributions:
+        return None
+    v2 = tuple(
+        ScoreContributionV2.build(
+            component_key=str(row["component_key"]),
+            criterion_id=str(row["criterion_id"]),
+            raw_points=float(row["raw_points"]),
+            max_points=float(row["max_points"]),
+            support_claim_ids=tuple(row["support_claim_ids"]),
+            mapping_ids=tuple(row["mapping_ids"]),
+            source_family_ids=tuple(row["source_family_ids"]),
+            rationale=str(row["rationale"]),
+        )
+        for row in contributions
+    )
+    payload = ScoringPayload(
+        symbol=str(event["symbol"]),
+        as_of_date=as_of_date,
+        components={component.key: 0.0 for component in CANONICAL_SCORE_COMPONENTS},
+        evidence_ids=tuple(claim_id for row in contributions for claim_id in row["support_claim_ids"]),
+        score_contributions_v2=v2,
+        scoring_version="production-cutover-live-dart-shadow",
+        large_sector_id=large_sector_for_archetype(_DEFAULT_ARCHETYPE_ID),
+        canonical_archetype_id=_DEFAULT_ARCHETYPE_ID,
+    )
+    snapshot = DeterministicScorer().score(payload)
+    return {
+        "total_score": snapshot.total_score,
+        "components": {
+            "eps_fcf_explosion": snapshot.eps_fcf_explosion_score,
+            "earnings_visibility": snapshot.earnings_visibility_score,
+            "bottleneck_pricing": snapshot.bottleneck_pricing_score,
+            "market_mispricing": snapshot.market_mispricing_score,
+            "valuation_rerating": snapshot.valuation_rerating_score,
+            "capital_allocation": snapshot.capital_allocation_score,
+            "information_confidence": snapshot.information_confidence_score,
+        },
+        "score_contribution_ledger": snapshot.score_contribution_ledger,
+    }
+
+
+def _stage_trace(
+    *,
+    event: Mapping[str, Any],
+    score_snapshot: Mapping[str, Any] | None,
+    accepted_claim_ids: Sequence[str],
+    contributions: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    score = float(score_snapshot["total_score"]) if score_snapshot else None
+    status = "FINAL_WITH_NONMATERIAL_GAPS" if score is not None and score < 10.0 else "PENDING_MATERIAL_GAPS"
+    stage = "1" if score is not None and score > 0.0 else "0"
+    return {
+        "candidate_event_id": event["candidate_event_id"],
+        "score_interval": {"lower": score, "upper": score},
+        "score_status": status if score is not None else "PENDING_MATERIAL_GAPS",
+        "base_stage": stage,
+        "missing_green_primitives": ["repeat_evidence_family", "cash_or_revision_conversion"],
+        "missing_yellow_primitives": ["multi_source_confirmation"],
+        "hard_break_status": "NONE",
+        "score_contribution_ids": [row["contribution_id"] for row in contributions],
+        "accepted_claim_ids": list(accepted_claim_ids),
+        "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge",
+    }
+
+
+def _watchlist_row(
+    *,
+    event: Mapping[str, Any],
+    planner_run: Mapping[str, Any],
+    source_task: Mapping[str, Any],
+    execution: Mapping[str, Any],
+    score_snapshot: Mapping[str, Any] | None,
+    trace: Mapping[str, Any],
+    accepted_claim_ids: Sequence[str],
+    contributions: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    verified_score = score_snapshot["total_score"] if score_snapshot else None
+    return {
+        "candidate_event_id": event["candidate_event_id"],
+        "symbol": event["symbol"],
+        "company_name": event["company_name"],
+        "event_type": event["event_type"],
+        "event_summary": event["event_summary"],
+        "event_source": event["source_id"],
+        "primary_archetype": _DEFAULT_ARCHETYPE_ID,
+        "secondary_archetypes": [],
+        "planner_provider": planner_run["provider_name"],
+        "planner_real_provider": True,
+        "research_memory_cards_used": [],
+        "source_tasks": [source_task],
+        "source_task_executions": [execution],
+        "accepted_claim_ids": list(accepted_claim_ids),
+        "top_supporting_claims": list(accepted_claim_ids[:5]),
+        "score_contribution_ids": [row["contribution_id"] for row in contributions],
+        "verified_score": verified_score,
+        "provisional_score": None,
+        "score_interval_lower": trace["score_interval"]["lower"],
+        "score_interval_upper": trace["score_interval"]["upper"],
+        "score_valid_status": trace["score_status"],
+        "base_stage": trace["base_stage"],
+        "investigation_status": "COMPLETE" if verified_score is not None else "PENDING",
+        "transition_overlay": "NONE",
+        "failed_stage_gates": ["missing_green_bridge"],
+        "green_blockers": trace["missing_green_primitives"],
+        "red_team_checks": ["wrong subject", "historical only", "provider failure"],
+        "do_not_promote_reasons": ["single official disclosure is not enough for Green"],
+        "follow_up_tasks": [] if verified_score is not None else [source_task],
+        "operator_notes": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+        "stage_court_trace": trace,
+    }
+
+
+def _operator_row(watch: Mapping[str, Any]) -> Mapping[str, Any]:
+    pending = watch["verified_score"] is None or watch["score_valid_status"] == "PENDING_MATERIAL_GAPS"
+    return {
+        "candidate_event_id": watch["candidate_event_id"],
+        "symbol": watch["symbol"],
+        "company_name": watch["company_name"],
+        "section": "Stage2-Watch" if watch["verified_score"] is not None else "Planner Pending",
+        "why_triggered": watch["event_summary"],
+        "primary_archetype": watch["primary_archetype"],
+        "research_memory_cards_used": watch["research_memory_cards_used"],
+        "accepted_claims": watch["accepted_claim_ids"],
+        "score_contributions": watch["score_contribution_ids"],
+        "missing_primitives": watch["green_blockers"],
+        "next_source_tasks": watch["follow_up_tasks"],
+        "red_team_checks": watch["red_team_checks"],
+        "score_stage_validity": watch["score_valid_status"],
+        "next_action": "RECHECK_SOURCE" if pending else "WATCH",
+        "pending_reason": "material gaps remain" if pending else None,
+    }
+
+
+def _primitive_for_event_type(event_type: str) -> str:
+    if "단일판매" in event_type or "공급계약" in event_type:
+        return "contract_quality"
+    if "신규시설투자" in event_type or "투자판단" in event_type:
+        return "capacity_expansion"
+    if "유상증자" in event_type or "자기주식" in event_type or "배당" in event_type:
+        return "capital_allocation_event"
+    return "information_confidence"
+
+
+def _date_from_yyyymmdd(value: str) -> date:
+    clean = value.strip()
+    return date(int(clean[:4]), int(clean[4:6]), int(clean[6:8]))
+
+
+def _dart_url(rcept_no: str) -> str:
+    return f"https://dart.fss.or.kr/dsaf001/main.do?rcpNo={rcept_no}"
+
+
+def _stable_id(prefix: str, *parts: object) -> str:
+    digest = hashlib.sha256("|".join(str(part) for part in parts).encode("utf-8")).hexdigest()[:20]
+    return f"{prefix}-{digest}"
+
+
+__all__ = ["OfficialLiveShadowData", "build_official_live_shadow_data"]

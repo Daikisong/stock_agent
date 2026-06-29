@@ -1,0 +1,228 @@
+{
+  "blockers": [
+    "working tree dirty at report generation, so PRODUCTION_CUTOVER_READY is forbidden",
+    "multi-day validation below 10 frozen/live-equivalent days",
+    "five live official dry runs not completed"
+  ],
+  "config": {
+    "as_of_date": "2026-06-30",
+    "candidate_min_count": 50,
+    "deterministic_scorer_min_count": 15,
+    "fail_on_critical_audit": true,
+    "max_fetches_per_task": 3,
+    "max_source_tasks_per_candidate": 5,
+    "max_total_runtime_seconds": 900,
+    "mode": "production_shadow_live",
+    "planner_provider": "real",
+    "sector_min_events": 3,
+    "source_mode": "live_official_first"
+  },
+  "final_status": "DAILY_PRODUCTION_SHADOW_PASS",
+  "metadata": {
+    "candidate_event_hash": "3be7427970fac5edbeaec3550a74e753e0eb93b9f100b2721b3581d0135ad57b",
+    "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_production_cutover_shadow --as-of-date 2026-06-30 --mode production_shadow_live --planner-provider real --source-mode live_official_first --candidate-min-count 50 --sector-min-events 3 --max-source-tasks-per-candidate 5 --max-fetches-per-task 3 --output-dir output/production_cutover/2026-06-30 --docs-dir docs/operational --fail-on-critical-audit true",
+    "config_hash": "003bc1f3c19f2b70ee1f69986ce415719224504acadc761b1eb413eda86698e3",
+    "evidence_os_schema_version": "e2r-agentic-evidence-os-v2",
+    "git_head_sha": "f18e0d8bc075e7456d9e5624245ec043c8a7040b",
+    "planner_prompt_hash": "2364a31d0c0d99fb311c0a8d122102738bd55b94f211794580650b457fb22faa",
+    "planner_response_hash": "5f1fd0f88d53ab73af1c5a5a225c0a1b885da68c850064d846c6ab59b5c44ef9",
+    "repo_dirty": true,
+    "report_base_commit_sha": "f18e0d8bc075e7456d9e5624245ec043c8a7040b",
+    "report_generated_at": "2026-06-29T21:14:29Z",
+    "report_generator": "e2r.production.cutover_shadow",
+    "scoring_schema_version": "e2r-deterministic-scorer-v2",
+    "source_corpus_hash": "3bc1436f2b07c6e0d781fe400ddbaea340607eac6eab41736644f1fa83a0f6db",
+    "stage_schema_version": "e2r-stage-court-v2"
+  },
+  "production_ready": false,
+  "production_verdict": "NOT_READY",
+  "report_reproducibility": {
+    "metadata": {
+      "candidate_event_hash": "3be7427970fac5edbeaec3550a74e753e0eb93b9f100b2721b3581d0135ad57b",
+      "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_production_cutover_shadow --as-of-date 2026-06-30 --mode production_shadow_live --planner-provider real --source-mode live_official_first --candidate-min-count 50 --sector-min-events 3 --max-source-tasks-per-candidate 5 --max-fetches-per-task 3 --output-dir output/production_cutover/2026-06-30 --docs-dir docs/operational --fail-on-critical-audit true",
+      "config_hash": "003bc1f3c19f2b70ee1f69986ce415719224504acadc761b1eb413eda86698e3",
+      "evidence_os_schema_version": "e2r-agentic-evidence-os-v2",
+      "git_head_sha": "f18e0d8bc075e7456d9e5624245ec043c8a7040b",
+      "planner_prompt_hash": "2364a31d0c0d99fb311c0a8d122102738bd55b94f211794580650b457fb22faa",
+      "planner_response_hash": "5f1fd0f88d53ab73af1c5a5a225c0a1b885da68c850064d846c6ab59b5c44ef9",
+      "repo_dirty": true,
+      "report_base_commit_sha": "f18e0d8bc075e7456d9e5624245ec043c8a7040b",
+      "report_generated_at": "2026-06-29T21:14:29Z",
+      "report_generator": "e2r.production.cutover_shadow",
+      "scoring_schema_version": "e2r-deterministic-scorer-v2",
+      "source_corpus_hash": "3bc1436f2b07c6e0d781fe400ddbaea340607eac6eab41736644f1fa83a0f6db",
+      "stage_schema_version": "e2r-stage-court-v2"
+    },
+    "schema_version": "production_cutover_report_reproducibility_audit_v1",
+    "summary": {
+      "critical_count_sum": 0,
+      "dirty_worktree_ready_claim_count": 0,
+      "missing_command_count": 0,
+      "missing_config_hash_count": 0,
+      "one_line_large_report_count": 0,
+      "report_generated_without_test_command_count": 0,
+      "report_head_sha_mismatch_count": 0
+    }
+  },
+  "schema_version": "production_cutover_shadow_latest_v1",
+  "summary": {
+    "candidate": {
+      "actual_krx_universe_count": 3972,
+      "cached_fixture_source_count": 0,
+      "cached_path_count": 0,
+      "combined_registry_count": 3972,
+      "company_name_mismatch_count": 0,
+      "fixture_candidate_event_count": 0,
+      "fixture_candidate_event_count_in_production": 0,
+      "mode": "production_shadow_live",
+      "production_candidate_event_count": 50,
+      "production_eligible_candidate_event_count": 50,
+      "sector_coverage": {},
+      "snapshot_uri_source_count": 0,
+      "symbol_not_in_registry_count": 0,
+      "total_candidate_event_count": 50
+    },
+    "extraction": {
+      "accepted_claim_count": 50,
+      "accepted_claim_without_anchor_count": 0,
+      "assertion_to_claim_count": 50,
+      "contract_visible_to_raw_extractor_count": 0,
+      "event_summary_used_as_exact_quote_count": 0,
+      "forced_current_temporal_count": 0,
+      "forced_positive_polarity_count": 0,
+      "forced_target_subject_count": 0,
+      "historical_only_rejected_count": 0,
+      "primitive_gap_direct_to_mapping_count": 0,
+      "real_document_to_assertion_count": 50,
+      "source_field_existence_to_score_without_adjudication_count": 0,
+      "wrong_subject_rejected_count": 0
+    },
+    "multiday": {
+      "accepted_claim_total": 50,
+      "day_count": 1,
+      "deterministic_stage_output_total": 50,
+      "fake_frozen_planner_provider_in_live_count": 0,
+      "fixture_candidate_in_live_count": 0,
+      "repeat_variance": 0,
+      "required_frozen_day_count": 10,
+      "required_live_dry_run_count": 5,
+      "source_provider_failure_total": 0,
+      "status": "DAILY_ONLY_MULTIDAY_NOT_COMPLETE"
+    },
+    "operator_digest": {
+      "green_yellow_items_with_claim_ids": 0,
+      "item_count": 50,
+      "next_action_counts": {
+        "WATCH": 50
+      },
+      "pending_item_count": 0,
+      "section_counts": {
+        "Stage2-Watch": 50
+      }
+    },
+    "planner": {
+      "endpoints": {
+        "codex-cli": 50
+      },
+      "fake_frozen_provider_used_count": 0,
+      "planner_output_score_stage_key_count": 0,
+      "planner_prompt_hash_count": 50,
+      "planner_provider_model_null_count": 0,
+      "planner_response_hash_count": 50,
+      "planner_response_missing_hash_count": 0,
+      "planner_run_count": 50,
+      "planner_schema_reject_count": 0,
+      "raw_prompt_response_file_missing_count": 0,
+      "real_planner_success_count": 50,
+      "real_provider_names": {
+        "codex_cli_planner": 50
+      }
+    },
+    "score_stage": {
+      "canonical_score_scale_max": 100,
+      "canonical_score_scale_min": 0,
+      "deterministic_scorer_configured_min_count": 15,
+      "deterministic_scorer_output_count": 50,
+      "pending_material_gap_count": 0,
+      "pending_or_provider_count": 0,
+      "provider_failed_final_score_count": 0,
+      "provider_failed_score_count": 0,
+      "score_contribution_count": 50,
+      "score_without_claim_count": 0,
+      "stagecourt_trace_count": 50,
+      "watchlist_count": 50
+    },
+    "source": {
+      "companyguide_call_count": 0,
+      "dart_call_count": 50,
+      "fetched_document_count": 50,
+      "issuer_ir_call_count": 0,
+      "kind_call_count": 0,
+      "krx_call_count": 0,
+      "live_or_fresh_provider_document_count": 50,
+      "provider_call_counts": {
+        "OpenDART": 50
+      },
+      "provider_failure_count": 0,
+      "provider_failure_counts": {},
+      "real_document_fetched_count": 50,
+      "real_source_document_fetched_count": 50,
+      "snapshot_only_counted_as_live_count": 0,
+      "snapshot_only_document_count": 0,
+      "source_gaps": {
+        "CompanyGuide": "not required for DART disclosure event verification",
+        "IR": "follow-up source class, not primary for DART disclosure verification",
+        "KIND": "not required for OpenDART disclosure-based daily shadow",
+        "KRX": "OpenDART corpCode stock_code universe used as official listed universe for this shadow run"
+      },
+      "source_task_accepted_without_provider_fetch_count": 0,
+      "stored_snapshot_only_documents": 0,
+      "trusted_news_call_count": 0
+    },
+    "static": {
+      "MFE_MAE_in_current_prompt_count": 0,
+      "accepted_claim_without_anchor_count": 0,
+      "accepted_claim_without_date_count": 0,
+      "accepted_claim_without_subject_target_adjudication_count": 0,
+      "cached_fixture_source_in_production_count": 0,
+      "cheap_scan_score_as_verified_score_count": 0,
+      "contract_visible_to_raw_extractor_count": 0,
+      "critical_audit_pass": true,
+      "critical_count_sum": 0,
+      "current_head_sha_mismatch_count": 0,
+      "default_current_temporal_count": 0,
+      "default_positive_polarity_count": 0,
+      "default_target_subject_count": 0,
+      "deterministic_scorer_output_below_min_count": 0,
+      "dirty_worktree_ready_count": 0,
+      "event_summary_used_as_quote_count": 0,
+      "evidence_url_pending_to_fixture_count": 0,
+      "fixture_candidate_in_production_count": 0,
+      "future_outcome_in_extraction_prompt_count": 0,
+      "hard_break_without_current_open_direct_claim_count": 0,
+      "one_line_large_report_count": 0,
+      "pending_material_gap_final_reject_count": 0,
+      "primitive_gap_direct_mapping_count": 0,
+      "production_blockers": [
+        "working tree dirty at report generation, so PRODUCTION_CUTOVER_READY is forbidden"
+      ],
+      "production_ready_with_blockers_count": 0,
+      "provider_failed_final_score_count": 0,
+      "score_without_claim_count": 0,
+      "snapshot_only_counted_as_live_count": 0,
+      "source_proxy_to_A2_count": 0,
+      "source_proxy_to_score_count": 0,
+      "source_task_accepted_without_provider_fetch_count": 0,
+      "synthetic_assertion_count": 0,
+      "unbounded_fetch_config_count": 0,
+      "warning_counts": {
+        "A2_REAL_REPLAY_VERIFIED_count": 0,
+        "cached_path_count": 0,
+        "deterministic_scorer_output_count": 50,
+        "fixture_candidate_event_count": 0,
+        "planner_provider_model_null_count": 0,
+        "raw_prompt_response_file_missing_count": 0
+      }
+    }
+  }
+}

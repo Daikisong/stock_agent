@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-097230-20260629801171",
+    "company_name": "HJ중공업",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "HJ중공업(097230) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
+    "event_title": "[기재정정]단일판매ㆍ공급계약체결",
+    "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "[기재정정]단일판매ㆍ공급계약체결"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801171",
+    "structured_payload": {
+      "corp_cls": "Y",
+      "corp_code": "00633835",
+      "corp_name": "HJ중공업",
+      "flr_nm": "HJ중공업",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629801171",
+      "report_nm": "[기재정정]단일판매ㆍ공급계약체결              ",
+      "rm": "유",
+      "stock_code": "097230"
+    },
+    "symbol": "097230"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}

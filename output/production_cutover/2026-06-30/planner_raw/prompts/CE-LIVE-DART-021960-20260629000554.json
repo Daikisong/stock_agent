@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-021960-20260629000554",
+    "company_name": "케이비캐피탈",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "케이비캐피탈(021960) OpenDART disclosure: 증권발행실적보고서",
+    "event_title": "증권발행실적보고서",
+    "event_type": "증권발행실적보고서",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "증권발행실적보고서"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000554",
+    "structured_payload": {
+      "corp_cls": "E",
+      "corp_code": "00161408",
+      "corp_name": "케이비캐피탈",
+      "flr_nm": "케이비캐피탈",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629000554",
+      "report_nm": "증권발행실적보고서",
+      "rm": "",
+      "stock_code": "021960"
+    },
+    "symbol": "021960"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}

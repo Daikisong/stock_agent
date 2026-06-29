@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-347700-20260629901175",
+    "company_name": "스피어",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "스피어(347700) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
+    "event_title": "[기재정정]단일판매ㆍ공급계약체결",
+    "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "[기재정정]단일판매ㆍ공급계약체결"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901175",
+    "structured_payload": {
+      "corp_cls": "K",
+      "corp_code": "01336762",
+      "corp_name": "스피어",
+      "flr_nm": "스피어",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629901175",
+      "report_nm": "[기재정정]단일판매ㆍ공급계약체결              ",
+      "rm": "코",
+      "stock_code": "347700"
+    },
+    "symbol": "347700"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}

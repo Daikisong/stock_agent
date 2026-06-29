@@ -180,16 +180,19 @@ def _append_claims_for_task(
             adjudicated_ids.append(claim.claim_id)
             audit_counts["raw_assertion_to_adjudicated_claim_count"] += 1
             ledger.append_claim(claim)
+            support_direction = _support_direction_for_signal(signal)
             mapping_status = (
                 MappingStatus.ACCEPTED
-                if task.primitive_gap in signal.supported_primitives and task.primitive_gap in _contract_primitive_ids(contract)
+                if support_direction != SupportDirection.NEUTRAL
+                and task.primitive_gap in signal.supported_primitives
+                and task.primitive_gap in _contract_primitive_ids(contract)
                 else MappingStatus.REJECTED
             )
             mapping = PrimitiveMappingProposal.build(
                 claim_id=claim.claim_id,
                 archetype_id=contract.archetype_id,
                 primitive_id=task.primitive_gap,
-                support_direction=SupportDirection.SUPPORT if signal.polarity != Polarity.NEGATIVE else SupportDirection.COUNTER,
+                support_direction=support_direction,
                 mapping_status=mapping_status,
                 rationale=f"v4_signal:{signal.signal_id}",
                 contract_rule_id=task.primitive_gap,
@@ -307,7 +310,15 @@ def _structured_field_polarity(key: str, value: Any) -> tuple[Polarity, str]:
         return Polarity.NEGATIVE, "structured_field_negative_value"
     if any(token in text for token in ("상향", "증가", "확대", "up", "raise", "positive")):
         return Polarity.POSITIVE, "structured_field_positive_value"
-    return Polarity.POSITIVE, "structured_field_presence_positive_by_contract"
+    return Polarity.NORMAL, "structured_field_presence_only_not_score_positive"
+
+
+def _support_direction_for_signal(signal: ExtractionSignal) -> SupportDirection:
+    if signal.polarity == Polarity.POSITIVE:
+        return SupportDirection.SUPPORT
+    if signal.polarity == Polarity.NEGATIVE:
+        return SupportDirection.COUNTER
+    return SupportDirection.NEUTRAL
 
 
 def _field_to_primitives(key: str, value: Any) -> tuple[str, ...]:

@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-440320-20260629901092",
+    "company_name": "오픈놀",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "오픈놀(440320) OpenDART disclosure: 증권발행결과(자율공시) (제2회차 CB)",
+    "event_title": "증권발행결과(자율공시) (제2회차 CB)",
+    "event_type": "증권발행결과(자율공시) (제2회차 CB)",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "증권발행결과(자율공시) (제2회차 CB)"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901092",
+    "structured_payload": {
+      "corp_cls": "K",
+      "corp_code": "01585155",
+      "corp_name": "오픈놀",
+      "flr_nm": "오픈놀",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629901092",
+      "report_nm": "증권발행결과(자율공시)              (제2회차 CB)",
+      "rm": "코",
+      "stock_code": "440320"
+    },
+    "symbol": "440320"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}

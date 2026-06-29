@@ -1,0 +1,3 @@
+from test_cutover_real_source_connectors import CutoverRealSourceConnectorsTests
+
+__all__ = ["CutoverRealSourceConnectorsTests"]

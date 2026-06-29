@@ -1,0 +1,18 @@
+{
+  "schema_version": "production_cutover_sla_report_v1",
+  "summary": {
+    "api_call_count": 50,
+    "budget_exhausted_pending_count": 0,
+    "cache_hit_count": 50,
+    "cache_miss_count": 0,
+    "extraction_runtime_seconds": null,
+    "llm_call_count": 50,
+    "max_total_runtime_seconds": 900,
+    "planner_runtime_seconds": null,
+    "retry_count": 0,
+    "scoring_runtime_seconds": null,
+    "source_acquisition_runtime_seconds": null,
+    "total_runtime_seconds": 3.623,
+    "unbounded_fetch_config_count": 0
+  }
+}

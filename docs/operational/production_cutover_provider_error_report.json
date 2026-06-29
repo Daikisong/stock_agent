@@ -1,0 +1,8 @@
+{
+  "rows": [],
+  "schema_version": "production_cutover_provider_error_report_v1",
+  "summary": {
+    "provider_failed_final_score_count": 0,
+    "provider_failure_count": 0
+  }
+}

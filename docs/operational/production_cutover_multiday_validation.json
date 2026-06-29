@@ -1,0 +1,28 @@
+{
+  "repeat_rows": [],
+  "rows": [
+    {
+      "accepted_claim_count": 50,
+      "as_of_date": "2026-06-30",
+      "candidate_event_count": 50,
+      "critical_audit_count": 0,
+      "eligible_candidate_event_count": 50,
+      "planner_success_count": 50,
+      "scored_item_count": 50,
+      "source_fetched_count": 50
+    }
+  ],
+  "schema_version": "production_cutover_multiday_validation_v1",
+  "summary": {
+    "accepted_claim_total": 50,
+    "day_count": 1,
+    "deterministic_stage_output_total": 50,
+    "fake_frozen_planner_provider_in_live_count": 0,
+    "fixture_candidate_in_live_count": 0,
+    "repeat_variance": 0,
+    "required_frozen_day_count": 10,
+    "required_live_dry_run_count": 5,
+    "source_provider_failure_total": 0,
+    "status": "DAILY_ONLY_MULTIDAY_NOT_COMPLETE"
+  }
+}

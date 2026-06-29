@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "candidate_event_hash": "3be7427970fac5edbeaec3550a74e753e0eb93b9f100b2721b3581d0135ad57b",
+    "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_production_cutover_shadow --as-of-date 2026-06-30 --mode production_shadow_live --planner-provider real --source-mode live_official_first --candidate-min-count 50 --sector-min-events 3 --max-source-tasks-per-candidate 5 --max-fetches-per-task 3 --output-dir output/production_cutover/2026-06-30 --docs-dir docs/operational --fail-on-critical-audit true",
+    "config_hash": "003bc1f3c19f2b70ee1f69986ce415719224504acadc761b1eb413eda86698e3",
+    "evidence_os_schema_version": "e2r-agentic-evidence-os-v2",
+    "git_head_sha": "f18e0d8bc075e7456d9e5624245ec043c8a7040b",
+    "planner_prompt_hash": "2364a31d0c0d99fb311c0a8d122102738bd55b94f211794580650b457fb22faa",
+    "planner_response_hash": "5f1fd0f88d53ab73af1c5a5a225c0a1b885da68c850064d846c6ab59b5c44ef9",
+    "repo_dirty": true,
+    "report_base_commit_sha": "f18e0d8bc075e7456d9e5624245ec043c8a7040b",
+    "report_generated_at": "2026-06-29T21:14:29Z",
+    "report_generator": "e2r.production.cutover_shadow",
+    "scoring_schema_version": "e2r-deterministic-scorer-v2",
+    "source_corpus_hash": "3bc1436f2b07c6e0d781fe400ddbaea340607eac6eab41736644f1fa83a0f6db",
+    "stage_schema_version": "e2r-stage-court-v2"
+  },
+  "schema_version": "production_cutover_report_reproducibility_audit_v1",
+  "summary": {
+    "critical_count_sum": 0,
+    "dirty_worktree_ready_claim_count": 0,
+    "missing_command_count": 0,
+    "missing_config_hash_count": 0,
+    "one_line_large_report_count": 0,
+    "report_generated_without_test_command_count": 0,
+    "report_head_sha_mismatch_count": 0
+  }
+}

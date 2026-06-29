@@ -1,0 +1,31 @@
+{
+  "candidate_event": {
+    "candidate_event_id": "CE-LIVE-DART-007460-20260629801147",
+    "company_name": "에이프로젠",
+    "detected_at": "2026-06-30",
+    "event_date": "2026-06-29",
+    "event_summary": "에이프로젠(007460) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)(자회사의 주요경영사항) (제3자배정)",
+    "event_title": "[기재정정]주요사항보고서(유상증자결정)(자회사의 주요경영사항) (제3자배정)",
+    "event_type": "[기재정정]주요사항보고서(유상증자결정)(자회사의 주요경영사항) (제3자배정)",
+    "issuer_directness": "DIRECT",
+    "raw_reason_codes": [
+      "[기재정정]주요사항보고서(유상증자결정)(자회사의 주요경영사항) (제3자배정)"
+    ],
+    "research_brain_eligible": true,
+    "source_family": "DART",
+    "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801147",
+    "structured_payload": {
+      "corp_cls": "Y",
+      "corp_code": "00152385",
+      "corp_name": "에이프로젠",
+      "flr_nm": "에이프로젠",
+      "rcept_dt": "20260629",
+      "rcept_no": "20260629801147",
+      "report_nm": "[기재정정]주요사항보고서(유상증자결정)(자회사의 주요경영사항)              (제3자배정)",
+      "rm": "유",
+      "stock_code": "007460"
+    },
+    "symbol": "007460"
+  },
+  "instruction": "Plan source tasks only. Do not score or stage."
+}
