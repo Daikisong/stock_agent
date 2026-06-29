@@ -14,6 +14,7 @@ from e2r.production.candidate_event_purity import InstrumentRegistry, Production
 from e2r.production.claim_extraction.extraction_audit import build_claim_extraction_audit
 from e2r.production.metadata import build_report_metadata, stable_hash, write_json, write_jsonl, write_text
 from e2r.production.official_live_shadow import OfficialLiveShadowData, build_official_live_shadow_data
+from e2r.production.report_reproducibility import audit_report_reproducibility
 from e2r.production.source_connectors import SourceFetchResult, build_default_source_provider_registry
 
 
@@ -120,6 +121,7 @@ def build_production_cutover_bundle(
     )
     stability_report = _stability_report_markdown(multiday_validation)
     shadow_latest = _shadow_latest(
+        repo_root=root,
         metadata=metadata,
         candidate_purity=candidate_purity,
         source_connector_report=source_connector_report,
@@ -1184,6 +1186,7 @@ def _readiness_blockers(
 
 def _shadow_latest(
     *,
+    repo_root: str | Path,
     metadata: Mapping[str, Any],
     candidate_purity: Mapping[str, Any],
     source_connector_report: Mapping[str, Any],
@@ -1231,7 +1234,7 @@ def _shadow_latest(
     production_ready = daily_shadow_pass and not production_blockers
     if production_ready:
         label = "PRODUCTION_CUTOVER_READY"
-    return {
+    shadow_latest = {
         "schema_version": "production_cutover_shadow_latest_v1",
         "metadata": metadata,
         "config": config.to_dict(),
@@ -1239,19 +1242,6 @@ def _shadow_latest(
         "production_verdict": "READY" if production_ready else "NOT_READY",
         "production_ready": production_ready,
         "blockers": production_blockers,
-        "report_reproducibility": {
-            "schema_version": "production_cutover_report_reproducibility_audit_v1",
-            "metadata": metadata,
-            "summary": {
-                "report_head_sha_mismatch_count": 0,
-                "missing_command_count": int(not metadata.get("command")),
-                "missing_config_hash_count": int(not metadata.get("config_hash")),
-                "one_line_large_report_count": 0,
-                "dirty_worktree_ready_claim_count": int(bool(metadata.get("repo_dirty")) and production_ready),
-                "report_generated_without_test_command_count": 0,
-                "critical_count_sum": 0,
-            },
-        },
         "summary": {
             "candidate": candidate_purity["summary"],
             "planner": planner_provider_report["summary"],
@@ -1263,6 +1253,7 @@ def _shadow_latest(
             "static": static_logic_audit["summary"],
         },
     }
+    return {**shadow_latest, "report_reproducibility": audit_report_reproducibility(shadow_latest, repo_root=repo_root)}
 
 
 def _output_artifacts(
