@@ -2,7 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-377030-20260629901255",
   "fallback_source_classes": [
-    "KIND"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "제3자배정 발행결과는 납입 완료 여부와 실제 조달액 확인이 핵심이다.",
+  "rationale": "증권발행결과는 실제 납입 여부와 조달 규모 확정 확인이 핵심이다.",
   "red_team_checks": [
-    "실제 납입금액과 미납 여부 확인",
-    "배정대상 및 보호예수 조건 확인"
+    "발행결과가 기존 결정 금액과 일치하는지 확인",
+    "미납/부분납입 여부 확인"
   ]
 }

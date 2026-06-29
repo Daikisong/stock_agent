@@ -2,8 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-006050-20260629901292",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "KIND"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "정정 공급계약은 계약금액, 상대방, 기간, 해지 조건 변동을 먼저 확인해야 한다.",
+  "rationale": "정정 공급계약은 계약상대, 기간, 금액, 해지조건 변화가 품질 판단의 출발점이다.",
   "red_team_checks": [
-    "정정 전후 계약금액 및 기간 비교",
-    "계약 상대방 익명/특수관계 여부 확인"
+    "정정 전후 계약금액/기간 변경 확인",
+    "계약상대 익명 또는 특수관계 여부 확인"
   ]
 }

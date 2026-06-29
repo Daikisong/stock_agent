@@ -2,8 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-360070-20260629901095",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerIR"
+    "KIND"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,10 +18,10 @@
   "preferred_source_classes": [
     "DART"
   ],
-  "primitive_gap": "order_to_revenue_bridge",
-  "rationale": "장비/소재 계약 정정은 수주가 언제 매출로 전환되는지 확인해야 한다.",
+  "primitive_gap": "contract_quality",
+  "rationale": "정정 공급계약은 계약금액, 상대방, 기간 변경을 확인해 계약 질 자료를 만든다.",
   "red_team_checks": [
-    "납품 기간과 검수 조건 확인",
-    "계약금액 변경 및 매출 대비 규모 확인"
+    "정정 전후 금액/기간 비교",
+    "계약상대 비공개 사유와 해지 조건 확인"
   ]
 }

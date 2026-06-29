@@ -2,8 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-351320-20260629901083",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "KIND"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "정정 공급계약은 계약 품질 훼손 또는 강화 여부를 보려면 원문 비교가 필요하다.",
+  "rationale": "정정 공급계약은 계약 상대와 금액/기간 변경을 통해 품질 리스크를 확인한다.",
   "red_team_checks": [
-    "정정 전후 계약 조건 비교",
-    "상대방과 계약 이행 조건 확인"
+    "정정 사유 확인",
+    "계약 해지 또는 지연 가능성 문구 확인"
   ]
 }

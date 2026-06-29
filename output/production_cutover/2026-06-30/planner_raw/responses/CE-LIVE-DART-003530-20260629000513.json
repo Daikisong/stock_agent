@@ -19,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "증권발행실적의 실제 발행 규모와 조건 확인이 우선이다.",
+  "rationale": "발행실적보고서는 실발행 금액, 조건, 회차를 확인하는 bounded task가 적합하다.",
   "red_team_checks": [
-    "접수번호별 증권 종류 확인",
-    "미발행 또는 청약 미달 여부 확인"
+    "회차별 중복 계산 방지",
+    "발행 목적과 비용 조건 확인"
   ]
 }

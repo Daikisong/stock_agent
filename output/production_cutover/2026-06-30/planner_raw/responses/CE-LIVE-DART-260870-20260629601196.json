@@ -2,8 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-260870-20260629601196",
   "fallback_source_classes": [
-    "IssuerIR",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "우선주 제3자배정 결과는 조달 완료와 투자자 조건 확인이 필요하다.",
+  "rationale": "제3자배정 우선주 발행결과는 투자자 성격과 조달 목적이 중요하다.",
   "red_team_checks": [
-    "우선주 권리 조건 확인",
-    "납입자와 전략적 투자 성격 확인"
+    "발행대상자와 전략적 투자 성격 확인",
+    "운영자금/시설자금/채무상환 구분 확인"
   ]
 }

@@ -2,8 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-060900-20260629901198",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "KIND"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,10 +18,10 @@
   "preferred_source_classes": [
     "DART"
   ],
-  "primitive_gap": "contract_quality",
-  "rationale": "단일판매 공급계약은 C05에서 계약 질과 매출 가시성의 출발점이다.",
+  "primitive_gap": "revenue_visibility_contract",
+  "rationale": "공급계약 체결은 매출 가시성과 계약 기간 확인이 가장 직접적인 gap이다.",
   "red_team_checks": [
-    "계약 상대방 신뢰도 확인",
-    "계약금액·기간·해지 조건 확인"
+    "계약상대와 계약금액 공시 여부 확인",
+    "최근 매출 대비 규모와 계약기간 확인"
   ]
 }

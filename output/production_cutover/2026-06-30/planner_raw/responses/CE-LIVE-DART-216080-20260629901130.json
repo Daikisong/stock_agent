@@ -2,7 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-216080-20260629901130",
   "fallback_source_classes": [
-    "KIND"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "동일 회사 발행결과는 회차별 납입 완료와 조건 차이를 확인한다.",
+  "rationale": "동일 발행결과 건은 접수번호별 실납입과 조건 차이를 확인한다.",
   "red_team_checks": [
-    "동일 회차 중복 접수 여부 확인",
-    "미납 또는 일부 납입 여부 확인"
+    "같은 날 공시와 중복 여부 확인",
+    "기존 결정 공시 대비 발행 규모 변경 확인"
   ]
 }

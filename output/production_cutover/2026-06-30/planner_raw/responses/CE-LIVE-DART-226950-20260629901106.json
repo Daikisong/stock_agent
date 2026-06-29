@@ -2,7 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-226950-20260629901106",
   "fallback_source_classes": [
-    "KIND"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "증권발행결과는 앞선 유상증자 결정의 실제 납입 여부를 확인한다.",
+  "rationale": "증권발행결과는 앞선 유상증자 결정의 납입 완료 여부를 확인한다.",
   "red_team_checks": [
-    "납입 완료 여부 확인",
-    "원 결정 공시의 자금 사용처와 대조"
+    "결정 공시 대비 실제 납입 금액 확인",
+    "발행대상자와 보호예수 조건 확인"
   ]
 }

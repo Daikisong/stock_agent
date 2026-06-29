@@ -2,8 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-175250-20260629000562",
   "fallback_source_classes": [
-    "IssuerIR",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "유상증자 결정은 희석, 조달 목적, 납입 가능성 확인용 공식 원문이 필요하다.",
+  "rationale": "유상증자 결정은 조달 목적과 발행 구조가 계약/설비 투자와 연결되는지 확인해야 한다.",
   "red_team_checks": [
     "제3자배정/주주배정 방식 확인",
-    "자금 사용처와 기존 현금흐름 gap 연결 여부 확인"
+    "자금 사용처와 기존 차입 상환 비중 확인"
   ]
 }

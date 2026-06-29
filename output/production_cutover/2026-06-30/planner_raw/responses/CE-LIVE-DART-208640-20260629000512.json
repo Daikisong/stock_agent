@@ -2,7 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-208640-20260629000512",
   "fallback_source_classes": [
-    "KIND"
+    "KRX"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "정정 유상증자 결정은 이후 권리락·발행가 이벤트의 원천 조건이다.",
+  "rationale": "정정 유상증자 결정은 권리락/발행가 공시와 연결해 일정 및 조건을 확인한다.",
   "red_team_checks": [
-    "정정 전후 발행 조건 비교",
-    "자금 사용 목적 및 일정 확인"
+    "정정 전후 발행주식수와 발행가 확인",
+    "자금 사용 목적 변경 여부 확인"
   ]
 }

@@ -2,7 +2,6 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-282720-20260629900997",
   "fallback_source_classes": [
-    "KIND",
     "IssuerIR"
   ],
   "forbidden_source_classes": [
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "margin_bridge_visible",
-  "rationale": "공사/전력 계약 정정은 계약금액과 공사기간 변경이 마진 가시성에 직접 연결된다.",
+  "rationale": "전력/공사 계약 정정은 매출 가시성보다 원가와 공사범위 변경 확인이 중요하다.",
   "red_team_checks": [
-    "정정 전후 계약금액 확인",
-    "원가 부담 또는 기간 연장 여부 확인"
+    "계약기간 및 공사범위 변경 확인",
+    "원가 부담 또는 지체상금 조건 확인"
   ]
 }

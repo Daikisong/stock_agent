@@ -2,8 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-130660-20260629801144",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,10 +18,10 @@
   "preferred_source_classes": [
     "DART"
   ],
-  "primitive_gap": "contract_quality",
-  "rationale": "정정 공급계약은 계약 상대방, 금액, 기간의 최종 조건 확인이 필요하다.",
+  "primitive_gap": "order_to_revenue_bridge",
+  "rationale": "공급계약 정정은 수주가 언제 매출로 전환되는지 기간과 진행 조건 확인이 필요하다.",
   "red_team_checks": [
-    "정정 전후 변경 항목 확인",
-    "공공/민간 발주처와 해지 조건 확인"
+    "계약기간과 매출 인식 시점 확인",
+    "정정으로 납기 연장 또는 금액 변동 여부 확인"
   ]
 }

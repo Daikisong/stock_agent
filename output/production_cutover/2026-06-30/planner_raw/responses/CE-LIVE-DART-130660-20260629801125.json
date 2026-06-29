@@ -2,8 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-130660-20260629801125",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,10 +18,10 @@
   "preferred_source_classes": [
     "DART"
   ],
-  "primitive_gap": "revenue_visibility_contract",
-  "rationale": "계약 정정 후 매출 인식 기간과 계약 규모의 가시성 확인이 필요하다.",
+  "primitive_gap": "order_to_revenue_bridge",
+  "rationale": "동일 회사 공급계약 정정은 수주-매출 전환 일정의 변경 여부 확인이 필요하다.",
   "red_team_checks": [
-    "최신 정정본 여부 확인",
-    "계약기간과 최근 매출 대비 규모 확인"
+    "이전 정정 공시와 대상 계약 중복 여부 확인",
+    "납기/계약기간 변경 확인"
   ]
 }

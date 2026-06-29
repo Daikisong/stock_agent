@@ -2,7 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-248070-20260629000482",
   "fallback_source_classes": [
-    "IssuerOfficial"
+    "KRX"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "자기주식 처분 결과는 처분 목적과 실제 유입 자금 확인이 필요하다.",
+  "rationale": "자기주식처분결과는 처분 목적과 실제 처분 규모 확인이 필요하다.",
   "red_team_checks": [
     "처분 상대방과 목적 확인",
-    "처분 수량·가격·총액 확인"
+    "처분가액과 계획 대비 실적 확인"
   ]
 }

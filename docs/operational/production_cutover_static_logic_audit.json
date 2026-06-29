@@ -24,7 +24,9 @@
     "one_line_large_report_count": 0,
     "pending_material_gap_final_reject_count": 0,
     "primitive_gap_direct_mapping_count": 0,
-    "production_blockers": [],
+    "production_blockers": [
+      "A2 real replay verified count is 0; explicit source/provider gap keeps cutover NOT_READY"
+    ],
     "production_ready_with_blockers_count": 0,
     "provider_failed_final_score_count": 0,
     "score_without_claim_count": 0,

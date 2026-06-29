@@ -2,7 +2,6 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-063170-20260629901142",
   "fallback_source_classes": [
-    "KIND",
     "IssuerOfficial"
   ],
   "forbidden_source_classes": [
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "공급계약 정정은 거래 실체, 금액, 기간의 확정성이 먼저다.",
+  "rationale": "공급계약 정정은 일회성 판매인지 반복 가능한 계약인지 구분할 기초자료가 필요하다.",
   "red_team_checks": [
-    "거래 상대방 공개 여부 확인",
-    "정정으로 계약 규모가 축소됐는지 확인"
+    "계약상대 및 품목 확인",
+    "최근 매출 대비 규모와 계약기간 확인"
   ]
 }

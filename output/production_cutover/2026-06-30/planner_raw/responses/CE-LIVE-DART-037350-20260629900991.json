@@ -2,7 +2,6 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-037350-20260629900991",
   "fallback_source_classes": [
-    "KIND",
     "IssuerIR"
   ],
   "forbidden_source_classes": [
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "margin_bridge_visible",
-  "rationale": "EPC 성격의 정정 공급계약은 금액 변경과 원가/마진 가시성 확인이 중요하다.",
+  "rationale": "EPC 성격의 공급계약 정정은 금액뿐 아니라 마진 훼손 가능 조건 확인이 중요하다.",
   "red_team_checks": [
-    "도급 범위와 공사기간 확인",
-    "정정으로 수익성 조건이 악화됐는지 확인"
+    "공사범위/기간 변경 여부 확인",
+    "원가 상승 또는 지체상금 조건 확인"
   ]
 }

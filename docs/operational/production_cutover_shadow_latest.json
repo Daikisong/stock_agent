@@ -1,33 +1,35 @@
 {
   "blockers": [
-    "multi-day validation below 10 frozen/live-equivalent days",
-    "five live official dry runs not completed"
+    "A2 real replay verified count is 0; explicit source/provider gap keeps cutover NOT_READY"
   ],
   "config": {
     "as_of_date": "2026-06-30",
     "candidate_min_count": 50,
     "deterministic_scorer_min_count": 15,
     "fail_on_critical_audit": true,
+    "frozen_snapshot_dir": null,
     "max_fetches_per_task": 3,
     "max_source_tasks_per_candidate": 5,
     "max_total_runtime_seconds": 900,
     "mode": "production_shadow_live",
+    "output_dir": "output/production_cutover/2026-06-30",
     "planner_provider": "real",
     "sector_min_events": 3,
-    "source_mode": "live_official_first"
+    "source_mode": "live_official_first",
+    "validation_output_root": "/tmp/e2r_cutover_runs"
   },
   "final_status": "DAILY_PRODUCTION_SHADOW_PASS",
   "metadata": {
     "candidate_event_hash": "a9df137904b5cfc5c05efe98194521a2575613bb389054e8f52d4286028f1136",
-    "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_production_cutover_shadow --as-of-date 2026-06-30 --mode production_shadow_live --planner-provider real --source-mode live_official_first --candidate-min-count 50 --sector-min-events 3 --max-source-tasks-per-candidate 5 --max-fetches-per-task 3 --output-dir output/production_cutover/2026-06-30 --docs-dir docs/operational --fail-on-critical-audit true",
-    "config_hash": "003bc1f3c19f2b70ee1f69986ce415719224504acadc761b1eb413eda86698e3",
+    "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_production_cutover_shadow --as-of-date 2026-06-30 --mode production_shadow_live --planner-provider real --source-mode live_official_first --candidate-min-count 50 --sector-min-events 3 --max-source-tasks-per-candidate 5 --max-fetches-per-task 3 --output-dir output/production_cutover/2026-06-30 --validation-output-root /tmp/e2r_cutover_runs --frozen-snapshot-dir  --docs-dir docs/operational --fail-on-critical-audit true",
+    "config_hash": "8af0def53decd684b812f0ae96076ddf3628f717041d39960e0fff9e54f52b53",
     "evidence_os_schema_version": "e2r-agentic-evidence-os-v2",
-    "git_head_sha": "9a94243b257bec795aa020d9f6c7fe048c616de6",
+    "git_head_sha": "d79621a9a9dd12caac3309828642576f12c35e1f",
     "planner_prompt_hash": "c1c79739403f242e40f3c3bd05dc7bb59a0563d6e724cf9b84e3e12ad3185aa9",
-    "planner_response_hash": "e40ee09557596aeeb2da88d2cc04953e1834769eb59d967b84cc253a0dcb2c01",
+    "planner_response_hash": "f60115dd8900c65a34679fee8187d1b200069c8849de0c2c48281b93ada08d1e",
     "repo_dirty": false,
-    "report_base_commit_sha": "9a94243b257bec795aa020d9f6c7fe048c616de6",
-    "report_generated_at": "2026-06-29T22:01:17Z",
+    "report_base_commit_sha": "d79621a9a9dd12caac3309828642576f12c35e1f",
+    "report_generated_at": "2026-06-29T23:43:27Z",
     "report_generator": "e2r.production.cutover_shadow",
     "scoring_schema_version": "e2r-deterministic-scorer-v2",
     "source_corpus_hash": "3bc1436f2b07c6e0d781fe400ddbaea340607eac6eab41736644f1fa83a0f6db",
@@ -38,15 +40,15 @@
   "report_reproducibility": {
     "metadata": {
       "candidate_event_hash": "a9df137904b5cfc5c05efe98194521a2575613bb389054e8f52d4286028f1136",
-      "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_production_cutover_shadow --as-of-date 2026-06-30 --mode production_shadow_live --planner-provider real --source-mode live_official_first --candidate-min-count 50 --sector-min-events 3 --max-source-tasks-per-candidate 5 --max-fetches-per-task 3 --output-dir output/production_cutover/2026-06-30 --docs-dir docs/operational --fail-on-critical-audit true",
-      "config_hash": "003bc1f3c19f2b70ee1f69986ce415719224504acadc761b1eb413eda86698e3",
+      "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_production_cutover_shadow --as-of-date 2026-06-30 --mode production_shadow_live --planner-provider real --source-mode live_official_first --candidate-min-count 50 --sector-min-events 3 --max-source-tasks-per-candidate 5 --max-fetches-per-task 3 --output-dir output/production_cutover/2026-06-30 --validation-output-root /tmp/e2r_cutover_runs --frozen-snapshot-dir  --docs-dir docs/operational --fail-on-critical-audit true",
+      "config_hash": "8af0def53decd684b812f0ae96076ddf3628f717041d39960e0fff9e54f52b53",
       "evidence_os_schema_version": "e2r-agentic-evidence-os-v2",
-      "git_head_sha": "9a94243b257bec795aa020d9f6c7fe048c616de6",
+      "git_head_sha": "d79621a9a9dd12caac3309828642576f12c35e1f",
       "planner_prompt_hash": "c1c79739403f242e40f3c3bd05dc7bb59a0563d6e724cf9b84e3e12ad3185aa9",
-      "planner_response_hash": "e40ee09557596aeeb2da88d2cc04953e1834769eb59d967b84cc253a0dcb2c01",
+      "planner_response_hash": "f60115dd8900c65a34679fee8187d1b200069c8849de0c2c48281b93ada08d1e",
       "repo_dirty": false,
-      "report_base_commit_sha": "9a94243b257bec795aa020d9f6c7fe048c616de6",
-      "report_generated_at": "2026-06-29T22:01:17Z",
+      "report_base_commit_sha": "d79621a9a9dd12caac3309828642576f12c35e1f",
+      "report_generated_at": "2026-06-29T23:43:27Z",
       "report_generator": "e2r.production.cutover_shadow",
       "scoring_schema_version": "e2r-deterministic-scorer-v2",
       "source_corpus_hash": "3bc1436f2b07c6e0d781fe400ddbaea340607eac6eab41736644f1fa83a0f6db",
@@ -257,16 +259,25 @@
       "wrong_subject_rejected_count": 0
     },
     "multiday": {
-      "accepted_claim_total": 50,
-      "day_count": 1,
-      "deterministic_stage_output_total": 50,
+      "accepted_claim_total": 980,
+      "day_count": 10,
+      "deterministic_stage_output_total": 980,
       "fake_frozen_planner_provider_in_live_count": 0,
       "fixture_candidate_in_live_count": 0,
+      "frozen_repeat_day_with_3_runs_count": 3,
+      "frozen_replay_day_count": 10,
+      "live_equivalent_day_count": 10,
+      "live_official_dry_run_count": 11,
+      "remaining_frozen_day_count": 0,
+      "remaining_live_dry_run_count": 0,
+      "remaining_repeated_frozen_day_count": 0,
       "repeat_variance": 0,
       "required_frozen_day_count": 10,
       "required_live_dry_run_count": 5,
-      "source_provider_failure_total": 0,
-      "status": "DAILY_ONLY_MULTIDAY_NOT_COMPLETE"
+      "required_repeated_frozen_day_count": 3,
+      "snapshot_only_counted_as_live_count": 0,
+      "source_provider_failure_total": 198,
+      "status": "MULTIDAY_SHADOW_PASS"
     },
     "operator_digest": {
       "green_yellow_items_with_claim_ids": 0,
@@ -376,7 +387,9 @@
       "one_line_large_report_count": 0,
       "pending_material_gap_final_reject_count": 0,
       "primitive_gap_direct_mapping_count": 0,
-      "production_blockers": [],
+      "production_blockers": [
+        "A2 real replay verified count is 0; explicit source/provider gap keeps cutover NOT_READY"
+      ],
       "production_ready_with_blockers_count": 0,
       "provider_failed_final_score_count": 0,
       "score_without_claim_count": 0,

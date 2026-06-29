@@ -19,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "동일 발행실적 공시는 회차별 실제 조달 내역을 확인해야 한다.",
+  "rationale": "복수 발행실적보고서는 각 회차의 조달 조건을 bounded로 확인한다.",
   "red_team_checks": [
-    "회차 또는 증권 종류 식별",
-    "모집 실적과 발행 조건 확인"
+    "회차별 발행 조건 구분",
+    "기존 결정 공시 대비 미달 발행 여부 확인"
   ]
 }

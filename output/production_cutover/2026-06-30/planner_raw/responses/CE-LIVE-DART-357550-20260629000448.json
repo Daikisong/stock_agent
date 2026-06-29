@@ -2,7 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-357550-20260629000448",
   "fallback_source_classes": [
-    "IssuerOfficial"
+    "KRX"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "자기주식취득 신탁계약은 자본 배분 규모와 기간 확인이 우선이다.",
+  "rationale": "자기주식취득신탁 결정은 자본정책 이벤트로 계약/매출 claim보다 조건 확인이 우선이다.",
   "red_team_checks": [
-    "계약금액과 계약기간 확인",
-    "취득 목적과 기존 주주환원 정책 연결 여부 확인"
+    "신탁 계약금액과 기간 확인",
+    "취득 목적과 재무 부담 확인"
   ]
 }

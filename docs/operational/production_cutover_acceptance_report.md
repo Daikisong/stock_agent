@@ -3,7 +3,7 @@
 - final_status: DAILY_PRODUCTION_SHADOW_PASS
 - production_verdict: NOT_READY
 - production_ready: False
-- blockers: ['multi-day validation below 10 frozen/live-equivalent days', 'five live official dry runs not completed']
+- blockers: ['A2 real replay verified count is 0; explicit source/provider gap keeps cutover NOT_READY']
 
 ## 핵심 해석
 v4는 shadow 실행 증거로 보존하지만, 이 cutover gate는 fixture/cache/snapshot-only 증거를 운영 READY 증거로 승격하지 않는다.

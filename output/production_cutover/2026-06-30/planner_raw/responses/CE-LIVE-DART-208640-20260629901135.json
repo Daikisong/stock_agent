@@ -2,7 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-208640-20260629901135",
   "fallback_source_classes": [
-    "KIND"
+    "KRX"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "1차 발행가액 결정은 유상증자 실제 희석 조건을 갱신한다.",
+  "rationale": "1차 발행가액 결정은 유상증자 조건 확정 과정의 가격 이벤트다.",
   "red_team_checks": [
-    "원 유상증자 공시와 발행가 비교",
-    "최종 발행가 확정 전 임시 조건 여부 확인"
+    "기존 유상증자 결정과 발행가 산정 연결 확인",
+    "최종 발행가 확정 전 조건 변동 가능성 확인"
   ]
 }
