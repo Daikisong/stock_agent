@@ -10,6 +10,7 @@ from typing import Any, Mapping, Sequence
 from e2r.agentic.evidence_os import (
     AdjudicatedClaim,
     AppendOnlyEvidenceLedger,
+    AnchorType,
     Directness,
     EvidenceAnchor,
     EvidenceContractV2,
@@ -253,6 +254,8 @@ def _extract_signals(
     text = _visible_text(anchor.exact_text or document_text)
     normalized = anchor.normalized_value if isinstance(anchor.normalized_value, Mapping) else {}
     row = normalized.get("row") if isinstance(normalized.get("row"), Mapping) else {}
+    if anchor.anchor_type == AnchorType.TEXT_SPAN and not row:
+        return ()
     signals: list[ExtractionSignal] = []
     source_date = document.published_date()
 
@@ -376,10 +379,12 @@ def _raw_assertion_from_signal(
     anchor: EvidenceAnchor,
     event: CandidateEventV2,
 ) -> RawAssertion:
+    normalized = anchor.normalized_value if isinstance(anchor.normalized_value, Mapping) else {}
+    subject_text = str(normalized.get("company_name") or normalized.get("symbol") or event.company_name)
     return RawAssertion(
         raw_assertion_id=deterministic_id("RAWASSERTV4", (anchor.anchor_id, signal.signal_id, signal.quote)),
         anchor_id=anchor.anchor_id,
-        subject_text=event.company_name,
+        subject_text=subject_text,
         predicate=signal.predicate,
         object_text=signal.quote,
         value=signal.quote,
@@ -387,7 +392,7 @@ def _raw_assertion_from_signal(
         certainty="source_anchor_extracted",
         event_date_text=signal.event_date.isoformat() if signal.event_date else None,
         exact_quote=signal.quote,
-        related_entity_texts=(event.company_name,),
+        related_entity_texts=tuple(dict.fromkeys((subject_text, event.company_name))),
         extractor_model="research_brain_v4_rule_extractor_from_real_anchor",
         extractor_prompt_hash="contract_blind_signal_rules_v1",
     )

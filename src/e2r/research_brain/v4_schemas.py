@@ -21,6 +21,7 @@ class PlannerProviderModeV4(str, Enum):
 
 
 class SourceAcquisitionModeV4(str, Enum):
+    LIVE_OFFICIAL_FIRST = "live_official_first"
     FROZEN_REAL_SOURCE_SNAPSHOT = "frozen_real_source_snapshot"
     LIVE_OFFICIAL_ONLY = "live_official_only"
     LIVE_FULL_BOUNDED = "live_full_bounded"
@@ -184,9 +185,10 @@ class DailyWatchlistItemV4:
 class ProductionShadowV4Config:
     as_of_date: str
     planner_provider: str = PlannerProviderModeV4.REAL.value
-    source_acquisition: str = SourceAcquisitionModeV4.FROZEN_REAL_SOURCE_SNAPSHOT.value
-    universe_limit: int = 40
-    planner_success_limit: int = 10
+    source_acquisition: str = SourceAcquisitionModeV4.LIVE_OFFICIAL_FIRST.value
+    universe_limit: int = 30
+    planner_success_limit: int = 30
+    planner_batch_size: int = 5
     max_fetches_per_task: int = 3
     top_results: int = 20
     retry_max: int = 2
@@ -199,6 +201,8 @@ class ProductionShadowV4Config:
             raise ValueError("v4 production shadow forbids retry_max=None")
         if self.max_fetches_per_task <= 0:
             raise ValueError("v4 production shadow requires bounded max_fetches_per_task")
+        if self.planner_batch_size <= 0:
+            raise ValueError("v4 production shadow requires bounded planner_batch_size")
         if self.planner_provider == PlannerProviderModeV4.FAKE.value and not self.fake_provider_allowed:
             raise ValueError("fake planner provider is not allowed for production shadow")
 

@@ -1,0 +1,13 @@
+{
+  "schema_version": "research_brain_v4_sector_coverage_report",
+  "summary": {
+    "large_sector_attempted_count": 4,
+    "large_sector_counts": {
+      "L10_POLICY_EVENT_CROSS_REDTEAM_MISC": 1,
+      "L2_AI_SEMICONDUCTOR_ELECTRONICS": 6,
+      "L7_BIO_HEALTHCARE_MEDICAL": 3,
+      "UNKNOWN": 20
+    },
+    "sector_gap_count": 1
+  }
+}

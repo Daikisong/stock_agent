@@ -1,0 +1,18 @@
+{
+  "policy": {
+    "price_path_rows": "guardrail summary only; not extraction prompt or score",
+    "source_proxy_rows": "ontology/source route/false-positive memory only",
+    "url_backed_rows": "A2 only after source/snapshot/anchor/claim replay"
+  },
+  "schema_version": "research_brain_v4_research_memory_usage_audit",
+  "summary": {
+    "C06_C08_C15_url_backed_candidate_count": 6,
+    "C17_C24_C28_source_proxy_count": 4,
+    "C24_C28_C17_source_proxy_promoted_to_A2_count": 0,
+    "memory_record_count": 200,
+    "price_outcome_to_extraction_prompt_count": 0,
+    "price_path_only_count": 76,
+    "source_proxy_memory_to_score_count": 0,
+    "source_proxy_or_pending_count": 110
+  }
+}

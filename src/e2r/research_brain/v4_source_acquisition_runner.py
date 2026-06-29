@@ -139,7 +139,10 @@ class SourceAcquisitionRunnerV4:
             elif normalized == "DART":
                 yield from _dart_snapshots(self.repo_root, event=event, as_of_date=as_of_date)
             elif normalized in {"KIND", "KRX"}:
-                yield from _kind_snapshots(self.repo_root, event=event, as_of_date=as_of_date)
+                if normalized == "KIND":
+                    yield from _kind_snapshots(self.repo_root, event=event, as_of_date=as_of_date)
+                else:
+                    yield from _krx_snapshots(self.repo_root, event=event, as_of_date=as_of_date)
             elif normalized in {"IR", "IssuerOfficial", "Official"}:
                 yield from _issuer_official_snapshots(self.repo_root, event=event, as_of_date=as_of_date)
             elif normalized in {"TrustedNews", "News"}:
@@ -272,6 +275,58 @@ def _kind_snapshots(repo_root: Path, *, event: CandidateEventV2, as_of_date: dat
                 anchor_type=AnchorType.API_RECORD,
                 normalized_value={"symbol": event.symbol, "company_name": event.company_name, "provider": "KIND", "row": dict(row)},
             )
+
+
+def _krx_snapshots(repo_root: Path, *, event: CandidateEventV2, as_of_date: date) -> Iterable[StoredSourceSnapshot]:
+    instrument_root = repo_root / "data/raw/krx/instruments"
+    for path in sorted(instrument_root.glob("*.csv")):
+        for row in _csv_rows(path):
+            if str(row.get("symbol") or "") != event.symbol:
+                continue
+            listed = _date_from_any(row.get("listed_date")) or as_of_date
+            if listed > as_of_date:
+                continue
+            text = _row_text("KRX", row, raw_text=str(row.get("name") or event.company_name), symbol=event.symbol, company_name=event.company_name)
+            yield StoredSourceSnapshot(
+                source_class="KRX",
+                provider_name="KRXStoredInstrumentStatus",
+                source_path=path,
+                symbol=event.symbol,
+                company_name=str(row.get("name") or event.company_name),
+                published_at=as_of_date,
+                text=text,
+                canonical_url=f"snapshot://krx/instruments/{path.name}#{event.symbol}",
+                anchor_type=AnchorType.API_RECORD,
+                normalized_value={"symbol": event.symbol, "company_name": event.company_name, "provider": "KRX", "row": dict(row)},
+            )
+    prices_root = repo_root / "data/raw/krx/prices"
+    for path in sorted(prices_root.glob("*.csv")):
+        latest: Mapping[str, Any] | None = None
+        latest_date: date | None = None
+        for row in _csv_rows(path):
+            if str(row.get("symbol") or "") != event.symbol:
+                continue
+            row_date = _date_from_any(row.get("date") or row.get("as_of_date")) or as_of_date
+            if row_date > as_of_date:
+                continue
+            if latest_date is None or row_date > latest_date:
+                latest = row
+                latest_date = row_date
+        if latest is None or latest_date is None:
+            continue
+        text = _row_text("KRX price", latest, raw_text=f"{event.company_name} KRX trading status", symbol=event.symbol, company_name=event.company_name)
+        yield StoredSourceSnapshot(
+            source_class="KRX",
+            provider_name="KRXStoredPriceStatus",
+            source_path=path,
+            symbol=event.symbol,
+            company_name=event.company_name,
+            published_at=latest_date,
+            text=text,
+            canonical_url=f"snapshot://krx/prices/{path.name}#{latest_date.isoformat()}",
+            anchor_type=AnchorType.API_RECORD,
+            normalized_value={"symbol": event.symbol, "company_name": event.company_name, "provider": "KRX", "row": dict(latest)},
+        )
 
 
 def _issuer_official_snapshots(repo_root: Path, *, event: CandidateEventV2, as_of_date: date) -> Iterable[StoredSourceSnapshot]:

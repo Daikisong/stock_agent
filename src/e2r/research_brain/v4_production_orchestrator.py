@@ -11,6 +11,7 @@ from typing import Any, Mapping, Sequence
 from e2r.agentic.evidence_contract_v2 import load_evidence_contracts_v2
 from e2r.calibration.taxonomy import large_sector_for_archetype
 from e2r.research_brain.v2_memory_cards import build_memory_cards_from_v1_matrix
+from e2r.research_brain.schemas import SourceTask, SourceTaskType, deterministic_id
 from e2r.research_brain.v2_schemas import ArchetypeMemoryCard, CandidateEventV2, EventMagnitudeV2
 from e2r.research_brain.v4_evidence_extraction_bridge import (
     EvidenceOSExecutionBundleV4,
@@ -56,14 +57,16 @@ def run_research_brain_v4_production_shadow(
     if planner_provider is None:
         planner_provider = build_planner_provider_v4(mode=config.planner_provider, working_directory=repo_root)
     planned_events = events[: config.planner_success_limit] if config.planner_provider != PlannerProviderModeV4.FAKE.value else events
-    planner_runs = list(
-        run_planner_provider_v4(
-            provider=planner_provider,
-            events=planned_events,
-            memory_cards=cards,
-            existing_evidence_by_event_id={event.candidate_event_id: _evidence_summary(event) for event in planned_events},
+    planner_runs: list[PlannerRunV4] = []
+    for event_batch in _chunks(planned_events, config.planner_batch_size):
+        planner_runs.extend(
+            run_planner_provider_v4(
+                provider=planner_provider,
+                events=event_batch,
+                memory_cards=cards,
+                existing_evidence_by_event_id={event.candidate_event_id: _evidence_summary(event) for event in event_batch},
+            )
         )
-    )
     planned_ids = {run.event.candidate_event_id for run in planner_runs}
     for event in events:
         if event.candidate_event_id in planned_ids:
@@ -100,6 +103,7 @@ def run_research_brain_v4_production_shadow(
                 card_by_id=cards_by_id,
                 max_tasks=config.max_fetches_per_task,
             )
+            tasks = tuple((*tasks, *_mandatory_official_status_tasks(event=event, primary_archetype=primary)))
             bundle = execute_source_tasks_with_evidence_os_v4(
                 event=event,
                 tasks=tasks,
@@ -251,7 +255,8 @@ def run_multi_day_shadow_v4(
             planner_provider=base_config.planner_provider,
             source_acquisition=base_config.source_acquisition,
             universe_limit=base_config.universe_limit,
-            planner_success_limit=max(6, min(base_config.planner_success_limit, 10)),
+            planner_success_limit=base_config.planner_success_limit,
+            planner_batch_size=base_config.planner_batch_size,
             max_fetches_per_task=base_config.max_fetches_per_task,
             top_results=base_config.top_results,
             retry_max=base_config.retry_max,
@@ -303,6 +308,7 @@ def build_real_planner_report_v4(planner_runs: Sequence[PlannerRunV4]) -> Mappin
             "real_provider_attempt_count": sum(run.provider_mode == PlannerProviderModeV4.REAL.value for run in planner_runs),
             "real_provider_success_count": sum(run.real_provider_success for run in planner_runs),
             "real_provider_failure_count": sum(run.provider_failed and run.provider_mode == PlannerProviderModeV4.REAL.value for run in planner_runs),
+            "planner_not_attempted_count": sum(run.provider_mode == PlannerProviderModeV4.NONE.value for run in planner_runs),
             "fake_provider_used_count": sum(run.fake_provider_used for run in planner_runs),
             "provider_error_by_candidate": {
                 run.event.candidate_event_id: run.provider_error
@@ -339,6 +345,9 @@ def build_source_acquisition_report_v4(executions: Sequence[SourceTaskExecutionV
             "source_task_accepted_without_real_document_count": accepted_without_doc,
             "accepted_claim_count": sum(len(execution.accepted_claim_ids) for execution in executions),
             "source_classes_exercised": dict(source_classes),
+            "required_official_source_classes_present": all(
+                key in source_classes for key in ("CompanyGuide", "DART", "KIND", "KRX", "IR")
+            ),
         },
         "status_counts": dict(statuses),
         "rows": [execution.to_dict() for execution in executions],
@@ -521,10 +530,14 @@ def build_v4_readiness_verdict(
         blockers.append("candidate_event_count below 30")
     if p["real_provider_success_count"] < 10:
         blockers.append("real planner success below 10")
+    if p.get("planner_not_attempted_count", 0):
+        blockers.append("not all production-shadow candidates were attempted by real planner")
     if p["fake_provider_used_count"] != 0:
         blockers.append("fake planner provider used")
     if s["source_task_executed_count"] < 20:
         blockers.append("source task executed below 20")
+    if not s.get("required_official_source_classes_present", False):
+        blockers.append("required official source classes not all exercised")
     if s["real_document_fetched_count"] < 30:
         blockers.append("real document fetched below 30")
     if e["adjudicated_claim_to_accepted_claim_count"] < 10:
@@ -596,6 +609,69 @@ def _historical_source_events(*, root: Path, as_of_date: date, limit: int) -> li
                 )
             )
     return rows
+
+
+def _mandatory_official_status_tasks(*, event: CandidateEventV2, primary_archetype: str) -> tuple[SourceTask, ...]:
+    """Exercise official exchange/status providers without creating score credit."""
+
+    common = {
+        "candidate_event_id": event.candidate_event_id,
+        "symbol": event.symbol,
+        "company_name": event.company_name,
+        "archetype_id": primary_archetype,
+        "task_type": SourceTaskType.RED_TEAM.value,
+        "fallback_source_classes": (),
+        "forbidden_source_classes": ("unbounded_general_search",),
+        "date_window": {"end": event.event_date, "lookback_days": 30},
+        "max_queries": 1,
+        "max_candidates": 3,
+        "max_fetches": 1,
+        "stop_condition": {"accepted_claim_count": 0},
+        "llm_query_allowed": False,
+        "general_search_allowed": False,
+        "memory_record_ids": (),
+    }
+    return (
+        SourceTask(
+            task_id=deterministic_id("RSTASKV4CGSTATUS", (event.candidate_event_id, primary_archetype)),
+            primitive_gap="official_report_snapshot_current",
+            preferred_source_classes=("CompanyGuide",),
+            reason_from_memory="mandatory official report/consensus snapshot check",
+            **common,
+        ),
+        SourceTask(
+            task_id=deterministic_id("RSTASKV4DARTSTATUS", (event.candidate_event_id, primary_archetype)),
+            primitive_gap="official_disclosure_status_current",
+            preferred_source_classes=("DART",),
+            reason_from_memory="mandatory official disclosure status check",
+            **common,
+        ),
+        SourceTask(
+            task_id=deterministic_id("RSTASKV4KIND", (event.candidate_event_id, primary_archetype)),
+            primitive_gap="exchange_risk_status_current",
+            preferred_source_classes=("KIND",),
+            reason_from_memory="mandatory official exchange risk status check",
+            **common,
+        ),
+        SourceTask(
+            task_id=deterministic_id("RSTASKV4KRX", (event.candidate_event_id, primary_archetype)),
+            primitive_gap="listing_trading_status_current",
+            preferred_source_classes=("KRX",),
+            reason_from_memory="mandatory official listing/trading status check",
+            **common,
+        ),
+        SourceTask(
+            task_id=deterministic_id("RSTASKV4IRSTATUS", (event.candidate_event_id, primary_archetype)),
+            primitive_gap="issuer_official_update_current",
+            preferred_source_classes=("IR",),
+            reason_from_memory="mandatory issuer official/IR update check",
+            **common,
+        ),
+    )
+
+
+def _chunks(values: Sequence[CandidateEventV2], size: int) -> tuple[tuple[CandidateEventV2, ...], ...]:
+    return tuple(tuple(values[index : index + size]) for index in range(0, len(values), size))
 
 
 def _watchlist_section(item: DailyWatchlistItemV4) -> str:

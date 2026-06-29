@@ -1,0 +1,2747 @@
+{
+  "rows": [
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-005930-2026-06-25",
+        "company_name": "삼성전자",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-06-25",
+        "event_freshness_days": 4,
+        "event_summary": "27년에 더욱 부각될 생산능력. 27년에 더욱 부각될 생산능력 ▶ 메모리 가격 상승구간에 최대 Capa 이점 극대화 ▶ 2Q26 실적 전망치 하향 조정. 성과급 충당금 규모 확대",
+        "event_title": "27년에 더욱 부각될 생산능력",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "MEMORY"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-28/005930_recent_reports.json",
+        "structured_payload": {
+          "report_count": 20,
+          "snapshot_path": "data/cache/company_guide/2026-06-28/005930_recent_reports.json"
+        },
+        "symbol": "005930"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": {
+        "counter_thesis": "2Q26 전망치 하향 및 성과급 충당금 확대가 단기 실적 품질을 훼손하거나, 일반 메모리 가격 상승만으로 HBM 구조적 쇼티지를 과대해석했을 수 있다.",
+        "do_not_promote_reasons": [
+          "가격 상승만 확인되고 고객 배정 또는 capacity pre-sold 증거가 없으면 C06 승격 근거로 쓰지 않는다.",
+          "2Q26 하향이 구조적 비용 증가로 확인되면 중기 가시성 판단을 보류한다."
+        ],
+        "green_blockers_to_close": [
+          "cashflow bridge",
+          "repeat evidence family",
+          "conventional memory drag"
+        ],
+        "must_verify_primitives": [
+          "hbm_capacity_constraint",
+          "hbm_capacity_pre_sold",
+          "memory_price_increase_mentioned",
+          "medium_term_revision_visibility"
+        ],
+        "planner_self_check": {
+          "future_outcome_used": false,
+          "score_keys_present": false,
+          "stage_keys_present": false
+        },
+        "positive_thesis": "메모리 가격 상승 구간에서 삼성전자의 생산능력 우위가 2027년 매출/이익 가시성으로 연결되는지 확인한다.",
+        "query_intents": [
+          "삼성전자 2026년 2분기 또는 2027년 메모리 Capa/HBM 생산능력 관련 IR·CompanyGuide·브로커 리포트 확인",
+          "삼성전자 2Q26 전망치 하향 사유와 2027년 실적 가시성 분리 확인"
+        ],
+        "red_team_checks": [
+          "가격 상승 언급만 있고 고객 배정/장기계약/RPO 같은 수요 잠김 증거가 없는지 확인",
+          "2Q26 실적 하향 원인이 일회성 성과급인지 구조적 마진 훼손인지 분리",
+          "HBM이 아닌 범용 DRAM 회복만으로 C06을 과대 적용하지 않도록 점검"
+        ],
+        "source_task_drafts": [
+          {
+            "date_window": {
+              "end": "2026-06-25",
+              "lookback_days": 120
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 12,
+            "max_fetches": 4,
+            "max_queries": 3,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "hbm_capacity_constraint",
+            "reason_from_memory": "생산능력 이점 문구를 HBM capacity constraint 또는 pre-sold capacity로 연결할 수 있는 공식/IR 근거가 필요하다.",
+            "stop_condition": {
+              "accepted_claim_count": 2
+            },
+            "task_id": "CEV4-CG-005930-2026-06-25-T1",
+            "task_type": "official_ir_capacity_check"
+          },
+          {
+            "date_window": {
+              "end": "2026-06-25",
+              "lookback_days": 90
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 10,
+            "max_fetches": 3,
+            "max_queries": 2,
+            "preferred_source_classes": [
+              "CompanyGuide",
+              "IR"
+            ],
+            "primitive_gap": "medium_term_revision_visibility",
+            "reason_from_memory": "2Q26 하향과 2027년 생산능력 부각이 같이 있어 단기 하향과 중기 상향 가시성을 분리해야 한다.",
+            "stop_condition": {
+              "accepted_claim_count": 2
+            },
+            "task_id": "CEV4-CG-005930-2026-06-25-T2",
+            "task_type": "companyguide_revision_bridge"
+          },
+          {
+            "date_window": {
+              "end": "2026-06-25",
+              "lookback_days": 60
+            },
+            "fallback_source_classes": [],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 8,
+            "max_fetches": 3,
+            "max_queries": 2,
+            "preferred_source_classes": [
+              "CompanyGuide",
+              "IR",
+              "BrokerPDF"
+            ],
+            "primitive_gap": "memory_price_increase_mentioned",
+            "reason_from_memory": "메모리 가격 상승이 이벤트의 직접 원인이므로 가격 상승 근거와 제품 믹스가 HBM/일반 DRAM 중 어디에 있는지 확인한다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-005930-2026-06-25-T3",
+            "task_type": "official_or_broker_price_cycle_confirmation"
+          }
+        ],
+        "top_k_archetype_hypotheses": [
+          {
+            "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            "probability_or_score": 0.62,
+            "reason": "CompanyGuide 이벤트가 메모리 가격 상승구간과 최대 Capa 이점 극대화를 직접 언급해 HBM/메모리 생산능력 제약 및 중기 실적 가시성 확인이 우선이다."
+          },
+          {
+            "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+            "probability_or_score": 0.28,
+            "reason": "메모리 가격 상승 자체는 사이클 회복 아키타입과도 맞지만, 이벤트 핵심은 장비 수주보다 삼성전자 메모리 Capa 활용이다."
+          },
+          {
+            "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+            "probability_or_score": 0.04,
+            "reason": "정책 또는 보조금 문구가 없으므로 낮은 보조 가설이다."
+          }
+        ]
+      },
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": null,
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": true,
+      "real_provider_success": true,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-000660-2026-06-25",
+        "company_name": "SK하이닉스",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-06-25",
+        "event_freshness_days": 4,
+        "event_summary": "실적과 멀티플 둘 다 열려 있다. 실적과 멀티플 둘 다 열려 있다 ▶ 2Q26 Preview: 기존 전망치 수준 유지 ▶ 26년 하반기 메모리 가격 상향하며 실적 상향 ▶ ADR 상장 및 실적 변동성 축소는 밸류에이션 할증에 기여",
+        "event_title": "실적과 멀티플 둘 다 열려 있다",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "EPS_ACTION_TYP_NM_UP",
+          "PRC_ACTION_TYP_NM_UP",
+          "MEMORY"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-28/000660_recent_reports.json",
+        "structured_payload": {
+          "report_count": 20,
+          "snapshot_path": "data/cache/company_guide/2026-06-28/000660_recent_reports.json"
+        },
+        "symbol": "000660"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": {
+        "counter_thesis": "실적 상향이 가격 사이클에만 의존하고 고객 계약/배정 증거가 약하면 구조적 HBM capacity 아키타입보다 일반 메모리 사이클 회복에 가깝다.",
+        "do_not_promote_reasons": [
+          "ADR 상장 및 밸류에이션 할증만으로 C32나 C06 근거를 만들지 않는다.",
+          "가격 사이클만 있고 고객 배정 증거가 없으면 C06보다 C10 검토 대상으로 남긴다."
+        ],
+        "green_blockers_to_close": [
+          "cashflow bridge",
+          "repeat evidence family",
+          "conventional memory drag"
+        ],
+        "must_verify_primitives": [
+          "memory_price_increase_mentioned",
+          "medium_term_revision_visibility",
+          "customer_preorder_or_allocation",
+          "hbm_capacity_pre_sold"
+        ],
+        "planner_self_check": {
+          "future_outcome_used": false,
+          "score_keys_present": false,
+          "stage_keys_present": false
+        },
+        "positive_thesis": "하반기 메모리 가격 상향이 SK하이닉스 실적 상향과 변동성 축소로 이어지는지, HBM 고객 배정 또는 capacity pre-sold 증거와 연결해 확인한다.",
+        "query_intents": [
+          "SK하이닉스 2026년 하반기 메모리 가격 상향과 실적 상향 근거 확인",
+          "SK하이닉스 HBM 고객 배정·선주문·capacity pre-sold 관련 IR 또는 브로커 근거 확인"
+        ],
+        "red_team_checks": [
+          "ADR 상장 문구를 지배구조 이벤트로 오인하지 않기",
+          "메모리 가격 상향과 HBM 고객 잠김을 분리해 검증",
+          "실적 변동성 축소가 실제 계약/물량 가시성인지 단순 밸류에이션 코멘트인지 확인"
+        ],
+        "source_task_drafts": [
+          {
+            "date_window": {
+              "end": "2026-06-25",
+              "lookback_days": 90
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 12,
+            "max_fetches": 4,
+            "max_queries": 3,
+            "preferred_source_classes": [
+              "CompanyGuide",
+              "IR"
+            ],
+            "primitive_gap": "medium_term_revision_visibility",
+            "reason_from_memory": "하반기 메모리 가격 상향과 실적 상향이 이벤트 핵심이므로 추정치 변화의 기간과 원천을 확인해야 한다.",
+            "stop_condition": {
+              "accepted_claim_count": 2
+            },
+            "task_id": "CEV4-CG-000660-2026-06-25-T1",
+            "task_type": "companyguide_revision_bridge"
+          },
+          {
+            "date_window": {
+              "end": "2026-06-25",
+              "lookback_days": 180
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 12,
+            "max_fetches": 4,
+            "max_queries": 3,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "customer_preorder_or_allocation",
+            "reason_from_memory": "실적 변동성 축소가 고객 배정 또는 선주문 같은 구조적 수요 잠김에서 오는지 확인해야 한다.",
+            "stop_condition": {
+              "accepted_claim_count": 2
+            },
+            "task_id": "CEV4-CG-000660-2026-06-25-T2",
+            "task_type": "ir_customer_allocation_check"
+          },
+          {
+            "date_window": {
+              "end": "2026-06-25",
+              "lookback_days": 60
+            },
+            "fallback_source_classes": [],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 8,
+            "max_fetches": 3,
+            "max_queries": 2,
+            "preferred_source_classes": [
+              "CompanyGuide",
+              "IR",
+              "BrokerPDF"
+            ],
+            "primitive_gap": "memory_price_increase_mentioned",
+            "reason_from_memory": "메모리 가격 상향 문구가 제품별 가격 또는 믹스 개선 근거로 확인되는지 필요하다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-000660-2026-06-25-T3",
+            "task_type": "price_cycle_source_check"
+          }
+        ],
+        "top_k_archetype_hypotheses": [
+          {
+            "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            "probability_or_score": 0.58,
+            "reason": "하반기 메모리 가격 상향과 실적 상향, 변동성 축소가 HBM 고객/생산능력 가시성과 연결될 가능성이 크다."
+          },
+          {
+            "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+            "probability_or_score": 0.31,
+            "reason": "메모리 가격 상향과 사이클 회복 자체는 C10에도 부합하지만 장비 수주보다는 메모리 업체 실적 가시성이 핵심이다."
+          },
+          {
+            "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+            "probability_or_score": 0.03,
+            "reason": "ADR 상장은 언급되지만 공개매수나 지배권 프리미엄 이벤트는 확인되지 않았다."
+          }
+        ]
+      },
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": null,
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": true,
+      "real_provider_success": true,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-005930-2026-06-25",
+        "company_name": "삼성전자",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-06-25",
+        "event_freshness_days": 4,
+        "event_summary": "27년에 더욱 부각될 생산능력. 27년에 더욱 부각될 생산능력 ▶ 메모리 가격 상승구간에 최대 Capa 이점 극대화 ▶ 2Q26 실적 전망치 하향 조정. 성과급 충당금 규모 확대",
+        "event_title": "27년에 더욱 부각될 생산능력",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "MEMORY"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-26/005930_recent_reports.json",
+        "structured_payload": {
+          "report_count": 20,
+          "snapshot_path": "data/cache/company_guide/2026-06-26/005930_recent_reports.json"
+        },
+        "symbol": "005930"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": {
+        "counter_thesis": "2Q26 전망치 하향 및 성과급 충당금 확대가 단기 실적 품질을 훼손하거나, 일반 메모리 가격 상승만으로 HBM 구조적 쇼티지를 과대해석했을 수 있다.",
+        "do_not_promote_reasons": [
+          "가격 상승만 확인되고 고객 배정 또는 capacity pre-sold 증거가 없으면 C06 승격 근거로 쓰지 않는다.",
+          "2Q26 하향이 구조적 비용 증가로 확인되면 중기 가시성 판단을 보류한다."
+        ],
+        "green_blockers_to_close": [
+          "cashflow bridge",
+          "repeat evidence family",
+          "conventional memory drag"
+        ],
+        "must_verify_primitives": [
+          "hbm_capacity_constraint",
+          "hbm_capacity_pre_sold",
+          "memory_price_increase_mentioned",
+          "medium_term_revision_visibility"
+        ],
+        "planner_self_check": {
+          "future_outcome_used": false,
+          "score_keys_present": false,
+          "stage_keys_present": false
+        },
+        "positive_thesis": "메모리 가격 상승 구간에서 삼성전자의 생산능력 우위가 2027년 매출/이익 가시성으로 연결되는지 확인한다.",
+        "query_intents": [
+          "삼성전자 2026년 2분기 또는 2027년 메모리 Capa/HBM 생산능력 관련 IR·CompanyGuide·브로커 리포트 확인",
+          "삼성전자 2Q26 전망치 하향 사유와 2027년 실적 가시성 분리 확인"
+        ],
+        "red_team_checks": [
+          "가격 상승 언급만 있고 고객 배정/장기계약/RPO 같은 수요 잠김 증거가 없는지 확인",
+          "2Q26 실적 하향 원인이 일회성 성과급인지 구조적 마진 훼손인지 분리",
+          "HBM이 아닌 범용 DRAM 회복만으로 C06을 과대 적용하지 않도록 점검"
+        ],
+        "source_task_drafts": [
+          {
+            "date_window": {
+              "end": "2026-06-25",
+              "lookback_days": 120
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 12,
+            "max_fetches": 4,
+            "max_queries": 3,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "hbm_capacity_constraint",
+            "reason_from_memory": "생산능력 이점 문구를 HBM capacity constraint 또는 pre-sold capacity로 연결할 수 있는 공식/IR 근거가 필요하다.",
+            "stop_condition": {
+              "accepted_claim_count": 2
+            },
+            "task_id": "CEV4-CG-005930-2026-06-25-T1",
+            "task_type": "official_ir_capacity_check"
+          },
+          {
+            "date_window": {
+              "end": "2026-06-25",
+              "lookback_days": 90
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 10,
+            "max_fetches": 3,
+            "max_queries": 2,
+            "preferred_source_classes": [
+              "CompanyGuide",
+              "IR"
+            ],
+            "primitive_gap": "medium_term_revision_visibility",
+            "reason_from_memory": "2Q26 하향과 2027년 생산능력 부각이 같이 있어 단기 하향과 중기 상향 가시성을 분리해야 한다.",
+            "stop_condition": {
+              "accepted_claim_count": 2
+            },
+            "task_id": "CEV4-CG-005930-2026-06-25-T2",
+            "task_type": "companyguide_revision_bridge"
+          },
+          {
+            "date_window": {
+              "end": "2026-06-25",
+              "lookback_days": 60
+            },
+            "fallback_source_classes": [],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 8,
+            "max_fetches": 3,
+            "max_queries": 2,
+            "preferred_source_classes": [
+              "CompanyGuide",
+              "IR",
+              "BrokerPDF"
+            ],
+            "primitive_gap": "memory_price_increase_mentioned",
+            "reason_from_memory": "메모리 가격 상승이 이벤트의 직접 원인이므로 가격 상승 근거와 제품 믹스가 HBM/일반 DRAM 중 어디에 있는지 확인한다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-005930-2026-06-25-T3",
+            "task_type": "official_or_broker_price_cycle_confirmation"
+          }
+        ],
+        "top_k_archetype_hypotheses": [
+          {
+            "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            "probability_or_score": 0.62,
+            "reason": "CompanyGuide 이벤트가 메모리 가격 상승구간과 최대 Capa 이점 극대화를 직접 언급해 HBM/메모리 생산능력 제약 및 중기 실적 가시성 확인이 우선이다."
+          },
+          {
+            "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+            "probability_or_score": 0.28,
+            "reason": "메모리 가격 상승 자체는 사이클 회복 아키타입과도 맞지만, 이벤트 핵심은 장비 수주보다 삼성전자 메모리 Capa 활용이다."
+          },
+          {
+            "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+            "probability_or_score": 0.04,
+            "reason": "정책 또는 보조금 문구가 없으므로 낮은 보조 가설이다."
+          }
+        ]
+      },
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": null,
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": true,
+      "real_provider_success": true,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-000660-2026-06-25",
+        "company_name": "SK하이닉스",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-06-25",
+        "event_freshness_days": 4,
+        "event_summary": "실적과 멀티플 둘 다 열려 있다. 실적과 멀티플 둘 다 열려 있다 ▶ 2Q26 Preview: 기존 전망치 수준 유지 ▶ 26년 하반기 메모리 가격 상향하며 실적 상향 ▶ ADR 상장 및 실적 변동성 축소는 밸류에이션 할증에 기여",
+        "event_title": "실적과 멀티플 둘 다 열려 있다",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "EPS_ACTION_TYP_NM_UP",
+          "PRC_ACTION_TYP_NM_UP",
+          "MEMORY"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-26/000660_recent_reports.json",
+        "structured_payload": {
+          "report_count": 20,
+          "snapshot_path": "data/cache/company_guide/2026-06-26/000660_recent_reports.json"
+        },
+        "symbol": "000660"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": {
+        "counter_thesis": "실적 상향이 가격 사이클에만 의존하고 고객 계약/배정 증거가 약하면 구조적 HBM capacity 아키타입보다 일반 메모리 사이클 회복에 가깝다.",
+        "do_not_promote_reasons": [
+          "ADR 상장 및 밸류에이션 할증만으로 C32나 C06 근거를 만들지 않는다.",
+          "가격 사이클만 있고 고객 배정 증거가 없으면 C06보다 C10 검토 대상으로 남긴다."
+        ],
+        "green_blockers_to_close": [
+          "cashflow bridge",
+          "repeat evidence family",
+          "conventional memory drag"
+        ],
+        "must_verify_primitives": [
+          "memory_price_increase_mentioned",
+          "medium_term_revision_visibility",
+          "customer_preorder_or_allocation",
+          "hbm_capacity_pre_sold"
+        ],
+        "planner_self_check": {
+          "future_outcome_used": false,
+          "score_keys_present": false,
+          "stage_keys_present": false
+        },
+        "positive_thesis": "하반기 메모리 가격 상향이 SK하이닉스 실적 상향과 변동성 축소로 이어지는지, HBM 고객 배정 또는 capacity pre-sold 증거와 연결해 확인한다.",
+        "query_intents": [
+          "SK하이닉스 2026년 하반기 메모리 가격 상향과 실적 상향 근거 확인",
+          "SK하이닉스 HBM 고객 배정·선주문·capacity pre-sold 관련 IR 또는 브로커 근거 확인"
+        ],
+        "red_team_checks": [
+          "ADR 상장 문구를 지배구조 이벤트로 오인하지 않기",
+          "메모리 가격 상향과 HBM 고객 잠김을 분리해 검증",
+          "실적 변동성 축소가 실제 계약/물량 가시성인지 단순 밸류에이션 코멘트인지 확인"
+        ],
+        "source_task_drafts": [
+          {
+            "date_window": {
+              "end": "2026-06-25",
+              "lookback_days": 90
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 12,
+            "max_fetches": 4,
+            "max_queries": 3,
+            "preferred_source_classes": [
+              "CompanyGuide",
+              "IR"
+            ],
+            "primitive_gap": "medium_term_revision_visibility",
+            "reason_from_memory": "하반기 메모리 가격 상향과 실적 상향이 이벤트 핵심이므로 추정치 변화의 기간과 원천을 확인해야 한다.",
+            "stop_condition": {
+              "accepted_claim_count": 2
+            },
+            "task_id": "CEV4-CG-000660-2026-06-25-T1",
+            "task_type": "companyguide_revision_bridge"
+          },
+          {
+            "date_window": {
+              "end": "2026-06-25",
+              "lookback_days": 180
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 12,
+            "max_fetches": 4,
+            "max_queries": 3,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "customer_preorder_or_allocation",
+            "reason_from_memory": "실적 변동성 축소가 고객 배정 또는 선주문 같은 구조적 수요 잠김에서 오는지 확인해야 한다.",
+            "stop_condition": {
+              "accepted_claim_count": 2
+            },
+            "task_id": "CEV4-CG-000660-2026-06-25-T2",
+            "task_type": "ir_customer_allocation_check"
+          },
+          {
+            "date_window": {
+              "end": "2026-06-25",
+              "lookback_days": 60
+            },
+            "fallback_source_classes": [],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 8,
+            "max_fetches": 3,
+            "max_queries": 2,
+            "preferred_source_classes": [
+              "CompanyGuide",
+              "IR",
+              "BrokerPDF"
+            ],
+            "primitive_gap": "memory_price_increase_mentioned",
+            "reason_from_memory": "메모리 가격 상향 문구가 제품별 가격 또는 믹스 개선 근거로 확인되는지 필요하다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-000660-2026-06-25-T3",
+            "task_type": "price_cycle_source_check"
+          }
+        ],
+        "top_k_archetype_hypotheses": [
+          {
+            "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            "probability_or_score": 0.58,
+            "reason": "하반기 메모리 가격 상향과 실적 상향, 변동성 축소가 HBM 고객/생산능력 가시성과 연결될 가능성이 크다."
+          },
+          {
+            "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+            "probability_or_score": 0.31,
+            "reason": "메모리 가격 상향과 사이클 회복 자체는 C10에도 부합하지만 장비 수주보다는 메모리 업체 실적 가시성이 핵심이다."
+          },
+          {
+            "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+            "probability_or_score": 0.03,
+            "reason": "ADR 상장은 언급되지만 공개매수나 지배권 프리미엄 이벤트는 확인되지 않았다."
+          }
+        ]
+      },
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": null,
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": true,
+      "real_provider_success": true,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-005930-2026-06-18",
+        "company_name": "삼성전자",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-06-18",
+        "event_freshness_days": 11,
+        "event_summary": "성과급 반영해도 실적 전망치 상향. 성과급 반영해도 실적 전망치 상향 ▶ 2Q26 Preview: 예상보다 강한 메모리 가격 ▶ 일반 DRAM에 이어 HBM도 가격 상승에 기여 ▶ 저평가 받을 이유 없다. 목표주가 재차 상향",
+        "event_title": "성과급 반영해도 실적 전망치 상향",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "EPS_ACTION_TYP_NM_UP",
+          "PRC_ACTION_TYP_NM_UP",
+          "HBM",
+          "MEMORY"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-21/005930_recent_reports.json",
+        "structured_payload": {
+          "report_count": 20,
+          "snapshot_path": "data/cache/company_guide/2026-06-21/005930_recent_reports.json"
+        },
+        "symbol": "005930"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": {
+        "counter_thesis": "HBM 가격 기여가 단순 가격 사이클 또는 브로커 추정일 뿐, 고객 계약·capacity pre-sold·현금흐름으로 이어지는 증거가 부족할 수 있다.",
+        "do_not_promote_reasons": [
+          "목표주가 상향은 가격/밸류에이션 자료일 뿐 구조적 evidence로 쓰지 않는다.",
+          "HBM 가격 기여만 있고 고객 수요 잠김이 없으면 green blocker가 남는다."
+        ],
+        "green_blockers_to_close": [
+          "cashflow bridge",
+          "repeat evidence family",
+          "conventional memory drag"
+        ],
+        "must_verify_primitives": [
+          "memory_price_increase_mentioned",
+          "medium_term_revision_visibility",
+          "hbm_capacity_pre_sold",
+          "customer_preorder_or_allocation"
+        ],
+        "planner_self_check": {
+          "future_outcome_used": false,
+          "score_keys_present": false,
+          "stage_keys_present": false
+        },
+        "positive_thesis": "예상보다 강한 메모리 가격과 HBM 가격 기여가 삼성전자 실적 전망 상향으로 이어지는지 확인한다.",
+        "query_intents": [
+          "삼성전자 2026년 6월 중순 HBM 가격 기여와 메모리 가격 상승 근거 확인",
+          "성과급 반영 후 삼성전자 2Q26 및 2026년 전망치 상향 근거 확인"
+        ],
+        "red_team_checks": [
+          "목표주가 상향과 가격 상승만으로 승격하지 않기",
+          "일반 DRAM 회복과 HBM 구조적 수요를 분리",
+          "성과급 반영 후에도 실적 상향이라는 문구가 실제 revision source로 확인되는지 점검"
+        ],
+        "source_task_drafts": [
+          {
+            "date_window": {
+              "end": "2026-06-18",
+              "lookback_days": 60
+            },
+            "fallback_source_classes": [],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 8,
+            "max_fetches": 3,
+            "max_queries": 2,
+            "preferred_source_classes": [
+              "CompanyGuide",
+              "BrokerPDF",
+              "IR"
+            ],
+            "primitive_gap": "memory_price_increase_mentioned",
+            "reason_from_memory": "이벤트가 예상보다 강한 메모리 가격과 HBM 가격 기여를 직접 언급한다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-005930-2026-06-18-T1",
+            "task_type": "companyguide_broker_price_evidence"
+          },
+          {
+            "date_window": {
+              "end": "2026-06-18",
+              "lookback_days": 90
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 10,
+            "max_fetches": 3,
+            "max_queries": 2,
+            "preferred_source_classes": [
+              "CompanyGuide",
+              "IR"
+            ],
+            "primitive_gap": "medium_term_revision_visibility",
+            "reason_from_memory": "성과급 반영 후에도 전망치 상향이라는 주장이 추정치 경로와 기간별 이익에 반영됐는지 확인해야 한다.",
+            "stop_condition": {
+              "accepted_claim_count": 2
+            },
+            "task_id": "CEV4-CG-005930-2026-06-18-T2",
+            "task_type": "revision_source_bridge"
+          },
+          {
+            "date_window": {
+              "end": "2026-06-18",
+              "lookback_days": 180
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 12,
+            "max_fetches": 4,
+            "max_queries": 3,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "customer_preorder_or_allocation",
+            "reason_from_memory": "HBM 가격 기여가 실제 고객 수요 잠김 또는 배정과 연결되는지 확인해야 한다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-005930-2026-06-18-T3",
+            "task_type": "hbm_customer_visibility_check"
+          }
+        ],
+        "top_k_archetype_hypotheses": [
+          {
+            "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            "probability_or_score": 0.67,
+            "reason": "일반 DRAM에 이어 HBM도 가격 상승에 기여했다는 직접 문구와 실적 전망치 상향이 있어 C06 확인 우선순위가 높다."
+          },
+          {
+            "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+            "probability_or_score": 0.24,
+            "reason": "메모리 가격 강세는 C10 사이클 회복과도 맞지만 이벤트는 장비 수주보다 삼성전자 실적 전망 상향이다."
+          },
+          {
+            "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+            "probability_or_score": 0.04,
+            "reason": "HBM 문구가 있으나 장비 수주, 백로그, 상대강도 근거는 이벤트에 없다."
+          }
+        ]
+      },
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": null,
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": true,
+      "real_provider_success": true,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-000660-2026-06-17",
+        "company_name": "SK하이닉스",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-06-17",
+        "event_freshness_days": 12,
+        "event_summary": "여전히 추정치 상향 사이클. 여전히 추정치 상향 사이클 ▶ SK하이닉스의 2Q26 영업이익은 62.8조원(+67%qoq)으로 전망 ▶ SK하이닉스의 2026년 영업이익은 275.5조원(+481%yoy)으로 전망 ▶ HBM4의 성공적인 리비전에 이어 HBM4E의 샘플 출하도 하반기 정상 진행되며 핵심 고객사와의 기술 파트너십이 긴밀히 유지될 것으로 보임",
+        "event_title": "여전히 추정치 상향 사이클",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "EPS_ACTION_TYP_NM_UP",
+          "PRC_ACTION_TYP_NM_UP",
+          "HBM"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-21/000660_recent_reports.json",
+        "structured_payload": {
+          "report_count": 20,
+          "snapshot_path": "data/cache/company_guide/2026-06-21/000660_recent_reports.json"
+        },
+        "symbol": "000660"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": {
+        "counter_thesis": "샘플 출하와 기술 파트너십은 아직 양산 계약이나 매출 가시성이 아닐 수 있으며, 수치가 과도하거나 단순 브로커 전망일 수 있다.",
+        "do_not_promote_reasons": [
+          "샘플 출하만 있고 양산/공급/고객 배정 근거가 없으면 revenue_visibility_contract로 보지 않는다.",
+          "기술 파트너십 문구만으로 장기계약을 추론하지 않는다."
+        ],
+        "green_blockers_to_close": [
+          "cashflow bridge",
+          "repeat evidence family",
+          "conventional memory drag"
+        ],
+        "must_verify_primitives": [
+          "customer_preorder_or_allocation",
+          "hbm_capacity_pre_sold",
+          "revenue_visibility_contract",
+          "medium_term_revision_visibility"
+        ],
+        "planner_self_check": {
+          "future_outcome_used": false,
+          "score_keys_present": false,
+          "stage_keys_present": false
+        },
+        "positive_thesis": "HBM4/HBM4E 기술 진행과 핵심 고객사 파트너십이 SK하이닉스 중기 실적 상향과 고객 배정 가시성으로 연결되는지 확인한다.",
+        "query_intents": [
+          "SK하이닉스 HBM4 리비전, HBM4E 샘플 출하, 핵심 고객사 파트너십 관련 IR·CompanyGuide 근거 확인",
+          "SK하이닉스 2Q26 및 2026년 영업이익 전망치 상향 근거와 단위 검증"
+        ],
+        "red_team_checks": [
+          "샘플 출하를 확정 매출 또는 장기계약으로 오인하지 않기",
+          "핵심 고객사 파트너십이 공식 IR/고객 배정 근거인지 확인",
+          "영업이익 전망 수치가 원문 단위와 기간 기준에서 오류 없이 파싱됐는지 점검"
+        ],
+        "source_task_drafts": [
+          {
+            "date_window": {
+              "end": "2026-06-17",
+              "lookback_days": 180
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 12,
+            "max_fetches": 4,
+            "max_queries": 3,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "customer_preorder_or_allocation",
+            "reason_from_memory": "핵심 고객사와의 기술 파트너십 유지 문구가 고객 배정 또는 선주문 근거인지 확인해야 한다.",
+            "stop_condition": {
+              "accepted_claim_count": 2
+            },
+            "task_id": "CEV4-CG-000660-2026-06-17-T1",
+            "task_type": "hbm_customer_partnership_evidence"
+          },
+          {
+            "date_window": {
+              "end": "2026-06-17",
+              "lookback_days": 180
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 12,
+            "max_fetches": 4,
+            "max_queries": 3,
+            "preferred_source_classes": [
+              "IR",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "revenue_visibility_contract",
+            "reason_from_memory": "HBM4E 샘플 출하가 매출 가시성이나 공급 계약으로 이어지는지 별도 확인이 필요하다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-000660-2026-06-17-T2",
+            "task_type": "hbm_sample_to_revenue_bridge"
+          },
+          {
+            "date_window": {
+              "end": "2026-06-17",
+              "lookback_days": 90
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 10,
+            "max_fetches": 3,
+            "max_queries": 2,
+            "preferred_source_classes": [
+              "CompanyGuide",
+              "IR"
+            ],
+            "primitive_gap": "medium_term_revision_visibility",
+            "reason_from_memory": "2Q26 및 2026년 영업이익 전망치가 이벤트 핵심 수치이므로 원천과 기간별 revision을 확인한다.",
+            "stop_condition": {
+              "accepted_claim_count": 2
+            },
+            "task_id": "CEV4-CG-000660-2026-06-17-T3",
+            "task_type": "revision_magnitude_source_check"
+          }
+        ],
+        "top_k_archetype_hypotheses": [
+          {
+            "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            "probability_or_score": 0.72,
+            "reason": "HBM4 리비전 성공, HBM4E 샘플 출하, 핵심 고객사와의 기술 파트너십 유지가 C06의 고객/능력 가시성 primitives와 가장 잘 맞는다."
+          },
+          {
+            "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+            "probability_or_score": 0.17,
+            "reason": "추정치 상향 사이클은 메모리 회복과 연결되지만 이벤트의 핵심은 HBM 제품/고객 관계다."
+          },
+          {
+            "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+            "probability_or_score": 0.06,
+            "reason": "HBM 고객 관련 문구는 있으나 장비 주문 백로그나 상대강도 근거는 없다."
+          }
+        ]
+      },
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": null,
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": true,
+      "real_provider_success": true,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-950190-2026-06-04",
+        "company_name": "고스트스튜디오",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-06-04",
+        "event_freshness_days": 25,
+        "event_summary": "회사소개 및 주요 경영현황. 회사소개 및 주요 경영현황 ▶",
+        "event_title": "회사소개 및 주요 경영현황",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/950190_recent_reports.json",
+        "structured_payload": {
+          "report_count": 5,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/950190_recent_reports.json"
+        },
+        "symbol": "950190"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": {
+        "counter_thesis": "이벤트가 단순 회사소개/경영현황으로 보이며 허용 아키타입 어느 쪽에도 직접 primitive가 없을 가능성이 높다.",
+        "do_not_promote_reasons": [
+          "회사소개, 사업 개요, Q&A만 있으면 profile only로 남긴다.",
+          "허용 primitive와 연결되는 공식 이벤트가 없으면 추가 확장하지 않는다."
+        ],
+        "green_blockers_to_close": [
+          "cash runway",
+          "partner economics",
+          "regulatory path"
+        ],
+        "must_verify_primitives": [
+          "binary_event_unresolved",
+          "policy_headline_only"
+        ],
+        "planner_self_check": {
+          "future_outcome_used": false,
+          "score_keys_present": false,
+          "stage_keys_present": false
+        },
+        "positive_thesis": "회사소개 자료 안에 실제로 사업 현황 관련 촉매가 포함됐는지 최소 범위에서 원문 확인한다.",
+        "query_intents": [
+          "고스트스튜디오 2026년 6월 회사소개 및 주요 경영현황 원문에서 실제 이벤트성 근거 존재 여부 확인"
+        ],
+        "red_team_checks": [
+          "회사소개 자료를 이벤트성 촉매로 과대해석하지 않기",
+          "가격 또는 프로필 정보만 있으면 do-not-promote로 남기기",
+          "허용 옵션에 없는 엔터테인먼트/콘텐츠 테마를 새로 만들지 않기"
+        ],
+        "source_task_drafts": [
+          {
+            "date_window": {
+              "end": "2026-06-04",
+              "lookback_days": 45
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 6,
+            "max_fetches": 2,
+            "max_queries": 2,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "binary_event_unresolved",
+            "reason_from_memory": "원문이 회사소개뿐인지, 실제 승인/계약/자금 이벤트가 숨어 있는지 최소 확인한다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-950190-2026-06-04-T1",
+            "task_type": "ir_deck_event_scan"
+          },
+          {
+            "date_window": {
+              "end": "2026-06-04",
+              "lookback_days": 45
+            },
+            "fallback_source_classes": [],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 5,
+            "max_fetches": 1,
+            "max_queries": 1,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "policy_headline_only",
+            "reason_from_memory": "정책/공식 이벤트가 아니라 단순 경영현황 자료인지 확인해 false-positive 가능성을 줄인다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-950190-2026-06-04-T2",
+            "task_type": "official_profile_false_positive_check"
+          }
+        ],
+        "top_k_archetype_hypotheses": [
+          {
+            "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+            "probability_or_score": 0.22,
+            "reason": "허용 옵션 중 router score가 가장 높지만 이벤트 텍스트는 회사소개에 불과해 바이오 임상 이벤트 근거는 없다."
+          },
+          {
+            "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+            "probability_or_score": 0.12,
+            "reason": "회사소개 자료일 뿐 공개매수나 규제 승인 문구가 없다."
+          },
+          {
+            "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+            "probability_or_score": 0.12,
+            "reason": "정책·보조금 이벤트 문구가 없어 낮은 가능성의 확인 대상이다."
+          }
+        ]
+      },
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": null,
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": true,
+      "real_provider_success": true,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-496320-2026-06-10",
+        "company_name": "본시스템즈",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-06-10",
+        "event_freshness_days": 19,
+        "event_summary": "회사소개 및 주요 경영현황. 회사소개 및 주요 경영현황 ▶ 1) 회사현황 소개, 2) 사업현황 및 전망 설명, 3) 질의응답",
+        "event_title": "회사소개 및 주요 경영현황",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/496320_recent_reports.json",
+        "structured_payload": {
+          "report_count": 3,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/496320_recent_reports.json"
+        },
+        "symbol": "496320"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": {
+        "counter_thesis": "자료가 단순 회사소개와 Q&A이면 허용 아키타입 primitive로 연결할 증거가 없고 profile-only로 남을 가능성이 높다.",
+        "do_not_promote_reasons": [
+          "회사소개와 질의응답만 있으면 profile only로 남긴다.",
+          "직접 회사 현금 경로가 공식 문서로 확인되지 않으면 정책/공급 아키타입으로 확장하지 않는다."
+        ],
+        "green_blockers_to_close": [
+          "cash runway",
+          "partner economics",
+          "regulatory path"
+        ],
+        "must_verify_primitives": [
+          "binary_event_unresolved",
+          "direct_company_cash_route"
+        ],
+        "planner_self_check": {
+          "future_outcome_used": false,
+          "score_keys_present": false,
+          "stage_keys_present": false
+        },
+        "positive_thesis": "회사현황/사업전망 자료에서 공식적으로 확인 가능한 계약, 정책, 현금 경로, 임상/승인 이벤트가 있는지 확인한다.",
+        "query_intents": [
+          "본시스템즈 2026년 6월 회사현황 소개 자료에서 계약·정책·현금 경로 등 공식 이벤트 존재 여부 확인"
+        ],
+        "red_team_checks": [
+          "사업전망 설명을 확정 계약 또는 정책 수혜로 오인하지 않기",
+          "Q&A나 회사소개만 있으면 이벤트성 근거로 승격하지 않기",
+          "허용 옵션 밖의 테마를 임의 생성하지 않기"
+        ],
+        "source_task_drafts": [
+          {
+            "date_window": {
+              "end": "2026-06-10",
+              "lookback_days": 45
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 6,
+            "max_fetches": 2,
+            "max_queries": 2,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "binary_event_unresolved",
+            "reason_from_memory": "회사현황 소개 안에 실제 승인/계약/리스크 이벤트가 포함됐는지 원문 확인이 필요하다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-496320-2026-06-10-T1",
+            "task_type": "ir_deck_event_scan"
+          },
+          {
+            "date_window": {
+              "end": "2026-06-10",
+              "lookback_days": 90
+            },
+            "fallback_source_classes": [],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 6,
+            "max_fetches": 2,
+            "max_queries": 2,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "direct_company_cash_route",
+            "reason_from_memory": "사업현황 및 전망 설명이 실제 매출/현금 유입 경로로 공식 확인되는지 확인한다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-496320-2026-06-10-T2",
+            "task_type": "official_cash_route_check"
+          }
+        ],
+        "top_k_archetype_hypotheses": [
+          {
+            "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+            "probability_or_score": 0.21,
+            "reason": "허용 옵션 중 최고 router score지만 이벤트는 회사현황 소개라 임상 데이터 근거가 없다."
+          },
+          {
+            "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+            "probability_or_score": 0.13,
+            "reason": "사업현황 및 전망 설명에 정책 또는 직접 현금 경로가 있을지 최소 확인 가능하지만 현재 텍스트에는 없다."
+          },
+          {
+            "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+            "probability_or_score": 0.12,
+            "reason": "허용 옵션에는 있으나 offtake, supply shortage, permit 문구가 없어 낮다."
+          }
+        ]
+      },
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": null,
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": true,
+      "real_provider_success": true,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-495810-2025-11-13",
+        "company_name": "유비씨",
+        "detected_at": "2026-06-29",
+        "event_date": "2025-11-13",
+        "event_freshness_days": 228,
+        "event_summary": "회사소개 및 주요 경영현황. 회사소개 및 주요 경영현황 ▶ 1. 회사현황 소개, 2. 주요 경영현황 설명, 3. 질의응답",
+        "event_title": "회사소개 및 주요 경영현황",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/495810_recent_reports.json",
+        "structured_payload": {
+          "report_count": 3,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/495810_recent_reports.json"
+        },
+        "symbol": "495810"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": {
+        "counter_thesis": "event_freshness_days가 228일이고 요약이 회사소개 중심이라 신규 촉매로 보기 어렵고 profile-only일 가능성이 높다.",
+        "do_not_promote_reasons": [
+          "오래된 profile-only 자료면 fresh event로 승격하지 않는다.",
+          "공식 원문에서 직접 현금 경로가 확인되지 않으면 정책/공급 가설을 확장하지 않는다."
+        ],
+        "green_blockers_to_close": [
+          "cash runway",
+          "partner economics",
+          "regulatory path"
+        ],
+        "must_verify_primitives": [
+          "binary_event_unresolved",
+          "direct_company_cash_route"
+        ],
+        "planner_self_check": {
+          "future_outcome_used": false,
+          "score_keys_present": false,
+          "stage_keys_present": false
+        },
+        "positive_thesis": "오래된 회사소개 자료에 실제 경영 이벤트가 포함됐는지 확인하되, 공식 원문 기준으로 최소 검증만 수행한다.",
+        "query_intents": [
+          "유비씨 2025년 11월 회사소개 및 주요 경영현황 원문에서 실제 이벤트성 근거 존재 여부 확인"
+        ],
+        "red_team_checks": [
+          "오래된 회사소개 자료를 최신 이벤트처럼 해석하지 않기",
+          "주요 경영현황이라는 표현만으로 계약/정책 이벤트를 추론하지 않기",
+          "허용 아키타입과 연결되지 않으면 확장 중단"
+        ],
+        "source_task_drafts": [
+          {
+            "date_window": {
+              "end": "2025-11-13",
+              "lookback_days": 45
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 5,
+            "max_fetches": 1,
+            "max_queries": 1,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "binary_event_unresolved",
+            "reason_from_memory": "오래된 회사소개 자료가 실제 이벤트를 담았는지 원문 한정으로 확인한다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-495810-2025-11-13-T1",
+            "task_type": "ir_deck_old_event_scan"
+          },
+          {
+            "date_window": {
+              "end": "2025-11-13",
+              "lookback_days": 90
+            },
+            "fallback_source_classes": [],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 5,
+            "max_fetches": 1,
+            "max_queries": 1,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "direct_company_cash_route",
+            "reason_from_memory": "주요 경영현황 설명이 실제 현금 유입 경로를 공식적으로 제시했는지 최소 확인한다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-495810-2025-11-13-T2",
+            "task_type": "official_cash_route_minimal_check"
+          }
+        ],
+        "top_k_archetype_hypotheses": [
+          {
+            "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+            "probability_or_score": 0.18,
+            "reason": "허용 옵션 중 최고 router score지만 이벤트가 오래된 회사소개 자료라 임상 이벤트 가능성은 낮다."
+          },
+          {
+            "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+            "probability_or_score": 0.11,
+            "reason": "주요 경영현황 안에 정책/보조금 경로가 있을 수 있으나 현재 요약에는 없다."
+          },
+          {
+            "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+            "probability_or_score": 0.1,
+            "reason": "공급계약이나 정책 공급 문구가 없어 낮은 확인 대상이다."
+          }
+        ]
+      },
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": null,
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": true,
+      "real_provider_success": true,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-475150-2026-05-18",
+        "company_name": "SK이터닉스",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-05-18",
+        "event_freshness_days": 42,
+        "event_summary": "2026년 1분기 실적. 2026년 1분기 실적 ▶ 2026년 1분기 실적 및 주요 경영현황 설명, Q&A 진행",
+        "event_title": "2026년 1분기 실적",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/475150_recent_reports.json",
+        "structured_payload": {
+          "report_count": 20,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/475150_recent_reports.json"
+        },
+        "symbol": "475150"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": {
+        "counter_thesis": "요약상 단순 분기 실적 설명과 Q&A일 뿐 특정 정책, 프로젝트 수주, 규제 이벤트가 없을 수 있다.",
+        "do_not_promote_reasons": [
+          "실적 발표와 Q&A만 있으면 특정 정책/프로젝트 이벤트로 승격하지 않는다.",
+          "직접 회사 현금 경로 없이 산업 정책 headline만 있으면 policy_headline_only로 남긴다."
+        ],
+        "green_blockers_to_close": [
+          "yellow",
+          "green blocked",
+          "green requires"
+        ],
+        "must_verify_primitives": [
+          "direct_company_cash_route",
+          "policy_or_regulatory_confirmed",
+          "implementation_timeline"
+        ],
+        "planner_self_check": {
+          "future_outcome_used": false,
+          "score_keys_present": false,
+          "stage_keys_present": false
+        },
+        "positive_thesis": "1Q26 실적 및 경영현황 자료에서 정책/프로젝트/직접 현금 경로가 공식적으로 확인되는지 확인한다.",
+        "query_intents": [
+          "SK이터닉스 2026년 1분기 실적 IR에서 매출·수주·프로젝트 현금 경로 확인",
+          "SK이터닉스 경영현황 자료 내 정책·규제·프로젝트 일정 관련 공식 근거 확인"
+        ],
+        "red_team_checks": [
+          "분기 실적 설명을 정책 수혜나 프로젝트 수주로 과대해석하지 않기",
+          "공식 현금 경로 없이 산업 테마만 있으면 profile-only로 남기기",
+          "원전/전략자원 등 허용 아키타입 이름에 이벤트를 억지로 맞추지 않기"
+        ],
+        "source_task_drafts": [
+          {
+            "date_window": {
+              "end": "2026-05-18",
+              "lookback_days": 90
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 8,
+            "max_fetches": 2,
+            "max_queries": 2,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "direct_company_cash_route",
+            "reason_from_memory": "분기 실적 자료에서 매출/수주/프로젝트 현금 경로가 공식적으로 제시됐는지 확인한다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-475150-2026-05-18-T1",
+            "task_type": "earnings_ir_cash_route_check"
+          },
+          {
+            "date_window": {
+              "end": "2026-05-18",
+              "lookback_days": 120
+            },
+            "fallback_source_classes": [
+              "BrokerPDF"
+            ],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 8,
+            "max_fetches": 2,
+            "max_queries": 2,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "policy_or_regulatory_confirmed",
+            "reason_from_memory": "경영현황 설명이 정책/규제 또는 프로젝트 일정과 직접 연결되는지 공식 자료로 확인한다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-475150-2026-05-18-T2",
+            "task_type": "official_policy_project_check"
+          },
+          {
+            "date_window": {
+              "end": "2026-05-18",
+              "lookback_days": 120
+            },
+            "fallback_source_classes": [],
+            "forbidden_source_classes": [
+              "unbounded_general_search"
+            ],
+            "general_search_allowed": false,
+            "llm_query_allowed": true,
+            "max_candidates": 5,
+            "max_fetches": 1,
+            "max_queries": 1,
+            "preferred_source_classes": [
+              "IR",
+              "IssuerOfficial",
+              "CompanyGuide"
+            ],
+            "primitive_gap": "implementation_timeline",
+            "reason_from_memory": "정책/프로젝트 가설이 성립하려면 실행 일정이 공식 자료 안에 있어야 한다.",
+            "stop_condition": {
+              "accepted_claim_count": 1
+            },
+            "task_id": "CEV4-CG-475150-2026-05-18-T3",
+            "task_type": "ir_timeline_check"
+          }
+        ],
+        "top_k_archetype_hypotheses": [
+          {
+            "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+            "probability_or_score": 0.2,
+            "reason": "SK이터닉스의 1분기 실적/경영현황 자료에서 정책 또는 직접 현금 경로가 포함될 가능성은 있으나 요약에는 명시되지 않았다."
+          },
+          {
+            "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+            "probability_or_score": 0.16,
+            "reason": "허용 primitive 중 direct_company_cash_route가 실적 자료와 연결될 수 있으나 공급 부족/오프테이크 문구는 없다."
+          },
+          {
+            "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+            "probability_or_score": 0.12,
+            "reason": "허용 옵션이나 원전 프로젝트/정책 지연 문구가 없어 낮은 가능성이다."
+          }
+        ]
+      },
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": null,
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": true,
+      "real_provider_success": true,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-459550-2026-02-19",
+        "company_name": "알트",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-02-19",
+        "event_freshness_days": 130,
+        "event_summary": "국내 접수하고 해외 진출에 로봇까지. 국내 접수하고 해외 진출에 로봇까지 ▶ 해외로 진출하는 국내 시니어폰, 키즈폰 시장 1인자 ▶ 캐시카우에 더해질 성장성 ▶ Valuation & Risk: 2026년은 강력한 실적모멘텀 기대",
+        "event_title": "국내 접수하고 해외 진출에 로봇까지",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "EPS_ACTION_TYP_NM_UP"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/459550_recent_reports.json",
+        "structured_payload": {
+          "report_count": 2,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/459550_recent_reports.json"
+        },
+        "symbol": "459550"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-457600-2026-04-09",
+        "company_name": "벡트",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-04-09",
+        "event_freshness_days": 81,
+        "event_summary": "「AI」 디지털 사이니지 토탈 솔루션 전문기업. 「AI」 디지털 사이니지 토탈 솔루션 전문기업 ▶ 전자칠판(Interactive Whiteboard), 전자교탁, 실내외 LED 안내전광판, 비디오프로젝터, 미디어 파사드, 3D 프린터, AI & AIoT, 모션마루(Motion MARU) 등을 핵심 제품으로 보유한 디지털 사이니지 전문기업 ▶ 2011년부터 핵심 기술 관련 특허 출원을 시작하여 현재 특허 10건을 등록 ▶ 국내 시장에 편중된 매출 구조를 개선하기 위해 일본, 싱가포르, 인도네시아, 말레이시아 등 교실 현대화 사업이 활발한 국가를 중심으로 에듀테크 솔루션 수출을 본격화하는 글로벌 확장 전략을 추진",
+        "event_title": "「AI」 디지털 사이니지 토탈 솔루션 전문기업",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/457600_recent_reports.json",
+        "structured_payload": {
+          "report_count": 5,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/457600_recent_reports.json"
+        },
+        "symbol": "457600"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-432430-2026-02-19",
+        "company_name": "와이랩",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-02-19",
+        "event_freshness_days": 130,
+        "event_summary": "회사소개 및 주요 사업현황. 회사소개 및 주요 사업현황 ▶ 주요 사업현황 설명 및 질의응답",
+        "event_title": "회사소개 및 주요 사업현황",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/432430_recent_reports.json",
+        "structured_payload": {
+          "report_count": 4,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/432430_recent_reports.json"
+        },
+        "symbol": "432430"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-418620-2026-05-21",
+        "company_name": "E8",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-05-21",
+        "event_freshness_days": 39,
+        "event_summary": "회사소개 및 주요 경영현황. 회사소개 및 주요 경영현황 ▶ 2026년 1분기 실적 및 주요 경영 현황 설명",
+        "event_title": "회사소개 및 주요 경영현황",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/418620_recent_reports.json",
+        "structured_payload": {
+          "report_count": 4,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/418620_recent_reports.json"
+        },
+        "symbol": "418620"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-417860-2025-12-22",
+        "company_name": "오브젠",
+        "detected_at": "2026-06-29",
+        "event_date": "2025-12-22",
+        "event_freshness_days": 189,
+        "event_summary": "AI 성과 본격화, 잘레시아 인수를 통한 확장 스토리. AI 성과 본격화, 잘레시아 인수를 통한 확장 스토리 ▶ AI/데이터 기반으로 통합 마케팅 솔루션 제공 ▶ ‘잘레시아’ 인수를 통해 사업 영역 및 고객군의 전방위 확장 기대 ▶ AI 솔루션 성과 본격화, 매출액 +67% YoY 성장",
+        "event_title": "AI 성과 본격화, 잘레시아 인수를 통한 확장 스토리",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/417860_recent_reports.json",
+        "structured_payload": {
+          "report_count": 4,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/417860_recent_reports.json"
+        },
+        "symbol": "417860"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-415640-2026-04-01",
+        "company_name": "KB발해인프라",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-04-01",
+        "event_freshness_days": 89,
+        "event_summary": "Corporate day 후기: 본격 신규 투자로 배당 여력 증대. Corporate day 후기: 본격 신규 투자로 배당 여력 증대 ▶ 2025년 보령LNG와 파인데이터센터 투자의 성과, 총 투자액 1,345억원(한도) ▶ 신대구부산고속도로의 보유 현금 증가, 전사 배당 안정성 강화 ▶ 150조원 규모의 국민성장펀드는 올해부터 가동, 접근가능한 딜 증가 전망",
+        "event_title": "Corporate day 후기: 본격 신규 투자로 배당 여력 증대",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/415640_recent_reports.json",
+        "structured_payload": {
+          "report_count": 12,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/415640_recent_reports.json"
+        },
+        "symbol": "415640"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-404990-2026-05-21",
+        "company_name": "신한서부티엔디리츠",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-05-21",
+        "event_freshness_days": 39,
+        "event_summary": "회사소개 및 주요 사업현황. 회사소개 및 주요 사업현황 ▶ 회사소개 및 사업현황, 질의응답",
+        "event_title": "회사소개 및 주요 사업현황",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/404990_recent_reports.json",
+        "structured_payload": {
+          "report_count": 16,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/404990_recent_reports.json"
+        },
+        "symbol": "404990"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-399720-2026-04-30",
+        "company_name": "가온칩스",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-04-30",
+        "event_freshness_days": 60,
+        "event_summary": "삼성이 터지면 같이 터지는 파트너, 수주잔고 1,000억 확보. 삼성이 터지면 같이 터지는 파트너, 수주잔고 1,000억 확보 ▶ AI칩 고도화와 수요 다변화로 고난도 선단 공정 턴키 수주 확대 ▶ 정부 정책 및 삼성 파운드리 수율 개선에 따른 수요 폭증 ▶ 고부가가치 프로젝트 비중 확대 및 양산 매출 본격화로 흑자 전환 기대",
+        "event_title": "삼성이 터지면 같이 터지는 파트너, 수주잔고 1,000억 확보",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/399720_recent_reports.json",
+        "structured_payload": {
+          "report_count": 8,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/399720_recent_reports.json"
+        },
+        "symbol": "399720"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-389260-2025-07-14",
+        "company_name": "대명에너지",
+        "detected_at": "2026-06-29",
+        "event_date": "2025-07-14",
+        "event_freshness_days": 350,
+        "event_summary": "2분기도 견조한 실적 예상. 2분기도 견조한 실적 예상 ▶ 2Q25 Preview: 매출액 187억원과 영업이익 38억원 전망 ▶ 2025년 매출액과 영업이익 각각 YoY +89%, +144% 성장",
+        "event_title": "2분기도 견조한 실적 예상",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/389260_recent_reports.json",
+        "structured_payload": {
+          "report_count": 2,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/389260_recent_reports.json"
+        },
+        "symbol": "389260"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-388790-2026-06-05",
+        "company_name": "라이콤",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-06-05",
+        "event_freshness_days": 24,
+        "event_summary": "숨겨진 광통신 수혜주. 숨겨진 광통신 수혜주 ▶ 광증폭기·광섬유레이저 제조업체 ▶ AI 데이터센터 수주 급증 + 방산용 레이저 본격화 ▶ 27년부터 실적 레버리지 구간 진입 전망",
+        "event_title": "숨겨진 광통신 수혜주",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/388790_recent_reports.json",
+        "structured_payload": {
+          "report_count": 5,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/388790_recent_reports.json"
+        },
+        "symbol": "388790"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-380540-2026-03-16",
+        "company_name": "옵티코어",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-03-16",
+        "event_freshness_days": 105,
+        "event_summary": "K-AAOI의 가능성을 보다. K-AAOI의 가능성을 보다 ▶ 옵티코어의 매출 기반이 텔레콤에서 데이터콤으로 전환될 가능성에 주목 ▶ 지난 한 달간 광모듈 관련 종목 중 주가 상승률이 가장 높았던 것은 Applied Optoelectronics(AAOI)로, 한 달 새 120% 급등 ▶ 옵티코어도 최근 국내 AI 데이터센터향 400G/800G 광트랜시버 공급을 시작했으며, 25년 말 3건의 수주 공시와 함께 누적 167억원의 수주를 확보",
+        "event_title": "K-AAOI의 가능성을 보다",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "SUPPLY"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/380540_recent_reports.json",
+        "structured_payload": {
+          "report_count": 3,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/380540_recent_reports.json"
+        },
+        "symbol": "380540"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-376930-2026-05-18",
+        "company_name": "노을",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-05-18",
+        "event_freshness_days": 42,
+        "event_summary": "회사소개 및 주요 사업현황. 회사소개 및 주요 사업현황 ▶ 1) 회사 소개 및 주요 사업현황 설명, 2) 질의응답 / ※ 대표이사 주관으로 진행 예정",
+        "event_title": "회사소개 및 주요 사업현황",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/376930_recent_reports.json",
+        "structured_payload": {
+          "report_count": 13,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/376930_recent_reports.json"
+        },
+        "symbol": "376930"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-355390-2025-12-12",
+        "company_name": "크라우드웍스",
+        "detected_at": "2026-06-29",
+        "event_date": "2025-12-12",
+        "event_freshness_days": 199,
+        "event_summary": "IPO 기업 업데이트: 데이터에서 피지컬 AI까지. IPO 기업 업데이트: 데이터에서 피지컬 AI까지 ▶ 데이터-모델 통합 기반 Agentic AI 기업 ▶ 데이터 사업 둔화 속 알피 중심 구조 재편 진행 중 ▶ 이제는 피지컬 AI까지",
+        "event_title": "IPO 기업 업데이트: 데이터에서 피지컬 AI까지",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/355390_recent_reports.json",
+        "structured_payload": {
+          "report_count": 3,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/355390_recent_reports.json"
+        },
+        "symbol": "355390"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-332290-2026-05-21",
+        "company_name": "누보",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-05-21",
+        "event_freshness_days": 39,
+        "event_summary": "회사소개 및 주요 사업현황. 회사소개 및 주요 사업현황 ▶ 투자자 이해 증진을 위한 회사 현황 안내 (사업 현황 및 26년 1Q실적 설명, 질의 응답)",
+        "event_title": "회사소개 및 주요 사업현황",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/332290_recent_reports.json",
+        "structured_payload": {
+          "report_count": 7,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/332290_recent_reports.json"
+        },
+        "symbol": "332290"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-328380-2025-12-18",
+        "company_name": "솔트웨어",
+        "detected_at": "2026-06-29",
+        "event_date": "2025-12-18",
+        "event_freshness_days": 193,
+        "event_summary": "AI로의 전환 시도 중. AI로의 전환 시도 중 ▶ 클라우드 MPS 기업 ▶ AI와 클라우드 네이티브로 성장 기대 ▶ 클라우드 견조세에 더해지는 AI",
+        "event_title": "AI로의 전환 시도 중",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/328380_recent_reports.json",
+        "structured_payload": {
+          "report_count": 2,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/328380_recent_reports.json"
+        },
+        "symbol": "328380"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-319660-2026-06-05",
+        "company_name": "피에스케이",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-06-05",
+        "event_freshness_days": 24,
+        "event_summary": "모든 고객들이 Capex 상향. 모든 고객들이 Capex 상향 ▶ 2Q26 Preview: 1분기의 연장선. 안정적 실적 기대 ▶ 2026년 영업이익 전년대비 2배 이상 증가한 1,836억원 전망 ▶ 전공정 내 최선호주 종목으로 유지",
+        "event_title": "모든 고객들이 Capex 상향",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "EPS_ACTION_TYP_NM_UP",
+          "PRC_ACTION_TYP_NM_UP"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/319660_recent_reports.json",
+        "structured_payload": {
+          "report_count": 20,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/319660_recent_reports.json"
+        },
+        "symbol": "319660"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-318660-2025-11-20",
+        "company_name": "타임기술",
+        "detected_at": "2026-06-29",
+        "event_date": "2025-11-20",
+        "event_freshness_days": 221,
+        "event_summary": "기술분석보고서. 기술분석보고서 ▶ AI 기반 통합체계지원 및 기술번역 전문역량 강화 ▶ 국내 방산산업 성장세와 수출 확대로 인한 시장 확대 ▶ 통합지원·기술번역·소프트웨어를 아우르는 디지털 인프라 구축",
+        "event_title": "기술분석보고서",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/318660_recent_reports.json",
+        "structured_payload": {
+          "report_count": 2,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/318660_recent_reports.json"
+        },
+        "symbol": "318660"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-312610-2026-04-09",
+        "company_name": "에이에프더블류",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-04-09",
+        "event_freshness_days": 81,
+        "event_summary": "기술분석보고서. 기술분석보고서 ▶ 2차전지 부품에서 자동차 경량화 부품 및 전장부품으로 사업구조 전환 중 ▶ 자동차 경량화와 전장 기능이 결합된 통합 부품 시장으로 재편 중 ▶ 사업구조 전환과 생산체계 고도화 진행 중, 신사업 성과가 실적 회복 여부를 좌우할 주요 변수",
+        "event_title": "기술분석보고서",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/312610_recent_reports.json",
+        "structured_payload": {
+          "report_count": 1,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/312610_recent_reports.json"
+        },
+        "symbol": "312610"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-299900-2026-05-11",
+        "company_name": "위지윅스튜디오",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-05-11",
+        "event_freshness_days": 49,
+        "event_summary": "회사소개 및 주요 경영현황. 회사소개 및 주요 경영현황 ▶ (주)위지윅스튜디오와 (주)엔피 간 합병 관련 내용설명 및 Q&A",
+        "event_title": "회사소개 및 주요 경영현황",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/299900_recent_reports.json",
+        "structured_payload": {
+          "report_count": 1,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/299900_recent_reports.json"
+        },
+        "symbol": "299900"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    },
+    {
+      "endpoint": "codex-cli",
+      "event": {
+        "candidate_event_id": "CEV4-CG-299480-2026-05-28",
+        "company_name": "지앤이헬스케어",
+        "detected_at": "2026-06-29",
+        "event_date": "2026-05-28",
+        "event_freshness_days": 32,
+        "event_summary": "회사소개 및 주요 경영현황. 회사소개 및 주요 경영현황 ▶ 1. 회사소개, 2. 주요 경영현황 및 전망설명, 3. 질의응답",
+        "event_title": "회사소개 및 주요 경영현황",
+        "event_type": "report_radar",
+        "initial_evidence_document_ids": [],
+        "issuer_directness": "DIRECT",
+        "magnitude": {
+          "contract_to_sales_pct": null,
+          "eps_revision_pct": null,
+          "facility_to_marketcap_pct": null,
+          "fcf_change": null,
+          "opm_change_pctp": null,
+          "relative_strength_rank": null,
+          "volume_spike_ratio": null
+        },
+        "price_context": {},
+        "primary_disclosure_type": null,
+        "raw_reason_codes": [
+          "REPORT_RADAR"
+        ],
+        "research_brain_eligible": true,
+        "source_family": "CompanyGuide",
+        "source_id": "data/cache/company_guide/2026-06-12/299480_recent_reports.json",
+        "structured_payload": {
+          "report_count": 2,
+          "snapshot_path": "data/cache/company_guide/2026-06-12/299480_recent_reports.json"
+        },
+        "symbol": "299480"
+      },
+      "fake_provider_used": false,
+      "model": null,
+      "output": null,
+      "planner_output_score_stage_key_count": 0,
+      "provider_error": "codex_cli_timeout",
+      "provider_mode": "real",
+      "provider_name": "codex_cli_planner",
+      "r13_invalid_primary_rejected": false,
+      "real_provider_exercised": false,
+      "real_provider_success": false,
+      "rejected_by_validator": false
+    }
+  ],
+  "schema_version": "research_brain_v4_real_planner_report",
+  "summary": {
+    "R13_invalid_primary_rejected_count": 0,
+    "fake_provider_used_count": 0,
+    "planner_not_attempted_count": 0,
+    "planner_output_score_stage_key_count": 0,
+    "planner_run_count": 30,
+    "provider_error_by_candidate": {
+      "CEV4-CG-299480-2026-05-28": "codex_cli_timeout",
+      "CEV4-CG-299900-2026-05-11": "codex_cli_timeout",
+      "CEV4-CG-312610-2026-04-09": "codex_cli_timeout",
+      "CEV4-CG-318660-2025-11-20": "codex_cli_timeout",
+      "CEV4-CG-319660-2026-06-05": "codex_cli_timeout",
+      "CEV4-CG-328380-2025-12-18": "codex_cli_timeout",
+      "CEV4-CG-332290-2026-05-21": "codex_cli_timeout",
+      "CEV4-CG-355390-2025-12-12": "codex_cli_timeout",
+      "CEV4-CG-376930-2026-05-18": "codex_cli_timeout",
+      "CEV4-CG-380540-2026-03-16": "codex_cli_timeout",
+      "CEV4-CG-388790-2026-06-05": "codex_cli_timeout",
+      "CEV4-CG-389260-2025-07-14": "codex_cli_timeout",
+      "CEV4-CG-399720-2026-04-30": "codex_cli_timeout",
+      "CEV4-CG-404990-2026-05-21": "codex_cli_timeout",
+      "CEV4-CG-415640-2026-04-01": "codex_cli_timeout",
+      "CEV4-CG-417860-2025-12-22": "codex_cli_timeout",
+      "CEV4-CG-418620-2026-05-21": "codex_cli_timeout",
+      "CEV4-CG-432430-2026-02-19": "codex_cli_timeout",
+      "CEV4-CG-457600-2026-04-09": "codex_cli_timeout",
+      "CEV4-CG-459550-2026-02-19": "codex_cli_timeout"
+    },
+    "real_provider_attempt_count": 30,
+    "real_provider_failure_count": 20,
+    "real_provider_success_count": 10,
+    "rejected_by_validator_count": 0,
+    "schema_violations": 0
+  }
+}

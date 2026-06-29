@@ -1,0 +1,328 @@
+{
+  "rows": [
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4DARTSTATUS-341824975770d612863c3554"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KIND-341824975770d612863c3554"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KRX-341824975770d612863c3554"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4IRSTATUS-341824975770d612863c3554"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4DARTSTATUS-024a167a1e2f981aada6c902"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KIND-024a167a1e2f981aada6c902"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KRX-024a167a1e2f981aada6c902"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4IRSTATUS-024a167a1e2f981aada6c902"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4DARTSTATUS-341824975770d612863c3554"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KIND-341824975770d612863c3554"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KRX-341824975770d612863c3554"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4IRSTATUS-341824975770d612863c3554"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4DARTSTATUS-024a167a1e2f981aada6c902"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KIND-024a167a1e2f981aada6c902"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KRX-024a167a1e2f981aada6c902"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4IRSTATUS-024a167a1e2f981aada6c902"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4DARTSTATUS-103be7f99f64e9bb5d8b2ebc"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KIND-103be7f99f64e9bb5d8b2ebc"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KRX-103be7f99f64e9bb5d8b2ebc"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4IRSTATUS-103be7f99f64e9bb5d8b2ebc"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4DARTSTATUS-48301ad2ef8b0e4e777f8756"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KIND-48301ad2ef8b0e4e777f8756"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KRX-48301ad2ef8b0e4e777f8756"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4IRSTATUS-48301ad2ef8b0e4e777f8756"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4DARTSTATUS-5ad4947d595008384dc0ea07"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KIND-5ad4947d595008384dc0ea07"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KRX-5ad4947d595008384dc0ea07"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4IRSTATUS-5ad4947d595008384dc0ea07"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4DARTSTATUS-6dac7cb19e1d528c2df0188a"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KIND-6dac7cb19e1d528c2df0188a"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KRX-6dac7cb19e1d528c2df0188a"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4IRSTATUS-6dac7cb19e1d528c2df0188a"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4DARTSTATUS-0c39ccf4b43c315f2a2c622d"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KIND-0c39ccf4b43c315f2a2c622d"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KRX-0c39ccf4b43c315f2a2c622d"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4IRSTATUS-0c39ccf4b43c315f2a2c622d"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4DARTSTATUS-3e35832e2117eab4fa699423"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KIND-3e35832e2117eab4fa699423"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4KRX-3e35832e2117eab4fa699423"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "RSTASKV4IRSTATUS-3e35832e2117eab4fa699423"
+    }
+  ],
+  "schema_version": "research_brain_v4_source_provider_gap_report",
+  "summary": {
+    "provider_or_source_gap_count": 40
+  }
+}

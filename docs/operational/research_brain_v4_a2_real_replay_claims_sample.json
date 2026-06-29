@@ -1,0 +1,39 @@
+{
+  "rows": [
+    {
+      "anchor_id": "ANCH-ed8123eda881cef22aa6",
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "claim_id": "CLM-116be0111093fb90df18",
+      "document_id": "DOC-32563a17d549e6a92b7e",
+      "evidence_url_pending": false,
+      "primitive_id": "revenue_visibility_contract",
+      "promoted": true,
+      "record_id": "RMEM-00072ea7e9b562a259bfef89",
+      "snapshot_loaded": true,
+      "source_date": "2024-05-27",
+      "source_proxy_only": false,
+      "source_quality_class_after": "A2_REAL_REPLAY_VERIFIED",
+      "source_url": "https://www.businesspost.co.kr/BP?command=article_view&num=353335"
+    },
+    {
+      "anchor_id": "ANCH-1aa47ee2df8d33118d91",
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "claim_id": "CLM-2b392013d62b17b5f1bd",
+      "document_id": "DOC-9b05efc3e7b860e249be",
+      "evidence_url_pending": false,
+      "primitive_id": "revenue_visibility_contract",
+      "promoted": true,
+      "record_id": "RMEM-00079201612e9ed9c3368d05",
+      "snapshot_loaded": true,
+      "source_date": "2023-12-18",
+      "source_proxy_only": false,
+      "source_quality_class_after": "A2_REAL_REPLAY_VERIFIED",
+      "source_url": "https://en.yna.co.kr/view/AEN20231218009052320"
+    }
+  ],
+  "schema_version": "research_brain_v4_a2_real_replay_claims_sample",
+  "summary": {
+    "all_rows_have_source_url_snapshot_anchor_claim": true,
+    "sample_size": 2
+  }
+}

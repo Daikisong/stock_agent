@@ -30,11 +30,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--planner-provider", default="real", choices=("real", "codex", "codex_cli", "fake", "none"))
     parser.add_argument(
         "--source-acquisition",
-        default="frozen_real_source_snapshot",
-        choices=("frozen_real_source_snapshot", "live_official_only", "live_full_bounded", "test_fake"),
+        default="live_official_first",
+        choices=("live_official_first", "frozen_real_source_snapshot", "live_official_only", "live_full_bounded", "test_fake"),
     )
-    parser.add_argument("--universe-limit", type=int, default=40)
-    parser.add_argument("--planner-success-limit", type=int, default=10)
+    parser.add_argument("--universe-limit", type=int, default=30)
+    parser.add_argument("--planner-success-limit", type=int, default=30)
+    parser.add_argument("--planner-batch-size", type=int, default=5)
     parser.add_argument("--max-fetches-per-task", type=int, default=3)
     parser.add_argument("--top-results", type=int, default=20)
     parser.add_argument("--retry-max", type=int, default=2)
@@ -53,6 +54,7 @@ def main(argv: list[str] | None = None) -> int:
         source_acquisition=args.source_acquisition,
         universe_limit=args.universe_limit,
         planner_success_limit=args.planner_success_limit,
+        planner_batch_size=args.planner_batch_size,
         max_fetches_per_task=args.max_fetches_per_task,
         top_results=args.top_results,
         retry_max=args.retry_max,
