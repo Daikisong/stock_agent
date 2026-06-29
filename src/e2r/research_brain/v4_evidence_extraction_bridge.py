@@ -41,6 +41,8 @@ class ExtractionSignal:
     quote: str
     polarity: Polarity
     supported_primitives: tuple[str, ...]
+    extraction_method: str
+    polarity_source: str
     event_date: date | None = None
 
 
@@ -254,12 +256,19 @@ def _extract_signals(
     text = _visible_text(anchor.exact_text or document_text)
     normalized = anchor.normalized_value if isinstance(anchor.normalized_value, Mapping) else {}
     row = normalized.get("row") if isinstance(normalized.get("row"), Mapping) else {}
-    if anchor.anchor_type == AnchorType.TEXT_SPAN and not row:
+    if not row:
         return ()
     signals: list[ExtractionSignal] = []
     source_date = document.published_date()
 
-    def add(signal_id: str, predicate: str, primitives: Sequence[str], *, polarity: Polarity = Polarity.POSITIVE) -> None:
+    def add(
+        signal_id: str,
+        predicate: str,
+        primitives: Sequence[str],
+        *,
+        polarity: Polarity,
+        polarity_source: str,
+    ) -> None:
         quote = _quote_for_signal(text, predicate)
         if not quote:
             return
@@ -270,107 +279,80 @@ def _extract_signals(
                 quote=quote,
                 polarity=polarity,
                 supported_primitives=tuple(dict.fromkeys(primitives)),
+                extraction_method="structured_api_record",
+                polarity_source=polarity_source,
                 event_date=source_date,
             )
         )
 
-    if _any_text(text, "HBM", "메모리", "Memory", "DRAM"):
-        if _any_text(text, "고객", "customer", "엔비디아", "ASIC", "다변화"):
+    for key, value in row.items():
+        if value in (None, ""):
+            continue
+        primitives = _field_to_primitives(str(key), value)
+        if primitives:
+            polarity, polarity_source = _structured_field_polarity(str(key), value)
             add(
-                "memory_customer_allocation",
-                "customer demand/allocation is discussed",
-                ("customer_preorder_or_allocation", "named_customer_quality", "cycle_demand_visibility"),
+                f"structured_field_{'_'.join(primitives[:3])}",
+                f"structured field {key} is present",
+                primitives,
+                polarity=polarity,
+                polarity_source=polarity_source,
             )
-        if _any_text(text, "공급 부족", "병목", "수급 불균형", "bottleneck", "supply-demand", "좁은"):
-            add(
-                "memory_capacity_constraint",
-                "memory supply bottleneck is discussed",
-                ("hbm_capacity_constraint", "hbm_capacity_pre_sold", "supply_demand_tightness"),
-            )
-        if _any_text(text, "가격 상승", "price uptrend", "가격 상승세", "ASP"):
-            add(
-                "memory_price_increase",
-                "memory price increase is discussed",
-                ("memory_price_increase_mentioned", "pricing_power_confirmed", "spread_expansion"),
-            )
-    if _any_text(text, "목표주가 상향", "추정EPS 상향", "실적 전망치 상향", "Upward earnings revisions", "Raising target"):
-        add(
-            "revision_visibility",
-            "earnings or target revision is raised",
-            ("medium_term_revision_visibility", "cycle_to_revenue_bridge", "opm_expansion_pctp"),
-        )
-    if _any_text(text, "계약", "수주잔고", "장기공급", "RPO", "backlog", "contract"):
-        add(
-            "contract_backlog_visibility",
-            "contract or backlog visibility is discussed",
-            (
-                "revenue_visibility_contract",
-                "contract_quality",
-                "order_backlog_to_sales",
-                "rpo_to_sales",
-                "retention_or_renewal",
-                "export_contract",
-            ),
-        )
-    if _any_text(text, "영업이익", "OP", "OPM", "margin", "마진", "FCF", "현금흐름"):
-        add(
-            "margin_cash_bridge",
-            "margin or cash-flow bridge is discussed",
-            (
-                "opm_expansion_pctp",
-                "fcf_quality_score",
-                "margin_bridge_visible",
-                "recurring_margin_leverage",
-                "realized_margin",
-            ),
-        )
-    if _any_text(text, "판가", "spread", "스프레드", "원재료", "price pass-through"):
-        add(
-            "spread_pass_through",
-            "spread or pass-through is discussed",
-            ("spread_expansion", "pricing_power_confirmed", "raw_material_cost_risk", "inventory_cycle"),
-        )
-    if _any_text(text, "CAPA", "capacity", "증설", "가동률"):
-        add(
-            "capacity_utilization",
-            "capacity or utilization is discussed",
-            ("utilization_rate", "hbm_capacity_constraint", "capacity_precommitted", "socket_or_test_demand_visible"),
-        )
-    if row:
-        for key, value in row.items():
-            if value in (None, ""):
-                continue
-            primitive = _field_to_primitive(str(key), value)
-            if primitive:
-                add(
-                    f"structured_field_{primitive}",
-                    f"structured field {key} is present",
-                    (primitive,),
-                )
     return tuple(dict((signal.signal_id, signal) for signal in signals).values())
 
 
-def _field_to_primitive(key: str, value: Any) -> str | None:
+def _structured_field_polarity(key: str, value: Any) -> tuple[Polarity, str]:
+    text = f"{key} {value}".lower()
+    if any(token in text for token in ("하향", "감소", "축소", "down", "lower", "cut", "negative")):
+        return Polarity.NEGATIVE, "structured_field_negative_value"
+    if any(token in text for token in ("상향", "증가", "확대", "up", "raise", "positive")):
+        return Polarity.POSITIVE, "structured_field_positive_value"
+    return Polarity.POSITIVE, "structured_field_presence_positive_by_contract"
+
+
+def _field_to_primitives(key: str, value: Any) -> tuple[str, ...]:
     lowered = key.lower()
     mapping = {
-        "eps_action_typ_nm": "medium_term_revision_visibility",
-        "prc_action_typ_nm": "medium_term_revision_visibility",
-        "target_prc": "medium_term_revision_visibility",
-        "contract_amount_to_prior_sales": "contract_quality",
-        "contract_duration_months": "delivery_schedule",
-        "order_backlog_to_sales": "order_backlog_to_sales",
-        "rpo_to_sales": "rpo_to_sales",
-        "backlog_yoy_pct": "order_backlog_to_sales",
-        "opm_expansion_pctp": "opm_expansion_pctp",
-        "fcf_quality_score": "fcf_quality_score",
-        "pricing_power_confirmed": "pricing_power_confirmed",
-        "capa_utilization_pct": "utilization_rate",
-        "capa_expansion_pct": "utilization_rate",
-        "asp_yoy_pct": "memory_price_increase_mentioned",
+        "eps_action_typ_nm": ("medium_term_revision_visibility", "cycle_to_revenue_bridge", "order_to_revenue_bridge"),
+        "prc_action_typ_nm": ("medium_term_revision_visibility", "cycle_to_revenue_bridge", "order_to_revenue_bridge"),
+        "recomm_action_typ_nm": ("medium_term_revision_visibility",),
+        "target_prc": ("medium_term_revision_visibility",),
+        "report_type": ("contract_quality", "revenue_visibility_contract", "export_contract"),
+        "contract_amount_to_prior_sales": (
+            "contract_quality",
+            "contract_amount_to_prior_sales",
+            "revenue_visibility_contract",
+            "export_contract",
+        ),
+        "contract_duration_months": ("delivery_schedule", "contract_duration_months", "contract_quality"),
+        "order_backlog_to_sales": ("order_backlog_to_sales", "revenue_visibility_contract", "equipment_order_backlog"),
+        "rpo_to_sales": ("rpo_to_sales", "revenue_visibility_contract", "retention_or_renewal"),
+        "backlog_yoy_pct": ("order_backlog_to_sales", "equipment_order_backlog"),
+        "record_backlog": ("order_backlog_to_sales", "revenue_visibility_contract"),
+        "prepayment_exists": ("contract_quality", "revenue_visibility_contract"),
+        "non_cancellable": ("contract_quality",),
+        "op_yoy_pct": ("opm_expansion_pctp", "cycle_to_revenue_bridge", "order_to_revenue_bridge"),
+        "opm_expansion_pctp": ("opm_expansion_pctp", "margin_bridge_visible", "realized_margin"),
+        "fcf_quality_score": ("fcf_quality_score", "direct_company_cash_route"),
+        "pricing_power_confirmed": ("pricing_power_confirmed", "spread_expansion"),
+        "capa_utilization_pct": ("utilization_rate", "capacity_constraint", "hbm_capacity_constraint"),
+        "capa_expansion_pct": ("utilization_rate", "capacity_precommitted", "capacity_constraint"),
+        "capacity_constraint": ("capacity_constraint", "hbm_capacity_constraint", "supply_demand_tightness"),
+        "capacity_precommitted": ("capacity_precommitted", "hbm_capacity_pre_sold"),
+        "lead_time_months": ("lead_time_extended", "capacity_constraint"),
+        "asp_yoy_pct": ("memory_price_increase_mentioned", "pricing_power_confirmed", "spread_expansion"),
+        "high_margin_mix_pct": ("margin_bridge_visible", "realized_margin"),
     }
-    if lowered in mapping and str(value).strip().lower() not in {"0", "false", "none", "없음"}:
-        return mapping[lowered]
-    return None
+    if lowered not in mapping or str(value).strip().lower() in {"0", "false", "none", "없음"}:
+        return ()
+    if lowered == "report_type" and not _explicit_contract_disclosure(value):
+        return ()
+    return tuple(dict.fromkeys(mapping[lowered]))
+
+
+def _explicit_contract_disclosure(value: Any) -> bool:
+    text = str(value)
+    return any(token in text for token in ("단일판매", "공급계약", "계약체결", "수주", "신규시설투자"))
 
 
 def _raw_assertion_from_signal(
@@ -393,8 +375,8 @@ def _raw_assertion_from_signal(
         event_date_text=signal.event_date.isoformat() if signal.event_date else None,
         exact_quote=signal.quote,
         related_entity_texts=tuple(dict.fromkeys((subject_text, event.company_name))),
-        extractor_model="research_brain_v4_rule_extractor_from_real_anchor",
-        extractor_prompt_hash="contract_blind_signal_rules_v1",
+        extractor_model=f"research_brain_v4_{signal.extraction_method}",
+        extractor_prompt_hash=f"contract_blind_{signal.extraction_method}_v2",
     )
 
 

@@ -289,6 +289,41 @@ class FixturePlannerProviderV4(ResearchBrainPlannerProviderV4):
         }
 
 
+@dataclass
+class FrozenRealPlannerProviderV4(ResearchBrainPlannerProviderV4):
+    """Replay planner outputs produced by an already-exercised real provider.
+
+    Multi-day acceptance has two different checks:
+    - exercise the real planner on live production-shadow days;
+    - replay the same frozen planner/source snapshot three times and require
+      deterministic score/stage output.
+
+    The repeat check must not call the LLM again, because that measures LLM
+    sampling/provider availability variance rather than deterministic pipeline
+    repeatability. This provider keeps the "real planner provenance" while
+    replaying the exact real outputs from the baseline run.
+    """
+
+    outputs_by_event_id: Mapping[str, LLMPlannerOutputV2]
+    provider_name = "frozen_real_planner_snapshot_v4"
+    provider_mode = PlannerProviderModeV4.REAL.value
+    real_provider = True
+    endpoint = "frozen-real-planner-snapshot"
+
+    def plan_many(
+        self,
+        *,
+        events: Sequence[CandidateEventV2],
+        memory_cards: Sequence[ArchetypeMemoryCard],
+        existing_evidence_by_event_id: Mapping[str, Mapping[str, Any]] | None = None,
+    ) -> Mapping[str, LLMPlannerOutputV2]:
+        return {
+            event.candidate_event_id: self.outputs_by_event_id[event.candidate_event_id]
+            for event in events
+            if event.candidate_event_id in self.outputs_by_event_id
+        }
+
+
 class NoPlannerProviderV4(ResearchBrainPlannerProviderV4):
     provider_name = "none"
     provider_mode = PlannerProviderModeV4.NONE.value
@@ -740,6 +775,7 @@ def _float_env(env: Mapping[str, str], key: str, default: float) -> float:
 __all__ = [
     "CodexCLIPlannerProviderV4",
     "FixturePlannerProviderV4",
+    "FrozenRealPlannerProviderV4",
     "NoPlannerProviderV4",
     "ResearchBrainPlannerProviderV4",
     "build_planner_provider_v4",

@@ -25,6 +25,7 @@ class ResearchBrainV4MultiDayShadowTests(unittest.TestCase):
         self.assertEqual(summary["fake_provider_used_total"], 0)
         self.assertEqual(summary["repeated_frozen_run_variance"], 0)
         self.assertEqual(len(multi["repeat_rows"]), 3)
+        self.assertEqual({row["repeat_mode"] for row in multi["repeat_rows"]}, {"frozen_real_planner_snapshot"})
         self.assertEqual(len({row["watchlist_signature"] for row in multi["repeat_rows"]}), 1)
 
 

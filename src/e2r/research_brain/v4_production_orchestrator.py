@@ -18,6 +18,7 @@ from e2r.research_brain.v4_evidence_extraction_bridge import (
     execute_source_tasks_with_evidence_os_v4,
 )
 from e2r.research_brain.v4_planner_runtime import (
+    FrozenRealPlannerProviderV4,
     ResearchBrainPlannerProviderV4,
     build_planner_provider_v4,
     run_planner_provider_v4,
@@ -103,7 +104,13 @@ def run_research_brain_v4_production_shadow(
                 card_by_id=cards_by_id,
                 max_tasks=config.max_fetches_per_task,
             )
-            tasks = tuple((*tasks, *_mandatory_official_status_tasks(event=event, primary_archetype=primary)))
+            tasks = tuple(
+                (
+                    *tasks,
+                    *_event_origin_structured_replay_tasks(event=event, primary_archetype=primary, contract=contract),
+                    *_mandatory_official_status_tasks(event=event, primary_archetype=primary),
+                )
+            )
             bundle = execute_source_tasks_with_evidence_os_v4(
                 event=event,
                 tasks=tasks,
@@ -252,6 +259,7 @@ def run_multi_day_shadow_v4(
     days = tuple(base_day - timedelta(days=offset) for offset in (0, 1, 2, 3, 4))
     rows = []
     signatures = []
+    frozen_repeat_provider: FrozenRealPlannerProviderV4 | None = None
     for day in days:
         provider = planner_provider_factory() if planner_provider_factory else build_planner_provider_v4(
             mode=base_config.planner_provider,
@@ -275,6 +283,8 @@ def run_multi_day_shadow_v4(
             planner_provider=provider,
             repo_root=repo_root,
         )
+        if day == base_day:
+            frozen_repeat_provider = _frozen_real_planner_provider_from_result(result)
         signature = _watchlist_signature(result["watchlist_report"])
         signatures.append(signature)
         rows.append(
@@ -298,9 +308,11 @@ def run_multi_day_shadow_v4(
     repeat_signatures = []
     repeat_day = base_day
     for repeat_index in range(3):
-        provider = planner_provider_factory() if planner_provider_factory else build_planner_provider_v4(
-            mode=base_config.planner_provider,
-            working_directory=repo_root,
+        provider = frozen_repeat_provider or (
+            planner_provider_factory() if planner_provider_factory else build_planner_provider_v4(
+                mode=base_config.planner_provider,
+                working_directory=repo_root,
+            )
         )
         config = ProductionShadowV4Config(
             as_of_date=repeat_day.isoformat(),
@@ -325,6 +337,7 @@ def run_multi_day_shadow_v4(
         repeat_rows.append(
             {
                 "repeat_index": repeat_index,
+                "repeat_mode": "frozen_real_planner_snapshot" if frozen_repeat_provider is not None else "live_planner_fallback",
                 "as_of_date": repeat_day.isoformat(),
                 "candidate_event_count": result["candidate_report"]["summary"]["candidate_event_count"],
                 "unique_candidate_event_count": result["candidate_report"]["summary"].get("unique_candidate_event_count"),
@@ -363,6 +376,17 @@ def run_multi_day_shadow_v4(
         "rows": rows,
         "repeat_rows": repeat_rows,
     }
+
+
+def _frozen_real_planner_provider_from_result(result: Mapping[str, Any]) -> FrozenRealPlannerProviderV4 | None:
+    outputs = {
+        run.event.candidate_event_id: run.output
+        for run in result.get("planner_runs", ())
+        if isinstance(run, PlannerRunV4) and run.real_provider_success and run.output is not None
+    }
+    if not outputs:
+        return None
+    return FrozenRealPlannerProviderV4(outputs_by_event_id=outputs)
 
 
 def build_real_planner_report_v4(planner_runs: Sequence[PlannerRunV4]) -> Mapping[str, Any]:
@@ -583,34 +607,39 @@ def build_static_logic_audit_from_reports_v4(
     s = source_report["summary"]
     e = extraction_audit["summary"]
     w = watchlist_report["summary"]
+    source_rows = tuple(source_report.get("rows", ()))
+    planner_rows = tuple(planner_report.get("rows", ()))
+    watchlist_rows = tuple(watchlist_report.get("rows", ()))
     top_results_none = int(config.get("top_results") is None)
     retry_max_none = int(config.get("retry_max") is None)
+    source_proxy_to_score = _source_proxy_to_score_count(watchlist_rows)
+    official_gap_to_web = _official_solvable_gap_sent_to_general_web_count(source_rows)
     critical = {
         "fake_provider_used_in_production_shadow_count": p["fake_provider_used_count"],
         "duplicate_candidate_event_count": int(planner_report["summary"].get("planner_run_count", 0))
         - int(planner_report["summary"].get("unique_planner_candidate_count", planner_report["summary"].get("planner_run_count", 0))),
-        "provider_failed_final_score_count": 0,
+        "provider_failed_final_score_count": _provider_failed_final_score_count(watchlist_rows),
         "source_task_accepted_without_real_document_count": s["source_task_accepted_without_real_document_count"],
         "synthetic_assertion_count": e["synthetic_assertion_count"],
         "forced_target_subject_count": e["forced_target_subject_count"],
         "forced_positive_polarity_count": e["forced_positive_polarity_count"],
         "forced_current_temporal_count": e["forced_current_temporal_count"],
         "event_summary_used_as_exact_quote_count": e["event_summary_used_as_exact_quote_count"],
-        "source_proxy_to_score_count": 0,
+        "source_proxy_to_score_count": source_proxy_to_score,
         "source_proxy_to_A2_count": 0,
         "A2_without_fetch_or_snapshot_count": 0,
         "A2_without_anchor_count": 0,
         "cheap_scan_score_as_verified_score_count": w["cheap_scan_score_as_verified_score_count"],
-        "watchlist_without_stagecourt_count": max(0, w["deterministic_scorer_output_count"] - w["stagecourt_trace_count"]),
-        "score_contribution_without_claim_count": 0,
+        "watchlist_without_stagecourt_count": _watchlist_without_stagecourt_count(watchlist_rows),
+        "score_contribution_without_claim_count": _score_contribution_without_claim_count(watchlist_rows),
         "R13_invalid_primary_count": p["R13_invalid_primary_rejected_count"],
-        "DART_solvable_gap_sent_to_general_web_count": 0,
-        "FCF_gap_sent_to_news_count": 0,
+        "DART_solvable_gap_sent_to_general_web_count": official_gap_to_web,
+        "FCF_gap_sent_to_news_count": _fcf_gap_sent_to_news_count(source_rows),
         "unbounded_source_task_count": s["unbounded_source_task_count"],
         "top_results_none_in_production_count": top_results_none,
         "retry_max_none_in_production_count": retry_max_none,
-        "future_outcome_in_planner_prompt_count": 0,
-        "future_outcome_in_extraction_prompt_count": 0,
+        "future_outcome_in_planner_prompt_count": _future_outcome_token_count(planner_rows),
+        "future_outcome_in_extraction_prompt_count": _future_outcome_token_count(source_rows),
         "production_ready_despite_blockers_count": 0,
     }
     critical_count_sum = sum(int(value) for value in critical.values())
@@ -623,6 +652,92 @@ def build_static_logic_audit_from_reports_v4(
             "critical_audit_pass": critical_count_sum == 0 and p["real_provider_success_count"] > 0,
         },
     }
+
+
+def _provider_failed_final_score_count(rows: Sequence[Mapping[str, Any]]) -> int:
+    return sum(
+        1
+        for row in rows
+        if row.get("score_valid_status") == "PROVIDER_FAILED" and row.get("verified_score") is not None
+    )
+
+
+def _score_contribution_without_claim_count(rows: Sequence[Mapping[str, Any]]) -> int:
+    return sum(
+        1
+        for row in rows
+        if row.get("verified_score") is not None
+        and (not row.get("accepted_claim_ids") or not row.get("score_contribution_ids"))
+    )
+
+
+def _watchlist_without_stagecourt_count(rows: Sequence[Mapping[str, Any]]) -> int:
+    return sum(1 for row in rows if row.get("verified_score") is not None and not row.get("stage_court_trace"))
+
+
+def _source_proxy_to_score_count(rows: Sequence[Mapping[str, Any]]) -> int:
+    count = 0
+    for row in rows:
+        if row.get("verified_score") is None:
+            continue
+        executions = row.get("source_task_executions") or ()
+        text = json.dumps(executions, ensure_ascii=False).lower()
+        if "source_proxy_only" in text or "source_proxy" in text or "evidence_url_pending" in text:
+            count += 1
+    return count
+
+
+def _official_solvable_gap_sent_to_general_web_count(rows: Sequence[Mapping[str, Any]]) -> int:
+    count = 0
+    for row in rows:
+        task = row.get("source_task") or {}
+        primitive = str(task.get("primitive_gap") or "")
+        if not _official_solvable_primitive(primitive):
+            continue
+        source_classes = {
+            str(item).lower()
+            for item in (
+                *(task.get("preferred_source_classes") or ()),
+                *(task.get("fallback_source_classes") or ()),
+            )
+        }
+        if bool(task.get("general_search_allowed")) or source_classes & {"trustednews", "news", "web", "generalweb"}:
+            count += 1
+    return count
+
+
+def _fcf_gap_sent_to_news_count(rows: Sequence[Mapping[str, Any]]) -> int:
+    count = 0
+    for row in rows:
+        task = row.get("source_task") or {}
+        primitive = str(task.get("primitive_gap") or "").lower()
+        if "fcf" not in primitive and "cash" not in primitive:
+            continue
+        source_classes = {
+            str(item).lower()
+            for item in (
+                *(task.get("preferred_source_classes") or ()),
+                *(task.get("fallback_source_classes") or ()),
+            )
+        }
+        if bool(task.get("general_search_allowed")) or source_classes & {"trustednews", "news", "web", "generalweb"}:
+            count += 1
+    return count
+
+
+def _official_solvable_primitive(primitive: str) -> bool:
+    lowered = primitive.lower()
+    return any(token in lowered for token in ("fcf", "cash", "revision", "backlog", "contract", "rpo"))
+
+
+def _future_outcome_token_count(rows: Sequence[Mapping[str, Any]]) -> int:
+    forbidden = ("mfe", "mae", "future_return", "outcome_label", "expected_stage", "target_score")
+    count = 0
+    for row in rows:
+        text = json.dumps(row, ensure_ascii=False).lower()
+        if any(token in text for token in forbidden):
+            count += 1
+    return count
 
 
 def build_v4_readiness_verdict(
@@ -1007,6 +1122,84 @@ def _mandatory_official_status_tasks(*, event: CandidateEventV2, primary_archety
             **common,
         ),
     )
+
+
+def _event_origin_structured_replay_tasks(
+    *,
+    event: CandidateEventV2,
+    primary_archetype: str,
+    contract: EvidenceContractV2,
+) -> tuple[SourceTask, ...]:
+    """Replay the official structured row that produced the candidate event.
+
+    This is deliberately not a search-query fallback. If a candidate came from a
+    structured provider such as CompanyGuide or DART, the same provider row is a
+    real source anchor and should be allowed to fill matching contract
+    primitives. Plain text/news mentions still remain mention-only unless a
+    separate extractor verifies them.
+    """
+
+    available = _contract_primitive_ids_for_tasks(contract)
+    source_family = event.source_family
+    if source_family == "CompanyGuide":
+        source_classes = ("CompanyGuide",)
+        candidates = (
+            "medium_term_revision_visibility",
+            "cycle_to_revenue_bridge",
+            "order_to_revenue_bridge",
+            "opm_expansion_pctp",
+        )
+    elif source_family == "DART":
+        source_classes = ("DART",)
+        candidates = (
+            "contract_amount_to_prior_sales",
+            "contract_duration_months",
+            "contract_quality",
+            "revenue_visibility_contract",
+            "export_contract",
+            "delivery_schedule",
+            "order_backlog_to_sales",
+        )
+    else:
+        return ()
+    tasks: list[SourceTask] = []
+    for primitive in candidates:
+        if primitive not in available:
+            continue
+        tasks.append(
+            SourceTask(
+                task_id=deterministic_id("RSTASKV4ORIGIN", (event.candidate_event_id, primary_archetype, primitive)),
+                candidate_event_id=event.candidate_event_id,
+                symbol=event.symbol,
+                company_name=event.company_name,
+                archetype_id=primary_archetype,
+                primitive_gap=primitive,
+                task_type=SourceTaskType.POSITIVE_VERIFY.value,
+                preferred_source_classes=source_classes,
+                fallback_source_classes=(),
+                forbidden_source_classes=("unbounded_general_search",),
+                date_window={"end": event.event_date, "lookback_days": 540},
+                max_queries=1,
+                max_candidates=10,
+                max_fetches=3,
+                stop_condition={"accepted_claim_count": 1},
+                llm_query_allowed=False,
+                general_search_allowed=False,
+                reason_from_memory="event-origin structured source replay",
+            )
+        )
+    return tuple(tasks[:3])
+
+
+def _contract_primitive_ids_for_tasks(contract: EvidenceContractV2) -> set[str]:
+    values = set(contract.required_primitives)
+    values.update(contract.green_gate.primitive_ids())
+    values.update(contract.alternative_primitives)
+    for primitives in contract.alternative_primitives.values():
+        values.update(primitives)
+    for primitives in contract.score_rubric.values():
+        values.update(primitives)
+    return values
 
 
 def _chunks(values: Sequence[CandidateEventV2], size: int) -> tuple[tuple[CandidateEventV2, ...], ...]:

@@ -10,12 +10,22 @@ from research_brain_v4_test_helpers import c06_source_task, sample_v4_event
 
 
 class _SingleDocumentRunner:
-    def __init__(self, *, symbol: str, company_name: str, published_at: date, text: str, anchor_type=AnchorType.API_RECORD) -> None:
+    def __init__(
+        self,
+        *,
+        symbol: str,
+        company_name: str,
+        published_at: date,
+        text: str,
+        anchor_type=AnchorType.API_RECORD,
+        include_structured_row: bool = True,
+    ) -> None:
         self.symbol = symbol
         self.company_name = company_name
         self.published_at = published_at
         self.text = text
         self.anchor_type = anchor_type
+        self.include_structured_row = include_structured_row
 
     def acquire(self, *, event, task, as_of_date):
         document = EvidenceDocument.from_text(
@@ -37,7 +47,7 @@ class _SingleDocumentRunner:
             normalized_value={
                 "symbol": self.symbol,
                 "company_name": self.company_name,
-                "row": {"EPS_ACTION_TYP_NM": "추정EPS 상향"},
+                **({"row": {"EPS_ACTION_TYP_NM": "추정EPS 상향"}} if self.include_structured_row else {}),
             },
             anchor_verified=True,
         )
@@ -94,6 +104,28 @@ class ResearchBrainV4EvidenceExtractionFromRealDocumentTests(unittest.TestCase):
         self.assertFalse(execution.accepted_claim_ids)
         self.assertIn("target_scope_not_allowed:UNRELATED", execution.not_eligible_reasons)
         self.assertGreater(bundle.extraction_audit["wrong_subject_rejected_count"], 0)
+
+    def test_text_span_keyword_mentions_are_mention_only_not_score_claims(self):
+        contract = load_evidence_contracts_v2(require_all_archetypes=True)["C06_HBM_MEMORY_CUSTOMER_CAPACITY"]
+        bundle = execute_source_tasks_with_evidence_os_v4(
+            event=sample_v4_event(),
+            tasks=(c06_source_task(),),
+            contract=contract,
+            as_of_date=date(2026, 6, 29),
+            source_runner=_SingleDocumentRunner(
+                symbol="005930",
+                company_name="삼성전자",
+                published_at=date(2026, 6, 20),
+                text="삼성전자는 HBM 고객 수요와 목표주가 상향 가능성이 언급됐다.",
+                anchor_type=AnchorType.TEXT_SPAN,
+                include_structured_row=False,
+            ),
+        )
+        execution = bundle.executions[0]
+        self.assertFalse(execution.raw_assertion_ids)
+        self.assertFalse(execution.accepted_claim_ids)
+        self.assertEqual(execution.status, "NO_EVIDENCE_FOUND")
+        self.assertGreater(bundle.extraction_audit["mention_only_count"], 0)
 
     def test_old_positive_document_without_current_confirmation_is_historical_not_scored(self):
         contract = load_evidence_contracts_v2(require_all_archetypes=True)["C06_HBM_MEMORY_CUSTOMER_CAPACITY"]

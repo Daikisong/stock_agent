@@ -30,7 +30,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4CGSTATUS-0ec467a5c98b85b736e764a9"
+      "task_id": "RSTASKV4CGSTATUS-5d3d82e3bb1271e0cfea9f71"
     },
     {
       "provider_errors": [
@@ -38,7 +38,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4DARTSTATUS-0ec467a5c98b85b736e764a9"
+      "task_id": "RSTASKV4DARTSTATUS-5d3d82e3bb1271e0cfea9f71"
     },
     {
       "provider_errors": [
@@ -46,7 +46,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4KRX-0ec467a5c98b85b736e764a9"
+      "task_id": "RSTASKV4KRX-5d3d82e3bb1271e0cfea9f71"
     },
     {
       "provider_errors": [
@@ -54,7 +54,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4IRSTATUS-0ec467a5c98b85b736e764a9"
+      "task_id": "RSTASKV4IRSTATUS-5d3d82e3bb1271e0cfea9f71"
     },
     {
       "provider_errors": [
@@ -62,7 +62,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4CGSTATUS-ee6ff33de8111a3d5efb9cec"
+      "task_id": "RSTASKV4CGSTATUS-3d1e48a245b0d0043564ff6a"
     },
     {
       "provider_errors": [
@@ -70,7 +70,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4KIND-ee6ff33de8111a3d5efb9cec"
+      "task_id": "RSTASKV4KIND-3d1e48a245b0d0043564ff6a"
     },
     {
       "provider_errors": [
@@ -78,7 +78,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4IRSTATUS-ee6ff33de8111a3d5efb9cec"
+      "task_id": "RSTASKV4IRSTATUS-3d1e48a245b0d0043564ff6a"
     },
     {
       "provider_errors": [
@@ -134,30 +134,6 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "CEV4-HIST-267260-2023-07-27-9-T1"
-    },
-    {
-      "provider_errors": [
-        "live_official_first_provider_has_no_matching_document"
-      ],
-      "status": "PROVIDER_FAILED",
-      "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "CEV4-HIST-267260-2023-07-27-9-T2"
-    },
-    {
-      "provider_errors": [
-        "live_official_first_provider_has_no_matching_document"
-      ],
-      "status": "PROVIDER_FAILED",
-      "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "CEV4-HIST-267260-2023-07-27-9-T3"
-    },
-    {
-      "provider_errors": [
-        "live_official_first_provider_has_no_matching_document"
-      ],
-      "status": "PROVIDER_FAILED",
-      "stop_reason": "no_matching_real_source_snapshot",
       "task_id": "RSTASKV4CGSTATUS-cd71f0c1e25448accfa7957b"
     },
     {
@@ -191,14 +167,6 @@
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
       "task_id": "CEV4-CG-005930-1107900-2026-06-25-T2"
-    },
-    {
-      "provider_errors": [
-        "live_official_first_provider_has_no_matching_document"
-      ],
-      "status": "PROVIDER_FAILED",
-      "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "CEV4-CG-005930-1107900-2026-06-25-T3"
     },
     {
       "provider_errors": [
@@ -262,7 +230,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4DARTSTATUS-c23ec263efb5622abbecd1e8"
+      "task_id": "RSTASKV4DARTSTATUS-a8b4e1f6bb567d580e0c89a9"
     },
     {
       "provider_errors": [
@@ -270,7 +238,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4KIND-c23ec263efb5622abbecd1e8"
+      "task_id": "RSTASKV4KIND-a8b4e1f6bb567d580e0c89a9"
     },
     {
       "provider_errors": [
@@ -278,7 +246,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4KRX-c23ec263efb5622abbecd1e8"
+      "task_id": "RSTASKV4KRX-a8b4e1f6bb567d580e0c89a9"
     },
     {
       "provider_errors": [
@@ -286,31 +254,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4IRSTATUS-c23ec263efb5622abbecd1e8"
-    },
-    {
-      "provider_errors": [
-        "live_official_first_provider_has_no_matching_document"
-      ],
-      "status": "PROVIDER_FAILED",
-      "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "CEV4-HIST-298040-2023-07-10-10-T1"
-    },
-    {
-      "provider_errors": [
-        "live_official_first_provider_has_no_matching_document"
-      ],
-      "status": "PROVIDER_FAILED",
-      "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "CEV4-HIST-298040-2023-07-10-10-T2"
-    },
-    {
-      "provider_errors": [
-        "live_official_first_provider_has_no_matching_document"
-      ],
-      "status": "PROVIDER_FAILED",
-      "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "CEV4-HIST-298040-2023-07-10-10-T3"
+      "task_id": "RSTASKV4IRSTATUS-a8b4e1f6bb567d580e0c89a9"
     },
     {
       "provider_errors": [
@@ -398,7 +342,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4CGSTATUS-57a202befb75a9caf525c45b"
+      "task_id": "RSTASKV4CGSTATUS-afde3fcd252700c06b61dff0"
     },
     {
       "provider_errors": [
@@ -406,7 +350,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4KIND-57a202befb75a9caf525c45b"
+      "task_id": "RSTASKV4KIND-afde3fcd252700c06b61dff0"
     },
     {
       "provider_errors": [
@@ -414,7 +358,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4IRSTATUS-57a202befb75a9caf525c45b"
+      "task_id": "RSTASKV4IRSTATUS-afde3fcd252700c06b61dff0"
     },
     {
       "provider_errors": [
@@ -503,6 +447,30 @@
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
       "task_id": "RSTASKV4IRSTATUS-e36194f59cda41168f0246c1"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "CEV4-HIST-103590-2023-11-27-11-T1"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "CEV4-HIST-103590-2023-11-27-11-T2"
+    },
+    {
+      "provider_errors": [
+        "live_official_first_provider_has_no_matching_document"
+      ],
+      "status": "PROVIDER_FAILED",
+      "stop_reason": "no_matching_real_source_snapshot",
+      "task_id": "CEV4-HIST-103590-2023-11-27-11-T3"
     },
     {
       "provider_errors": [
@@ -718,14 +686,6 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "CEV4-HIST-062040-2025-02-06-12-T3"
-    },
-    {
-      "provider_errors": [
-        "live_official_first_provider_has_no_matching_document"
-      ],
-      "status": "PROVIDER_FAILED",
-      "stop_reason": "no_matching_real_source_snapshot",
       "task_id": "RSTASKV4CGSTATUS-38757bbd820da404683ad88c"
     },
     {
@@ -878,7 +838,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4DARTSTATUS-43fb6a6c3c5b69cc20aa87eb"
+      "task_id": "RSTASKV4DARTSTATUS-ddfc5824911771246173e2f5"
     },
     {
       "provider_errors": [
@@ -886,7 +846,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4KIND-43fb6a6c3c5b69cc20aa87eb"
+      "task_id": "RSTASKV4KIND-ddfc5824911771246173e2f5"
     },
     {
       "provider_errors": [
@@ -894,7 +854,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4KRX-43fb6a6c3c5b69cc20aa87eb"
+      "task_id": "RSTASKV4KRX-ddfc5824911771246173e2f5"
     },
     {
       "provider_errors": [
@@ -902,7 +862,7 @@
       ],
       "status": "PROVIDER_FAILED",
       "stop_reason": "no_matching_real_source_snapshot",
-      "task_id": "RSTASKV4IRSTATUS-43fb6a6c3c5b69cc20aa87eb"
+      "task_id": "RSTASKV4IRSTATUS-ddfc5824911771246173e2f5"
     },
     {
       "provider_errors": [
@@ -995,6 +955,6 @@
   ],
   "schema_version": "research_brain_v4_source_provider_gap_report",
   "summary": {
-    "provider_or_source_gap_count": 124
+    "provider_or_source_gap_count": 119
   }
 }

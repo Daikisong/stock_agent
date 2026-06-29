@@ -11,7 +11,7 @@
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "score_valid_status": "PENDING_EVIDENCE_OS_CLAIMS",
       "source_family": "DART",
-      "source_task_count": 8,
+      "source_task_count": 11,
       "symbol": "111111",
       "verified_score": null
     },
@@ -21,9 +21,9 @@
       "candidate_event_id": "CEV4-KIND-000000-2024-01-02",
       "company_name": "관리주의샘플",
       "event_type": "exchange_risk_status",
-      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
       "planner_provider_failed": false,
-      "primary_archetype": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "primary_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
       "score_valid_status": "PENDING_EVIDENCE_OS_CLAIMS",
       "source_family": "KIND",
       "source_task_count": 8,
@@ -36,12 +36,12 @@
       "candidate_event_id": "CEV4-KRX-111111-2020-01-02",
       "company_name": "한전변압기",
       "event_type": "listing_trading_status",
-      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
       "planner_provider_failed": false,
-      "primary_archetype": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "primary_archetype": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
       "score_valid_status": "PENDING_EVIDENCE_OS_CLAIMS",
       "source_family": "KRX",
-      "source_task_count": 8,
+      "source_task_count": 7,
       "symbol": "111111",
       "verified_score": null
     },
@@ -61,8 +61,8 @@
       "verified_score": null
     },
     {
-      "accepted_claim_count": 3,
-      "base_stage": "2",
+      "accepted_claim_count": 6,
+      "base_stage": "0",
       "candidate_event_id": "CEV4-CG-005930-1108000-2026-06-25",
       "company_name": "삼성전자",
       "event_type": "report_radar",
@@ -71,9 +71,9 @@
       "primary_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "score_valid_status": "FINAL",
       "source_family": "CompanyGuide",
-      "source_task_count": 8,
+      "source_task_count": 9,
       "symbol": "005930",
-      "verified_score": 71.5
+      "verified_score": 4.3333
     },
     {
       "accepted_claim_count": 0,
@@ -113,7 +113,7 @@
       "event_type": "report_radar",
       "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
       "planner_provider_failed": false,
-      "primary_archetype": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "primary_archetype": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
       "score_valid_status": "PENDING_EVIDENCE_OS_CLAIMS",
       "source_family": "CompanyGuide",
       "source_task_count": 8,
@@ -146,7 +146,7 @@
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "score_valid_status": "PENDING_EVIDENCE_OS_CLAIMS",
       "source_family": "DART",
-      "source_task_count": 8,
+      "source_task_count": 11,
       "symbol": "111111",
       "verified_score": null
     },
@@ -171,9 +171,9 @@
       "candidate_event_id": "CEV4-KRX-222222-2020-01-02",
       "company_name": "케이전력",
       "event_type": "listing_trading_status",
-      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
       "planner_provider_failed": false,
-      "primary_archetype": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "primary_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
       "score_valid_status": "PENDING_EVIDENCE_OS_CLAIMS",
       "source_family": "KRX",
       "source_task_count": 7,
@@ -191,7 +191,7 @@
       "primary_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
       "score_valid_status": "PENDING_EVIDENCE_OS_CLAIMS",
       "source_family": "KIND",
-      "source_task_count": 7,
+      "source_task_count": 8,
       "symbol": "555555",
       "verified_score": null
     },
@@ -206,12 +206,12 @@
       "primary_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "score_valid_status": "FINAL",
       "source_family": "CompanyGuide",
-      "source_task_count": 8,
+      "source_task_count": 9,
       "symbol": "000660",
       "verified_score": 4.3333
     },
     {
-      "accepted_claim_count": 11,
+      "accepted_claim_count": 6,
       "base_stage": "0",
       "candidate_event_id": "CEV4-CG-000660-1107986-2026-06-25",
       "company_name": "SK하이닉스",
@@ -221,9 +221,9 @@
       "primary_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "score_valid_status": "FINAL",
       "source_family": "CompanyGuide",
-      "source_task_count": 8,
+      "source_task_count": 9,
       "symbol": "000660",
-      "verified_score": 20.1667
+      "verified_score": 4.3333
     },
     {
       "accepted_claim_count": 0,
@@ -251,7 +251,7 @@
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "score_valid_status": "PENDING_EVIDENCE_OS_CLAIMS",
       "source_family": "DART",
-      "source_task_count": 8,
+      "source_task_count": 11,
       "symbol": "222222",
       "verified_score": null
     },
@@ -301,7 +301,7 @@
       "verified_score": null
     },
     {
-      "accepted_claim_count": 13,
+      "accepted_claim_count": 6,
       "base_stage": "0",
       "candidate_event_id": "CEV4-CG-005930-1106418-2026-06-18",
       "company_name": "삼성전자",
@@ -311,9 +311,9 @@
       "primary_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "score_valid_status": "FINAL",
       "source_family": "CompanyGuide",
-      "source_task_count": 8,
+      "source_task_count": 9,
       "symbol": "005930",
-      "verified_score": 36.0
+      "verified_score": 4.3333
     },
     {
       "accepted_claim_count": 0,
@@ -341,7 +341,7 @@
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "score_valid_status": "PENDING_EVIDENCE_OS_CLAIMS",
       "source_family": "DART",
-      "source_task_count": 8,
+      "source_task_count": 11,
       "symbol": "333333",
       "verified_score": null
     },
@@ -376,7 +376,7 @@
       "verified_score": null
     },
     {
-      "accepted_claim_count": 11,
+      "accepted_claim_count": 6,
       "base_stage": "0",
       "candidate_event_id": "CEV4-CG-005930-1106338-2026-06-17",
       "company_name": "삼성전자",
@@ -386,24 +386,24 @@
       "primary_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "score_valid_status": "FINAL",
       "source_family": "CompanyGuide",
-      "source_task_count": 8,
+      "source_task_count": 9,
       "symbol": "005930",
-      "verified_score": 20.1667
+      "verified_score": 4.3333
     },
     {
-      "accepted_claim_count": 10,
+      "accepted_claim_count": 0,
       "base_stage": "0",
       "candidate_event_id": "CEV4-CG-005930-1106305-2026-06-17",
       "company_name": "삼성전자",
       "event_type": "report_radar",
-      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
       "planner_provider_failed": false,
-      "primary_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-      "score_valid_status": "FINAL",
+      "primary_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "score_valid_status": "PENDING_EVIDENCE_OS_CLAIMS",
       "source_family": "CompanyGuide",
       "source_task_count": 8,
       "symbol": "005930",
-      "verified_score": 4.3333
+      "verified_score": null
     },
     {
       "accepted_claim_count": 0,
@@ -431,7 +431,7 @@
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "score_valid_status": "PENDING_EVIDENCE_OS_CLAIMS",
       "source_family": "DART",
-      "source_task_count": 8,
+      "source_task_count": 11,
       "symbol": "666666",
       "verified_score": null
     },
