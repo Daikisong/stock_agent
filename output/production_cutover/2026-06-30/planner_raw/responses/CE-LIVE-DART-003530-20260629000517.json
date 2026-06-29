@@ -8,7 +8,7 @@
     "unbounded_general_search"
   ],
   "max_candidates": 5,
-  "max_fetches": 2,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -19,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "복수 발행실적보고서는 각 회차의 조달 조건을 bounded로 확인한다.",
+  "rationale": "증권발행실적보고서는 발행 결과 확인용 공식 원천이 충분하다.",
   "red_team_checks": [
-    "회차별 발행 조건 구분",
-    "기존 결정 공시 대비 미달 발행 여부 확인"
+    "발행 완료 여부 확인",
+    "발행 조건 변경 여부 확인"
   ]
 }

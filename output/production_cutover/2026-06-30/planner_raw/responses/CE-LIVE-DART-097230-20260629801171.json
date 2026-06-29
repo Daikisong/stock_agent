@@ -2,7 +2,8 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-097230-20260629801171",
   "fallback_source_classes": [
-    "IssuerIR"
+    "KIND",
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +20,9 @@
     "DART"
   ],
   "primitive_gap": "margin_bridge_visible",
-  "rationale": "건설/중공업 공급계약 정정은 매출보다 원가·마진 조건 변동 위험 확인이 필요하다.",
+  "rationale": "중공업/건설 계약 정정은 매출보다 원가와 마진 변동 위험이 크다.",
   "red_team_checks": [
-    "정정 전후 계약금액과 기간 변경 확인",
-    "원가상승 또는 공사범위 변경 문구 확인"
+    "정정으로 계약금액 또는 공사기간 변경 확인",
+    "원가상승 보상 조항 또는 변경계약 여부 확인"
   ]
 }

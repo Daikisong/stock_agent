@@ -2,7 +2,8 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-381970-20260629801242",
   "fallback_source_classes": [
-    "IssuerIR"
+    "IssuerOfficial",
+    "TrustedNews"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +20,9 @@
     "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "투자판단 주요경영사항 정정은 원인 이벤트의 계약성, 금액, 조건 변경 확인이 필요하다.",
+  "rationale": "투자판단 관련 주요경영사항 정정은 원문에서 거래 조건 또는 사업 영향 변경을 확인해야 한다.",
   "red_team_checks": [
     "정정 전후 핵심 조건 변경 확인",
-    "일회성 이벤트인지 반복 매출 기반인지 구분"
+    "계약성 이벤트인지 일회성 이벤트인지 구분"
   ]
 }

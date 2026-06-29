@@ -2,7 +2,8 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-028670-20260629801140",
   "fallback_source_classes": [
-    "IssuerIR"
+    "IssuerIR",
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +20,9 @@
     "DART"
   ],
   "primitive_gap": "capacity_expansion",
-  "rationale": "신규시설투자는 투자 대상, 금액, 기간, 기대 효과 확인이 우선이다.",
+  "rationale": "신규시설투자는 증설 성격, 투자 기간, 재원 확인이 핵심이다.",
   "red_team_checks": [
-    "투자 대상이 실제 운송능력 확대인지 확인",
-    "투자금액 대비 재무 부담 확인"
+    "투자 대상이 매출 능력 확대인지 확인",
+    "투자금액과 자기자본 대비 비중 확인"
   ]
 }

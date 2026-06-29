@@ -2,7 +2,8 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-226950-20260629000494",
   "fallback_source_classes": [
-    "IssuerIR"
+    "IssuerIR",
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +20,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "유상증자 결정은 발행 방식, 대상자, 사용 목적 확인에 집중한다.",
+  "rationale": "유상증자는 연구개발, 운영, 채무상환 등 사용처 구분이 우선이다.",
   "red_team_checks": [
-    "운영자금과 연구개발/시설자금 구분",
-    "후속 정정 또는 발행결과 공시 존재 확인"
+    "자금 사용 목적별 금액 확인",
+    "발행 조건과 희석 규모 확인"
   ]
 }

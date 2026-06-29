@@ -2,7 +2,8 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-378340-20260629900849",
   "fallback_source_classes": [
-    "KIND"
+    "KIND",
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +20,9 @@
     "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "장비 공급계약 정정은 고객, 금액, 납기, 취소 가능성 확인이 필요하다.",
+  "rationale": "장비 공급계약 정정은 고객, 납기, 금액 변화 확인이 우선이다.",
   "red_team_checks": [
-    "계약상대와 납기 변경 확인",
-    "정정으로 금액 축소 또는 연기 발생 여부 확인"
+    "정정으로 계약기간 또는 금액 변경 확인",
+    "상대방 비공개 사유와 해지조건 확인"
   ]
 }

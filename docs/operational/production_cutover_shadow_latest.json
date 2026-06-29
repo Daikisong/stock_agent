@@ -24,12 +24,12 @@
     "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_production_cutover_shadow --as-of-date 2026-06-30 --mode production_shadow_live --planner-provider real --source-mode live_official_first --candidate-min-count 50 --sector-min-events 3 --max-source-tasks-per-candidate 5 --max-fetches-per-task 3 --output-dir output/production_cutover/2026-06-30 --validation-output-root /tmp/e2r_cutover_runs --frozen-snapshot-dir  --docs-dir docs/operational --fail-on-critical-audit true",
     "config_hash": "8af0def53decd684b812f0ae96076ddf3628f717041d39960e0fff9e54f52b53",
     "evidence_os_schema_version": "e2r-agentic-evidence-os-v2",
-    "git_head_sha": "d79621a9a9dd12caac3309828642576f12c35e1f",
+    "git_head_sha": "7b62a14d008ead8fbc792787109d9df6e5ad6a6f",
     "planner_prompt_hash": "c1c79739403f242e40f3c3bd05dc7bb59a0563d6e724cf9b84e3e12ad3185aa9",
-    "planner_response_hash": "f60115dd8900c65a34679fee8187d1b200069c8849de0c2c48281b93ada08d1e",
+    "planner_response_hash": "bfb5d109eae8978cb8af9a3a8823b21d1c566a184bb46625a396b4fd7266e1d1",
     "repo_dirty": false,
-    "report_base_commit_sha": "d79621a9a9dd12caac3309828642576f12c35e1f",
-    "report_generated_at": "2026-06-29T23:43:27Z",
+    "report_base_commit_sha": "7b62a14d008ead8fbc792787109d9df6e5ad6a6f",
+    "report_generated_at": "2026-06-29T23:56:12Z",
     "report_generator": "e2r.production.cutover_shadow",
     "scoring_schema_version": "e2r-deterministic-scorer-v2",
     "source_corpus_hash": "3bc1436f2b07c6e0d781fe400ddbaea340607eac6eab41736644f1fa83a0f6db",
@@ -39,27 +39,23 @@
   "production_verdict": "NOT_READY",
   "report_reproducibility": {
     "metadata": {
-      "candidate_event_hash": "a9df137904b5cfc5c05efe98194521a2575613bb389054e8f52d4286028f1136",
-      "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_production_cutover_shadow --as-of-date 2026-06-30 --mode production_shadow_live --planner-provider real --source-mode live_official_first --candidate-min-count 50 --sector-min-events 3 --max-source-tasks-per-candidate 5 --max-fetches-per-task 3 --output-dir output/production_cutover/2026-06-30 --validation-output-root /tmp/e2r_cutover_runs --frozen-snapshot-dir  --docs-dir docs/operational --fail-on-critical-audit true",
-      "config_hash": "8af0def53decd684b812f0ae96076ddf3628f717041d39960e0fff9e54f52b53",
-      "evidence_os_schema_version": "e2r-agentic-evidence-os-v2",
-      "git_head_sha": "d79621a9a9dd12caac3309828642576f12c35e1f",
-      "planner_prompt_hash": "c1c79739403f242e40f3c3bd05dc7bb59a0563d6e724cf9b84e3e12ad3185aa9",
-      "planner_response_hash": "f60115dd8900c65a34679fee8187d1b200069c8849de0c2c48281b93ada08d1e",
+      "current_git_head_sha": "7b62a14d008ead8fbc792787109d9df6e5ad6a6f",
       "repo_dirty": false,
-      "report_base_commit_sha": "d79621a9a9dd12caac3309828642576f12c35e1f",
-      "report_generated_at": "2026-06-29T23:43:27Z",
-      "report_generator": "e2r.production.cutover_shadow",
-      "scoring_schema_version": "e2r-deterministic-scorer-v2",
-      "source_corpus_hash": "3bc1436f2b07c6e0d781fe400ddbaea340607eac6eab41736644f1fa83a0f6db",
-      "stage_schema_version": "e2r-stage-court-v2"
+      "report_head_alignment": {
+        "aligned": true,
+        "mode": "exact_current_head"
+      }
     },
     "schema_version": "production_cutover_report_reproducibility_audit_v1",
     "summary": {
+      "critical_audit_pass": true,
       "critical_count_sum": 0,
       "dirty_worktree_ready_claim_count": 0,
+      "missing_candidate_event_hash_count": 0,
       "missing_command_count": 0,
       "missing_config_hash_count": 0,
+      "missing_planner_hash_count": 0,
+      "missing_source_corpus_hash_count": 0,
       "one_line_large_report_count": 0,
       "report_generated_without_test_command_count": 0,
       "report_head_sha_mismatch_count": 0

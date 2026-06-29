@@ -2,7 +2,8 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-347700-20260629901164",
   "fallback_source_classes": [
-    "KIND"
+    "KIND",
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +20,9 @@
     "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "정정 공급계약의 실제 품질은 원 공시 대비 변경폭 확인으로 판단 재료를 만든다.",
+  "rationale": "공급계약 정정은 중복보다 조건 변경 여부가 중요하다.",
   "red_team_checks": [
-    "원계약 접수번호와 정정 연결 확인",
-    "계약상대/금액/기간 변경폭 확인"
+    "동일 계약의 여러 정정 공시 연결",
+    "계약상대방과 기간 변경 확인"
   ]
 }

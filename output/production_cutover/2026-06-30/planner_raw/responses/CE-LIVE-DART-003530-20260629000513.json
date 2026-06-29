@@ -8,7 +8,7 @@
     "unbounded_general_search"
   ],
   "max_candidates": 5,
-  "max_fetches": 2,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -19,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "발행실적보고서는 실발행 금액, 조건, 회차를 확인하는 bounded task가 적합하다.",
+  "rationale": "발행실적보고서는 자금조달 이벤트의 완료 여부 확인에 적합하다.",
   "red_team_checks": [
-    "회차별 중복 계산 방지",
-    "발행 목적과 비용 조건 확인"
+    "발행 금액과 조건 확인",
+    "동일 회사 중복 공시 회차 구분"
   ]
 }

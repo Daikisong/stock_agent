@@ -2,7 +2,8 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-347700-20260629901169",
   "fallback_source_classes": [
-    "KIND"
+    "KIND",
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +20,9 @@
     "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "동일 회사 반복 정정 공시는 각 접수 건의 변경 사유를 확인해야 한다.",
+  "rationale": "반복 정정 공시는 최신 원문 기준으로 계약 품질을 확인해야 한다.",
   "red_team_checks": [
-    "같은 날 정정 공시 간 대상 계약 중복 여부 확인",
-    "계약기간 연장과 금액 축소 여부 확인"
+    "최신 정정본 식별",
+    "금액 감소 또는 일정 지연 여부 확인"
   ]
 }

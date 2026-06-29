@@ -2,7 +2,8 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-083660-20260629000561",
   "fallback_source_classes": [
-    "IssuerIR"
+    "IssuerIR",
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +20,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "정정 유상증자는 최초 결정 대비 납입일, 발행가, 목적 변경 확인이 핵심이다.",
+  "rationale": "정정 유상증자는 기존 조건 변경이 핵심이다. 예: 발행가, 대상자, 납입일 변경을 원문에서 비교한다.",
   "red_team_checks": [
-    "최초 공시와 정정 공시 차이 확인",
-    "자금 사용 목적의 계약/설비 관련성 확인"
+    "정정 전후 변경 항목 확인",
+    "조달자금 사용처가 수주 대응인지 확인"
   ]
 }

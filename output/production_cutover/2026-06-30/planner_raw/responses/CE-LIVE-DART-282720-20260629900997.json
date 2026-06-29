@@ -2,7 +2,8 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-282720-20260629900997",
   "fallback_source_classes": [
-    "IssuerIR"
+    "KIND",
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -19,9 +20,9 @@
     "DART"
   ],
   "primitive_gap": "margin_bridge_visible",
-  "rationale": "전력/공사 계약 정정은 매출 가시성보다 원가와 공사범위 변경 확인이 중요하다.",
+  "rationale": "공사/전력 EPC 계약 정정은 수주금액뿐 아니라 마진 보호 조건 확인이 중요하다.",
   "red_team_checks": [
-    "계약기간 및 공사범위 변경 확인",
-    "원가 부담 또는 지체상금 조건 확인"
+    "정정 전후 계약금액과 기간 확인",
+    "원가 상승 부담 또는 변경계약 가능성 확인"
   ]
 }

@@ -8,7 +8,7 @@
     "unbounded_general_search"
   ],
   "max_candidates": 5,
-  "max_fetches": 2,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -19,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "동일 증권사 발행실적은 해당 접수 건의 발행 규모와 조건 확정 확인이 목적이다.",
+  "rationale": "동일 발행실적 유형은 원문 1건으로 조달 이벤트를 확인한다.",
   "red_team_checks": [
-    "동일일자 공시 중복 여부 확인",
-    "발행 조건의 비용 부담 확인"
+    "중복 회차 여부 확인",
+    "기초 발행 신고와 결과 차이 확인"
   ]
 }
