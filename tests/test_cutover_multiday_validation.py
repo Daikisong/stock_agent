@@ -1,4 +1,7 @@
 import unittest
+import json
+import tempfile
+from pathlib import Path
 
 from e2r.production.cutover_shadow import ProductionCutoverConfig, build_production_cutover_bundle
 
@@ -35,6 +38,61 @@ class CutoverMultidayValidationTests(unittest.TestCase):
         rows = bundle["multiday_validation"]["rows"]
         frozen_rows = [row for row in rows if row["run_kind"] == "frozen"]
         self.assertTrue(frozen_rows)
+
+    def test_frozen_repeat_variance_uses_watchlist_score_stage_hash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            watchlist = {
+                "rows": [
+                    {
+                        "candidate_event_id": "CE-LIVE-DART-000001-20260619000001",
+                        "verified_score": 4.4,
+                        "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+                        "base_stage": "1",
+                        "accepted_claim_ids": ["CLM-1"],
+                        "score_contribution_ids": ["SCON-1"],
+                    }
+                ]
+            }
+            for index in range(1, 4):
+                run = root / f"frozen-2026-06-19-r{index}"
+                run.mkdir()
+                (run / "daily_watchlist.json").write_text(json.dumps(watchlist), encoding="utf-8")
+                audit = {
+                    "final_status": "IMPLEMENTATION_MERGED",
+                    "metadata": {"git_head_sha": "sha", "repo_dirty": False},
+                    "config": {"mode": "frozen_replay", "as_of_date": "2026-06-19"},
+                    "summary": {
+                        "candidate": {
+                            "total_candidate_event_count": 50,
+                            "production_eligible_candidate_event_count": 50,
+                            "fixture_candidate_event_count_in_production": 0,
+                        },
+                        "source": {"provider_failure_count": 0, "snapshot_only_counted_as_live_count": 0},
+                        "planner": {"real_planner_success_count": 0, "fake_frozen_provider_used_count": 0},
+                        "extraction": {"accepted_claim_count": 50},
+                        "score_stage": {
+                            "deterministic_scorer_output_count": 50,
+                            "run_specific_summary_noise": index,
+                        },
+                        "static": {"critical_count_sum": 0},
+                    },
+                }
+                (run / "audit_summary.json").write_text(json.dumps(audit), encoding="utf-8")
+
+            bundle = build_production_cutover_bundle(
+                config=ProductionCutoverConfig(
+                    as_of_date="2026-06-30",
+                    validation_output_root=str(root),
+                ),
+                repo_root=".",
+                command="unit-test",
+            )
+            repeat_rows = {
+                row["as_of_date"]: row for row in bundle["multiday_validation"]["repeat_rows"]
+            }
+            self.assertEqual(repeat_rows["2026-06-19"]["repeat_variance"], 0)
+            self.assertEqual(repeat_rows["2026-06-19"]["unique_score_stage_hash_count"], 1)
 
 
 if __name__ == "__main__":

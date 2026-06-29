@@ -698,19 +698,7 @@ def _multiday_row_from_current_run(
         and int(source.get("snapshot_only_counted_as_live_count", 0)) == 0
     )
     output_dir = config.output_dir or f"output/production_cutover/{config.as_of_date}"
-    score_stage_hash = stable_hash(
-        [
-            {
-                "candidate_event_id": row.get("candidate_event_id"),
-                "verified_score": row.get("verified_score"),
-                "score_valid_status": row.get("score_valid_status"),
-                "base_stage": row.get("base_stage"),
-                "accepted_claim_ids": row.get("accepted_claim_ids") or [],
-                "score_contribution_ids": row.get("score_contribution_ids") or [],
-            }
-            for row in watchlist_rows
-        ]
-    )
+    score_stage_hash = _score_stage_hash_from_watchlist_rows(watchlist_rows)
     row = {
         "run_id": Path(output_dir).name,
         "output_dir": output_dir,
@@ -862,7 +850,7 @@ def _multiday_row_from_audit_summary(path: Path) -> Mapping[str, Any] | None:
         "candidate_event_hash": metadata.get("candidate_event_hash"),
         "planner_prompt_hash": metadata.get("planner_prompt_hash"),
         "planner_response_hash": metadata.get("planner_response_hash"),
-        "score_stage_hash": stable_hash(score),
+        "score_stage_hash": _score_stage_hash_from_output_dir(path.parent, fallback=stable_hash(score)),
         "daily_artifact_hash": stable_hash(audit),
         "candidate_event_count": int(candidate.get("total_candidate_event_count", 0)),
         "eligible_candidate_event_count": int(candidate.get("production_eligible_candidate_event_count", 0)),
@@ -878,6 +866,34 @@ def _multiday_row_from_audit_summary(path: Path) -> Mapping[str, Any] | None:
         "daily_shadow_pass": final_status in {"DAILY_PRODUCTION_SHADOW_PASS", "PRODUCTION_CUTOVER_READY"},
     }
     return {**row, "pass_for_multiday": _multiday_row_passes(row)}
+
+
+def _score_stage_hash_from_output_dir(output_dir: Path, *, fallback: str) -> str:
+    watchlist_path = output_dir / "daily_watchlist.json"
+    try:
+        payload = json.loads(watchlist_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return fallback
+    rows = payload.get("rows") if isinstance(payload, Mapping) else None
+    if not isinstance(rows, list):
+        return fallback
+    return _score_stage_hash_from_watchlist_rows(rows)
+
+
+def _score_stage_hash_from_watchlist_rows(watchlist_rows: Sequence[Mapping[str, Any]]) -> str:
+    return stable_hash(
+        [
+            {
+                "candidate_event_id": row.get("candidate_event_id"),
+                "verified_score": row.get("verified_score"),
+                "score_valid_status": row.get("score_valid_status"),
+                "base_stage": row.get("base_stage"),
+                "accepted_claim_ids": row.get("accepted_claim_ids") or [],
+                "score_contribution_ids": row.get("score_contribution_ids") or [],
+            }
+            for row in watchlist_rows
+        ]
+    )
 
 
 def _multiday_run_kind(mode: str) -> str:
