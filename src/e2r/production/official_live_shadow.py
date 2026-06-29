@@ -1112,18 +1112,20 @@ def _large_sector_for_industry_code(industry_code: str) -> str | None:
         return "L8_PLATFORM_CONTENT_SW_SECURITY"
     if first2 in {"26"} or first3 in {"281", "282"}:
         return "L2_AI_SEMICONDUCTOR_ELECTRONICS"
-    if first2 in {"20", "21", "24", "25"}:
+    if first2 in {"17", "20", "21", "22", "24", "25"}:
         return "L4_MATERIALS_SPREAD_RESOURCE"
     if first2 in {"10", "11", "12", "13", "14", "15", "46", "47"}:
         return "L5_CONSUMER_BRAND_DISTRIBUTION"
     if first2 in {"29", "33", "35", "36", "37", "38", "39", "42"} or first3 in {"721"}:
         return "L1_INDUSTRIALS_INFRA_DEFENSE_GRID"
-    if first2 in {"23", "41"}:
+    if first2 in {"23", "41", "68"}:
         return "L9_CONSTRUCTION_REALESTATE_HOUSING"
     if first2 in {"30", "31", "45", "49", "50", "51", "52", "76"}:
         return "L3_BATTERY_EV_GREEN_MOBILITY"
-    if first3 in {"701"} or first2 in {"86", "87"}:
+    if first3 in {"701"} or first2 in {"27", "86", "87"}:
         return "L7_BIO_HEALTHCARE_MEDICAL"
+    if first2 in {"90", "91"}:
+        return "L5_CONSUMER_BRAND_DISTRIBUTION"
     if first4 in {"8411"} or first2 in {"84"}:
         return "L10_POLICY_EVENT_CROSS_REDTEAM_MISC"
     return None

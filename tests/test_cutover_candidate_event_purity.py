@@ -6,6 +6,7 @@ from e2r.production.candidate_event_purity import (
     evaluate_candidate_event_production_eligibility,
     load_instrument_registry,
 )
+from e2r.production.official_live_shadow import _large_sector_for_industry_code
 
 
 class CutoverCandidateEventPurityTests(unittest.TestCase):
@@ -93,6 +94,15 @@ class CutoverCandidateEventPurityTests(unittest.TestCase):
         coverage = report["summary"]["sector_coverage"]["summary"]
         self.assertGreaterEqual(coverage["active_large_sector_count"], 6)
         self.assertEqual(coverage["unknown_sector_candidate_count"], 0)
+
+    def test_live_industry_code_mapping_covers_recent_dart_edge_codes(self):
+        self.assertEqual(_large_sector_for_industry_code("6811"), "L9_CONSTRUCTION_REALESTATE_HOUSING")
+        self.assertEqual(_large_sector_for_industry_code("682"), "L9_CONSTRUCTION_REALESTATE_HOUSING")
+        self.assertEqual(_large_sector_for_industry_code("27199"), "L7_BIO_HEALTHCARE_MEDICAL")
+        self.assertEqual(_large_sector_for_industry_code("272"), "L7_BIO_HEALTHCARE_MEDICAL")
+        self.assertEqual(_large_sector_for_industry_code("172"), "L4_MATERIALS_SPREAD_RESOURCE")
+        self.assertEqual(_large_sector_for_industry_code("222"), "L4_MATERIALS_SPREAD_RESOURCE")
+        self.assertEqual(_large_sector_for_industry_code("91249"), "L5_CONSUMER_BRAND_DISTRIBUTION")
 
 
 if __name__ == "__main__":
