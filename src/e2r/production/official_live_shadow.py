@@ -1116,7 +1116,7 @@ def _large_sector_for_industry_code(industry_code: str) -> str | None:
         return "L4_MATERIALS_SPREAD_RESOURCE"
     if first2 in {"10", "11", "12", "13", "14", "15", "46", "47"}:
         return "L5_CONSUMER_BRAND_DISTRIBUTION"
-    if first2 in {"29", "33", "35", "36", "37", "38", "39", "42"} or first3 in {"721"}:
+    if first2 in {"28", "29", "33", "35", "36", "37", "38", "39", "42"} or first3 in {"721"}:
         return "L1_INDUSTRIALS_INFRA_DEFENSE_GRID"
     if first2 in {"23", "41", "68"}:
         return "L9_CONSTRUCTION_REALESTATE_HOUSING"
@@ -1124,8 +1124,12 @@ def _large_sector_for_industry_code(industry_code: str) -> str | None:
         return "L3_BATTERY_EV_GREEN_MOBILITY"
     if first3 in {"701"} or first2 in {"27", "86", "87"}:
         return "L7_BIO_HEALTHCARE_MEDICAL"
-    if first2 in {"90", "91"}:
+    if first3 in {"715"}:
+        return "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL"
+    if first2 in {"32", "90", "91"}:
         return "L5_CONSUMER_BRAND_DISTRIBUTION"
+    if first2 in {"73"}:
+        return "L10_POLICY_EVENT_CROSS_REDTEAM_MISC"
     if first4 in {"8411"} or first2 in {"84"}:
         return "L10_POLICY_EVENT_CROSS_REDTEAM_MISC"
     return None

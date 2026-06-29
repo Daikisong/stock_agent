@@ -681,6 +681,22 @@ def _multiday_row_from_current_run(
     extraction = claim_extraction_audit["summary"]
     score = score_meaning_audit["summary"]
     critical_count = int(static_logic_audit["summary"].get("critical_count_sum", 0))
+    sector_summary = ((candidate.get("sector_coverage") or {}).get("summary") or {})
+    daily_shadow_pass = (
+        critical_count == 0
+        and int(candidate.get("actual_krx_universe_count", 0)) > 1000
+        and int(candidate.get("production_eligible_candidate_event_count", 0)) >= config.candidate_min_count
+        and int(sector_summary.get("active_large_sector_count", 0)) >= 6
+        and int(sector_summary.get("unknown_sector_candidate_count", 0)) == 0
+        and int(planner.get("real_planner_success_count", 0)) >= 30
+        and int(planner.get("fake_frozen_provider_used_count", 0)) == 0
+        and int(source.get("real_source_document_fetched_count", 0)) >= 50
+        and int(extraction.get("accepted_claim_count", 0)) >= 20
+        and int(score.get("deterministic_scorer_output_count", 0)) >= config.deterministic_scorer_min_count
+        and int(candidate.get("fixture_candidate_event_count_in_production", 0)) == 0
+        and int(candidate.get("cached_fixture_source_count", 0)) == 0
+        and int(source.get("snapshot_only_counted_as_live_count", 0)) == 0
+    )
     output_dir = config.output_dir or f"output/production_cutover/{config.as_of_date}"
     score_stage_hash = stable_hash(
         [
@@ -730,6 +746,7 @@ def _multiday_row_from_current_run(
         "fixture_candidate_in_live_count": int(candidate.get("fixture_candidate_event_count_in_production", 0)),
         "fake_frozen_planner_provider_in_live_count": int(planner.get("fake_frozen_provider_used_count", 0)),
         "snapshot_only_counted_as_live_count": int(source.get("snapshot_only_counted_as_live_count", 0)),
+        "daily_shadow_pass": daily_shadow_pass,
     }
     return {**row, "pass_for_multiday": _multiday_row_passes(row)}
 
@@ -831,12 +848,14 @@ def _multiday_row_from_audit_summary(path: Path) -> Mapping[str, Any] | None:
     score = summary.get("score_stage") or {}
     static = summary.get("static") or summary.get("static_logic") or {}
     mode = str(config.get("mode") or "")
+    final_status = str(audit.get("final_status") or "")
     row = {
         "run_id": path.parent.name,
         "output_dir": str(path.parent),
         "as_of_date": config.get("as_of_date") or metadata.get("as_of_date"),
         "mode": mode,
         "run_kind": _multiday_run_kind(mode),
+        "final_status": final_status,
         "git_head_sha": metadata.get("git_head_sha"),
         "config_hash": metadata.get("config_hash"),
         "source_corpus_hash": metadata.get("source_corpus_hash"),
@@ -856,6 +875,7 @@ def _multiday_row_from_audit_summary(path: Path) -> Mapping[str, Any] | None:
         "fixture_candidate_in_live_count": int(candidate.get("fixture_candidate_event_count_in_production", 0)),
         "fake_frozen_planner_provider_in_live_count": int(planner.get("fake_frozen_provider_used_count", 0)),
         "snapshot_only_counted_as_live_count": int(source.get("snapshot_only_counted_as_live_count", 0)),
+        "daily_shadow_pass": final_status in {"DAILY_PRODUCTION_SHADOW_PASS", "PRODUCTION_CUTOVER_READY"},
     }
     return {**row, "pass_for_multiday": _multiday_row_passes(row)}
 
@@ -878,6 +898,8 @@ def _multiday_row_passes(row: Mapping[str, Any]) -> bool:
     if int(row.get("scored_item_count", 0)) < 15:
         return False
     if row.get("run_kind") == "live":
+        if not row.get("daily_shadow_pass"):
+            return False
         return (
             int(row.get("planner_success_count", 0)) >= 30
             and int(row.get("real_source_document_fetched_count", 0)) >= 50

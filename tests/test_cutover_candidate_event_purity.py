@@ -103,6 +103,11 @@ class CutoverCandidateEventPurityTests(unittest.TestCase):
         self.assertEqual(_large_sector_for_industry_code("172"), "L4_MATERIALS_SPREAD_RESOURCE")
         self.assertEqual(_large_sector_for_industry_code("222"), "L4_MATERIALS_SPREAD_RESOURCE")
         self.assertEqual(_large_sector_for_industry_code("91249"), "L5_CONSUMER_BRAND_DISTRIBUTION")
+        self.assertEqual(_large_sector_for_industry_code("320"), "L5_CONSUMER_BRAND_DISTRIBUTION")
+        self.assertEqual(_large_sector_for_industry_code("739"), "L10_POLICY_EVENT_CROSS_REDTEAM_MISC")
+        self.assertEqual(_large_sector_for_industry_code("715"), "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL")
+        self.assertEqual(_large_sector_for_industry_code("28520"), "L1_INDUSTRIALS_INFRA_DEFENSE_GRID")
+        self.assertEqual(_large_sector_for_industry_code("289"), "L1_INDUSTRIALS_INFRA_DEFENSE_GRID")
 
 
 if __name__ == "__main__":
