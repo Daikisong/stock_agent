@@ -3,7 +3,7 @@
   "summary": {
     "five_day_run_count": 5,
     "max_signature_variance_count": 4,
-    "no_score_stage_variance": true,
-    "repeat_variance": 0
+    "no_score_stage_variance": false,
+    "repeat_variance": 2
   }
 }

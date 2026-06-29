@@ -19,10 +19,18 @@ class ResearchBrainV4StaticLogicAuditTests(unittest.TestCase):
             planner_provider=RealStubPlannerProviderV4(),
         )
         audit = result["static_audit"]["summary"]
+        candidate = result["candidate_report"]["summary"]
         source = result["source_acquisition_report"]["summary"]
         planner = result["planner_report"]["summary"]
+        watchlist = result["watchlist_report"]["summary"]
+        self.assertEqual(candidate["duplicate_candidate_event_count"], 0)
+        self.assertEqual(candidate["unique_candidate_event_count"], candidate["candidate_event_count"])
+        self.assertEqual(planner["unique_planner_candidate_count"], planner["planner_run_count"])
         self.assertEqual(planner["planner_not_attempted_count"], 0)
         self.assertTrue(source["required_official_source_classes_present"])
+        self.assertTrue({"CompanyGuide", "DART", "KIND", "KRX", "IR"}.issubset(source["source_classes_with_fetched_documents"]))
+        self.assertLessEqual(source["unique_real_document_fetched_count"], source["real_document_fetched_count"])
+        self.assertLessEqual(watchlist["unique_deterministic_scorer_output_count"], watchlist["deterministic_scorer_output_count"])
         self.assertEqual(audit["critical_count_sum"], 0)
         self.assertGreater(audit["real_provider_exercised_count"], 0)
 

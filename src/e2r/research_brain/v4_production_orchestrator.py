@@ -191,9 +191,12 @@ def discover_daily_candidate_events_v4(
 ) -> tuple[CandidateEventV2, ...]:
     root = Path(repo_root)
     rows: list[CandidateEventV2] = []
+    rows.extend(_official_source_events(root=root, as_of_date=as_of_date, limit=max(15, universe_limit)))
     cache_root = root / "data/cache/company_guide"
+    company_guide_limit = max(universe_limit * 4, universe_limit + 20)
+    company_guide_count = 0
     for path in sorted(cache_root.glob("*/??????_recent_reports.json"), reverse=True):
-        if len(rows) >= universe_limit:
+        if company_guide_count >= company_guide_limit:
             break
         symbol = path.name.split("_", 1)[0]
         payload = _load_json(path)
@@ -202,36 +205,40 @@ def discover_daily_candidate_events_v4(
         lists = [row for row in payload.get("lists") or () if isinstance(row, Mapping)]
         if not lists:
             continue
-        first = lists[0]
-        publish_date = _yy_mm_dd_date(first.get("ANL_DT"), as_of_date) or _date_from_path(path) or as_of_date
-        if publish_date > as_of_date:
-            continue
-        company = str(first.get("CMP_NM_KOR") or symbol)
-        comment = _strip_html(str(first.get("COMMENT") or first.get("COMMENT2") or ""))
-        title = str(first.get("RPT_TITLE") or "CompanyGuide report radar")
-        rows.append(
-            CandidateEventV2(
-                candidate_event_id=f"CEV4-CG-{symbol}-{publish_date.isoformat()}",
-                symbol=symbol,
-                company_name=company,
-                event_date=publish_date.isoformat(),
-                detected_at=as_of_date.isoformat(),
-                source_family="CompanyGuide",
-                source_id=str(path),
-                event_type="report_radar",
-                raw_reason_codes=tuple(_reason_codes_from_report(first, comment)),
-                primary_disclosure_type=None,
-                event_title=title,
-                event_summary=f"{title}. {comment[:500]}",
-                magnitude=EventMagnitudeV2(),
-                event_freshness_days=max(0, (as_of_date - publish_date).days),
-                issuer_directness="DIRECT",
-                structured_payload={"snapshot_path": str(path), "report_count": len(lists)},
-                research_brain_eligible=True,
+        for first in lists[:3]:
+            if company_guide_count >= company_guide_limit:
+                break
+            publish_date = _yy_mm_dd_date(first.get("ANL_DT"), as_of_date) or _date_from_path(path) or as_of_date
+            if publish_date > as_of_date:
+                continue
+            company = str(first.get("CMP_NM_KOR") or symbol)
+            comment = _strip_html(str(first.get("COMMENT") or first.get("COMMENT2") or ""))
+            title = str(first.get("RPT_TITLE") or "CompanyGuide report radar")
+            rpt_id = str(first.get("RPT_ID") or title or "no_rpt_id")
+            rows.append(
+                CandidateEventV2(
+                    candidate_event_id=f"CEV4-CG-{symbol}-{rpt_id}-{publish_date.isoformat()}",
+                    symbol=symbol,
+                    company_name=company,
+                    event_date=publish_date.isoformat(),
+                    detected_at=as_of_date.isoformat(),
+                    source_family="CompanyGuide",
+                    source_id=str(path),
+                    event_type="report_radar",
+                    raw_reason_codes=tuple(_reason_codes_from_report(first, comment)),
+                    primary_disclosure_type=None,
+                    event_title=title,
+                    event_summary=f"{title}. {comment[:500]}",
+                    magnitude=EventMagnitudeV2(),
+                    event_freshness_days=max(0, (as_of_date - publish_date).days),
+                    issuer_directness="DIRECT",
+                    structured_payload={"snapshot_path": str(path), "report_count": len(lists), "rpt_id": rpt_id},
+                    research_brain_eligible=True,
+                )
             )
-        )
-    rows.extend(_historical_source_events(root=root, as_of_date=as_of_date, limit=max(0, universe_limit - len(rows))))
-    return tuple(rows[:universe_limit])
+            company_guide_count += 1
+    rows.extend(_historical_source_events(root=root, as_of_date=as_of_date, limit=max(15, universe_limit)))
+    return _select_unique_candidate_events(rows, limit=universe_limit)
 
 
 def run_multi_day_shadow_v4(
@@ -274,39 +281,105 @@ def run_multi_day_shadow_v4(
             {
                 "as_of_date": day.isoformat(),
                 "candidate_event_count": result["candidate_report"]["summary"]["candidate_event_count"],
+                "unique_candidate_event_count": result["candidate_report"]["summary"].get("unique_candidate_event_count"),
                 "real_provider_success_count": result["planner_report"]["summary"]["real_provider_success_count"],
+                "unique_real_provider_success_count": result["planner_report"]["summary"].get("unique_real_provider_success_count"),
                 "fake_provider_used_count": result["planner_report"]["summary"]["fake_provider_used_count"],
                 "real_document_fetched_count": result["source_acquisition_report"]["summary"]["real_document_fetched_count"],
+                "unique_real_document_fetched_count": result["source_acquisition_report"]["summary"].get("unique_real_document_fetched_count"),
                 "accepted_claim_count": result["evidence_extraction_audit"]["summary"]["adjudicated_claim_to_accepted_claim_count"],
                 "deterministic_stage_output_count": result["watchlist_report"]["summary"]["deterministic_scorer_output_count"],
+                "unique_deterministic_stage_output_count": result["watchlist_report"]["summary"].get("unique_deterministic_scorer_output_count"),
                 "provider_failure_count": result["planner_report"]["summary"]["real_provider_failure_count"],
                 "watchlist_signature": signature,
             }
         )
+    repeat_rows = []
+    repeat_signatures = []
+    repeat_day = base_day
+    for repeat_index in range(3):
+        provider = planner_provider_factory() if planner_provider_factory else build_planner_provider_v4(
+            mode=base_config.planner_provider,
+            working_directory=repo_root,
+        )
+        config = ProductionShadowV4Config(
+            as_of_date=repeat_day.isoformat(),
+            planner_provider=base_config.planner_provider,
+            source_acquisition=base_config.source_acquisition,
+            universe_limit=base_config.universe_limit,
+            planner_success_limit=base_config.planner_success_limit,
+            planner_batch_size=base_config.planner_batch_size,
+            max_fetches_per_task=base_config.max_fetches_per_task,
+            top_results=base_config.top_results,
+            retry_max=base_config.retry_max,
+            fake_provider_allowed=base_config.fake_provider_allowed,
+        )
+        result = run_research_brain_v4_production_shadow(
+            config=config,
+            v1_archetype_matrix=v1_archetype_matrix,
+            planner_provider=provider,
+            repo_root=repo_root,
+        )
+        signature = _watchlist_signature(result["watchlist_report"])
+        repeat_signatures.append(signature)
+        repeat_rows.append(
+            {
+                "repeat_index": repeat_index,
+                "as_of_date": repeat_day.isoformat(),
+                "candidate_event_count": result["candidate_report"]["summary"]["candidate_event_count"],
+                "unique_candidate_event_count": result["candidate_report"]["summary"].get("unique_candidate_event_count"),
+                "real_provider_success_count": result["planner_report"]["summary"]["real_provider_success_count"],
+                "unique_real_provider_success_count": result["planner_report"]["summary"].get("unique_real_provider_success_count"),
+                "real_document_fetched_count": result["source_acquisition_report"]["summary"]["real_document_fetched_count"],
+                "unique_real_document_fetched_count": result["source_acquisition_report"]["summary"].get("unique_real_document_fetched_count"),
+                "deterministic_stage_output_count": result["watchlist_report"]["summary"]["deterministic_scorer_output_count"],
+                "unique_deterministic_stage_output_count": result["watchlist_report"]["summary"].get("unique_deterministic_scorer_output_count"),
+                "watchlist_signature": signature,
+            }
+        )
+    repeated_variance = len(set(repeat_signatures)) - 1 if repeat_signatures else 1
     return {
         "schema_version": "research_brain_v4_multi_day_shadow_runs",
         "summary": {
             "five_day_run_count": len(rows),
             "real_provider_success_count_total": sum(row["real_provider_success_count"] for row in rows),
             "real_document_fetched_total": sum(row["real_document_fetched_count"] for row in rows),
+            "unique_real_document_fetched_total": sum(
+                int(row.get("unique_real_document_fetched_count") or row["real_document_fetched_count"])
+                for row in rows
+            ),
             "accepted_claim_total": sum(row["accepted_claim_count"] for row in rows),
             "deterministic_stage_output_total": sum(row["deterministic_stage_output_count"] for row in rows),
+            "unique_deterministic_stage_output_total": sum(
+                int(row.get("unique_deterministic_stage_output_count") or row["deterministic_stage_output_count"])
+                for row in rows
+            ),
             "fake_provider_used_total": sum(row["fake_provider_used_count"] for row in rows),
-            "repeated_frozen_run_variance": 0,
+            "repeat_run_count": len(repeat_rows),
+            "repeated_frozen_run_variance": repeated_variance,
             "production_ready_despite_provider_gap": 0,
             "max_signature_variance_count": len(set(signatures)) - 1 if signatures else 0,
         },
         "rows": rows,
+        "repeat_rows": repeat_rows,
     }
 
 
 def build_real_planner_report_v4(planner_runs: Sequence[PlannerRunV4]) -> Mapping[str, Any]:
+    unique_event_ids = {run.event.candidate_event_id for run in planner_runs}
+    unique_success_event_ids = {
+        run.event.candidate_event_id
+        for run in planner_runs
+        if run.real_provider_success
+    }
     return {
         "schema_version": "research_brain_v4_real_planner_report",
         "summary": {
             "planner_run_count": len(planner_runs),
+            "unique_planner_candidate_count": len(unique_event_ids),
             "real_provider_attempt_count": sum(run.provider_mode == PlannerProviderModeV4.REAL.value for run in planner_runs),
             "real_provider_success_count": sum(run.real_provider_success for run in planner_runs),
+            "unique_real_provider_success_count": len(unique_success_event_ids),
             "real_provider_failure_count": sum(run.provider_failed and run.provider_mode == PlannerProviderModeV4.REAL.value for run in planner_runs),
             "planner_not_attempted_count": sum(run.provider_mode == PlannerProviderModeV4.NONE.value for run in planner_runs),
             "fake_provider_used_count": sum(run.fake_provider_used for run in planner_runs),
@@ -327,6 +400,21 @@ def build_real_planner_report_v4(planner_runs: Sequence[PlannerRunV4]) -> Mappin
 def build_source_acquisition_report_v4(executions: Sequence[SourceTaskExecutionV4]) -> Mapping[str, Any]:
     statuses = Counter(execution.status for execution in executions)
     source_classes = Counter(str(execution.source_task.get("preferred_source_classes", ["unknown"])[0]) for execution in executions)
+    fetched_source_classes = Counter(
+        str(execution.source_task.get("preferred_source_classes", ["unknown"])[0])
+        for execution in executions
+        if execution.fetched_document_ids
+    )
+    unique_document_ids = {
+        document_id
+        for execution in executions
+        for document_id in execution.fetched_document_ids
+    }
+    unique_claim_ids = {
+        claim_id
+        for execution in executions
+        for claim_id in execution.accepted_claim_ids
+    }
     accepted_without_doc = sum(bool(execution.accepted_claim_ids) and not execution.fetched_document_ids for execution in executions)
     unbounded = sum(
         1
@@ -339,14 +427,17 @@ def build_source_acquisition_report_v4(executions: Sequence[SourceTaskExecutionV
             "source_task_count": len(executions),
             "source_task_executed_count": len(executions),
             "real_document_fetched_count": sum(len(execution.fetched_document_ids) for execution in executions),
+            "unique_real_document_fetched_count": len(unique_document_ids),
             "provider_failure_count": statuses.get("PROVIDER_FAILED", 0),
             "budget_exhausted_count": statuses.get("BUDGET_EXHAUSTED", 0),
             "unbounded_source_task_count": unbounded,
             "source_task_accepted_without_real_document_count": accepted_without_doc,
             "accepted_claim_count": sum(len(execution.accepted_claim_ids) for execution in executions),
+            "unique_accepted_claim_count": len(unique_claim_ids),
             "source_classes_exercised": dict(source_classes),
+            "source_classes_with_fetched_documents": dict(fetched_source_classes),
             "required_official_source_classes_present": all(
-                key in source_classes for key in ("CompanyGuide", "DART", "KIND", "KRX", "IR")
+                key in fetched_source_classes for key in ("CompanyGuide", "DART", "KIND", "KRX", "IR")
             ),
         },
         "status_counts": dict(statuses),
@@ -390,11 +481,19 @@ def build_daily_watchlist_report_v4(items: Sequence[DailyWatchlistItemV4]) -> Ma
     }
     for item in items:
         sections[_watchlist_section(item)].append(item.to_dict())
+    unique_item_ids = {item.candidate_event_id for item in items}
+    unique_scored_ids = {
+        item.candidate_event_id
+        for item in items
+        if item.verified_score is not None and bool(item.score_contribution_ids)
+    }
     return {
         "schema_version": "research_brain_v4_daily_watchlist",
         "summary": {
             "watchlist_count": len(items),
+            "unique_watchlist_count": len(unique_item_ids),
             "deterministic_scorer_output_count": sum(item.verified_score is not None and bool(item.score_contribution_ids) for item in items),
+            "unique_deterministic_scorer_output_count": len(unique_scored_ids),
             "stagecourt_trace_count": sum(bool(item.stage_court_trace) for item in items),
             "cheap_scan_score_as_verified_score_count": 0,
             "score_pending_provider_pending_count": sum(
@@ -414,10 +513,13 @@ def build_candidate_event_report_v4(
     events: Sequence[CandidateEventV2],
     routed_rows: Sequence[Mapping[str, Any]],
 ) -> Mapping[str, Any]:
+    unique_event_ids = {event.candidate_event_id for event in events}
     return {
         "schema_version": "research_brain_v4_candidate_event_report",
         "summary": {
             "candidate_event_count": len(events),
+            "unique_candidate_event_count": len(unique_event_ids),
+            "duplicate_candidate_event_count": max(0, len(events) - len(unique_event_ids)),
             "event_type_breakdown": dict(Counter(event.event_type for event in events)),
             "source_family_breakdown": dict(Counter(event.source_family for event in events)),
             "cached_path_count": sum(1 for event in events if "data/cache" in event.source_id or "fixtures/" in event.source_id),
@@ -428,12 +530,25 @@ def build_candidate_event_report_v4(
 
 def build_sector_coverage_report_v4(routed_rows: Sequence[Mapping[str, Any]]) -> Mapping[str, Any]:
     counts = Counter(str(row.get("large_sector_id") or "UNKNOWN") for row in routed_rows)
+    provider_pending_unknown = sum(
+        1
+        for row in routed_rows
+        if str(row.get("large_sector_id") or "UNKNOWN") == "UNKNOWN" and row.get("planner_provider_failed")
+    )
+    scored_counts = Counter(
+        str(row.get("large_sector_id") or "UNKNOWN")
+        for row in routed_rows
+        if not row.get("planner_provider_failed")
+    )
     return {
         "schema_version": "research_brain_v4_sector_coverage_report",
         "summary": {
             "large_sector_attempted_count": len(counts),
             "large_sector_counts": dict(counts),
-            "sector_gap_count": sum(1 for count in counts.values() if count < 3),
+            "scored_or_planned_large_sector_counts": dict(scored_counts),
+            "provider_pending_unknown_count": provider_pending_unknown,
+            "sector_gap_count": sum(1 for sector, count in scored_counts.items() if sector != "UNKNOWN" and count < 3),
+            "unknown_without_provider_gap_count": max(0, counts.get("UNKNOWN", 0) - provider_pending_unknown),
         },
     }
 
@@ -472,6 +587,8 @@ def build_static_logic_audit_from_reports_v4(
     retry_max_none = int(config.get("retry_max") is None)
     critical = {
         "fake_provider_used_in_production_shadow_count": p["fake_provider_used_count"],
+        "duplicate_candidate_event_count": int(planner_report["summary"].get("planner_run_count", 0))
+        - int(planner_report["summary"].get("unique_planner_candidate_count", planner_report["summary"].get("planner_run_count", 0))),
         "provider_failed_final_score_count": 0,
         "source_task_accepted_without_real_document_count": s["source_task_accepted_without_real_document_count"],
         "synthetic_assertion_count": e["synthetic_assertion_count"],
@@ -502,7 +619,7 @@ def build_static_logic_audit_from_reports_v4(
         "summary": {
             **critical,
             "real_provider_exercised_count": p["real_provider_success_count"],
-            "critical_count_sum": critical_count_sum,
+        "critical_count_sum": critical_count_sum,
             "critical_audit_pass": critical_count_sum == 0 and p["real_provider_success_count"] > 0,
         },
     }
@@ -528,8 +645,14 @@ def build_v4_readiness_verdict(
     blockers: list[str] = []
     if c["candidate_event_count"] < 30:
         blockers.append("candidate_event_count below 30")
+    if c.get("unique_candidate_event_count", c["candidate_event_count"]) < 30:
+        blockers.append("unique candidate_event_count below 30")
+    if c.get("duplicate_candidate_event_count", 0):
+        blockers.append("duplicate candidate events present")
     if p["real_provider_success_count"] < 10:
         blockers.append("real planner success below 10")
+    if p.get("unique_real_provider_success_count", p["real_provider_success_count"]) < 10:
+        blockers.append("unique real planner success below 10")
     if p.get("planner_not_attempted_count", 0):
         blockers.append("not all production-shadow candidates were attempted by real planner")
     if p["fake_provider_used_count"] != 0:
@@ -537,13 +660,17 @@ def build_v4_readiness_verdict(
     if s["source_task_executed_count"] < 20:
         blockers.append("source task executed below 20")
     if not s.get("required_official_source_classes_present", False):
-        blockers.append("required official source classes not all exercised")
+        blockers.append("required official source classes not all fetched")
     if s["real_document_fetched_count"] < 30:
         blockers.append("real document fetched below 30")
+    if s.get("unique_real_document_fetched_count", s["real_document_fetched_count"]) < 30:
+        blockers.append("unique real document fetched below 30")
     if e["adjudicated_claim_to_accepted_claim_count"] < 10:
         blockers.append("Evidence OS accepted claims below 10")
     if w["deterministic_scorer_output_count"] < 5:
         blockers.append("deterministic score/stage outputs below 5")
+    if w.get("unique_deterministic_scorer_output_count", w["deterministic_scorer_output_count"]) < 5:
+        blockers.append("unique deterministic score/stage outputs below 5")
     if a["critical_count_sum"] != 0:
         blockers.append("static critical audit findings exist")
     daily_watchlist_pass = not blockers
@@ -554,6 +681,12 @@ def build_v4_readiness_verdict(
         production_blockers.append("multi-day fake provider used")
     if m.get("accepted_claim_total", 0) < 30:
         production_blockers.append("multi-day accepted claims below 30")
+    if m.get("unique_real_document_fetched_total", m.get("real_document_fetched_total", 0)) < 100:
+        production_blockers.append("multi-day unique real documents below 100")
+    if m.get("unique_deterministic_stage_output_total", m.get("deterministic_stage_output_total", 0)) < 15:
+        production_blockers.append("multi-day unique deterministic stage outputs below 15")
+    if m.get("repeated_frozen_run_variance", 1) != 0:
+        production_blockers.append("repeated frozen run variance is not zero")
     production_ready = daily_watchlist_pass and not production_blockers
     if production_ready:
         label = "PRODUCTION_READY"
@@ -573,6 +706,147 @@ def build_v4_readiness_verdict(
             "production_blockers": production_blockers,
         },
     }
+
+
+def _official_source_events(*, root: Path, as_of_date: date, limit: int) -> list[CandidateEventV2]:
+    rows: list[CandidateEventV2] = []
+    company_by_symbol = _company_name_by_symbol(root)
+    for path in sorted(
+        (
+            *(root / "fixtures/historical").glob("disclosures.csv"),
+            *(root / "data/raw/opendart/disclosures").glob("*.csv"),
+            *(root / "data/raw/korea_cheap_scan/opendart/disclosures").glob("*.csv"),
+        )
+    ):
+        for row in _csv_rows(path):
+            published = _date_from_any(row.get("published_at") or row.get("as_of_date")) or as_of_date
+            if published > as_of_date:
+                continue
+            symbol = str(row.get("symbol") or "")
+            if not symbol:
+                continue
+            title = str(row.get("title") or row.get("report_type") or "OpenDART disclosure")
+            text = str(row.get("raw_text") or title)
+            rows.append(
+                CandidateEventV2(
+                    candidate_event_id=f"CEV4-DART-{symbol}-{row.get('rcept_no') or published.isoformat()}",
+                    symbol=symbol,
+                    company_name=str(row.get("company_name") or company_by_symbol.get(symbol) or symbol),
+                    event_date=published.isoformat(),
+                    detected_at=as_of_date.isoformat(),
+                    source_family="DART",
+                    source_id=str(path),
+                    event_type=str(row.get("report_type") or "official_disclosure"),
+                    raw_reason_codes=tuple(
+                        key for key, value in row.items() if value not in ("", None) and key not in {"symbol"}
+                    ),
+                    primary_disclosure_type=str(row.get("report_type") or ""),
+                    event_title=title,
+                    event_summary=text[:700],
+                    issuer_directness="DIRECT",
+                    structured_payload=dict(row),
+                    research_brain_eligible=True,
+                )
+            )
+    for path in sorted(
+        (
+            *(root / "data/raw/kind/risk_flags").glob("*.csv"),
+            *(root / "data/raw/korea_cheap_scan/kind/risk_flags").glob("*.csv"),
+        )
+    ):
+        for row in _csv_rows(path):
+            published = _date_from_any(row.get("as_of_date")) or as_of_date
+            if published > as_of_date:
+                continue
+            symbol = str(row.get("symbol") or "")
+            if not symbol:
+                continue
+            title = str(row.get("title") or "KIND risk/status flag")
+            rows.append(
+                CandidateEventV2(
+                    candidate_event_id=f"CEV4-KIND-{symbol}-{published.isoformat()}",
+                    symbol=symbol,
+                    company_name=str(row.get("company_name") or company_by_symbol.get(symbol) or symbol),
+                    event_date=published.isoformat(),
+                    detected_at=as_of_date.isoformat(),
+                    source_family="KIND",
+                    source_id=str(path),
+                    event_type="exchange_risk_status",
+                    raw_reason_codes=tuple(
+                        key for key, value in row.items() if str(value).strip().lower() in {"true", "1", "yes"}
+                    )
+                    or ("KIND_STATUS",),
+                    primary_disclosure_type="KIND_STATUS",
+                    event_title=title,
+                    event_summary=title,
+                    issuer_directness="DIRECT",
+                    structured_payload=dict(row),
+                    research_brain_eligible=True,
+                )
+            )
+    for path in sorted(
+        (
+            *(root / "data/raw/krx/instruments").glob("*.csv"),
+            *(root / "data/raw/korea_cheap_scan/krx/instruments").glob("*.csv"),
+            root / "fixtures/historical/instruments.csv",
+        )
+    ):
+        if not path.exists():
+            continue
+        for row in _csv_rows(path):
+            listed = _date_from_any(row.get("listed_date")) or as_of_date
+            if listed > as_of_date:
+                continue
+            symbol = str(row.get("symbol") or "")
+            if not symbol:
+                continue
+            company = str(row.get("name") or row.get("company_name") or company_by_symbol.get(symbol) or symbol)
+            rows.append(
+                CandidateEventV2(
+                    candidate_event_id=f"CEV4-KRX-{symbol}-{listed.isoformat()}",
+                    symbol=symbol,
+                    company_name=company,
+                    event_date=listed.isoformat(),
+                    detected_at=as_of_date.isoformat(),
+                    source_family="KRX",
+                    source_id=str(path),
+                    event_type="listing_trading_status",
+                    raw_reason_codes=("KRX_INSTRUMENT_STATUS",),
+                    primary_disclosure_type="KRX_INSTRUMENT_STATUS",
+                    event_title=f"{company} KRX listing/trading status",
+                    event_summary=f"{company} KRX instrument status snapshot",
+                    issuer_directness="DIRECT",
+                    structured_payload=dict(row),
+                    research_brain_eligible=True,
+                )
+            )
+    text_root = root / "data/raw/search_html/text"
+    for path in sorted(text_root.glob("*.txt")):
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        matched = _match_company_from_text(text, company_by_symbol)
+        if matched is None:
+            continue
+        symbol, company = matched
+        rows.append(
+            CandidateEventV2(
+                candidate_event_id=f"CEV4-IR-{symbol}-{path.stem}",
+                symbol=symbol,
+                company_name=company,
+                event_date=as_of_date.isoformat(),
+                detected_at=as_of_date.isoformat(),
+                source_family="IR",
+                source_id=str(path),
+                event_type="issuer_official_snapshot",
+                raw_reason_codes=("IR_SNAPSHOT",),
+                primary_disclosure_type="IR_SNAPSHOT",
+                event_title=f"{company} issuer official snapshot",
+                event_summary=_strip_html(text)[:700],
+                issuer_directness="DIRECT",
+                structured_payload={"snapshot_path": str(path)},
+                research_brain_eligible=True,
+            )
+        )
+    return rows
 
 
 def _historical_source_events(*, root: Path, as_of_date: date, limit: int) -> list[CandidateEventV2]:
@@ -609,6 +883,71 @@ def _historical_source_events(*, root: Path, as_of_date: date, limit: int) -> li
                 )
             )
     return rows
+
+
+def _select_unique_candidate_events(rows: Sequence[CandidateEventV2], *, limit: int) -> tuple[CandidateEventV2, ...]:
+    unique_by_family: dict[str, list[CandidateEventV2]] = {}
+    seen_event_ids: set[str] = set()
+    for event in rows:
+        if event.candidate_event_id in seen_event_ids:
+            continue
+        seen_event_ids.add(event.candidate_event_id)
+        unique_by_family.setdefault(event.source_family, []).append(event)
+    preferred_order = ("DART", "KIND", "KRX", "IR", "CompanyGuide", "ReportRadar")
+    families = [family for family in preferred_order if family in unique_by_family]
+    families.extend(family for family in unique_by_family if family not in families)
+    selected: list[CandidateEventV2] = []
+    used_by_family: Counter[str] = Counter()
+    for family in families:
+        bucket = unique_by_family[family]
+        if bucket:
+            selected.append(bucket[0])
+            used_by_family[family] += 1
+            if len(selected) >= limit:
+                return tuple(selected[:limit])
+    fill_order_template = ("CompanyGuide", "CompanyGuide", "ReportRadar", "DART", "IR", "KRX", "KIND")
+    fill_order = tuple(family for family in fill_order_template if family in unique_by_family) + tuple(
+        family for family in unique_by_family if family not in set(fill_order_template)
+    )
+    while len(selected) < limit and fill_order:
+        progressed = False
+        for family in fill_order:
+            bucket = unique_by_family[family]
+            index = used_by_family[family]
+            if index >= len(bucket):
+                continue
+            selected.append(bucket[index])
+            used_by_family[family] += 1
+            progressed = True
+            if len(selected) >= limit:
+                break
+        if not progressed:
+            break
+    return tuple(selected[:limit])
+
+
+def _company_name_by_symbol(root: Path) -> dict[str, str]:
+    mapping: dict[str, str] = {}
+    for path in (
+        root / "fixtures/historical/instruments.csv",
+        *(root / "data/raw/krx/instruments").glob("*.csv"),
+        *(root / "data/raw/korea_cheap_scan/krx/instruments").glob("*.csv"),
+    ):
+        if not path.exists():
+            continue
+        for row in _csv_rows(path):
+            symbol = str(row.get("symbol") or "")
+            name = str(row.get("name") or row.get("company_name") or "")
+            if symbol and name:
+                mapping.setdefault(symbol, name)
+    return mapping
+
+
+def _match_company_from_text(text: str, company_by_symbol: Mapping[str, str]) -> tuple[str, str] | None:
+    for symbol, company in company_by_symbol.items():
+        if symbol in text or company in text:
+            return symbol, company
+    return None
 
 
 def _mandatory_official_status_tasks(*, event: CandidateEventV2, primary_archetype: str) -> tuple[SourceTask, ...]:

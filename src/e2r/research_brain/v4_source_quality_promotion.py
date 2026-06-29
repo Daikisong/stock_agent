@@ -8,7 +8,27 @@ from datetime import date
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-from e2r.agentic.evidence_os import AnchorType, EvidenceAnchor, EvidenceDocument, SourceType, stable_claim_id
+from e2r.agentic.evidence_contract_v2 import EvidenceContractV2, load_evidence_contracts_v2
+from e2r.agentic.evidence_os import (
+    AdjudicatedClaim,
+    Directness,
+    EvidenceAnchor,
+    EvidenceDocument,
+    InvestigationStatus,
+    MappingStatus,
+    Polarity,
+    PrimitiveMappingProposal,
+    RawAssertion,
+    RelationToTarget,
+    SemanticStatus,
+    SourceType,
+    SupportDirection,
+    TargetScopeStatus,
+    TemporalStatus,
+    VerificationStatus,
+    derive_score_eligibility,
+    stable_claim_id,
+)
 
 
 DEFAULT_MEMORY_RECORD_SAMPLE = Path("docs/operational/research_brain_v1_memory_records_sample.jsonl")
@@ -150,6 +170,11 @@ def _attempt_real_replay(*, row: Mapping[str, Any], as_of_date: date, repo_root:
         return _failed(row, "stored_snapshot_empty")
     source_date = _date_from_any(row.get("entry_date") or row.get("trigger_date")) or as_of_date
     primitive = _first(row.get("primitive_ids")) or "source_quorum"
+    contract = load_evidence_contracts_v2(require_all_archetypes=True).get(str(row.get("canonical_archetype_id") or ""))
+    if contract is None:
+        return _failed(row, "unknown_archetype_contract_for_replay")
+    if primitive not in _contract_primitive_ids(contract):
+        return _failed(row, "primitive_not_in_evidence_contract")
     document = EvidenceDocument.from_text(
         text=text,
         canonical_url=source_url,
@@ -167,6 +192,67 @@ def _attempt_real_replay(*, row: Mapping[str, Any], as_of_date: date, repo_root:
     anchor = EvidenceAnchor.text_span(document=document, document_text=text, exact_text=quote)
     if not anchor.anchor_verified:
         return _failed(row, "anchor_not_verified_against_snapshot")
+    raw = RawAssertion(
+        raw_assertion_id=stable_claim_id(
+            document_hash=document.content_hash,
+            anchor_locator=anchor.locator,
+            subject_entity_id=str(row.get("symbol") or row.get("company_name") or "UNKNOWN"),
+            predicate=primitive,
+            value=quote,
+            assertion_fingerprint=f"{record_id}:raw",
+            extraction_schema_version="research_brain_v4_source_quality_raw_assertion",
+        ).replace("CLM-", "RAWASSERT-"),
+        anchor_id=anchor.anchor_id,
+        subject_text=str(row.get("company_name") or row.get("symbol") or "UNKNOWN"),
+        predicate=primitive,
+        object_text=quote,
+        value=quote,
+        polarity_proposal=Polarity.POSITIVE,
+        certainty="source_quality_replay",
+        event_date_text=source_date.isoformat(),
+        exact_quote=quote,
+        related_entity_texts=(str(row.get("company_name") or row.get("symbol") or "UNKNOWN"),),
+        extractor_model="research_brain_v4_source_quality_replay",
+        extractor_prompt_hash="source_quality_replay_v1",
+    )
+    target_entity_id = f"TICKER:{row.get('symbol') or row.get('company_name') or 'UNKNOWN'}"
+    claim = AdjudicatedClaim.from_raw(
+        raw=raw,
+        document=document,
+        anchor=anchor,
+        subject_entity_id=target_entity_id,
+        target_entity_id=target_entity_id,
+        relation_to_target=RelationToTarget.SELF,
+        directness=Directness.DIRECT,
+        verification_status=VerificationStatus.SEMANTIC_VERIFIED,
+        target_scope_status=TargetScopeStatus.DIRECT,
+        polarity=Polarity.POSITIVE,
+        temporal_status=TemporalStatus.CURRENT if source_date <= as_of_date else TemporalStatus.UNKNOWN,
+        semantic_status=SemanticStatus.PASS_,
+        investigation_status=InvestigationStatus.COMPLETE,
+        event_date=source_date,
+        adjudication_rationale="v4 A2 source quality replay requires Evidence OS claim eligibility",
+    )
+    mapping = PrimitiveMappingProposal.build(
+        claim_id=claim.claim_id,
+        archetype_id=contract.archetype_id,
+        primitive_id=primitive,
+        support_direction=SupportDirection.SUPPORT,
+        mapping_status=MappingStatus.ACCEPTED,
+        rationale="v4_source_quality_replay",
+        contract_rule_id=primitive,
+    )
+    eligibility = derive_score_eligibility(
+        document=document,
+        anchor=anchor,
+        claim=claim,
+        mapping=mapping,
+        as_of_date=as_of_date,
+        allowed_target_scopes=contract.allowed_target_scopes,
+        allowed_directness=contract.allowed_directness,
+    )
+    if not eligibility.eligible:
+        return _failed(row, "evidence_os_score_eligibility_failed:" + ",".join(eligibility.reasons))
     claim_id = stable_claim_id(
         document_hash=document.content_hash,
         anchor_locator=anchor.locator,
@@ -189,6 +275,8 @@ def _attempt_real_replay(*, row: Mapping[str, Any], as_of_date: date, repo_root:
         "document_id": document.document_id,
         "anchor_id": anchor.anchor_id,
         "claim_id": claim_id,
+        "evidence_os_claim_id": claim.claim_id,
+        "mapping_id": mapping.mapping_id,
         "source_quality_class_after": "A2_REAL_REPLAY_VERIFIED",
     }
 
@@ -259,6 +347,17 @@ def _first(value: Any) -> str | None:
     if isinstance(value, Sequence) and not isinstance(value, (bytes, bytearray)) and value:
         return str(value[0])
     return None
+
+
+def _contract_primitive_ids(contract: EvidenceContractV2) -> set[str]:
+    values = set(contract.required_primitives)
+    values.update(contract.green_gate.primitive_ids())
+    values.update(contract.alternative_primitives)
+    for primitives in contract.alternative_primitives.values():
+        values.update(primitives)
+    for primitives in contract.score_rubric.values():
+        values.update(primitives)
+    return values
 
 
 __all__ = [

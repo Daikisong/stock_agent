@@ -33,7 +33,7 @@
     {
       "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-000027361552054cea2f3eaa",
       "source_proxy_only": false,
@@ -163,7 +163,7 @@
     {
       "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-0000c011d16d0d3cf6ee6db7",
       "source_proxy_only": false,
@@ -223,7 +223,7 @@
     {
       "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-0001165a075201ced9c88b95",
       "source_proxy_only": false,
@@ -243,7 +243,7 @@
     {
       "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-000127ba8ee9b492e1ce3cdf",
       "source_proxy_only": false,
@@ -533,7 +533,7 @@
     {
       "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-0002995404514a9ab2430aa5",
       "source_proxy_only": false,
@@ -543,7 +543,7 @@
     {
       "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-0002b6ac8c9fb9e8818a571d",
       "source_proxy_only": false,
@@ -613,7 +613,7 @@
     {
       "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-0002fa0116cc5e6df6cbbe93",
       "source_proxy_only": false,
@@ -633,7 +633,7 @@
     {
       "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-0003072d779b046465da983d",
       "source_proxy_only": false,
@@ -653,7 +653,7 @@
     {
       "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-0003131d9bc888193e7a7b2d",
       "source_proxy_only": false,
@@ -683,7 +683,7 @@
     {
       "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-0003304ab092f20e6bbbd2fc",
       "source_proxy_only": false,
@@ -813,7 +813,7 @@
     {
       "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-00040c5332a429898e4f0c7a",
       "source_proxy_only": false,
@@ -933,7 +933,7 @@
     {
       "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-0004d62c29ad9bd531a160c1",
       "source_proxy_only": false,
@@ -973,7 +973,7 @@
     {
       "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-0004ee851f152e0b3f2e0e42",
       "source_proxy_only": false,
@@ -1023,7 +1023,7 @@
     {
       "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-0005434fdf71fc13469e0aca",
       "source_proxy_only": false,
@@ -1073,7 +1073,7 @@
     {
       "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-00057365a0ad77c45936df24",
       "source_proxy_only": false,
@@ -1113,7 +1113,7 @@
     {
       "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-000591b6e0c2f842c4cfd154",
       "source_proxy_only": false,
@@ -1343,7 +1343,7 @@
     {
       "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-00064efe866a36afd1313bc0",
       "source_proxy_only": false,
@@ -1443,7 +1443,7 @@
     {
       "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-000705272e80da1096e08dc4",
       "source_proxy_only": false,
@@ -1479,6 +1479,16 @@
       "source_proxy_only": false,
       "source_quality_class": "E_INVALID_OR_DUPLICATE",
       "source_url": null
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "evidence_url_pending": false,
+      "failure_reason": "primitive_not_in_evidence_contract",
+      "promoted": false,
+      "record_id": "RMEM-00072ea7e9b562a259bfef89",
+      "source_proxy_only": false,
+      "source_quality_class": "A_URL_BACKED_REPLAY_READY",
+      "source_url": "https://www.businesspost.co.kr/BP?command=article_view&num=353335"
     },
     {
       "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
@@ -1549,6 +1559,16 @@
       "source_proxy_only": false,
       "source_quality_class": "D_PRICE_PATH_ONLY_OR_FUTURE_LEAKAGE_RISK",
       "source_url": null
+    },
+    {
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "evidence_url_pending": false,
+      "failure_reason": "primitive_not_in_evidence_contract",
+      "promoted": false,
+      "record_id": "RMEM-00079201612e9ed9c3368d05",
+      "source_proxy_only": false,
+      "source_quality_class": "E_INVALID_OR_DUPLICATE",
+      "source_url": "https://en.yna.co.kr/view/AEN20231218009052320"
     },
     {
       "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
@@ -1863,7 +1883,7 @@
     {
       "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-0008a38ce51bd6d01357c05f",
       "source_proxy_only": false,
@@ -1953,7 +1973,7 @@
     {
       "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
       "evidence_url_pending": false,
-      "failure_reason": "anchor_not_verified_against_snapshot",
+      "failure_reason": "primitive_not_in_evidence_contract",
       "promoted": false,
       "record_id": "RMEM-00092c524830e91d6d708555",
       "source_proxy_only": false,
@@ -1982,42 +2002,12 @@
     }
   ],
   "failure_reasons": {
-    "anchor_not_verified_against_snapshot": 38,
+    "anchor_not_verified_against_snapshot": 18,
+    "primitive_not_in_evidence_contract": 22,
     "source_proxy_or_evidence_url_pending_cannot_enter_A2": 34,
     "source_url_missing": 126
   },
-  "promoted_rows": [
-    {
-      "anchor_id": "ANCH-ed8123eda881cef22aa6",
-      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
-      "claim_id": "CLM-116be0111093fb90df18",
-      "document_id": "DOC-32563a17d549e6a92b7e",
-      "evidence_url_pending": false,
-      "primitive_id": "revenue_visibility_contract",
-      "promoted": true,
-      "record_id": "RMEM-00072ea7e9b562a259bfef89",
-      "snapshot_loaded": true,
-      "source_date": "2024-05-27",
-      "source_proxy_only": false,
-      "source_quality_class_after": "A2_REAL_REPLAY_VERIFIED",
-      "source_url": "https://www.businesspost.co.kr/BP?command=article_view&num=353335"
-    },
-    {
-      "anchor_id": "ANCH-1aa47ee2df8d33118d91",
-      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
-      "claim_id": "CLM-2b392013d62b17b5f1bd",
-      "document_id": "DOC-9b05efc3e7b860e249be",
-      "evidence_url_pending": false,
-      "primitive_id": "revenue_visibility_contract",
-      "promoted": true,
-      "record_id": "RMEM-00079201612e9ed9c3368d05",
-      "snapshot_loaded": true,
-      "source_date": "2023-12-18",
-      "source_proxy_only": false,
-      "source_quality_class_after": "A2_REAL_REPLAY_VERIFIED",
-      "source_url": "https://en.yna.co.kr/view/AEN20231218009052320"
-    }
-  ],
+  "promoted_rows": [],
   "repair_queue": [
     {
       "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
@@ -2044,7 +2034,7 @@
       "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-000027361552054cea2f3eaa",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://github.com/Songdaiki/stock-web"
     },
     {
@@ -2135,7 +2125,7 @@
       "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-0000c011d16d0d3cf6ee6db7",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://www.prnewswire.com/news-releases/sk-hynix-reports-second-quarter-2023-financial-results-301885757.html"
     },
     {
@@ -2177,7 +2167,7 @@
       "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-0001165a075201ced9c88b95",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://www.businesspost.co.kr/BP?command=article_view&num=322683`"
     },
     {
@@ -2191,7 +2181,7 @@
       "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-000127ba8ee9b492e1ce3cdf",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://ssl.pstatic.net/imgstock/upload/research/company/hd_hyundai_electric_20230727.pdf"
     },
     {
@@ -2394,14 +2384,14 @@
       "canonical_archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-0002995404514a9ab2430aa5",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://www.skbp.com/eng/news/view.do?boardCode=BDCD0002&boardSeq=519"
     },
     {
       "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-0002b6ac8c9fb9e8818a571d",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://www.tlbpcb.com/bbs/list.php?catcode=19100000&code=board2&page=3"
     },
     {
@@ -2450,7 +2440,7 @@
       "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-0002fa0116cc5e6df6cbbe93",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://pulse.mk.co.kr/news/english/10758654"
     },
     {
@@ -2464,7 +2454,7 @@
       "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-0003072d779b046465da983d",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://en.yna.co.kr/view/AEN20240716006752320"
     },
     {
@@ -2478,7 +2468,7 @@
       "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-0003131d9bc888193e7a7b2d",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://www.defensenews.com/global/europe/2022/07/21/south-korean-officials-say-major-sale-of-weapons-to-poland-is-imminent/"
     },
     {
@@ -2499,7 +2489,7 @@
       "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-0003304ab092f20e6bbbd2fc",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://v.daum.net/v/KiD2Y1sbyy?f=p"
     },
     {
@@ -2590,7 +2580,7 @@
       "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-00040c5332a429898e4f0c7a",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://www.businesspost.co.kr/BP?command=article_view&num=384721"
     },
     {
@@ -2674,7 +2664,7 @@
       "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-0004d62c29ad9bd531a160c1",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://www.koreajoongangdaily.com/business/ncsofts-change-on-display-with-throne-and-liberty/10552706"
     },
     {
@@ -2702,7 +2692,7 @@
       "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-0004ee851f152e0b3f2e0e42",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://ssl.pstatic.net/imgstock/upload/research/company/hd_hyundai_electric_20230727.pdf"
     },
     {
@@ -2737,7 +2727,7 @@
       "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-0005434fdf71fc13469e0aca",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://securities.miraeasset.com/bbs/download/2122467.pdf?attachmentId=2122467"
     },
     {
@@ -2772,7 +2762,7 @@
       "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-00057365a0ad77c45936df24",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://m.theinvestor.co.kr/view.php?ud=20220118000587"
     },
     {
@@ -2800,7 +2790,7 @@
       "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-000591b6e0c2f842c4cfd154",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://en.wikipedia.org/wiki/Skycovione"
     },
     {
@@ -2961,7 +2951,7 @@
       "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-00064efe866a36afd1313bc0",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://github.com/Songdaiki/stock-web"
     },
     {
@@ -3031,7 +3021,7 @@
       "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-000705272e80da1096e08dc4",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://github.com/Songdaiki/stock-web"
     },
     {
@@ -3054,6 +3044,13 @@
       "record_id": "RMEM-000721522a32421626409214",
       "repair_reason": "source_url_missing",
       "source_url": null
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
+      "record_id": "RMEM-00072ea7e9b562a259bfef89",
+      "repair_reason": "primitive_not_in_evidence_contract",
+      "source_url": "https://www.businesspost.co.kr/BP?command=article_view&num=353335"
     },
     {
       "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
@@ -3103,6 +3100,13 @@
       "record_id": "RMEM-00078f4edb35ec0baa62d519",
       "repair_reason": "source_url_missing",
       "source_url": null
+    },
+    {
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
+      "record_id": "RMEM-00079201612e9ed9c3368d05",
+      "repair_reason": "primitive_not_in_evidence_contract",
+      "source_url": "https://en.yna.co.kr/view/AEN20231218009052320"
     },
     {
       "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
@@ -3325,7 +3329,7 @@
       "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-0008a38ce51bd6d01357c05f",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://koreajoongangdaily.joins.com/2023/08/10/business/industry/CJ-ENM/20230810181556376.html"
     },
     {
@@ -3388,7 +3392,7 @@
       "canonical_archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
       "next_action": "fetch/store source snapshot, then replay anchor/date/entity/primitive",
       "record_id": "RMEM-00092c524830e91d6d708555",
-      "repair_reason": "anchor_not_verified_against_snapshot",
+      "repair_reason": "primitive_not_in_evidence_contract",
       "source_url": "https://securities.miraeasset.com/bbs/download/2135886.pdf?attachmentId=2135886"
     },
     {
@@ -3408,7 +3412,7 @@
   ],
   "schema_version": "research_brain_v4_source_quality_promotion_report",
   "summary": {
-    "A2_REAL_REPLAY_VERIFIED_count": 2,
+    "A2_REAL_REPLAY_VERIFIED_count": 0,
     "A2_without_anchor_count": 0,
     "A2_without_claim_id_count": 0,
     "A2_without_fetch_or_snapshot_count": 0,
@@ -3418,7 +3422,7 @@
     "attempted_count": 200,
     "honest_source_or_provider_gap": true,
     "promotion_requested_count": 100,
-    "promotion_source_gap_count": 98,
+    "promotion_source_gap_count": 100,
     "source_proxy_to_A2_count": 0
   }
 }

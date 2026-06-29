@@ -1,12 +1,12 @@
 # Research Brain v4 Production Shadow Report
 
-- final_status: PRODUCTION_READY
-- production_ready: True
+- final_status: DAILY_WATCHLIST_PASS
+- production_ready: False
 - candidate_event_count: 30
-- real planner success/failure: 10 / 20
+- real planner success/failure: 30 / 0
 - fake_provider_used_count: 0
-- source_tasks/documents/accepted_claims: 77 / 87 / 53
-- extraction documents_to_assertions/assertions_to_claims/accepted: 135 / 135 / 44
+- source_tasks/documents/accepted_claims: 237 / 230 / 73
+- extraction documents_to_assertions/assertions_to_claims/accepted: 519 / 519 / 85
 - deterministic scorer outputs: 6
 - blockers: []
 

@@ -228,10 +228,11 @@ def _company_guide_snapshots(
 
 def _dart_snapshots(repo_root: Path, *, event: CandidateEventV2, as_of_date: date) -> Iterable[StoredSourceSnapshot]:
     paths = (
-        repo_root / "fixtures/historical/disclosures.csv",
-        repo_root / "data/raw/opendart/disclosures/iljin_contract.csv",
+        *(repo_root / "fixtures/historical").glob("disclosures.csv"),
+        *(repo_root / "data/raw/opendart/disclosures").glob("*.csv"),
+        *(repo_root / "data/raw/korea_cheap_scan/opendart/disclosures").glob("*.csv"),
     )
-    for path in paths:
+    for path in sorted(paths):
         for row in _csv_rows(path):
             if str(row.get("symbol") or "") != event.symbol:
                 continue
@@ -255,7 +256,11 @@ def _dart_snapshots(repo_root: Path, *, event: CandidateEventV2, as_of_date: dat
 
 
 def _kind_snapshots(repo_root: Path, *, event: CandidateEventV2, as_of_date: date) -> Iterable[StoredSourceSnapshot]:
-    for path in (repo_root / "data/raw/kind/risk_flags/risk_flags.csv",):
+    paths = (
+        *(repo_root / "data/raw/kind/risk_flags").glob("*.csv"),
+        *(repo_root / "data/raw/korea_cheap_scan/kind/risk_flags").glob("*.csv"),
+    )
+    for path in sorted(paths):
         for row in _csv_rows(path):
             if str(row.get("symbol") or "") != event.symbol:
                 continue
@@ -278,8 +283,12 @@ def _kind_snapshots(repo_root: Path, *, event: CandidateEventV2, as_of_date: dat
 
 
 def _krx_snapshots(repo_root: Path, *, event: CandidateEventV2, as_of_date: date) -> Iterable[StoredSourceSnapshot]:
-    instrument_root = repo_root / "data/raw/krx/instruments"
-    for path in sorted(instrument_root.glob("*.csv")):
+    instrument_paths = (
+        *(repo_root / "data/raw/krx/instruments").glob("*.csv"),
+        *(repo_root / "data/raw/korea_cheap_scan/krx/instruments").glob("*.csv"),
+        repo_root / "fixtures/historical/instruments.csv",
+    )
+    for path in sorted(path for path in instrument_paths if path.exists()):
         for row in _csv_rows(path):
             if str(row.get("symbol") or "") != event.symbol:
                 continue
@@ -299,8 +308,12 @@ def _krx_snapshots(repo_root: Path, *, event: CandidateEventV2, as_of_date: date
                 anchor_type=AnchorType.API_RECORD,
                 normalized_value={"symbol": event.symbol, "company_name": event.company_name, "provider": "KRX", "row": dict(row)},
             )
-    prices_root = repo_root / "data/raw/krx/prices"
-    for path in sorted(prices_root.glob("*.csv")):
+    price_paths = (
+        *(repo_root / "data/raw/krx/prices").glob("*.csv"),
+        *(repo_root / "data/raw/korea_cheap_scan/krx/prices").glob("*.csv"),
+        repo_root / "fixtures/historical/prices.csv",
+    )
+    for path in sorted(path for path in price_paths if path.exists()):
         latest: Mapping[str, Any] | None = None
         latest_date: date | None = None
         for row in _csv_rows(path):

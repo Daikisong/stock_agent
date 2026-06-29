@@ -21,8 +21,11 @@ class ResearchBrainV4MultiDayShadowTests(unittest.TestCase):
         summary = multi["summary"]
         self.assertEqual(summary["five_day_run_count"], 5)
         self.assertGreaterEqual(summary["real_provider_success_count_total"], 15)
+        self.assertEqual(summary["repeat_run_count"], 3)
         self.assertEqual(summary["fake_provider_used_total"], 0)
         self.assertEqual(summary["repeated_frozen_run_variance"], 0)
+        self.assertEqual(len(multi["repeat_rows"]), 3)
+        self.assertEqual(len({row["watchlist_signature"] for row in multi["repeat_rows"]}), 1)
 
 
 if __name__ == "__main__":

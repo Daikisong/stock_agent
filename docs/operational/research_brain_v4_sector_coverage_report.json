@@ -1,13 +1,29 @@
 {
   "schema_version": "research_brain_v4_sector_coverage_report",
   "summary": {
-    "large_sector_attempted_count": 4,
+    "large_sector_attempted_count": 8,
     "large_sector_counts": {
-      "L10_POLICY_EVENT_CROSS_REDTEAM_MISC": 1,
-      "L2_AI_SEMICONDUCTOR_ELECTRONICS": 6,
+      "L10_POLICY_EVENT_CROSS_REDTEAM_MISC": 2,
+      "L1_INDUSTRIALS_INFRA_DEFENSE_GRID": 9,
+      "L2_AI_SEMICONDUCTOR_ELECTRONICS": 9,
+      "L4_MATERIALS_SPREAD_RESOURCE": 2,
+      "L5_CONSUMER_BRAND_DISTRIBUTION": 1,
+      "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL": 1,
       "L7_BIO_HEALTHCARE_MEDICAL": 3,
-      "UNKNOWN": 20
+      "L9_CONSTRUCTION_REALESTATE_HOUSING": 3
     },
-    "sector_gap_count": 1
+    "provider_pending_unknown_count": 0,
+    "scored_or_planned_large_sector_counts": {
+      "L10_POLICY_EVENT_CROSS_REDTEAM_MISC": 2,
+      "L1_INDUSTRIALS_INFRA_DEFENSE_GRID": 9,
+      "L2_AI_SEMICONDUCTOR_ELECTRONICS": 9,
+      "L4_MATERIALS_SPREAD_RESOURCE": 2,
+      "L5_CONSUMER_BRAND_DISTRIBUTION": 1,
+      "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL": 1,
+      "L7_BIO_HEALTHCARE_MEDICAL": 3,
+      "L9_CONSTRUCTION_REALESTATE_HOUSING": 3
+    },
+    "sector_gap_count": 4,
+    "unknown_without_provider_gap_count": 0
   }
 }
