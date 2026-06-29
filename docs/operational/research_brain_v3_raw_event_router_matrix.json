@@ -1,0 +1,342 @@
+{
+  "mandatory_six_results": {
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
+      "expected_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "explicit_r13_fixture": false,
+      "fake_provider_used": true,
+      "fixture_id": "raw-c06-hbm-capacity",
+      "primary_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK"
+      ],
+      "top3_contains_expected": true
+    },
+    "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
+      "expected_archetype": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "explicit_r13_fixture": false,
+      "fake_provider_used": true,
+      "fixture_id": "raw-c08-test-socket",
+      "primary_archetype": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+        "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK"
+      ],
+      "top3_contains_expected": true
+    },
+    "C15_MATERIAL_SPREAD_SUPERCYCLE": {
+      "expected_archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "explicit_r13_fixture": false,
+      "fake_provider_used": true,
+      "fixture_id": "raw-c15-material-spread",
+      "primary_archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C15_MATERIAL_SPREAD_SUPERCYCLE",
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+        "C19_BRAND_RETAIL_INVENTORY_MARGIN"
+      ],
+      "top3_contains_expected": true
+    },
+    "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": {
+      "expected_archetype": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "explicit_r13_fixture": false,
+      "fake_provider_used": true,
+      "fixture_id": "raw-c17-chemical-spread",
+      "primary_archetype": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+        "C15_MATERIAL_SPREAD_SUPERCYCLE",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE"
+      ],
+      "top3_contains_expected": true
+    },
+    "C24_BIO_TRIAL_DATA_EVENT_RISK": {
+      "expected_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "explicit_r13_fixture": false,
+      "fake_provider_used": true,
+      "fixture_id": "raw-c24-bio-trial",
+      "primary_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C24_BIO_TRIAL_DATA_EVENT_RISK",
+        "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK"
+      ],
+      "top3_contains_expected": true
+    },
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": {
+      "expected_archetype": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "explicit_r13_fixture": false,
+      "fake_provider_used": true,
+      "fixture_id": "raw-c28-security-contract",
+      "primary_archetype": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "C11_BATTERY_ORDERBOOK_RERATING",
+        "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG"
+      ],
+      "top3_contains_expected": true
+    }
+  },
+  "rows": [
+    {
+      "expected_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "explicit_r13_fixture": false,
+      "fake_provider_used": true,
+      "fixture_id": "raw-c06-hbm-capacity",
+      "primary_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "explicit_r13_fixture": false,
+      "fake_provider_used": true,
+      "fixture_id": "raw-c08-test-socket",
+      "primary_archetype": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+        "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "explicit_r13_fixture": false,
+      "fake_provider_used": true,
+      "fixture_id": "raw-c15-material-spread",
+      "primary_archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C15_MATERIAL_SPREAD_SUPERCYCLE",
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+        "C19_BRAND_RETAIL_INVENTORY_MARGIN"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "explicit_r13_fixture": false,
+      "fake_provider_used": true,
+      "fixture_id": "raw-c17-chemical-spread",
+      "primary_archetype": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+        "C15_MATERIAL_SPREAD_SUPERCYCLE",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "explicit_r13_fixture": false,
+      "fake_provider_used": true,
+      "fixture_id": "raw-c24-bio-trial",
+      "primary_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C24_BIO_TRIAL_DATA_EVENT_RISK",
+        "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "explicit_r13_fixture": false,
+      "fake_provider_used": true,
+      "fixture_id": "raw-c28-security-contract",
+      "primary_archetype": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "C11_BATTERY_ORDERBOOK_RERATING",
+        "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "explicit_r13_fixture": false,
+      "fake_provider_used": true,
+      "fixture_id": "raw-c03-defense-export",
+      "primary_archetype": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "explicit_r13_fixture": false,
+      "fake_provider_used": true,
+      "fixture_id": "raw-c10-memory-equipment-cycle",
+      "primary_archetype": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+        "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+        "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "explicit_r13_fixture": true,
+      "fake_provider_used": true,
+      "fixture_id": "raw-r13-explicit-review",
+      "primary_archetype": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": false,
+      "top3_archetypes": [
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "explicit_r13_fixture": true,
+      "fake_provider_used": true,
+      "fixture_id": "raw-adv-hbm-substrate-sympathy",
+      "primary_archetype": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "explicit_r13_fixture": true,
+      "fake_provider_used": true,
+      "fixture_id": "raw-adv-security-keyword-only",
+      "primary_archetype": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "explicit_r13_fixture": true,
+      "fake_provider_used": true,
+      "fixture_id": "raw-adv-commodity-headline-only",
+      "primary_archetype": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "provider_error": null,
+      "provider_name": "fixture_fake_planner",
+      "r13_overroute": false,
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "C15_MATERIAL_SPREAD_SUPERCYCLE",
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+      ],
+      "top3_contains_expected": true
+    }
+  ],
+  "schema_version": "research_brain_v3_raw_event_router_matrix",
+  "summary": {
+    "fake_provider_used": true,
+    "fixture_count": 12,
+    "fixture_label_leakage_count": 0,
+    "mandatory_six_top1_pass": true,
+    "r13_overroute_count": 0,
+    "top1_accuracy": 0.916667,
+    "top1_correct_count": 11,
+    "top3_accuracy": 1.0,
+    "top3_correct_count": 12
+  }
+}

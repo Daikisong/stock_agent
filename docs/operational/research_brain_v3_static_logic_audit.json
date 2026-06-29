@@ -1,0 +1,31 @@
+{
+  "schema_version": "research_brain_v3_static_logic_audit",
+  "summary": {
+    "DART_solvable_gap_sent_to_web_count": 0,
+    "Evidence_OS_accepted_claim_linked_to_source_task_count": 66,
+    "FCF_gap_sent_to_news_count": 0,
+    "R13_primary_without_explicit_red_team_event_count": 0,
+    "cheap_scan_total_score_used_as_verified_score_count": 0,
+    "critical_audit_pass": true,
+    "critical_count_sum": 0,
+    "deterministic_fake_accepted_claim_count": 0,
+    "fixture_expected_archetype_in_event_text_count": 0,
+    "frozen_daily_run_count": 5,
+    "future_outcome_in_planner_prompt_count": 0,
+    "general_web_before_official_count": 0,
+    "local_handoff_accepted_claim_count": 0,
+    "production_daily_run_from_cached_candidate_path_count": 0,
+    "raw_routing_fixture_leakage_count": 0,
+    "ready_despite_no_real_provider_count": 0,
+    "real_LLM_provider_exercised_count": 0,
+    "research_brain_direct_score_stage_key_path_count": 0,
+    "source_proxy_to_A2_count": 0,
+    "source_proxy_to_score_count": 0,
+    "source_task_without_budget_count": 0,
+    "source_task_without_execution_count": 0,
+    "warnings": [
+      "real planner provider not exercised; PRODUCTION_READY remains blocked"
+    ],
+    "watchlist_item_without_stagecourt_result_count": 0
+  }
+}

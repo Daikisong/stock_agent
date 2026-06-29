@@ -1,4 +1,4 @@
-# E2R Daily Watchlist
+# E2R Daily Watchlist v3
 
 ## Stage3-Green
 
@@ -14,26 +14,19 @@
 
 ## Stage2-Watch
 
-- 380540 옵티코어: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 380540 옵티코어: supply_contract / C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 016600 큐캐피탈: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 089970 브이엠: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 066980 한성크린텍: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 066980 한성크린텍: supply_contract / C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 084440 유비온: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 084440 유비온: supply_contract / C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 440110 파두: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 440110 파두: supply_contract / C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 136150 원일티엔아이: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 136150 원일티엔아이: supply_contract / C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 399720 가온칩스: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 399720 가온칩스: supply_contract / C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 079370 제우스: capital_return / C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 079370 제우스: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 007810 코리아써키트: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 040350 크레오에스지: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 000430 대원강업: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
-- 002630 오리엔트바이오: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / FINAL_WITH_LOCAL_EVIDENCE_OS_HANDOFF
+- 000660 SK하이닉스: operating_event / C06_HBM_MEMORY_CUSTOMER_CAPACITY / verified=71.5 / trigger=None / FINAL
+- 123456 테스트소켓사: supply_contract / C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY / verified=43.2 / trigger=None / FINAL
+- 987654 제지소재사: margin_event / C15_MATERIAL_SPREAD_SUPERCYCLE / verified=43.2 / trigger=None / FINAL
+- 456789 화학소재사: margin_event / C17_CHEMICAL_COMMODITY_MARGIN_SPREAD / verified=41.2 / trigger=None / FINAL
+- 246810 바이오사: clinical_event / C24_BIO_TRIAL_DATA_EVENT_RISK / verified=62.0 / trigger=None / FINAL
+- 135790 보안소프트웨어사: contract_event / C28_SOFTWARE_SECURITY_CONTRACT_RETENTION / verified=39.8 / trigger=None / FINAL
+- 111111 방산수출사: export_contract / C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG / verified=51.15 / trigger=None / FINAL
+- 222333 메모리장비사: orderbook_event / C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE / verified=20.2907 / trigger=None / FINAL
+- 333444 교차검증사: false_positive_review / R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL / verified=50.4 / trigger=None / FINAL
+- 444555 패키지기판사: false_positive_review / R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW / verified=50.4 / trigger=None / FINAL
+- 555666 테마보안사: false_positive_review / R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW / verified=50.4 / trigger=None / FINAL
+- 666777 원자재민감사: false_positive_review / R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW / verified=50.4 / trigger=None / FINAL
+- 062040 산일전기: facility_investment / C11_BATTERY_ORDERBOOK_RERATING / verified=40.0 / trigger=None / FINAL
 
 ## 4B-watch
 
@@ -45,23 +38,28 @@
 
 ## Provider/Source Pending
 
-- 084370 유진테크: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 085620 미래에셋생명: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 192080 더블유게임즈: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 219130 타이거일렉: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 001800 오리온홀딩스: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 019550 SBI인베스트먼트: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 027740 마니커: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 030530 원익홀딩스: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 032680 소프트센: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 033560 블루콤: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 059090 미코: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 060900 에이전트AI: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 081660 미스토홀딩스: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 082920 비츠로셀: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 093370 후성: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 097800 윈팩: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 114090 GKL: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 115610 이미지스: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 121060 유니포인트: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
-- 126640 화신정공: price_relative_strength / C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH / pending_evidence_os_claims
+- 267260 HD현대일렉트릭: supply_contract / C11_BATTERY_ORDERBOOK_RERATING / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 298040 효성중공업: earnings_actual / C11_BATTERY_ORDERBOOK_RERATING / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 298040 효성중공업: supply_contract / C11_BATTERY_ORDERBOOK_RERATING / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 103590 일진전기: supply_contract / C11_BATTERY_ORDERBOOK_RERATING / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 003230 삼양식품: other / C18_CONSUMER_EXPORT_CHANNEL_REORDER / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- NVDA NVDA: other / C11_BATTERY_ORDERBOOK_RERATING / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- ZM ZM: other / C11_BATTERY_ORDERBOOK_RERATING / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 096530 씨젠: other / C11_BATTERY_ORDERBOOK_RERATING / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- SMCI SMCI: other / C11_BATTERY_ORDERBOOK_RERATING / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 267260 HD현대일렉트릭: other / C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 267260 HD현대일렉트릭: report_radar / C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 298040 효성중공업: other / C24_BIO_TRIAL_DATA_EVENT_RISK / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 298040 효성중공업: report_radar / C24_BIO_TRIAL_DATA_EVENT_RISK / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 103590 일진전기: other / C24_BIO_TRIAL_DATA_EVENT_RISK / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 103590 일진전기: report_radar / C24_BIO_TRIAL_DATA_EVENT_RISK / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 062040 산일전기: other / C01_ORDER_BACKLOG_MARGIN_BRIDGE / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 062040 산일전기: report_radar / C01_ORDER_BACKLOG_MARGIN_BRIDGE / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 003230 삼양식품: other / C11_BATTERY_ORDERBOOK_RERATING / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 003230 삼양식품: report_radar / C11_BATTERY_ORDERBOOK_RERATING / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- NVDA NVDA: other / C24_BIO_TRIAL_DATA_EVENT_RISK / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- NVDA NVDA: report_radar / C24_BIO_TRIAL_DATA_EVENT_RISK / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- ZM ZM: other / C24_BIO_TRIAL_DATA_EVENT_RISK / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- ZM ZM: report_radar / C24_BIO_TRIAL_DATA_EVENT_RISK / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 096530 씨젠: other / C24_BIO_TRIAL_DATA_EVENT_RISK / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS
+- 096530 씨젠: report_radar / C24_BIO_TRIAL_DATA_EVENT_RISK / verified=None / trigger=None / PENDING_EVIDENCE_OS_CLAIMS

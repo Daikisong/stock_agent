@@ -1,0 +1,55 @@
+{
+  "rows": [
+    {
+      "as_of_date": "2026-06-29",
+      "candidate_event_count": 40,
+      "deterministic_score_stage_count": 13,
+      "fake_provider_used_count": 40,
+      "provider_failure_count": 0,
+      "repeat_variance_count": 0,
+      "watchlist_item_count": 40
+    },
+    {
+      "as_of_date": "2026-06-22",
+      "candidate_event_count": 40,
+      "deterministic_score_stage_count": 2,
+      "fake_provider_used_count": 40,
+      "provider_failure_count": 0,
+      "repeat_variance_count": 0,
+      "watchlist_item_count": 40
+    },
+    {
+      "as_of_date": "2026-05-30",
+      "candidate_event_count": 40,
+      "deterministic_score_stage_count": 2,
+      "fake_provider_used_count": 40,
+      "provider_failure_count": 0,
+      "repeat_variance_count": 0,
+      "watchlist_item_count": 40
+    },
+    {
+      "as_of_date": "2026-03-31",
+      "candidate_event_count": 40,
+      "deterministic_score_stage_count": 3,
+      "fake_provider_used_count": 40,
+      "provider_failure_count": 0,
+      "repeat_variance_count": 0,
+      "watchlist_item_count": 40
+    },
+    {
+      "as_of_date": "2025-12-31",
+      "candidate_event_count": 40,
+      "deterministic_score_stage_count": 5,
+      "fake_provider_used_count": 40,
+      "provider_failure_count": 0,
+      "repeat_variance_count": 0,
+      "watchlist_item_count": 40
+    }
+  ],
+  "schema_version": "research_brain_v3_stability_audit",
+  "summary": {
+    "frozen_daily_run_count": 5,
+    "max_repeat_variance_count": 0,
+    "no_score_stage_variance": true
+  }
+}

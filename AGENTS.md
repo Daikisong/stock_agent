@@ -47,6 +47,40 @@
 - 좋은 방식: LLM이 현재 문서에서 무엇이 빠졌는지 판단해 `{company} 2026 1Q earnings call HBM customer allocation cancellation terms` 같은 query를 직접 제안하고, 코드는 그 query를 검증 후 실행한다.
 - 보류 방식 예: FCF/revision source가 비었고 LLM이 새 검색을 못 만들면 `68점 Stage2`로 내보내지 않고 `score pending / raw 68점 참고`로 남긴다.
 
+## Operational Modes
+
+같은 Research Brain이라도 목적에 따라 수집 폭과 성공 라벨을 분리한다.
+
+### A. Research/backfill mode
+
+- 연구자료 수리, source repair, memory backfill, audit용 모드다.
+- 넓은 검색을 허용할 수 있다.
+- `max_results_per_query=100`, `top_results=None` 같은 넓은 설정은 이 모드에서만 허용한다.
+- 이 모드 결과는 운영 점수 확정이 아니라 source gap을 줄이는 재료다.
+
+쉬운 예: 과거 C06 HBM 연구자료의 URL을 복구하려고 넓게 찾는 것은 backfill mode다. 여기서 찾은 문서는 다시 Evidence OS anchor/claim 검증을 통과해야 운영 점수에 들어간다.
+
+### B. Production daily mode
+
+- 실제 daily watchlist를 만드는 모드다.
+- 모든 SourceTask는 `max_queries`, `max_candidates`, `max_fetches`, `stop_condition` 같은 budget을 가져야 한다.
+- `top_results=None`, `retry_max=None`, 무제한 page fetch는 금지한다.
+- official-first다. DART/KIND/KRX/IR/CompanyGuide로 풀 수 있는 gap을 먼저 일반 웹으로 보내지 않는다.
+- general web fallback은 SourceTask가 명시적으로 허용하고 official/source gap을 기록한 뒤 제한적으로만 쓴다.
+- claim이 확인되면 stop-on-resolution으로 멈춘다.
+- provider failure나 material source gap은 낮은 점수 확정이 아니라 `Provider/Source Pending`으로 남긴다.
+- `KoreaLiveLiteConfig`와 Research Brain daily CLI는 production daily preset에서 unbounded config를 발견하면 실행 실패해야 한다.
+
+쉬운 예: `as_of_date=2026-06-29` daily run에서 FCF가 비었으면 뉴스 1,000개를 긁는 게 아니라 DART/IR/CompanyGuide task를 bounded로 실행한다. provider가 실패하면 `0점`이 아니라 pending이다.
+
+### C. Test mode
+
+- fake planner/provider와 bounded fixture 사용을 허용한다.
+- test mode 결과로 `PRODUCTION_READY`를 선언하지 않는다.
+- fixture는 raw event text에 expected archetype id를 넣지 않는다.
+
+쉬운 예: `"HBM 매출 비중 확대, capacity sold out"` fixture의 expected가 C06이어도, 본문에 `C06_HBM_MEMORY_CUSTOMER_CAPACITY`라는 답안지를 넣으면 안 된다.
+
 ## Output Safety
 
 - 투자 권고 문구를 출력하지 않는다.

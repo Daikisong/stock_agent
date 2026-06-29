@@ -1,0 +1,2110 @@
+{
+  "cards": [
+    {
+      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "compile_input_hash": "8e90fe03ac4b59dbfe8ee89935c6ae971e63562310fb4aa750828e47ee12bfbc",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: realized_margin_bridge",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: regulatory_endpoint_bridge",
+        "route via revenue_visibility_contract: IR, CompanyGuide, BrokerPDF, TrustedNews",
+        "route via cash_or_revision_conversion: IR, CompanyGuide, BrokerPDF, TrustedNews",
+        "route via realized_margin_bridge: IR, CompanyGuide, BrokerPDF, TrustedNews",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "yellow",
+        "green requires",
+        "보류",
+        "green blocker",
+        "price-only",
+        "false positive",
+        "profile only",
+        "가격만"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "evidence_url_pending row requires source repair before fixture use."
+      ],
+      "source_proxy_supporting_records": [
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE:source_proxy:0",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE:source_proxy:1",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 3971,
+        "price_path_only_count": 9241,
+        "production_fixture_count": 647,
+        "source_proxy_count": 23633,
+        "url_backed_count": 5408
+      },
+      "url_backed_supporting_records": [
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE:url_backed:0",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE:url_backed:1",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "compile_input_hash": "3e9b7655e45994cdb63958eb0cb4dd66f3d524d2193d236fbe51be14cad1c32f",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: realized_margin_bridge",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: order_backlog_to_sales",
+        "route via revenue_visibility_contract: DART, CompanyGuide, IR, Official",
+        "route via cash_or_revision_conversion: DART, CompanyGuide, IR, Official",
+        "route via realized_margin_bridge: DART, CompanyGuide, IR, Official",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "yellow",
+        "blocks green",
+        "green blocked",
+        "green blocker",
+        "price-only",
+        "false positive",
+        "sympathy",
+        "profile only"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "L345-L351"
+      ],
+      "source_proxy_supporting_records": [
+        "C02_POWER_GRID_DATACENTER_CAPEX:source_proxy:0",
+        "C02_POWER_GRID_DATACENTER_CAPEX:source_proxy:1",
+        "C02_POWER_GRID_DATACENTER_CAPEX:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 15920,
+        "price_path_only_count": 9652,
+        "production_fixture_count": 938,
+        "source_proxy_count": 92273,
+        "url_backed_count": 8223
+      },
+      "url_backed_supporting_records": [
+        "C02_POWER_GRID_DATACENTER_CAPEX:url_backed:0",
+        "C02_POWER_GRID_DATACENTER_CAPEX:url_backed:1",
+        "C02_POWER_GRID_DATACENTER_CAPEX:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "compile_input_hash": "3bc869639ce06ed7bef92b4b993bfc022dfd2e418844df4834c9764d1e39f14b",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: realized_margin_bridge",
+        "required primitive: export_contract",
+        "route via revenue_visibility_contract: IR, CompanyGuide, BrokerPDF, TrustedNews",
+        "route via retention_or_renewal_bridge: IR, CompanyGuide, BrokerPDF, TrustedNews",
+        "route via source_quorum: IR, CompanyGuide, BrokerPDF, TrustedNews",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "yellow",
+        "green requires",
+        "blocks green",
+        "green blocked",
+        "sympathy",
+        "price-only",
+        "false positive",
+        "profile only"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "evidence_url_pending row requires source repair before fixture use.",
+        "fence19"
+      ],
+      "source_proxy_supporting_records": [
+        "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG:source_proxy:0",
+        "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG:source_proxy:1",
+        "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 6063,
+        "price_path_only_count": 7638,
+        "production_fixture_count": 1094,
+        "source_proxy_count": 32918,
+        "url_backed_count": 8837
+      },
+      "url_backed_supporting_records": [
+        "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG:url_backed:0",
+        "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG:url_backed:1",
+        "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "compile_input_hash": "fe688fe5737133c7104d4c746ce99aeced5241ee1f285d080f3c6c2d665b7f78",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: direct_company_cash_route",
+        "required primitive: source_quorum",
+        "required primitive: customer_preorder_or_allocation",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: regulatory_endpoint_bridge",
+        "required primitive: realized_margin_bridge",
+        "route via direct_company_cash_route: KIND, TrustedNews, BrokerPDF, IR",
+        "route via source_quorum: KIND, TrustedNews, BrokerPDF, IR",
+        "route via customer_preorder_or_allocation: KIND, TrustedNews, BrokerPDF, IR",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "direct_company_cash_route",
+        "source_quorum",
+        "customer_preorder_or_allocation",
+        "revenue_visibility_contract",
+        "yellow",
+        "green blocked",
+        "green requires",
+        "blocks green",
+        "false positive",
+        "price-only",
+        "sympathy",
+        "profile only"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "L210-L226"
+      ],
+      "source_proxy_supporting_records": [
+        "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY:source_proxy:0",
+        "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY:source_proxy:1",
+        "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2140,
+        "price_path_only_count": 6203,
+        "production_fixture_count": 854,
+        "source_proxy_count": 10583,
+        "url_backed_count": 5358
+      },
+      "url_backed_supporting_records": [
+        "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY:url_backed:0",
+        "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY:url_backed:1",
+        "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "compile_input_hash": "9be54d9e4745ac9ade06db31bc0935512c0f13798dc0d53f72acf20862f9fdf5",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: realized_margin_bridge",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: regulatory_endpoint_bridge",
+        "route via revenue_visibility_contract: IR, DART, KIND, Official",
+        "route via cash_or_revision_conversion: IR, DART, KIND, Official",
+        "route via realized_margin_bridge: IR, DART, KIND, Official",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "yellow",
+        "green requires",
+        "green blocked",
+        "green blocker",
+        "false positive",
+        "price-only",
+        "weather",
+        "profile only"
+      ],
+      "source_gap": [
+        "evidence_url_pending row requires source repair before fixture use.",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP:source_proxy:0",
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP:source_proxy:1",
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2350,
+        "price_path_only_count": 10230,
+        "production_fixture_count": 435,
+        "source_proxy_count": 11196,
+        "url_backed_count": 3501
+      },
+      "url_backed_supporting_records": [
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP:url_backed:0",
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP:url_backed:1",
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "compile_input_hash": "719022051ac37b855bd03fd419d3179b34e1a0a19f9203f208e9b4321b959492",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: realized_margin_bridge",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: customer_preorder_or_allocation",
+        "route via revenue_visibility_contract: CompanyGuide, IR, BrokerPDF, TrustedNews",
+        "route via cash_or_revision_conversion: CompanyGuide, IR, BrokerPDF, TrustedNews",
+        "route via realized_margin_bridge: CompanyGuide, IR, BrokerPDF, TrustedNews",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "capacity sold-out",
+        "customer allocation",
+        "qualification pass",
+        "HBM revenue mix",
+        "cashflow bridge",
+        "repeat evidence family",
+        "conventional memory drag",
+        "package substrate sympathy",
+        "qualification lag with reopen path",
+        "HBM keyword only"
+      ],
+      "source_gap": [
+        "evidence_url_pending row requires source repair before fixture use.",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C06_HBM_MEMORY_CUSTOMER_CAPACITY:source_proxy:0",
+        "C06_HBM_MEMORY_CUSTOMER_CAPACITY:source_proxy:1",
+        "C06_HBM_MEMORY_CUSTOMER_CAPACITY:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 22193,
+        "price_path_only_count": 6882,
+        "production_fixture_count": 1018,
+        "source_proxy_count": 68735,
+        "url_backed_count": 9590
+      },
+      "url_backed_supporting_records": [
+        "C06_HBM_MEMORY_CUSTOMER_CAPACITY:url_backed:0",
+        "C06_HBM_MEMORY_CUSTOMER_CAPACITY:url_backed:1",
+        "C06_HBM_MEMORY_CUSTOMER_CAPACITY:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "compile_input_hash": "1f61c0ebad47b085d8fa9e7dec01f6190f4c0484718db4b2b1e4c1716637dd14",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: realized_margin_bridge",
+        "required primitive: source_quorum",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: hbm_customer_order",
+        "route via retention_or_renewal_bridge: BrokerPDF, IR, KIND, TrustedNews",
+        "route via realized_margin_bridge: BrokerPDF, IR, KIND, TrustedNews",
+        "route via source_quorum: BrokerPDF, IR, KIND, TrustedNews",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "retention_or_renewal_bridge",
+        "realized_margin_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "yellow",
+        "green requires",
+        "green blocker",
+        "blocks green",
+        "profile only",
+        "price-only",
+        "false positive",
+        "가격만"
+      ],
+      "source_gap": [
+        "evidence_url_pending row requires source repair before fixture use.",
+        "L324-L328",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH:source_proxy:0",
+        "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH:source_proxy:1",
+        "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2575,
+        "price_path_only_count": 6917,
+        "production_fixture_count": 790,
+        "source_proxy_count": 12198,
+        "url_backed_count": 6944
+      },
+      "url_backed_supporting_records": [
+        "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH:url_backed:0",
+        "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH:url_backed:1",
+        "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "compile_input_hash": "e8dbf6fa4f5629c1421761d50d3513df7062245b51366926c2634554e1773eba",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: realized_margin_bridge",
+        "required primitive: regulatory_endpoint_bridge",
+        "required primitive: source_quorum",
+        "required primitive: customer_preorder_or_allocation",
+        "required primitive: retention_or_renewal_bridge",
+        "route via revenue_visibility_contract: IR, Official, CompanyGuide, BrokerPDF",
+        "route via realized_margin_bridge: IR, Official, CompanyGuide, BrokerPDF",
+        "route via regulatory_endpoint_bridge: IR, Official, CompanyGuide, BrokerPDF",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "named customer",
+        "customer qualification",
+        "supply order",
+        "revenue conversion",
+        "repeat customer order",
+        "margin bridge",
+        "customer quality evidence",
+        "product profile only",
+        "award without customer order"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY:source_proxy:0",
+        "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY:source_proxy:1",
+        "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2780,
+        "price_path_only_count": 7756,
+        "production_fixture_count": 367,
+        "source_proxy_count": 13602,
+        "url_backed_count": 2399
+      },
+      "url_backed_supporting_records": [
+        "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY:url_backed:0",
+        "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY:url_backed:1",
+        "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "compile_input_hash": "8ce3da4d19a8cc40c3fa6d38daf7f86c31bf9a400b770eb4090d9b64f723a305",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: valuation_overheat",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: source_quorum",
+        "required primitive: order_to_revenue_bridge",
+        "required primitive: customer_quality_visible",
+        "required primitive: cash_or_revision_conversion",
+        "route via valuation_overheat: BrokerPDF, IR, Official, CompanyGuide",
+        "route via revenue_visibility_contract: BrokerPDF, IR, Official, CompanyGuide",
+        "route via source_quorum: BrokerPDF, IR, Official, CompanyGuide",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "valuation_overheat",
+        "revenue_visibility_contract",
+        "source_quorum",
+        "order_to_revenue_bridge",
+        "yellow",
+        "green requires",
+        "blocks green",
+        "green blocked",
+        "price-only",
+        "profile only",
+        "가격만",
+        "false positive"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "L230-L234",
+        "fence4:L2"
+      ],
+      "source_proxy_supporting_records": [
+        "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF:source_proxy:0",
+        "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF:source_proxy:1",
+        "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2788,
+        "price_path_only_count": 8414,
+        "production_fixture_count": 1162,
+        "source_proxy_count": 13304,
+        "url_backed_count": 9465
+      },
+      "url_backed_supporting_records": [
+        "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF:url_backed:0",
+        "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF:url_backed:1",
+        "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "compile_input_hash": "01d64c4181f4ca2c274a18ab5915951531175e43f7ea253afb9b8b528b93aa5f",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: realized_margin_bridge",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: cycle_demand_visibility",
+        "required primitive: revenue_visibility_contract",
+        "route via cash_or_revision_conversion: CompanyGuide, BrokerPDF, TrustedNews, IR",
+        "route via realized_margin_bridge: CompanyGuide, BrokerPDF, TrustedNews, IR",
+        "route via retention_or_renewal_bridge: CompanyGuide, BrokerPDF, TrustedNews, IR",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "yellow",
+        "green blocked",
+        "보류",
+        "green requires",
+        "false positive",
+        "price-only",
+        "profile only",
+        "weather"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "evidence_url_pending row requires source repair before fixture use.",
+        "L64:table12"
+      ],
+      "source_proxy_supporting_records": [
+        "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE:source_proxy:0",
+        "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE:source_proxy:1",
+        "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 4498,
+        "price_path_only_count": 11480,
+        "production_fixture_count": 592,
+        "source_proxy_count": 22927,
+        "url_backed_count": 5399
+      },
+      "url_backed_supporting_records": [
+        "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE:url_backed:0",
+        "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE:url_backed:1",
+        "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "compile_input_hash": "e104526548e8e0ec4d84079622155bebec3a1dcaae4793e66252f635236b2b1d",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: ex_credit_margin",
+        "required primitive: customer_preorder_or_allocation",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: realized_margin_bridge",
+        "required primitive: source_quorum",
+        "required primitive: retention_or_renewal_bridge",
+        "route via ex_credit_margin: IR, BrokerPDF, DART, TrustedNews",
+        "route via customer_preorder_or_allocation: IR, BrokerPDF, DART, TrustedNews",
+        "route via revenue_visibility_contract: IR, BrokerPDF, DART, TrustedNews",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "ex_credit_margin",
+        "customer_preorder_or_allocation",
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "yellow",
+        "green requires",
+        "green blocked",
+        "blocks green",
+        "false positive",
+        "price-only",
+        "sympathy",
+        "profile only"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C11_BATTERY_ORDERBOOK_RERATING:source_proxy:0",
+        "C11_BATTERY_ORDERBOOK_RERATING:source_proxy:1",
+        "C11_BATTERY_ORDERBOOK_RERATING:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 3223,
+        "price_path_only_count": 8707,
+        "production_fixture_count": 1230,
+        "source_proxy_count": 16240,
+        "url_backed_count": 11278
+      },
+      "url_backed_supporting_records": [
+        "C11_BATTERY_ORDERBOOK_RERATING:url_backed:0",
+        "C11_BATTERY_ORDERBOOK_RERATING:url_backed:1",
+        "C11_BATTERY_ORDERBOOK_RERATING:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "compile_input_hash": "3e3a31c37d14014da1a561690bb4b3db80037ad80072ff06cd5871cf7c5d10bb",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: realized_margin_bridge",
+        "required primitive: source_quorum",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: volume_visibility",
+        "route via revenue_visibility_contract: IR, TrustedNews, Official, BrokerPDF",
+        "route via realized_margin_bridge: IR, TrustedNews, Official, BrokerPDF",
+        "route via source_quorum: IR, TrustedNews, Official, BrokerPDF",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "source_quorum",
+        "retention_or_renewal_bridge",
+        "yellow",
+        "green requires",
+        "green blocked",
+        "blocks green",
+        "false positive",
+        "price-only",
+        "profile only",
+        "가격만"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence23"
+      ],
+      "source_proxy_supporting_records": [
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK:source_proxy:0",
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK:source_proxy:1",
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2838,
+        "price_path_only_count": 8627,
+        "production_fixture_count": 673,
+        "source_proxy_count": 14724,
+        "url_backed_count": 6133
+      },
+      "url_backed_supporting_records": [
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK:url_backed:0",
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK:url_backed:1",
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "compile_input_hash": "c590c194fac5a3d0d41b30f2b38af6f3272d487bf9d527dca1b712407e0df52f",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: realized_margin_bridge",
+        "required primitive: jv_utilization",
+        "route via revenue_visibility_contract: IR, Official, BrokerPDF, TrustedNews",
+        "route via retention_or_renewal_bridge: IR, Official, BrokerPDF, TrustedNews",
+        "route via source_quorum: IR, Official, BrokerPDF, TrustedNews",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "cash_or_revision_conversion",
+        "yellow",
+        "green requires",
+        "green blocked",
+        "blocks green",
+        "false positive",
+        "profile only",
+        "price-only",
+        "가격만"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C13_BATTERY_JV_UTILIZATION_AMPC_IRA:source_proxy:0",
+        "C13_BATTERY_JV_UTILIZATION_AMPC_IRA:source_proxy:1",
+        "C13_BATTERY_JV_UTILIZATION_AMPC_IRA:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2976,
+        "price_path_only_count": 10278,
+        "production_fixture_count": 1318,
+        "source_proxy_count": 18848,
+        "url_backed_count": 11058
+      },
+      "url_backed_supporting_records": [
+        "C13_BATTERY_JV_UTILIZATION_AMPC_IRA:url_backed:0",
+        "C13_BATTERY_JV_UTILIZATION_AMPC_IRA:url_backed:1",
+        "C13_BATTERY_JV_UTILIZATION_AMPC_IRA:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "compile_input_hash": "253d9639a5e64ca67d2127c8520302fcd7482b4b3d9b0be610a70d68d7ead41e",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: realized_margin_bridge",
+        "required primitive: regulatory_endpoint_bridge",
+        "required primitive: source_quorum",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: ev_demand_slowdown",
+        "route via revenue_visibility_contract: TrustedNews, IR, Official, BrokerPDF",
+        "route via realized_margin_bridge: TrustedNews, IR, Official, BrokerPDF",
+        "route via regulatory_endpoint_bridge: TrustedNews, IR, Official, BrokerPDF",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge",
+        "source_quorum",
+        "yellow",
+        "green requires",
+        "green blocked",
+        "blocks green",
+        "profile only",
+        "price-only",
+        "false positive",
+        "sympathy"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "evidence_url_pending row requires source repair before fixture use."
+      ],
+      "source_proxy_supporting_records": [
+        "C14_EV_DEMAND_SLOWDOWN_4B_4C:source_proxy:0",
+        "C14_EV_DEMAND_SLOWDOWN_4B_4C:source_proxy:1",
+        "C14_EV_DEMAND_SLOWDOWN_4B_4C:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 3408,
+        "price_path_only_count": 12818,
+        "production_fixture_count": 513,
+        "source_proxy_count": 22823,
+        "url_backed_count": 5048
+      },
+      "url_backed_supporting_records": [
+        "C14_EV_DEMAND_SLOWDOWN_4B_4C:url_backed:0",
+        "C14_EV_DEMAND_SLOWDOWN_4B_4C:url_backed:1",
+        "C14_EV_DEMAND_SLOWDOWN_4B_4C:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "compile_input_hash": "2e7d9e415252c40c0b8cf2c0dd8cacc9e8c3ed6c4ff8a7cf990ff9901c6ad299",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: realized_margin_bridge",
+        "required primitive: source_quorum",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: regulatory_endpoint_bridge",
+        "route via revenue_visibility_contract: IR, KIND, Official, TrustedNews",
+        "route via cash_or_revision_conversion: IR, KIND, Official, TrustedNews",
+        "route via realized_margin_bridge: IR, KIND, Official, TrustedNews",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "price pass-through",
+        "realized spread",
+        "inventory lag bridge",
+        "margin conversion",
+        "FCF conversion",
+        "EPS revision",
+        "issuer-level pass-through",
+        "raw commodity headline only",
+        "price weather without issuer spread"
+      ],
+      "source_gap": [
+        "evidence_url_pending row requires source repair before fixture use.",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C15_MATERIAL_SPREAD_SUPERCYCLE:source_proxy:0",
+        "C15_MATERIAL_SPREAD_SUPERCYCLE:source_proxy:1",
+        "C15_MATERIAL_SPREAD_SUPERCYCLE:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2839,
+        "price_path_only_count": 9868,
+        "production_fixture_count": 736,
+        "source_proxy_count": 12822,
+        "url_backed_count": 5826
+      },
+      "url_backed_supporting_records": [
+        "C15_MATERIAL_SPREAD_SUPERCYCLE:url_backed:0",
+        "C15_MATERIAL_SPREAD_SUPERCYCLE:url_backed:1",
+        "C15_MATERIAL_SPREAD_SUPERCYCLE:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "compile_input_hash": "f3b0a221e19b97587795c848df4d12f2a3f7bbf2e034e1bccf0d81b843c9976e",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: realized_margin_bridge",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: supply_shortage",
+        "route via revenue_visibility_contract: CompanyGuide, IR, BrokerPDF, TrustedNews",
+        "route via realized_margin_bridge: CompanyGuide, IR, BrokerPDF, TrustedNews",
+        "route via retention_or_renewal_bridge: CompanyGuide, IR, BrokerPDF, TrustedNews",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "yellow",
+        "green requires",
+        "green blocked",
+        "blocks green",
+        "false positive",
+        "price-only",
+        "가격만",
+        "keyword only"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "evidence_url_pending row requires source repair before fixture use."
+      ],
+      "source_proxy_supporting_records": [
+        "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY:source_proxy:0",
+        "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY:source_proxy:1",
+        "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2474,
+        "price_path_only_count": 6957,
+        "production_fixture_count": 520,
+        "source_proxy_count": 11525,
+        "url_backed_count": 4249
+      },
+      "url_backed_supporting_records": [
+        "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY:url_backed:0",
+        "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY:url_backed:1",
+        "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "compile_input_hash": "478caf2f57aa8b9769de25c574dd4c7a5a9840f8bb5c4c6d56e83432e8c61f30",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: realized_margin_bridge",
+        "required primitive: source_quorum",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: regulatory_endpoint_bridge",
+        "route via realized_margin_bridge: IR, KIND, TrustedNews, CompanyGuide",
+        "route via source_quorum: IR, KIND, TrustedNews, CompanyGuide",
+        "route via retention_or_renewal_bridge: IR, KIND, TrustedNews, CompanyGuide",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "chemical spread expansion",
+        "ASP pass-through",
+        "raw material cost lag",
+        "OPM bridge",
+        "FCF bridge",
+        "revision confirmation",
+        "realized spread",
+        "commodity price article only",
+        "industry spread without issuer margin"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence18:L6",
+        "evidence_url_pending row requires source repair before fixture use."
+      ],
+      "source_proxy_supporting_records": [
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD:source_proxy:0",
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD:source_proxy:1",
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2908,
+        "price_path_only_count": 8872,
+        "production_fixture_count": 765,
+        "source_proxy_count": 13600,
+        "url_backed_count": 6593
+      },
+      "url_backed_supporting_records": [
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD:url_backed:0",
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD:url_backed:1",
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "compile_input_hash": "5f3addfd25c7d3ac6292a0490e184e2a0d2f382fb65ce4dc73ddbb2047b556a8",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: realized_margin_bridge",
+        "required primitive: source_quorum",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: export_growth_pct",
+        "route via retention_or_renewal_bridge: IR, BrokerPDF, TrustedNews, CompanyGuide",
+        "route via cash_or_revision_conversion: IR, BrokerPDF, TrustedNews, CompanyGuide",
+        "route via realized_margin_bridge: IR, BrokerPDF, TrustedNews, CompanyGuide",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "retention_or_renewal_bridge",
+        "cash_or_revision_conversion",
+        "realized_margin_bridge",
+        "source_quorum",
+        "yellow",
+        "blocks green",
+        "green requires",
+        "green blocked",
+        "price-only",
+        "false positive",
+        "sympathy",
+        "profile only"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C18_CONSUMER_EXPORT_CHANNEL_REORDER:source_proxy:0",
+        "C18_CONSUMER_EXPORT_CHANNEL_REORDER:source_proxy:1",
+        "C18_CONSUMER_EXPORT_CHANNEL_REORDER:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 3028,
+        "price_path_only_count": 9836,
+        "production_fixture_count": 553,
+        "source_proxy_count": 14277,
+        "url_backed_count": 3981
+      },
+      "url_backed_supporting_records": [
+        "C18_CONSUMER_EXPORT_CHANNEL_REORDER:url_backed:0",
+        "C18_CONSUMER_EXPORT_CHANNEL_REORDER:url_backed:1",
+        "C18_CONSUMER_EXPORT_CHANNEL_REORDER:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "compile_input_hash": "54a3f180940a36476e84b2e5e2b1d954e1135dc5a07f4a5b324f4a1de02dc954",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: realized_margin_bridge",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: sell_through_confirmed",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: source_quorum",
+        "required primitive: inventory_spike",
+        "route via realized_margin_bridge: IR, BrokerPDF, DART, KIND",
+        "route via retention_or_renewal_bridge: IR, BrokerPDF, DART, KIND",
+        "route via sell_through_confirmed: IR, BrokerPDF, DART, KIND",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "sell_through_confirmed",
+        "revenue_visibility_contract",
+        "yellow",
+        "green requires",
+        "green blocked",
+        "blocks green",
+        "profile only",
+        "price-only",
+        "false positive",
+        "weather"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C19_BRAND_RETAIL_INVENTORY_MARGIN:source_proxy:0",
+        "C19_BRAND_RETAIL_INVENTORY_MARGIN:source_proxy:1",
+        "C19_BRAND_RETAIL_INVENTORY_MARGIN:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2760,
+        "price_path_only_count": 6956,
+        "production_fixture_count": 918,
+        "source_proxy_count": 13293,
+        "url_backed_count": 6739
+      },
+      "url_backed_supporting_records": [
+        "C19_BRAND_RETAIL_INVENTORY_MARGIN:url_backed:0",
+        "C19_BRAND_RETAIL_INVENTORY_MARGIN:url_backed:1",
+        "C19_BRAND_RETAIL_INVENTORY_MARGIN:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "compile_input_hash": "66e09ae774547388148090e5a7cf9371f8ab35d18eb945c226a55cb4d887ad07",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: realized_margin_bridge",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: high_margin_mix_improvement",
+        "route via retention_or_renewal_bridge: IR, CompanyGuide, Official, BrokerPDF",
+        "route via source_quorum: IR, CompanyGuide, Official, BrokerPDF",
+        "route via realized_margin_bridge: IR, CompanyGuide, Official, BrokerPDF",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "realized_margin_bridge",
+        "revenue_visibility_contract",
+        "yellow",
+        "green requires",
+        "green blocker",
+        "blocks green",
+        "price-only",
+        "false positive",
+        "profile only",
+        "sympathy"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "evidence_url_pending row requires source repair before fixture use."
+      ],
+      "source_proxy_supporting_records": [
+        "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION:source_proxy:0",
+        "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION:source_proxy:1",
+        "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 9117,
+        "price_path_only_count": 11090,
+        "production_fixture_count": 1115,
+        "source_proxy_count": 50989,
+        "url_backed_count": 9310
+      },
+      "url_backed_supporting_records": [
+        "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION:url_backed:0",
+        "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION:url_backed:1",
+        "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "compile_input_hash": "ea63e29b808b605a725b135c85f824fde38a3587210959fc4ed6f268ced83677",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: credit_cost_quality",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: source_quorum",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: realized_margin_bridge",
+        "route via credit_cost_quality: IR, TrustedNews, BrokerPDF, CompanyGuide",
+        "route via revenue_visibility_contract: IR, TrustedNews, BrokerPDF, CompanyGuide",
+        "route via source_quorum: IR, TrustedNews, BrokerPDF, CompanyGuide",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "credit_cost_quality",
+        "revenue_visibility_contract",
+        "source_quorum",
+        "retention_or_renewal_bridge",
+        "yellow",
+        "green requires",
+        "보류",
+        "green blocked",
+        "price-only",
+        "false positive",
+        "sympathy",
+        "가격만"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "evidence_url_pending row requires source repair before fixture use."
+      ],
+      "source_proxy_supporting_records": [
+        "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN:source_proxy:0",
+        "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN:source_proxy:1",
+        "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 4109,
+        "price_path_only_count": 12056,
+        "production_fixture_count": 648,
+        "source_proxy_count": 19413,
+        "url_backed_count": 6013
+      },
+      "url_backed_supporting_records": [
+        "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN:url_backed:0",
+        "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN:url_backed:1",
+        "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "compile_input_hash": "6fe22d8ff272fd195e666b71aa7e9ef3baaf70d19eddab85b9514f462b0d9ac5",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: source_quorum",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: realized_margin_bridge",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: k_ics_ratio",
+        "required primitive: retention_or_renewal_bridge",
+        "route via source_quorum: IR, BrokerPDF, TrustedNews, Official",
+        "route via revenue_visibility_contract: IR, BrokerPDF, TrustedNews, Official",
+        "route via realized_margin_bridge: IR, BrokerPDF, TrustedNews, Official",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "source_quorum",
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "cash_or_revision_conversion",
+        "yellow",
+        "green requires",
+        "green blocked",
+        "보류",
+        "false positive",
+        "price-only",
+        "sympathy",
+        "profile only"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "evidence_url_pending row requires source repair before fixture use."
+      ],
+      "source_proxy_supporting_records": [
+        "C22_INSURANCE_RATE_CYCLE_RESERVE:source_proxy:0",
+        "C22_INSURANCE_RATE_CYCLE_RESERVE:source_proxy:1",
+        "C22_INSURANCE_RATE_CYCLE_RESERVE:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 3256,
+        "price_path_only_count": 10627,
+        "production_fixture_count": 633,
+        "source_proxy_count": 15302,
+        "url_backed_count": 5466
+      },
+      "url_backed_supporting_records": [
+        "C22_INSURANCE_RATE_CYCLE_RESERVE:url_backed:0",
+        "C22_INSURANCE_RATE_CYCLE_RESERVE:url_backed:1",
+        "C22_INSURANCE_RATE_CYCLE_RESERVE:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "compile_input_hash": "6bee41ff886e9eb21919438868360f78687d5c0c5514cdf3eb90e6bd2496fbdf",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: regulatory_endpoint_bridge",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: realized_margin_bridge",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: regulatory_approval_confirmed",
+        "route via regulatory_endpoint_bridge: Official, BrokerPDF, IR, CompanyGuide",
+        "route via retention_or_renewal_bridge: Official, BrokerPDF, IR, CompanyGuide",
+        "route via source_quorum: Official, BrokerPDF, IR, CompanyGuide",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "regulatory_endpoint_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "realized_margin_bridge",
+        "yellow",
+        "green requires",
+        "green blocked",
+        "blocks green",
+        "false positive",
+        "price-only",
+        "profile only"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION:source_proxy:0",
+        "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION:source_proxy:1",
+        "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2867,
+        "price_path_only_count": 8501,
+        "production_fixture_count": 373,
+        "source_proxy_count": 14021,
+        "url_backed_count": 3280
+      },
+      "url_backed_supporting_records": [
+        "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION:url_backed:0",
+        "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION:url_backed:1",
+        "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "compile_input_hash": "1e9c97622441cac9c8c717d1afd6fd9532c6077835e5ae934c34507542b95500",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: source_quorum",
+        "required primitive: regulatory_endpoint_bridge",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: safety_signal",
+        "required primitive: realized_margin_bridge",
+        "route via revenue_visibility_contract: IR, Official, BrokerPDF, TrustedNews",
+        "route via source_quorum: IR, Official, BrokerPDF, TrustedNews",
+        "route via regulatory_endpoint_bridge: IR, Official, BrokerPDF, TrustedNews",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "trial endpoint",
+        "effect size",
+        "safety profile",
+        "regulatory milestone",
+        "cash runway",
+        "partner economics",
+        "regulatory path",
+        "trial headline without endpoint",
+        "binary event without runway"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "evidence_url_pending row requires source repair before fixture use."
+      ],
+      "source_proxy_supporting_records": [
+        "C24_BIO_TRIAL_DATA_EVENT_RISK:source_proxy:0",
+        "C24_BIO_TRIAL_DATA_EVENT_RISK:source_proxy:1",
+        "C24_BIO_TRIAL_DATA_EVENT_RISK:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2566,
+        "price_path_only_count": 8377,
+        "production_fixture_count": 412,
+        "source_proxy_count": 12988,
+        "url_backed_count": 2818
+      },
+      "url_backed_supporting_records": [
+        "C24_BIO_TRIAL_DATA_EVENT_RISK:url_backed:0",
+        "C24_BIO_TRIAL_DATA_EVENT_RISK:url_backed:1",
+        "C24_BIO_TRIAL_DATA_EVENT_RISK:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "compile_input_hash": "d4fb7dde0412e0606b08deb9271d53d7ca953162b3b7d58e63d7d8069620b27a",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: realized_margin_bridge",
+        "required primitive: regulatory_endpoint_bridge",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: cash_or_revision_conversion",
+        "route via revenue_visibility_contract: IR, Official, TrustedNews, BrokerPDF",
+        "route via realized_margin_bridge: IR, Official, TrustedNews, BrokerPDF",
+        "route via regulatory_endpoint_bridge: IR, Official, TrustedNews, BrokerPDF",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge",
+        "retention_or_renewal_bridge",
+        "yellow",
+        "green requires",
+        "blocks green",
+        "green blocked",
+        "false positive",
+        "price-only",
+        "profile only",
+        "가격만"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT:source_proxy:0",
+        "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT:source_proxy:1",
+        "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2578,
+        "price_path_only_count": 7646,
+        "production_fixture_count": 447,
+        "source_proxy_count": 12233,
+        "url_backed_count": 3165
+      },
+      "url_backed_supporting_records": [
+        "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT:url_backed:0",
+        "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT:url_backed:1",
+        "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "compile_input_hash": "4ebeffb2cc423c2a7e96c19a8df6b7b791c8c93938f21fced62e2be88f37b960",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: source_quorum",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: operating_leverage_visible",
+        "required primitive: realized_margin_bridge",
+        "route via cash_or_revision_conversion: IR, BrokerPDF, Official, TrustedNews",
+        "route via revenue_visibility_contract: IR, BrokerPDF, Official, TrustedNews",
+        "route via source_quorum: IR, BrokerPDF, Official, TrustedNews",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "cash_or_revision_conversion",
+        "revenue_visibility_contract",
+        "source_quorum",
+        "retention_or_renewal_bridge",
+        "yellow",
+        "blocks green",
+        "green requires",
+        "green blocked",
+        "price-only",
+        "signboard",
+        "false positive",
+        "profile only"
+      ],
+      "source_gap": [
+        "fence15:L6",
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE:source_proxy:0",
+        "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE:source_proxy:1",
+        "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 3366,
+        "price_path_only_count": 8729,
+        "production_fixture_count": 1115,
+        "source_proxy_count": 15376,
+        "url_backed_count": 9533
+      },
+      "url_backed_supporting_records": [
+        "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE:url_backed:0",
+        "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE:url_backed:1",
+        "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "compile_input_hash": "c426f2f36cbaaf3bc0f11e0ed825861eeae538665b1410d86c8b0aab7438f7ee",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: realized_margin_bridge",
+        "required primitive: source_quorum",
+        "required primitive: ip_monetization_visible",
+        "required primitive: repeat_revenue",
+        "required primitive: retention_or_renewal_bridge",
+        "route via revenue_visibility_contract: IR, BrokerPDF, TrustedNews, KIND",
+        "route via realized_margin_bridge: IR, BrokerPDF, TrustedNews, KIND",
+        "route via source_quorum: IR, BrokerPDF, TrustedNews, KIND",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "source_quorum",
+        "ip_monetization_visible",
+        "green requires",
+        "yellow",
+        "green blocked",
+        "blocks green",
+        "price-only",
+        "false positive",
+        "profile only"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C27_CONTENT_IP_GLOBAL_MONETIZATION:source_proxy:0",
+        "C27_CONTENT_IP_GLOBAL_MONETIZATION:source_proxy:1",
+        "C27_CONTENT_IP_GLOBAL_MONETIZATION:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 3280,
+        "price_path_only_count": 7566,
+        "production_fixture_count": 1170,
+        "source_proxy_count": 15555,
+        "url_backed_count": 9497
+      },
+      "url_backed_supporting_records": [
+        "C27_CONTENT_IP_GLOBAL_MONETIZATION:url_backed:0",
+        "C27_CONTENT_IP_GLOBAL_MONETIZATION:url_backed:1",
+        "C27_CONTENT_IP_GLOBAL_MONETIZATION:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "compile_input_hash": "5cdb5406eb7b89ae4c324eb8fab2dcd66ffe1c596a13d41be15c280def407d1d",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: realized_margin_bridge",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: retention_or_renewal",
+        "route via revenue_visibility_contract: IR, BrokerPDF, TrustedNews, KIND",
+        "route via realized_margin_bridge: IR, BrokerPDF, TrustedNews, KIND",
+        "route via retention_or_renewal_bridge: IR, BrokerPDF, TrustedNews, KIND",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "ARR growth",
+        "RPO backlog",
+        "renewal rate",
+        "retention",
+        "recurring revenue durability",
+        "margin cash conversion",
+        "churn evidence",
+        "security theme spike",
+        "software keyword without retention bridge"
+      ],
+      "source_gap": [
+        "evidence_url_pending row requires source repair before fixture use.",
+        "source_proxy_only row is ontology/planning only.",
+        "L241:table6"
+      ],
+      "source_proxy_supporting_records": [
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:source_proxy:0",
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:source_proxy:1",
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 3150,
+        "price_path_only_count": 8401,
+        "production_fixture_count": 638,
+        "source_proxy_count": 14900,
+        "url_backed_count": 4845
+      },
+      "url_backed_supporting_records": [
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:url_backed:0",
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:url_backed:1",
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "compile_input_hash": "30796fcf1e2b706ea0eabcabe0af5d9331384c6c31bf788e38f541d2ac88e54c",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: realized_margin_bridge",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: regulatory_endpoint_bridge",
+        "required primitive: cash_or_revision_conversion",
+        "route via revenue_visibility_contract: IR, Official, TrustedNews, DART",
+        "route via realized_margin_bridge: IR, Official, TrustedNews, DART",
+        "route via retention_or_renewal_bridge: IR, Official, TrustedNews, DART",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "yellow",
+        "green requires",
+        "green blocker",
+        "blocks green",
+        "price-only",
+        "false positive",
+        "sympathy",
+        "weather"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE:source_proxy:0",
+        "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE:source_proxy:1",
+        "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 4462,
+        "price_path_only_count": 15449,
+        "production_fixture_count": 678,
+        "source_proxy_count": 23001,
+        "url_backed_count": 5526
+      },
+      "url_backed_supporting_records": [
+        "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE:url_backed:0",
+        "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE:url_backed:1",
+        "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "compile_input_hash": "0f736865885a1bec58dc8a408bb50f752856c24c394fe2e1f69aea3bc535a91e",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: source_quorum",
+        "required primitive: realized_margin_bridge",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: balance_sheet_repair",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: cash_or_revision_conversion",
+        "route via source_quorum: IR, TrustedNews, KIND, BrokerPDF",
+        "route via realized_margin_bridge: IR, TrustedNews, KIND, BrokerPDF",
+        "route via retention_or_renewal_bridge: IR, TrustedNews, KIND, BrokerPDF",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "source_quorum",
+        "realized_margin_bridge",
+        "retention_or_renewal_bridge",
+        "balance_sheet_repair",
+        "yellow",
+        "green requires",
+        "green blocked",
+        "blocks green",
+        "price-only",
+        "profile only",
+        "sympathy",
+        "false positive"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK:source_proxy:0",
+        "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK:source_proxy:1",
+        "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 4689,
+        "price_path_only_count": 15798,
+        "production_fixture_count": 1132,
+        "source_proxy_count": 23144,
+        "url_backed_count": 7620
+      },
+      "url_backed_supporting_records": [
+        "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK:url_backed:0",
+        "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK:url_backed:1",
+        "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "compile_input_hash": "dd01a787e95d8a49052507f1e1e4af3eda6d12998546cb7d47fb27342f8a5b8a",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: realized_margin_bridge",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: regulatory_endpoint_bridge",
+        "required primitive: cash_or_revision_conversion",
+        "route via retention_or_renewal_bridge: IR, TrustedNews, Official, BrokerPDF",
+        "route via source_quorum: IR, TrustedNews, Official, BrokerPDF",
+        "route via realized_margin_bridge: IR, TrustedNews, Official, BrokerPDF",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "realized_margin_bridge",
+        "revenue_visibility_contract",
+        "yellow",
+        "green blocked",
+        "green requires",
+        "blocks green",
+        "price-only",
+        "false positive",
+        "profile only",
+        "sympathy"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "fence16:L6",
+        "fence23"
+      ],
+      "source_proxy_supporting_records": [
+        "C31_POLICY_SUBSIDY_LEGISLATION_EVENT:source_proxy:0",
+        "C31_POLICY_SUBSIDY_LEGISLATION_EVENT:source_proxy:1",
+        "C31_POLICY_SUBSIDY_LEGISLATION_EVENT:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 4836,
+        "price_path_only_count": 15983,
+        "production_fixture_count": 451,
+        "source_proxy_count": 23315,
+        "url_backed_count": 3767
+      },
+      "url_backed_supporting_records": [
+        "C31_POLICY_SUBSIDY_LEGISLATION_EVENT:url_backed:0",
+        "C31_POLICY_SUBSIDY_LEGISLATION_EVENT:url_backed:1",
+        "C31_POLICY_SUBSIDY_LEGISLATION_EVENT:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "compile_input_hash": "0678925e69de8b7961067d7737a6a76a403ee2605fbfb5fa11d173c265499c85",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: realized_margin_bridge",
+        "required primitive: regulatory_endpoint_bridge",
+        "route via revenue_visibility_contract: BrokerPDF, IR, Official, KIND",
+        "route via cash_or_revision_conversion: BrokerPDF, IR, Official, KIND",
+        "route via retention_or_renewal_bridge: BrokerPDF, IR, Official, KIND",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "yellow",
+        "green blocked",
+        "green requires",
+        "blocks green",
+        "price-only",
+        "false positive",
+        "profile only",
+        "sympathy"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "evidence_url_pending row requires source repair before fixture use."
+      ],
+      "source_proxy_supporting_records": [
+        "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP:source_proxy:0",
+        "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP:source_proxy:1",
+        "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 3740,
+        "price_path_only_count": 10127,
+        "production_fixture_count": 551,
+        "source_proxy_count": 18096,
+        "url_backed_count": 5158
+      },
+      "url_backed_supporting_records": [
+        "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP:url_backed:0",
+        "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP:url_backed:1",
+        "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "compile_input_hash": "80cae4023c8699b1a7eb48b3e2adb09261ae5f0f0fae473c77bca215dfa34c85",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: cash_or_revision_conversion",
+        "required primitive: source_quorum",
+        "required primitive: missing_cashflow_bridge",
+        "required primitive: regulatory_endpoint_bridge",
+        "required primitive: realized_margin_bridge",
+        "route via revenue_visibility_contract: CompanyGuide, Official, BrokerPDF, TrustedNews",
+        "route via cash_or_revision_conversion: CompanyGuide, Official, BrokerPDF, TrustedNews",
+        "route via source_quorum: CompanyGuide, Official, BrokerPDF, TrustedNews",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "cash_or_revision_conversion",
+        "source_quorum",
+        "missing_cashflow_bridge",
+        "yellow",
+        "green requires",
+        "green blocked",
+        "green blocker",
+        "price-only",
+        "false positive",
+        "weather",
+        "sympathy"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "evidence_url_pending row requires source repair before fixture use."
+      ],
+      "source_proxy_supporting_records": [
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:source_proxy:0",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:source_proxy:1",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 19722,
+        "price_path_only_count": 6789,
+        "production_fixture_count": 1230,
+        "source_proxy_count": 114130,
+        "url_backed_count": 11080
+      },
+      "url_backed_supporting_records": [
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:url_backed:0",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:url_backed:1",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "compile_input_hash": "2d032602d417244fc0f3b7967201892bbe54fb46b2c44ad33b344fbffe124c00",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: regulatory_endpoint_bridge",
+        "required primitive: source_quorum",
+        "required primitive: realized_margin_bridge",
+        "required primitive: revenue_visibility_contract",
+        "required primitive: customer_preorder_or_allocation",
+        "route via retention_or_renewal_bridge: BrokerPDF, IR, Official, TrustedNews",
+        "route via regulatory_endpoint_bridge: BrokerPDF, IR, Official, TrustedNews",
+        "route via source_quorum: BrokerPDF, IR, Official, TrustedNews",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "retention_or_renewal_bridge",
+        "regulatory_endpoint_bridge",
+        "source_quorum",
+        "realized_margin_bridge",
+        "yellow",
+        "green requires",
+        "blocks green",
+        "green blocked",
+        "false positive",
+        "price-only",
+        "sympathy",
+        "profile only"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM:source_proxy:0",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM:source_proxy:1",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 5069,
+        "price_path_only_count": 23399,
+        "production_fixture_count": 617,
+        "source_proxy_count": 31433,
+        "url_backed_count": 7988
+      },
+      "url_backed_supporting_records": [
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM:url_backed:0",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM:url_backed:1",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "compile_input_hash": "640bd9fc8304d0e7824e24335513f6b11e959c3d100efc1a9bc294516b7f391c",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: realized_margin_bridge",
+        "required primitive: regulatory_endpoint_bridge",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: price_only_blowoff",
+        "route via revenue_visibility_contract: IR, Official, BrokerPDF, TrustedNews",
+        "route via realized_margin_bridge: IR, Official, BrokerPDF, TrustedNews",
+        "route via regulatory_endpoint_bridge: IR, Official, BrokerPDF, TrustedNews",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "realized_margin_bridge",
+        "regulatory_endpoint_bridge",
+        "retention_or_renewal_bridge",
+        "yellow",
+        "green blocked",
+        "green requires",
+        "green blocker",
+        "price-only",
+        "false positive",
+        "profile only"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only."
+      ],
+      "source_proxy_supporting_records": [
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION:source_proxy:0",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION:source_proxy:1",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 2675,
+        "price_path_only_count": 4845,
+        "production_fixture_count": 801,
+        "source_proxy_count": 11112,
+        "url_backed_count": 5645
+      },
+      "url_backed_supporting_records": [
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION:url_backed:0",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION:url_backed:1",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION:url_backed:2"
+      ]
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "compile_input_hash": "993a4cf11756b6d8f61cfd2e822e5b691a75fea4255e9853ab4055913143eb3b",
+      "confidence": "HIGH",
+      "conflict_summary": [
+        "price_path_only_records_are_guard_only"
+      ],
+      "data_distilled_rules": [
+        "required primitive: revenue_visibility_contract",
+        "required primitive: retention_or_renewal_bridge",
+        "required primitive: source_quorum",
+        "required primitive: high_mae_history",
+        "required primitive: realized_margin_bridge",
+        "required primitive: regulatory_endpoint_bridge",
+        "route via revenue_visibility_contract: IR, BrokerPDF, Official, TrustedNews",
+        "route via retention_or_renewal_bridge: IR, BrokerPDF, Official, TrustedNews",
+        "route via source_quorum: IR, BrokerPDF, Official, TrustedNews",
+        "source-backed records have higher prompt weight than source proxy rows",
+        "price-path-only records can create guard warnings but not positive unlocks"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "last_compiled_at": "2026-06-29T06:34:54+00:00",
+      "price_path_only_warning_records": [],
+      "seed_rules": [
+        "revenue_visibility_contract",
+        "retention_or_renewal_bridge",
+        "source_quorum",
+        "high_mae_history",
+        "yellow",
+        "blocks green",
+        "green requires",
+        "green blocker",
+        "false positive",
+        "price-only",
+        "sympathy",
+        "weather"
+      ],
+      "source_gap": [
+        "source_proxy_only row is ontology/planning only.",
+        "L52:table46"
+      ],
+      "source_proxy_supporting_records": [
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL:source_proxy:0",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL:source_proxy:1",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL:source_proxy:2"
+      ],
+      "source_quality_weighted_patterns": {
+        "ontology_only_count": 952,
+        "price_path_only_count": 18950,
+        "production_fixture_count": 887,
+        "source_proxy_count": 5572,
+        "url_backed_count": 6965
+      },
+      "url_backed_supporting_records": [
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL:url_backed:0",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL:url_backed:1",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL:url_backed:2"
+      ]
+    }
+  ],
+  "schema_version": "research_brain_v3_memory_card_distillation_report",
+  "summary": {
+    "card_count": 36,
+    "card_with_source_gap_count": 36,
+    "cards_with_data_distilled_rules": 36,
+    "source_proxy_positive_unlock_count": 0
+  }
+}
