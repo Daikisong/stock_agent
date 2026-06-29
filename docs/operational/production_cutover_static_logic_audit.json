@@ -38,11 +38,13 @@
     "unbounded_fetch_config_count": 0,
     "warning_counts": {
       "A2_REAL_REPLAY_VERIFIED_count": 0,
+      "active_large_sector_count": 9,
       "cached_path_count": 0,
       "deterministic_scorer_output_count": 50,
       "fixture_candidate_event_count": 0,
       "planner_provider_model_null_count": 0,
-      "raw_prompt_response_file_missing_count": 0
+      "raw_prompt_response_file_missing_count": 0,
+      "unknown_sector_candidate_count": 0
     }
   }
 }

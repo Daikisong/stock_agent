@@ -1,17 +1,30 @@
 {
   "candidate_event": {
     "candidate_event_id": "CE-LIVE-DART-417840-20260629000499",
+    "company_info_payload": {
+      "corp_code": "01383229",
+      "corp_name": "주식회사 저스템",
+      "hm_url": "www.justem.co.kr",
+      "induty_code": "29271",
+      "ir_url": "",
+      "stock_code": "417840"
+    },
     "company_name": "저스템",
+    "corp_code": "01383229",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "저스템(417840) OpenDART disclosure: 자기주식취득결과보고서",
     "event_title": "자기주식취득결과보고서",
     "event_type": "자기주식취득결과보고서",
+    "industry_code": "29271",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     "raw_reason_codes": [
       "자기주식취득결과보고서"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000499",
     "structured_payload": {

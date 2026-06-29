@@ -16,6 +16,7 @@ v4는 shadow 실행 증거로 보존하지만, 이 cutover gate는 fixture/cache
 
 ```json
 {
+  "active_large_sector_count": 9,
   "actual_krx_universe_count": 3972,
   "cached_fixture_source_count": 0,
   "cached_path_count": 0,
@@ -26,10 +27,169 @@ v4는 shadow 실행 증거로 보존하지만, 이 cutover gate는 fixture/cache
   "mode": "production_shadow_live",
   "production_candidate_event_count": 50,
   "production_eligible_candidate_event_count": 50,
-  "sector_coverage": {},
+  "sector_coverage": {
+    "active": {
+      "L1_INDUSTRIALS_INFRA_DEFENSE_GRID": {
+        "candidate_attempt_count": 10,
+        "classification_sources": [
+          "OpenDART company.json induty_code"
+        ],
+        "production_eligible_candidate_count": 10,
+        "sample_symbols": [
+          "060900",
+          "130660",
+          "270520",
+          "351320",
+          "130660",
+          "417840",
+          "037350",
+          "060900",
+          "378340",
+          "282720"
+        ],
+        "source_gap": null
+      },
+      "L2_AI_SEMICONDUCTOR_ELECTRONICS": {
+        "candidate_attempt_count": 4,
+        "classification_sources": [
+          "OpenDART company.json induty_code"
+        ],
+        "production_eligible_candidate_count": 4,
+        "sample_symbols": [
+          "148250",
+          "260870",
+          "360070",
+          "248070"
+        ],
+        "source_gap": null
+      },
+      "L3_BATTERY_EV_GREEN_MOBILITY": {
+        "candidate_attempt_count": 4,
+        "classification_sources": [
+          "OpenDART company.json induty_code"
+        ],
+        "production_eligible_candidate_count": 4,
+        "sample_symbols": [
+          "381970",
+          "104040",
+          "028670",
+          "403550"
+        ],
+        "source_gap": null
+      },
+      "L4_MATERIALS_SPREAD_RESOURCE": {
+        "candidate_attempt_count": 7,
+        "classification_sources": [
+          "OpenDART company.json induty_code"
+        ],
+        "production_eligible_candidate_count": 7,
+        "sample_symbols": [
+          "083660",
+          "083660",
+          "175250",
+          "007460",
+          "216080",
+          "216080",
+          "357550"
+        ],
+        "source_gap": null
+      },
+      "L5_CONSUMER_BRAND_DISTRIBUTION": {
+        "candidate_attempt_count": 2,
+        "classification_sources": [
+          "OpenDART company.json induty_code"
+        ],
+        "production_eligible_candidate_count": 2,
+        "sample_symbols": [
+          "368970",
+          "063170"
+        ],
+        "source_gap": null
+      },
+      "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL": {
+        "candidate_attempt_count": 8,
+        "classification_sources": [
+          "OpenDART company.json induty_code"
+        ],
+        "production_eligible_candidate_count": 8,
+        "sample_symbols": [
+          "021960",
+          "003530",
+          "003380",
+          "003530",
+          "003530",
+          "003530",
+          "003540",
+          "003540"
+        ],
+        "source_gap": null
+      },
+      "L7_BIO_HEALTHCARE_MEDICAL": {
+        "candidate_attempt_count": 3,
+        "classification_sources": [
+          "OpenDART company.json induty_code"
+        ],
+        "production_eligible_candidate_count": 3,
+        "sample_symbols": [
+          "226950",
+          "226950",
+          "226950"
+        ],
+        "source_gap": null
+      },
+      "L8_PLATFORM_CONTENT_SW_SECURITY": {
+        "candidate_attempt_count": 9,
+        "classification_sources": [
+          "OpenDART company.json induty_code"
+        ],
+        "production_eligible_candidate_count": 9,
+        "sample_symbols": [
+          "208640",
+          "377030",
+          "377030",
+          "347700",
+          "347700",
+          "347700",
+          "208640",
+          "208640",
+          "440320"
+        ],
+        "source_gap": null
+      },
+      "L9_CONSTRUCTION_REALESTATE_HOUSING": {
+        "candidate_attempt_count": 3,
+        "classification_sources": [
+          "OpenDART company.json induty_code"
+        ],
+        "production_eligible_candidate_count": 3,
+        "sample_symbols": [
+          "006050",
+          "006050",
+          "097230"
+        ],
+        "source_gap": null
+      }
+    },
+    "inactive": {
+      "L10_POLICY_EVENT_CROSS_REDTEAM_MISC": {
+        "candidate_attempt_count": 0,
+        "classification_sources": [],
+        "production_eligible_candidate_count": 0,
+        "sample_symbols": [],
+        "source_gap": "no_candidate_attempt_in_current_daily_scan"
+      }
+    },
+    "summary": {
+      "active_large_sector_count": 9,
+      "inactive_large_sector_count": 1,
+      "large_sector_total": 10,
+      "unknown_sector_candidate_count": 0
+    }
+  },
   "snapshot_uri_source_count": 0,
   "symbol_not_in_registry_count": 0,
-  "total_candidate_event_count": 50
+  "total_candidate_event_count": 50,
+  "unknown_sector_candidate_count": 0
 }
 ```
 
@@ -60,31 +220,44 @@ v4는 shadow 실행 증거로 보존하지만, 이 cutover gate는 fixture/cache
 
 ```json
 {
-  "companyguide_call_count": 0,
-  "dart_call_count": 50,
+  "companyguide_call_count": 3,
+  "dart_call_count": 53,
   "fetched_document_count": 50,
-  "issuer_ir_call_count": 0,
-  "kind_call_count": 0,
-  "krx_call_count": 0,
+  "issuer_ir_call_count": 3,
+  "kind_call_count": 3,
+  "krx_call_count": 3,
   "live_or_fresh_provider_document_count": 50,
   "provider_call_counts": {
-    "OpenDART": 50
+    "CompanyGuide": 3,
+    "IssuerIR": 3,
+    "KIND": 3,
+    "KRX": 3,
+    "OpenDART": 53,
+    "TrustedNews": 3
   },
-  "provider_failure_count": 0,
-  "provider_failure_counts": {},
+  "provider_failure_count": 18,
+  "provider_failure_counts": {
+    "CompanyGuide": 3,
+    "IssuerIR": 3,
+    "KIND": 3,
+    "KRX": 3,
+    "OpenDART": 3,
+    "TrustedNews": 3
+  },
   "real_document_fetched_count": 50,
   "real_source_document_fetched_count": 50,
   "snapshot_only_counted_as_live_count": 0,
   "snapshot_only_document_count": 0,
   "source_gaps": {
-    "CompanyGuide": "not required for DART disclosure event verification",
-    "IR": "follow-up source class, not primary for DART disclosure verification",
-    "KIND": "not required for OpenDART disclosure-based daily shadow",
-    "KRX": "OpenDART corpCode stock_code universe used as official listed universe for this shadow run"
+    "CompanyGuide": "connector exercised; local live implementation currently returns explicit PROVIDER_FAILED",
+    "IR": "connector exercised; local live implementation currently returns explicit PROVIDER_FAILED",
+    "KIND": "connector exercised; local live implementation currently returns explicit PROVIDER_FAILED",
+    "KRX": "connector exercised; OpenDART corpCode/company APIs supplied universe and industry coverage for this run",
+    "TrustedNews": "connector exercised; local live implementation currently returns explicit PROVIDER_FAILED"
   },
   "source_task_accepted_without_provider_fetch_count": 0,
   "stored_snapshot_only_documents": 0,
-  "trusted_news_call_count": 0
+  "trusted_news_call_count": 3
 }
 ```
 

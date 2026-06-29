@@ -1,17 +1,30 @@
 {
   "candidate_event": {
     "candidate_event_id": "CE-LIVE-DART-260870-20260629601196",
+    "company_info_payload": {
+      "corp_code": "01188730",
+      "corp_name": "SK시그넷(주)",
+      "hm_url": "www.sksignet.com",
+      "induty_code": "2811",
+      "ir_url": "",
+      "stock_code": "260870"
+    },
     "company_name": "SK시그넷",
+    "corp_code": "01188730",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "SK시그넷(260870) OpenDART disclosure: 증권발행결과(자율공시) (제3자배정 유상증자_우선주)",
     "event_title": "증권발행결과(자율공시) (제3자배정 유상증자_우선주)",
     "event_type": "증권발행결과(자율공시) (제3자배정 유상증자_우선주)",
+    "industry_code": "2811",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
     "raw_reason_codes": [
       "증권발행결과(자율공시) (제3자배정 유상증자_우선주)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629601196",
     "structured_payload": {

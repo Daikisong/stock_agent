@@ -1,17 +1,30 @@
 {
   "candidate_event": {
     "candidate_event_id": "CE-LIVE-DART-060900-20260629900964",
+    "company_info_payload": {
+      "corp_code": "00367695",
+      "corp_name": "(주)에이전트에이아이",
+      "hm_url": "www.agentai.xyz",
+      "induty_code": "351",
+      "ir_url": "www.agentai.xyz",
+      "stock_code": "060900"
+    },
     "company_name": "에이전트AI",
+    "corp_code": "00367695",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "에이전트AI(060900) OpenDART disclosure: 증권발행결과(자율공시) (제35회차 CB)",
     "event_title": "증권발행결과(자율공시) (제35회차 CB)",
     "event_type": "증권발행결과(자율공시) (제35회차 CB)",
+    "industry_code": "351",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     "raw_reason_codes": [
       "증권발행결과(자율공시) (제35회차 CB)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629900964",
     "structured_payload": {

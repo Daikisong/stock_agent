@@ -14,6 +14,8 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
+from e2r.calibration.taxonomy import LARGE_SECTOR_IDS
+
 
 class ProductionMode(str, Enum):
     FROZEN_REPLAY = "frozen_replay"
@@ -215,6 +217,7 @@ def build_candidate_purity_report(
     production_rows = [row for row in rows if row["eligible"]]
     fixture_rows = [row for row in rows if row["fixture_like_symbol"] or row["source_id_fixture"]]
     cached_rows = [row for row in rows if row["source_id_cached_or_fixture"]]
+    sector_coverage = _sector_coverage(events, rows)
     return {
         "schema_version": "production_cutover_candidate_purity_v1",
         "summary": {
@@ -233,13 +236,74 @@ def build_candidate_purity_report(
             "snapshot_uri_source_count": sum(1 for row in rows if row["source_id_snapshot_uri"]),
             "company_name_mismatch_count": sum("company_name_mismatch" in row["reasons"] for row in rows),
             "symbol_not_in_registry_count": sum("symbol_not_in_instrument_registry" in row["reasons"] for row in rows),
-            "sector_coverage": {},
+            "sector_coverage": sector_coverage,
+            "active_large_sector_count": sector_coverage["summary"]["active_large_sector_count"],
+            "unknown_sector_candidate_count": sector_coverage["summary"]["unknown_sector_candidate_count"],
         },
         "registry": {
             "source_paths": list(registry.source_paths),
         },
         "rows": rows,
     }
+
+
+def _sector_coverage(events: Sequence[Mapping[str, Any] | Any], rows: Sequence[Mapping[str, Any]]) -> Mapping[str, Any]:
+    coverage: dict[str, dict[str, Any]] = {
+        sector: {
+            "candidate_attempt_count": 0,
+            "production_eligible_candidate_count": 0,
+            "source_gap": "no_candidate_attempt_in_current_daily_scan",
+            "sample_symbols": [],
+            "classification_sources": [],
+        }
+        for sector in LARGE_SECTOR_IDS
+    }
+    unknown = {
+        "candidate_attempt_count": 0,
+        "production_eligible_candidate_count": 0,
+        "source_gap": "sector_classification_provider_missing_or_unmapped",
+        "sample_symbols": [],
+        "classification_sources": [],
+    }
+    for event, row in zip(events, rows):
+        data = _event_to_mapping(event)
+        sector = str(data.get("large_sector_id") or "")
+        bucket = coverage.get(sector)
+        if bucket is None:
+            bucket = unknown
+        bucket["candidate_attempt_count"] += 1
+        if row.get("eligible"):
+            bucket["production_eligible_candidate_count"] += 1
+        if len(bucket["sample_symbols"]) < 10:
+            bucket["sample_symbols"].append(str(data.get("symbol") or row.get("symbol") or ""))
+        source = str(data.get("sector_classification_source") or "")
+        if source and source not in bucket["classification_sources"]:
+            bucket["classification_sources"].append(source)
+        if bucket is not unknown:
+            bucket["source_gap"] = None
+    active = {
+        sector: value
+        for sector, value in coverage.items()
+        if int(value["candidate_attempt_count"]) > 0
+    }
+    inactive = {
+        sector: value
+        for sector, value in coverage.items()
+        if int(value["candidate_attempt_count"]) == 0
+    }
+    payload: dict[str, Any] = {
+        "summary": {
+            "large_sector_total": len(LARGE_SECTOR_IDS),
+            "active_large_sector_count": len(active),
+            "inactive_large_sector_count": len(inactive),
+            "unknown_sector_candidate_count": unknown["candidate_attempt_count"],
+        },
+        "active": active,
+        "inactive": inactive,
+    }
+    if unknown["candidate_attempt_count"]:
+        payload["unknown"] = unknown
+    return payload
 
 
 def _instrument_rows(path: Path, *, official: bool) -> Iterable[tuple[str, str, str, bool]]:

@@ -12,7 +12,7 @@
     "retry_count": 0,
     "scoring_runtime_seconds": null,
     "source_acquisition_runtime_seconds": null,
-    "total_runtime_seconds": 3.623,
+    "total_runtime_seconds": 7.6432,
     "unbounded_fetch_config_count": 0
   }
 }

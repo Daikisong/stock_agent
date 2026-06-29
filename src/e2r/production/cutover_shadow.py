@@ -68,7 +68,13 @@ def build_production_cutover_bundle(
         as_of_date=config.as_of_date,
         registry=live_data.registry,
     )
-    source_connector_report = _source_connector_report_from_live_data(live_data)
+    connector_probe_results = _exercise_connectors(
+        events=events,
+        repo_root=root,
+        as_of_date=date.fromisoformat(config.as_of_date),
+        source_mode=config.source_mode,
+    )
+    source_connector_report = _source_connector_report_from_live_data(live_data, connector_probe_results)
     provider_error_report = _provider_error_report(source_connector_report)
     claim_extraction_audit = _claim_extraction_audit_from_live_data(live_data)
     planner_provider_report = _planner_provider_report(planner_rows)
@@ -285,15 +291,23 @@ def _source_connector_report_from_v4_and_connectors(
     }
 
 
-def _source_connector_report_from_live_data(live_data: OfficialLiveShadowData) -> Mapping[str, Any]:
-    rows = list(live_data.provider_results)
+def _source_connector_report_from_live_data(
+    live_data: OfficialLiveShadowData,
+    connector_probe_results: Sequence[SourceFetchResult] = (),
+) -> Mapping[str, Any]:
+    rows = list(live_data.provider_results) + [result.to_dict() for result in connector_probe_results]
     provider_call_counts = Counter(str(row.get("provider_name") or "unknown") for row in rows)
     provider_failure_counts = Counter(
         str(row.get("provider_name") or "unknown")
         for row in rows
         if row.get("status") in {"PROVIDER_FAILED", "AUTH_FAILED", "RATE_LIMITED", "REJECTED_BY_POLICY"}
     )
-    fetched_count = sum(row.get("status") == "FETCHED" and row.get("mode") == "live" for row in rows)
+    fetched_count = sum(
+        row.get("status") == "FETCHED"
+        and row.get("mode") == "live"
+        and not str(row.get("canonical_url") or "").startswith("snapshot://")
+        for row in rows
+    )
     return {
         "schema_version": "production_cutover_source_connector_report_v1",
         "summary": {
@@ -320,10 +334,11 @@ def _source_connector_report_from_live_data(live_data: OfficialLiveShadowData) -
                 for row in live_data.source_task_executions
             ),
             "source_gaps": {
-                "KIND": "not required for OpenDART disclosure-based daily shadow",
-                "KRX": "OpenDART corpCode stock_code universe used as official listed universe for this shadow run",
-                "CompanyGuide": "not required for DART disclosure event verification",
-                "IR": "follow-up source class, not primary for DART disclosure verification",
+                "KIND": "connector exercised; local live implementation currently returns explicit PROVIDER_FAILED",
+                "KRX": "connector exercised; OpenDART corpCode/company APIs supplied universe and industry coverage for this run",
+                "CompanyGuide": "connector exercised; local live implementation currently returns explicit PROVIDER_FAILED",
+                "IR": "connector exercised; local live implementation currently returns explicit PROVIDER_FAILED",
+                "TrustedNews": "connector exercised; local live implementation currently returns explicit PROVIDER_FAILED",
             },
         },
         "rows": rows,
@@ -688,6 +703,12 @@ def _static_logic_audit(
     warnings = {
         "fixture_candidate_event_count": int(c.get("fixture_candidate_event_count", 0)),
         "cached_path_count": int(c.get("cached_path_count", 0)),
+        "active_large_sector_count": int(
+            ((c.get("sector_coverage") or {}).get("summary") or {}).get("active_large_sector_count", 0)
+        ),
+        "unknown_sector_candidate_count": int(
+            ((c.get("sector_coverage") or {}).get("summary") or {}).get("unknown_sector_candidate_count", 0)
+        ),
         "planner_provider_model_null_count": int(p.get("planner_provider_model_null_count", 0)),
         "raw_prompt_response_file_missing_count": int(p.get("raw_prompt_response_file_missing_count", 0)),
         "deterministic_scorer_output_count": int(sc.get("deterministic_scorer_output_count", 0)),
@@ -727,6 +748,11 @@ def _readiness_blockers(
         blockers.append("actual_krx_universe_count <= 1000")
     if c.get("production_eligible_candidate_event_count", 0) < config.candidate_min_count:
         blockers.append("production eligible candidate events below configured minimum")
+    sector_summary = ((c.get("sector_coverage") or {}).get("summary") or {})
+    if sector_summary.get("active_large_sector_count", 0) < 6:
+        blockers.append("sector coverage below 6 active large sectors")
+    if sector_summary.get("unknown_sector_candidate_count", 0):
+        blockers.append("candidate sector classification has unknown rows")
     if c.get("fixture_candidate_event_count_in_production", 0):
         blockers.append("fixture-like candidates were present in input and excluded")
     if c.get("cached_path_count", 0):
@@ -776,6 +802,8 @@ def _shadow_latest(
         critical_pass
         and c.get("actual_krx_universe_count", 0) > 1000
         and c.get("production_eligible_candidate_event_count", 0) >= config.candidate_min_count
+        and ((c.get("sector_coverage") or {}).get("summary") or {}).get("active_large_sector_count", 0) >= 6
+        and ((c.get("sector_coverage") or {}).get("summary") or {}).get("unknown_sector_candidate_count", 0) == 0
         and p.get("real_planner_success_count", 0) >= 30
         and s.get("real_source_document_fetched_count", 0) >= 50
         and e.get("accepted_claim_count", 0) >= 20

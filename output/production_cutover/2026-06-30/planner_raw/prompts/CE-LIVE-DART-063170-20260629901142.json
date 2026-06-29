@@ -1,17 +1,30 @@
 {
   "candidate_event": {
     "candidate_event_id": "CE-LIVE-DART-063170-20260629901142",
+    "company_info_payload": {
+      "corp_code": "00410915",
+      "corp_name": "(주)서울옥션",
+      "hm_url": "www.seoulauction.com",
+      "induty_code": "461",
+      "ir_url": "https://www.seoulauction.com/",
+      "stock_code": "063170"
+    },
     "company_name": "서울옥션",
+    "corp_code": "00410915",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "서울옥션(063170) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "461",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901142",
     "structured_payload": {

@@ -1,17 +1,30 @@
 {
   "candidate_event": {
     "candidate_event_id": "CE-LIVE-DART-403550-20260629801126",
+    "company_info_payload": {
+      "corp_code": "01026157",
+      "corp_name": "(주)쏘카",
+      "hm_url": "www.socarcorp.kr",
+      "induty_code": "76110",
+      "ir_url": "https://www.socarcorp.kr/ir/events",
+      "stock_code": "403550"
+    },
     "company_name": "쏘카",
+    "corp_code": "01026157",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "쏘카(403550) OpenDART disclosure: [기재정정]유상증자결정(종속회사의주요경영사항)",
     "event_title": "[기재정정]유상증자결정(종속회사의주요경영사항)",
     "event_type": "[기재정정]유상증자결정(종속회사의주요경영사항)",
+    "industry_code": "76110",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
     "raw_reason_codes": [
       "[기재정정]유상증자결정(종속회사의주요경영사항)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801126",
     "structured_payload": {

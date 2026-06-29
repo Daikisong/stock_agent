@@ -1,17 +1,30 @@
 {
   "candidate_event": {
     "candidate_event_id": "CE-LIVE-DART-028670-20260629801140",
+    "company_info_payload": {
+      "corp_code": "00122737",
+      "corp_name": "팬오션(주)",
+      "hm_url": "www.panocean.com",
+      "induty_code": "50112",
+      "ir_url": "www.panocean.com",
+      "stock_code": "028670"
+    },
     "company_name": "팬오션",
+    "corp_code": "00122737",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "팬오션(028670) OpenDART disclosure: 신규시설투자등",
     "event_title": "신규시설투자등",
     "event_type": "신규시설투자등",
+    "industry_code": "50112",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
     "raw_reason_codes": [
       "신규시설투자등"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801140",
     "structured_payload": {

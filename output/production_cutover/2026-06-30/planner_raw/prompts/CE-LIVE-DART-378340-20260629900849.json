@@ -1,17 +1,30 @@
 {
   "candidate_event": {
     "candidate_event_id": "CE-LIVE-DART-378340-20260629900849",
+    "company_info_payload": {
+      "corp_code": "01488320",
+      "corp_name": "주식회사 필에너지",
+      "hm_url": "philenergy.co.kr",
+      "induty_code": "29299",
+      "ir_url": "",
+      "stock_code": "378340"
+    },
     "company_name": "필에너지",
+    "corp_code": "01488320",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "필에너지(378340) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "29299",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629900849",
     "structured_payload": {

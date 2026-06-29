@@ -1,17 +1,30 @@
 {
   "candidate_event": {
     "candidate_event_id": "CE-LIVE-DART-270520-20260629000502",
+    "company_info_payload": {
+      "corp_code": "01228515",
+      "corp_name": "(주)앱튼",
+      "hm_url": "www.aptn-inc.com",
+      "induty_code": "721",
+      "ir_url": "",
+      "stock_code": "270520"
+    },
     "company_name": "앱튼",
+    "corp_code": "01228515",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "앱튼(270520) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)",
     "event_title": "[기재정정]주요사항보고서(유상증자결정)",
     "event_type": "[기재정정]주요사항보고서(유상증자결정)",
+    "industry_code": "721",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     "raw_reason_codes": [
       "[기재정정]주요사항보고서(유상증자결정)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000502",
     "structured_payload": {

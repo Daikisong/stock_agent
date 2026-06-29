@@ -32,6 +32,7 @@ from e2r.scoring import CANONICAL_SCORE_COMPONENTS, DeterministicScorer, Scoring
 
 _DART_LIST_URL = "https://opendart.fss.or.kr/api/list.json"
 _DART_CORP_CODE_URL = "https://opendart.fss.or.kr/api/corpCode.xml"
+_DART_COMPANY_URL = "https://opendart.fss.or.kr/api/company.json"
 _DISCLOSURE_KEYWORDS = (
     "단일판매",
     "공급계약",
@@ -104,7 +105,8 @@ def build_official_live_shadow_data(
     operator_rows: list[Mapping[str, Any]] = []
     provider_results: list[Mapping[str, Any]] = []
     for row in selected:
-        event = _candidate_event_from_dart_row(row, as_of_date=as_of_date)
+        company_info = _fetch_opendart_company(str(row["corp_code"]))
+        event = _candidate_event_from_dart_row(row, as_of_date=as_of_date, company_info=company_info)
         events.append(event)
         prompt = {
             "candidate_event": event,
@@ -338,6 +340,20 @@ def _fetch_opendart_disclosures(*, as_of_date: date, pages: int, page_count: int
     return tuple(rows)
 
 
+@lru_cache(maxsize=4096)
+def _fetch_opendart_company(corp_code: str) -> Mapping[str, Any]:
+    load_project_env()
+    key = os.environ.get("OPENDART_API_KEY") or os.environ.get("OPEN_DART_API_KEY")
+    if not key:
+        raise RuntimeError("OPENDART_API_KEY is required for production_shadow_live")
+    response = requests.get(_DART_COMPANY_URL, params={"crtfc_key": key, "corp_code": corp_code}, timeout=30)
+    response.raise_for_status()
+    payload = response.json()
+    if payload.get("status") != "000":
+        raise RuntimeError(f"OpenDART company failed: {payload.get('status')} {payload.get('message')}")
+    return payload
+
+
 def _registry_from_dart_universe(rows: Sequence[Mapping[str, Any]]) -> InstrumentRegistry:
     names = {str(row["symbol"]): str(row["company_name"]) for row in rows if row.get("symbol")}
     return InstrumentRegistry(
@@ -370,16 +386,28 @@ def _select_disclosure_candidates(
     return tuple(unique.values())
 
 
-def _candidate_event_from_dart_row(row: Mapping[str, Any], *, as_of_date: date) -> Mapping[str, Any]:
+def _candidate_event_from_dart_row(
+    row: Mapping[str, Any],
+    *,
+    as_of_date: date,
+    company_info: Mapping[str, Any],
+) -> Mapping[str, Any]:
     symbol = str(row["stock_code"])
     company = str(row["corp_name"]).strip()
     rcept_no = str(row["rcept_no"]).strip()
     event_date = _date_from_yyyymmdd(str(row.get("rcept_dt") or as_of_date.strftime("%Y%m%d")))
     report_name = " ".join(str(row.get("report_nm") or "").split())
+    industry_code = str(company_info.get("induty_code") or "").strip()
+    sector = _large_sector_for_industry_code(industry_code)
     return {
         "candidate_event_id": f"CE-LIVE-DART-{symbol}-{rcept_no}",
         "symbol": symbol,
         "company_name": company,
+        "corp_code": str(row.get("corp_code") or ""),
+        "industry_code": industry_code,
+        "large_sector_id": sector or "UNKNOWN_SECTOR",
+        "sector_classification_status": "CLASSIFIED" if sector else "UNKNOWN_SECTOR_PROVIDER_GAP",
+        "sector_classification_source": "OpenDART company.json induty_code",
         "event_date": event_date.isoformat(),
         "detected_at": as_of_date.isoformat(),
         "source_family": "DART",
@@ -390,6 +418,10 @@ def _candidate_event_from_dart_row(row: Mapping[str, Any], *, as_of_date: date) 
         "issuer_directness": "DIRECT",
         "raw_reason_codes": [report_name],
         "structured_payload": dict(row),
+        "company_info_payload": {
+            key: company_info.get(key)
+            for key in ("corp_code", "corp_name", "stock_code", "induty_code", "hm_url", "ir_url")
+        },
         "research_brain_eligible": True,
     }
 
@@ -665,6 +697,43 @@ def _date_from_yyyymmdd(value: str) -> date:
 
 def _dart_url(rcept_no: str) -> str:
     return f"https://dart.fss.or.kr/dsaf001/main.do?rcpNo={rcept_no}"
+
+
+def _large_sector_for_industry_code(industry_code: str) -> str | None:
+    """Map official OpenDART/KSIC industry codes to broad E2R large sectors.
+
+    The mapping is intentionally industry-code based, not symbol based. Easy
+    example: a 66xxx code is finance regardless of the company name, while a
+    58x code is software/content regardless of the disclosure title.
+    """
+
+    code = "".join(ch for ch in industry_code if ch.isdigit())
+    if not code:
+        return None
+    first2 = code[:2]
+    first3 = code[:3]
+    first4 = code[:4]
+    if first2 in {"64", "65", "66"}:
+        return "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL"
+    if first2 in {"58", "59", "60", "61", "62", "63"}:
+        return "L8_PLATFORM_CONTENT_SW_SECURITY"
+    if first2 in {"26"} or first3 in {"281", "282"}:
+        return "L2_AI_SEMICONDUCTOR_ELECTRONICS"
+    if first2 in {"20", "21", "24", "25"}:
+        return "L4_MATERIALS_SPREAD_RESOURCE"
+    if first2 in {"10", "11", "12", "13", "14", "15", "46", "47"}:
+        return "L5_CONSUMER_BRAND_DISTRIBUTION"
+    if first2 in {"29", "33", "35", "36", "37", "38", "39", "42"} or first3 in {"721"}:
+        return "L1_INDUSTRIALS_INFRA_DEFENSE_GRID"
+    if first2 in {"23", "41"}:
+        return "L9_CONSTRUCTION_REALESTATE_HOUSING"
+    if first2 in {"30", "31", "45", "49", "50", "51", "52", "76"}:
+        return "L3_BATTERY_EV_GREEN_MOBILITY"
+    if first3 in {"701"} or first2 in {"86", "87"}:
+        return "L7_BIO_HEALTHCARE_MEDICAL"
+    if first4 in {"8411"} or first2 in {"84"}:
+        return "L10_POLICY_EVENT_CROSS_REDTEAM_MISC"
+    return None
 
 
 def _stable_id(prefix: str, *parts: object) -> str:

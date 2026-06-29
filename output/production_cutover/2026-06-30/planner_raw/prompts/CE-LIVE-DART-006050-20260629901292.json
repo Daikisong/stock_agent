@@ -1,17 +1,30 @@
 {
   "candidate_event": {
     "candidate_event_id": "CE-LIVE-DART-006050-20260629901292",
+    "company_info_payload": {
+      "corp_code": "00104537",
+      "corp_name": "(주)국영지앤엠",
+      "hm_url": "www.kukyong.com",
+      "induty_code": "231",
+      "ir_url": "",
+      "stock_code": "006050"
+    },
     "company_name": "국영지앤엠",
+    "corp_code": "00104537",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "국영지앤엠(006050) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결(자율공시)",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결(자율공시)",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결(자율공시)",
+    "industry_code": "231",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결(자율공시)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901292",
     "structured_payload": {

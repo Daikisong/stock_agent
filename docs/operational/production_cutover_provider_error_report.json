@@ -1,8 +1,405 @@
 {
-  "rows": [],
+  "rows": [
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "OpenDART",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-a9e11393e9f3aaa54224",
+      "request_params": {
+        "company_name": "알엔투테크놀로지",
+        "symbol": "148250"
+      },
+      "snapshot_run_id": null,
+      "source_class": "DART",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "KIND",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-b9a5481737252684702b",
+      "request_params": {
+        "company_name": "알엔투테크놀로지",
+        "symbol": "148250"
+      },
+      "snapshot_run_id": null,
+      "source_class": "KIND",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "KRX",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-924fe52d6198a8ba9353",
+      "request_params": {
+        "company_name": "알엔투테크놀로지",
+        "symbol": "148250"
+      },
+      "snapshot_run_id": null,
+      "source_class": "KRX",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "CompanyGuide",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-4d6969f934e754d2a340",
+      "request_params": {
+        "company_name": "알엔투테크놀로지",
+        "symbol": "148250"
+      },
+      "snapshot_run_id": null,
+      "source_class": "CompanyGuide",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "IssuerIR",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-3cda495d0f334e581d54",
+      "request_params": {
+        "company_name": "알엔투테크놀로지",
+        "symbol": "148250"
+      },
+      "snapshot_run_id": null,
+      "source_class": "IR",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "TrustedNews",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-f7cb9314bacfa364a809",
+      "request_params": {
+        "company_name": "알엔투테크놀로지",
+        "symbol": "148250"
+      },
+      "snapshot_run_id": null,
+      "source_class": "TrustedNews",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "OpenDART",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-fc63e4ac826458723c06",
+      "request_params": {
+        "company_name": "CSA 코스믹",
+        "symbol": "083660"
+      },
+      "snapshot_run_id": null,
+      "source_class": "DART",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "KIND",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-a9b8dc600e747bb06a3f",
+      "request_params": {
+        "company_name": "CSA 코스믹",
+        "symbol": "083660"
+      },
+      "snapshot_run_id": null,
+      "source_class": "KIND",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "KRX",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-5e9b0b015cc6ce7913ae",
+      "request_params": {
+        "company_name": "CSA 코스믹",
+        "symbol": "083660"
+      },
+      "snapshot_run_id": null,
+      "source_class": "KRX",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "CompanyGuide",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-add8ff0458239f84a290",
+      "request_params": {
+        "company_name": "CSA 코스믹",
+        "symbol": "083660"
+      },
+      "snapshot_run_id": null,
+      "source_class": "CompanyGuide",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "IssuerIR",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-a4c5807caa85fb3e4eef",
+      "request_params": {
+        "company_name": "CSA 코스믹",
+        "symbol": "083660"
+      },
+      "snapshot_run_id": null,
+      "source_class": "IR",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "TrustedNews",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-199ab2c350fbdf52c467",
+      "request_params": {
+        "company_name": "CSA 코스믹",
+        "symbol": "083660"
+      },
+      "snapshot_run_id": null,
+      "source_class": "TrustedNews",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "OpenDART",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-b9f240a8a932a870ddea",
+      "request_params": {
+        "company_name": "국영지앤엠",
+        "symbol": "006050"
+      },
+      "snapshot_run_id": null,
+      "source_class": "DART",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "KIND",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-b5d4f27e577794fe8c71",
+      "request_params": {
+        "company_name": "국영지앤엠",
+        "symbol": "006050"
+      },
+      "snapshot_run_id": null,
+      "source_class": "KIND",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "KRX",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-ff97ffd57a30ad482b7a",
+      "request_params": {
+        "company_name": "국영지앤엠",
+        "symbol": "006050"
+      },
+      "snapshot_run_id": null,
+      "source_class": "KRX",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "CompanyGuide",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-e67b061d93db12aae2b7",
+      "request_params": {
+        "company_name": "국영지앤엠",
+        "symbol": "006050"
+      },
+      "snapshot_run_id": null,
+      "source_class": "CompanyGuide",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "IssuerIR",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-6db00835cef7c492acef",
+      "request_params": {
+        "company_name": "국영지앤엠",
+        "symbol": "006050"
+      },
+      "snapshot_run_id": null,
+      "source_class": "IR",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    },
+    {
+      "available_at": null,
+      "canonical_url": null,
+      "content_hash": null,
+      "fetched_at": "2026-06-29T21:24:11Z",
+      "mode": "live",
+      "official_document_id": null,
+      "provider_error": "live_connector_not_configured_in_local_environment",
+      "provider_name": "TrustedNews",
+      "published_at": null,
+      "raw_text": "",
+      "request_id": "SRCREQ-d5f20b152dc39209f0e4",
+      "request_params": {
+        "company_name": "국영지앤엠",
+        "symbol": "006050"
+      },
+      "snapshot_run_id": null,
+      "source_class": "TrustedNews",
+      "source_fetch_request_id": null,
+      "status": "PROVIDER_FAILED",
+      "structured_payload": {}
+    }
+  ],
   "schema_version": "production_cutover_provider_error_report_v1",
   "summary": {
     "provider_failed_final_score_count": 0,
-    "provider_failure_count": 0
+    "provider_failure_count": 18
   }
 }

@@ -1,17 +1,30 @@
 [
   {
     "candidate_event_id": "CE-LIVE-DART-148250-20260629000586",
+    "company_info_payload": {
+      "corp_code": "00915508",
+      "corp_name": "(주)알엔투테크놀로지",
+      "hm_url": "www.rn2.co.kr",
+      "induty_code": "262",
+      "ir_url": "",
+      "stock_code": "148250"
+    },
     "company_name": "알엔투테크놀로지",
+    "corp_code": "00915508",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-30",
     "event_summary": "알엔투테크놀로지(148250) OpenDART disclosure: 주요사항보고서(유상증자결정)",
     "event_title": "주요사항보고서(유상증자결정)",
     "event_type": "주요사항보고서(유상증자결정)",
+    "industry_code": "262",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
     "raw_reason_codes": [
       "주요사항보고서(유상증자결정)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000586",
     "structured_payload": {
@@ -29,17 +42,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-083660-20260629000561",
+    "company_info_payload": {
+      "corp_code": "00406037",
+      "corp_name": "(주)씨에스에이코스믹",
+      "hm_url": "www.csacosmic.com",
+      "induty_code": "204",
+      "ir_url": "",
+      "stock_code": "083660"
+    },
     "company_name": "CSA 코스믹",
+    "corp_code": "00406037",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "CSA 코스믹(083660) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)",
     "event_title": "[기재정정]주요사항보고서(유상증자결정)",
     "event_type": "[기재정정]주요사항보고서(유상증자결정)",
+    "industry_code": "204",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
     "raw_reason_codes": [
       "[기재정정]주요사항보고서(유상증자결정)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000561",
     "structured_payload": {
@@ -57,17 +83,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-006050-20260629901292",
+    "company_info_payload": {
+      "corp_code": "00104537",
+      "corp_name": "(주)국영지앤엠",
+      "hm_url": "www.kukyong.com",
+      "induty_code": "231",
+      "ir_url": "",
+      "stock_code": "006050"
+    },
     "company_name": "국영지앤엠",
+    "corp_code": "00104537",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "국영지앤엠(006050) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결(자율공시)",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결(자율공시)",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결(자율공시)",
+    "industry_code": "231",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결(자율공시)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901292",
     "structured_payload": {
@@ -85,17 +124,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-083660-20260629000553",
+    "company_info_payload": {
+      "corp_code": "00406037",
+      "corp_name": "(주)씨에스에이코스믹",
+      "hm_url": "www.csacosmic.com",
+      "induty_code": "204",
+      "ir_url": "",
+      "stock_code": "083660"
+    },
     "company_name": "CSA 코스믹",
+    "corp_code": "00406037",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "CSA 코스믹(083660) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)",
     "event_title": "[기재정정]주요사항보고서(유상증자결정)",
     "event_type": "[기재정정]주요사항보고서(유상증자결정)",
+    "industry_code": "204",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
     "raw_reason_codes": [
       "[기재정정]주요사항보고서(유상증자결정)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000553",
     "structured_payload": {
@@ -113,17 +165,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-006050-20260629901282",
+    "company_info_payload": {
+      "corp_code": "00104537",
+      "corp_name": "(주)국영지앤엠",
+      "hm_url": "www.kukyong.com",
+      "induty_code": "231",
+      "ir_url": "",
+      "stock_code": "006050"
+    },
     "company_name": "국영지앤엠",
+    "corp_code": "00104537",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "국영지앤엠(006050) OpenDART disclosure: 단일판매ㆍ공급계약체결(자율공시)",
     "event_title": "단일판매ㆍ공급계약체결(자율공시)",
     "event_type": "단일판매ㆍ공급계약체결(자율공시)",
+    "industry_code": "231",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
     "raw_reason_codes": [
       "단일판매ㆍ공급계약체결(자율공시)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901282",
     "structured_payload": {
@@ -141,17 +206,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-208640-20260629901297",
+    "company_info_payload": {
+      "corp_code": "01049422",
+      "corp_name": "(주)썸에이지",
+      "hm_url": "www.thumbage.co.kr",
+      "induty_code": "582",
+      "ir_url": "",
+      "stock_code": "208640"
+    },
     "company_name": "썸에이지",
+    "corp_code": "01049422",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "썸에이지(208640) OpenDART disclosure: 권리락 (유상증자)",
     "event_title": "권리락 (유상증자)",
     "event_type": "권리락 (유상증자)",
+    "industry_code": "582",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
     "raw_reason_codes": [
       "권리락 (유상증자)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901297",
     "structured_payload": {
@@ -169,17 +247,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-175250-20260629000562",
+    "company_info_payload": {
+      "corp_code": "00554352",
+      "corp_name": "아이큐어(주)",
+      "hm_url": "icure.co.kr",
+      "induty_code": "204",
+      "ir_url": "",
+      "stock_code": "175250"
+    },
     "company_name": "아이큐어",
+    "corp_code": "00554352",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "아이큐어(175250) OpenDART disclosure: 주요사항보고서(유상증자결정)",
     "event_title": "주요사항보고서(유상증자결정)",
     "event_type": "주요사항보고서(유상증자결정)",
+    "industry_code": "204",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
     "raw_reason_codes": [
       "주요사항보고서(유상증자결정)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000562",
     "structured_payload": {
@@ -197,17 +288,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-377030-20260629901255",
+    "company_info_payload": {
+      "corp_code": "01409095",
+      "corp_name": "비트맥스(주)",
+      "hm_url": "bitmax.im",
+      "induty_code": "582",
+      "ir_url": "",
+      "stock_code": "377030"
+    },
     "company_name": "비트맥스",
+    "corp_code": "01409095",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "비트맥스(377030) OpenDART disclosure: 증권발행결과(자율공시) (제3자배정 유상증자)",
     "event_title": "증권발행결과(자율공시) (제3자배정 유상증자)",
     "event_type": "증권발행결과(자율공시) (제3자배정 유상증자)",
+    "industry_code": "582",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
     "raw_reason_codes": [
       "증권발행결과(자율공시) (제3자배정 유상증자)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901255",
     "structured_payload": {
@@ -225,17 +329,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-377030-20260629901251",
+    "company_info_payload": {
+      "corp_code": "01409095",
+      "corp_name": "비트맥스(주)",
+      "hm_url": "bitmax.im",
+      "induty_code": "582",
+      "ir_url": "",
+      "stock_code": "377030"
+    },
     "company_name": "비트맥스",
+    "corp_code": "01409095",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "비트맥스(377030) OpenDART disclosure: 증권발행결과(자율공시) (제3자배정 유상증자)",
     "event_title": "증권발행결과(자율공시) (제3자배정 유상증자)",
     "event_type": "증권발행결과(자율공시) (제3자배정 유상증자)",
+    "industry_code": "582",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
     "raw_reason_codes": [
       "증권발행결과(자율공시) (제3자배정 유상증자)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901251",
     "structured_payload": {
@@ -253,17 +370,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-381970-20260629801242",
+    "company_info_payload": {
+      "corp_code": "01323032",
+      "corp_name": "케이카 주식회사",
+      "hm_url": "www.kcar.com",
+      "induty_code": "45120",
+      "ir_url": "kcar.irpage.co.kr",
+      "stock_code": "381970"
+    },
     "company_name": "케이카",
+    "corp_code": "01323032",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "케이카(381970) OpenDART disclosure: [기재정정]투자판단관련주요경영사항",
     "event_title": "[기재정정]투자판단관련주요경영사항",
     "event_type": "[기재정정]투자판단관련주요경영사항",
+    "industry_code": "45120",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
     "raw_reason_codes": [
       "[기재정정]투자판단관련주요경영사항"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801242",
     "structured_payload": {
@@ -281,17 +411,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-021960-20260629000554",
+    "company_info_payload": {
+      "corp_code": "00161408",
+      "corp_name": "케이비캐피탈(주)",
+      "hm_url": "www.kbcapital.co.kr",
+      "induty_code": "64911",
+      "ir_url": "",
+      "stock_code": "021960"
+    },
     "company_name": "케이비캐피탈",
+    "corp_code": "00161408",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "케이비캐피탈(021960) OpenDART disclosure: 증권발행실적보고서",
     "event_title": "증권발행실적보고서",
     "event_type": "증권발행실적보고서",
+    "industry_code": "64911",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
     "raw_reason_codes": [
       "증권발행실적보고서"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000554",
     "structured_payload": {
@@ -309,17 +452,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-104040-20260629901236",
+    "company_info_payload": {
+      "corp_code": "00442905",
+      "corp_name": "(주)디에스엠",
+      "hm_url": "www.dsfinetec.com",
+      "induty_code": "30399",
+      "ir_url": "",
+      "stock_code": "104040"
+    },
     "company_name": "디에스엠",
+    "corp_code": "00442905",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "디에스엠(104040) OpenDART disclosure: 증권발행결과(자율공시)",
     "event_title": "증권발행결과(자율공시)",
     "event_type": "증권발행결과(자율공시)",
+    "industry_code": "30399",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
     "raw_reason_codes": [
       "증권발행결과(자율공시)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901236",
     "structured_payload": {
@@ -337,17 +493,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-260870-20260629601196",
+    "company_info_payload": {
+      "corp_code": "01188730",
+      "corp_name": "SK시그넷(주)",
+      "hm_url": "www.sksignet.com",
+      "induty_code": "2811",
+      "ir_url": "",
+      "stock_code": "260870"
+    },
     "company_name": "SK시그넷",
+    "corp_code": "01188730",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "SK시그넷(260870) OpenDART disclosure: 증권발행결과(자율공시) (제3자배정 유상증자_우선주)",
     "event_title": "증권발행결과(자율공시) (제3자배정 유상증자_우선주)",
     "event_type": "증권발행결과(자율공시) (제3자배정 유상증자_우선주)",
+    "industry_code": "2811",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
     "raw_reason_codes": [
       "증권발행결과(자율공시) (제3자배정 유상증자_우선주)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629601196",
     "structured_payload": {
@@ -365,17 +534,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-060900-20260629901198",
+    "company_info_payload": {
+      "corp_code": "00367695",
+      "corp_name": "(주)에이전트에이아이",
+      "hm_url": "www.agentai.xyz",
+      "induty_code": "351",
+      "ir_url": "www.agentai.xyz",
+      "stock_code": "060900"
+    },
     "company_name": "에이전트AI",
+    "corp_code": "00367695",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "에이전트AI(060900) OpenDART disclosure: 단일판매ㆍ공급계약체결",
     "event_title": "단일판매ㆍ공급계약체결",
     "event_type": "단일판매ㆍ공급계약체결",
+    "industry_code": "351",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     "raw_reason_codes": [
       "단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901198",
     "structured_payload": {
@@ -393,17 +575,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-097230-20260629801171",
+    "company_info_payload": {
+      "corp_code": "00633835",
+      "corp_name": "(주)에이치제이중공업",
+      "hm_url": "www.hjsc.co.kr",
+      "induty_code": "41221",
+      "ir_url": "",
+      "stock_code": "097230"
+    },
     "company_name": "HJ중공업",
+    "corp_code": "00633835",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "HJ중공업(097230) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "41221",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801171",
     "structured_payload": {
@@ -421,17 +616,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-347700-20260629901175",
+    "company_info_payload": {
+      "corp_code": "01336762",
+      "corp_name": "(주)스피어코퍼레이션",
+      "hm_url": "spherecorp.kr/",
+      "induty_code": "58222",
+      "ir_url": "",
+      "stock_code": "347700"
+    },
     "company_name": "스피어",
+    "corp_code": "01336762",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "스피어(347700) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "58222",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901175",
     "structured_payload": {
@@ -449,17 +657,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-347700-20260629901169",
+    "company_info_payload": {
+      "corp_code": "01336762",
+      "corp_name": "(주)스피어코퍼레이션",
+      "hm_url": "spherecorp.kr/",
+      "induty_code": "58222",
+      "ir_url": "",
+      "stock_code": "347700"
+    },
     "company_name": "스피어",
+    "corp_code": "01336762",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "스피어(347700) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "58222",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901169",
     "structured_payload": {
@@ -477,17 +698,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-347700-20260629901164",
+    "company_info_payload": {
+      "corp_code": "01336762",
+      "corp_name": "(주)스피어코퍼레이션",
+      "hm_url": "spherecorp.kr/",
+      "induty_code": "58222",
+      "ir_url": "",
+      "stock_code": "347700"
+    },
     "company_name": "스피어",
+    "corp_code": "01336762",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "스피어(347700) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "58222",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901164",
     "structured_payload": {
@@ -505,17 +739,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-368970-20260629000506",
+    "company_info_payload": {
+      "corp_code": "01491607",
+      "corp_name": "주식회사 오에스피",
+      "hm_url": "",
+      "induty_code": "109",
+      "ir_url": "",
+      "stock_code": "368970"
+    },
     "company_name": "오에스피",
+    "corp_code": "01491607",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "오에스피(368970) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)",
     "event_title": "[기재정정]주요사항보고서(유상증자결정)",
     "event_type": "[기재정정]주요사항보고서(유상증자결정)",
+    "industry_code": "109",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
     "raw_reason_codes": [
       "[기재정정]주요사항보고서(유상증자결정)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000506",
     "structured_payload": {
@@ -533,17 +780,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-007460-20260629801147",
+    "company_info_payload": {
+      "corp_code": "00152385",
+      "corp_name": "(주)에이프로젠",
+      "hm_url": "www.aprogen.com",
+      "induty_code": "212",
+      "ir_url": "",
+      "stock_code": "007460"
+    },
     "company_name": "에이프로젠",
+    "corp_code": "00152385",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "에이프로젠(007460) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)(자회사의 주요경영사항) (제3자배정)",
     "event_title": "[기재정정]주요사항보고서(유상증자결정)(자회사의 주요경영사항) (제3자배정)",
     "event_type": "[기재정정]주요사항보고서(유상증자결정)(자회사의 주요경영사항) (제3자배정)",
+    "industry_code": "212",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
     "raw_reason_codes": [
       "[기재정정]주요사항보고서(유상증자결정)(자회사의 주요경영사항) (제3자배정)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801147",
     "structured_payload": {
@@ -561,17 +821,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000520",
+    "company_info_payload": {
+      "corp_code": "00148610",
+      "corp_name": "한화투자증권(주)",
+      "hm_url": "www.koreastock.co.kr",
+      "induty_code": "66121",
+      "ir_url": "",
+      "stock_code": "003530"
+    },
     "company_name": "한화투자증권",
+    "corp_code": "00148610",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서",
     "event_title": "증권발행실적보고서",
     "event_type": "증권발행실적보고서",
+    "industry_code": "66121",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
     "raw_reason_codes": [
       "증권발행실적보고서"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000520",
     "structured_payload": {
@@ -589,17 +862,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-003380-20260629901161",
+    "company_info_payload": {
+      "corp_code": "00148364",
+      "corp_name": "(주)하림지주",
+      "hm_url": "www.harimholdings.co.kr",
+      "induty_code": "64992",
+      "ir_url": "",
+      "stock_code": "003380"
+    },
     "company_name": "하림지주",
+    "corp_code": "00148364",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "하림지주(003380) OpenDART disclosure: 신규시설투자등(자회사의 주요경영사항)",
     "event_title": "신규시설투자등(자회사의 주요경영사항)",
     "event_type": "신규시설투자등(자회사의 주요경영사항)",
+    "industry_code": "64992",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
     "raw_reason_codes": [
       "신규시설투자등(자회사의 주요경영사항)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901161",
     "structured_payload": {
@@ -617,17 +903,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-208640-20260629000512",
+    "company_info_payload": {
+      "corp_code": "01049422",
+      "corp_name": "(주)썸에이지",
+      "hm_url": "www.thumbage.co.kr",
+      "induty_code": "582",
+      "ir_url": "",
+      "stock_code": "208640"
+    },
     "company_name": "썸에이지",
+    "corp_code": "01049422",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "썸에이지(208640) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)",
     "event_title": "[기재정정]주요사항보고서(유상증자결정)",
     "event_type": "[기재정정]주요사항보고서(유상증자결정)",
+    "industry_code": "582",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
     "raw_reason_codes": [
       "[기재정정]주요사항보고서(유상증자결정)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000512",
     "structured_payload": {
@@ -645,17 +944,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000517",
+    "company_info_payload": {
+      "corp_code": "00148610",
+      "corp_name": "한화투자증권(주)",
+      "hm_url": "www.koreastock.co.kr",
+      "induty_code": "66121",
+      "ir_url": "",
+      "stock_code": "003530"
+    },
     "company_name": "한화투자증권",
+    "corp_code": "00148610",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서",
     "event_title": "증권발행실적보고서",
     "event_type": "증권발행실적보고서",
+    "industry_code": "66121",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
     "raw_reason_codes": [
       "증권발행실적보고서"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000517",
     "structured_payload": {
@@ -673,17 +985,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000514",
+    "company_info_payload": {
+      "corp_code": "00148610",
+      "corp_name": "한화투자증권(주)",
+      "hm_url": "www.koreastock.co.kr",
+      "induty_code": "66121",
+      "ir_url": "",
+      "stock_code": "003530"
+    },
     "company_name": "한화투자증권",
+    "corp_code": "00148610",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서",
     "event_title": "증권발행실적보고서",
     "event_type": "증권발행실적보고서",
+    "industry_code": "66121",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
     "raw_reason_codes": [
       "증권발행실적보고서"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000514",
     "structured_payload": {
@@ -701,17 +1026,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-130660-20260629801144",
+    "company_info_payload": {
+      "corp_code": "00194947",
+      "corp_name": "한전산업개발(주)",
+      "hm_url": "www.kepid.co.kr",
+      "induty_code": "72129",
+      "ir_url": "http://www.kepid.co.kr/",
+      "stock_code": "130660"
+    },
     "company_name": "한전산업",
+    "corp_code": "00194947",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "한전산업(130660) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "72129",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801144",
     "structured_payload": {
@@ -729,17 +1067,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000513",
+    "company_info_payload": {
+      "corp_code": "00148610",
+      "corp_name": "한화투자증권(주)",
+      "hm_url": "www.koreastock.co.kr",
+      "induty_code": "66121",
+      "ir_url": "",
+      "stock_code": "003530"
+    },
     "company_name": "한화투자증권",
+    "corp_code": "00148610",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서",
     "event_title": "증권발행실적보고서",
     "event_type": "증권발행실적보고서",
+    "industry_code": "66121",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
     "raw_reason_codes": [
       "증권발행실적보고서"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000513",
     "structured_payload": {
@@ -757,17 +1108,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-028670-20260629801140",
+    "company_info_payload": {
+      "corp_code": "00122737",
+      "corp_name": "팬오션(주)",
+      "hm_url": "www.panocean.com",
+      "induty_code": "50112",
+      "ir_url": "www.panocean.com",
+      "stock_code": "028670"
+    },
     "company_name": "팬오션",
+    "corp_code": "00122737",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "팬오션(028670) OpenDART disclosure: 신규시설투자등",
     "event_title": "신규시설투자등",
     "event_type": "신규시설투자등",
+    "industry_code": "50112",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
     "raw_reason_codes": [
       "신규시설투자등"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801140",
     "structured_payload": {
@@ -785,17 +1149,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-360070-20260629901095",
+    "company_info_payload": {
+      "corp_code": "01360875",
+      "corp_name": "주식회사 탑머티리얼",
+      "hm_url": "www.topmaterial.co.kr",
+      "induty_code": "28202",
+      "ir_url": "",
+      "stock_code": "360070"
+    },
     "company_name": "탑머티리얼",
+    "corp_code": "01360875",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "탑머티리얼(360070) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "28202",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901095",
     "structured_payload": {
@@ -813,17 +1190,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-063170-20260629901142",
+    "company_info_payload": {
+      "corp_code": "00410915",
+      "corp_name": "(주)서울옥션",
+      "hm_url": "www.seoulauction.com",
+      "induty_code": "461",
+      "ir_url": "https://www.seoulauction.com/",
+      "stock_code": "063170"
+    },
     "company_name": "서울옥션",
+    "corp_code": "00410915",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "서울옥션(063170) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "461",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901142",
     "structured_payload": {
@@ -841,17 +1231,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-270520-20260629000502",
+    "company_info_payload": {
+      "corp_code": "01228515",
+      "corp_name": "(주)앱튼",
+      "hm_url": "www.aptn-inc.com",
+      "induty_code": "721",
+      "ir_url": "",
+      "stock_code": "270520"
+    },
     "company_name": "앱튼",
+    "corp_code": "01228515",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "앱튼(270520) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)",
     "event_title": "[기재정정]주요사항보고서(유상증자결정)",
     "event_type": "[기재정정]주요사항보고서(유상증자결정)",
+    "industry_code": "721",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     "raw_reason_codes": [
       "[기재정정]주요사항보고서(유상증자결정)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000502",
     "structured_payload": {
@@ -869,17 +1272,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-226950-20260629000494",
+    "company_info_payload": {
+      "corp_code": "01113718",
+      "corp_name": "올릭스 주식회사",
+      "hm_url": "www.olixpharma.com",
+      "induty_code": "70113",
+      "ir_url": "",
+      "stock_code": "226950"
+    },
     "company_name": "올릭스",
+    "corp_code": "01113718",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "올릭스(226950) OpenDART disclosure: 주요사항보고서(유상증자결정)",
     "event_title": "주요사항보고서(유상증자결정)",
     "event_type": "주요사항보고서(유상증자결정)",
+    "industry_code": "70113",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
     "raw_reason_codes": [
       "주요사항보고서(유상증자결정)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000494",
     "structured_payload": {
@@ -897,17 +1313,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-351320-20260629901083",
+    "company_info_payload": {
+      "corp_code": "01440153",
+      "corp_name": "(주)넥사다이내믹스",
+      "hm_url": "nexadynamics.kr",
+      "induty_code": "29272",
+      "ir_url": "",
+      "stock_code": "351320"
+    },
     "company_name": "넥사다이내믹스",
+    "corp_code": "01440153",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "넥사다이내믹스(351320) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "29272",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901083",
     "structured_payload": {
@@ -925,17 +1354,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-208640-20260629901135",
+    "company_info_payload": {
+      "corp_code": "01049422",
+      "corp_name": "(주)썸에이지",
+      "hm_url": "www.thumbage.co.kr",
+      "induty_code": "582",
+      "ir_url": "",
+      "stock_code": "208640"
+    },
     "company_name": "썸에이지",
+    "corp_code": "01049422",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "썸에이지(208640) OpenDART disclosure: 유상증자1차발행가액결정",
     "event_title": "유상증자1차발행가액결정",
     "event_type": "유상증자1차발행가액결정",
+    "industry_code": "582",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
     "raw_reason_codes": [
       "유상증자1차발행가액결정"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901135",
     "structured_payload": {
@@ -953,17 +1395,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-130660-20260629801125",
+    "company_info_payload": {
+      "corp_code": "00194947",
+      "corp_name": "한전산업개발(주)",
+      "hm_url": "www.kepid.co.kr",
+      "induty_code": "72129",
+      "ir_url": "http://www.kepid.co.kr/",
+      "stock_code": "130660"
+    },
     "company_name": "한전산업",
+    "corp_code": "00194947",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "한전산업(130660) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "72129",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801125",
     "structured_payload": {
@@ -981,17 +1436,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-216080-20260629901133",
+    "company_info_payload": {
+      "corp_code": "01222867",
+      "corp_name": "(주)제테마",
+      "hm_url": "www.jetema.com",
+      "induty_code": "213",
+      "ir_url": "",
+      "stock_code": "216080"
+    },
     "company_name": "제테마",
+    "corp_code": "01222867",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "제테마(216080) OpenDART disclosure: 증권발행결과(자율공시)",
     "event_title": "증권발행결과(자율공시)",
     "event_type": "증권발행결과(자율공시)",
+    "industry_code": "213",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
     "raw_reason_codes": [
       "증권발행결과(자율공시)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901133",
     "structured_payload": {
@@ -1009,17 +1477,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-403550-20260629801126",
+    "company_info_payload": {
+      "corp_code": "01026157",
+      "corp_name": "(주)쏘카",
+      "hm_url": "www.socarcorp.kr",
+      "induty_code": "76110",
+      "ir_url": "https://www.socarcorp.kr/ir/events",
+      "stock_code": "403550"
+    },
     "company_name": "쏘카",
+    "corp_code": "01026157",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "쏘카(403550) OpenDART disclosure: [기재정정]유상증자결정(종속회사의주요경영사항)",
     "event_title": "[기재정정]유상증자결정(종속회사의주요경영사항)",
     "event_type": "[기재정정]유상증자결정(종속회사의주요경영사항)",
+    "industry_code": "76110",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
     "raw_reason_codes": [
       "[기재정정]유상증자결정(종속회사의주요경영사항)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801126",
     "structured_payload": {
@@ -1037,17 +1518,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-216080-20260629901130",
+    "company_info_payload": {
+      "corp_code": "01222867",
+      "corp_name": "(주)제테마",
+      "hm_url": "www.jetema.com",
+      "induty_code": "213",
+      "ir_url": "",
+      "stock_code": "216080"
+    },
     "company_name": "제테마",
+    "corp_code": "01222867",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "제테마(216080) OpenDART disclosure: 증권발행결과(자율공시)",
     "event_title": "증권발행결과(자율공시)",
     "event_type": "증권발행결과(자율공시)",
+    "industry_code": "213",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
     "raw_reason_codes": [
       "증권발행결과(자율공시)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901130",
     "structured_payload": {
@@ -1065,17 +1559,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-440320-20260629901092",
+    "company_info_payload": {
+      "corp_code": "01585155",
+      "corp_name": "주식회사 오픈놀",
+      "hm_url": "openknowl.com",
+      "induty_code": "58222",
+      "ir_url": "",
+      "stock_code": "440320"
+    },
     "company_name": "오픈놀",
+    "corp_code": "01585155",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "오픈놀(440320) OpenDART disclosure: 증권발행결과(자율공시) (제2회차 CB)",
     "event_title": "증권발행결과(자율공시) (제2회차 CB)",
     "event_type": "증권발행결과(자율공시) (제2회차 CB)",
+    "industry_code": "58222",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
     "raw_reason_codes": [
       "증권발행결과(자율공시) (제2회차 CB)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901092",
     "structured_payload": {
@@ -1093,17 +1600,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-417840-20260629000499",
+    "company_info_payload": {
+      "corp_code": "01383229",
+      "corp_name": "주식회사 저스템",
+      "hm_url": "www.justem.co.kr",
+      "induty_code": "29271",
+      "ir_url": "",
+      "stock_code": "417840"
+    },
     "company_name": "저스템",
+    "corp_code": "01383229",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "저스템(417840) OpenDART disclosure: 자기주식취득결과보고서",
     "event_title": "자기주식취득결과보고서",
     "event_type": "자기주식취득결과보고서",
+    "industry_code": "29271",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     "raw_reason_codes": [
       "자기주식취득결과보고서"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000499",
     "structured_payload": {
@@ -1121,17 +1641,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-037350-20260629900991",
+    "company_info_payload": {
+      "corp_code": "00216498",
+      "corp_name": "(주)성도이엔지",
+      "hm_url": "www.sungdokorea.com",
+      "induty_code": "721",
+      "ir_url": "",
+      "stock_code": "037350"
+    },
     "company_name": "성도이엔지",
+    "corp_code": "00216498",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "성도이엔지(037350) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "721",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629900991",
     "structured_payload": {
@@ -1149,17 +1682,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-226950-20260629901106",
+    "company_info_payload": {
+      "corp_code": "01113718",
+      "corp_name": "올릭스 주식회사",
+      "hm_url": "www.olixpharma.com",
+      "induty_code": "70113",
+      "ir_url": "",
+      "stock_code": "226950"
+    },
     "company_name": "올릭스",
+    "corp_code": "01113718",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "올릭스(226950) OpenDART disclosure: 증권발행결과(자율공시)",
     "event_title": "증권발행결과(자율공시)",
     "event_type": "증권발행결과(자율공시)",
+    "industry_code": "70113",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
     "raw_reason_codes": [
       "증권발행결과(자율공시)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901106",
     "structured_payload": {
@@ -1177,17 +1723,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-226950-20260629000459",
+    "company_info_payload": {
+      "corp_code": "01113718",
+      "corp_name": "올릭스 주식회사",
+      "hm_url": "www.olixpharma.com",
+      "induty_code": "70113",
+      "ir_url": "",
+      "stock_code": "226950"
+    },
     "company_name": "올릭스",
+    "corp_code": "01113718",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "올릭스(226950) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)",
     "event_title": "[기재정정]주요사항보고서(유상증자결정)",
     "event_type": "[기재정정]주요사항보고서(유상증자결정)",
+    "industry_code": "70113",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
     "raw_reason_codes": [
       "[기재정정]주요사항보고서(유상증자결정)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000459",
     "structured_payload": {
@@ -1205,17 +1764,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-248070-20260629000482",
+    "company_info_payload": {
+      "corp_code": "01159233",
+      "corp_name": "주식회사 솔루엠",
+      "hm_url": "www.solum-group.co.kr",
+      "induty_code": "2629",
+      "ir_url": "http://www.solum-group.com",
+      "stock_code": "248070"
+    },
     "company_name": "솔루엠",
+    "corp_code": "01159233",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "솔루엠(248070) OpenDART disclosure: 자기주식처분결과보고서",
     "event_title": "자기주식처분결과보고서",
     "event_type": "자기주식처분결과보고서",
+    "industry_code": "2629",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
     "raw_reason_codes": [
       "자기주식처분결과보고서"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000482",
     "structured_payload": {
@@ -1233,17 +1805,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-003540-20260629000478",
+    "company_info_payload": {
+      "corp_code": "00110893",
+      "corp_name": "대신증권(주)",
+      "hm_url": "www.daishin.com",
+      "induty_code": "66121",
+      "ir_url": "",
+      "stock_code": "003540"
+    },
     "company_name": "대신증권",
+    "corp_code": "00110893",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "대신증권(003540) OpenDART disclosure: 증권발행실적보고서",
     "event_title": "증권발행실적보고서",
     "event_type": "증권발행실적보고서",
+    "industry_code": "66121",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
     "raw_reason_codes": [
       "증권발행실적보고서"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000478",
     "structured_payload": {
@@ -1261,17 +1846,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-060900-20260629900964",
+    "company_info_payload": {
+      "corp_code": "00367695",
+      "corp_name": "(주)에이전트에이아이",
+      "hm_url": "www.agentai.xyz",
+      "induty_code": "351",
+      "ir_url": "www.agentai.xyz",
+      "stock_code": "060900"
+    },
     "company_name": "에이전트AI",
+    "corp_code": "00367695",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "에이전트AI(060900) OpenDART disclosure: 증권발행결과(자율공시) (제35회차 CB)",
     "event_title": "증권발행결과(자율공시) (제35회차 CB)",
     "event_type": "증권발행결과(자율공시) (제35회차 CB)",
+    "industry_code": "351",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     "raw_reason_codes": [
       "증권발행결과(자율공시) (제35회차 CB)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629900964",
     "structured_payload": {
@@ -1289,17 +1887,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-378340-20260629900849",
+    "company_info_payload": {
+      "corp_code": "01488320",
+      "corp_name": "주식회사 필에너지",
+      "hm_url": "philenergy.co.kr",
+      "induty_code": "29299",
+      "ir_url": "",
+      "stock_code": "378340"
+    },
     "company_name": "필에너지",
+    "corp_code": "01488320",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "필에너지(378340) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "29299",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629900849",
     "structured_payload": {
@@ -1317,17 +1928,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-003540-20260629000475",
+    "company_info_payload": {
+      "corp_code": "00110893",
+      "corp_name": "대신증권(주)",
+      "hm_url": "www.daishin.com",
+      "induty_code": "66121",
+      "ir_url": "",
+      "stock_code": "003540"
+    },
     "company_name": "대신증권",
+    "corp_code": "00110893",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "대신증권(003540) OpenDART disclosure: 증권발행실적보고서",
     "event_title": "증권발행실적보고서",
     "event_type": "증권발행실적보고서",
+    "industry_code": "66121",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
     "raw_reason_codes": [
       "증권발행실적보고서"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000475",
     "structured_payload": {
@@ -1345,17 +1969,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-282720-20260629900997",
+    "company_info_payload": {
+      "corp_code": "00872656",
+      "corp_name": "금양그린파워(주)",
+      "hm_url": "www.kygp.co.kr",
+      "induty_code": "423",
+      "ir_url": "",
+      "stock_code": "282720"
+    },
     "company_name": "금양그린파워",
+    "corp_code": "00872656",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "금양그린파워(282720) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "423",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629900997",
     "structured_payload": {
@@ -1373,17 +2010,30 @@
   },
   {
     "candidate_event_id": "CE-LIVE-DART-357550-20260629000448",
+    "company_info_payload": {
+      "corp_code": "00921916",
+      "corp_name": "주식회사 석경에이티",
+      "hm_url": "www.sukgyung.com",
+      "induty_code": "20129",
+      "ir_url": "",
+      "stock_code": "357550"
+    },
     "company_name": "석경에이티",
+    "corp_code": "00921916",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "석경에이티(357550) OpenDART disclosure: 주요사항보고서(자기주식취득신탁계약체결결정)",
     "event_title": "주요사항보고서(자기주식취득신탁계약체결결정)",
     "event_type": "주요사항보고서(자기주식취득신탁계약체결결정)",
+    "industry_code": "20129",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
     "raw_reason_codes": [
       "주요사항보고서(자기주식취득신탁계약체결결정)"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629000448",
     "structured_payload": {

@@ -1,17 +1,30 @@
 {
   "candidate_event": {
     "candidate_event_id": "CE-LIVE-DART-381970-20260629801242",
+    "company_info_payload": {
+      "corp_code": "01323032",
+      "corp_name": "케이카 주식회사",
+      "hm_url": "www.kcar.com",
+      "induty_code": "45120",
+      "ir_url": "kcar.irpage.co.kr",
+      "stock_code": "381970"
+    },
     "company_name": "케이카",
+    "corp_code": "01323032",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "케이카(381970) OpenDART disclosure: [기재정정]투자판단관련주요경영사항",
     "event_title": "[기재정정]투자판단관련주요경영사항",
     "event_type": "[기재정정]투자판단관련주요경영사항",
+    "industry_code": "45120",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
     "raw_reason_codes": [
       "[기재정정]투자판단관련주요경영사항"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801242",
     "structured_payload": {

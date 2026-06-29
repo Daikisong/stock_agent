@@ -34,6 +34,10 @@ class CutoverDailyShadowEntrypointTests(unittest.TestCase):
             payload = json.loads(completed.stdout)
             self.assertEqual(payload["production_verdict"], "NOT_READY")
             self.assertTrue((output / "audit_summary.json").exists())
+            audit = json.loads((output / "audit_summary.json").read_text(encoding="utf-8"))
+            coverage = audit["summary"]["candidate"]["sector_coverage"]["summary"]
+            self.assertGreaterEqual(coverage["active_large_sector_count"], 6)
+            self.assertEqual(coverage["unknown_sector_candidate_count"], 0)
 
 
 if __name__ == "__main__":

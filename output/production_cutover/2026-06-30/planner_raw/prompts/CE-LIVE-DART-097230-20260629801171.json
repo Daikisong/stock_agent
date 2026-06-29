@@ -1,17 +1,30 @@
 {
   "candidate_event": {
     "candidate_event_id": "CE-LIVE-DART-097230-20260629801171",
+    "company_info_payload": {
+      "corp_code": "00633835",
+      "corp_name": "(주)에이치제이중공업",
+      "hm_url": "www.hjsc.co.kr",
+      "induty_code": "41221",
+      "ir_url": "",
+      "stock_code": "097230"
+    },
     "company_name": "HJ중공업",
+    "corp_code": "00633835",
     "detected_at": "2026-06-30",
     "event_date": "2026-06-29",
     "event_summary": "HJ중공업(097230) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
     "event_title": "[기재정정]단일판매ㆍ공급계약체결",
     "event_type": "[기재정정]단일판매ㆍ공급계약체결",
+    "industry_code": "41221",
     "issuer_directness": "DIRECT",
+    "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
     "raw_reason_codes": [
       "[기재정정]단일판매ㆍ공급계약체결"
     ],
     "research_brain_eligible": true,
+    "sector_classification_source": "OpenDART company.json induty_code",
+    "sector_classification_status": "CLASSIFIED",
     "source_family": "DART",
     "source_id": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629801171",
     "structured_payload": {
