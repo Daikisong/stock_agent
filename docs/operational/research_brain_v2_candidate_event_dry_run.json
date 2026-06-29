@@ -1,0 +1,3575 @@
+{
+  "provider_or_source_gaps": [
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 1,
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    }
+  ],
+  "rows": [
+    {
+      "candidate_event_id": "CEV2-cce73a04731b19b4c9d81339",
+      "company_name": "옵티코어",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "옵티코어 price_relative_strength event from PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "옵티코어 price_relative_strength event from PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:380540:20260612900554:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 50.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 26.0,
+        "merged_stage": null,
+        "price_event_score": 50.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_NEAR_52W_HIGH",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 26.0,
+        "company_name": "옵티코어",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 50.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT",
+          "PRICE_NEAR_52W_HIGH",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "380540",
+        "test_injected": false
+      },
+      "symbol": "380540"
+    },
+    {
+      "candidate_event_id": "CEV2-ad652cfc04f53d031e3c42f1",
+      "company_name": "옵티코어",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "옵티코어 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_title": "옵티코어 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_type": "supply_contract",
+      "initial_evidence_document_ids": [
+        "opendart:380540:20260612900554:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 50.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 26.0,
+        "merged_stage": null,
+        "price_event_score": 50.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": "DISC_SUPPLY_CONTRACT",
+      "raw_reason_codes": [
+        "DISC_SUPPLY_CONTRACT"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 26.0,
+        "company_name": "옵티코어",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 50.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT",
+          "PRICE_NEAR_52W_HIGH",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "380540",
+        "test_injected": false
+      },
+      "symbol": "380540"
+    },
+    {
+      "candidate_event_id": "CEV2-656f12c5d7b54b769fc15cba",
+      "company_name": "큐캐피탈",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "큐캐피탈 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_title": "큐캐피탈 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:016600:20260611000492:임원ㆍ주요주주특정증권등소유상황보고서",
+        "opendart:016600:20260611000534:주식등의대량보유상황보고서(일반)"
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 100.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 25.0,
+        "merged_stage": null,
+        "price_event_score": 100.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_NEAR_52W_HIGH",
+        "PRICE_60D_TOP_PERCENTILE",
+        "PRICE_GAP_WITH_DISCLOSURE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 25.0,
+        "company_name": "큐캐피탈",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 100.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_NEAR_52W_HIGH",
+          "PRICE_60D_TOP_PERCENTILE",
+          "PRICE_GAP_WITH_DISCLOSURE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "016600",
+        "test_injected": false
+      },
+      "symbol": "016600"
+    },
+    {
+      "candidate_event_id": "CEV2-dfbab2b51071d77663081563",
+      "company_name": "브이엠",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "브이엠 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_title": "브이엠 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:089970:20260611000016:주식등의대량보유상황보고서(약식)"
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 100.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 25.0,
+        "merged_stage": null,
+        "price_event_score": 100.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_NEAR_52W_HIGH",
+        "PRICE_60D_TOP_PERCENTILE",
+        "PRICE_GAP_WITH_DISCLOSURE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 25.0,
+        "company_name": "브이엠",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 100.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_NEAR_52W_HIGH",
+          "PRICE_60D_TOP_PERCENTILE",
+          "PRICE_GAP_WITH_DISCLOSURE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "089970",
+        "test_injected": false
+      },
+      "symbol": "089970"
+    },
+    {
+      "candidate_event_id": "CEV2-f4fd58fc8acb5c56954c4645",
+      "company_name": "유진테크",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "유진테크 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "유진테크 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 85.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 21.25,
+        "merged_stage": null,
+        "price_event_score": 85.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_NEAR_52W_HIGH",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 21.25,
+        "company_name": "유진테크",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 85.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_NEAR_52W_HIGH",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "084370",
+        "test_injected": false
+      },
+      "symbol": "084370"
+    },
+    {
+      "candidate_event_id": "CEV2-c0d815293dd0e19bc0af9864",
+      "company_name": "미래에셋생명",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "미래에셋생명 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "미래에셋생명 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 85.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 21.25,
+        "merged_stage": null,
+        "price_event_score": 85.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_NEAR_52W_HIGH",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 21.25,
+        "company_name": "미래에셋생명",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 85.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_NEAR_52W_HIGH",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "085620",
+        "test_injected": false
+      },
+      "symbol": "085620"
+    },
+    {
+      "candidate_event_id": "CEV2-a2456d417b5fc8783f08e0d6",
+      "company_name": "더블유게임즈",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "더블유게임즈 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "더블유게임즈 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 85.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 21.25,
+        "merged_stage": null,
+        "price_event_score": 85.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_NEAR_52W_HIGH",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 21.25,
+        "company_name": "더블유게임즈",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 85.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_NEAR_52W_HIGH",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "192080",
+        "test_injected": false
+      },
+      "symbol": "192080"
+    },
+    {
+      "candidate_event_id": "CEV2-94966501e9a15dc6e33aa105",
+      "company_name": "타이거일렉",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "타이거일렉 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "타이거일렉 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 85.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 21.25,
+        "merged_stage": null,
+        "price_event_score": 85.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_NEAR_52W_HIGH",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 21.25,
+        "company_name": "타이거일렉",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 85.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_NEAR_52W_HIGH",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "219130",
+        "test_injected": false
+      },
+      "symbol": "219130"
+    },
+    {
+      "candidate_event_id": "CEV2-7109d09cd88e6364229960b4",
+      "company_name": "한성크린텍",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "한성크린텍 price_relative_strength event from PRICE_60D_TOP_PERCENTILE",
+      "event_title": "한성크린텍 price_relative_strength event from PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:066980:20260611900868:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 25.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 19.75,
+        "merged_stage": null,
+        "price_event_score": 25.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 19.75,
+        "company_name": "한성크린텍",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 25.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "066980",
+        "test_injected": false
+      },
+      "symbol": "066980"
+    },
+    {
+      "candidate_event_id": "CEV2-88b673b002f37ad83858f6ea",
+      "company_name": "한성크린텍",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "한성크린텍 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_title": "한성크린텍 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_type": "supply_contract",
+      "initial_evidence_document_ids": [
+        "opendart:066980:20260611900868:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 25.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 19.75,
+        "merged_stage": null,
+        "price_event_score": 25.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": "DISC_SUPPLY_CONTRACT",
+      "raw_reason_codes": [
+        "DISC_SUPPLY_CONTRACT"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 19.75,
+        "company_name": "한성크린텍",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 25.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "066980",
+        "test_injected": false
+      },
+      "symbol": "066980"
+    },
+    {
+      "candidate_event_id": "CEV2-5bcce2fdc37331dbba1f9346",
+      "company_name": "유비온",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "유비온 price_relative_strength event from PRICE_60D_TOP_PERCENTILE",
+      "event_title": "유비온 price_relative_strength event from PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:084440:20260611900800:단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 25.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 19.75,
+        "merged_stage": null,
+        "price_event_score": 25.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 19.75,
+        "company_name": "유비온",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 25.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "084440",
+        "test_injected": false
+      },
+      "symbol": "084440"
+    },
+    {
+      "candidate_event_id": "CEV2-3413e2723a7e8c7d1e09d709",
+      "company_name": "유비온",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "유비온 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_title": "유비온 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_type": "supply_contract",
+      "initial_evidence_document_ids": [
+        "opendart:084440:20260611900800:단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 25.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 19.75,
+        "merged_stage": null,
+        "price_event_score": 25.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": "DISC_SUPPLY_CONTRACT",
+      "raw_reason_codes": [
+        "DISC_SUPPLY_CONTRACT"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 19.75,
+        "company_name": "유비온",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 25.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "084440",
+        "test_injected": false
+      },
+      "symbol": "084440"
+    },
+    {
+      "candidate_event_id": "CEV2-9574a7045c3bab0cd8639d17",
+      "company_name": "파두",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "파두 price_relative_strength event from PRICE_60D_TOP_PERCENTILE",
+      "event_title": "파두 price_relative_strength event from PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:440110:20260611000606:주식매수선택권부여에관한신고",
+        "opendart:440110:20260612900737:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 25.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 19.75,
+        "merged_stage": null,
+        "price_event_score": 25.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 19.75,
+        "company_name": "파두",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 25.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "440110",
+        "test_injected": false
+      },
+      "symbol": "440110"
+    },
+    {
+      "candidate_event_id": "CEV2-75996f87279bd91ea1f537d8",
+      "company_name": "파두",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "파두 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_title": "파두 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_type": "supply_contract",
+      "initial_evidence_document_ids": [
+        "opendart:440110:20260611000606:주식매수선택권부여에관한신고",
+        "opendart:440110:20260612900737:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 25.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 19.75,
+        "merged_stage": null,
+        "price_event_score": 25.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": "DISC_SUPPLY_CONTRACT",
+      "raw_reason_codes": [
+        "DISC_SUPPLY_CONTRACT"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 19.75,
+        "company_name": "파두",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 25.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "440110",
+        "test_injected": false
+      },
+      "symbol": "440110"
+    },
+    {
+      "candidate_event_id": "CEV2-99bfb22cf8ef8678fd6c3679",
+      "company_name": "원일티엔아이",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "원일티엔아이 price_relative_strength event from PRICE_GAP_WITH_DISCLOSURE",
+      "event_title": "원일티엔아이 price_relative_strength event from PRICE_GAP_WITH_DISCLOSURE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:136150:20260611900372:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 20.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 18.5,
+        "merged_stage": null,
+        "price_event_score": 20.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_GAP_WITH_DISCLOSURE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 18.5,
+        "company_name": "원일티엔아이",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 20.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT",
+          "PRICE_GAP_WITH_DISCLOSURE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "136150",
+        "test_injected": false
+      },
+      "symbol": "136150"
+    },
+    {
+      "candidate_event_id": "CEV2-41c43b7793d3925d66ad264d",
+      "company_name": "원일티엔아이",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "원일티엔아이 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_title": "원일티엔아이 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_type": "supply_contract",
+      "initial_evidence_document_ids": [
+        "opendart:136150:20260611900372:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 20.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 18.5,
+        "merged_stage": null,
+        "price_event_score": 20.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": "DISC_SUPPLY_CONTRACT",
+      "raw_reason_codes": [
+        "DISC_SUPPLY_CONTRACT"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 18.5,
+        "company_name": "원일티엔아이",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 20.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT",
+          "PRICE_GAP_WITH_DISCLOSURE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "136150",
+        "test_injected": false
+      },
+      "symbol": "136150"
+    },
+    {
+      "candidate_event_id": "CEV2-e77180f0839056d0c33ab16c",
+      "company_name": "가온칩스",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "가온칩스 price_relative_strength event from PRICE_GAP_WITH_DISCLOSURE",
+      "event_title": "가온칩스 price_relative_strength event from PRICE_GAP_WITH_DISCLOSURE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:399720:20260611900165:단일판매ㆍ공급계약체결              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 20.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 18.5,
+        "merged_stage": null,
+        "price_event_score": 20.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_GAP_WITH_DISCLOSURE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 18.5,
+        "company_name": "가온칩스",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 20.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT",
+          "PRICE_GAP_WITH_DISCLOSURE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "399720",
+        "test_injected": false
+      },
+      "symbol": "399720"
+    },
+    {
+      "candidate_event_id": "CEV2-70895024eb9bc3bf2a395d8f",
+      "company_name": "가온칩스",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "가온칩스 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_title": "가온칩스 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_type": "supply_contract",
+      "initial_evidence_document_ids": [
+        "opendart:399720:20260611900165:단일판매ㆍ공급계약체결              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 20.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 18.5,
+        "merged_stage": null,
+        "price_event_score": 20.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": "DISC_SUPPLY_CONTRACT",
+      "raw_reason_codes": [
+        "DISC_SUPPLY_CONTRACT"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 18.5,
+        "company_name": "가온칩스",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 20.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT",
+          "PRICE_GAP_WITH_DISCLOSURE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "399720",
+        "test_injected": false
+      },
+      "symbol": "399720"
+    },
+    {
+      "candidate_event_id": "CEV2-597f6efe7496b31a0bace391",
+      "company_name": "제우스",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "제우스 capital_return event from DISC_BUYBACK_OR_CANCELLATION",
+      "event_title": "제우스 capital_return event from DISC_BUYBACK_OR_CANCELLATION",
+      "event_type": "capital_return",
+      "initial_evidence_document_ids": [
+        "opendart:079370:20260611000550:주요사항보고서(자기주식취득신탁계약체결결정)"
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 55.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 18.25,
+        "merged_stage": null,
+        "price_event_score": 55.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": "DISC_BUYBACK_OR_CANCELLATION",
+      "raw_reason_codes": [
+        "DISC_BUYBACK_OR_CANCELLATION"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 18.25,
+        "company_name": "제우스",
+        "disclosure_event_score": 10.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 55.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_BUYBACK_OR_CANCELLATION",
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_GAP_WITH_DISCLOSURE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "079370",
+        "test_injected": false
+      },
+      "symbol": "079370"
+    },
+    {
+      "candidate_event_id": "CEV2-bfdbb576515f827f07ff8ada",
+      "company_name": "제우스",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "제우스 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_title": "제우스 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:079370:20260611000550:주요사항보고서(자기주식취득신탁계약체결결정)"
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 55.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 18.25,
+        "merged_stage": null,
+        "price_event_score": 55.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_GAP_WITH_DISCLOSURE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 18.25,
+        "company_name": "제우스",
+        "disclosure_event_score": 10.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 55.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_BUYBACK_OR_CANCELLATION",
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_GAP_WITH_DISCLOSURE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "079370",
+        "test_injected": false
+      },
+      "symbol": "079370"
+    },
+    {
+      "candidate_event_id": "CEV2-9aa95010a03000ba5857b77e",
+      "company_name": "코리아써키트",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "코리아써키트 price_relative_strength event from PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_title": "코리아써키트 price_relative_strength event from PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:007810:20260611000551:주식등의대량보유상황보고서(약식)"
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 70.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 17.5,
+        "merged_stage": null,
+        "price_event_score": 70.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_NEAR_52W_HIGH",
+        "PRICE_60D_TOP_PERCENTILE",
+        "PRICE_GAP_WITH_DISCLOSURE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 17.5,
+        "company_name": "코리아써키트",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 70.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_NEAR_52W_HIGH",
+          "PRICE_60D_TOP_PERCENTILE",
+          "PRICE_GAP_WITH_DISCLOSURE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "007810",
+        "test_injected": false
+      },
+      "symbol": "007810"
+    },
+    {
+      "candidate_event_id": "CEV2-4d231756fe8ecb18459d8b98",
+      "company_name": "크레오에스지",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "크레오에스지 price_relative_strength event from PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_title": "크레오에스지 price_relative_strength event from PRICE_NEAR_52W_HIGH, PRICE_60D_TOP_PERCENTILE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:040350:20260611000451:주식등의대량보유상황보고서(일반)"
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 70.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 17.5,
+        "merged_stage": null,
+        "price_event_score": 70.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_NEAR_52W_HIGH",
+        "PRICE_60D_TOP_PERCENTILE",
+        "PRICE_GAP_WITH_DISCLOSURE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 17.5,
+        "company_name": "크레오에스지",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 70.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_NEAR_52W_HIGH",
+          "PRICE_60D_TOP_PERCENTILE",
+          "PRICE_GAP_WITH_DISCLOSURE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "040350",
+        "test_injected": false
+      },
+      "symbol": "040350"
+    },
+    {
+      "candidate_event_id": "CEV2-d9667821ec6e8af44469c508",
+      "company_name": "대원강업",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "대원강업 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "대원강업 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:000430:20260612000532:주식등의대량보유상황보고서(일반)",
+        "opendart:000430:20260612000540:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "대원강업",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "000430",
+        "test_injected": false
+      },
+      "symbol": "000430"
+    },
+    {
+      "candidate_event_id": "CEV2-226cd9f016d6f86f2b4b40c6",
+      "company_name": "오리온홀딩스",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "오리온홀딩스 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "오리온홀딩스 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "오리온홀딩스",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "001800",
+        "test_injected": false
+      },
+      "symbol": "001800"
+    },
+    {
+      "candidate_event_id": "CEV2-0e6d05d9e3ba27a2973b2756",
+      "company_name": "오리엔트바이오",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "오리엔트바이오 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "오리엔트바이오 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:002630:20260611000186:임원ㆍ주요주주특정증권등소유상황보고서",
+        "opendart:002630:20260612000465:주주총회소집공고",
+        "opendart:002630:20260612800693:주주총회소집결의              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "오리엔트바이오",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "002630",
+        "test_injected": false
+      },
+      "symbol": "002630"
+    },
+    {
+      "candidate_event_id": "CEV2-51ed02f872fea28e47e8169c",
+      "company_name": "SBI인베스트먼트",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "SBI인베스트먼트 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "SBI인베스트먼트 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "SBI인베스트먼트",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "019550",
+        "test_injected": false
+      },
+      "symbol": "019550"
+    },
+    {
+      "candidate_event_id": "CEV2-247ee77ab86302e625ab00ce",
+      "company_name": "마니커",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "마니커 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "마니커 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "마니커",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "027740",
+        "test_injected": false
+      },
+      "symbol": "027740"
+    },
+    {
+      "candidate_event_id": "CEV2-358ca19dd75a225d48eca9a9",
+      "company_name": "원익홀딩스",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "원익홀딩스 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "원익홀딩스 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "원익홀딩스",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "030530",
+        "test_injected": false
+      },
+      "symbol": "030530"
+    },
+    {
+      "candidate_event_id": "CEV2-e0d1e14215f224f7b6ff4dd6",
+      "company_name": "소프트센",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "소프트센 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "소프트센 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "소프트센",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "032680",
+        "test_injected": false
+      },
+      "symbol": "032680"
+    },
+    {
+      "candidate_event_id": "CEV2-c50cd8deff3cdfecee260cd3",
+      "company_name": "블루콤",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "블루콤 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "블루콤 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "블루콤",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "033560",
+        "test_injected": false
+      },
+      "symbol": "033560"
+    },
+    {
+      "candidate_event_id": "CEV2-9124f1449f751960a15efe6e",
+      "company_name": "에스엠",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "에스엠 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "에스엠 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:041510:20260612000309:주식등의대량보유상황보고서(약식)"
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "에스엠",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "041510",
+        "test_injected": false
+      },
+      "symbol": "041510"
+    },
+    {
+      "candidate_event_id": "CEV2-396d273b13be3e835a43c1d2",
+      "company_name": "미코",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "미코 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "미코 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "미코",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "059090",
+        "test_injected": false
+      },
+      "symbol": "059090"
+    },
+    {
+      "candidate_event_id": "CEV2-99008cae99ca476de94d08e6",
+      "company_name": "에이전트AI",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "에이전트AI price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "에이전트AI price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "에이전트AI",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "060900",
+        "test_injected": false
+      },
+      "symbol": "060900"
+    },
+    {
+      "candidate_event_id": "CEV2-b4ece70f9c3703da8ce85956",
+      "company_name": "미스토홀딩스",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "미스토홀딩스 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "미스토홀딩스 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "미스토홀딩스",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "081660",
+        "test_injected": false
+      },
+      "symbol": "081660"
+    },
+    {
+      "candidate_event_id": "CEV2-10c5fca69c94274103688446",
+      "company_name": "비츠로셀",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "비츠로셀 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "비츠로셀 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "비츠로셀",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "082920",
+        "test_injected": false
+      },
+      "symbol": "082920"
+    },
+    {
+      "candidate_event_id": "CEV2-0b82c1dd1412fe02d4fa6f60",
+      "company_name": "후성",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "후성 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "후성 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "후성",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "093370",
+        "test_injected": false
+      },
+      "symbol": "093370"
+    },
+    {
+      "candidate_event_id": "CEV2-e6b07a96a6b75159f208ee98",
+      "company_name": "윈팩",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "윈팩 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "윈팩 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "윈팩",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "097800",
+        "test_injected": false
+      },
+      "symbol": "097800"
+    },
+    {
+      "candidate_event_id": "CEV2-69d209c955d19b981e95df43",
+      "company_name": "GKL",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "GKL price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "GKL price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "GKL",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "114090",
+        "test_injected": false
+      },
+      "symbol": "114090"
+    },
+    {
+      "candidate_event_id": "CEV2-02ab49304f53119b238919b2",
+      "company_name": "이미지스",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "이미지스 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "이미지스 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "이미지스",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "115610",
+        "test_injected": false
+      },
+      "symbol": "115610"
+    },
+    {
+      "candidate_event_id": "CEV2-ee436c918f3aa31843105807",
+      "company_name": "유니포인트",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "유니포인트 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "유니포인트 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "유니포인트",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "121060",
+        "test_injected": false
+      },
+      "symbol": "121060"
+    },
+    {
+      "candidate_event_id": "CEV2-9468a382841bb0bb94d3232b",
+      "company_name": "화신정공",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "화신정공 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "화신정공 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "화신정공",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "126640",
+        "test_injected": false
+      },
+      "symbol": "126640"
+    },
+    {
+      "candidate_event_id": "CEV2-e212637cc371b53283bc1062",
+      "company_name": "이퓨쳐",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "이퓨쳐 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "이퓨쳐 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "이퓨쳐",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "134060",
+        "test_injected": false
+      },
+      "symbol": "134060"
+    },
+    {
+      "candidate_event_id": "CEV2-1fc42e1d41d3ad67f6653921",
+      "company_name": "원익IPS",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "원익IPS price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "원익IPS price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "원익IPS",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "240810",
+        "test_injected": false
+      },
+      "symbol": "240810"
+    },
+    {
+      "candidate_event_id": "CEV2-870e903fa87b83325aaeb31f",
+      "company_name": "케이씨텍",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "케이씨텍 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "케이씨텍 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "케이씨텍",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "281820",
+        "test_injected": false
+      },
+      "symbol": "281820"
+    },
+    {
+      "candidate_event_id": "CEV2-dd12a9817f8b114c2648384a",
+      "company_name": "솔트웨어",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "솔트웨어 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "솔트웨어 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:328380:20260611000346:임원ㆍ주요주주특정증권등소유상황보고서",
+        "opendart:328380:20260612000139:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "솔트웨어",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "328380",
+        "test_injected": false
+      },
+      "symbol": "328380"
+    },
+    {
+      "candidate_event_id": "CEV2-4e4702464dbcf978dac87841",
+      "company_name": "이노테나",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "이노테나 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "이노테나 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "이노테나",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "333050",
+        "test_injected": false
+      },
+      "symbol": "333050"
+    },
+    {
+      "candidate_event_id": "CEV2-4f1c4d4eaac009cf7f01f732",
+      "company_name": "크라우드웍스",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "크라우드웍스 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "크라우드웍스 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "크라우드웍스",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "355390",
+        "test_injected": false
+      },
+      "symbol": "355390"
+    },
+    {
+      "candidate_event_id": "CEV2-2c1e3c6007f1a8088bf6d691",
+      "company_name": "라이콤",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "라이콤 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "라이콤 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "라이콤",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "388790",
+        "test_injected": false
+      },
+      "symbol": "388790"
+    },
+    {
+      "candidate_event_id": "CEV2-8712710ee1e214fd5f494120",
+      "company_name": "유디엠텍",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "유디엠텍 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_title": "유디엠텍 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_60D_TOP_PERCENTILE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 60.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 15.0,
+        "merged_stage": null,
+        "price_event_score": 60.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_60D_TOP_PERCENTILE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 15.0,
+        "company_name": "유디엠텍",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 60.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_60D_TOP_PERCENTILE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "389680",
+        "test_injected": false
+      },
+      "symbol": "389680"
+    },
+    {
+      "candidate_event_id": "CEV2-4120bb01f35e04217170a91f",
+      "company_name": "KG에코솔루션",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "KG에코솔루션 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_title": "KG에코솔루션 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:151860:20260611900373:수시공시의무관련사항(공정공시)              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 55.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 13.75,
+        "merged_stage": null,
+        "price_event_score": 55.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_GAP_WITH_DISCLOSURE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 13.75,
+        "company_name": "KG에코솔루션",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 55.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_GAP_WITH_DISCLOSURE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "151860",
+        "test_injected": false
+      },
+      "symbol": "151860"
+    },
+    {
+      "candidate_event_id": "CEV2-ae0d78f3883503bf16f2db5e",
+      "company_name": "SK리츠",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "SK리츠 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_title": "SK리츠 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:395400:20260611000556:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 55.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 13.75,
+        "merged_stage": null,
+        "price_event_score": 55.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_GAP_WITH_DISCLOSURE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 13.75,
+        "company_name": "SK리츠",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 55.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_GAP_WITH_DISCLOSURE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "395400",
+        "test_injected": false
+      },
+      "symbol": "395400"
+    },
+    {
+      "candidate_event_id": "CEV2-ed15cb3dac96206f302cb6ef",
+      "company_name": "삼성FN리츠",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "삼성FN리츠 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_title": "삼성FN리츠 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:448730:20260611000561:임원ㆍ주요주주특정증권등소유상황보고서",
+        "opendart:448730:20260611800268:부동산투자회사부동산임대              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 55.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 13.75,
+        "merged_stage": null,
+        "price_event_score": 55.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_GAP_WITH_DISCLOSURE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 13.75,
+        "company_name": "삼성FN리츠",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 55.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_GAP_WITH_DISCLOSURE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "448730",
+        "test_injected": false
+      },
+      "symbol": "448730"
+    },
+    {
+      "candidate_event_id": "CEV2-8872ce3ec114c2913ff7f942",
+      "company_name": "한화리츠",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "한화리츠 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_title": "한화리츠 price_relative_strength event from PRICE_VOLUME_SPIKE, PRICE_GAP_WITH_DISCLOSURE",
+      "event_type": "price_relative_strength",
+      "initial_evidence_document_ids": [
+        "opendart:451800:20260611000563:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 55.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 13.75,
+        "merged_stage": null,
+        "price_event_score": 55.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": null,
+      "raw_reason_codes": [
+        "PRICE_VOLUME_SPIKE",
+        "PRICE_GAP_WITH_DISCLOSURE"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 13.75,
+        "company_name": "한화리츠",
+        "disclosure_event_score": 0.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 55.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "PRICE_VOLUME_SPIKE",
+          "PRICE_GAP_WITH_DISCLOSURE"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "451800",
+        "test_injected": false
+      },
+      "symbol": "451800"
+    },
+    {
+      "candidate_event_id": "CEV2-66a92e64df57de317ca45b47",
+      "company_name": "한신공영",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "한신공영 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_title": "한신공영 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_type": "supply_contract",
+      "initial_evidence_document_ids": [
+        "opendart:004960:20260612800414:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 0.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 13.5,
+        "merged_stage": null,
+        "price_event_score": 0.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": "DISC_SUPPLY_CONTRACT",
+      "raw_reason_codes": [
+        "DISC_SUPPLY_CONTRACT"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 13.5,
+        "company_name": "한신공영",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 0.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "004960",
+        "test_injected": false
+      },
+      "symbol": "004960"
+    },
+    {
+      "candidate_event_id": "CEV2-69eca9f8bcb4b28eb39c4551",
+      "company_name": "HDC",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "HDC supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_title": "HDC supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_type": "supply_contract",
+      "initial_evidence_document_ids": [
+        "opendart:012630:20260611800785:단일판매ㆍ공급계약체결(자회사의 주요경영사항)              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 0.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 13.5,
+        "merged_stage": null,
+        "price_event_score": 0.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": "DISC_SUPPLY_CONTRACT",
+      "raw_reason_codes": [
+        "DISC_SUPPLY_CONTRACT"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 13.5,
+        "company_name": "HDC",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 0.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "012630",
+        "test_injected": false
+      },
+      "symbol": "012630"
+    },
+    {
+      "candidate_event_id": "CEV2-480fc05fef0a079064839e76",
+      "company_name": "까뮤이앤씨",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "까뮤이앤씨 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_title": "까뮤이앤씨 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_type": "supply_contract",
+      "initial_evidence_document_ids": [
+        "opendart:013700:20260611800522:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 0.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 13.5,
+        "merged_stage": null,
+        "price_event_score": 0.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": "DISC_SUPPLY_CONTRACT",
+      "raw_reason_codes": [
+        "DISC_SUPPLY_CONTRACT"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 13.5,
+        "company_name": "까뮤이앤씨",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 0.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "013700",
+        "test_injected": false
+      },
+      "symbol": "013700"
+    },
+    {
+      "candidate_event_id": "CEV2-5def257ecf89236e3e8b6db3",
+      "company_name": "HL D&I",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "HL D&I supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_title": "HL D&I supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_type": "supply_contract",
+      "initial_evidence_document_ids": [
+        "opendart:014790:20260612800570:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 0.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 13.5,
+        "merged_stage": null,
+        "price_event_score": 0.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": "DISC_SUPPLY_CONTRACT",
+      "raw_reason_codes": [
+        "DISC_SUPPLY_CONTRACT"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 13.5,
+        "company_name": "HL D&I",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 0.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "014790",
+        "test_injected": false
+      },
+      "symbol": "014790"
+    },
+    {
+      "candidate_event_id": "CEV2-5e89b75bc1c63cffd74269fd",
+      "company_name": "신원종합개발",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "신원종합개발 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_title": "신원종합개발 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_type": "supply_contract",
+      "initial_evidence_document_ids": [
+        "opendart:017000:20260611900224:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 0.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 13.5,
+        "merged_stage": null,
+        "price_event_score": 0.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": "DISC_SUPPLY_CONTRACT",
+      "raw_reason_codes": [
+        "DISC_SUPPLY_CONTRACT"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 13.5,
+        "company_name": "신원종합개발",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 0.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "017000",
+        "test_injected": false
+      },
+      "symbol": "017000"
+    },
+    {
+      "candidate_event_id": "CEV2-587ac48261942a1d08f80784",
+      "company_name": "KCC건설",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "KCC건설 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_title": "KCC건설 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_type": "supply_contract",
+      "initial_evidence_document_ids": [
+        "opendart:021320:20260612900603:단일판매ㆍ공급계약체결              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 0.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 13.5,
+        "merged_stage": null,
+        "price_event_score": 0.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": "DISC_SUPPLY_CONTRACT",
+      "raw_reason_codes": [
+        "DISC_SUPPLY_CONTRACT"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 13.5,
+        "company_name": "KCC건설",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 0.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "021320",
+        "test_injected": false
+      },
+      "symbol": "021320"
+    },
+    {
+      "candidate_event_id": "CEV2-f98967242e98ff05b46906b6",
+      "company_name": "대우건설",
+      "detected_at": "2026-06-12",
+      "event_date": "2026-06-12",
+      "event_freshness_days": 0,
+      "event_summary": "대우건설 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_title": "대우건설 supply_contract event from DISC_SUPPLY_CONTRACT",
+      "event_type": "supply_contract",
+      "initial_evidence_document_ids": [
+        "opendart:047040:20260612800708:[기재정정]단일판매ㆍ공급계약체결              ",
+        "opendart:047040:20260612800723:[기재정정]기타경영사항(자율공시)              "
+      ],
+      "issuer_directness": "DIRECT",
+      "magnitude": {
+        "contract_to_sales_pct": null,
+        "eps_revision_pct": null,
+        "facility_to_marketcap_pct": null,
+        "fcf_change": null,
+        "opm_change_pctp": null,
+        "relative_strength_rank": null,
+        "volume_spike_ratio": 0.0
+      },
+      "price_context": {
+        "cheap_scan_total_score": 13.5,
+        "merged_stage": null,
+        "price_event_score": 0.0,
+        "score_valid": null
+      },
+      "primary_disclosure_type": "DISC_SUPPLY_CONTRACT",
+      "raw_reason_codes": [
+        "DISC_SUPPLY_CONTRACT"
+      ],
+      "research_brain_eligible": true,
+      "source_family": "DART",
+      "source_id": "official_cheap_scan",
+      "structured_payload": {
+        "as_of_date": "2026-06-12",
+        "candidate_source_path": "official_cheap_scan",
+        "cheap_scan_total_score": 13.5,
+        "company_name": "대우건설",
+        "disclosure_event_score": 30.0,
+        "dropped_reason": null,
+        "financial_event_score": 0.0,
+        "market": "KR",
+        "price_event_score": 0.0,
+        "production_candidate": true,
+        "reason_codes": [
+          "DISC_SUPPLY_CONTRACT"
+        ],
+        "recommended_next_layer": "event_search",
+        "risk_event_score": 0.0,
+        "symbol": "047040",
+        "test_injected": false
+      },
+      "symbol": "047040"
+    }
+  ],
+  "schema_version": "research_brain_v2_candidate_event_dry_run",
+  "sector_rows": [
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 59,
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "required_attempt_count": 3,
+      "status": "pass"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 1,
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    },
+    {
+      "candidate_event_attempt_count": 0,
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "required_attempt_count": 3,
+      "status": "provider_or_source_gap"
+    }
+  ],
+  "summary": {
+    "candidate_event_count": 60,
+    "event_type_breakdown": {
+      "capital_return": 1,
+      "price_relative_strength": 46,
+      "supply_contract": 13
+    },
+    "event_with_initial_evidence_count": 33,
+    "sector_coverage": {
+      "L2_AI_SEMICONDUCTOR_ELECTRONICS": 59,
+      "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL": 1
+    },
+    "sector_coverage_count": 2,
+    "sector_gap_count": 9,
+    "source_family_breakdown": {
+      "DART": 60
+    },
+    "targeted_smoke_only": false
+  }
+}

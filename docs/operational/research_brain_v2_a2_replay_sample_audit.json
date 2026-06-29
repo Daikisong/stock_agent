@@ -1,0 +1,1212 @@
+{
+  "rows": [
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-000",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-001",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-002",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-003",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-004",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-005",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-006",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-007",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-008",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-009",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-010",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-011",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-012",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-013",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-014",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-015",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-016",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-017",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-018",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-019",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-020",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-021",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-022",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-023",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-024",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-025",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-026",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-027",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-028",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-029",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-030",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-031",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-032",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-033",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-034",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-035",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-036",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-037",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-038",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-039",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-040",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-041",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-042",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-043",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-044",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-045",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-046",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-047",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-048",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-049",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-050",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-051",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-052",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-053",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-054",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-055",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-056",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-057",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-058",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-059",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-060",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-061",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-062",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-063",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-064",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-065",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-066",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-067",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-068",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-069",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-070",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-071",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-072",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-073",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-074",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-075",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-076",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-077",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-078",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-079",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-080",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-081",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-082",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-083",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-084",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-085",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-086",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-087",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-088",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-089",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-090",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-091",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-092",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-093",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-094",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-095",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-096",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-097",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-098",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-099",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-100",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-101",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-102",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-103",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-104",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-105",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-106",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-107",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-108",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-109",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-110",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-111",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-112",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-113",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-114",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-115",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-116",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-117",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-118",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-119",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-120",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-121",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-122",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-123",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-124",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-125",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-126",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-127",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-128",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-129",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-130",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-131",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-132",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-133",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-134",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-135",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-136",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-137",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-138",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-139",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-140",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-141",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-142",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-143",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-144",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-145",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-146",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-147",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-148",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-149",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-150",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-151",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-152",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-153",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-154",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-155",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-156",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-157",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-158",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-159",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-160",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-161",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-162",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-163",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-164",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-165",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-166",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-167",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-168",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-169",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-170",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-171",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-172",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-173",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-174",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-175",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-176",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-177",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-178",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-179",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-180",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-181",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-182",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-183",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-184",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-185",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-186",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-187",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-188",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-189",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-190",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-191",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-192",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-193",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-194",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-195",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-196",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-197",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-198",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    },
+    {
+      "anchor_replay_status": "pass",
+      "evidence_os_replay_ready": true,
+      "sample_id": "A2-SAMPLE-199",
+      "source_quality_v2": "A2_EVIDENCE_OS_REPLAY_VERIFIED"
+    }
+  ],
+  "schema_version": "research_brain_v2_a2_replay_sample_audit",
+  "summary": {
+    "A2_replay_sample_fail_count": 0,
+    "A2_replay_sample_pass_count": 200,
+    "audit_pass": true,
+    "evidence_os_replay_ready": true,
+    "sample_size": 200
+  }
+}

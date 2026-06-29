@@ -1,0 +1,16 @@
+{
+  "schema_version": "research_brain_v2_readiness_verdict",
+  "summary": {
+    "blockers": [],
+    "fake_provider_used": false,
+    "frozen_daily_run_count": 1,
+    "production_blockers": [
+      "PRODUCTION_READY requires at least 5 frozen daily runs",
+      "real LLM planner provider not exercised in this shadow report"
+    ],
+    "production_ready": false,
+    "production_verdict": "READY_FOR_SHADOW_DAILY_RUN",
+    "ready_for_shadow_daily_run": true,
+    "real_provider_available": false
+  }
+}

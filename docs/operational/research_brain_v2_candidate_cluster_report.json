@@ -1,0 +1,872 @@
+{
+  "rows": [
+    {
+      "cluster_id": "CEV2-ee40c328f895e131960772ad",
+      "company_name": "대원강업",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-d9667821ec6e8af44469c508"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "000430"
+    },
+    {
+      "cluster_id": "CEV2-1c8d92d054bbb858f96c4dd2",
+      "company_name": "오리온홀딩스",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-226cd9f016d6f86f2b4b40c6"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "001800"
+    },
+    {
+      "cluster_id": "CEV2-a104dcf02a6c4ce00d340be1",
+      "company_name": "오리엔트바이오",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-0e6d05d9e3ba27a2973b2756"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "002630"
+    },
+    {
+      "cluster_id": "CEV2-6d819a503ac6f53c26c324f2",
+      "company_name": "한신공영",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-66a92e64df57de317ca45b47"
+      ],
+      "event_types": [
+        "supply_contract"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "004960"
+    },
+    {
+      "cluster_id": "CEV2-6511695f248952b093fcb5f7",
+      "company_name": "코리아써키트",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-9aa95010a03000ba5857b77e"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "007810"
+    },
+    {
+      "cluster_id": "CEV2-8c90405863c50dedb99f8823",
+      "company_name": "HDC",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-69eca9f8bcb4b28eb39c4551"
+      ],
+      "event_types": [
+        "supply_contract"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "012630"
+    },
+    {
+      "cluster_id": "CEV2-ebffb77592c489d95bff9443",
+      "company_name": "까뮤이앤씨",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-480fc05fef0a079064839e76"
+      ],
+      "event_types": [
+        "supply_contract"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "013700"
+    },
+    {
+      "cluster_id": "CEV2-80977edcc4204f285d4d1a0e",
+      "company_name": "HL D&I",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-5def257ecf89236e3e8b6db3"
+      ],
+      "event_types": [
+        "supply_contract"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "014790"
+    },
+    {
+      "cluster_id": "CEV2-d99370327b9dfb848ae247e5",
+      "company_name": "큐캐피탈",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-656f12c5d7b54b769fc15cba"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "016600"
+    },
+    {
+      "cluster_id": "CEV2-eee6fa100010eb2ee4acbbbc",
+      "company_name": "신원종합개발",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-5e89b75bc1c63cffd74269fd"
+      ],
+      "event_types": [
+        "supply_contract"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "017000"
+    },
+    {
+      "cluster_id": "CEV2-f97bb301a759eb4a9d8aec6c",
+      "company_name": "SBI인베스트먼트",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-51ed02f872fea28e47e8169c"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "019550"
+    },
+    {
+      "cluster_id": "CEV2-b0cf03bfdc40552dc89f4412",
+      "company_name": "KCC건설",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-587ac48261942a1d08f80784"
+      ],
+      "event_types": [
+        "supply_contract"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "021320"
+    },
+    {
+      "cluster_id": "CEV2-9e94e06ba4e4e75665021ead",
+      "company_name": "마니커",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-247ee77ab86302e625ab00ce"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "027740"
+    },
+    {
+      "cluster_id": "CEV2-5e88d47ffe31ccbf68237d5a",
+      "company_name": "원익홀딩스",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-358ca19dd75a225d48eca9a9"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "030530"
+    },
+    {
+      "cluster_id": "CEV2-8a407247fd08591fb8379edb",
+      "company_name": "소프트센",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-e0d1e14215f224f7b6ff4dd6"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "032680"
+    },
+    {
+      "cluster_id": "CEV2-b4e58089ca220c5d25f99547",
+      "company_name": "블루콤",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-c50cd8deff3cdfecee260cd3"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "033560"
+    },
+    {
+      "cluster_id": "CEV2-290fad2e7b64dd4333a509bb",
+      "company_name": "크레오에스지",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-4d231756fe8ecb18459d8b98"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "040350"
+    },
+    {
+      "cluster_id": "CEV2-e6d186527f084a63ccddc2e7",
+      "company_name": "에스엠",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-9124f1449f751960a15efe6e"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "041510"
+    },
+    {
+      "cluster_id": "CEV2-ab806802c8277ca324bc7186",
+      "company_name": "대우건설",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-f98967242e98ff05b46906b6"
+      ],
+      "event_types": [
+        "supply_contract"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "047040"
+    },
+    {
+      "cluster_id": "CEV2-ecb1fa3874684ae1e9aad27a",
+      "company_name": "미코",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-396d273b13be3e835a43c1d2"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "059090"
+    },
+    {
+      "cluster_id": "CEV2-d8f2280c63011ddbc51ee24b",
+      "company_name": "에이전트AI",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-99008cae99ca476de94d08e6"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "060900"
+    },
+    {
+      "cluster_id": "CEV2-ea25fe94432ebd3eac4614e6",
+      "company_name": "한성크린텍",
+      "event_count": 2,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-7109d09cd88e6364229960b4",
+        "CEV2-88b673b002f37ad83858f6ea"
+      ],
+      "event_types": [
+        "price_relative_strength",
+        "supply_contract"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 2,
+      "symbol": "066980"
+    },
+    {
+      "cluster_id": "CEV2-516d87420831763077247130",
+      "company_name": "제우스",
+      "event_count": 2,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-597f6efe7496b31a0bace391",
+        "CEV2-bfdbb576515f827f07ff8ada"
+      ],
+      "event_types": [
+        "capital_return",
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 2,
+      "symbol": "079370"
+    },
+    {
+      "cluster_id": "CEV2-8e1b4b8d4abf874e27371fc4",
+      "company_name": "미스토홀딩스",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-b4ece70f9c3703da8ce85956"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "081660"
+    },
+    {
+      "cluster_id": "CEV2-8340acfb648cdf5fc1098ace",
+      "company_name": "비츠로셀",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-10c5fca69c94274103688446"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "082920"
+    },
+    {
+      "cluster_id": "CEV2-a2f49c2296e25ab454a52018",
+      "company_name": "유진테크",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-f4fd58fc8acb5c56954c4645"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "084370"
+    },
+    {
+      "cluster_id": "CEV2-40123230b8b0bbf067f831d9",
+      "company_name": "유비온",
+      "event_count": 2,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-5bcce2fdc37331dbba1f9346",
+        "CEV2-3413e2723a7e8c7d1e09d709"
+      ],
+      "event_types": [
+        "price_relative_strength",
+        "supply_contract"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 2,
+      "symbol": "084440"
+    },
+    {
+      "cluster_id": "CEV2-9fc7442edf2dce1974144b18",
+      "company_name": "미래에셋생명",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-c0d815293dd0e19bc0af9864"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "085620"
+    },
+    {
+      "cluster_id": "CEV2-83ef8eb3d6d85cd3953fc713",
+      "company_name": "브이엠",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-dfbab2b51071d77663081563"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "089970"
+    },
+    {
+      "cluster_id": "CEV2-da3980b461f5a1fcd8c2e60f",
+      "company_name": "후성",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-0b82c1dd1412fe02d4fa6f60"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "093370"
+    },
+    {
+      "cluster_id": "CEV2-9873c86f5125d239e784a5ed",
+      "company_name": "윈팩",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-e6b07a96a6b75159f208ee98"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "097800"
+    },
+    {
+      "cluster_id": "CEV2-4596192c15a19e8445162d5c",
+      "company_name": "GKL",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-69d209c955d19b981e95df43"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "114090"
+    },
+    {
+      "cluster_id": "CEV2-156cdbd2cbe7179f74cc73ce",
+      "company_name": "이미지스",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-02ab49304f53119b238919b2"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "115610"
+    },
+    {
+      "cluster_id": "CEV2-015669cba160316d40d38c78",
+      "company_name": "유니포인트",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-ee436c918f3aa31843105807"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "121060"
+    },
+    {
+      "cluster_id": "CEV2-790b353c3f3f1e4bf3e549c5",
+      "company_name": "화신정공",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-9468a382841bb0bb94d3232b"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "126640"
+    },
+    {
+      "cluster_id": "CEV2-e1b04de094831f2d84047328",
+      "company_name": "이퓨쳐",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-e212637cc371b53283bc1062"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "134060"
+    },
+    {
+      "cluster_id": "CEV2-38676ff5dd480dd9128a90d6",
+      "company_name": "원일티엔아이",
+      "event_count": 2,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-99bfb22cf8ef8678fd6c3679",
+        "CEV2-41c43b7793d3925d66ad264d"
+      ],
+      "event_types": [
+        "price_relative_strength",
+        "supply_contract"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 2,
+      "symbol": "136150"
+    },
+    {
+      "cluster_id": "CEV2-2857e950ecb755674929cad0",
+      "company_name": "KG에코솔루션",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-4120bb01f35e04217170a91f"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "151860"
+    },
+    {
+      "cluster_id": "CEV2-f7819fe719fa3dec463ecce2",
+      "company_name": "더블유게임즈",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-a2456d417b5fc8783f08e0d6"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "192080"
+    },
+    {
+      "cluster_id": "CEV2-a9ebbc3ab188f0b414d0cf1a",
+      "company_name": "타이거일렉",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-94966501e9a15dc6e33aa105"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "219130"
+    },
+    {
+      "cluster_id": "CEV2-59db106ef8303aab5fa0f0ec",
+      "company_name": "원익IPS",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-1fc42e1d41d3ad67f6653921"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "240810"
+    },
+    {
+      "cluster_id": "CEV2-564aadbcd18d175704567ed0",
+      "company_name": "케이씨텍",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-870e903fa87b83325aaeb31f"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "281820"
+    },
+    {
+      "cluster_id": "CEV2-27f5f847986f78b3667b63df",
+      "company_name": "솔트웨어",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-dd12a9817f8b114c2648384a"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "328380"
+    },
+    {
+      "cluster_id": "CEV2-e12bedded739ced0bf9ed158",
+      "company_name": "이노테나",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-4e4702464dbcf978dac87841"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "333050"
+    },
+    {
+      "cluster_id": "CEV2-4bb07ace63a2e8a6c8db52fc",
+      "company_name": "크라우드웍스",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-4f1c4d4eaac009cf7f01f732"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "355390"
+    },
+    {
+      "cluster_id": "CEV2-9d723eff773020165556f9c3",
+      "company_name": "옵티코어",
+      "event_count": 2,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-cce73a04731b19b4c9d81339",
+        "CEV2-ad652cfc04f53d031e3c42f1"
+      ],
+      "event_types": [
+        "price_relative_strength",
+        "supply_contract"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 2,
+      "symbol": "380540"
+    },
+    {
+      "cluster_id": "CEV2-ee3080ca5f25592c6a075fcf",
+      "company_name": "라이콤",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-2c1e3c6007f1a8088bf6d691"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "388790"
+    },
+    {
+      "cluster_id": "CEV2-00d081425594ca5051087cdf",
+      "company_name": "유디엠텍",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-8712710ee1e214fd5f494120"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 0,
+      "symbol": "389680"
+    },
+    {
+      "cluster_id": "CEV2-200b07f27207cf131f521ce8",
+      "company_name": "SK리츠",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-ae0d78f3883503bf16f2db5e"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "395400"
+    },
+    {
+      "cluster_id": "CEV2-2e12b3dbca9bc9882a14b8fd",
+      "company_name": "가온칩스",
+      "event_count": 2,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-e77180f0839056d0c33ab16c",
+        "CEV2-70895024eb9bc3bf2a395d8f"
+      ],
+      "event_types": [
+        "price_relative_strength",
+        "supply_contract"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 2,
+      "symbol": "399720"
+    },
+    {
+      "cluster_id": "CEV2-8c54d7c265307053572c019b",
+      "company_name": "파두",
+      "event_count": 2,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-9574a7045c3bab0cd8639d17",
+        "CEV2-75996f87279bd91ea1f537d8"
+      ],
+      "event_types": [
+        "price_relative_strength",
+        "supply_contract"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 2,
+      "symbol": "440110"
+    },
+    {
+      "cluster_id": "CEV2-82c0d90c2891b840f06b11f6",
+      "company_name": "삼성FN리츠",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-ed15cb3dac96206f302cb6ef"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "448730"
+    },
+    {
+      "cluster_id": "CEV2-a9fe19feb5750976f443e58f",
+      "company_name": "한화리츠",
+      "event_count": 1,
+      "event_date": "2026-06-12",
+      "event_ids": [
+        "CEV2-8872ce3ec114c2913ff7f942"
+      ],
+      "event_types": [
+        "price_relative_strength"
+      ],
+      "freshness_score": 100,
+      "source_family": "DART",
+      "source_strength_score": 1,
+      "symbol": "451800"
+    }
+  ],
+  "schema_version": "research_brain_v2_candidate_cluster_report",
+  "summary": {
+    "cluster_count": 53,
+    "event_count": 60,
+    "multi_event_cluster_count": 7
+  }
+}

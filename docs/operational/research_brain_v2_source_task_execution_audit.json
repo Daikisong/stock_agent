@@ -1,0 +1,3849 @@
+{
+  "rows": [
+    {
+      "accepted_claim_ids": [
+        "RBCLM-3ed5f2dfc41975e19b9d130b"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:380540:20260612900554:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-0bc5cd0e4887f8dfc27642d4"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-fe655241f5abb73be46e9127"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:380540:20260612900554:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-9d55d5e904e8d3c330dc7f3d"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-6b359546d8c988eac54801e7"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:380540:20260612900554:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-86609aa1d950c2d9a62d4ba3"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-80dc76eab9f18c4d29259615"
+      ],
+      "attempted_sources": [
+        "DART",
+        "CompanyGuide"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:380540:20260612900554:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-1c104f4ad2b7888309779e60"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-e2c9c476b8c7303f12dbe923"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:380540:20260612900554:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-1cf5163cd5b76ae69d3f1bc9"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-a726c412aa173c5b5bca7469"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:380540:20260612900554:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-91a57a5351892c5b7d7340f3"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-a4e4bf2ec840f8aa981c52d0"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:016600:20260611000492:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-cd8a0d46b900741b7d238911"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-b246a4b692deef0f61232a6d"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:016600:20260611000492:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-63484c3d2fccdad4ba7c96e1"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-5611d772f3c2732f3c3b42ca"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:016600:20260611000492:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-d2435b5ac2b0db92a69cd7ba"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-67306835d435045940f383cd"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:089970:20260611000016:주식등의대량보유상황보고서(약식)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-8150196e969e467bca437ac8"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-d7e6d73f21bed1e102417b12"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:089970:20260611000016:주식등의대량보유상황보고서(약식)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-48d6970a804e336c8ef46a9a"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-daa754d874a06316a5f0a602"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:089970:20260611000016:주식등의대량보유상황보고서(약식)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-360989d6a527104b4e73588b"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-a4081a4a230183b3af25e3c0"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-3e8f7b15ad79032cd6de8486"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-20a4853db3e7d3ea8f0e889c"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-71d1bb5d9af11cd8aeb84dd6"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-678686e547716451e5d44780"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-a3fc90aacfedebb260200d8b"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-e70143adb87e940544b92c7f"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-6fe8d194c3a5220c0379d52d"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-d06929c624543dc0596b8823"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-059b8a3f7c8a8874a36c09ef"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-1fd17f95b7f4e68f59612db4"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-0ba84ed955583ca256def1a1"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-bffa9f5f1bcbbf721d2bc06c"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:066980:20260611900868:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-38f48a3167873b34a725fdc1"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-b882dd59a956aeb747d2f687"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:066980:20260611900868:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-5c563bd6b54eaa48c026f9c4"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-cc091c16d95f9ae88aa46b7c"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:066980:20260611900868:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-cb0d6354b6deac9ead482886"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-7fd6d0041b49aca2261fc1c1"
+      ],
+      "attempted_sources": [
+        "DART",
+        "CompanyGuide"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:066980:20260611900868:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-9c8bf5e72eb2dcdf778a0726"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-c0b9105300991be1e740a206"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:066980:20260611900868:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-7cf4f5fd4618905e620404d1"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-ad32dd16727be0bf59743fd8"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:066980:20260611900868:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-3db28560632550ea4681e6bc"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-a1ba573bdb9766e630a952de"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:084440:20260611900800:단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-2db53c0c06d4e2e421dcf7be"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-1a23e1d4eac87dd7181971dd"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:084440:20260611900800:단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-06d2629eb912a71a70e7ec28"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-4cc7cb8913c350a54c716980"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:084440:20260611900800:단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-e11b2462123443a5b9945f87"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-55005e9e102ffb2167a106c2"
+      ],
+      "attempted_sources": [
+        "DART",
+        "CompanyGuide"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:084440:20260611900800:단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-27527cfdef8eaea0bb65c2d3"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-e7820e6ed14bd41b793fff77"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:084440:20260611900800:단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-a3e478523a774ea47aebf1b0"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-b785f2f4b857df627ad134e9"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:084440:20260611900800:단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-bc86613c20c5bbf8f369399c"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-3f6a4248daddec599d8b8104"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:440110:20260611000606:주식매수선택권부여에관한신고"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-46c9182ce5b80de1465695a0"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-ed8381fc9a043b36ac55c186"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:440110:20260611000606:주식매수선택권부여에관한신고"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-4190823147a463ecf10fbc74"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-1b8f137a12deb68d1c4f36ed"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:440110:20260611000606:주식매수선택권부여에관한신고"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-be9337f08d86651d99060c34"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-d309d3a6fed4f6f256509615"
+      ],
+      "attempted_sources": [
+        "DART",
+        "CompanyGuide"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:440110:20260611000606:주식매수선택권부여에관한신고"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-1a73b074d76e980729595522"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-96182e5402abfcfbda90a614"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:440110:20260611000606:주식매수선택권부여에관한신고"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-83c3e82aead0753823bccd99"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-9446b1664882a78398d843b3"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:440110:20260611000606:주식매수선택권부여에관한신고"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-478c5798075fda2e18d1f1fc"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-433d18f7f4024cbf4a8262e5"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:136150:20260611900372:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-ed477139aa0d6317c45cd78a"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-5be0fcd8bd0b9754b2621e45"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:136150:20260611900372:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-149d4cb02ef1127eca072e6a"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-3e2d616efc214657b8bc6675"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:136150:20260611900372:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-8ed06404d303f1f8aa14a60e"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-67117f4ed04b69ada95b515f"
+      ],
+      "attempted_sources": [
+        "DART",
+        "CompanyGuide"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:136150:20260611900372:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-08cf53d53536ac8ebc994abe"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-9a4e4294683061d207fa54a8"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:136150:20260611900372:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-e8dbe1b674e0324065bb3be9"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-604702f3b2092440e8f7140f"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:136150:20260611900372:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-c704983586b7186150415b7e"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-3cea4e3ed246eb381c6eb5bf"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:399720:20260611900165:단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-76a9333abfb4c79f5f26d5e6"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-bb8dc432dfb5930c214cabee"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:399720:20260611900165:단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-c134f09115fe521146be6266"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-c02a2b377a51a4271dcf82a4"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:399720:20260611900165:단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-3026f819196ce4a1cd0d9541"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-7a19ec9a3cf169919f4842e6"
+      ],
+      "attempted_sources": [
+        "DART",
+        "CompanyGuide"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:399720:20260611900165:단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-6beb5214305cb3cea2855041"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-8ad6e30045309b73cc2f3274"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:399720:20260611900165:단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-92f36dd3c18a5a908218b61b"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-dcd889ca4167a60b43929796"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:399720:20260611900165:단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-32317fcdc5703e4bcfce3916"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-b8226788bbaa917e8e2b952e"
+      ],
+      "attempted_sources": [
+        "IR",
+        "TrustedNews"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:079370:20260611000550:주요사항보고서(자기주식취득신탁계약체결결정)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-7a34df2da26079b88ea0e570"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-1b78d24b80dfccfbd31d6eb0"
+      ],
+      "attempted_sources": [
+        "DART",
+        "KIND"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:079370:20260611000550:주요사항보고서(자기주식취득신탁계약체결결정)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-6250ecfb15a952cdf8599be6"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-5e2f81966befd5d586cf99b8"
+      ],
+      "attempted_sources": [
+        "IR",
+        "TrustedNews"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:079370:20260611000550:주요사항보고서(자기주식취득신탁계약체결결정)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-430f661c8a2431466bbb24cc"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-feb936633e4432235d950eb7"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:079370:20260611000550:주요사항보고서(자기주식취득신탁계약체결결정)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-3c4577ad33d269020d776004"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-6a3bf2c253e0cd7104a93879"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:079370:20260611000550:주요사항보고서(자기주식취득신탁계약체결결정)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-7df26972672f9452a24b28e4"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-53b1a68c6992f8c3a6e699d3"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:079370:20260611000550:주요사항보고서(자기주식취득신탁계약체결결정)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-59aca4f9760b6158724158f6"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-ffe633dd7dc3d24bbd2f17b9"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:007810:20260611000551:주식등의대량보유상황보고서(약식)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-23034aa2c4ef46039b941999"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-6dff5cb38067eeb9b2175874"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:007810:20260611000551:주식등의대량보유상황보고서(약식)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-d520a2f85d03f1bb24e1c293"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-858342f9b56417f379046aed"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:007810:20260611000551:주식등의대량보유상황보고서(약식)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-73631ccd690a1ca544b3e7ad"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-b5e0dec83ed512b17816e575"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:040350:20260611000451:주식등의대량보유상황보고서(일반)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-5d2b7d34a24bb41a0e9f5ae7"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-fc35ca5f5a940e0114b81352"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:040350:20260611000451:주식등의대량보유상황보고서(일반)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-fb251623aa9efa009247cd81"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-b6654ce0628c0b51b2abe839"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:040350:20260611000451:주식등의대량보유상황보고서(일반)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-2ec94a030fffc87b44b30ac5"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-3625e3cdd852e1840d7c63fb"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:000430:20260612000532:주식등의대량보유상황보고서(일반)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-2d4b4b9757a3ba13723f2171"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-fc8ea53cb2202077211345d4"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:000430:20260612000532:주식등의대량보유상황보고서(일반)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-7c2c5b3812620e0ff1732cc1"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-ccb8a0b313e1edfa903eccb9"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:000430:20260612000532:주식등의대량보유상황보고서(일반)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-b3e98c221dfe029dc75a18e9"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-b21e8685bb82041bb15d3a83"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-db202419fac4a2964915db39"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-c0ef477b8b1ffe7e839563a9"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-7da5e8ccf7c482dc6dfff50a"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:002630:20260611000186:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-1d0a58d8596a770e531e804e"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-122ad15005a3ad33b1b70618"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:002630:20260611000186:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-93b5d8000edd7359304edd6c"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-afefa506b1a5fbd6652dfe97"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:002630:20260611000186:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-773c6cdb2ae690fa88a01c6b"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-cddb271439193b3934452379"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-e09e551bff9f259cecb07138"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-7d0f573ad7f8e7456484701f"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-3d465313d8a13d51f70f5138"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-f47ac40c738b0101e27bd696"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-604be251f4d90c71a6b6869f"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-07580ec08183ff1745fcab14"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-ab109460791da63390a23fec"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-ddeef8de4c84ac1e2fbfcbba"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-ce30f33626445e6867d39980"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-e0940232f2b1ee44a0a7269c"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-220558f6c1c19b3f6e1107ac"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-4a484d40b9b0138b0f7c1e1a"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-fcc4e153a040b7324a6efced"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-81febf710a03783908660763"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-6495232ba8276c906332e4fd"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:041510:20260612000309:주식등의대량보유상황보고서(약식)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-ef8f86277dab56af774a09a3"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-b2ff54ed8f20cce71cb30b3c"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:041510:20260612000309:주식등의대량보유상황보고서(약식)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-2262ede5fc8f289909a99399"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-44e4c08936a4ab4fb572f38f"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:041510:20260612000309:주식등의대량보유상황보고서(약식)"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-a64283b388df072c7e45a610"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-7d5c0985a81f9bf43407f706"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-792e83d58ad1aa7f5de481a7"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-d12c9e92552d418969f92911"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-cd927c0ce0e75b54da709ec5"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-a9e1146976cdaba928daf1b0"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-2217c16aadec54f9d8ddade1"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-1cf4802f9c11ef08eab0f34c"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-aad1f85e0e9e5435917782b5"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-947f22193fef2b9be3e62885"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-ad9342c31d7eec122328b9cf"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-e76da620edb61f1739f64f5c"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-d1b4ccaf1fc4a3d29ebef699"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-bfef33a16eff9edde3bd8d6c"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-0d37e76773c3bd6f41689ae2"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-269cea71ae677ee421eed4ca"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-598541ae094ebcbddbcea1ce"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-a60dcb472c7ae0ee5b8f65d5"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-829e47175801d7d105b4efbb"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-b232ec36f227f7fffbb0b9b4"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-733873f7bac4b523d32d1cb0"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-9b8ab69d39b7f709577d3417"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-5db88c3a14ce9cc0d7fbda76"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-70dc0063bbd0f93d9a300f00"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-07d37550073b4df6880ec7f1"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-b77541ac5a1872f1e5c3ee24"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-c7adfce6336f846f9aac1e0b"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-7696efa757397dda26c3dff8"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-712c266dbb87142c4d3e81de"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-6634b0d226b010879a32238e"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-e1cbb218604803ca820538cd"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-46664bd01526ba30dd44ff64"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-590538c519d022f49a1afaf5"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-1f68e799d52e8ee81b542b01"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-11a5f4d733a3ee9b531f1f4c"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-b32a8c467be5cc597779ccde"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-162533d3e993fcd1b27b8ac3"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-64865a71809a3b7b1a1e53b5"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-35a1d5c8f4c6e96234b408be"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-d52e1d9ec1213989bf8bc676"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-f8e474ca74d198b45a14697d"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:328380:20260611000346:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-5bf00efed9462fd40e49edec"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-e872b9d9072c54d346570f9b"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:328380:20260611000346:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-ed76098bb394a0a6954a5132"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-9cff93910491c47a35f62cff"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:328380:20260611000346:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-8e56eb600905f9e46ad8a709"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-ef55c8fbdd71b871bf9066a9"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-06053bb04fe8e07fa165aba4"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-456f18f835dfc9f9bf37321d"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-29792665565d03a919047ee0"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-2fd840f1b141c8171c56c9ee"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-a6a07ed813ea5f9b4e595449"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-ab28cc2183d97ff032bb27df"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-e91dccfa3d27d52303a99303"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-d74c453789ba6fdfb634415c"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-fb9c4f6b1c195a29bec461de"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-cc31ef675ff021584dd72c44"
+    },
+    {
+      "accepted_claim_ids": [],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 0,
+        "fetches": 0,
+        "queries": 1
+      },
+      "fetched_document_ids": [],
+      "parsed_anchor_count": 0,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_initial_source_backed_evidence_document",
+      "task_id": "RSTASKV2-3c0c2ce57db8f799b911f624"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-af5f7fda85d605d5d5aa9549"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:151860:20260611900373:수시공시의무관련사항(공정공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-212709fed7ef074e72e2aff7"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-8e2d43d33b01087822c984d8"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:151860:20260611900373:수시공시의무관련사항(공정공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-ace6566b521bf1875f545c7f"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-3edb2c423a9c6320848465bb"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:151860:20260611900373:수시공시의무관련사항(공정공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-9d5c3b76efc1c713e1553d5e"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-730519181018659e65aa4004"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:395400:20260611000556:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-e75aeed98388d56c794c23f9"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-d817cc28ec309c4e7853a713"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:395400:20260611000556:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-b60cb655883a6f7d3a5fe2c0"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-c0ff0ce3129f50fd6fc930bf"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:395400:20260611000556:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-04cbb9d77c112d447797c882"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-aae682f25d7f8b6d33252a08"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:448730:20260611000561:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-b02632b3ae8671674c5014a9"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-47aa307ca0b803f7bc8f2612"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:448730:20260611000561:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-26f50fd21986ba3c6b1e7f81"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-41884d9e5429cbd9104b2547"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:448730:20260611000561:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-9f93ea89507e2d4e4cd7acf9"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-82657102629940856bab51d2"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:451800:20260611000563:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-9d95becd9bfc0c3ba5289f78"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-171458e956f3e7bf8a305bf1"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:451800:20260611000563:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-2066ec4895c0e75f893d5077"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-dd92cc3c873081d6705320df"
+      ],
+      "attempted_sources": [
+        "BrokerPDF",
+        "IR"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:451800:20260611000563:임원ㆍ주요주주특정증권등소유상황보고서"
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-8b873caeb7758cac678fc210"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-c8a931020c681994363e5aa4"
+      ],
+      "attempted_sources": [
+        "DART",
+        "CompanyGuide"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:004960:20260612800414:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-7a80cc02a5c1d83e13dd3327"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-20808b069a3626bb82d4e936"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:004960:20260612800414:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-96090da7f016438e7d2a6cd8"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-06e1bf9902aeca7a111ebf11"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:004960:20260612800414:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-f40c6b1182e934b37c41a204"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-6d6eb3c38c7db69046a9f6e4"
+      ],
+      "attempted_sources": [
+        "DART",
+        "CompanyGuide"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:012630:20260611800785:단일판매ㆍ공급계약체결(자회사의 주요경영사항)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-dd9115dc4fd7533f51ea07de"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-6e469e8e3a5031a385911bc8"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:012630:20260611800785:단일판매ㆍ공급계약체결(자회사의 주요경영사항)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-02711a90be10a93471c75ed7"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-d8822d19073282cdb5989d9b"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:012630:20260611800785:단일판매ㆍ공급계약체결(자회사의 주요경영사항)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-d85ed3e1620d0dad194c0020"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-0670bd2a313d22b67a73e6b7"
+      ],
+      "attempted_sources": [
+        "DART",
+        "CompanyGuide"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:013700:20260611800522:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-36847718f698856c7c7202ad"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-fadff597d705131fa78da084"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:013700:20260611800522:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-c6624e4403fa2fd7c0e26015"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-b38f13770020a4aa35ef3c3e"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:013700:20260611800522:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-229b71d74f05069e50fceef0"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-bb6488fb765412671072f491"
+      ],
+      "attempted_sources": [
+        "DART",
+        "CompanyGuide"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:014790:20260612800570:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-708ff2639aaec7b44dc0d1f6"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-a57e38e992dc190b90ba743d"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:014790:20260612800570:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-7792a3b1509193b6940683de"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-603700176bb6c045cda97a0e"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:014790:20260612800570:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-901e755b43c1e400a3809ba0"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-6378310d97b73b593376f908"
+      ],
+      "attempted_sources": [
+        "DART",
+        "CompanyGuide"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:017000:20260611900224:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-b5cadd57edf3c6e66033eec9"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-a272c9dc6d07a87dc216d8ca"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:017000:20260611900224:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-0a84b207f42fdbf6287a2d18"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-99f324e437b1665352d69a01"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:017000:20260611900224:[기재정정]단일판매ㆍ공급계약체결(자율공시)              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-36c2a216e3fd59bade793059"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-d5d6ce1b783c2752f0a26763"
+      ],
+      "attempted_sources": [
+        "DART",
+        "CompanyGuide"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:021320:20260612900603:단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-d5e8cbb3956c31706b162202"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-641138dec2bfda3a4f15fcd6"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:021320:20260612900603:단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-2f98db7a950552050822e7b8"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-c060a44a3800c41b009d5c8f"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:021320:20260612900603:단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-dfa389a6129ab001e074739e"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-ba5099f5a099abd185cddf57"
+      ],
+      "attempted_sources": [
+        "DART",
+        "CompanyGuide"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:047040:20260612800708:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-86eda9677dbd87e394a1acbd"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-ebc526c778a89404cdba0cb0"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:047040:20260612800708:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-ed1e68d4d22edba3d4a79932"
+    },
+    {
+      "accepted_claim_ids": [
+        "RBCLM-f9b97af700b87226ef974cdf"
+      ],
+      "attempted_sources": [
+        "CompanyGuide",
+        "BrokerPDF"
+      ],
+      "budget_used": {
+        "candidates": 1,
+        "fetches": 1,
+        "queries": 1
+      },
+      "fetched_document_ids": [
+        "opendart:047040:20260612800708:[기재정정]단일판매ㆍ공급계약체결              "
+      ],
+      "parsed_anchor_count": 1,
+      "provider_error": null,
+      "rejected_claim_ids": [],
+      "status": "EVIDENCE_OS_ACCEPTED",
+      "stop_reason": "local_snapshot_evidence_os_handoff_accepted",
+      "task_id": "RSTASKV2-4747776535f912180d6b51be"
+    }
+  ],
+  "schema_version": "research_brain_v2_source_task_execution_audit",
+  "status_counts": {
+    "EVIDENCE_OS_ACCEPTED": 99,
+    "NO_EVIDENCE_FOUND": 81
+  },
+  "summary": {
+    "DART_solvable_gap_sent_to_web_count": 0,
+    "FCF_gap_sent_to_news_count": 0,
+    "IR_solvable_gap_sent_to_web_count": 0,
+    "accepted_claim_count": 99,
+    "accepted_claim_source_task_count": 99,
+    "budget_exhausted_material_gap_count": 0,
+    "deterministic_stage_output_count": 4,
+    "executed_source_task_count": 180,
+    "fetched_source_task_count": 99,
+    "general_search_task_count": 0,
+    "general_search_task_ratio": 0.0,
+    "official_source_task_count": 180,
+    "official_task_ratio": 1.0,
+    "parsed_source_task_count": 99,
+    "planned_but_not_executed_task_count": 0,
+    "planned_source_task_count": 180,
+    "provider_failed_material_task_count": 0,
+    "source_task_count": 180,
+    "source_task_execution_audit_pass": true,
+    "source_task_to_score_contribution_count": 0,
+    "stop_on_resolution_success_count": 180,
+    "unbounded_source_task_count": 0
+  }
+}

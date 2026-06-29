@@ -1,0 +1,745 @@
+{
+  "rows": [
+    {
+      "expected_archetype": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "primary_archetype": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+        "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+        "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C02_POWER_GRID_DATACENTER_CAPEX",
+      "primary_archetype": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C02_POWER_GRID_DATACENTER_CAPEX",
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "primary_archetype": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "primary_archetype": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+        "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+        "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "primary_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+        "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "primary_archetype": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+        "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "primary_archetype": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+        "C06_HBM_MEMORY_CUSTOMER_CAPACITY"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "primary_archetype": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM"
+      ],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+        "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+        "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "primary_archetype": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+        "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C11_BATTERY_ORDERBOOK_RERATING",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C11_BATTERY_ORDERBOOK_RERATING",
+      "primary_archetype": "C11_BATTERY_ORDERBOOK_RERATING",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C11_BATTERY_ORDERBOOK_RERATING",
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+        "C13_BATTERY_JV_UTILIZATION_AMPC_IRA"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "primary_archetype": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+        "C11_BATTERY_ORDERBOOK_RERATING",
+        "C13_BATTERY_JV_UTILIZATION_AMPC_IRA"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "primary_archetype": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+        "C11_BATTERY_ORDERBOOK_RERATING",
+        "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "primary_archetype": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "primary_archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C15_MATERIAL_SPREAD_SUPERCYCLE",
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+        "C19_BRAND_RETAIL_INVENTORY_MARGIN"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "primary_archetype": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "primary_archetype": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+        "C15_MATERIAL_SPREAD_SUPERCYCLE",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "primary_archetype": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+        "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "primary_archetype": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+        "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "primary_archetype": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "primary_archetype": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+        "C22_INSURANCE_RATE_CYCLE_RESERVE",
+        "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "primary_archetype": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C22_INSURANCE_RATE_CYCLE_RESERVE",
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "primary_archetype": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+        "C24_BIO_TRIAL_DATA_EVENT_RISK",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "primary_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION"
+      ],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C24_BIO_TRIAL_DATA_EVENT_RISK",
+        "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "primary_archetype": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+        "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "primary_archetype": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "primary_archetype": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "primary_archetype": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "C11_BATTERY_ORDERBOOK_RERATING",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "primary_archetype": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "primary_archetype": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW"
+      ],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+        "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "primary_archetype": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "explicit_r13_fixture": false,
+      "fixture_id": "FIX-C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "primary_archetype": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "explicit_r13_fixture": true,
+      "fixture_id": "FIX-R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "primary_archetype": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "explicit_r13_fixture": true,
+      "fixture_id": "FIX-R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "primary_archetype": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "explicit_r13_fixture": true,
+      "fixture_id": "FIX-R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "primary_archetype": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW"
+      ],
+      "top3_contains_expected": true
+    },
+    {
+      "expected_archetype": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "explicit_r13_fixture": true,
+      "fixture_id": "FIX-R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "primary_archetype": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "r13_overroute": false,
+      "router_confidence": "HIGH",
+      "secondary_overlays": [],
+      "status": "ROUTED",
+      "top1_exact_match": true,
+      "top3_archetypes": [
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION"
+      ],
+      "top3_contains_expected": true
+    }
+  ],
+  "schema_version": "research_brain_v2_archetype_router_confusion_matrix",
+  "summary": {
+    "fixture_count": 36,
+    "mandatory_six_results": {
+      "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
+        "expected_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "explicit_r13_fixture": false,
+        "fixture_id": "FIX-C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "primary_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "r13_overroute": false,
+        "router_confidence": "HIGH",
+        "secondary_overlays": [],
+        "status": "ROUTED",
+        "top1_exact_match": true,
+        "top3_archetypes": [
+          "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+          "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE"
+        ],
+        "top3_contains_expected": true
+      },
+      "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
+        "expected_archetype": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+        "explicit_r13_fixture": false,
+        "fixture_id": "FIX-C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+        "primary_archetype": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+        "r13_overroute": false,
+        "router_confidence": "HIGH",
+        "secondary_overlays": [],
+        "status": "ROUTED",
+        "top1_exact_match": true,
+        "top3_archetypes": [
+          "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+          "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+          "C06_HBM_MEMORY_CUSTOMER_CAPACITY"
+        ],
+        "top3_contains_expected": true
+      },
+      "C15_MATERIAL_SPREAD_SUPERCYCLE": {
+        "expected_archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+        "explicit_r13_fixture": false,
+        "fixture_id": "FIX-C15_MATERIAL_SPREAD_SUPERCYCLE",
+        "primary_archetype": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+        "r13_overroute": false,
+        "router_confidence": "HIGH",
+        "secondary_overlays": [],
+        "status": "ROUTED",
+        "top1_exact_match": true,
+        "top3_archetypes": [
+          "C15_MATERIAL_SPREAD_SUPERCYCLE",
+          "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+          "C19_BRAND_RETAIL_INVENTORY_MARGIN"
+        ],
+        "top3_contains_expected": true
+      },
+      "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": {
+        "expected_archetype": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+        "explicit_r13_fixture": false,
+        "fixture_id": "FIX-C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+        "primary_archetype": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+        "r13_overroute": false,
+        "router_confidence": "HIGH",
+        "secondary_overlays": [],
+        "status": "ROUTED",
+        "top1_exact_match": true,
+        "top3_archetypes": [
+          "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+          "C15_MATERIAL_SPREAD_SUPERCYCLE",
+          "C01_ORDER_BACKLOG_MARGIN_BRIDGE"
+        ],
+        "top3_contains_expected": true
+      },
+      "C24_BIO_TRIAL_DATA_EVENT_RISK": {
+        "expected_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+        "explicit_r13_fixture": false,
+        "fixture_id": "FIX-C24_BIO_TRIAL_DATA_EVENT_RISK",
+        "primary_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+        "r13_overroute": false,
+        "router_confidence": "HIGH",
+        "secondary_overlays": [
+          "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+          "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION"
+        ],
+        "status": "ROUTED",
+        "top1_exact_match": true,
+        "top3_archetypes": [
+          "C24_BIO_TRIAL_DATA_EVENT_RISK",
+          "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+          "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK"
+        ],
+        "top3_contains_expected": true
+      },
+      "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": {
+        "expected_archetype": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "explicit_r13_fixture": false,
+        "fixture_id": "FIX-C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "primary_archetype": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+        "r13_overroute": false,
+        "router_confidence": "HIGH",
+        "secondary_overlays": [],
+        "status": "ROUTED",
+        "top1_exact_match": true,
+        "top3_archetypes": [
+          "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "C11_BATTERY_ORDERBOOK_RERATING",
+          "C01_ORDER_BACKLOG_MARGIN_BRIDGE"
+        ],
+        "top3_contains_expected": true
+      }
+    },
+    "mandatory_six_top1_pass": true,
+    "r13_overroute_count": 0,
+    "top1_accuracy": 1.0,
+    "top1_correct_count": 36,
+    "top3_accuracy": 1.0,
+    "top3_correct_count": 36
+  }
+}
