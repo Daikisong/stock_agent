@@ -3,7 +3,7 @@
   "candidate_event_id": "CE-LIVE-DART-347700-20260629901175",
   "fallback_source_classes": [
     "KIND",
-    "TrustedNews"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "반복 정정된 공급계약은 계약 유지 여부와 조건 변경 확인이 우선이다.",
+  "rationale": "정정 공급계약은 원 계약 대비 변경 내용이 계약 품질 판단의 핵심이다.",
   "red_team_checks": [
-    "정정 사유와 변경 항목 확인",
-    "계약 해지 리스크 확인"
+    "정정 전후 계약금액 비교",
+    "상대방 및 계약 유지 조건 확인"
   ]
 }

@@ -3,7 +3,7 @@
   "candidate_event_id": "CE-LIVE-DART-351320-20260629901083",
   "fallback_source_classes": [
     "KIND",
-    "TrustedNews"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "공급계약 정정은 계약 조건 변경과 매출 기여 지속성을 확인한다.",
+  "rationale": "정정 공급계약은 계약 품질 훼손 또는 강화 여부를 보려면 원문 비교가 필요하다.",
   "red_team_checks": [
-    "정정 사유 확인",
-    "계약 해지 또는 지연 리스크 확인"
+    "정정 전후 계약 조건 비교",
+    "상대방과 계약 이행 조건 확인"
   ]
 }

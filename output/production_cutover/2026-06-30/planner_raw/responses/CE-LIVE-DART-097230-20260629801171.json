@@ -3,7 +3,7 @@
   "candidate_event_id": "CE-LIVE-DART-097230-20260629801171",
   "fallback_source_classes": [
     "KIND",
-    "TrustedNews"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
-  "primitive_gap": "order_to_revenue_bridge",
-  "rationale": "건설 계약 정정은 수주가 실제 매출로 이어지는 기간과 진행률 확인이 중요하다.",
+  "primitive_gap": "margin_bridge_visible",
+  "rationale": "건설 계약 정정은 금액뿐 아니라 공사기간과 원가 부담 변경이 중요하다.",
   "red_team_checks": [
-    "공사기간 변경 확인",
-    "원가 상승이나 계약금액 변경 확인"
+    "정정으로 계약금액/기간이 바뀌었는지 확인",
+    "도급 형태와 원가 상승 전가 가능성 확인"
   ]
 }

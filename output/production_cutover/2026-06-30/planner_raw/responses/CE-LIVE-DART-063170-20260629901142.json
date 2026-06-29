@@ -3,7 +3,7 @@
   "candidate_event_id": "CE-LIVE-DART-063170-20260629901142",
   "fallback_source_classes": [
     "KIND",
-    "TrustedNews"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
-  "primitive_gap": "revenue_visibility_contract",
-  "rationale": "단일판매공급계약 정정은 매출 발생 기간과 계약금액 변경 확인이 우선이다.",
+  "primitive_gap": "contract_quality",
+  "rationale": "공급계약 정정은 거래 실체, 금액, 기간의 확정성이 먼저다.",
   "red_team_checks": [
-    "계약기간이 연장/축소됐는지 확인",
-    "계약 상대방과 품목 확인"
+    "거래 상대방 공개 여부 확인",
+    "정정으로 계약 규모가 축소됐는지 확인"
   ]
 }

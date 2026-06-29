@@ -2,8 +2,8 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-083660-20260629000553",
   "fallback_source_classes": [
-    "KRX",
-    "TrustedNews"
+    "IssuerIR",
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "중복성 있는 유상증자 정정 이벤트는 해당 접수번호 기준 변경사항을 확인한다.",
+  "rationale": "중복 가능성이 있는 정정 유상증자 공시는 원문 기준으로 조건 변경을 확인한다.",
   "red_team_checks": [
-    "동일 회사의 다른 정정공시와 접수번호 구분",
-    "발행대상과 납입 일정 변경 확인"
+    "같은 날 중복 접수와 최종본 식별",
+    "조달 목적과 납입 확실성 확인"
   ]
 }

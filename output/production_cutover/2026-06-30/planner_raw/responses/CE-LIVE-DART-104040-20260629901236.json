@@ -2,7 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-104040-20260629901236",
   "fallback_source_classes": [
-    "IssuerIR"
+    "KIND"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -16,13 +16,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "KRX"
+    "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "증권발행결과는 실제 자금 유입과 발행 조건 확인용이다.",
+  "rationale": "발행결과 공시는 자금 조달이 계획대로 완료됐는지 확인하는 이벤트다.",
   "red_team_checks": [
     "납입 완료 여부 확인",
-    "자금 사용 목적 확인"
+    "발행 조건 변경 또는 미발행 수량 확인"
   ]
 }

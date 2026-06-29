@@ -3,7 +3,7 @@
   "candidate_event_id": "CE-LIVE-DART-006050-20260629901282",
   "fallback_source_classes": [
     "KIND",
-    "TrustedNews"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
   "primitive_gap": "revenue_visibility_contract",
-  "rationale": "신규 단일판매공급계약은 매출 인식 기간과 최근 매출 대비 규모 확인이 우선이다.",
+  "rationale": "신규 공급계약은 매출 인식 기간과 최근 매출 대비 규모 확인이 우선이다.",
   "red_team_checks": [
     "계약기간이 단기 일회성인지 확인",
-    "최근 매출 대비 계약금액 기준 확인"
+    "최근 매출 대비 계약금액 산식 확인"
   ]
 }

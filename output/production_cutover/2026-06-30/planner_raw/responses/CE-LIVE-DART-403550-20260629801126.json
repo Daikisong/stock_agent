@@ -2,8 +2,8 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-403550-20260629801126",
   "fallback_source_classes": [
-    "KRX",
-    "TrustedNews"
+    "IssuerIR",
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "종속회사 유상증자 정정은 연결 기준 영향과 자금 사용처 확인이 필요하다.",
+  "rationale": "종속회사 유상증자 정정은 연결 기준 자금 조달과 지분 영향 확인이 필요하다.",
   "red_team_checks": [
-    "종속회사 지분율 변화 확인",
-    "모회사 재무/사업 영향 확인"
+    "종속회사명과 연결 영향 확인",
+    "정정 전후 발행 조건 비교"
   ]
 }

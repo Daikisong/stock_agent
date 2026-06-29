@@ -2,8 +2,8 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-083660-20260629000561",
   "fallback_source_classes": [
-    "KRX",
-    "TrustedNews"
+    "IssuerIR",
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "유상증자 정정은 변경된 발행조건과 자금 사용처가 핵심이다.",
+  "rationale": "기재정정 유상증자는 정정 전후 조건 변화가 핵심이다.",
   "red_team_checks": [
-    "최초 공시 대비 변경 항목 확인",
-    "조달 목적이 계약/설비와 연결되는지 확인"
+    "정정 항목과 기존 공시 대조",
+    "납입일·발행가·배정대상 변경 확인"
   ]
 }

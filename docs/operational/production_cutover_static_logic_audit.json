@@ -24,9 +24,7 @@
     "one_line_large_report_count": 0,
     "pending_material_gap_final_reject_count": 0,
     "primitive_gap_direct_mapping_count": 0,
-    "production_blockers": [
-      "working tree dirty at report generation, so PRODUCTION_CUTOVER_READY is forbidden"
-    ],
+    "production_blockers": [],
     "production_ready_with_blockers_count": 0,
     "provider_failed_final_score_count": 0,
     "score_without_claim_count": 0,

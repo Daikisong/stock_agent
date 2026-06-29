@@ -2,7 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-357550-20260629000448",
   "fallback_source_classes": [
-    "IssuerIR"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -16,13 +16,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "KRX"
+    "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "자기주식취득 신탁계약은 환원 규모, 기간, 재무 여력 확인이 필요하다.",
+  "rationale": "자기주식취득 신탁계약은 자본 배분 규모와 기간 확인이 우선이다.",
   "red_team_checks": [
-    "신탁계약 금액과 기간 확인",
-    "현금흐름 대비 집행 가능성 확인"
+    "계약금액과 계약기간 확인",
+    "취득 목적과 기존 주주환원 정책 연결 여부 확인"
   ]
 }

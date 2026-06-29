@@ -3,7 +3,7 @@
   "candidate_event_id": "CE-LIVE-DART-006050-20260629901292",
   "fallback_source_classes": [
     "KIND",
-    "TrustedNews"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "단일판매공급계약 정정은 계약금액, 상대방, 기간, 조건 변경 확인이 필요하다.",
+  "rationale": "정정 공급계약은 계약금액, 상대방, 기간, 해지 조건 변동을 먼저 확인해야 한다.",
   "red_team_checks": [
-    "정정으로 계약 규모나 기간이 약화됐는지 확인",
-    "해지/변경 조건 존재 여부 확인"
+    "정정 전후 계약금액 및 기간 비교",
+    "계약 상대방 익명/특수관계 여부 확인"
   ]
 }

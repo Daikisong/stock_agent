@@ -29,12 +29,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--max-source-tasks-per-candidate", type=int, default=5)
     parser.add_argument("--max-fetches-per-task", type=int, default=3)
     parser.add_argument("--output-dir", default=None)
+    parser.add_argument("--validation-output-root", default=None)
+    parser.add_argument("--frozen-snapshot-dir", default=None)
     parser.add_argument("--docs-dir", default="docs/operational")
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--fail-on-critical-audit", default="true")
     args = parser.parse_args(argv)
 
     output_dir = args.output_dir or f"output/production_cutover/{args.as_of_date}"
+    validation_output_root = args.validation_output_root or str(Path(output_dir).parent)
     config = ProductionCutoverConfig(
         as_of_date=args.as_of_date,
         mode=args.mode,
@@ -45,6 +48,9 @@ def main(argv: list[str] | None = None) -> int:
         max_source_tasks_per_candidate=args.max_source_tasks_per_candidate,
         max_fetches_per_task=args.max_fetches_per_task,
         fail_on_critical_audit=str(args.fail_on_critical_audit).lower() == "true",
+        output_dir=output_dir,
+        validation_output_root=validation_output_root,
+        frozen_snapshot_dir=args.frozen_snapshot_dir,
     )
     command = " ".join(
         [
@@ -70,6 +76,10 @@ def main(argv: list[str] | None = None) -> int:
             str(args.max_fetches_per_task),
             "--output-dir",
             output_dir,
+            "--validation-output-root",
+            validation_output_root,
+            "--frozen-snapshot-dir",
+            args.frozen_snapshot_dir or "",
             "--docs-dir",
             args.docs_dir,
             "--fail-on-critical-audit",

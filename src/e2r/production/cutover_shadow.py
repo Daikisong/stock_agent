@@ -10,7 +10,7 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-from e2r.production.candidate_event_purity import ProductionMode, build_candidate_purity_report
+from e2r.production.candidate_event_purity import InstrumentRegistry, ProductionMode, build_candidate_purity_report
 from e2r.production.claim_extraction.extraction_audit import build_claim_extraction_audit
 from e2r.production.metadata import build_report_metadata, stable_hash, write_json, write_jsonl, write_text
 from e2r.production.official_live_shadow import OfficialLiveShadowData, build_official_live_shadow_data
@@ -30,6 +30,9 @@ class ProductionCutoverConfig:
     max_total_runtime_seconds: int = 900
     deterministic_scorer_min_count: int = 15
     fail_on_critical_audit: bool = True
+    output_dir: str | None = None
+    validation_output_root: str = "output/production_cutover"
+    frozen_snapshot_dir: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -43,12 +46,15 @@ def build_production_cutover_bundle(
 ) -> Mapping[str, Any]:
     started = time.monotonic()
     root = Path(repo_root)
-    live_data = build_official_live_shadow_data(
-        repo_root=root,
-        as_of_date=date.fromisoformat(config.as_of_date),
-        candidate_min_count=config.candidate_min_count,
-        planner_provider=config.planner_provider,
-    )
+    if config.mode == ProductionMode.FROZEN_REPLAY.value:
+        live_data = _load_frozen_replay_shadow_data(repo_root=root, config=config)
+    else:
+        live_data = build_official_live_shadow_data(
+            repo_root=root,
+            as_of_date=date.fromisoformat(config.as_of_date),
+            candidate_min_count=config.candidate_min_count,
+            planner_provider=config.planner_provider,
+        )
     events = live_data.candidate_events
     planner_rows = live_data.planner_runs
     source_rows = live_data.source_task_executions
@@ -69,19 +75,19 @@ def build_production_cutover_bundle(
         as_of_date=config.as_of_date,
         registry=live_data.registry,
     )
-    connector_probe_results = _exercise_connectors(
-        events=events,
-        repo_root=root,
-        as_of_date=date.fromisoformat(config.as_of_date),
-        source_mode=config.source_mode,
-    )
-    source_connector_report = _source_connector_report_from_live_data(live_data, connector_probe_results)
+    connector_probe_results = ()
+    if config.mode != ProductionMode.FROZEN_REPLAY.value:
+        connector_probe_results = _exercise_connectors(
+            events=events,
+            repo_root=root,
+            as_of_date=date.fromisoformat(config.as_of_date),
+            source_mode=config.source_mode,
+        )
+    source_connector_report = _source_connector_report_from_live_data(live_data, connector_probe_results, mode=config.mode)
     provider_error_report = _provider_error_report(source_connector_report)
     claim_extraction_audit = _claim_extraction_audit_from_live_data(live_data)
     planner_provider_report = _planner_provider_report(planner_rows)
     score_meaning_audit = _score_meaning_audit(watchlist_rows, config=config)
-    multiday_validation = _multiday_validation_from_live_data(live_data)
-    stability_report = _stability_report_markdown(multiday_validation)
     v4 = _load_v4_reports(root)
     memory_usage_audit = _research_memory_usage_audit(v4.get("memory_usage", {}), v4.get("source_quality", {}))
     sla_report = _sla_report(started_at=started, config=config, planner_rows=planner_rows, source_rows=source_rows)
@@ -96,6 +102,23 @@ def build_production_cutover_bundle(
         memory_usage_audit=memory_usage_audit,
         config=config,
     )
+    current_multiday_row = _multiday_row_from_current_run(
+        metadata=metadata,
+        config=config,
+        candidate_purity=candidate_purity,
+        source_connector_report=source_connector_report,
+        planner_provider_report=planner_provider_report,
+        claim_extraction_audit=claim_extraction_audit,
+        score_meaning_audit=score_meaning_audit,
+        static_logic_audit=static_logic_audit,
+        watchlist_rows=watchlist_rows,
+    )
+    multiday_validation = _multiday_validation_from_artifacts(
+        repo_root=root,
+        config=config,
+        current_row=current_multiday_row,
+    )
+    stability_report = _stability_report_markdown(multiday_validation)
     shadow_latest = _shadow_latest(
         metadata=metadata,
         candidate_purity=candidate_purity,
@@ -230,6 +253,138 @@ def _json(path: Path) -> Mapping[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _json_any(path: Path, default: Any) -> Any:
+    if not path.exists():
+        return default
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _jsonl(path: Path) -> tuple[Mapping[str, Any], ...]:
+    if not path.exists():
+        return ()
+    rows: list[Mapping[str, Any]] = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        parsed = json.loads(line)
+        if isinstance(parsed, Mapping):
+            rows.append(parsed)
+    return tuple(rows)
+
+
+def _load_frozen_replay_shadow_data(*, repo_root: Path, config: ProductionCutoverConfig) -> OfficialLiveShadowData:
+    snapshot = Path(config.frozen_snapshot_dir or config.output_dir or f"output/production_cutover/{config.as_of_date}")
+    if not snapshot.is_absolute():
+        snapshot = repo_root / snapshot
+    audit = _json_any(snapshot / "audit_summary.json", {})
+    if not audit:
+        raise FileNotFoundError(f"frozen replay snapshot missing audit_summary.json: {snapshot}")
+    events = tuple(_json_any(snapshot / "candidate_events.json", []))
+    planner_runs = tuple(_frozen_planner_row(row) for row in _json_any(snapshot / "planner_runs.json", []))
+    source_tasks = tuple(_json_any(snapshot / "source_tasks.json", []))
+    source_task_executions = tuple(_json_any(snapshot / "source_task_executions.json", []))
+    documents = tuple(_frozen_document_row(row, snapshot=snapshot) for row in _jsonl(snapshot / "evidence_documents.jsonl"))
+    anchors = _jsonl(snapshot / "evidence_anchors.jsonl")
+    claims = _jsonl(snapshot / "evidence_claim_ledger.jsonl")
+    primitive_states = _jsonl(snapshot / "primitive_states.jsonl")
+    score_contributions = _jsonl(snapshot / "score_contributions.jsonl")
+    traces = tuple(_json_any(snapshot / "stagecourt_traces.json", []))
+    watchlist_payload = _json_any(snapshot / "daily_watchlist.json", {"rows": []})
+    watchlist = tuple(watchlist_payload.get("rows", ()) if isinstance(watchlist_payload, Mapping) else watchlist_payload)
+    operator_payload = _json_any(snapshot / "operator_digest.json", {"rows": []})
+    operator_rows = tuple(operator_payload.get("rows", ()) if isinstance(operator_payload, Mapping) else operator_payload)
+    candidate_summary = ((audit.get("summary") or {}).get("candidate") or {}) if isinstance(audit, Mapping) else {}
+    names = {str(row.get("symbol")): str(row.get("company_name") or row.get("symbol")) for row in events if row.get("symbol")}
+    registry = InstrumentRegistry(
+        symbols=frozenset(names),
+        names_by_symbol=names,
+        official_krx_universe_count=int(candidate_summary.get("actual_krx_universe_count", len(names))),
+        combined_registry_count=int(candidate_summary.get("combined_registry_count", len(names))),
+        source_paths=(f"frozen_snapshot:{snapshot}",),
+    )
+    provider_results = tuple(_frozen_provider_result(row, snapshot=snapshot) for row in documents)
+    return OfficialLiveShadowData(
+        registry=registry,
+        candidate_events=events,
+        planner_runs=planner_runs,
+        source_tasks=source_tasks,
+        source_task_executions=source_task_executions,
+        evidence_documents=documents,
+        evidence_anchors=anchors,
+        evidence_claim_ledger=claims,
+        primitive_states=primitive_states,
+        score_contributions=score_contributions,
+        stagecourt_traces=traces,
+        daily_watchlist=watchlist,
+        operator_digest_rows=operator_rows,
+        provider_results=provider_results,
+        source_corpus={
+            "frozen_snapshot_dir": str(snapshot),
+            "frozen_snapshot_audit_hash": stable_hash(audit),
+            "frozen_snapshot_document_count": len(documents),
+        },
+    )
+
+
+def _frozen_planner_row(row: Mapping[str, Any]) -> Mapping[str, Any]:
+    frozen = dict(row)
+    event_id = str(frozen.get("candidate_event_id") or "unknown")
+    output = frozen.get("raw_response_payload") or {
+        "frozen_replay": True,
+        "candidate_event_id": event_id,
+        "source": "planner_runs.json",
+    }
+    frozen.update(
+        {
+            "provider_name": "frozen_planner_snapshot",
+            "provider_mode": "frozen",
+            "provider_mode_label": "frozen_replay",
+            "real_provider_exercised": False,
+            "real_provider_success": False,
+            "fake_provider_used": True,
+            "is_real_provider": False,
+            "endpoint": "frozen-snapshot",
+            "model": frozen.get("model") or "frozen-snapshot",
+            "model_identity_status": "FROZEN_REPLAY_SNAPSHOT",
+            "prompt_payload": {
+                "schema_version": "production_cutover_frozen_planner_prompt_v1",
+                "candidate_event_id": event_id,
+                "source": "planner_runs.json",
+            },
+            "output": output,
+            "raw_response_payload": output,
+        }
+    )
+    return frozen
+
+
+def _frozen_document_row(row: Mapping[str, Any], *, snapshot: Path) -> Mapping[str, Any]:
+    frozen = dict(row)
+    frozen["mode"] = "frozen"
+    frozen["frozen_snapshot_dir"] = str(snapshot)
+    return frozen
+
+
+def _frozen_provider_result(row: Mapping[str, Any], *, snapshot: Path) -> Mapping[str, Any]:
+    return {
+        "provider_name": row.get("source_name") or "OpenDART",
+        "source_class": "DART",
+        "mode": "frozen",
+        "request_id": f"FROZEN-{row.get('provider_request_id') or row.get('document_id')}",
+        "request_params": {"frozen_snapshot_dir": str(snapshot), "document_id": row.get("document_id")},
+        "status": "FETCHED",
+        "canonical_url": row.get("canonical_url"),
+        "official_document_id": row.get("official_document_id"),
+        "published_at": row.get("published_at"),
+        "available_at": row.get("available_at"),
+        "fetched_at": row.get("fetched_at"),
+        "content_hash": row.get("content_hash"),
+        "raw_text": row.get("raw_text"),
+        "structured_payload": row.get("structured_payload") or {},
+        "provider_error": None,
+    }
+
+
 def _exercise_connectors(
     *,
     events: Sequence[Mapping[str, Any]],
@@ -295,8 +450,11 @@ def _source_connector_report_from_v4_and_connectors(
 def _source_connector_report_from_live_data(
     live_data: OfficialLiveShadowData,
     connector_probe_results: Sequence[SourceFetchResult] = (),
+    *,
+    mode: str = ProductionMode.PRODUCTION_SHADOW_LIVE.value,
 ) -> Mapping[str, Any]:
     rows = list(live_data.provider_results) + [result.to_dict() for result in connector_probe_results]
+    frozen_mode = mode == ProductionMode.FROZEN_REPLAY.value
     provider_call_counts = Counter(str(row.get("provider_name") or "unknown") for row in rows)
     provider_failure_counts = Counter(
         str(row.get("provider_name") or "unknown")
@@ -309,6 +467,7 @@ def _source_connector_report_from_live_data(
         and not str(row.get("canonical_url") or "").startswith("snapshot://")
         for row in rows
     )
+    snapshot_document_count = sum(row.get("mode") in {"snapshot", "frozen"} for row in rows)
     return {
         "schema_version": "production_cutover_source_connector_report_v1",
         "summary": {
@@ -324,10 +483,12 @@ def _source_connector_report_from_live_data(
             "real_document_fetched_count": fetched_count,
             "real_source_document_fetched_count": fetched_count,
             "live_or_fresh_provider_document_count": fetched_count,
-            "snapshot_only_document_count": sum(row.get("mode") in {"snapshot", "frozen"} for row in rows),
+            "snapshot_only_document_count": snapshot_document_count,
             "snapshot_only_counted_as_live_count": sum(
                 row.get("mode") in {"snapshot", "frozen"} and row.get("status") == "FETCHED" for row in rows
-            ),
+            )
+            if not frozen_mode
+            else 0,
             "stored_snapshot_only_documents": 0,
             "provider_failure_count": sum(provider_failure_counts.values()),
             "source_task_accepted_without_provider_fetch_count": sum(
@@ -502,37 +663,231 @@ def _multiday_validation_from_v4(v4_multi_day: Mapping[str, Any]) -> Mapping[str
     }
 
 
-def _multiday_validation_from_live_data(live_data: OfficialLiveShadowData) -> Mapping[str, Any]:
-    scored = sum(row.get("verified_score") is not None for row in live_data.daily_watchlist)
-    accepted = sum(1 for row in live_data.evidence_claim_ledger if row.get("accepted"))
+def _multiday_row_from_current_run(
+    *,
+    metadata: Mapping[str, Any],
+    config: ProductionCutoverConfig,
+    candidate_purity: Mapping[str, Any],
+    source_connector_report: Mapping[str, Any],
+    planner_provider_report: Mapping[str, Any],
+    claim_extraction_audit: Mapping[str, Any],
+    score_meaning_audit: Mapping[str, Any],
+    static_logic_audit: Mapping[str, Any],
+    watchlist_rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    candidate = candidate_purity["summary"]
+    source = source_connector_report["summary"]
+    planner = planner_provider_report["summary"]
+    extraction = claim_extraction_audit["summary"]
+    score = score_meaning_audit["summary"]
+    critical_count = int(static_logic_audit["summary"].get("critical_count_sum", 0))
+    output_dir = config.output_dir or f"output/production_cutover/{config.as_of_date}"
+    score_stage_hash = stable_hash(
+        [
+            {
+                "candidate_event_id": row.get("candidate_event_id"),
+                "verified_score": row.get("verified_score"),
+                "score_valid_status": row.get("score_valid_status"),
+                "base_stage": row.get("base_stage"),
+                "accepted_claim_ids": row.get("accepted_claim_ids") or [],
+                "score_contribution_ids": row.get("score_contribution_ids") or [],
+            }
+            for row in watchlist_rows
+        ]
+    )
+    row = {
+        "run_id": Path(output_dir).name,
+        "output_dir": output_dir,
+        "as_of_date": config.as_of_date,
+        "mode": config.mode,
+        "run_kind": _multiday_run_kind(config.mode),
+        "git_head_sha": metadata.get("git_head_sha"),
+        "config_hash": metadata.get("config_hash"),
+        "source_corpus_hash": metadata.get("source_corpus_hash"),
+        "candidate_event_hash": metadata.get("candidate_event_hash"),
+        "planner_prompt_hash": metadata.get("planner_prompt_hash"),
+        "planner_response_hash": metadata.get("planner_response_hash"),
+        "score_stage_hash": score_stage_hash,
+        "daily_artifact_hash": stable_hash(
+            {
+                "metadata": metadata,
+                "candidate": candidate,
+                "source": source,
+                "planner": planner,
+                "extraction": extraction,
+                "score": score,
+                "score_stage_hash": score_stage_hash,
+            }
+        ),
+        "candidate_event_count": int(candidate.get("total_candidate_event_count", 0)),
+        "eligible_candidate_event_count": int(candidate.get("production_eligible_candidate_event_count", 0)),
+        "planner_success_count": int(planner.get("real_planner_success_count", 0)),
+        "real_source_document_fetched_count": int(source.get("real_source_document_fetched_count", 0)),
+        "accepted_claim_count": int(extraction.get("accepted_claim_count", 0)),
+        "scored_item_count": int(score.get("deterministic_scorer_output_count", 0)),
+        "critical_audit_count": critical_count,
+        "provider_failure_count": int(source.get("provider_failure_count", 0)),
+        "fixture_candidate_in_live_count": int(candidate.get("fixture_candidate_event_count_in_production", 0)),
+        "fake_frozen_planner_provider_in_live_count": int(planner.get("fake_frozen_provider_used_count", 0)),
+        "snapshot_only_counted_as_live_count": int(source.get("snapshot_only_counted_as_live_count", 0)),
+    }
+    return {**row, "pass_for_multiday": _multiday_row_passes(row)}
+
+
+def _multiday_validation_from_artifacts(
+    *,
+    repo_root: Path,
+    config: ProductionCutoverConfig,
+    current_row: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    rows_by_output: dict[str, Mapping[str, Any]] = {}
+    root = Path(config.validation_output_root)
+    if not root.is_absolute():
+        root = repo_root / root
+    for audit_path in sorted(root.glob("*/audit_summary.json")):
+        row = _multiday_row_from_audit_summary(audit_path)
+        if row is not None:
+            rows_by_output[str(Path(str(row["output_dir"])).resolve())] = row
+    current_key = str((repo_root / str(current_row["output_dir"])).resolve()) if not Path(str(current_row["output_dir"])).is_absolute() else str(Path(str(current_row["output_dir"])).resolve())
+    rows_by_output[current_key] = current_row
+    rows = tuple(sorted(rows_by_output.values(), key=lambda row: (str(row.get("as_of_date")), str(row.get("run_id")))))
+    pass_rows = [row for row in rows if row.get("pass_for_multiday")]
+    live_rows = [row for row in pass_rows if row.get("run_kind") == "live"]
+    frozen_rows = [row for row in pass_rows if row.get("run_kind") == "frozen"]
+    live_dates = {str(row.get("as_of_date")) for row in live_rows if row.get("as_of_date")}
+    frozen_dates = {str(row.get("as_of_date")) for row in frozen_rows if row.get("as_of_date")}
+    repeat_groups: list[Mapping[str, Any]] = []
+    repeat_variance = 0
+    repeated_frozen_day_count = 0
+    for as_of in sorted(frozen_dates):
+        group = [row for row in frozen_rows if row.get("as_of_date") == as_of]
+        if len(group) < 2:
+            continue
+        hashes = sorted({str(row.get("score_stage_hash")) for row in group})
+        variance = max(len(hashes) - 1, 0)
+        repeat_variance += variance
+        if len(group) >= 3:
+            repeated_frozen_day_count += 1
+        repeat_groups.append(
+            {
+                "as_of_date": as_of,
+                "run_count": len(group),
+                "unique_score_stage_hash_count": len(hashes),
+                "repeat_variance": variance,
+                "score_stage_hashes": hashes,
+            }
+        )
+    day_count = len(live_dates | frozen_dates)
+    required_frozen_day_count = 10
+    required_live_dry_run_count = 5
+    required_repeated_frozen_day_count = 3
     return {
         "schema_version": "production_cutover_multiday_validation_v1",
         "summary": {
-            "day_count": 1,
-            "required_frozen_day_count": 10,
-            "required_live_dry_run_count": 5,
-            "repeat_variance": 0,
-            "accepted_claim_total": accepted,
-            "deterministic_stage_output_total": scored,
-            "source_provider_failure_total": 0,
-            "fixture_candidate_in_live_count": 0,
-            "fake_frozen_planner_provider_in_live_count": 0,
-            "status": "DAILY_ONLY_MULTIDAY_NOT_COMPLETE",
+            "day_count": day_count,
+            "live_equivalent_day_count": len(live_dates),
+            "frozen_replay_day_count": len(frozen_dates),
+            "live_official_dry_run_count": len(live_rows),
+            "required_frozen_day_count": required_frozen_day_count,
+            "required_live_dry_run_count": required_live_dry_run_count,
+            "remaining_frozen_day_count": max(required_frozen_day_count - len(frozen_dates), 0),
+            "remaining_live_dry_run_count": max(required_live_dry_run_count - len(live_rows), 0),
+            "required_repeated_frozen_day_count": required_repeated_frozen_day_count,
+            "frozen_repeat_day_with_3_runs_count": repeated_frozen_day_count,
+            "remaining_repeated_frozen_day_count": max(required_repeated_frozen_day_count - repeated_frozen_day_count, 0),
+            "repeat_variance": repeat_variance,
+            "accepted_claim_total": sum(int(row.get("accepted_claim_count", 0)) for row in pass_rows),
+            "deterministic_stage_output_total": sum(int(row.get("scored_item_count", 0)) for row in pass_rows),
+            "source_provider_failure_total": sum(int(row.get("provider_failure_count", 0)) for row in rows),
+            "fixture_candidate_in_live_count": sum(int(row.get("fixture_candidate_in_live_count", 0)) for row in live_rows),
+            "fake_frozen_planner_provider_in_live_count": sum(
+                int(row.get("fake_frozen_planner_provider_in_live_count", 0)) for row in live_rows
+            ),
+            "snapshot_only_counted_as_live_count": sum(int(row.get("snapshot_only_counted_as_live_count", 0)) for row in live_rows),
+            "status": "MULTIDAY_SHADOW_PASS"
+            if len(frozen_dates) >= required_frozen_day_count
+            and len(live_rows) >= required_live_dry_run_count
+            and repeated_frozen_day_count >= required_repeated_frozen_day_count
+            and repeat_variance == 0
+            else "MULTIDAY_SHADOW_NOT_COMPLETE",
         },
-        "rows": [
-            {
-                "as_of_date": live_data.candidate_events[0]["detected_at"] if live_data.candidate_events else None,
-                "candidate_event_count": len(live_data.candidate_events),
-                "eligible_candidate_event_count": len(live_data.candidate_events),
-                "planner_success_count": len(live_data.planner_runs),
-                "source_fetched_count": len(live_data.evidence_documents),
-                "accepted_claim_count": accepted,
-                "scored_item_count": scored,
-                "critical_audit_count": 0,
-            }
-        ],
-        "repeat_rows": [],
+        "rows": list(rows),
+        "repeat_rows": repeat_groups,
     }
+
+
+def _multiday_row_from_audit_summary(path: Path) -> Mapping[str, Any] | None:
+    try:
+        audit = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    summary = audit.get("summary") or {}
+    metadata = audit.get("metadata") or {}
+    config = audit.get("config") or {}
+    candidate = summary.get("candidate") or {}
+    source = summary.get("source") or {}
+    planner = summary.get("planner") or {}
+    extraction = summary.get("extraction") or {}
+    score = summary.get("score_stage") or {}
+    static = summary.get("static") or summary.get("static_logic") or {}
+    mode = str(config.get("mode") or "")
+    row = {
+        "run_id": path.parent.name,
+        "output_dir": str(path.parent),
+        "as_of_date": config.get("as_of_date") or metadata.get("as_of_date"),
+        "mode": mode,
+        "run_kind": _multiday_run_kind(mode),
+        "git_head_sha": metadata.get("git_head_sha"),
+        "config_hash": metadata.get("config_hash"),
+        "source_corpus_hash": metadata.get("source_corpus_hash"),
+        "candidate_event_hash": metadata.get("candidate_event_hash"),
+        "planner_prompt_hash": metadata.get("planner_prompt_hash"),
+        "planner_response_hash": metadata.get("planner_response_hash"),
+        "score_stage_hash": stable_hash(score),
+        "daily_artifact_hash": stable_hash(audit),
+        "candidate_event_count": int(candidate.get("total_candidate_event_count", 0)),
+        "eligible_candidate_event_count": int(candidate.get("production_eligible_candidate_event_count", 0)),
+        "planner_success_count": int(planner.get("real_planner_success_count", 0)),
+        "real_source_document_fetched_count": int(source.get("real_source_document_fetched_count", 0)),
+        "accepted_claim_count": int(extraction.get("accepted_claim_count", 0)),
+        "scored_item_count": int(score.get("deterministic_scorer_output_count", 0)),
+        "critical_audit_count": int(static.get("critical_count_sum", 0)),
+        "provider_failure_count": int(source.get("provider_failure_count", 0)),
+        "fixture_candidate_in_live_count": int(candidate.get("fixture_candidate_event_count_in_production", 0)),
+        "fake_frozen_planner_provider_in_live_count": int(planner.get("fake_frozen_provider_used_count", 0)),
+        "snapshot_only_counted_as_live_count": int(source.get("snapshot_only_counted_as_live_count", 0)),
+    }
+    return {**row, "pass_for_multiday": _multiday_row_passes(row)}
+
+
+def _multiday_run_kind(mode: str) -> str:
+    if mode == ProductionMode.FROZEN_REPLAY.value:
+        return "frozen"
+    if mode in {ProductionMode.PRODUCTION_SHADOW_LIVE.value, ProductionMode.PRODUCTION_LIVE_DRY_RUN.value, ProductionMode.PRODUCTION_LIVE.value}:
+        return "live"
+    return "shadow"
+
+
+def _multiday_row_passes(row: Mapping[str, Any]) -> bool:
+    if int(row.get("critical_audit_count", 0)):
+        return False
+    if int(row.get("eligible_candidate_event_count", 0)) < 30:
+        return False
+    if int(row.get("accepted_claim_count", 0)) < 20:
+        return False
+    if int(row.get("scored_item_count", 0)) < 15:
+        return False
+    if row.get("run_kind") == "live":
+        return (
+            int(row.get("planner_success_count", 0)) >= 30
+            and int(row.get("real_source_document_fetched_count", 0)) >= 50
+            and int(row.get("fixture_candidate_in_live_count", 0)) == 0
+            and int(row.get("fake_frozen_planner_provider_in_live_count", 0)) == 0
+            and int(row.get("snapshot_only_counted_as_live_count", 0)) == 0
+        )
+    if row.get("run_kind") == "frozen":
+        return int(row.get("fixture_candidate_in_live_count", 0)) == 0
+    return False
 
 
 def _research_memory_usage_audit(v4_memory: Mapping[str, Any], source_quality: Mapping[str, Any]) -> Mapping[str, Any]:
@@ -823,10 +1178,15 @@ def _shadow_latest(
     )
     label = "DAILY_PRODUCTION_SHADOW_PASS" if daily_shadow_pass else "IMPLEMENTATION_MERGED"
     production_blockers = list(blockers)
-    if multiday_validation["summary"].get("day_count", 0) < 10:
-        production_blockers.append("multi-day validation below 10 frozen/live-equivalent days")
-    if multiday_validation["summary"].get("required_live_dry_run_count", 0) > 1:
+    multiday_summary = multiday_validation["summary"]
+    if multiday_summary.get("frozen_replay_day_count", 0) < multiday_summary.get("required_frozen_day_count", 10):
+        production_blockers.append("ten frozen replay days not completed")
+    if multiday_summary.get("live_official_dry_run_count", 0) < multiday_summary.get("required_live_dry_run_count", 5):
         production_blockers.append("five live official dry runs not completed")
+    if multiday_summary.get("frozen_repeat_day_with_3_runs_count", 0) < multiday_summary.get("required_repeated_frozen_day_count", 3):
+        production_blockers.append("three frozen days with three exact-repeat runs not completed")
+    if multiday_summary.get("repeat_variance", 0):
+        production_blockers.append("frozen repeat score/stage variance is nonzero")
     production_ready = daily_shadow_pass and not production_blockers
     if production_ready:
         label = "PRODUCTION_CUTOVER_READY"
@@ -1035,9 +1395,14 @@ def _stability_report_markdown(multiday: Mapping[str, Any]) -> str:
             "# Production Cutover Stability Report",
             "",
             f"- day_count: {s['day_count']}",
+            f"- live_equivalent_day_count: {s['live_equivalent_day_count']}",
+            f"- frozen_replay_day_count: {s['frozen_replay_day_count']} / {s['required_frozen_day_count']}",
+            f"- live_official_dry_run_count: {s['live_official_dry_run_count']} / {s['required_live_dry_run_count']}",
+            f"- frozen_repeat_day_with_3_runs_count: {s['frozen_repeat_day_with_3_runs_count']} / {s['required_repeated_frozen_day_count']}",
             f"- repeat_variance: {s['repeat_variance']}",
             f"- accepted_claim_total: {s['accepted_claim_total']}",
             f"- deterministic_stage_output_total: {s['deterministic_stage_output_total']}",
+            f"- status: {s['status']}",
             "",
         ]
     )

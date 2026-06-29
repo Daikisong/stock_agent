@@ -2,7 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-216080-20260629901130",
   "fallback_source_classes": [
-    "IssuerIR"
+    "KIND"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -16,13 +16,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "KRX"
+    "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "동일 발행결과 이벤트는 접수번호별 납입 결과와 조건을 확인한다.",
+  "rationale": "동일 회사 발행결과는 회차별 납입 완료와 조건 차이를 확인한다.",
   "red_team_checks": [
-    "중복 공시 여부 확인",
-    "실제 조달 규모 확인"
+    "동일 회차 중복 접수 여부 확인",
+    "미납 또는 일부 납입 여부 확인"
   ]
 }

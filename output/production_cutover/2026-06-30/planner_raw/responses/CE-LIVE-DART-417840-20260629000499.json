@@ -2,7 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-417840-20260629000499",
   "fallback_source_classes": [
-    "IssuerIR"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -16,13 +16,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "KRX"
+    "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "자기주식취득결과는 실제 집행 규모와 주주환원 성격 확인이 필요하다.",
+  "rationale": "자기주식취득 결과는 실제 집행 규모와 자본 배분 성격 확인이 필요하다.",
   "red_team_checks": [
     "계획 대비 취득 완료율 확인",
-    "재무 여력 대비 취득 규모 확인"
+    "취득 목적과 기간 확인"
   ]
 }

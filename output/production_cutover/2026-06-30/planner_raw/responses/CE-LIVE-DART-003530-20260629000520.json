@@ -2,7 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-003530-20260629000520",
   "fallback_source_classes": [
-    "IssuerIR"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -16,13 +16,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "KRX"
+    "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "증권발행실적보고서는 금융 조달 조건과 규모 확인용이다.",
+  "rationale": "증권발행실적은 실제 조달 규모와 조건 확인용이다.",
   "red_team_checks": [
-    "발행 증권 종류와 조건 확인",
-    "영업 계약과 직접 연결되는지 구분"
+    "발행 실적 미달 여부 확인",
+    "자금 사용처와 만기/금리 조건 확인"
   ]
 }

@@ -2,6 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-381970-20260629801242",
   "fallback_source_classes": [
+    "IssuerOfficial",
     "TrustedNews"
   ],
   "forbidden_source_classes": [
@@ -16,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
-  "primitive_gap": "margin_bridge_visible",
-  "rationale": "투자판단 주요경영사항 정정은 손익 영향과 변경 사유 확인이 필요하다.",
+  "primitive_gap": "contract_quality",
+  "rationale": "투자판단 관련 정정 공시는 변경된 핵심 경영사항의 계약성·지속성을 확인해야 한다.",
   "red_team_checks": [
-    "정정 전후 핵심 수치 변경 확인",
-    "일회성 비용/수익인지 구분"
+    "정정 사유와 변경 항목 확인",
+    "계약/거래 상대방과 금액 확정성 확인"
   ]
 }

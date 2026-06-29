@@ -2,8 +2,8 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-148250-20260629000586",
   "fallback_source_classes": [
-    "KRX",
-    "TrustedNews"
+    "IssuerIR",
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "유상증자 결정은 조달 목적, 배정 방식, 자금 사용처 확인이 우선이다.",
+  "rationale": "유상증자 결정은 자금 조달 목적, 대상, 납입 일정 확인이 우선이다.",
   "red_team_checks": [
-    "증자 자금이 성장 CAPEX인지 운영자금/채무상환인지 구분",
-    "정정공시 가능성 확인"
+    "정정 공시 존재 여부 확인",
+    "자금 사용 목적이 운영자금인지 시설/수주 대응인지 분리"
   ]
 }

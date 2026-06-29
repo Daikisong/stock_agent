@@ -3,7 +3,7 @@
   "candidate_event_id": "CE-LIVE-DART-130660-20260629801144",
   "fallback_source_classes": [
     "KIND",
-    "TrustedNews"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
-  "primitive_gap": "order_to_revenue_bridge",
-  "rationale": "공급계약 정정은 수주액이 어느 기간 매출로 전환되는지 확인해야 한다.",
+  "primitive_gap": "contract_quality",
+  "rationale": "정정 공급계약은 계약 상대방, 금액, 기간의 최종 조건 확인이 필요하다.",
   "red_team_checks": [
-    "계약기간과 매출 인식 시점 확인",
-    "계약금액 변경 여부 확인"
+    "정정 전후 변경 항목 확인",
+    "공공/민간 발주처와 해지 조건 확인"
   ]
 }

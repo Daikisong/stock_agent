@@ -3,7 +3,7 @@
   "candidate_event_id": "CE-LIVE-DART-378340-20260629900849",
   "fallback_source_classes": [
     "KIND",
-    "TrustedNews"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
-  "primitive_gap": "contract_quality",
-  "rationale": "장비 공급계약 정정은 계약금액, 고객, 납기 변경 여부 확인이 핵심이다.",
+  "primitive_gap": "order_to_revenue_bridge",
+  "rationale": "장비 공급계약 정정은 납품 일정과 매출 전환 경로 확인이 중요하다.",
   "red_team_checks": [
-    "납기 지연 또는 금액 축소 확인",
-    "고객사와 취소조건 확인"
+    "계약기간 및 납품 일정 변경 확인",
+    "계약금액과 상대방 변경 여부 확인"
   ]
 }

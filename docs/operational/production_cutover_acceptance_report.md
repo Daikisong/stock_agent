@@ -3,7 +3,7 @@
 - final_status: DAILY_PRODUCTION_SHADOW_PASS
 - production_verdict: NOT_READY
 - production_ready: False
-- blockers: ['working tree dirty at report generation, so PRODUCTION_CUTOVER_READY is forbidden', 'multi-day validation below 10 frozen/live-equivalent days', 'five live official dry runs not completed']
+- blockers: ['multi-day validation below 10 frozen/live-equivalent days', 'five live official dry runs not completed']
 
 ## 핵심 해석
 v4는 shadow 실행 증거로 보존하지만, 이 cutover gate는 fixture/cache/snapshot-only 증거를 운영 READY 증거로 승격하지 않는다.

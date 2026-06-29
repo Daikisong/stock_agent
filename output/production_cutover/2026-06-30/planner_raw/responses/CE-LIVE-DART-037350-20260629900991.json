@@ -3,7 +3,7 @@
   "candidate_event_id": "CE-LIVE-DART-037350-20260629900991",
   "fallback_source_classes": [
     "KIND",
-    "TrustedNews"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
-  "primitive_gap": "order_to_revenue_bridge",
-  "rationale": "EPC 성격의 공급계약 정정은 계약기간, 공정, 매출 전환 경로 확인이 중요하다.",
+  "primitive_gap": "margin_bridge_visible",
+  "rationale": "EPC 성격의 정정 공급계약은 금액 변경과 원가/마진 가시성 확인이 중요하다.",
   "red_team_checks": [
-    "계약금액과 기간 변경 확인",
-    "원가 부담 또는 지연 가능성 확인"
+    "도급 범위와 공사기간 확인",
+    "정정으로 수익성 조건이 악화됐는지 확인"
   ]
 }

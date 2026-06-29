@@ -3,7 +3,7 @@
   "candidate_event_id": "CE-LIVE-DART-360070-20260629901095",
   "fallback_source_classes": [
     "KIND",
-    "TrustedNews"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
-  "primitive_gap": "contract_quality",
-  "rationale": "공급계약 정정은 계약 상대, 금액, 기간, 조건 변경 확인이 필요하다.",
+  "primitive_gap": "order_to_revenue_bridge",
+  "rationale": "장비/소재 계약 정정은 수주가 언제 매출로 전환되는지 확인해야 한다.",
   "red_team_checks": [
-    "원계약 대비 경제성 훼손 확인",
-    "고객사나 납품 범위 변경 확인"
+    "납품 기간과 검수 조건 확인",
+    "계약금액 변경 및 매출 대비 규모 확인"
   ]
 }

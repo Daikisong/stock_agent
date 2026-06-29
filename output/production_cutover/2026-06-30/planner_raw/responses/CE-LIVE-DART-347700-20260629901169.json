@@ -3,7 +3,7 @@
   "candidate_event_id": "CE-LIVE-DART-347700-20260629901169",
   "fallback_source_classes": [
     "KIND",
-    "TrustedNews"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "동일 회사 정정 공급계약은 접수번호별 변경 조건을 분리 확인한다.",
+  "rationale": "동일 회사 반복 정정은 최종 계약 조건 식별이 먼저다.",
   "red_team_checks": [
-    "중복 이벤트 여부 확인",
-    "계약금액과 기간 변경 확인"
+    "같은 계약의 최신 정정본 여부 확인",
+    "매출 인식 기간 변경 확인"
   ]
 }

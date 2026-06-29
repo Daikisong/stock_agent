@@ -2,8 +2,8 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-260870-20260629601196",
   "fallback_source_classes": [
-    "KRX",
-    "TrustedNews"
+    "IssuerIR",
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "우선주 제3자배정 결과는 전략 투자와 설비/운영자금 연결을 확인한다.",
+  "rationale": "우선주 제3자배정 결과는 조달 완료와 투자자 조건 확인이 필요하다.",
   "red_team_checks": [
-    "우선주 조건과 희석 가능성 확인",
-    "EV 충전 인프라 투자와 연결되는지 확인"
+    "우선주 권리 조건 확인",
+    "납입자와 전략적 투자 성격 확인"
   ]
 }

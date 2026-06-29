@@ -2,7 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-060900-20260629900964",
   "fallback_source_classes": [
-    "IssuerIR"
+    "KIND"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -16,13 +16,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "KRX"
+    "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "CB 발행결과는 실제 납입과 전환조건, 자금 사용처 확인이 필요하다.",
+  "rationale": "CB 발행결과는 계약 이벤트와 별도로 자금 조달 및 희석 조건 확인이 필요하다.",
   "red_team_checks": [
-    "CB 전환가와 리픽싱 조건 확인",
-    "공급계약 이행자금과 연결되는지 확인"
+    "납입 완료와 전환가액 확인",
+    "조기상환청구권 및 투자자 확인"
   ]
 }

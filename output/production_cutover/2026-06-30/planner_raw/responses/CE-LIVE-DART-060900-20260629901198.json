@@ -3,7 +3,7 @@
   "candidate_event_id": "CE-LIVE-DART-060900-20260629901198",
   "fallback_source_classes": [
     "KIND",
-    "TrustedNews"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "단일판매공급계약은 계약 상대방, 기간, 취소 조건 확인이 핵심이다.",
+  "rationale": "단일판매 공급계약은 C05에서 계약 질과 매출 가시성의 출발점이다.",
   "red_team_checks": [
     "계약 상대방 신뢰도 확인",
-    "계약금액이 최근 매출 대비 의미 있는지 확인"
+    "계약금액·기간·해지 조건 확인"
   ]
 }

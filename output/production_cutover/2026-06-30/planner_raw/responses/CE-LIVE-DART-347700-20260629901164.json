@@ -3,7 +3,7 @@
   "candidate_event_id": "CE-LIVE-DART-347700-20260629901164",
   "fallback_source_classes": [
     "KIND",
-    "TrustedNews"
+    "IssuerOfficial"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,13 +17,12 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART",
-    "IssuerIR"
+    "DART"
   ],
-  "primitive_gap": "contract_quality",
-  "rationale": "정정 공급계약은 원계약 대비 경제성이 유지되는지 공식 공시로 확인한다.",
+  "primitive_gap": "revenue_visibility_contract",
+  "rationale": "반복 정정 계약은 최종 계약기간과 매출 인식 가능 기간 확인이 필요하다.",
   "red_team_checks": [
-    "정정 전후 매출 인식 기간 비교",
-    "상대방 또는 계약조건 변경 확인"
+    "계약기간과 납품 일정 확인",
+    "최근 매출 대비 계약 규모 확인"
   ]
 }
