@@ -3,17 +3,19 @@
     "candidate_event_id": "CE-LIVE-DART-148250-20260629000586",
     "company_name": "알엔투테크놀로지",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KRX",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -26,17 +28,19 @@
     "candidate_event_id": "CE-LIVE-DART-083660-20260629000561",
     "company_name": "CSA 코스믹",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KRX",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -49,17 +53,19 @@
     "candidate_event_id": "CE-LIVE-DART-006050-20260629901292",
     "company_name": "국영지앤엠",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "contract_quality",
     "stop_condition": {
@@ -72,17 +78,19 @@
     "candidate_event_id": "CE-LIVE-DART-083660-20260629000553",
     "company_name": "CSA 코스믹",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KRX",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -95,40 +103,43 @@
     "candidate_event_id": "CE-LIVE-DART-006050-20260629901282",
     "company_name": "국영지앤엠",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
-    "primitive_gap": "contract_quality",
+    "primitive_gap": "revenue_visibility_contract",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "006050",
-    "task_id": "SRC-TASK-cf784f70400100246b2d"
+    "task_id": "SRC-TASK-616b9b08fef9162694ea"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-208640-20260629901297",
     "company_name": "썸에이지",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -141,17 +152,19 @@
     "candidate_event_id": "CE-LIVE-DART-175250-20260629000562",
     "company_name": "아이큐어",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KRX",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -164,17 +177,18 @@
     "candidate_event_id": "CE-LIVE-DART-377030-20260629901255",
     "company_name": "비트맥스",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -187,17 +201,18 @@
     "candidate_event_id": "CE-LIVE-DART-377030-20260629901251",
     "company_name": "비트맥스",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -210,86 +225,91 @@
     "candidate_event_id": "CE-LIVE-DART-381970-20260629801242",
     "company_name": "케이카",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
-    "primitive_gap": "capacity_expansion",
+    "primitive_gap": "margin_bridge_visible",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "381970",
-    "task_id": "SRC-TASK-1a8fd9be3f41f796d821"
+    "task_id": "SRC-TASK-efbbccee3fb5996ccec0"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-021960-20260629000554",
     "company_name": "케이비캐피탈",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
-    "primitive_gap": "information_confidence",
+    "primitive_gap": "capital_allocation_event",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "021960",
-    "task_id": "SRC-TASK-72e9ba5565bd6d612f91"
+    "task_id": "SRC-TASK-4221f9c181940f61c0cd"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-104040-20260629901236",
     "company_name": "디에스엠",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
-    "primitive_gap": "information_confidence",
+    "primitive_gap": "capital_allocation_event",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "104040",
-    "task_id": "SRC-TASK-1d5bb4d5d68635a74b00"
+    "task_id": "SRC-TASK-909137930b58e30c915b"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-260870-20260629601196",
     "company_name": "SK시그넷",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KRX",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -302,17 +322,19 @@
     "candidate_event_id": "CE-LIVE-DART-060900-20260629901198",
     "company_name": "에이전트AI",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "contract_quality",
     "stop_condition": {
@@ -325,40 +347,44 @@
     "candidate_event_id": "CE-LIVE-DART-097230-20260629801171",
     "company_name": "HJ중공업",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
-    "primitive_gap": "contract_quality",
+    "primitive_gap": "order_to_revenue_bridge",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "097230",
-    "task_id": "SRC-TASK-634cfbd54fd3304369a2"
+    "task_id": "SRC-TASK-124670950559004b0f94"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-347700-20260629901175",
     "company_name": "스피어",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "contract_quality",
     "stop_condition": {
@@ -371,17 +397,19 @@
     "candidate_event_id": "CE-LIVE-DART-347700-20260629901169",
     "company_name": "스피어",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "contract_quality",
     "stop_condition": {
@@ -394,17 +422,19 @@
     "candidate_event_id": "CE-LIVE-DART-347700-20260629901164",
     "company_name": "스피어",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "contract_quality",
     "stop_condition": {
@@ -417,17 +447,19 @@
     "candidate_event_id": "CE-LIVE-DART-368970-20260629000506",
     "company_name": "오에스피",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KRX",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -440,17 +472,19 @@
     "candidate_event_id": "CE-LIVE-DART-007460-20260629801147",
     "company_name": "에이프로젠",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KRX",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -463,40 +497,42 @@
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000520",
     "company_name": "한화투자증권",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
-    "primitive_gap": "information_confidence",
+    "primitive_gap": "capital_allocation_event",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "003530",
-    "task_id": "SRC-TASK-1c046d78ae56e3beda1f"
+    "task_id": "SRC-TASK-acfc61b9c3437f97296e"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-003380-20260629901161",
     "company_name": "하림지주",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "capacity_expansion",
     "stop_condition": {
@@ -509,17 +545,18 @@
     "candidate_event_id": "CE-LIVE-DART-208640-20260629000512",
     "company_name": "썸에이지",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KRX"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -532,109 +569,115 @@
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000517",
     "company_name": "한화투자증권",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
-    "primitive_gap": "information_confidence",
+    "primitive_gap": "capital_allocation_event",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "003530",
-    "task_id": "SRC-TASK-641e51e1a3f5653cd474"
+    "task_id": "SRC-TASK-cfae5f6a306fb393dc5c"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000514",
     "company_name": "한화투자증권",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
-    "primitive_gap": "information_confidence",
+    "primitive_gap": "capital_allocation_event",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "003530",
-    "task_id": "SRC-TASK-9e6e7e5e041b5d473e95"
+    "task_id": "SRC-TASK-88eed36a21b5799d8382"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-130660-20260629801144",
     "company_name": "한전산업",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
-    "primitive_gap": "contract_quality",
+    "primitive_gap": "order_to_revenue_bridge",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "130660",
-    "task_id": "SRC-TASK-bef8fd91f676bc310463"
+    "task_id": "SRC-TASK-bee6e5917483983f40c3"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000513",
     "company_name": "한화투자증권",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
-    "primitive_gap": "information_confidence",
+    "primitive_gap": "capital_allocation_event",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "003530",
-    "task_id": "SRC-TASK-5909d27ee8fad9c3adbd"
+    "task_id": "SRC-TASK-52bb4c7395e303a1829f"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-028670-20260629801140",
     "company_name": "팬오션",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "capacity_expansion",
     "stop_condition": {
@@ -647,17 +690,19 @@
     "candidate_event_id": "CE-LIVE-DART-360070-20260629901095",
     "company_name": "탑머티리얼",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "contract_quality",
     "stop_condition": {
@@ -670,40 +715,44 @@
     "candidate_event_id": "CE-LIVE-DART-063170-20260629901142",
     "company_name": "서울옥션",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
-    "primitive_gap": "contract_quality",
+    "primitive_gap": "revenue_visibility_contract",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "063170",
-    "task_id": "SRC-TASK-6e2771315b65b1ab4a6f"
+    "task_id": "SRC-TASK-f48309c73f0d0e708b80"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-270520-20260629000502",
     "company_name": "앱튼",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KRX",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -716,17 +765,19 @@
     "candidate_event_id": "CE-LIVE-DART-226950-20260629000494",
     "company_name": "올릭스",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KRX",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -739,17 +790,19 @@
     "candidate_event_id": "CE-LIVE-DART-351320-20260629901083",
     "company_name": "넥사다이내믹스",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "contract_quality",
     "stop_condition": {
@@ -762,17 +815,18 @@
     "candidate_event_id": "CE-LIVE-DART-208640-20260629901135",
     "company_name": "썸에이지",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -785,17 +839,19 @@
     "candidate_event_id": "CE-LIVE-DART-130660-20260629801125",
     "company_name": "한전산업",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "contract_quality",
     "stop_condition": {
@@ -808,40 +864,43 @@
     "candidate_event_id": "CE-LIVE-DART-216080-20260629901133",
     "company_name": "제테마",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
-    "primitive_gap": "information_confidence",
+    "primitive_gap": "capital_allocation_event",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "216080",
-    "task_id": "SRC-TASK-613075ca476aed25ceb4"
+    "task_id": "SRC-TASK-a7880fa25818b777862c"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-403550-20260629801126",
     "company_name": "쏘카",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KRX",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -854,63 +913,66 @@
     "candidate_event_id": "CE-LIVE-DART-216080-20260629901130",
     "company_name": "제테마",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
-    "primitive_gap": "information_confidence",
+    "primitive_gap": "capital_allocation_event",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "216080",
-    "task_id": "SRC-TASK-b6cd0adda5530b59eca2"
+    "task_id": "SRC-TASK-e3f2913c655d0d4ad1cf"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-440320-20260629901092",
     "company_name": "오픈놀",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
-    "primitive_gap": "information_confidence",
+    "primitive_gap": "capital_allocation_event",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "440320",
-    "task_id": "SRC-TASK-dfd06a864bd323094b1a"
+    "task_id": "SRC-TASK-5124e5bd08c375596738"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-417840-20260629000499",
     "company_name": "저스템",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -923,63 +985,68 @@
     "candidate_event_id": "CE-LIVE-DART-037350-20260629900991",
     "company_name": "성도이엔지",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
-    "primitive_gap": "contract_quality",
+    "primitive_gap": "order_to_revenue_bridge",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "037350",
-    "task_id": "SRC-TASK-ad2e9d4d158e4857b770"
+    "task_id": "SRC-TASK-195d188045cb0e9bfac7"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-226950-20260629901106",
     "company_name": "올릭스",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
-    "primitive_gap": "information_confidence",
+    "primitive_gap": "capital_allocation_event",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "226950",
-    "task_id": "SRC-TASK-f1ee2ce5b508d730877d"
+    "task_id": "SRC-TASK-be134d06d0f58164f709"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-226950-20260629000459",
     "company_name": "올릭스",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KRX",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -992,17 +1059,18 @@
     "candidate_event_id": "CE-LIVE-DART-248070-20260629000482",
     "company_name": "솔루엠",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {
@@ -1015,63 +1083,67 @@
     "candidate_event_id": "CE-LIVE-DART-003540-20260629000478",
     "company_name": "대신증권",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
-    "primitive_gap": "information_confidence",
+    "primitive_gap": "capital_allocation_event",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "003540",
-    "task_id": "SRC-TASK-adab0eea4bb40a83fbe8"
+    "task_id": "SRC-TASK-2a1102abba3569bd2f1e"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-060900-20260629900964",
     "company_name": "에이전트AI",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
-    "primitive_gap": "information_confidence",
+    "primitive_gap": "capital_allocation_event",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "060900",
-    "task_id": "SRC-TASK-29cdc4a72d2289cf0ec8"
+    "task_id": "SRC-TASK-e5524ac3490532570d48"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-378340-20260629900849",
     "company_name": "필에너지",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
     "primitive_gap": "contract_quality",
     "stop_condition": {
@@ -1084,63 +1156,67 @@
     "candidate_event_id": "CE-LIVE-DART-003540-20260629000475",
     "company_name": "대신증권",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
-    "primitive_gap": "information_confidence",
+    "primitive_gap": "capital_allocation_event",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "003540",
-    "task_id": "SRC-TASK-5bf1abb3d08b9c8001f8"
+    "task_id": "SRC-TASK-89e6dbba216688745636"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-282720-20260629900997",
     "company_name": "금양그린파워",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "KIND",
+      "TrustedNews"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "IssuerIR"
     ],
-    "primitive_gap": "contract_quality",
+    "primitive_gap": "order_to_revenue_bridge",
     "stop_condition": {
       "accepted_claim_count": 1
     },
     "symbol": "282720",
-    "task_id": "SRC-TASK-5dca712076c2c65d3a54"
+    "task_id": "SRC-TASK-af254e032507d517a351"
   },
   {
     "candidate_event_id": "CE-LIVE-DART-357550-20260629000448",
     "company_name": "석경에이티",
     "fallback_source_classes": [
-      "IssuerOfficial"
+      "IssuerIR"
     ],
     "forbidden_source_classes": [
       "unbounded_general_search"
     ],
     "general_search_allowed": false,
-    "max_candidates": 1,
-    "max_fetches": 1,
+    "max_candidates": 5,
+    "max_fetches": 2,
     "max_queries": 1,
     "preferred_source_classes": [
-      "DART"
+      "DART",
+      "KRX"
     ],
     "primitive_gap": "capital_allocation_event",
     "stop_condition": {

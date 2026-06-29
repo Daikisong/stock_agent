@@ -201,6 +201,7 @@ v4는 shadow 실행 증거로 보존하지만, 이 cutover gate는 fixture/cache
     "codex-cli": 50
   },
   "fake_frozen_provider_used_count": 0,
+  "planner_default_model_unpinned_count": 0,
   "planner_output_score_stage_key_count": 0,
   "planner_prompt_hash_count": 50,
   "planner_provider_model_null_count": 0,

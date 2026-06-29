@@ -6,6 +6,12 @@ import hashlib
 import io
 import json
 import os
+import re
+import shlex
+import signal
+import subprocess
+import tempfile
+import time
 import zipfile
 from dataclasses import dataclass
 from datetime import date, datetime
@@ -58,6 +64,72 @@ _ALLOWED_PRIMITIVES = (
     "margin_bridge_visible",
 )
 _DEFAULT_ARCHETYPE_ID = "C05_EPC_MEGA_CONTRACT_MARGIN_GAP"
+_FORBIDDEN_PLANNER_KEYS = {
+    "score",
+    "stage",
+    "hard_break",
+    "current_score_eligible",
+    "verified_score",
+    "final_stage",
+    "feature_input",
+    "score_contribution",
+}
+_PLANNER_BATCH_OUTPUT_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "properties": {
+        "plans": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "properties": {
+                    "candidate_event_id": {"type": "string"},
+                    "archetype_id": {"type": "string"},
+                    "primitive_gap": {"type": "string"},
+                    "preferred_source_classes": {
+                        "type": "array",
+                        "minItems": 1,
+                        "items": {"type": "string"},
+                    },
+                    "fallback_source_classes": {"type": "array", "items": {"type": "string"}},
+                    "forbidden_source_classes": {"type": "array", "items": {"type": "string"}},
+                    "max_queries": {"type": "integer"},
+                    "max_candidates": {"type": "integer"},
+                    "max_fetches": {"type": "integer"},
+                    "rationale": {"type": "string"},
+                    "red_team_checks": {"type": "array", "items": {"type": "string"}},
+                    "planner_self_check": {
+                        "type": "object",
+                        "additionalProperties": False,
+                        "properties": {
+                            "score_keys_present": {"type": "boolean"},
+                            "stage_keys_present": {"type": "boolean"},
+                            "future_outcome_used": {"type": "boolean"},
+                        },
+                        "required": ["score_keys_present", "stage_keys_present", "future_outcome_used"],
+                    },
+                },
+                "required": [
+                    "candidate_event_id",
+                    "archetype_id",
+                    "primitive_gap",
+                    "preferred_source_classes",
+                    "fallback_source_classes",
+                    "forbidden_source_classes",
+                    "max_queries",
+                    "max_candidates",
+                    "max_fetches",
+                    "rationale",
+                    "red_team_checks",
+                    "planner_self_check",
+                ],
+            },
+        }
+    },
+    "required": ["plans"],
+}
 
 
 @dataclass(frozen=True)
@@ -84,6 +156,7 @@ def build_official_live_shadow_data(
     repo_root: str | Path,
     as_of_date: date,
     candidate_min_count: int,
+    planner_provider: str = "surrogate",
 ) -> OfficialLiveShadowData:
     root = Path(repo_root)
     universe_rows = _fetch_opendart_universe()
@@ -91,6 +164,15 @@ def build_official_live_shadow_data(
     disclosure_rows = _fetch_opendart_disclosures(as_of_date=as_of_date, pages=5, page_count=100)
     selected = _select_disclosure_candidates(disclosure_rows, candidate_min_count=candidate_min_count)
     extractor = ContractBlindRawAssertionExtractor()
+    event_rows: list[tuple[Mapping[str, Any], Mapping[str, Any]]] = []
+    for row in selected:
+        company_info = _fetch_opendart_company(str(row["corp_code"]))
+        event_rows.append((row, _candidate_event_from_dart_row(row, as_of_date=as_of_date, company_info=company_info)))
+    planner_by_event_id = _planner_runs_for_events(
+        tuple(event for _, event in event_rows),
+        provider_mode=planner_provider,
+        repo_root=root,
+    )
     events: list[Mapping[str, Any]] = []
     planner_runs: list[Mapping[str, Any]] = []
     source_tasks: list[Mapping[str, Any]] = []
@@ -104,37 +186,10 @@ def build_official_live_shadow_data(
     watchlist: list[Mapping[str, Any]] = []
     operator_rows: list[Mapping[str, Any]] = []
     provider_results: list[Mapping[str, Any]] = []
-    for row in selected:
-        company_info = _fetch_opendart_company(str(row["corp_code"]))
-        event = _candidate_event_from_dart_row(row, as_of_date=as_of_date, company_info=company_info)
+    for row, event in event_rows:
         events.append(event)
-        prompt = {
-            "candidate_event": event,
-            "instruction": "Plan source tasks only. Do not score or stage.",
-        }
-        plan = _planner_response_for_dart_event(event)
-        planner_run = {
-            "candidate_event_id": event["candidate_event_id"],
-            "provider_name": "codex_cli_planner",
-            "provider_mode": "real",
-            "real_provider_exercised": True,
-            "real_provider_success": True,
-            "fake_provider_used": False,
-            "endpoint": "codex-cli",
-            "model": os.environ.get("E2R_CODEX_PLANNER_MODEL") or "codex-cli-default",
-            "command": "codex exec --output-schema planner_schema.json",
-            "prompt_hash": stable_hash(prompt),
-            "response_hash": stable_hash(plan),
-            "raw_prompt_path": f"planner_raw/prompts/{event['candidate_event_id']}.json",
-            "raw_response_path": f"planner_raw/responses/{event['candidate_event_id']}.json",
-            "schema_validation_status": "PASS",
-            "rejected_by_validator": False,
-            "latency_ms": None,
-            "provider_mode_label": "real",
-            "is_real_provider": True,
-            "output": plan,
-            "prompt_payload": prompt,
-        }
+        planner_run = dict(planner_by_event_id[event["candidate_event_id"]])
+        plan = planner_run["output"]
         planner_runs.append(planner_run)
         task = _source_task_for_event(event, plan)
         source_tasks.append(task)
@@ -453,21 +508,359 @@ def _planner_response_for_dart_event(event: Mapping[str, Any]) -> Mapping[str, A
     }
 
 
+def _planner_runs_for_events(
+    events: Sequence[Mapping[str, Any]],
+    *,
+    provider_mode: str,
+    repo_root: Path,
+) -> Mapping[str, Mapping[str, Any]]:
+    normalized = str(provider_mode or "surrogate").strip().lower()
+    if normalized in {"real", "codex", "codex_cli"}:
+        return _real_codex_planner_runs_for_events(events, repo_root=repo_root)
+    if normalized not in {"surrogate", "deterministic_surrogate", "test_surrogate"}:
+        raise ValueError(f"unknown production cutover planner provider: {provider_mode}")
+    rows: dict[str, Mapping[str, Any]] = {}
+    for event in events:
+        prompt = _planner_prompt_payload(tuple([event]))
+        plan = _planner_response_for_dart_event(event)
+        rows[str(event["candidate_event_id"])] = {
+            "candidate_event_id": event["candidate_event_id"],
+            "provider_name": "deterministic_surrogate_planner",
+            "provider_mode": "surrogate",
+            "real_provider_exercised": False,
+            "real_provider_success": False,
+            "fake_provider_used": True,
+            "endpoint": "local-deterministic-surrogate",
+            "model": "surrogate-not-llm",
+            "command": "deterministic_surrogate_planner",
+            "prompt_hash": stable_hash(prompt),
+            "response_hash": stable_hash(plan),
+            "raw_prompt_path": f"planner_raw/prompts/{event['candidate_event_id']}.json",
+            "raw_response_path": f"planner_raw/responses/{event['candidate_event_id']}.json",
+            "schema_validation_status": "SURROGATE_ONLY_NOT_PRODUCTION_READY",
+            "rejected_by_validator": False,
+            "latency_ms": 0,
+            "provider_mode_label": "surrogate",
+            "is_real_provider": False,
+            "planner_output_score_stage_key_count": _count_forbidden_planner_keys(plan),
+            "output": plan,
+            "prompt_payload": prompt,
+        }
+    return rows
+
+
+def _real_codex_planner_runs_for_events(
+    events: Sequence[Mapping[str, Any]],
+    *,
+    repo_root: Path,
+) -> Mapping[str, Mapping[str, Any]]:
+    load_project_env()
+    prompt_payload = _planner_prompt_payload(events)
+    prompt_text = _planner_prompt_text(prompt_payload)
+    requested_model = (os.environ.get("E2R_CODEX_PLANNER_MODEL") or "").strip()
+    model = requested_model or "codex-cli-default"
+    command, output_path = _codex_planner_command(repo_root=repo_root, model=requested_model)
+    started = time.monotonic()
+    with tempfile.TemporaryDirectory(prefix="e2r_cutover_planner_") as tmpdir:
+        tmp = Path(tmpdir)
+        schema_path = tmp / "planner_schema.json"
+        output_file = tmp / "planner_output.json"
+        schema_path.write_text(json.dumps(_PLANNER_BATCH_OUTPUT_SCHEMA, ensure_ascii=False), encoding="utf-8")
+        command, output_path = _codex_planner_command(repo_root=repo_root, model=requested_model, schema_path=schema_path, output_path=output_file)
+        completed = _run_codex_command(command, prompt=prompt_text, timeout=_planner_timeout_seconds())
+        raw = output_file.read_text(encoding="utf-8") if output_file.exists() else completed.stdout
+    latency_ms = int((time.monotonic() - started) * 1000)
+    if completed.returncode != 0 and not raw.strip():
+        raise RuntimeError(_clean_planner_error(completed.stderr or completed.stdout or f"codex_cli_exit_{completed.returncode}"))
+    payload = _json_object_from_text(raw)
+    if payload is None:
+        raise RuntimeError("codex planner returned non-json output")
+    if _count_forbidden_planner_keys(payload):
+        raise RuntimeError("codex planner output contains forbidden score/stage keys")
+    prompt_hash = stable_hash(prompt_payload)
+    response_hash = stable_hash(payload)
+    by_event = {str(event["candidate_event_id"]): event for event in events}
+    plans = {}
+    raw_plans = {}
+    for row in payload.get("plans") or ():
+        if isinstance(row, Mapping) and row.get("candidate_event_id") in by_event:
+            event_id = str(row["candidate_event_id"])
+            raw_plans[event_id] = dict(row)
+            plans[event_id] = _validated_planner_plan(row, by_event[event_id])
+    missing = [event_id for event_id in by_event if event_id not in plans]
+    if missing:
+        raise RuntimeError(f"codex planner returned no valid plan for {len(missing)} candidate events")
+    command_text = " ".join(shlex.quote(part) for part in command)
+    return {
+        event_id: {
+            "candidate_event_id": event_id,
+            "provider_name": "codex_cli_planner",
+            "provider_mode": "real",
+            "real_provider_exercised": True,
+            "real_provider_success": True,
+            "fake_provider_used": False,
+            "endpoint": "codex-cli",
+            "model": model,
+            "requested_model": requested_model or None,
+            "model_identity_status": "EXPLICIT_MODEL" if requested_model else "CODEX_CLI_DEFAULT_MODEL_NOT_PINNED",
+            "command": command_text,
+            "prompt_hash": stable_hash({"batch_prompt_hash": prompt_hash, "candidate_event_id": event_id}),
+            "response_hash": stable_hash(plans[event_id]),
+            "batch_prompt_hash": prompt_hash,
+            "batch_response_hash": response_hash,
+            "raw_prompt_path": f"planner_raw/prompts/{event_id}.json",
+            "raw_response_path": f"planner_raw/responses/{event_id}.json",
+            "schema_validation_status": "PASS",
+            "rejected_by_validator": False,
+            "latency_ms": latency_ms,
+            "provider_mode_label": "real",
+            "is_real_provider": True,
+            "planner_output_score_stage_key_count": _count_forbidden_planner_keys(plans[event_id]),
+            "output": plans[event_id],
+            "raw_response_payload": raw_plans[event_id],
+            "prompt_payload": {
+                "batch_prompt_hash": prompt_hash,
+                "candidate_event": by_event[event_id],
+                "batch_rules": prompt_payload["rules"],
+                "allowed_primitives": prompt_payload["allowed_primitives"],
+            },
+        }
+        for event_id in by_event
+    }
+
+
+def _planner_prompt_payload(events: Sequence[Mapping[str, Any]]) -> Mapping[str, Any]:
+    return {
+        "schema_version": "production_cutover_real_planner_prompt_v1",
+        "events": [
+            {
+                "candidate_event_id": event["candidate_event_id"],
+                "symbol": event["symbol"],
+                "company_name": event["company_name"],
+                "event_date": event["event_date"],
+                "source_family": event["source_family"],
+                "event_type": event["event_type"],
+                "event_title": event["event_title"],
+                "event_summary": event["event_summary"],
+                "large_sector_id": event.get("large_sector_id"),
+                "industry_code": event.get("industry_code"),
+                "issuer_directness": event.get("issuer_directness"),
+            }
+            for event in events
+        ],
+        "allowed_archetypes": [_DEFAULT_ARCHETYPE_ID],
+        "allowed_primitives": list(_ALLOWED_PRIMITIVES),
+        "allowed_source_classes": ["DART", "KIND", "KRX", "CompanyGuide", "IssuerIR", "IssuerOfficial", "TrustedNews"],
+        "rules": [
+            "Return exactly one plan per candidate_event_id.",
+            "Keep each plan compact: choose one primitive_gap and one bounded source task.",
+            "Plan source tasks only; do not output score, stage, hard_break, current_score_eligible, or feature_input.",
+            "Use only allowed_primitives for primitive_gap.",
+            "Set max_queries<=2, max_candidates<=10, max_fetches<=3.",
+            "forbidden_source_classes must contain unbounded_general_search.",
+            "Prefer official sources before TrustedNews.",
+        ],
+    }
+
+
+def _planner_prompt_text(payload: Mapping[str, Any]) -> str:
+    return "\n\n".join(
+        [
+            "You are the E2R Production Cutover Research Brain Planner.",
+            "Your only job is to produce bounded SourceTask drafts for live official-source evidence acquisition.",
+            "Do not score. Do not stage. Do not verify final claims. Do not mark current_score_eligible.",
+            "Keep the JSON concise: one primitive_gap and one source task per candidate.",
+            "Return one JSON object matching the supplied output schema.",
+            json.dumps(payload, ensure_ascii=False, sort_keys=True),
+        ]
+    )
+
+
+def _validated_planner_plan(row: Mapping[str, Any], event: Mapping[str, Any]) -> Mapping[str, Any]:
+    if _count_forbidden_planner_keys(row):
+        raise RuntimeError("planner plan contains forbidden score/stage keys")
+    event_id = str(row.get("candidate_event_id") or "")
+    if event_id != event["candidate_event_id"]:
+        raise RuntimeError("planner plan candidate_event_id mismatch")
+    primitive = str(row.get("primitive_gap") or "")
+    if primitive not in _ALLOWED_PRIMITIVES:
+        raise RuntimeError(f"planner plan for {event_id} has no allowed primitive")
+    max_queries = min(max(int(row.get("max_queries") or 1), 1), 2)
+    max_candidates = min(max(int(row.get("max_candidates") or 1), 1), 10)
+    max_fetches = min(max(int(row.get("max_fetches") or 1), 1), 3)
+    forbidden = tuple(str(item) for item in row.get("forbidden_source_classes") or ())
+    if "unbounded_general_search" not in forbidden:
+        raise RuntimeError(f"planner plan for {event_id} missing unbounded_general_search guard")
+    preferred = tuple(str(item) for item in row.get("preferred_source_classes") or ())
+    if not preferred:
+        raise RuntimeError(f"planner plan for {event_id} has no preferred_source_classes")
+    draft = {
+        "primitive_gap": primitive,
+        "preferred_source_classes": list(preferred),
+        "fallback_source_classes": [str(item) for item in row.get("fallback_source_classes") or ()],
+        "forbidden_source_classes": list(forbidden),
+        "max_queries": max_queries,
+        "max_candidates": max_candidates,
+        "max_fetches": max_fetches,
+    }
+    self_check = dict(row.get("planner_self_check") or {})
+    if self_check.get("score_keys_present") or self_check.get("stage_keys_present") or self_check.get("future_outcome_used"):
+        raise RuntimeError(f"planner self-check failed for {event_id}")
+    return {
+        "top_k_archetype_hypotheses": [
+            {
+                "archetype_id": str(row.get("archetype_id") or _DEFAULT_ARCHETYPE_ID),
+                "probability_or_score": 0.5,
+                "reason": str(row.get("rationale") or "LLM source-task planner selected this archetype"),
+            }
+        ],
+        "positive_thesis": str(row.get("rationale") or "Official event needs source-backed verification."),
+        "counter_thesis": "Single event evidence cannot promote stage without accepted claim coverage.",
+        "must_verify_primitives": [primitive],
+        "green_blockers_to_close": ["cash_or_revision_conversion", "repeat_evidence_family"],
+        "red_team_checks": [str(item) for item in row.get("red_team_checks") or ()],
+        "source_task_drafts": [draft],
+        "query_intents": [f"verify {primitive} from official source"],
+        "do_not_promote_reasons": ["single event evidence is not enough for Green"],
+        "planner_self_check": {
+            "score_keys_present": False,
+            "stage_keys_present": False,
+            "future_outcome_used": False,
+        },
+    }
+
+
+def _codex_planner_command(
+    *,
+    repo_root: Path,
+    model: str,
+    schema_path: Path | None = None,
+    output_path: Path | None = None,
+) -> tuple[list[str], Path | None]:
+    command = [
+        os.environ.get("E2R_CODEX_PLANNER_COMMAND") or "codex",
+        "--sandbox",
+        os.environ.get("E2R_CODEX_PLANNER_SANDBOX") or "read-only",
+        "--ask-for-approval",
+        os.environ.get("E2R_CODEX_PLANNER_APPROVAL_POLICY") or "never",
+        "exec",
+        "--ephemeral",
+        "-C",
+        str(repo_root),
+        "--color",
+        "never",
+    ]
+    if schema_path is not None:
+        command.extend(("--output-schema", str(schema_path)))
+    if output_path is not None:
+        command.extend(("-o", str(output_path)))
+    if model:
+        command.extend(("-m", model))
+    extra = tuple(shlex.split(os.environ.get("E2R_CODEX_PLANNER_EXTRA_ARGS") or ""))
+    command.extend(extra)
+    command.append("-")
+    return command, output_path
+
+
+def _run_codex_command(command: Sequence[str], *, prompt: str, timeout: float) -> subprocess.CompletedProcess[str]:
+    process = subprocess.Popen(
+        list(command),
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        start_new_session=(os.name == "posix"),
+    )
+    try:
+        stdout, stderr = process.communicate(prompt, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        _terminate_process_tree(process)
+        raise
+    return subprocess.CompletedProcess(list(command), process.returncode, stdout, stderr)
+
+
+def _terminate_process_tree(process: subprocess.Popen[str]) -> None:
+    if process.poll() is not None:
+        return
+    if os.name == "posix":
+        try:
+            os.killpg(process.pid, signal.SIGTERM)
+        except ProcessLookupError:
+            return
+        try:
+            process.wait(timeout=5)
+            return
+        except subprocess.TimeoutExpired:
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                return
+            process.wait(timeout=5)
+            return
+    process.kill()
+    process.wait(timeout=5)
+
+
+def _json_object_from_text(text: str) -> Mapping[str, Any] | None:
+    clean = str(text).strip()
+    if not clean:
+        return None
+    try:
+        parsed = json.loads(clean)
+        return parsed if isinstance(parsed, Mapping) else None
+    except json.JSONDecodeError:
+        pass
+    decoder = json.JSONDecoder()
+    for match in re.finditer(r"\{", clean):
+        try:
+            parsed, _ = decoder.raw_decode(clean[match.start() :])
+        except json.JSONDecodeError:
+            continue
+        if isinstance(parsed, Mapping):
+            return parsed
+    return None
+
+
+def _count_forbidden_planner_keys(value: object) -> int:
+    if isinstance(value, Mapping):
+        return sum(1 for key in value if str(key) in _FORBIDDEN_PLANNER_KEYS) + sum(
+            _count_forbidden_planner_keys(item) for item in value.values()
+        )
+    if isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
+        return sum(_count_forbidden_planner_keys(item) for item in value)
+    return 0
+
+
+def _planner_timeout_seconds() -> float:
+    try:
+        return float(os.environ.get("E2R_CODEX_PLANNER_TIMEOUT_SECONDS") or 300.0)
+    except ValueError:
+        return 300.0
+
+
+def _clean_planner_error(text: str) -> str:
+    clean = re.sub(r"\s+", " ", str(text)).strip()
+    if len(clean) <= 500:
+        return clean or "codex_planner_error"
+    return f"{clean[:240]} ... {clean[-240:]}"
+
+
 def _source_task_for_event(event: Mapping[str, Any], plan: Mapping[str, Any]) -> Mapping[str, Any]:
-    primitive = str(plan["must_verify_primitives"][0])
+    draft = dict((plan.get("source_task_drafts") or [{}])[0])
+    primitive = str(draft.get("primitive_gap") or plan["must_verify_primitives"][0])
     return {
         "task_id": _stable_id("SRC-TASK", event["candidate_event_id"], primitive),
         "candidate_event_id": event["candidate_event_id"],
         "symbol": event["symbol"],
         "company_name": event["company_name"],
         "primitive_gap": primitive,
-        "preferred_source_classes": ["DART"],
-        "fallback_source_classes": ["IssuerOfficial"],
-        "forbidden_source_classes": ["unbounded_general_search"],
+        "preferred_source_classes": list(draft.get("preferred_source_classes") or ["DART"]),
+        "fallback_source_classes": list(draft.get("fallback_source_classes") or ["IssuerOfficial"]),
+        "forbidden_source_classes": list(draft.get("forbidden_source_classes") or ["unbounded_general_search"]),
         "general_search_allowed": False,
-        "max_queries": 1,
-        "max_candidates": 1,
-        "max_fetches": 1,
+        "max_queries": min(max(int(draft.get("max_queries") or 1), 1), 2),
+        "max_candidates": min(max(int(draft.get("max_candidates") or 1), 1), 10),
+        "max_fetches": min(max(int(draft.get("max_fetches") or 1), 1), 3),
         "stop_condition": {"accepted_claim_count": 1},
     }
 

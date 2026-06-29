@@ -1,4 +1,26 @@
 {
+  "allowed_primitives": [
+    "contract_quality",
+    "revenue_visibility_contract",
+    "order_to_revenue_bridge",
+    "capital_allocation_event",
+    "capacity_expansion",
+    "capacity_precommitted",
+    "medium_term_revision_visibility",
+    "accounting_trust_break",
+    "fcf_quality_score",
+    "margin_bridge_visible"
+  ],
+  "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+  "batch_rules": [
+    "Return exactly one plan per candidate_event_id.",
+    "Keep each plan compact: choose one primitive_gap and one bounded source task.",
+    "Plan source tasks only; do not output score, stage, hard_break, current_score_eligible, or feature_input.",
+    "Use only allowed_primitives for primitive_gap.",
+    "Set max_queries<=2, max_candidates<=10, max_fetches<=3.",
+    "forbidden_source_classes must contain unbounded_general_search.",
+    "Prefer official sources before TrustedNews."
+  ],
   "candidate_event": {
     "candidate_event_id": "CE-LIVE-DART-021960-20260629000554",
     "company_info_payload": {
@@ -39,6 +61,5 @@
       "stock_code": "021960"
     },
     "symbol": "021960"
-  },
-  "instruction": "Plan source tasks only. Do not score or stage."
+  }
 }

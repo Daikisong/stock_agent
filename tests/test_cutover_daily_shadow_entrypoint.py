@@ -22,6 +22,8 @@ class CutoverDailyShadowEntrypointTests(unittest.TestCase):
                     str(output),
                     "--docs-dir",
                     str(docs),
+                    "--planner-provider",
+                    "surrogate",
                     "--fail-on-critical-audit",
                     "true",
                 ],

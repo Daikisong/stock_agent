@@ -21,7 +21,7 @@ from e2r.production.source_connectors import SourceFetchResult, build_default_so
 class ProductionCutoverConfig:
     as_of_date: str
     mode: str = ProductionMode.PRODUCTION_SHADOW_LIVE.value
-    planner_provider: str = "real"
+    planner_provider: str = "surrogate"
     source_mode: str = "live_official_first"
     candidate_min_count: int = 50
     sector_min_events: int = 3
@@ -47,6 +47,7 @@ def build_production_cutover_bundle(
         repo_root=root,
         as_of_date=date.fromisoformat(config.as_of_date),
         candidate_min_count=config.candidate_min_count,
+        planner_provider=config.planner_provider,
     )
     events = live_data.candidate_events
     planner_rows = live_data.planner_runs
@@ -393,9 +394,10 @@ def _provider_error_report(source_connector_report: Mapping[str, Any]) -> Mappin
 
 def _planner_provider_report(planner_rows: Sequence[Mapping[str, Any]]) -> Mapping[str, Any]:
     model_null = sum(not row.get("model") for row in planner_rows)
-    response_hash_count = sum(1 for row in planner_rows if stable_hash(row))
+    response_hash_count = sum(1 for row in planner_rows if row.get("response_hash"))
     provider_names = Counter(str(row.get("provider_name") or "unknown") for row in planner_rows)
     endpoints = Counter(str(row.get("endpoint") or "null") for row in planner_rows)
+    default_model_unpinned = sum(row.get("model_identity_status") == "CODEX_CLI_DEFAULT_MODEL_NOT_PINNED" for row in planner_rows)
     return {
         "schema_version": "production_cutover_planner_provider_report_v1",
         "summary": {
@@ -404,9 +406,10 @@ def _planner_provider_report(planner_rows: Sequence[Mapping[str, Any]]) -> Mappi
             "real_provider_names": dict(provider_names),
             "endpoints": dict(endpoints),
             "planner_provider_model_null_count": model_null,
+            "planner_default_model_unpinned_count": default_model_unpinned,
             "planner_response_hash_count": response_hash_count,
-            "planner_response_missing_hash_count": 0,
-            "planner_prompt_hash_count": len(planner_rows),
+            "planner_response_missing_hash_count": sum(not row.get("response_hash") for row in planner_rows),
+            "planner_prompt_hash_count": sum(1 for row in planner_rows if row.get("prompt_hash")),
             "raw_prompt_response_file_missing_count": sum(
                 not row.get("raw_prompt_path") or not row.get("raw_response_path") for row in planner_rows
             ),
@@ -419,14 +422,16 @@ def _planner_provider_report(planner_rows: Sequence[Mapping[str, Any]]) -> Mappi
         },
         "rows": [
             {
-                "candidate_event_id": (row.get("event") or {}).get("candidate_event_id"),
+                "candidate_event_id": row.get("candidate_event_id") or (row.get("event") or {}).get("candidate_event_id"),
                 "provider_name": row.get("provider_name"),
                 "endpoint": row.get("endpoint"),
                 "model": row.get("model") or "MODEL_NOT_RECORDED",
-                "response_hash": stable_hash(row),
+                "model_identity_status": row.get("model_identity_status"),
+                "prompt_hash": row.get("prompt_hash"),
+                "response_hash": row.get("response_hash"),
                 "raw_prompt_path": row.get("raw_prompt_path"),
                 "raw_response_path": row.get("raw_response_path"),
-                "schema_validation_status": "PASS" if not row.get("rejected_by_validator") else "REJECTED",
+                "schema_validation_status": row.get("schema_validation_status") or ("PASS" if not row.get("rejected_by_validator") else "REJECTED"),
             }
             for row in planner_rows
         ],
@@ -710,6 +715,7 @@ def _static_logic_audit(
             ((c.get("sector_coverage") or {}).get("summary") or {}).get("unknown_sector_candidate_count", 0)
         ),
         "planner_provider_model_null_count": int(p.get("planner_provider_model_null_count", 0)),
+        "planner_default_model_unpinned_count": int(p.get("planner_default_model_unpinned_count", 0)),
         "raw_prompt_response_file_missing_count": int(p.get("raw_prompt_response_file_missing_count", 0)),
         "deterministic_scorer_output_count": int(sc.get("deterministic_scorer_output_count", 0)),
         "A2_REAL_REPLAY_VERIFIED_count": int(m.get("A2_REAL_REPLAY_VERIFIED_count", 0)),
@@ -761,6 +767,8 @@ def _readiness_blockers(
         blockers.append("real planner success below 30")
     if p.get("planner_provider_model_null_count", 0):
         blockers.append("planner provider model was not recorded")
+    if p.get("planner_default_model_unpinned_count", 0):
+        blockers.append("planner ran through Codex CLI default model without explicit model pin")
     if p.get("raw_prompt_response_file_missing_count", 0):
         blockers.append("planner raw prompt/response files missing")
     if s.get("real_source_document_fetched_count", 0) < 50:
@@ -805,6 +813,7 @@ def _shadow_latest(
         and ((c.get("sector_coverage") or {}).get("summary") or {}).get("active_large_sector_count", 0) >= 6
         and ((c.get("sector_coverage") or {}).get("summary") or {}).get("unknown_sector_candidate_count", 0) == 0
         and p.get("real_planner_success_count", 0) >= 30
+        and p.get("fake_frozen_provider_used_count", 0) == 0
         and s.get("real_source_document_fetched_count", 0) >= 50
         and e.get("accepted_claim_count", 0) >= 20
         and sc.get("deterministic_scorer_output_count", 0) >= config.deterministic_scorer_min_count
@@ -942,7 +951,7 @@ def _output_artifacts_from_live_data(
             if row.get("raw_prompt_path")
         ],
         "planner_raw_responses": [
-            {"path": row["raw_response_path"], "payload": row["output"]}
+            {"path": row["raw_response_path"], "payload": row.get("raw_response_payload") or row["output"]}
             for row in live_data.planner_runs
             if row.get("raw_response_path")
         ],

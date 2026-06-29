@@ -1,48 +1,28 @@
 {
-  "counter_thesis": "Disclosure title alone is limited; score remains low unless accepted claim maps to a primitive.",
-  "do_not_promote_reasons": [
-    "single disclosure title is not enough for Green"
+  "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+  "candidate_event_id": "CE-LIVE-DART-021960-20260629000554",
+  "fallback_source_classes": [
+    "IssuerIR"
   ],
-  "green_blockers_to_close": [
-    "cash_or_revision_conversion",
-    "repeat_evidence_family"
+  "forbidden_source_classes": [
+    "unbounded_general_search"
   ],
-  "must_verify_primitives": [
-    "information_confidence"
-  ],
+  "max_candidates": 5,
+  "max_fetches": 2,
+  "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
     "score_keys_present": false,
     "stage_keys_present": false
   },
-  "positive_thesis": "Official disclosure may provide source-backed primitive evidence.",
-  "query_intents": [
-    "verify DART disclosure information_confidence"
+  "preferred_source_classes": [
+    "DART",
+    "KRX"
   ],
+  "primitive_gap": "capital_allocation_event",
+  "rationale": "증권발행실적보고서는 조달 규모와 발행조건을 공식 문서로 확인한다.",
   "red_team_checks": [
-    "wrong subject",
-    "historical only",
-    "provider failure"
-  ],
-  "source_task_drafts": [
-    {
-      "fallback_source_classes": [
-        "IssuerOfficial"
-      ],
-      "max_candidates": 1,
-      "max_fetches": 1,
-      "max_queries": 1,
-      "preferred_source_classes": [
-        "DART"
-      ],
-      "primitive_gap": "information_confidence"
-    }
-  ],
-  "top_k_archetype_hypotheses": [
-    {
-      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
-      "probability_or_score": 0.62,
-      "reason": "DART official disclosure event"
-    }
+    "발행 목적과 만기/금리 조건 확인",
+    "계약 매출과 무관한 금융조달인지 구분"
   ]
 }

@@ -1,1002 +1,2678 @@
 [
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-148250-20260629000586",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "64bb66e9cca1e6e32bb5fcee43010030650526f4fc2dc897a4f950c1e31eae1c",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "64b210a760a79d92916b72d523cec65b8a76f171ed081d7d948c8850ae3a6487",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-148250-20260629000586.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-148250-20260629000586.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-148250-20260629000586",
+      "fallback_source_classes": [
+        "KRX",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "유상증자 결정은 조달 목적, 배정 방식, 자금 사용처 확인이 우선이다.",
+      "red_team_checks": [
+        "증자 자금이 성장 CAPEX인지 운영자금/채무상환인지 구분",
+        "정정공시 가능성 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "14a4e80ce47c8de9f08126b85d05982e34c8312a427b29d73c81aabc98f50c9e",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-083660-20260629000561",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "92c692b93f6106eb09ffc0ed6e4c8bb6e75e2b3dbff785c64bf8ce0755c0a532",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "51ca33ba3cd9756433a4b7a48a9806b1c01c5e7a4ae2e81045da9f8b79934999",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-083660-20260629000561.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-083660-20260629000561.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-083660-20260629000561",
+      "fallback_source_classes": [
+        "KRX",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "유상증자 정정은 변경된 발행조건과 자금 사용처가 핵심이다.",
+      "red_team_checks": [
+        "최초 공시 대비 변경 항목 확인",
+        "조달 목적이 계약/설비와 연결되는지 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "54013e63c98c2b221500645f16bed1d302d2d3a9bb93661eddb1eae75f5777df",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-006050-20260629901292",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "9698daeea0ff3d870bccf87c93591e81acc584ff33c0fba2c1002465741385bf",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "bd9a4e9905bbb78d3cbf9e23195bec8a866d94339e8d089433fdbd3f427952f0",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-006050-20260629901292.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-006050-20260629901292.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-006050-20260629901292",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "contract_quality",
+      "rationale": "단일판매공급계약 정정은 계약금액, 상대방, 기간, 조건 변경 확인이 필요하다.",
+      "red_team_checks": [
+        "정정으로 계약 규모나 기간이 약화됐는지 확인",
+        "해지/변경 조건 존재 여부 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "c577813eebd6fe31df55a77379fde65f19d6e2fba9de8938bf840b7e5996de78",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-083660-20260629000553",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "e2f072e8348491fbd33ff2a4a5c0c7da3d69ee7099cd868c506126cec763b142",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "fb092c3f29a1a04706699cf01624319b0d1872bc6aa879cfa4330616f6ad4591",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-083660-20260629000553.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-083660-20260629000553.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-083660-20260629000553",
+      "fallback_source_classes": [
+        "KRX",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "중복성 있는 유상증자 정정 이벤트는 해당 접수번호 기준 변경사항을 확인한다.",
+      "red_team_checks": [
+        "동일 회사의 다른 정정공시와 접수번호 구분",
+        "발행대상과 납입 일정 변경 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "462ee9f727f1fcf50630bda395a9cbb984a9b2747abb1b0e7c4014588868aaa2",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-006050-20260629901282",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "eaa4ff80529774cc89c95a4707b02be77e3fa021d333f15d771ae67d204cf963",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "6ef7d2e0c049e1c2a99dba35e37a0b6523d560cc33445f3e890e6e7461f65d10",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-006050-20260629901282.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-006050-20260629901282.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-006050-20260629901282",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "revenue_visibility_contract",
+      "rationale": "신규 단일판매공급계약은 매출 인식 기간과 최근 매출 대비 규모 확인이 우선이다.",
+      "red_team_checks": [
+        "계약기간이 단기 일회성인지 확인",
+        "최근 매출 대비 계약금액 기준 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "dde15d555b43d1b3fece3e27e4c4453aaddf41c69da580f23c490ed0e9e63c14",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-208640-20260629901297",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "5ac661c909f6cb859ea394e333fe78b4824ff79bd046dc87ccd9accb9d3122a4",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "bebfcbd183a3cdc70d247c7914b15948a7be8be9f15c43943075f5bd4cc0ee71",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-208640-20260629901297.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-208640-20260629901297.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-208640-20260629901297",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "권리락은 유상증자 진행상태와 발행조건 확인용 이벤트다.",
+      "red_team_checks": [
+        "권리락 기준일과 발행가액 확인",
+        "기존 유상증자 결정 공시와 연결 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "5da7114fc72ce190ba568e29da0c79fe7888fa310dd609338da88bdf7ac40b6f",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-175250-20260629000562",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "23bd65c1f3f3232dc72dcdc3e047515a11f9e07a656134702516b6e629090de4",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "7da554712d24c2efdf78a0fdf63f8b55acba078f2cd0d71bdba827490bd4c99f",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-175250-20260629000562.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-175250-20260629000562.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-175250-20260629000562",
+      "fallback_source_classes": [
+        "KRX",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "유상증자 결정은 조달 목적과 재무 부담 완화 여부를 확인해야 한다.",
+      "red_team_checks": [
+        "운영자금 비중 확인",
+        "시설투자나 계약 이행자금과의 연결성 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "5c7e01d9861bc17faac20985e49d33314b3d720b6c074b9c76a5739ccb3287c5",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-377030-20260629901255",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "e5cba8a282ce00815527cdcb0285701c0a89e5530a4c4df74c04fcaedecc571f",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "178a6e4e536d9ee8b125eefaaa064c7514d6d76b44e7817ea05578d37fedb8f3",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-377030-20260629901255.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-377030-20260629901255.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-377030-20260629901255",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "제3자배정 증자 결과는 실제 납입 여부와 배정자 확인이 핵심이다.",
+      "red_team_checks": [
+        "납입 완료 여부 확인",
+        "배정 대상의 전략적 성격 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "6561b8cfc9e24d5d6c0ba36dfadc1d3fec03bca09abf5bf7221117e55ec422dd",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-377030-20260629901251",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "2034fd522d5909d6bd6d271a80338f937684d06affd2bedb056b0009d4b630d2",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "37f5bf08456acfb6f5c17c2876bc15a304e96a231a897b2e566d67071c0131a0",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-377030-20260629901251.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-377030-20260629901251.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-377030-20260629901251",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "동일 회사 증권발행결과는 접수번호별 실제 발행조건과 납입 결과를 분리 확인한다.",
+      "red_team_checks": [
+        "중복 공시 여부 확인",
+        "발행 주식 수와 납입금액 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "83d7cc10f6050c685937a1f15b7e861ce54e1c53047396ac1fcdbebe3fd738ae",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-381970-20260629801242",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "3f1823c3f746b03e97ebb2bb40da5451d423e0359a5b624ed560a2bf28d7bc9a",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "db49d61948815814f9c4cb4499c28f2ae31db6adef9cdf3f329f7e91fd71f53d",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-381970-20260629801242.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-381970-20260629801242.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-381970-20260629801242",
+      "fallback_source_classes": [
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "margin_bridge_visible",
+      "rationale": "투자판단 주요경영사항 정정은 손익 영향과 변경 사유 확인이 필요하다.",
+      "red_team_checks": [
+        "정정 전후 핵심 수치 변경 확인",
+        "일회성 비용/수익인지 구분"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "2d9ba5fde1193765eddee3f930f86c32c4a2040da75f1b1b307806706645253a",
+    "requested_model": "gpt-5.5",
+    "response_hash": "9f59c2443196f937e2dac38f5eebcd4a9c3baced01d015289bece62d345e2655",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-021960-20260629000554",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "131fcdbe613c8eb5da875f67627147acde7fc50aa454df3bc14ed2a1fc264709",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "6476ee312d8f7906ef09941d023af05b7824cd58850a4029fe79630bad24496e",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-021960-20260629000554.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-021960-20260629000554.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-021960-20260629000554",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "증권발행실적보고서는 조달 규모와 발행조건을 공식 문서로 확인한다.",
+      "red_team_checks": [
+        "발행 목적과 만기/금리 조건 확인",
+        "계약 매출과 무관한 금융조달인지 구분"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "db774c6c944de47ebf6f8a90dddfe64453a084590edc3c10a87e1daa25e24564",
+    "requested_model": "gpt-5.5",
+    "response_hash": "9842723a39254fd9c98b297b4ca758a4553d6476e28866eaa8599779f7a02555",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-104040-20260629901236",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "450984e435485276a44755c4ca57ff3c942b2fa5ed2b60198a169eccfab81c50",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "d57672238d5f814b34fb5d3e3a8408a461f9bdd5e8c09ef20230ff26cf20c5ea",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-104040-20260629901236.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-104040-20260629901236.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-104040-20260629901236",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "증권발행결과는 실제 자금 유입과 발행 조건 확인용이다.",
+      "red_team_checks": [
+        "납입 완료 여부 확인",
+        "자금 사용 목적 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "db774c6c944de47ebf6f8a90dddfe64453a084590edc3c10a87e1daa25e24564",
+    "requested_model": "gpt-5.5",
+    "response_hash": "b4791d80c002388bdb3f20d69a116abb988e3cdb3033558a07a10e10f7ee78c1",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-260870-20260629601196",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "aca0abff30afb06bf65beaf2598f0939b299abd230a2dfa75ded58f528eca873",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "943754f9674261bd07d4c305c3e71a795f8c550e851ec095f159d2d9a555a622",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-260870-20260629601196.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-260870-20260629601196.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-260870-20260629601196",
+      "fallback_source_classes": [
+        "KRX",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "우선주 제3자배정 결과는 전략 투자와 설비/운영자금 연결을 확인한다.",
+      "red_team_checks": [
+        "우선주 조건과 희석 가능성 확인",
+        "EV 충전 인프라 투자와 연결되는지 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "e1cfda45b59972ebf63ee13c8942842dc5d4b553e63b140a992af13e9c38a2f7",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-060900-20260629901198",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "1b72c9f33d4900a54d7048158e01a4c1e179740d1089a929e456c41e81e56bf1",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "1b9ba37b26d8c11ec9353a417c299e7a2edd8548e5106a9a5e76272a73e785ac",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-060900-20260629901198.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-060900-20260629901198.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-060900-20260629901198",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "contract_quality",
+      "rationale": "단일판매공급계약은 계약 상대방, 기간, 취소 조건 확인이 핵심이다.",
+      "red_team_checks": [
+        "계약 상대방 신뢰도 확인",
+        "계약금액이 최근 매출 대비 의미 있는지 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "5dc85929a686982cb04e77db90eccef054f1fedecf0de1fc81bd5b880822950c",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-097230-20260629801171",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "5c7bcd1c00028dafb05f72ca63898d5ac5660e789d465549f2e44a334a9e331e",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "b31ad70254f27dc26b9efdc8e1edfb6e05f78268de1ec79926526d974985da10",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-097230-20260629801171.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-097230-20260629801171.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-097230-20260629801171",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "order_to_revenue_bridge",
+      "rationale": "건설 계약 정정은 수주가 실제 매출로 이어지는 기간과 진행률 확인이 중요하다.",
+      "red_team_checks": [
+        "공사기간 변경 확인",
+        "원가 상승이나 계약금액 변경 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "d253aef0afd5f5403871ed24e49b09128c3d111d9668c43793847446be3438af",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-347700-20260629901175",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "fa3d28526ac5f487712bd85eb4f9bff2f6076f22586e87e500b241f84c197b03",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "6341dab644cfd1b7acdadc1b99aa04bf9158bff78311c5941988fe8452e00f61",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-347700-20260629901175.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-347700-20260629901175.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-347700-20260629901175",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "contract_quality",
+      "rationale": "반복 정정된 공급계약은 계약 유지 여부와 조건 변경 확인이 우선이다.",
+      "red_team_checks": [
+        "정정 사유와 변경 항목 확인",
+        "계약 해지 리스크 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "97d504eba2a7163f9470d423e1194bf2bb1c70da4cfbb1f4fd023fd0a8850cef",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-347700-20260629901169",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "9a18db50c4c51f15b8888f4fcf2b7e6ec74ea1650ac68f8d4033cdc87a0b7c9d",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "ab464718d142fe2cc751c226306244404cd8dbcbc4cfa17991639b4298045023",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-347700-20260629901169.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-347700-20260629901169.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-347700-20260629901169",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "contract_quality",
+      "rationale": "동일 회사 정정 공급계약은 접수번호별 변경 조건을 분리 확인한다.",
+      "red_team_checks": [
+        "중복 이벤트 여부 확인",
+        "계약금액과 기간 변경 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "772fd46362dcf113650c39ba2c7dffd9927e3698bdd92cc66a02d5da980f32e2",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-347700-20260629901164",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "7d4f79ecc5abe28bdac1e847231d2fb36ba8efa0f650a8deab10855c8223f47c",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "a194a57bc69b51e5ab1b20f49437b111a2a7ed7bfb969ac8d69beff40ded9d00",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-347700-20260629901164.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-347700-20260629901164.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-347700-20260629901164",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "contract_quality",
+      "rationale": "정정 공급계약은 원계약 대비 경제성이 유지되는지 공식 공시로 확인한다.",
+      "red_team_checks": [
+        "정정 전후 매출 인식 기간 비교",
+        "상대방 또는 계약조건 변경 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "42bd6192b0eb0a6f8bbbc4608e9f2ff437814f13bd6e886d91f49df64e77c3ee",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-368970-20260629000506",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "26107f6fbbd4873bca0766013b6204d728d12648095534036ba11bf4867b6442",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "ae49285bd310a05f2809670ec3f9daa4d944a48add0ee8cb94dd86da3dc05726",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-368970-20260629000506.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-368970-20260629000506.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-368970-20260629000506",
+      "fallback_source_classes": [
+        "KRX",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "유상증자 정정은 발행조건과 자금 사용처 변경을 확인한다.",
+      "red_team_checks": [
+        "납입일과 발행가 변경 확인",
+        "운영자금 조달인지 성장투자인지 구분"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "6c49fd7f966c55797be47b0e67f7edd00a2b09ed93b22acf4ec40a00c02922d4",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-007460-20260629801147",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "1305eaa8352ad2ec677d4b382b2eb5a007a63a97a528c9f854c51cab35e103f6",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "c0d7c90dc4c6e73501eec83b78e0cf4af444c1ba1794a0505e0ffd426700eeaf",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-007460-20260629801147.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-007460-20260629801147.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-007460-20260629801147",
+      "fallback_source_classes": [
+        "KRX",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "자회사 제3자배정 정정은 모회사 손익/지분 영향과 조달 목적 확인이 필요하다.",
+      "red_team_checks": [
+        "자회사 주요경영사항의 모회사 귀속 영향 확인",
+        "제3자배정 대상과 사용처 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "e812fcd732c701c4a1ee36ad5d9bc8a60cd2204919c4d29ff439dd48720b05e4",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000520",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "7cab8686a8730198b01acdcbde46e932198bfe2da25539eb8a94ebd53f6d8038",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "3c1e402dfc1290226e11832f52089539272ddd6c8dd882f0c9e22e5f49a3f063",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-003530-20260629000520.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-003530-20260629000520.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-003530-20260629000520",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "증권발행실적보고서는 금융 조달 조건과 규모 확인용이다.",
+      "red_team_checks": [
+        "발행 증권 종류와 조건 확인",
+        "영업 계약과 직접 연결되는지 구분"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "db774c6c944de47ebf6f8a90dddfe64453a084590edc3c10a87e1daa25e24564",
+    "requested_model": "gpt-5.5",
+    "response_hash": "40ae3364ce8227ed299ef06790597d0b18f9e7ea3ecc6326352d3b013c6150e7",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-003380-20260629901161",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "7e141a5bf6280c3d176f16111fde664b3b4255ab9789dfc03ae79f97b1af5c1e",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "81aaad124c70556a9a2b42f94b8823b3d0ff3ccc771ff1b849cb16b316178b31",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-003380-20260629901161.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-003380-20260629901161.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-003380-20260629901161",
+      "fallback_source_classes": [
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "capacity_expansion",
+      "rationale": "신규시설투자는 투자 목적, 금액, 기간, 자회사 범위 확인이 핵심이다.",
+      "red_team_checks": [
+        "자회사 투자와 지주회사 연결성 확인",
+        "투자금액 대비 재무 부담 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "2d9ba5fde1193765eddee3f930f86c32c4a2040da75f1b1b307806706645253a",
+    "requested_model": "gpt-5.5",
+    "response_hash": "c6337feaf6d2f48ac15c1f89896eab34e01c0b5527b514ec5f7d2d40954d0735",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-208640-20260629000512",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "9519aa3857eb37d2e90a8741da0b235316980abe27a696d549ae053848138801",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "bcf6007243f781512de272585eeccbd9d2218a994d026a5d1a79389565cc645c",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-208640-20260629000512.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-208640-20260629000512.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-208640-20260629000512",
+      "fallback_source_classes": [
+        "KRX"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "유상증자 정정은 발행가, 납입일, 자금 사용처 변경을 확인한다.",
+      "red_team_checks": [
+        "기존 유상증자 공시와 정정 항목 대조",
+        "자금 사용처의 사업 연계성 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "ca887571722dd6a9abea8afaaf1a64464f65958e6b891a47b05df9e1727c6e64",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000517",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "8d330c6e85cd29eaffb7de61c52cdaca583e316e783b737280a8676e673b24bd",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "8b3ba5e9d850dd4bf8542bbc6a2b19df4dac065e781b5abb67e30796d2c09b6d",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-003530-20260629000517.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-003530-20260629000517.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-003530-20260629000517",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "동일 발행실적 공시는 회차별 조건과 조달 규모를 확인한다.",
+      "red_team_checks": [
+        "회차 중복 여부 확인",
+        "발행금리와 만기 조건 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "db774c6c944de47ebf6f8a90dddfe64453a084590edc3c10a87e1daa25e24564",
+    "requested_model": "gpt-5.5",
+    "response_hash": "2dcf2b9f5790457519e60a609601b3c390675820cb66a30d64a266e9607a80d8",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000514",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "5540dc2823d5d089b065fe5a7a3cc6e645458bb5a876fb4bb855310225346309",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "80fe74b75ebebeb17a156673f9617d2ce232bb25aeff609da11dbd7e03a3bdfa",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-003530-20260629000514.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-003530-20260629000514.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-003530-20260629000514",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "증권발행실적보고서의 실제 발행조건을 공식 문서로 수집한다.",
+      "red_team_checks": [
+        "증권 종류와 발행총액 확인",
+        "자금 사용처 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "db774c6c944de47ebf6f8a90dddfe64453a084590edc3c10a87e1daa25e24564",
+    "requested_model": "gpt-5.5",
+    "response_hash": "23624cec136c80d9f3b7d0df62f0c8477ad84805c0dca4f0af678c3c12a38f98",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-130660-20260629801144",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "a31629cb10bc94929128bb48985dfc39d18b6676a28daaa0eb3398e27c4dfe9b",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "a2410acf4e23ca0ceab3b532daaf73d9e3d0fa7e7abd377b644a2559ce1b5beb",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-130660-20260629801144.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-130660-20260629801144.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-130660-20260629801144",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "order_to_revenue_bridge",
+      "rationale": "공급계약 정정은 수주액이 어느 기간 매출로 전환되는지 확인해야 한다.",
+      "red_team_checks": [
+        "계약기간과 매출 인식 시점 확인",
+        "계약금액 변경 여부 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "34a6036481b6e4b92fb1980f30baaa7bfe32e5d84f1e85fb0f487d7f8f8f3818",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000513",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "94960d56bcc443c521faf300031355aa8f4d316b118ed3c385a00a93f5237854",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "73082bfd9d1601fed79beb703d5fd3e1334aca356d74013f60e69acfa6846837",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-003530-20260629000513.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-003530-20260629000513.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-003530-20260629000513",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "발행실적보고서는 실제 조달 완료 여부와 조건을 확인한다.",
+      "red_team_checks": [
+        "납입 또는 발행 완료 여부 확인",
+        "다른 회차와 중복 여부 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "db774c6c944de47ebf6f8a90dddfe64453a084590edc3c10a87e1daa25e24564",
+    "requested_model": "gpt-5.5",
+    "response_hash": "17441959f8c399f5e6b465eb6ca0bad137d950524357f39b98eb748825afaf00",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-028670-20260629801140",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "6b2d6bb49d09c164be37d68800489cad855edfd47186d2279a9d0f89f47868a2",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "f047ba1e4e0260726377d42c2cb784f88a0c956275ed52a29383adfcb463457a",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-028670-20260629801140.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-028670-20260629801140.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-028670-20260629801140",
+      "fallback_source_classes": [
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "capacity_expansion",
+      "rationale": "신규시설투자는 투자대상, 규모, 예상효과, 자금조달 방식을 확인한다.",
+      "red_team_checks": [
+        "투자금액 대비 자기자본 비중 확인",
+        "매출/원가 개선과 연결되는지 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "2d9ba5fde1193765eddee3f930f86c32c4a2040da75f1b1b307806706645253a",
+    "requested_model": "gpt-5.5",
+    "response_hash": "b5b25353d91d70f0dbc7176c0b3cbaa1f3f62871e0be9b0bc378c96f1f05403c",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-360070-20260629901095",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "6b2cd6d574ec741fdcbe6a34157235f69881cbc96f0ea0dabce6d1684e7c06d3",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "64357ccde5af6bbc4854e0d3528c2c419891b981051177f8791ea9aaf51259a6",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-360070-20260629901095.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-360070-20260629901095.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-360070-20260629901095",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "contract_quality",
+      "rationale": "공급계약 정정은 계약 상대, 금액, 기간, 조건 변경 확인이 필요하다.",
+      "red_team_checks": [
+        "원계약 대비 경제성 훼손 확인",
+        "고객사나 납품 범위 변경 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "0ea585f295a2427b082d0ca69027f996def0d6835a26bfb2103876e1f10ec5f0",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-063170-20260629901142",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "16747052ce63d2b28f67ae50cbbd248986aed8ccb3b0913712aec0b93a765d3e",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "31e0470d1a1c20eeee1838fdca77b09902f1262bcb505bb6656d768de1e345ab",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-063170-20260629901142.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-063170-20260629901142.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-063170-20260629901142",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "revenue_visibility_contract",
+      "rationale": "단일판매공급계약 정정은 매출 발생 기간과 계약금액 변경 확인이 우선이다.",
+      "red_team_checks": [
+        "계약기간이 연장/축소됐는지 확인",
+        "계약 상대방과 품목 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "1130c521d688fd0de429071330ca5c1bdf881366055a2434293f98a2ece70d13",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-270520-20260629000502",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "6c58cf8c46410a2e208ac4cbc96ab6cc0de6b35c61914cc6646ac964640f0734",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "e03fe0ead44477cc5c20629d330be45a48f9f05e1d58fda44208fb1bf8106a1a",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-270520-20260629000502.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-270520-20260629000502.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-270520-20260629000502",
+      "fallback_source_classes": [
+        "KRX",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "유상증자 정정은 발행조건과 자금 사용 목적의 변경 확인이 핵심이다.",
+      "red_team_checks": [
+        "납입 지연 여부 확인",
+        "운영자금과 성장자금 비중 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "b705ab2f3204e0febff26da754dd16f94d0c19d6a382900b4ead392c84f92232",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-226950-20260629000494",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "a8428fd8e3f89338544a53e683846445f5b136bb53a766e7452548e283eaac92",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "79ca7f31c8277548bb7b6c6197ac4fe89dfc6cfa2cf675ca9ac469b5ae9f2b32",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-226950-20260629000494.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-226950-20260629000494.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-226950-20260629000494",
+      "fallback_source_classes": [
+        "KRX",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "유상증자 결정은 임상/운영/채무상환 등 자금 사용처 구분이 필요하다.",
+      "red_team_checks": [
+        "자금 사용처 세부 항목 확인",
+        "기존 현금흐름 부족 보전인지 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "72f0386161f6d6cc6e266763bd8df98019d394efd76125a9b040c3e07b2bbaad",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-351320-20260629901083",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "2b93682e326f3e56012265379ddbffe4f675fa00031fdc3b04a4a5627b199f68",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "b6476e376b4ae29bbb81979cb4d08addbc82c88c7052015e8ff8b639164d88bc",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-351320-20260629901083.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-351320-20260629901083.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-351320-20260629901083",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "contract_quality",
+      "rationale": "공급계약 정정은 계약 조건 변경과 매출 기여 지속성을 확인한다.",
+      "red_team_checks": [
+        "정정 사유 확인",
+        "계약 해지 또는 지연 리스크 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "0275908223b22524d2e51f535732a4b6a443aa301e26b9837fbc350c72c6bdf1",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-208640-20260629901135",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "6b7a8e3958b468ecee8e5966a54728d82a70eac02729439cc835b3e23fb2e7f8",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "2856b7a5c79576080d4334e22d82294a50842fc28673bc8d8a8cfae423f69694",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-208640-20260629901135.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-208640-20260629901135.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-208640-20260629901135",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "유상증자 1차 발행가액 결정은 조달 규모와 희석률 업데이트에 필요하다.",
+      "red_team_checks": [
+        "최초 예정 발행가와 차이 확인",
+        "최종 조달액 변동 가능성 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "5c3180016ee8d69b581efe031adc048158db502bc78203b0760e3c84fc4f33d5",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-130660-20260629801125",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "dff9cf2ceb1d37cbc5cfa27fa0b09363b2842aa7e02de5a807a26af9175aa5bf",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "2498050359aa78e7afbf9157faff2b90868c24d3b9c41fee5108d3d7a5713838",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-130660-20260629801125.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-130660-20260629801125.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-130660-20260629801125",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "contract_quality",
+      "rationale": "정정 공급계약은 계약금액, 기간, 상대방 변경 여부를 공식 확인한다.",
+      "red_team_checks": [
+        "동일 회사의 다른 정정공시와 중복 구분",
+        "수익성 훼손 가능 조건 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "8138383602fe4611fca7e61bba3d74ea566a74f873a135811ce8ed42c6fc5681",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-216080-20260629901133",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "4df8dff855f0d191e1577449d52d4b74c578a1bbda78d9b9385cedfeb3afbe4f",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "ba3f69f57083a9c4b35a96fc9f2188d2412353113987aeef72d8e60d30a744bc",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-216080-20260629901133.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-216080-20260629901133.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-216080-20260629901133",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "증권발행결과는 실제 납입금액과 발행조건 확인용이다.",
+      "red_team_checks": [
+        "납입 완료 여부 확인",
+        "자금 사용처와 재무 부담 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "db774c6c944de47ebf6f8a90dddfe64453a084590edc3c10a87e1daa25e24564",
+    "requested_model": "gpt-5.5",
+    "response_hash": "12b65e8e54710f5d4cdc30b0011b5d0c962ea06dec719caa4790d8036ffda55a",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-403550-20260629801126",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "f578884546c1b5c142088757048aea3356cd8fe40582f12e4384914b127874f5",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "e9280342ffd3606f0542afee76a2bc3a437634ef581eb6238cb7101e8464cce7",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-403550-20260629801126.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-403550-20260629801126.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-403550-20260629801126",
+      "fallback_source_classes": [
+        "KRX",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "종속회사 유상증자 정정은 연결 기준 영향과 자금 사용처 확인이 필요하다.",
+      "red_team_checks": [
+        "종속회사 지분율 변화 확인",
+        "모회사 재무/사업 영향 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "beffe095981b1f249729066d8089eeae97e9391d4dcc057972474fbb941aa918",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-216080-20260629901130",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "88b4d28a3a7ffb283bb6e9fda0b83f76c535d51defe39f02366ccd222dbc025e",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "e89e27deb9032e2023f1ccf9f9530931b4fc8b8d05c8f3111f9a1289206b528e",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-216080-20260629901130.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-216080-20260629901130.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-216080-20260629901130",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "동일 발행결과 이벤트는 접수번호별 납입 결과와 조건을 확인한다.",
+      "red_team_checks": [
+        "중복 공시 여부 확인",
+        "실제 조달 규모 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "db774c6c944de47ebf6f8a90dddfe64453a084590edc3c10a87e1daa25e24564",
+    "requested_model": "gpt-5.5",
+    "response_hash": "0e48be4931a98135860d95b925c1f37e48f0a316d91e6f71dd97cf8999ccb86a",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-440320-20260629901092",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "45f10b4d31bd6534f130b921da4e37ce40ff92ecf41a3386b65e83c5c1a0dfee",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "798e9f7a52ee3ea8beea0801b2a13c7380f8666a01039eafb9fd42ea9a83476d",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-440320-20260629901092.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-440320-20260629901092.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-440320-20260629901092",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "CB 발행결과는 전환조건, 납입 여부, 자금 사용처 확인이 필요하다.",
+      "red_team_checks": [
+        "전환가액과 리픽싱 조건 확인",
+        "운영자금 조달인지 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "db774c6c944de47ebf6f8a90dddfe64453a084590edc3c10a87e1daa25e24564",
+    "requested_model": "gpt-5.5",
+    "response_hash": "46bcdc426496ab2e2e66b2ae7591a5eb0cb259e5029b01eb6f2265a56281b22e",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-417840-20260629000499",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "a4039636bc7d706d9e9e0cb7e6d78f5df3a576617fafde575caad6db102206dc",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "3d0c551f804164f4c9d6e64b9f45c96f4fcaa568edb939b0b8fa607b22dfa092",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-417840-20260629000499.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-417840-20260629000499.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-417840-20260629000499",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "자기주식취득결과는 실제 집행 규모와 주주환원 성격 확인이 필요하다.",
+      "red_team_checks": [
+        "계획 대비 취득 완료율 확인",
+        "재무 여력 대비 취득 규모 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "80b23dd0759b8f22327eb3c84b060f7b7604b82e52da45fa5cb6f24f6bf5018b",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-037350-20260629900991",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "52f523bf7645075eecf3543f37dbcb3eb681b7343b0efe60e8ece91ed2092de7",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "6a8a0208939be447af590eb9616141d2dd8dc81095c1b39fdd5c3bfaa2d82ddd",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-037350-20260629900991.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-037350-20260629900991.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-037350-20260629900991",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "order_to_revenue_bridge",
+      "rationale": "EPC 성격의 공급계약 정정은 계약기간, 공정, 매출 전환 경로 확인이 중요하다.",
+      "red_team_checks": [
+        "계약금액과 기간 변경 확인",
+        "원가 부담 또는 지연 가능성 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "4a5fa0754db562b0cd97b8ad56ee772d04492a79ec3de7517a75579033887f0c",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-226950-20260629901106",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "cce516714de63d7e16ec07c73226456fef938ca77a5dcd0893d6815a5a696544",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "34b79d2b28217c546deed37f0b5b91fe90e49316c00c3a78ef38e9e57bd74840",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-226950-20260629901106.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-226950-20260629901106.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-226950-20260629901106",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "증권발행결과는 유상증자 실제 납입과 조달 규모 확인에 필요하다.",
+      "red_team_checks": [
+        "납입 완료 여부 확인",
+        "기존 유상증자 결정과 조건 일치 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "db774c6c944de47ebf6f8a90dddfe64453a084590edc3c10a87e1daa25e24564",
+    "requested_model": "gpt-5.5",
+    "response_hash": "4d23a2a7488e9f29002cfa837a13130d3611f1d68c0bb790a7924c54a7f464c4",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-226950-20260629000459",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "71839a1e5ae3d4592fe649787d762fff00bd62a7d9d7cac4be1b8de3efa7ce75",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "f7b211b7b9d8926418808e7b75d8538b266aa9b2edd21ff8fd9f0706e72fd816",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-226950-20260629000459.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-226950-20260629000459.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-226950-20260629000459",
+      "fallback_source_classes": [
+        "KRX",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "유상증자 정정은 자금 사용처와 발행조건 변경 확인이 필요하다.",
+      "red_team_checks": [
+        "최초 결정 대비 정정 항목 확인",
+        "증권발행결과와 연결 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "dc2b0b6d315a8f23031827c8e2758d5618bb1daf8d08db62e71ea8eb99c8e8d9",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-248070-20260629000482",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "a8deb46bece6f52d96ebc3681c87004761a7d84ccbb23e3d97cbd57a39d79c12",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "ea70ace78700fd0e217985f925e8b6971fc7d25c75b31dc3bcd432f401bf44fe",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-248070-20260629000482.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-248070-20260629000482.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-248070-20260629000482",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "자기주식처분결과는 처분 목적, 대상, 자금 유입 여부 확인이 필요하다.",
+      "red_team_checks": [
+        "처분 목적이 임직원 보상인지 자금조달인지 확인",
+        "처분 가격과 규모 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "6f8f58a98efed3e666751be47b31c309f211d033dd31b1d15d4f1c4fbea3b983",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-003540-20260629000478",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "7abfe8c976f2c2428a90730b80bfb1401a9425010cb001293888a2db94a0a713",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "7f1171aa751705e4a3f1bfdcbaa939935d4d726ad026dd91c265b858654e9ae0",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-003540-20260629000478.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-003540-20260629000478.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-003540-20260629000478",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "증권발행실적보고서는 발행 규모와 조건 확인용 공식 자료다.",
+      "red_team_checks": [
+        "발행 증권의 만기/금리 확인",
+        "사업계약 관련 조달인지 구분"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "db774c6c944de47ebf6f8a90dddfe64453a084590edc3c10a87e1daa25e24564",
+    "requested_model": "gpt-5.5",
+    "response_hash": "dbb2d54fa58414e870f8da2a300831a38c2c248a715f59f65b116a75fbd528ac",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-060900-20260629900964",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "ad7fc770aa797fe25302526d3f7e842870fd1845a2bef4764532b27532e8d9d6",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "6b2fe5151b109410af6d2455f18098e5713e5254f9a64bc5a68edf25d79073f7",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-060900-20260629900964.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-060900-20260629900964.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-060900-20260629900964",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "CB 발행결과는 실제 납입과 전환조건, 자금 사용처 확인이 필요하다.",
+      "red_team_checks": [
+        "CB 전환가와 리픽싱 조건 확인",
+        "공급계약 이행자금과 연결되는지 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "db774c6c944de47ebf6f8a90dddfe64453a084590edc3c10a87e1daa25e24564",
+    "requested_model": "gpt-5.5",
+    "response_hash": "9ed9f605e239839734549a6b776fe771bbcd766834581c3080f64eb342354ece",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-378340-20260629900849",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "95d68487c329b15f6fa6dc6f6e8b6b8445f3899f6d2c8b7aad34c50b56606ba2",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "55ba8cd641f17de1d899326323e56985cc8f699f22f39615bea642cc640a9461",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-378340-20260629900849.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-378340-20260629900849.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-378340-20260629900849",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "contract_quality",
+      "rationale": "장비 공급계약 정정은 계약금액, 고객, 납기 변경 여부 확인이 핵심이다.",
+      "red_team_checks": [
+        "납기 지연 또는 금액 축소 확인",
+        "고객사와 취소조건 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "7e9de2d7b12758564bd7ee4bb813c042deb1cf0b8c548a092372d47f01acaeac",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-003540-20260629000475",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "4632fd2ffca7becfa173000ffda8e5c608d94564dd2a3e7863a7cb65a59f4075",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "39aa1714c2a7309b9845245aedeba714dc9e482a2160eb297ae5492f2adc754d",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-003540-20260629000475.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-003540-20260629000475.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-003540-20260629000475",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "동일 회사 발행실적은 회차별 발행조건과 실제 조달액을 확인한다.",
+      "red_team_checks": [
+        "중복 접수 여부 확인",
+        "발행 목적과 조건 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "db774c6c944de47ebf6f8a90dddfe64453a084590edc3c10a87e1daa25e24564",
+    "requested_model": "gpt-5.5",
+    "response_hash": "f612feb36eab2c10f551b22acb533bcf0e8dd743d0d0cd963930f34afe5405c6",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-282720-20260629900997",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "72de207a933d777f847418d7916b567c3851ca5c263a9f1926a715d81bbe5b88",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "37ae0ccc5770c350e8cad93ac76393062446751239606424bdcf71d8907cfdd2",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-282720-20260629900997.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-282720-20260629900997.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-282720-20260629900997",
+      "fallback_source_classes": [
+        "KIND",
+        "TrustedNews"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "IssuerIR"
+      ],
+      "primitive_gap": "order_to_revenue_bridge",
+      "rationale": "전력/건설 계약 정정은 수주잔고와 매출 전환 기간 확인이 중요하다.",
+      "red_team_checks": [
+        "계약기간과 금액 변경 확인",
+        "원가 상승 리스크 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "7cef57dffaafff323139048879ddc7476c4c6ff34a66a1c294ebb86799eddc70",
+    "requested_model": "gpt-5.5",
+    "response_hash": "8e3d20386d75f0abc423678bf2f84c72a7771121be2c12c8f70d650f2a98d880",
     "schema_validation_status": "PASS"
   },
   {
+    "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
+    "batch_response_hash": "f7069048d034f684a7d86cda73a1ea7204b50f5c7ac41fc7f3e0d6a3b7345055",
     "candidate_event_id": "CE-LIVE-DART-357550-20260629000448",
-    "command": "codex exec --output-schema planner_schema.json",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_d93gktjf/planner_schema.json -o /tmp/e2r_cutover_planner_d93gktjf/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": null,
-    "model": "codex-cli-default",
-    "prompt_hash": "e09d8c8124106235279f532adf45fbb2d94462c67c8ab34618a92c38dd6d57b7",
+    "latency_ms": 155037,
+    "model": "gpt-5.5",
+    "model_identity_status": "EXPLICIT_MODEL",
+    "planner_output_score_stage_key_count": 0,
+    "prompt_hash": "fadf6eeef3441a22fe86a2ce778780cddfefce0fd8def8f1314275792481f9a3",
     "provider_mode": "real",
     "provider_mode_label": "real",
     "provider_name": "codex_cli_planner",
     "raw_prompt_path": "planner_raw/prompts/CE-LIVE-DART-357550-20260629000448.json",
     "raw_response_path": "planner_raw/responses/CE-LIVE-DART-357550-20260629000448.json",
+    "raw_response_payload": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "candidate_event_id": "CE-LIVE-DART-357550-20260629000448",
+      "fallback_source_classes": [
+        "IssuerIR"
+      ],
+      "forbidden_source_classes": [
+        "unbounded_general_search"
+      ],
+      "max_candidates": 5,
+      "max_fetches": 2,
+      "max_queries": 1,
+      "planner_self_check": {
+        "future_outcome_used": false,
+        "score_keys_present": false,
+        "stage_keys_present": false
+      },
+      "preferred_source_classes": [
+        "DART",
+        "KRX"
+      ],
+      "primitive_gap": "capital_allocation_event",
+      "rationale": "자기주식취득 신탁계약은 환원 규모, 기간, 재무 여력 확인이 필요하다.",
+      "red_team_checks": [
+        "신탁계약 금액과 기간 확인",
+        "현금흐름 대비 집행 가능성 확인"
+      ]
+    },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
-    "response_hash": "4598025e1890b650ee7b4d0d7bf1adfe36bb0e725641d8c05fd40cd61eb16ae0",
+    "requested_model": "gpt-5.5",
+    "response_hash": "59e7393305646896d8d2bd610c105a17ba1b5b4f2a1aeedf4bc64038d24e2f53",
     "schema_validation_status": "PASS"
   }
 ]

@@ -42,6 +42,7 @@
       "cached_path_count": 0,
       "deterministic_scorer_output_count": 50,
       "fixture_candidate_event_count": 0,
+      "planner_default_model_unpinned_count": 0,
       "planner_provider_model_null_count": 0,
       "raw_prompt_response_file_missing_count": 0,
       "unknown_sector_candidate_count": 0
