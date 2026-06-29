@@ -1172,8 +1172,11 @@ def _readiness_blockers(
         blockers.append("accepted claims below 20")
     if sc.get("deterministic_scorer_output_count", 0) < config.deterministic_scorer_min_count:
         blockers.append("deterministic scorer outputs below configured minimum")
-    if m.get("A2_REAL_REPLAY_VERIFIED_count", 0) <= 0 and not m.get("A2_source_provider_gap"):
-        blockers.append("A2 real replay verified count is 0 without explicit source provider gap")
+    if m.get("A2_REAL_REPLAY_VERIFIED_count", 0) <= 0:
+        if m.get("A2_source_provider_gap"):
+            blockers.append("A2 real replay verified count is 0; explicit source/provider gap keeps cutover NOT_READY")
+        else:
+            blockers.append("A2 real replay verified count is 0")
     if metadata.get("repo_dirty"):
         blockers.append("working tree dirty at report generation, so PRODUCTION_CUTOVER_READY is forbidden")
     return blockers
