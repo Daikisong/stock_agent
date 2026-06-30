@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import json
+import os
 import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+from e2r.env import load_project_env
 from e2r.production.metadata import build_report_metadata, git_head_sha, stable_hash, write_json, write_text
 
 from .baseline_scanner import BaselineScanInputs, BaselineScanner
@@ -72,6 +74,8 @@ class CensusRunResult:
 
 def run_census_mode(config: CensusRunConfig) -> CensusRunResult:
     start = time.monotonic()
+    if config.source_mode == "live_official_first":
+        load_project_env(".env", override=False)
     output_root = Path(config.output_root)
     depth_config = _load_json(config.depth_policy_path)
     sla_config_payload = _load_json(config.sla_path)
@@ -86,7 +90,7 @@ def run_census_mode(config: CensusRunConfig) -> CensusRunResult:
     all_instruments = universe_result.instruments
     eligible = eligible_instruments(all_instruments)
     shard_instruments = select_shard(eligible, shard_count=config.shard_count, shard_index=config.shard_index)
-    scanner = BaselineScanner(_baseline_inputs_for_mode(config.mode))
+    scanner = BaselineScanner(_baseline_inputs_for_config(config=config, instruments=shard_instruments))
     scans = scanner.scan_many(shard_instruments, as_of_date=config.as_of_date)
     events = tuple(
         build_census_assessment_event(
@@ -253,9 +257,9 @@ def build_readiness_verdict(
     if sla_report["summary"]["status"] not in {"COMPLETE", "PARTIAL_WITH_PENDING"}:
         blockers.append("SLA failed")
     verdict = "NOT_READY" if blockers else "FULL_UNIVERSE_STAGE_MAP_READY"
-    if not blockers and watchlist_seed.get("seed_count", 0) >= 0:
+    if not blockers and watchlist_seed.get("seed_count", 0) > 0 and stage_summary.get("provider_pending_count", 0) == 0:
         verdict = "READY_FOR_DAILY_TRIGGER_INTEGRATION"
-    if not blockers and deep_backfill_plan:
+    if not blockers:
         labels = [
             "IMPLEMENTATION_MERGED",
             "CENSUS_LIGHT_PASS",
@@ -263,9 +267,13 @@ def build_readiness_verdict(
             "WATCHLIST_SEED_PASS",
             "CENSUS_STATIC_AUDIT_PASS",
             "CENSUS_SLA_PASS",
-            "READY_FOR_DEEP_BACKFILL_DESIGN",
-            "READY_FOR_DAILY_TRIGGER_INTEGRATION",
         ]
+        if deep_backfill_plan:
+            labels.append("READY_FOR_DEEP_BACKFILL_DESIGN")
+            if verdict == "FULL_UNIVERSE_STAGE_MAP_READY":
+                verdict = "READY_FOR_DEEP_BACKFILL_DESIGN"
+        if verdict == "READY_FOR_DAILY_TRIGGER_INTEGRATION":
+            labels.append("READY_FOR_DAILY_TRIGGER_INTEGRATION")
     else:
         labels = []
     return {"schema_version": "e2r_census_readiness_verdict_v1", "verdict": verdict, "labels": labels, "blockers": blockers}
@@ -316,11 +324,35 @@ def write_operational_docs(
     )
 
 
-def _baseline_inputs_for_mode(mode: str) -> BaselineScanInputs:
-    # Live source collection is intentionally not faked here.  In an environment
-    # with no provider registry wired to Census yet, symbols remain no-current
-    # rather than receiving synthetic scores.
+def _baseline_inputs_for_config(*, config: CensusRunConfig, instruments: Sequence[Any]) -> BaselineScanInputs:
+    provider_errors = official_provider_gap_errors(
+        source_mode=config.source_mode,
+        universe_file=config.universe_file,
+        env=os.environ,
+        official_baseline_connector_wired=False,
+    )
+    if provider_errors:
+        return BaselineScanInputs(provider_failed_symbols={str(item.symbol): provider_errors for item in instruments})
     return BaselineScanInputs()
+
+
+def official_provider_gap_errors(
+    *,
+    source_mode: str,
+    universe_file: str | None,
+    env: Mapping[str, str],
+    official_baseline_connector_wired: bool,
+) -> tuple[str, ...]:
+    if source_mode != "live_official_first" or universe_file:
+        return ()
+    errors: list[str] = []
+    if not env.get("KRX_OPENAPI_KEY"):
+        errors.append("KRX_OPENAPI_KEY_missing")
+    if not (env.get("OPENDART_API_KEY") or env.get("DART_API_KEY")):
+        errors.append("OPENDART_API_KEY_missing")
+    if not official_baseline_connector_wired:
+        errors.append("official_baseline_connector_unwired")
+    return tuple(errors)
 
 
 def _load_json(path: str | None) -> dict[str, Any]:
@@ -360,6 +392,11 @@ def _design_doc() -> str:
             "",
             "## Safety",
             "- CensusAssessmentEvent는 점수 증거가 아니다.",
+            "- CensusAssessmentEvent는 전 종목을 평가 대상으로 올리는 행정 이벤트다.",
+            "- CandidateEvent는 실제 사업/공시/시장/리스크 사건이며, 이것도 accepted current claim으로 검증되기 전에는 점수 증거가 아니다.",
+            "- 쉬운 예: 새 공시가 없는 종목은 CensusAssessmentEvent만 있고 CandidateEvent/claim이 없으므로 Stage0 / NoCurrentCatalyst다.",
+            "- 쉬운 예: 공식 provider가 막힌 종목은 실제 CandidateEvent 가능성을 확인하지 못했으므로 낮은 점수가 아니라 ProviderPending이다.",
+            "- 트리거는 조사를 여는 문이고, claim만 점수를 여는 열쇠다.",
             "- market anomaly와 provider failure는 점수가 아니라 pending/investigation 상태다.",
             "- 비영점 verified score는 accepted current claim id가 있을 때만 허용한다.",
             "- 종목명/URL 예외처리와 unbounded fetch는 금지한다.",
@@ -428,7 +465,8 @@ def _acceptance_report(
             f"25. Static audit critical counts: {audit.get('critical_counts')}",
             f"26. Census readiness verdict: {readiness.get('verdict')}",
             "27. Deep backfill readiness: READY_FOR_DEEP_BACKFILL_DESIGN",
-            "28. Daily trigger integration readiness: READY_FOR_DAILY_TRIGGER_INTEGRATION",
+            "28. Daily trigger integration readiness: "
+            f"{'READY_FOR_DAILY_TRIGGER_INTEGRATION' if 'READY_FOR_DAILY_TRIGGER_INTEGRATION' in (readiness.get('labels') or []) else 'BLOCKED_BY_PROVIDER_OR_EMPTY_SEED'}",
             f"29. Remaining blockers: {readiness.get('blockers')}",
             f"- output_root: {output_root}",
             "",
@@ -436,4 +474,11 @@ def _acceptance_report(
     )
 
 
-__all__ = ["CensusRunConfig", "CensusRunResult", "build_readiness_verdict", "run_census_mode", "write_operational_docs"]
+__all__ = [
+    "CensusRunConfig",
+    "CensusRunResult",
+    "build_readiness_verdict",
+    "official_provider_gap_errors",
+    "run_census_mode",
+    "write_operational_docs",
+]

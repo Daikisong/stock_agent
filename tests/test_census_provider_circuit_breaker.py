@@ -14,7 +14,8 @@ class CensusProviderCircuitBreakerTests(unittest.TestCase):
             provider_failure_count=2,
             runtime_pending_count=0,
         )
-        self.assertEqual(report["summary"]["status"], "PROVIDER_CIRCUIT_OPEN")
+        self.assertEqual(report["summary"]["status"], "PARTIAL_WITH_PENDING")
+        self.assertEqual(report["summary"]["provider_circuit_open"], True)
 
 
 if __name__ == "__main__":

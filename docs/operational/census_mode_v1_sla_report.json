@@ -16,11 +16,12 @@
   "summary": {
     "deep_count": 0,
     "llm_calls": 0,
-    "provider_failure_count": 0,
+    "provider_circuit_open": true,
+    "provider_failure_count": 3391,
     "runtime_pending_count": 0,
     "source_task_count": 0,
-    "status": "COMPLETE",
-    "total_runtime_seconds": 7.815,
+    "status": "PARTIAL_WITH_PENDING",
+    "total_runtime_seconds": 7.8062,
     "unbounded_fetch_config_count": 0
   }
 }

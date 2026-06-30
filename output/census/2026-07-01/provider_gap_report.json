@@ -1,5 +1,7 @@
 {
-  "provider_gap_counts": {},
-  "provider_pending_count": 0,
+  "provider_gap_counts": {
+    "official_baseline_connector_unwired": 3391
+  },
+  "provider_pending_count": 3391,
   "schema_version": "e2r_census_provider_gap_report_v1"
 }

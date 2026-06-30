@@ -50,10 +50,11 @@ def build_sla_report(
     unbounded_fetch_config_count: int = 0,
 ) -> dict[str, Any]:
     status = "COMPLETE"
+    provider_circuit_open = provider_failure_count >= config.max_provider_failures_before_circuit_breaker
     if total_runtime_seconds > config.max_total_runtime_seconds or runtime_pending_count:
         status = "PARTIAL_WITH_PENDING"
-    if provider_failure_count >= config.max_provider_failures_before_circuit_breaker:
-        status = "PROVIDER_CIRCUIT_OPEN"
+    if provider_circuit_open:
+        status = "PARTIAL_WITH_PENDING"
     if unbounded_fetch_config_count:
         status = "FAILED_UNBOUNDED_CONFIG"
     return {
@@ -65,6 +66,7 @@ def build_sla_report(
             "llm_calls": llm_calls,
             "source_task_count": source_task_count,
             "provider_failure_count": provider_failure_count,
+            "provider_circuit_open": provider_circuit_open,
             "runtime_pending_count": runtime_pending_count,
             "unbounded_fetch_config_count": unbounded_fetch_config_count,
         },

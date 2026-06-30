@@ -31,8 +31,8 @@
   },
   "warnings": {
     "no_green_yellow_found": true,
-    "provider_gap_rate_high": false,
-    "too_many_no_current_catalyst_rows": true,
+    "provider_gap_rate_high": true,
+    "too_many_no_current_catalyst_rows": false,
     "too_many_stage1_rows": false
   }
 }

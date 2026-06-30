@@ -2,8 +2,8 @@
 
 ## 전체 요약
 - eligible: 3391
-- Stage0/NoCurrentCatalyst: 3391 / 3391
-- ProviderPending: 0
+- Stage0/NoCurrentCatalyst: 0 / 0
+- ProviderPending: 3391
 - Watchlist seed: 0
 
 ## Stage3-Green
@@ -19,7 +19,7 @@
 - count: 0
 
 ## Provider/Source Pending
-- provider gaps: {}
+- provider gaps: {'official_baseline_connector_unwired': 3391}
 - source gaps: {}
 
 ## NoCurrentCatalyst summary

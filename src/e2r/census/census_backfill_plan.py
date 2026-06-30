@@ -10,8 +10,8 @@ def build_deep_backfill_plan(stage_rows: Sequence[Mapping[str, Any]], *, shard_c
         row
         for row in stage_rows
         if row.get("base_stage") in {"Stage2-Watch", "Stage2-Actionable", "Stage3-Yellow", "Stage3-Green"}
-        or row.get("census_status") == "PENDING_PROVIDER"
     ]
+    pending = [row for row in stage_rows if row.get("census_status") in {"PENDING_PROVIDER", "PENDING_SOURCE"}]
     source_gaps: dict[str, int] = {}
     sectors: dict[str, int] = {}
     for row in stage_rows:
@@ -25,12 +25,12 @@ def build_deep_backfill_plan(stage_rows: Sequence[Mapping[str, Any]], *, shard_c
         "sector_priority": sorted(sectors, key=lambda key: (-sectors[key], key))[:10],
         "archetype_priority": [],
         "provider_gap_priority": sorted(source_gaps, key=lambda key: (-source_gaps[key], key))[:10],
-        "pending_symbol_list": [row["symbol"] for row in stage_rows if row.get("census_status") in {"PENDING_PROVIDER", "PENDING_SOURCE"}],
+        "pending_symbol_list": [row["symbol"] for row in pending],
         "Stage2plus_candidate_list": [row["symbol"] for row in stage2plus],
         "source_heavy_candidate_list": [row["symbol"] for row in stage_rows if row.get("source_gaps") or row.get("provider_gaps")],
         "expected_runtime": "multi-shard; bounded per shard",
         "expected_llm_calls": len(stage2plus),
-        "expected_provider_calls": len(stage2plus) * 3,
+        "expected_provider_calls": len(stage2plus) * 3 + len(pending),
         "checkpoint_strategy": "per-shard checkpoint with source/config hash",
         "resume_strategy": "skip processed symbols and merge deterministic stage rows",
     }

@@ -1,16 +1,16 @@
 {
   "accepted_claim_total": 0,
-  "completed_symbol_count": 3391,
+  "completed_symbol_count": 0,
   "depth_distribution": {
     "CHEAP_BASELINE": 3391
   },
   "eligible_symbol_count": 3391,
   "failed_symbol_count": 0,
   "green_count": 0,
-  "no_current_catalyst_count": 3391,
+  "no_current_catalyst_count": 0,
   "no_score_count": 3391,
   "orphan_score_count": 0,
-  "provider_pending_count": 0,
+  "provider_pending_count": 3391,
   "reject_red_count": 0,
   "risk_review_count": 0,
   "runtime_pending_count": 0,
@@ -18,15 +18,15 @@
   "schema_version": "e2r_census_stage_summary_v1",
   "score_contribution_total": 0,
   "source_proxy_to_score_count": 0,
-  "stage0_count": 3391,
+  "stage0_count": 0,
   "stage1_count": 0,
   "stage2_actionable_count": 0,
   "stage2_watch_count": 0,
   "stage_distribution": {
-    "Stage0": 3391
+    "Unknown": 3391
   },
   "status_distribution": {
-    "SCANNED": 3391
+    "PENDING_PROVIDER": 3391
   },
   "total_universe_count": 3940,
   "verified_score_count": 0,
