@@ -1,0 +1,2844 @@
+{
+  "live_section_counts": {
+    "Stage1-Watch": 100
+  },
+  "rows": [
+    {
+      "accepted_claims": [
+        "CLM-39e96e4787c2861f59a4"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-396470-20260624900961",
+      "company_name": "워트",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-1d6a3ffb154877da909e"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "396470",
+      "why_triggered": "워트(396470) OpenDART disclosure: 단일판매ㆍ공급계약체결(자율공시)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-6ae1f748f4cf5bc3e575"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-452260-20260624800968",
+      "company_name": "한화갤러리아",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-997a0ef2b297b831296e"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "452260",
+      "why_triggered": "한화갤러리아(452260) OpenDART disclosure: 투자판단관련주요경영사항"
+    },
+    {
+      "accepted_claims": [
+        "CLM-81c7e1506f765553eae1"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-473980-20260624000491",
+      "company_name": "노머스",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-0fa686a5866a2568f455"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "473980",
+      "why_triggered": "노머스(473980) OpenDART disclosure: 주요사항보고서(자기주식취득신탁계약체결결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-d0394fdde21aa182b982"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-052710-20260624900954",
+      "company_name": "아모텍",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-d7e6a3127475a8f2d5d1"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "052710",
+      "why_triggered": "아모텍(052710) OpenDART disclosure: 권리락 (유상증자)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-f0eae309d103e4cd1b0f"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-375500-20260624800895",
+      "company_name": "DL이앤씨",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-1534763ea0b22cab8690"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "375500",
+      "why_triggered": "DL이앤씨(375500) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-aa90d6cb313e3afa37e6"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-052710-20260624900922",
+      "company_name": "아모텍",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-36130e6268cf23b1119a"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "052710",
+      "why_triggered": "아모텍(052710) OpenDART disclosure: 유상증자1차발행가액결정"
+    },
+    {
+      "accepted_claims": [
+        "CLM-fba317712a6b54962cd6"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-065710-20260624900828",
+      "company_name": "서호전기",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-19539de89b266b5b121b"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "065710",
+      "why_triggered": "서호전기(065710) OpenDART disclosure: 단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-b2779a2c189e014326b0"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-007460-20260624800913",
+      "company_name": "에이프로젠",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-c5e7cfa6c8c0d4e254a3"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "007460",
+      "why_triggered": "에이프로젠(007460) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)(자회사의 주요경영사항) (제3자배정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-8aa7fb5e257f683df859"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-270520-20260624000434",
+      "company_name": "앱튼",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-47b806590ef33f97e9ae"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "270520",
+      "why_triggered": "앱튼(270520) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-255140992470f42b626b"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-331920-20260624000431",
+      "company_name": "셀레믹스",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-3b4ba97eb5bb6cd6f138"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "331920",
+      "why_triggered": "셀레믹스(331920) OpenDART disclosure: 주요사항보고서(유상증자결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-2fe0a9d1bb07a950a1ca"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-215090-20260624900830",
+      "company_name": "솔디펜스",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-0905f7527cc06d9adb55"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "215090",
+      "why_triggered": "솔디펜스(215090) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-1926134dcde5dc592df2"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-402340-20260624800818",
+      "company_name": "SK스퀘어",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-4bb3ed67b772c0171632"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "402340",
+      "why_triggered": "SK스퀘어(402340) OpenDART disclosure: 주요사항보고서(유상증자결정)(자회사의 주요경영사항)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-1b739c3ba0c15b95358d"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-000660-20260624000420",
+      "company_name": "SK하이닉스",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-30065cc24ae184d50be1"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "000660",
+      "why_triggered": "SK하이닉스(000660) OpenDART disclosure: 주요사항보고서(유상증자결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-9e5704d64f174b9deba9"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-376980-20260624900815",
+      "company_name": "원티드랩",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-48708b979ba4c6ac7b15"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "376980",
+      "why_triggered": "원티드랩(376980) OpenDART disclosure: 유동성공급계약의체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-18a257215057d417e131"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-080530-20260619900514",
+      "company_name": "코디",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-33781eb653de05b27b51"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "080530",
+      "why_triggered": "코디(080530) OpenDART disclosure: [첨부추가]주식소각결정"
+    },
+    {
+      "accepted_claims": [
+        "CLM-71d074d713298717ee56"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-026910-20260624901008",
+      "company_name": "광진실업",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-70493b3d8cd70fce1e88"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "026910",
+      "why_triggered": "광진실업(026910) OpenDART disclosure: 소속부변경"
+    },
+    {
+      "accepted_claims": [
+        "CLM-14057362610ae62c7e02"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-000660-20260624000511",
+      "company_name": "SK하이닉스",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-8da68431606c7699ece3"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "000660",
+      "why_triggered": "SK하이닉스(000660) OpenDART disclosure: 증권신고서(지분증권)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-9aaf6a921e683a2ee9b4"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-005930-20260624801004",
+      "company_name": "삼성전자",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-02bb56e64083a9cd1389"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "005930",
+      "why_triggered": "삼성전자(005930) OpenDART disclosure: 풍문또는보도에대한해명(미확정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-a7b9270b6e8b85a91b7c"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-030350-20260624900997",
+      "company_name": "드래곤플라이",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-df107a71e1595976def7"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "030350",
+      "why_triggered": "드래곤플라이(030350) OpenDART disclosure: 주권매매거래정지기간변경 (개선기간 부여)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-ed22cc6514c1dd1e63d2"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-043260-20260624900958",
+      "company_name": "성호전자",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-51bc14bc3f721700fd48"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "043260",
+      "why_triggered": "성호전자(043260) OpenDART disclosure: 최대주주변경을수반하는주식담보제공계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-67e61d3b805c00d2a008"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-034730-20260625800908",
+      "company_name": "SK",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-47d3c07b979f8ee4bc5b"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "034730",
+      "why_triggered": "SK(034730) OpenDART disclosure: 투자판단관련주요경영사항(자회사의 주요경영사항)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-2de8c490ae53e58eb155"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-017670-20260625800905",
+      "company_name": "SK텔레콤",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-e0b58a504ad75bcdb86d"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "017670",
+      "why_triggered": "SK텔레콤(017670) OpenDART disclosure: 투자판단관련주요경영사항"
+    },
+    {
+      "accepted_claims": [
+        "CLM-7eee4c754c66ec3ab78d"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-215570-20260625000623",
+      "company_name": "크로넥스",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-42535f1de650b631f08e"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "215570",
+      "why_triggered": "크로넥스(215570) OpenDART disclosure: 주요사항보고서(유상증자결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-c4cb04954e20b668b7c1"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-010960-20260625800870",
+      "company_name": "삼호개발",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-b97ab5aa644f6d39cefb"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "010960",
+      "why_triggered": "삼호개발(010960) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-96314b4730dc11600afe"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-267850-20260625800851",
+      "company_name": "아시아나IDT",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-9efd7e4595e140f52010"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "267850",
+      "why_triggered": "아시아나IDT(267850) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-46d10849b213e9174789"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-042370-20260625900767",
+      "company_name": "비츠로테크",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-4d276abe3bd60ee2184d"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "042370",
+      "why_triggered": "비츠로테크(042370) OpenDART disclosure: 주요사항보고서(자기주식처분결정)(자회사의 주요경영사항)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-1666569ec3ac18d9ba28"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-069920-20260625000610",
+      "company_name": "엑시온그룹",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-1718130746acf46ca508"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "069920",
+      "why_triggered": "엑시온그룹(069920) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-4e5016b538fe361e129c"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-431190-20260625900803",
+      "company_name": "케이쓰리아이",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-e7ff7772016a5df2b275"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "431190",
+      "why_triggered": "케이쓰리아이(431190) OpenDART disclosure: 단일판매ㆍ공급계약체결(자율공시)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-e5d1db1fbf2bfef3ddab"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-418620-20260625900798",
+      "company_name": "E8",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-ad5b9f568ee5159d214c"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "418620",
+      "why_triggered": "E8(418620) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-d030d0c9884b7894ae6b"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-005960-20260625800808",
+      "company_name": "동부건설",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-442cfbba9a0d1fdce452"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "005960",
+      "why_triggered": "동부건설(005960) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-5af87659332d61c11522"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-007460-20260625800723",
+      "company_name": "에이프로젠",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-8b4313615760f61e5e76"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "007460",
+      "why_triggered": "에이프로젠(007460) OpenDART disclosure: 주요사항보고서(유상증자결정)(자회사의 주요경영사항) (제3자배정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-f75314b3bbff823a8b02"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-002990-20260625800801",
+      "company_name": "금호건설",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-de0e228bc29a0ed63135"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "002990",
+      "why_triggered": "금호건설(002990) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-7e7f69862d27eb73a84a"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-398120-20260625900781",
+      "company_name": "에스지헬스케어",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-f47f7c2135d6e52afa22"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "398120",
+      "why_triggered": "에스지헬스케어(398120) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결(자율공시)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-443a2ec802c78b3df76e"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-047040-20260625800795",
+      "company_name": "대우건설",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-11499a7d99f7a18c384f"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "047040",
+      "why_triggered": "대우건설(047040) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-ab253c646f9a86866555"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-024110-20260625000589",
+      "company_name": "기업은행",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-f6504ae0351132f6c687"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "024110",
+      "why_triggered": "기업은행(024110) OpenDART disclosure: 주요사항보고서(상각형조건부자본증권발행결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-a1419aa950c4d96dcb2b"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-229500-20260625600782",
+      "company_name": "노브메타파마",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-d93ff542727c9dba4d46"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "229500",
+      "why_triggered": "노브메타파마(229500) OpenDART disclosure: 증권발행결과(자율공시)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-b54a857bd1e99b5acead"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-220180-20260625900771",
+      "company_name": "핸디소프트",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-d71a9420e8654a65f316"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "220180",
+      "why_triggered": "핸디소프트(220180) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-b600e1ef5f28a8a8c62f"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-126720-20260625800762",
+      "company_name": "수산인더스트리",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-23d2371767a94f3c1f48"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "126720",
+      "why_triggered": "수산인더스트리(126720) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-de18acd27e2065cc1ec4"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-082920-20260625000526",
+      "company_name": "비츠로셀",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-136fd57e75838f3cda36"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "082920",
+      "why_triggered": "비츠로셀(082920) OpenDART disclosure: 주요사항보고서(자기주식처분결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-9694ca7b6afd0545384b"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-299660-20260625900722",
+      "company_name": "셀리드",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-84a99985f3828c233fe3"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "299660",
+      "why_triggered": "셀리드(299660) OpenDART disclosure: [기재정정]투자판단관련주요경영사항 (사업반환청구의 소 제기의 건)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-c2496c124df03c6ccafd"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-215090-20260626901432",
+      "company_name": "솔디펜스",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-4cb295b090df06f4b8b1"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "215090",
+      "why_triggered": "솔디펜스(215090) OpenDART disclosure: 단일판매ㆍ공급계약체결(자율공시)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-1e696d57a00d958d6289"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-215090-20260626901426",
+      "company_name": "솔디펜스",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-ad5504b1721da3aada44"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "215090",
+      "why_triggered": "솔디펜스(215090) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-2906b9936f54c91ced1a"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-440110-20260626901396",
+      "company_name": "파두",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-6f51aa3889fd114d520c"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "440110",
+      "why_triggered": "파두(440110) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-be1b23126d701287a67e"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-007980-20260626000762",
+      "company_name": "TP",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-ba091c231630b32b8b0c"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "007980",
+      "why_triggered": "TP(007980) OpenDART disclosure: 주요사항보고서(자기주식처분결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-a1f6768c2cbf9a8119bb"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-440110-20260626901308",
+      "company_name": "파두",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-1577e51e922fd8dc2a09"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "440110",
+      "why_triggered": "파두(440110) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-dcf21e75fe1278c86913"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-003380-20260626901383",
+      "company_name": "하림지주",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-27c4e27dda624cd912d4"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "003380",
+      "why_triggered": "하림지주(003380) OpenDART disclosure: [기재정정]신규시설투자등(자회사의 주요경영사항)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-f150c1d84414b4cb7bec"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-300080-20260626901314",
+      "company_name": "플리토",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-e8f4b7cdb6f947478586"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "300080",
+      "why_triggered": "플리토(300080) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-4a1c248ad2acb6ad3fd8"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-005960-20260626801367",
+      "company_name": "동부건설",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-c489e0c5de7be8d83ec8"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "005960",
+      "why_triggered": "동부건설(005960) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-c4b18933e2c311f772e6"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-001470-20260626801353",
+      "company_name": "삼부토건",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-14f56ab0cd5515af288b"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "001470",
+      "why_triggered": "삼부토건(001470) OpenDART disclosure: 투자판단관련주요경영사항"
+    },
+    {
+      "accepted_claims": [
+        "CLM-ecca8237c9053bf43490"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-068270-20260626801203",
+      "company_name": "셀트리온",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-95fe76e72cee62bfc3e2"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "068270",
+      "why_triggered": "셀트리온(068270) OpenDART disclosure: 투자판단관련주요경영사항 (CTP55(코센틱스 바이오시밀러) 한국 품목허가 신청)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-09150068eba08cd92931"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-007460-20260626801127",
+      "company_name": "에이프로젠",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-fddced482fc7f1f52e3a"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "007460",
+      "why_triggered": "에이프로젠(007460) OpenDART disclosure: [기재정정]투자판단관련주요경영사항"
+    },
+    {
+      "accepted_claims": [
+        "CLM-284b9bbfdba9080898d2"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-008670-20260626000744",
+      "company_name": "신한투자증권",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-7f2a0c1d0279454670ed"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "008670",
+      "why_triggered": "신한투자증권(008670) OpenDART disclosure: 증권발행실적보고서"
+    },
+    {
+      "accepted_claims": [
+        "CLM-310cf2e18a426cc01b69"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-003530-20260626000741",
+      "company_name": "한화투자증권",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-665278f11eb1d81aa591"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "003530",
+      "why_triggered": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서"
+    },
+    {
+      "accepted_claims": [
+        "CLM-06d9b7bbb8736131ccd1"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-052400-20260626000697",
+      "company_name": "코나아이",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-bec4e121b80576fb614c"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "052400",
+      "why_triggered": "코나아이(052400) OpenDART disclosure: 주요사항보고서(자기주식취득결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-661f5c02d1c28c8c0f08"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-085660-20260626901150",
+      "company_name": "차바이오텍",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-724b3c020cc417a58138"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "085660",
+      "why_triggered": "차바이오텍(085660) OpenDART disclosure: 유상증자결정(종속회사의주요경영사항)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-f3a763d3c8ec1ac1db37"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-003530-20260626000730",
+      "company_name": "한화투자증권",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-ab620c69ae55f0537a62"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "003530",
+      "why_triggered": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서"
+    },
+    {
+      "accepted_claims": [
+        "CLM-0edad114baf3cf6c6ba5"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-008670-20260626000725",
+      "company_name": "신한투자증권",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-4ca17daf22d0f0479fb1"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "008670",
+      "why_triggered": "신한투자증권(008670) OpenDART disclosure: 증권발행실적보고서"
+    },
+    {
+      "accepted_claims": [
+        "CLM-ac7bca287e6af514ca7f"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-054930-20260626901101",
+      "company_name": "유신",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-d2aa400dd019987810c1"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "054930",
+      "why_triggered": "유신(054930) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결(자율공시)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-ef4c8f856e827d5ebbd7"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-003540-20260626000717",
+      "company_name": "대신증권",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-1426aac0f51c8cedc5bc"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "003540",
+      "why_triggered": "대신증권(003540) OpenDART disclosure: 주요사항보고서(자본으로인정되는채무증권발행결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-b7c3f67cb3c4961fc242"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-003530-20260626000713",
+      "company_name": "한화투자증권",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-7584a1d23867a5e299b3"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "003530",
+      "why_triggered": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서"
+    },
+    {
+      "accepted_claims": [
+        "CLM-59aa8fdf3dc67610e1ee"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-083660-20260629000561",
+      "company_name": "CSA 코스믹",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-01637b402275d8451b00"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "083660",
+      "why_triggered": "CSA 코스믹(083660) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-9295294fdb9de364c568"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-006050-20260629901292",
+      "company_name": "국영지앤엠",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-640b635edd1925a6b622"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "006050",
+      "why_triggered": "국영지앤엠(006050) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결(자율공시)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-a9455b55c706caf962b6"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-083660-20260629000553",
+      "company_name": "CSA 코스믹",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-fa259f4e76b908354dc9"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "083660",
+      "why_triggered": "CSA 코스믹(083660) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-223e876f59e018b7c879"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-006050-20260629901282",
+      "company_name": "국영지앤엠",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-53e0caa5b3bb6d140b7a"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "006050",
+      "why_triggered": "국영지앤엠(006050) OpenDART disclosure: 단일판매ㆍ공급계약체결(자율공시)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-8ee25ede9acac8238387"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-208640-20260629901297",
+      "company_name": "썸에이지",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-eb8f1ae737e49b9e5c08"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "208640",
+      "why_triggered": "썸에이지(208640) OpenDART disclosure: 권리락 (유상증자)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-17a9dcc3ce4802cfc000"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-175250-20260629000562",
+      "company_name": "아이큐어",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-3a6e5a4a64347454800f"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "175250",
+      "why_triggered": "아이큐어(175250) OpenDART disclosure: 주요사항보고서(유상증자결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-5eb7fb690addef9202f7"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-377030-20260629901255",
+      "company_name": "비트맥스",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-912a9348917ae7c364f5"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "377030",
+      "why_triggered": "비트맥스(377030) OpenDART disclosure: 증권발행결과(자율공시) (제3자배정 유상증자)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-a33a42bbb6b25ffc4296"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-377030-20260629901251",
+      "company_name": "비트맥스",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-1ae72fed25c16170621c"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "377030",
+      "why_triggered": "비트맥스(377030) OpenDART disclosure: 증권발행결과(자율공시) (제3자배정 유상증자)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-710def20c4444bad8370"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-381970-20260629801242",
+      "company_name": "케이카",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-8eaf43ed6d3429298d9f"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "381970",
+      "why_triggered": "케이카(381970) OpenDART disclosure: [기재정정]투자판단관련주요경영사항"
+    },
+    {
+      "accepted_claims": [
+        "CLM-a7edee227a226a875f57"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-021960-20260629000554",
+      "company_name": "케이비캐피탈",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-a1385de77fa6858c0544"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "021960",
+      "why_triggered": "케이비캐피탈(021960) OpenDART disclosure: 증권발행실적보고서"
+    },
+    {
+      "accepted_claims": [
+        "CLM-50152adaca9967708583"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-104040-20260629901236",
+      "company_name": "디에스엠",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-c0214d5fd693c973f151"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "104040",
+      "why_triggered": "디에스엠(104040) OpenDART disclosure: 증권발행결과(자율공시)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-7abceae2db019329c728"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-260870-20260629601196",
+      "company_name": "SK시그넷",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-328cc9d9c68b26fa6e85"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "260870",
+      "why_triggered": "SK시그넷(260870) OpenDART disclosure: 증권발행결과(자율공시) (제3자배정 유상증자_우선주)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-9f6396e3b40cef4e7e4f"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-060900-20260629901198",
+      "company_name": "에이전트AI",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-3ec43247a2120d9c4901"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "060900",
+      "why_triggered": "에이전트AI(060900) OpenDART disclosure: 단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-c447929aacf1e95f42c0"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-097230-20260629801171",
+      "company_name": "HJ중공업",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-c7334a5f89be276435e4"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "097230",
+      "why_triggered": "HJ중공업(097230) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-a39b62ed6227b260c8e4"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-347700-20260629901175",
+      "company_name": "스피어",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-129dba30580755653b82"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "347700",
+      "why_triggered": "스피어(347700) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-d3ca6661af9da68e4855"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-347700-20260629901169",
+      "company_name": "스피어",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-41b6df25b0c577126d72"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "347700",
+      "why_triggered": "스피어(347700) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-dd2f37266ce52a0f25b5"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-347700-20260629901164",
+      "company_name": "스피어",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-3630e97d6b28ba7c21b8"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "347700",
+      "why_triggered": "스피어(347700) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-c12cc7e640dd44685709"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-368970-20260629000506",
+      "company_name": "오에스피",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-94d18bc215c2711af389"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "368970",
+      "why_triggered": "오에스피(368970) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-e72287593da240364449"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-007460-20260629801147",
+      "company_name": "에이프로젠",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-fa2a13f7ebb632e38841"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "007460",
+      "why_triggered": "에이프로젠(007460) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)(자회사의 주요경영사항) (제3자배정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-8074f683fae0ce5b5be1"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-003530-20260629000520",
+      "company_name": "한화투자증권",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-82c19b180708dd8ee43f"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "003530",
+      "why_triggered": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서"
+    },
+    {
+      "accepted_claims": [
+        "CLM-e806862cacc3c9c67fa9"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-003090-20260630801612",
+      "company_name": "대웅",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-4c0aec313350d773c1de"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "003090",
+      "why_triggered": "대웅(003090) OpenDART disclosure: [기재정정]신규시설투자등(자회사의 주요경영사항)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-7bfbb9a38685e31d5296"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-069620-20260630801610",
+      "company_name": "대웅제약",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-a22493cb0e09bd5f9cf2"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "069620",
+      "why_triggered": "대웅제약(069620) OpenDART disclosure: [기재정정]신규시설투자등"
+    },
+    {
+      "accepted_claims": [
+        "CLM-a06f4cbbe335305dcc97"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-114450-20260630901605",
+      "company_name": "그린생명과학",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-b4f7304f66b7a22a5ecb"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "114450",
+      "why_triggered": "그린생명과학(114450) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-d810bf1ebf67a5d1a002"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-001360-20260630801598",
+      "company_name": "삼성제약",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-7e00ee45e85cfe21f151"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "001360",
+      "why_triggered": "삼성제약(001360) OpenDART disclosure: 투자판단관련주요경영사항 (진행성 핵상 마비 치료제 GV1001의 국내 제3상 임상시험계획서 제출)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-5ac29c97b8952240f1d9"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-034830-20260630801595",
+      "company_name": "한국토지신탁",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-38abe76bbfb9498011d8"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "034830",
+      "why_triggered": "한국토지신탁(034830) OpenDART disclosure: [기재정정]투자판단관련주요경영사항"
+    },
+    {
+      "accepted_claims": [
+        "CLM-72ca260bbc996fbf4cba"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-200350-20260630901559",
+      "company_name": "아티스트스튜디오",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-6a9c19d9bd850872846b"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "200350",
+      "why_triggered": "아티스트스튜디오(200350) OpenDART disclosure: 단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-576ad5e7f9f0028d7747"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-049180-20260630901578",
+      "company_name": "셀루메드",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-45af1e9dcaeeced137a5"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "049180",
+      "why_triggered": "셀루메드(049180) OpenDART disclosure: [기재정정]투자판단관련주요경영사항 (집행판결 청구소송 합의 변경의 건)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-92555c84232e007a54b3"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-010130-20260630801556",
+      "company_name": "고려아연",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-b5bfc87d5a58cfcfe713"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "010130",
+      "why_triggered": "고려아연(010130) OpenDART disclosure: [기재정정]신규시설투자등(자율공시)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-c0579d915944809862c6"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-0015G0-20260630901538",
+      "company_name": "그린광학",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-12d28c44584486589251"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "0015G0",
+      "why_triggered": "그린광학(0015G0) OpenDART disclosure: 단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-844352683d94ae6fc6e7"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-276040-20260630901533",
+      "company_name": "스코넥",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-2b7bf9a63f0d6d3f7171"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "276040",
+      "why_triggered": "스코넥(276040) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-9a22b8dd92e02729bc79"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-028100-20260630801516",
+      "company_name": "동아지질",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-da304be5a914ee93074f"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "028100",
+      "why_triggered": "동아지질(028100) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-e2a1d069528f62799278"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-469750-20260630901511",
+      "company_name": "아이비젼웍스",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-50f8eef2398d8cea3978"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "469750",
+      "why_triggered": "아이비젼웍스(469750) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-d77b7337f371ee1edf8e"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-001470-20260630801514",
+      "company_name": "삼부토건",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-e3df3b343a7a93f36d93"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "001470",
+      "why_triggered": "삼부토건(001470) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-bb10099224c580eef062"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-002460-20260630801513",
+      "company_name": "HS화성",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-51c34b5b421356ffcba8"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "002460",
+      "why_triggered": "HS화성(002460) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
+    },
+    {
+      "accepted_claims": [
+        "CLM-80e0082a358553a5f84f"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-344860-20260630001080",
+      "company_name": "이노진",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-387650142aec490cef39"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "344860",
+      "why_triggered": "이노진(344860) OpenDART disclosure: 주요사항보고서(유상증자결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-a53edac00bb069a2386f"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-086710-20260630001092",
+      "company_name": "선진뷰티사이언스",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-a79dcde8a21dd19c1705"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "086710",
+      "why_triggered": "선진뷰티사이언스(086710) OpenDART disclosure: 주요사항보고서(자기주식취득결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-b060b83c7eb6c482aa91"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-010950-20260630801472",
+      "company_name": "S-Oil",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-5ac88c5f37ddbce552ba"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "010950",
+      "why_triggered": "S-Oil(010950) OpenDART disclosure: [기재정정]신규시설투자등"
+    },
+    {
+      "accepted_claims": [
+        "CLM-f3bedf7cdcebba47dff2"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-112190-20260630001086",
+      "company_name": "KC산업",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-54d74ffb63b7705b8dac"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "112190",
+      "why_triggered": "KC산업(112190) OpenDART disclosure: 주요사항보고서(유상증자결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-8ab842287555907fb37d"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-137940-20260630001076",
+      "company_name": "넥스트아이",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-a02bb9f3f35f0e8bf661"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "137940",
+      "why_triggered": "넥스트아이(137940) OpenDART disclosure: 주요사항보고서(유상증자결정)"
+    },
+    {
+      "accepted_claims": [
+        "CLM-62e9dd2a451fd3f56799"
+      ],
+      "candidate_event_id": "CE-LIVE-DART-034020-20260630801489",
+      "company_name": "두산에너빌리티",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "WATCH",
+      "next_source_tasks": [],
+      "pending_reason": null,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "red_team_checks": [
+        "wrong subject",
+        "historical only",
+        "provider failure"
+      ],
+      "research_memory_cards_used": [],
+      "score_contributions": [
+        "SCON-e134bdc57bb87a457a0f"
+      ],
+      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
+      "section": "Stage1-Watch",
+      "symbol": "034020",
+      "why_triggered": "두산에너빌리티(034020) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결(자율공시)"
+    }
+  ],
+  "schema_version": "production_cutover_v3_stage_distribution_report_v1",
+  "summary": {
+    "ProviderPending_count": 1,
+    "RiskReview_or_Reject_count": 1,
+    "Stage1_Watch_count": 100,
+    "Stage2_or_higher_count": 1,
+    "YellowPending_count": 1,
+    "a2_validation_claim_count": 30,
+    "deterministic_scorer_output_count": 100,
+    "documented_low_signal_market": true,
+    "live_Stage2_or_higher_count": 0,
+    "score_without_claim_count": 0,
+    "stagecourt_trace_count": 100,
+    "status": "MEANINGFUL_STAGE_SPLIT_PASS"
+  },
+  "validation_rows": [
+    {
+      "case_id": "a2_yellow_pending_bridge",
+      "section": "Stage3-Yellow-Pending",
+      "source": "A2 replay"
+    },
+    {
+      "case_id": "wrong_subject_risk_guard",
+      "section": "Reject/Red",
+      "source": "adversarial regression"
+    },
+    {
+      "case_id": "provider_failure_pending_guard",
+      "section": "Provider/Source Pending",
+      "source": "provider handling"
+    }
+  ],
+  "validation_section_counts": {
+    "Provider/Source Pending": 1,
+    "Reject/Red": 1,
+    "Stage3-Yellow-Pending": 1
+  }
+}

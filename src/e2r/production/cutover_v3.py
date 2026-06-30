@@ -13,13 +13,14 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from e2r.production.cutover_shadow import ProductionCutoverConfig, build_production_cutover_bundle
+from e2r.production.metadata import SCORING_SCHEMA_VERSION, STAGE_SCHEMA_VERSION
 from e2r.production.cutover_v2 import (
     _claim_access_policy,
     _claim_extraction_report_v2,
     _trigger_taxonomy,
     build_a2_replay_promotion_report,
 )
-from e2r.production.metadata import stable_hash, write_json, write_jsonl, write_text
+from e2r.production.metadata import git_head_sha, stable_hash, write_json, write_jsonl, write_text
 from e2r.production.source_connectors import build_default_source_provider_registry
 
 
@@ -102,7 +103,23 @@ def build_production_cutover_v3_bundle(
     trigger_policy = _trigger_policy_audit_v3(base_bundles=base_bundles)
     operator_digest = _operator_digest_v3(base_bundles=base_bundles, provider_matrix=provider_matrix)
     sla = _sla_report_v3(base_bundles=base_bundles)
-    census = _census_readiness_v3(stage_distribution=stage_distribution, provider_matrix=provider_matrix)
+    rollup_metadata = _rollup_metadata_v3(base_bundles=base_bundles, config=config, command=command, repo_root=root)
+    census_precheck = _cutover_ready_pre_static_v3(
+        provider_matrix=provider_matrix,
+        multiday=multiday,
+        claim_audit=claim_audit,
+        stage_distribution=stage_distribution,
+        trigger_policy=trigger_policy,
+        sla=sla,
+        a2=a2,
+    )
+    census = _census_readiness_v3(
+        cutover_ready=census_precheck,
+        llm_extractor_success_count=claim_audit["summary"].get("llm_extractor_success_count", 0),
+        stage_distribution=stage_distribution,
+        provider_matrix=provider_matrix,
+        multiday=multiday,
+    )
     static = _static_logic_audit_v3(
         provider_matrix=provider_matrix,
         multiday=multiday,
@@ -142,11 +159,12 @@ def build_production_cutover_v3_bundle(
         "operator_digest": operator_digest,
         "operator_digest_summary_md": _operator_digest_summary_markdown(operator_digest),
         "sla_report": sla,
+        "rollup_metadata": rollup_metadata,
         "static_logic_audit": static,
         "census_mode_readiness_report_md": census["markdown"],
         "v2_to_v3_gap_md": _v2_to_v3_gap_markdown(provider_matrix=provider_matrix, multiday=multiday),
-        "acceptance_report_md": _acceptance_markdown_v3(labels=labels, verdict=verdict, static=static),
-        "readiness_verdict_md": verdict["markdown"],
+        "acceptance_report_md": _acceptance_markdown_v3(labels=labels, verdict=verdict, static=static, metadata=rollup_metadata),
+        "readiness_verdict_md": _readiness_markdown_v3(verdict=verdict, labels=labels, static=static, metadata=rollup_metadata),
         "labels": labels,
         "verdict": verdict,
     }
@@ -187,10 +205,17 @@ def write_production_cutover_v3_bundle(
         path = docs / name
         write_text(path, text)
         paths[name] = str(path)
+    v3_operator_rows = list(bundle["operator_digest"].get("rows") or ())
     for base in bundle["base_bundles"]:
         run_date = base["config"]["as_of_date"]
         out = output_root_path / run_date
-        paths.update(_write_v3_shadow_outputs(base=base, output_dir=out))
+        paths.update(
+            _write_v3_shadow_outputs(
+                base=base,
+                output_dir=out,
+                operator_rows=[row for row in v3_operator_rows if row.get("as_of_date") == run_date],
+            )
+        )
     return paths
 
 
@@ -230,6 +255,8 @@ def _provider_completeness_matrix_v3(source_report: Mapping[str, Any]) -> Mappin
         fetch_success_count = sum(row.get("status") == "FETCHED" for row in provider_rows)
         fetch_failure_count = sum(row.get("status") in {"PROVIDER_FAILED", "AUTH_FAILED", "RATE_LIMITED"} for row in provider_rows)
         no_result_count = sum(row.get("status") == "NO_RESULT" for row in provider_rows)
+        fetched_rows = [row for row in provider_rows if row.get("status") == "FETCHED"]
+        sample_row = fetched_rows[0] if fetched_rows else (provider_rows[0] if provider_rows else {})
         if fetch_success_count:
             classification = "LIVE_READY"
             blocking = False
@@ -254,6 +281,11 @@ def _provider_completeness_matrix_v3(source_report: Mapping[str, Any]) -> Mappin
                 "no_result_count": no_result_count,
                 "used_for_score_claim_count": 0,
                 "used_for_pending_claim_count": fetch_success_count,
+                "sample_mode": sample_row.get("mode"),
+                "sample_provider_request_id": sample_row.get("provider_request_id") or sample_row.get("request_id"),
+                "sample_content_hash": sample_row.get("content_hash"),
+                "sample_latency_seconds": sample_row.get("freshness_seconds"),
+                "sample_error": sample_row.get("provider_error"),
                 "blocking_cutover": blocking,
                 "blocker_reason": blocker_reason,
                 "exact_next_action": "none" if not blocking else "implement or configure provider-specific live endpoint",
@@ -281,6 +313,7 @@ def _provider_completeness_matrix_v3(source_report: Mapping[str, Any]) -> Mappin
             "revision_report_ir_provider_path_exercised_count": revision_count,
             "status": status,
         },
+        "source_summary": dict(source_report.get("summary") or {}),
         "rows": matrix_rows,
     }
 
@@ -291,28 +324,40 @@ def _claim_extractor_provider_audit_v3(
     runtime_assertions = sum(
         int(base["claim_extraction_audit"]["summary"].get("real_document_to_assertion_count", 0)) for base in base_bundles
     )
-    accepted_claims = sum(
-        int(base["claim_extraction_audit"]["summary"].get("accepted_claim_count", 0)) for base in base_bundles
-    )
+    accepted_claim_rows = _accepted_claim_rows(base_bundles)
+    accepted_claims = len(accepted_claim_rows)
+    structured_rule_claims = [row for row in accepted_claim_rows if _claim_is_structured_rule_score_eligible(row, base_bundles)]
+    unstructured_rule_claims = [
+        row
+        for row in accepted_claim_rows
+        if _claim_document_source_type(row, base_bundles) not in _STRUCTURED_RULE_SOURCE_TYPES
+    ]
     llm_summary = claim_extraction["report"]["summary"]
     llm_attempt = len(claim_extraction["report"].get("rows") or [])
     llm_success = int(llm_summary.get("llm_raw_assertion_extractor_used_count", 0))
-    unstructured_text_rule_score_count = 0
+    unstructured_text_rule_score_count = len(unstructured_rule_claims)
     summary = {
         "llm_extractor_attempt_count": llm_attempt,
         "llm_extractor_success_count": llm_success,
         "llm_extractor_failure_count": max(llm_attempt - llm_success, 0),
         "rule_fallback_extractor_count": runtime_assertions,
-        "rule_fallback_score_eligible_claim_count": accepted_claims,
-        "mention_only_count": 0,
+        "rule_fallback_score_eligible_claim_count": len(structured_rule_claims),
+        "mention_only_count": max(runtime_assertions - accepted_claims, 0),
         "accepted_claim_from_llm_count": llm_success,
-        "accepted_claim_from_rule_count": accepted_claims,
+        "accepted_claim_from_rule_count": len(structured_rule_claims),
         "forced_target_subject_count": int(llm_summary.get("forced_target_subject_count", 0)),
         "forced_positive_polarity_count": int(llm_summary.get("forced_positive_polarity_count", 0)),
         "forced_current_temporal_count": int(llm_summary.get("forced_current_temporal_count", 0)),
         "contract_visible_to_raw_extractor_count": int(llm_summary.get("contract_visible_to_raw_extractor_count", 0)),
         "primitive_gap_visible_to_raw_extractor_count": int(llm_summary.get("primitive_gap_direct_mapping_count", 0)),
         "unstructured_text_rule_score_count": unstructured_text_rule_score_count,
+        "accepted_claim_without_anchor_count": sum(not row.get("anchor_id") for row in accepted_claim_rows),
+        "accepted_claim_without_date_count": sum(not (row.get("event_date") or row.get("as_of_date")) for row in accepted_claim_rows),
+        "structured_rule_claim_missing_subject_date_value_locator_count": sum(
+            _claim_document_source_type(row, base_bundles) in _STRUCTURED_RULE_SOURCE_TYPES
+            and not _claim_has_structured_score_fields(row)
+            for row in accepted_claim_rows
+        ),
         "production_extraction_mode": "LLM_AND_STRUCTURED_OFFICIAL" if llm_success else "STRUCTURED_OFFICIAL_ONLY",
     }
     summary["status"] = (
@@ -323,6 +368,9 @@ def _claim_extractor_provider_audit_v3(
         and summary["contract_visible_to_raw_extractor_count"] == 0
         and summary["primitive_gap_visible_to_raw_extractor_count"] == 0
         and summary["unstructured_text_rule_score_count"] == 0
+        and summary["accepted_claim_without_anchor_count"] == 0
+        and summary["accepted_claim_without_date_count"] == 0
+        and summary["structured_rule_claim_missing_subject_date_value_locator_count"] == 0
         else "CLAIM_EXTRACTOR_AUDIT_NOT_READY"
     )
     return {"schema_version": "production_cutover_v3_claim_extractor_provider_audit_v1", "summary": summary}
@@ -337,17 +385,21 @@ def _multiday_validation_v3(
     live_rows = []
     for base in base_bundles:
         summary = base["shadow_latest"]
+        day_pass = _v3_live_day_pass(base)
         live_rows.append(
             {
                 "as_of_date": base["config"]["as_of_date"],
                 "run_kind": "live",
+                "child_shadow_production_verdict": summary.get("production_verdict"),
+                "child_shadow_blockers": list(summary.get("blockers") or ()),
                 "watchlist_signature": stable_hash(base["output_artifacts"]["daily_watchlist"]),
                 "config_hash": stable_hash(base["config"]),
                 "source_corpus_hash": base["metadata"]["source_corpus_hash"],
                 "deterministic_stage_output_count": base["score_meaning_audit"]["summary"].get("deterministic_scorer_output_count", 0),
                 "provider_failure_count": base["source_connector_report"]["summary"].get("provider_failure_count", 0),
                 "provider_pending_or_nonfinal": True,
-                "pass": bool(summary.get("daily_shadow_pass", False)),
+                "v3_live_day_admissible": day_pass,
+                "pass": day_pass,
             }
         )
     frozen_rows = _frozen_replay_rows_from_live(live_rows, required_days=config.frozen_replay_days, repeated_days=config.repeated_frozen_days)
@@ -364,11 +416,13 @@ def _multiday_validation_v3(
         "fake_frozen_planner_provider_in_live_count": 0,
         "snapshot_only_counted_as_live_count": 0,
         "source_provider_failure_total": sum(int(row.get("provider_failure_count", 0)) for row in live_rows),
+        "live_day_pass_count": sum(bool(row.get("pass")) for row in live_rows),
         "unresolved_provider_blocker_count": provider_matrix["summary"]["provider_blocker_count"],
     }
     summary["status"] = (
         "MULTIDAY_SHADOW_PASS"
         if summary["five_day_live_official_shadow_count"] >= config.live_shadow_days
+        and summary["live_day_pass_count"] >= config.live_shadow_days
         and summary["frozen_replay_day_count"] >= config.frozen_replay_days
         and summary["frozen_repeat_day_with_3_runs_count"] >= config.repeated_frozen_days
         and summary["repeat_variance"] == 0
@@ -406,14 +460,14 @@ def _stage_distribution_report_v3(
         {"case_id": "provider_failure_pending_guard", "section": "Provider/Source Pending", "source": "provider handling"},
     ]
     validation_counts = Counter(row["section"] for row in validation_rows)
-    total_stage2_or_higher = live_stage2_or_higher + validation_counts.get("Stage3-Yellow-Pending", 0)
+    total_stage2_or_higher = live_stage2_or_higher
     deterministic_count = sum(
         int(base["score_meaning_audit"]["summary"].get("deterministic_scorer_output_count", 0)) for base in base_bundles
     )
     stagecourt_trace_count = deterministic_count
     score_without_claim_count = sum(int(base["score_meaning_audit"]["summary"].get("score_without_claim_count", 0)) for base in base_bundles)
     provider_material_failures = provider_matrix["summary"]["provider_blocker_count"]
-    documented_low_signal_market = live_stage2_or_higher == 0 and multiday["summary"]["status"] == "MULTIDAY_SHADOW_PASS"
+    documented_low_signal_market = live_stage2_or_higher < 10 and multiday["summary"]["status"] == "MULTIDAY_SHADOW_PASS"
     summary = {
         "deterministic_scorer_output_count": deterministic_count,
         "live_Stage2_or_higher_count": live_stage2_or_higher,
@@ -426,6 +480,11 @@ def _stage_distribution_report_v3(
         "score_without_claim_count": score_without_claim_count,
         "documented_low_signal_market": documented_low_signal_market,
         "a2_validation_claim_count": a2_count,
+        "provider_failure_final_reject_count": sum(
+            row.get("section") == "Reject/Red" and str(row.get("pending_reason") or "").lower().find("provider") >= 0
+            for row in live_operator_rows
+        ),
+        "source_proxy_to_score_count": _source_proxy_to_score_count(base_bundles),
     }
     summary["status"] = (
         "MEANINGFUL_STAGE_SPLIT_PASS"
@@ -434,7 +493,9 @@ def _stage_distribution_report_v3(
         and score_without_claim_count == 0
         and summary["RiskReview_or_Reject_count"] >= 1
         and summary["YellowPending_count"] >= 1
-        and (live_stage2_or_higher >= 10 or documented_low_signal_market or total_stage2_or_higher >= 1)
+        and live_stage2_or_higher >= 10
+        else "MEANINGFUL_STAGE_SPLIT_LOW_SIGNAL_NOT_READY"
+        if documented_low_signal_market
         else "MEANINGFUL_STAGE_SPLIT_NOT_COMPLETE"
     )
     return {
@@ -450,6 +511,11 @@ def _stage_distribution_report_v3(
 def _trigger_policy_audit_v3(*, base_bundles: Sequence[Mapping[str, Any]]) -> Mapping[str, Any]:
     categories = _trigger_taxonomy()["categories"]
     events = [row for base in base_bundles for row in base["output_artifacts"].get("candidate_events") or ()]
+    watch_by_event_id = {
+        row.get("candidate_event_id"): row
+        for base in base_bundles
+        for row in (base["output_artifacts"].get("daily_watchlist") or {}).get("rows", ())
+    }
     summary = {
         "trigger_category_count": len(categories),
         "candidate_event_count": len(events),
@@ -457,10 +523,24 @@ def _trigger_policy_audit_v3(*, base_bundles: Sequence[Mapping[str, Any]]) -> Ma
         "candidate_events_missing_allowed_source_families_count": sum(not row.get("allowed_source_families") for row in events),
         "candidate_events_missing_score_eligibility_policy_count": sum(not row.get("score_eligibility_policy") for row in events),
         "candidate_events_missing_source_task_generation_policy_count": sum(not row.get("source_task_generation_policy") for row in events),
-        "market_anomaly_to_score_count": 0,
-        "news_snippet_to_score_count": 0,
+        "market_anomaly_to_score_count": sum(
+            _watch_has_score(watch_by_event_id.get(row.get("candidate_event_id")))
+            for row in events
+            if row.get("trigger_category") == "Market Anomaly Trigger"
+            or row.get("score_eligibility_policy") == "investigation_only_never_score"
+        ),
+        "news_snippet_to_score_count": sum(
+            _watch_has_score(watch_by_event_id.get(row.get("candidate_event_id")))
+            for row in events
+            if row.get("source_family") in {"TrustedNews", "NewsSnippet"} or row.get("trigger_category") == "News Snippet Trigger"
+        ),
         "census_assessment_trigger_used_before_census_count": 0,
-        "old_risk_without_current_open_to_score_count": 0,
+        "old_risk_without_current_open_to_score_count": sum(
+            _watch_has_score(watch_by_event_id.get(row.get("candidate_event_id")))
+            for row in events
+            if row.get("trigger_category") == "Official Risk Trigger"
+            and row.get("current_open_risk_claim_id") is None
+        ),
     }
     summary["status"] = (
         "TRIGGER_POLICY_ENFORCED"
@@ -490,7 +570,7 @@ def _operator_digest_v3(*, base_bundles: Sequence[Mapping[str, Any]], provider_m
                     "event_summary": row.get("why_triggered"),
                     "primary_archetype": row.get("primary_archetype"),
                     "current_stage": row.get("section"),
-                    "verified_score": None,
+                    "verified_score": row.get("verified_score"),
                     "score_status": row.get("score_stage_validity"),
                     "supporting_claims": row.get("accepted_claims") or [],
                     "missing_primitives": row.get("missing_primitives") or [],
@@ -563,16 +643,16 @@ def _static_logic_audit_v3(
             and not stage_distribution["summary"].get("documented_low_signal_market")
         ),
         "rule_fallback_unstructured_text_score_count": int(claim_audit["summary"].get("unstructured_text_rule_score_count", 0)),
-        "live_connector_alias_to_snapshot_count": 0,
-        "provider_failed_final_score_count": 0,
-        "source_proxy_to_score_count": 0,
+        "live_connector_alias_to_snapshot_count": int(provider_matrix.get("source_summary", {}).get("live_connector_alias_to_snapshot_count", 0)),
+        "provider_failed_final_score_count": int(stage_distribution["summary"].get("provider_failure_final_reject_count", 0)),
+        "source_proxy_to_score_count": int(stage_distribution["summary"].get("source_proxy_to_score_count", 0)),
         "source_proxy_to_A2_count": int(a2["report"]["summary"].get("source_proxy_to_A2_count", 0)),
         "evidence_url_pending_to_fixture_count": int(a2["report"]["summary"].get("evidence_url_pending_to_A2_count", 0)),
         "market_anomaly_to_score_count": int(trigger_policy["summary"].get("market_anomaly_to_score_count", 0)),
         "news_snippet_to_score_count": int(trigger_policy["summary"].get("news_snippet_to_score_count", 0)),
         "old_risk_without_current_open_to_score_count": int(trigger_policy["summary"].get("old_risk_without_current_open_to_score_count", 0)),
-        "accepted_claim_without_anchor_count": 0,
-        "accepted_claim_without_date_count": 0,
+        "accepted_claim_without_anchor_count": int(claim_audit["summary"].get("accepted_claim_without_anchor_count", 0)),
+        "accepted_claim_without_date_count": int(claim_audit["summary"].get("accepted_claim_without_date_count", 0)),
         "score_without_claim_count": int(stage_distribution["summary"].get("score_without_claim_count", 0)),
         "unbounded_fetch_config_count": int(sla["summary"].get("unbounded_fetch_config_count", 0)),
         "census_implementation_before_cutover_ready_count": int(census.get("label") == "READY_FOR_CENSUS_IMPLEMENTATION" and not completion_ready),
@@ -604,6 +684,126 @@ def _static_logic_audit_v3(
             "production_blockers": blockers,
         },
     }
+
+
+_STRUCTURED_RULE_SOURCE_TYPES = {"API_RECORD", "XBRL_FACT", "TABLE_CELL", "STRUCTURED_OFFICIAL_API"}
+
+
+def _accepted_claim_rows(base_bundles: Sequence[Mapping[str, Any]]) -> list[Mapping[str, Any]]:
+    rows: list[Mapping[str, Any]] = []
+    for base in base_bundles:
+        rows.extend(row for row in base["output_artifacts"].get("evidence_claim_ledger", ()) if row.get("accepted"))
+    return rows
+
+
+def _claim_document_source_type(row: Mapping[str, Any], base_bundles: Sequence[Mapping[str, Any]]) -> str | None:
+    document_id = row.get("document_id")
+    if not document_id:
+        return None
+    for base in base_bundles:
+        for document in base["output_artifacts"].get("evidence_documents", ()):
+            if document.get("document_id") == document_id:
+                return str(document.get("source_type") or "")
+    return None
+
+
+def _claim_is_structured_rule_score_eligible(row: Mapping[str, Any], base_bundles: Sequence[Mapping[str, Any]]) -> bool:
+    return _claim_document_source_type(row, base_bundles) in _STRUCTURED_RULE_SOURCE_TYPES and _claim_has_structured_score_fields(row)
+
+
+def _claim_has_structured_score_fields(row: Mapping[str, Any]) -> bool:
+    return bool(
+        row.get("subject_entity_id")
+        and (row.get("event_date") or row.get("as_of_date"))
+        and (row.get("quote_text") or row.get("value") is not None or row.get("primitive_id"))
+        and (row.get("anchor_id") or row.get("source_url") or row.get("document_id"))
+    )
+
+
+def _watch_has_score(row: Mapping[str, Any] | None) -> bool:
+    return bool(row and row.get("verified_score") is not None)
+
+
+def _source_proxy_to_score_count(base_bundles: Sequence[Mapping[str, Any]]) -> int:
+    count = 0
+    for base in base_bundles:
+        documents = {
+            row.get("document_id"): row
+            for row in base["output_artifacts"].get("evidence_documents", ())
+            if row.get("document_id")
+        }
+        accepted_claim_documents = {
+            row.get("document_id")
+            for row in base["output_artifacts"].get("evidence_claim_ledger", ())
+            if row.get("accepted")
+        }
+        source_proxy_documents = {
+            document_id
+            for document_id, document in documents.items()
+            if str(document.get("source_type") or "").upper() in {"SOURCE_PROXY", "EVIDENCE_URL_PENDING"}
+            or str(document.get("canonical_url") or "").startswith("source_proxy://")
+        }
+        count += len(source_proxy_documents & accepted_claim_documents)
+    return count
+
+
+def _v3_live_day_pass(base: Mapping[str, Any]) -> bool:
+    candidate = ((base["candidate_purity"].get("sector_coverage") or {}).get("summary") or {})
+    source = base["source_connector_report"]["summary"]
+    score = base["score_meaning_audit"]["summary"]
+    static = base["static_logic_audit"]["summary"]
+    return (
+        int(candidate.get("unknown_sector_candidate_count", 0)) == 0
+        and int(source.get("real_source_document_fetched_count", 0)) > 0
+        and int(score.get("deterministic_scorer_output_count", 0)) > 0
+        and int(score.get("score_without_claim_count", 0)) == 0
+        and int(static.get("critical_count_sum", 0)) == 0
+    )
+
+
+def _v3_day_audit_summary(base: Mapping[str, Any]) -> Mapping[str, Any]:
+    child = base["shadow_latest"]
+    day_pass = _v3_live_day_pass(base)
+    return {
+        "schema_version": "production_cutover_v3_day_audit_v1",
+        "as_of_date": base["config"]["as_of_date"],
+        "v3_live_day_verdict": "LIVE_DAY_PASS" if day_pass else "LIVE_DAY_NOT_READY",
+        "v3_live_day_pass": day_pass,
+        "child_shadow_production_verdict": child.get("production_verdict"),
+        "child_shadow_blockers": list(child.get("blockers") or ()),
+        "rollup_note": (
+            "This file is a v3 per-day admissibility audit. The child shadow verdict is preserved for diagnostics "
+            "but does not by itself decide the v3 multi-day rollup."
+        ),
+        "metadata": base["metadata"],
+        "summary": {
+            "candidate": child.get("summary", {}).get("candidate"),
+            "source": child.get("summary", {}).get("source"),
+            "score_stage": child.get("summary", {}).get("score_stage"),
+        },
+    }
+
+
+def _cutover_ready_pre_static_v3(
+    *,
+    provider_matrix: Mapping[str, Any],
+    multiday: Mapping[str, Any],
+    claim_audit: Mapping[str, Any],
+    stage_distribution: Mapping[str, Any],
+    trigger_policy: Mapping[str, Any],
+    sla: Mapping[str, Any],
+    a2: Mapping[str, Any],
+) -> bool:
+    return (
+        provider_matrix["summary"].get("status") == "PROVIDER_COMPLETENESS_PASS"
+        and provider_matrix["summary"].get("provider_blocker_count") == 0
+        and multiday["summary"].get("status") == "MULTIDAY_SHADOW_PASS"
+        and claim_audit["summary"].get("status") == "CLAIM_EXTRACTOR_AUDIT_PASS"
+        and stage_distribution["summary"].get("status") == "MEANINGFUL_STAGE_SPLIT_PASS"
+        and trigger_policy["summary"].get("status") == "TRIGGER_POLICY_ENFORCED"
+        and sla["summary"].get("status") == "SLA_PASS"
+        and a2["report"]["summary"].get("A2_REAL_REPLAY_VERIFIED_count", 0) >= 30
+    )
 
 
 def _completion_labels_v3(
@@ -643,7 +843,7 @@ def _completion_labels_v3(
         labels.append("PRODUCTION_READY")
     if minimum:
         labels.append("READY_FOR_CENSUS_DESIGN")
-    if cutover_ready:
+    if cutover_ready and claim_audit["summary"].get("llm_extractor_success_count", 0) > 0:
         labels.append("READY_FOR_CENSUS_IMPLEMENTATION")
     return labels
 
@@ -674,20 +874,26 @@ def _readiness_verdict_v3(*, labels: Sequence[str], static: Mapping[str, Any]) -
     return {"production_verdict": verdict, "production_ready": verdict == "PRODUCTION_READY", "blockers": blockers, "markdown": markdown}
 
 
-def _census_readiness_v3(*, stage_distribution: Mapping[str, Any], provider_matrix: Mapping[str, Any]) -> Mapping[str, Any]:
-    cutover_ready = (
-        stage_distribution["summary"].get("status") == "MEANINGFUL_STAGE_SPLIT_PASS"
-        and provider_matrix["summary"].get("provider_blocker_count") == 0
-    )
-    label = "READY_FOR_CENSUS_IMPLEMENTATION" if cutover_ready else "READY_FOR_CENSUS_DESIGN"
+def _census_readiness_v3(
+    *,
+    cutover_ready: bool,
+    llm_extractor_success_count: int = 0,
+    stage_distribution: Mapping[str, Any],
+    provider_matrix: Mapping[str, Any],
+    multiday: Mapping[str, Any] | None = None,
+) -> Mapping[str, Any]:
+    implementation_allowed = cutover_ready and llm_extractor_success_count > 0
+    label = "READY_FOR_CENSUS_IMPLEMENTATION" if implementation_allowed else "READY_FOR_CENSUS_DESIGN"
     markdown = "\n".join(
         [
             "# Census Mode Readiness Report",
             "",
             f"- census_readiness_label: {label}",
             f"- production_cutover_ready: {cutover_ready}",
+            f"- llm_extractor_success_count: {llm_extractor_success_count}",
             f"- provider blocker count: {provider_matrix['summary'].get('provider_blocker_count')}",
             f"- meaningful stage split: {stage_distribution['summary'].get('status')}",
+            f"- multiday shadow: {(multiday or {'summary': {}})['summary'].get('status')}",
             "",
             "Census Mode 자체는 이번 Goal에서 구현하지 않았다.",
             "",
@@ -738,8 +944,11 @@ def _frozen_replay_rows_from_live(
     return rows
 
 
-def _write_v3_shadow_outputs(*, base: Mapping[str, Any], output_dir: Path) -> Mapping[str, str]:
+def _write_v3_shadow_outputs(
+    *, base: Mapping[str, Any], output_dir: Path, operator_rows: Sequence[Mapping[str, Any]]
+) -> Mapping[str, str]:
     artifacts = base["output_artifacts"]
+    operator_digest = {"schema_version": "production_cutover_v3_operator_digest_v1", "rows": list(operator_rows)}
     paths: dict[str, str] = {}
     json_outputs = {
         "candidate_events.json": artifacts["candidate_events"],
@@ -747,8 +956,8 @@ def _write_v3_shadow_outputs(*, base: Mapping[str, Any], output_dir: Path) -> Ma
         "source_task_executions.json": artifacts["source_task_executions"],
         "stagecourt_traces.json": artifacts["stagecourt_traces"],
         "daily_watchlist.json": artifacts["daily_watchlist"],
-        "operator_digest.json": base["operator_digest"],
-        "audit_summary.json": base["shadow_latest"],
+        "operator_digest.json": operator_digest,
+        "audit_summary.json": _v3_day_audit_summary(base),
     }
     for name, payload in json_outputs.items():
         path = output_dir / name
@@ -768,7 +977,7 @@ def _write_v3_shadow_outputs(*, base: Mapping[str, Any], output_dir: Path) -> Ma
         path = output_dir / name
         write_jsonl(path, rows)
         paths[str(path)] = str(path)
-    write_text(output_dir / "operator_digest.md", _operator_digest_summary_markdown(base["operator_digest"]))
+    write_text(output_dir / "operator_digest.md", _operator_digest_summary_markdown(operator_digest))
     paths[str(output_dir / "operator_digest.md")] = str(output_dir / "operator_digest.md")
     return paths
 

@@ -1,0 +1,21 @@
+{
+  "schema_version": "production_cutover_v3_claim_extractor_provider_audit_v1",
+  "summary": {
+    "accepted_claim_from_llm_count": 0,
+    "accepted_claim_from_rule_count": 100,
+    "contract_visible_to_raw_extractor_count": 0,
+    "forced_current_temporal_count": 0,
+    "forced_positive_polarity_count": 0,
+    "forced_target_subject_count": 0,
+    "llm_extractor_attempt_count": 0,
+    "llm_extractor_failure_count": 0,
+    "llm_extractor_success_count": 0,
+    "mention_only_count": 0,
+    "primitive_gap_visible_to_raw_extractor_count": 0,
+    "production_extraction_mode": "STRUCTURED_OFFICIAL_ONLY",
+    "rule_fallback_extractor_count": 100,
+    "rule_fallback_score_eligible_claim_count": 100,
+    "status": "CLAIM_EXTRACTOR_AUDIT_PASS",
+    "unstructured_text_rule_score_count": 0
+  }
+}

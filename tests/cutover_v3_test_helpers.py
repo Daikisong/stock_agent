@@ -41,9 +41,24 @@ def fake_v3_base(as_of_date: str = "2026-06-30", count: int = 20) -> Mapping[str
             "source_tasks": [],
             "source_task_executions": [],
             "stagecourt_traces": [],
-            "evidence_documents": [],
+            "evidence_documents": [
+                {"document_id": f"DOC-{idx}", "source_type": "API_RECORD", "content_hash": f"HASH-{idx}"}
+                for idx in range(count)
+            ],
             "evidence_anchors": [],
-            "evidence_claim_ledger": [{"claim_id": f"CLM-{idx}", "accepted": True} for idx in range(count)],
+            "evidence_claim_ledger": [
+                {
+                    "claim_id": f"CLM-{idx}",
+                    "document_id": f"DOC-{idx}",
+                    "anchor_id": f"ANCH-{idx}",
+                    "subject_entity_id": f"TICKER:{idx:06d}",
+                    "event_date": as_of_date,
+                    "primitive_id": "earnings_visibility",
+                    "value": "official structured disclosure",
+                    "accepted": True,
+                }
+                for idx in range(count)
+            ],
             "primitive_states": [],
             "score_contributions": [{"contribution_id": f"SC-{idx}"} for idx in range(count)],
         },

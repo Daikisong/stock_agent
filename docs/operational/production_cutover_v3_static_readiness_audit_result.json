@@ -1,0 +1,29 @@
+{
+  "schema_version": "production_cutover_v3_static_logic_audit_v1",
+  "summary": {
+    "accepted_claim_without_anchor_count": 0,
+    "accepted_claim_without_date_count": 0,
+    "all_stage1_but_ready_count": 0,
+    "census_implementation_before_cutover_ready_count": 0,
+    "critical_audit_pass": true,
+    "critical_count_sum": 0,
+    "cutover_ready_with_blockers_count": 0,
+    "cutover_ready_with_multiday_incomplete_count": 0,
+    "evidence_url_pending_to_fixture_count": 0,
+    "live_connector_alias_to_snapshot_count": 0,
+    "market_anomaly_to_score_count": 0,
+    "missing_report_hash_count": 0,
+    "news_snippet_to_score_count": 0,
+    "old_risk_without_current_open_to_score_count": 0,
+    "production_blockers": [],
+    "production_ready_with_blockers_count": 0,
+    "production_ready_with_provider_blocker_count": 0,
+    "provider_failed_final_score_count": 0,
+    "report_head_sha_mismatch_count": 0,
+    "rule_fallback_unstructured_text_score_count": 0,
+    "score_without_claim_count": 0,
+    "source_proxy_to_A2_count": 0,
+    "source_proxy_to_score_count": 0,
+    "unbounded_fetch_config_count": 0
+  }
+}

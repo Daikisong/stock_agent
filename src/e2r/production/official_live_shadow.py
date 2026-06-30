@@ -1031,8 +1031,23 @@ def _stage_trace(
     contributions: Sequence[Mapping[str, Any]],
 ) -> Mapping[str, Any]:
     score = float(score_snapshot["total_score"]) if score_snapshot else None
-    status = "FINAL_WITH_NONMATERIAL_GAPS" if score is not None and score < 10.0 else "PENDING_MATERIAL_GAPS"
-    stage = "1" if score is not None and score > 0.0 else "0"
+    material_watch = _has_material_watch_primitive(contributions)
+    if score is None:
+        status = "PENDING_MATERIAL_GAPS"
+        stage = "0"
+        reason = "no accepted claim-backed score; keep pending"
+    elif material_watch:
+        status = "PENDING_MATERIAL_GAPS"
+        stage = "2"
+        reason = "direct official material claim creates Stage2-Watch; Yellow/Green still require multi-source cash/revision bridge"
+    elif score > 0.0:
+        status = "FINAL_WITH_NONMATERIAL_GAPS"
+        stage = "1"
+        reason = "low claim-backed official disclosure score; no Stage2 material bridge"
+    else:
+        status = "PENDING_MATERIAL_GAPS"
+        stage = "0"
+        reason = "zero score; no current catalyst"
     return {
         "candidate_event_id": event["candidate_event_id"],
         "score_interval": {"lower": score, "upper": score},
@@ -1043,7 +1058,7 @@ def _stage_trace(
         "hard_break_status": "NONE",
         "score_contribution_ids": [row["contribution_id"] for row in contributions],
         "accepted_claim_ids": list(accepted_claim_ids),
-        "stage_decision_reason": "low claim-backed official disclosure score; no Green/Yellow bridge",
+        "stage_decision_reason": reason,
     }
 
 
@@ -1136,6 +1151,11 @@ def _operator_section_for_watch(watch: Mapping[str, Any]) -> str:
     if stage == "4B":
         return "4B-watch"
     return "Runtime Budget Pending"
+
+
+def _has_material_watch_primitive(contributions: Sequence[Mapping[str, Any]]) -> bool:
+    material_components = {"earnings_visibility", "bottleneck_pricing"}
+    return any(str(row.get("component_key") or "") in material_components for row in contributions)
 
 
 def _primitive_for_event_type(event_type: str) -> str:

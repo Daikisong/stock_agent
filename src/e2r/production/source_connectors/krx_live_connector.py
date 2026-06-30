@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import time
 from datetime import date, datetime
+from functools import lru_cache
 from pathlib import Path
 
 import requests
@@ -38,12 +39,7 @@ class KRXLiveConnector:
             )
         started = time.monotonic()
         try:
-            response = requests.get(_KRX_MDC_URL, headers={"User-Agent": "Mozilla/5.0 E2R-Cutover/3.0"}, timeout=15)
-            response.raise_for_status()
-            text = response.text
-            if len(text.strip()) < 1000:
-                raise RuntimeError("KRX response body too small to anchor provider fetch")
-            content_hash = hashlib.sha256(response.content).hexdigest()
+            text, content_hash = _fetch_krx_mdc_main()
             return SourceFetchResult(
                 provider_name=self.provider_name,
                 source_class=self.source_class,
@@ -84,6 +80,20 @@ class KRXLiveConnector:
 
 def _utc_now() -> str:
     return datetime.utcnow().isoformat(timespec="seconds") + "Z"
+
+
+@lru_cache(maxsize=1)
+def _fetch_krx_mdc_main() -> tuple[str, str]:
+    response = requests.get(
+        _KRX_MDC_URL,
+        headers={"User-Agent": "Mozilla/5.0 E2R-Cutover/3.0"},
+        timeout=(3.05, 10),
+    )
+    response.raise_for_status()
+    text = response.text
+    if len(text.strip()) < 1000:
+        raise RuntimeError("KRX response body too small to anchor provider fetch")
+    return text, hashlib.sha256(response.content).hexdigest()
 
 
 __all__ = ["KRXLiveConnector"]

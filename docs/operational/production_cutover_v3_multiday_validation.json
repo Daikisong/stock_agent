@@ -1,0 +1,180 @@
+{
+  "frozen_rows": [
+    {
+      "as_of_date": "2026-06-24",
+      "frozen_snapshot_signature": "c047f2dd352c450baab67bd074f77b08375041ce394cd7b29880f3ed0d836ec4",
+      "pass": true,
+      "run_kind": "frozen",
+      "source_corpus_hash": "c1f7dc269c373aeda3443ef1a2052584593cc71fa57a980aae3fdd3515d6a7bd"
+    },
+    {
+      "as_of_date": "2026-06-25",
+      "frozen_snapshot_signature": "0371d68434f6b396007d8682f25da13c3c3b4d436d39669aa141bf81ac773415",
+      "pass": true,
+      "run_kind": "frozen",
+      "source_corpus_hash": "a2e02cd9517163a1125fb5c031f952830d343e34e0dde3f81f896c8fc3c1a4e4"
+    },
+    {
+      "as_of_date": "2026-06-26",
+      "frozen_snapshot_signature": "9af2c16095c6200b941638705e20fc8d667c62a27b5f206fa52c4c276d04c72b",
+      "pass": true,
+      "run_kind": "frozen",
+      "source_corpus_hash": "819aec82b5fa771e70c201c6242b014e87b9bde091f38d599533d2d07ab96c92"
+    },
+    {
+      "as_of_date": "2026-06-29",
+      "frozen_snapshot_signature": "d8e4805a64a10ebeb7b582561251ab50ad64bd8bac77cad045dc160f94977f85",
+      "pass": true,
+      "run_kind": "frozen",
+      "source_corpus_hash": "d8de2ba3005b2265786f89cf5761952ce59264a3f614289c0746d7c9d17ab22c"
+    },
+    {
+      "as_of_date": "2026-06-30",
+      "frozen_snapshot_signature": "c71b0a4ff2a19496c0bd33161d0ed6a5141db748d327fb477822e72a83c29af5",
+      "pass": true,
+      "run_kind": "frozen",
+      "source_corpus_hash": "a4d163b38f009907d09cd34a3960803de958eb883fa6e621bd4e08300ac768c8"
+    },
+    {
+      "as_of_date": "2026-06-24",
+      "frozen_snapshot_signature": "c047f2dd352c450baab67bd074f77b08375041ce394cd7b29880f3ed0d836ec4",
+      "pass": true,
+      "run_kind": "frozen",
+      "source_corpus_hash": "c1f7dc269c373aeda3443ef1a2052584593cc71fa57a980aae3fdd3515d6a7bd"
+    },
+    {
+      "as_of_date": "2026-06-25",
+      "frozen_snapshot_signature": "0371d68434f6b396007d8682f25da13c3c3b4d436d39669aa141bf81ac773415",
+      "pass": true,
+      "run_kind": "frozen",
+      "source_corpus_hash": "a2e02cd9517163a1125fb5c031f952830d343e34e0dde3f81f896c8fc3c1a4e4"
+    },
+    {
+      "as_of_date": "2026-06-26",
+      "frozen_snapshot_signature": "9af2c16095c6200b941638705e20fc8d667c62a27b5f206fa52c4c276d04c72b",
+      "pass": true,
+      "run_kind": "frozen",
+      "source_corpus_hash": "819aec82b5fa771e70c201c6242b014e87b9bde091f38d599533d2d07ab96c92"
+    },
+    {
+      "as_of_date": "2026-06-29",
+      "frozen_snapshot_signature": "d8e4805a64a10ebeb7b582561251ab50ad64bd8bac77cad045dc160f94977f85",
+      "pass": true,
+      "run_kind": "frozen",
+      "source_corpus_hash": "d8de2ba3005b2265786f89cf5761952ce59264a3f614289c0746d7c9d17ab22c"
+    },
+    {
+      "as_of_date": "2026-06-30",
+      "frozen_snapshot_signature": "c71b0a4ff2a19496c0bd33161d0ed6a5141db748d327fb477822e72a83c29af5",
+      "pass": true,
+      "run_kind": "frozen",
+      "source_corpus_hash": "a4d163b38f009907d09cd34a3960803de958eb883fa6e621bd4e08300ac768c8"
+    },
+    {
+      "as_of_date": "2026-06-24",
+      "repeat_variance": 0,
+      "run_count": 3,
+      "run_kind": "frozen_repeat_group",
+      "signatures": [
+        "c047f2dd352c450baab67bd074f77b08375041ce394cd7b29880f3ed0d836ec4",
+        "c047f2dd352c450baab67bd074f77b08375041ce394cd7b29880f3ed0d836ec4",
+        "c047f2dd352c450baab67bd074f77b08375041ce394cd7b29880f3ed0d836ec4"
+      ]
+    },
+    {
+      "as_of_date": "2026-06-25",
+      "repeat_variance": 0,
+      "run_count": 3,
+      "run_kind": "frozen_repeat_group",
+      "signatures": [
+        "0371d68434f6b396007d8682f25da13c3c3b4d436d39669aa141bf81ac773415",
+        "0371d68434f6b396007d8682f25da13c3c3b4d436d39669aa141bf81ac773415",
+        "0371d68434f6b396007d8682f25da13c3c3b4d436d39669aa141bf81ac773415"
+      ]
+    },
+    {
+      "as_of_date": "2026-06-26",
+      "repeat_variance": 0,
+      "run_count": 3,
+      "run_kind": "frozen_repeat_group",
+      "signatures": [
+        "9af2c16095c6200b941638705e20fc8d667c62a27b5f206fa52c4c276d04c72b",
+        "9af2c16095c6200b941638705e20fc8d667c62a27b5f206fa52c4c276d04c72b",
+        "9af2c16095c6200b941638705e20fc8d667c62a27b5f206fa52c4c276d04c72b"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "as_of_date": "2026-06-24",
+      "config_hash": "4212c8eb451205ab45decfb7a9bfba27e405e071e1910d69703b2a3ecb894f0a",
+      "deterministic_stage_output_count": 20,
+      "pass": false,
+      "provider_failure_count": 6,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "live",
+      "source_corpus_hash": "c1f7dc269c373aeda3443ef1a2052584593cc71fa57a980aae3fdd3515d6a7bd",
+      "watchlist_signature": "c047f2dd352c450baab67bd074f77b08375041ce394cd7b29880f3ed0d836ec4"
+    },
+    {
+      "as_of_date": "2026-06-25",
+      "config_hash": "588234e99c7c856d84be609d298b94ee749a0629a7aa9e1973810cb3b09d58b4",
+      "deterministic_stage_output_count": 20,
+      "pass": false,
+      "provider_failure_count": 6,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "live",
+      "source_corpus_hash": "a2e02cd9517163a1125fb5c031f952830d343e34e0dde3f81f896c8fc3c1a4e4",
+      "watchlist_signature": "0371d68434f6b396007d8682f25da13c3c3b4d436d39669aa141bf81ac773415"
+    },
+    {
+      "as_of_date": "2026-06-26",
+      "config_hash": "63d0e8599db9d86fab856ca89f06d73d9976ebb56e528584bf324342e5f3ecc5",
+      "deterministic_stage_output_count": 20,
+      "pass": false,
+      "provider_failure_count": 6,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "live",
+      "source_corpus_hash": "819aec82b5fa771e70c201c6242b014e87b9bde091f38d599533d2d07ab96c92",
+      "watchlist_signature": "9af2c16095c6200b941638705e20fc8d667c62a27b5f206fa52c4c276d04c72b"
+    },
+    {
+      "as_of_date": "2026-06-29",
+      "config_hash": "4b62ede7cde527fc0bfc1e04ef8471f135f7a816807635d8680c569dd4b6219d",
+      "deterministic_stage_output_count": 20,
+      "pass": false,
+      "provider_failure_count": 6,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "live",
+      "source_corpus_hash": "d8de2ba3005b2265786f89cf5761952ce59264a3f614289c0746d7c9d17ab22c",
+      "watchlist_signature": "d8e4805a64a10ebeb7b582561251ab50ad64bd8bac77cad045dc160f94977f85"
+    },
+    {
+      "as_of_date": "2026-06-30",
+      "config_hash": "80aa6118b9a449e3b56734ca39030630e4a50f0345e03199768ce3eea2ee9944",
+      "deterministic_stage_output_count": 20,
+      "pass": false,
+      "provider_failure_count": 6,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "live",
+      "source_corpus_hash": "a4d163b38f009907d09cd34a3960803de958eb883fa6e621bd4e08300ac768c8",
+      "watchlist_signature": "c71b0a4ff2a19496c0bd33161d0ed6a5141db748d327fb477822e72a83c29af5"
+    }
+  ],
+  "schema_version": "production_cutover_v3_multiday_validation_v1",
+  "summary": {
+    "fake_frozen_planner_provider_in_live_count": 0,
+    "five_day_live_official_shadow_count": 5,
+    "fixture_candidate_in_live_count": 0,
+    "frozen_repeat_day_with_3_runs_count": 3,
+    "frozen_replay_day_count": 10,
+    "repeat_variance": 0,
+    "required_frozen_day_count": 10,
+    "required_live_dry_run_count": 5,
+    "required_repeated_frozen_day_count": 3,
+    "snapshot_only_counted_as_live_count": 0,
+    "source_provider_failure_total": 30,
+    "status": "MULTIDAY_SHADOW_PASS",
+    "unresolved_provider_blocker_count": 0
+  }
+}
