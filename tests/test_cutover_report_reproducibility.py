@@ -65,6 +65,19 @@ class CutoverReportReproducibilityTests(unittest.TestCase):
                 "report_artifact_child",
             )
 
+            (report_dir / "production_cutover_test_summary.json").write_text(
+                json.dumps({"status": "PASS", "passed": 1}, indent=2),
+                encoding="utf-8",
+            )
+            _git(repo, "add", "docs/operational/production_cutover_test_summary.json")
+            _git(repo, "commit", "-m", "more report artifacts")
+            descendant_audit = audit_report_reproducibility(report, repo_root=repo)
+            self.assertEqual(descendant_audit["summary"]["report_head_sha_mismatch_count"], 0)
+            self.assertEqual(
+                descendant_audit["metadata"]["report_head_alignment"]["mode"],
+                "report_artifact_descendant",
+            )
+
             (repo / "src" / "code.py").write_text("print('changed')\n", encoding="utf-8")
             _git(repo, "add", "src/code.py")
             _git(repo, "commit", "-m", "code change after report")

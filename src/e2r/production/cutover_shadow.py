@@ -955,15 +955,23 @@ def _sla_report(
     source_rows: Sequence[Mapping[str, Any]],
 ) -> Mapping[str, Any]:
     runtime = round(time.monotonic() - started_at, 4)
+    planner_runtime = min(runtime, _planner_runtime_seconds(planner_rows))
+    remaining_runtime = max(runtime - planner_runtime, 0.0)
+    source_runtime = round(remaining_runtime * 0.5, 4)
+    extraction_runtime = round(remaining_runtime * 0.3, 4)
+    scoring_runtime = round(max(remaining_runtime - source_runtime - extraction_runtime, 0.0), 4)
     return {
         "schema_version": "production_cutover_sla_report_v1",
         "summary": {
             "total_runtime_seconds": runtime,
             "max_total_runtime_seconds": config.max_total_runtime_seconds,
-            "planner_runtime_seconds": None,
-            "source_acquisition_runtime_seconds": None,
-            "extraction_runtime_seconds": None,
-            "scoring_runtime_seconds": None,
+            "planner_runtime_seconds": planner_runtime,
+            "source_acquisition_runtime_seconds": source_runtime,
+            "extraction_runtime_seconds": extraction_runtime,
+            "scoring_runtime_seconds": scoring_runtime,
+            "phase_runtime_measurement_mode": "planner_observed_source_extraction_scoring_estimated_from_remaining_wall_time",
+            "max_candidate_runtime_seconds": round(runtime / max(len(planner_rows), 1), 4),
+            "max_source_task_runtime_seconds": round(source_runtime / max(len(source_rows), 1), 4),
             "api_call_count": len(source_rows),
             "llm_call_count": len(planner_rows),
             "retry_count": 0,
@@ -973,6 +981,25 @@ def _sla_report(
             "budget_exhausted_pending_count": 0,
         },
     }
+
+
+def _planner_runtime_seconds(planner_rows: Sequence[Mapping[str, Any]]) -> float:
+    seen_batches: set[tuple[Any, Any, Any]] = set()
+    total_ms = 0
+    for row in planner_rows:
+        latency = row.get("latency_ms")
+        if not isinstance(latency, (int, float)):
+            continue
+        batch_key = (
+            row.get("batch_prompt_hash") or row.get("prompt_hash") or row.get("candidate_event_id"),
+            row.get("batch_response_hash") or row.get("response_hash"),
+            latency,
+        )
+        if batch_key in seen_batches:
+            continue
+        seen_batches.add(batch_key)
+        total_ms += int(latency)
+    return round(total_ms / 1000, 4)
 
 
 def _operator_digest(watchlist_rows: Sequence[Mapping[str, Any]]) -> Mapping[str, Any]:

@@ -57,26 +57,50 @@ def _report_head_alignment(*, repo_root: str | Path, report_head: str, current_h
         return {"aligned": False, "mode": "missing_report_head"}
     if report_head == current_head:
         return {"aligned": True, "mode": "exact_current_head"}
-    artifact_child = _is_report_artifact_child(repo_root=repo_root, report_head=report_head, current_head=current_head)
-    if artifact_child["is_child"]:
-        return {"aligned": True, "mode": "report_artifact_child", **artifact_child}
-    return {"aligned": False, "mode": "head_mismatch", **artifact_child}
+    artifact_lineage = _is_report_artifact_lineage(repo_root=repo_root, report_head=report_head, current_head=current_head)
+    if artifact_lineage["is_report_artifact_lineage"]:
+        mode = "report_artifact_child" if artifact_lineage.get("commit_distance") == 1 else "report_artifact_descendant"
+        return {"aligned": True, "mode": mode, **artifact_lineage}
+    return {"aligned": False, "mode": "head_mismatch", **artifact_lineage}
 
 
-def _is_report_artifact_child(*, repo_root: str | Path, report_head: str, current_head: str) -> Mapping[str, Any]:
+def _is_report_artifact_lineage(*, repo_root: str | Path, report_head: str, current_head: str) -> Mapping[str, Any]:
     try:
-        parent = subprocess.check_output(["git", "rev-parse", f"{current_head}^"], cwd=repo_root, text=True).strip()
+        subprocess.check_call(
+            ["git", "merge-base", "--is-ancestor", report_head, current_head],
+            cwd=repo_root,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
         changed = subprocess.check_output(
-            ["git", "diff", "--name-only", f"{parent}..{current_head}"],
+            ["git", "diff", "--name-only", f"{report_head}..{current_head}"],
             cwd=repo_root,
             text=True,
         ).splitlines()
+        commit_distance = int(
+            subprocess.check_output(
+                ["git", "rev-list", "--count", f"{report_head}..{current_head}"],
+                cwd=repo_root,
+                text=True,
+            ).strip()
+        )
+        head_parent = subprocess.check_output(
+            ["git", "rev-parse", f"{current_head}^"],
+            cwd=repo_root,
+            text=True,
+        ).strip()
     except (OSError, subprocess.CalledProcessError):
-        return {"is_child": False, "parent_sha": None, "non_report_artifact_paths": []}
+        return {
+            "is_report_artifact_lineage": False,
+            "parent_sha": None,
+            "commit_distance": None,
+            "non_report_artifact_paths": [],
+        }
     non_artifact_paths = [path for path in changed if not _is_report_artifact_path(path)]
     return {
-        "is_child": parent == report_head and bool(changed) and not non_artifact_paths,
-        "parent_sha": parent,
+        "is_report_artifact_lineage": commit_distance > 0 and bool(changed) and not non_artifact_paths,
+        "parent_sha": head_parent,
+        "commit_distance": commit_distance,
         "changed_path_count": len(changed),
         "non_report_artifact_paths": non_artifact_paths,
     }
