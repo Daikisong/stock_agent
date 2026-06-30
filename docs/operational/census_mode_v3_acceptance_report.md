@@ -1,7 +1,7 @@
 # Census Mode v3 Acceptance Report
 
 1. Final status: IMPLEMENTATION_MERGED, CENSUS_V1_V2_RECLASSIFIED, BASELINE_SOURCE_WIRED_PASS, SOURCE_TIMELINE_PASS, LAST_EFFECTIVE_THESIS_PASS, CLAIM_TO_STAGE_TRACE_PASS, CENSUS_LIGHT_PASS, CENSUS_SELECTIVE_DEEP_PASS, FULL_UNIVERSE_STAGE_MAP_PASS, WATCHLIST_SEED_PASS, SELF_REPAIR_LOOP_PASS, INDEPENDENT_REVIEWER_PASS, READY_FOR_DAILY_TRIGGER_INTEGRATION, READY_FOR_DEEP_BACKFILL_DESIGN
-2. Commit SHA / message / push status / working tree: report_generation_sha=8f5bc589e6011e558c50414ff25e868669fe5a85; push_status=pending_final_commit_and_push
+2. Commit SHA / message / push status / working tree: implementation_commit_sha=c5bc76a; message="Census v3 전체지도 leaf audit 구현"; push_status=pushed_to_main; working_tree_clean_after_push=true
 3. Test command and pass/fail/skip: PYTHONPATH=src python -m unittest discover -s tests -v
    Test result: 4834 tests passed in 107.137s; skipped 0 Census v3 tests
 4. Self-repair iteration count: 1
