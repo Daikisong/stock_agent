@@ -1,0 +1,8 @@
+{
+  "schema_version": "e2r_census_v3_source_gap_report_v1",
+  "source_gap_count": 19,
+  "source_gap_counts": {
+    "market_anomaly_requires_source_claim": 3,
+    "report_event_without_accepted_claim": 16
+  }
+}

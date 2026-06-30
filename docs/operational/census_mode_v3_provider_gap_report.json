@@ -1,0 +1,9 @@
+{
+  "blocking_provider_gap_count": 0,
+  "nonblocking_optional_provider_gap_count": 3391,
+  "provider_gap_counts": {
+    "issuer_ir_trusted_news_optional_provider_not_configured": 3391
+  },
+  "provider_pending_count": 0,
+  "schema_version": "e2r_census_v3_provider_gap_report_v1"
+}

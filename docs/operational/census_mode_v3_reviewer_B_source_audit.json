@@ -1,0 +1,27 @@
+{
+  "critical_count": 0,
+  "critical_counts": {
+    "evidence_url_pending_to_score_count": 0,
+    "market_anomaly_to_score_count": 0,
+    "news_snippet_to_score_count": 0,
+    "price_path_only_to_score_count": 0,
+    "source_proxy_to_score_count": 0,
+    "source_task_execution_total_zero_count": 0,
+    "source_task_fake_execution_count": 0,
+    "source_task_total_zero_count": 0,
+    "source_task_with_accepted_claim_zero_count": 0
+  },
+  "leaf_artifact_root": "output/census_v3/2026-07-01",
+  "leaf_artifacts_checked": [
+    "census_stage_status.jsonl",
+    "claim_to_stage_trace.jsonl",
+    "accepted_claims.jsonl",
+    "score_contributions.jsonl",
+    "source_tasks.jsonl",
+    "source_task_executions.jsonl",
+    "stagecourt_traces.jsonl"
+  ],
+  "reviewer": "B_SOURCE",
+  "schema_version": "e2r_census_v3_independent_reviewer_v1",
+  "verdict": "PASS"
+}

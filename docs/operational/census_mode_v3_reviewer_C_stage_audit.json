@@ -1,0 +1,28 @@
+{
+  "critical_count": 0,
+  "critical_counts": {
+    "all_provider_pending_count": 0,
+    "all_stage0_without_source_proof_count": 0,
+    "all_unknown_count": 0,
+    "no_current_catalyst_without_timeline_count": 0,
+    "provider_failed_final_score_count": 0,
+    "provider_pending_over_30pct_count": 0,
+    "recent_lookback_used_as_stage_cutoff_count": 0,
+    "single_stage_bucket_count": 0,
+    "single_status_bucket_count": 0,
+    "unknown_over_5pct_count": 0
+  },
+  "leaf_artifact_root": "output/census_v3/2026-07-01",
+  "leaf_artifacts_checked": [
+    "census_stage_status.jsonl",
+    "claim_to_stage_trace.jsonl",
+    "accepted_claims.jsonl",
+    "score_contributions.jsonl",
+    "source_tasks.jsonl",
+    "source_task_executions.jsonl",
+    "stagecourt_traces.jsonl"
+  ],
+  "reviewer": "C_STAGE",
+  "schema_version": "e2r_census_v3_independent_reviewer_v1",
+  "verdict": "PASS"
+}

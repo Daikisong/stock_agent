@@ -1,4 +1,4 @@
-"""Collect real baseline inputs for Census v2.
+"""Collect real baseline inputs for Census v2/v3.
 
 This module is the bridge that was missing in v1. It reads existing local
 source-backed artifacts and turns them into Census inputs, while keeping
@@ -50,6 +50,30 @@ class CensusBaselineBundle:
     summary: Mapping[str, Any] = field(default_factory=dict)
 
 
+@dataclass(frozen=True)
+class CensusBaselineInputCollector:
+    """Small object wrapper used by newer Census runners and tests."""
+
+    repo_root: str | Path = "."
+    provider_matrix_path: str | Path = DEFAULT_PROVIDER_MATRIX
+    candidate_event_report_path: str | Path = DEFAULT_CANDIDATE_EVENT_REPORT
+    report_snapshots_path: str | Path = DEFAULT_REPORT_SNAPSHOTS
+    search_snapshots_path: str | Path = DEFAULT_SEARCH_SNAPSHOTS
+    price_file_path: str | Path = DEFAULT_PRICE_FILE
+
+    def collect(self, *, instruments: Sequence[UniverseInstrument], as_of_date: str) -> CensusBaselineBundle:
+        return collect_baseline_bundle(
+            instruments=instruments,
+            as_of_date=as_of_date,
+            repo_root=self.repo_root,
+            provider_matrix_path=self.provider_matrix_path,
+            candidate_event_report_path=self.candidate_event_report_path,
+            report_snapshots_path=self.report_snapshots_path,
+            search_snapshots_path=self.search_snapshots_path,
+            price_file_path=self.price_file_path,
+        )
+
+
 def collect_baseline_bundle(
     *,
     instruments: Sequence[UniverseInstrument],
@@ -87,19 +111,60 @@ def collect_baseline_bundle(
     companyguide_events = _event_counts(candidate_events_by_symbol, "CompanyGuide")
     report_radar_events = _event_counts(candidate_events_by_symbol, "ReportRadar")
     issuer_ir_events = _event_counts(candidate_events_by_symbol, "IR")
+    trusted_news_events_by_symbol = {
+        symbol: tuple(row for row in rows if row.get("source_family") == "TrustedNews")
+        for symbol, rows in report_events_by_symbol.items()
+        if any(row.get("source_family") == "TrustedNews" for row in rows)
+    }
+    latest_report_by_symbol = {
+        symbol: sorted(rows, key=lambda row: str(row.get("published_at") or row.get("as_of_date") or ""))[-1]
+        for symbol, rows in report_events_by_symbol.items()
+        if rows
+    }
+    latest_disclosure_by_symbol = {
+        symbol: rows[-1]
+        for symbol, rows in candidate_events_by_symbol.items()
+        if rows
+    }
     for symbol, rows in report_events_by_symbol.items():
         report_radar_events[symbol] = report_radar_events.get(symbol, 0) + len(rows)
     source_gaps = _source_gaps_from_candidate_events(candidate_events_by_symbol, ledger.accepted_claims_by_symbol)
     inputs = BaselineScanInputs(
         provider_failed_symbols=provider_failed,
+        provider_failure_by_symbol=provider_failed,
         price_anomaly_symbols={symbol: len(rows) for symbol, rows in price_events_by_symbol.items()},
+        price_anomaly_by_symbol=price_events_by_symbol,
         recent_official_events=recent_official,
+        historical_official_events=recent_official,
+        latest_regular_report_by_symbol=latest_report_by_symbol,
+        latest_material_disclosure_by_symbol=latest_disclosure_by_symbol,
+        last_material_official_event_by_symbol=latest_disclosure_by_symbol,
+        risk_events_by_symbol={
+            symbol: tuple(row for row in rows if "risk" in str(row.get("event_type") or "").lower())
+            for symbol, rows in candidate_events_by_symbol.items()
+        },
         existing_claim_counts={symbol: len(rows) for symbol, rows in ledger.accepted_claims_by_symbol.items()},
         existing_stage=ledger.existing_stage_by_symbol,
         companyguide_revision_events=companyguide_events,
+        companyguide_revision_events_by_symbol={
+            symbol: tuple(row for row in rows if row.get("source_family") == "CompanyGuide")
+            for symbol, rows in candidate_events_by_symbol.items()
+        },
         report_radar_events=report_radar_events,
+        report_radar_events_by_symbol=report_events_by_symbol,
         issuer_ir_events=issuer_ir_events,
+        issuer_ir_events_by_symbol={
+            symbol: tuple(row for row in rows if row.get("source_family") == "IR")
+            for symbol, rows in candidate_events_by_symbol.items()
+        },
+        trusted_news_events={symbol: len(rows) for symbol, rows in trusted_news_events_by_symbol.items()},
+        trusted_news_events_by_symbol=trusted_news_events_by_symbol,
+        market_anomaly_events_by_symbol=price_events_by_symbol,
         existing_claim_refs={symbol: tuple(row["claim_id"] for row in rows) for symbol, rows in ledger.accepted_claims_by_symbol.items()},
+        existing_claim_refs_by_symbol={symbol: tuple(row["claim_id"] for row in rows) for symbol, rows in ledger.accepted_claims_by_symbol.items()},
+        previous_watchlist_state={},
+        last_effective_thesis_by_symbol={},
+        research_memory_hints_by_symbol={symbol: () for symbol in eligible},
         source_gap_by_symbol=source_gaps,
         no_data_reason_by_symbol={symbol: "no_current_catalyst_after_baseline_sources" for symbol in eligible if symbol not in _symbols_with_any_input(ledger, candidate_events_by_symbol, report_events_by_symbol, price_events_by_symbol)},
     )
@@ -422,6 +487,7 @@ def _float(value: Any) -> float:
 
 __all__ = [
     "CensusBaselineBundle",
+    "CensusBaselineInputCollector",
     "DEFAULT_CANDIDATE_EVENT_REPORT",
     "DEFAULT_PRICE_FILE",
     "DEFAULT_PROVIDER_MATRIX",
