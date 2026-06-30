@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shlex
 from datetime import date
 from pathlib import Path
 
@@ -50,9 +51,8 @@ def main(argv: list[str] | None = None) -> int:
         llm_extractor_document_limit=args.llm_extractor_document_limit,
         final_cutover_approved=str(args.final_cutover_approved).lower() == "true",
     )
-    command = " ".join(
+    command = "PYTHONPATH=src " + shlex.join(
         [
-            "PYTHONPATH=src",
             "python",
             "-m",
             "e2r.cli.run_e2r_production_cutover_v3",
@@ -64,8 +64,30 @@ def main(argv: list[str] | None = None) -> int:
             str(args.candidate_min_count),
             "--live-shadow-days",
             str(args.live_shadow_days),
+            "--frozen-replay-days",
+            str(args.frozen_replay_days),
+            "--repeated-frozen-days",
+            str(args.repeated_frozen_days),
             "--output-root",
             args.output_root,
+            "--validation-output-root",
+            validation_root,
+            "--docs-dir",
+            args.docs_dir,
+            "--repo-root",
+            args.repo_root,
+            "--fetch-a2-live",
+            str(args.fetch_a2_live),
+            "--run-llm-extractor",
+            str(args.run_llm_extractor),
+            "--a2-fetch-limit-per-arch",
+            str(args.a2_fetch_limit_per_arch),
+            "--llm-extractor-document-limit",
+            str(args.llm_extractor_document_limit),
+            "--final-cutover-approved",
+            str(args.final_cutover_approved),
+            "--fail-on-critical-audit",
+            str(args.fail_on_critical_audit),
         ]
     )
     bundle = build_production_cutover_v3_bundle(repo_root=args.repo_root, config=config, command=command)
