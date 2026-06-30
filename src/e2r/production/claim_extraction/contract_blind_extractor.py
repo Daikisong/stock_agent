@@ -120,13 +120,11 @@ def _polarity_for_sentence(sentence: str) -> str:
 
 def _predicate_for_sentence(sentence: str) -> str:
     lower = sentence.lower()
-    if "opendart" in lower and ("접수번호" in sentence or "disclosure" in lower or "공시" in sentence):
-        return "official_document_fact"
     if any(token in lower for token in ("계약", "수주", "supply agreement", "order")):
         return "contract_or_order_claim"
     if any(token in lower for token in ("유상증자", "자기주식", "배당", "증권발행")):
         return "capital_event_claim"
-    if any(token in lower for token in ("신규시설투자", "시설투자", "투자판단", "설비투자")):
+    if any(token in lower for token in ("신규시설투자", "시설투자", "설비투자")):
         return "capacity_investment_claim"
     if any(token in lower for token in ("eps", "목표주가", "상향", "컨센서스", "revision")):
         return "revision_claim"
@@ -134,6 +132,8 @@ def _predicate_for_sentence(sentence: str) -> str:
         return "audit_or_accounting_claim"
     if any(token in lower for token in ("영업이익", "fcf", "현금흐름", "마진", "margin")):
         return "profitability_or_cash_claim"
+    if "opendart" in lower and ("접수번호" in sentence or "disclosure" in lower or "공시" in sentence):
+        return "official_document_fact"
     return "mention_only"
 
 

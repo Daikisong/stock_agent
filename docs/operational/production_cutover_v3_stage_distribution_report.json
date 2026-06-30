@@ -1,22 +1,27 @@
 {
   "live_section_counts": {
-    "Stage1-Watch": 100
+    "Reject/Red": 1,
+    "Stage1-Watch": 54,
+    "Stage2-Watch": 45
   },
   "rows": [
     {
       "accepted_claims": [
-        "CLM-39e96e4787c2861f59a4"
+        "CLM-c432488c3492ebd766ae"
       ],
       "candidate_event_id": "CE-LIVE-DART-396470-20260624900961",
       "company_name": "워트",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -24,11 +29,13 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-1d6a3ffb154877da909e"
+        "SCON-39d1d7f72716ea50231a"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "396470",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "워트(396470) OpenDART disclosure: 단일판매ㆍ공급계약체결(자율공시)"
     },
     {
@@ -37,14 +44,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-452260-20260624800968",
       "company_name": "한화갤러리아",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -57,22 +67,27 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "452260",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.0,
       "why_triggered": "한화갤러리아(452260) OpenDART disclosure: 투자판단관련주요경영사항"
     },
     {
       "accepted_claims": [
-        "CLM-81c7e1506f765553eae1"
+        "CLM-a67ddd0454a4af3aab5d"
       ],
       "candidate_event_id": "CE-LIVE-DART-473980-20260624000491",
       "company_name": "노머스",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -80,27 +95,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-0fa686a5866a2568f455"
+        "SCON-d9296498b08e4bd4d2c1"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "473980",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "노머스(473980) OpenDART disclosure: 주요사항보고서(자기주식취득신탁계약체결결정)"
     },
     {
       "accepted_claims": [
-        "CLM-d0394fdde21aa182b982"
+        "CLM-628fb78f097a29a65007"
       ],
       "candidate_event_id": "CE-LIVE-DART-052710-20260624900954",
       "company_name": "아모텍",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -108,27 +128,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-d7e6a3127475a8f2d5d1"
+        "SCON-1a13e05f48c515ba76af"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "052710",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "아모텍(052710) OpenDART disclosure: 권리락 (유상증자)"
     },
     {
       "accepted_claims": [
-        "CLM-f0eae309d103e4cd1b0f"
+        "CLM-b08de89c5b516486e5c4"
       ],
       "candidate_event_id": "CE-LIVE-DART-375500-20260624800895",
       "company_name": "DL이앤씨",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -136,27 +161,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-1534763ea0b22cab8690"
+        "SCON-8aaafe87d3a40fcad6a6"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "375500",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "DL이앤씨(375500) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-aa90d6cb313e3afa37e6"
+        "CLM-7083114e028a5adb2199"
       ],
       "candidate_event_id": "CE-LIVE-DART-052710-20260624900922",
       "company_name": "아모텍",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -164,27 +194,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-36130e6268cf23b1119a"
+        "SCON-11fd963f61d2304f660d"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "052710",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "아모텍(052710) OpenDART disclosure: 유상증자1차발행가액결정"
     },
     {
       "accepted_claims": [
-        "CLM-fba317712a6b54962cd6"
+        "CLM-7debf5fe6671ac4fe558"
       ],
       "candidate_event_id": "CE-LIVE-DART-065710-20260624900828",
       "company_name": "서호전기",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -192,27 +227,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-19539de89b266b5b121b"
+        "SCON-d46b50b81ad1ea289955"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "065710",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "서호전기(065710) OpenDART disclosure: 단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-b2779a2c189e014326b0"
+        "CLM-732f0c8065b0b81d6d62"
       ],
       "candidate_event_id": "CE-LIVE-DART-007460-20260624800913",
       "company_name": "에이프로젠",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -220,27 +260,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-c5e7cfa6c8c0d4e254a3"
+        "SCON-9507ebd9b45b67181ec4"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "007460",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "에이프로젠(007460) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)(자회사의 주요경영사항) (제3자배정)"
     },
     {
       "accepted_claims": [
-        "CLM-8aa7fb5e257f683df859"
+        "CLM-f8680ba6f8d75137138f"
       ],
       "candidate_event_id": "CE-LIVE-DART-270520-20260624000434",
       "company_name": "앱튼",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -248,27 +293,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-47b806590ef33f97e9ae"
+        "SCON-3ea9a3d9c158444745e9"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "270520",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "앱튼(270520) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)"
     },
     {
       "accepted_claims": [
-        "CLM-255140992470f42b626b"
+        "CLM-69dfab856dbad8314972"
       ],
       "candidate_event_id": "CE-LIVE-DART-331920-20260624000431",
       "company_name": "셀레믹스",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -276,27 +326,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-3b4ba97eb5bb6cd6f138"
+        "SCON-38c02cee94ad2844c75b"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "331920",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "셀레믹스(331920) OpenDART disclosure: 주요사항보고서(유상증자결정)"
     },
     {
       "accepted_claims": [
-        "CLM-2fe0a9d1bb07a950a1ca"
+        "CLM-6ba91165d0438ac17c41"
       ],
       "candidate_event_id": "CE-LIVE-DART-215090-20260624900830",
       "company_name": "솔디펜스",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -304,27 +359,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-0905f7527cc06d9adb55"
+        "SCON-ca5f25e3f3b55eed12b6"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "215090",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "솔디펜스(215090) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-1926134dcde5dc592df2"
+        "CLM-2d76bb8b327062676a90"
       ],
       "candidate_event_id": "CE-LIVE-DART-402340-20260624800818",
       "company_name": "SK스퀘어",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -332,27 +392,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-4bb3ed67b772c0171632"
+        "SCON-4fc622252cc7b58f547d"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "402340",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "SK스퀘어(402340) OpenDART disclosure: 주요사항보고서(유상증자결정)(자회사의 주요경영사항)"
     },
     {
       "accepted_claims": [
-        "CLM-1b739c3ba0c15b95358d"
+        "CLM-ad1b2dc6c75182e702b8"
       ],
       "candidate_event_id": "CE-LIVE-DART-000660-20260624000420",
       "company_name": "SK하이닉스",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -360,27 +425,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-30065cc24ae184d50be1"
+        "SCON-0c3ba8d1d9f1f5b5e104"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "000660",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "SK하이닉스(000660) OpenDART disclosure: 주요사항보고서(유상증자결정)"
     },
     {
       "accepted_claims": [
-        "CLM-9e5704d64f174b9deba9"
+        "CLM-277d6023a853c5665709"
       ],
       "candidate_event_id": "CE-LIVE-DART-376980-20260624900815",
       "company_name": "원티드랩",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -388,11 +458,13 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-48708b979ba4c6ac7b15"
+        "SCON-466b19b28b02a6fe8fd3"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "376980",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "원티드랩(376980) OpenDART disclosure: 유동성공급계약의체결"
     },
     {
@@ -401,14 +473,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-080530-20260619900514",
       "company_name": "코디",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -421,6 +496,8 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "080530",
+      "trigger_category": "Information Trigger",
+      "verified_score": 4.0,
       "why_triggered": "코디(080530) OpenDART disclosure: [첨부추가]주식소각결정"
     },
     {
@@ -429,14 +506,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-026910-20260624901008",
       "company_name": "광진실업",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -449,6 +529,8 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "026910",
+      "trigger_category": "Information Trigger",
+      "verified_score": 4.0,
       "why_triggered": "광진실업(026910) OpenDART disclosure: 소속부변경"
     },
     {
@@ -457,14 +539,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-000660-20260624000511",
       "company_name": "SK하이닉스",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -477,6 +562,8 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "000660",
+      "trigger_category": "Information Trigger",
+      "verified_score": 4.0,
       "why_triggered": "SK하이닉스(000660) OpenDART disclosure: 증권신고서(지분증권)"
     },
     {
@@ -485,14 +572,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-005930-20260624801004",
       "company_name": "삼성전자",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -505,6 +595,8 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "005930",
+      "trigger_category": "Information Trigger",
+      "verified_score": 4.0,
       "why_triggered": "삼성전자(005930) OpenDART disclosure: 풍문또는보도에대한해명(미확정)"
     },
     {
@@ -513,14 +605,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-030350-20260624900997",
       "company_name": "드래곤플라이",
+      "current_stage": "3-Red",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -531,24 +626,29 @@
         "SCON-df107a71e1595976def7"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "section": "Reject/Red",
       "symbol": "030350",
+      "trigger_category": "Official Risk Trigger",
+      "verified_score": 4.0,
       "why_triggered": "드래곤플라이(030350) OpenDART disclosure: 주권매매거래정지기간변경 (개선기간 부여)"
     },
     {
       "accepted_claims": [
-        "CLM-ed22cc6514c1dd1e63d2"
+        "CLM-c919faec6af5dbacb01d"
       ],
       "candidate_event_id": "CE-LIVE-DART-043260-20260624900958",
       "company_name": "성호전자",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -556,11 +656,13 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-51bc14bc3f721700fd48"
+        "SCON-484a11777dddc7eec634"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "043260",
+      "trigger_category": "Information Trigger",
+      "verified_score": 4.4,
       "why_triggered": "성호전자(043260) OpenDART disclosure: 최대주주변경을수반하는주식담보제공계약체결"
     },
     {
@@ -569,14 +671,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-034730-20260625800908",
       "company_name": "SK",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -589,6 +694,8 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "034730",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.0,
       "why_triggered": "SK(034730) OpenDART disclosure: 투자판단관련주요경영사항(자회사의 주요경영사항)"
     },
     {
@@ -597,14 +704,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-017670-20260625800905",
       "company_name": "SK텔레콤",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -617,22 +727,27 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "017670",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.0,
       "why_triggered": "SK텔레콤(017670) OpenDART disclosure: 투자판단관련주요경영사항"
     },
     {
       "accepted_claims": [
-        "CLM-7eee4c754c66ec3ab78d"
+        "CLM-68296064ef69cfcced9a"
       ],
       "candidate_event_id": "CE-LIVE-DART-215570-20260625000623",
       "company_name": "크로넥스",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -640,27 +755,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-42535f1de650b631f08e"
+        "SCON-f40ce9c79144fefcb924"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "215570",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "크로넥스(215570) OpenDART disclosure: 주요사항보고서(유상증자결정)"
     },
     {
       "accepted_claims": [
-        "CLM-c4cb04954e20b668b7c1"
+        "CLM-d76a650404c2a97849c1"
       ],
       "candidate_event_id": "CE-LIVE-DART-010960-20260625800870",
       "company_name": "삼호개발",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -668,27 +788,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-b97ab5aa644f6d39cefb"
+        "SCON-e954d536cd39a72775d3"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "010960",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "삼호개발(010960) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-96314b4730dc11600afe"
+        "CLM-bfbb0f444e55d45462ec"
       ],
       "candidate_event_id": "CE-LIVE-DART-267850-20260625800851",
       "company_name": "아시아나IDT",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -696,27 +821,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-9efd7e4595e140f52010"
+        "SCON-2d1133f569d461e691eb"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "267850",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "아시아나IDT(267850) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-46d10849b213e9174789"
+        "CLM-2bd40095c492016bceeb"
       ],
       "candidate_event_id": "CE-LIVE-DART-042370-20260625900767",
       "company_name": "비츠로테크",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -724,27 +854,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-4d276abe3bd60ee2184d"
+        "SCON-de51cf26ba3edcbd1ca3"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "042370",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "비츠로테크(042370) OpenDART disclosure: 주요사항보고서(자기주식처분결정)(자회사의 주요경영사항)"
     },
     {
       "accepted_claims": [
-        "CLM-1666569ec3ac18d9ba28"
+        "CLM-a1bf2e8904f585504d1f"
       ],
       "candidate_event_id": "CE-LIVE-DART-069920-20260625000610",
       "company_name": "엑시온그룹",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -752,27 +887,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-1718130746acf46ca508"
+        "SCON-c5179a93c09200d9298a"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "069920",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "엑시온그룹(069920) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)"
     },
     {
       "accepted_claims": [
-        "CLM-4e5016b538fe361e129c"
+        "CLM-70a11a6ca6a1590d0f9d"
       ],
       "candidate_event_id": "CE-LIVE-DART-431190-20260625900803",
       "company_name": "케이쓰리아이",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -780,27 +920,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-e7ff7772016a5df2b275"
+        "SCON-c315a1e5418ac7a24dc5"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "431190",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "케이쓰리아이(431190) OpenDART disclosure: 단일판매ㆍ공급계약체결(자율공시)"
     },
     {
       "accepted_claims": [
-        "CLM-e5d1db1fbf2bfef3ddab"
+        "CLM-ac10a67d3cc23adb49a0"
       ],
       "candidate_event_id": "CE-LIVE-DART-418620-20260625900798",
       "company_name": "E8",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -808,27 +953,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-ad5b9f568ee5159d214c"
+        "SCON-4553ddd790384cb5b886"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "418620",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "E8(418620) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-d030d0c9884b7894ae6b"
+        "CLM-a880bd45ec3de829dbc5"
       ],
       "candidate_event_id": "CE-LIVE-DART-005960-20260625800808",
       "company_name": "동부건설",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -836,27 +986,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-442cfbba9a0d1fdce452"
+        "SCON-da695d5ed870c26b6b0e"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "005960",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "동부건설(005960) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-5af87659332d61c11522"
+        "CLM-f1684dc9a46dd84760e0"
       ],
       "candidate_event_id": "CE-LIVE-DART-007460-20260625800723",
       "company_name": "에이프로젠",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -864,27 +1019,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-8b4313615760f61e5e76"
+        "SCON-36aaa56d36945ad3e897"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "007460",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "에이프로젠(007460) OpenDART disclosure: 주요사항보고서(유상증자결정)(자회사의 주요경영사항) (제3자배정)"
     },
     {
       "accepted_claims": [
-        "CLM-f75314b3bbff823a8b02"
+        "CLM-0fe420e6bc1c04fecae3"
       ],
       "candidate_event_id": "CE-LIVE-DART-002990-20260625800801",
       "company_name": "금호건설",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -892,27 +1052,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-de0e228bc29a0ed63135"
+        "SCON-3c9532eef6b0e28151c9"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "002990",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "금호건설(002990) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-7e7f69862d27eb73a84a"
+        "CLM-dabd39e0897e2719efc0"
       ],
       "candidate_event_id": "CE-LIVE-DART-398120-20260625900781",
       "company_name": "에스지헬스케어",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -920,27 +1085,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-f47f7c2135d6e52afa22"
+        "SCON-83cc89ee6e882df671d5"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "398120",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "에스지헬스케어(398120) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결(자율공시)"
     },
     {
       "accepted_claims": [
-        "CLM-443a2ec802c78b3df76e"
+        "CLM-b01e92773e981eb9781c"
       ],
       "candidate_event_id": "CE-LIVE-DART-047040-20260625800795",
       "company_name": "대우건설",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -948,27 +1118,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-11499a7d99f7a18c384f"
+        "SCON-3cb986eaf1466e0b39da"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "047040",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "대우건설(047040) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-ab253c646f9a86866555"
+        "CLM-a306824712a6781a0e1f"
       ],
       "candidate_event_id": "CE-LIVE-DART-024110-20260625000589",
       "company_name": "기업은행",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -976,27 +1151,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-f6504ae0351132f6c687"
+        "SCON-ea933877a3560d7665e0"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "024110",
+      "trigger_category": "Information Trigger",
+      "verified_score": 3.2,
       "why_triggered": "기업은행(024110) OpenDART disclosure: 주요사항보고서(상각형조건부자본증권발행결정)"
     },
     {
       "accepted_claims": [
-        "CLM-a1419aa950c4d96dcb2b"
+        "CLM-5d6251668a384d07741b"
       ],
       "candidate_event_id": "CE-LIVE-DART-229500-20260625600782",
       "company_name": "노브메타파마",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1004,27 +1184,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-d93ff542727c9dba4d46"
+        "SCON-be87a7dd7a364ba98ea4"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "229500",
+      "trigger_category": "Information Trigger",
+      "verified_score": 3.2,
       "why_triggered": "노브메타파마(229500) OpenDART disclosure: 증권발행결과(자율공시)"
     },
     {
       "accepted_claims": [
-        "CLM-b54a857bd1e99b5acead"
+        "CLM-a4933cb160850878e07b"
       ],
       "candidate_event_id": "CE-LIVE-DART-220180-20260625900771",
       "company_name": "핸디소프트",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1032,27 +1217,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-d71a9420e8654a65f316"
+        "SCON-ba2cfca9b980e7b01785"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "220180",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "핸디소프트(220180) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-b600e1ef5f28a8a8c62f"
+        "CLM-d48e5b33ef8955ae29e2"
       ],
       "candidate_event_id": "CE-LIVE-DART-126720-20260625800762",
       "company_name": "수산인더스트리",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1060,27 +1250,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-23d2371767a94f3c1f48"
+        "SCON-3c3a90eafac4346efb25"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "126720",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "수산인더스트리(126720) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-de18acd27e2065cc1ec4"
+        "CLM-b2624b03d897ae2777ba"
       ],
       "candidate_event_id": "CE-LIVE-DART-082920-20260625000526",
       "company_name": "비츠로셀",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1088,11 +1283,13 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-136fd57e75838f3cda36"
+        "SCON-8541ffcca566e594ccca"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "082920",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "비츠로셀(082920) OpenDART disclosure: 주요사항보고서(자기주식처분결정)"
     },
     {
@@ -1101,14 +1298,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-299660-20260625900722",
       "company_name": "셀리드",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1121,22 +1321,27 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "299660",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.0,
       "why_triggered": "셀리드(299660) OpenDART disclosure: [기재정정]투자판단관련주요경영사항 (사업반환청구의 소 제기의 건)"
     },
     {
       "accepted_claims": [
-        "CLM-c2496c124df03c6ccafd"
+        "CLM-11e54e59c2578523aa25"
       ],
       "candidate_event_id": "CE-LIVE-DART-215090-20260626901432",
       "company_name": "솔디펜스",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1144,27 +1349,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-4cb295b090df06f4b8b1"
+        "SCON-b6703ffb0e0953228908"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "215090",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "솔디펜스(215090) OpenDART disclosure: 단일판매ㆍ공급계약체결(자율공시)"
     },
     {
       "accepted_claims": [
-        "CLM-1e696d57a00d958d6289"
+        "CLM-d57c95342ba0cf445d52"
       ],
       "candidate_event_id": "CE-LIVE-DART-215090-20260626901426",
       "company_name": "솔디펜스",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1172,27 +1382,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-ad5504b1721da3aada44"
+        "SCON-c04a1d1f86dc279384c7"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "215090",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "솔디펜스(215090) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-2906b9936f54c91ced1a"
+        "CLM-e1817d6a0a8c2b43e296"
       ],
       "candidate_event_id": "CE-LIVE-DART-440110-20260626901396",
       "company_name": "파두",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1200,27 +1415,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-6f51aa3889fd114d520c"
+        "SCON-ad6128f4d6a4abe1213c"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "440110",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "파두(440110) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-be1b23126d701287a67e"
+        "CLM-0116e84896b3b7f0b357"
       ],
       "candidate_event_id": "CE-LIVE-DART-007980-20260626000762",
       "company_name": "TP",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1228,27 +1448,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-ba091c231630b32b8b0c"
+        "SCON-68b6e54ad8db2ae440d0"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "007980",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "TP(007980) OpenDART disclosure: 주요사항보고서(자기주식처분결정)"
     },
     {
       "accepted_claims": [
-        "CLM-a1f6768c2cbf9a8119bb"
+        "CLM-e4aac9fa4fc3028593f6"
       ],
       "candidate_event_id": "CE-LIVE-DART-440110-20260626901308",
       "company_name": "파두",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1256,27 +1481,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-1577e51e922fd8dc2a09"
+        "SCON-3209683e387cc1900876"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "440110",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "파두(440110) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-dcf21e75fe1278c86913"
+        "CLM-f7664360a464fd660931"
       ],
       "candidate_event_id": "CE-LIVE-DART-003380-20260626901383",
       "company_name": "하림지주",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1284,27 +1514,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-27c4e27dda624cd912d4"
+        "SCON-8f38851a52d1346c70ce"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "003380",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 1.5,
       "why_triggered": "하림지주(003380) OpenDART disclosure: [기재정정]신규시설투자등(자회사의 주요경영사항)"
     },
     {
       "accepted_claims": [
-        "CLM-f150c1d84414b4cb7bec"
+        "CLM-a66137b04e668b9742de"
       ],
       "candidate_event_id": "CE-LIVE-DART-300080-20260626901314",
       "company_name": "플리토",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1312,27 +1547,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-e8f4b7cdb6f947478586"
+        "SCON-5d5065a9e74a16996709"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "300080",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "플리토(300080) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-4a1c248ad2acb6ad3fd8"
+        "CLM-c59551b1af6c8050951e"
       ],
       "candidate_event_id": "CE-LIVE-DART-005960-20260626801367",
       "company_name": "동부건설",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1340,11 +1580,13 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-c489e0c5de7be8d83ec8"
+        "SCON-68ed34340b42a72f03d7"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "005960",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "동부건설(005960) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
@@ -1353,14 +1595,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-001470-20260626801353",
       "company_name": "삼부토건",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1373,6 +1618,8 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "001470",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.0,
       "why_triggered": "삼부토건(001470) OpenDART disclosure: 투자판단관련주요경영사항"
     },
     {
@@ -1381,14 +1628,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-068270-20260626801203",
       "company_name": "셀트리온",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1401,6 +1651,8 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "068270",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.0,
       "why_triggered": "셀트리온(068270) OpenDART disclosure: 투자판단관련주요경영사항 (CTP55(코센틱스 바이오시밀러) 한국 품목허가 신청)"
     },
     {
@@ -1409,14 +1661,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-007460-20260626801127",
       "company_name": "에이프로젠",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1429,22 +1684,27 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "007460",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.0,
       "why_triggered": "에이프로젠(007460) OpenDART disclosure: [기재정정]투자판단관련주요경영사항"
     },
     {
       "accepted_claims": [
-        "CLM-284b9bbfdba9080898d2"
+        "CLM-74de1e19891db1ee1887"
       ],
       "candidate_event_id": "CE-LIVE-DART-008670-20260626000744",
       "company_name": "신한투자증권",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1452,27 +1712,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-7f2a0c1d0279454670ed"
+        "SCON-af0bb04500d8c962b5fa"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "008670",
+      "trigger_category": "Information Trigger",
+      "verified_score": 3.2,
       "why_triggered": "신한투자증권(008670) OpenDART disclosure: 증권발행실적보고서"
     },
     {
       "accepted_claims": [
-        "CLM-310cf2e18a426cc01b69"
+        "CLM-7f8a8247c99475b071d7"
       ],
       "candidate_event_id": "CE-LIVE-DART-003530-20260626000741",
       "company_name": "한화투자증권",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1480,27 +1745,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-665278f11eb1d81aa591"
+        "SCON-5ddbe1e901ca53328cae"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "003530",
+      "trigger_category": "Information Trigger",
+      "verified_score": 3.2,
       "why_triggered": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서"
     },
     {
       "accepted_claims": [
-        "CLM-06d9b7bbb8736131ccd1"
+        "CLM-7d7b13caa1590ea44eae"
       ],
       "candidate_event_id": "CE-LIVE-DART-052400-20260626000697",
       "company_name": "코나아이",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1508,27 +1778,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-bec4e121b80576fb614c"
+        "SCON-7e8a2b33d2825d44138c"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "052400",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "코나아이(052400) OpenDART disclosure: 주요사항보고서(자기주식취득결정)"
     },
     {
       "accepted_claims": [
-        "CLM-661f5c02d1c28c8c0f08"
+        "CLM-c45bce081a4cc9f29e6b"
       ],
       "candidate_event_id": "CE-LIVE-DART-085660-20260626901150",
       "company_name": "차바이오텍",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1536,27 +1811,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-724b3c020cc417a58138"
+        "SCON-7d3953b404ed194b4bdb"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "085660",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "차바이오텍(085660) OpenDART disclosure: 유상증자결정(종속회사의주요경영사항)"
     },
     {
       "accepted_claims": [
-        "CLM-f3a763d3c8ec1ac1db37"
+        "CLM-ea8e4c83637812887e45"
       ],
       "candidate_event_id": "CE-LIVE-DART-003530-20260626000730",
       "company_name": "한화투자증권",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1564,27 +1844,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-ab620c69ae55f0537a62"
+        "SCON-372ba868c9cca77ede0d"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "003530",
+      "trigger_category": "Information Trigger",
+      "verified_score": 3.2,
       "why_triggered": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서"
     },
     {
       "accepted_claims": [
-        "CLM-0edad114baf3cf6c6ba5"
+        "CLM-49334422203669c34a2f"
       ],
       "candidate_event_id": "CE-LIVE-DART-008670-20260626000725",
       "company_name": "신한투자증권",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1592,27 +1877,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-4ca17daf22d0f0479fb1"
+        "SCON-fa8774e66c8069224cf4"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "008670",
+      "trigger_category": "Information Trigger",
+      "verified_score": 3.2,
       "why_triggered": "신한투자증권(008670) OpenDART disclosure: 증권발행실적보고서"
     },
     {
       "accepted_claims": [
-        "CLM-ac7bca287e6af514ca7f"
+        "CLM-fa3763025773a59bf8a0"
       ],
       "candidate_event_id": "CE-LIVE-DART-054930-20260626901101",
       "company_name": "유신",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1620,27 +1910,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-d2aa400dd019987810c1"
+        "SCON-d92a8042f2781ac2cc4b"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "054930",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "유신(054930) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결(자율공시)"
     },
     {
       "accepted_claims": [
-        "CLM-ef4c8f856e827d5ebbd7"
+        "CLM-1d5a59ce2941e5044afe"
       ],
       "candidate_event_id": "CE-LIVE-DART-003540-20260626000717",
       "company_name": "대신증권",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1648,27 +1943,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-1426aac0f51c8cedc5bc"
+        "SCON-845caf38eaac8ba5534e"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "003540",
+      "trigger_category": "Information Trigger",
+      "verified_score": 3.2,
       "why_triggered": "대신증권(003540) OpenDART disclosure: 주요사항보고서(자본으로인정되는채무증권발행결정)"
     },
     {
       "accepted_claims": [
-        "CLM-b7c3f67cb3c4961fc242"
+        "CLM-2d606fe2aaab68f33c35"
       ],
       "candidate_event_id": "CE-LIVE-DART-003530-20260626000713",
       "company_name": "한화투자증권",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1676,27 +1976,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-7584a1d23867a5e299b3"
+        "SCON-8743eefcaf2ede672d4a"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "003530",
+      "trigger_category": "Information Trigger",
+      "verified_score": 3.2,
       "why_triggered": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서"
     },
     {
       "accepted_claims": [
-        "CLM-59aa8fdf3dc67610e1ee"
+        "CLM-f03364189d74b9a49c7e"
       ],
       "candidate_event_id": "CE-LIVE-DART-083660-20260629000561",
       "company_name": "CSA 코스믹",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1704,27 +2009,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-01637b402275d8451b00"
+        "SCON-7ded16261682113dc1d1"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "083660",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "CSA 코스믹(083660) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)"
     },
     {
       "accepted_claims": [
-        "CLM-9295294fdb9de364c568"
+        "CLM-b7acca3024e92a00a220"
       ],
       "candidate_event_id": "CE-LIVE-DART-006050-20260629901292",
       "company_name": "국영지앤엠",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1732,27 +2042,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-640b635edd1925a6b622"
+        "SCON-98f5ac0748f426e1785c"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "006050",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "국영지앤엠(006050) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결(자율공시)"
     },
     {
       "accepted_claims": [
-        "CLM-a9455b55c706caf962b6"
+        "CLM-451cdab75926c4b7cdd7"
       ],
       "candidate_event_id": "CE-LIVE-DART-083660-20260629000553",
       "company_name": "CSA 코스믹",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1760,27 +2075,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-fa259f4e76b908354dc9"
+        "SCON-92b642d279dfa12c72ee"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "083660",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "CSA 코스믹(083660) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)"
     },
     {
       "accepted_claims": [
-        "CLM-223e876f59e018b7c879"
+        "CLM-2c51e09b28a70366b93c"
       ],
       "candidate_event_id": "CE-LIVE-DART-006050-20260629901282",
       "company_name": "국영지앤엠",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1788,27 +2108,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-53e0caa5b3bb6d140b7a"
+        "SCON-4ebda6370c1a2de4afd2"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "006050",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "국영지앤엠(006050) OpenDART disclosure: 단일판매ㆍ공급계약체결(자율공시)"
     },
     {
       "accepted_claims": [
-        "CLM-8ee25ede9acac8238387"
+        "CLM-78a24c36a074e5265138"
       ],
       "candidate_event_id": "CE-LIVE-DART-208640-20260629901297",
       "company_name": "썸에이지",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1816,27 +2141,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-eb8f1ae737e49b9e5c08"
+        "SCON-9bfa8a75c5432f7cf8e2"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "208640",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "썸에이지(208640) OpenDART disclosure: 권리락 (유상증자)"
     },
     {
       "accepted_claims": [
-        "CLM-17a9dcc3ce4802cfc000"
+        "CLM-d9655243ac86e0cabd80"
       ],
       "candidate_event_id": "CE-LIVE-DART-175250-20260629000562",
       "company_name": "아이큐어",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1844,27 +2174,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-3a6e5a4a64347454800f"
+        "SCON-5f39c98218648ef25d46"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "175250",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "아이큐어(175250) OpenDART disclosure: 주요사항보고서(유상증자결정)"
     },
     {
       "accepted_claims": [
-        "CLM-5eb7fb690addef9202f7"
+        "CLM-f84b5652b4d6b9e755eb"
       ],
       "candidate_event_id": "CE-LIVE-DART-377030-20260629901255",
       "company_name": "비트맥스",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1872,27 +2207,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-912a9348917ae7c364f5"
+        "SCON-ca966230ce5b2ee22699"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "377030",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "비트맥스(377030) OpenDART disclosure: 증권발행결과(자율공시) (제3자배정 유상증자)"
     },
     {
       "accepted_claims": [
-        "CLM-a33a42bbb6b25ffc4296"
+        "CLM-42a98d620ec33b881263"
       ],
       "candidate_event_id": "CE-LIVE-DART-377030-20260629901251",
       "company_name": "비트맥스",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1900,11 +2240,13 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-1ae72fed25c16170621c"
+        "SCON-0114b1a586521047198e"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "377030",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "비트맥스(377030) OpenDART disclosure: 증권발행결과(자율공시) (제3자배정 유상증자)"
     },
     {
@@ -1913,14 +2255,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-381970-20260629801242",
       "company_name": "케이카",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1933,22 +2278,27 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "381970",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.0,
       "why_triggered": "케이카(381970) OpenDART disclosure: [기재정정]투자판단관련주요경영사항"
     },
     {
       "accepted_claims": [
-        "CLM-a7edee227a226a875f57"
+        "CLM-bc277ec31863d972d26c"
       ],
       "candidate_event_id": "CE-LIVE-DART-021960-20260629000554",
       "company_name": "케이비캐피탈",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1956,27 +2306,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-a1385de77fa6858c0544"
+        "SCON-0877e50ee9d9d557a206"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "021960",
+      "trigger_category": "Information Trigger",
+      "verified_score": 3.2,
       "why_triggered": "케이비캐피탈(021960) OpenDART disclosure: 증권발행실적보고서"
     },
     {
       "accepted_claims": [
-        "CLM-50152adaca9967708583"
+        "CLM-0cdd70f98e1bce630904"
       ],
       "candidate_event_id": "CE-LIVE-DART-104040-20260629901236",
       "company_name": "디에스엠",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -1984,27 +2339,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-c0214d5fd693c973f151"
+        "SCON-c4513128d5691cbff6a9"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "104040",
+      "trigger_category": "Information Trigger",
+      "verified_score": 3.2,
       "why_triggered": "디에스엠(104040) OpenDART disclosure: 증권발행결과(자율공시)"
     },
     {
       "accepted_claims": [
-        "CLM-7abceae2db019329c728"
+        "CLM-338dc22943e536d6c5f1"
       ],
       "candidate_event_id": "CE-LIVE-DART-260870-20260629601196",
       "company_name": "SK시그넷",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2012,27 +2372,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-328cc9d9c68b26fa6e85"
+        "SCON-e96df1e8f0a8947953c8"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "260870",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "SK시그넷(260870) OpenDART disclosure: 증권발행결과(자율공시) (제3자배정 유상증자_우선주)"
     },
     {
       "accepted_claims": [
-        "CLM-9f6396e3b40cef4e7e4f"
+        "CLM-5875f4ff5818d69db47f"
       ],
       "candidate_event_id": "CE-LIVE-DART-060900-20260629901198",
       "company_name": "에이전트AI",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2040,27 +2405,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-3ec43247a2120d9c4901"
+        "SCON-a20dd1e2078ec299ae6c"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "060900",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "에이전트AI(060900) OpenDART disclosure: 단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-c447929aacf1e95f42c0"
+        "CLM-4ce03ee1ba9dcdd8dea0"
       ],
       "candidate_event_id": "CE-LIVE-DART-097230-20260629801171",
       "company_name": "HJ중공업",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2068,27 +2438,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-c7334a5f89be276435e4"
+        "SCON-9cfa854d9585de67473e"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "097230",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "HJ중공업(097230) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-a39b62ed6227b260c8e4"
+        "CLM-400e47ba7c01512e177e"
       ],
       "candidate_event_id": "CE-LIVE-DART-347700-20260629901175",
       "company_name": "스피어",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2096,27 +2471,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-129dba30580755653b82"
+        "SCON-f3adf98df8085d8cedb2"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "347700",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "스피어(347700) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-d3ca6661af9da68e4855"
+        "CLM-e9b398ac64c3b12ff639"
       ],
       "candidate_event_id": "CE-LIVE-DART-347700-20260629901169",
       "company_name": "스피어",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2124,27 +2504,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-41b6df25b0c577126d72"
+        "SCON-818ecad21ac2caf760b4"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "347700",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "스피어(347700) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-dd2f37266ce52a0f25b5"
+        "CLM-375981675c7b54104128"
       ],
       "candidate_event_id": "CE-LIVE-DART-347700-20260629901164",
       "company_name": "스피어",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2152,27 +2537,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-3630e97d6b28ba7c21b8"
+        "SCON-c1f0996406692da488d6"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "347700",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "스피어(347700) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-c12cc7e640dd44685709"
+        "CLM-dba2224e74d55cae3d97"
       ],
       "candidate_event_id": "CE-LIVE-DART-368970-20260629000506",
       "company_name": "오에스피",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2180,27 +2570,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-94d18bc215c2711af389"
+        "SCON-26f499815d76801a8986"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "368970",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "오에스피(368970) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)"
     },
     {
       "accepted_claims": [
-        "CLM-e72287593da240364449"
+        "CLM-730b38c062c7cf5d7aa9"
       ],
       "candidate_event_id": "CE-LIVE-DART-007460-20260629801147",
       "company_name": "에이프로젠",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2208,27 +2603,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-fa2a13f7ebb632e38841"
+        "SCON-24a7baaab3f71c0366e2"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "007460",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "에이프로젠(007460) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)(자회사의 주요경영사항) (제3자배정)"
     },
     {
       "accepted_claims": [
-        "CLM-8074f683fae0ce5b5be1"
+        "CLM-9ab370a7b71ec7eec665"
       ],
       "candidate_event_id": "CE-LIVE-DART-003530-20260629000520",
       "company_name": "한화투자증권",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2236,27 +2636,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-82c19b180708dd8ee43f"
+        "SCON-70e8fe9629d6ccd941ba"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "003530",
+      "trigger_category": "Information Trigger",
+      "verified_score": 3.2,
       "why_triggered": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서"
     },
     {
       "accepted_claims": [
-        "CLM-e806862cacc3c9c67fa9"
+        "CLM-d4ccf4c0a0b39f2b0142"
       ],
       "candidate_event_id": "CE-LIVE-DART-003090-20260630801612",
       "company_name": "대웅",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2264,27 +2669,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-4c0aec313350d773c1de"
+        "SCON-39d486c6eb07fb5f9d98"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "003090",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 1.5,
       "why_triggered": "대웅(003090) OpenDART disclosure: [기재정정]신규시설투자등(자회사의 주요경영사항)"
     },
     {
       "accepted_claims": [
-        "CLM-7bfbb9a38685e31d5296"
+        "CLM-b84a9709358d0294880b"
       ],
       "candidate_event_id": "CE-LIVE-DART-069620-20260630801610",
       "company_name": "대웅제약",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2292,27 +2702,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-a22493cb0e09bd5f9cf2"
+        "SCON-ea5240546af802629fee"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "069620",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 1.5,
       "why_triggered": "대웅제약(069620) OpenDART disclosure: [기재정정]신규시설투자등"
     },
     {
       "accepted_claims": [
-        "CLM-a06f4cbbe335305dcc97"
+        "CLM-6ca25a145ce63d88c695"
       ],
       "candidate_event_id": "CE-LIVE-DART-114450-20260630901605",
       "company_name": "그린생명과학",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2320,11 +2735,13 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-b4f7304f66b7a22a5ecb"
+        "SCON-8929a6a12bd9b5103a4d"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "114450",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "그린생명과학(114450) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
@@ -2333,14 +2750,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-001360-20260630801598",
       "company_name": "삼성제약",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2353,6 +2773,8 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "001360",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.0,
       "why_triggered": "삼성제약(001360) OpenDART disclosure: 투자판단관련주요경영사항 (진행성 핵상 마비 치료제 GV1001의 국내 제3상 임상시험계획서 제출)"
     },
     {
@@ -2361,14 +2783,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-034830-20260630801595",
       "company_name": "한국토지신탁",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2381,22 +2806,27 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "034830",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.0,
       "why_triggered": "한국토지신탁(034830) OpenDART disclosure: [기재정정]투자판단관련주요경영사항"
     },
     {
       "accepted_claims": [
-        "CLM-72ca260bbc996fbf4cba"
+        "CLM-2d0ff38e77fb81032a2f"
       ],
       "candidate_event_id": "CE-LIVE-DART-200350-20260630901559",
       "company_name": "아티스트스튜디오",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2404,11 +2834,13 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-6a9c19d9bd850872846b"
+        "SCON-eda9a04b2dfdcf97356a"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "200350",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "아티스트스튜디오(200350) OpenDART disclosure: 단일판매ㆍ공급계약체결"
     },
     {
@@ -2417,14 +2849,17 @@
       ],
       "candidate_event_id": "CE-LIVE-DART-049180-20260630901578",
       "company_name": "셀루메드",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2437,22 +2872,27 @@
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "049180",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.0,
       "why_triggered": "셀루메드(049180) OpenDART disclosure: [기재정정]투자판단관련주요경영사항 (집행판결 청구소송 합의 변경의 건)"
     },
     {
       "accepted_claims": [
-        "CLM-92555c84232e007a54b3"
+        "CLM-ad0fd02c3207cc416cf5"
       ],
       "candidate_event_id": "CE-LIVE-DART-010130-20260630801556",
       "company_name": "고려아연",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2460,27 +2900,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-b5bfc87d5a58cfcfe713"
+        "SCON-bbc960e0a0b9441d36d2"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "010130",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 1.5,
       "why_triggered": "고려아연(010130) OpenDART disclosure: [기재정정]신규시설투자등(자율공시)"
     },
     {
       "accepted_claims": [
-        "CLM-c0579d915944809862c6"
+        "CLM-cd9e9f21aa2d79de0ab1"
       ],
       "candidate_event_id": "CE-LIVE-DART-0015G0-20260630901538",
       "company_name": "그린광학",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2488,27 +2933,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-12d28c44584486589251"
+        "SCON-b2288aa8765fb1f61b9c"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "0015G0",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "그린광학(0015G0) OpenDART disclosure: 단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-844352683d94ae6fc6e7"
+        "CLM-3079d3d99d8c72c596e6"
       ],
       "candidate_event_id": "CE-LIVE-DART-276040-20260630901533",
       "company_name": "스코넥",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2516,27 +2966,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-2b7bf9a63f0d6d3f7171"
+        "SCON-cfbc7b0260d3ca6ff8ee"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "276040",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "스코넥(276040) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-9a22b8dd92e02729bc79"
+        "CLM-2d6beea36f8d01a93083"
       ],
       "candidate_event_id": "CE-LIVE-DART-028100-20260630801516",
       "company_name": "동아지질",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2544,27 +2999,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-da304be5a914ee93074f"
+        "SCON-c84cd440fb50d0bb6ce1"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "028100",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "동아지질(028100) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-e2a1d069528f62799278"
+        "CLM-ed51b4482fe7096bfd7a"
       ],
       "candidate_event_id": "CE-LIVE-DART-469750-20260630901511",
       "company_name": "아이비젼웍스",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2572,27 +3032,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-50f8eef2398d8cea3978"
+        "SCON-c376270ad879da69272f"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "469750",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "아이비젼웍스(469750) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-d77b7337f371ee1edf8e"
+        "CLM-9f28c18e516e10e84683"
       ],
       "candidate_event_id": "CE-LIVE-DART-001470-20260630801514",
       "company_name": "삼부토건",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2600,27 +3065,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-e3df3b343a7a93f36d93"
+        "SCON-6290a9214100270b671e"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "001470",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "삼부토건(001470) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-bb10099224c580eef062"
+        "CLM-973fd69c75b279dbbbd0"
       ],
       "candidate_event_id": "CE-LIVE-DART-002460-20260630801513",
       "company_name": "HS화성",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2628,27 +3098,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-51c34b5b421356ffcba8"
+        "SCON-b4efce7dc8639efec272"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "002460",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "HS화성(002460) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결"
     },
     {
       "accepted_claims": [
-        "CLM-80e0082a358553a5f84f"
+        "CLM-c1fc6e1261fb48c3beb0"
       ],
       "candidate_event_id": "CE-LIVE-DART-344860-20260630001080",
       "company_name": "이노진",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2656,27 +3131,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-387650142aec490cef39"
+        "SCON-e8cae7c60f52b953da6f"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "344860",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "이노진(344860) OpenDART disclosure: 주요사항보고서(유상증자결정)"
     },
     {
       "accepted_claims": [
-        "CLM-a53edac00bb069a2386f"
+        "CLM-f9d0a43b3bb7e58ab4e7"
       ],
       "candidate_event_id": "CE-LIVE-DART-086710-20260630001092",
       "company_name": "선진뷰티사이언스",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2684,27 +3164,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-a79dcde8a21dd19c1705"
+        "SCON-242de3a820d534fcc924"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "086710",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "선진뷰티사이언스(086710) OpenDART disclosure: 주요사항보고서(자기주식취득결정)"
     },
     {
       "accepted_claims": [
-        "CLM-b060b83c7eb6c482aa91"
+        "CLM-c95e2a211a72c6bce420"
       ],
       "candidate_event_id": "CE-LIVE-DART-010950-20260630801472",
       "company_name": "S-Oil",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2712,27 +3197,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-5ac88c5f37ddbce552ba"
+        "SCON-35ec452e867ab02bae7a"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "010950",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 1.5,
       "why_triggered": "S-Oil(010950) OpenDART disclosure: [기재정정]신규시설투자등"
     },
     {
       "accepted_claims": [
-        "CLM-f3bedf7cdcebba47dff2"
+        "CLM-cb96e710c4f972882e16"
       ],
       "candidate_event_id": "CE-LIVE-DART-112190-20260630001086",
       "company_name": "KC산업",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2740,27 +3230,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-54d74ffb63b7705b8dac"
+        "SCON-6d91f7fa7a9523ee1ef4"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "112190",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "KC산업(112190) OpenDART disclosure: 주요사항보고서(유상증자결정)"
     },
     {
       "accepted_claims": [
-        "CLM-8ab842287555907fb37d"
+        "CLM-a9a7f95933ac09468780"
       ],
       "candidate_event_id": "CE-LIVE-DART-137940-20260630001076",
       "company_name": "넥스트아이",
+      "current_stage": "1",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
       "next_action": "WATCH",
       "next_source_tasks": [],
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
       "pending_reason": null,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2768,27 +3263,32 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-a02bb9f3f35f0e8bf661"
+        "SCON-d7ad28a2e2ef2eaf0eb6"
       ],
       "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
       "section": "Stage1-Watch",
       "symbol": "137940",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 3.2,
       "why_triggered": "넥스트아이(137940) OpenDART disclosure: 주요사항보고서(유상증자결정)"
     },
     {
       "accepted_claims": [
-        "CLM-62e9dd2a451fd3f56799"
+        "CLM-9700743a768341cea45b"
       ],
       "candidate_event_id": "CE-LIVE-DART-034020-20260630801489",
       "company_name": "두산에너빌리티",
+      "current_stage": "2",
       "missing_primitives": [
         "repeat_evidence_family",
         "cash_or_revision_conversion"
       ],
-      "next_action": "WATCH",
+      "next_action": "RECHECK_SOURCE",
       "next_source_tasks": [],
-      "pending_reason": null,
+      "operator_note": "Official disclosure was scored only as low-stage monitoring evidence; 투자 권고가 아니다.",
+      "pending_reason": "material gaps remain",
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [],
       "red_team_checks": [
         "wrong subject",
         "historical only",
@@ -2796,11 +3296,13 @@
       ],
       "research_memory_cards_used": [],
       "score_contributions": [
-        "SCON-e134bdc57bb87a457a0f"
+        "SCON-b99a0d03ad043d2209d9"
       ],
-      "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-      "section": "Stage1-Watch",
+      "score_stage_validity": "PENDING_MATERIAL_GAPS",
+      "section": "Stage2-Watch",
       "symbol": "034020",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": 4.4,
       "why_triggered": "두산에너빌리티(034020) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결(자율공시)"
     }
   ],
@@ -2808,14 +3310,16 @@
   "summary": {
     "ProviderPending_count": 1,
     "RiskReview_or_Reject_count": 1,
-    "Stage1_Watch_count": 100,
-    "Stage2_or_higher_count": 1,
+    "Stage1_Watch_count": 54,
+    "Stage2_or_higher_count": 45,
     "YellowPending_count": 1,
     "a2_validation_claim_count": 30,
     "deterministic_scorer_output_count": 100,
-    "documented_low_signal_market": true,
-    "live_Stage2_or_higher_count": 0,
+    "documented_low_signal_market": false,
+    "live_Stage2_or_higher_count": 45,
+    "provider_failure_final_reject_count": 0,
     "score_without_claim_count": 0,
+    "source_proxy_to_score_count": 0,
     "stagecourt_trace_count": 100,
     "status": "MEANINGFUL_STAGE_SPLIT_PASS"
   },

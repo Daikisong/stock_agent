@@ -3,6 +3,8 @@
   "summary": {
     "accepted_claim_from_llm_count": 0,
     "accepted_claim_from_rule_count": 100,
+    "accepted_claim_without_anchor_count": 0,
+    "accepted_claim_without_date_count": 0,
     "contract_visible_to_raw_extractor_count": 0,
     "forced_current_temporal_count": 0,
     "forced_positive_polarity_count": 0,
@@ -16,6 +18,7 @@
     "rule_fallback_extractor_count": 100,
     "rule_fallback_score_eligible_claim_count": 100,
     "status": "CLAIM_EXTRACTOR_AUDIT_PASS",
+    "structured_rule_claim_missing_subject_date_value_locator_count": 0,
     "unstructured_text_rule_score_count": 0
   }
 }

@@ -22,12 +22,16 @@ def fake_v3_base(as_of_date: str = "2026-06-30", count: int = 20) -> Mapping[str
             "candidate_event_id": row["candidate_event_id"],
             "symbol": row["symbol"],
             "company_name": row["company_name"],
-            "section": "Stage1-Watch",
+            "trigger_category": row["trigger_category"],
+            "section": "Stage2-Watch" if idx < max(count // 2, 1) else "Stage1-Watch",
             "why_triggered": "official disclosure",
             "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+            "verified_score": 7.0 if idx < max(count // 2, 1) else 4.0,
             "accepted_claims": [f"CLM-{idx}"],
             "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
             "missing_primitives": ["cash_or_revision_conversion"],
+            "provider_source_gaps": [],
+            "operator_note": "fixture operator note",
         }
         for idx, row in enumerate(events)
     ]
@@ -63,6 +67,13 @@ def fake_v3_base(as_of_date: str = "2026-06-30", count: int = 20) -> Mapping[str
             "score_contributions": [{"contribution_id": f"SC-{idx}"} for idx in range(count)],
         },
         "operator_digest": {"rows": digest_rows},
+        "candidate_purity": {
+            "sector_coverage": {
+                "summary": {
+                    "unknown_sector_candidate_count": 0,
+                }
+            }
+        },
         "score_meaning_audit": {
             "summary": {
                 "deterministic_scorer_output_count": count,
@@ -70,7 +81,14 @@ def fake_v3_base(as_of_date: str = "2026-06-30", count: int = 20) -> Mapping[str
                 "score_without_claim_count": 0,
             }
         },
-        "source_connector_report": {"summary": {"provider_failure_count": 0}, "rows": []},
+        "source_connector_report": {
+            "summary": {
+                "provider_failure_count": 0,
+                "real_source_document_fetched_count": count,
+            },
+            "rows": [],
+        },
+        "static_logic_audit": {"summary": {"critical_count_sum": 0}},
         "claim_extraction_audit": {
             "summary": {
                 "real_document_to_assertion_count": count,
@@ -90,6 +108,18 @@ def fake_v3_base(as_of_date: str = "2026-06-30", count: int = 20) -> Mapping[str
             }
         },
     }
+
+
+def fake_v3_frozen_base(as_of_date: str = "2026-06-30", count: int = 20, run_index: int = 1) -> Mapping[str, Any]:
+    base = dict(fake_v3_base(as_of_date=as_of_date, count=count))
+    base["config"] = {
+        "as_of_date": as_of_date,
+        "mode": "frozen_replay",
+        "frozen_snapshot_dir": f"output/production_cutover_v3/_v3_frozen_inputs/{as_of_date}",
+        "output_dir": f"output/production_cutover_v3/_v3_frozen_replays/{as_of_date}/run-{run_index}",
+    }
+    base["metadata"] = {**base["metadata"], "source_corpus_hash": f"FROZEN-SRC-{as_of_date}"}
+    return base
 
 
 def fake_provider_matrix(status: str = "PROVIDER_COMPLETENESS_PASS", blockers: int = 0) -> Mapping[str, Any]:
@@ -113,4 +143,20 @@ def fake_a2(count: int = 30) -> Mapping[str, Any]:
                 "evidence_url_pending_to_A2_count": 0,
             }
         }
+    }
+
+
+def fake_rollup_metadata() -> Mapping[str, Any]:
+    return {
+        "git_head_sha": "HEAD",
+        "report_base_commit_sha": "HEAD",
+        "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_production_cutover_v3",
+        "config_hash": "CONFIG",
+        "source_corpus_hash": "SOURCE",
+        "candidate_event_hash": "EVENT",
+        "planner_prompt_hash": "PROMPT",
+        "planner_response_hash": "RESPONSE",
+        "evidence_os_schema_version": "EOS",
+        "scoring_schema_version": "SCORING",
+        "stage_schema_version": "STAGE",
     }

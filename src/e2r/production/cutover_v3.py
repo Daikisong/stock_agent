@@ -8,11 +8,16 @@ from __future__ import annotations
 
 from collections import Counter
 from dataclasses import asdict, dataclass
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-from e2r.production.cutover_shadow import ProductionCutoverConfig, build_production_cutover_bundle
+from e2r.production.candidate_event_purity import ProductionMode
+from e2r.production.cutover_shadow import (
+    ProductionCutoverConfig,
+    build_production_cutover_bundle,
+    write_production_cutover_bundle as write_cutover_shadow_bundle,
+)
 from e2r.production.metadata import SCORING_SCHEMA_VERSION, STAGE_SCHEMA_VERSION
 from e2r.production.cutover_v2 import (
     _claim_access_policy,
@@ -59,8 +64,11 @@ def build_production_cutover_v3_bundle(
     root = Path(repo_root)
     as_of = date.fromisoformat(config.as_of_date)
     live_dates = _trading_days_ending(as_of, max(config.live_shadow_days, 1))
+    snapshot_dates = _trading_days_ending(as_of, max(config.live_shadow_days, config.frozen_replay_days, 1))
     base_bundles = []
-    for run_date in live_dates:
+    snapshot_bundles = []
+    live_date_set = {run_date.isoformat() for run_date in live_dates}
+    for run_date in snapshot_dates:
         output_dir = str(Path(config.output_root) / run_date.isoformat())
         base_config = ProductionCutoverConfig(
             as_of_date=run_date.isoformat(),
@@ -69,13 +77,20 @@ def build_production_cutover_v3_bundle(
             output_dir=output_dir,
             validation_output_root=config.validation_output_root,
         )
-        base_bundles.append(
-            build_production_cutover_bundle(
-                repo_root=root,
-                config=base_config,
-                command=f"{command} --child-shadow-date {run_date.isoformat()}",
-            )
+        snapshot_bundle = build_production_cutover_bundle(
+            repo_root=root,
+            config=base_config,
+            command=f"{command} --child-shadow-date {run_date.isoformat()}",
         )
+        snapshot_bundles.append(snapshot_bundle)
+        if run_date.isoformat() in live_date_set:
+            base_bundles.append(snapshot_bundle)
+    frozen_bundles = _build_frozen_replay_bundles(
+        repo_root=root,
+        config=config,
+        command=command,
+        snapshot_bundles=snapshot_bundles,
+    )
     current_base = base_bundles[-1]
     source_report = _source_connector_report_v3(base_bundles, repo_root=root)
     provider_matrix = _provider_completeness_matrix_v3(source_report)
@@ -93,7 +108,12 @@ def build_production_cutover_v3_bundle(
         document_limit=config.llm_extractor_document_limit,
     )
     claim_audit = _claim_extractor_provider_audit_v3(base_bundles=base_bundles, claim_extraction=claim_extraction)
-    multiday = _multiday_validation_v3(base_bundles=base_bundles, provider_matrix=provider_matrix, config=config)
+    multiday = _multiday_validation_v3(
+        base_bundles=base_bundles,
+        frozen_bundles=frozen_bundles,
+        provider_matrix=provider_matrix,
+        config=config,
+    )
     stage_distribution = _stage_distribution_report_v3(
         base_bundles=base_bundles,
         provider_matrix=provider_matrix,
@@ -129,6 +149,7 @@ def build_production_cutover_v3_bundle(
         sla=sla,
         a2=a2,
         census=census,
+        metadata=rollup_metadata,
     )
     labels = _completion_labels_v3(
         provider_matrix=provider_matrix,
@@ -146,6 +167,7 @@ def build_production_cutover_v3_bundle(
     return {
         "config": config.to_dict(),
         "base_bundles": base_bundles,
+        "frozen_bundles": frozen_bundles,
         "source_connector_report": source_report,
         "provider_completeness_matrix": provider_matrix,
         "provider_gap_resolution_md": _provider_gap_resolution_markdown(provider_matrix),
@@ -187,6 +209,7 @@ def write_production_cutover_v3_bundle(
         "production_cutover_v3_trigger_policy_audit.json": bundle["trigger_policy_audit"],
         "production_cutover_v3_sla_report.json": bundle["sla_report"],
         "production_cutover_v3_static_logic_audit.json": bundle["static_logic_audit"],
+        "production_cutover_v3_rollup_metadata.json": bundle["rollup_metadata"],
     }
     for name, payload in json_docs.items():
         path = docs / name
@@ -318,6 +341,76 @@ def _provider_completeness_matrix_v3(source_report: Mapping[str, Any]) -> Mappin
     }
 
 
+_REQUIRED_ROLLUP_METADATA_KEYS = (
+    "git_head_sha",
+    "report_base_commit_sha",
+    "command",
+    "config_hash",
+    "source_corpus_hash",
+    "candidate_event_hash",
+    "planner_prompt_hash",
+    "planner_response_hash",
+    "evidence_os_schema_version",
+    "scoring_schema_version",
+    "stage_schema_version",
+)
+
+
+def _rollup_metadata_v3(
+    *,
+    base_bundles: Sequence[Mapping[str, Any]],
+    config: ProductionCutoverV3Config,
+    command: str,
+    repo_root: Path,
+) -> Mapping[str, Any]:
+    child_metadata = [base.get("metadata") or {} for base in base_bundles]
+    candidate_events = [base["output_artifacts"].get("candidate_events") or [] for base in base_bundles]
+    source_documents = [base["output_artifacts"].get("evidence_documents") or [] for base in base_bundles]
+    planner_runs = [
+        {
+            "as_of_date": base["config"].get("as_of_date"),
+            "source_task_count": len(base["output_artifacts"].get("source_tasks") or ()),
+            "execution_count": len(base["output_artifacts"].get("source_task_executions") or ()),
+            "prompt_hashes": sorted(
+                {
+                    str(row.get("prompt_hash"))
+                    for row in base["output_artifacts"].get("source_task_executions") or ()
+                    if row.get("prompt_hash")
+                }
+            ),
+            "response_hashes": sorted(
+                {
+                    str(row.get("response_hash"))
+                    for row in base["output_artifacts"].get("source_task_executions") or ()
+                    if row.get("response_hash")
+                }
+            ),
+        }
+        for base in base_bundles
+    ]
+    head = git_head_sha(repo_root)
+    return {
+        "schema_version": "production_cutover_v3_rollup_metadata_v1",
+        "git_head_sha": head,
+        "report_base_commit_sha": head,
+        "report_generated_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+        "report_generator": "production_cutover_v3",
+        "command": command,
+        "config_hash": stable_hash(config.to_dict()),
+        "source_corpus_hash": stable_hash(source_documents),
+        "candidate_event_hash": stable_hash(candidate_events),
+        "planner_prompt_hash": stable_hash([row.get("planner_prompt_hash") for row in child_metadata] + planner_runs),
+        "planner_response_hash": stable_hash([row.get("planner_response_hash") for row in child_metadata] + planner_runs),
+        "evidence_os_schema_version": next(
+            (str(row.get("evidence_os_schema_version")) for row in child_metadata if row.get("evidence_os_schema_version")),
+            "unknown",
+        ),
+        "scoring_schema_version": SCORING_SCHEMA_VERSION,
+        "stage_schema_version": STAGE_SCHEMA_VERSION,
+        "child_report_metadata_hash": stable_hash(child_metadata),
+    }
+
+
 def _claim_extractor_provider_audit_v3(
     *, base_bundles: Sequence[Mapping[str, Any]], claim_extraction: Mapping[str, Any]
 ) -> Mapping[str, Any]:
@@ -379,6 +472,7 @@ def _claim_extractor_provider_audit_v3(
 def _multiday_validation_v3(
     *,
     base_bundles: Sequence[Mapping[str, Any]],
+    frozen_bundles: Sequence[Mapping[str, Any]],
     provider_matrix: Mapping[str, Any],
     config: ProductionCutoverV3Config,
 ) -> Mapping[str, Any]:
@@ -402,16 +496,23 @@ def _multiday_validation_v3(
                 "pass": day_pass,
             }
         )
-    frozen_rows = _frozen_replay_rows_from_live(live_rows, required_days=config.frozen_replay_days, repeated_days=config.repeated_frozen_days)
-    repeat_variance = sum(int(row.get("repeat_variance", 0)) for row in frozen_rows if row.get("run_kind") == "frozen_repeat_group")
+    frozen_run_rows = [_frozen_replay_row_from_bundle(base) for base in frozen_bundles]
+    frozen_rows = [row for row in frozen_run_rows if row.get("run_kind") == "frozen"]
+    repeat_rows = _frozen_repeat_rows_from_replay_rows(frozen_run_rows)
+    repeat_variance = sum(int(row.get("repeat_variance", 0)) for row in repeat_rows)
+    passed_frozen_dates = {str(row.get("as_of_date")) for row in frozen_rows if row.get("pass")}
+    passed_repeat_dates = {str(row.get("as_of_date")) for row in repeat_rows if row.get("run_count", 0) >= 3 and row.get("pass")}
     summary = {
         "five_day_live_official_shadow_count": len(live_rows),
         "required_live_dry_run_count": config.live_shadow_days,
-        "frozen_replay_day_count": config.frozen_replay_days,
+        "frozen_replay_day_count": len(passed_frozen_dates),
         "required_frozen_day_count": config.frozen_replay_days,
-        "frozen_repeat_day_with_3_runs_count": config.repeated_frozen_days,
+        "frozen_replay_run_count": len([row for row in frozen_rows if row.get("pass")]),
+        "frozen_repeat_day_with_3_runs_count": len(passed_repeat_dates),
         "required_repeated_frozen_day_count": config.repeated_frozen_days,
         "repeat_variance": repeat_variance,
+        "real_frozen_replay_bundle_count": len(frozen_bundles),
+        "synthetic_frozen_replay_row_count": 0,
         "fixture_candidate_in_live_count": 0,
         "fake_frozen_planner_provider_in_live_count": 0,
         "snapshot_only_counted_as_live_count": 0,
@@ -426,6 +527,8 @@ def _multiday_validation_v3(
         and summary["frozen_replay_day_count"] >= config.frozen_replay_days
         and summary["frozen_repeat_day_with_3_runs_count"] >= config.repeated_frozen_days
         and summary["repeat_variance"] == 0
+        and summary["real_frozen_replay_bundle_count"] >= config.frozen_replay_days
+        and summary["synthetic_frozen_replay_row_count"] == 0
         and summary["fixture_candidate_in_live_count"] == 0
         and summary["fake_frozen_planner_provider_in_live_count"] == 0
         else "MULTIDAY_SHADOW_NOT_COMPLETE"
@@ -434,7 +537,7 @@ def _multiday_validation_v3(
         "schema_version": "production_cutover_v3_multiday_validation_v1",
         "summary": summary,
         "rows": live_rows,
-        "frozen_rows": frozen_rows,
+        "frozen_rows": [*frozen_rows, *repeat_rows],
     }
 
 
@@ -559,24 +662,31 @@ def _operator_digest_v3(*, base_bundles: Sequence[Mapping[str, Any]], provider_m
     provider_pending = provider_matrix["summary"]["provider_blocker_count"] > 0
     rows = []
     for base in base_bundles:
+        provider_gaps_by_symbol = _provider_source_gaps_by_symbol(base)
         for row in base["operator_digest"].get("rows") or ():
-            pending = provider_pending or str(row.get("score_stage_validity") or "").startswith("PENDING")
+            symbol = str(row.get("symbol") or "")
+            provider_gaps = [*list(row.get("provider_source_gaps") or ()), *provider_gaps_by_symbol.get(symbol, ())]
+            pending = provider_pending or bool(provider_gaps) or str(row.get("score_stage_validity") or "").startswith("PENDING")
+            score_status = row.get("score_stage_validity")
+            if provider_gaps and not provider_pending:
+                score_status = "PROVIDER_SOURCE_PENDING"
+            next_action = "PROVIDER_WAIT" if provider_pending else ("RECHECK_SOURCE" if pending else "WATCH")
             rows.append(
                 {
                     "as_of_date": base["config"]["as_of_date"],
-                    "symbol": row.get("symbol"),
+                    "symbol": symbol,
                     "company": row.get("company_name"),
-                    "trigger_category": "Official Positive Trigger",
+                    "trigger_category": row.get("trigger_category"),
                     "event_summary": row.get("why_triggered"),
                     "primary_archetype": row.get("primary_archetype"),
                     "current_stage": row.get("section"),
                     "verified_score": row.get("verified_score"),
-                    "score_status": row.get("score_stage_validity"),
+                    "score_status": score_status,
                     "supporting_claims": row.get("accepted_claims") or [],
                     "missing_primitives": row.get("missing_primitives") or [],
-                    "provider_source_gaps": ["blocking provider gap"] if provider_pending else [],
-                    "next_action": "PROVIDER_WAIT" if provider_pending else ("RECHECK_SOURCE" if pending else "WATCH"),
-                    "operator_note": "No buy/sell language; monitor evidence and provider state.",
+                    "provider_source_gaps": ["blocking provider gap"] if provider_pending else provider_gaps,
+                    "next_action": next_action,
+                    "operator_note": _operator_note_with_provider_gaps(row.get("operator_note"), provider_gaps),
                 }
             )
     summary = {
@@ -585,9 +695,37 @@ def _operator_digest_v3(*, base_bundles: Sequence[Mapping[str, Any]], provider_m
         "pending_item_count": sum(row["next_action"] in {"PROVIDER_WAIT", "RECHECK_SOURCE"} for row in rows),
         "scored_item_without_claim_count": sum(bool(row["verified_score"]) and not row["supporting_claims"] for row in rows),
         "provider_failure_final_reject_count": 0,
+        "provider_gap_item_count": sum(bool(row["provider_source_gaps"]) for row in rows),
+        "provider_gap_final_watch_count": sum(bool(row["provider_source_gaps"]) and row["next_action"] == "WATCH" for row in rows),
     }
-    summary["status"] = "OPERATOR_DIGEST_PASS" if rows and summary["scored_item_without_claim_count"] == 0 else "OPERATOR_DIGEST_NOT_COMPLETE"
+    summary["status"] = (
+        "OPERATOR_DIGEST_PASS"
+        if rows and summary["scored_item_without_claim_count"] == 0 and summary["provider_gap_final_watch_count"] == 0
+        else "OPERATOR_DIGEST_NOT_COMPLETE"
+    )
     return {"schema_version": "production_cutover_v3_operator_digest_v1", "summary": summary, "rows": rows}
+
+
+def _provider_source_gaps_by_symbol(base: Mapping[str, Any]) -> Mapping[str, tuple[str, ...]]:
+    gaps: dict[str, list[str]] = {}
+    for provider_row in base.get("source_connector_report", {}).get("rows") or ():
+        if provider_row.get("status") not in {"PROVIDER_FAILED", "AUTH_FAILED", "RATE_LIMITED"}:
+            continue
+        request_params = provider_row.get("request_params") or {}
+        symbol = str(provider_row.get("symbol") or request_params.get("symbol") or "")
+        if not symbol:
+            continue
+        provider = str(provider_row.get("provider_name") or "unknown_provider")
+        error = str(provider_row.get("provider_error") or provider_row.get("status") or "provider gap")
+        gaps.setdefault(symbol, []).append(f"{provider}: {error}")
+    return {symbol: tuple(items) for symbol, items in gaps.items()}
+
+
+def _operator_note_with_provider_gaps(note: Any, provider_gaps: Sequence[str]) -> str:
+    base_note = str(note or "No buy/sell language; monitor evidence and provider state.")
+    if not provider_gaps:
+        return base_note
+    return f"{base_note} Provider/source gap requires recheck before treating the score as final."
 
 
 def _sla_report_v3(*, base_bundles: Sequence[Mapping[str, Any]]) -> Mapping[str, Any]:
@@ -626,6 +764,7 @@ def _static_logic_audit_v3(
     sla: Mapping[str, Any],
     a2: Mapping[str, Any],
     census: Mapping[str, Any],
+    metadata: Mapping[str, Any],
 ) -> Mapping[str, Any]:
     provider_blockers = int(provider_matrix["summary"].get("provider_blocker_count", 0))
     multiday_pass = multiday["summary"].get("status") == "MULTIDAY_SHADOW_PASS"
@@ -656,8 +795,8 @@ def _static_logic_audit_v3(
         "score_without_claim_count": int(stage_distribution["summary"].get("score_without_claim_count", 0)),
         "unbounded_fetch_config_count": int(sla["summary"].get("unbounded_fetch_config_count", 0)),
         "census_implementation_before_cutover_ready_count": int(census.get("label") == "READY_FOR_CENSUS_IMPLEMENTATION" and not completion_ready),
-        "missing_report_hash_count": 0,
-        "report_head_sha_mismatch_count": 0,
+        "missing_report_hash_count": sum(not metadata.get(key) for key in _REQUIRED_ROLLUP_METADATA_KEYS),
+        "report_head_sha_mismatch_count": int(metadata.get("git_head_sha") != metadata.get("report_base_commit_sha")),
     }
     critical_sum = sum(int(value) for value in critical.values())
     blockers = []
@@ -912,36 +1051,118 @@ def _trading_days_ending(as_of: date, count: int) -> tuple[date, ...]:
     return tuple(reversed(days))
 
 
-def _frozen_replay_rows_from_live(
-    live_rows: Sequence[Mapping[str, Any]], *, required_days: int, repeated_days: int
-) -> list[Mapping[str, Any]]:
-    rows: list[Mapping[str, Any]] = []
-    if not live_rows:
-        return rows
-    for index in range(required_days):
-        source = live_rows[index % len(live_rows)]
-        rows.append(
-            {
-                "run_kind": "frozen",
-                "as_of_date": source["as_of_date"],
-                "frozen_snapshot_signature": source["watchlist_signature"],
-                "source_corpus_hash": source["source_corpus_hash"],
-                "pass": True,
-            }
-        )
-    for index in range(repeated_days):
-        source = live_rows[index % len(live_rows)]
-        signatures = [source["watchlist_signature"], source["watchlist_signature"], source["watchlist_signature"]]
-        rows.append(
+def _build_frozen_replay_bundles(
+    *,
+    repo_root: Path,
+    config: ProductionCutoverV3Config,
+    command: str,
+    snapshot_bundles: Sequence[Mapping[str, Any]],
+) -> tuple[Mapping[str, Any], ...]:
+    output_root = Path(config.output_root)
+    if not output_root.is_absolute():
+        output_root = repo_root / output_root
+    frozen_input_root = output_root / "_v3_frozen_inputs"
+    frozen_run_root = output_root / "_v3_frozen_replays"
+    bundles: list[Mapping[str, Any]] = []
+    for day_index, source in enumerate(snapshot_bundles[: config.frozen_replay_days]):
+        as_of_date = str(source["config"]["as_of_date"])
+        snapshot_dir = frozen_input_root / as_of_date
+        write_cutover_shadow_bundle(bundle=source, docs_dir=snapshot_dir / "_docs", output_dir=snapshot_dir)
+        run_count = 3 if day_index < config.repeated_frozen_days else 1
+        for run_index in range(1, run_count + 1):
+            frozen_output_dir = frozen_run_root / as_of_date / f"run-{run_index}"
+            frozen_config = ProductionCutoverConfig(
+                as_of_date=as_of_date,
+                mode=ProductionMode.FROZEN_REPLAY.value,
+                planner_provider="frozen_replay",
+                candidate_min_count=config.candidate_min_count,
+                output_dir=str(frozen_output_dir),
+                validation_output_root=config.validation_output_root,
+                frozen_snapshot_dir=str(snapshot_dir),
+            )
+            frozen_bundle = build_production_cutover_bundle(
+                repo_root=repo_root,
+                config=frozen_config,
+                command=f"{command} --frozen-replay-date {as_of_date} --frozen-repeat-index {run_index}",
+            )
+            write_cutover_shadow_bundle(
+                bundle=frozen_bundle,
+                docs_dir=frozen_output_dir / "_docs",
+                output_dir=frozen_output_dir,
+            )
+            bundles.append(frozen_bundle)
+    return tuple(bundles)
+
+
+def _watchlist_rows_from_bundle(base: Mapping[str, Any]) -> tuple[Mapping[str, Any], ...]:
+    payload = base.get("output_artifacts", {}).get("daily_watchlist") or {}
+    rows = payload.get("rows", ()) if isinstance(payload, Mapping) else payload
+    return tuple(row for row in rows if isinstance(row, Mapping))
+
+
+def _score_stage_fingerprint(base: Mapping[str, Any]) -> str:
+    rows = [
+        {
+            "symbol": row.get("symbol"),
+            "stage": row.get("section") or row.get("base_stage"),
+            "score": row.get("verified_score"),
+            "score_status": row.get("score_stage_validity") or row.get("score_valid_status"),
+        }
+        for row in _watchlist_rows_from_bundle(base)
+    ]
+    return stable_hash(rows)
+
+
+def _v3_frozen_day_pass(base: Mapping[str, Any]) -> bool:
+    return (
+        str(base.get("config", {}).get("mode")) == ProductionMode.FROZEN_REPLAY.value
+        and len(_watchlist_rows_from_bundle(base)) > 0
+        and int(base.get("score_meaning_audit", {}).get("summary", {}).get("deterministic_scorer_output_count", 0)) > 0
+        and int(base.get("static_logic_audit", {}).get("summary", {}).get("critical_count_sum", 0)) == 0
+    )
+
+
+def _frozen_replay_row_from_bundle(base: Mapping[str, Any]) -> Mapping[str, Any]:
+    return {
+        "run_kind": "frozen",
+        "as_of_date": base.get("config", {}).get("as_of_date"),
+        "mode": base.get("config", {}).get("mode"),
+        "frozen_snapshot_dir": base.get("config", {}).get("frozen_snapshot_dir"),
+        "watchlist_signature": stable_hash(base.get("output_artifacts", {}).get("daily_watchlist") or {}),
+        "score_stage_hash": _score_stage_fingerprint(base),
+        "source_corpus_hash": base.get("metadata", {}).get("source_corpus_hash"),
+        "deterministic_stage_output_count": base.get("score_meaning_audit", {})
+        .get("summary", {})
+        .get("deterministic_scorer_output_count", 0),
+        "provider_failure_count": base.get("source_connector_report", {}).get("summary", {}).get("provider_failure_count", 0),
+        "provider_pending_or_nonfinal": True,
+        "pass": _v3_frozen_day_pass(base),
+    }
+
+
+def _frozen_repeat_rows_from_replay_rows(rows: Sequence[Mapping[str, Any]]) -> list[Mapping[str, Any]]:
+    by_date: dict[str, list[Mapping[str, Any]]] = {}
+    for row in rows:
+        as_of_date = str(row.get("as_of_date") or "")
+        if not as_of_date:
+            continue
+        by_date.setdefault(as_of_date, []).append(row)
+    repeat_rows: list[Mapping[str, Any]] = []
+    for as_of_date, group in sorted(by_date.items()):
+        if len(group) < 3:
+            continue
+        signatures = [str(row.get("score_stage_hash")) for row in group[:3]]
+        repeat_rows.append(
             {
                 "run_kind": "frozen_repeat_group",
-                "as_of_date": source["as_of_date"],
-                "run_count": 3,
-                "signatures": signatures,
+                "as_of_date": as_of_date,
+                "run_count": len(group[:3]),
+                "score_stage_hashes": signatures,
                 "repeat_variance": len(set(signatures)) - 1,
+                "pass": all(row.get("pass") for row in group[:3]) and len(set(signatures)) == 1,
             }
         )
-    return rows
+    return repeat_rows
 
 
 def _write_v3_shadow_outputs(
@@ -1012,7 +1233,20 @@ def _stability_markdown_v3(multiday: Mapping[str, Any]) -> str:
 def _operator_digest_summary_markdown(report: Mapping[str, Any]) -> str:
     lines = ["# Production Cutover v3 Operator Digest Summary", ""]
     for row in report.get("rows", ())[:100]:
-        lines.append(f"- {row.get('as_of_date', '')} {row.get('symbol')} {row.get('current_stage')}: {row.get('next_action')}")
+        claims = ", ".join(str(claim) for claim in (row.get("supporting_claims") or ())) or "none"
+        missing = ", ".join(str(item) for item in (row.get("missing_primitives") or ())) or "none"
+        provider_gaps = ", ".join(str(item) for item in (row.get("provider_source_gaps") or ())) or "none"
+        lines.append(
+            "- "
+            f"{row.get('as_of_date', '')} {row.get('symbol')} {row.get('company')}: "
+            f"stage={row.get('current_stage')}, action={row.get('next_action')}, "
+            f"score={row.get('verified_score')}, status={row.get('score_status')}, "
+            f"trigger={row.get('trigger_category')}"
+        )
+        lines.append(f"  claims: {claims}")
+        lines.append(f"  missing: {missing}")
+        lines.append(f"  provider_gaps: {provider_gaps}")
+        lines.append(f"  note: {row.get('operator_note')}")
     lines.append("")
     return "\n".join(lines)
 
@@ -1031,7 +1265,21 @@ def _v2_to_v3_gap_markdown(*, provider_matrix: Mapping[str, Any], multiday: Mapp
     )
 
 
-def _acceptance_markdown_v3(*, labels: Sequence[str], verdict: Mapping[str, Any], static: Mapping[str, Any]) -> str:
+def _metadata_markdown_lines(metadata: Mapping[str, Any]) -> list[str]:
+    lines = ["", "## Reproducibility Metadata", ""]
+    for key in _REQUIRED_ROLLUP_METADATA_KEYS:
+        lines.append(f"- {key}: {metadata.get(key)}")
+    lines.append("")
+    return lines
+
+
+def _acceptance_markdown_v3(
+    *,
+    labels: Sequence[str],
+    verdict: Mapping[str, Any],
+    static: Mapping[str, Any],
+    metadata: Mapping[str, Any],
+) -> str:
     return "\n".join(
         [
             "# E2R Production Cutover Gate v3 Acceptance",
@@ -1042,7 +1290,29 @@ def _acceptance_markdown_v3(*, labels: Sequence[str], verdict: Mapping[str, Any]
             f"- static critical count: {static['summary']['critical_count_sum']}",
             "",
             "v3는 Census Mode를 구현하지 않고, provider/multiday/stage cutover gate만 닫는다.",
+            *_metadata_markdown_lines(metadata),
+        ]
+    )
+
+
+def _readiness_markdown_v3(
+    *,
+    verdict: Mapping[str, Any],
+    labels: Sequence[str],
+    static: Mapping[str, Any],
+    metadata: Mapping[str, Any],
+) -> str:
+    return "\n".join(
+        [
+            "# E2R Production Cutover Gate v3 Verdict",
             "",
+            f"- production_verdict: {verdict['production_verdict']}",
+            f"- labels: {', '.join(labels)}",
+            f"- static_critical_count_sum: {static['summary']['critical_count_sum']}",
+            f"- blockers: {verdict.get('blockers', [])}",
+            "",
+            "쉬운 예: provider와 multiday가 통과해도 사용자 승인 플래그가 없으면 PRODUCTION_READY가 아니라 CUTOVER_READY까지만 간다.",
+            *_metadata_markdown_lines(metadata),
         ]
     )
 

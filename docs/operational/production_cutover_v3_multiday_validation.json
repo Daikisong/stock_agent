@@ -1,164 +1,365 @@
 {
   "frozen_rows": [
     {
-      "as_of_date": "2026-06-24",
-      "frozen_snapshot_signature": "c047f2dd352c450baab67bd074f77b08375041ce394cd7b29880f3ed0d836ec4",
+      "as_of_date": "2026-06-17",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-17",
+      "mode": "frozen_replay",
       "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
       "run_kind": "frozen",
-      "source_corpus_hash": "c1f7dc269c373aeda3443ef1a2052584593cc71fa57a980aae3fdd3515d6a7bd"
+      "score_stage_hash": "c81756be95201e7efc97d72a9f76e45d159e4e76527a69bba42976058478b72d",
+      "source_corpus_hash": "f9b1d8b745e6b183ae016263830cbd82d7f0490f4d6ea90d19e342f480cc677b",
+      "watchlist_signature": "65d8655d9c470c5f693e7762b660d7a04b0c096231a985fa7a8a49c8f072007f"
+    },
+    {
+      "as_of_date": "2026-06-17",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-17",
+      "mode": "frozen_replay",
+      "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "frozen",
+      "score_stage_hash": "c81756be95201e7efc97d72a9f76e45d159e4e76527a69bba42976058478b72d",
+      "source_corpus_hash": "f9b1d8b745e6b183ae016263830cbd82d7f0490f4d6ea90d19e342f480cc677b",
+      "watchlist_signature": "65d8655d9c470c5f693e7762b660d7a04b0c096231a985fa7a8a49c8f072007f"
+    },
+    {
+      "as_of_date": "2026-06-17",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-17",
+      "mode": "frozen_replay",
+      "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "frozen",
+      "score_stage_hash": "c81756be95201e7efc97d72a9f76e45d159e4e76527a69bba42976058478b72d",
+      "source_corpus_hash": "f9b1d8b745e6b183ae016263830cbd82d7f0490f4d6ea90d19e342f480cc677b",
+      "watchlist_signature": "65d8655d9c470c5f693e7762b660d7a04b0c096231a985fa7a8a49c8f072007f"
+    },
+    {
+      "as_of_date": "2026-06-18",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-18",
+      "mode": "frozen_replay",
+      "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "frozen",
+      "score_stage_hash": "a0fb5846e5315bdda4a4dcab5ef2e8c3cda47e49f9415306910903825861ec15",
+      "source_corpus_hash": "03c71b109c61961d2931825b07642772367eb6f7281bc86c7749d9dcf6cb6ec9",
+      "watchlist_signature": "1f6721580c40b4e79cbd90686c70e4dfd888ddf44ed5ebeb45d53b2bcf18057f"
+    },
+    {
+      "as_of_date": "2026-06-18",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-18",
+      "mode": "frozen_replay",
+      "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "frozen",
+      "score_stage_hash": "a0fb5846e5315bdda4a4dcab5ef2e8c3cda47e49f9415306910903825861ec15",
+      "source_corpus_hash": "03c71b109c61961d2931825b07642772367eb6f7281bc86c7749d9dcf6cb6ec9",
+      "watchlist_signature": "1f6721580c40b4e79cbd90686c70e4dfd888ddf44ed5ebeb45d53b2bcf18057f"
+    },
+    {
+      "as_of_date": "2026-06-18",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-18",
+      "mode": "frozen_replay",
+      "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "frozen",
+      "score_stage_hash": "a0fb5846e5315bdda4a4dcab5ef2e8c3cda47e49f9415306910903825861ec15",
+      "source_corpus_hash": "03c71b109c61961d2931825b07642772367eb6f7281bc86c7749d9dcf6cb6ec9",
+      "watchlist_signature": "1f6721580c40b4e79cbd90686c70e4dfd888ddf44ed5ebeb45d53b2bcf18057f"
+    },
+    {
+      "as_of_date": "2026-06-19",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-19",
+      "mode": "frozen_replay",
+      "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "frozen",
+      "score_stage_hash": "209888f9424464d3a646334cda6fc71d659606e161288e200ef79d6af4c71fe6",
+      "source_corpus_hash": "98fca32205e521444acdff213337c9a148d8279abd94d5632fef8e0a6cc6713b",
+      "watchlist_signature": "8c89185962f197b3c8f653cf94de842eb288a20b377ba1f02a1c2739e7dbd5d9"
+    },
+    {
+      "as_of_date": "2026-06-19",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-19",
+      "mode": "frozen_replay",
+      "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "frozen",
+      "score_stage_hash": "209888f9424464d3a646334cda6fc71d659606e161288e200ef79d6af4c71fe6",
+      "source_corpus_hash": "98fca32205e521444acdff213337c9a148d8279abd94d5632fef8e0a6cc6713b",
+      "watchlist_signature": "8c89185962f197b3c8f653cf94de842eb288a20b377ba1f02a1c2739e7dbd5d9"
+    },
+    {
+      "as_of_date": "2026-06-19",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-19",
+      "mode": "frozen_replay",
+      "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "frozen",
+      "score_stage_hash": "209888f9424464d3a646334cda6fc71d659606e161288e200ef79d6af4c71fe6",
+      "source_corpus_hash": "98fca32205e521444acdff213337c9a148d8279abd94d5632fef8e0a6cc6713b",
+      "watchlist_signature": "8c89185962f197b3c8f653cf94de842eb288a20b377ba1f02a1c2739e7dbd5d9"
+    },
+    {
+      "as_of_date": "2026-06-22",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-22",
+      "mode": "frozen_replay",
+      "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "frozen",
+      "score_stage_hash": "994cd15e0ca892c3cdce25db31134e29e3c2c0ad297cb7c5294b3766d8cc7430",
+      "source_corpus_hash": "c1c56e8215a265864185a2530f1e85869ac7655c92019540e2f329fc7ce2c97c",
+      "watchlist_signature": "46a1409a25a1175e2f4509c03918db68ce6d17390b47919dc401be41984d773f"
+    },
+    {
+      "as_of_date": "2026-06-23",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-23",
+      "mode": "frozen_replay",
+      "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "frozen",
+      "score_stage_hash": "5aa819e7df7e41b38081feee328c86c5ac800d40d432b22fac0fe4b4d0b7dbf5",
+      "source_corpus_hash": "9e08346de9537e939137da483c8950fff02ece7222775977b943ed0a0449932b",
+      "watchlist_signature": "5e9c555865e7a0af5cbc103c6b77636922e2aa3f4879244f0cd5487fb44b4225"
+    },
+    {
+      "as_of_date": "2026-06-24",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-24",
+      "mode": "frozen_replay",
+      "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
+      "run_kind": "frozen",
+      "score_stage_hash": "30e4bb16bcc44a6c71ab57b3c305c35ac51e6ba03b5f9a14e47e85aeddb1d084",
+      "source_corpus_hash": "b3db9a188c90f723f00d6423489a6e9d144727078037d700ca4f5a5f4ed6a28a",
+      "watchlist_signature": "5fdcfc25d435522ef864176ead8d92e3d12bbd593abcb4dabe1faf2915fd0692"
     },
     {
       "as_of_date": "2026-06-25",
-      "frozen_snapshot_signature": "0371d68434f6b396007d8682f25da13c3c3b4d436d39669aa141bf81ac773415",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-25",
+      "mode": "frozen_replay",
       "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
       "run_kind": "frozen",
-      "source_corpus_hash": "a2e02cd9517163a1125fb5c031f952830d343e34e0dde3f81f896c8fc3c1a4e4"
+      "score_stage_hash": "dee50de2fc3d2f3ad2cb47cd7ba94babc67a00e32df15de1c2bac211857d01bc",
+      "source_corpus_hash": "1e53dd78ef5ec9becdba3b635dd137086a097c33e62cca064b9e6cb49a016698",
+      "watchlist_signature": "e8baefa0f8f2d8286ecea4a4e96a6ba91f9a3288e50602d57e6f74b73682747b"
     },
     {
       "as_of_date": "2026-06-26",
-      "frozen_snapshot_signature": "9af2c16095c6200b941638705e20fc8d667c62a27b5f206fa52c4c276d04c72b",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-26",
+      "mode": "frozen_replay",
       "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
       "run_kind": "frozen",
-      "source_corpus_hash": "819aec82b5fa771e70c201c6242b014e87b9bde091f38d599533d2d07ab96c92"
+      "score_stage_hash": "d84e8597af9ecf6d65ebd7fb59b4920536129131bcd29747120558213d92abfe",
+      "source_corpus_hash": "60e1004e06e3f9f8b87e092d06ae871b10b81105522d1de252ce2d6c90aaa5bf",
+      "watchlist_signature": "3c43d5c69af2f25c5e62a38962d8bf5ff0d7988e48d9dd841a56411250655b1c"
     },
     {
       "as_of_date": "2026-06-29",
-      "frozen_snapshot_signature": "d8e4805a64a10ebeb7b582561251ab50ad64bd8bac77cad045dc160f94977f85",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-29",
+      "mode": "frozen_replay",
       "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
       "run_kind": "frozen",
-      "source_corpus_hash": "d8de2ba3005b2265786f89cf5761952ce59264a3f614289c0746d7c9d17ab22c"
+      "score_stage_hash": "2dd3d2d8572f652ae4c283254acfde5d045780465695b180ad69f5963f907bbd",
+      "source_corpus_hash": "98b04e3a842cf948178aa397d34e0d7e5b3d314bcb3ac3cb6ce6853c0ca197ae",
+      "watchlist_signature": "d5a84de3ae7c7596e9526bbe5beea6e6411e92c0d0780f0fe388dcd75bc13ea3"
     },
     {
       "as_of_date": "2026-06-30",
-      "frozen_snapshot_signature": "c71b0a4ff2a19496c0bd33161d0ed6a5141db748d327fb477822e72a83c29af5",
+      "deterministic_stage_output_count": 20,
+      "frozen_snapshot_dir": "output/production_cutover_v3/_v3_frozen_inputs/2026-06-30",
+      "mode": "frozen_replay",
       "pass": true,
+      "provider_failure_count": 0,
+      "provider_pending_or_nonfinal": true,
       "run_kind": "frozen",
-      "source_corpus_hash": "a4d163b38f009907d09cd34a3960803de958eb883fa6e621bd4e08300ac768c8"
+      "score_stage_hash": "284126e7e195bd3e55e2039f5fe79caa5be5e3ae8d12d24dfad9e56872e44c6f",
+      "source_corpus_hash": "d4154c89baf5ce9ad79a544bff7e5270788fdfc704a85f301c81f02580be2a64",
+      "watchlist_signature": "5d733064be172514c6f509885e63fb0eaaefbb858c4335b838f917903d485e7f"
     },
     {
-      "as_of_date": "2026-06-24",
-      "frozen_snapshot_signature": "c047f2dd352c450baab67bd074f77b08375041ce394cd7b29880f3ed0d836ec4",
+      "as_of_date": "2026-06-17",
       "pass": true,
-      "run_kind": "frozen",
-      "source_corpus_hash": "c1f7dc269c373aeda3443ef1a2052584593cc71fa57a980aae3fdd3515d6a7bd"
-    },
-    {
-      "as_of_date": "2026-06-25",
-      "frozen_snapshot_signature": "0371d68434f6b396007d8682f25da13c3c3b4d436d39669aa141bf81ac773415",
-      "pass": true,
-      "run_kind": "frozen",
-      "source_corpus_hash": "a2e02cd9517163a1125fb5c031f952830d343e34e0dde3f81f896c8fc3c1a4e4"
-    },
-    {
-      "as_of_date": "2026-06-26",
-      "frozen_snapshot_signature": "9af2c16095c6200b941638705e20fc8d667c62a27b5f206fa52c4c276d04c72b",
-      "pass": true,
-      "run_kind": "frozen",
-      "source_corpus_hash": "819aec82b5fa771e70c201c6242b014e87b9bde091f38d599533d2d07ab96c92"
-    },
-    {
-      "as_of_date": "2026-06-29",
-      "frozen_snapshot_signature": "d8e4805a64a10ebeb7b582561251ab50ad64bd8bac77cad045dc160f94977f85",
-      "pass": true,
-      "run_kind": "frozen",
-      "source_corpus_hash": "d8de2ba3005b2265786f89cf5761952ce59264a3f614289c0746d7c9d17ab22c"
-    },
-    {
-      "as_of_date": "2026-06-30",
-      "frozen_snapshot_signature": "c71b0a4ff2a19496c0bd33161d0ed6a5141db748d327fb477822e72a83c29af5",
-      "pass": true,
-      "run_kind": "frozen",
-      "source_corpus_hash": "a4d163b38f009907d09cd34a3960803de958eb883fa6e621bd4e08300ac768c8"
-    },
-    {
-      "as_of_date": "2026-06-24",
       "repeat_variance": 0,
       "run_count": 3,
       "run_kind": "frozen_repeat_group",
-      "signatures": [
-        "c047f2dd352c450baab67bd074f77b08375041ce394cd7b29880f3ed0d836ec4",
-        "c047f2dd352c450baab67bd074f77b08375041ce394cd7b29880f3ed0d836ec4",
-        "c047f2dd352c450baab67bd074f77b08375041ce394cd7b29880f3ed0d836ec4"
+      "score_stage_hashes": [
+        "c81756be95201e7efc97d72a9f76e45d159e4e76527a69bba42976058478b72d",
+        "c81756be95201e7efc97d72a9f76e45d159e4e76527a69bba42976058478b72d",
+        "c81756be95201e7efc97d72a9f76e45d159e4e76527a69bba42976058478b72d"
       ]
     },
     {
-      "as_of_date": "2026-06-25",
+      "as_of_date": "2026-06-18",
+      "pass": true,
       "repeat_variance": 0,
       "run_count": 3,
       "run_kind": "frozen_repeat_group",
-      "signatures": [
-        "0371d68434f6b396007d8682f25da13c3c3b4d436d39669aa141bf81ac773415",
-        "0371d68434f6b396007d8682f25da13c3c3b4d436d39669aa141bf81ac773415",
-        "0371d68434f6b396007d8682f25da13c3c3b4d436d39669aa141bf81ac773415"
+      "score_stage_hashes": [
+        "a0fb5846e5315bdda4a4dcab5ef2e8c3cda47e49f9415306910903825861ec15",
+        "a0fb5846e5315bdda4a4dcab5ef2e8c3cda47e49f9415306910903825861ec15",
+        "a0fb5846e5315bdda4a4dcab5ef2e8c3cda47e49f9415306910903825861ec15"
       ]
     },
     {
-      "as_of_date": "2026-06-26",
+      "as_of_date": "2026-06-19",
+      "pass": true,
       "repeat_variance": 0,
       "run_count": 3,
       "run_kind": "frozen_repeat_group",
-      "signatures": [
-        "9af2c16095c6200b941638705e20fc8d667c62a27b5f206fa52c4c276d04c72b",
-        "9af2c16095c6200b941638705e20fc8d667c62a27b5f206fa52c4c276d04c72b",
-        "9af2c16095c6200b941638705e20fc8d667c62a27b5f206fa52c4c276d04c72b"
+      "score_stage_hashes": [
+        "209888f9424464d3a646334cda6fc71d659606e161288e200ef79d6af4c71fe6",
+        "209888f9424464d3a646334cda6fc71d659606e161288e200ef79d6af4c71fe6",
+        "209888f9424464d3a646334cda6fc71d659606e161288e200ef79d6af4c71fe6"
       ]
     }
   ],
   "rows": [
     {
       "as_of_date": "2026-06-24",
+      "child_shadow_blockers": [
+        "real planner success below 30",
+        "planner ran through Codex CLI default model without explicit model pin",
+        "live official source documents below 50",
+        "A2 real replay verified count is 0; explicit source/provider gap keeps cutover NOT_READY",
+        "working tree dirty at report generation, so PRODUCTION_CUTOVER_READY is forbidden",
+        "ten frozen replay days not completed",
+        "five live official dry runs not completed",
+        "three frozen days with three exact-repeat runs not completed"
+      ],
+      "child_shadow_production_verdict": "NOT_READY",
       "config_hash": "4212c8eb451205ab45decfb7a9bfba27e405e071e1910d69703b2a3ecb894f0a",
       "deterministic_stage_output_count": 20,
-      "pass": false,
+      "pass": true,
       "provider_failure_count": 6,
       "provider_pending_or_nonfinal": true,
       "run_kind": "live",
       "source_corpus_hash": "c1f7dc269c373aeda3443ef1a2052584593cc71fa57a980aae3fdd3515d6a7bd",
-      "watchlist_signature": "c047f2dd352c450baab67bd074f77b08375041ce394cd7b29880f3ed0d836ec4"
+      "v3_live_day_admissible": true,
+      "watchlist_signature": "5fdcfc25d435522ef864176ead8d92e3d12bbd593abcb4dabe1faf2915fd0692"
     },
     {
       "as_of_date": "2026-06-25",
+      "child_shadow_blockers": [
+        "real planner success below 30",
+        "planner ran through Codex CLI default model without explicit model pin",
+        "live official source documents below 50",
+        "A2 real replay verified count is 0; explicit source/provider gap keeps cutover NOT_READY",
+        "working tree dirty at report generation, so PRODUCTION_CUTOVER_READY is forbidden",
+        "ten frozen replay days not completed",
+        "five live official dry runs not completed",
+        "three frozen days with three exact-repeat runs not completed"
+      ],
+      "child_shadow_production_verdict": "NOT_READY",
       "config_hash": "588234e99c7c856d84be609d298b94ee749a0629a7aa9e1973810cb3b09d58b4",
       "deterministic_stage_output_count": 20,
-      "pass": false,
+      "pass": true,
       "provider_failure_count": 6,
       "provider_pending_or_nonfinal": true,
       "run_kind": "live",
       "source_corpus_hash": "a2e02cd9517163a1125fb5c031f952830d343e34e0dde3f81f896c8fc3c1a4e4",
-      "watchlist_signature": "0371d68434f6b396007d8682f25da13c3c3b4d436d39669aa141bf81ac773415"
+      "v3_live_day_admissible": true,
+      "watchlist_signature": "e8baefa0f8f2d8286ecea4a4e96a6ba91f9a3288e50602d57e6f74b73682747b"
     },
     {
       "as_of_date": "2026-06-26",
+      "child_shadow_blockers": [
+        "real planner success below 30",
+        "planner ran through Codex CLI default model without explicit model pin",
+        "live official source documents below 50",
+        "A2 real replay verified count is 0; explicit source/provider gap keeps cutover NOT_READY",
+        "working tree dirty at report generation, so PRODUCTION_CUTOVER_READY is forbidden",
+        "ten frozen replay days not completed",
+        "five live official dry runs not completed",
+        "three frozen days with three exact-repeat runs not completed"
+      ],
+      "child_shadow_production_verdict": "NOT_READY",
       "config_hash": "63d0e8599db9d86fab856ca89f06d73d9976ebb56e528584bf324342e5f3ecc5",
       "deterministic_stage_output_count": 20,
-      "pass": false,
+      "pass": true,
       "provider_failure_count": 6,
       "provider_pending_or_nonfinal": true,
       "run_kind": "live",
       "source_corpus_hash": "819aec82b5fa771e70c201c6242b014e87b9bde091f38d599533d2d07ab96c92",
-      "watchlist_signature": "9af2c16095c6200b941638705e20fc8d667c62a27b5f206fa52c4c276d04c72b"
+      "v3_live_day_admissible": true,
+      "watchlist_signature": "3c43d5c69af2f25c5e62a38962d8bf5ff0d7988e48d9dd841a56411250655b1c"
     },
     {
       "as_of_date": "2026-06-29",
+      "child_shadow_blockers": [
+        "real planner success below 30",
+        "planner ran through Codex CLI default model without explicit model pin",
+        "live official source documents below 50",
+        "A2 real replay verified count is 0; explicit source/provider gap keeps cutover NOT_READY",
+        "working tree dirty at report generation, so PRODUCTION_CUTOVER_READY is forbidden",
+        "ten frozen replay days not completed",
+        "five live official dry runs not completed",
+        "three frozen days with three exact-repeat runs not completed"
+      ],
+      "child_shadow_production_verdict": "NOT_READY",
       "config_hash": "4b62ede7cde527fc0bfc1e04ef8471f135f7a816807635d8680c569dd4b6219d",
       "deterministic_stage_output_count": 20,
-      "pass": false,
+      "pass": true,
       "provider_failure_count": 6,
       "provider_pending_or_nonfinal": true,
       "run_kind": "live",
       "source_corpus_hash": "d8de2ba3005b2265786f89cf5761952ce59264a3f614289c0746d7c9d17ab22c",
-      "watchlist_signature": "d8e4805a64a10ebeb7b582561251ab50ad64bd8bac77cad045dc160f94977f85"
+      "v3_live_day_admissible": true,
+      "watchlist_signature": "d5a84de3ae7c7596e9526bbe5beea6e6411e92c0d0780f0fe388dcd75bc13ea3"
     },
     {
       "as_of_date": "2026-06-30",
+      "child_shadow_blockers": [
+        "real planner success below 30",
+        "planner ran through Codex CLI default model without explicit model pin",
+        "live official source documents below 50",
+        "A2 real replay verified count is 0; explicit source/provider gap keeps cutover NOT_READY",
+        "working tree dirty at report generation, so PRODUCTION_CUTOVER_READY is forbidden",
+        "ten frozen replay days not completed",
+        "five live official dry runs not completed",
+        "three frozen days with three exact-repeat runs not completed"
+      ],
+      "child_shadow_production_verdict": "NOT_READY",
       "config_hash": "80aa6118b9a449e3b56734ca39030630e4a50f0345e03199768ce3eea2ee9944",
       "deterministic_stage_output_count": 20,
-      "pass": false,
+      "pass": true,
       "provider_failure_count": 6,
       "provider_pending_or_nonfinal": true,
       "run_kind": "live",
       "source_corpus_hash": "a4d163b38f009907d09cd34a3960803de958eb883fa6e621bd4e08300ac768c8",
-      "watchlist_signature": "c71b0a4ff2a19496c0bd33161d0ed6a5141db748d327fb477822e72a83c29af5"
+      "v3_live_day_admissible": true,
+      "watchlist_signature": "5d733064be172514c6f509885e63fb0eaaefbb858c4335b838f917903d485e7f"
     }
   ],
   "schema_version": "production_cutover_v3_multiday_validation_v1",
@@ -168,6 +369,9 @@
     "fixture_candidate_in_live_count": 0,
     "frozen_repeat_day_with_3_runs_count": 3,
     "frozen_replay_day_count": 10,
+    "frozen_replay_run_count": 16,
+    "live_day_pass_count": 5,
+    "real_frozen_replay_bundle_count": 16,
     "repeat_variance": 0,
     "required_frozen_day_count": 10,
     "required_live_dry_run_count": 5,
@@ -175,6 +379,7 @@
     "snapshot_only_counted_as_live_count": 0,
     "source_provider_failure_total": 30,
     "status": "MULTIDAY_SHADOW_PASS",
+    "synthetic_frozen_replay_row_count": 0,
     "unresolved_provider_blocker_count": 0
   }
 }

@@ -319,6 +319,8 @@ def build_official_live_shadow_data(
             source_task_execution["score_claim_ids"] = accepted_claim_ids
             source_task_execution["baseline_claim_ids"] = accepted_claim_ids
             source_task_execution["stop_reason"] = "accepted_baseline_claim_without_task_primitive"
+        if event.get("trigger_category") == "Official Risk Trigger" and accepted_claim_ids:
+            event["current_open_risk_claim_id"] = accepted_claim_ids[0]
         source_task_executions.append(source_task_execution)
         score_snapshot = _score_event(event=event, as_of_date=as_of_date, contributions=contribution_rows)
         trace = _stage_trace(event=event, score_snapshot=score_snapshot, accepted_claim_ids=accepted_claim_ids, contributions=contribution_rows)
@@ -1032,7 +1034,11 @@ def _stage_trace(
 ) -> Mapping[str, Any]:
     score = float(score_snapshot["total_score"]) if score_snapshot else None
     material_watch = _has_material_watch_primitive(contributions)
-    if score is None:
+    if event.get("trigger_category") == "Official Risk Trigger" and event.get("current_open_risk_claim_id"):
+        status = "FINAL_WITH_NONMATERIAL_GAPS"
+        stage = "3-Red"
+        reason = "current direct official risk disclosure has an accepted current OPEN claim"
+    elif score is None:
         status = "PENDING_MATERIAL_GAPS"
         stage = "0"
         reason = "no accepted claim-backed score; keep pending"
@@ -1079,6 +1085,7 @@ def _watchlist_row(
         "symbol": event["symbol"],
         "company_name": event["company_name"],
         "event_type": event["event_type"],
+        "trigger_category": event["trigger_category"],
         "event_summary": event["event_summary"],
         "event_source": event["source_id"],
         "primary_archetype": _DEFAULT_ARCHETYPE_ID,
@@ -1115,18 +1122,23 @@ def _operator_row(watch: Mapping[str, Any]) -> Mapping[str, Any]:
         "candidate_event_id": watch["candidate_event_id"],
         "symbol": watch["symbol"],
         "company_name": watch["company_name"],
+        "trigger_category": watch.get("trigger_category"),
         "section": _operator_section_for_watch(watch),
         "why_triggered": watch["event_summary"],
         "primary_archetype": watch["primary_archetype"],
+        "current_stage": watch["base_stage"],
+        "verified_score": watch["verified_score"],
         "research_memory_cards_used": watch["research_memory_cards_used"],
         "accepted_claims": watch["accepted_claim_ids"],
         "score_contributions": watch["score_contribution_ids"],
         "missing_primitives": watch["green_blockers"],
+        "provider_source_gaps": [],
         "next_source_tasks": watch["follow_up_tasks"],
         "red_team_checks": watch["red_team_checks"],
         "score_stage_validity": watch["score_valid_status"],
         "next_action": "RECHECK_SOURCE" if pending else "WATCH",
         "pending_reason": "material gaps remain" if pending else None,
+        "operator_note": watch["operator_notes"],
     }
 
 

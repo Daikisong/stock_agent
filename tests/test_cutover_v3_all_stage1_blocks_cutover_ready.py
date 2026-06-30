@@ -1,7 +1,7 @@
 import unittest
 
 from e2r.production.cutover_v3 import _static_logic_audit_v3
-from tests.cutover_v3_test_helpers import fake_a2, fake_provider_matrix
+from tests.cutover_v3_test_helpers import fake_a2, fake_provider_matrix, fake_rollup_metadata
 
 
 class CutoverV3AllStage1BlocksCutoverReadyTests(unittest.TestCase):
@@ -22,6 +22,7 @@ class CutoverV3AllStage1BlocksCutoverReadyTests(unittest.TestCase):
             sla={"summary": {"status": "SLA_PASS", "unbounded_fetch_config_count": 0}},
             a2=fake_a2(),
             census={"label": "READY_FOR_CENSUS_DESIGN"},
+            metadata=fake_rollup_metadata(),
         )
         self.assertGreater(audit["summary"]["all_stage1_but_ready_count"], 0)
 
