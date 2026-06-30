@@ -30,6 +30,7 @@ def map_claim_to_primitive(
     if adjudication.semantic_status != "PASS":
         return PrimitiveMappingDecision(None, "REJECTED", "NEUTRAL", "adjudication_not_passed")
     mapping = predicate_to_primitives or {
+        "official_document_fact": ("information_confidence",),
         "contract_or_order_claim": ("contract_quality", "revenue_visibility_contract", "order_to_revenue_bridge"),
         "capital_event_claim": ("capital_allocation_event",),
         "capacity_investment_claim": ("capacity_expansion", "capacity_precommitted"),

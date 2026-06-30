@@ -1,0 +1,721 @@
+{
+  "rows": [
+    {
+      "accepted_claim_ids": [
+        "CLM-730783d6a2da6281b932"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-008560-20260630000644",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-71da6a5fd1cfdfd6d346"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "008560",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-c403435328c43a3a7925"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-016360-20260630000642",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-ca03e7c65a6a473b7ff7"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "016360",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-9f6f8dbfeade50fad9f9"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-001520-20260630800672",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-b9843e160e9af290ee5d"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "001520",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-9468af1d0e171424ccab"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-389020-20260630900655",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-5847cf3ef63b1dc92459"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "389020",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-f7ce75cba58e753411d5"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-011560-20260630900621",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-3a00993f27934d9e7af1"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "011560",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-d81df04b59cf62d1b5d8"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-174900-20260630900653",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-9ab2f13e6a7133459882"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "174900",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-b8a47fe287532b99db58"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-333620-20260630900660",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-cc8449982150d885401b"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "333620",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-752fb934def1819f7d4b"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-001570-20260630800678",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-ede29641e293cee591f7"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "001570",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-0f1c943ac84cf43b7ef7"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-003450-20260630000613",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-7ac4b760d3136ef6220c"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "003450",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-69b33445f27455e8d128"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-008670-20260630000583",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-6cbde8730f55a11e21b4"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "008670",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-6581ed7078b46cf99a9b"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-008670-20260630000575",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-4ff3fea2511d25e96ea0"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "008670",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-1ef8fd28970c759bb11b"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-001200-20260630000548",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-1da9ec6e9f4755d76856"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "001200",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-753a381bd59725c62d76"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-013580-20260630800549",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-3cd59e4f98aac6e3fda2"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "013580",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-a3d291ff7e25301710b4"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-189860-20260630900584",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-935dfacf26e18e684b85"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "189860",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-95364f3ce14c46c1109a"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-001500-20260630000533",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-d25cacf8f0f4d9d83ddc"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "001500",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-7ae45734873e1a57bee4"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-008560-20260630000518",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-91deabc067b5b10618c9"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "008560",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-dc248d88ec0c376e649c"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-432470-20260630900458",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-0d2d09ba82fb19e3e4af"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "432470",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-1e7776f46ff065f9d6a6"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-171010-20260630900574",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-6ad226f19d04280b84f3"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "171010",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-b7d7aa4e5e6ee34a8daf"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-030610-20260630000513",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-3b32704cb5bac27dda5f"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "030610",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-fe3794578b734987b7e3"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-261780-20260630900561",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-abae0da3cc405e4f7247"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "261780",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-8e6b04bce1b49215f716"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-092790-20260630800532",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-19d015d3681dda7f6c41"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "092790",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-ba53be391f0deddd71cd"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-030610-20260630000502",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-0d766781a464c1163e7b"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "030610",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-ab132e929f0452e97995"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-008670-20260630000493",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-9c95ff66e9d68b127783"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "008670",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-6e0f85b8758bc1588d94"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-003450-20260630000470",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-b7ff538e5a25ea7951f8"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "003450",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-2adbf807ec96e3fab58c"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-358570-20260630900439",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-a5dc39dbfd7eb7b21a07"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "358570",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-4d0291994a213704b38b"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-097230-20260630800457",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-a14073117f8013fb21cc"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "097230",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-0cfad9c94b3cf0b64705"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-028100-20260630800437",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-8c477adf8afead0ebd56"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "028100",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-51f9b1360faacd2570a5"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-028100-20260630800432",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-28c1cdd118edc474b6dd"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "028100",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-ae1c7008775386b94d81"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-003450-20260630000440",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-ac3db69afbab565c0ef3"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "003450",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-04e61dc718b876016f5a"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-327260-20260630900452",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-6f0a5bc2a8ee627a4d05"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "327260",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-0f6b61262a586ef8cdbd"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-432470-20260630900433",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-51a1c1094c84a94965f9"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "432470",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-1b60794ea7c5625eb4c9"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-033660-20260630000415",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-8795ca3dc60713b5ca35"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "033660",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-bf5f174e96e234228ae7"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-012340-20260630000413",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-2a5787b6cc136d74cd84"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "012340",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-98df2bdf465bc6e381f3"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-003530-20260630000410",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-32011a3903bc453db98c"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "003530",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-f3099d2aba2cc748c63a"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-005110-20260630000391",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-6ff611ae3e7c141def58"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "005110",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-6cf7b65d70e34b672f76"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-003530-20260630000402",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-b8907e6b3eb0a24422d7"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "003530",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-086dc4016e9dc1d6d43a"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-012340-20260630900357",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-754bffd3d41751705f83"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "012340",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-6db2094bb133ab2abac7"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-086980-20260630900363",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-b25d2d7af89867de09d1"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "086980",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-be89489450751a393276"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-308430-20260630900376",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-fb66e518e0314dc10edf"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "308430",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-0ccfe90e5c2beaafea9d"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-950200-20260630900373",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-374f72bb5862974e5cd8"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "950200",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-23ff3b995e28d81cba56"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-950250-20260630900368",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-d8ae4aaf9893f6ce5c73"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "950250",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-b1130b063c1dbbe04a1f"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-002150-20260630800345",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-c4e13e38d4ababd64e18"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "002150",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-57b731c8ab0988c3fc4d"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-059210-20260630900323",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-21bb10ecebd16263df9d"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "059210",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-fffe8179ad01f2a49d8d"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-011930-20260630800739",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-cc3e495f8847314fe8d5"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "011930",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-bde685383937707fb037"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-016790-20260630000647",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-bf1b9b81a5dcb7e74663"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "016790",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-1fa63b0ee4440d61cf60"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-121800-20260630000646",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-6d19e8643a729b60e2d1"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "121800",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-0cd30e782036b773b8a3"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-163730-20260630000643",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-4d5ceadff78ebb3b91f0"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "163730",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-6829cc3ba57daa566222"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-0099X0-20260630000618",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-65375abaad3982e09559"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "0099X0",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-d8f0b06201aec00f01d3"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-0099X0-20260630900710",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-580f8f6a06fae99e33e9"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "0099X0",
+      "verified_score": 4.0
+    },
+    {
+      "accepted_claim_ids": [
+        "CLM-3678297758845447fbfe"
+      ],
+      "base_stage": "1",
+      "candidate_event_id": "CE-LIVE-DART-010140-20260630000640",
+      "explanation": "insufficient primitive coverage",
+      "score_contribution_ids": [
+        "SCON-21b112e91b91eff65223"
+      ],
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "symbol": "010140",
+      "verified_score": 4.0
+    }
+  ],
+  "schema_version": "production_cutover_v2_score_meaning_audit_v1",
+  "summary": {
+    "all_low_scores_explained": true,
+    "canonical_score_scale_max": 100,
+    "canonical_score_scale_min": 0,
+    "deterministic_scorer_configured_min_count": 15,
+    "deterministic_scorer_output_count": 50,
+    "pending_material_gap_count": 0,
+    "pending_or_provider_count": 0,
+    "provider_failed_final_score_count": 0,
+    "provider_failed_score_count": 0,
+    "provider_failure_items_not_final_reject": true,
+    "score_contribution_count": 50,
+    "score_without_claim_count": 0,
+    "stagecourt_trace_count": 50,
+    "watchlist_count": 50
+  }
+}

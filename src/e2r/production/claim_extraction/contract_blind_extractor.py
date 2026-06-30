@@ -120,6 +120,8 @@ def _polarity_for_sentence(sentence: str) -> str:
 
 def _predicate_for_sentence(sentence: str) -> str:
     lower = sentence.lower()
+    if "opendart" in lower and ("접수번호" in sentence or "disclosure" in lower or "공시" in sentence):
+        return "official_document_fact"
     if any(token in lower for token in ("계약", "수주", "supply agreement", "order")):
         return "contract_or_order_claim"
     if any(token in lower for token in ("유상증자", "자기주식", "배당", "증권발행")):

@@ -1,0 +1,86 @@
+{
+  "categories": [
+    {
+      "allowed_source_families": [
+        "DART",
+        "KIND",
+        "KRX",
+        "IssuerIR"
+      ],
+      "examples": [
+        "DART supply contract",
+        "facility investment",
+        "earnings preannouncement"
+      ],
+      "score_eligibility_policy": "accepted_claim_required",
+      "trigger_category": "Official Positive Trigger"
+    },
+    {
+      "allowed_source_families": [
+        "DART",
+        "KIND",
+        "KRX",
+        "IssuerIR"
+      ],
+      "examples": [
+        "contract cancellation",
+        "audit opinion issue",
+        "trading halt"
+      ],
+      "score_eligibility_policy": "accepted_claim_required",
+      "trigger_category": "Official Risk Trigger"
+    },
+    {
+      "allowed_source_families": [
+        "DART",
+        "CompanyGuide",
+        "ReportRadar"
+      ],
+      "examples": [
+        "actual OPM/FCF improvement",
+        "EPS/OP consensus revision"
+      ],
+      "score_eligibility_policy": "accepted_claim_required",
+      "trigger_category": "Financial/Revision Trigger"
+    },
+    {
+      "allowed_source_families": [
+        "KRX",
+        "PriceFeed"
+      ],
+      "examples": [
+        "volume spike",
+        "relative strength",
+        "breakout/gap"
+      ],
+      "score_eligibility_policy": "investigation_only_never_score",
+      "trigger_category": "Market Anomaly Trigger"
+    },
+    {
+      "allowed_source_families": [
+        "IssuerIR",
+        "TrustedNews",
+        "BrokerReport"
+      ],
+      "examples": [
+        "issuer IR",
+        "conference call",
+        "trusted news"
+      ],
+      "score_eligibility_policy": "accepted_claim_required",
+      "trigger_category": "Information Trigger"
+    },
+    {
+      "allowed_source_families": [
+        "DART",
+        "KRX"
+      ],
+      "examples": [
+        "periodic full-universe baseline assessment"
+      ],
+      "score_eligibility_policy": "accepted_claim_required",
+      "trigger_category": "Census Assessment Trigger"
+    }
+  ],
+  "schema_version": "e2r_trigger_taxonomy_v1"
+}

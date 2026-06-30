@@ -1,0 +1,17 @@
+{
+  "items": [
+    {
+      "id": "census-stage0",
+      "title": "Stage0/NoCurrentCatalyst full-universe baseline"
+    },
+    {
+      "id": "census-provider-pending",
+      "title": "ProviderPending full ticker support"
+    },
+    {
+      "id": "census-no-current-event",
+      "title": "NoCurrentEvent assessment policy"
+    }
+  ],
+  "schema_version": "census_mode_design_backlog_v1"
+}

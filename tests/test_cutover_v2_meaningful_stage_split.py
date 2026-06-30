@@ -17,6 +17,18 @@ class CutoverV2MeaningfulStageSplitTests(unittest.TestCase):
         self.assertGreaterEqual(report["summary"]["ProviderPending_count"], 1)
         self.assertGreaterEqual(report["summary"]["Reject_Red_count"], 1)
 
+    def test_all_stage1_without_provider_explanation_is_not_split_pass(self):
+        report = _stage_distribution_report_v2(
+            base={
+                "output_artifacts": {"daily_watchlist": {"rows": []}},
+                "operator_digest": {"rows": [{"section": "Stage1-Watch"} for _ in range(50)]},
+                "score_meaning_audit": {"summary": {"deterministic_scorer_output_count": 50, "stagecourt_trace_count": 50, "score_without_claim_count": 0}},
+            },
+            provider_matrix={"rows": [{"blocking_cutover": False}]},
+        )
+        self.assertEqual(report["summary"]["Stage2_or_higher_count"], 0)
+        self.assertEqual(report["summary"]["status"], "MEANINGFUL_STAGE_SPLIT_NOT_COMPLETE")
+
 
 if __name__ == "__main__":
     unittest.main()

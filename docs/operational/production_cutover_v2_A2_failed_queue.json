@@ -1,0 +1,211 @@
+{
+  "rows": [
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-6ab9c0b7024ef7bace6b",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_108_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research(1).md",
+      "source_url": "https://www.reuters.com/technology/sk-hynix-reports-q2-loss-chip-glut-continues-2023-07-25/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-ab54f118cb8bf9913c79",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_108_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research(1).md",
+      "source_url": "https://www.reuters.com/technology/sk-hynixs-q3-loss-narrows-previous-qtr-solid-demand-advanced-chips-2023-10-25/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-80d23daca2de9f43d32d",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_108_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research(1).md",
+      "source_url": "https://www.reuters.com/technology/sk-hynix-swings-q4-profit-strong-ai-chip-demand-2024-01-24/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-a3608c2dd0937119c134",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_108_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research(1).md",
+      "source_url": "https://www.reuters.com/technology/sk-hynix-q1-profit-beats-expectations-ai-boom-2024-04-24/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-919c7de36ab1f0d6c032",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_108_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research(1).md",
+      "source_url": "https://www.reuters.com/technology/nvidia-supplier-sk-hynixs-q2-profit-soars-ai-boom-2024-07-24/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-0164a0bb1c59418a40e4",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_108_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research(1).md",
+      "source_url": "https://www.reuters.com/technology/samsungs-hbm-chips-failing-nvidia-tests-due-heat-power-consumption-woes-sources-2024-05-23/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-169dd9112c5eef525734",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_108_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research(1).md",
+      "source_url": "https://www.reuters.com/technology/artificial-intelligence/samsungs-8-layer-hbm3e-chips-clear-nvidias-tests-use-sources-say-2024-08-06/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-e89891b21c3fb89f37c9",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_109_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research(1).md",
+      "source_url": "https://www.reuters.com/technology/nvidia-supplier-sk-hynix-posts-record-quarterly-profit-2025-01-22/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-0e05bf353c163b14a506",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_109_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research(1).md",
+      "source_url": "https://www.reuters.com/world/asia-pacific/nvidia-supplier-sk-hynixs-q1-profit-jumps-beating-expectations-2025-04-23/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-34c21e70b39bb4e1de52",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_109_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research(1).md",
+      "source_url": "https://www.reuters.com/technology/samsung-posts-weaker-profit-recovery-it-misses-out-ai-boom-2024-10-30/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-67cc6e6751bbf676fb07",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_10_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research.md",
+      "source_url": "https://www.reuters.com/technology/nvidia-supplier-sk-hynix-says-hbm-chips-almost-sold-out-2025-2024-05-02/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-23a548d6a1bc9e90bc1c",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_10_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research.md",
+      "source_url": "https://www.reuters.com/technology/sk-hynix-start-mass-producing-hbm3e-12-layer-chips-this-month-2024-09-04/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_403",
+      "provider_error": "http_status_403",
+      "provider_request_id": "A2SRCREQ-184ee92bfb8ab4be3bae",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_10_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research.md",
+      "source_url": "https://www.investopedia.com/samsung-stock-jumps-on-reports-nvidia-may-order-next-gen-memory-chips-8611507",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-83b964c923e3fdc18429",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_10_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research.md",
+      "source_url": "https://www.reuters.com/technology/nvidia-clears-samsungs-hbm3-chips-use-china-market-processor-sources-say-2024-07-23/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-a6c6c5a5d4bd89633db6",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_110_L2_AI_SEMICONDUCTOR_ELECTRONICS_C06_HBM_MEMORY_CUSTOMER_CAPACITY_research(1).md",
+      "source_url": "https://www.reuters.com/technology/nvidia-supplier-sk-hynix-says-begins-mass-production-12-layer-hbm3e-chips-2024-09-26/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "failure_reason": "SSLError: HTTPSConnectionPool(host='w4.kirs.or.kr', port=443): Max retries exceeded with url: /download/research/241212_%EB%B0%98%EB%8F%84%EC%B2%B4_%EC%98%A4%ED%82%A8%EC%8A%A4%EC%A0%84%EC%9E%90%28080580%29_%EB%B0%98%EB%8F%84%EC%B2%B4%20%EA%B2%80%EC%82%AC%EC%9A%A9%20%EC%86%8C%EC%BC%93%20%EB%B0%8F%20%EB%B0%98%EB%8F%84%EC%B2%B4%20%ED%85%8C%EC%8A%A4%ED%8A%B8%20%EC%A0%84%EB%AC%B8%EA%B8%B0%EC%97%85_NICE%EB%94%94%EC%95%A4%EB%B9%84.pdf (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1007)')))",
+      "provider_error": "SSLError: HTTPSConnectionPool(host='w4.kirs.or.kr', port=443): Max retries exceeded with url: /download/research/241212_%EB%B0%98%EB%8F%84%EC%B2%B4_%EC%98%A4%ED%82%A8%EC%8A%A4%EC%A0%84%EC%9E%90%28080580%29_%EB%B0%98%EB%8F%84%EC%B2%B4%20%EA%B2%80%EC%82%AC%EC%9A%A9%20%EC%86%8C%EC%BC%93%20%EB%B0%8F%20%EB%B0%98%EB%8F%84%EC%B2%B4%20%ED%85%8C%EC%8A%A4%ED%8A%B8%20%EC%A0%84%EB%AC%B8%EA%B8%B0%EC%97%85_NICE%EB%94%94%EC%95%A4%EB%B9%84.pdf (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1007)')))",
+      "provider_request_id": "A2SRCREQ-ea10d6fdb1fcd10ad96c",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_110_L2_AI_SEMICONDUCTOR_ELECTRONICS_C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY_research.md",
+      "source_url": "https://w4.kirs.or.kr/download/research/241212_%EB%B0%98%EB%8F%84%EC%B2%B4_%EC%98%A4%ED%82%A8%EC%8A%A4%EC%A0%84%EC%9E%90%28080580%29_%EB%B0%98%EB%8F%84%EC%B2%B4%20%EA%B2%80%EC%82%AC%EC%9A%A9%20%EC%86%8C%EC%BC%93%20%EB%B0%8F%20%EB%B0%98%EB%8F%84%EC%B2%B4%20%ED%85%8C%EC%8A%A4%ED%8A%B8%20%EC%A0%84%EB%AC%B8%EA%B8%B0%EC%97%85_NICE%EB%94%94%EC%95%A4%EB%B9%84.pdf",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "failure_reason": "http_status_403",
+      "provider_error": "http_status_403",
+      "provider_request_id": "A2SRCREQ-6dfda1d050112b46f820",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R2_loop_111_L2_AI_SEMICONDUCTOR_ELECTRONICS_C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY_research.md",
+      "source_url": "https://www.hankyung.com/article/2024122350061",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "failure_reason": "http_status_401",
+      "provider_error": "http_status_401",
+      "provider_request_id": "A2SRCREQ-14f70727710df5a1e4dd",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R4_loop_101_L4_MATERIALS_SPREAD_RESOURCE_C15_MATERIAL_SPREAD_SUPERCYCLE_research.md",
+      "source_url": "https://www.reuters.com/business/lme-copper-hits-11000-ton-first-time-since-may-2024-2025-10-09/",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "failure_reason": "http_status_404",
+      "provider_error": "http_status_404",
+      "provider_request_id": "A2SRCREQ-f8c415f6f2a3732ed08d",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R4_loop_104_L4_MATERIALS_SPREAD_RESOURCE_C15_MATERIAL_SPREAD_SUPERCYCLE_research.md",
+      "source_url": "https://www.posco-inc.com:4453/poscoinc/v4/kor/fileDownload?fileSn=21&histSn=416",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "failure_reason": "http_status_404",
+      "provider_error": "http_status_404",
+      "provider_request_id": "A2SRCREQ-00bf7e2500ae6c42a414",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R4_loop_104_L4_MATERIALS_SPREAD_RESOURCE_C15_MATERIAL_SPREAD_SUPERCYCLE_research.md",
+      "source_url": "https://kind.krx.co.kr/external/2022/07/28/000513/20220728001205/10001.htm",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "failure_reason": "http_status_404",
+      "provider_error": "http_status_404",
+      "provider_request_id": "A2SRCREQ-735aa059571a7c8aaac5",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R4_loop_104_L4_MATERIALS_SPREAD_RESOURCE_C15_MATERIAL_SPREAD_SUPERCYCLE_research.md",
+      "source_url": "https://kind.krx.co.kr/external/2022/11/02/001330/20221102002997/10001.htm",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "failure_reason": "SSLError: HTTPSConnectionPool(host='www.tccsteel.com', port=443): Max retries exceeded with url: /en/about/investors (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1007)')))",
+      "provider_error": "SSLError: HTTPSConnectionPool(host='www.tccsteel.com', port=443): Max retries exceeded with url: /en/about/investors (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1007)')))",
+      "provider_request_id": "A2SRCREQ-fe271a5f4bb12e8d5424",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R4_loop_105_L4_MATERIALS_SPREAD_RESOURCE_C15_MATERIAL_SPREAD_SUPERCYCLE_research(3).md",
+      "source_url": "https://www.tccsteel.com/en/about/investors",
+      "status": "PROVIDER_FAILED"
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "failure_reason": "http_status_404",
+      "provider_error": "http_status_404",
+      "provider_request_id": "A2SRCREQ-96ab60b5a7ff634bea63",
+      "source_research_file": "docs/round/achieve/achieve_v12/e2r_stock_web_v12_residual_round_R4_loop_105_L4_MATERIALS_SPREAD_RESOURCE_C15_MATERIAL_SPREAD_SUPERCYCLE_research(3).md",
+      "source_url": "https://www.asiae.co.kr/en/print.htm?idxno=2022042509393896603",
+      "status": "PROVIDER_FAILED"
+    }
+  ]
+}

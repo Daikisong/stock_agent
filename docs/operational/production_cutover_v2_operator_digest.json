@@ -1,0 +1,1112 @@
+{
+  "rows": [
+    {
+      "company": "메리츠증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "메리츠증권(008560) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-730783d6a2da6281b932"
+      ],
+      "symbol": "008560",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "삼성증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "삼성증권(016360) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-c403435328c43a3a7925"
+      ],
+      "symbol": "016360",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "동양",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "동양(001520) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-9f6f8dbfeade50fad9f9"
+      ],
+      "symbol": "001520",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "자람테크놀로지",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "자람테크놀로지(389020) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-9468af1d0e171424ccab"
+      ],
+      "symbol": "389020",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "세보엠이씨",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "세보엠이씨(011560) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-f7ce75cba58e753411d5"
+      ],
+      "symbol": "011560",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "앱클론",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "앱클론(174900) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결(자율공시)",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-d81df04b59cf62d1b5d8"
+      ],
+      "symbol": "174900",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "엔시스",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "엔시스(333620) OpenDART disclosure: 단일판매ㆍ공급계약해지",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-b8a47fe287532b99db58"
+      ],
+      "symbol": "333620",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "금양",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "금양(001570) OpenDART disclosure: [기재정정]신규시설투자등",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-752fb934def1819f7d4b"
+      ],
+      "symbol": "001570",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "케이비증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "케이비증권(003450) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-0f1c943ac84cf43b7ef7"
+      ],
+      "symbol": "003450",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "신한투자증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "신한투자증권(008670) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-69b33445f27455e8d128"
+      ],
+      "symbol": "008670",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "신한투자증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "신한투자증권(008670) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-6581ed7078b46cf99a9b"
+      ],
+      "symbol": "008670",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "유진증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "유진증권(001200) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-1ef8fd28970c759bb11b"
+      ],
+      "symbol": "001200",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "계룡건설산업",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "계룡건설산업(013580) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-753a381bd59725c62d76"
+      ],
+      "symbol": "013580",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "서전기전",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "서전기전(189860) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-a3d291ff7e25301710b4"
+      ],
+      "symbol": "189860",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "현대차증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "현대차증권(001500) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-95364f3ce14c46c1109a"
+      ],
+      "symbol": "001500",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "메리츠증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "메리츠증권(008560) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-7ae45734873e1a57bee4"
+      ],
+      "symbol": "008560",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "케이엔에스",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "케이엔에스(432470) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-dc248d88ec0c376e649c"
+      ],
+      "symbol": "432470",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "램테크놀러지",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "램테크놀러지(171010) OpenDART disclosure: [기재정정]신규시설투자등",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-1e7776f46ff065f9d6a6"
+      ],
+      "symbol": "171010",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "교보증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "교보증권(030610) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-b7d7aa4e5e6ee34a8daf"
+      ],
+      "symbol": "030610",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "아리바이오LAB",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "아리바이오LAB(261780) OpenDART disclosure: 증권발행결과(자율공시)",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-fe3794578b734987b7e3"
+      ],
+      "symbol": "261780",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "넥스틸",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "넥스틸(092790) OpenDART disclosure: 유상증자또는주식관련사채등의발행결과(자율공시)",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-8e6b04bce1b49215f716"
+      ],
+      "symbol": "092790",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "교보증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "교보증권(030610) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-ba53be391f0deddd71cd"
+      ],
+      "symbol": "030610",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "신한투자증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "신한투자증권(008670) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-ab132e929f0452e97995"
+      ],
+      "symbol": "008670",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "케이비증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "케이비증권(003450) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-6e0f85b8758bc1588d94"
+      ],
+      "symbol": "003450",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "지아이이노베이션",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "지아이이노베이션(358570) OpenDART disclosure: [기재정정]투자판단관련주요경영사항(임상시험계획승인신청등결정) (전이성 거세저항성 전립선암 환자를 대상으로 GI102와 pasritamig 병용 요법의 항암 활성, 안전성 및 내약성을 평가하기 위한 제1b/2상 임상시험계획 승인)",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-2adbf807ec96e3fab58c"
+      ],
+      "symbol": "358570",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "HJ중공업",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "HJ중공업(097230) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-4d0291994a213704b38b"
+      ],
+      "symbol": "097230",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "동아지질",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "동아지질(028100) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-0cfad9c94b3cf0b64705"
+      ],
+      "symbol": "028100",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "동아지질",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "동아지질(028100) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-51f9b1360faacd2570a5"
+      ],
+      "symbol": "028100",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "케이비증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "케이비증권(003450) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-ae1c7008775386b94d81"
+      ],
+      "symbol": "003450",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "RF머트리얼즈",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "RF머트리얼즈(327260) OpenDART disclosure: 단일판매ㆍ공급계약체결",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-04e61dc718b876016f5a"
+      ],
+      "symbol": "327260",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "케이엔에스",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "케이엔에스(432470) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-0f6b61262a586ef8cdbd"
+      ],
+      "symbol": "432470",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "우리금융캐피탈",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "우리금융캐피탈(033660) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-1b60794ea7c5625eb4c9"
+      ],
+      "symbol": "033660",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "뉴인텍",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "뉴인텍(012340) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-bf5f174e96e234228ae7"
+      ],
+      "symbol": "012340",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "한화투자증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-98df2bdf465bc6e381f3"
+      ],
+      "symbol": "003530",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "한창",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "한창(005110) OpenDART disclosure: [기재정정]주요사항보고서(유상증자결정)",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-f3099d2aba2cc748c63a"
+      ],
+      "symbol": "005110",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "한화투자증권",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "한화투자증권(003530) OpenDART disclosure: 증권발행실적보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-6cf7b65d70e34b672f76"
+      ],
+      "symbol": "003530",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "뉴인텍",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "뉴인텍(012340) OpenDART disclosure: 증권발행결과(자율공시) (주주배정후 실권주 일반공모)",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-086dc4016e9dc1d6d43a"
+      ],
+      "symbol": "012340",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "쇼박스",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "쇼박스(086980) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약해지",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-6db2094bb133ab2abac7"
+      ],
+      "symbol": "086980",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "셀비온",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "셀비온(308430) OpenDART disclosure: 투자판단관련주요경영사항(임상시험계획승인신청) (전이성 거세저항성 전립선암 환자에서 Lutetium(177Lu) DGUL(포큐보타이드 사테트라세탄)의 유효성 및 안전성을 평가하기 위한 다기관, 공개, 무작위배정, 제 3상 임상시험 계획 승인신청)",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-be89489450751a393276"
+      ],
+      "symbol": "308430",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "소마젠",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "소마젠(950200) OpenDART disclosure: 투자판단관련주요경영사항 (자본잉여금 감액 및 결손금 보전 결정(이사회 결의))",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-0ccfe90e5c2beaafea9d"
+      ],
+      "symbol": "950200",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "테라뷰",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "테라뷰(950250) OpenDART disclosure: 단일판매ㆍ공급계약체결",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-23ff3b995e28d81cba56"
+      ],
+      "symbol": "950250",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "도화엔지니어링",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "도화엔지니어링(002150) OpenDART disclosure: [기재정정]단일판매ㆍ공급계약체결",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-b1130b063c1dbbe04a1f"
+      ],
+      "symbol": "002150",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "메타바이오메드",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "메타바이오메드(059210) OpenDART disclosure: [기재정정]현금ㆍ현물배당결정",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-57b731c8ab0988c3fc4d"
+      ],
+      "symbol": "059210",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "신성이엔지",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "신성이엔지(011930) OpenDART disclosure: 지속가능경영보고서등관련사항(자율공시)",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-fffe8179ad01f2a49d8d"
+      ],
+      "symbol": "011930",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "현대사료",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "현대사료(016790) OpenDART disclosure: 사외이사의선임ㆍ해임또는중도퇴임에관한신고",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-bde685383937707fb037"
+      ],
+      "symbol": "016790",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "비덴트",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "비덴트(121800) OpenDART disclosure: 사외이사의선임ㆍ해임또는중도퇴임에관한신고",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-1fa63b0ee4440d61cf60"
+      ],
+      "symbol": "121800",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "핑거",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "핑거(163730) OpenDART disclosure: 임원ㆍ주요주주특정증권등소유상황보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-0cd30e782036b773b8a3"
+      ],
+      "symbol": "163730",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "IBKS제25호스팩",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "IBKS제25호스팩(0099X0) OpenDART disclosure: 주요사항보고서(회사합병결정)",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-6829cc3ba57daa566222"
+      ],
+      "symbol": "0099X0",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "IBKS제25호스팩",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "IBKS제25호스팩(0099X0) OpenDART disclosure: 주권매매거래정지 (SPAC 합병(예비심사청구대상))",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-d8f0b06201aec00f01d3"
+      ],
+      "symbol": "0099X0",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    },
+    {
+      "company": "삼성중공업",
+      "current_stage": "Stage1-Watch",
+      "event_summary": "삼성중공업(010140) OpenDART disclosure: 임원ㆍ주요주주특정증권등소유상황보고서",
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_action": "PROVIDER_WAIT",
+      "operator_note": "Provider gap is not a final reject; monitor after source repair.",
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "provider_source_gaps": [
+        "blocking provider gap"
+      ],
+      "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "supporting_claims": [
+        "CLM-3678297758845447fbfe"
+      ],
+      "symbol": "010140",
+      "trigger_category": "Official Positive Trigger",
+      "verified_score": null
+    }
+  ],
+  "schema_version": "production_cutover_v2_operator_digest_v1",
+  "summary": {
+    "item_count": 50,
+    "next_action_counts": {
+      "PROVIDER_WAIT": 50
+    },
+    "pending_item_count": 50
+  }
+}

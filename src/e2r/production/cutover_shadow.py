@@ -973,7 +973,7 @@ def _sla_report(
             "max_candidate_runtime_seconds": round(runtime / max(len(planner_rows), 1), 4),
             "max_source_task_runtime_seconds": round(source_runtime / max(len(source_rows), 1), 4),
             "api_call_count": len(source_rows),
-            "llm_call_count": len(planner_rows),
+            "llm_call_count": _planner_call_count(planner_rows),
             "retry_count": 0,
             "cache_hit_count": sum(bool(row.get("fetched_document_ids")) for row in source_rows),
             "cache_miss_count": sum(not row.get("fetched_document_ids") for row in source_rows),
@@ -1000,6 +1000,17 @@ def _planner_runtime_seconds(planner_rows: Sequence[Mapping[str, Any]]) -> float
         seen_batches.add(batch_key)
         total_ms += int(latency)
     return round(total_ms / 1000, 4)
+
+
+def _planner_call_count(planner_rows: Sequence[Mapping[str, Any]]) -> int:
+    seen_batches: set[tuple[Any, Any]] = set()
+    for row in planner_rows:
+        batch_key = (
+            row.get("batch_prompt_hash") or row.get("prompt_hash") or row.get("candidate_event_id"),
+            row.get("batch_response_hash") or row.get("response_hash"),
+        )
+        seen_batches.add(batch_key)
+    return len(seen_batches)
 
 
 def _operator_digest(watchlist_rows: Sequence[Mapping[str, Any]]) -> Mapping[str, Any]:
@@ -1499,6 +1510,10 @@ def _section_for_watchlist_row(row: Mapping[str, Any]) -> str:
         return "Stage2-Actionable"
     if stage == "2":
         return "Stage2-Watch"
+    if stage == "1":
+        return "Stage1-Watch"
+    if stage == "0":
+        return "NoCurrentCatalyst"
     if stage == "4B":
         return "4B-watch"
     if stage in {"3-Red", "4C"}:

@@ -62,6 +62,7 @@ _ALLOWED_PRIMITIVES = (
     "accounting_trust_break",
     "fcf_quality_score",
     "margin_bridge_visible",
+    "information_confidence",
 )
 _DEFAULT_ARCHETYPE_ID = "C05_EPC_MEGA_CONTRACT_MARGIN_GAP"
 _FORBIDDEN_PLANNER_KEYS = {
@@ -203,6 +204,7 @@ def build_official_live_shadow_data(
                 "source_class": "DART",
                 "mode": "live",
                 "request_id": document["provider_request_id"],
+                "provider_request_id": document["provider_request_id"],
                 "request_params": {"rcept_no": row["rcept_no"], "stock_code": row["stock_code"]},
                 "status": "FETCHED",
                 "canonical_url": document["canonical_url"],
@@ -244,6 +246,7 @@ def build_official_live_shadow_data(
             )
         )
         accepted_claim_ids: list[str] = []
+        task_accepted_claim_ids: list[str] = []
         contribution_rows: list[Mapping[str, Any]] = []
         for assertion in assertion_records:
             source_task_execution["raw_assertion_ids"].append(assertion.raw_assertion_id)
@@ -280,12 +283,15 @@ def build_official_live_shadow_data(
                 "eligibility_reasons": list(adjudication.reasons),
                 "adjudication": adjudication.to_dict(),
                 "mapping": mapping.to_dict(),
+                "satisfies_source_task": _claim_satisfies_source_task(mapping.primitive_id, task),
                 "accepted": mapping.mapping_status == "ACCEPTED" and adjudication.semantic_status == "PASS",
             }
             claims.append(claim_row)
             if not claim_row["accepted"]:
                 continue
             accepted_claim_ids.append(claim_id)
+            if claim_row["satisfies_source_task"]:
+                task_accepted_claim_ids.append(claim_id)
             primitive_states.append(
                 {
                     "candidate_event_id": event["candidate_event_id"],
@@ -300,10 +306,19 @@ def build_official_live_shadow_data(
             if contribution is not None:
                 contribution_rows.append(contribution)
                 score_contributions.append(contribution)
-        if accepted_claim_ids:
+        if task_accepted_claim_ids:
             source_task_execution["status"] = "EVIDENCE_OS_ACCEPTED"
-            source_task_execution["accepted_claim_ids"] = accepted_claim_ids
+            source_task_execution["accepted_claim_ids"] = task_accepted_claim_ids
+            source_task_execution["score_claim_ids"] = accepted_claim_ids
+            source_task_execution["baseline_claim_ids"] = [
+                claim_id for claim_id in accepted_claim_ids if claim_id not in set(task_accepted_claim_ids)
+            ]
             source_task_execution["stop_reason"] = "accepted_contract_blind_claim"
+        elif accepted_claim_ids:
+            source_task_execution["status"] = "EVIDENCE_OS_BASELINE_ONLY"
+            source_task_execution["score_claim_ids"] = accepted_claim_ids
+            source_task_execution["baseline_claim_ids"] = accepted_claim_ids
+            source_task_execution["stop_reason"] = "accepted_baseline_claim_without_task_primitive"
         source_task_executions.append(source_task_execution)
         score_snapshot = _score_event(event=event, as_of_date=as_of_date, contributions=contribution_rows)
         trace = _stage_trace(event=event, score_snapshot=score_snapshot, accepted_claim_ids=accepted_claim_ids, contributions=contribution_rows)
@@ -454,6 +469,7 @@ def _candidate_event_from_dart_row(
     report_name = " ".join(str(row.get("report_nm") or "").split())
     industry_code = str(company_info.get("induty_code") or "").strip()
     sector = _large_sector_for_industry_code(industry_code)
+    trigger_category = _trigger_category_for_dart_report(report_name)
     return {
         "candidate_event_id": f"CE-LIVE-DART-{symbol}-{rcept_no}",
         "symbol": symbol,
@@ -469,6 +485,8 @@ def _candidate_event_from_dart_row(
         "source_id": _dart_url(rcept_no),
         "event_type": report_name,
         "event_title": report_name,
+        "trigger_category": trigger_category,
+        "score_eligibility_policy": _score_eligibility_policy_for_trigger(trigger_category),
         "event_summary": f"{company}({symbol}) OpenDART disclosure: {report_name}",
         "issuer_directness": "DIRECT",
         "raw_reason_codes": [report_name],
@@ -554,6 +572,14 @@ def _real_codex_planner_runs_for_events(
     *,
     repo_root: Path,
 ) -> Mapping[str, Mapping[str, Any]]:
+    batch_size = _planner_batch_size()
+    if len(events) > batch_size:
+        merged: dict[str, Mapping[str, Any]] = {}
+        for offset in range(0, len(events), batch_size):
+            batch = tuple(events[offset : offset + batch_size])
+            merged.update(_real_codex_planner_runs_for_events(batch, repo_root=repo_root))
+        return merged
+
     load_project_env()
     prompt_payload = _planner_prompt_payload(events)
     prompt_text = _planner_prompt_text(prompt_payload)
@@ -838,6 +864,13 @@ def _planner_timeout_seconds() -> float:
         return 300.0
 
 
+def _planner_batch_size() -> int:
+    try:
+        return max(int(os.environ.get("E2R_CODEX_PLANNER_BATCH_SIZE") or 50), 1)
+    except ValueError:
+        return 50
+
+
 def _clean_planner_error(text: str) -> str:
     clean = re.sub(r"\s+", " ", str(text)).strip()
     if len(clean) <= 500:
@@ -863,6 +896,11 @@ def _source_task_for_event(event: Mapping[str, Any], plan: Mapping[str, Any]) ->
         "max_fetches": min(max(int(draft.get("max_fetches") or 1), 1), 3),
         "stop_condition": {"accepted_claim_count": 1},
     }
+
+
+def _claim_satisfies_source_task(primitive_id: str | None, task: Mapping[str, Any]) -> bool:
+    task_primitive = str(task.get("primitive_gap") or "")
+    return bool(primitive_id) and str(primitive_id) == task_primitive
 
 
 def _document_for_dart_row(row: Mapping[str, Any], *, event: Mapping[str, Any], as_of_date: date) -> Mapping[str, Any]:
@@ -1058,7 +1096,7 @@ def _operator_row(watch: Mapping[str, Any]) -> Mapping[str, Any]:
         "candidate_event_id": watch["candidate_event_id"],
         "symbol": watch["symbol"],
         "company_name": watch["company_name"],
-        "section": "Stage2-Watch" if watch["verified_score"] is not None else "Planner Pending",
+        "section": _operator_section_for_watch(watch),
         "why_triggered": watch["event_summary"],
         "primary_archetype": watch["primary_archetype"],
         "research_memory_cards_used": watch["research_memory_cards_used"],
@@ -1073,6 +1111,29 @@ def _operator_row(watch: Mapping[str, Any]) -> Mapping[str, Any]:
     }
 
 
+def _operator_section_for_watch(watch: Mapping[str, Any]) -> str:
+    if watch.get("verified_score") is None:
+        return "Planner Pending"
+    stage = str(watch.get("base_stage") or "")
+    if stage == "0":
+        return "NoCurrentCatalyst"
+    if stage == "1":
+        return "Stage1-Watch"
+    if stage == "2":
+        return "Stage2-Watch"
+    if stage == "2-Actionable":
+        return "Stage2-Actionable"
+    if stage == "3-Yellow":
+        return "Stage3-Yellow-Pending"
+    if stage == "3-Green":
+        return "Stage3-Green"
+    if stage in {"3-Red", "4C"}:
+        return "Reject/Red"
+    if stage == "4B":
+        return "4B-watch"
+    return "Runtime Budget Pending"
+
+
 def _primitive_for_event_type(event_type: str) -> str:
     if "단일판매" in event_type or "공급계약" in event_type:
         return "contract_quality"
@@ -1081,6 +1142,20 @@ def _primitive_for_event_type(event_type: str) -> str:
     if "유상증자" in event_type or "자기주식" in event_type or "배당" in event_type:
         return "capital_allocation_event"
     return "information_confidence"
+
+
+def _trigger_category_for_dart_report(report_name: str) -> str:
+    if any(keyword in report_name for keyword in ("계약해지", "거래정지", "횡령", "배임", "감사의견", "의견거절", "상장폐지")):
+        return "Official Risk Trigger"
+    if any(keyword in report_name for keyword in ("단일판매", "공급계약", "잠정실적", "영업(잠정)실적", "신규시설투자", "투자판단", "유상증자", "자기주식", "배당")):
+        return "Official Positive Trigger"
+    return "Information Trigger"
+
+
+def _score_eligibility_policy_for_trigger(trigger_category: str) -> str:
+    if trigger_category == "Market Anomaly Trigger":
+        return "investigation_only_never_score"
+    return "accepted_claim_required"
 
 
 def _date_from_yyyymmdd(value: str) -> date:

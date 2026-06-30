@@ -84,7 +84,7 @@ def build_production_cutover_v2_bundle(
         document_limit=config.llm_extractor_document_limit,
     )
     stage_distribution = _stage_distribution_report_v2(base=base, provider_matrix=provider_matrix)
-    trigger_policy = _trigger_policy_audit()
+    trigger_policy = _trigger_policy_audit(base=base)
     multiday = _multiday_validation_v2(base=base, a2=a2, provider_matrix=provider_matrix)
     sla = _sla_report_v2(base=base)
     operator_digest = _operator_digest_v2(base=base, provider_matrix=provider_matrix)
@@ -98,6 +98,7 @@ def build_production_cutover_v2_bundle(
         trigger_policy=trigger_policy,
         census=census,
         base=base,
+        multiday=multiday,
     )
     labels = _completion_labels(
         source_report=source_report,
@@ -303,7 +304,10 @@ def build_a2_replay_promotion_report(
 
 
 def _source_connector_report_v2(source_report_v1: Mapping[str, Any], *, repo_root: Path) -> Mapping[str, Any]:
-    rows = list(source_report_v1.get("rows") or ())
+    rows = [
+        {**row, "provider_request_id": row.get("provider_request_id") or row.get("request_id")}
+        for row in (source_report_v1.get("rows") or ())
+    ]
     registry = build_default_source_provider_registry(repo_root)
     alias_count = sum(connector.__class__.__name__ == "LocalSnapshotConnector" for connector in registry.connectors)
     summary = dict(source_report_v1.get("summary") or {})
@@ -401,13 +405,21 @@ def _claim_extraction_report_v2(
         llm_assertions = sum(int(row.get("raw_assertion_count", 0)) for row in samples)
     base_summary = dict(base["claim_extraction_audit"]["summary"])
     a2_backed_assertion_count = len(a2.get("promoted_claims") or ())
-    real_document_assertions = int(base_summary.get("real_document_to_assertion_count", 0)) + llm_assertions + a2_backed_assertion_count
+    runtime_contract_blind_assertions = int(base_summary.get("real_document_to_assertion_count", 0))
+    real_document_assertions = runtime_contract_blind_assertions + llm_assertions + a2_backed_assertion_count
     summary = {
         **base_summary,
         "a2_backed_assertion_count": a2_backed_assertion_count,
+        "runtime_contract_blind_raw_assertion_count": runtime_contract_blind_assertions,
+        "llm_sample_raw_assertion_count": llm_assertions,
         "real_document_to_raw_assertion_count": real_document_assertions,
+        "real_document_to_raw_assertion_breakdown": {
+            "runtime_contract_blind_raw_assertion_count": runtime_contract_blind_assertions,
+            "llm_sample_raw_assertion_count": llm_assertions,
+            "a2_backed_assertion_count": a2_backed_assertion_count,
+        },
         "llm_raw_assertion_extractor_used_count": llm_used,
-        "rule_fallback_mention_only_count": max(int(base_summary.get("real_document_to_assertion_count", 0)) - llm_assertions, 0),
+        "rule_fallback_mention_only_count": max(runtime_contract_blind_assertions - llm_assertions, 0),
         "primitive_gap_direct_mapping_count": int(base_summary.get("primitive_gap_direct_to_mapping_count", 0)),
         "status": "LLM_EXTRACTION_PASS"
         if llm_used >= 30
@@ -568,24 +580,42 @@ def _llm_batch_extract_samples(
 def _stage_distribution_report_v2(*, base: Mapping[str, Any], provider_matrix: Mapping[str, Any]) -> Mapping[str, Any]:
     rows = list((base["output_artifacts"].get("daily_watchlist") or {}).get("rows") or ())
     operator_rows = list((base["operator_digest"].get("rows") or ()))
-    sections = Counter(row.get("section") or "Stage2-Watch" for row in operator_rows)
-    provider_failures = sum(row.get("blocking_cutover") for row in provider_matrix["rows"])
+    sections = Counter(row.get("section") or "Runtime Budget Pending" for row in operator_rows)
+    provider_failures = sum(bool(row.get("blocking_cutover")) for row in provider_matrix["rows"])
     regression_slice = [
         {"case_id": "wrong_subject_accounting_guard", "section": "Reject/Red", "reason": "wrong-subject hard break rejected"},
         {"case_id": "provider_failure_pending_guard", "section": "Provider/Source Pending", "reason": "provider failure is pending"},
     ]
-    summary = {
-        "deterministic_scorer_output_count": int(base["score_meaning_audit"]["summary"].get("deterministic_scorer_output_count", 0)),
-        "Stage2_or_higher_count": sections.get("Stage2-Watch", 0)
+    stage2_or_higher = (
+        sections.get("Stage2-Watch", 0)
         + sections.get("Stage2-Actionable", 0)
         + sections.get("Stage3-Yellow-Pending", 0)
-        + sections.get("Stage3-Green", 0),
+        + sections.get("Stage3-Green", 0)
+    )
+    reject_red_count = sections.get("Reject/Red", 0) + len([row for row in regression_slice if row["section"] == "Reject/Red"])
+    deterministic_count = int(base["score_meaning_audit"]["summary"].get("deterministic_scorer_output_count", 0))
+    stagecourt_trace_count = int(base["score_meaning_audit"]["summary"].get("stagecourt_trace_count", 0))
+    score_without_claim_count = int(base["score_meaning_audit"]["summary"].get("score_without_claim_count", 0))
+    source_provider_explanation_present = provider_failures > 0
+    meaningful_pass = (
+        deterministic_count >= 50
+        and stagecourt_trace_count >= deterministic_count
+        and score_without_claim_count == 0
+        and reject_red_count >= 1
+        and (stage2_or_higher >= 5 or source_provider_explanation_present)
+    )
+    summary = {
+        "deterministic_scorer_output_count": deterministic_count,
+        "Stage2_or_higher_count": stage2_or_higher,
         "PendingMaterialGaps_count": max(provider_failures, 1 if provider_failures else 0),
         "ProviderPending_count": provider_failures,
-        "Reject_Red_count": 1,
-        "stagecourt_trace_count": int(base["score_meaning_audit"]["summary"].get("stagecourt_trace_count", 0)),
-        "score_without_claim_count": int(base["score_meaning_audit"]["summary"].get("score_without_claim_count", 0)),
-        "status": "MEANINGFUL_STAGE_SPLIT_PASS",
+        "Reject_Red_count": reject_red_count,
+        "Stage1_Watch_count": sections.get("Stage1-Watch", 0),
+        "NoCurrentCatalyst_count": sections.get("NoCurrentCatalyst", 0),
+        "stagecourt_trace_count": stagecourt_trace_count,
+        "score_without_claim_count": score_without_claim_count,
+        "source_provider_explanation_present": source_provider_explanation_present,
+        "status": "MEANINGFUL_STAGE_SPLIT_PASS" if meaningful_pass else "MEANINGFUL_STAGE_SPLIT_NOT_COMPLETE",
     }
     score_audit = {
         "schema_version": "production_cutover_v2_score_meaning_audit_v1",
@@ -646,17 +676,28 @@ def _claim_access_policy() -> Mapping[str, Any]:
     }
 
 
-def _trigger_policy_audit() -> Mapping[str, Any]:
+def _trigger_policy_audit(*, base: Mapping[str, Any] | None = None) -> Mapping[str, Any]:
     taxonomy = _trigger_taxonomy()
     rows = taxonomy["categories"]
     market = [row for row in rows if row["trigger_category"] == "Market Anomaly Trigger"][0]
+    candidate_events = list((((base or {}).get("output_artifacts") or {}).get("candidate_events")) or ())
+    missing_trigger = sum(not row.get("trigger_category") for row in candidate_events)
+    missing_policy = sum(not row.get("score_eligibility_policy") for row in candidate_events)
     summary = {
         "trigger_category_count": len(rows),
         "categories_with_allowed_source_families": sum(bool(row["allowed_source_families"]) for row in rows),
         "categories_with_score_eligibility_policy": sum(bool(row["score_eligibility_policy"]) for row in rows),
+        "candidate_event_count": len(candidate_events),
+        "candidate_events_with_trigger_category_count": len(candidate_events) - missing_trigger,
+        "candidate_events_missing_trigger_category_count": missing_trigger,
+        "candidate_events_missing_score_eligibility_policy_count": missing_policy,
         "market_only_events_to_score_count": int(market["score_eligibility_policy"] != "investigation_only_never_score"),
         "census_assessment_supports_no_current_catalyst": True,
-        "status": "TRIGGER_POLICY_PASS",
+        "status": "TRIGGER_POLICY_PASS"
+        if int(market["score_eligibility_policy"] != "investigation_only_never_score") == 0
+        and missing_trigger == 0
+        and missing_policy == 0
+        else "TRIGGER_POLICY_NOT_COMPLETE",
     }
     return {"schema_version": "production_cutover_v2_trigger_policy_audit_v1", "summary": summary, "rows": rows}
 
@@ -732,15 +773,34 @@ def _static_logic_audit_v2(
     trigger_policy: Mapping[str, Any],
     census: Mapping[str, Any],
     base: Mapping[str, Any],
+    multiday: Mapping[str, Any] | None = None,
 ) -> Mapping[str, Any]:
     source = source_report["summary"]
     a2s = a2["report"]["summary"]
     extraction = claim_extraction["report"]["summary"]
     stage = stage_distribution["summary"]
     trigger = trigger_policy["summary"]
-    production_ready = False
+    multiday_summary = (multiday or {"summary": {"status": "MULTIDAY_SHADOW_NOT_COMPLETE"}})["summary"]
+    source_pass = source.get("status") == "LIVE_CONNECTOR_PASS"
+    provider_clear = provider_matrix["summary"]["provider_blocker_count"] == 0
+    a2_pass = a2s.get("status") == "A2_REPLAY_PASS" or a2s.get("A2_REAL_REPLAY_VERIFIED_count", 0) >= 30
+    extraction_pass = extraction.get("status") == "LLM_EXTRACTION_PASS"
+    stage_pass = stage.get("status") == "MEANINGFUL_STAGE_SPLIT_PASS"
+    trigger_pass = trigger.get("status") == "TRIGGER_POLICY_PASS" and trigger.get("candidate_events_missing_trigger_category_count", 0) == 0
+    multiday_pass = multiday_summary.get("status") == "MULTIDAY_SHADOW_PASS"
+    production_ready = (
+        source_pass
+        and provider_clear
+        and a2_pass
+        and extraction_pass
+        and stage_pass
+        and trigger_pass
+        and multiday_pass
+    )
+    ready_without_provider_guard = source_pass and a2_pass and extraction_pass and stage_pass and trigger_pass and multiday_pass
+    ready_without_a2_guard = source_pass and provider_clear and extraction_pass and stage_pass and trigger_pass and multiday_pass
     critical = {
-        "production_ready_despite_A2_zero_count": int(production_ready and a2s["A2_REAL_REPLAY_VERIFIED_count"] == 0),
+        "production_ready_despite_A2_zero_count": int(ready_without_a2_guard and a2s["A2_REAL_REPLAY_VERIFIED_count"] == 0),
         "live_connector_alias_to_snapshot_count": int(source.get("live_connector_alias_to_snapshot_count", 0)),
         "source_task_accepted_without_live_or_fresh_provider_doc_count": int(
             source.get("source_task_accepted_without_provider_fetch_count", 0)
@@ -760,7 +820,9 @@ def _static_logic_audit_v2(
         "census_enabled_before_cutover_ready_count": 0,
         "market_anomaly_to_score_count": int(trigger.get("market_only_events_to_score_count", 0)),
         "old_risk_without_current_open_to_score_count": 0,
-        "source_provider_gap_ignored_count": int(production_ready and provider_matrix["summary"]["provider_blocker_count"] > 0),
+        "source_provider_gap_ignored_count": int(
+            ready_without_provider_guard and provider_matrix["summary"]["provider_blocker_count"] > 0
+        ),
         "missing_report_hash_count": 0,
         "one_line_large_report_count": 0,
         "unbounded_fetch_config_count": int(base["sla_report"]["summary"].get("unbounded_fetch_config_count", 0)),
@@ -772,7 +834,15 @@ def _static_logic_audit_v2(
             **critical,
             "critical_count_sum": critical_sum,
             "critical_audit_pass": critical_sum == 0,
-            "production_blockers": _v2_blockers(provider_matrix=provider_matrix, a2=a2, claim_extraction=claim_extraction, census=census),
+            "production_blockers": _v2_blockers(
+                provider_matrix=provider_matrix,
+                a2=a2,
+                claim_extraction=claim_extraction,
+                stage_distribution=stage_distribution,
+                trigger_policy=trigger_policy,
+                census=census,
+                multiday=multiday or {"summary": {"status": "MULTIDAY_SHADOW_NOT_COMPLETE"}},
+            ),
         },
     }
 
@@ -849,7 +919,10 @@ def _v2_blockers(
     provider_matrix: Mapping[str, Any],
     a2: Mapping[str, Any],
     claim_extraction: Mapping[str, Any],
+    stage_distribution: Mapping[str, Any],
+    trigger_policy: Mapping[str, Any],
     census: Mapping[str, Any],
+    multiday: Mapping[str, Any],
 ) -> list[str]:
     blockers = []
     if a2["report"]["summary"]["A2_REAL_REPLAY_VERIFIED_count"] < 30:
@@ -858,6 +931,12 @@ def _v2_blockers(
         blockers.append("blocking source provider gaps remain")
     if claim_extraction["report"]["summary"]["status"] != "LLM_EXTRACTION_PASS":
         blockers.append("LLM contract-blind extraction validation not complete")
+    if stage_distribution["summary"].get("status") != "MEANINGFUL_STAGE_SPLIT_PASS":
+        blockers.append("meaningful stage split validation not complete")
+    if trigger_policy["summary"].get("status") != "TRIGGER_POLICY_PASS":
+        blockers.append("trigger policy not attached to every candidate event")
+    if multiday["summary"].get("status") != "MULTIDAY_SHADOW_PASS":
+        blockers.append("multiday live shadow validation not complete")
     if census["label"] == "NOT_READY_FOR_CENSUS":
         blockers.append("census readiness remains NOT_READY_FOR_CENSUS")
     return blockers

@@ -1,0 +1,24 @@
+{
+  "schema_version": "production_cutover_v2_sla_report_v1",
+  "summary": {
+    "api_call_count": 50,
+    "budget_exhausted_pending_count": 0,
+    "budget_state": "COMPLETE",
+    "cache_hit_count": 50,
+    "cache_miss_count": 0,
+    "extraction_runtime_seconds": 3.2763,
+    "llm_call_count": 1,
+    "max_candidate_runtime_seconds": 3.7612,
+    "max_source_task_runtime_seconds": 0.1092,
+    "max_total_runtime_seconds": 900,
+    "phase_runtime_measurement_mode": "planner_observed_source_extraction_scoring_estimated_from_remaining_wall_time",
+    "planner_runtime_seconds": 177.14,
+    "provider_circuit_open_count": 0,
+    "retry_count": 0,
+    "runtime_budget_exhausted_candidates": 0,
+    "scoring_runtime_seconds": 2.1842,
+    "source_acquisition_runtime_seconds": 5.4605,
+    "total_runtime_seconds": 188.061,
+    "unbounded_fetch_config_count": 0
+  }
+}

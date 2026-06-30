@@ -1,0 +1,12 @@
+{
+  "rules": [
+    "trigger can open investigation",
+    "only accepted claim can open score",
+    "market anomaly cannot become score evidence",
+    "headline/snippet cannot score without full source/date/quote/target validation",
+    "source_proxy memory cannot score",
+    "old risk cannot score without current OPEN lifecycle",
+    "missing evidence is UNKNOWN, not ABSENT"
+  ],
+  "schema_version": "e2r_claim_access_policy_v1"
+}
