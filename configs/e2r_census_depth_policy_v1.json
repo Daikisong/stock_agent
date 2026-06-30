@@ -1,0 +1,10 @@
+{
+  "schema_version": "e2r_census_depth_policy_v1",
+  "high_priority_threshold": 35.0,
+  "official_light_threshold": 10.0,
+  "max_deep_symbols": 25,
+  "sector_sample_quota": 0,
+  "max_source_tasks_per_symbol": 3,
+  "max_fetches_per_task": 3,
+  "max_llm_calls_per_symbol": 1
+}

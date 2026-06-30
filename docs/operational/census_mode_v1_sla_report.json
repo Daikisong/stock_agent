@@ -1,0 +1,26 @@
+{
+  "config": {
+    "max_deep_symbols": 25,
+    "max_fetches_per_task": 3,
+    "max_llm_calls": 50,
+    "max_provider_failures_before_circuit_breaker": 100,
+    "max_retry_count": 1,
+    "max_source_tasks_per_symbol": 3,
+    "max_source_tasks_total": 250,
+    "max_symbol_runtime_seconds": 10,
+    "max_total_runtime_seconds": 1800,
+    "retry_max_must_not_be_none": true,
+    "top_results_must_not_be_none": true
+  },
+  "schema_version": "e2r_census_sla_report_v1",
+  "summary": {
+    "deep_count": 0,
+    "llm_calls": 0,
+    "provider_failure_count": 0,
+    "runtime_pending_count": 0,
+    "source_task_count": 0,
+    "status": "COMPLETE",
+    "total_runtime_seconds": 8.6311,
+    "unbounded_fetch_config_count": 0
+  }
+}

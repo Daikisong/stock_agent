@@ -1,0 +1,14 @@
+{
+  "schema_version": "e2r_census_sla_v1",
+  "max_total_runtime_seconds": 1800,
+  "max_symbol_runtime_seconds": 10,
+  "max_deep_symbols": 25,
+  "max_llm_calls": 50,
+  "max_source_tasks_total": 250,
+  "max_source_tasks_per_symbol": 3,
+  "max_fetches_per_task": 3,
+  "max_provider_failures_before_circuit_breaker": 100,
+  "max_retry_count": 1,
+  "top_results_must_not_be_none": true,
+  "retry_max_must_not_be_none": true
+}

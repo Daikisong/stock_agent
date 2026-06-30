@@ -1,0 +1,25 @@
+{
+  "Stage2plus_candidate_list": [],
+  "archetype_priority": [],
+  "checkpoint_strategy": "per-shard checkpoint with source/config hash",
+  "expected_llm_calls": 0,
+  "expected_provider_calls": 0,
+  "expected_runtime": "multi-shard; bounded per shard",
+  "pending_symbol_list": [],
+  "provider_gap_priority": [],
+  "resume_strategy": "skip processed symbols and merge deterministic stage rows",
+  "schema_version": "e2r_census_deep_backfill_plan_v1",
+  "sector_priority": [
+    "unknown",
+    "전력기기/전선",
+    "메모리/HBM",
+    "2차전지/소재",
+    "K-뷰티/유통",
+    "방산",
+    "식품수출",
+    "의료기기/헬스케어",
+    "해운/운임"
+  ],
+  "shard_count": 10,
+  "source_heavy_candidate_list": []
+}

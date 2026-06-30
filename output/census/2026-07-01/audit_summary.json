@@ -1,0 +1,38 @@
+{
+  "critical_counts": {
+    "census_assessment_event_to_score_count": 0,
+    "cheap_scan_score_as_verified_score_count": 0,
+    "checkpoint_missing_hash_count": 0,
+    "duplicate_symbol_stage_status_count": 0,
+    "eligible_symbol_missing_stage_status_count": 0,
+    "evidence_url_pending_to_score_count": 0,
+    "market_anomaly_to_score_count": 0,
+    "news_snippet_to_score_count": 0,
+    "no_claim_nonzero_score_count": 0,
+    "no_current_event_marked_red_count": 0,
+    "old_risk_without_current_open_to_score_count": 0,
+    "one_line_large_report_count": 0,
+    "price_path_only_to_score_count": 0,
+    "provider_failed_final_score_count": 0,
+    "report_head_sha_mismatch_count": 0,
+    "research_brain_score_direct_output_count": 0,
+    "research_brain_stage_direct_output_count": 0,
+    "shard_merge_duplicate_count": 0,
+    "source_pending_marked_red_count": 0,
+    "source_proxy_to_score_count": 0,
+    "stage_without_confidence_count": 0,
+    "stale_claim_reused_current_count": 0,
+    "unbounded_fetch_config_count": 0
+  },
+  "schema_version": "e2r_census_static_logic_audit_v1",
+  "summary": {
+    "critical_count_sum": 0,
+    "status": "CENSUS_STATIC_AUDIT_PASS"
+  },
+  "warnings": {
+    "no_green_yellow_found": true,
+    "provider_gap_rate_high": false,
+    "too_many_no_current_catalyst_rows": true,
+    "too_many_stage1_rows": false
+  }
+}

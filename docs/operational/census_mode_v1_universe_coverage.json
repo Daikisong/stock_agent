@@ -1,0 +1,25 @@
+{
+  "active_market_breakdown": {
+    "KOSDAQ": 550,
+    "KOSPI": 551
+  },
+  "as_of_date": "2026-07-01",
+  "eligible_common_stock_count": 1101,
+  "excluded_etf_count": 0,
+  "excluded_etn_count": 0,
+  "excluded_inactive_count": 0,
+  "excluded_invalid_symbol_count": 0,
+  "excluded_preferred_count": 0,
+  "excluded_reit_count": 0,
+  "excluded_spac_count": 0,
+  "excluded_total_count": 0,
+  "fixture_like_symbol_count": 0,
+  "missing_company_name_count": 0,
+  "missing_sector_count": 1100,
+  "raw_universe_count": 1101,
+  "schema_version": "e2r_census_universe_coverage_v1",
+  "sector_coverage_breakdown": {
+    "unknown": 1100,
+    "메모리/HBM": 1
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "e2r_census_stage_status_policy_v1",
+  "no_event_policy": {
+    "base_stage": "Stage0",
+    "investigation_status": "NO_CURRENT_CATALYST",
+    "score_valid_status": "NO_CURRENT_EVENT",
+    "verified_score": null
+  },
+  "provider_failure_policy": {
+    "census_status": "PENDING_PROVIDER",
+    "investigation_status": "PROVIDER_FAILED",
+    "score_valid_status": "PROVIDER_FAILED",
+    "final_reject_allowed": false
+  },
+  "market_anomaly_policy": {
+    "score_allowed": false,
+    "next_action": "INVESTIGATE"
+  },
+  "nonzero_score_policy": {
+    "requires_accepted_current_claim_id": true,
+    "orphan_score_allowed": false
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "e2r_census_mode_config_v1",
+  "allowed_modes": [
+    "census_light",
+    "census_selective_deep",
+    "census_full_deep_backfill_plan",
+    "census_watchlist_update"
+  ],
+  "production_default_mode": "census_light",
+  "universe": "krx",
+  "source_mode": "live_official_first",
+  "score_policy": {
+    "census_assessment_event_score_allowed": false,
+    "market_anomaly_score_allowed": false,
+    "provider_failure_final_reject_allowed": false,
+    "nonzero_score_requires_accepted_current_claim_id": true
+  },
+  "unbounded_fetch_allowed": false
+}
