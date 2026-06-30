@@ -31,6 +31,8 @@ class SourceFetchResult:
     raw_text: str = ""
     structured_payload: Mapping[str, Any] = field(default_factory=dict)
     provider_error: str | None = None
+    provider_request_id: str | None = None
+    freshness_seconds: float | None = None
     snapshot_run_id: str | None = None
     source_fetch_request_id: str | None = None
 
@@ -111,6 +113,7 @@ class LocalSnapshotConnector:
                     raw_text=text[:200_000],
                     structured_payload={"snapshot_path": str(path), "symbol": symbol, "company_name": company_name},
                     snapshot_run_id=_stable_id("SNAPSHOT", self.provider_name, str(path)),
+                    provider_request_id=request_id,
                     source_fetch_request_id=request_id,
                 )
         return SourceFetchResult(
@@ -184,47 +187,21 @@ class SourceProviderRegistry:
 
 def build_default_source_provider_registry(repo_root: str | Path = ".") -> SourceProviderRegistry:
     root = Path(repo_root)
+    from .companyguide_live_connector import CompanyGuideLiveConnector
+    from .issuer_ir_connector import IssuerIRLiveConnector
+    from .kind_live_connector import KINDLiveConnector
+    from .krx_live_connector import KRXLiveConnector
+    from .opendart_live_connector import OpenDARTLiveConnector
+    from .trusted_news_connector import TrustedNewsLiveConnector
+
     return SourceProviderRegistry(
         connectors=(
-            LocalSnapshotConnector(
-                provider_name="OpenDART",
-                source_class="DART",
-                repo_root=root,
-                path_patterns=("data/raw/opendart/disclosures/*.csv", "data/raw/korea_cheap_scan/opendart/disclosures/*.csv"),
-            ),
-            LocalSnapshotConnector(
-                provider_name="KIND",
-                source_class="KIND",
-                repo_root=root,
-                path_patterns=("data/raw/kind/risk_flags/*.csv", "data/raw/korea_cheap_scan/kind/risk_flags/*.csv"),
-            ),
-            LocalSnapshotConnector(
-                provider_name="KRX",
-                source_class="KRX",
-                repo_root=root,
-                path_patterns=("data/raw/krx/instruments/*.csv", "data/raw/krx/prices/{symbol}.csv"),
-            ),
-            LocalSnapshotConnector(
-                provider_name="CompanyGuide",
-                source_class="CompanyGuide",
-                repo_root=root,
-                path_patterns=(
-                    "data/cache/company_guide/*/{symbol}_recent_reports.json",
-                    "data/cache/company_guide/*/{symbol}_snapshot.html",
-                ),
-            ),
-            LocalSnapshotConnector(
-                provider_name="IssuerIR",
-                source_class="IR",
-                repo_root=root,
-                path_patterns=("data/raw/search_html/text/*.txt",),
-            ),
-            LocalSnapshotConnector(
-                provider_name="TrustedNews",
-                source_class="TrustedNews",
-                repo_root=root,
-                path_patterns=("data/raw/naver_news/news/news.json", "fixtures/historical/news.json"),
-            ),
+            OpenDARTLiveConnector(repo_root=root),
+            KINDLiveConnector(repo_root=root),
+            KRXLiveConnector(repo_root=root),
+            CompanyGuideLiveConnector(repo_root=root),
+            IssuerIRLiveConnector(repo_root=root),
+            TrustedNewsLiveConnector(repo_root=root),
         )
     )
 

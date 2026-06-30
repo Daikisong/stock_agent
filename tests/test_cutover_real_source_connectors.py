@@ -16,7 +16,11 @@ class CutoverRealSourceConnectorsTests(unittest.TestCase):
         )
         report = registry.build_report(results)
         self.assertGreaterEqual(report["summary"]["provider_failure_count"], 1)
-        self.assertEqual(report["summary"]["real_document_fetched_count"], 0)
+        self.assertEqual(report["summary"]["snapshot_only_counted_as_live_count"], 0)
+        for row in report["rows"]:
+            if row["status"] == "FETCHED":
+                self.assertTrue(row["content_hash"])
+                self.assertFalse(str(row.get("canonical_url") or "").startswith("snapshot://"))
 
     def test_shadow_report_exercises_official_provider_classes(self):
         bundle = build_production_cutover_bundle(
