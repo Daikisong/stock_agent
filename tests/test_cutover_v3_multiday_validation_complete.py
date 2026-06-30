@@ -22,6 +22,12 @@ class CutoverV3MultidayValidationCompleteTests(unittest.TestCase):
         self.assertGreaterEqual(report["summary"]["five_day_live_official_shadow_count"], 5)
         self.assertGreaterEqual(report["summary"]["frozen_replay_day_count"], 10)
         self.assertEqual(report["summary"]["repeat_variance"], 0)
+        self.assertEqual(report["summary"]["source_corpus_repeat_variance"], 0)
+        self.assertEqual(report["summary"]["replay_input_repeat_variance"], 0)
+        repeat_rows = [row for row in report["frozen_rows"] if row.get("run_kind") == "frozen_repeat_group"]
+        self.assertTrue(repeat_rows)
+        self.assertTrue(all(row["source_corpus_repeat_variance"] == 0 for row in repeat_rows))
+        self.assertTrue(all(row["replay_input_repeat_variance"] == 0 for row in repeat_rows))
 
 
 if __name__ == "__main__":

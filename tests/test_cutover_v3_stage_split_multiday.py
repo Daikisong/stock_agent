@@ -15,7 +15,12 @@ class CutoverV3StageSplitMultidayTests(unittest.TestCase):
         )
         self.assertEqual(report["summary"]["status"], "MEANINGFUL_STAGE_SPLIT_PASS")
         self.assertEqual(report["summary"]["deterministic_scorer_output_count"], 100)
+        self.assertGreaterEqual(report["summary"]["live_ProviderPending_count"], 1)
+        self.assertGreaterEqual(report["summary"]["provider_failure_pending_link_count"], 1)
+        self.assertEqual(report["summary"]["live_YellowPending_count"], 0)
+        self.assertGreaterEqual(report["summary"]["YellowPending_guard_validation_count"], 1)
         self.assertGreaterEqual(report["summary"]["YellowPending_count"], 1)
+        self.assertGreaterEqual(report["summary"]["live_RiskReview_or_Reject_count"], 1)
         self.assertGreaterEqual(report["summary"]["RiskReview_or_Reject_count"], 1)
 
 

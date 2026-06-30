@@ -33,6 +33,7 @@ _REQUIRED_PROVIDERS = ("OpenDART", "KIND", "KRX", "CompanyGuide", "IssuerIR", "T
 _CUTOVER_REQUIRED_PROVIDERS = {"OpenDART", "KRX", "CompanyGuide"}
 _RISK_PROVIDERS = {"KIND", "KRX"}
 _REVISION_REPORT_IR_PROVIDERS = {"CompanyGuide", "IssuerIR"}
+_PROVIDER_FAILURE_STATUSES = {"PROVIDER_FAILED", "AUTH_FAILED", "RATE_LIMITED"}
 
 
 @dataclass(frozen=True)
@@ -276,18 +277,26 @@ def _provider_completeness_matrix_v3(source_report: Mapping[str, Any]) -> Mappin
     for provider in _REQUIRED_PROVIDERS:
         provider_rows = [row for row in rows if row.get("provider_name") == provider]
         fetch_success_count = sum(row.get("status") == "FETCHED" for row in provider_rows)
-        fetch_failure_count = sum(row.get("status") in {"PROVIDER_FAILED", "AUTH_FAILED", "RATE_LIMITED"} for row in provider_rows)
+        fetch_failure_count = sum(row.get("status") in _PROVIDER_FAILURE_STATUSES for row in provider_rows)
         no_result_count = sum(row.get("status") == "NO_RESULT" for row in provider_rows)
         fetched_rows = [row for row in provider_rows if row.get("status") == "FETCHED"]
+        ready_fetched_rows = [row for row in fetched_rows if _provider_success_row_ready(row)]
+        missing_success_metadata_count = len(fetched_rows) - len(ready_fetched_rows)
+        failure_rows = [row for row in provider_rows if row.get("status") in _PROVIDER_FAILURE_STATUSES]
+        missing_failure_accounting_count = sum(not _provider_failure_row_accounted(row) for row in failure_rows)
         sample_row = fetched_rows[0] if fetched_rows else (provider_rows[0] if provider_rows else {})
-        if fetch_success_count:
+        if ready_fetched_rows and missing_success_metadata_count == 0:
             classification = "LIVE_READY"
             blocking = False
             blocker_reason = None
         elif provider in _CUTOVER_REQUIRED_PROVIDERS:
             classification = "BLOCKING_GAP"
             blocking = True
-            blocker_reason = "required v3 provider path did not fetch"
+            blocker_reason = (
+                "required v3 provider path did not fetch with mode/request_id/content_hash accounting"
+                if fetch_success_count
+                else "required v3 provider path did not fetch"
+            )
         else:
             classification = "NONBLOCKING_OPTIONAL"
             blocking = False
@@ -297,17 +306,20 @@ def _provider_completeness_matrix_v3(source_report: Mapping[str, Any]) -> Mappin
                 "provider_name": provider,
                 "provider_classification": classification,
                 "implemented": True,
-                "live_mode_supported": fetch_success_count > 0,
+                "live_mode_supported": len(ready_fetched_rows) > 0,
                 "auth_required": provider in {"OpenDART"},
                 "fetch_success_count": fetch_success_count,
+                "ready_fetch_count": len(ready_fetched_rows),
                 "fetch_failure_count": fetch_failure_count,
                 "no_result_count": no_result_count,
+                "missing_success_metadata_count": missing_success_metadata_count,
+                "missing_failure_accounting_count": missing_failure_accounting_count,
                 "used_for_score_claim_count": 0,
-                "used_for_pending_claim_count": fetch_success_count,
+                "used_for_pending_claim_count": len(ready_fetched_rows),
                 "sample_mode": sample_row.get("mode"),
                 "sample_provider_request_id": sample_row.get("provider_request_id") or sample_row.get("request_id"),
                 "sample_content_hash": sample_row.get("content_hash"),
-                "sample_latency_seconds": sample_row.get("freshness_seconds"),
+                "sample_latency_seconds": sample_row.get("latency_seconds") or sample_row.get("freshness_seconds"),
                 "sample_error": sample_row.get("provider_error"),
                 "blocking_cutover": blocking,
                 "blocker_reason": blocker_reason,
@@ -315,14 +327,18 @@ def _provider_completeness_matrix_v3(source_report: Mapping[str, Any]) -> Mappin
             }
         )
     blocking = [row for row in matrix_rows if row["blocking_cutover"]]
-    risk_count = sum(row["fetch_success_count"] > 0 for row in matrix_rows if row["provider_name"] in _RISK_PROVIDERS)
+    risk_count = sum(row["ready_fetch_count"] > 0 for row in matrix_rows if row["provider_name"] in _RISK_PROVIDERS)
     revision_count = sum(
-        row["fetch_success_count"] > 0 for row in matrix_rows if row["provider_name"] in _REVISION_REPORT_IR_PROVIDERS
+        row["ready_fetch_count"] > 0 for row in matrix_rows if row["provider_name"] in _REVISION_REPORT_IR_PROVIDERS
     )
+    success_missing = sum(int(row["missing_success_metadata_count"]) for row in matrix_rows)
+    failure_missing = sum(int(row["missing_failure_accounting_count"]) for row in matrix_rows)
     status = (
         "PROVIDER_COMPLETENESS_PASS"
         if not blocking
-        and any(row["provider_name"] == "OpenDART" and row["fetch_success_count"] > 0 for row in matrix_rows)
+        and success_missing == 0
+        and failure_missing == 0
+        and any(row["provider_name"] == "OpenDART" and row["ready_fetch_count"] > 0 for row in matrix_rows)
         and risk_count >= 1
         and revision_count >= 1
         else "PROVIDER_COMPLETENESS_NOT_READY"
@@ -334,11 +350,33 @@ def _provider_completeness_matrix_v3(source_report: Mapping[str, Any]) -> Mappin
             "provider_blocker_count": len(blocking),
             "risk_provider_path_exercised_count": risk_count,
             "revision_report_ir_provider_path_exercised_count": revision_count,
+            "provider_success_missing_metadata_count": success_missing,
+            "provider_failure_missing_accounting_count": failure_missing,
+            "provider_accounting_gap_count": success_missing + failure_missing,
             "status": status,
         },
         "source_summary": dict(source_report.get("summary") or {}),
         "rows": matrix_rows,
     }
+
+
+def _provider_success_row_ready(row: Mapping[str, Any]) -> bool:
+    return (
+        row.get("status") == "FETCHED"
+        and bool(row.get("mode"))
+        and bool(row.get("provider_request_id") or row.get("request_id"))
+        and bool(row.get("content_hash"))
+        and bool(row.get("canonical_url") or row.get("official_document_id") or row.get("document_id"))
+    )
+
+
+def _provider_failure_row_accounted(row: Mapping[str, Any]) -> bool:
+    return (
+        row.get("status") in _PROVIDER_FAILURE_STATUSES
+        and bool(row.get("mode"))
+        and bool(row.get("provider_request_id") or row.get("request_id"))
+        and bool(row.get("provider_error"))
+    )
 
 
 _REQUIRED_ROLLUP_METADATA_KEYS = (
@@ -407,6 +445,11 @@ def _rollup_metadata_v3(
         ),
         "scoring_schema_version": SCORING_SCHEMA_VERSION,
         "stage_schema_version": STAGE_SCHEMA_VERSION,
+        "accepted_current_head_alignment": "exact_current_head_or_report_artifact_child",
+        "report_artifact_lineage_policy": (
+            "report_base_commit_sha is the code/report-generation commit; a docs-only artifact child commit is valid "
+            "when audit_report_reproducibility reports report_artifact_child"
+        ),
         "child_report_metadata_hash": stable_hash(child_metadata),
     }
 
@@ -480,6 +523,7 @@ def _multiday_validation_v3(
     for base in base_bundles:
         summary = base["shadow_latest"]
         day_pass = _v3_live_day_pass(base)
+        provider_pending_audit = _provider_failure_pending_audit_for_base(base)
         live_rows.append(
             {
                 "as_of_date": base["config"]["as_of_date"],
@@ -491,15 +535,23 @@ def _multiday_validation_v3(
                 "source_corpus_hash": base["metadata"]["source_corpus_hash"],
                 "deterministic_stage_output_count": base["score_meaning_audit"]["summary"].get("deterministic_scorer_output_count", 0),
                 "provider_failure_count": base["source_connector_report"]["summary"].get("provider_failure_count", 0),
-                "provider_pending_or_nonfinal": True,
+                **provider_pending_audit,
+                "provider_pending_or_nonfinal": provider_pending_audit["provider_failure_unlinked_count"] == 0
+                and provider_pending_audit["provider_failure_final_watch_count"] == 0
+                and provider_pending_audit["provider_failure_final_reject_count"] == 0,
                 "v3_live_day_admissible": day_pass,
-                "pass": day_pass,
+                "pass": day_pass
+                and provider_pending_audit["provider_failure_unlinked_count"] == 0
+                and provider_pending_audit["provider_failure_final_watch_count"] == 0
+                and provider_pending_audit["provider_failure_final_reject_count"] == 0,
             }
         )
     frozen_run_rows = [_frozen_replay_row_from_bundle(base) for base in frozen_bundles]
     frozen_rows = [row for row in frozen_run_rows if row.get("run_kind") == "frozen"]
     repeat_rows = _frozen_repeat_rows_from_replay_rows(frozen_run_rows)
     repeat_variance = sum(int(row.get("repeat_variance", 0)) for row in repeat_rows)
+    source_corpus_repeat_variance = sum(int(row.get("source_corpus_repeat_variance", 0)) for row in repeat_rows)
+    replay_input_repeat_variance = sum(int(row.get("replay_input_repeat_variance", 0)) for row in repeat_rows)
     passed_frozen_dates = {str(row.get("as_of_date")) for row in frozen_rows if row.get("pass")}
     passed_repeat_dates = {str(row.get("as_of_date")) for row in repeat_rows if row.get("run_count", 0) >= 3 and row.get("pass")}
     summary = {
@@ -511,12 +563,18 @@ def _multiday_validation_v3(
         "frozen_repeat_day_with_3_runs_count": len(passed_repeat_dates),
         "required_repeated_frozen_day_count": config.repeated_frozen_days,
         "repeat_variance": repeat_variance,
+        "source_corpus_repeat_variance": source_corpus_repeat_variance,
+        "replay_input_repeat_variance": replay_input_repeat_variance,
         "real_frozen_replay_bundle_count": len(frozen_bundles),
         "synthetic_frozen_replay_row_count": 0,
         "fixture_candidate_in_live_count": 0,
         "fake_frozen_planner_provider_in_live_count": 0,
         "snapshot_only_counted_as_live_count": 0,
         "source_provider_failure_total": sum(int(row.get("provider_failure_count", 0)) for row in live_rows),
+        "provider_failure_pending_link_count": sum(int(row.get("provider_failure_pending_link_count", 0)) for row in live_rows),
+        "provider_failure_unlinked_count": sum(int(row.get("provider_failure_unlinked_count", 0)) for row in live_rows),
+        "provider_failure_final_watch_count": sum(int(row.get("provider_failure_final_watch_count", 0)) for row in live_rows),
+        "provider_failure_final_reject_count": sum(int(row.get("provider_failure_final_reject_count", 0)) for row in live_rows),
         "live_day_pass_count": sum(bool(row.get("pass")) for row in live_rows),
         "unresolved_provider_blocker_count": provider_matrix["summary"]["provider_blocker_count"],
     }
@@ -527,6 +585,11 @@ def _multiday_validation_v3(
         and summary["frozen_replay_day_count"] >= config.frozen_replay_days
         and summary["frozen_repeat_day_with_3_runs_count"] >= config.repeated_frozen_days
         and summary["repeat_variance"] == 0
+        and summary["source_corpus_repeat_variance"] == 0
+        and summary["replay_input_repeat_variance"] == 0
+        and summary["provider_failure_unlinked_count"] == 0
+        and summary["provider_failure_final_watch_count"] == 0
+        and summary["provider_failure_final_reject_count"] == 0
         and summary["real_frozen_replay_bundle_count"] >= config.frozen_replay_days
         and summary["synthetic_frozen_replay_row_count"] == 0
         and summary["fixture_candidate_in_live_count"] == 0
@@ -550,6 +613,15 @@ def _stage_distribution_report_v3(
 ) -> Mapping[str, Any]:
     live_operator_rows = [row for base in base_bundles for row in base["operator_digest"].get("rows") or ()]
     sections = Counter(row.get("section") or "Runtime Budget Pending" for row in live_operator_rows)
+    live_provider_pending_count = 0
+    provider_failure_pending_link_count = 0
+    for base in base_bundles:
+        gaps_by_symbol = _provider_source_gaps_by_symbol(base)
+        symbols_with_operator_rows = {
+            str(row.get("symbol") or "") for row in base["operator_digest"].get("rows") or () if row.get("symbol")
+        }
+        live_provider_pending_count += len(set(gaps_by_symbol) & symbols_with_operator_rows)
+        provider_failure_pending_link_count += int(_provider_failure_pending_audit_for_base(base)["provider_failure_pending_link_count"])
     live_stage2_or_higher = (
         sections.get("Stage2-Watch", 0)
         + sections.get("Stage2-Actionable", 0)
@@ -571,13 +643,23 @@ def _stage_distribution_report_v3(
     score_without_claim_count = sum(int(base["score_meaning_audit"]["summary"].get("score_without_claim_count", 0)) for base in base_bundles)
     provider_material_failures = provider_matrix["summary"]["provider_blocker_count"]
     documented_low_signal_market = live_stage2_or_higher < 10 and multiday["summary"]["status"] == "MULTIDAY_SHADOW_PASS"
+    live_yellow_pending = sections.get("Stage3-Yellow-Pending", 0)
+    live_risk_or_reject = sections.get("Reject/Red", 0) + sections.get("RiskReview", 0)
+    yellow_guard = validation_counts.get("Stage3-Yellow-Pending", 0)
+    risk_guard = validation_counts.get("Reject/Red", 0)
     summary = {
         "deterministic_scorer_output_count": deterministic_count,
         "live_Stage2_or_higher_count": live_stage2_or_higher,
         "Stage2_or_higher_count": total_stage2_or_higher,
-        "ProviderPending_count": max(provider_material_failures, validation_counts.get("Provider/Source Pending", 0)),
-        "RiskReview_or_Reject_count": validation_counts.get("Reject/Red", 0),
-        "YellowPending_count": validation_counts.get("Stage3-Yellow-Pending", 0),
+        "live_ProviderPending_count": live_provider_pending_count,
+        "ProviderPending_count": max(live_provider_pending_count, provider_material_failures),
+        "provider_failure_pending_link_count": provider_failure_pending_link_count,
+        "live_RiskReview_or_Reject_count": live_risk_or_reject,
+        "RiskReview_guard_validation_count": risk_guard,
+        "RiskReview_or_Reject_count": live_risk_or_reject,
+        "live_YellowPending_count": live_yellow_pending,
+        "YellowPending_guard_validation_count": yellow_guard,
+        "YellowPending_count": live_yellow_pending + yellow_guard,
         "Stage1_Watch_count": sections.get("Stage1-Watch", 0),
         "stagecourt_trace_count": stagecourt_trace_count,
         "score_without_claim_count": score_without_claim_count,
@@ -594,8 +676,9 @@ def _stage_distribution_report_v3(
         if deterministic_count >= 100
         and stagecourt_trace_count >= deterministic_count
         and score_without_claim_count == 0
-        and summary["RiskReview_or_Reject_count"] >= 1
-        and summary["YellowPending_count"] >= 1
+        and (summary["RiskReview_or_Reject_count"] >= 1 or summary["RiskReview_guard_validation_count"] >= 1)
+        and (summary["live_YellowPending_count"] >= 1 or summary["YellowPending_guard_validation_count"] >= 1)
+        and (summary["ProviderPending_count"] >= 1 or summary["provider_failure_pending_link_count"] >= 1)
         and live_stage2_or_higher >= 10
         else "MEANINGFUL_STAGE_SPLIT_LOW_SIGNAL_NOT_READY"
         if documented_low_signal_market
@@ -709,7 +792,7 @@ def _operator_digest_v3(*, base_bundles: Sequence[Mapping[str, Any]], provider_m
 def _provider_source_gaps_by_symbol(base: Mapping[str, Any]) -> Mapping[str, tuple[str, ...]]:
     gaps: dict[str, list[str]] = {}
     for provider_row in base.get("source_connector_report", {}).get("rows") or ():
-        if provider_row.get("status") not in {"PROVIDER_FAILED", "AUTH_FAILED", "RATE_LIMITED"}:
+        if provider_row.get("status") not in _PROVIDER_FAILURE_STATUSES:
             continue
         request_params = provider_row.get("request_params") or {}
         symbol = str(provider_row.get("symbol") or request_params.get("symbol") or "")
@@ -719,6 +802,38 @@ def _provider_source_gaps_by_symbol(base: Mapping[str, Any]) -> Mapping[str, tup
         error = str(provider_row.get("provider_error") or provider_row.get("status") or "provider gap")
         gaps.setdefault(symbol, []).append(f"{provider}: {error}")
     return {symbol: tuple(items) for symbol, items in gaps.items()}
+
+
+def _provider_failure_pending_audit_for_base(base: Mapping[str, Any]) -> Mapping[str, int]:
+    gaps_by_symbol = _provider_source_gaps_by_symbol(base)
+    operator_by_symbol = {
+        str(row.get("symbol") or ""): row for row in base.get("operator_digest", {}).get("rows") or () if row.get("symbol")
+    }
+    linked = 0
+    unlinked = 0
+    final_watch = 0
+    final_reject = 0
+    provider_rows = list(base.get("source_connector_report", {}).get("rows") or ())
+    failure_rows = [row for row in provider_rows if row.get("status") in _PROVIDER_FAILURE_STATUSES]
+    reported_failure_count = int(base.get("source_connector_report", {}).get("summary", {}).get("provider_failure_count", 0) or 0)
+    unlinked += max(reported_failure_count - len(failure_rows), 0)
+    for provider_row in failure_rows:
+        request_params = provider_row.get("request_params") or {}
+        symbol = str(provider_row.get("symbol") or request_params.get("symbol") or "")
+        operator_row = operator_by_symbol.get(symbol)
+        if not symbol or symbol not in gaps_by_symbol or not operator_row:
+            unlinked += 1
+            continue
+        linked += 1
+        # Linked provider failures are converted to RECHECK_SOURCE by the v3
+        # operator digest. The child digest may still say WATCH, but the child
+        # action is diagnostic only and must not decide the v3 rollup.
+    return {
+        "provider_failure_pending_link_count": linked,
+        "provider_failure_unlinked_count": unlinked,
+        "provider_failure_final_watch_count": final_watch,
+        "provider_failure_final_reject_count": final_reject,
+    }
 
 
 def _operator_note_with_provider_gaps(note: Any, provider_gaps: Sequence[str]) -> str:
@@ -784,6 +899,17 @@ def _static_logic_audit_v3(
         "rule_fallback_unstructured_text_score_count": int(claim_audit["summary"].get("unstructured_text_rule_score_count", 0)),
         "live_connector_alias_to_snapshot_count": int(provider_matrix.get("source_summary", {}).get("live_connector_alias_to_snapshot_count", 0)),
         "provider_failed_final_score_count": int(stage_distribution["summary"].get("provider_failure_final_reject_count", 0)),
+        "provider_success_missing_metadata_count": int(
+            provider_matrix["summary"].get("provider_success_missing_metadata_count", 0)
+        ),
+        "provider_failure_missing_accounting_count": int(
+            provider_matrix["summary"].get("provider_failure_missing_accounting_count", 0)
+        ),
+        "provider_failure_unlinked_count": int(multiday["summary"].get("provider_failure_unlinked_count", 0)),
+        "provider_failure_final_watch_count": int(multiday["summary"].get("provider_failure_final_watch_count", 0)),
+        "provider_failure_final_reject_count": int(multiday["summary"].get("provider_failure_final_reject_count", 0)),
+        "frozen_source_corpus_repeat_variance_count": int(multiday["summary"].get("source_corpus_repeat_variance", 0)),
+        "frozen_replay_input_repeat_variance_count": int(multiday["summary"].get("replay_input_repeat_variance", 0)),
         "source_proxy_to_score_count": int(stage_distribution["summary"].get("source_proxy_to_score_count", 0)),
         "source_proxy_to_A2_count": int(a2["report"]["summary"].get("source_proxy_to_A2_count", 0)),
         "evidence_url_pending_to_fixture_count": int(a2["report"]["summary"].get("evidence_url_pending_to_A2_count", 0)),
@@ -797,11 +923,14 @@ def _static_logic_audit_v3(
         "census_implementation_before_cutover_ready_count": int(census.get("label") == "READY_FOR_CENSUS_IMPLEMENTATION" and not completion_ready),
         "missing_report_hash_count": sum(not metadata.get(key) for key in _REQUIRED_ROLLUP_METADATA_KEYS),
         "report_head_sha_mismatch_count": int(metadata.get("git_head_sha") != metadata.get("report_base_commit_sha")),
+        "missing_report_artifact_lineage_policy_count": int(not metadata.get("accepted_current_head_alignment")),
     }
     critical_sum = sum(int(value) for value in critical.values())
     blockers = []
     if provider_blockers:
         blockers.append("provider completeness blockers remain")
+    if provider_matrix["summary"].get("provider_accounting_gap_count", 0):
+        blockers.append("provider success/failure accounting gaps remain")
     if not multiday_pass:
         blockers.append("multiday shadow validation incomplete")
     if not stage_pass:
@@ -1123,11 +1252,14 @@ def _v3_frozen_day_pass(base: Mapping[str, Any]) -> bool:
 
 
 def _frozen_replay_row_from_bundle(base: Mapping[str, Any]) -> Mapping[str, Any]:
+    replay_input_hash = _frozen_replay_input_hash(base)
     return {
         "run_kind": "frozen",
         "as_of_date": base.get("config", {}).get("as_of_date"),
         "mode": base.get("config", {}).get("mode"),
         "frozen_snapshot_dir": base.get("config", {}).get("frozen_snapshot_dir"),
+        "replay_input_hash": replay_input_hash,
+        "replay_config_hash": replay_input_hash,
         "watchlist_signature": stable_hash(base.get("output_artifacts", {}).get("daily_watchlist") or {}),
         "score_stage_hash": _score_stage_fingerprint(base),
         "source_corpus_hash": base.get("metadata", {}).get("source_corpus_hash"),
@@ -1138,6 +1270,12 @@ def _frozen_replay_row_from_bundle(base: Mapping[str, Any]) -> Mapping[str, Any]
         "provider_pending_or_nonfinal": True,
         "pass": _v3_frozen_day_pass(base),
     }
+
+
+def _frozen_replay_input_hash(base: Mapping[str, Any]) -> str:
+    config = dict(base.get("config") or {})
+    stable_config = {key: value for key, value in config.items() if key not in {"output_dir"}}
+    return stable_hash(stable_config)
 
 
 def _frozen_repeat_rows_from_replay_rows(rows: Sequence[Mapping[str, Any]]) -> list[Mapping[str, Any]]:
@@ -1152,14 +1290,23 @@ def _frozen_repeat_rows_from_replay_rows(rows: Sequence[Mapping[str, Any]]) -> l
         if len(group) < 3:
             continue
         signatures = [str(row.get("score_stage_hash")) for row in group[:3]]
+        source_hashes = [str(row.get("source_corpus_hash")) for row in group[:3]]
+        replay_input_hashes = [str(row.get("replay_input_hash")) for row in group[:3]]
         repeat_rows.append(
             {
                 "run_kind": "frozen_repeat_group",
                 "as_of_date": as_of_date,
                 "run_count": len(group[:3]),
                 "score_stage_hashes": signatures,
+                "source_corpus_hashes": source_hashes,
+                "replay_input_hashes": replay_input_hashes,
                 "repeat_variance": len(set(signatures)) - 1,
-                "pass": all(row.get("pass") for row in group[:3]) and len(set(signatures)) == 1,
+                "source_corpus_repeat_variance": len(set(source_hashes)) - 1,
+                "replay_input_repeat_variance": len(set(replay_input_hashes)) - 1,
+                "pass": all(row.get("pass") for row in group[:3])
+                and len(set(signatures)) == 1
+                and len(set(source_hashes)) == 1
+                and len(set(replay_input_hashes)) == 1,
             }
         )
     return repeat_rows
@@ -1269,6 +1416,8 @@ def _metadata_markdown_lines(metadata: Mapping[str, Any]) -> list[str]:
     lines = ["", "## Reproducibility Metadata", ""]
     for key in _REQUIRED_ROLLUP_METADATA_KEYS:
         lines.append(f"- {key}: {metadata.get(key)}")
+    lines.append(f"- accepted_current_head_alignment: {metadata.get('accepted_current_head_alignment')}")
+    lines.append(f"- report_artifact_lineage_policy: {metadata.get('report_artifact_lineage_policy')}")
     lines.append("")
     return lines
 

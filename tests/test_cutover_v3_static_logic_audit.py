@@ -18,6 +18,7 @@ class CutoverV3StaticLogicAuditTests(unittest.TestCase):
             metadata=fake_rollup_metadata(),
         )
         self.assertEqual(static["summary"]["critical_count_sum"], 0)
+        self.assertEqual(static["summary"]["missing_report_artifact_lineage_policy_count"], 0)
         labels = _completion_labels_v3(
             provider_matrix=fake_provider_matrix(),
             multiday={"summary": {"status": "MULTIDAY_SHADOW_PASS"}},

@@ -17,24 +17,32 @@ def fake_v3_base(as_of_date: str = "2026-06-30", count: int = 20) -> Mapping[str
         }
         for idx in range(count)
     ]
-    digest_rows = [
-        {
-            "candidate_event_id": row["candidate_event_id"],
-            "symbol": row["symbol"],
-            "company_name": row["company_name"],
-            "trigger_category": row["trigger_category"],
-            "section": "Stage2-Watch" if idx < max(count // 2, 1) else "Stage1-Watch",
-            "why_triggered": "official disclosure",
-            "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
-            "verified_score": 7.0 if idx < max(count // 2, 1) else 4.0,
-            "accepted_claims": [f"CLM-{idx}"],
-            "score_stage_validity": "FINAL_WITH_NONMATERIAL_GAPS",
-            "missing_primitives": ["cash_or_revision_conversion"],
-            "provider_source_gaps": [],
-            "operator_note": "fixture operator note",
-        }
-        for idx, row in enumerate(events)
-    ]
+    digest_rows = []
+    for idx, row in enumerate(events):
+        section = "Stage2-Watch" if idx < max(count // 2, 1) else "Stage1-Watch"
+        score = 7.0 if idx < max(count // 2, 1) else 4.0
+        validity = "FINAL_WITH_NONMATERIAL_GAPS"
+        if idx == count - 1 and count >= 2:
+            section = "Reject/Red"
+            score = 0.0
+            validity = "FINAL_RISK_REVIEW"
+        digest_rows.append(
+            {
+                "candidate_event_id": row["candidate_event_id"],
+                "symbol": row["symbol"],
+                "company_name": row["company_name"],
+                "trigger_category": row["trigger_category"],
+                "section": section,
+                "why_triggered": "official disclosure",
+                "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+                "verified_score": score,
+                "accepted_claims": [f"CLM-{idx}"],
+                "score_stage_validity": validity,
+                "missing_primitives": ["cash_or_revision_conversion"],
+                "provider_source_gaps": [],
+                "operator_note": "fixture operator note",
+            }
+        )
     return {
         "config": {"as_of_date": as_of_date},
         "metadata": {"source_corpus_hash": f"SRC-{as_of_date}"},
@@ -83,10 +91,20 @@ def fake_v3_base(as_of_date: str = "2026-06-30", count: int = 20) -> Mapping[str
         },
         "source_connector_report": {
             "summary": {
-                "provider_failure_count": 0,
+                "provider_failure_count": 1,
                 "real_source_document_fetched_count": count,
             },
-            "rows": [],
+            "rows": [
+                {
+                    "provider_name": "IssuerIR",
+                    "status": "PROVIDER_FAILED",
+                    "mode": "live",
+                    "provider_error": "IR page unavailable",
+                    "provider_request_id": f"SRCREQ-ISSUERIR-{as_of_date}",
+                    "request_id": f"SRCREQ-ISSUERIR-{as_of_date}",
+                    "request_params": {"symbol": "000000", "company_name": "회사0"},
+                }
+            ],
         },
         "static_logic_audit": {"summary": {"critical_count_sum": 0}},
         "claim_extraction_audit": {
@@ -159,4 +177,5 @@ def fake_rollup_metadata() -> Mapping[str, Any]:
         "evidence_os_schema_version": "EOS",
         "scoring_schema_version": "SCORING",
         "stage_schema_version": "STAGE",
+        "accepted_current_head_alignment": "exact_current_head_or_report_artifact_child",
     }
