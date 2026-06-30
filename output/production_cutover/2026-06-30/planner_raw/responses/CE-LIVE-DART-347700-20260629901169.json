@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-347700-20260629901169",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "반복 정정 공시는 최신 원문 기준으로 계약 품질을 확인해야 한다.",
+  "rationale": "정정 공급계약 공시에서 정정 항목, 계약잔액, 기간 변화를 확보한다.",
   "red_team_checks": [
-    "최신 정정본 식별",
-    "금액 감소 또는 일정 지연 여부 확인"
+    "이전 정정공시와 최신 공시 구분",
+    "계약 취소/축소 신호 확인"
   ]
 }

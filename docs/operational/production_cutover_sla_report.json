@@ -5,14 +5,17 @@
     "budget_exhausted_pending_count": 0,
     "cache_hit_count": 50,
     "cache_miss_count": 0,
-    "extraction_runtime_seconds": null,
+    "extraction_runtime_seconds": 2.1208,
     "llm_call_count": 50,
+    "max_candidate_runtime_seconds": 3.2425,
+    "max_source_task_runtime_seconds": 0.0707,
     "max_total_runtime_seconds": 900,
-    "planner_runtime_seconds": null,
+    "phase_runtime_measurement_mode": "planner_observed_source_extraction_scoring_estimated_from_remaining_wall_time",
+    "planner_runtime_seconds": 155.056,
     "retry_count": 0,
-    "scoring_runtime_seconds": null,
-    "source_acquisition_runtime_seconds": null,
-    "total_runtime_seconds": 163.5807,
+    "scoring_runtime_seconds": 1.4138,
+    "source_acquisition_runtime_seconds": 3.5346,
+    "total_runtime_seconds": 162.1252,
     "unbounded_fetch_config_count": 0
   }
 }

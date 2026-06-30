@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-063170-20260629901142",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "정정 공급계약은 계약 상대와 조건 변화를 공식 원문에서 확인한다.",
+  "rationale": "정정 공급계약의 계약금액, 상대방, 기간, 정정 내용을 확보한다.",
   "red_team_checks": [
-    "계약금액과 기간 변경 확인",
-    "수익 인식 가능성 및 취소 조건 확인"
+    "계약물품/서비스 성격 확인",
+    "정정 전후 매출 가시성 변화 확인"
   ]
 }

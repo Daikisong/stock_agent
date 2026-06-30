@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-007460-20260629801147",
   "fallback_source_classes": [
-    "IssuerIR",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "자회사 제3자배정 유상증자는 연결 기준 자금투입 목적을 확인해야 한다.",
+  "rationale": "자회사 제3자배정 유상증자 정정공시에서 발행조건과 지배회사 재무 영향 정보를 확보한다.",
   "red_team_checks": [
     "자회사 주요경영사항 범위 확인",
-    "배정 대상자와 자금 사용처 확인"
+    "정정 전후 납입일/배정자 변경 확인"
   ]
 }

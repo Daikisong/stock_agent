@@ -1,13 +1,13 @@
 [
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-148250-20260629000586",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -21,14 +21,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-148250-20260629000586",
       "fallback_source_classes": [
-        "IssuerIR",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -39,28 +38,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "유상증자 결정은 계약 수주보다 자금조달 목적과 사용처 확인이 먼저다. 예: 시설투자 자금인지 운영자금인지 DART 본문으로 확인한다.",
+      "rationale": "유상증자 결정 공시의 자금용도, 배정방식, 납입일, 희석 조건을 공식 원문에서 확보한다.",
       "red_team_checks": [
-        "증자 목적이 계약 수행 CAPEX인지 단순 운영자금인지 구분",
-        "정정 공시 여부와 납입일 변경 여부 확인"
+        "정정공시 여부 확인",
+        "자금용도가 운영자금인지 투자/채무상환인지 구분"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "443f8c81a2878bb81a46fb357690e8c31119d2d43df69b4a62b9984b9954d056",
+    "response_hash": "dab949bee2b4169dcc718382fd4870a191aaa30abe86c303a4898a78cd3ccf2d",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-083660-20260629000561",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -74,14 +73,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-083660-20260629000561",
       "fallback_source_classes": [
-        "IssuerIR",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -92,28 +90,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "정정 유상증자는 기존 조건 변경이 핵심이다. 예: 발행가, 대상자, 납입일 변경을 원문에서 비교한다.",
+      "rationale": "정정 유상증자 공시에서 정정 전후 발행조건과 자금용도 변화를 확보한다.",
       "red_team_checks": [
-        "정정 전후 변경 항목 확인",
-        "조달자금 사용처가 수주 대응인지 확인"
+        "정정 사유 확인",
+        "납입일/발행가 변경 여부 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "712cd66ec4aa5748a8c98c21270944b1c4f4ff734df3d9949638d721b96dd2ad",
+    "response_hash": "41d278e14025e366f4b0bcb0cbaa141811f9f33233ce0ba2b2a5f0ec9128e4be",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-006050-20260629901292",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -127,14 +125,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-006050-20260629901292",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -145,28 +142,28 @@
         "DART"
       ],
       "primitive_gap": "contract_quality",
-      "rationale": "정정된 공급계약은 금액, 기간, 상대방, 해지조건 변화가 핵심이다. 예: 계약금액이 매출 대비 큰지보다 먼저 조건이 유지됐는지 본다.",
+      "rationale": "정정 공급계약 공시에서 계약상대, 금액, 기간, 조건 변경을 확보한다.",
       "red_team_checks": [
-        "정정으로 계약금액 또는 기간이 줄었는지 확인",
-        "계약상대방과 판매공급지역 누락 여부 확인"
+        "정정 전후 계약금액 비교",
+        "해지/변경 조건 누락 여부 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "11a9379cb1984c828f024d791d23cf86587ece8c60ceee72e4306cdaa362b3be",
+    "response_hash": "b51f30694f50a131d29a58e3c6857b268d5ff30ae80b9b9a80678571adb7b336",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-083660-20260629000553",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -180,14 +177,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-083660-20260629000553",
       "fallback_source_classes": [
-        "IssuerIR",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -198,28 +194,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "동일 회사의 정정 유상증자 공시는 자금조달 조건 변화 확인이 우선이다.",
+      "rationale": "정정 유상증자 공시의 발행조건, 조달금액, 자금사용 목적을 공식 원문에서 확보한다.",
       "red_team_checks": [
-        "중복 공시와 최종 정정본 식별",
-        "납입 가능성과 자금 사용처 확인"
+        "중복 정정공시와 최신 원문 구분",
+        "제3자배정/주주배정 여부 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "528150acf05b2dc891d6653a55c9ab87acdd8460300f43eb8d28588f396808f1",
+    "response_hash": "f49adbe389a2f2ba5f24e088f992469bca96f6ee4ea3e1dcf49ddf152afb99f5",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-006050-20260629901282",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -233,14 +229,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-006050-20260629901282",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -251,28 +246,28 @@
         "DART"
       ],
       "primitive_gap": "revenue_visibility_contract",
-      "rationale": "신규 공급계약은 매출 인식 기간과 계약상대방 확인이 우선이다. 예: 1개월 계약과 3년 계약은 같은 금액이어도 가시성이 다르다.",
+      "rationale": "공급계약 원공시에서 계약금액, 매출액 대비 비율, 계약기간을 확보한다.",
       "red_team_checks": [
-        "계약기간과 최근 매출 대비 계약금액 확인",
-        "조건부 계약 또는 해지 가능 조항 확인"
+        "계약 종료일 확인",
+        "최근 매출액 기준연도 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "0298feb0e06ed140a5cf95fb443aa1142a8062069ffe7fff0c8562d4493ab2c3",
+    "response_hash": "7aa6b8218292c5ab85395f498e71d9a54967a21be6748271042a717d3ee4acfd",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-208640-20260629901297",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -286,8 +281,7 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-208640-20260629901297",
       "fallback_source_classes": [
-        "KRX",
-        "KIND"
+        "KRX"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
@@ -301,31 +295,32 @@
         "stage_keys_present": false
       },
       "preferred_source_classes": [
-        "DART"
+        "DART",
+        "KIND"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "권리락은 유상증자 진행 이벤트라 조달 구조 확인이 필요하다.",
+      "rationale": "권리락 공시에서 유상증자 기준가격, 권리락일, 발행조건을 확보한다.",
       "red_team_checks": [
-        "기초 유상증자 공시와 연결",
-        "발행가와 일정 변경 여부 확인"
+        "관련 유상증자 결정 공시 연결",
+        "권리락 기준가격과 일정 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "e8a6442829da3c356acf610fb003f83851b93d2a63c95549e5645b88cbaa7125",
+    "response_hash": "9ac2db953f33629f32e4b41f0378ff94b68cee4c124ba5975a9b18354c967c8e",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-175250-20260629000562",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -339,14 +334,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-175250-20260629000562",
       "fallback_source_classes": [
-        "IssuerIR",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -357,28 +351,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "유상증자 결정은 계약 품질보다 조달 목적과 희석 조건이 먼저다.",
+      "rationale": "유상증자 결정 공시에서 조달 목적, 배정 대상, 납입 조건을 확보한다.",
       "red_team_checks": [
-        "운영자금 비중과 채무상환 비중 확인",
-        "제3자배정이면 대상자와 보호예수 확인"
+        "운영자금/채무상환 비중 확인",
+        "보호예수 또는 할인율 조건 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "95de4176deaf032c0f87ca7360a0db9961a46485094eeecdeaa6fb3aa07ee565",
+    "response_hash": "d002c3c57527ba75bad141b5ad92e612b75d60f59f2995e0837aa31c537b0a7f",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-377030-20260629901255",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -392,14 +386,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-377030-20260629901255",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -410,28 +403,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "증권발행결과는 계획된 조달이 실제 완료됐는지 확인하는 이벤트다.",
+      "rationale": "제3자배정 유상증자 발행결과에서 실제 납입 여부와 발행 주식 수를 확보한다.",
       "red_team_checks": [
-        "납입 완료 금액과 미달 여부 확인",
-        "기존 유상증자 결정 공시와 조건 일치 여부 확인"
+        "미납/부분납입 여부 확인",
+        "배정 대상자와 기존 결정공시 대조"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "0947090d1c3d0a850fb288f93eaf38c25fe6e1876cada5bb3034578467c5dbfc",
+    "response_hash": "33e8a98c48075ed03e425b971a441710076227d8617e7c2f95f092d712b9cdc2",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-377030-20260629901251",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -445,14 +438,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-377030-20260629901251",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -463,28 +455,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "동일한 제3자배정 결과 공시는 납입 완료와 발행 조건 확인이 핵심이다.",
+      "rationale": "증권발행결과 공시에서 납입 완료, 발행가, 조달금액을 확보한다.",
       "red_team_checks": [
-        "중복 결과 공시 여부 확인",
-        "배정 대상자와 납입금액 확인"
+        "동일일자 중복 발행결과 구분",
+        "정정 또는 추가 발행 여부 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "1a79fc73b9e9f29a8d5ef01d800c6e8faaf95fc782834ea53b1e06d4d7c0e42b",
+    "response_hash": "226a624a674135c8da188020b79847432f12f13287faabcac53b75ca97245a9c",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-381970-20260629801242",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -498,14 +490,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-381970-20260629801242",
       "fallback_source_classes": [
-        "IssuerOfficial",
-        "TrustedNews"
+        "IssuerOfficial"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -516,28 +507,28 @@
         "DART"
       ],
       "primitive_gap": "contract_quality",
-      "rationale": "투자판단 관련 주요경영사항 정정은 원문에서 거래 조건 또는 사업 영향 변경을 확인해야 한다.",
+      "rationale": "정정 주요경영사항에서 계약/거래 구조, 정정 항목, 재무 영향 범위를 확보한다.",
       "red_team_checks": [
-        "정정 전후 핵심 조건 변경 확인",
-        "계약성 이벤트인지 일회성 이벤트인지 구분"
+        "정정 전후 핵심 수치 비교",
+        "거래 상대와 조건의 확정성 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "d8d69f0408e276b9f1a58d9456449119e164dc013cc4c7e9b1a47f7e7e4e5804",
+    "response_hash": "a4a2ca2b3fc87288f8e61505ad830f859f30b0a1198ea5155c9117493bd5497c",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-021960-20260629000554",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -551,12 +542,12 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-021960-20260629000554",
       "fallback_source_classes": [
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
+      "max_candidates": 3,
       "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
@@ -568,28 +559,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "증권발행실적보고서는 조달 완료와 조건 확인용이다.",
+      "rationale": "증권발행실적보고서에서 발행 규모, 조달 완료, 사용 목적을 확보한다.",
       "red_team_checks": [
-        "발행 규모와 자금 사용 목적 확인",
-        "기초 증권신고서와 차이 확인"
+        "예정 대비 실제 발행금액 확인",
+        "자금사용 계획 변경 여부 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "252bb857774994c5b33e2f8820593e29a250cc0bc014adb53e2a303ecf1216a2",
+    "response_hash": "2bcd49aa74458eff19540761bca0b4d3a01e1ac19e668762641ce77c581ca6d6",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-104040-20260629901236",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -603,14 +594,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-104040-20260629901236",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -621,28 +611,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "증권발행결과는 실제 납입과 조달 목적 확인이 우선이다.",
+      "rationale": "증권발행결과 공시에서 납입 결과, 발행 조건, 조달금액을 확보한다.",
       "red_team_checks": [
-        "납입 완료 여부 확인",
-        "시설자금인지 운영자금인지 구분"
+        "발행 실패/축소 여부 확인",
+        "관련 결정공시와 조건 대조"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "40f722c5baba461df84346fca4f435a902addfcb0bcd82741f693b74b86723c2",
+    "response_hash": "3c785fe5b64500aabe8e75ffed58b7f804c370c56d30cf220d6983901c2ed55d",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-260870-20260629601196",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -656,14 +646,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-260870-20260629601196",
       "fallback_source_classes": [
-        "IssuerIR",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -674,28 +663,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "우선주 제3자배정 결과는 성장 투자 재원인지 재무 보강인지 확인해야 한다.",
+      "rationale": "우선주 제3자배정 발행결과에서 납입 완료, 투자자, 우선주 조건을 확보한다.",
       "red_team_checks": [
-        "우선주 조건과 배정 대상자 확인",
-        "조달자금 사용처와 기존 투자계획 연결 확인"
+        "우선주 전환/상환 조건 확인",
+        "자금사용 목적과 투자자 성격 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "a901a1170f08110f4acc47d0d93180b0e69fe74065402f951d345900e2753fff",
+    "response_hash": "45bfdaaa6a28f87da62e2e32972b002e6dad00fc8613353991067dd02ace73b1",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-060900-20260629901198",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -709,14 +698,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-060900-20260629901198",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -726,29 +714,29 @@
       "preferred_source_classes": [
         "DART"
       ],
-      "primitive_gap": "contract_quality",
-      "rationale": "단일판매 공급계약은 상대방, 금액, 기간, 조건이 계약 품질의 기본이다.",
+      "primitive_gap": "revenue_visibility_contract",
+      "rationale": "공급계약 공시에서 계약금액, 기간, 상대방, 최근 매출액 대비 비율을 확보한다.",
       "red_team_checks": [
-        "계약금액의 최근 매출 대비 비중 확인",
-        "계약 해지 또는 조건부 조항 확인"
+        "계약상대 비공개 사유 확인",
+        "계약 해지 조건 및 기간 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "237f16d4464c8780eb3ead38bbf9654817d1fa61ceef5e6721aa1cd9c02f272b",
+    "response_hash": "45eccc78f2eaf2d9540eefd4bf04f92ae71018ac54b6728db7a27a6122fbf7cd",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-097230-20260629801171",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -762,14 +750,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-097230-20260629801171",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -779,29 +766,29 @@
       "preferred_source_classes": [
         "DART"
       ],
-      "primitive_gap": "margin_bridge_visible",
-      "rationale": "중공업/건설 계약 정정은 매출보다 원가와 마진 변동 위험이 크다.",
+      "primitive_gap": "contract_quality",
+      "rationale": "정정 공급계약에서 EPC 계약 금액, 기간, 상대방, 정정 사유를 확보한다.",
       "red_team_checks": [
-        "정정으로 계약금액 또는 공사기간 변경 확인",
-        "원가상승 보상 조항 또는 변경계약 여부 확인"
+        "원가/공사기간 변경 가능성 확인",
+        "정정 전후 계약금액과 기간 비교"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "7c51dfe9e36d5e8e28ff706501594513569fccd6b75da0aef46c44c8ddc8cf2e",
+    "response_hash": "d29c18a169190e39ab427f88c3c6173c44c8d77515ce9ef61060615d32216950",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-347700-20260629901175",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -815,14 +802,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-347700-20260629901175",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -833,28 +819,28 @@
         "DART"
       ],
       "primitive_gap": "contract_quality",
-      "rationale": "정정 공급계약은 최종 계약조건 확인이 먼저다.",
+      "rationale": "정정 공급계약의 변경된 계약조건과 매출 인식 가능 기간을 확보한다.",
       "red_team_checks": [
-        "정정 전후 금액, 기간, 상대방 변경 확인",
-        "계약 이행 조건과 해지 조건 확인"
+        "동일 계약의 반복 정정 여부 확인",
+        "계약상대와 계약금액 변경 여부 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "ec4c1bf40e1d25e6eadccc635b278690e8d107ddb48ab29a7fd4a3a5dfa2937e",
+    "response_hash": "b246a0c3c5b773fc427303bcdca3990d8f397337dda2bb36f26a373034c2ef67",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-347700-20260629901169",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -868,14 +854,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-347700-20260629901169",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -886,28 +871,28 @@
         "DART"
       ],
       "primitive_gap": "contract_quality",
-      "rationale": "반복 정정 공시는 최신 원문 기준으로 계약 품질을 확인해야 한다.",
+      "rationale": "정정 공급계약 공시에서 정정 항목, 계약잔액, 기간 변화를 확보한다.",
       "red_team_checks": [
-        "최신 정정본 식별",
-        "금액 감소 또는 일정 지연 여부 확인"
+        "이전 정정공시와 최신 공시 구분",
+        "계약 취소/축소 신호 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "34f9ccba8d033d01fb73d7462be5583dd9293a6624deb976a37a43742fb8323c",
+    "response_hash": "a2d302fac6c34303146e7f99a4e73fa4430467cbcaaf369ce2d0c70313f4b553",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-347700-20260629901164",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -921,14 +906,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-347700-20260629901164",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -939,28 +923,28 @@
         "DART"
       ],
       "primitive_gap": "contract_quality",
-      "rationale": "공급계약 정정은 중복보다 조건 변경 여부가 중요하다.",
+      "rationale": "정정 공급계약 원문에서 변경된 조건과 수익 가시성 정보를 확보한다.",
       "red_team_checks": [
-        "동일 계약의 여러 정정 공시 연결",
-        "계약상대방과 기간 변경 확인"
+        "중복 이벤트와 접수번호별 차이 확인",
+        "계약기간 연장인지 금액 변경인지 구분"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "83a0316592d10ff1ed6319b46996e7fd72081264749e4467eb50209b9784485c",
+    "response_hash": "f35914a39e47ae236eb37324d9c73b005fec95139f05cd814f530e2bd4f95f7d",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-368970-20260629000506",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -974,13 +958,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-368970-20260629000506",
       "fallback_source_classes": [
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -991,28 +975,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "정정 유상증자는 조달 조건과 목적 변경 확인이 핵심이다.",
+      "rationale": "정정 유상증자 결정에서 발행조건, 자금용도, 일정 변경을 확보한다.",
       "red_team_checks": [
-        "정정 전후 발행 조건 확인",
-        "자금 사용처와 기존 사업계획 연결 확인"
+        "정정 사유와 납입 가능성 확인",
+        "조달금액 변동 여부 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "ce3775ebf518db37f233500d24383e03b251527a5b9c21b3c291c378d9b800b3",
+    "response_hash": "24bfb91370d5786439581247c4d2135b03946b7238eff624629f8dbc187fde37",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-007460-20260629801147",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1026,14 +1010,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-007460-20260629801147",
       "fallback_source_classes": [
-        "IssuerIR",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -1044,28 +1027,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "자회사 제3자배정 유상증자는 연결 기준 자금투입 목적을 확인해야 한다.",
+      "rationale": "자회사 제3자배정 유상증자 정정공시에서 발행조건과 지배회사 재무 영향 정보를 확보한다.",
       "red_team_checks": [
         "자회사 주요경영사항 범위 확인",
-        "배정 대상자와 자금 사용처 확인"
+        "정정 전후 납입일/배정자 변경 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "90c6d30651b7b5617d140921e232f722c148e4f1cd717b3bc68e54594e29686c",
+    "response_hash": "e9e94cc3627f2a55e8dbaabc1ead4bf0c573491fd72f4dc65080d57706b8ec09",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000520",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1079,12 +1062,12 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-003530-20260629000520",
       "fallback_source_classes": [
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
+      "max_candidates": 3,
       "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
@@ -1096,28 +1079,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "증권발행실적보고서는 발행 완료와 조달 조건 확인에 한정한다.",
+      "rationale": "증권발행실적보고서에서 실제 발행 규모와 조달 완료 여부를 확보한다.",
       "red_team_checks": [
-        "발행 규모와 조건 확인",
-        "기초 신고서 대비 변경 여부 확인"
+        "회차별 발행 중복 구분",
+        "예정 발행조건 대비 실제 조건 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "81c1a94991288a0b9232831ddc1cb8877bbf73dd15321d02ed8cd5d51bcca8f7",
+    "response_hash": "e997fc2ac6f870b7640394218a70ccc2f9a7d1b78850d727b28fba5067baa778",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-003380-20260629901161",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1131,14 +1114,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-003380-20260629901161",
       "fallback_source_classes": [
-        "IssuerIR",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -1149,28 +1131,28 @@
         "DART"
       ],
       "primitive_gap": "capacity_expansion",
-      "rationale": "신규시설투자는 투자 규모, 기간, 목적이 핵심이다. 예: 수요 대응 증설인지 단순 유지보수인지 구분한다.",
+      "rationale": "자회사 신규시설투자 공시에서 투자금액, 목적, 기간, 생산능력 관련 정보를 확보한다.",
       "red_team_checks": [
-        "자회사 투자 대상과 연결 영향 확인",
-        "투자 목적이 계약 또는 수요와 연결되는지 확인"
+        "자회사와 상장사 연결 영향 확인",
+        "투자기간과 자금조달 방식 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "451938995a59aa24f9830460f514266e3c4c0cc6eded33e567d60e62857ac66f",
+    "response_hash": "dec33ab68becc8aede5f1d6bad6322db20fd2c31660007ed57470c7517c43322",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-208640-20260629000512",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1184,14 +1166,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-208640-20260629000512",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -1202,28 +1183,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "정정 유상증자 결정은 발행 조건 변경과 조달 목적 확인이 우선이다.",
+      "rationale": "정정 유상증자 결정에서 발행가, 일정, 조달 목적 변경을 확보한다.",
       "red_team_checks": [
-        "정정 전후 발행가와 일정 확인",
-        "운영자금 사용 비중 확인"
+        "권리락 공시와 일정 대조",
+        "정정 전후 조달금액 변화 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "785fda1e8e6516e882005047be37832c7f7b84f95c9e8d2ab1114ad9eb1c29b2",
+    "response_hash": "c55d7e7416fd5a8c1d9874d5b26f864757112813ec0cfd97202499c94ded6308",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000517",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1237,12 +1218,12 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-003530-20260629000517",
       "fallback_source_classes": [
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
+      "max_candidates": 3,
       "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
@@ -1254,28 +1235,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "증권발행실적보고서는 발행 결과 확인용 공식 원천이 충분하다.",
+      "rationale": "증권발행실적보고서에서 발행 결과와 자금 사용 계획을 확보한다.",
       "red_team_checks": [
-        "발행 완료 여부 확인",
-        "발행 조건 변경 여부 확인"
+        "동일 발행자의 복수 실적보고서 회차 구분",
+        "실제 납입금액 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "4c3e3860c76e8bcfd4c7406ec039c6ecf984502b5231b2a581496dab7728a110",
+    "response_hash": "c323d0e23ab0213b8d56eb661708646f18ec9b3db214e683cf583b91d2591753",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000514",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1289,12 +1270,12 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-003530-20260629000514",
       "fallback_source_classes": [
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
+      "max_candidates": 3,
       "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
@@ -1306,28 +1287,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "동일 발행실적 유형은 원문 1건으로 조달 이벤트를 확인한다.",
+      "rationale": "증권발행실적보고서 원문에서 발행조건, 조달금액, 청약 결과를 확보한다.",
       "red_team_checks": [
-        "중복 회차 여부 확인",
-        "기초 발행 신고와 결과 차이 확인"
+        "회차/종류별 증권 구분",
+        "예정 대비 미달 여부 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "ebbc3a4b93432f55cdf6f7fd03438d51b884f4e2c42b67ccba68c46f5d9f5d05",
+    "response_hash": "c2293671140cbe5766bb578c14881618710f357b122e0b1dc81f7975174eb0ba",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-130660-20260629801144",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1341,14 +1322,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-130660-20260629801144",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -1358,29 +1338,29 @@
       "preferred_source_classes": [
         "DART"
       ],
-      "primitive_gap": "revenue_visibility_contract",
-      "rationale": "공급계약 정정은 매출 인식 가능 기간과 상대방 조건 확인이 필요하다.",
+      "primitive_gap": "contract_quality",
+      "rationale": "정정 공급계약에서 계약금액, 기간, 상대방, 정정 내용을 확보한다.",
       "red_team_checks": [
-        "계약기간 변경과 금액 변경 확인",
-        "공공/민간 상대방 및 해지조건 확인"
+        "공공/민간 계약상대와 변경 리스크 확인",
+        "정정 전후 금액/기간 비교"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "fdb5c8fe1810641901eeeb5e5e4656b78c72c458b3461158abeb5ec15794f86e",
+    "response_hash": "fabdc1e2c18909264bcbbddc9333c2f1ee07628f6543063bc418e80c7669a111",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-003530-20260629000513",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1394,12 +1374,12 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-003530-20260629000513",
       "fallback_source_classes": [
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
+      "max_candidates": 3,
       "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
@@ -1411,28 +1391,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "발행실적보고서는 자금조달 이벤트의 완료 여부 확인에 적합하다.",
+      "rationale": "증권발행실적보고서에서 실제 발행액과 발행조건을 공식 원문으로 확보한다.",
       "red_team_checks": [
-        "발행 금액과 조건 확인",
-        "동일 회사 중복 공시 회차 구분"
+        "중복 접수번호별 대상 증권 확인",
+        "자금사용 목적 누락 여부 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "100cd7f7fc1c0fbd81dda0850ce6a2f3a2f5f3682f7937d69a1ecf3b25f57d93",
+    "response_hash": "886f5c6ce42731ad16f556976de3b822e613ddf8ed9f2be78ff4da5920fc8ea3",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-028670-20260629801140",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1446,14 +1426,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-028670-20260629801140",
       "fallback_source_classes": [
-        "IssuerIR",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -1464,28 +1443,28 @@
         "DART"
       ],
       "primitive_gap": "capacity_expansion",
-      "rationale": "신규시설투자는 증설 성격, 투자 기간, 재원 확인이 핵심이다.",
+      "rationale": "신규시설투자 공시에서 투자대상, 금액, 기간, 기대 생산/운영 효과를 확보한다.",
       "red_team_checks": [
-        "투자 대상이 매출 능력 확대인지 확인",
-        "투자금액과 자기자본 대비 비중 확인"
+        "투자금액의 자기자본 대비 비율 확인",
+        "투자 목적이 선대/설비 확장인지 구분"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "1e3a02e1626e0f0051b9c555a42146aa7ab0400a5be9c620558adf05a9f9d0e3",
+    "response_hash": "dd3018981d95ebb64181db4c0404d13d01d76715c00a7dfcc5b4c4196edf7bdd",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-360070-20260629901095",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1499,14 +1478,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-360070-20260629901095",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -1517,28 +1495,28 @@
         "DART"
       ],
       "primitive_gap": "contract_quality",
-      "rationale": "장비 공급계약 정정은 고객, 금액, 납기, 변경조건 확인이 중요하다.",
+      "rationale": "정정 공급계약 공시에서 2차전지 장비 계약의 금액, 기간, 정정 사유를 확보한다.",
       "red_team_checks": [
-        "정정으로 납기 지연 또는 금액 변경 확인",
-        "계약상대방 공개 여부와 조건부 조항 확인"
+        "계약상대 공개 여부 확인",
+        "계약기간 연장/금액 변경 구분"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "79320572874157fea05f611a8cfeec1afb5a8957461f4cdbf95311e5b1543e92",
+    "response_hash": "eb2285a1b5e6c1563fa33143d4a386ba7b10f24dcfc462446d92a476d5beb8e4",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-063170-20260629901142",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1552,14 +1530,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-063170-20260629901142",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -1570,28 +1547,28 @@
         "DART"
       ],
       "primitive_gap": "contract_quality",
-      "rationale": "정정 공급계약은 계약 상대와 조건 변화를 공식 원문에서 확인한다.",
+      "rationale": "정정 공급계약의 계약금액, 상대방, 기간, 정정 내용을 확보한다.",
       "red_team_checks": [
-        "계약금액과 기간 변경 확인",
-        "수익 인식 가능성 및 취소 조건 확인"
+        "계약물품/서비스 성격 확인",
+        "정정 전후 매출 가시성 변화 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "19aab6c0c23b8ac0e2b40af5789cdddddb9532446268039efceacfb2f741dac0",
+    "response_hash": "a8009ecc40776a2451e2b85332291e2f43d89edb89ef037e71afb32cbc1963ec",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-270520-20260629000502",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1605,13 +1582,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-270520-20260629000502",
       "fallback_source_classes": [
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -1622,28 +1599,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "정정 유상증자는 자금조달 조건 변경이 핵심이다.",
+      "rationale": "정정 유상증자 결정에서 자금용도, 배정방식, 납입일 변경을 확보한다.",
       "red_team_checks": [
-        "발행 대상자와 납입일 변경 확인",
-        "조달자금 사용처 확인"
+        "납입 지연 또는 조건 변경 확인",
+        "운영자금 조달인지 성장투자인지 구분"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "56eaa19a35832398dcbcc3f60a0b9cfaddacfedb7a1800575194a7a666ca9e61",
+    "response_hash": "b8cf54abc6acfc471d8a6c9caea14a5de1ba39ee2a1acc0647b54b507bf3dcf7",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-226950-20260629000494",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1657,14 +1634,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-226950-20260629000494",
       "fallback_source_classes": [
-        "IssuerIR",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -1675,28 +1651,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "유상증자는 연구개발, 운영, 채무상환 등 사용처 구분이 우선이다.",
+      "rationale": "유상증자 결정 공시에서 조달 규모, 목적, 배정 조건을 확보한다.",
       "red_team_checks": [
-        "자금 사용 목적별 금액 확인",
-        "발행 조건과 희석 규모 확인"
+        "임상/운영자금 사용처 구분",
+        "할인율과 납입일 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "0ad01e21ff90c7043aed3c3b82ab76323ebf00f96825f712a99e25e5be9ec31c",
+    "response_hash": "bb0f58f3f6e77fb3919139100570a0fbaf7b193c77844e22cd108652480e4332",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-351320-20260629901083",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1710,14 +1686,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-351320-20260629901083",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -1728,28 +1703,28 @@
         "DART"
       ],
       "primitive_gap": "contract_quality",
-      "rationale": "정정 공급계약은 원계약 대비 조건 변화가 계약 품질 판단의 출발점이다.",
+      "rationale": "정정 공급계약에서 계약 상대, 금액, 기간, 정정 사유를 확보한다.",
       "red_team_checks": [
-        "금액, 기간, 상대방 변경 여부 확인",
-        "조건부 이행 또는 해지 가능성 확인"
+        "계약 취소/축소 가능성 확인",
+        "최근 매출액 대비 비율 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "b96007a8090addd6c4783adaf851fe6d592f8bd5eb86a2c6c6babcbbf445c908",
+    "response_hash": "67598543f015168165788d931057d19e1c90d502d89971a8fae0aad122e115b5",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-208640-20260629901135",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1763,8 +1738,7 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-208640-20260629901135",
       "fallback_source_classes": [
-        "KRX",
-        "KIND"
+        "KRX"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
@@ -1778,31 +1752,32 @@
         "stage_keys_present": false
       },
       "preferred_source_classes": [
-        "DART"
+        "DART",
+        "KIND"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "1차 발행가액 결정은 유상증자 조건 확정 과정의 공식 증거다.",
+      "rationale": "유상증자 1차 발행가액 결정 공시에서 발행가, 산정 기준, 일정 정보를 확보한다.",
       "red_team_checks": [
-        "최초 유상증자 결정 공시와 연결",
-        "발행가 산정과 향후 일정 확인"
+        "기존 유상증자 결정공시와 조건 대조",
+        "최종 발행가 확정 전 단계임을 표시"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "f3ca988c3213b7cf589b2535b50fdfc9537612b279c96873f2db559d34425b49",
+    "response_hash": "f3ff01a6f51a09d471157740df6ebcb69ff79d123e5c30777161e08b80218bee",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-130660-20260629801125",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1816,14 +1791,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-130660-20260629801125",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -1833,29 +1807,29 @@
       "preferred_source_classes": [
         "DART"
       ],
-      "primitive_gap": "revenue_visibility_contract",
-      "rationale": "공급계약 정정은 매출 가시성에 직접 영향을 줄 수 있다.",
+      "primitive_gap": "contract_quality",
+      "rationale": "정정 공급계약에서 변경된 계약 조건과 매출 인식 기간을 확보한다.",
       "red_team_checks": [
-        "계약기간과 금액 변경 확인",
-        "계약상대방 및 취소 조건 확인"
+        "동일 계약의 최신 정정본 여부 확인",
+        "계약금액/기간 변경 폭 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "11fd4d555af1be66678a559a4a4b12e5137f12ef315673767e1fd274d169a3e5",
+    "response_hash": "afd4876c5e334ee5380418382fceac31ae5268a4644cacd06d5df5d22aeac3c3",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-216080-20260629901133",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1869,14 +1843,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-216080-20260629901133",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -1887,28 +1860,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "증권발행결과는 계획 조달의 실제 성사 여부를 확인하는 공식 원천이다.",
+      "rationale": "증권발행결과에서 납입 여부, 발행금액, 자금사용 계획을 확보한다.",
       "red_team_checks": [
-        "납입 완료와 미발행 잔여 여부 확인",
-        "자금 사용 목적과 기존 결정 공시 비교"
+        "동일일자 복수 발행결과와 구분",
+        "미납 또는 발행조건 변경 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "5525611ba81007b52e79c84f0a29079f47b5128e42a87b799b3b7213c172f384",
+    "response_hash": "4a17e96096f3dc47a585abfbb3644c2a04f52fb4ec5a3f72a465993d799a4b5c",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-403550-20260629801126",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1922,14 +1895,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-403550-20260629801126",
       "fallback_source_classes": [
-        "IssuerIR",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -1940,28 +1912,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "종속회사 유상증자는 연결 자금투입과 사업 확장 목적 확인이 필요하다.",
+      "rationale": "종속회사 유상증자 정정공시에서 조달조건, 정정 사유, 연결 영향 가능 정보를 확보한다.",
       "red_team_checks": [
-        "종속회사 범위와 연결 영향 확인",
-        "정정 전후 발행 조건 및 사용처 확인"
+        "종속회사와 상장사 재무 연결 범위 확인",
+        "납입일과 발행가 변경 여부 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "e50edb39543cf98ad2eed4823ca8d1e3801ef17893b0b120d1453ed1fcda9e85",
+    "response_hash": "cd41e418e4e14356a56d680eaac4a67e031dcd4bec5c19e44ccdaabfc8999a12",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-216080-20260629901130",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -1975,14 +1947,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-216080-20260629901130",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -1993,28 +1964,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "동일 증권발행결과 유형은 실제 납입 완료와 조건 일치 확인이 핵심이다.",
+      "rationale": "증권발행결과 공시에서 실제 납입, 발행주식 수, 조달금액을 확보한다.",
       "red_team_checks": [
-        "중복 또는 별도 회차 여부 확인",
-        "납입 금액과 발행 조건 확인"
+        "접수번호별 증권 종류 확인",
+        "기존 결정공시와 발행조건 대조"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "a3197b707c31b87506ac1c0ddca054cd73c279a88032e82904bec182ef3de045",
+    "response_hash": "da89c4a7444971eff1d955f950267fdf1fd2697dccdee7518b51ea11771e50df",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-440320-20260629901092",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -2028,14 +1999,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-440320-20260629901092",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -2046,28 +2016,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "CB 발행결과는 납입 여부, 전환조건, 사용처 확인이 우선이다.",
+      "rationale": "CB 발행결과 공시에서 납입 여부, 전환조건, 조달금액을 확보한다.",
       "red_team_checks": [
-        "전환가액과 리픽싱 조건 확인",
-        "자금 사용처와 채무성 조건 확인"
+        "전환가액/만기/이자 조건 확인",
+        "미납 또는 조건 변경 여부 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "b671c8b08358017ba4ba219d17293ddb82d0eff996718352b1f30a4c495d3b80",
+    "response_hash": "4485de47e45ee2e4d313d582a2d713928982bd5ab6a1b6a0eee82d9dbeabee88",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-417840-20260629000499",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -2081,14 +2051,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-417840-20260629000499",
       "fallback_source_classes": [
-        "KRX",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -2099,28 +2068,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "자기주식취득결과는 실제 집행 규모와 재원 사용 확인이 필요하다.",
+      "rationale": "자기주식취득결과보고서에서 실제 취득 규모, 평균단가, 미취득 사유를 확보한다.",
       "red_team_checks": [
-        "계획 대비 취득 완료율 확인",
-        "취득 목적과 기간 확인"
+        "계획 대비 실제 취득률 확인",
+        "취득 기간과 자금 집행 규모 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "c9da1b5f8ff9b2a7d94d4a5d56a62fe92bc98e003e8e29913b38030fe15093f4",
+    "response_hash": "c77b654d6bc4ef6fdd594871cc528e50937b89a1e860dcf13598e10c2099d1e9",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-037350-20260629900991",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -2134,14 +2103,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-037350-20260629900991",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -2151,29 +2119,29 @@
       "preferred_source_classes": [
         "DART"
       ],
-      "primitive_gap": "margin_bridge_visible",
-      "rationale": "EPC 성격의 공급계약 정정은 매출보다 마진과 원가조건 확인이 중요하다.",
+      "primitive_gap": "contract_quality",
+      "rationale": "정정 공급계약에서 EPC/설비 계약의 금액, 기간, 상대방, 변경 내용을 확보한다.",
       "red_team_checks": [
-        "공사기간과 계약금액 변경 확인",
-        "원가 보전 또는 변경계약 조항 확인"
+        "계약기간 변경과 원가 부담 가능성 확인",
+        "정정 전후 계약금액 비교"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "073b1d312857ab6f8d4addba508285a04d2218bccd07ed2604fbc9540c3a55d2",
+    "response_hash": "6ec1b599ed50cc078ef701036fe474f10f54bf1ebbdb357771f88aa9476bb3e2",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-226950-20260629901106",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -2187,14 +2155,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-226950-20260629901106",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -2205,28 +2172,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "증권발행결과는 유상증자 계획이 실제 납입됐는지 확인하는 단계다.",
+      "rationale": "증권발행결과 공시에서 유상증자 납입 결과와 실제 조달금액을 확보한다.",
       "red_team_checks": [
-        "납입 완료 여부 확인",
-        "결정 공시의 자금 사용처와 일치 여부 확인"
+        "결정공시 대비 실제 납입 여부 확인",
+        "발행가와 발행주식 수 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "eebeb9ae5678efe05c8460484dec77d64f45908768d2b0ff3e6b1d1535ab2981",
+    "response_hash": "f39f06d7c840c841a916355f7b378c601aeb5d82b19bf076cf74a9f302b17480",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-226950-20260629000459",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -2240,14 +2207,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-226950-20260629000459",
       "fallback_source_classes": [
-        "IssuerIR",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -2258,28 +2224,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "정정 유상증자는 조건 변경과 사용처 변경 여부가 핵심이다.",
+      "rationale": "정정 유상증자 결정 공시에서 발행조건과 자금용도 변경을 확보한다.",
       "red_team_checks": [
-        "정정 전후 발행조건 확인",
-        "연구개발 또는 운영자금 사용처 구분"
+        "발행결과 공시와 연결 확인",
+        "정정 사유 및 납입 일정 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "96dd297145db7777e4b45deccf93bd2cc0324b8f687e368a6c5db271f1d1fd63",
+    "response_hash": "113ee9141ce88c6a4e89e3497fe04b6fcfcdf4f2d00f0a9663d71364cb5c8b5b",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-248070-20260629000482",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -2293,14 +2259,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-248070-20260629000482",
       "fallback_source_classes": [
-        "KRX",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -2311,28 +2276,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "자기주식처분결과는 처분 목적과 실제 처분 조건 확인이 필요하다.",
+      "rationale": "자기주식처분결과보고서에서 처분 규모, 가격, 대상, 목적을 확보한다.",
       "red_team_checks": [
-        "처분 대상과 가격 확인",
-        "처분 목적이 임직원 보상인지 자금조달인지 구분"
+        "처분 목적이 임직원/투자재원/재무개선인지 구분",
+        "계획 대비 실제 처분률 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "a3543e4fe367836eaa072a7b6105293c41ee24d38bc226116187e6b365e1a199",
+    "response_hash": "0a946429a5b51873ee896e7c8f0ce5ecfa5faf6adfcf576bb94ee00ea4a8fe09",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-003540-20260629000478",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -2346,12 +2311,12 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-003540-20260629000478",
       "fallback_source_classes": [
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
+      "max_candidates": 3,
       "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
@@ -2363,28 +2328,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "증권발행실적보고서는 발행 완료와 조건 확인에 충분한 공식 원천이다.",
+      "rationale": "증권발행실적보고서에서 실제 발행규모, 조건, 청약 결과를 확보한다.",
       "red_team_checks": [
-        "발행 규모와 조건 확인",
-        "기초 신고서 대비 변경 여부 확인"
+        "회차별 발행 대상 구분",
+        "예정 대비 실제 발행금액 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "1993009c382f39cf15f999caf743e04a9187c1bb27234ec37f045c5c8421b3cb",
+    "response_hash": "171023e8277c4730111ef35fa9a5bf693a59375c26077749dda443689a2f7f48",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-060900-20260629900964",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -2398,14 +2363,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-060900-20260629900964",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -2416,28 +2380,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "CB 발행결과는 납입, 전환조건, 사용처가 핵심이다.",
+      "rationale": "CB 발행결과에서 납입 완료, 전환가액, 만기, 조달금액을 확보한다.",
       "red_team_checks": [
-        "전환가액과 조정 조건 확인",
-        "조달자금 사용처와 계약 수행 관련성 확인"
+        "공급계약 이벤트와 별도 자금조달 이벤트로 구분",
+        "전환조건과 희석 가능성 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "3861a95b9f0a87d1e39720a7978922beac6133338e68390fc4a5d0c85b826db9",
+    "response_hash": "dbd1c6ae8e602f0fa70430e3ae9ab74725469f65a335b8869a1782a6a47cc401",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-378340-20260629900849",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -2451,14 +2415,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-378340-20260629900849",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -2469,28 +2432,28 @@
         "DART"
       ],
       "primitive_gap": "contract_quality",
-      "rationale": "장비 공급계약 정정은 고객, 납기, 금액 변화 확인이 우선이다.",
+      "rationale": "정정 공급계약에서 장비 공급 계약의 금액, 기간, 상대방, 변경 내용을 확보한다.",
       "red_team_checks": [
-        "정정으로 계약기간 또는 금액 변경 확인",
-        "상대방 비공개 사유와 해지조건 확인"
+        "계약상대 비공개와 신뢰도 확인",
+        "정정 전후 납기/금액 변화 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "0cf923f0f6f362b1978e6533b40e431637af1d85119ed4621fd84e3cd63c7f08",
+    "response_hash": "ca1bf29a909ae9f90faa5635f7729bfc00a37dd0967b6648368e1d4cf67bfc6b",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-003540-20260629000475",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -2504,12 +2467,12 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-003540-20260629000475",
       "fallback_source_classes": [
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
+      "max_candidates": 3,
       "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
@@ -2521,28 +2484,28 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "동일 발행실적 유형은 공식 원문으로 발행 조건과 완료 여부를 확인한다.",
+      "rationale": "증권발행실적보고서에서 발행 결과와 자금조달 확정 정보를 확보한다.",
       "red_team_checks": [
-        "중복 공시 또는 별도 회차 여부 확인",
-        "발행 조건 변경 여부 확인"
+        "동일 발행자의 복수 보고서 차이 확인",
+        "미발행/부분발행 여부 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "70dfdbb92e8974594fb3fb4ea7dcdb2258b52a155b437063cf81db8563141858",
+    "response_hash": "ee1c73ee8500e875b534f04ba9dbdccfabb26b1d0fad36877e6a2ac481ecbf04",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-282720-20260629900997",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -2556,14 +2519,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-282720-20260629900997",
       "fallback_source_classes": [
-        "KIND",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -2573,29 +2535,29 @@
       "preferred_source_classes": [
         "DART"
       ],
-      "primitive_gap": "margin_bridge_visible",
-      "rationale": "공사/전력 EPC 계약 정정은 수주금액뿐 아니라 마진 보호 조건 확인이 중요하다.",
+      "primitive_gap": "contract_quality",
+      "rationale": "정정 공급계약에서 계약금액, 기간, 발주처, 정정 사유를 확보한다.",
       "red_team_checks": [
-        "정정 전후 계약금액과 기간 확인",
-        "원가 상승 부담 또는 변경계약 가능성 확인"
+        "공사/용역 범위와 마진 리스크 확인",
+        "정정 전후 계약기간 및 금액 비교"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "6b9ee62c32c3c7eecdba0adc0253ab2880821b4e2b0398350ba3d6f5c6df941a",
+    "response_hash": "d121b7e43d6c7b5b89574b59365b7946ae8bb4c948fb4965d10b180abe6ad3a8",
     "schema_validation_status": "PASS"
   },
   {
     "batch_prompt_hash": "73c2c551ac45c3aab1775dd14b72d6eb63cc2840ec64424e3aa11de09d45bb64",
-    "batch_response_hash": "d8cb9c0e1e4ec97e7c208a290e7417a4d0f40f1af5b640465a6959d1490e8319",
+    "batch_response_hash": "b5f8b01e43379692af0fdc5488a293efbbfe2a9bf45af9cb12aa477a8cdf730b",
     "candidate_event_id": "CE-LIVE-DART-357550-20260629000448",
-    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_7ntm5ho9/planner_schema.json -o /tmp/e2r_cutover_planner_7ntm5ho9/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
+    "command": "codex --sandbox read-only --ask-for-approval never exec --ephemeral -C . --color never --output-schema /tmp/e2r_cutover_planner_525aov5h/planner_schema.json -o /tmp/e2r_cutover_planner_525aov5h/planner_output.json -m gpt-5.5 -c model_reasoning_effort=low -",
     "endpoint": "codex-cli",
     "fake_provider_used": false,
     "is_real_provider": true,
-    "latency_ms": 156228,
+    "latency_ms": 155056,
     "model": "gpt-5.5",
     "model_identity_status": "EXPLICIT_MODEL",
     "planner_output_score_stage_key_count": 0,
@@ -2609,14 +2571,13 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "candidate_event_id": "CE-LIVE-DART-357550-20260629000448",
       "fallback_source_classes": [
-        "KRX",
-        "IssuerOfficial"
+        "IssuerIR"
       ],
       "forbidden_source_classes": [
         "unbounded_general_search"
       ],
-      "max_candidates": 5,
-      "max_fetches": 2,
+      "max_candidates": 3,
+      "max_fetches": 1,
       "max_queries": 1,
       "planner_self_check": {
         "future_outcome_used": false,
@@ -2627,17 +2588,17 @@
         "DART"
       ],
       "primitive_gap": "capital_allocation_event",
-      "rationale": "자기주식취득신탁 결정은 자본배분 이벤트로 취득 규모와 목적 확인이 필요하다.",
+      "rationale": "자기주식취득신탁계약 공시에서 취득 한도, 계약기간, 체결 목적을 확보한다.",
       "red_team_checks": [
         "신탁계약 금액과 기간 확인",
-        "취득 목적과 재무 여력 확인"
+        "실제 취득결과 후속공시 필요 여부 확인"
       ]
     },
     "real_provider_exercised": true,
     "real_provider_success": true,
     "rejected_by_validator": false,
     "requested_model": "gpt-5.5",
-    "response_hash": "1efa278a3d5862467365fe8fe0e60ba67e6d7fbb362ad16afe4da77abc3a0893",
+    "response_hash": "d46add3e2b45ea98d7946029c3159baf669f4c946052c6860c9b0f737ccdaddc",
     "schema_validation_status": "PASS"
   }
 ]

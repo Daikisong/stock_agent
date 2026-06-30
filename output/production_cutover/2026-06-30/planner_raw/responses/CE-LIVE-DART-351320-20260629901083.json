@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-351320-20260629901083",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "정정 공급계약은 원계약 대비 조건 변화가 계약 품질 판단의 출발점이다.",
+  "rationale": "정정 공급계약에서 계약 상대, 금액, 기간, 정정 사유를 확보한다.",
   "red_team_checks": [
-    "금액, 기간, 상대방 변경 여부 확인",
-    "조건부 이행 또는 해지 가능성 확인"
+    "계약 취소/축소 가능성 확인",
+    "최근 매출액 대비 비율 확인"
   ]
 }

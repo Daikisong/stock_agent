@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-226950-20260629000494",
   "fallback_source_classes": [
-    "IssuerIR",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "유상증자는 연구개발, 운영, 채무상환 등 사용처 구분이 우선이다.",
+  "rationale": "유상증자 결정 공시에서 조달 규모, 목적, 배정 조건을 확보한다.",
   "red_team_checks": [
-    "자금 사용 목적별 금액 확인",
-    "발행 조건과 희석 규모 확인"
+    "임상/운영자금 사용처 구분",
+    "할인율과 납입일 확인"
   ]
 }

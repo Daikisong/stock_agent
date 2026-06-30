@@ -2,13 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-368970-20260629000506",
   "fallback_source_classes": [
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -19,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "정정 유상증자는 조달 조건과 목적 변경 확인이 핵심이다.",
+  "rationale": "정정 유상증자 결정에서 발행조건, 자금용도, 일정 변경을 확보한다.",
   "red_team_checks": [
-    "정정 전후 발행 조건 확인",
-    "자금 사용처와 기존 사업계획 연결 확인"
+    "정정 사유와 납입 가능성 확인",
+    "조달금액 변동 여부 확인"
   ]
 }

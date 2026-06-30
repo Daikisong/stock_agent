@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-357550-20260629000448",
   "fallback_source_classes": [
-    "KRX",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "자기주식취득신탁 결정은 자본배분 이벤트로 취득 규모와 목적 확인이 필요하다.",
+  "rationale": "자기주식취득신탁계약 공시에서 취득 한도, 계약기간, 체결 목적을 확보한다.",
   "red_team_checks": [
     "신탁계약 금액과 기간 확인",
-    "취득 목적과 재무 여력 확인"
+    "실제 취득결과 후속공시 필요 여부 확인"
   ]
 }

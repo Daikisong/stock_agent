@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-006050-20260629901292",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "정정된 공급계약은 금액, 기간, 상대방, 해지조건 변화가 핵심이다. 예: 계약금액이 매출 대비 큰지보다 먼저 조건이 유지됐는지 본다.",
+  "rationale": "정정 공급계약 공시에서 계약상대, 금액, 기간, 조건 변경을 확보한다.",
   "red_team_checks": [
-    "정정으로 계약금액 또는 기간이 줄었는지 확인",
-    "계약상대방과 판매공급지역 누락 여부 확인"
+    "정정 전후 계약금액 비교",
+    "해지/변경 조건 누락 여부 확인"
   ]
 }

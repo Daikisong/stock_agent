@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-083660-20260629000553",
   "fallback_source_classes": [
-    "IssuerIR",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "동일 회사의 정정 유상증자 공시는 자금조달 조건 변화 확인이 우선이다.",
+  "rationale": "정정 유상증자 공시의 발행조건, 조달금액, 자금사용 목적을 공식 원문에서 확보한다.",
   "red_team_checks": [
-    "중복 공시와 최종 정정본 식별",
-    "납입 가능성과 자금 사용처 확인"
+    "중복 정정공시와 최신 원문 구분",
+    "제3자배정/주주배정 여부 확인"
   ]
 }

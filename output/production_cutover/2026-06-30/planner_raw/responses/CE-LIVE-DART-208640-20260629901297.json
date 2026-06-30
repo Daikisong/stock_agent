@@ -2,8 +2,7 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-208640-20260629901297",
   "fallback_source_classes": [
-    "KRX",
-    "KIND"
+    "KRX"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
@@ -17,12 +16,13 @@
     "stage_keys_present": false
   },
   "preferred_source_classes": [
-    "DART"
+    "DART",
+    "KIND"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "권리락은 유상증자 진행 이벤트라 조달 구조 확인이 필요하다.",
+  "rationale": "권리락 공시에서 유상증자 기준가격, 권리락일, 발행조건을 확보한다.",
   "red_team_checks": [
-    "기초 유상증자 공시와 연결",
-    "발행가와 일정 변경 여부 확인"
+    "관련 유상증자 결정 공시 연결",
+    "권리락 기준가격과 일정 확인"
   ]
 }

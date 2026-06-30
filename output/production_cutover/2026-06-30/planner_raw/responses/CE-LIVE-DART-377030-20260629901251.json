@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-377030-20260629901251",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "동일한 제3자배정 결과 공시는 납입 완료와 발행 조건 확인이 핵심이다.",
+  "rationale": "증권발행결과 공시에서 납입 완료, 발행가, 조달금액을 확보한다.",
   "red_team_checks": [
-    "중복 결과 공시 여부 확인",
-    "배정 대상자와 납입금액 확인"
+    "동일일자 중복 발행결과 구분",
+    "정정 또는 추가 발행 여부 확인"
   ]
 }

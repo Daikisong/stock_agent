@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-175250-20260629000562",
   "fallback_source_classes": [
-    "IssuerIR",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "유상증자 결정은 계약 품질보다 조달 목적과 희석 조건이 먼저다.",
+  "rationale": "유상증자 결정 공시에서 조달 목적, 배정 대상, 납입 조건을 확보한다.",
   "red_team_checks": [
-    "운영자금 비중과 채무상환 비중 확인",
-    "제3자배정이면 대상자와 보호예수 확인"
+    "운영자금/채무상환 비중 확인",
+    "보호예수 또는 할인율 조건 확인"
   ]
 }

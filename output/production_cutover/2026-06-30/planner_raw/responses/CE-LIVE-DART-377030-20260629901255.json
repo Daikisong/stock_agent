@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-377030-20260629901255",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "증권발행결과는 계획된 조달이 실제 완료됐는지 확인하는 이벤트다.",
+  "rationale": "제3자배정 유상증자 발행결과에서 실제 납입 여부와 발행 주식 수를 확보한다.",
   "red_team_checks": [
-    "납입 완료 금액과 미달 여부 확인",
-    "기존 유상증자 결정 공시와 조건 일치 여부 확인"
+    "미납/부분납입 여부 확인",
+    "배정 대상자와 기존 결정공시 대조"
   ]
 }

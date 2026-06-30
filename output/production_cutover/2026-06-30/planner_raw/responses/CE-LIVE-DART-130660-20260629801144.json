@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-130660-20260629801144",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -19,10 +18,10 @@
   "preferred_source_classes": [
     "DART"
   ],
-  "primitive_gap": "revenue_visibility_contract",
-  "rationale": "공급계약 정정은 매출 인식 가능 기간과 상대방 조건 확인이 필요하다.",
+  "primitive_gap": "contract_quality",
+  "rationale": "정정 공급계약에서 계약금액, 기간, 상대방, 정정 내용을 확보한다.",
   "red_team_checks": [
-    "계약기간 변경과 금액 변경 확인",
-    "공공/민간 상대방 및 해지조건 확인"
+    "공공/민간 계약상대와 변경 리스크 확인",
+    "정정 전후 금액/기간 비교"
   ]
 }

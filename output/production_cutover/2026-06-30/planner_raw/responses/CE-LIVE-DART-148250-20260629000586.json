@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-148250-20260629000586",
   "fallback_source_classes": [
-    "IssuerIR",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "유상증자 결정은 계약 수주보다 자금조달 목적과 사용처 확인이 먼저다. 예: 시설투자 자금인지 운영자금인지 DART 본문으로 확인한다.",
+  "rationale": "유상증자 결정 공시의 자금용도, 배정방식, 납입일, 희석 조건을 공식 원문에서 확보한다.",
   "red_team_checks": [
-    "증자 목적이 계약 수행 CAPEX인지 단순 운영자금인지 구분",
-    "정정 공시 여부와 납입일 변경 여부 확인"
+    "정정공시 여부 확인",
+    "자금용도가 운영자금인지 투자/채무상환인지 구분"
   ]
 }

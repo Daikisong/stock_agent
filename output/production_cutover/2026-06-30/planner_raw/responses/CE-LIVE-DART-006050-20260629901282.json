@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-006050-20260629901282",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "revenue_visibility_contract",
-  "rationale": "신규 공급계약은 매출 인식 기간과 계약상대방 확인이 우선이다. 예: 1개월 계약과 3년 계약은 같은 금액이어도 가시성이 다르다.",
+  "rationale": "공급계약 원공시에서 계약금액, 매출액 대비 비율, 계약기간을 확보한다.",
   "red_team_checks": [
-    "계약기간과 최근 매출 대비 계약금액 확인",
-    "조건부 계약 또는 해지 가능 조항 확인"
+    "계약 종료일 확인",
+    "최근 매출액 기준연도 확인"
   ]
 }

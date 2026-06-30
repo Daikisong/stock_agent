@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-440320-20260629901092",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "CB 발행결과는 납입 여부, 전환조건, 사용처 확인이 우선이다.",
+  "rationale": "CB 발행결과 공시에서 납입 여부, 전환조건, 조달금액을 확보한다.",
   "red_team_checks": [
-    "전환가액과 리픽싱 조건 확인",
-    "자금 사용처와 채무성 조건 확인"
+    "전환가액/만기/이자 조건 확인",
+    "미납 또는 조건 변경 여부 확인"
   ]
 }

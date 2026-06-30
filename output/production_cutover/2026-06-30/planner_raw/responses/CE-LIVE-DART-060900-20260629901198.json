@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-060900-20260629901198",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -19,10 +18,10 @@
   "preferred_source_classes": [
     "DART"
   ],
-  "primitive_gap": "contract_quality",
-  "rationale": "단일판매 공급계약은 상대방, 금액, 기간, 조건이 계약 품질의 기본이다.",
+  "primitive_gap": "revenue_visibility_contract",
+  "rationale": "공급계약 공시에서 계약금액, 기간, 상대방, 최근 매출액 대비 비율을 확보한다.",
   "red_team_checks": [
-    "계약금액의 최근 매출 대비 비중 확인",
-    "계약 해지 또는 조건부 조항 확인"
+    "계약상대 비공개 사유 확인",
+    "계약 해지 조건 및 기간 확인"
   ]
 }

@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-282720-20260629900997",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -19,10 +18,10 @@
   "preferred_source_classes": [
     "DART"
   ],
-  "primitive_gap": "margin_bridge_visible",
-  "rationale": "공사/전력 EPC 계약 정정은 수주금액뿐 아니라 마진 보호 조건 확인이 중요하다.",
+  "primitive_gap": "contract_quality",
+  "rationale": "정정 공급계약에서 계약금액, 기간, 발주처, 정정 사유를 확보한다.",
   "red_team_checks": [
-    "정정 전후 계약금액과 기간 확인",
-    "원가 상승 부담 또는 변경계약 가능성 확인"
+    "공사/용역 범위와 마진 리스크 확인",
+    "정정 전후 계약기간 및 금액 비교"
   ]
 }

@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-130660-20260629801125",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -19,10 +18,10 @@
   "preferred_source_classes": [
     "DART"
   ],
-  "primitive_gap": "revenue_visibility_contract",
-  "rationale": "공급계약 정정은 매출 가시성에 직접 영향을 줄 수 있다.",
+  "primitive_gap": "contract_quality",
+  "rationale": "정정 공급계약에서 변경된 계약 조건과 매출 인식 기간을 확보한다.",
   "red_team_checks": [
-    "계약기간과 금액 변경 확인",
-    "계약상대방 및 취소 조건 확인"
+    "동일 계약의 최신 정정본 여부 확인",
+    "계약금액/기간 변경 폭 확인"
   ]
 }

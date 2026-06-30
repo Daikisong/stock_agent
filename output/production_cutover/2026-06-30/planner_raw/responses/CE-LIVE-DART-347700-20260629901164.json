@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-347700-20260629901164",
   "fallback_source_classes": [
-    "KIND",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "contract_quality",
-  "rationale": "공급계약 정정은 중복보다 조건 변경 여부가 중요하다.",
+  "rationale": "정정 공급계약 원문에서 변경된 조건과 수익 가시성 정보를 확보한다.",
   "red_team_checks": [
-    "동일 계약의 여러 정정 공시 연결",
-    "계약상대방과 기간 변경 확인"
+    "중복 이벤트와 접수번호별 차이 확인",
+    "계약기간 연장인지 금액 변경인지 구분"
   ]
 }

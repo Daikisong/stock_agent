@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-003380-20260629901161",
   "fallback_source_classes": [
-    "IssuerIR",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capacity_expansion",
-  "rationale": "신규시설투자는 투자 규모, 기간, 목적이 핵심이다. 예: 수요 대응 증설인지 단순 유지보수인지 구분한다.",
+  "rationale": "자회사 신규시설투자 공시에서 투자금액, 목적, 기간, 생산능력 관련 정보를 확보한다.",
   "red_team_checks": [
-    "자회사 투자 대상과 연결 영향 확인",
-    "투자 목적이 계약 또는 수요와 연결되는지 확인"
+    "자회사와 상장사 연결 영향 확인",
+    "투자기간과 자금조달 방식 확인"
   ]
 }

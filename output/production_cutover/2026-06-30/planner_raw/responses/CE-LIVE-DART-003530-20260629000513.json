@@ -2,12 +2,12 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-003530-20260629000513",
   "fallback_source_classes": [
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
+  "max_candidates": 3,
   "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
@@ -19,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "발행실적보고서는 자금조달 이벤트의 완료 여부 확인에 적합하다.",
+  "rationale": "증권발행실적보고서에서 실제 발행액과 발행조건을 공식 원문으로 확보한다.",
   "red_team_checks": [
-    "발행 금액과 조건 확인",
-    "동일 회사 중복 공시 회차 구분"
+    "중복 접수번호별 대상 증권 확인",
+    "자금사용 목적 누락 여부 확인"
   ]
 }

@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-403550-20260629801126",
   "fallback_source_classes": [
-    "IssuerIR",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "종속회사 유상증자는 연결 자금투입과 사업 확장 목적 확인이 필요하다.",
+  "rationale": "종속회사 유상증자 정정공시에서 조달조건, 정정 사유, 연결 영향 가능 정보를 확보한다.",
   "red_team_checks": [
-    "종속회사 범위와 연결 영향 확인",
-    "정정 전후 발행 조건 및 사용처 확인"
+    "종속회사와 상장사 재무 연결 범위 확인",
+    "납입일과 발행가 변경 여부 확인"
   ]
 }

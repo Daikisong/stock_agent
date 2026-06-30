@@ -2,14 +2,13 @@
   "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
   "candidate_event_id": "CE-LIVE-DART-417840-20260629000499",
   "fallback_source_classes": [
-    "KRX",
-    "IssuerOfficial"
+    "IssuerIR"
   ],
   "forbidden_source_classes": [
     "unbounded_general_search"
   ],
-  "max_candidates": 5,
-  "max_fetches": 2,
+  "max_candidates": 3,
+  "max_fetches": 1,
   "max_queries": 1,
   "planner_self_check": {
     "future_outcome_used": false,
@@ -20,9 +19,9 @@
     "DART"
   ],
   "primitive_gap": "capital_allocation_event",
-  "rationale": "자기주식취득결과는 실제 집행 규모와 재원 사용 확인이 필요하다.",
+  "rationale": "자기주식취득결과보고서에서 실제 취득 규모, 평균단가, 미취득 사유를 확보한다.",
   "red_team_checks": [
-    "계획 대비 취득 완료율 확인",
-    "취득 목적과 기간 확인"
+    "계획 대비 실제 취득률 확인",
+    "취득 기간과 자금 집행 규모 확인"
   ]
 }
