@@ -15,7 +15,7 @@ class ProductionProviderFailureNotNoResultTests(unittest.TestCase):
         self.assertTrue(results)
         self.assertFalse(any(result.status == "NO_RESULT" for result in results))
         for result in results:
-            if result.provider_name == "OpenDART":
+            if result.provider_name in {"OpenDART", "KIND", "KRX", "CompanyGuide"}:
                 self.assertIn(result.status, {"FETCHED", "AUTH_FAILED", "PROVIDER_FAILED"})
                 if result.status == "FETCHED":
                     self.assertTrue(result.counts_as_live)

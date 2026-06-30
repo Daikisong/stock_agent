@@ -470,6 +470,7 @@ def _candidate_event_from_dart_row(
     industry_code = str(company_info.get("induty_code") or "").strip()
     sector = _large_sector_for_industry_code(industry_code)
     trigger_category = _trigger_category_for_dart_report(report_name)
+    score_policy = _score_eligibility_policy_for_trigger(trigger_category)
     return {
         "candidate_event_id": f"CE-LIVE-DART-{symbol}-{rcept_no}",
         "symbol": symbol,
@@ -486,7 +487,10 @@ def _candidate_event_from_dart_row(
         "event_type": report_name,
         "event_title": report_name,
         "trigger_category": trigger_category,
-        "score_eligibility_policy": _score_eligibility_policy_for_trigger(trigger_category),
+        "allowed_source_families": _allowed_source_families_for_trigger(trigger_category),
+        "score_eligibility_policy": score_policy,
+        "investigation_only": score_policy == "investigation_only_never_score",
+        "source_task_generation_policy": "llm_planned_official_first_bounded",
         "event_summary": f"{company}({symbol}) OpenDART disclosure: {report_name}",
         "issuer_directness": "DIRECT",
         "raw_reason_codes": [report_name],
@@ -1158,6 +1162,18 @@ def _score_eligibility_policy_for_trigger(trigger_category: str) -> str:
     return "accepted_claim_required"
 
 
+def _allowed_source_families_for_trigger(trigger_category: str) -> list[str]:
+    if trigger_category == "Official Risk Trigger":
+        return ["DART", "KIND", "KRX", "IssuerIR"]
+    if trigger_category == "Official Positive Trigger":
+        return ["DART", "KIND", "KRX", "IssuerIR", "CompanyGuide"]
+    if trigger_category == "Market Anomaly Trigger":
+        return ["KRX", "PriceFeed"]
+    if trigger_category == "Information Trigger":
+        return ["IssuerIR", "TrustedNews", "DART"]
+    return ["DART", "KRX"]
+
+
 def _date_from_yyyymmdd(value: str) -> date:
     clean = value.strip()
     return date(int(clean[:4]), int(clean[4:6]), int(clean[6:8]))
@@ -1187,7 +1203,7 @@ def _large_sector_for_industry_code(industry_code: str) -> str | None:
         return "L8_PLATFORM_CONTENT_SW_SECURITY"
     if first2 in {"26"} or first3 in {"281", "282"}:
         return "L2_AI_SEMICONDUCTOR_ELECTRONICS"
-    if first2 in {"17", "20", "21", "22", "24", "25"}:
+    if first2 in {"17", "19", "20", "21", "22", "24", "25"}:
         return "L4_MATERIALS_SPREAD_RESOURCE"
     if first2 in {"10", "11", "12", "13", "14", "15", "46", "47"}:
         return "L5_CONSUMER_BRAND_DISTRIBUTION"
