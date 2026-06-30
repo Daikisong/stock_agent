@@ -32,7 +32,7 @@ from .schemas import DepthLevel
 from .shard_planner import select_shard
 from .stage_status_builder import build_stage_status
 from .triage import plan_research_brain
-from .universe import build_universe, eligible_instruments, write_universe_coverage
+from .universe import build_universe, eligible_instruments
 from .watchlist_seed_exporter import export_watchlist_seed, render_watchlist_seed_report
 
 
@@ -200,7 +200,6 @@ def run_census_mode(config: CensusRunConfig) -> CensusRunResult:
         operator_digest_md=operator_digest,
         deep_backfill_plan=deep_backfill_plan,
     )
-    write_universe_coverage("docs/operational/census_mode_v1_universe_coverage.json", universe_result.coverage)
     readiness = build_readiness_verdict(
         stage_summary=stage_summary,
         audit=audit,
@@ -290,6 +289,7 @@ def write_operational_docs(
 ) -> None:
     docs = Path("docs/operational")
     write_text(docs / "census_mode_v1_design.md", _design_doc())
+    write_json(docs / "census_mode_v1_universe_coverage.json", universe_coverage)
     write_text(docs / "census_mode_v1_stage_map_summary.md", render_stage_map_summary_md(stage_summary))
     write_json(docs / "census_mode_v1_stage_distribution.json", stage_summary["stage_distribution"])
     write_json(docs / "census_mode_v1_sector_stage_distribution.json", sector_distribution)

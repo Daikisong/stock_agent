@@ -1,25 +1,32 @@
 {
   "active_market_breakdown": {
-    "KOSDAQ": 550,
-    "KOSPI": 551
+    "KOSDAQ": 1775,
+    "KOSPI": 2165
   },
   "as_of_date": "2026-07-01",
-  "eligible_common_stock_count": 1101,
-  "excluded_etf_count": 0,
-  "excluded_etn_count": 0,
+  "eligible_common_stock_count": 3391,
+  "excluded_etf_count": 1,
+  "excluded_etn_count": 377,
   "excluded_inactive_count": 0,
   "excluded_invalid_symbol_count": 0,
-  "excluded_preferred_count": 0,
-  "excluded_reit_count": 0,
-  "excluded_spac_count": 0,
-  "excluded_total_count": 0,
+  "excluded_preferred_count": 94,
+  "excluded_reit_count": 34,
+  "excluded_spac_count": 43,
+  "excluded_total_count": 549,
   "fixture_like_symbol_count": 0,
   "missing_company_name_count": 0,
-  "missing_sector_count": 1100,
-  "raw_universe_count": 1101,
+  "missing_sector_count": 3378,
+  "raw_universe_count": 3940,
   "schema_version": "e2r_census_universe_coverage_v1",
   "sector_coverage_breakdown": {
-    "unknown": 1100,
-    "메모리/HBM": 1
+    "2차전지/소재": 1,
+    "K-뷰티/유통": 1,
+    "unknown": 3927,
+    "메모리/HBM": 2,
+    "방산": 1,
+    "식품수출": 1,
+    "의료기기/헬스케어": 1,
+    "전력기기/전선": 5,
+    "해운/운임": 1
   }
 }

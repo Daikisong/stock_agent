@@ -20,7 +20,7 @@
     "runtime_pending_count": 0,
     "source_task_count": 0,
     "status": "COMPLETE",
-    "total_runtime_seconds": 8.6311,
+    "total_runtime_seconds": 7.815,
     "unbounded_fetch_config_count": 0
   }
 }
