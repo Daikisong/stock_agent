@@ -1,0 +1,15 @@
+{
+  "schema_version": "e2r_census_lifecycle_policy_v1",
+  "default_stored_source_max_age_days": 365,
+  "stored_source_max_age_days_by_family": {
+    "CompanyGuide": 120,
+    "ExistingEvidenceOSLedger": 730,
+    "IR": 365,
+    "KRXPrice": 30,
+    "OpenDART": 730,
+    "ReportRadar": 365,
+    "TrustedNews": 90
+  },
+  "score_policy": "accepted_current_claims_only",
+  "unknown_policy": "unknown_is_not_present_and_not_absent"
+}

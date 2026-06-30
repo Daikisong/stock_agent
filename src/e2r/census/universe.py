@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -119,6 +120,14 @@ def _load_rows(*, universe_file: str | Path | None, allow_naver_fallback: bool) 
 
 
 def _read_csv_rows(path: Path) -> list[dict[str, Any]]:
+    if path.suffix.lower() == ".jsonl":
+        rows: list[dict[str, Any]] = []
+        with path.open(encoding="utf-8") as handle:
+            for line in handle:
+                text = line.strip()
+                if text:
+                    rows.append(json.loads(text))
+        return rows
     with path.open(encoding="utf-8-sig", newline="") as handle:
         return [dict(row) for row in csv.DictReader(handle)]
 

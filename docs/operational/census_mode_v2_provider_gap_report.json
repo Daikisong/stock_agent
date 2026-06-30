@@ -1,0 +1,22 @@
+{
+  "blocking_provider_gap_count": 0,
+  "nonblocking_optional_provider_gaps": [
+    {
+      "provider_classification": "NONBLOCKING_OPTIONAL",
+      "provider_name": "IssuerIR",
+      "sample_error": "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+    },
+    {
+      "provider_classification": "NONBLOCKING_OPTIONAL",
+      "provider_name": "TrustedNews",
+      "sample_error": "trusted_news_provider_not_configured; general search is not a score source"
+    }
+  ],
+  "provider_gap_counts": {},
+  "provider_matrix_status_counts": {
+    "LIVE_READY": 4,
+    "NONBLOCKING_OPTIONAL": 2
+  },
+  "provider_pending_count": 0,
+  "schema_version": "e2r_census_v2_provider_gap_report_v1"
+}

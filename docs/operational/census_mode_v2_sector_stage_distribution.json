@@ -1,0 +1,116 @@
+{
+  "schema_version": "e2r_census_sector_distribution_v1",
+  "sectors": {
+    "2차전지/소재": {
+      "DeepDossier_count": 0,
+      "ProviderPending_count": 0,
+      "SourceGap_count": 1,
+      "Stage2plus_count": 0,
+      "accepted_claim_count": 0,
+      "eligible_count": 1,
+      "scanned_count": 1,
+      "stage_distribution": {
+        "Stage1": 1
+      }
+    },
+    "K-뷰티/유통": {
+      "DeepDossier_count": 0,
+      "ProviderPending_count": 0,
+      "SourceGap_count": 1,
+      "Stage2plus_count": 0,
+      "accepted_claim_count": 0,
+      "eligible_count": 1,
+      "scanned_count": 1,
+      "stage_distribution": {
+        "Stage1": 1
+      }
+    },
+    "unknown": {
+      "DeepDossier_count": 0,
+      "ProviderPending_count": 0,
+      "SourceGap_count": 0,
+      "Stage2plus_count": 37,
+      "accepted_claim_count": 89,
+      "eligible_count": 3378,
+      "scanned_count": 3378,
+      "stage_distribution": {
+        "Red": 1,
+        "Stage0": 3306,
+        "Stage1": 34,
+        "Stage2-Watch": 37
+      }
+    },
+    "메모리/HBM": {
+      "DeepDossier_count": 0,
+      "ProviderPending_count": 0,
+      "SourceGap_count": 0,
+      "Stage2plus_count": 0,
+      "accepted_claim_count": 3,
+      "eligible_count": 2,
+      "scanned_count": 2,
+      "stage_distribution": {
+        "Stage1": 2
+      }
+    },
+    "방산": {
+      "DeepDossier_count": 0,
+      "ProviderPending_count": 0,
+      "SourceGap_count": 1,
+      "Stage2plus_count": 0,
+      "accepted_claim_count": 0,
+      "eligible_count": 1,
+      "scanned_count": 1,
+      "stage_distribution": {
+        "Stage1": 1
+      }
+    },
+    "식품수출": {
+      "DeepDossier_count": 0,
+      "ProviderPending_count": 0,
+      "SourceGap_count": 1,
+      "Stage2plus_count": 0,
+      "accepted_claim_count": 0,
+      "eligible_count": 1,
+      "scanned_count": 1,
+      "stage_distribution": {
+        "Stage1": 1
+      }
+    },
+    "의료기기/헬스케어": {
+      "DeepDossier_count": 0,
+      "ProviderPending_count": 0,
+      "SourceGap_count": 1,
+      "Stage2plus_count": 0,
+      "accepted_claim_count": 0,
+      "eligible_count": 1,
+      "scanned_count": 1,
+      "stage_distribution": {
+        "Stage1": 1
+      }
+    },
+    "전력기기/전선": {
+      "DeepDossier_count": 0,
+      "ProviderPending_count": 0,
+      "SourceGap_count": 5,
+      "Stage2plus_count": 0,
+      "accepted_claim_count": 0,
+      "eligible_count": 5,
+      "scanned_count": 5,
+      "stage_distribution": {
+        "Stage1": 5
+      }
+    },
+    "해운/운임": {
+      "DeepDossier_count": 0,
+      "ProviderPending_count": 0,
+      "SourceGap_count": 1,
+      "Stage2plus_count": 0,
+      "accepted_claim_count": 0,
+      "eligible_count": 1,
+      "scanned_count": 1,
+      "stage_distribution": {
+        "Stage1": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": "e2r_census_source_gap_report_v1",
+  "source_gap_count": 11,
+  "source_gap_counts": {
+    "accepted_claim_absent": 3,
+    "accepted_current_claim_absent": 3,
+    "candidate_event_without_accepted_current_claim": 5
+  }
+}
