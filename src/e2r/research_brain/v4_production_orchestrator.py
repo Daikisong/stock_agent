@@ -3,13 +3,22 @@
 from __future__ import annotations
 
 import json
+import re
 from collections import Counter
+from dataclasses import replace
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from e2r.agentic.evidence_contract_v2 import load_evidence_contracts_v2
+from e2r.agentic.evidence_os import AppendOnlyEvidenceLedger, LedgerEvent, LedgerEventType
 from e2r.calibration.taxonomy import large_sector_for_archetype
+from e2r.production.claim_extraction import CodexCLIExtractorProvider, LLMContractBlindRawAssertionExtractor, RuleFallbackExtractorProvider
+from e2r.production.candidate_event_purity import (
+    ProductionMode,
+    evaluate_candidate_event_production_eligibility,
+    load_instrument_registry,
+)
 from e2r.research_brain.v2_memory_cards import build_memory_cards_from_v1_matrix
 from e2r.research_brain.schemas import SourceTask, SourceTaskType, deterministic_id
 from e2r.research_brain.v2_schemas import ArchetypeMemoryCard, CandidateEventV2, EventMagnitudeV2
@@ -18,17 +27,22 @@ from e2r.research_brain.v4_evidence_extraction_bridge import (
     execute_source_tasks_with_evidence_os_v4,
 )
 from e2r.research_brain.v4_planner_runtime import (
+    CONTRACT_COMPATIBLE_PRIMITIVES,
     FrozenRealPlannerProviderV4,
     ResearchBrainPlannerProviderV4,
     build_planner_provider_v4,
     run_planner_provider_v4,
+    sanitize_existing_evidence_summary_v4,
     source_tasks_from_planner_output_v4,
 )
 from e2r.research_brain.v4_schemas import (
+    ClaimExtractorProviderModeV4,
     DailyWatchlistItemV4,
     PlannerProviderModeV4,
     PlannerRunV4,
     ProductionShadowV4Config,
+    SourceAcquisitionModeV4,
+    SourceTaskExecutionStatusV4,
     SourceTaskExecutionV4,
 )
 from e2r.research_brain.v4_scoring_stage import build_claim_backed_watchlist_item_v4
@@ -36,6 +50,10 @@ from e2r.research_brain.v4_source_acquisition_runner import SourceAcquisitionRun
 
 
 DEFAULT_V1_ARCHETYPE_MATRIX = Path("docs/operational/research_brain_v1_archetype_matrix.json")
+_FORBIDDEN_PLANNER_CONTEXT_ASSIGNMENT_RE = re.compile(
+    r"(^|[;\s])([A-Za-z0-9_]*(?:score|stage)[A-Za-z0-9_]*)=([^;]*)(;?)",
+    re.IGNORECASE,
+)
 
 
 def run_research_brain_v4_production_shadow(
@@ -50,51 +68,75 @@ def run_research_brain_v4_production_shadow(
     cards = build_memory_cards_from_v1_matrix(v1_archetype_matrix)
     cards_by_id = {card.archetype_id: card for card in cards}
     contracts = load_evidence_contracts_v2(require_all_archetypes=True)
-    events = discover_daily_candidate_events_v4(
+    discovered_events = discover_daily_candidate_events_v4(
         repo_root=repo_root,
         as_of_date=as_of_date,
-        universe_limit=config.universe_limit,
+        universe_limit=_discovery_limit_for_config(config),
+    )
+    seed_events = _candidate_seed_events_from_config(config=config, as_of_date=as_of_date)
+    events = _select_unique_candidate_events(
+        (*seed_events, *discovered_events),
+        limit=_discovery_limit_for_config(config),
     )
     if planner_provider is None:
         planner_provider = build_planner_provider_v4(mode=config.planner_provider, working_directory=repo_root)
-    planned_events = events[: config.planner_success_limit] if config.planner_provider != PlannerProviderModeV4.FAKE.value else events
+    claim_extractor = _claim_extractor_for_config(config=config, repo_root=repo_root)
+    ordered_events = _planner_candidate_order(events=events, config=config, repo_root=repo_root, as_of_date=as_of_date)
     planner_runs: list[PlannerRunV4] = []
-    for event_batch in _chunks(planned_events, config.planner_batch_size):
-        planner_runs.extend(
-            run_planner_provider_v4(
+    next_event_index = 0
+    if config.planner_provider == PlannerProviderModeV4.FAKE.value:
+        for event_batch in _chunks(ordered_events, config.planner_batch_size):
+            planner_runs.extend(
+                run_planner_provider_v4(
+                    provider=planner_provider,
+                    events=event_batch,
+                    memory_cards=cards,
+                    existing_evidence_by_event_id=_evidence_context_by_event(events=event_batch, config=config),
+                )
+            )
+        next_event_index = len(ordered_events)
+    else:
+        real_success_count = 0
+        while next_event_index < len(ordered_events) and real_success_count < config.planner_success_limit:
+            remaining_success_budget = max(1, config.planner_success_limit - real_success_count)
+            event_batch = ordered_events[
+                next_event_index : next_event_index + min(config.planner_batch_size, remaining_success_budget)
+            ]
+            next_event_index += len(event_batch)
+            batch_runs = run_planner_provider_v4(
                 provider=planner_provider,
                 events=event_batch,
                 memory_cards=cards,
-                existing_evidence_by_event_id={event.candidate_event_id: _evidence_summary(event) for event in event_batch},
+                existing_evidence_by_event_id=_evidence_context_by_event(events=event_batch, config=config),
             )
+            planner_runs.extend(batch_runs)
+            real_success_count += sum(1 for run in batch_runs if run.real_provider_success)
+    planner_runs = list(
+        _retry_planner_for_missing_external_web_plan(
+            planner_runs=planner_runs,
+            provider=planner_provider,
+            memory_cards=cards,
+            config=config,
         )
-    planned_ids = {run.event.candidate_event_id for run in planner_runs}
-    for event in events:
-        if event.candidate_event_id in planned_ids:
-            continue
-        planner_runs.append(
-            PlannerRunV4(
-                event=event,
-                provider_name="not_attempted_after_real_planner_limit",
-                provider_mode=PlannerProviderModeV4.NONE.value,
-                real_provider_exercised=False,
-                real_provider_success=False,
-                fake_provider_used=False,
-                provider_error="planner_not_attempted_after_real_planner_limit",
-            )
-        )
+    )
 
     source_runner = SourceAcquisitionRunnerV4(mode=config.source_acquisition, repo_root=repo_root)
     executions: list[SourceTaskExecutionV4] = []
     bundles: dict[str, EvidenceOSExecutionBundleV4] = {}
     watchlist_items: list[DailyWatchlistItemV4] = []
     routed_rows: list[Mapping[str, Any]] = []
-    for run in planner_runs:
+    feedback_retry_planner_runs: list[PlannerRunV4] = []
+    run_index = 0
+    planned_event_ids = {run.event.candidate_event_id for run in planner_runs}
+    while run_index < len(planner_runs):
+        run = planner_runs[run_index]
+        run_index += 1
         event = run.event
         primary = _primary_from_planner(run)
         secondary = _secondary_from_planner(run)
         card = cards_by_id.get(primary or "")
         contract = contracts.get(primary or "") if primary else None
+        item_planner_run = run
         tasks = ()
         bundle = None
         if run.output and primary and card and contract:
@@ -102,7 +144,8 @@ def run_research_brain_v4_production_shadow(
                 event=event,
                 planner_output=run.output,
                 card_by_id=cards_by_id,
-                max_tasks=config.max_fetches_per_task,
+                max_tasks=config.max_source_tasks_per_plan,
+                max_fetches_per_task=config.max_fetches_per_task,
             )
             tasks = tuple(
                 (
@@ -117,12 +160,94 @@ def run_research_brain_v4_production_shadow(
                 contract=contract,
                 as_of_date=as_of_date,
                 source_runner=source_runner,
+                claim_extractor=claim_extractor,
             )
+            seen_retry_signatures: set[tuple[Any, ...]] = set()
+            retry_attempt_count = 0
+            while retry_attempt_count < max(0, config.retry_max - 1):
+                retry_run = _next_feedback_retry_planner_run(
+                    planner_run=run,
+                    bundle=bundle,
+                    provider=planner_provider,
+                    memory_cards=cards,
+                    config=config,
+                )
+                if retry_run is None:
+                    break
+                retry_signature = _feedback_retry_signature(retry_run)
+                if retry_signature in seen_retry_signatures:
+                    break
+                seen_retry_signatures.add(retry_signature)
+                feedback_retry_planner_runs.append(retry_run)
+                if not retry_run.output:
+                    break
+                retry_primary = _primary_from_planner(retry_run)
+                retry_card = cards_by_id.get(retry_primary or "")
+                retry_contract = contracts.get(retry_primary or "") if retry_primary else None
+                retry_can_execute = bool(retry_primary and retry_card and retry_contract)
+                if not retry_can_execute:
+                    break
+                retry_tasks = source_tasks_from_planner_output_v4(
+                    event=event,
+                    planner_output=retry_run.output,
+                    card_by_id=cards_by_id,
+                    max_tasks=config.max_source_tasks_per_plan,
+                    max_fetches_per_task=config.max_fetches_per_task,
+                )
+                retry_tasks = tuple(
+                    (
+                        *retry_tasks,
+                        *_event_origin_structured_replay_tasks(
+                            event=event,
+                            primary_archetype=retry_primary,
+                            contract=retry_contract,
+                        ),
+                        *_mandatory_official_status_tasks(event=event, primary_archetype=retry_primary),
+                    )
+                )
+                retry_reason_tag = (
+                    _feedback_retry_reason_tag(retry_run)
+                    if retry_run.source_rejection_feedback_count > 0 or retry_run.rerouted_claim_feedback_count > 0
+                    else "rejected_claim_mapping"
+                )
+                rerouted_feedback = _rerouted_claim_feedback_from_bundle(bundle) if retry_run.rerouted_claim_feedback_count > 0 else ()
+                retry_tasks, dropped_retry_executions = _deduplicated_feedback_retry_tasks_with_rejections(
+                    event=event,
+                    original_tasks=tasks,
+                    retry_tasks=retry_tasks,
+                    reason_tag=retry_reason_tag,
+                    rerouted_claim_feedback=rerouted_feedback,
+                )
+                if dropped_retry_executions:
+                    bundle = _append_retry_drop_executions_to_bundle(
+                        bundle=bundle,
+                        executions=dropped_retry_executions,
+                    )
+                if not retry_tasks:
+                    break
+                had_initial_acceptance = _bundle_has_accepted_claims(bundle)
+                retry_bundle = execute_source_tasks_with_evidence_os_v4(
+                    event=event,
+                    tasks=retry_tasks,
+                    contract=retry_contract,
+                    as_of_date=as_of_date,
+                    source_runner=source_runner,
+                    claim_extractor=claim_extractor,
+                )
+                tasks = tuple((*tasks, *retry_tasks))
+                bundle = _merge_evidence_os_bundles_v4(bundle, retry_bundle)
+                if _bundle_has_accepted_claims(retry_bundle) and not had_initial_acceptance:
+                    item_planner_run = retry_run
+                    primary = retry_primary
+                    secondary = _secondary_from_planner(retry_run)
+                    card = retry_card
+                    contract = retry_contract
+                retry_attempt_count += 1
             executions.extend(bundle.executions)
             bundles[event.candidate_event_id] = bundle
         item = build_claim_backed_watchlist_item_v4(
             event=event,
-            planner_run=run,
+            planner_run=item_planner_run,
             primary_archetype=primary,
             secondary_archetypes=secondary,
             card=card,
@@ -141,16 +266,83 @@ def run_research_brain_v4_production_shadow(
                 "source_family": event.source_family,
                 "primary_archetype": primary,
                 "large_sector_id": large_sector_for_archetype(primary or "") if primary else None,
-                "planner_provider_failed": run.provider_failed,
+                "planner_provider_failed": item_planner_run.provider_failed,
                 "source_task_count": len(tasks),
-                "accepted_claim_count": len(item.accepted_claim_ids),
+                "accepted_claim_count": _accepted_claim_count_from_bundle(bundle),
+                "verified_score": item.verified_score,
+                "base_stage": item.base_stage,
+                "score_valid_status": item.score_valid_status,
+            }
+        )
+        if run_index >= len(planner_runs) and _should_continue_for_accepted_claim_target(
+            config=config,
+            accepted_claim_count=_accepted_claim_count_from_bundles(bundles.values()),
+            attempted_candidate_count=len(planned_event_ids),
+        ):
+            more_runs, next_event_index = _plan_more_events_for_accepted_claim_target(
+                ordered_events=ordered_events,
+                next_event_index=next_event_index,
+                planned_event_ids=planned_event_ids,
+                provider=planner_provider,
+                cards=cards,
+                config=config,
+            )
+            if more_runs:
+                more_runs = list(
+                    _retry_planner_for_missing_external_web_plan(
+                        planner_runs=more_runs,
+                        provider=planner_provider,
+                        memory_cards=cards,
+                        config=config,
+                    )
+                )
+                planner_runs.extend(more_runs)
+                planned_event_ids.update(run.event.candidate_event_id for run in more_runs)
+    for event in events:
+        if event.candidate_event_id in planned_event_ids:
+            continue
+        pending_run = PlannerRunV4(
+            event=event,
+            provider_name="not_attempted_after_real_planner_limit",
+            provider_mode=PlannerProviderModeV4.NONE.value,
+            real_provider_exercised=False,
+            real_provider_success=False,
+            fake_provider_used=False,
+            provider_error="planner_not_attempted_after_real_planner_limit",
+        )
+        planner_runs.append(pending_run)
+        item = build_claim_backed_watchlist_item_v4(
+            event=event,
+            planner_run=pending_run,
+            primary_archetype=None,
+            secondary_archetypes=(),
+            card=None,
+            contract=None,
+            tasks=(),
+            bundle=None,
+            as_of_date=as_of_date,
+        )
+        watchlist_items.append(item)
+        routed_rows.append(
+            {
+                "candidate_event_id": event.candidate_event_id,
+                "symbol": event.symbol,
+                "company_name": event.company_name,
+                "event_type": event.event_type,
+                "source_family": event.source_family,
+                "primary_archetype": None,
+                "large_sector_id": None,
+                "planner_provider_failed": pending_run.provider_failed,
+                "source_task_count": 0,
+                "accepted_claim_count": 0,
                 "verified_score": item.verified_score,
                 "base_stage": item.base_stage,
                 "score_valid_status": item.score_valid_status,
             }
         )
     candidate_report = build_candidate_event_report_v4(events=events, routed_rows=routed_rows)
-    planner_report = build_real_planner_report_v4(planner_runs)
+    all_planner_runs = tuple((*planner_runs, *feedback_retry_planner_runs))
+    planner_report = build_real_planner_report_v4(all_planner_runs)
     source_report = build_source_acquisition_report_v4(executions)
     extraction_audit = build_evidence_extraction_audit_v4(bundles.values())
     watchlist_report = build_daily_watchlist_report_v4(watchlist_items)
@@ -184,10 +376,34 @@ def run_research_brain_v4_production_shadow(
         "static_audit": static_audit,
         "readiness": readiness,
         "watchlist_items": watchlist_items,
-        "planner_runs": tuple(planner_runs),
+        "planner_runs": all_planner_runs,
         "executions": tuple(executions),
         "bundles": bundles,
     }
+
+
+def _claim_extractor_for_config(*, config: ProductionShadowV4Config, repo_root: str | Path) -> LLMContractBlindRawAssertionExtractor:
+    """Select the unstructured-text claim extractor for the v4 run mode.
+
+    Frozen snapshots and fixture-like paths stay on the deterministic fallback
+    so unit tests and replay audits do not spawn external tools. Live full
+    source acquisition uses the Codex CLI-backed extractor by default, because
+    Brain/Web evidence pass must leave a provider_mode=llm extraction trace.
+    """
+
+    mode = ClaimExtractorProviderModeV4(config.claim_extractor_provider)
+    if mode == ClaimExtractorProviderModeV4.AUTO:
+        mode = (
+            ClaimExtractorProviderModeV4.CODEX_CLI
+            if config.source_acquisition == SourceAcquisitionModeV4.LIVE_FULL_BOUNDED.value
+            and config.planner_provider not in {PlannerProviderModeV4.NONE.value, PlannerProviderModeV4.FAKE.value}
+            else ClaimExtractorProviderModeV4.RULE_FALLBACK
+        )
+    if mode == ClaimExtractorProviderModeV4.CODEX_CLI:
+        return LLMContractBlindRawAssertionExtractor(
+            provider=CodexCLIExtractorProvider(repo_root=repo_root, timeout_seconds=config.claim_extractor_timeout_seconds)
+        )
+    return LLMContractBlindRawAssertionExtractor(provider=RuleFallbackExtractorProvider())
 
 
 def discover_daily_candidate_events_v4(
@@ -198,6 +414,7 @@ def discover_daily_candidate_events_v4(
 ) -> tuple[CandidateEventV2, ...]:
     root = Path(repo_root)
     rows: list[CandidateEventV2] = []
+    rows.extend(_production_cutover_leaf_candidate_events(root=root, as_of_date=as_of_date, limit=max(15, universe_limit)))
     rows.extend(_official_source_events(root=root, as_of_date=as_of_date, limit=max(15, universe_limit)))
     cache_root = root / "data/cache/company_guide"
     company_guide_limit = max(universe_limit * 4, universe_limit + 20)
@@ -248,6 +465,356 @@ def discover_daily_candidate_events_v4(
     return _select_unique_candidate_events(rows, limit=universe_limit)
 
 
+def _candidate_seed_events_from_config(*, config: ProductionShadowV4Config, as_of_date: date) -> tuple[CandidateEventV2, ...]:
+    if not config.candidate_event_seed_path:
+        return ()
+    path = Path(config.candidate_event_seed_path)
+    if not path.exists():
+        return ()
+    rows: list[CandidateEventV2] = []
+    with path.open(encoding="utf-8") as handle:
+        for line in handle:
+            text = line.strip()
+            if not text:
+                continue
+            payload = json.loads(text)
+            event_date = _date_from_any(payload.get("event_date") or payload.get("as_of_date")) or as_of_date
+            if event_date > as_of_date:
+                continue
+            symbol = str(payload.get("symbol") or "").zfill(6)
+            if not symbol:
+                continue
+            rows.append(
+                CandidateEventV2(
+                    candidate_event_id=str(payload.get("candidate_event_id") or f"CEV4-SEED-{symbol}-{event_date.isoformat()}"),
+                    symbol=symbol,
+                    company_name=str(payload.get("company_name") or symbol),
+                    event_date=event_date.isoformat(),
+                    detected_at=str(payload.get("detected_at") or as_of_date.isoformat()),
+                    source_family=str(payload.get("source_family") or "CensusFullThesisQueue"),
+                    source_id=str(payload.get("source_id") or path),
+                    event_type=str(payload.get("event_type") or "full_thesis_refresh_seed"),
+                    raw_reason_codes=tuple(str(item) for item in payload.get("raw_reason_codes") or ()),
+                    primary_disclosure_type=payload.get("primary_disclosure_type"),
+                    event_title=str(payload.get("event_title") or f"{symbol} full thesis refresh seed"),
+                    event_summary=str(payload.get("event_summary") or ""),
+                    event_freshness_days=max(0, (as_of_date - event_date).days),
+                    issuer_directness=str(payload.get("issuer_directness") or "DIRECT"),
+                    structured_payload=dict(payload.get("structured_payload") or payload),
+                    research_brain_eligible=payload.get("research_brain_eligible") is not False,
+                )
+            )
+    return tuple(rows)
+
+
+def _production_cutover_leaf_candidate_events(*, root: Path, as_of_date: date, limit: int) -> list[CandidateEventV2]:
+    """Load URL-backed live official candidate events before cached fallbacks.
+
+    Easy example: if the leaf artifact already has
+    ``CE-LIVE-DART-396470-20260624900961`` with a DART viewer URL, a live
+    official Brain probe should plan on that before spending the only real
+    planner slot on ``data/cache/company_guide/...``.
+    """
+
+    rows: list[CandidateEventV2] = []
+    cutover_root = root / "output" / "production_cutover_v3"
+    if not cutover_root.exists():
+        return rows
+    day_roots = sorted(
+        (
+            path
+            for path in cutover_root.glob("20??-??-??")
+            if path.is_dir() and _date_from_any(path.name) and _date_from_any(path.name) <= as_of_date
+        ),
+        reverse=True,
+    )
+    for day_root in day_roots:
+        if len(rows) >= limit:
+            break
+        payload = _load_json(day_root / "candidate_events.json")
+        if not isinstance(payload, list):
+            continue
+        for row in payload:
+            if len(rows) >= limit:
+                break
+            if not isinstance(row, Mapping):
+                continue
+            event = _candidate_event_from_leaf_row(row=row, as_of_date=as_of_date)
+            if event is not None:
+                rows.append(event)
+    return rows
+
+
+def _candidate_event_from_leaf_row(*, row: Mapping[str, Any], as_of_date: date) -> CandidateEventV2 | None:
+    symbol = str(row.get("symbol") or "").zfill(6)
+    if not symbol.strip("0"):
+        return None
+    event_date = _date_from_any(row.get("event_date") or row.get("detected_at"))
+    if event_date is None or event_date > as_of_date:
+        return None
+    source_id = str(row.get("source_id") or "")
+    source_family = str(row.get("source_family") or "")
+    if not source_id or not source_family:
+        return None
+    raw_reason_codes = row.get("raw_reason_codes") or ()
+    if isinstance(raw_reason_codes, str):
+        raw_reason_codes = (raw_reason_codes,)
+    elif not isinstance(raw_reason_codes, Sequence):
+        raw_reason_codes = ()
+    return CandidateEventV2(
+        candidate_event_id=str(row.get("candidate_event_id") or f"CEV4-LEAF-{symbol}-{event_date.isoformat()}"),
+        symbol=symbol,
+        company_name=str(row.get("company_name") or symbol),
+        event_date=event_date.isoformat(),
+        detected_at=str(row.get("detected_at") or as_of_date.isoformat()),
+        source_family=source_family,
+        source_id=source_id,
+        event_type=str(row.get("event_type") or row.get("event_title") or "production_cutover_leaf_event"),
+        raw_reason_codes=tuple(str(code) for code in raw_reason_codes if str(code).strip()),
+        primary_disclosure_type=str(row.get("event_type") or row.get("primary_disclosure_type") or ""),
+        event_title=str(row.get("event_title") or row.get("event_type") or ""),
+        event_summary=str(row.get("event_summary") or row.get("event_title") or "")[:700],
+        magnitude=EventMagnitudeV2(),
+        event_freshness_days=max(0, (as_of_date - event_date).days),
+        issuer_directness=str(row.get("issuer_directness") or "UNKNOWN"),
+        structured_payload=row.get("structured_payload") if isinstance(row.get("structured_payload"), Mapping) else dict(row),
+        research_brain_eligible=bool(row.get("research_brain_eligible", True)),
+    )
+
+
+def _planner_candidate_order(
+    *,
+    events: Sequence[CandidateEventV2],
+    config: ProductionShadowV4Config,
+    repo_root: str | Path,
+    as_of_date: date,
+) -> tuple[CandidateEventV2, ...]:
+    """Prioritize production-live candidates before fixture/cache examples.
+
+    Easy example: a stored fixture symbol like ``111111`` can be useful in
+    frozen replay tests, but it should not be the first real Codex/OpenDART
+    planner target in a live official acquisition run. The candidate can remain
+    in the diagnostic event report; it just should not consume the scarce live
+    planner slot before a real KRX symbol.
+    """
+
+    live_modes = {
+        SourceAcquisitionModeV4.LIVE_OFFICIAL_FIRST.value,
+        SourceAcquisitionModeV4.LIVE_OFFICIAL_ONLY.value,
+        SourceAcquisitionModeV4.LIVE_FULL_BOUNDED.value,
+    }
+    if config.source_acquisition not in live_modes:
+        return tuple(events)
+    registry = load_instrument_registry(repo_root)
+
+    def sort_key(event: CandidateEventV2) -> tuple[int, int, int, int, int, int, str]:
+        eligibility = evaluate_candidate_event_production_eligibility(
+            event,
+            registry=registry,
+            mode=ProductionMode.PRODUCTION_SHADOW_LIVE,
+            repo_root=repo_root,
+            as_of_date=as_of_date.isoformat(),
+        )
+        queue_seed_priority = 0 if _is_full_thesis_refresh_seed_event(event) else 1
+        fixture_penalty = 1 if eligibility.fixture_like_symbol else 0
+        source_penalty = 1 if eligibility.source_id_cached_or_fixture or eligibility.source_id_snapshot_uri else 0
+        return (
+            queue_seed_priority,
+            0 if eligibility.eligible else 1,
+            fixture_penalty,
+            source_penalty,
+            _candidate_evidence_likelihood_rank(event),
+            max(0, int(event.event_freshness_days or 0)),
+            event.candidate_event_id,
+        )
+
+    return tuple(sorted(events, key=sort_key))
+
+
+def _is_full_thesis_refresh_seed_event(event: CandidateEventV2) -> bool:
+    structured = event.structured_payload if isinstance(event.structured_payload, Mapping) else {}
+    return (
+        str(event.source_family or "") == "CensusFullThesisQueue"
+        or str(event.event_type or "") == "full_thesis_refresh_seed"
+        or str(structured.get("seed_role") or "") == "planner_input_only"
+    )
+
+
+def _candidate_evidence_likelihood_rank(event: CandidateEventV2) -> int:
+    """Return an investigation-order bucket, never a score signal.
+
+    Easy example: a direct sales-contract disclosure is more likely to produce a
+    score-eligible claim than a facility-investment end-date correction. That
+    only decides which candidate gets the scarce live planner slot first. It
+    does not make either candidate score-eligible.
+    """
+
+    source_family = str(event.source_family or "").strip().lower()
+    text = _candidate_event_text(event)
+    has_contract = _contains_any(
+        text,
+        (
+            "단일판매",
+            "공급계약",
+            "판매계약",
+            "수주",
+            "supply contract",
+            "sales contract",
+            "order backlog",
+        ),
+    )
+    has_report = source_family in {"companyguide", "report", "researchreport"} or _contains_any(
+        text,
+        (
+            "report_radar",
+            "리포트",
+            "실적",
+            "컨센서스",
+            "목표주가",
+            "상향",
+            "revision",
+            "guidance",
+            "earnings",
+        ),
+    )
+    has_facility = _contains_any(text, ("신규시설투자", "시설투자", "공장", "증설", "capacity", "capa"))
+    has_admin_or_correction = _contains_any(
+        text,
+        (
+            "정정",
+            "종료일 연장",
+            "연장",
+            "관리종목",
+            "거래정지",
+            "해명공시",
+            "자기주식",
+            "주식담보",
+            "유상증자",
+            "기재정정",
+        ),
+    )
+    if has_contract and not has_admin_or_correction:
+        return 0
+    if has_contract:
+        return 1
+    if has_report:
+        return 2
+    if source_family in {"issuerir", "issuerofficial", "ir"}:
+        return 3
+    if has_facility and not has_admin_or_correction:
+        return 4
+    if source_family in {"dart", "opendart", "kind", "krx", "trustednews"} and not has_admin_or_correction:
+        return 5
+    if has_facility:
+        return 6
+    if has_admin_or_correction:
+        return 7
+    return 8
+
+
+def _candidate_event_text(event: CandidateEventV2) -> str:
+    structured = event.structured_payload if isinstance(event.structured_payload, Mapping) else {}
+    return " ".join(
+        str(value or "")
+        for value in (
+            event.source_family,
+            event.event_type,
+            event.primary_disclosure_type,
+            event.event_title,
+            event.event_summary,
+            " ".join(str(code) for code in event.raw_reason_codes),
+            json.dumps(structured, ensure_ascii=False, sort_keys=True),
+        )
+    ).lower()
+
+
+def _contains_any(text: str, tokens: Sequence[str]) -> bool:
+    return any(str(token).lower() in text for token in tokens)
+
+
+def _should_continue_for_accepted_claim_target(
+    *,
+    config: ProductionShadowV4Config,
+    accepted_claim_count: int,
+    attempted_candidate_count: int,
+) -> bool:
+    if config.accepted_claim_target <= 0:
+        return False
+    if config.planner_provider in {PlannerProviderModeV4.NONE.value, PlannerProviderModeV4.FAKE.value}:
+        return False
+    if accepted_claim_count >= config.accepted_claim_target:
+        return False
+    return attempted_candidate_count < config.max_distinct_candidate_attempts
+
+
+def _plan_more_events_for_accepted_claim_target(
+    *,
+    ordered_events: Sequence[CandidateEventV2],
+    next_event_index: int,
+    planned_event_ids: set[str],
+    provider: ResearchBrainPlannerProviderV4 | None,
+    cards: Sequence[ArchetypeMemoryCard],
+    config: ProductionShadowV4Config,
+) -> tuple[list[PlannerRunV4], int]:
+    if provider is None:
+        return [], next_event_index
+    batch: list[CandidateEventV2] = []
+    cursor = next_event_index
+    while cursor < len(ordered_events) and len(batch) < config.planner_batch_size:
+        event = ordered_events[cursor]
+        cursor += 1
+        if event.candidate_event_id in planned_event_ids:
+            continue
+        batch.append(event)
+    if not batch:
+        return [], cursor
+    return (
+        list(
+            run_planner_provider_v4(
+                provider=provider,
+                events=tuple(batch),
+                memory_cards=cards,
+                existing_evidence_by_event_id=_evidence_context_by_event(events=tuple(batch), config=config),
+            )
+        ),
+        cursor,
+    )
+
+
+def _accepted_claim_count_from_bundles(bundles: Sequence[EvidenceOSExecutionBundleV4]) -> int:
+    return len(
+        {
+            claim_id
+            for bundle in bundles
+            for execution in bundle.executions
+            for claim_id in execution.accepted_claim_ids
+        }
+    )
+
+
+def _accepted_claim_count_from_bundle(bundle: EvidenceOSExecutionBundleV4 | None) -> int:
+    if bundle is None:
+        return 0
+    return len(
+        {
+            claim_id
+            for execution in bundle.executions
+            for claim_id in execution.accepted_claim_ids
+        }
+    )
+
+
+def _discovery_limit_for_config(config: ProductionShadowV4Config) -> int:
+    live_modes = {
+        SourceAcquisitionModeV4.LIVE_OFFICIAL_FIRST.value,
+        SourceAcquisitionModeV4.LIVE_OFFICIAL_ONLY.value,
+        SourceAcquisitionModeV4.LIVE_FULL_BOUNDED.value,
+    }
+    if config.source_acquisition not in live_modes or config.planner_provider == PlannerProviderModeV4.FAKE.value:
+        return config.universe_limit
+    return max(config.universe_limit, config.planner_success_limit * 10, config.planner_success_limit + 20)
+
+
 def run_multi_day_shadow_v4(
     *,
     base_config: ProductionShadowV4Config,
@@ -272,9 +839,14 @@ def run_multi_day_shadow_v4(
             universe_limit=base_config.universe_limit,
             planner_success_limit=base_config.planner_success_limit,
             planner_batch_size=base_config.planner_batch_size,
+            max_source_tasks_per_plan=base_config.max_source_tasks_per_plan,
             max_fetches_per_task=base_config.max_fetches_per_task,
+            accepted_claim_target=base_config.accepted_claim_target,
+            max_distinct_candidate_attempts=base_config.max_distinct_candidate_attempts,
             top_results=base_config.top_results,
             retry_max=base_config.retry_max,
+            claim_extractor_provider=base_config.claim_extractor_provider,
+            claim_extractor_timeout_seconds=base_config.claim_extractor_timeout_seconds,
             fake_provider_allowed=base_config.fake_provider_allowed,
         )
         result = run_research_brain_v4_production_shadow(
@@ -321,9 +893,14 @@ def run_multi_day_shadow_v4(
             universe_limit=base_config.universe_limit,
             planner_success_limit=base_config.planner_success_limit,
             planner_batch_size=base_config.planner_batch_size,
+            max_source_tasks_per_plan=base_config.max_source_tasks_per_plan,
             max_fetches_per_task=base_config.max_fetches_per_task,
+            accepted_claim_target=base_config.accepted_claim_target,
+            max_distinct_candidate_attempts=base_config.max_distinct_candidate_attempts,
             top_results=base_config.top_results,
             retry_max=base_config.retry_max,
+            claim_extractor_provider=base_config.claim_extractor_provider,
+            claim_extractor_timeout_seconds=base_config.claim_extractor_timeout_seconds,
             fake_provider_allowed=base_config.fake_provider_allowed,
         )
         result = run_research_brain_v4_production_shadow(
@@ -390,7 +967,10 @@ def _frozen_real_planner_provider_from_result(result: Mapping[str, Any]) -> Froz
 
 
 def build_real_planner_report_v4(planner_runs: Sequence[PlannerRunV4]) -> Mapping[str, Any]:
-    unique_event_ids = {run.event.candidate_event_id for run in planner_runs}
+    initial_runs = tuple(run for run in planner_runs if run.planner_run_role != "feedback_retry")
+    retry_runs = tuple(run for run in planner_runs if run.planner_run_role == "feedback_retry")
+    unique_event_ids = {run.event.candidate_event_id for run in initial_runs}
+    unique_all_event_ids = {run.event.candidate_event_id for run in planner_runs}
     unique_success_event_ids = {
         run.event.candidate_event_id
         for run in planner_runs
@@ -400,13 +980,30 @@ def build_real_planner_report_v4(planner_runs: Sequence[PlannerRunV4]) -> Mappin
         "schema_version": "research_brain_v4_real_planner_report",
         "summary": {
             "planner_run_count": len(planner_runs),
+            "initial_planner_run_count": len(initial_runs),
+            "feedback_retry_planner_run_count": len(retry_runs),
             "unique_planner_candidate_count": len(unique_event_ids),
+            "unique_planner_event_count_including_retries": len(unique_all_event_ids),
             "real_provider_attempt_count": sum(run.provider_mode == PlannerProviderModeV4.REAL.value for run in planner_runs),
             "real_provider_success_count": sum(run.real_provider_success for run in planner_runs),
             "unique_real_provider_success_count": len(unique_success_event_ids),
             "real_provider_failure_count": sum(run.provider_failed and run.provider_mode == PlannerProviderModeV4.REAL.value for run in planner_runs),
-            "planner_not_attempted_count": sum(run.provider_mode == PlannerProviderModeV4.NONE.value for run in planner_runs),
+            "planner_not_attempted_count": sum(
+                run.provider_mode == PlannerProviderModeV4.NONE.value for run in initial_runs
+            ),
             "fake_provider_used_count": sum(run.fake_provider_used for run in planner_runs),
+            "rejected_claim_feedback_retry_count": sum(
+                1 for run in retry_runs if run.rejected_claim_feedback_count > 0
+            ),
+            "rejected_claim_feedback_item_count": sum(run.rejected_claim_feedback_count for run in retry_runs),
+            "source_rejection_feedback_retry_count": sum(
+                1 for run in retry_runs if run.source_rejection_feedback_count > 0
+            ),
+            "source_rejection_feedback_item_count": sum(run.source_rejection_feedback_count for run in retry_runs),
+            "rerouted_claim_feedback_retry_count": sum(
+                1 for run in retry_runs if run.rerouted_claim_feedback_count > 0
+            ),
+            "rerouted_claim_feedback_item_count": sum(run.rerouted_claim_feedback_count for run in retry_runs),
             "provider_error_by_candidate": {
                 run.event.candidate_event_id: run.provider_error
                 for run in planner_runs
@@ -416,6 +1013,19 @@ def build_real_planner_report_v4(planner_runs: Sequence[PlannerRunV4]) -> Mappin
             "planner_output_score_stage_key_count": sum(run.planner_output_score_stage_key_count for run in planner_runs),
             "R13_invalid_primary_rejected_count": sum(run.r13_invalid_primary_rejected for run in planner_runs),
             "schema_violations": sum(run.rejected_by_validator for run in planner_runs),
+            "planner_prompt_hash_count": sum(1 for run in planner_runs if run.prompt_hash),
+            "planner_response_hash_count": sum(1 for run in planner_runs if run.response_hash),
+            "planner_prompt_missing_hash_count": sum(
+                1 for run in planner_runs if run.real_provider_exercised and not run.prompt_hash
+            ),
+            "planner_response_missing_hash_count": sum(
+                1 for run in planner_runs if run.real_provider_exercised and not run.response_hash
+            ),
+            "planner_raw_artifact_missing_count": sum(
+                1
+                for run in planner_runs
+                if run.real_provider_exercised and (not run.raw_prompt_path or not run.raw_response_path)
+            ),
         },
         "rows": [run.to_dict() for run in planner_runs],
     }
@@ -429,11 +1039,15 @@ def build_source_acquisition_report_v4(executions: Sequence[SourceTaskExecutionV
         for execution in executions
         if execution.fetched_document_ids
     )
-    unique_document_ids = {
-        document_id
+    document_refs = tuple(
+        (str(document_id), str(url or ""))
         for execution in executions
-        for document_id in execution.fetched_document_ids
-    }
+        for document_id, url in _document_id_url_pairs(execution)
+    )
+    fetched_document_ids = {document_id for document_id, _ in document_refs if document_id}
+    live_document_ids = {document_id for document_id, url in document_refs if document_id and _is_live_document_url(url)}
+    snapshot_document_ids = {document_id for document_id, url in document_refs if document_id and _is_snapshot_document_url(url)}
+    unknown_url_document_ids = {document_id for document_id, url in document_refs if document_id and not url}
     unique_claim_ids = {
         claim_id
         for execution in executions
@@ -450,8 +1064,16 @@ def build_source_acquisition_report_v4(executions: Sequence[SourceTaskExecutionV
         "summary": {
             "source_task_count": len(executions),
             "source_task_executed_count": len(executions),
-            "real_document_fetched_count": sum(len(execution.fetched_document_ids) for execution in executions),
-            "unique_real_document_fetched_count": len(unique_document_ids),
+            "fetched_document_count": len(document_refs),
+            "unique_fetched_document_count": len(fetched_document_ids),
+            "snapshot_document_fetched_count": sum(1 for _, url in document_refs if _is_snapshot_document_url(url)),
+            "unique_snapshot_document_fetched_count": len(snapshot_document_ids),
+            "unknown_url_document_fetched_count": len(unknown_url_document_ids),
+            "live_document_fetched_count": sum(1 for _, url in document_refs if _is_live_document_url(url)),
+            "unique_live_document_fetched_count": len(live_document_ids),
+            "real_document_fetched_count": sum(1 for _, url in document_refs if _is_live_document_url(url)),
+            "unique_real_document_fetched_count": len(live_document_ids),
+            "real_document_count_semantics": "live_non_snapshot_document_only",
             "provider_failure_count": statuses.get("PROVIDER_FAILED", 0),
             "budget_exhausted_count": statuses.get("BUDGET_EXHAUSTED", 0),
             "unbounded_source_task_count": unbounded,
@@ -467,6 +1089,23 @@ def build_source_acquisition_report_v4(executions: Sequence[SourceTaskExecutionV
         "status_counts": dict(statuses),
         "rows": [execution.to_dict() for execution in executions],
     }
+
+
+def _document_id_url_pairs(execution: SourceTaskExecutionV4) -> tuple[tuple[str, str], ...]:
+    urls = tuple(str(url or "") for url in execution.document_urls)
+    ids = tuple(str(document_id or "") for document_id in execution.fetched_document_ids)
+    if len(urls) >= len(ids):
+        return tuple((document_id, urls[index]) for index, document_id in enumerate(ids))
+    return tuple((document_id, urls[index] if index < len(urls) else "") for index, document_id in enumerate(ids))
+
+
+def _is_snapshot_document_url(url: str) -> bool:
+    return str(url or "").startswith("snapshot://")
+
+
+def _is_live_document_url(url: str) -> bool:
+    value = str(url or "")
+    return bool(value) and not _is_snapshot_document_url(value)
 
 
 def build_evidence_extraction_audit_v4(bundles: Sequence[EvidenceOSExecutionBundleV4]) -> Mapping[str, Any]:
@@ -488,6 +1127,7 @@ def build_evidence_extraction_audit_v4(bundles: Sequence[EvidenceOSExecutionBund
             "wrong_subject_rejected_count": counts["wrong_subject_rejected_count"],
             "event_summary_used_as_exact_quote_count": counts["event_summary_used_as_exact_quote_count"],
             "source_task_accepted_without_real_document_count": counts["source_task_accepted_without_real_document_count"],
+            "source_lineage_feedback_retry_dropped_count": counts["source_lineage_feedback_retry_dropped_count"],
         },
     }
 
@@ -616,8 +1256,18 @@ def build_static_logic_audit_from_reports_v4(
     official_gap_to_web = _official_solvable_gap_sent_to_general_web_count(source_rows)
     critical = {
         "fake_provider_used_in_production_shadow_count": p["fake_provider_used_count"],
-        "duplicate_candidate_event_count": int(planner_report["summary"].get("planner_run_count", 0))
-        - int(planner_report["summary"].get("unique_planner_candidate_count", planner_report["summary"].get("planner_run_count", 0))),
+        "duplicate_candidate_event_count": int(
+            planner_report["summary"].get(
+                "initial_planner_run_count",
+                planner_report["summary"].get("planner_run_count", 0),
+            )
+        )
+        - int(
+            planner_report["summary"].get(
+                "unique_planner_candidate_count",
+                planner_report["summary"].get("planner_run_count", 0),
+            )
+        ),
         "provider_failed_final_score_count": _provider_failed_final_score_count(watchlist_rows),
         "source_task_accepted_without_real_document_count": s["source_task_accepted_without_real_document_count"],
         "synthetic_assertion_count": e["synthetic_assertion_count"],
@@ -725,8 +1375,23 @@ def _fcf_gap_sent_to_news_count(rows: Sequence[Mapping[str, Any]]) -> int:
     return count
 
 
+_OFFICIAL_SOLVABLE_PRIMITIVE_IDS = {
+    "contract_visibility",
+    "contract_amount_to_prior_sales",
+    "contract_duration_months",
+    "contract_quality",
+    "delivery_schedule",
+    "export_contract",
+    "order_backlog_to_sales",
+    "order_to_revenue_bridge",
+    "revenue_visibility_contract",
+}
+
+
 def _official_solvable_primitive(primitive: str) -> bool:
     lowered = primitive.lower()
+    if lowered in _OFFICIAL_SOLVABLE_PRIMITIVE_IDS:
+        return True
     return any(token in lowered for token in ("fcf", "cash", "revision", "backlog", "contract", "rpo"))
 
 
@@ -1008,12 +1673,26 @@ def _select_unique_candidate_events(rows: Sequence[CandidateEventV2], *, limit: 
             continue
         seen_event_ids.add(event.candidate_event_id)
         unique_by_family.setdefault(event.source_family, []).append(event)
+    selected: list[CandidateEventV2] = []
+    used_by_family: Counter[str] = Counter()
+
+    # A full-thesis refresh seed is not a score signal. It is the explicit queue
+    # telling Research Brain which event-board rows need a real full-thesis
+    # refresh. If we only take one seed for family diversity, most queued rows
+    # stay PLANNER_NOT_RUN while low-priority discovery examples consume the
+    # bounded live planner budget.
+    for event in unique_by_family.get("CensusFullThesisQueue", ()):
+        selected.append(event)
+        used_by_family["CensusFullThesisQueue"] += 1
+        if len(selected) >= limit:
+            return tuple(selected[:limit])
+
     preferred_order = ("DART", "KIND", "KRX", "IR", "CompanyGuide", "ReportRadar")
     families = [family for family in preferred_order if family in unique_by_family]
     families.extend(family for family in unique_by_family if family not in families)
-    selected: list[CandidateEventV2] = []
-    used_by_family: Counter[str] = Counter()
     for family in families:
+        if family == "CensusFullThesisQueue":
+            continue
         bucket = unique_by_family[family]
         if bucket:
             selected.append(bucket[0])
@@ -1240,13 +1919,1448 @@ def _secondary_from_planner(run: PlannerRunV4) -> tuple[str, ...]:
     )
 
 
-def _evidence_summary(event: CandidateEventV2) -> Mapping[str, Any]:
+def _evidence_context_by_event(
+    *,
+    events: Sequence[CandidateEventV2],
+    config: ProductionShadowV4Config,
+    planner_feedback_by_event_id: Mapping[str, Sequence[str]] | None = None,
+    rejected_claim_feedback_by_event_id: Mapping[str, Sequence[Mapping[str, Any]]] | None = None,
+    source_rejection_feedback_by_event_id: Mapping[str, Sequence[Mapping[str, Any]]] | None = None,
+    rerouted_claim_feedback_by_event_id: Mapping[str, Sequence[Mapping[str, Any]]] | None = None,
+) -> Mapping[str, Mapping[str, Any]]:
     return {
-        "source_family": event.source_family,
-        "source_id": event.source_id,
-        "event_summary_preview": event.event_summary[:240],
-        "structured_payload_keys": sorted(event.structured_payload.keys())[:20],
+        event.candidate_event_id: _evidence_summary(
+            event,
+            brain_web_acquisition_required=_requires_external_web_plan(config),
+            planner_feedback=tuple((planner_feedback_by_event_id or {}).get(event.candidate_event_id, ())),
+            rejected_claim_feedback=tuple(
+                (rejected_claim_feedback_by_event_id or {}).get(event.candidate_event_id, ())
+            ),
+            source_rejection_feedback=tuple(
+                (source_rejection_feedback_by_event_id or {}).get(event.candidate_event_id, ())
+            ),
+            rerouted_claim_feedback=tuple(
+                (rerouted_claim_feedback_by_event_id or {}).get(event.candidate_event_id, ())
+            ),
+        )
+        for event in events
     }
+
+
+def _evidence_summary(
+    event: CandidateEventV2,
+    *,
+    brain_web_acquisition_required: bool = False,
+    planner_feedback: Sequence[str] = (),
+    rejected_claim_feedback: Sequence[Mapping[str, Any]] = (),
+    source_rejection_feedback: Sequence[Mapping[str, Any]] = (),
+    rerouted_claim_feedback: Sequence[Mapping[str, Any]] = (),
+) -> Mapping[str, Any]:
+    structured = event.structured_payload if isinstance(event.structured_payload, Mapping) else {}
+    full_thesis_queue_context = _full_thesis_queue_context_from_structured_payload(structured)
+    safe_structured_keys = [
+        key
+        for key in sorted(structured.keys())
+        if "score" not in str(key).lower() and "stage" not in str(key).lower()
+    ][:20]
+    return sanitize_existing_evidence_summary_v4(
+        {
+            "source_family": event.source_family,
+            "source_id": event.source_id,
+            "event_summary_preview": _safe_planner_event_summary_preview(event.event_summary),
+            "structured_payload_keys": safe_structured_keys,
+            "full_thesis_queue_context": full_thesis_queue_context,
+            "brain_web_acquisition_required": bool(brain_web_acquisition_required),
+            "planner_feedback": list(planner_feedback),
+            "rejected_claim_feedback": [dict(row) for row in rejected_claim_feedback],
+            "source_rejection_feedback": [dict(row) for row in source_rejection_feedback],
+            "rerouted_claim_feedback": [dict(row) for row in rerouted_claim_feedback],
+        }
+    )
+
+
+def _safe_planner_event_summary_preview(summary: str, *, limit: int = 240) -> str:
+    cleaned = _FORBIDDEN_PLANNER_CONTEXT_ASSIGNMENT_RE.sub(" ", str(summary or ""))
+    cleaned = re.sub(r"\s+", " ", cleaned).strip(" ;")
+    return cleaned[:limit]
+
+
+def _full_thesis_queue_context_from_structured_payload(structured: Mapping[str, Any]) -> dict[str, Any]:
+    """Expose non-binding event-board context to the planner.
+
+    Easy example: if a census row was only a C05 contract watch, the full-thesis
+    planner should know that prior context and the missing gates. It still must
+    choose the final archetype and source tasks itself; this is not a target
+    archetype override.
+    """
+
+    if str(structured.get("seed_role") or "") != "planner_input_only" and not structured.get("queue_task_id"):
+        return {}
+    keys = (
+        "queue_task_id",
+        "source_primary_archetype",
+        "source_secondary_archetypes",
+        "source_large_sector_id",
+        "source_missing_primitives",
+        "source_material_gap_ids",
+        "source_accepted_claim_ids",
+        "source_candidate_event_ids",
+        "target_archetype_status",
+        "target_archetype",
+        "missing_full_thesis_primitives",
+        "preferred_source_classes",
+        "fallback_source_classes",
+        "forbidden_source_classes",
+        "official_first_required",
+        "follow_up_task_id",
+        "follow_up_origin",
+        "follow_up_primitive_gap",
+        "follow_up_archetype_id",
+        "present_primitives",
+        "missing_green_primitives",
+        "llm_query_required",
+        "llm_query_allowed",
+        "general_search_allowed",
+        "hardcoded_query_count",
+        "hardcoded_queries",
+        "query_intents",
+        "date_window",
+        "max_queries",
+        "max_candidates",
+        "max_fetches",
+        "max_queries_per_task",
+        "max_candidates_per_query",
+        "max_fetches_per_task",
+        "stop_condition",
+    )
+    context = {key: structured.get(key) for key in keys if key in structured}
+    if "source_stage_scope" in structured:
+        context["event_board_scope"] = structured.get("source_stage_scope")
+    if "source_stage_signal" in structured:
+        context["event_board_signal"] = structured.get("source_stage_signal")
+    if "source_stage_decision_status" in structured:
+        context["event_board_decision_status"] = structured.get("source_stage_decision_status")
+    if "source_failed_stage_gates" in structured:
+        context["source_failed_gate_ids"] = structured.get("source_failed_stage_gates")
+    return context
+
+
+def _retry_planner_for_missing_external_web_plan(
+    *,
+    planner_runs: Sequence[PlannerRunV4],
+    provider: ResearchBrainPlannerProviderV4 | None,
+    memory_cards: Sequence[ArchetypeMemoryCard],
+    config: ProductionShadowV4Config,
+) -> tuple[PlannerRunV4, ...]:
+    if provider is None or not _requires_external_web_plan(config):
+        return tuple(planner_runs)
+    if config.planner_provider in {PlannerProviderModeV4.NONE.value, PlannerProviderModeV4.FAKE.value}:
+        return tuple(planner_runs)
+    retry_events: list[CandidateEventV2] = []
+    feedback: dict[str, tuple[str, ...]] = {}
+    for run in planner_runs:
+        gaps = _external_web_plan_gaps(run)
+        if not gaps:
+            continue
+        retry_events.append(run.event)
+        feedback[run.event.candidate_event_id] = gaps
+    if not retry_events:
+        return tuple(planner_runs)
+    replacement: dict[str, PlannerRunV4] = {}
+    for event_batch in _chunks(retry_events, config.planner_batch_size):
+        retry_runs = run_planner_provider_v4(
+            provider=provider,
+            events=event_batch,
+            memory_cards=memory_cards,
+            existing_evidence_by_event_id=_evidence_context_by_event(
+                events=event_batch,
+                config=config,
+                planner_feedback_by_event_id=feedback,
+            ),
+        )
+        for retry_run in retry_runs:
+            if retry_run.output and _planner_output_requests_external_web(retry_run.output):
+                replacement[retry_run.event.candidate_event_id] = retry_run
+    if not replacement:
+        return tuple(planner_runs)
+    return tuple(replacement.get(run.event.candidate_event_id, run) for run in planner_runs)
+
+
+def _next_feedback_retry_planner_run(
+    *,
+    planner_run: PlannerRunV4,
+    bundle: EvidenceOSExecutionBundleV4,
+    provider: ResearchBrainPlannerProviderV4 | None,
+    memory_cards: Sequence[ArchetypeMemoryCard],
+    config: ProductionShadowV4Config,
+) -> PlannerRunV4 | None:
+    """Select the next bounded feedback retry.
+
+    Source-route failures take precedence over claim-mapping retries. Easy
+    example: if a fetched article was rejected because it came from general
+    search and was unrelated to the target, the planner needs a better source
+    route first. Loosening primitive mapping would recreate the wrong-subject
+    failures this path is designed to prevent.
+    """
+
+    if _source_rejection_feedback_from_bundle(bundle):
+        retry_run = _retry_planner_for_source_rejection_feedback(
+            planner_run=planner_run,
+            bundle=bundle,
+            provider=provider,
+            memory_cards=memory_cards,
+            config=config,
+        )
+        if retry_run is not None:
+            return retry_run
+    retry_run = _retry_planner_for_rejected_mapping_feedback(
+        planner_run=planner_run,
+        bundle=bundle,
+        provider=provider,
+        memory_cards=memory_cards,
+        config=config,
+    )
+    if retry_run is not None:
+        return retry_run
+    retry_run = _retry_planner_for_rerouted_claim_feedback(
+        planner_run=planner_run,
+        bundle=bundle,
+        provider=provider,
+        memory_cards=memory_cards,
+        config=config,
+    )
+    if retry_run is not None:
+        return retry_run
+    return _retry_planner_for_source_rejection_feedback(
+        planner_run=planner_run,
+        bundle=bundle,
+        provider=provider,
+        memory_cards=memory_cards,
+        config=config,
+    )
+
+
+def _feedback_retry_signature(retry_run: PlannerRunV4) -> tuple[Any, ...]:
+    output = retry_run.output
+    return (
+        retry_run.planner_feedback,
+        retry_run.rejected_claim_feedback_count,
+        retry_run.source_rejection_feedback_count,
+        retry_run.rerouted_claim_feedback_count,
+        _primary_from_planner(retry_run),
+        tuple(output.query_intents if output else ()),
+        tuple(
+            (
+                str(draft.get("primitive_gap") or ""),
+                tuple(str(item) for item in (draft.get("preferred_source_classes") or ())),
+                tuple(str(item) for item in (draft.get("fallback_source_classes") or ())),
+                tuple(str(item) for item in (draft.get("query_intents") or ())),
+            )
+            for draft in (output.source_task_drafts if output else ())
+        ),
+    )
+
+
+def _feedback_retry_reason_tag(retry_run: PlannerRunV4) -> str:
+    if "previous_source_lineage_unverified_original" in tuple(retry_run.planner_feedback):
+        return "source_lineage_unverified_original"
+    if "previous_claims_rerouted_original_gap_unsatisfied" in tuple(retry_run.planner_feedback):
+        return "rerouted_claim_original_gap_unsatisfied"
+    return "source_rejection"
+
+
+def _retry_planner_for_rejected_mapping_feedback(
+    *,
+    planner_run: PlannerRunV4,
+    bundle: EvidenceOSExecutionBundleV4,
+    provider: ResearchBrainPlannerProviderV4 | None,
+    memory_cards: Sequence[ArchetypeMemoryCard],
+    config: ProductionShadowV4Config,
+) -> PlannerRunV4 | None:
+    """Ask the planner once more when fetched claims were rejected before score.
+
+    Easy example: if a source task fetched a direct DART correction but the
+    primitive mapper rejected it as "not volume growth", the next step is not to
+    loosen the mapper. The planner should see that rejected source pattern and
+    choose a different bounded source/task if it can.
+    """
+
+    if provider is None or not _allows_feedback_retry(config):
+        return None
+    if config.retry_max <= 1:
+        return None
+    if config.planner_provider in {PlannerProviderModeV4.NONE.value, PlannerProviderModeV4.FAKE.value}:
+        return None
+    if planner_run.provider_failed or planner_run.output is None:
+        return None
+    rejected_feedback = _rejected_claim_feedback_from_bundle(bundle)
+    if not rejected_feedback:
+        return None
+    rerouted_feedback = _rerouted_claim_feedback_from_bundle(bundle)
+    if _bundle_has_direct_source_task_acceptance(bundle) and not _bundle_has_unresolved_external_web_or_llm_failure(bundle):
+        return None
+    event = planner_run.event
+    feedback_tags = ("previous_claims_rejected_before_score",)
+    retry_runs = run_planner_provider_v4(
+        provider=provider,
+        events=(event,),
+        memory_cards=memory_cards,
+        existing_evidence_by_event_id=_evidence_context_by_event(
+            events=(event,),
+            config=config,
+            planner_feedback_by_event_id={event.candidate_event_id: feedback_tags},
+            rejected_claim_feedback_by_event_id={event.candidate_event_id: rejected_feedback},
+            rerouted_claim_feedback_by_event_id={event.candidate_event_id: rerouted_feedback},
+        ),
+    )
+    initial_primary = _primary_from_planner(planner_run)
+    decorated_runs = tuple(
+        replace(
+            retry_run,
+            planner_run_role="feedback_retry",
+            planner_feedback=feedback_tags,
+            rejected_claim_feedback_count=len(rejected_feedback),
+            rerouted_claim_feedback_count=len(rerouted_feedback),
+        )
+        for retry_run in retry_runs
+    )
+    first_retry = decorated_runs[0] if decorated_runs else None
+    for retry_run in retry_runs:
+        if retry_run.output is None:
+            continue
+        if initial_primary and _primary_from_planner(retry_run) != initial_primary:
+            continue
+        return replace(
+            retry_run,
+            planner_run_role="feedback_retry",
+            planner_feedback=feedback_tags,
+            rejected_claim_feedback_count=len(rejected_feedback),
+            rerouted_claim_feedback_count=len(rerouted_feedback),
+        )
+    return first_retry
+
+
+def _retry_planner_for_source_rejection_feedback(
+    *,
+    planner_run: PlannerRunV4,
+    bundle: EvidenceOSExecutionBundleV4,
+    provider: ResearchBrainPlannerProviderV4 | None,
+    memory_cards: Sequence[ArchetypeMemoryCard],
+    config: ProductionShadowV4Config,
+) -> PlannerRunV4 | None:
+    """Ask the planner again when source candidates never reached extraction.
+
+    Easy example: if every web result is a stock list, channel page, or site
+    archive, the claim-level retry cannot run because no claim exists yet. The
+    planner should see that source failure pattern and choose a different
+    bounded route. Deterministic code still only validates and executes the
+    query/source task; it does not synthesize a replacement query template.
+    """
+
+    if provider is None or not _allows_feedback_retry(config):
+        return None
+    if config.retry_max <= 1:
+        return None
+    if config.planner_provider in {PlannerProviderModeV4.NONE.value, PlannerProviderModeV4.FAKE.value}:
+        return None
+    if planner_run.provider_failed or planner_run.output is None:
+        return None
+    source_feedback = _source_rejection_feedback_from_bundle(bundle)
+    if not source_feedback:
+        return None
+    rerouted_feedback = _rerouted_claim_feedback_from_bundle(bundle)
+    if _bundle_has_direct_source_task_acceptance(bundle) and not _bundle_has_unresolved_external_web_or_llm_failure(bundle):
+        return None
+    event = planner_run.event
+    feedback_tags = _source_rejection_feedback_tags(source_feedback)
+    retry_runs = run_planner_provider_v4(
+        provider=provider,
+        events=(event,),
+        memory_cards=memory_cards,
+        existing_evidence_by_event_id=_evidence_context_by_event(
+            events=(event,),
+            config=config,
+            planner_feedback_by_event_id={event.candidate_event_id: feedback_tags},
+            source_rejection_feedback_by_event_id={event.candidate_event_id: source_feedback},
+            rerouted_claim_feedback_by_event_id={event.candidate_event_id: rerouted_feedback},
+        ),
+    )
+    decorated_runs = tuple(
+        replace(
+            retry_run,
+            planner_run_role="feedback_retry",
+            planner_feedback=feedback_tags,
+            source_rejection_feedback_count=len(source_feedback),
+            rerouted_claim_feedback_count=len(rerouted_feedback),
+        )
+        for retry_run in retry_runs
+    )
+    first_retry = decorated_runs[0] if decorated_runs else None
+    initial_primary = _primary_from_planner(planner_run)
+    for retry_run in decorated_runs:
+        if retry_run.output is None:
+            continue
+        if initial_primary and _primary_from_planner(retry_run) != initial_primary:
+            continue
+        return retry_run
+    return first_retry
+
+
+def _retry_planner_for_rerouted_claim_feedback(
+    *,
+    planner_run: PlannerRunV4,
+    bundle: EvidenceOSExecutionBundleV4,
+    provider: ResearchBrainPlannerProviderV4 | None,
+    memory_cards: Sequence[ArchetypeMemoryCard],
+    config: ProductionShadowV4Config,
+) -> PlannerRunV4 | None:
+    """Ask the planner again when a claim was useful but did not satisfy the gap.
+
+    Easy example: CompanyGuide EPS/target-price consensus may be a valid
+    medium_term_revision_visibility claim. It still does not prove HBM customer
+    allocation or capacity pre-sold. The next planner call should see that split
+    and choose a bounded source route for the still-unsatisfied primitive instead
+    of repeating the same CompanyGuide task.
+    """
+
+    if provider is None or not _allows_feedback_retry(config):
+        return None
+    if config.retry_max <= 1:
+        return None
+    if config.planner_provider in {PlannerProviderModeV4.NONE.value, PlannerProviderModeV4.FAKE.value}:
+        return None
+    if planner_run.provider_failed or planner_run.output is None:
+        return None
+    if _bundle_has_direct_source_task_acceptance(bundle):
+        return None
+    rerouted_feedback = _rerouted_claim_feedback_from_bundle(bundle)
+    if not rerouted_feedback:
+        return None
+    event = planner_run.event
+    feedback_tags = ("previous_claims_rerouted_original_gap_unsatisfied",)
+    retry_runs = run_planner_provider_v4(
+        provider=provider,
+        events=(event,),
+        memory_cards=memory_cards,
+        existing_evidence_by_event_id=_evidence_context_by_event(
+            events=(event,),
+            config=config,
+            planner_feedback_by_event_id={event.candidate_event_id: feedback_tags},
+            rerouted_claim_feedback_by_event_id={event.candidate_event_id: rerouted_feedback},
+        ),
+    )
+    decorated_runs = tuple(
+        replace(
+            retry_run,
+            planner_run_role="feedback_retry",
+            planner_feedback=feedback_tags,
+            rerouted_claim_feedback_count=len(rerouted_feedback),
+        )
+        for retry_run in retry_runs
+    )
+    first_retry = decorated_runs[0] if decorated_runs else None
+    initial_primary = _primary_from_planner(planner_run)
+    for retry_run in decorated_runs:
+        if retry_run.output is None:
+            continue
+        if initial_primary and _primary_from_planner(retry_run) != initial_primary:
+            continue
+        return retry_run
+    return first_retry
+
+
+def _source_rejection_feedback_from_bundle(
+    bundle: EvidenceOSExecutionBundleV4,
+    *,
+    limit: int = 8,
+) -> tuple[Mapping[str, Any], ...]:
+    executions_by_task_id = {execution.task_id: execution for execution in bundle.executions}
+    web_task_ids = _web_source_task_ids(bundle)
+    rows: list[Mapping[str, Any]] = []
+    seen_task_ids: set[str] = set()
+    for execution in bundle.executions:
+        if len(rows) >= limit:
+            return tuple(rows)
+        if execution.accepted_claim_ids:
+            continue
+        if execution.status != "REJECTED_BY_POLICY":
+            continue
+        if not _execution_uses_external_web_or_llm(execution, web_task_ids=web_task_ids):
+            continue
+        task_payload = dict(execution.source_task)
+        task_id = execution.task_id
+        seen_task_ids.add(task_id)
+        reason_counts = Counter(
+            str(reason or "policy_rejected_before_search")
+            for reason in (execution.provider_errors or ("policy_rejected_before_search",))
+        )
+        rows.append(
+            {
+                "source_task_id": task_id,
+                "candidate_event_id": execution.candidate_event_id
+                or str(task_payload.get("candidate_event_id") or ""),
+                "symbol": execution.symbol or str(task_payload.get("symbol") or ""),
+                "company_name": execution.company_name or str(task_payload.get("company_name") or ""),
+                "primitive_gap": execution.primitive_gap or str(task_payload.get("primitive_gap") or ""),
+                "task_type": str(task_payload.get("task_type") or ""),
+                "preferred_source_classes": list(
+                    execution.preferred_source_classes or task_payload.get("preferred_source_classes") or ()
+                ),
+                "fallback_source_classes": list(
+                    execution.fallback_source_classes or task_payload.get("fallback_source_classes") or ()
+                ),
+                "query_count": len(
+                    {
+                        str(query or "")
+                        for query in (task_payload.get("query_intents") or ())
+                        if str(query or "").strip()
+                    }
+                ),
+                "search_result_count": 0,
+                "rejected_source_count": 1,
+                "fetched_document_count": 0,
+                "selected_source_count": 0,
+                "rejection_reason_distribution": dict(reason_counts),
+                "sample_rejected_sources": [
+                    {
+                        "query": query,
+                        "url": None,
+                        "title": None,
+                        "provider_name": execution.provider_name,
+                        "rejection_reason": reason,
+                        "selection_status": "REJECTED_BY_POLICY_BEFORE_SEARCH",
+                    }
+                    for query in list(task_payload.get("query_intents") or ())[:3]
+                    for reason in list(reason_counts.keys())[:1]
+                ],
+                "source_rejection_summary": ";".join(
+                    f"{reason}:{count}" for reason, count in reason_counts.most_common(4)
+                ),
+            }
+        )
+    if not bundle.web_rejected_documents:
+        return tuple(rows)
+    web_results_by_id = {
+        str(row.get("web_result_id") or ""): row
+        for row in bundle.web_search_results
+        if str(row.get("web_result_id") or "").strip()
+    }
+    fetched_count_by_task = Counter(
+        str(row.get("source_task_id") or row.get("task_id") or "")
+        for row in bundle.web_fetched_documents
+        if str(row.get("source_task_id") or row.get("task_id") or "").strip()
+    )
+    result_count_by_task = Counter(
+        str(row.get("source_task_id") or row.get("task_id") or "")
+        for row in bundle.web_search_results
+        if str(row.get("source_task_id") or row.get("task_id") or "").strip()
+    )
+    rejected_by_task: dict[str, list[Mapping[str, Any]]] = {}
+    for row in bundle.web_rejected_documents:
+        task_id = str(row.get("source_task_id") or row.get("task_id") or "")
+        if not task_id or task_id in seen_task_ids:
+            continue
+        execution = executions_by_task_id.get(task_id)
+        rejection_phase = str(row.get("rejection_phase") or "")
+        if execution is not None and execution.accepted_claim_ids and rejection_phase != "post_extraction_evidence_os":
+            continue
+        rejected_by_task.setdefault(task_id, []).append(row)
+    for task_id in sorted(rejected_by_task):
+        rejected_rows = rejected_by_task[task_id]
+        execution = executions_by_task_id.get(task_id)
+        task_payload = dict(execution.source_task) if execution is not None else {}
+        reason_counts = Counter(str(row.get("rejection_reason") or "unknown_source_rejection") for row in rejected_rows)
+        phase_counts = Counter(
+            str(row.get("rejection_phase") or "pre_extraction_source_filter") for row in rejected_rows
+        )
+        not_eligible_counts = Counter(
+            str(reason)
+            for row in rejected_rows
+            for reason in (row.get("not_eligible_reasons") or ())
+            if str(reason).strip()
+        )
+        provider_error_counts = Counter(
+            str(reason)
+            for row in rejected_rows
+            for reason in (row.get("provider_errors") or ())
+            if str(reason).strip()
+        )
+        examples: list[Mapping[str, Any]] = []
+        for row in rejected_rows[:3]:
+            result_row = web_results_by_id.get(str(row.get("web_result_id") or ""))
+            examples.append(
+                {
+                    "query": row.get("query"),
+                    "url": row.get("url"),
+                    "title": row.get("title"),
+                    "provider_name": row.get("provider_name"),
+                    "rejection_phase": row.get("rejection_phase") or "pre_extraction_source_filter",
+                    "rejection_reason": row.get("rejection_reason"),
+                    "not_eligible_reasons": list(row.get("not_eligible_reasons") or ())[:6],
+                    "selection_status": (result_row or {}).get("selection_status"),
+                }
+            )
+        primitive_gap = str(task_payload.get("primitive_gap") or rejected_rows[0].get("primitive_gap") or "")
+        rows.append(
+            {
+                "source_task_id": task_id,
+                "candidate_event_id": str(rejected_rows[0].get("candidate_event_id") or task_payload.get("candidate_event_id") or ""),
+                "symbol": str(rejected_rows[0].get("symbol") or task_payload.get("symbol") or ""),
+                "company_name": str(rejected_rows[0].get("company_name") or task_payload.get("company_name") or ""),
+                "primitive_gap": primitive_gap,
+                "task_type": str(task_payload.get("task_type") or ""),
+                "preferred_source_classes": list(task_payload.get("preferred_source_classes") or ()),
+                "fallback_source_classes": list(task_payload.get("fallback_source_classes") or ()),
+                "query_count": len({str(row.get("query") or "") for row in rejected_rows if str(row.get("query") or "").strip()}),
+                "search_result_count": int(result_count_by_task.get(task_id, len(rejected_rows))),
+                "rejected_source_count": len(rejected_rows),
+                "fetched_document_count": int(fetched_count_by_task.get(task_id, 0)),
+                "selected_source_count": int(fetched_count_by_task.get(task_id, 0)),
+                "rejection_phase_distribution": dict(phase_counts),
+                "rejection_reason_distribution": dict(reason_counts),
+                "not_eligible_reason_distribution": dict(not_eligible_counts),
+                "provider_error_distribution": dict(provider_error_counts),
+                "sample_rejected_sources": examples,
+                "source_rejection_summary": ";".join(
+                    f"{reason}:{count}"
+                    for reason, count in (
+                        *phase_counts.most_common(2),
+                        *reason_counts.most_common(4),
+                        *not_eligible_counts.most_common(4),
+                    )
+                ),
+            }
+        )
+        if len(rows) >= limit:
+            return tuple(rows)
+    return tuple(rows)
+
+
+def _rerouted_claim_feedback_from_bundle(
+    bundle: EvidenceOSExecutionBundleV4,
+    *,
+    limit: int = 8,
+) -> tuple[Mapping[str, Any], ...]:
+    rows: list[Mapping[str, Any]] = []
+    for execution in bundle.executions:
+        if len(rows) >= limit:
+            return tuple(rows)
+        if execution.satisfies_source_task:
+            continue
+        if not execution.rerouted_accepted_claim_ids:
+            continue
+        task = dict(execution.source_task)
+        accepted_primitives = tuple(
+            str(item)
+            for item in (execution.accepted_primitive_ids or ())
+            if str(item).strip()
+        )
+        unsatisfied_primitives = tuple(
+            str(item)
+            for item in (execution.primitive_gap_unsatisfied_ids or ())
+            if str(item).strip()
+        ) or (str(execution.primitive_gap or task.get("primitive_gap") or ""),)
+        rows.append(
+            {
+                "source_task_id": execution.task_id,
+                "candidate_event_id": execution.candidate_event_id
+                or str(task.get("candidate_event_id") or ""),
+                "symbol": execution.symbol or str(task.get("symbol") or ""),
+                "company_name": execution.company_name or str(task.get("company_name") or ""),
+                "requested_primitive_gap": str(execution.primitive_gap or task.get("primitive_gap") or ""),
+                "accepted_claim_ids": list(execution.rerouted_accepted_claim_ids),
+                "accepted_primitive_ids": list(accepted_primitives),
+                "primitive_gap_unsatisfied_ids": list(unsatisfied_primitives),
+                "satisfaction_type": execution.satisfaction_type,
+                "source_class": execution.source_class,
+                "provider_name": execution.provider_name,
+                "preferred_source_classes": list(
+                    execution.preferred_source_classes or task.get("preferred_source_classes") or ()
+                ),
+                "fallback_source_classes": list(
+                    execution.fallback_source_classes or task.get("fallback_source_classes") or ()
+                ),
+                "document_ids": list(execution.fetched_document_ids),
+                "document_urls": list(execution.document_urls),
+                "feedback_summary": (
+                    "accepted_claim_rerouted_to_"
+                    f"{','.join(accepted_primitives) or 'other_primitive'};"
+                    "original_gap_still_unsatisfied:"
+                    f"{','.join(unsatisfied_primitives)}"
+                ),
+            }
+        )
+    return tuple(rows)
+
+
+def _source_rejection_feedback_tags(source_feedback: Sequence[Mapping[str, Any]]) -> tuple[str, ...]:
+    has_unverified_original = any(
+        str(reason).startswith("source_lineage_unverified_original")
+        for row in source_feedback
+        for reason in (
+            (row.get("not_eligible_reason_distribution") or {}).keys()
+            if isinstance(row.get("not_eligible_reason_distribution"), Mapping)
+            else ()
+        )
+    )
+    for row in source_feedback:
+        phase_distribution = row.get("rejection_phase_distribution") or {}
+        phases = phase_distribution.keys() if isinstance(phase_distribution, Mapping) else ()
+        if any(str(phase) == "post_extraction_evidence_os" for phase in phases):
+            if has_unverified_original:
+                return (
+                    "previous_source_lineage_unverified_original",
+                    "previous_sources_failed_before_or_after_extraction",
+                )
+            return ("previous_sources_failed_before_or_after_extraction",)
+    if has_unverified_original:
+        return (
+            "previous_source_lineage_unverified_original",
+            "previous_sources_rejected_before_extraction",
+        )
+    return ("previous_sources_rejected_before_extraction",)
+
+
+def _rejected_claim_feedback_from_bundle(
+    bundle: EvidenceOSExecutionBundleV4,
+    *,
+    limit: int = 8,
+) -> tuple[Mapping[str, Any], ...]:
+    rows: list[Mapping[str, Any]] = []
+    raw_rejections_by_claim = _raw_assertion_rejections_by_claim(bundle)
+    for execution in bundle.executions:
+        if execution.accepted_claim_ids or not execution.rejected_claim_ids:
+            continue
+        task = dict(execution.source_task)
+        for claim_id in execution.rejected_claim_ids:
+            claim = bundle.ledger.claims.get(claim_id)
+            if claim is None:
+                continue
+            mapping = _mapping_for_claim(bundle, claim_id)
+            document = bundle.documents.get(claim.source_document_id)
+            anchor = bundle.anchors.get(claim.source_anchor_id)
+            raw = bundle.raw_assertions.get(claim.raw_assertion_id)
+            raw_rejection = raw_rejections_by_claim.get(claim_id) or raw_rejections_by_claim.get(claim.raw_assertion_id)
+            reasons = tuple(
+                str(reason)
+                for reason in (
+                    (raw_rejection or {}).get("not_eligible_reasons")
+                    or execution.not_eligible_reasons
+                    or ()
+                )
+                if str(reason).strip()
+            )
+            rationale = str((raw_rejection or {}).get("mapping_rationale") or getattr(mapping, "rationale", "") or "")
+            rejection_reason = str((raw_rejection or {}).get("rejection_reason") or "")
+            target_scope_status = str((raw_rejection or {}).get("target_scope_status") or _enum_value(claim.target_scope_status) or "")
+            directness = str((raw_rejection or {}).get("directness") or _enum_value(claim.directness) or "")
+            semantic_status = str((raw_rejection or {}).get("semantic_status") or _enum_value(claim.semantic_status) or "")
+            temporal_status = str((raw_rejection or {}).get("temporal_status") or _enum_value(claim.temporal_status) or "")
+            polarity = str((raw_rejection or {}).get("polarity") or _enum_value(claim.polarity) or "")
+            mapping_status = str((raw_rejection or {}).get("mapping_status") or _enum_value(getattr(mapping, "mapping_status", None)) or "")
+            mapped_primitive_id = (raw_rejection or {}).get("mapped_primitive_id") or getattr(mapping, "primitive_id", None)
+            support_direction = str((raw_rejection or {}).get("support_direction") or _enum_value(getattr(mapping, "support_direction", None)) or "")
+            contract_feedback = _contract_compatibility_feedback(
+                task=task,
+                claim=claim,
+                raw=raw,
+                anchor=anchor,
+                reasons=reasons,
+                rationale=rationale,
+                rejection_reason=rejection_reason,
+                mapped_primitive_id=str(mapped_primitive_id or ""),
+            )
+            rows.append(
+                {
+                    "source_task_execution_id": deterministic_id(
+                        "SRCEXEC-FEEDBACK",
+                        (execution.task_id, claim_id, reasons, rationale),
+                    ),
+                    "source_task_id": execution.task_id,
+                    "primitive_gap": str(task.get("primitive_gap") or ""),
+                    "task_type": str(task.get("task_type") or ""),
+                    "preferred_source_classes": list(task.get("preferred_source_classes") or ()),
+                    "fallback_source_classes": list(task.get("fallback_source_classes") or ()),
+                    "claim_id": claim.claim_id,
+                    "raw_assertion_id": claim.raw_assertion_id,
+                    "mapping_id": getattr(mapping, "mapping_id", None),
+                    "document_id": claim.source_document_id,
+                    "anchor_id": claim.source_anchor_id,
+                    "source_url": document.canonical_url if document else None,
+                    "source_provider": document.source_name if document else None,
+                    "anchor_verified": bool(anchor.anchor_verified) if anchor else False,
+                    "raw_assertion_rejection_id": (raw_rejection or {}).get("raw_assertion_rejection_id"),
+                    "raw_assertion_rejection_reason": rejection_reason or None,
+                    "quote_preview": _preview_text(
+                        (raw.exact_quote if raw else "") or (anchor.exact_text if anchor else ""),
+                        limit=360,
+                    ),
+                    "target_scope_status": target_scope_status,
+                    "directness": directness,
+                    "semantic_status": semantic_status,
+                    "temporal_status": temporal_status,
+                    "polarity": polarity,
+                    "mapping_status": mapping_status,
+                    "mapped_primitive_id": mapped_primitive_id,
+                    "support_direction": support_direction,
+                    "eligibility_reasons": list(reasons),
+                    "mapping_rationale": rationale,
+                    "rejection_summary": _rejection_summary(
+                        reasons=((rejection_reason,) if rejection_reason else ()) + reasons,
+                        rationale=rationale,
+                    ),
+                    **contract_feedback,
+                }
+            )
+            if len(rows) >= limit:
+                return tuple(rows)
+    return tuple(rows)
+
+
+def _contract_compatibility_feedback(
+    *,
+    task: Mapping[str, Any],
+    claim: Any,
+    raw: Any | None,
+    anchor: Any | None,
+    reasons: Sequence[str],
+    rationale: str,
+    rejection_reason: str,
+    mapped_primitive_id: str,
+) -> Mapping[str, Any]:
+    primitive_gap = str(task.get("primitive_gap") or "")
+    text = " ".join(
+        str(value or "")
+        for value in (
+            primitive_gap,
+            mapped_primitive_id,
+            rejection_reason,
+            rationale,
+            " ".join(str(reason) for reason in reasons),
+            getattr(raw, "predicate", ""),
+            getattr(raw, "object_text", ""),
+            getattr(raw, "value", ""),
+            getattr(raw, "exact_quote", ""),
+            getattr(anchor, "exact_text", ""),
+            getattr(claim, "adjudication_rationale", ""),
+        )
+    ).lower()
+    contract_signal = any(
+        token in text
+        for token in (
+            "structured_field_contract_quality",
+            "revenue_visibility_contract",
+            "export_contract",
+            "contract_amount_to_prior_sales",
+            "contract_duration_months",
+            "contract_or_order_claim",
+            "단일판매",
+            "공급계약",
+            "판매공급계약",
+            "판매ㆍ공급계약",
+            "판매·공급계약",
+        )
+    )
+    requested_compatible = primitive_gap in CONTRACT_COMPATIBLE_PRIMITIVES or mapped_primitive_id in CONTRACT_COMPATIBLE_PRIMITIVES
+    required = bool(contract_signal and not requested_compatible)
+    return {
+        "contract_compatible_route_required": required,
+        "contract_signal_detected": bool(contract_signal),
+        "rejected_primitive_contract_compatible": bool(requested_compatible),
+        "contract_compatible_primitive_hints": sorted(CONTRACT_COMPATIBLE_PRIMITIVES) if required else [],
+        "contract_compatibility_feedback": (
+            "contract_fields_found_but_selected_primitive_incompatible"
+            if required
+            else ""
+        ),
+    }
+
+
+def _raw_assertion_rejections_by_claim(bundle: EvidenceOSExecutionBundleV4) -> dict[str, Mapping[str, Any]]:
+    rows: dict[str, Mapping[str, Any]] = {}
+    for row in bundle.raw_assertion_rejections:
+        claim_id = str(row.get("claim_id") or row.get("adjudicated_claim_id") or "")
+        raw_assertion_id = str(row.get("raw_assertion_id") or "")
+        if claim_id and claim_id not in rows:
+            rows[claim_id] = row
+        if raw_assertion_id and raw_assertion_id not in rows:
+            rows[raw_assertion_id] = row
+    return rows
+
+
+def _mapping_for_claim(bundle: EvidenceOSExecutionBundleV4, claim_id: str) -> Any | None:
+    rejected = [
+        mapping
+        for mapping in bundle.ledger.mappings.values()
+        if mapping.claim_id == claim_id and _enum_value(mapping.mapping_status) == "REJECTED"
+    ]
+    if rejected:
+        return rejected[-1]
+    for mapping in bundle.ledger.mappings.values():
+        if mapping.claim_id == claim_id:
+            return mapping
+    return None
+
+
+def _deduplicated_feedback_retry_tasks(
+    *,
+    event: CandidateEventV2,
+    original_tasks: Sequence[SourceTask],
+    retry_tasks: Sequence[SourceTask],
+    reason_tag: str = "rejected_claim_mapping",
+    rerouted_claim_feedback: Sequence[Mapping[str, Any]] = (),
+) -> tuple[SourceTask, ...]:
+    kept, _ = _deduplicated_feedback_retry_tasks_with_rejections(
+        event=event,
+        original_tasks=original_tasks,
+        retry_tasks=retry_tasks,
+        reason_tag=reason_tag,
+        rerouted_claim_feedback=rerouted_claim_feedback,
+    )
+    return kept
+
+
+def _deduplicated_feedback_retry_tasks_with_rejections(
+    *,
+    event: CandidateEventV2,
+    original_tasks: Sequence[SourceTask],
+    retry_tasks: Sequence[SourceTask],
+    reason_tag: str = "rejected_claim_mapping",
+    rerouted_claim_feedback: Sequence[Mapping[str, Any]] = (),
+) -> tuple[tuple[SourceTask, ...], tuple[SourceTaskExecutionV4, ...]]:
+    original_signatures = {_source_task_signature(task) for task in original_tasks}
+    seen = set(original_signatures)
+    blocked_sources_by_primitive = _rerouted_blocked_sources_by_primitive(rerouted_claim_feedback)
+    rows: list[SourceTask] = []
+    rejected: list[SourceTaskExecutionV4] = []
+    for index, task in enumerate(retry_tasks):
+        original_task = task
+        sanitized_task, removed_sources = _remove_rerouted_only_sources_from_retry_task(
+            task=task,
+            blocked_sources_by_primitive=blocked_sources_by_primitive,
+        )
+        if sanitized_task is None:
+            rejected.append(
+                _rerouted_source_retry_drop_execution(
+                    event=event,
+                    task=original_task,
+                    index=index,
+                    removed_sources=removed_sources,
+                    reason_tag=reason_tag,
+                )
+            )
+            continue
+        task = sanitized_task
+        if (
+            reason_tag == "source_lineage_unverified_original"
+            and _source_lineage_retry_task_is_discovery_only(task)
+        ):
+            rejected.append(
+                _source_lineage_retry_drop_execution(
+                    event=event,
+                    task=task,
+                    index=index,
+                    reason_tag=reason_tag,
+                )
+            )
+            continue
+        signature = _source_task_signature(task)
+        if signature in seen:
+            continue
+        seen.add(signature)
+        rows.append(
+            replace(
+                task,
+                task_id=deterministic_id(
+                    "RSTASKV4RETRY",
+                    (event.candidate_event_id, index, task.task_id, signature),
+                ),
+                reason_from_memory=_feedback_retry_reason_from_memory(
+                    base=task.reason_from_memory,
+                    reason_tag=reason_tag,
+                    removed_sources=removed_sources,
+                ),
+            )
+        )
+    return tuple(rows), tuple(rejected)
+
+
+def _rerouted_blocked_sources_by_primitive(
+    rerouted_claim_feedback: Sequence[Mapping[str, Any]],
+) -> dict[str, set[str]]:
+    blocked: dict[str, set[str]] = {}
+    for row in rerouted_claim_feedback:
+        source_names = {
+            _source_name_key(row.get("source_class")),
+            _source_name_key(row.get("provider_name")),
+        }
+        source_names = {name for name in source_names if name}
+        if not source_names:
+            continue
+        primitive_ids = {
+            str(item or "").strip()
+            for item in (row.get("primitive_gap_unsatisfied_ids") or ())
+            if str(item or "").strip()
+        }
+        requested = str(row.get("requested_primitive_gap") or "").strip()
+        if requested:
+            primitive_ids.add(requested)
+        for primitive_id in primitive_ids:
+            blocked.setdefault(primitive_id, set()).update(source_names)
+    return blocked
+
+
+def _remove_rerouted_only_sources_from_retry_task(
+    *,
+    task: SourceTask,
+    blocked_sources_by_primitive: Mapping[str, set[str]],
+) -> tuple[SourceTask | None, tuple[str, ...]]:
+    blocked = blocked_sources_by_primitive.get(task.primitive_gap) or set()
+    if not blocked:
+        return task, ()
+    removed: list[str] = []
+
+    def keep(values: Sequence[str]) -> tuple[str, ...]:
+        kept: list[str] = []
+        for value in values:
+            if _source_name_key(value) in blocked:
+                removed.append(str(value))
+                continue
+            kept.append(str(value))
+        return tuple(kept)
+
+    preferred = keep(task.preferred_source_classes)
+    fallback = keep(task.fallback_source_classes)
+    if not removed:
+        return task, ()
+    if not preferred and fallback:
+        preferred = (fallback[0],)
+        fallback = tuple(fallback[1:])
+    if not preferred:
+        return None, tuple(dict.fromkeys(removed))
+    return replace(task, preferred_source_classes=preferred, fallback_source_classes=fallback), tuple(dict.fromkeys(removed))
+
+
+def _feedback_retry_reason_from_memory(*, base: str, reason_tag: str, removed_sources: Sequence[str]) -> str:
+    value = f"{base};feedback_retry:{reason_tag}"
+    if removed_sources:
+        value = f"{value};rerouted_source_removed:{','.join(removed_sources)}"
+    return value
+
+
+def _source_name_key(value: Any) -> str:
+    return "".join(ch for ch in str(value or "").lower() if ch.isalnum())
+
+
+def _rerouted_source_retry_drop_execution(
+    *,
+    event: CandidateEventV2,
+    task: SourceTask,
+    index: int,
+    removed_sources: Sequence[str],
+    reason_tag: str,
+) -> SourceTaskExecutionV4:
+    reason = "rerouted_feedback_removed_all_candidate_source_classes"
+    task_payload = {
+        **task.to_dict(),
+        "reason_from_memory": _feedback_retry_reason_from_memory(
+            base=task.reason_from_memory,
+            reason_tag=reason_tag,
+            removed_sources=removed_sources,
+        ),
+    }
+    return SourceTaskExecutionV4(
+        task_id=deterministic_id("RSTASKV4RETRYDROP", (event.candidate_event_id, index, task.task_id, reason)),
+        source_task=task_payload,
+        status=SourceTaskExecutionStatusV4.REJECTED_BY_POLICY.value,
+        candidate_event_id=event.candidate_event_id,
+        symbol=event.symbol,
+        company_name=event.company_name,
+        archetype_id=task.archetype_id,
+        primitive_gap=task.primitive_gap,
+        source_class="policy",
+        provider_name="research_brain_v4_retry_policy",
+        source_task_origin="feedback_retry",
+        preferred_source_classes=task.preferred_source_classes,
+        fallback_source_classes=task.fallback_source_classes,
+        forbidden_source_classes=task.forbidden_source_classes,
+        requested_source_classes=(*task.preferred_source_classes, *task.fallback_source_classes),
+        not_eligible_reasons=(reason,),
+        provider_errors=(reason,),
+        budget_used={"queries": 0, "candidates": 0, "fetches": 0},
+        stop_reason=reason,
+    )
+
+
+def _source_lineage_retry_drop_execution(
+    *,
+    event: CandidateEventV2,
+    task: SourceTask,
+    index: int,
+    reason_tag: str,
+) -> SourceTaskExecutionV4:
+    reason = "source_lineage_retry_discovery_only_after_unverified_original"
+    task_payload = {
+        **task.to_dict(),
+        "reason_from_memory": f"{task.reason_from_memory};feedback_retry:{reason_tag};dropped:{reason}",
+    }
+    requested_classes = tuple((*task.preferred_source_classes, *task.fallback_source_classes))
+    return SourceTaskExecutionV4(
+        task_id=deterministic_id("RSTASKV4RETRYDROP", (event.candidate_event_id, index, task.task_id, reason)),
+        source_task=task_payload,
+        status=SourceTaskExecutionStatusV4.REJECTED_BY_POLICY.value,
+        candidate_event_id=event.candidate_event_id,
+        symbol=event.symbol,
+        company_name=event.company_name,
+        archetype_id=task.archetype_id,
+        primitive_gap=task.primitive_gap,
+        source_class="policy",
+        provider_name="research_brain_v4_retry_policy",
+        source_task_origin="feedback_retry",
+        preferred_source_classes=task.preferred_source_classes,
+        fallback_source_classes=task.fallback_source_classes,
+        forbidden_source_classes=task.forbidden_source_classes,
+        requested_source_classes=requested_classes,
+        not_eligible_reasons=(reason,),
+        provider_errors=(reason,),
+        budget_used={"queries": 0, "candidates": 0, "fetches": 0},
+        stop_reason=reason,
+    )
+
+
+def _append_retry_drop_executions_to_bundle(
+    *,
+    bundle: EvidenceOSExecutionBundleV4,
+    executions: Sequence[SourceTaskExecutionV4],
+) -> EvidenceOSExecutionBundleV4:
+    if not executions:
+        return bundle
+    audit = Counter({key: int(value) for key, value in bundle.extraction_audit.items()})
+    audit["source_lineage_feedback_retry_dropped_count"] += len(executions)
+    return EvidenceOSExecutionBundleV4(
+        ledger=bundle.ledger,
+        executions=tuple((*bundle.executions, *executions)),
+        documents=bundle.documents,
+        anchors=bundle.anchors,
+        document_text_by_id=bundle.document_text_by_id,
+        extraction_audit=dict(audit),
+        raw_assertions=bundle.raw_assertions,
+        web_search_tasks=bundle.web_search_tasks,
+        web_search_results=bundle.web_search_results,
+        web_fetched_documents=bundle.web_fetched_documents,
+        web_rejected_documents=bundle.web_rejected_documents,
+        claim_extractor_runs=bundle.claim_extractor_runs,
+        raw_assertion_rejections=bundle.raw_assertion_rejections,
+    )
+
+
+def _source_lineage_retry_task_is_discovery_only(task: SourceTask) -> bool:
+    classes = {
+        str(item or "").strip().lower()
+        for item in (*task.preferred_source_classes, *task.fallback_source_classes)
+        if str(item or "").strip()
+    }
+    if not classes:
+        return False
+    original_capable = {
+        "brokerreportpublicpdf",
+        "companynewsroom",
+        "dart",
+        "ir",
+        "issuerofficial",
+        "kind",
+        "krx",
+        "reportpdf",
+        "trustednews",
+    }
+    discovery_only = {
+        "generalweb",
+        "generalwebsearch",
+        "industrymedia",
+        "naversearch",
+        "news",
+        "web",
+    }
+    return bool(classes & discovery_only) and not bool(classes & original_capable)
+
+
+def _source_task_signature(task: SourceTask) -> tuple[Any, ...]:
+    return (
+        task.primitive_gap,
+        task.task_type,
+        tuple(str(item).lower() for item in task.preferred_source_classes),
+        tuple(str(item).lower() for item in task.fallback_source_classes),
+        tuple(str(item).lower() for item in task.query_intents),
+    )
+
+
+def _merge_evidence_os_bundles_v4(
+    base: EvidenceOSExecutionBundleV4,
+    follow_up: EvidenceOSExecutionBundleV4,
+) -> EvidenceOSExecutionBundleV4:
+    ledger = AppendOnlyEvidenceLedger()
+    for source in (base, follow_up):
+        for claim in source.ledger.claims.values():
+            _append_claim_for_bundle_merge(ledger=ledger, claim=claim)
+        for mapping in source.ledger.mappings.values():
+            _append_mapping_for_bundle_merge(ledger=ledger, mapping=mapping)
+        for event in source.ledger.events:
+            ledger.append_event(event)
+    audit = Counter({key: int(value) for key, value in base.extraction_audit.items()})
+    audit.update({key: int(value) for key, value in follow_up.extraction_audit.items()})
+    return EvidenceOSExecutionBundleV4(
+        ledger=ledger,
+        executions=tuple((*base.executions, *follow_up.executions)),
+        documents={**base.documents, **follow_up.documents},
+        anchors={**base.anchors, **follow_up.anchors},
+        document_text_by_id={**base.document_text_by_id, **follow_up.document_text_by_id},
+        extraction_audit=dict(audit),
+        raw_assertions={**base.raw_assertions, **follow_up.raw_assertions},
+        web_search_tasks=tuple((*base.web_search_tasks, *follow_up.web_search_tasks)),
+        web_search_results=tuple((*base.web_search_results, *follow_up.web_search_results)),
+        web_fetched_documents=tuple((*base.web_fetched_documents, *follow_up.web_fetched_documents)),
+        web_rejected_documents=tuple((*base.web_rejected_documents, *follow_up.web_rejected_documents)),
+        claim_extractor_runs=tuple((*base.claim_extractor_runs, *follow_up.claim_extractor_runs)),
+        raw_assertion_rejections=tuple((*base.raw_assertion_rejections, *follow_up.raw_assertion_rejections)),
+    )
+
+
+def _append_claim_for_bundle_merge(*, ledger: AppendOnlyEvidenceLedger, claim: Any) -> None:
+    try:
+        ledger.append_claim(claim)
+    except ValueError as exc:
+        if "claim_id collision with different claim" not in str(exc):
+            raise
+        # A retry can re-adjudicate the same source assertion differently. Keep
+        # the first immutable claim row and record that a retry attempted to
+        # update it; do not crash the entire Brain/Web attempt.
+        ledger.append_event(
+            LedgerEvent.build(
+                event_type=LedgerEventType.UPDATES,
+                from_id=claim.claim_id,
+                reason="merge_retry_claim_id_collision_existing_claim_retained",
+            )
+        )
+
+
+def _append_mapping_for_bundle_merge(*, ledger: AppendOnlyEvidenceLedger, mapping: Any) -> None:
+    try:
+        ledger.append_mapping(mapping)
+    except ValueError as exc:
+        if "mapping_id collision with different mapping" not in str(exc):
+            raise
+        retry_mapping = replace(
+            mapping,
+            mapping_id=deterministic_id(
+                "MAPRETRY",
+                (
+                    mapping.mapping_id,
+                    mapping.claim_id,
+                    mapping.archetype_id,
+                    mapping.primitive_id,
+                    _enum_value(mapping.support_direction),
+                    _enum_value(mapping.mapping_status),
+                    mapping.rationale,
+                ),
+            ),
+        )
+        ledger.append_mapping(retry_mapping)
+
+
+def _bundle_has_accepted_claims(bundle: EvidenceOSExecutionBundleV4 | None) -> bool:
+    if bundle is None:
+        return False
+    return any(execution.accepted_claim_ids for execution in bundle.executions)
+
+
+def _bundle_has_direct_source_task_acceptance(bundle: EvidenceOSExecutionBundleV4 | None) -> bool:
+    if bundle is None:
+        return False
+    return any(execution.satisfies_source_task and execution.direct_accepted_claim_ids for execution in bundle.executions)
+
+
+def _bundle_has_unresolved_external_web_or_llm_failure(bundle: EvidenceOSExecutionBundleV4 | None) -> bool:
+    if bundle is None:
+        return False
+    if _source_rejection_feedback_from_bundle(bundle):
+        return True
+    web_task_ids = _web_source_task_ids(bundle)
+    executions_by_task_id = {execution.task_id: execution for execution in bundle.executions}
+    for row in bundle.raw_assertion_rejections:
+        task_id = str(row.get("source_task_id") or row.get("task_id") or "")
+        execution = executions_by_task_id.get(task_id)
+        if execution is not None and execution.accepted_claim_ids:
+            continue
+        raw_id = str(row.get("raw_assertion_id") or "")
+        if raw_id.startswith("RAWLLM-") or task_id in web_task_ids or _row_uses_external_web(row):
+            return True
+        if execution is not None and _execution_uses_external_web_or_llm(execution, web_task_ids=web_task_ids):
+            return True
+    for execution in bundle.executions:
+        if execution.accepted_claim_ids:
+            continue
+        if not (execution.rejected_claim_ids or execution.not_eligible_reasons or execution.provider_errors):
+            continue
+        if _execution_uses_external_web_or_llm(execution, web_task_ids=web_task_ids):
+            return True
+    return False
+
+
+def _web_source_task_ids(bundle: EvidenceOSExecutionBundleV4) -> set[str]:
+    rows: list[Mapping[str, Any]] = []
+    rows.extend(bundle.web_search_tasks)
+    rows.extend(bundle.web_search_results)
+    rows.extend(bundle.web_fetched_documents)
+    rows.extend(bundle.web_rejected_documents)
+    task_ids: set[str] = set()
+    for row in rows:
+        task_id = str(row.get("source_task_id") or row.get("task_id") or "")
+        if task_id:
+            task_ids.add(task_id)
+    return task_ids
+
+
+def _execution_uses_external_web_or_llm(execution: SourceTaskExecutionV4, *, web_task_ids: set[str]) -> bool:
+    if execution.task_id in web_task_ids:
+        return True
+    payload = dict(execution.source_task)
+    if _row_uses_external_web(
+        {
+            "source_class": execution.source_class,
+            "provider_name": execution.provider_name,
+            "preferred_source_classes": execution.preferred_source_classes or payload.get("preferred_source_classes"),
+            "fallback_source_classes": execution.fallback_source_classes or payload.get("fallback_source_classes"),
+            "requested_source_classes": execution.requested_source_classes or (),
+        }
+    ):
+        # A fallback class alone should not mark a DART/KIND claim as external.
+        return bool(execution.source_class or execution.provider_name or execution.task_id in web_task_ids)
+    return any(str(raw_id).startswith("RAWLLM-") for raw_id in execution.raw_assertion_ids)
+
+
+def _row_uses_external_web(row: Mapping[str, Any]) -> bool:
+    external_names = {
+        "naversearch",
+        "generalwebsearch",
+        "trustednews",
+        "news",
+        "industrymedia",
+        "companynewsroom",
+        "reportpdf",
+        "brokerreportpublicpdf",
+        "naverfreesearchprovider",
+    }
+    values: list[Any] = []
+    for key in (
+        "source_class",
+        "provider_name",
+        "preferred_source_classes",
+        "fallback_source_classes",
+        "requested_source_classes",
+    ):
+        value = row.get(key)
+        if isinstance(value, (list, tuple, set)):
+            values.extend(value)
+        else:
+            values.append(value)
+    normalized = {"".join(ch for ch in str(value or "").lower() if ch.isalnum()) for value in values}
+    return bool(normalized & external_names)
+
+
+def _rejection_summary(*, reasons: Sequence[str], rationale: str) -> str:
+    clean_reasons = [str(reason).strip() for reason in reasons if str(reason).strip()]
+    if clean_reasons:
+        return ";".join(clean_reasons[:4])
+    return _preview_text(rationale, limit=180) or "rejected_before_score"
+
+
+def _preview_text(value: str, *, limit: int) -> str:
+    text = " ".join(str(value or "").split())
+    return text if len(text) <= limit else f"{text[: max(0, limit - 3)]}..."
+
+
+def _enum_value(value: Any) -> Any:
+    return getattr(value, "value", value)
+
+
+def _requires_external_web_plan(config: ProductionShadowV4Config) -> bool:
+    return (
+        config.source_acquisition == SourceAcquisitionModeV4.LIVE_FULL_BOUNDED.value
+        and config.planner_provider not in {PlannerProviderModeV4.NONE.value, PlannerProviderModeV4.FAKE.value}
+    )
+
+
+def _allows_feedback_retry(config: ProductionShadowV4Config) -> bool:
+    """Allow planner repair after source/claim rejection in live acquisition modes.
+
+    External-web planning is stricter and only applies to live_full_bounded.
+    Rejected-claim feedback is different: even official-first runs can fetch the
+    wrong official document, such as a financing disclosure for a capacity gap.
+    In that case the planner should see the rejection and choose another bounded
+    official/IR/report route instead of letting the first failed task end the
+    full-thesis refresh.
+    """
+
+    live_modes = {
+        SourceAcquisitionModeV4.LIVE_OFFICIAL_FIRST.value,
+        SourceAcquisitionModeV4.LIVE_OFFICIAL_ONLY.value,
+        SourceAcquisitionModeV4.LIVE_FULL_BOUNDED.value,
+    }
+    return (
+        config.source_acquisition in live_modes
+        and config.planner_provider not in {PlannerProviderModeV4.NONE.value, PlannerProviderModeV4.FAKE.value}
+    )
+
+
+def _external_web_plan_gaps(run: PlannerRunV4) -> tuple[str, ...]:
+    if not run.output:
+        return ()
+    gaps: list[str] = []
+    if not tuple(str(item).strip() for item in run.output.query_intents if str(item).strip()):
+        gaps.append("query_intents_empty")
+    if not _planner_output_requests_external_web(run.output):
+        gaps.append("no_external_web_source_task")
+    return tuple(dict.fromkeys(gaps))
+
+
+def _planner_output_requests_external_web(output: Any) -> bool:
+    if not tuple(str(item).strip() for item in getattr(output, "query_intents", ()) if str(item).strip()):
+        return False
+    external = {
+        "naversearch",
+        "generalwebsearch",
+        "trustednews",
+        "news",
+        "industrymedia",
+        "companynewsroom",
+        "reportpdf",
+        "brokerreportpublicpdf",
+    }
+    for draft in getattr(output, "source_task_drafts", ()) or ():
+        primitive = str(draft.get("primitive_gap") or draft.get("primitive_id") or "")
+        if _planner_official_solvable_gap(primitive):
+            continue
+        source_names = {
+            _planner_source_name(item)
+            for item in (
+                *(draft.get("preferred_source_classes") or ()),
+                *(draft.get("fallback_source_classes") or ()),
+            )
+        }
+        if source_names & external:
+            return True
+    return False
+
+
+def _planner_source_name(value: object) -> str:
+    return "".join(ch for ch in str(value or "").strip().lower() if ch.isalnum())
+
+
+def _planner_official_solvable_gap(primitive: str) -> bool:
+    lower = primitive.lower()
+    if lower in _OFFICIAL_SOLVABLE_PRIMITIVE_IDS:
+        return True
+    return any(token in lower for token in ("backlog", "cash", "fcf", "revision", "rpo"))
 
 
 def _reason_codes_from_report(row: Mapping[str, Any], comment: str) -> list[str]:

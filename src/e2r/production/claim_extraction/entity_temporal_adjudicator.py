@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from datetime import date
+import re
 from typing import Sequence
 
 from .contract_blind_extractor import RawAssertionRecord
@@ -30,7 +31,9 @@ def adjudicate_entity_temporal_scope(
     source_published_at: date | None = None,
 ) -> AdjudicationResult:
     reasons: list[str] = []
-    direct = assertion.subject in set(target_aliases)
+    normalized_aliases = {_normalize_entity_alias(alias) for alias in target_aliases}
+    normalized_aliases.discard("")
+    direct = _normalize_entity_alias(assertion.subject) in normalized_aliases
     if not direct:
         reasons.append("wrong_or_unknown_subject")
     event_date = _parse_date(assertion.event_date) or source_published_at
@@ -62,6 +65,12 @@ def _parse_date(value: str | None) -> date | None:
         return date.fromisoformat(value[:10])
     except ValueError:
         return None
+
+
+def _normalize_entity_alias(value: str | None) -> str:
+    text = str(value or "").casefold().strip()
+    text = re.sub(r"\b(co|corp|corporation|inc|ltd|limited|plc|sa|ag)\b\.?", "", text)
+    return re.sub(r"[\s\-_/.,:;()[\]&'’]+", "", text)
 
 
 __all__ = ["AdjudicationResult", "adjudicate_entity_temporal_scope"]

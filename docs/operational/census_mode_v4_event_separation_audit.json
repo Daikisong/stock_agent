@@ -1,0 +1,14 @@
+{
+  "critical_counts": {
+    "assessment_event_score_evidence_allowed_count": 0,
+    "assessment_only_nonzero_score_count": 0,
+    "atomic_candidate_event_is_assessment_count": 0,
+    "atomic_candidate_event_not_in_symbol_candidate_events_count": 0,
+    "candidate_event_ids_contain_assessment_event_count": 0,
+    "missing_census_assessment_event_id_count": 0,
+    "no_current_catalyst_with_candidate_event_count": 0,
+    "score_eligible_candidate_without_accepted_claim_count": 0
+  },
+  "schema_version": "e2r_census_v4_event_separation_audit_v1",
+  "verdict": "PASS"
+}

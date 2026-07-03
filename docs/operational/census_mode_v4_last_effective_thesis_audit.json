@@ -1,0 +1,22 @@
+{
+  "critical_count": 0,
+  "critical_counts": {
+    "active_thesis_without_event_or_claim_count": 0,
+    "dummy_no_known_thesis_count": 0,
+    "historical_only_without_historical_event_count": 0,
+    "last_effective_thesis_count_mismatch": 0,
+    "no_known_thesis_without_any_source_attempt_count": 0,
+    "provider_pending_without_provider_failure_count": 0,
+    "recent_lookback_used_as_stage_cutoff_count": 0
+  },
+  "last_effective_thesis_count": 3391,
+  "schema_version": "e2r_census_v4_last_effective_thesis_audit_v1",
+  "source_timeline_count": 3391,
+  "status_distribution": {
+    "ACTIVE_THESIS": 74,
+    "NEEDS_REFRESH": 3,
+    "NO_KNOWN_THESIS": 3306,
+    "SOURCE_PENDING": 8
+  },
+  "verdict": "PASS"
+}

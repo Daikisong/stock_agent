@@ -1,0 +1,45 @@
+{
+  "accepted_claim_seed_count": 0,
+  "controlled_smoke_full_thesis_final_scope_count": 0,
+  "critical_count": 0,
+  "critical_counts": {
+    "accepted_claim_without_source_task_count": 0,
+    "full_thesis_promoted_missing_full_e2r_score_count": 0,
+    "full_thesis_promoted_missing_stagecourt_count": 0,
+    "full_thesis_scope_without_promoted_status_count": 0,
+    "score_evidence_allowed_before_execution_count": 0,
+    "seed_trace_count_mismatch_count": 0,
+    "source_task_before_real_provider_success_count": 0,
+    "stage_promotion_allowed_before_execution_count": 0,
+    "stagecourt_without_accepted_claim_count": 0
+  },
+  "final_score_scale_counts": {
+    "EVENT_WEIGHTED_PARTIAL": 67,
+    "NO_SCORE": 18
+  },
+  "final_stage_scope_counts": {
+    "CENSUS_EVENT_BOARD": 85
+  },
+  "full_thesis_promoted_seed_count": 0,
+  "next_actions_by_status": {
+    "ACCEPTED_CLAIM_NOT_CREATED": "fetch_anchor_and_extract_score_eligible_claims",
+    "FULL_THESIS_PROMOTED": "eligible_for_operator_full_thesis_stage_use",
+    "PLANNER_NOT_RUN": "run_real_full_thesis_planner_for_seed",
+    "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": "fix_or_retry_real_planner_provider",
+    "SOURCE_TASK_NOT_EXECUTED": "execute_bounded_official_first_source_tasks",
+    "STAGECOURT_READY_NOT_PROMOTED": "resolve_green_gate_or_material_gap_blockers",
+    "STAGECOURT_TRACE_NOT_CREATED": "map_claims_to_primitives_scores_and_stagecourt"
+  },
+  "operator_rule": "A seed row is only an investigation input until the trace reaches FULL_THESIS_PROMOTED. Earlier statuses must remain pending/source-provider/material-gap states and must not be used as an operator FULL_THESIS Stage.",
+  "planner_run_seed_count": 0,
+  "real_provider_success_seed_count": 0,
+  "schema_version": "e2r_census_v4_full_thesis_seed_materialization_audit_v1",
+  "seed_event_count": 85,
+  "source_task_execution_seed_count": 0,
+  "stagecourt_trace_seed_count": 0,
+  "status_counts": {
+    "PLANNER_NOT_RUN": 85
+  },
+  "trace_row_count": 85,
+  "verdict": "PASS"
+}

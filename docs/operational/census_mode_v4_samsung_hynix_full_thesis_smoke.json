@@ -1,0 +1,387 @@
+{
+  "daily_event_and_full_thesis_separated": true,
+  "full_thesis_status": "PENDING_FULL_THESIS_REFRESH",
+  "hardcoded_query_count": 0,
+  "per_symbol": [
+    {
+      "additional_daily_atomic_decision_ids": [
+        "ATOMIC-0485086ca2055199dd6e"
+      ],
+      "blocking_reason": "full_thesis_source_tasks_planned_but_not_executed",
+      "company_name": "SK하이닉스",
+      "daily_event_claim_ids": [
+        "CLM-14057362610ae62c7e02"
+      ],
+      "daily_event_score_contribution_ids": [
+        "SCON-8da68431606c7699ece3"
+      ],
+      "daily_event_stagecourt_trace_ids": [
+        "SCT-e322086eb30eefe7c6dc"
+      ],
+      "full_thesis_claim_ids": [],
+      "full_thesis_score_contribution_ids": [],
+      "full_thesis_source_task_ids": [
+        "FTSMOKE-fd76cd442e38eae313be",
+        "FTSMOKE-548f20b4ca4c69404991",
+        "FTSMOKE-806a60f7275790fffd6d",
+        "FTSMOKE-64940c0b9a02e2b53dd3",
+        "FTSMOKE-f94d4dfe43aea61a403d",
+        "FTSMOKE-536e8bab52086cddf93d",
+        "FTSMOKE-7dec07a3cda7d1a94362"
+      ],
+      "full_thesis_stagecourt_trace_ids": [],
+      "missing_full_thesis_primitives": [
+        "full_thesis_refresh_task_not_run"
+      ],
+      "smoke_pass_allowed": false,
+      "symbol": "000660"
+    },
+    {
+      "additional_daily_atomic_decision_ids": [],
+      "blocking_reason": "full_thesis_source_tasks_planned_but_not_executed",
+      "company_name": "삼성전자",
+      "daily_event_claim_ids": [
+        "CLM-9aaf6a921e683a2ee9b4"
+      ],
+      "daily_event_score_contribution_ids": [
+        "SCON-02bb56e64083a9cd1389"
+      ],
+      "daily_event_stagecourt_trace_ids": [
+        "SCT-00c47e02e1f158d6cd22"
+      ],
+      "full_thesis_claim_ids": [],
+      "full_thesis_score_contribution_ids": [],
+      "full_thesis_source_task_ids": [
+        "FTSMOKE-e3779b2e978a1f923ae2",
+        "FTSMOKE-954d18b35a7eff134922",
+        "FTSMOKE-2e8335b971c4a6dd8df4",
+        "FTSMOKE-0963618d828473258046",
+        "FTSMOKE-8516d345146391fef91b",
+        "FTSMOKE-b914a94fb161d39edc5a",
+        "FTSMOKE-52d7621452a6b40cd76f"
+      ],
+      "full_thesis_stagecourt_trace_ids": [],
+      "missing_full_thesis_primitives": [
+        "full_thesis_refresh_task_not_run"
+      ],
+      "smoke_pass_allowed": false,
+      "symbol": "005930"
+    }
+  ],
+  "required_full_thesis_primitives": [
+    "named_customer_or_customer_quality",
+    "qualification_status",
+    "capacity_allocation_or_pre_sold",
+    "hbm_shipment_or_revenue_mix",
+    "cash_or_revision_conversion",
+    "repeat_evidence_family",
+    "source_quorum"
+  ],
+  "required_symbols": [
+    "005930",
+    "000660"
+  ],
+  "rows": [
+    {
+      "accepted_claim_count": 1,
+      "accepted_claim_ids": [
+        "CLM-14057362610ae62c7e02"
+      ],
+      "accepted_official_claim_count": 1,
+      "additional_stage_decision_ids": [
+        "ATOMIC-0485086ca2055199dd6e"
+      ],
+      "as_of_date": "2026-07-01",
+      "assessment_depth": "VERIFIED_STAGE",
+      "assessment_depth_display": "EVENT_BOARD_VERIFIED_STAGE",
+      "atomic_stage_decision_id": "ATOMIC-cc4d4c6610353bea363b",
+      "base_stage": "Stage1",
+      "base_stage_display": "EVENT_BOARD_STAGE1",
+      "blocked_claim_ids": [],
+      "blocked_primitive_state_ids": [],
+      "blocked_score_contribution_ids": [],
+      "candidate_event_count": 8,
+      "candidate_event_ids": [
+        "CE-LIVE-DART-000660-20260624000420",
+        "CE-LIVE-DART-000660-20260624000511",
+        "CLM-ad1b2dc6c75182e702b8",
+        "CLM-14057362610ae62c7e02",
+        "REP-5f66ed0ab91cfb7547",
+        "MKT-63f536bf233d519fba",
+        "RMH-CLM-ad1b2dc6c75182e702b8",
+        "RMH-CLM-14057362610ae62c7e02"
+      ],
+      "candidate_event_scope": "CANDIDATE_EVENTS_PRESENT",
+      "canonical_stage": "1",
+      "canonical_stage_display": "EVENT_BOARD_1",
+      "census_assessment_event_id": "CAE-60ed8a2fd7bc29c437dc",
+      "census_assessment_event_score_evidence_allowed": false,
+      "census_assessment_event_type": "CensusAssessmentEvent",
+      "census_status": "DEEP_VERIFIED",
+      "census_status_display": "EVENT_BOARD_DEEP_VERIFIED",
+      "claim_backed_score_ratio": 1.0,
+      "claim_to_stage_trace_id": "CSTTRACE-4ac4933f04170718f5c7",
+      "company_name": "SK하이닉스",
+      "daily_event_evidence_score": 4.0,
+      "daily_event_stage_signal": "OFFICIAL_EVENT_WATCH",
+      "event_evidence_score": 4.0,
+      "failed_stage_gates": [
+        "missing_green_bridge"
+      ],
+      "full_e2r_verified_score": null,
+      "full_thesis_missing_primitives": [
+        "full_thesis_refresh_task_not_run"
+      ],
+      "full_thesis_not_run": true,
+      "full_thesis_primary_archetype": null,
+      "full_thesis_score_scale": "NO_SCORE",
+      "full_thesis_score_valid_status": "NOT_SCORED",
+      "full_thesis_stage": "FULL_THESIS_NOT_RUN",
+      "full_thesis_verified_score": null,
+      "investigation_only_candidate_event_count": 6,
+      "investigation_only_candidate_event_ids": [
+        "CE-LIVE-DART-000660-20260624000420",
+        "CE-LIVE-DART-000660-20260624000511",
+        "REP-5f66ed0ab91cfb7547",
+        "MKT-63f536bf233d519fba",
+        "RMH-CLM-ad1b2dc6c75182e702b8",
+        "RMH-CLM-14057362610ae62c7e02"
+      ],
+      "investigation_status": "COMPLETE",
+      "investigation_status_display": "EVENT_BOARD_COMPLETE",
+      "is_controlled_smoke_full_thesis_stage": false,
+      "is_full_e2r_score": false,
+      "is_full_thesis_stage": false,
+      "large_sector_id": "메모리/HBM",
+      "market": "KOSPI",
+      "market_anomaly_count": 0,
+      "market_anomaly_event_count": 1,
+      "market_anomaly_event_ids": [
+        "MKT-63f536bf233d519fba"
+      ],
+      "material_gap_ids": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion",
+        "multi_source_confirmation"
+      ],
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_actions": [
+        "WATCH"
+      ],
+      "official_candidate_event_count": 2,
+      "official_candidate_event_ids": [
+        "CE-LIVE-DART-000660-20260624000420",
+        "CE-LIVE-DART-000660-20260624000511"
+      ],
+      "official_evidence_document_count": 1,
+      "official_source_task_count": 1,
+      "operator_scope_note": "census_event_board_status_not_full_thesis",
+      "operator_score_use": "NOT_FULL_E2R_SCORE",
+      "operator_stage_use": "NOT_FULL_THESIS_STAGE",
+      "orphan_score_count": 0,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "primitive_state_ids": [
+        "PRIM-1ba2d8a15795d81baf28"
+      ],
+      "provider_gaps": [],
+      "raw_contribution_score": 1.0,
+      "recent_candidate_event_count": 2,
+      "recent_event_count": 2,
+      "report_event_count": 1,
+      "report_event_ids": [
+        "REP-5f66ed0ab91cfb7547"
+      ],
+      "research_memory_hint_event_count": 2,
+      "research_memory_hint_event_ids": [
+        "RMH-CLM-ad1b2dc6c75182e702b8",
+        "RMH-CLM-14057362610ae62c7e02"
+      ],
+      "risk_stage_signal": "NONE",
+      "score_contribution_count": 1,
+      "score_contribution_ids": [
+        "SCON-8da68431606c7699ece3"
+      ],
+      "score_eligible_candidate_event_count": 2,
+      "score_eligible_candidate_event_ids": [
+        "CLM-ad1b2dc6c75182e702b8",
+        "CLM-14057362610ae62c7e02"
+      ],
+      "score_interval_lower": 4.0,
+      "score_interval_upper": 4.0,
+      "score_scale": "EVENT_WEIGHTED_PARTIAL",
+      "score_scale_display": "EVENT_BOARD_EVENT_WEIGHTED_PARTIAL",
+      "score_scope": "EVENT_WEIGHTED_PARTIAL",
+      "score_scope_display": "EVENT_BOARD_EVENT_WEIGHTED_PARTIAL",
+      "score_semantics": "single_event_or_limited_task_score",
+      "score_source": "STAGECOURT_SCORE_INTERVAL",
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "score_valid_status_display": "EVENT_BOARD_FINAL_WITH_NONMATERIAL_GAPS",
+      "secondary_archetypes": [],
+      "semantic_guard_class": "not_contract_quality",
+      "semantic_guard_reasons": [],
+      "semantic_guard_status": "PASS",
+      "source_gaps": [],
+      "stage_confidence": "HIGH",
+      "stage_confidence_display": "EVENT_BOARD_HIGH",
+      "stage_decision_status": "FINAL",
+      "stage_decision_status_display": "EVENT_BOARD_FINAL",
+      "stage_scope": "CENSUS_EVENT_BOARD",
+      "stage_scope_display": "EVENT_BOARD_CENSUS_EVENT_BOARD",
+      "stage_signal": "OFFICIAL_EVENT_WATCH",
+      "stage_signal_display": "EVENT_BOARD_OFFICIAL_EVENT_WATCH",
+      "stagecourt_trace_id": "SCT-e322086eb30eefe7c6dc",
+      "symbol": "000660",
+      "transition_overlay": "NONE",
+      "verified_score": null
+    },
+    {
+      "accepted_claim_count": 1,
+      "accepted_claim_ids": [
+        "CLM-9aaf6a921e683a2ee9b4"
+      ],
+      "accepted_official_claim_count": 1,
+      "additional_stage_decision_ids": [],
+      "as_of_date": "2026-07-01",
+      "assessment_depth": "VERIFIED_STAGE",
+      "assessment_depth_display": "EVENT_BOARD_VERIFIED_STAGE",
+      "atomic_stage_decision_id": "ATOMIC-5d0fd10e6d77c31a30b8",
+      "base_stage": "Stage1",
+      "base_stage_display": "EVENT_BOARD_STAGE1",
+      "blocked_claim_ids": [],
+      "blocked_primitive_state_ids": [],
+      "blocked_score_contribution_ids": [],
+      "candidate_event_count": 4,
+      "candidate_event_ids": [
+        "CE-LIVE-DART-005930-20260624801004",
+        "CLM-9aaf6a921e683a2ee9b4",
+        "REP-5851054b5558c66337",
+        "RMH-CLM-9aaf6a921e683a2ee9b4"
+      ],
+      "candidate_event_scope": "CANDIDATE_EVENTS_PRESENT",
+      "canonical_stage": "1",
+      "canonical_stage_display": "EVENT_BOARD_1",
+      "census_assessment_event_id": "CAE-d3ef5441479cf6f13f68",
+      "census_assessment_event_score_evidence_allowed": false,
+      "census_assessment_event_type": "CensusAssessmentEvent",
+      "census_status": "DEEP_VERIFIED",
+      "census_status_display": "EVENT_BOARD_DEEP_VERIFIED",
+      "claim_backed_score_ratio": 1.0,
+      "claim_to_stage_trace_id": "CSTTRACE-137909af6dfb2dd19076",
+      "company_name": "삼성전자",
+      "daily_event_evidence_score": 4.0,
+      "daily_event_stage_signal": "OFFICIAL_EVENT_WATCH",
+      "event_evidence_score": 4.0,
+      "failed_stage_gates": [
+        "missing_green_bridge"
+      ],
+      "full_e2r_verified_score": null,
+      "full_thesis_missing_primitives": [
+        "full_thesis_refresh_task_not_run"
+      ],
+      "full_thesis_not_run": true,
+      "full_thesis_primary_archetype": null,
+      "full_thesis_score_scale": "NO_SCORE",
+      "full_thesis_score_valid_status": "NOT_SCORED",
+      "full_thesis_stage": "FULL_THESIS_NOT_RUN",
+      "full_thesis_verified_score": null,
+      "investigation_only_candidate_event_count": 3,
+      "investigation_only_candidate_event_ids": [
+        "CE-LIVE-DART-005930-20260624801004",
+        "REP-5851054b5558c66337",
+        "RMH-CLM-9aaf6a921e683a2ee9b4"
+      ],
+      "investigation_status": "COMPLETE",
+      "investigation_status_display": "EVENT_BOARD_COMPLETE",
+      "is_controlled_smoke_full_thesis_stage": false,
+      "is_full_e2r_score": false,
+      "is_full_thesis_stage": false,
+      "large_sector_id": "메모리/HBM",
+      "market": "KOSPI",
+      "market_anomaly_count": 0,
+      "market_anomaly_event_count": 0,
+      "market_anomaly_event_ids": [],
+      "material_gap_ids": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion",
+        "multi_source_confirmation"
+      ],
+      "missing_primitives": [
+        "repeat_evidence_family",
+        "cash_or_revision_conversion"
+      ],
+      "next_actions": [
+        "WATCH"
+      ],
+      "official_candidate_event_count": 1,
+      "official_candidate_event_ids": [
+        "CE-LIVE-DART-005930-20260624801004"
+      ],
+      "official_evidence_document_count": 1,
+      "official_source_task_count": 1,
+      "operator_scope_note": "census_event_board_status_not_full_thesis",
+      "operator_score_use": "NOT_FULL_E2R_SCORE",
+      "operator_stage_use": "NOT_FULL_THESIS_STAGE",
+      "orphan_score_count": 0,
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "primitive_state_ids": [
+        "PRIM-d4dfb87fc292f7dd8153"
+      ],
+      "provider_gaps": [],
+      "raw_contribution_score": 1.0,
+      "recent_candidate_event_count": 1,
+      "recent_event_count": 1,
+      "report_event_count": 1,
+      "report_event_ids": [
+        "REP-5851054b5558c66337"
+      ],
+      "research_memory_hint_event_count": 1,
+      "research_memory_hint_event_ids": [
+        "RMH-CLM-9aaf6a921e683a2ee9b4"
+      ],
+      "risk_stage_signal": "NONE",
+      "score_contribution_count": 1,
+      "score_contribution_ids": [
+        "SCON-02bb56e64083a9cd1389"
+      ],
+      "score_eligible_candidate_event_count": 1,
+      "score_eligible_candidate_event_ids": [
+        "CLM-9aaf6a921e683a2ee9b4"
+      ],
+      "score_interval_lower": 4.0,
+      "score_interval_upper": 4.0,
+      "score_scale": "EVENT_WEIGHTED_PARTIAL",
+      "score_scale_display": "EVENT_BOARD_EVENT_WEIGHTED_PARTIAL",
+      "score_scope": "EVENT_WEIGHTED_PARTIAL",
+      "score_scope_display": "EVENT_BOARD_EVENT_WEIGHTED_PARTIAL",
+      "score_semantics": "single_event_or_limited_task_score",
+      "score_source": "STAGECOURT_SCORE_INTERVAL",
+      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
+      "score_valid_status_display": "EVENT_BOARD_FINAL_WITH_NONMATERIAL_GAPS",
+      "secondary_archetypes": [],
+      "semantic_guard_class": "not_contract_quality",
+      "semantic_guard_reasons": [],
+      "semantic_guard_status": "PASS",
+      "source_gaps": [],
+      "stage_confidence": "HIGH",
+      "stage_confidence_display": "EVENT_BOARD_HIGH",
+      "stage_decision_status": "FINAL",
+      "stage_decision_status_display": "EVENT_BOARD_FINAL",
+      "stage_scope": "CENSUS_EVENT_BOARD",
+      "stage_scope_display": "EVENT_BOARD_CENSUS_EVENT_BOARD",
+      "stage_signal": "OFFICIAL_EVENT_WATCH",
+      "stage_signal_display": "EVENT_BOARD_OFFICIAL_EVENT_WATCH",
+      "stagecourt_trace_id": "SCT-00c47e02e1f158d6cd22",
+      "symbol": "005930",
+      "transition_overlay": "NONE",
+      "verified_score": null
+    }
+  ],
+  "schema_version": "e2r_census_v4_samsung_hynix_full_thesis_smoke_v1",
+  "score_allowed_before_execution": false,
+  "smoke_task_count": 14,
+  "target_full_thesis_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "verdict": "PENDING_FULL_THESIS_REFRESH"
+}

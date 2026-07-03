@@ -36,9 +36,20 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--universe-limit", type=int, default=30)
     parser.add_argument("--planner-success-limit", type=int, default=30)
     parser.add_argument("--planner-batch-size", type=int, default=5)
+    parser.add_argument("--max-source-tasks-per-plan", type=int, default=5)
     parser.add_argument("--max-fetches-per-task", type=int, default=3)
+    parser.add_argument("--accepted-claim-target", type=int, default=0)
+    parser.add_argument("--max-distinct-candidate-attempts", type=int, default=30)
     parser.add_argument("--top-results", type=int, default=20)
     parser.add_argument("--retry-max", type=int, default=2)
+    parser.add_argument(
+        "--candidate-event-seed-path",
+        help=(
+            "Optional JSONL seed event file, for example a Census v4 "
+            "full_thesis_blocker_follow_up_seed_events.jsonl artifact."
+        ),
+    )
+    parser.add_argument("--claim-extractor-provider", default="auto", choices=("auto", "codex_cli", "rule_fallback"))
     parser.add_argument("--output-dir", default="docs/operational")
     parser.add_argument("--v1-archetype-matrix", default=str(DEFAULT_V1_ARCHETYPE_MATRIX))
     parser.add_argument("--repo-root", default=".")
@@ -55,9 +66,14 @@ def main(argv: list[str] | None = None) -> int:
         universe_limit=args.universe_limit,
         planner_success_limit=args.planner_success_limit,
         planner_batch_size=args.planner_batch_size,
+        max_source_tasks_per_plan=args.max_source_tasks_per_plan,
         max_fetches_per_task=args.max_fetches_per_task,
+        accepted_claim_target=args.accepted_claim_target,
+        max_distinct_candidate_attempts=args.max_distinct_candidate_attempts,
         top_results=args.top_results,
         retry_max=args.retry_max,
+        candidate_event_seed_path=args.candidate_event_seed_path,
+        claim_extractor_provider=args.claim_extractor_provider,
         fake_provider_allowed=args.allow_fake_provider,
     )
     result = run_research_brain_v4_production_shadow(

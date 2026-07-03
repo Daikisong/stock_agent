@@ -1,0 +1,4 @@
+CrowdStrike Holdings, Inc. (NASDAQ: CRWD) announced the Falcon Next-Gen SIEM ISV ecosystem on May 7, 2024.
+CrowdStrike said Falcon Next-Gen SIEM supports the largest ecosystem of ISV data sources of any pure-play cybersecurity vendor.
+The announcement said security teams can ingest, retain, search and analyze data from over 500 sources.
+The announcement described AI, workflow automation, threat intelligence, third-party data integrations, and the AI-native SOC.

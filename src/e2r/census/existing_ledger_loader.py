@@ -134,17 +134,18 @@ def load_existing_ledger(
             for claim in row_claims
         )
         if all_claim_ids:
+            primitive_state = {
+                "schema_version": "e2r_census_v2_primitive_state_ref_v1",
+                "symbol": symbol,
+                "primitive_id": "existing_cutover_claim_backed_signal",
+                "status": "PRESENT_CURRENT",
+                "support_claim_ids": all_claim_ids,
+                "counter_claim_ids": [],
+                "confidence": 1.0,
+                "as_of_date": as_of_date,
+            }
             primitive_states.append(
-                {
-                    "schema_version": "e2r_census_v2_primitive_state_ref_v1",
-                    "symbol": symbol,
-                    "primitive_id": "existing_cutover_claim_backed_signal",
-                    "status": "PRESENT_CURRENT",
-                    "support_claim_ids": all_claim_ids,
-                    "counter_claim_ids": [],
-                    "confidence": 1.0,
-                    "as_of_date": as_of_date,
-                }
+                with_primitive_state_id(primitive_state)
             )
         traces.append(_stagecourt_trace(symbol=symbol, rows=symbol_rows, as_of_date=as_of_date))
 
@@ -166,6 +167,28 @@ def load_existing_ledger(
         stagecourt_traces=tuple(traces),
         skipped_rows=tuple(skipped),
     )
+
+
+def primitive_state_id_for_row(row: Mapping[str, Any]) -> str:
+    existing = str(row.get("primitive_state_id") or "")
+    if existing:
+        return existing
+    key = {
+        "symbol": str(row.get("symbol") or "").zfill(6),
+        "primitive_id": row.get("primitive_id"),
+        "status": row.get("status"),
+        "support_claim_ids": tuple(str(item) for item in row.get("support_claim_ids") or ()),
+        "counter_claim_ids": tuple(str(item) for item in row.get("counter_claim_ids") or ()),
+        "as_of_date": row.get("as_of_date"),
+        "source_cutover_date": row.get("source_cutover_date"),
+    }
+    return "PRIM-" + stable_hash(key)[:20]
+
+
+def with_primitive_state_id(row: Mapping[str, Any]) -> dict[str, Any]:
+    out = dict(row)
+    out["primitive_state_id"] = primitive_state_id_for_row(out)
+    return out
 
 
 def _best_current_stage(rows: Sequence[Mapping[str, Any]]) -> str:

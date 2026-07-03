@@ -37,14 +37,94 @@ def map_claim_to_primitive(
         "revision_claim": ("medium_term_revision_visibility",),
         "audit_or_accounting_claim": ("accounting_trust_break",),
         "profitability_or_cash_claim": ("fcf_quality_score", "margin_bridge_visible"),
+        "material_pricing_power_claim": ("pricing_power_confirmed",),
+        "material_spread_expansion_claim": ("spread_expansion",),
+        "material_profitability_bridge_claim": ("fcf_quality_score", "opm_expansion_pctp", "margin_bridge_visible"),
+        "utilization_or_volume_claim": ("utilization_rate", "capa_utilization_pct"),
+        "inventory_cycle_claim": ("inventory_cycle",),
+        "bio_trial_quality_claim": ("trial_quality_visible",),
+        "bio_binary_event_risk_claim": ("binary_event_unresolved",),
+        "bio_approval_not_confirmed_claim": ("approval_not_confirmed",),
+        "bio_safety_signal_claim": ("safety_signal",),
+        "cash_runway_risk_claim": ("cash_runway_risk",),
+        "software_arr_growth_claim": ("arr_growth_visible",),
+        "software_net_retention_claim": ("nrr",),
+        "software_renewal_or_churn_claim": ("retention_or_renewal",),
+        "software_rpo_or_deferred_revenue_claim": ("rpo_to_sales",),
+        "software_recurring_margin_claim": ("recurring_margin_leverage",),
+        "semiconductor_test_profile_claim": ("socket_or_test_demand_visible",),
+        "customer_diversification_claim": ("named_customer_quality",),
+        "customer_quality_or_qualification_claim": ("named_customer_quality", "qualification_confirmed"),
+        "customer_allocation_or_qualification_claim": (
+            "customer_preorder_or_allocation",
+            "qualification_status",
+            "revenue_visibility_contract",
+        ),
+        "capacity_allocation_claim": (
+            "hbm_capacity_pre_sold",
+            "hbm_capacity_constraint",
+            "capacity_precommitted",
+        ),
     }
     if assertion.predicate == "audit_or_accounting_claim" and adjudication.polarity != "NEGATIVE":
         return PrimitiveMappingDecision(None, "REJECTED", "NEUTRAL", "normal_or_positive_audit_is_not_trust_break")
+    if assertion.predicate == "capacity_investment_claim":
+        guard = _capacity_investment_guard(assertion, adjudication)
+        if guard is not None:
+            return guard
     for primitive in mapping.get(assertion.predicate, ()):
         if primitive in allowed_primitives:
             direction = "COUNTER" if adjudication.polarity == "NEGATIVE" else "SUPPORT"
             return PrimitiveMappingDecision(primitive, "ACCEPTED", direction, f"predicate:{assertion.predicate}")
-    return PrimitiveMappingDecision(None, "REJECTED", "no_allowed_primitive_for_predicate")
+    return PrimitiveMappingDecision(None, "REJECTED", "NEUTRAL", "no_allowed_primitive_for_predicate")
+
+
+def _capacity_investment_guard(
+    assertion: RawAssertionRecord,
+    adjudication: AdjudicationResult,
+) -> PrimitiveMappingDecision | None:
+    text = " ".join(
+        str(value)
+        for value in (
+            assertion.exact_quote,
+            assertion.object_text,
+            assertion.predicate,
+        )
+        if value
+    ).lower()
+    if _has_any(text, ("기재정정", "정정신고", "정정사유", "정정전", "정정후", "correction", "amendment")):
+        return PrimitiveMappingDecision(
+            None,
+            "REJECTED",
+            "NEUTRAL",
+            "facility_investment_correction_requires_followup_not_positive_capacity",
+        )
+    if _has_any(text, ("종료일 연장", "연장", "지연", "연기", "delay", "delayed", "postpone")):
+        return PrimitiveMappingDecision(
+            None,
+            "REJECTED",
+            "NEUTRAL",
+            "facility_investment_schedule_delay_not_positive_capacity",
+        )
+    if _has_any(text, ("취소", "철회", "중단", "해지", "cancel", "withdraw", "terminated")):
+        return PrimitiveMappingDecision(
+            None,
+            "REJECTED",
+            "NEUTRAL",
+            "facility_investment_cancelled_not_positive_capacity",
+        )
+    if adjudication.polarity == "NEGATIVE":
+        return PrimitiveMappingDecision(
+            None,
+            "REJECTED",
+            "NEUTRAL",
+            "negative_facility_investment_not_positive_capacity",
+        )
+    return None
+
+
+def _has_any(text: str, needles: tuple[str, ...]) -> bool:
+    return any(needle.lower() in text for needle in needles)
 
 
 __all__ = ["PrimitiveMappingDecision", "map_claim_to_primitive"]

@@ -1,0 +1,123 @@
+{
+  "case_count": 11,
+  "cases": [
+    {
+      "case_id": "wrong_subject_audit_opinion_not_target_risk",
+      "expected": "audit/accounting claim subject is 월덱스, not 삼성전자",
+      "observed_subjects": [
+        "월덱스"
+      ],
+      "status": "PASS"
+    },
+    {
+      "case_id": "old_risk_resolved_not_current_hard_break",
+      "expected": "resolved target accounting/trust risk is lifecycle context, not current score evidence or 4C hard break",
+      "observed": {
+        "eligibility_reasons": [
+          "temporal_not_allowed:RESOLVED"
+        ],
+        "primitive_status": "RESOLVED",
+        "score_eligible": false,
+        "stage_reasons": [
+          "green_gate_missing:accounting_trust_break"
+        ],
+        "support_claim_ids": [],
+        "transition_overlay": "NONE"
+      },
+      "status": "PASS"
+    },
+    {
+      "case_id": "non_revenue_contract_not_contract_quality",
+      "expected": "share buyback trust and pledge contracts cannot unlock contract_quality",
+      "observed_classes": [
+        "share_buyback_trust_contract",
+        "pledge_or_collateral_contract"
+      ],
+      "status": "PASS"
+    },
+    {
+      "case_id": "trace_mismatch_guard",
+      "critical_count_key": "stage_trace_stage_mismatch_count",
+      "observed_count": 0,
+      "status": "PASS"
+    },
+    {
+      "case_id": "trace_score_interval_guard",
+      "critical_count_key": "stage_trace_score_interval_mismatch_count",
+      "observed_count": 0,
+      "status": "PASS"
+    },
+    {
+      "case_id": "trace_claim_set_guard",
+      "critical_count_key": "stage_trace_claim_set_mismatch_count",
+      "observed_count": 0,
+      "status": "PASS"
+    },
+    {
+      "case_id": "source_proxy_score_guard",
+      "critical_count_key": "source_proxy_to_score_count",
+      "observed_count": 0,
+      "status": "PASS"
+    },
+    {
+      "case_id": "evidence_url_pending_score_guard",
+      "critical_count_key": "evidence_url_pending_to_score_count",
+      "observed_count": 0,
+      "status": "PASS"
+    },
+    {
+      "case_id": "snippet_score_guard",
+      "critical_count_key": "news_snippet_to_score_count",
+      "observed_count": 0,
+      "status": "PASS"
+    },
+    {
+      "case_id": "provider_failure_final_score_guard",
+      "critical_count_key": "provider_failed_final_score_count",
+      "observed_count": 0,
+      "status": "PASS"
+    },
+    {
+      "case_id": "samsung_hynix_daily_event_not_full_thesis_or_4c",
+      "expected": "Samsung/Hynix separate daily event score from full thesis score and never become 4C from daily-event evidence",
+      "observed": {
+        "000660": {
+          "base_stage": "Stage1",
+          "canonical_stage": "1",
+          "daily_event_evidence_score": 4.0,
+          "event_evidence_score": 4.0,
+          "full_e2r_verified_score": null,
+          "full_thesis_stage": "FULL_THESIS_NOT_RUN",
+          "score_scale": "EVENT_WEIGHTED_PARTIAL",
+          "stage_scope": "CENSUS_EVENT_BOARD",
+          "verified_score": null
+        },
+        "005930": {
+          "base_stage": "Stage1",
+          "canonical_stage": "1",
+          "daily_event_evidence_score": 4.0,
+          "event_evidence_score": 4.0,
+          "full_e2r_verified_score": null,
+          "full_thesis_stage": "FULL_THESIS_NOT_RUN",
+          "score_scale": "EVENT_WEIGHTED_PARTIAL",
+          "stage_scope": "CENSUS_EVENT_BOARD",
+          "verified_score": null
+        }
+      },
+      "status": "PASS"
+    }
+  ],
+  "completion_eligible": true,
+  "failed_case_count": 0,
+  "known_bad_required_before_goal_completion": true,
+  "note": "Known-bad regression runs deterministic adversarial fixtures and leaf critical-count guards.",
+  "passed_case_count": 11,
+  "required_before_labels": [
+    "KNOWN_BAD_REGRESSION_PASS",
+    "MEANINGFUL_OPERATIONAL_STAGE_PASS",
+    "READY_FOR_OPERATIONAL_STAGE_USE"
+  ],
+  "schema_version": "e2r_census_v4_known_bad_regression_report_v1",
+  "status": "PASS",
+  "target_gate": "anti_fake"
+}

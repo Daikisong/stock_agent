@@ -1,0 +1,76 @@
+{
+  "all_archetype_replay_matrix_summary": {
+    "archetype_count": 36,
+    "controlled_wiring_smoke_ready_count": 0,
+    "guard_replay_ready_count": 6,
+    "missing_required_archetype_count": 26,
+    "required_archetype_count": 32,
+    "source_backed_ready_count": 6,
+    "status_counts": {
+      "GUARDRAIL_CONTRACT_ONLY_PENDING_SOURCE_BACKED_REPLAY": 4,
+      "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY": 6,
+      "SOURCE_GAP_PENDING": 26
+    }
+  },
+  "all_archetype_replay_pass_allowed": false,
+  "blockers": [
+    "brain_web_evidence_pass_false",
+    "full_thesis_smoke_pending",
+    "full_thesis_production_pass_false",
+    "full_thesis_seed_promotion_pass_false",
+    "source_backed_replay_parity_all_archetypes_pending",
+    "goal_requirement_matrix_pass_false"
+  ],
+  "brain_web_evidence_pass_allowed": false,
+  "c06_guard_replay_pass_allowed": true,
+  "c06_guard_replay_status": "C06_GUARD_REPLAY_PASS",
+  "controlled_semantic_replay_pass_allowed": true,
+  "controlled_semantic_replay_summary": {
+    "blockers": [],
+    "case_count": 10,
+    "fail_count": 0,
+    "pass_count": 10,
+    "pending_count": 0,
+    "required_case_count": 10
+  },
+  "full_thesis_production_pass_allowed": false,
+  "full_thesis_production_status": "PENDING_FULL_THESIS_PRODUCTION",
+  "full_thesis_seed_materialization_audit_pass_allowed": true,
+  "full_thesis_seed_materialization_summary": {
+    "critical_count": 0,
+    "full_thesis_promoted_seed_count": 0,
+    "seed_event_count": 85,
+    "status_counts": {
+      "PLANNER_NOT_RUN": 85
+    },
+    "trace_row_count": 85,
+    "verdict": "PASS"
+  },
+  "full_thesis_seed_promotion_pass_allowed": false,
+  "full_thesis_smoke_pass_allowed": false,
+  "full_thesis_status": "PENDING_FULL_THESIS_REFRESH",
+  "goal_completion_ready": false,
+  "goal_requirement_matrix_summary": {
+    "fail_gate_ids": [],
+    "goal_completion_minimum_pass": false,
+    "pending_gate_ids": [
+      "FULL_THESIS_SMOKE_PASS",
+      "FULL_THESIS_PRODUCTION_PASS",
+      "FULL_THESIS_SEED_PROMOTION_PASS",
+      "BRAIN_WEB_EVIDENCE_PASS",
+      "ALL_ARCHETYPE_SOURCE_BACKED_REPLAY_PASS"
+    ],
+    "required_goal_completion_count": 19,
+    "required_goal_completion_fail_count": 0,
+    "required_goal_completion_pass_count": 14,
+    "required_goal_completion_pending_count": 5
+  },
+  "known_bad_regression_status": "PASS",
+  "meaningful_operational_stage_pass_allowed": false,
+  "schema_version": "e2r_census_v4_goal_completion_audit_v1",
+  "self_repair_completion_eligible": true,
+  "self_repair_loop_executed": true,
+  "self_repair_status": "RUN_COMPLETE",
+  "target_gate": "anti_fake",
+  "test_result_evidence_verdict": "MACHINE_READABLE_TEST_ARTIFACT_PASS"
+}

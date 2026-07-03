@@ -36,6 +36,28 @@ class StructuredApiClaimRequiresAdjudicationTests(unittest.TestCase):
         self.assertEqual(adjudication.semantic_status, "REJECTED")
         self.assertEqual(decision.mapping_status, "REJECTED")
 
+    def test_english_alias_matching_is_case_and_suffix_normalized(self):
+        assertion = RawAssertionRecord(
+            raw_assertion_id="RAW2",
+            document_id="DOC2",
+            anchor_id="ANCHOR2",
+            subject="SK Hynix",
+            predicate="revision_claim",
+            object_text="SK Hynix raised its operating profit guidance.",
+            polarity_proposal="POSITIVE",
+            modality="STATED",
+            event_date="2026-06-30",
+            exact_quote="SK Hynix raised its operating profit guidance.",
+            related_entities=("SK Hynix",),
+        )
+        adjudication = adjudicate_entity_temporal_scope(
+            assertion,
+            target_aliases=("SK hynix Inc.", "000660"),
+            as_of_date=date(2026, 7, 1),
+        )
+        self.assertEqual(adjudication.target_scope_status, "DIRECT")
+        self.assertEqual(adjudication.semantic_status, "PASS")
+
 
 if __name__ == "__main__":
     unittest.main()

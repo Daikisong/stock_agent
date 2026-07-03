@@ -1,0 +1,16 @@
+{
+  "critical_counts": {
+    "atomic_candidate_event_is_assessment_count": 0,
+    "atomic_candidate_event_not_in_symbol_candidate_events_count": 0,
+    "stage_trace_canonical_stage_mismatch_count": 0,
+    "stage_trace_claim_set_mismatch_count": 0,
+    "stage_trace_contribution_set_mismatch_count": 0,
+    "stage_trace_scope_mismatch_count": 0,
+    "stage_trace_score_interval_mismatch_count": 0,
+    "stage_trace_score_scope_mismatch_count": 0,
+    "stage_trace_score_status_mismatch_count": 0,
+    "stage_trace_stage_mismatch_count": 0
+  },
+  "schema_version": "e2r_census_v4_atomic_audit_v1",
+  "verdict": "PASS"
+}

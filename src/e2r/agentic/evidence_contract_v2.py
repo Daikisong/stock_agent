@@ -80,7 +80,11 @@ def evidence_contract_v2_from_mapping(raw: Mapping[str, Any]) -> EvidenceContrac
     if not isinstance(gate_payload, Mapping):
         raise ValueError(f"missing green_gate for {archetype_id}")
     alternative_primitives = _string_tuple_mapping(raw.get("alternative_primitives"))
-    score_rubric = _string_tuple_mapping(raw.get("score_rubric"))
+    guard_modes = _string_mapping(raw.get("guard_modes"))
+    score_rubric = _score_rubric_without_guard_primitives(
+        _string_tuple_mapping(raw.get("score_rubric")),
+        guard_primitives=guard_modes,
+    )
     freshness = dict(_freshness_mapping(raw.get("freshness")))
     _apply_default_bridge_freshness(
         freshness,
@@ -101,7 +105,7 @@ def evidence_contract_v2_from_mapping(raw: Mapping[str, Any]) -> EvidenceContrac
         score_rubric=score_rubric,
         source_quorum=_source_quorum_mapping(raw.get("source_quorum")),
         freshness=freshness,
-        guard_modes=_string_mapping(raw.get("guard_modes")),
+        guard_modes=guard_modes,
         aggregation_rules=_clean_tuple(raw.get("aggregation_rules")),
     )
 
@@ -214,6 +218,20 @@ def _string_tuple_mapping(value: Any) -> Mapping[str, tuple[str, ...]]:
     if not isinstance(value, Mapping):
         raise ValueError("expected object mapping to string lists")
     return {str(key).strip(): _clean_tuple(raw) for key, raw in value.items() if str(key).strip()}
+
+
+def _score_rubric_without_guard_primitives(
+    score_rubric: Mapping[str, tuple[str, ...]],
+    *,
+    guard_primitives: Mapping[str, str],
+) -> Mapping[str, tuple[str, ...]]:
+    if not guard_primitives:
+        return score_rubric
+    blocked = set(guard_primitives)
+    return {
+        component_key: tuple(primitive for primitive in primitives if primitive not in blocked)
+        for component_key, primitives in score_rubric.items()
+    }
 
 
 def _target_scope_tuple(value: Any) -> tuple[TargetScopeStatus, ...]:

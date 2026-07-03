@@ -1,0 +1,326 @@
+{
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "blockers": [],
+  "cases": [
+    {
+      "actual_green_unlock_allowed": false,
+      "actual_hard_break_allowed": false,
+      "actual_transition_overlay": "NONE",
+      "as_of_date": "2026-07-01",
+      "case_pass": true,
+      "case_pass_reasons": [
+        "hard_break_rejected_without_current_direct_cancellation",
+        "no_score_contribution_from_guard_claim",
+        "no_transition_overlay_from_guard_claim",
+        "source_backed_not_proxy",
+        "current_score_eligible_false"
+      ],
+      "company_name": "삼성전자",
+      "evidence_url_pending": false,
+      "expected_current_score_eligible": false,
+      "expected_green_unlock_allowed": false,
+      "expected_hard_break_allowed": false,
+      "expected_polarity": "NEGATIVE_OR_MIXED",
+      "expected_target_scope_status": "DIRECT",
+      "expected_temporal_status": "HISTORICAL_OR_FOLLOWUP_REQUIRED",
+      "guard_case_id": "C06-GUARD-SAMSUNG-QUALIFICATION-LAG-NOT-4C",
+      "guard_claim_summary": "Samsung HBM chips were reported as failing Nvidia tests due to heat and power issues.",
+      "input_claim_class": "qualification_lag",
+      "published_at": "2024-05-23",
+      "rationale": "A qualification lag is an execution/watch guard. It is not a current OPEN cancellation or permanent customer loss without current follow-up confirmation.",
+      "score_contribution_ids": [],
+      "source_name": "Reuters",
+      "source_proxy_only": false,
+      "source_url": "https://www.reuters.com/technology/samsungs-hbm-chips-failing-nvidia-tests-due-heat-power-consumption-woes-sources-2024-05-23/",
+      "symbol": "005930"
+    },
+    {
+      "actual_green_unlock_allowed": false,
+      "actual_hard_break_allowed": false,
+      "actual_transition_overlay": "NONE",
+      "as_of_date": "2026-07-01",
+      "case_pass": true,
+      "case_pass_reasons": [
+        "hard_break_rejected_without_current_direct_cancellation",
+        "no_score_contribution_from_guard_claim",
+        "no_transition_overlay_from_guard_claim",
+        "source_backed_not_proxy",
+        "current_score_eligible_false"
+      ],
+      "company_name": "삼성전자",
+      "evidence_url_pending": false,
+      "expected_current_score_eligible": false,
+      "expected_green_unlock_allowed": false,
+      "expected_hard_break_allowed": false,
+      "expected_polarity": "MIXED_OR_PARTIAL_POSITIVE",
+      "expected_target_scope_status": "DIRECT",
+      "expected_temporal_status": "FOLLOWUP_SUPERSESSION_CONTEXT",
+      "guard_case_id": "C06-GUARD-SAMSUNG-PARTIAL-CLEARANCE-SUPERSEDES-ABSOLUTE-FAILURE",
+      "guard_claim_summary": "Nvidia reportedly cleared Samsung HBM3 chips for a China-market processor after earlier qualification concerns.",
+      "input_claim_class": "partial_qualification_followup",
+      "published_at": "2024-07-23",
+      "rationale": "A partial follow-up can supersede an absolute-failure narrative, but it still does not prove broad C06 Green qualification, allocation, shipment, and cash bridge.",
+      "score_contribution_ids": [],
+      "source_name": "Reuters",
+      "source_proxy_only": false,
+      "source_url": "https://www.reuters.com/technology/nvidia-clears-samsungs-hbm3-chips-use-china-market-processor-sources-say-2024-07-23/",
+      "symbol": "005930"
+    },
+    {
+      "actual_green_unlock_allowed": false,
+      "actual_hard_break_allowed": false,
+      "actual_transition_overlay": "NONE",
+      "as_of_date": "2026-07-01",
+      "case_pass": true,
+      "case_pass_reasons": [
+        "hard_break_rejected_without_current_direct_cancellation",
+        "no_score_contribution_from_guard_claim",
+        "no_transition_overlay_from_guard_claim",
+        "source_backed_not_proxy",
+        "current_score_eligible_false"
+      ],
+      "company_name": "삼성전자",
+      "evidence_url_pending": false,
+      "expected_current_score_eligible": false,
+      "expected_green_unlock_allowed": false,
+      "expected_hard_break_allowed": false,
+      "expected_polarity": "NEGATIVE_OR_MIXED",
+      "expected_target_scope_status": "DIRECT",
+      "expected_temporal_status": "HISTORICAL_OR_FOLLOWUP_REQUIRED",
+      "guard_case_id": "C06-GUARD-SAMSUNG-SUPPLY-DELAY-NOT-GREEN-OR-4C",
+      "guard_claim_summary": "Samsung earnings expectations were reportedly hit by Nvidia AI chip supply delay.",
+      "input_claim_class": "ai_chip_supply_delay",
+      "published_at": "2025-01-06",
+      "rationale": "A supply-delay article can block Green until current conversion evidence appears, but it is not itself a current hard break or a positive Green unlock.",
+      "score_contribution_ids": [],
+      "source_name": "Reuters",
+      "source_proxy_only": false,
+      "source_url": "https://www.reuters.com/technology/samsung-q4-earnings-expected-be-hit-by-nvidia-ai-chip-supply-delay-2025-01-06/",
+      "symbol": "005930"
+    }
+  ],
+  "full_thesis_symbols": [],
+  "green_unlock_false_positive_count": 0,
+  "guard_case_count": 3,
+  "guard_case_pass_count": 3,
+  "guard_cases_pass": true,
+  "guard_replay_pass": true,
+  "guard_replay_scope": "controlled_url_backed_guard_replay",
+  "hard_break_false_positive_count": 0,
+  "positive_guard_url_reuse_claim_ids": [],
+  "positive_guard_url_reuse_count": 0,
+  "positive_replay_ready": true,
+  "positive_replay_required": true,
+  "positive_semantic_replay_ready": true,
+  "positive_wiring_smoke_ready": false,
+  "rule": "C06 qualification lag or supply delay guard claims may create follow-up/watch context, but they cannot create a current hard break, Green unlock, score contribution, or source-backed replay pass without current direct semantic extraction and lifecycle confirmation.",
+  "schema_version": "e2r_census_v4_c06_guard_replay_audit_v1",
+  "score_contribution_leak_count": 0,
+  "semantic_blockers": [],
+  "source_backed_positive_replay_ready": true,
+  "source_backed_semantic_replay": {
+    "accepted_claim_count": 1,
+    "accepted_claim_ids": [
+      "CLM-f3732d950b5e82567d63"
+    ],
+    "accepted_primitive_ids": [
+      "customer_preorder_or_allocation"
+    ],
+    "anchor_count": 1,
+    "as_of_date": "2026-07-01",
+    "blockers": [],
+    "claim_extractor_attempt_count": 1,
+    "claim_extractor_non_llm_provider_count": 1,
+    "claim_extractor_success_count": 1,
+    "claims": [
+      {
+        "accepted_mappings": [
+          {
+            "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            "claim_id": "CLM-f3732d950b5e82567d63",
+            "contract_rule_id": "customer_preorder_or_allocation",
+            "counter_primitive_ids": [],
+            "mapping_id": "MAP-e2327b8bda7641302252",
+            "mapping_status": "ACCEPTED",
+            "primitive_id": "customer_preorder_or_allocation",
+            "rationale": "contract_blind_extractor:predicate:customer_allocation_or_qualification_claim",
+            "support_direction": "SUPPORT"
+          }
+        ],
+        "accepted_primitive_ids": [
+          "customer_preorder_or_allocation"
+        ],
+        "adjudication_rationale": "contract-blind unstructured extraction followed by deterministic target/temporal adjudication",
+        "anchor_verified": true,
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "claim_id": "CLM-f3732d950b5e82567d63",
+        "company_name": "SK하이닉스",
+        "contradiction_group_id": null,
+        "directness": "DIRECT",
+        "effective_end": null,
+        "effective_start": null,
+        "event_date": "2024-04-01",
+        "investigation_status": "COMPLETE",
+        "polarity": "POSITIVE",
+        "production_score_evidence_allowed": false,
+        "quote_text": "2024.04.01\n제목: SK하이닉스 HBM 메모리 리레이팅 Review\n현재주가: 168000\n목표주가: 230000\n목표주가 상향: 30%\nFY1 매출액: 520000\nFY1 영업이익: 98000\nFY1 EPS: 9000\nFY2 매출액: 650000\nFY2 영업이익: 160000\nFY2 EPS: 14500\nPER: 15\nPBR: 2.0\nROE: 14%\nOPM: 19%\nOPM 개선폭: 11%\nHBM 수요 증가와 고객 allocation이 확대되고 있다.\n메모리 가격 상승, DRAM 가격 상승, 공급조절이 실적 가시성을 높인다.\nadvanced packaging bottleneck과 HBM CAPA 제약이 공급 병목으로 언급된다.\n투자포인트: HBM 수요 증가, 메모리 가격 상승, EPS 상향\n리스크: 고객 CAPEX 둔화와 공급과잉",
+        "raw_assertion_id": "RAWPROD-3e7a157907ef4cc9dd52",
+        "relation_to_target": "SELF",
+        "replay_only": true,
+        "semantic_status": "PASS",
+        "source_anchor_id": "ANCH-837323668f9c064b492a",
+        "source_assertion_id": "SASSERT-7fbc593c11c81a39bd63",
+        "source_document_id": "DOC-98838fe9e9dc3d8e9b96",
+        "source_origin": "c06_source_backed_semantic_replay",
+        "source_type": "RESEARCH_REPORT",
+        "source_url": "https://ssl.pstatic.net/imgstock/upload/research/company/sk_hynix_memory_20240401.pdf",
+        "subject_entity_id": "TICKER:000660",
+        "superseded_by_claim_ids": [],
+        "symbol": "000660",
+        "target_entity_id": "TICKER:000660",
+        "target_scope_status": "DIRECT",
+        "temporal_status": "CURRENT",
+        "verification_status": "SEMANTIC_VERIFIED"
+      }
+    ],
+    "document_count": 1,
+    "document_urls": [
+      "https://ssl.pstatic.net/imgstock/upload/research/company/sk_hynix_memory_20240401.pdf"
+    ],
+    "executions": [
+      {
+        "accepted_claim_ids": [
+          "CLM-f3732d950b5e82567d63"
+        ],
+        "accepted_primitive_ids": [
+          "customer_preorder_or_allocation"
+        ],
+        "adjudicated_claim_ids": [
+          "CLM-f3732d950b5e82567d63",
+          "CLM-10bd1bbacea8aca8b267",
+          "CLM-bbdf746bb83c4b137c4d"
+        ],
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "budget_used": {
+          "candidates": 1,
+          "fetches": 1,
+          "queries": 1
+        },
+        "candidate_event_id": "CE-C06-SEMREPLAY-000660-20240430",
+        "company_name": "SK하이닉스",
+        "direct_accepted_claim_ids": [
+          "CLM-f3732d950b5e82567d63"
+        ],
+        "document_hashes": [
+          "98838fe9e9dc3d8e9b963e407e86ab749404ac8d0ff65bb7c68158a9841dd020"
+        ],
+        "document_urls": [
+          "https://ssl.pstatic.net/imgstock/upload/research/company/sk_hynix_memory_20240401.pdf"
+        ],
+        "evidence_anchor_ids": [
+          "ANCH-837323668f9c064b492a"
+        ],
+        "fallback_source_classes": [],
+        "fetched_document_ids": [
+          "DOC-98838fe9e9dc3d8e9b96"
+        ],
+        "forbidden_source_classes": [
+          "unbounded_general_search",
+          "snippet_only_score",
+          "source_proxy_only",
+          "evidence_url_pending"
+        ],
+        "not_eligible_reasons": [
+          "semantic_rejected",
+          "target_scope_not_allowed:UNRELATED",
+          "target_not_direct:NOT_TARGET_SCOPED",
+          "mapping_not_accepted:REJECTED",
+          "primitive_mapping_rejected:adjudication_not_passed"
+        ],
+        "preferred_source_classes": [
+          "BrokerReportPublicPDF"
+        ],
+        "primitive_gap": "customer_preorder_or_allocation",
+        "primitive_gap_satisfied_ids": [
+          "customer_preorder_or_allocation"
+        ],
+        "primitive_gap_unsatisfied_ids": [],
+        "production_score_evidence_allowed": false,
+        "provider_errors": [],
+        "provider_name": "stored_real_source_snapshot_provider",
+        "raw_assertion_ids": [
+          "RAWPROD-3e7a157907ef4cc9dd52",
+          "RAWPROD-e865662389b379a1cc24",
+          "RAWPROD-80b52c1ef12d916176cb"
+        ],
+        "rejected_claim_ids": [
+          "CLM-10bd1bbacea8aca8b267",
+          "CLM-bbdf746bb83c4b137c4d"
+        ],
+        "replay_only": true,
+        "requested_source_classes": [
+          "BrokerReportPublicPDF"
+        ],
+        "rerouted_accepted_claim_ids": [],
+        "satisfaction_type": "DIRECT_ACCEPTED_CLAIM",
+        "satisfies_source_task": true,
+        "score_claim_ids": [
+          "CLM-f3732d950b5e82567d63"
+        ],
+        "source_class": "BrokerReportPublicPDF",
+        "source_origin": "c06_source_backed_semantic_replay",
+        "source_task": {
+          "allowed_domains": [],
+          "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "candidate_event_id": "CE-C06-SEMREPLAY-000660-20240430",
+          "company_name": "SK하이닉스",
+          "date_window": {
+            "end": "2024-04-30",
+            "lookback_days": 180
+          },
+          "fallback_source_classes": [],
+          "forbidden_source_classes": [
+            "unbounded_general_search",
+            "snippet_only_score",
+            "source_proxy_only",
+            "evidence_url_pending"
+          ],
+          "general_search_allowed": false,
+          "llm_query_allowed": false,
+          "max_candidates": 5,
+          "max_fetches": 3,
+          "max_queries": 1,
+          "memory_record_ids": [],
+          "preferred_source_classes": [
+            "BrokerReportPublicPDF"
+          ],
+          "primitive_gap": "customer_preorder_or_allocation",
+          "query_intents": [],
+          "reason_from_memory": "C06 controlled semantic replay must be source-backed and contract-blind.",
+          "stop_condition": {
+            "accepted_claim_count": 1
+          },
+          "symbol": "000660",
+          "task_id": "C06-SEMREPLAY-000660-customer_preorder_or_allocation",
+          "task_type": "positive_verify"
+        },
+        "source_task_origin": "research_brain_v4_attempt",
+        "status": "EVIDENCE_OS_ACCEPTED",
+        "stop_reason": "stored_real_source_snapshot_parsed",
+        "symbol": "000660",
+        "task_id": "C06-SEMREPLAY-000660-customer_preorder_or_allocation"
+      }
+    ],
+    "fixture_as_of_date": "2024-04-30",
+    "positive_replay_pass": true,
+    "production_score_evidence_allowed": false,
+    "raw_assertion_count": 3,
+    "replay_only": true,
+    "required_positive_primitives": [
+      "customer_preorder_or_allocation"
+    ],
+    "rule": "This replay is not a production full-thesis row. It only proves C06 positive semantic extraction can pass through source-backed EvidenceDocument/Anchor/RawAssertion/Claim/PrimitiveMapping without using smoke fixture mappings or guard URLs.",
+    "schema_version": "e2r_census_v4_c06_source_backed_semantic_replay_v1",
+    "source_origin": "c06_source_backed_semantic_replay"
+  }
+}

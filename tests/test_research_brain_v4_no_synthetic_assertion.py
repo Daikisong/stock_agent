@@ -4,7 +4,7 @@ from datetime import date
 from e2r.agentic.evidence_contract_v2 import load_evidence_contracts_v2
 from e2r.research_brain.v4_evidence_extraction_bridge import execute_source_tasks_with_evidence_os_v4
 from e2r.research_brain.v4_source_acquisition_runner import SourceAcquisitionRunnerV4
-from research_brain_v4_test_helpers import c06_source_task, sample_v4_event
+from tests.research_brain_v4_test_helpers import c06_source_task, sample_v4_event
 
 
 class ResearchBrainV4NoSyntheticAssertionTests(unittest.TestCase):

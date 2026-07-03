@@ -1,0 +1,7 @@
+{
+  "critical_counts": {
+    "stage2_without_stage_signal_count": 0
+  },
+  "schema_version": "e2r_census_v4_stage_signal_audit_v1",
+  "verdict": "PASS"
+}

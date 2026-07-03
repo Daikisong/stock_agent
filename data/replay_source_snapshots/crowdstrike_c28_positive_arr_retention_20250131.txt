@@ -1,0 +1,8 @@
+CrowdStrike Holdings, Inc. (NASDAQ: CRWD) reported key subscription metrics in its fiscal 2025 Form 10-K.
+CrowdStrike reported annual recurring revenue of $4,241,838 thousand as of January 31, 2025, up 23% year-over-year from $3,435,150 thousand.
+CrowdStrike reported a dollar-based net retention rate of 112% as of January 31, 2025.
+CrowdStrike said its dollar-based net retention rate reflects customer renewals, expansion, contraction, and churn.
+CrowdStrike defines a subscription customer as a legal entity with a subscription agreement for the Falcon platform whose term has not ended or with which the company is negotiating a renewal contract.
+CrowdStrike said subscription revenue is recognized ratably over the subscription agreement term, generally one to three years.
+CrowdStrike said deferred revenue was $3.7 billion as of January 31, 2025, with $2.7 billion expected to be recorded as revenue in the next 12 months.
+CrowdStrike reported subscription gross profit of $2,925,971 thousand and subscription gross margin of 78% for fiscal 2025.

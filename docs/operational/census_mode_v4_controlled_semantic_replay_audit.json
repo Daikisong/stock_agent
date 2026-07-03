@@ -1,0 +1,172 @@
+{
+  "as_of_date": "2026-07-01",
+  "blockers": [],
+  "case_count": 10,
+  "cases": [
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "case_id": "C06_HBM_POSITIVE_AND_QUALIFICATION_LAG_GUARD",
+      "case_pass": true,
+      "expected": "C06 positive path and qualification-lag guard both pass contract-blind semantic replay",
+      "observed": {
+        "controlled_wiring_smoke_pass": false,
+        "guard_cases_pass": true,
+        "guard_replay_pass": true,
+        "positive_semantic_replay_ready": true,
+        "semantic_blockers": []
+      },
+      "required_before_meaningful_operation": true,
+      "status": "PASS"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "case_id": "C08_TEST_SOCKET_CUSTOMER_ORDER_PROFILE_ONLY_GUARD",
+      "case_pass": true,
+      "expected": "customer/order conversion positive and profile-only guard",
+      "observed": {
+        "guard_replay_pass": true,
+        "matrix_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
+        "positive_replay_pass": true,
+        "source_backed_fixture_count": 4,
+        "unsupported_reason": null
+      },
+      "required_before_meaningful_operation": true,
+      "status": "PASS"
+    },
+    {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "case_id": "C15_MATERIAL_SPREAD_PASS_THROUGH_RAW_COMMODITY_GUARD",
+      "case_pass": true,
+      "expected": "issuer pass-through/spread/margin bridge positive and raw commodity headline false-positive guard",
+      "observed": {
+        "guard_replay_pass": true,
+        "matrix_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
+        "positive_replay_pass": true,
+        "source_backed_fixture_count": 6,
+        "unsupported_reason": null
+      },
+      "required_before_meaningful_operation": true,
+      "status": "PASS"
+    },
+    {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "case_id": "C17_CHEMICAL_SPREAD_REALIZED_MARGIN_BRIDGE_GUARD",
+      "case_pass": true,
+      "expected": "realized margin bridge positive and spread-only guard",
+      "observed": {
+        "guard_replay_pass": true,
+        "matrix_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
+        "positive_replay_pass": true,
+        "source_backed_fixture_count": 10,
+        "unsupported_reason": null
+      },
+      "required_before_meaningful_operation": true,
+      "status": "PASS"
+    },
+    {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "case_id": "C24_CLINICAL_BINARY_EVENT_GUARD",
+      "case_pass": true,
+      "expected": "endpoint/regulatory/runway bridge positive and binary-event-only guard",
+      "observed": {
+        "guard_replay_pass": true,
+        "matrix_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
+        "positive_replay_pass": true,
+        "source_backed_fixture_count": 5,
+        "unsupported_reason": null
+      },
+      "required_before_meaningful_operation": true,
+      "status": "PASS"
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "case_id": "C28_SOFTWARE_SECURITY_RETENTION_BRIDGE_GUARD",
+      "case_pass": true,
+      "expected": "ARR/RPO/renewal/retention bridge positive and keyword-only security/software guard",
+      "observed": {
+        "guard_replay_pass": true,
+        "matrix_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
+        "positive_replay_pass": true,
+        "source_backed_fixture_count": 7,
+        "unsupported_reason": null
+      },
+      "required_before_meaningful_operation": true,
+      "status": "PASS"
+    },
+    {
+      "archetype_id": null,
+      "case_id": "WRONG_SUBJECT_RISK_FIXTURE",
+      "case_pass": true,
+      "expected": "third-party normal audit opinion is not assigned to target risk",
+      "observed": {
+        "known_bad_case_id": "wrong_subject_audit_opinion_not_target_risk",
+        "known_bad_expected": "audit/accounting claim subject is 월덱스, not 삼성전자",
+        "known_bad_observed": null,
+        "known_bad_status": "PASS"
+      },
+      "required_before_meaningful_operation": true,
+      "status": "PASS"
+    },
+    {
+      "archetype_id": null,
+      "case_id": "OLD_RISK_RESOLVED_FIXTURE",
+      "case_pass": true,
+      "expected": "resolved historical target risk cannot become current score evidence or 4C",
+      "observed": {
+        "known_bad_case_id": "old_risk_resolved_not_current_hard_break",
+        "known_bad_expected": "resolved target accounting/trust risk is lifecycle context, not current score evidence or 4C hard break",
+        "known_bad_observed": {
+          "eligibility_reasons": [
+            "temporal_not_allowed:RESOLVED"
+          ],
+          "primitive_status": "RESOLVED",
+          "score_eligible": false,
+          "stage_reasons": [
+            "green_gate_missing:accounting_trust_break"
+          ],
+          "support_claim_ids": [],
+          "transition_overlay": "NONE"
+        },
+        "known_bad_status": "PASS"
+      },
+      "required_before_meaningful_operation": true,
+      "status": "PASS"
+    },
+    {
+      "archetype_id": null,
+      "case_id": "PROVIDER_FAILURE_PENDING_FIXTURE",
+      "case_pass": true,
+      "expected": "provider failure does not finalize low score or Red",
+      "observed": {
+        "known_bad_case_id": "provider_failure_final_score_guard",
+        "known_bad_expected": null,
+        "known_bad_observed": null,
+        "known_bad_status": "PASS"
+      },
+      "required_before_meaningful_operation": true,
+      "status": "PASS"
+    },
+    {
+      "archetype_id": null,
+      "case_id": "SEMANTIC_CONTRACT_GUARD_FIXTURE",
+      "case_pass": true,
+      "expected": "non-revenue contract wording cannot unlock contract_quality",
+      "observed": {
+        "known_bad_case_id": "non_revenue_contract_not_contract_quality",
+        "known_bad_expected": "share buyback trust and pledge contracts cannot unlock contract_quality",
+        "known_bad_observed": null,
+        "known_bad_status": "PASS"
+      },
+      "required_before_meaningful_operation": true,
+      "status": "PASS"
+    }
+  ],
+  "controlled_semantic_replay_pass": true,
+  "fail_count": 0,
+  "output_root": "output/census_v4/2026-07-01",
+  "pass_count": 10,
+  "pending_count": 0,
+  "required_case_count": 10,
+  "rule": "Goal3 controlled replay is only pass when each required positive/guard/global fixture is contract-blind, source-backed, lifecycle-aware, and claim-backed. Wiring smoke or known source gaps remain pending, not pass.",
+  "schema_version": "e2r_census_v4_controlled_semantic_replay_audit_v1"
+}

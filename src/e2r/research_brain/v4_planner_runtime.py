@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import os
 import re
 import shlex
@@ -27,6 +28,157 @@ from e2r.research_brain.v3_llm_planner_provider import (
     validate_llm_planner_output_v3,
 )
 from e2r.research_brain.v4_schemas import PlannerProviderModeV4, PlannerRunV4
+
+
+CONTRACT_COMPATIBLE_PRIMITIVES: frozenset[str] = frozenset(
+    {
+        "contract_quality",
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "contract_visibility",
+        "revenue_visibility_contract",
+        "order_to_revenue_bridge",
+        "order_backlog_to_sales",
+        "delivery_schedule",
+        "export_contract",
+    }
+)
+_REVENUE_CONTRACT_TERMS: tuple[str, ...] = (
+    "단일판매",
+    "판매공급계약",
+    "판매ㆍ공급계약",
+    "판매·공급계약",
+    "공급계약",
+    "판매계약",
+    "계약체결",
+    "수주",
+    "supply contract",
+    "sales contract",
+    "purchase order",
+    "revenue contract",
+    "epc contract",
+)
+_NON_REVENUE_CONTRACT_TERMS: tuple[str, ...] = (
+    "자기주식",
+    "주식담보",
+    "담보제공",
+    "유상증자",
+    "전환사채",
+    "신주인수권",
+    "타법인",
+    "채무보증",
+    "소송",
+    "해명공시",
+    "조회공시",
+)
+
+_FORBIDDEN_EXISTING_EVIDENCE_CONTEXT_KEYS: frozenset[str] = frozenset(
+    {
+        "accepted_claim_final",
+        "current_score_eligible",
+        "expected_stage",
+        "green_unlock_score",
+        "hard_break_final",
+        "score",
+        "source_base_stage",
+        "source_score_contribution_ids",
+        "source_stage_decision_status",
+        "source_stage_signal",
+        "stage",
+        "target_score",
+        "target_stage",
+        "verified_final",
+    }
+)
+_FORBIDDEN_EXISTING_EVIDENCE_CONTEXT_KEY_FRAGMENTS: tuple[str, ...] = (
+    "current_score_eligible",
+    "score_contribution",
+    "stage_decision",
+    "stage_signal",
+)
+_FORBIDDEN_PLANNER_CONTEXT_ASSIGNMENT_RE = re.compile(
+    r"(^|[;\s])([A-Za-z0-9_]*(?:score|stage)[A-Za-z0-9_]*)=([^;]*)(;?)",
+    re.IGNORECASE,
+)
+
+
+def _is_forbidden_existing_evidence_context_key(key: object) -> bool:
+    normalized = str(key).strip().lower()
+    if normalized in _FORBIDDEN_EXISTING_EVIDENCE_CONTEXT_KEYS:
+        return True
+    if normalized.endswith("_score") or normalized.endswith("_stage"):
+        return True
+    if normalized.startswith("source_stage"):
+        return True
+    return any(fragment in normalized for fragment in _FORBIDDEN_EXISTING_EVIDENCE_CONTEXT_KEY_FRAGMENTS)
+
+
+def sanitize_existing_evidence_summary_v4(value: Any) -> Any:
+    """Remove score/stage-like hints before planner prompt construction.
+
+    The planner may see missing evidence and prior source failures, but it must
+    not receive target scores, stage labels, or eligibility conclusions as
+    context. This helper is recursive because feedback rows can contain nested
+    provider/debug payloads.
+    """
+
+    if isinstance(value, Mapping):
+        return {
+            str(key): sanitize_existing_evidence_summary_v4(item)
+            for key, item in value.items()
+            if not _is_forbidden_existing_evidence_context_key(key)
+        }
+    if isinstance(value, (list, tuple)):
+        return [sanitize_existing_evidence_summary_v4(item) for item in value]
+    return value
+
+
+def _sanitize_planner_context_text_v4(value: Any) -> str:
+    cleaned = _FORBIDDEN_PLANNER_CONTEXT_ASSIGNMENT_RE.sub(" ", str(value or ""))
+    return re.sub(r"\s+", " ", cleaned).strip(" ;")
+
+
+def _is_forbidden_candidate_event_context_key(key: object) -> bool:
+    normalized = str(key).strip().lower()
+    if _is_forbidden_existing_evidence_context_key(normalized):
+        return True
+    return "score" in normalized or "stage" in normalized
+
+
+def _sanitize_candidate_event_for_planner_v4(value: Any, *, parent_key: str | None = None) -> Any:
+    """Remove event-board score/stage hints from planner candidate context.
+
+    Census full-thesis seeds can carry prior event-board diagnostics such as
+    source_stage_signal or source_base_stage. Those are useful audit facts, but
+    they must not become planner evidence or target-stage hints.
+    """
+
+    if isinstance(value, Mapping):
+        sanitized: dict[str, Any] = {}
+        for key, item in value.items():
+            key_text = str(key)
+            if _is_forbidden_candidate_event_context_key(key_text):
+                continue
+            if key_text == "raw_reason_codes" and isinstance(item, (list, tuple)):
+                sanitized[key_text] = [
+                    _sanitize_planner_context_text_v4(code)
+                    for code in item
+                    if "score" not in str(code).lower() and "stage" not in str(code).lower()
+                ]
+                continue
+            if key_text == "event_summary":
+                sanitized[key_text] = _sanitize_planner_context_text_v4(item)
+                continue
+            sanitized[key_text] = _sanitize_candidate_event_for_planner_v4(item, parent_key=key_text)
+        return sanitized
+    if isinstance(value, (list, tuple)):
+        return [
+            _sanitize_candidate_event_for_planner_v4(item, parent_key=parent_key)
+            for item in value
+        ]
+    if isinstance(value, str):
+        return _sanitize_planner_context_text_v4(value)
+    return value
 
 
 PLANNER_BATCH_OUTPUT_SCHEMA: Mapping[str, object] = {
@@ -93,6 +245,7 @@ PLANNER_BATCH_OUTPUT_SCHEMA: Mapping[str, object] = {
                                 },
                                 "llm_query_allowed": {"type": "boolean"},
                                 "general_search_allowed": {"type": "boolean"},
+                                "query_intents": {"type": "array", "items": {"type": "string"}},
                                 "reason_from_memory": {"type": "string"},
                             },
                             "required": [
@@ -109,6 +262,7 @@ PLANNER_BATCH_OUTPUT_SCHEMA: Mapping[str, object] = {
                                 "stop_condition",
                                 "llm_query_allowed",
                                 "general_search_allowed",
+                                "query_intents",
                                 "reason_from_memory",
                             ],
                         },
@@ -262,7 +416,7 @@ class CodexCLIPlannerProviderV4(ResearchBrainPlannerProviderV4):
         ]
         if self.working_directory is not None:
             command.extend(("-C", str(self.working_directory)))
-        if self.model:
+        if self.model and self.model != "codex-cli-default":
             command.extend(("-m", self.model))
         if self.profile:
             command.extend(("-p", self.profile))
@@ -345,7 +499,7 @@ def build_planner_provider_v4(
         return CodexCLIPlannerProviderV4(
             codex_command=(env.get("E2R_CODEX_PLANNER_COMMAND") or env.get("E2R_CODEX_THEME_COMMAND") or "codex").strip()
             or "codex",
-            model=_optional_env(env, "E2R_CODEX_PLANNER_MODEL"),
+            model=_optional_env(env, "E2R_CODEX_PLANNER_MODEL") or "codex-cli-default",
             profile=_optional_env(env, "E2R_CODEX_PLANNER_PROFILE"),
             working_directory=_optional_env(env, "E2R_CODEX_PLANNER_WORKDIR") or working_directory,
             timeout_seconds=_float_env(env, "E2R_CODEX_PLANNER_TIMEOUT_SECONDS", 180.0),
@@ -376,6 +530,13 @@ def run_planner_provider_v4(
             )
             for event in events
         )
+    prompt_payload = _planner_prompt_payload_for_trace(
+        events=events,
+        memory_cards=memory_cards,
+        existing_evidence_by_event_id=existing_evidence_by_event_id or {},
+    )
+    prompt_text = _planner_prompt(prompt_payload)
+    prompt_hash = _sha256_text(prompt_text)
     try:
         outputs = provider.plan_many(
             events=events,
@@ -383,15 +544,60 @@ def run_planner_provider_v4(
             existing_evidence_by_event_id=existing_evidence_by_event_id or {},
         )
     except PlannerProviderRejected as exc:
-        return tuple(_failed_run(provider, event, str(exc), rejected=True) for event in events)
+        return tuple(
+            _failed_run(
+                provider,
+                event,
+                str(exc),
+                rejected=True,
+                prompt_payload=prompt_payload,
+                prompt_text=prompt_text,
+                prompt_hash=prompt_hash,
+            )
+            for event in events
+        )
     except PlannerProviderUnavailable as exc:
-        return tuple(_failed_run(provider, event, str(exc), rejected=False) for event in events)
+        return tuple(
+            _failed_run(
+                provider,
+                event,
+                str(exc),
+                rejected=False,
+                prompt_payload=prompt_payload,
+                prompt_text=prompt_text,
+                prompt_hash=prompt_hash,
+            )
+            for event in events
+        )
     rows: list[PlannerRunV4] = []
     for event in events:
         output = outputs.get(event.candidate_event_id)
         if output is None:
-            rows.append(_failed_run(provider, event, "planner_output_missing_for_candidate", rejected=False))
+            rows.append(
+                _failed_run(
+                    provider,
+                    event,
+                    "planner_output_missing_for_candidate",
+                    rejected=False,
+                    prompt_payload=prompt_payload,
+                    prompt_text=prompt_text,
+                    prompt_hash=prompt_hash,
+                )
+            )
             continue
+        response_payload = {
+            "schema_version": "research_brain_v4_planner_response_leaf_v1",
+            "candidate_event_id": event.candidate_event_id,
+            "output": output.to_dict(),
+        }
+        response_text = _json_dumps_stable(response_payload)
+        response_hash = _sha256_text(response_text)
+        planner_run_id = _planner_run_id(
+            event=event,
+            provider_name=provider.provider_name,
+            prompt_hash=prompt_hash,
+            response_hash=response_hash,
+        )
         rows.append(
             PlannerRunV4(
                 event=event,
@@ -400,9 +606,18 @@ def run_planner_provider_v4(
                 real_provider_exercised=bool(provider.real_provider),
                 real_provider_success=bool(provider.real_provider),
                 fake_provider_used=bool(provider.fake_provider),
+                planner_run_id=planner_run_id,
                 output=output,
                 model=getattr(provider, "model", None),
                 endpoint=getattr(provider, "endpoint", None),
+                prompt_hash=prompt_hash,
+                response_hash=response_hash,
+                raw_prompt_path=_planner_raw_prompt_path(planner_run_id),
+                raw_response_path=_planner_raw_response_path(planner_run_id),
+                prompt_payload=prompt_payload,
+                prompt_text=prompt_text,
+                response_payload=response_payload,
+                response_text=response_text,
             )
         )
     return tuple(rows)
@@ -414,11 +629,12 @@ def source_tasks_from_planner_output_v4(
     planner_output: LLMPlannerOutputV2,
     card_by_id: Mapping[str, ArchetypeMemoryCard],
     max_tasks: int = 5,
+    max_fetches_per_task: int | None = None,
 ) -> tuple[SourceTask, ...]:
     primary = str(planner_output.top_k_archetype_hypotheses[0].get("archetype_id"))
     card = card_by_id[primary]
     tasks: list[SourceTask] = []
-    for draft in planner_output.source_task_drafts[:max_tasks]:
+    for draft in _selected_source_task_drafts(planner_output=planner_output, max_tasks=max_tasks):
         primitive = str(draft.get("primitive_gap") or draft.get("primitive_id") or "").strip()
         if not primitive:
             continue
@@ -439,8 +655,12 @@ def source_tasks_from_planner_output_v4(
                 date_window=draft.get("date_window") or {"end": event.event_date, "lookback_days": 540},
                 max_queries=int(draft.get("max_queries") or 1),
                 max_candidates=int(draft.get("max_candidates") or 10),
-                max_fetches=int(draft.get("max_fetches") or 3),
+                max_fetches=_bounded_task_fetches(
+                    int(draft.get("max_fetches") or 3),
+                    max_fetches_per_task=max_fetches_per_task,
+                ),
                 stop_condition=draft.get("stop_condition") or {"accepted_claim_count": 1},
+                query_intents=_source_task_query_intents(draft=draft, planner_output=planner_output),
                 llm_query_allowed=bool(draft.get("llm_query_allowed", True)),
                 general_search_allowed=bool(draft.get("general_search_allowed", False)),
                 reason_from_memory=str(draft.get("reason_from_memory") or f"planner_v4:{primary}:{primitive}"),
@@ -448,6 +668,72 @@ def source_tasks_from_planner_output_v4(
             )
         )
     return tuple(tasks)
+
+
+def _source_task_query_intents(*, draft: Mapping[str, Any], planner_output: LLMPlannerOutputV2) -> tuple[str, ...]:
+    task_specific = _clean_query_intents(draft.get("query_intents") or ())
+    if task_specific:
+        return task_specific
+    return _clean_query_intents(planner_output.query_intents)
+
+
+def _clean_query_intents(values: Sequence[Any]) -> tuple[str, ...]:
+    rows: list[str] = []
+    for value in values:
+        text = str(value or "").strip()
+        if not text:
+            continue
+        rows.append(text)
+    return tuple(dict.fromkeys(rows))
+
+
+def _bounded_task_fetches(value: int, *, max_fetches_per_task: int | None) -> int:
+    if max_fetches_per_task is None:
+        return max(1, value)
+    return max(1, min(value, int(max_fetches_per_task)))
+
+
+def _selected_source_task_drafts(*, planner_output: LLMPlannerOutputV2, max_tasks: int) -> tuple[Mapping[str, Any], ...]:
+    drafts = tuple(planner_output.source_task_drafts)
+    if max_tasks <= 0:
+        return ()
+    selected = list(drafts[:max_tasks])
+    if not tuple(str(item).strip() for item in planner_output.query_intents if str(item).strip()):
+        return tuple(selected)
+    if any(_draft_requests_external_web(draft) for draft in selected):
+        return tuple(selected)
+    external = next((draft for draft in drafts[max_tasks:] if _draft_requests_external_web(draft)), None)
+    if external is None:
+        return tuple(selected)
+    if selected:
+        selected[-1] = external
+    else:
+        selected.append(external)
+    return tuple(selected)
+
+
+def _draft_requests_external_web(draft: Mapping[str, Any]) -> bool:
+    primitive = str(draft.get("primitive_gap") or draft.get("primitive_id") or "")
+    if _is_official_solvable_gap(primitive):
+        return False
+    external = {
+        "naversearch",
+        "generalwebsearch",
+        "trustednews",
+        "news",
+        "industrymedia",
+        "companynewsroom",
+        "reportpdf",
+        "brokerreportpublicpdf",
+    }
+    names = {
+        "".join(ch for ch in str(item or "").lower() if ch.isalnum())
+        for item in (
+            *(draft.get("preferred_source_classes") or ()),
+            *(draft.get("fallback_source_classes") or ()),
+        )
+    }
+    return bool(names & external)
 
 
 def build_v4_planner_prompt_payload(
@@ -460,31 +746,39 @@ def build_v4_planner_prompt_payload(
     card_by_id = {card.archetype_id: card for card in memory_cards}
     event_payloads = []
     for event in events:
+        signal_profile = _event_signal_profile(event)
         route = route_candidate_event_v2(event, memory_cards, top_k=5)
         options = []
+        option_ids: set[str] = set()
         for candidate in route.top_k_archetypes:
             card = card_by_id.get(candidate.archetype_id)
             contract = contracts.get(candidate.archetype_id)
-            primitives = tuple(contract.required_primitives if contract else (card.required_primitives if card else ()))
-            options.append(
-                {
-                    "archetype_id": candidate.archetype_id,
-                    "router_score": candidate.probability_or_score,
-                    "router_reason": candidate.reason,
-                    "allowed_primitives": list(primitives[:12]),
-                    "preferred_source_routes": {
-                        key: list(value)
-                        for key, value in (card.source_route_by_primitive.items() if card else ())
-                        if key in primitives
-                    },
-                    "green_blockers": list(card.green_blockers[:5] if card else ()),
-                    "do_not_promote_rules": list(card.do_not_promote_rules[:5] if card else ()),
-                }
+            option = _planner_option_payload(
+                archetype_id=candidate.archetype_id,
+                router_score=candidate.probability_or_score,
+                router_reason=candidate.reason,
+                card=card,
+                contract=contract,
             )
+            options.append(option)
+            option_ids.add(candidate.archetype_id)
+        if signal_profile["direct_revenue_contract_disclosure"]:
+            for option in _contract_compatible_option_payloads(
+                cards=memory_cards,
+                contracts=contracts,
+                card_by_id=card_by_id,
+                existing_option_ids=option_ids,
+            ):
+                options.append(option)
+                option_ids.add(str(option["archetype_id"]))
+            options.sort(key=_contract_event_option_sort_key)
         event_payloads.append(
             {
-                "candidate_event": event.to_dict(),
-                "existing_evidence_summary": dict(existing_evidence_by_event_id.get(event.candidate_event_id, {})),
+                "candidate_event": _sanitize_candidate_event_for_planner_v4(event.to_dict()),
+                "event_signal_profile": signal_profile,
+                "existing_evidence_summary": sanitize_existing_evidence_summary_v4(
+                    existing_evidence_by_event_id.get(event.candidate_event_id, {})
+                ),
                 "allowed_archetype_options": options,
             }
         )
@@ -501,7 +795,175 @@ def build_v4_planner_prompt_payload(
             "Every source_task_draft must set forbidden_source_classes exactly to [\"unbounded_general_search\"].",
             "Every source_task_draft must set general_search_allowed=false.",
             "For official-solvable gaps, fallback_source_classes must not include TrustedNews, News, web, or general web.",
+            "query_intents must be bounded company-scoped executable search queries containing the company name or ticker when external web/news fallback is needed.",
+            "When different source_task_drafts need different searches, put task-specific query_intents inside each source_task_draft; those task-specific queries override the top-level query_intents for that task.",
+            "If event_signal_profile.direct_revenue_contract_disclosure is true, prefer the highest event_signal_fit_score allowed_archetype_options item with contract_compatible=true and use one of its contract_compatible_primitives for source_task_drafts.primitive_gap. Prefer contract_amount_to_prior_sales or contract_duration_months over generic contract_quality when available. If you choose a non-contract-compatible archetype, you must plan source tasks that prove an issuer-specific volume, mix, margin, or cash bridge beyond the contract existence itself.",
+            "If existing_evidence_summary.brain_web_acquisition_required is true, include at least one target-scoped query_intent and at least one non-official-solvable source_task_draft whose preferred_source_classes or fallback_source_classes includes TrustedNews, NaverSearch, GeneralWebSearch, ReportPDF, BrokerReportPublicPDF, IndustryMedia, or CompanyNewsroom. The query text must be written by you from the candidate context; deterministic code will only validate and execute it.",
+            "If existing_evidence_summary.planner_feedback contains query_intents_empty or no_external_web_source_task, repair those exact gaps without adding scores or stages.",
+            "If existing_evidence_summary.rejected_claim_feedback contains contract_compatible_route_required=true, the previous source contained contract fields but the selected primitive was incompatible. Do not repeat volume/mix/leverage primitives unless you add a separate bridge source; reroute to a contract_compatible archetype/primitive when available.",
+            "If existing_evidence_summary.rejected_claim_feedback is non-empty, those fetched claims were rejected before scoring. Do not repeat the same rejected source/subject pattern; plan a different bounded source_task/query that can prove the primitive directly. Still do not output score, stage, verified final, current_score_eligible, or accepted claim final.",
+            "If existing_evidence_summary.source_rejection_feedback is non-empty, previous source candidates were rejected before extraction or failed post-extraction score/source admissibility. Do not repeat the same URL/source pattern; plan a different bounded source_task/query aimed at issuer IR, DART/KIND detail, report PDF, company newsroom, trusted article original, or another source class that can prove the primitive directly. Still do not output score, stage, verified final, current_score_eligible, or accepted claim final.",
+            "If source_rejection_feedback.not_eligible_reason_distribution contains source_lineage_unverified_original, treat the prior web/news/report result as discovery-only, not a verified original source. Prefer an official detail URL, issuer-hosted IR/newsroom page, report PDF original, or trusted article original before retrying generic web search.",
+            "If existing_evidence_summary.rerouted_claim_feedback is non-empty, the previous claim was accepted for a different primitive but did not satisfy the requested primitive_gap. Preserve that accepted evidence as context, but plan a different bounded source_task/query for primitive_gap_unsatisfied_ids. Do not repeat the same source class/document if it only produced the rerouted primitive, and still do not output score, stage, verified final, current_score_eligible, or accepted claim final.",
             "R13 may be primary only when the event explicitly says red-team, false-positive, or cross-archetype review.",
+        ],
+        "forbidden_output_keys": sorted(FORBIDDEN_RESEARCH_BRAIN_OUTPUT_KEYS),
+    }
+
+
+def _planner_option_payload(
+    *,
+    archetype_id: str,
+    router_score: float,
+    router_reason: str,
+    card: ArchetypeMemoryCard | None,
+    contract: Any | None,
+    event_signal_fit_score: int | None = None,
+) -> Mapping[str, Any]:
+    required_primitives = tuple(contract.required_primitives if contract else (card.required_primitives if card else ()))
+    allowed_primitives = (
+        tuple(sorted(_allowed_primitives_from_contract(contract)))
+        if contract is not None
+        else required_primitives
+    )
+    contract_primitives = tuple(primitive for primitive in allowed_primitives if primitive in CONTRACT_COMPATIBLE_PRIMITIVES)
+    if event_signal_fit_score is None and contract_primitives:
+        event_signal_fit_score = _contract_option_fit_score(contract_primitives)
+    return {
+        "archetype_id": archetype_id,
+        "router_score": router_score,
+        "router_reason": router_reason,
+        "event_signal_fit_score": event_signal_fit_score,
+        "allowed_primitives": list(allowed_primitives),
+        "contract_compatible": bool(contract_primitives),
+        "contract_compatible_primitives": list(contract_primitives),
+        "preferred_source_routes": {
+            key: list(value)
+            for key, value in (card.source_route_by_primitive.items() if card else ())
+            if key in allowed_primitives
+        },
+        "green_blockers": list(card.green_blockers[:5] if card else ()),
+        "do_not_promote_rules": list(card.do_not_promote_rules[:5] if card else ()),
+    }
+
+
+def _contract_compatible_option_payloads(
+    *,
+    cards: Sequence[ArchetypeMemoryCard],
+    contracts: Mapping[str, Any],
+    card_by_id: Mapping[str, ArchetypeMemoryCard],
+    existing_option_ids: set[str],
+    limit: int = 3,
+) -> tuple[Mapping[str, Any], ...]:
+    rows: list[tuple[int, str, Mapping[str, Any]]] = []
+    for card in cards:
+        if card.archetype_id in existing_option_ids:
+            continue
+        contract = contracts.get(card.archetype_id)
+        if contract is None:
+            continue
+        compatible = sorted(_allowed_primitives_from_contract(contract) & CONTRACT_COMPATIBLE_PRIMITIVES)
+        if not compatible:
+            continue
+        fit_score = _contract_option_fit_score(compatible)
+        rows.append(
+            (
+                -fit_score,
+                card.archetype_id,
+                _planner_option_payload(
+                    archetype_id=card.archetype_id,
+                    router_score=float(fit_score),
+                    router_reason="event_signal_profile:direct_revenue_contract_disclosure_contract_compatible_option_ordered_by_primitive_fit",
+                    card=card_by_id.get(card.archetype_id),
+                    contract=contract,
+                    event_signal_fit_score=fit_score,
+                ),
+            )
+        )
+    rows.sort(key=lambda item: (item[0], item[1]))
+    return tuple(row for _, _, row in rows[:limit])
+
+
+def _contract_event_option_sort_key(option: Mapping[str, Any]) -> tuple[int, int, str]:
+    return (
+        0 if option.get("contract_compatible") else 1,
+        -int(option.get("event_signal_fit_score") or 0),
+        str(option.get("archetype_id") or ""),
+    )
+
+
+def _contract_option_fit_score(compatible_primitives: Sequence[str]) -> int:
+    priorities = {
+        "contract_amount_to_prior_sales": 100,
+        "contract_duration_months": 80,
+        "revenue_visibility_contract": 70,
+        "contract_visibility": 50,
+        "delivery_schedule": 40,
+        "order_backlog_to_sales": 30,
+        "order_to_revenue_bridge": 30,
+        "export_contract": 20,
+        "contract_quality": 10,
+    }
+    return sum(priorities.get(primitive, 1) for primitive in set(compatible_primitives))
+
+
+def _event_signal_profile(event: CandidateEventV2) -> Mapping[str, Any]:
+    text = _event_signal_text(event)
+    contract_terms = tuple(term for term in _REVENUE_CONTRACT_TERMS if term.lower() in text)
+    false_positive_terms = tuple(term for term in _NON_REVENUE_CONTRACT_TERMS if term.lower() in text)
+    direct_revenue_contract = bool(contract_terms) and not bool(false_positive_terms)
+    return {
+        "direct_revenue_contract_disclosure": direct_revenue_contract,
+        "contract_signal_terms": list(contract_terms[:8]),
+        "non_revenue_contract_terms": list(false_positive_terms[:8]),
+        "contract_compatible_primitive_hints": sorted(CONTRACT_COMPATIBLE_PRIMITIVES),
+    }
+
+
+def _event_signal_text(event: CandidateEventV2) -> str:
+    structured = event.structured_payload if isinstance(event.structured_payload, Mapping) else {}
+    return " ".join(
+        str(value or "")
+        for value in (
+            event.source_family,
+            event.source_id,
+            event.event_type,
+            event.primary_disclosure_type,
+            event.event_title,
+            event.event_summary,
+            " ".join(str(code) for code in event.raw_reason_codes),
+            json.dumps(structured, ensure_ascii=False, sort_keys=True),
+        )
+    ).lower()
+
+
+def _planner_prompt_payload_for_trace(
+    *,
+    events: Sequence[CandidateEventV2],
+    memory_cards: Sequence[ArchetypeMemoryCard],
+    existing_evidence_by_event_id: Mapping[str, Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    if memory_cards:
+        return build_v4_planner_prompt_payload(
+            events=events,
+            memory_cards=memory_cards,
+            existing_evidence_by_event_id=existing_evidence_by_event_id,
+        )
+    return {
+        "schema_version": "research_brain_v4_planner_prompt_minimal_trace",
+        "events": [
+            {
+                "candidate_event": _sanitize_candidate_event_for_planner_v4(event.to_dict()),
+                "existing_evidence_summary": sanitize_existing_evidence_summary_v4(
+                    existing_evidence_by_event_id.get(event.candidate_event_id, {})
+                ),
+                "allowed_archetype_options": [],
+            }
+            for event in events
+        ],
+        "rules": [
+            "Minimal trace payload used when tests inject a planner provider without memory cards.",
+            "Do not output score, stage, hard_break final, verified final, current_score_eligible, or accepted claim final.",
         ],
         "forbidden_output_keys": sorted(FORBIDDEN_RESEARCH_BRAIN_OUTPUT_KEYS),
     }
@@ -523,9 +985,71 @@ def validate_llm_planner_output_v4(
     primary = str(output.top_k_archetype_hypotheses[0].get("archetype_id") or "")
     if primary.startswith("R13_") and not _explicit_r13_event(event):
         raise PlannerProviderRejected("R13 primary is only allowed for explicit red-team events")
+    allowed_primitives = _allowed_primitives_for_primary(primary)
+    valid_must_verify = tuple(
+        normalized
+        for primitive in output.must_verify_primitives
+        for normalized in (_normalize_planner_primitive_for_contract(primitive, allowed_primitives),)
+        if normalized
+    )
+    valid_source_task_drafts: list[Mapping[str, Any]] = []
     for draft in output.source_task_drafts:
-        _validate_source_task_draft_v4(draft)
-    return validate_llm_planner_output_v3(payload, event=event, memory_cards=memory_cards)
+        sanitized_draft = _sanitize_source_task_draft_v4(draft)
+        primitive = _normalize_planner_primitive_for_contract(
+            str(sanitized_draft.get("primitive_gap") or sanitized_draft.get("primitive_id") or "").strip(),
+            allowed_primitives,
+        )
+        if primitive:
+            sanitized_draft = dict(sanitized_draft)
+            sanitized_draft["primitive_gap"] = primitive
+        _validate_source_task_draft_v4(sanitized_draft)
+        primitive = str(sanitized_draft.get("primitive_gap") or sanitized_draft.get("primitive_id") or "").strip()
+        if primitive in allowed_primitives:
+            valid_source_task_drafts.append(sanitized_draft)
+    sanitized = output.to_dict()
+    sanitized["must_verify_primitives"] = list(valid_must_verify)
+    sanitized["source_task_drafts"] = valid_source_task_drafts
+    if output.source_task_drafts and not valid_source_task_drafts:
+        raise PlannerProviderRejected(f"all source_task primitives are outside primary archetype contract: {primary}")
+    return validate_llm_planner_output_v3(sanitized, event=event, memory_cards=memory_cards)
+
+
+def _allowed_primitives_for_primary(primary: str) -> set[str]:
+    contracts = load_evidence_contracts_v2(require_all_archetypes=False)
+    contract = contracts.get(primary)
+    if contract is None:
+        return set()
+    return _allowed_primitives_from_contract(contract)
+
+
+def _allowed_primitives_from_contract(contract: Any) -> set[str]:
+    values: set[str] = set(contract.required_primitives)
+    values.update(contract.green_gate.primitive_ids())
+    values.update(contract.alternative_primitives)
+    for primitives in contract.alternative_primitives.values():
+        values.update(primitives)
+    for primitives in contract.score_rubric.values():
+        values.update(primitives)
+    values.update(contract.primitive_aliases)
+    values.update(contract.freshness)
+    return values
+
+
+def _normalize_planner_primitive_for_contract(primitive: str, allowed_primitives: set[str]) -> str | None:
+    if primitive == "contract_quality":
+        for candidate in (
+            "contract_amount_to_prior_sales",
+            "revenue_visibility_contract",
+            "contract_duration_months",
+            "contract_visibility",
+            "delivery_schedule",
+            "export_contract",
+        ):
+            if candidate in allowed_primitives:
+                return candidate
+    if primitive in allowed_primitives:
+        return primitive
+    return None
 
 
 def _fixture_output_for_event(
@@ -598,8 +1122,38 @@ def _source_task_draft(
         "stop_condition": {"accepted_claim_count": 1},
         "llm_query_allowed": True,
         "general_search_allowed": False,
+        "query_intents": [f"verify {primitive}"],
         "reason_from_memory": f"{card.archetype_id if card else 'UNKNOWN'}:{primitive}",
     }
+
+
+def _sanitize_source_task_draft_v4(draft: Mapping[str, Any]) -> Mapping[str, Any]:
+    primitive = str(draft.get("primitive_gap") or draft.get("primitive_id") or "").strip()
+    if not _is_official_solvable_gap(primitive):
+        return dict(draft)
+    sanitized = dict(draft)
+    disallowed = {"generalweb", "web", "newsonly", "trustednews", "news", "naversearch", "generalwebsearch"}
+    preferred = _without_external_web_sources(draft.get("preferred_source_classes") or (), disallowed=disallowed)
+    fallback = _without_external_web_sources(draft.get("fallback_source_classes") or (), disallowed=disallowed)
+    if not preferred:
+        preferred = ("DART", "CompanyGuide", "IR")
+    if not fallback:
+        fallback = ("IssuerOfficial", "IR")
+    sanitized["preferred_source_classes"] = list(preferred)
+    sanitized["fallback_source_classes"] = list(fallback)
+    sanitized["general_search_allowed"] = False
+    return sanitized
+
+
+def _without_external_web_sources(values: Sequence[Any], *, disallowed: set[str]) -> tuple[str, ...]:
+    rows: list[str] = []
+    for value in values:
+        raw = str(value or "").strip()
+        normalized = "".join(ch for ch in raw.lower() if ch.isalnum())
+        if not raw or normalized in disallowed:
+            continue
+        rows.append(raw)
+    return tuple(dict.fromkeys(rows))
 
 
 def _validate_source_task_draft_v4(draft: Mapping[str, Any]) -> None:
@@ -634,7 +1188,24 @@ def _failed_run(
     provider_error: str,
     *,
     rejected: bool,
+    prompt_payload: Mapping[str, Any] | None = None,
+    prompt_text: str | None = None,
+    prompt_hash: str | None = None,
 ) -> PlannerRunV4:
+    response_payload = {
+        "schema_version": "research_brain_v4_planner_response_leaf_v1",
+        "candidate_event_id": event.candidate_event_id,
+        "provider_error": provider_error,
+        "rejected_by_validator": rejected,
+    }
+    response_text = _json_dumps_stable(response_payload)
+    response_hash = _sha256_text(response_text)
+    planner_run_id = _planner_run_id(
+        event=event,
+        provider_name=provider.provider_name,
+        prompt_hash=prompt_hash,
+        response_hash=response_hash,
+    )
     return PlannerRunV4(
         event=event,
         provider_name=provider.provider_name,
@@ -642,11 +1213,20 @@ def _failed_run(
         real_provider_exercised=False if provider_error else bool(provider.real_provider),
         real_provider_success=False,
         fake_provider_used=bool(provider.fake_provider),
+        planner_run_id=planner_run_id,
         provider_error=provider_error,
         rejected_by_validator=rejected,
         r13_invalid_primary_rejected="R13 primary" in provider_error,
         model=getattr(provider, "model", None),
         endpoint=getattr(provider, "endpoint", None),
+        prompt_hash=prompt_hash,
+        response_hash=response_hash,
+        raw_prompt_path=_planner_raw_prompt_path(planner_run_id) if prompt_hash else None,
+        raw_response_path=_planner_raw_response_path(planner_run_id),
+        prompt_payload=prompt_payload,
+        prompt_text=prompt_text,
+        response_payload=response_payload,
+        response_text=response_text,
     )
 
 
@@ -660,6 +1240,42 @@ def _planner_prompt(payload: Mapping[str, Any]) -> str:
             json.dumps(payload, ensure_ascii=False, sort_keys=True),
         )
     )
+
+
+def _json_dumps_stable(payload: Mapping[str, Any]) -> str:
+    return json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
+def _sha256_text(text: str | None) -> str | None:
+    if text is None:
+        return None
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _planner_run_id(
+    *,
+    event: CandidateEventV2,
+    provider_name: str,
+    prompt_hash: str | None,
+    response_hash: str | None,
+) -> str:
+    return deterministic_id(
+        "PLANV4",
+        (
+            event.candidate_event_id,
+            provider_name,
+            prompt_hash or "",
+            response_hash or "",
+        ),
+    )
+
+
+def _planner_raw_prompt_path(planner_run_id: str) -> str:
+    return f"planner_raw/prompts/{planner_run_id}.json"
+
+
+def _planner_raw_response_path(planner_run_id: str) -> str:
+    return f"planner_raw/responses/{planner_run_id}.json"
 
 
 def _run_codex_command(command: Sequence[str], *, prompt: str, timeout: float) -> subprocess.CompletedProcess[str]:
@@ -731,8 +1347,23 @@ def _count_forbidden_keys(value: object) -> int:
     return 0
 
 
+_OFFICIAL_SOLVABLE_PRIMITIVE_IDS = {
+    "contract_visibility",
+    "contract_amount_to_prior_sales",
+    "contract_duration_months",
+    "contract_quality",
+    "delivery_schedule",
+    "export_contract",
+    "order_backlog_to_sales",
+    "order_to_revenue_bridge",
+    "revenue_visibility_contract",
+}
+
+
 def _is_official_solvable_gap(primitive: str) -> bool:
     lower = primitive.lower()
+    if lower in _OFFICIAL_SOLVABLE_PRIMITIVE_IDS:
+        return True
     return any(token in lower for token in ("fcf", "cash", "revision", "backlog", "contract", "rpo"))
 
 

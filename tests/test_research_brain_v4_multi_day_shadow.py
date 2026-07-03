@@ -2,7 +2,7 @@ import unittest
 
 from e2r.research_brain.v4_production_orchestrator import run_multi_day_shadow_v4
 from e2r.research_brain.v4_schemas import ProductionShadowV4Config
-from research_brain_v4_test_helpers import RealStubPlannerProviderV4, load_v4_matrix
+from tests.research_brain_v4_test_helpers import RealStubPlannerProviderV4, load_v4_matrix
 
 
 class ResearchBrainV4MultiDayShadowTests(unittest.TestCase):

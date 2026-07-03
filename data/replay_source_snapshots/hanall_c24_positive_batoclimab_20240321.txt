@@ -1,0 +1,6 @@
+HanAll Biopharma Co., Ltd. (KRX: 009420.KS) reported financial results for 2023 and provided business updates.
+Immunovant, HanAll's licensed partner in the United States and Europe, has reported positive initial results from a Phase 2 proof-of-concept trial evaluating the safety and efficacy of batoclimab in patients with Graves' disease.
+The study demonstrated that batoclimab achieved response rates exceeding 50% in patients who are hyperthyroid despite treatment with an anti-thyroid medication for more than 12 weeks.
+Treatment response is defined as normalization of T3 and T4 hormone levels without increasing ATD dose.
+The subcutaneous administration of 680 mg batoclimab showed a reduction of up to 87% in IgG levels, with a mean IgG reduction of 81% after 12 weeks of treatment.
+Batoclimab was generally well tolerated with no new safety signals identified from the initial data set.

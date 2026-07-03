@@ -170,7 +170,7 @@ def _is_pdf_url(url: str) -> bool:
 
 def _looks_like_news(source: str, url: str) -> bool:
     haystack = f"{source} {url}".lower()
-    return any(token in haystack for token in ("news", "naver.com", "yna.co.kr", "reuters", "bloomberg"))
+    return any(token in haystack for token in ("news", "news.naver.com", "yna.co.kr", "reuters", "bloomberg"))
 
 
 def _looks_like_disclosure(title: str, url: str) -> bool:

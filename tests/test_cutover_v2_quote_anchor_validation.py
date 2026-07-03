@@ -22,6 +22,17 @@ class CutoverV2QuoteAnchorValidationTests(unittest.TestCase):
             ).valid
         )
 
+    def test_text_span_quote_allows_normalized_whitespace(self):
+        result = validate_anchor(
+            exact_quote="Target issuer reached full capacity before peers.",
+            document_text="Target issuer reached full\n   capacity before peers.",
+            locator=None,
+            anchor_type="TEXT_SPAN",
+        )
+
+        self.assertTrue(result.valid)
+        self.assertEqual(result.reason, "quote_span_verified_normalized_whitespace")
+
 
 if __name__ == "__main__":
     unittest.main()

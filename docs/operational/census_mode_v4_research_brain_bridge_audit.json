@@ -1,0 +1,27 @@
+{
+  "accepted_claim_count": 56,
+  "blockers": [
+    "Research Brain v4 report is not production_cutover_ready",
+    "Research Brain v4 report contains snapshot:// source records",
+    "Research Brain v4 readiness text records fixture/snapshot blockers",
+    "Research Brain v4 planner rows include missing model identity"
+  ],
+  "bridge_mode": "imported_operational_report_bundle",
+  "forced_current_temporal_count": 0,
+  "forced_positive_polarity_count": 0,
+  "forced_target_subject_count": 0,
+  "planner_model_null_count": 30,
+  "planner_row_count": 30,
+  "production_cutover_ready": false,
+  "real_document_fetched_count": 255,
+  "report_dir": "docs/operational",
+  "schema_version": "e2r_census_v4_research_brain_bridge_audit_v1",
+  "shadow_ready": true,
+  "snapshot_url_count": 255,
+  "source_task_accepted_without_real_document_count": 0,
+  "source_task_count": 257,
+  "unique_accepted_claim_count": 21,
+  "unique_real_document_fetched_count": 63,
+  "usable_for_census_cutover": false,
+  "verdict": "SHADOW_OR_IMPORT_ONLY"
+}

@@ -19,7 +19,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--fail-on-external-blocker", default="true")
     parser.add_argument("--fail-on-report-overclaim", default="true")
     parser.add_argument("--fail-on-critical-audit", default="true")
+    parser.add_argument("--allow-legacy-v3", action="store_true")
     args = parser.parse_args(argv)
+    if not args.allow_legacy_v3:
+        print(
+            "run_e2r_census_v3_until_pass is legacy v3 and cannot claim production Census pass. "
+            "Use python -m e2r.cli.run_e2r_census_v4_until_pass, or pass --allow-legacy-v3 for explicit fixture-only runs."
+        )
+        return 2
     result = run_census_mode_v3(
         CensusV3RunConfig(
             as_of_date=args.as_of_date,
@@ -33,7 +40,7 @@ def main(argv: list[str] | None = None) -> int:
             fail_on_critical_audit=str(args.fail_on_critical_audit).lower() == "true",
         )
     )
-    print(result.readiness_verdict["verdict"])
+    print(f"LEGACY_V3_FIXTURE_VERDICT {result.readiness_verdict['verdict']}")
     return 0 if result.readiness_verdict["verdict"] == "FULL_UNIVERSE_STAGE_MAP_PASS" else 1
 
 

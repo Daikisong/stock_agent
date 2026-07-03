@@ -1,0 +1,280 @@
+{
+  "schema_version": "census_v4_0701_p0a_p0b_p0c_p0d_p0e_patch_test_result_v1",
+  "created_at_kst": "2026-07-02",
+  "patch_scope": "P0-A FULL_THESIS candidate scan split, P0-B official detail resolver metadata, P0-C query plumbing / external web/LLM failure feedback retry, P0-D policy-rejected external source feedback, and P0-E mixed official/web source-class scoring guard",
+  "patched_runtime_files": [
+    "src/e2r/census/census_runner_v4.py",
+    "src/e2r/research_brain/v4_planner_runtime.py",
+    "src/e2r/research_brain/v4_production_orchestrator.py",
+    "src/e2r/research_brain/v4_source_acquisition_runner.py",
+    "src/e2r/research_brain/v4_evidence_extraction_bridge.py"
+  ],
+  "patched_test_files": [
+    "tests/test_census_v4_brain_stage_promotion_gate.py",
+    "tests/test_research_brain_v4_operational_modes.py",
+    "tests/test_research_brain_v4_real_source_acquisition.py",
+    "tests/test_research_brain_v4_evidence_extraction_from_real_document.py"
+  ],
+  "patched_doc_files": [
+    "docs/0701/README.md",
+    "docs/0701/census_v4_0701_sourcequality_v21_stage_existence_deep_audit_and_patch_direction_2026-07-02.md",
+    "docs/0701/census_v4_0701_sourcequality_v23_patch_rerun_result_and_next_bottleneck_2026-07-02.md",
+    "docs/0701/census_v4_0701_sourcequality_v26_external_feedback_sourceclass_patch_and_stage_truth_2026-07-02.md"
+  ],
+  "behavior_verified": [
+    "source_task_drafts[*].query_intents are accepted by the v4 planner schema",
+    "task-specific query_intents override top-level query_intents for that SourceTask",
+    "top-level query_intents remain a fallback when a SourceTask has no task-specific query_intents",
+    "direct source-task acceptance still blocks stale rejected-claim retry when no external web/LLM task failed",
+    "direct source-task acceptance no longer blocks retry when a separate external LLM claim was rejected before scoring",
+    "direct source-task acceptance no longer blocks retry when separate external web sources were rejected before extraction",
+    "production FULL_THESIS candidate scan no longer depends only on BRAIN_WEB_PARTIAL stage rows",
+    "official-only complete Research Brain StageCourt traces can be FULL_THESIS candidates without satisfying the separate Brain/Web evidence gate",
+    "web/Naver-discovered exact KIND and DART URLs carry official_detail_resolution metadata",
+    "resolved official URLs become KIND/DART FILING documents instead of Naver score evidence",
+    "failed official URL fetches are rejected as official_detail_resolve_failed",
+    "policy-rejected external web source tasks become source_rejection_feedback instead of silent stops",
+    "direct source-task acceptance no longer blocks retry when a separate external task was rejected by policy before search",
+    "mixed official/web acquisition no longer checks NEWS documents as DART/KIND filings"
+  ],
+  "test_runs": [
+    {
+      "command": "PYTHONPATH=src python -m unittest tests.test_research_brain_v4_operational_modes.ResearchBrainV4OperationalModesTests.test_source_task_query_intents_are_task_specific_before_global_fallback tests.test_research_brain_v4_operational_modes.ResearchBrainV4OperationalModesTests.test_direct_source_task_acceptance_blocks_rejected_claim_feedback_retry tests.test_research_brain_v4_operational_modes.ResearchBrainV4OperationalModesTests.test_direct_source_task_acceptance_does_not_block_external_llm_rejected_claim_feedback_retry tests.test_research_brain_v4_operational_modes.ResearchBrainV4OperationalModesTests.test_direct_source_task_acceptance_does_not_block_failed_external_source_feedback_retry -v",
+      "test_count": 4,
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m unittest tests.test_research_brain_v4_operational_modes -v",
+      "test_count": 33,
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m unittest tests.test_research_brain_v4_real_planner_provider -v",
+      "test_count": 6,
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m unittest tests.test_research_brain_v4_real_source_acquisition.ResearchBrainV4RealSourceAcquisitionTests.test_web_discovered_kind_document_keeps_official_kind_source_class tests.test_research_brain_v4_real_source_acquisition.ResearchBrainV4RealSourceAcquisitionTests.test_web_discovered_dart_document_keeps_official_dart_resolution_metadata tests.test_research_brain_v4_real_source_acquisition.ResearchBrainV4RealSourceAcquisitionTests.test_web_discovered_official_detail_fetch_failure_is_a_resolver_failure tests.test_research_brain_v4_real_source_acquisition.ResearchBrainV4RealSourceAcquisitionTests.test_web_discovered_fake_kind_path_does_not_become_official_kind_source_class tests.test_research_brain_v4_evidence_extraction_from_real_document.ResearchBrainV4EvidenceExtractionFromRealDocumentTests.test_web_discovered_kind_full_source_is_not_rejected_as_general_search_provider_error -v",
+      "test_count": 5,
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m unittest tests.test_research_brain_v4_real_source_acquisition tests.test_research_brain_v4_evidence_extraction_from_real_document -v",
+      "test_count": 41,
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m unittest tests.test_census_v4_brain_web_readiness_gate tests.test_research_brain_v4_operational_modes -v",
+      "test_count": 47,
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m unittest tests.test_census_v4_brain_stage_promotion_gate -v",
+      "test_count": 12,
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m unittest tests.test_census_v4_full_thesis_smoke_tasks -v",
+      "test_count": 7,
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m unittest tests.test_census_v4_run_mode_honesty -v",
+      "test_count": 18,
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m unittest tests.test_census_v4_brain_web_readiness_gate -v",
+      "test_count": 14,
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m unittest discover -s tests -v",
+      "test_count": 5044,
+      "duration_seconds": 196.216,
+      "scope_note": "This historical full unittest was run before adding the strict schema regression test for source_task_drafts[*].query_intents. It is superseded by the following 5046-test post-v23 full rerun.",
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m e2r.cli.run_test_command_with_artifact --artifact output/test_full_repo_0701/full_unittest_after_p0a_p0c_v23_schema_artifact.json --log output/test_full_repo_0701/full_unittest_after_p0a_p0c_v23_schema.log -- python -m unittest discover -s tests -v",
+      "test_count": 5046,
+      "duration_seconds": 192.6421,
+      "failed_count": 0,
+      "error_count": 0,
+      "scope_note": "This full unittest was run before the P0-B official detail resolver metadata tests were added. It is superseded by the following 5048-test full rerun.",
+      "artifact": "output/test_full_repo_0701/full_unittest_after_p0a_p0c_v23_schema_artifact.json",
+      "artifact_sha256": "75c77bfdbca156bb2de8b601e5e842f0663ced50354d69e76d5f1bf6b86e3d65",
+      "log_sha256": "08971109edc0b9d1b48b17ba283ebddd62988f56d9cdbc8e283bf698c81d71a8",
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m e2r.cli.run_test_command_with_artifact --artifact output/test_full_repo_0701/full_unittest_after_p0b_official_detail_resolver_artifact.json --log output/test_full_repo_0701/full_unittest_after_p0b_official_detail_resolver.log -- python -m unittest discover -s tests -v",
+      "test_count": 5048,
+      "duration_seconds": 188.0978,
+      "failed_count": 0,
+      "error_count": 0,
+      "artifact": "output/test_full_repo_0701/full_unittest_after_p0b_official_detail_resolver_artifact.json",
+      "artifact_sha256": "71f444f03cfe7f6ef0f5da5f8b285fa37ab51a611a15ce143ed7d3d1ad2a6a1a",
+      "log_sha256": "12b0088e9ddb22995994770e8d8cd5962c724ab141339b201d0f7a12f9521d2c",
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m unittest tests.test_research_brain_v4_operational_modes.ResearchBrainV4OperationalModesTests.test_policy_rejected_external_task_becomes_source_feedback_without_web_rows tests.test_research_brain_v4_operational_modes.ResearchBrainV4OperationalModesTests.test_direct_acceptance_does_not_block_policy_rejected_external_task_retry tests.test_research_brain_v4_operational_modes.ResearchBrainV4OperationalModesTests.test_source_rejection_feedback_retries_planner_once tests.test_research_brain_v4_operational_modes.ResearchBrainV4OperationalModesTests.test_direct_source_task_acceptance_does_not_block_failed_external_source_feedback_retry -v",
+      "test_count": 4,
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m unittest tests.test_research_brain_v4_operational_modes tests.test_research_brain_v4_evidence_extraction_from_real_document tests.test_research_brain_v4_real_source_acquisition tests.test_census_v4_brain_web_readiness_gate -v",
+      "test_count": 91,
+      "status": "OK"
+    },
+    {
+      "command": "PYTHONPATH=src python -m e2r.cli.run_test_command_with_artifact --artifact output/test_full_repo_0701/full_unittest_after_p0d_p0e_external_feedback_sourceclass_artifact.json --log output/test_full_repo_0701/full_unittest_after_p0d_p0e_external_feedback_sourceclass.log -- python -m unittest discover -s tests -v",
+      "test_count": 5051,
+      "duration_seconds": 190.5442,
+      "failed_count": 0,
+      "error_count": 0,
+      "artifact": "output/test_full_repo_0701/full_unittest_after_p0d_p0e_external_feedback_sourceclass_artifact.json",
+      "log_sha256": "4d31c61b2a03eb97ed1ef4b4cd189a4ab63742b841f3d11b98bd570802a045cc",
+      "status": "OK"
+    }
+  ],
+  "rerun_diagnostics": [
+    {
+      "output_root": "output/census_v4/2026-07-01-brain-web-diagnostic-sourcequality-v22",
+      "purpose": "first rerun after P0-A/P0-C local patch",
+      "readiness": "NOT_READY",
+      "result": "SCHEMA_REGRESSION",
+      "real_provider_success_count": 0,
+      "leaf_critical_count": 2,
+      "runtime_plausibility": "FAIL",
+      "provider_error_summary": "strict planner JSON schema rejected source_task_drafts[*].query_intents because it was declared in properties but missing from required"
+    },
+    {
+      "output_root": "output/census_v4/2026-07-01-brain-web-diagnostic-sourcequality-v23",
+      "purpose": "rerun after adding query_intents to strict schema required list",
+      "readiness": "NOT_READY",
+      "result": "VALID_RERUN_NOT_READY",
+      "real_provider_success_count": 2,
+      "source_task_execution_count": 13,
+      "web_fetched_document_count": 2,
+      "llm_claim_extractor_attempt_count": 2,
+      "official_accepted_claim_count": 4,
+      "web_or_llm_accepted_claim_count": 0,
+      "full_thesis_candidate_row_count": 1,
+      "promoted_full_thesis_row_count": 0,
+      "blocked_candidate_reason": "missing_green_gate_primitives",
+      "blocked_candidate_symbol": "003090",
+      "blocked_candidate_archetype": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "blocked_candidate_present_primitives": ["implementation_timeline"],
+      "blocked_candidate_missing_green_primitives": [
+        "direct_company_cash_route",
+        "policy_or_regulatory_confirmed",
+        "subsidy_capture_visible"
+      ],
+      "leaf_critical_count": 0,
+      "runtime_plausibility": "PASS_LIVE_RUNTIME_PLAUSIBILITY"
+    },
+    {
+      "output_root": "output/census_v4/2026-07-01-brain-web-diagnostic-sourcequality-v24",
+      "purpose": "rerun after P0-B code/tests; exposed missing policy-rejected external feedback",
+      "readiness": "NOT_READY",
+      "result": "VALID_RERUN_NOT_READY_WEB_CLAIMED_ZERO_SEARCH",
+      "real_provider_success_count": 1,
+      "source_task_execution_count": 13,
+      "web_search_task_count": 0,
+      "web_fetched_document_count": 0,
+      "llm_claim_extractor_attempt_count": 0,
+      "official_accepted_claim_count": 24,
+      "web_or_llm_accepted_claim_count": 0,
+      "full_thesis_candidate_row_count": 1,
+      "promoted_full_thesis_row_count": 0,
+      "blocked_candidate_symbol": "114450",
+      "blocked_candidate_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "blocked_candidate_present_primitives": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "delivery_schedule"
+      ],
+      "blocked_candidate_missing_green_primitives": ["margin_bridge_visible"],
+      "leaf_critical_count": 1,
+      "leaf_critical_summary": "web_claimed_but_zero_search_count",
+      "runtime_plausibility": "PASS_LIVE_RUNTIME_PLAUSIBILITY"
+    },
+    {
+      "output_root": "output/census_v4/2026-07-01-brain-web-diagnostic-sourcequality-v25",
+      "purpose": "rerun after P0-D policy-rejected external task feedback patch",
+      "readiness": "NOT_READY",
+      "result": "VALID_RERUN_NOT_READY_WEB_FETCH_AND_LLM_EXTRACTOR_EXECUTED",
+      "planner_run_count": 22,
+      "real_provider_success_count": 2,
+      "feedback_retry_count": 1,
+      "source_task_execution_count": 18,
+      "web_search_task_count": 7,
+      "web_search_result_count": 51,
+      "web_fetched_document_count": 2,
+      "web_rejected_document_count": 29,
+      "llm_claim_extractor_attempt_count": 2,
+      "official_accepted_claim_count": 36,
+      "web_or_llm_accepted_claim_count": 0,
+      "full_thesis_candidate_row_count": 1,
+      "promoted_full_thesis_row_count": 0,
+      "blocked_candidate_symbol": "114450",
+      "blocked_candidate_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "blocked_candidate_missing_green_primitives": ["margin_bridge_visible"],
+      "leaf_critical_count": 0,
+      "runtime_plausibility": "PASS_LIVE_RUNTIME_PLAUSIBILITY"
+    },
+    {
+      "output_root": "output/census_v4/2026-07-01-brain-web-diagnostic-sourcequality-v26",
+      "purpose": "rerun after P0-E mixed official/web source-class scoring guard patch",
+      "readiness": "NOT_READY",
+      "result": "VALID_RERUN_NOT_READY_DART_NEWS_MISMATCH_REMOVED",
+      "planner_run_count": 22,
+      "source_task_execution_count": 13,
+      "web_search_task_count": 4,
+      "web_search_result_count": 38,
+      "web_fetched_document_count": 2,
+      "web_rejected_document_count": 28,
+      "llm_claim_extractor_attempt_count": 2,
+      "official_accepted_claim_count": 24,
+      "web_or_llm_accepted_claim_count": 0,
+      "full_thesis_candidate_row_count": 1,
+      "promoted_full_thesis_row_count": 0,
+      "blocked_candidate_symbol": "114450",
+      "blocked_candidate_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "blocked_candidate_present_primitives": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "delivery_schedule"
+      ],
+      "blocked_candidate_missing_green_primitives": ["margin_bridge_visible"],
+      "leaf_critical_count": 0,
+      "runtime_plausibility": "PASS_LIVE_RUNTIME_PLAUSIBILITY",
+      "remaining_source_blocks": [
+        "source_provider_document_type_mismatch:TrustedNews:general_web_search_provider",
+        "source_task_provider_error_score_block:general_search_not_score_source",
+        "source_provider_document_type_mismatch:IndustryMedia:general_web_search_provider"
+      ]
+    }
+  ],
+  "post_v26_code_patch_not_live_proven": [
+    {
+      "patch": "P0-B official detail resolver metadata",
+      "status": "UNIT_TESTED_BUT_NOT_EXERCISED_BY_V24_V26_LIVE_RERUNS",
+      "reason": "v24-v26 live diagnostics did not produce an exact KIND/DART official URL discovered through web search, so official_detail_resolution metadata remains unit-tested but not live-exercised.",
+      "required_next_artifact_check": [
+        "web_search_results.jsonl contains official_detail_resolution_required/status for exact KIND/DART official URLs",
+        "web_fetched_documents.jsonl carries official_document_id for resolved official URLs",
+        "web_rejected_documents.jsonl uses official_detail_resolve_failed for failed official URL fetches"
+      ]
+    }
+  ],
+  "still_not_ready": [
+    "The latest v26 artifact still has FULL_THESIS row = 0.",
+    "The latest v26 artifact still has web_or_llm_accepted_claim_count = 0.",
+    "The latest v26 candidate scan produces one C05 candidate for 114450, but promotion is blocked by missing margin_bridge_visible.",
+    "General Naver search documents are still score-blocked until a trusted source connector/domain/source lineage route exists.",
+    "Naver-discovered KIND/DART official detail resolver metadata is unit-tested but not yet live-exercised in v24-v26."
+  ]
+}

@@ -310,6 +310,7 @@ class SourceTask:
     stop_condition: Mapping[str, Any] = field(
         default_factory=lambda: {"accepted_claim_count": 1, "counter_claim_check_done": True}
     )
+    query_intents: tuple[str, ...] = ()
     llm_query_allowed: bool = True
     general_search_allowed: bool = False
     reason_from_memory: str = ""

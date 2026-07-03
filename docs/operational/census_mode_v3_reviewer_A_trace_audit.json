@@ -8,7 +8,7 @@
     "stage2_without_stagecourt_trace_count": 0,
     "stagecourt_trace_id_missing_from_leaf_count": 0
   },
-  "leaf_artifact_root": "output/census_v3/2026-07-01",
+  "leaf_artifact_root": "output/test_census_v3_cached",
   "leaf_artifacts_checked": [
     "census_stage_status.jsonl",
     "claim_to_stage_trace.jsonl",

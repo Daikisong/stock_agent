@@ -8,6 +8,7 @@ The symbol and the source both have to be production-eligible.
 from __future__ import annotations
 
 import csv
+import json
 import re
 from dataclasses import asdict, dataclass
 from enum import Enum
@@ -103,6 +104,11 @@ def load_instrument_registry(repo_root: str | Path = ".") -> InstrumentRegistry:
         # as the official KRX universe size for cutover readiness.
         symbol = path.name.split("_", 1)[0]
         rows.append((symbol, symbol, str(path), False))
+    for path in tuple(root.glob("output/census_v3/*/universe.jsonl")) + tuple(root.glob("output/census_v4/*/universe.jsonl")):
+        # Census universe artifacts are not score evidence, but they are useful
+        # to avoid rejecting real KRX symbols just because the tiny raw fixture
+        # universe in this checkout is incomplete.
+        rows.extend(_jsonl_instrument_rows(path, official=False))
     official_symbols = {symbol for symbol, _name, _path, official in rows if official and _valid_symbol(symbol)}
     names: dict[str, str] = {}
     for symbol, name, _path, _official in rows:
@@ -309,6 +315,24 @@ def _sector_coverage(events: Sequence[Mapping[str, Any] | Any], rows: Sequence[M
 def _instrument_rows(path: Path, *, official: bool) -> Iterable[tuple[str, str, str, bool]]:
     with path.open("r", encoding="utf-8", newline="") as handle:
         for row in csv.DictReader(handle):
+            symbol = str(row.get("symbol") or row.get("ticker") or "").strip()
+            name = str(row.get("name") or row.get("company_name") or row.get("company") or symbol).strip()
+            if symbol:
+                yield symbol, name, str(path), official
+
+
+def _jsonl_instrument_rows(path: Path, *, official: bool) -> Iterable[tuple[str, str, str, bool]]:
+    with path.open("r", encoding="utf-8") as handle:
+        for line in handle:
+            text = line.strip()
+            if not text:
+                continue
+            try:
+                row = json.loads(text)
+            except json.JSONDecodeError:
+                continue
+            if not isinstance(row, Mapping):
+                continue
             symbol = str(row.get("symbol") or row.get("ticker") or "").strip()
             name = str(row.get("name") or row.get("company_name") or row.get("company") or symbol).strip()
             if symbol:

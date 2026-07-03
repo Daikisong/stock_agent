@@ -1,0 +1,34 @@
+{
+  "accepted_claim_count": 92,
+  "census_time_companyguide_attempt_count": 3391,
+  "census_time_existing_ledger_attempt_count": 3391,
+  "census_time_kind_krx_attempt_count": 3391,
+  "census_time_opendart_attempt_count": 3391,
+  "census_time_price_attempt_count": 3391,
+  "census_time_report_news_ir_attempt_count": 3391,
+  "critical_count": 0,
+  "critical_counts": {
+    "source_proxy_production_claim_count": 0,
+    "stale_cache_used_count": 0,
+    "symbol_without_any_census_time_source_attempt_count": 0
+  },
+  "cutover_replay_only_symbol_count": 67,
+  "mode_note": "all current scored rows are ledger/leaf-refresh rows; this audit proves coverage honesty, not live full-thesis operation",
+  "newly_verified_claim_count": 0,
+  "operational_live_source_coverage_pass": false,
+  "provider_cache_used_count": 92,
+  "provider_gap_attempt_count": 3391,
+  "reused_or_imported_claim_count": 92,
+  "schema_version": "e2r_census_v4_source_coverage_audit_v1",
+  "scored_row_count": 67,
+  "source_family_attempt_distribution": {
+    "CompanyGuide/ReportRadar": 3391,
+    "ExistingEvidenceOSLedger": 3391,
+    "IssuerIR/TrustedNews": 3391,
+    "KIND/KRX": 3391,
+    "OpenDART": 3391,
+    "PriceVolume": 3391,
+    "ResearchMemory": 3391
+  },
+  "verdict": "PASS_LEDGER_REFRESH_COVERAGE"
+}

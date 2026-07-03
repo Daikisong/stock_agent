@@ -1,0 +1,14 @@
+{
+  "claim_extractor_non_llm_provider_count": 0,
+  "configured_timeout_seconds": 60.0,
+  "llm_claim_extractor_attempt_count": 0,
+  "llm_claim_extractor_claimed_but_zero_count": 0,
+  "llm_claim_extractor_provider_error_count": 0,
+  "llm_claim_extractor_real_provider_count": 0,
+  "llm_claim_extractor_timeout_count": 0,
+  "pass_scope": "disabled_honesty",
+  "requested_by_brain_web_mode": false,
+  "requested_by_run_mode": false,
+  "schema_version": "e2r_census_v4_llm_claim_extraction_audit_v1",
+  "verdict": "DISABLED_HONESTY_PASS"
+}

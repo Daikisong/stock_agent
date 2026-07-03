@@ -28,6 +28,12 @@ class SourceAcquisitionModeV4(str, Enum):
     TEST_FAKE = "test_fake"
 
 
+class ClaimExtractorProviderModeV4(str, Enum):
+    AUTO = "auto"
+    CODEX_CLI = "codex_cli"
+    RULE_FALLBACK = "rule_fallback"
+
+
 class SourceAcquisitionStatusV4(str, Enum):
     FETCHED = "FETCHED"
     PARSED = "PARSED"
@@ -62,6 +68,7 @@ class PlannerRunV4:
     real_provider_exercised: bool
     real_provider_success: bool
     fake_provider_used: bool
+    planner_run_id: str | None = None
     output: LLMPlannerOutputV2 | None = None
     provider_error: str | None = None
     rejected_by_validator: bool = False
@@ -69,6 +76,19 @@ class PlannerRunV4:
     r13_invalid_primary_rejected: bool = False
     model: str | None = None
     endpoint: str | None = None
+    planner_run_role: str = "initial"
+    planner_feedback: tuple[str, ...] = ()
+    rejected_claim_feedback_count: int = 0
+    source_rejection_feedback_count: int = 0
+    rerouted_claim_feedback_count: int = 0
+    prompt_hash: str | None = None
+    response_hash: str | None = None
+    raw_prompt_path: str | None = None
+    raw_response_path: str | None = None
+    prompt_payload: Mapping[str, Any] | None = None
+    prompt_text: str | None = None
+    response_payload: Mapping[str, Any] | None = None
+    response_text: str | None = None
 
     @property
     def provider_failed(self) -> bool:
@@ -78,6 +98,10 @@ class PlannerRunV4:
         payload = asdict(self)
         payload["event"] = self.event.to_dict()
         payload["output"] = self.output.to_dict() if self.output else None
+        payload.pop("prompt_payload", None)
+        payload.pop("prompt_text", None)
+        payload.pop("response_payload", None)
+        payload.pop("response_text", None)
         return _json_safe(payload)
 
 
@@ -97,6 +121,10 @@ class SourceAcquisitionResultV4:
     provider_errors: tuple[str, ...] = ()
     budget_used: Mapping[str, int] = field(default_factory=dict)
     stop_reason: str = ""
+    web_search_tasks: tuple[Mapping[str, Any], ...] = ()
+    web_search_results: tuple[Mapping[str, Any], ...] = ()
+    web_fetched_documents: tuple[Mapping[str, Any], ...] = ()
+    web_rejected_documents: tuple[Mapping[str, Any], ...] = ()
 
     def __post_init__(self) -> None:
         SourceAcquisitionStatusV4(self.status)
@@ -113,6 +141,18 @@ class SourceTaskExecutionV4:
     task_id: str
     source_task: Mapping[str, Any]
     status: str
+    candidate_event_id: str = ""
+    symbol: str = ""
+    company_name: str = ""
+    archetype_id: str = ""
+    primitive_gap: str = ""
+    source_class: str = ""
+    provider_name: str = ""
+    source_task_origin: str = ""
+    preferred_source_classes: tuple[str, ...] = ()
+    fallback_source_classes: tuple[str, ...] = ()
+    forbidden_source_classes: tuple[str, ...] = ()
+    requested_source_classes: tuple[str, ...] = ()
     fetched_document_ids: tuple[str, ...] = ()
     document_urls: tuple[str, ...] = ()
     document_hashes: tuple[str, ...] = ()
@@ -122,6 +162,14 @@ class SourceTaskExecutionV4:
     accepted_claim_ids: tuple[str, ...] = ()
     rejected_claim_ids: tuple[str, ...] = ()
     not_eligible_reasons: tuple[str, ...] = ()
+    satisfies_source_task: bool = False
+    satisfaction_type: str = "NO_EVIDENCE_FOUND"
+    direct_accepted_claim_ids: tuple[str, ...] = ()
+    rerouted_accepted_claim_ids: tuple[str, ...] = ()
+    score_claim_ids: tuple[str, ...] = ()
+    accepted_primitive_ids: tuple[str, ...] = ()
+    primitive_gap_satisfied_ids: tuple[str, ...] = ()
+    primitive_gap_unsatisfied_ids: tuple[str, ...] = ()
     provider_errors: tuple[str, ...] = ()
     budget_used: Mapping[str, int] = field(default_factory=dict)
     stop_reason: str = ""
@@ -186,12 +234,18 @@ class ProductionShadowV4Config:
     as_of_date: str
     planner_provider: str = PlannerProviderModeV4.REAL.value
     source_acquisition: str = SourceAcquisitionModeV4.LIVE_OFFICIAL_FIRST.value
+    candidate_event_seed_path: str | None = None
     universe_limit: int = 30
     planner_success_limit: int = 30
     planner_batch_size: int = 5
+    max_source_tasks_per_plan: int = 5
     max_fetches_per_task: int = 3
+    accepted_claim_target: int = 0
+    max_distinct_candidate_attempts: int = 30
     top_results: int = 20
     retry_max: int = 2
+    claim_extractor_provider: str = ClaimExtractorProviderModeV4.AUTO.value
+    claim_extractor_timeout_seconds: float | None = 60.0
     fake_provider_allowed: bool = False
 
     def validate(self) -> None:
@@ -199,12 +253,23 @@ class ProductionShadowV4Config:
             raise ValueError("v4 production shadow forbids top_results=None")
         if self.retry_max is None:
             raise ValueError("v4 production shadow forbids retry_max=None")
+        if self.retry_max <= 0:
+            raise ValueError("v4 production shadow requires positive retry_max")
         if self.max_fetches_per_task <= 0:
             raise ValueError("v4 production shadow requires bounded max_fetches_per_task")
+        if self.max_source_tasks_per_plan <= 0:
+            raise ValueError("v4 production shadow requires bounded max_source_tasks_per_plan")
+        if self.accepted_claim_target < 0:
+            raise ValueError("v4 production shadow requires non-negative accepted_claim_target")
+        if self.max_distinct_candidate_attempts <= 0:
+            raise ValueError("v4 production shadow requires bounded max_distinct_candidate_attempts")
         if self.planner_batch_size <= 0:
             raise ValueError("v4 production shadow requires bounded planner_batch_size")
         if self.planner_provider == PlannerProviderModeV4.FAKE.value and not self.fake_provider_allowed:
             raise ValueError("fake planner provider is not allowed for production shadow")
+        if self.claim_extractor_timeout_seconds is not None and self.claim_extractor_timeout_seconds <= 0:
+            raise ValueError("v4 production shadow requires positive claim_extractor_timeout_seconds")
+        ClaimExtractorProviderModeV4(self.claim_extractor_provider)
 
     def to_dict(self) -> dict[str, Any]:
         return _json_safe(asdict(self))

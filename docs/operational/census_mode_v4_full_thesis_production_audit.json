@@ -1,0 +1,25 @@
+{
+  "blockers": [
+    "production_full_thesis_not_requested_or_no_rows"
+  ],
+  "completion_eligible": false,
+  "controlled_smoke_full_thesis_row_count": 0,
+  "controlled_smoke_substitution_allowed": false,
+  "controlled_smoke_substitution_rejected_count": 0,
+  "controlled_smoke_symbols": [],
+  "full_thesis_refresh_queue_candidate_count": 85,
+  "full_thesis_row_count": 0,
+  "full_thesis_smoke_mode": "disabled",
+  "incomplete_production_full_thesis_row_count": 0,
+  "production_full_thesis_row_count": 0,
+  "production_mode_requested": false,
+  "production_pass_allowed": false,
+  "production_runner_implemented": true,
+  "production_symbols": [],
+  "rule": "Controlled full-thesis smoke rows validate the claim-backed score path, but they cannot satisfy production full-thesis operation or meaningful operational readiness.",
+  "run_mode": "LEDGER_REFRESH_CENSUS",
+  "schema_version": "e2r_census_v4_full_thesis_production_audit_v1",
+  "status": "PENDING_FULL_THESIS_PRODUCTION",
+  "target_gate": "anti_fake",
+  "verdict": "PENDING_FULL_THESIS_PRODUCTION"
+}

@@ -20,9 +20,18 @@ def validate_anchor(*, exact_quote: str | None, document_text: str | None, locat
         return AnchorValidationResult(valid=True, reason="structured_locator_present", anchor_type=anchor_type)
     if not exact_quote or not document_text:
         return AnchorValidationResult(valid=False, reason="missing_quote_or_document_text", anchor_type=anchor_type)
-    if exact_quote.strip() not in document_text:
+    quote = exact_quote.strip()
+    if quote in document_text:
+        return AnchorValidationResult(valid=True, reason="quote_span_verified", anchor_type=anchor_type)
+    if _normalize_whitespace(quote) and _normalize_whitespace(quote) in _normalize_whitespace(document_text):
+        return AnchorValidationResult(valid=True, reason="quote_span_verified_normalized_whitespace", anchor_type=anchor_type)
+    if quote not in document_text:
         return AnchorValidationResult(valid=False, reason="quote_not_found_in_document_text", anchor_type=anchor_type)
     return AnchorValidationResult(valid=True, reason="quote_span_verified", anchor_type=anchor_type)
+
+
+def _normalize_whitespace(value: str) -> str:
+    return " ".join(str(value or "").split())
 
 
 __all__ = ["AnchorValidationResult", "validate_anchor"]

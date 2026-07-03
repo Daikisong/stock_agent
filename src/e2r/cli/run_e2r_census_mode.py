@@ -1,4 +1,8 @@
-"""Run E2R Census Mode v1."""
+"""Run E2R Census Mode v1.
+
+This legacy CLI is fixture/backward-compatibility only. Production Census pass
+generation must use `run_e2r_census_v4_until_pass`.
+"""
 
 from __future__ import annotations
 
@@ -22,7 +26,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--sla", default="configs/e2r_census_sla_v1.json")
     parser.add_argument("--universe-file")
     parser.add_argument("--fail-on-critical-audit", default="true")
+    parser.add_argument("--allow-legacy-v1", action="store_true")
     args = parser.parse_args(argv)
+    if not args.allow_legacy_v1:
+        print(
+            "run_e2r_census_mode is legacy v1 and cannot claim production Census pass. "
+            "Use python -m e2r.cli.run_e2r_census_v4_until_pass, or pass --allow-legacy-v1 for explicit fixture-only runs."
+        )
+        return 2
     result = run_census_mode(
         CensusRunConfig(
             as_of_date=args.as_of_date,

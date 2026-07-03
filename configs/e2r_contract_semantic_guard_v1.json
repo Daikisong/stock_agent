@@ -1,0 +1,25 @@
+{
+  "schema_version": "e2r_contract_semantic_guard_v1",
+  "contract_quality_allowed_classes": [
+    "commercial_supply_contract",
+    "customer_order_or_backlog",
+    "capacity_or_delivery_contract"
+  ],
+  "contract_quality_blocked_classes": [
+    "financial_contract",
+    "shareholder_return_contract",
+    "share_buyback_trust_contract",
+    "pledge_or_collateral_contract",
+    "equity_issuance_or_security_registration",
+    "capital_allocation_event",
+    "administrative_disclosure",
+    "clarification_or_rumor_response",
+    "information_confidence_only",
+    "risk_or_listing_event",
+    "unrelated_contract_or_wrong_subject"
+  ],
+  "notes": [
+    "DART title에 계약이 있다는 이유만으로 earnings_visibility/contract_quality를 열지 않는다.",
+    "고객/제품/금액/기간/수주/매출 가시성 중 적어도 하나의 revenue-facing scope가 필요하다."
+  ]
+}

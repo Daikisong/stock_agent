@@ -1,0 +1,24 @@
+{
+  "critical_count": 0,
+  "critical_counts": {
+    "report_claims_live_but_only_replay_count": 0,
+    "runtime_too_short_for_declared_live_fetch_count": 0,
+    "runtime_too_short_for_declared_llm_extraction_count": 0,
+    "zero_llm_but_llm_claimed_count": 0
+  },
+  "eligible_count": 3940,
+  "evidence_extraction_count": 0,
+  "legacy_boolean_pass": true,
+  "llm_call_count": 0,
+  "pass_scope": "ledger_refresh_runtime_honesty",
+  "provider_cache_count": 60,
+  "provider_call_count": 0,
+  "run_mode": "LEDGER_REFRESH_CENSUS",
+  "runtime_mode": "LEDGER_REFRESH",
+  "runtime_seconds": 0.7575,
+  "schema_version": "e2r_census_v4_runtime_plausibility_audit_v1",
+  "source_task_real_fetch_count": 0,
+  "verdict": "PASS_LEDGER_REFRESH_RUNTIME_HONESTY",
+  "web_fetched_document_count": 0,
+  "web_search_task_count": 0
+}

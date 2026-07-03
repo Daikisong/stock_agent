@@ -3,7 +3,7 @@ from datetime import date
 
 from e2r.research_brain.schemas import SourceTask, SourceTaskType
 from e2r.research_brain.v4_source_acquisition_runner import SourceAcquisitionRunnerV4
-from research_brain_v4_test_helpers import sample_v4_event
+from tests.research_brain_v4_test_helpers import sample_v4_event
 
 
 class ResearchBrainV4NoUnboundedProductionFetchTests(unittest.TestCase):

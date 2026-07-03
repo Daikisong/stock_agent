@@ -1,990 +1,1093 @@
-확인했어. 최신 `main`은 **Research Brain v1까지 실제로 들어간 상태**가 맞아. 커밋 히스토리상 최신 커밋은 `f5829a4 Research Brain v1 전체 메모리 재컴파일 보강`이고, 그 직전에 `d4cce0b Research Brain v1 운영 두뇌 계층 구현`, `3f30fe2 전 아키타입 증거 OS 운영 검증 완료`가 이어져 있어. 즉 Evidence OS → Research Brain 순서로 큰 구조는 실제 반영됐다. ([GitHub][1])
+너는 Daikisong/stock_agent 레포의 E2R Census v4 / Meaningful Operational Stage Gate를 구현하는 coding agent다.
 
-그런데 정적 감사 기준으로 보면 **아직 “운영 두뇌 완성”이라고 보기엔 치명적인 빈틈이 남아 있어.** 특히 Research Brain v1 리포트는 `READY`라고 쓰고 있지만, 내부 지표를 보면 “실제 종목 선정 두뇌”라기보다 **대량 메모리 인덱스 + 규칙형 플래너 + 제한된 dry-run**에 가깝다.
+이번 Goal은 단순 기능 추가가 아니다.
 
----
+이번 Goal의 목적은 다음 세 작업을 한 번에 닫는 것이다.
 
-# 현재 상태 요약
-
-좋은 점부터 보면, 레포에는 이제 `src/e2r/research_brain` 폴더가 생겼고, `memory_compiler.py`, `memory_store.py`, `hypothesis_builder.py`, `investigation_planner.py`, `runtime_planner.py`, `evidence_os_bridge.py`, `source_task_bridge.py`, `memory_leakage_audit.py`, `reports.py` 같은 핵심 파일이 들어가 있다. 구조 자체는 우리가 말한 Research Brain 계층을 제대로 만들려고 한 흔적이 분명하다. ([GitHub][2])
-
-운영 리포트도 생겼다. `research_brain_v1_acceptance_report.md`에는 테스트 `4543 passed / 0 failed / 0 skipped`, Evidence OS regression `READY`, memory record `1,555,954`, C01~C36 profile coverage `36/36`, leakage audit 통과, source router audit 통과, verdict `READY`가 적혀 있다. ([GitHub][3])
-
-하지만 바로 다음 지표가 문제야.
-
-`planner_replay_results`를 보면 C06, C08, C15, C17 replay의 `primary_archetype_hypothesis`가 각각 원래 아키타입이 아니라 **`R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW`**로 잡혀 있는데도 `result: pass`로 처리돼 있다. C24도 `R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL`로 잡혔고, C28만 제대로 C28로 잡혔다. ([GitHub][4])
-
-이건 꽤 중요해. 왜냐하면 Research Brain의 핵심은:
-
-```text
-이 사건은 어느 아키타입인가?
-→ 그 아키타입에서 무엇을 검증해야 하는가?
-```
-
-인데, replay에서조차 C06/HBM, C08/test socket, C15/spread, C17/chemical spread를 전부 R13 red-team류로 보내면서 pass가 나오면, 지금 acceptance test가 **“뇌가 맞게 생각했는지”가 아니라 “뭔가 source task를 만들었는지”만 보고 있는 것**에 가깝다.
-
----
-
-# 내가 보는 핵심 부족점
-
-## 1. 아키타입 추론이 아직 두뇌가 아니라 토큰 점수기다
-
-현재 `infer_archetype_hypothesis()`는 후보 이벤트의 `event_type`, `candidate_reason`, `source_family` 문자열을 합친 뒤, profile의 primitive/source route token이 들어 있는지와 memory record count로 점수를 올린다. 추가로 `contract`, `facility`, `earnings`, `risk` 같은 단어가 있으면 관련 토큰을 가진 archetype을 boost한다. ([GitHub][5])
-
-이 구조는 빠르지만, 우리가 말한 “연구 기억을 바탕으로 사고하는 LLM 두뇌”는 아니야.
-
-예를 들어 C06 replay가 HBM/customer-capacity 사고를 해야 하는데 R13 false-positive review로 가는 건, 실제 아키타입 의미보다 **메모리량·토큰 중첩·red-team류 일반어**가 더 세게 작동했다는 뜻으로 보인다.
-
----
-
-## 2. replay test가 잘못 통과하고 있다
-
-C06 replay에서 primary hypothesis가 C06이 아니면, 그 replay는 실패해야 맞다.
-
-지금은:
-
-```text
-target archetype: C06
-primary hypothesis: R13
-source_task_count: 6
-result: pass
-```
-
-이런 식이야. ([GitHub][4])
-
-이건 acceptance 기준이 너무 헐겁다. 최소한 replay에서는 아래를 요구해야 해.
-
-```text
-primary_archetype_hypothesis == expected_archetype
-또는
-expected_archetype in top_3_hypotheses
-AND primary mismatch reason is explicit
-```
-
-지금은 “뭔가 조사 계획을 만들었다”는 이유로 통과하는 모양인데, 이러면 실제 운영에서 좋은 C06 후보가 들어와도 R13 쪽 guard task만 잔뜩 만들고, C06 특유의 `capacity sold-out / customer allocation / HBM revenue mix / FCF bridge`를 놓칠 수 있어.
-
----
-
-## 3. Source quality A등급이 너무 쉽게 부여될 가능성이 있다
-
-`source_quality_classifier.py`를 보면 `source_proxy_only`나 `evidence_url_pending`이면 C등급으로 보내는 건 좋다. 그런데 그 외에는 `has_url`과 `has_anchor_hint`가 있으면 바로 `A_URL_BACKED_REPLAY_READY`가 된다. ([GitHub][6])
-
-이건 아직 약해.
-
-진짜 A등급 replay-ready는 단순히 URL 문자열과 `source_url`/`evidence_url` 힌트가 있는 게 아니라:
-
-```text
-URL fetch 성공
-source date 검증
-exact quote 또는 table/API anchor 검증
-target entity 직접성 검증
-as-of date 이전 자료
-primitive mapping 가능
-Evidence OS accepted claim으로 재현 가능
-```
-
-까지 통과해야 해.
-
-지금 리포트에는 `A_URL_BACKED_REPLAY_READY`가 202,547개, `production_fixture_count`가 56,042개로 크게 늘어났는데, 이 숫자가 실제 원문 fetch/anchor 검증까지 통과한 수인지, 아니면 URL 문자열이 있는 연구 row를 넓게 잡은 수인지는 더 엄격히 검증해야 한다. ([GitHub][7])
-
----
-
-## 4. Memory가 너무 크고, 아직 “압축된 판례 카드”가 약하다
-
-메모리 레코드가 155만 개까지 늘었다. 그중 `C_SOURCE_PROXY_ONTOLOGY_ONLY`가 860,101개, `D_PRICE_PATH_ONLY_OR_FUTURE_LEAKAGE_RISK`가 361,665개다. ([GitHub][3])
-
-원료가 많은 건 좋은데, 운영 두뇌가 매번 이 원료를 그대로 뒤지면 안 돼.
-
-최종적으로는 raw memory가 아니라:
-
-```text
-C06 ArchetypeMemoryCard
-C08 ArchetypeMemoryCard
-C15 ArchetypeMemoryCard
-...
-```
-
-처럼 압축돼야 해.
-
-예:
-
-```text
-C06:
-HBM 단어만으로 승격 금지.
-Stage2-Actionable unlock:
-- capacity sold-out
-- customer allocation
-- qualification pass
-- HBM revenue mix
-
-Green blocker:
-- cashflow bridge
-- repeat evidence family
-
-False positive:
-- package substrate sympathy
-- qualification lag with reopen path
-```
-
-현재 memory는 많이 들어갔지만, `runtime_planner.py`는 결국 profile의 `required_primitives_observed`, `green_blockers`, `source_routes`를 뽑아 source task를 만드는 수준이다. `plan_candidate_events()`도 candidate events를 받아 `build_research_brain_plan()`을 호출하는 얇은 entrypoint다. ([GitHub][8])
-
----
-
-## 5. Discovery dry run은 아직 운영 dry run이라고 보기엔 약하다
-
-Research Brain acceptance report의 discovery dry run은 `candidate_event_count: 8`, `candidate_event_requirement_status: provider_or_source_gap_recorded`, Evidence OS accepted claim count `5`다. ([GitHub][3])
-
-Evidence OS 쪽 sector matrix도 production discovery candidate count가 8이고, candidate source path가 `official_cheap_scan` 하나다. source call count를 보면 naver search query 32개가 있고, OpenDART detail fetch, OpenDART financial statement, CompanyGuide call은 0으로 되어 있다. ([GitHub][9])
-
-이건 “전 시장 운영으로 후보를 넓게 잡고, 공식 소스 중심으로 검증하는 일일 파이프라인”이라기보다는 **fixture/dry-run에 가까운 후보 생성 확인**이야.
-
-Research Brain이 진짜 운영 두뇌가 되려면 최소한:
-
-```text
-30개 이상 CandidateEvent
-각 large sector별 3개 이상
-source route 실행
-Evidence OS accepted claim 생성
-Stage output 생성
-follow-up task 생성
-```
-
-까지 가야 한다.
-
----
-
-## 6. general search 비율이 여전히 높다
-
-source route audit에서 official source task ratio는 1.0으로 좋게 찍혔지만, general search task ratio도 0.520833이다. 즉 전체 source task 중 절반가량은 general search 허용이다. ([GitHub][10])
-
-이 자체가 무조건 나쁜 건 아니지만, 최종 운영 목표는:
-
-```text
-DART/KIND/IR/CompanyGuide로 해결 가능한 gap
-→ general search 금지
-
-general search
-→ trusted source/unknown repair/fallback only
-```
-
-였지.
-
-따라서 단순히 “general_search_allowed=True인 task가 있어도 budget이 있으니 pass”가 아니라, **primitive별로 왜 general search가 허용됐는지**가 audit되어야 해.
-
----
-
-# 내 판정
-
-현재 상태는 이렇게 보는 게 정확해.
-
-```text
-Evidence OS v2:
-운영 READY에 가까움
-
-Research Brain v1:
-메모리 인덱스와 기본 플래너 구현은 완료
-
-하지만:
-아키타입 추론 정확도, replay acceptance, source quality 실제 검증,
-discovery dry run 규모, 압축 memory card, production orchestration은 아직 부족
-```
-
-따라서 다음 Goal은 “Research Brain v1에 또 파일 더 추가”가 아니라:
-
-> **Research Brain v2 — Archetype Routing Correctness + Production Discovery Orchestrator + Memory Distillation**
-
-로 가는 게 맞다.
-
----
-
-# 다음 패치용 완성 Goal 프롬프트
-
-아래 그대로 코딩 에이전트에게 주면 돼.
-
-```text
-너는 Daikisong/stock_agent 레포의 E2R Research Brain v2와 Production Discovery Orchestrator를 구현하는 coding agent다.
+A. Census v3의 anti-fake full-universe status board를 runtime-proven leaf artifact 기반으로 검증한다.
+B. Census v3 audit에서 발견된 Stage/score/trace atomicity, score scale, Stage2-Watch 의미 혼동, semantic primitive noise를 고친다.
+C. Research Brain + Web/Naver/IR/Report acquisition이 실제로 실행되었는지, 또는 실행되지 않았다면 그 라벨을 정직하게 낮추는 Gate를 만든다.
 
 현재 전제:
-- Evidence OS v2는 READY 상태다.
-- Research Brain v1은 구현되어 있고, 연구 메모리 compile/report/acceptance 산출물도 존재한다.
-- 하지만 Research Brain v1 acceptance는 아직 운영 두뇌 정확도를 충분히 검증하지 못한다.
-- 특히 planner replay에서 C06/C08/C15/C17/C24가 expected archetype이 아니라 R13 계열로 라우팅돼도 pass 처리되는 문제가 있다.
-- 이번 작업의 목표는 단순히 테스트 숫자를 늘리는 것이 아니라, Research Brain이 실제 운영에서 “새 사건 → 올바른 아키타입 → 올바른 primitive/source task → Evidence OS accepted claim → deterministic Stage”로 이어지게 만드는 것이다.
+- Evidence OS v2의 기본 철학은 유지한다.
+- Production Cutover v3는 CUTOVER_READY였다.
+- Census v3는 c5bc76a에서 구현되고 baaf2e7에서 acceptance report push 상태가 갱신되었다.
+- baaf2e7은 report-only commit이다.
+- Census v3 acceptance report는 FULL_UNIVERSE_STAGE_MAP_PASS를 주장한다.
+- 하지만 docs/0701/census_v3_stage_map_audit_2026-07-01.md의 독립 감사는 현재 결과를 “운영 확정 Stage 지도”가 아니라 “가짜 점수 방지용 전체 상태판”에 가깝다고 판정했다.
+- 현재 v3 결과에는 다음 문제가 있다.
+  1. Stage/score/status/trace가 한 원자적 StageCourt 결과에서 오지 않는 사례가 있다.
+  2. 삼부토건 001470은 최종 row가 Stage2-Watch / 4.4인데 연결 trace는 Stage1 / 4.0이다.
+  3. SK하이닉스 000660은 최종 score_interval_lower와 linked stagecourt trace score_interval이 다르다.
+  4. verified_score가 full E2R 100점인지, 단일 공식 이벤트 점수인지 섞인다.
+  5. Stage2-Watch가 canonical Stage2인지, official event watch signal인지 혼동된다.
+  6. 자기주식취득신탁계약/주식담보제공계약 같은 금융·관리성 계약이 contract_quality/earnings_visibility로 샐 수 있다.
+  7. 삼성전자/하이닉스 Census row는 HBM/C06 full thesis score가 아니라 최근 DART 이벤트 점수다.
+  8. Research Brain + Naver/Web/IR/Report acquisition이 실제로 돈 것인지 leaf artifact로 명확히 증명되지 않았다.
 
-이번 작업의 이름:
-Research Brain v2 — Archetype Routing Correctness + Production Discovery Orchestrator + Memory Distillation
+이번 Goal 이름:
+E2R Census v4 — Atomic Stage Decision, Score Scale Split, Semantic Primitive Guard, Real Brain/Web Evidence Gate
+
+한 줄 목표:
+전체 KRX universe 상태판을 “운영 확정 Stage 지도”처럼 보이게 만드는 것이 아니라,
+각 row가 어떤 종류의 Stage/점수인지 정직하게 구분하고,
+full thesis Stage가 필요한 후보는 Research Brain + official/web/IR/report SourceTask + Evidence OS + StageCourt로 실제 trace를 닫으며,
+그 trace가 같은 원자적 StageCourt 결과에서 나왔음을 증명하는 것이다.
 
 절대 원칙:
-1. Evidence OS v2를 우회하지 마라.
-2. Research Brain은 score/stage를 직접 계산하지 않는다.
-3. Research Brain은 FeatureInput, ScoreContribution, risk field를 직접 mutate하지 않는다.
-4. scoring weight와 Stage threshold는 바꾸지 않는다.
-5. source_proxy_only / evidence_url_pending / price_path_only memory는 현재 점수 evidence가 아니다.
-6. 과거 MFE/MAE/outcome label은 current extraction prompt에 들어가면 안 된다.
-7. 종목명 하드코딩, 특정 URL 예외, 특정 키워드 예외 금지.
-8. general search는 fallback이다. official source로 해결 가능한 primitive에는 general search를 허용하지 않는다.
-9. replay에서 expected archetype을 틀리면 실패다.
-10. candidate discovery가 8개로 끝나는데 READY라고 말하면 안 된다. source gap이면 NOT_READY 또는 PARTIAL_READY로 표시한다.
+1. report 숫자는 source of truth가 아니다. leaf artifacts와 atomic trace가 source of truth다.
+2. `ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS`와 `MEANINGFUL_OPERATIONAL_STAGE_PASS`를 분리한다.
+3. `FULL_UNIVERSE_STAGE_MAP_PASS`는 현재처럼 모호하게 쓰지 않는다. 의미를 바꾸거나 폐기한다.
+4. `verified_score`는 `score_scale=FULL_E2R_100`일 때만 허용한다.
+5. 단일 공식 이벤트 점수는 `event_evidence_score`로만 표시한다.
+6. raw contribution fallback은 `raw_contribution_score` 또는 `event_evidence_score`로만 표시한다.
+7. `Stage2-Watch`는 canonical Stage2와 watch signal을 분리한다.
+8. 최종 Census row의 stage/score/status/trace/claims/contributions는 하나의 `AtomicStageDecision`에서 와야 한다.
+9. 여러 날짜/여러 이벤트/여러 trace를 종목 단위로 합칠 때, representative decision 하나를 고르고 나머지는 additional/backlog trace로 분리한다.
+10. DART title에 “계약”이 있다는 이유로 `contract_quality`나 `earnings_visibility`를 열지 않는다.
+11. 자기주식취득신탁, 주식담보, 유상증자, 지분증권, 해명공시, 정정/관리성 공시는 revenue-facing contract가 아니다.
+12. 삼성전자/하이닉스 C06/HBM full thesis refresh와 daily DART event score를 같은 필드에 넣지 않는다.
+13. Research Brain/Web/Naver/IR/Report가 실행되지 않았으면 실행됐다고 말하지 않는다.
+14. 네이버/웹검색은 전 종목 무차별 실행이 아니라 L3/L4 이상 선별 후보에 bounded source task로만 실행한다.
+15. snippets/headlines는 score evidence가 아니다. full source, quote/date/subject/target/current validation이 있어야 한다.
+16. source_proxy_only/evidence_url_pending/price_path_only research memory는 score evidence가 아니다.
+17. provider failure는 low score나 Red가 아니라 Pending이다.
+18. 최근 공시 window는 Stage cutoff가 아니다. 마지막 유효 thesis/lifecycle이 기준이다.
+19. scoring weights와 Stage threshold는 바꾸지 않는다.
+20. 특정 종목명/URL/키워드 예외 처리 금지.
+21. 실패하면 원인 파일/함수까지 찾고, 패치하고, 같은 명령으로 재실행한다.
+22. 외부 API/키/계약/네트워크 장애만 `EXTERNAL_PROVIDER_BLOCKER_NOT_READY`로 남길 수 있다. 코드 wiring/semantic/audit 결함은 반드시 고친다.
 
 ================================================================================
-1. 현재 Research Brain v1 결함을 명시적으로 deprecated 처리
+0. 내부 통합 플랜 작성
 ================================================================================
 
-다음 상태를 운영 READY 근거로 쓰지 마라.
+코드 패치 전에 반드시 내부 계획 문서를 작성하라.
 
-- research_brain_v1_planner_replay_results.json에서:
-  - C06 expected인데 primary = R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW
-  - C08 expected인데 primary = R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW
-  - C15 expected인데 primary = R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW
-  - C17 expected인데 primary = R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW
-  - C24 expected인데 primary = R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL
-  - result가 pass로 되어 있는 상태
+생성:
+docs/operational/census_mode_v4_internal_patch_plan.md
 
-이 결과는 “planner task generation smoke pass”일 수는 있지만 “archetype routing pass”가 아니다.
+이 문서는 세 묶음으로 나눈다.
 
-새 문서 생성:
-docs/operational/research_brain_v1_deprecated_acceptance_notes.md
+Bundle A — Runtime Proof / Anti-Fake Hardening
+- legacy runner lockout
+- leaf artifact manifest
+- report generated from leaf audit only
+- claim-to-stage trace forensic audit
+- source task realness audit
+- known-bad regression
 
-내용:
-- v1 acceptance가 무엇을 검증했는지
-- 무엇을 검증하지 못했는지
-- 왜 v2가 필요한지
-- v1 report의 READY를 production-ready가 아니라 IMPLEMENTATION_READY로 재라벨링
+Bundle B — Meaningful Stage Semantics
+- AtomicStageDecision
+- score field split
+- Stage2-Watch meaning split
+- investigation_status split
+- risk overlay split
+- semantic primitive guard
+- official claim counters
 
-================================================================================
-2. Archetype Routing Correctness 재설계
-================================================================================
-
-현재 infer_archetype_hypothesis의 token/memory-count 기반 점수기를 교체하거나 보조로 낮춰라.
-
-새 구조:
-
-A. Candidate Event Understanding
-입력:
-- CandidateEvent
-- event_type
-- source_family
-- source payload
-- reason_codes
-- structured fields
-- price context
-- disclosure text if available
-- report/IR metadata if available
-
-출력:
-- event_semantics
-- involved_entities
-- economic_mechanism
-- likely_evidence_family
-- directness_to_issuer
-- event_strength
-- event_freshness
-- candidate_archetype_distribution
-
-B. Research Memory Retrieval
-입력:
-- event_semantics
-- large_sector candidate
-- candidate_archetype_distribution
-- available source families
-
-출력:
-- top_k_archetype_memory_cards
-- positive patterns
-- false-positive patterns
-- green blockers
-- red-team patterns
-- source route patterns
-- query success/failure patterns
-
-C. Archetype Router
-출력:
-{
-  "primary_archetype": "...",
-  "top_k_archetypes": [
-    {"archetype_id": "...", "probability_or_score": 0.0, "reason": "..."}
-  ],
-  "router_confidence": "HIGH|MEDIUM|LOW",
-  "why_not_other_top_archetypes": [],
-  "required_disambiguation_tasks": []
-}
-
-규칙:
-- R13 red-team/cross-archetype archetype는 default primary가 되면 안 된다.
-- R13은 overlay/secondary/red-team route로 붙는 것이 기본이다.
-- primary가 R13이 되려면 candidate event 자체가 cross-archetype false-positive review 또는 red-team review event라는 강한 증거가 있어야 한다.
-- expected archetype replay에서 primary mismatch는 실패다.
-- LOW confidence이면 score/stage로 넘어가지 말고 `ARCTYPE_PENDING_DISAMBIGUATION` 상태를 출력한다.
-
-필수 테스트:
-- C06 HBM event replay → primary C06
-- C08 test socket customer/order replay → primary C08
-- C15 material spread pass-through replay → primary C15
-- C17 chemical spread replay → primary C17
-- C24 bio data/regulatory event replay → primary C24
-- C28 software/security retention replay → primary C28
-- R13 generic false-positive review event → primary R13 가능
-- C06 event + red-team concern → primary C06, secondary/overlay R13
-- C15 raw commodity headline → primary C15, stage cap/false-positive memory attached, not R13 primary
+Bundle C — Real Brain/Web Evidence Gate
+- LLM planner run trace
+- Naver/Web/TrustedNews/IR/Report acquisition task
+- LLM claim extractor trace
+- official-first validator
+- full thesis refresh task
+- Samsung/Hynix C06/HBM smoke separation
 
 Acceptance:
-- C01-C36 archetype routing fixture 전체에서 top1 accuracy >= 90%
-- top3 accuracy = 100%
-- C06/C08/C15/C17/C24/C28 six mandatory replays top1 exact match
-- R13 over-routing count = 0 except explicit R13 fixtures
+- internal_patch_plan exists.
+- each bundle has file targets, test targets, output artifacts, acceptance gates.
+- coding begins only after this plan is written.
+- final acceptance report must include which bundle passed.
 
 ================================================================================
-3. ArchetypeMemoryCard 도입
+1. docs/0701 Audit Packet Ingestion
 ================================================================================
 
-현재 155만 개 ResearchMemoryRecord를 runtime planner가 직접 보는 구조를 줄여라.
+The two user-provided audit files must become tracked operational artifacts.
 
-새 객체:
-ArchetypeMemoryCard
+Input files:
+- docs/0701/README.md
+- docs/0701/census_v3_stage_map_audit_2026-07-01.md
 
-{
-  "archetype_id": "...",
-  "large_sector_id": "...",
-  "version": "v2",
-  "generated_from_record_count": 0,
-  "quality_breakdown": {},
-  "canonical_mechanism": "...",
-  "stage2_unlocks": [],
-  "yellow_unlocks": [],
-  "green_unlocks": [],
-  "green_blockers": [],
-  "stage2_caps": [],
-  "false_positive_patterns": [],
-  "4b_watch_patterns": [],
-  "4c_hard_break_patterns": [],
-  "required_primitives": [],
-  "alternative_primitives": [],
-  "source_route_by_primitive": {},
-  "source_quorum_by_primitive": {},
-  "do_not_promote_rules": [],
-  "lifecycle_rules": [],
-  "query_intent_patterns": [],
-  "bad_query_patterns": [],
-  "representative_url_backed_fixture_ids": [],
-  "representative_source_proxy_ontology_ids": [],
-  "source_gaps": [],
-  "confidence": "HIGH|MEDIUM|LOW",
-  "runtime_usage_policy": "READY|PLANNING_ONLY|SOURCE_GAP|UNSUPPORTED"
-}
+If these files are not yet in the repo:
+- add them exactly under docs/0701/
+- do not silently rewrite their conclusions
+- cite them in v4 acceptance report as the motivating audit
 
-카드는 raw memory를 그대로 복사하지 말고 압축해야 한다.
+Also create:
+docs/operational/census_mode_v3_forensic_review.md
 
-예시:
-C06 card:
-- HBM keyword alone is not enough.
-- Stage2-Actionable unlocks: capacity sold-out, customer allocation, qualification pass, HBM revenue mix, shipment visibility.
-- Green blockers: cashflow bridge, repeat evidence family, conventional memory drag.
-- False positives: package substrate sympathy, qualification lag with reopen path.
-- Hard 4C: confirmed permanent customer loss or cancellation, not mere qualification delay.
+Must include:
+- Census v3 is useful as anti-fake status board.
+- Census v3 is not yet meaningful operational Stage map.
+- non-Stage0 count = 85
+- claim/score/StageCourt trace rows = 74
+- Stage2-Watch = 37
+- Red = 1
+- Stage3-Green/Yellow = 0
+- Samsung/Hynix rows are DART event scores, not HBM full thesis scores.
+- Sambo/Hyundai mismatch examples.
+- list of P0/P1 patch requirements from docs/0701.
 
-C28 card:
-- software/security keyword is a signboard.
-- Stage2-Actionable requires ARR/RPO/renewal/retention/churn/contract backlog.
-- Security theme spike without retention bridge is false positive.
-- Green requires recurring revenue plus margin/cash durability.
-
-필수:
-- C01-C36 전체 ArchetypeMemoryCard 생성
-- card별 source_quality breakdown
-- card별 representative memory ids
-- card별 source gap
-- card 생성 과정 deterministic
-- raw memory record 155만 개를 planner prompt에 직접 넣지 않음
-
-출력:
-docs/operational/research_brain_v2_memory_cards.json
-docs/operational/research_brain_v2_memory_card_matrix.json
+Acceptance:
+- docs/0701 exists in git.
+- census_mode_v3_forensic_review.md exists.
+- v3 PASS labels are reinterpreted as `ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS`, not `MEANINGFUL_OPERATIONAL_STAGE_PASS`.
 
 ================================================================================
-4. Source Quality 재검증: A등급을 실제 Anchor-ready로 강화
+2. Readiness Label Split
 ================================================================================
 
-현재 A_URL_BACKED_REPLAY_READY는 URL + anchor hint만으로 과대분류될 수 있다.
-A등급을 다음처럼 세분화하라.
+Current v3 `FULL_UNIVERSE_STAGE_MAP_PASS` is ambiguous.
 
-A2_EVIDENCE_OS_REPLAY_VERIFIED
-- URL fetch 또는 snapshot 있음
-- EvidenceAnchor 생성 성공
-- source date verified
-- exact quote/table/API locator verified
-- target entity directness verified
-- primitive mapping accepted
-- Evidence OS replay 통과
+Introduce labels:
 
-A1_URL_BACKED_ANCHOR_PENDING
-- URL 있음
-- source date 또는 quote/anchor 검증 미완
-- replay fixture 후보지만 production replay 전 repair 필요
-
-A0_URL_STRING_ONLY
-- URL 문자열은 있지만 fetch/anchor/date 검증 없음
-- query/source route memory로만 사용
-
-B_URL_REPAIR_NEEDED
-- URL 있음, 원문 접근 실패 또는 format repair 필요
-
-C_SOURCE_PROXY_ONTOLOGY_ONLY
-- source_proxy_only/evidence_url_pending
-- ontology/source route/false-positive memory만 허용
-
-D_PRICE_PATH_ONLY_OR_FUTURE_LEAKAGE_RISK
-- outcome/price-path 중심
-- current extraction 금지
-
-E_INVALID_OR_DUPLICATE
-- 사용 금지
-
-수정할 것:
-- source_quality_classifier.py
-- memory_record schema
-- memory compiler
-- replay fixture selector
-- acceptance report
-
-필수 audit:
-- 기존 A_URL_BACKED_REPLAY_READY 202,547개를 A2/A1/A0로 재분류
-- A2만 production replay fixture 가능
-- A1/A0는 repair queue로 이동
-- A2 샘플 200개를 Evidence OS replay로 검증
-- C_SOURCE_PROXY_ONTOLOGY_ONLY가 score/replay fixture로 승격되는 count 0
-
-출력:
-docs/operational/research_brain_v2_source_quality_reclassification.json
-docs/operational/research_brain_v2_url_anchor_repair_queue.json
-docs/operational/research_brain_v2_a2_replay_sample_audit.json
-
-================================================================================
-5. CandidateEvent v2: 종목 row가 아니라 사건 단위로 분리
-================================================================================
-
-현재 CheapScanCandidate는 종목 단위 후보에 가깝다.
-Research Brain v2는 사건 단위 CandidateEvent를 사용해야 한다.
-
-CandidateEventV2:
-
-{
-  "candidate_event_id": "...",
-  "symbol": "...",
-  "company_name": "...",
-  "event_date": "...",
-  "detected_at": "...",
-  "source_family": "DART|KIND|KRX|CompanyGuide|IR|ReportRadar|Price|TrustedNews|Manual",
-  "source_id": "...",
-  "event_type": "...",
-  "raw_reason_codes": [],
-  "primary_disclosure_type": "...",
-  "event_title": "...",
-  "event_summary": "...",
-  "magnitude": {
-    "contract_to_sales_pct": null,
-    "facility_to_marketcap_pct": null,
-    "eps_revision_pct": null,
-    "opm_change_pctp": null,
-    "fcf_change": null,
-    "relative_strength_rank": null,
-    "volume_spike_ratio": null
-  },
-  "event_freshness_days": 0,
-  "issuer_directness": "DIRECT|INDIRECT|UNKNOWN",
-  "initial_evidence_document_ids": [],
-  "structured_payload": {},
-  "price_context": {},
-  "research_brain_eligible": true
-}
-
-한 종목에서 여러 사건이 있으면 여러 CandidateEvent를 만들어라.
-
-예:
-- A사 공급계약 공시
-- A사 신규시설투자
-- A사 실적 턴어라운드
-- A사 리포트 EPS 상향
-- A사 거래대금 급증
-
-이 다섯 개는 하나의 종목 후보가 아니라 다섯 개의 event다.
-나중에 CandidateCluster에서 합쳐라.
-
-필수:
-- daily_scan / korea_live_lite / report_radar output을 CandidateEventV2로 변환
-- event_id deterministic
-- event source anchor 보존
-- event freshness 계산
-- event magnitude normalization
-- event-level dedupe
-- event cluster by symbol/date/source family
-
-출력:
-docs/operational/research_brain_v2_candidate_event_schema.md
-docs/operational/research_brain_v2_candidate_event_dry_run.json
-
-================================================================================
-6. Production Discovery Orchestrator
-================================================================================
-
-지금 discovery dry run은 candidate_event_count 8에서 provider/source gap을 기록했는데 verdict READY로 남아 있다.
-v2에서는 운영 준비 판단을 엄격히 바꿔라.
-
-새 Orchestrator flow:
-
-1. Universe build
-   - KRX listed universe
-   - active watchlist optional
-   - exclude ETF/SPAC/REIT/preferred if configured
-
-2. Structured trigger scan
-   - DART/KIND/KRX
-   - financial actuals
-   - CompanyGuide/reports
-   - IR/report radar
-   - price/volume/relative strength
-
-3. CandidateEventV2 generation
-   - event-level rows
-
-4. Candidate clustering
-   - symbol/date/event-family cluster
-   - event priority score
-   - source strength score
-   - freshness score
-
-5. Research Brain v2 archetype routing
-   - top-k archetypes
-   - card retrieval
-   - disambiguation tasks
-
-6. SourceTask plan
-   - official-first
-   - primitive-level
-   - budgeted
-   - stop-on-resolution
-
-7. Source acquisition execution
-   - actual fetch/parse
-   - EvidenceDocument / EvidenceAnchor
-
-8. Evidence OS v2
-   - accepted claims
-   - primitive state
-   - score contribution
-
-9. Deterministic score/stage
-   - verified score
-   - provisional score
-   - score interval
-   - base stage
-   - investigation status
-   - transition overlay
-
-10. Daily Watchlist output
-   - Green
-   - Yellow-Pending
-   - Stage2-Actionable
-   - Stage2-Watch
-   - 4B-watch
-   - Reject/Red
-   - follow-up tasks
-
-Production readiness rules:
-- candidate_event_count >= 30 required for READY unless explicit market-holiday/provider outage label.
-- each large_sector_id must have >=3 event attempts or explicit provider/source gap.
-- at least 20 events must complete Research Brain routing.
-- at least 10 events must execute source tasks.
-- at least 5 events must produce Evidence OS accepted claims.
-- at least 3 events must produce deterministic score/stage output.
-- if these are not met, verdict is NOT_READY or PARTIAL_READY, not READY.
-
-출력:
-docs/operational/research_brain_v2_production_discovery_report.md
-docs/operational/research_brain_v2_daily_watchlist_sample.json
-docs/operational/research_brain_v2_candidate_cluster_report.json
-
-================================================================================
-7. SourceTask 실행성 강화
-================================================================================
-
-지금 source task는 계획 단위다.
-v2에서는 SourceTask가 실제 실행 결과와 연결돼야 한다.
-
-SourceTaskExecution:
-
-{
-  "task_id": "...",
-  "status": "NOT_STARTED|FETCHED|PARSED|EVIDENCE_OS_ACCEPTED|NO_EVIDENCE_FOUND|PROVIDER_FAILED|BUDGET_EXHAUSTED",
-  "attempted_sources": [],
-  "fetched_document_ids": [],
-  "parsed_anchor_count": 0,
-  "accepted_claim_ids": [],
-  "rejected_claim_ids": [],
-  "stop_reason": "...",
-  "provider_error": null,
-  "budget_used": {}
-}
-
-규칙:
-- SourceTask가 accepted claim 0개이면 그 primitive는 UNKNOWN 또는 NOT_OBSERVED다.
-- accepted claim 0개인데 score 상승하면 실패.
-- provider failure이면 score_valid가 pending/provider_failed로 가야 한다.
-- budget exhausted인데 material gap이면 pending.
-- source task execution 없이 planning만으로 READY 금지.
-
-필수 audit:
-- source_task_count
-- executed_source_task_count
-- accepted_claim_source_task_count
-- source_task_to_score_contribution_count
-- planned_but_not_executed_task_count
-- provider_failed_material_task_count
-
-출력:
-docs/operational/research_brain_v2_source_task_execution_audit.json
-
-================================================================================
-8. LLM Planner 통합
-================================================================================
-
-Research Brain v2는 deterministic token router만으로 끝나면 안 된다.
-
-LLM Planner 역할:
-- CandidateEventV2를 읽음
-- ArchetypeMemoryCard를 읽음
-- top-k archetype 후보와 이유 제시
-- positive thesis / counter thesis 작성
-- must-verify primitive 선정
-- red-team primitive 선정
-- SourceTask 초안 작성
-- suggested query intent 작성
-
-금지:
-- score 출력
-- stage 출력
-- hard_break final 출력
-- current_score_eligible 출력
-- FeatureInput 수정
-- ScoreContribution 수정
-
-LLM Planner output schema:
-
-{
-  "top_k_archetype_hypotheses": [
-    {
-      "archetype_id": "...",
-      "rank": 1,
-      "confidence": "HIGH|MEDIUM|LOW",
-      "reason": "...",
-      "supporting_event_fields": [],
-      "disambiguation_needed": false
-    }
-  ],
-  "positive_thesis": "...",
-  "counter_thesis": "...",
-  "must_verify_primitives": [],
-  "green_blockers_to_close": [],
-  "red_team_checks": [],
-  "source_task_drafts": [],
-  "query_intents": [],
-  "do_not_promote_reasons": [],
-  "planner_self_check": {
-    "score_keys_present": false,
-    "stage_keys_present": false,
-    "future_outcome_used": false
-  }
-}
-
-Deterministic validator:
-- schema validation
-- allowed archetype ids
-- no score/stage keys
-- no future outcome leakage
-- source task budget enforced
-- official-first rule enforced
-- disallowed general search for DART-solvable gaps
-- if LLM fails, status = PLANNER_PROVIDER_FAILED and candidate is pending, not fake-planned.
-
-Fake/mock LLM:
-- tests only
-- production report must say whether real provider or fake provider was used
-- fake provider results cannot be PRODUCTION_READY
-
-================================================================================
-9. Acceptance tests 강화
-================================================================================
-
-새 테스트 파일 또는 동등 테스트를 추가하라.
-
-tests/test_research_brain_v2_archetype_router.py
-tests/test_research_brain_v2_r13_overrouting.py
-tests/test_research_brain_v2_memory_cards.py
-tests/test_research_brain_v2_source_quality_reclassification.py
-tests/test_research_brain_v2_candidate_event_v2.py
-tests/test_research_brain_v2_production_orchestrator.py
-tests/test_research_brain_v2_source_task_execution.py
-tests/test_research_brain_v2_llm_planner_schema.py
-tests/test_research_brain_v2_evidence_os_integration.py
-tests/test_research_brain_v2_daily_watchlist.py
-tests/test_research_brain_v2_readiness_verdict.py
-
-필수 assertions:
-
-1. C06 replay primary == C06.
-2. C08 replay primary == C08.
-3. C15 replay primary == C15.
-4. C17 replay primary == C17.
-5. C24 replay primary == C24.
-6. C28 replay primary == C28.
-7. R13 is not primary unless fixture is explicit R13.
-8. top3 archetype contains expected archetype for all C01-C36 fixtures.
-9. router confidence LOW causes ARCTYPE_PENDING_DISAMBIGUATION.
-10. SourceQuality A2 requires Evidence OS anchor replay.
-11. URL string only is not A2.
-12. source_proxy_only never becomes replay fixture.
-13. CandidateEventV2 splits multiple events for same symbol.
-14. production discovery count < 30 cannot be READY unless explicit market/provider outage.
-15. source task planning without execution cannot be PRODUCTION_READY.
-16. planned task accepted_claim_count=0 cannot increase score.
-17. Research Brain output contains no score/stage keys.
-18. fake LLM provider cannot mark production readiness READY.
-19. general search ratio above configured max triggers warning or failure unless justified.
-20. DART-solvable gap sent to general search count = 0.
-21. FCF gap sent to news count = 0.
-22. source task execution audit has no unbounded task.
-23. daily watchlist sample includes event, archetype, claims, blockers, follow-up tasks.
-24. Evidence OS v2 regression remains READY.
-25. full unittest suite passes.
-
-================================================================================
-10. 운영 리포트 강화
-================================================================================
-
-새 report 생성:
-
-docs/operational/research_brain_v2_acceptance_report.md
-docs/operational/research_brain_v2_archetype_router_confusion_matrix.json
-docs/operational/research_brain_v2_memory_cards.json
-docs/operational/research_brain_v2_source_quality_reclassification.json
-docs/operational/research_brain_v2_candidate_event_dry_run.json
-docs/operational/research_brain_v2_production_discovery_report.md
-docs/operational/research_brain_v2_source_task_execution_audit.json
-docs/operational/research_brain_v2_daily_watchlist_sample.json
-docs/operational/research_brain_v2_readiness_verdict.md
-docs/operational/research_brain_v2_known_regressions.md
-
-Acceptance report 필수 항목:
-
-- commit SHA
-- test command and pass/fail/skip
-- Evidence OS v2 regression status
-- memory card count
-- A2/A1/A0/B/C/D/E source quality counts
-- router top1/top3 accuracy
-- R13 overroute count
-- CandidateEventV2 count
-- sector coverage
-- source task planned/executed/accepted claim count
-- official/general source ratio
-- Evidence OS accepted claim count
-- deterministic score/stage output count
-- watchlist sample count
-- provider error count
-- fake provider used 여부
-- production verdict:
-  - NOT_READY
-  - PARTIAL_READY
-  - READY_FOR_SHADOW_DAILY_RUN
-  - PRODUCTION_READY
-
-READY_FOR_SHADOW_DAILY_RUN 조건:
-- Evidence OS READY
-- Research Brain v2 router pass
-- CandidateEvent >= 30 or documented market/provider gap
-- SourceTask execution audit pass
-- watchlist sample generated
-
-PRODUCTION_READY 조건:
-- 최소 5개 날짜 또는 5회 frozen daily run
-- 각 run CandidateEvent >= 30 or provider gap
-- 각 run source task execution 완료
-- score/stage output reproducible
-- no R13 overroute
+A. ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
+Meaning:
+- every eligible symbol has a row
+- no claimless nonzero score
 - no source_proxy_to_score
-- no fake provider
+- no provider failure final score
+- no price-only score
+- Stage0/NoCurrentCatalyst rows are safe
+- some official event/watch rows may exist
+- does NOT mean operational full thesis score quality
+
+B. MEANINGFUL_OPERATIONAL_STAGE_PASS
+Meaning:
+- Stage/score/status/trace/claims/contributions come from same AtomicStageDecision
+- score scale is explicit
+- full_e2r_verified_score only when FULL_E2R_100
+- event score is separated from full thesis score
+- Stage2/Red/4B/4C semantics are not mixed
+- semantic primitive guard passes
+- full thesis controlled smoke passes
+- Research Brain/Web evidence gate is honest
+
+C. FULL_THESIS_REFRESH_PASS
+Meaning:
+- selected high-priority symbols have full thesis refresh tasks
+- Research Brain planner ran
+- official/web/IR/report acquisition ran where required
+- Evidence OS accepted claims support full thesis components
+- deterministic StageCourt produced full thesis status
+
+D. BRAIN_WEB_EVIDENCE_PASS
+Meaning:
+- LLM planner call count > 0
+- web/news/IR/report acquisition count > 0
+- LLM claim extractor or structured official extractor produced accepted claims
+- snippets did not score
+- official-first rule passed
+
+Rules:
+- `FULL_UNIVERSE_STAGE_MAP_PASS` cannot be used alone anymore.
+- If retained, it must expand to:
+  - ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
+  - plus explicit statement whether MEANINGFUL_OPERATIONAL_STAGE_PASS is true or false.
+- `READY_FOR_DAILY_TRIGGER_INTEGRATION` requires at least ANTI_FAKE pass + atomic trace pass.
+- `READY_FOR_OPERATIONAL_STAGE_USE` requires MEANINGFUL_OPERATIONAL_STAGE_PASS.
+- `READY_FOR_FULL_THESIS_OPERATION` requires FULL_THESIS_REFRESH_PASS.
+
+Tests:
+tests/test_census_v4_readiness_label_split.py
+tests/test_census_v4_no_ambiguous_full_universe_stage_map_pass.py
+
+Acceptance:
+- v4 readiness report has separate labels.
+- v3 report-only label cannot imply operational Stage quality.
+- if MEANINGFUL_OPERATIONAL_STAGE_PASS is false, final report must say why.
 
 ================================================================================
-11. Daily Watchlist Output
+3. AtomicStageDecision
 ================================================================================
 
-최종 출력은 추천이 아니라 상태판이다.
+Implement:
+src/e2r/census/atomic_stage_decision.py
 
-DailyWatchlistItem:
+Schema:
 
+AtomicStageDecision:
 {
+  "atomic_stage_decision_id": "...",
   "symbol": "...",
   "company_name": "...",
+  "as_of_date": "...",
   "candidate_event_id": "...",
-  "event_type": "...",
-  "event_summary": "...",
-  "primary_archetype": "...",
-  "secondary_archetypes": [],
-  "research_memory_cards_used": [],
-  "verified_score": null,
-  "provisional_score": null,
-  "score_valid_status": "...",
+  "source_task_ids": [],
+  "source_task_execution_ids": [],
+  "stagecourt_trace_id": "...",
   "base_stage": "...",
-  "investigation_status": "...",
-  "transition_overlay": "...",
+  "canonical_stage": "...",
+  "stage_signal": "...",
+  "risk_stage_signal": null,
+  "transition_overlay": "NONE|4A|4B|4C",
+  "stage_decision_status": "FINAL|PENDING_MATERIAL_GAPS|PROVIDER_PENDING|SOURCE_PENDING|EVENT_WATCH_ONLY|NO_CURRENT_CATALYST|RISK_REVIEW",
+  "score_scale": "FULL_E2R_100|EVENT_WEIGHTED_PARTIAL|RAW_CONTRIBUTION_SUM|NO_SCORE",
+  "score_source": "STAGECOURT_SCORE_INTERVAL|WATCHLIST_WEIGHTED_SCORE|RAW_CONTRIBUTION_FALLBACK|NONE",
+  "event_evidence_score": null,
+  "full_e2r_verified_score": null,
+  "raw_contribution_score": null,
+  "score_interval_lower": null,
+  "score_interval_upper": null,
+  "score_valid_status": "...",
   "accepted_claim_ids": [],
-  "top_supporting_claims": [],
-  "green_blockers": [],
-  "red_team_checks": [],
-  "source_task_status_summary": {},
-  "follow_up_tasks": [],
-  "do_not_promote_reasons": [],
-  "operator_notes": "..."
+  "score_contribution_ids": [],
+  "primitive_state_ids": [],
+  "failed_stage_gates": [],
+  "missing_primitives": [],
+  "material_gap_ids": [],
+  "source_cutover_date": "...",
+  "is_representative": true,
+  "additional_stage_decision_ids": []
 }
 
-섹션:
-- Stage3-Green
-- Stage3-Yellow-Pending
-- Stage2-Actionable
-- Stage2-Watch
-- 4B-watch
-- Reject/Red
-- Provider/Source Pending
+Rules:
+- CensusStageStatus for claim-backed rows must be built from exactly one representative AtomicStageDecision.
+- `base_stage`, `stage_signal`, `risk_stage_signal`, `score fields`, `score_valid_status`, `accepted_claim_ids`, `score_contribution_ids`, and `stagecourt_trace_id` must all come from that same decision.
+- Do not mix stage from trace A, score from watch row B, status from row C, trace id from trace D.
+- If multiple stage decisions exist for a symbol:
+  - choose representative by deterministic policy
+  - preserve all others in additional_stage_decision_ids
+  - report conflict summary
+- Representative selection policy:
+  1. Prefer full thesis decision over daily event decision.
+  2. Prefer current direct risk decision for risk overlay.
+  3. Prefer higher assessment depth only if score scale comparable.
+  4. Never compare FULL_E2R_100 and EVENT_WEIGHTED_PARTIAL as same score.
+  5. If conflict remains, mark `stage_decision_status=SOURCE_PENDING` or `TRACE_CONFLICT`, not final.
 
-출력 파일:
-output/daily_watchlist/YYYY-MM-DD/e2r_daily_watchlist.json
-output/daily_watchlist/YYYY-MM-DD/e2r_daily_watchlist.md
+Hard fail:
+- stage_trace_stage_mismatch_count > 0
+- stage_trace_score_interval_mismatch_count > 0
+- stage_trace_score_status_mismatch_count > 0
+- stage_trace_claim_set_mismatch_count > 0
+- stage_trace_contribution_set_mismatch_count > 0
+
+Tests:
+tests/test_census_v4_atomic_stage_decision.py
+tests/test_census_v4_sambo_trace_mismatch_fails.py
+tests/test_census_v4_multiple_trace_representative_selection.py
+tests/test_census_v4_trace_score_interval_mismatch_fails.py
 
 ================================================================================
-12. 완료 조건
+4. Score Field Split and verified_score Deprecation
 ================================================================================
 
-Goal 완료 조건:
+Current `verified_score` is misleading.
 
-1. Evidence OS v2 remains READY.
-2. Research Brain v1 deprecated notes created.
-3. Archetype router top1/top3 confusion matrix created.
-4. C06/C08/C15/C17/C24/C28 mandatory replay top1 exact match.
-5. C01-C36 top3 accuracy 100%.
-6. R13 overroute count 0 except explicit R13 fixtures.
-7. ArchetypeMemoryCard generated for C01-C36.
-8. SourceQuality reclassified into A2/A1/A0/B/C/D/E.
-9. A2 sample Evidence OS replay audit passes.
-10. CandidateEventV2 implemented.
-11. Multiple events per symbol split correctly.
-12. Production Discovery Orchestrator runs targeted_smoke_only=false.
-13. CandidateEvent count >=30 or verdict is not READY.
-14. SourceTaskExecution audit exists.
-15. Planned-only tasks do not count as executed.
-16. Evidence OS accepted claims are produced from executed tasks.
-17. Deterministic score/stage outputs are produced for at least 3 events in dry run.
-18. DailyWatchlist sample generated.
-19. general search fallback is justified and bounded.
-20. DART/IR/CompanyGuide-solvable gaps do not go to general search.
-21. Research Brain output has score/stage direct key count 0.
-22. source_proxy_to_score count 0.
-23. future leakage in extraction prompt count 0.
-24. full unittest suite passes.
-25. working tree clean.
-26. 한글 커밋 메시지로 commit/push.
-27. final report states exact readiness label.
+Change schema:
 
-최종 상태 라벨:
+Deprecated:
+- verified_score
+
+New:
+- full_e2r_verified_score
+- event_evidence_score
+- raw_contribution_score
+- score_scale
+- score_source
+- score_semantics
+
+Score scale meanings:
+- FULL_E2R_100:
+  full E2R deterministic score on canonical 0~100 scale.
+- EVENT_WEIGHTED_PARTIAL:
+  limited event/source-task score, not full company thesis.
+- RAW_CONTRIBUTION_SUM:
+  simple sum of raw contribution points; diagnostics only unless promoted by scorer.
+- NO_SCORE:
+  no scoring.
+
+Rules:
+- `full_e2r_verified_score` may be non-null only if score_scale=FULL_E2R_100.
+- `event_evidence_score` is used for single DART/event scores.
+- `raw_contribution_score` is used for fallback/raw contribution diagnostics.
+- `verified_score` may remain only as deprecated alias in reports, but must be null unless score_scale=FULL_E2R_100.
+- If any row displays `verified_score` with score_scale != FULL_E2R_100, hard fail.
+- Stage2-Watch with event score 1.5~4.4 must be shown as `event_evidence_score`, not `verified_score`.
+- Red row with event score must show `risk_stage_signal`, not imply score-driven Red.
+
+Audit counts:
+- verified_score_not_full_e2r_count
+- score_scale_missing_count
+- score_source_missing_count
+- score_scale_mixed_fallback_count
+- raw_contribution_fallback_as_verified_score_count
+- event_evidence_score_present_count
+- full_e2r_verified_score_present_count
+
+Tests:
+tests/test_census_v4_score_field_split.py
+tests/test_census_v4_verified_score_only_full_e2r.py
+tests/test_census_v4_event_score_not_verified_score.py
+
+================================================================================
+5. Stage Signal Split
+================================================================================
+
+Stage2-Watch currently hides two meanings.
+
+Add fields:
+- canonical_stage
+- stage_signal
+- risk_stage_signal
+- investigation_status
+- stage_decision_status
+- transition_overlay
+
+stage_signal enum:
+- NO_CURRENT_CATALYST
+- OFFICIAL_EVENT_WATCH
+- MATERIAL_CLAIM_WATCH
+- FULL_THESIS_STAGE
+- FULL_THESIS_PENDING
+- PROVIDER_PENDING
+- SOURCE_PENDING
+- RISK_REVIEW
+- EVIDENCE_INSUFFICIENT
+- TRACE_CONFLICT
+
+risk_stage_signal enum:
+- NONE
+- RISK_REVIEW
+- CURRENT_DIRECT_RISK
+- HISTORICAL_RISK_ONLY
+- HARD_BREAK_CANDIDATE
+- HARD_BREAK_CONFIRMED
+
+Rules:
+- `Stage2-Watch` is not enough. It must have stage_signal.
+- Most current Census v3 Stage2-Watch rows should become:
+  - canonical_stage = Stage1 or Stage2-Watch depending policy
+  - stage_signal = MATERIAL_CLAIM_WATCH or OFFICIAL_EVENT_WATCH
+  - stage_decision_status = PENDING_MATERIAL_GAPS if gaps remain
+- `investigation_status=COMPLETE` is allowed only when no material gap remains.
+- PENDING_MATERIAL_GAPS row cannot be COMPLETE.
+- Red/Reject/4B/4C must show risk_stage_signal or transition_overlay.
+- Red due risk must not look score-driven.
+
+Hard fail:
+- pending_material_marked_complete_count > 0
+- stage2_without_stage_signal_count > 0
+- red_without_risk_signal_or_trace_count > 0
+- source_pending_marked_red_count > 0
+
+Tests:
+tests/test_census_v4_stage_signal_split.py
+tests/test_census_v4_pending_material_not_complete.py
+tests/test_census_v4_red_requires_risk_signal.py
+
+================================================================================
+6. Semantic Primitive Guard for Contracts
+================================================================================
+
+현재 `contract_quality`가 너무 넓다.
+
+Implement:
+src/e2r/evidence/contract_semantic_classifier.py
+src/e2r/evidence/primitive_semantic_guard.py
+configs/e2r_contract_semantic_guard_v1.json
+
+Contract/event classes:
+- commercial_supply_contract
+- customer_order_or_backlog
+- framework_agreement_without_revenue_visibility
+- capacity_or_delivery_contract
+- financial_contract
+- shareholder_return_contract
+- share_buyback_trust_contract
+- pledge_or_collateral_contract
+- equity_issuance_or_security_registration
+- capital_allocation_event
+- administrative_disclosure
+- clarification_or_rumor_response
+- information_confidence_only
+- risk_or_listing_event
+- unrelated_contract_or_wrong_subject
+
+Rules:
+`contract_quality -> earnings_visibility` allowed only if:
+- target company direct
+- commercial/customer/product/service scope exists
+- counterparty/customer or product/service is identifiable
+- revenue/volume/order value/period/backlog/shipment or margin conversion exists
+- not share buyback trust
+- not pledge/collateral
+- not equity issuance/security registration
+- not rumor clarification
+- not administrative disclosure
+- not pure capital allocation
+- not wrong subject
+
+Mapping examples:
+- 단일판매공급계약 with amount/period/counterparty → commercial_supply_contract / customer_order_or_backlog
+- 자기주식취득신탁계약체결결정 → shareholder_return_contract / capital_allocation_event, not earnings_visibility
+- 주식담보제공계약체결 → pledge_or_collateral_contract / risk_or_capital_event, not contract_quality
+- 유상증자결정 / 증권신고서 → capital_allocation_event / information_confidence, not earnings_visibility
+- 풍문또는보도에대한해명 → information_confidence_only
+- 관리종목/거래정지 → risk_or_listing_event
+
+LLM role:
+- classify document/event contract type
+- extract subject/counterparty/product/value/period
+- mark uncertainty
+
+Code role:
+- enforce allowed primitive mapping
+- block score eligibility if semantic guard fails
+
+Hard fail:
+- share_buyback_trust_to_contract_quality_count > 0
+- pledge_contract_to_customer_contract_quality_count > 0
+- equity_issuance_to_earnings_visibility_count > 0
+- clarification_to_contract_quality_count > 0
+- administrative_disclosure_to_revenue_visibility_count > 0
+- contract_quality_semantic_guard_missing_count > 0
+
+Tests:
+tests/test_contract_semantic_classifier.py
+tests/test_census_v4_share_buyback_not_contract_quality.py
+tests/test_census_v4_pledge_not_customer_contract.py
+tests/test_census_v4_equity_issuance_not_earnings_visibility.py
+tests/test_census_v4_rumor_clarification_information_only.py
+
+================================================================================
+7. SourceTask Satisfaction Audit
+================================================================================
+
+Clarify whether a source task directly satisfied its primitive or only reused baseline claims.
+
+SourceTaskExecution satisfaction fields:
+- satisfies_source_task: true/false
+- satisfaction_type:
+  - DIRECT_ACCEPTED_CLAIM
+  - BASELINE_ACCEPTED_CLAIM_REUSE
+  - LIFECYCLE_REFRESH_ONLY
+  - REPORT_REPLAY_REFERENCE_ONLY
+  - NO_EVIDENCE_FOUND
+  - PROVIDER_FAILED
+  - PENDING_SOURCE
+- accepted_claim_ids
+- score_claim_ids
+- primitive_gap_satisfied_ids
+- primitive_gap_unsatisfied_ids
+
+Rules:
+- EVIDENCE_OS_ACCEPTED means source task directly produced accepted claim.
+- EVIDENCE_OS_BASELINE_ONLY means baseline claim exists but task did not directly satisfy primitive.
+- baseline-only claim may support event status but cannot be reported as direct source task success.
+- If `satisfies_source_task=false`, it cannot unlock full thesis stage.
+- Stage promotion must report whether evidence was direct, baseline reuse, or pending.
+
+Audit counts:
+- baseline_only_score_claim_count
+- baseline_only_stage_promotion_count
+- source_task_claim_satisfaction_mismatch_count
+- direct_task_without_accepted_claim_count
+- accepted_claim_without_satisfaction_path_count
+
+Hard fail:
+- source_task_claim_satisfaction_mismatch_count > 0
+- direct_task_without_accepted_claim_count > 0
+- baseline_only_stage_promotion_to_full_thesis_count > 0
+
+Tests:
+tests/test_census_v4_source_task_satisfaction.py
+tests/test_census_v4_baseline_only_not_direct_task_success.py
+
+================================================================================
+8. Official Event Counters
+================================================================================
+
+Currently DART accepted claims can exist while recent_official_event_count remains 0.
+
+Fix counters:
+- recent_candidate_event_count
+- accepted_official_claim_count
+- official_source_task_count
+- official_evidence_document_count
+- official_stage_decision_count
+
+Count official evidence if:
+- candidate_event.source_family in DART/KIND/KRX/OpenDART
+- accepted_claim.source_provider in OpenDART/KIND/KRX
+- source_task_execution.provider in OpenDART/KIND/KRX
+- evidence_document.canonical_url or official_document_id from official provider
+
+Hard fail:
+- accepted_official_claim_count > 0 and official event/source counters all zero
+- official_claim_but_recent_official_event_zero_count > 0 unless no recent window applies and latest_official_claim_count is nonzero
+- official source task exists but official_source_task_count zero
+
+Tests:
+tests/test_census_v4_official_event_counters.py
+
+================================================================================
+9. Samsung/Hynix Full Thesis Refresh Separation
+================================================================================
+
+Create separate task types:
+- daily_event_task
+- full_thesis_refresh_task
+
+For 삼성전자 005930 / SK하이닉스 000660:
+- daily_event_task captures recent DART events.
+- full_thesis_refresh_task evaluates C06/HBM thesis.
+
+C06/HBM full thesis must check:
+- HBM customer allocation
+- capacity sold-out / pre-sold status
+- qualification pass or lag
+- HBM shipment
+- HBM revenue mix
+- margin/FCF/revision bridge
+- conventional memory drag
+- customer concentration / Nvidia dependency
+- current as_of_date lifecycle
+
+Output fields:
+- daily_event_stage_signal
+- daily_event_evidence_score
+- full_thesis_primary_archetype
+- full_thesis_verified_score
+- full_thesis_score_scale
+- full_thesis_stage
+- full_thesis_score_valid_status
+- full_thesis_missing_primitives
+- full_thesis_source_tasks
+- full_thesis_accepted_claim_ids
+
+Rules:
+- daily DART event score cannot overwrite full thesis score.
+- full thesis missing source → full_thesis_status=PENDING_MATERIAL_GAPS or PROVIDER_PENDING.
+- Samsung/Hynix smoke must report both daily event and full thesis separately.
+- If full thesis is not run, report `FULL_THESIS_NOT_RUN`, not Stage1/4.0.
+- C06/HBM full thesis must not be inferred from a generic DART clarification or issuance filing.
+
+Required smoke:
+- 005930 Samsung Electronics
+- 000660 SK Hynix
+- at least one C06 positive fixture from research memory with URL-backed evidence
+- at least one C06 guard fixture, e.g. Samsung qualification lag
+
+Tests:
+tests/test_census_v4_samsung_hynix_daily_vs_full_thesis.py
+tests/test_census_v4_c06_full_thesis_refresh.py
+tests/test_census_v4_hbm_thesis_not_dart_event_score.py
+
+================================================================================
+10. Real Brain + Web/Naver/IR/Report Acquisition Gate
+================================================================================
+
+This section proves whether the “brain” actually ran.
+
+Run modes:
+- OFFICIAL_BASELINE_ONLY
+- BRAIN_TRIAGE_ENABLED
+- BRAIN_AND_WEB_ACQUISITION_ENABLED
+- FULL_LIVE_BRAIN_CENSUS
+- LEDGER_REFRESH_CENSUS
+- REPLAY_VALIDATION_CENSUS
+- HYBRID_CENSUS
+
+Rules:
+- If llm_planner_call_count=0, do not say “두뇌가 판단했다.”
+- If naver_search_call_count=0 and web_search_call_count=0 and trusted_news_search_call_count=0, do not say “네이버/웹을 썼다.”
+- If llm_claim_extractor_attempt_count=0, do not say “LLM이 원문 claim을 추출했다.”
+- If run mode is OFFICIAL_BASELINE_ONLY or LEDGER_REFRESH_CENSUS, final label cannot be BRAIN_WEB_EVIDENCE_PASS.
+- Naver/web search is not run for all tickers. It runs only for L3/L4 selected deep symbols with bounded SourceTasks.
+- official-first rule: DART/KIND/KRX/CompanyGuide/IR-solvable gaps must not go to Naver first.
+- Web snippets/headlines cannot score.
+- Full article/PDF/IR document must be fetched and Evidence OS must validate quote/date/subject/target/current status.
+
+Required artifacts:
+output/census_v4/YYYY-MM-DD/planner_runs.jsonl
+output/census_v4/YYYY-MM-DD/llm_prompts.jsonl
+output/census_v4/YYYY-MM-DD/llm_responses.jsonl
+output/census_v4/YYYY-MM-DD/web_search_tasks.jsonl
+output/census_v4/YYYY-MM-DD/web_search_results.jsonl
+output/census_v4/YYYY-MM-DD/web_fetched_documents.jsonl
+output/census_v4/YYYY-MM-DD/web_rejected_documents.jsonl
+output/census_v4/YYYY-MM-DD/claim_extractor_runs.jsonl
+output/census_v4/YYYY-MM-DD/brain_to_claim_trace.jsonl
+
+Minimum Brain/Web acceptance:
+- selected_deep_symbol_count >= 30 OR EXTERNAL_PROVIDER_BLOCKER_NOT_READY
+- llm_planner_call_count >= 30 OR EXTERNAL_PROVIDER_BLOCKER_NOT_READY
+- web_search_task_count >= 20 OR explicitly OFFICIAL_BASELINE_ONLY with honest label
+- naver_search_call_count + trusted_news_search_call_count + general_web_search_call_count >= 20 OR documented external blocker
+- web_fetched_document_count >= 10 OR documented source/provider gap
+- llm_claim_extractor_attempt_count >= 10 for unstructured docs OR structured-official-only label
+- web_or_llm_accepted_claim_count >= 3 OR all fetched docs rejected with reasons and label below BRAIN_WEB_EVIDENCE_PASS
+- official_first_violation_count = 0
+- snippet_to_score_count = 0
+- provider_failure_final_score_count = 0
+
+Critical counts:
+- llm_claimed_but_zero_calls_count = 0
+- web_claimed_but_zero_search_count = 0
+- naver_claimed_but_zero_naver_count = 0
+- brain_plan_without_prompt_hash_count = 0
+- planner_output_score_stage_key_count = 0
+- web_result_snippet_to_score_count = 0
+- unstructured_rule_fallback_score_count = 0
+- brain_claim_missing_stage_trace_count = 0
+- official_first_violation_count = 0
+
+Tests:
+tests/test_census_v4_brain_planner_real_calls.py
+tests/test_census_v4_web_naver_acquisition.py
+tests/test_census_v4_llm_claim_extractor_realness.py
+tests/test_census_v4_brain_to_claim_trace.py
+tests/test_census_v4_run_mode_honesty.py
+tests/test_census_v4_no_brain_claim_with_zero_llm_calls.py
+tests/test_census_v4_no_web_claim_with_zero_web_calls.py
+tests/test_census_v4_official_first_before_naver.py
+tests/test_census_v4_snippet_never_scores.py
+
+================================================================================
+11. Meaningful Operational Stage Acceptance
+================================================================================
+
+Add a new acceptance tier:
+
+ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS requires:
+- full universe row coverage
+- no fake score
+- no source_proxy score
+- no provider failure final score
+- Stage0/NoCurrentCatalyst safe
+- atomic trace audit may pass for event rows
+- does not require full thesis scores
+
+MEANINGFUL_OPERATIONAL_STAGE_PASS requires:
+- all Stage2/3/Red/4 rows have AtomicStageDecision match
+- score fields split and score_scale valid
+- PENDING_MATERIAL_GAPS not COMPLETE
+- source task satisfaction audit pass
+- semantic primitive guard pass
+- full thesis controlled smoke pass
+- run mode honestly labeled
+- Brain/Web gate pass if claiming brain/web
+- controlled replay includes expected Stage2/3-Yellow/3-Green/3-Red/4B/4C or source gap task
+- readiness verdict uses full test summary, self-repair, leaf audit, reviewer outputs as hard inputs
+
+Controlled replay required:
+- C06 HBM positive and qualification-lag guard
+- C08 test socket customer/order/profile-only guard
+- C15 material spread pass-through and raw commodity false positive
+- C17 chemical spread realized margin bridge guard
+- C24 clinical binary event guard
+- C28 software/security retention bridge guard
+- wrong-subject risk fixture
+- old-risk-resolved fixture
+- provider failure pending fixture
+- semantic contract guard fixture
+
+Tests:
+tests/test_census_v4_meaningful_operational_stage_acceptance.py
+tests/test_census_v4_controlled_replay_stage_semantics.py
+
+================================================================================
+12. Leaf Artifact and Reviewer Audits
+================================================================================
+
+Strengthen leaf audit.
+
+Add counts:
+- stage_trace_stage_mismatch_count
+- stage_trace_score_interval_mismatch_count
+- stage_trace_score_status_mismatch_count
+- stage_trace_claim_set_mismatch_count
+- stage_trace_contribution_set_mismatch_count
+- score_scale_missing_count
+- score_source_missing_count
+- verified_score_not_full_e2r_count
+- pending_material_marked_complete_count
+- stage2_pending_material_count
+- baseline_only_score_claim_count
+- baseline_only_stage_promotion_count
+- contract_quality_semantic_guard_missing_count
+- official_claim_but_recent_official_event_zero_count
+- readiness_missing_test_gate_count
+- readiness_missing_self_repair_gate_count
+- llm_claimed_but_zero_calls_count
+- web_claimed_but_zero_search_count
+
+Hard fail:
+- any trace mismatch > 0
+- score_scale_missing_count > 0
+- verified_score_not_full_e2r_count > 0
+- pending_material_marked_complete_count > 0
+- contract_quality_semantic_guard_missing_count > 0
+- semantic guard failures > 0
+- run mode honesty violations > 0
+
+Reviewer A/B/C/D/E:
+- A trace atomicity
+- B source realness
+- C stage semantics
+- D runtime/brain/web honesty
+- E semantic primitive guard
+
+Each reviewer reads only leaf artifacts and configs, not acceptance report.
+
+Tests:
+tests/test_census_v4_leaf_audit_atomic_counts.py
+tests/test_census_v4_reviewer_semantic_guard.py
+tests/test_census_v4_reviewer_run_mode_honesty.py
+
+================================================================================
+13. Known-Bad Regression Bundle
+================================================================================
+
+Create known-bad fixtures that must fail.
+
+fixtures/census_v4_known_bad/
+  stage_trace_mismatch_sambo/
+  score_interval_mismatch_hynix/
+  verified_score_event_partial/
+  stage2_pending_marked_complete/
+  buyback_trust_as_contract_quality/
+  pledge_contract_as_customer_contract/
+  equity_issuance_as_earnings_visibility/
+  dart_event_score_as_hbm_full_thesis/
+  llm_claimed_but_zero_calls/
+  web_claimed_but_zero_calls/
+  snippet_to_score/
+  provider_failed_final_red/
+  source_proxy_to_score/
+  old_active_contract_dropped_by_recent_cutoff/
+  report_label_overclaim/
+
+Acceptance:
+- every known-bad fixture fails with expected critical count.
+- if known-bad fixture passes, Goal fails.
+- no xfail/skip for known-bad tests.
+
+Tests:
+tests/test_census_v4_known_bad_regressions.py
+
+================================================================================
+14. Self-Repair Loop
+================================================================================
+
+The Goal is not complete until self-repair loop passes.
+
+Run:
+PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass \
+  --as-of-date 2026-07-01 \
+  --mode HYBRID_CENSUS \
+  --brain-web-mode enabled \
+  --max-iterations 10 \
+  --fail-on-run-mode-overclaim true \
+  --fail-on-atomic-mismatch true \
+  --fail-on-semantic-guard true \
+  --output-root output/census_v4/2026-07-01
+
+Self-repair must:
+- run census
+- run leaf audits
+- run reviewers
+- run known-bad regression
+- classify failures
+- patch code/config
+- rerun same command
+- rerun tests
+- compare before/after metrics
+- stop only when hard gates pass or external blocker is documented
+
+Failure classes:
+- ATOMIC_STAGE_TRACE_MISMATCH
+- VERIFIED_SCORE_SCALE_MISUSE
+- STAGE2_WATCH_SEMANTIC_AMBIGUITY
+- PENDING_MATERIAL_MARKED_COMPLETE
+- CONTRACT_SEMANTIC_GUARD_FAILURE
+- DAILY_EVENT_FULL_THESIS_MIXED
+- BRAIN_CLAIMED_BUT_ZERO_LLM_CALLS
+- WEB_CLAIMED_BUT_ZERO_SEARCH_CALLS
+- SNIPPET_TO_SCORE
+- SOURCE_TASK_SATISFACTION_MISMATCH
+- OFFICIAL_COUNTER_MISMATCH
+- REPORT_LABEL_OVERCLAIM
+- KNOWN_BAD_REGRESSION_PASSED
+- EXTERNAL_PROVIDER_BLOCKER
+
+Rules:
+- Do not loosen thresholds to pass.
+- Do not delete failing fixtures.
+- Do not change scoring weights/stage thresholds.
+- Do not fake LLM/web counts.
+- Do not mark external provider blocker as success.
+- If external blocker exists, final status must be EXTERNAL_PROVIDER_BLOCKER_NOT_READY or lower honest label.
+
+Tests:
+tests/test_census_v4_self_repair_loop.py
+tests/test_census_v4_no_threshold_loosening.py
+tests/test_census_v4_no_fake_llm_web_counts.py
+
+================================================================================
+15. Required Reports
+================================================================================
+
+Generate and commit:
+
+docs/0701/README.md
+docs/0701/census_v3_stage_map_audit_2026-07-01.md
+
+docs/operational/census_mode_v3_forensic_review.md
+docs/operational/census_mode_v4_internal_patch_plan.md
+docs/operational/census_mode_v4_acceptance_report.md
+docs/operational/census_mode_v4_readiness_verdict.md
+docs/operational/census_mode_v4_artifact_manifest.json
+docs/operational/census_mode_v4_atomic_stage_decision_audit.json
+docs/operational/census_mode_v4_score_scale_audit.json
+docs/operational/census_mode_v4_stage_signal_audit.json
+docs/operational/census_mode_v4_semantic_primitive_guard_audit.json
+docs/operational/census_mode_v4_source_task_satisfaction_audit.json
+docs/operational/census_mode_v4_official_event_counter_audit.json
+docs/operational/census_mode_v4_samsung_hynix_full_thesis_smoke.json
+docs/operational/census_mode_v4_brain_planner_audit.json
+docs/operational/census_mode_v4_web_naver_acquisition_audit.json
+docs/operational/census_mode_v4_llm_claim_extraction_audit.json
+docs/operational/census_mode_v4_brain_to_claim_trace_audit.json
+docs/operational/census_mode_v4_leaf_artifact_audit.json
+docs/operational/census_mode_v4_reviewer_A_trace_atomicity.json
+docs/operational/census_mode_v4_reviewer_B_source_realness.json
+docs/operational/census_mode_v4_reviewer_C_stage_semantics.json
+docs/operational/census_mode_v4_reviewer_D_runtime_brain_web_honesty.json
+docs/operational/census_mode_v4_reviewer_E_semantic_guard.json
+docs/operational/census_mode_v4_known_bad_regression_report.json
+docs/operational/census_mode_v4_self_repair_summary.md
+
+Output:
+output/census_v4/2026-07-01/
+  run_metadata.json
+  universe.jsonl
+  source_timelines.jsonl
+  last_effective_thesis_states.jsonl
+  baseline_scan_results.jsonl
+  census_events.jsonl
+  depth_decisions.jsonl
+  atomic_stage_decisions.jsonl
+  source_tasks.jsonl
+  source_task_executions.jsonl
+  evidence_documents.jsonl
+  evidence_anchors.jsonl
+  raw_assertions.jsonl
+  adjudicated_claims.jsonl
+  accepted_claims.jsonl
+  primitive_states.jsonl
+  score_contributions.jsonl
+  stagecourt_traces.jsonl
+  claim_to_stage_trace.jsonl
+  brain_to_claim_trace.jsonl
+  planner_runs.jsonl
+  web_search_tasks.jsonl
+  web_search_results.jsonl
+  claim_extractor_runs.jsonl
+  census_stage_status.jsonl
+  census_stage_map.jsonl
+  census_stage_map.csv
+  operator_digest.md
+  watchlist_seed_candidates.json
+  deep_backfill_plan.json
+  audit_summary.json
+
+If full output is too large:
+- commit manifest with row counts, sha256, byte sizes.
+- commit full scored-row sample bundle, all Stage2+/Red/risk rows, all Samsung/Hynix rows, all mismatch-regression rows, all web/LLM accepted claim rows.
+
+================================================================================
+16. Required Tests
+================================================================================
+
+Add/strengthen:
+
+tests/test_census_v4_atomic_stage_decision.py
+tests/test_census_v4_sambo_trace_mismatch_fails.py
+tests/test_census_v4_score_field_split.py
+tests/test_census_v4_verified_score_only_full_e2r.py
+tests/test_census_v4_stage_signal_split.py
+tests/test_census_v4_pending_material_not_complete.py
+tests/test_contract_semantic_classifier.py
+tests/test_census_v4_share_buyback_not_contract_quality.py
+tests/test_census_v4_pledge_not_customer_contract.py
+tests/test_census_v4_equity_issuance_not_earnings_visibility.py
+tests/test_census_v4_source_task_satisfaction.py
+tests/test_census_v4_official_event_counters.py
+tests/test_census_v4_samsung_hynix_daily_vs_full_thesis.py
+tests/test_census_v4_c06_full_thesis_refresh.py
+tests/test_census_v4_brain_planner_real_calls.py
+tests/test_census_v4_web_naver_acquisition.py
+tests/test_census_v4_llm_claim_extractor_realness.py
+tests/test_census_v4_brain_to_claim_trace.py
+tests/test_census_v4_run_mode_honesty.py
+tests/test_census_v4_meaningful_operational_stage_acceptance.py
+tests/test_census_v4_known_bad_regressions.py
+tests/test_census_v4_self_repair_loop.py
+
+Full command:
+PYTHONPATH=src python -m unittest discover -s tests -v
+
+Rules:
+- No skipped Census v4 tests.
+- No xfail.
+- Known-bad fixtures must fail as expected.
+- Tests must not only read acceptance report; they must inspect leaf artifacts/configs.
+
+================================================================================
+17. Hard Acceptance Gates
+================================================================================
+
+ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS:
+- eligible symbols all represented exactly once
+- no claimless nonzero score
+- no source_proxy_to_score
+- no provider_failed_final_score
+- no market/news snippet score
+- no one-line huge report
+- leaf audit pass
+- reviewer pass
+
+ATOMIC_STAGE_DECISION_PASS:
+- stage_trace_stage_mismatch_count = 0
+- stage_trace_score_interval_mismatch_count = 0
+- stage_trace_score_status_mismatch_count = 0
+- stage_trace_claim_set_mismatch_count = 0
+- stage_trace_contribution_set_mismatch_count = 0
+- Sambo mismatch fixture fails before patch and passes after patch
+
+SCORE_SCALE_PASS:
+- score_scale_missing_count = 0
+- verified_score_not_full_e2r_count = 0
+- raw_contribution_fallback_as_verified_score_count = 0
+- event_evidence_score used for partial event scores
+
+STAGE_SEMANTICS_PASS:
+- stage_signal present for all non-Stage0 rows
+- pending_material_marked_complete_count = 0
+- red_without_risk_signal_or_trace_count = 0
+- ProviderPending not Red
+
+SEMANTIC_PRIMITIVE_GUARD_PASS:
+- semantic contract guard failures = 0
+- buyback/pledge/equity issuance/clarification do not map to earnings_visibility contract_quality
+
+FULL_THESIS_SMOKE_PASS:
+- Samsung/Hynix daily event and C06/HBM full thesis outputs separated
+- full thesis task run or explicitly pending
+- DART event score not used as HBM full thesis score
+
+BRAIN_WEB_GATE_PASS:
+- if claiming brain/web, llm planner calls and web/news acquisition traces exist
+- snippets do not score
+- official-first violations = 0
+- if no LLM/web, honest lower label is used
+
+MEANINGFUL_OPERATIONAL_STAGE_PASS:
+- all above pass
+- controlled replay pass
+- no unresolved material semantic/trace/source blockers
+- readiness verdict uses tests/self-repair/auditors as hard inputs
+
+================================================================================
+18. Final Status Labels
+================================================================================
+
+Allowed labels:
 - IMPLEMENTATION_MERGED
-- ROUTER_REPLAY_PASS
-- MEMORY_CARD_PASS
-- SOURCE_QUALITY_RECLASSIFICATION_PASS
-- DISCOVERY_ORCHESTRATOR_PASS
-- SOURCE_TASK_EXECUTION_PASS
-- WATCHLIST_SAMPLE_PASS
-- READY_FOR_SHADOW_DAILY_RUN
-- PRODUCTION_READY
+- V3_FORENSIC_REVIEW_COMPLETE
+- ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
+- ATOMIC_STAGE_DECISION_PASS
+- SCORE_SCALE_PASS
+- STAGE_SEMANTICS_PASS
+- SEMANTIC_PRIMITIVE_GUARD_PASS
+- FULL_THESIS_SMOKE_PASS
+- BRAIN_TRIAGE_PASS
+- BRAIN_WEB_EVIDENCE_PASS
+- MEANINGFUL_OPERATIONAL_STAGE_PASS
+- READY_FOR_DAILY_TRIGGER_INTEGRATION
+- READY_FOR_FULL_THESIS_OPERATION
+- EXTERNAL_PROVIDER_BLOCKER_NOT_READY
 
-Goal 완료라고 말하려면 최소:
-READY_FOR_SHADOW_DAILY_RUN
+Do not use:
+- ambiguous FULL_UNIVERSE_STAGE_MAP_PASS alone
 
-PRODUCTION_READY라고 말하려면:
-5회 이상 daily shadow run 또는 frozen daily replay까지 통과해야 한다.
+Goal completion minimum:
+- V3_FORENSIC_REVIEW_COMPLETE
+- ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
+- ATOMIC_STAGE_DECISION_PASS
+- SCORE_SCALE_PASS
+- STAGE_SEMANTICS_PASS
+- SEMANTIC_PRIMITIVE_GUARD_PASS
+- FULL_THESIS_SMOKE_PASS
+- self-repair loop pass
+- known-bad regression pass
+- full tests pass
+
+Operational completion:
+- MEANINGFUL_OPERATIONAL_STAGE_PASS
+- plus BRAIN_WEB_EVIDENCE_PASS if claiming brain/web source acquisition
+- plus READY_FOR_DAILY_TRIGGER_INTEGRATION only if output labels are honest.
 
 ================================================================================
-13. 최종 답변 형식
+19. Final Answer Format
 ================================================================================
 
-작업 완료 후 다음 형식으로만 보고하라.
+After completion, report only:
 
-1. 최종 상태
-- IMPLEMENTATION_MERGED / ROUTER_REPLAY_PASS / MEMORY_CARD_PASS / SOURCE_QUALITY_RECLASSIFICATION_PASS / DISCOVERY_ORCHESTRATOR_PASS / SOURCE_TASK_EXECUTION_PASS / WATCHLIST_SAMPLE_PASS / READY_FOR_SHADOW_DAILY_RUN / PRODUCTION_READY
+1. Final status
+2. Commit SHA / message / push status / working tree
+3. Tests
+4. v3 forensic review result
+5. AtomicStageDecision audit
+6. Score scale audit
+7. Stage semantics audit
+8. Semantic primitive guard audit
+9. SourceTask satisfaction audit
+10. Samsung/Hynix full thesis smoke
+11. Brain/Web/Naver/IR/Report gate
+12. Leaf artifact / reviewer verdicts
+13. Known-bad regression result
+14. Self-repair iterations
+15. Remaining blockers
+16. Exact next step
 
-2. 커밋
-- SHA
-- message
-- push status
-- working tree status
+================================================================================
+20. Prohibitions
+================================================================================
 
-3. 테스트
-- command
-- passed/failed/skipped
+- Do not claim Meaningful Operational Stage if only anti-fake board passed.
+- Do not use ambiguous FULL_UNIVERSE_STAGE_MAP_PASS alone.
+- Do not call event_evidence_score “verified_score.”
+- Do not compare EVENT_WEIGHTED_PARTIAL with FULL_E2R_100.
+- Do not mix stage/score/status/trace from different StageCourt rows.
+- Do not keep Sambo-style mismatch.
+- Do not mark PENDING_MATERIAL_GAPS as COMPLETE.
+- Do not map share buyback trust/pledge/equity issuance/clarification to earnings_visibility contract_quality.
+- Do not say Samsung/Hynix HBM thesis was evaluated from DART event score.
+- Do not say Brain/Web/Naver ran if llm/web call artifacts are absent.
+- Do not score snippets.
+- Do not score source_proxy/evidence_url_pending research memory.
+- Do not fake LLM/web counts.
+- Do not loosen thresholds to pass.
+- Do not delete known-bad fixtures.
+- Do not change scoring weights or Stage thresholds.
+- Do not hide source gaps.
+- Do not output one-line huge reports.
 
-4. Evidence OS regression
-- READY 유지 여부
-- orphan score count
-- legacy direct path count
-- source_proxy_to_score count
+================================================================================
+21. One-line goal
+================================================================================
 
-5. Archetype router
-- top1 accuracy
-- top3 accuracy
-- C06/C08/C15/C17/C24/C28 mandatory replay result
-- R13 overroute count
+Census v4의 목적은 전 종목 상태판을 더 그럴듯하게 꾸미는 것이 아니다.
 
-6. Memory cards
-- C01-C36 card count
-- source quality breakdown
-- source gap count
+목적은:
 
-7. Source quality
-- A2/A1/A0/B/C/D/E counts
-- A2 replay sample pass count
-- repair queue count
-
-8. Candidate discovery
-- candidate_event_count
-- sector coverage
-- event type breakdown
-- targeted_smoke_only 여부
-
-9. Source task execution
-- planned/executed/fetched/parsed/accepted counts
-- provider failures
-- budget exhausted material gaps
-- general search ratio
-
-10. Daily watchlist
-- Green count
-- Yellow-Pending count
-- Stage2-Actionable count
-- Stage2-Watch count
-- 4B-watch count
-- Reject/Red count
-- Provider pending count
-
-11. Production verdict
-- READY_FOR_SHADOW_DAILY_RUN / PRODUCTION_READY / NOT_READY
-- blockers
-- exact next step
-```
-
----
-
-# 한 줄 결론
-
-지금 레포는 **Evidence OS는 잘 닫혔고, Research Brain도 뼈대와 메모리 import는 크게 들어갔다.**
-하지만 최신 산출물에서 C06/C08/C15/C17 replay가 R13으로 라우팅되는데도 pass 처리되는 걸 보면, 아직 “연구 기억으로 아키타입을 제대로 판정하는 두뇌”는 완성됐다고 보면 안 된다. ([GitHub][4])
-
-다음 Goal은 바로 이거야.
-
-> **Research Brain v2에서 아키타입 라우팅 정확도, 메모리 카드 압축, source quality 실제 검증, CandidateEvent v2, SourceTask 실행 감사, Daily Watchlist까지 묶어서 “실제 일일 운영 상태판”으로 만드는 것.**
+“이 row는 단일 공식 이벤트 watch인지, full thesis Stage인지, risk overlay인지, source pending인지”를 명확히 분리하고,
+점수와 Stage가 같은 AtomicStageDecision에서 나왔음을 증명하며,
+필요한 후보에는 Research Brain + official/web/IR/report SourceTask + Evidence OS claim까지 실제로 연결해,
+운영자가 오해하지 않는 전 시장 E2R 상태판을 만드는 것이다.

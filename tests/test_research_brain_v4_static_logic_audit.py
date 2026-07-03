@@ -2,7 +2,7 @@ import unittest
 
 from e2r.research_brain.v4_production_orchestrator import run_research_brain_v4_production_shadow
 from e2r.research_brain.v4_schemas import ProductionShadowV4Config
-from research_brain_v4_test_helpers import RealStubPlannerProviderV4, load_v4_matrix
+from tests.research_brain_v4_test_helpers import RealStubPlannerProviderV4, load_v4_matrix
 
 
 class ResearchBrainV4StaticLogicAuditTests(unittest.TestCase):
@@ -29,6 +29,11 @@ class ResearchBrainV4StaticLogicAuditTests(unittest.TestCase):
         self.assertEqual(planner["planner_not_attempted_count"], 0)
         self.assertTrue(source["required_official_source_classes_present"])
         self.assertTrue({"CompanyGuide", "DART", "KIND", "KRX", "IR"}.issubset(source["source_classes_with_fetched_documents"]))
+        self.assertGreater(source["fetched_document_count"], 0)
+        self.assertGreater(source["snapshot_document_fetched_count"], 0)
+        self.assertEqual(source["real_document_count_semantics"], "live_non_snapshot_document_only")
+        self.assertEqual(source["live_document_fetched_count"], 0)
+        self.assertEqual(source["real_document_fetched_count"], 0)
         self.assertLessEqual(source["unique_real_document_fetched_count"], source["real_document_fetched_count"])
         self.assertLessEqual(watchlist["unique_deterministic_scorer_output_count"], watchlist["deterministic_scorer_output_count"])
         self.assertEqual(audit["critical_count_sum"], 0)

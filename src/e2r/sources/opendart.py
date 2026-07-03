@@ -399,7 +399,7 @@ def parse_disclosure_text(raw_text: str, *, title: str = "") -> dict[str, Any]:
         ("product_or_service", ("계약내용", "주요제품", "공급제품", "product", "service")),
         ("region", ("공급지역", "지역", "region")),
     ):
-        value = _line_value_after(text, labels)
+        value = _contract_counterparty(text) if output_key == "counterparty" else _line_value_after(text, labels)
         if value:
             parsed[output_key] = value
 
@@ -578,10 +578,25 @@ def extract_document_text(raw_document: str) -> str:
         try:
             root = ET.fromstring(text)
             parts = [part.strip() for part in root.itertext() if part and part.strip()]
-            return "\n".join(parts)
+            return _clean_extracted_document_text("\n".join(parts))
         except ET.ParseError:
-            return re.sub(r"<[^>]+>", "\n", text)
-    return text
+            return _clean_extracted_document_text(re.sub(r"<[^>]+>", "\n", text))
+    return _clean_extracted_document_text(text)
+
+
+def _clean_extracted_document_text(text: str) -> str:
+    text = re.sub(r"\.[A-Za-z0-9_-]+\s*[^{}]{0,200}\{[^{}]*\}", " ", text)
+    text = re.sub(r"/\*.*?\*/", " ", text, flags=re.DOTALL)
+    lines: list[str] = []
+    for raw_line in text.splitlines():
+        line = re.sub(r"\s+", " ", raw_line).strip()
+        if not line:
+            continue
+        lowered = line.lower()
+        if any(token in lowered for token in ("font-family", "font-size", "border-collapse", "padding", "line-height")):
+            continue
+        lines.append(line)
+    return "\n".join(lines).strip()
 
 
 def classify_disclosure_signal(
@@ -710,7 +725,7 @@ def _scale_amount(value: float, unit: str | None) -> float:
 
 def _percent_after(text: str, labels: tuple[str, ...]) -> float | None:
     for label in labels:
-        match = re.search(rf"{re.escape(label)}[^0-9\-]*(?P<number>-?[0-9]+(?:\.[0-9]+)?)\s*%", text, re.IGNORECASE)
+        match = re.search(rf"{re.escape(label)}[^0-9\-]*(?P<number>-?[0-9]+(?:\.[0-9]+)?)\s*%?", text, re.IGNORECASE)
         if match:
             return float(match.group("number"))
     return None
@@ -739,9 +754,44 @@ def _contract_dates(text: str) -> tuple[date, date] | None:
         text,
         re.IGNORECASE,
     )
-    if not match:
-        return None
-    return date_value(match.group("start")), date_value(match.group("end"))
+    if match:
+        return date_value(match.group("start")), date_value(match.group("end"))
+    start = _date_after(text, ("시작일",))
+    end = _date_after(text, ("종료일",))
+    if start is not None and end is not None:
+        return start, end
+    return None
+
+
+def _contract_counterparty(text: str) -> str | None:
+    patterns = (
+        r"(?:^|\n)\s*(?:\d+\.\s*)?계약상대방\s*\n(?P<value>[^\n]+)",
+        r"(?:^|\n)\s*계약상대방\s*[:：]\s*(?P<value>[^\n]+)",
+    )
+    for pattern in patterns:
+        for match in re.finditer(pattern, text, re.IGNORECASE):
+            value = match.group("value").strip(" -\t")
+            if value and value not in {"-", "공시유보 만료"} and not _looks_like_contract_counterparty_label(value):
+                return value[:120]
+    fallback = _line_value_after(text, ("계약상대방", "상대방", "counterparty"))
+    if fallback and not _looks_like_contract_counterparty_label(fallback):
+        return fallback
+    return None
+
+
+def _looks_like_contract_counterparty_label(value: str) -> bool:
+    compact = value.replace(" ", "")
+    return any(
+        token in compact
+        for token in (
+            "최근매출액",
+            "주요사업",
+            "회사와의관계",
+            "동종계약",
+            "정정전",
+            "정정후",
+        )
+    )
 
 
 def _dilution_type(text: str) -> str | None:

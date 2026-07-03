@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 from typing import Any, Mapping
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, urlparse
 
 from e2r.sources.source_errors import (
     SourceRequest,
@@ -34,6 +34,8 @@ REPORT_QUERY_TEMPLATES: tuple[str, ...] = (
 
 RECOGNIZED_REPORT_DOMAINS: tuple[str, ...] = (
     "ssl.pstatic.net/imgstock/upload/research/company",
+    "stock.pstatic.net/stock-research/company",
+    "stock.pstatic.net/stock-research/industry",
     "file.alphasquare.co.kr/media/pdfs",
     "hanaw.com/download/research",
     "samsungpop.com",
@@ -47,6 +49,20 @@ RECOGNIZED_REPORT_DOMAINS: tuple[str, ...] = (
     "sk증권",
     "sks.co.kr",
     "yuantakorea.com",
+)
+
+NON_REPORT_URL_HINTS: tuple[str, ...] = (
+    "agreement",
+    "brochure",
+    "customer",
+    "event",
+    "manual",
+    "notice",
+    "policy",
+    "privacy",
+    "product",
+    "terms",
+    "약관",
 )
 
 
@@ -144,14 +160,115 @@ class ReportSearchConnector:
 
 
 def is_recognized_report_domain(url: str) -> bool:
-    parsed = urlparse(url)
-    normalized = f"{parsed.netloc}{parsed.path}".lower()
-    return any(domain.lower() in normalized for domain in RECOGNIZED_REPORT_DOMAINS)
+    parsed = _parse_url_like(url)
+    host = _normalized_hostname(parsed.hostname or "")
+    path = parsed.path.lower()
+    if not host:
+        return False
+    for domain in RECOGNIZED_REPORT_DOMAINS:
+        domain_text = domain.lower().strip()
+        if not domain_text:
+            continue
+        domain_host, domain_path = _split_domain_path(domain_text)
+        if not _host_matches_domain(host, domain_host):
+            continue
+        if domain_path and not path.startswith(domain_path):
+            continue
+        return True
+    return False
+
+
+def is_verified_report_original_url(
+    url: str,
+    *,
+    title: str | None = None,
+    content_type: str | None = None,
+) -> bool:
+    """Return true only for report-original PDF routes, not any broker-domain PDF."""
+
+    if not is_recognized_report_domain(url):
+        return False
+    parsed = _parse_url_like(url)
+    host = _normalized_hostname(parsed.hostname or "")
+    path = parsed.path.lower()
+    query = parsed.query.lower()
+    content_type_text = str(content_type or "").lower()
+    path_query = " ".join((path, query))
+    if any(hint in path_query for hint in NON_REPORT_URL_HINTS):
+        return False
+    if not _looks_like_pdf(parsed, content_type=content_type_text):
+        return False
+    if host == "stock.pstatic.net":
+        return path.startswith("/stock-research/company/") or path.startswith("/stock-research/industry/")
+    if host == "ssl.pstatic.net":
+        return path.startswith("/imgstock/upload/research/")
+    if host == "file.alphasquare.co.kr":
+        return path.startswith("/media/pdfs/")
+    if host == "hanaw.com" or host.endswith(".hanaw.com"):
+        return path.startswith("/download/research/")
+    if host == "samsungpop.com" or host.endswith(".samsungpop.com"):
+        return _is_samsungpop_research_download(parsed)
+    return False
 
 
 def _is_pdf_url(url: str) -> bool:
-    return urlparse(url).path.lower().endswith(".pdf") or ".pdf?" in url.lower()
+    return _parse_url_like(url).path.lower().endswith(".pdf") or ".pdf?" in url.lower()
+
+
+def _looks_like_pdf(parsed: Any, *, content_type: str) -> bool:
+    url = parsed.geturl().lower()
+    query_values = " ".join(value for values in parse_qs(parsed.query).values() for value in values).lower()
+    return (
+        parsed.path.lower().endswith(".pdf")
+        or ".pdf?" in url
+        or "application/pdf" in content_type
+        or "contenttype=application/pdf" in parsed.query.lower()
+        or ".pdf" in query_values
+    )
 
 
 def _domain(url: str) -> str:
-    return urlparse(url).netloc or "unknown"
+    return _parse_url_like(url).netloc or "unknown"
+
+
+def _is_samsungpop_research_download(parsed: Any) -> bool:
+    if parsed.path.lower() != "/common.do":
+        return False
+    query = {str(key).lower(): tuple(str(value).lower() for value in values) for key, values in parse_qs(parsed.query).items()}
+    save_keys = query.get("savekey", ())
+    file_names = query.get("filename", ())
+    content_types = query.get("contenttype", ())
+    commands = query.get("cmd", ())
+    return (
+        any(value == "research.pdf" for value in save_keys)
+        and any(".pdf" in value for value in file_names)
+        and any(value == "down" for value in commands)
+        and any("application/pdf" in value for value in content_types)
+    )
+
+
+def _parse_url_like(url: str) -> Any:
+    value = str(url or "").strip()
+    if value and "://" not in value:
+        value = f"https://{value}"
+    return urlparse(value)
+
+
+def _normalized_hostname(host: str) -> str:
+    normalized = str(host or "").strip().lower().strip(".")
+    if normalized.startswith("www."):
+        normalized = normalized[4:]
+    return normalized
+
+
+def _split_domain_path(domain: str) -> tuple[str, str]:
+    if "/" not in domain:
+        return _normalized_hostname(domain), ""
+    host, path = domain.split("/", 1)
+    return _normalized_hostname(host), f"/{path.strip('/')}"
+
+
+def _host_matches_domain(host: str, domain_host: str) -> bool:
+    if not host or not domain_host:
+        return False
+    return host == domain_host or host.endswith(f".{domain_host}")

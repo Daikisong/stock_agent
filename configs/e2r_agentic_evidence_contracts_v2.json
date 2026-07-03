@@ -814,34 +814,21 @@
         "earnings_visibility": [
           "contract_amount_to_prior_sales",
           "contract_duration_months",
-          "margin_bridge_visible",
-          "cost_overrun",
           "delivery_schedule"
         ],
         "bottleneck_pricing": [
-          "contract_amount_to_prior_sales",
-          "contract_duration_months",
-          "margin_bridge_visible",
-          "delivery_schedule"
+          "margin_bridge_visible"
         ],
         "market_mispricing": [
-          "contract_amount_to_prior_sales",
-          "contract_duration_months",
-          "margin_bridge_visible",
-          "delivery_schedule"
+          "margin_bridge_visible"
         ],
         "valuation_rerating": [
-          "contract_amount_to_prior_sales",
-          "contract_duration_months",
-          "margin_bridge_visible",
-          "delivery_schedule"
+          "margin_bridge_visible"
         ],
         "capital_allocation": [],
         "information_confidence": [
           "contract_amount_to_prior_sales",
           "contract_duration_months",
-          "margin_bridge_visible",
-          "cost_overrun",
           "delivery_schedule"
         ]
       }

@@ -17922,14 +17922,6 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         )
 
         states = aggregate_primitive_states(ledger=ledger, contract=contract, as_of_date=date(2026, 6, 21))
-        expected_source_id = stable_source_evidence_id(
-            archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-            primitive_id="customer_allocation",
-            support_direction=SupportDirection.SUPPORT,
-            subject_entity_id="KR:123456",
-            target_entity_id="KR:123456",
-            source_anchor_id=anchor.anchor_id,
-        )
         contributions = build_component_score_contributions_from_rubric(
             components={"earnings_visibility": 20.0},
             primitive_states=states,
@@ -17940,9 +17932,128 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         self.assertEqual(claim.source_anchor_id, anchor.anchor_id)
         self.assertTrue(claim.source_assertion_id.startswith("SASSERT-"))
         self.assertEqual(states["customer_allocation"].support_mapping_ids, (mapping.mapping_id,))
-        self.assertEqual(states["customer_allocation"].support_source_family_ids, (expected_source_id,))
+        self.assertEqual(states["customer_allocation"].support_source_family_ids, (document.document_id,))
         self.assertEqual(contributions[0].mapping_ids, (mapping.mapping_id,))
-        self.assertEqual(contributions[0].source_family_ids, (expected_source_id,))
+        self.assertEqual(contributions[0].source_family_ids, (document.document_id,))
+
+    def test_primitive_aggregation_counts_same_document_as_one_source_family_across_primitives(self):
+        text = "TargetIssuer disclosed a large contract amount and delivery schedule."
+        document = EvidenceDocument.from_text(
+            text=text,
+            canonical_url="https://dart.example.com/contract",
+            source_type=SourceType.FILING,
+            source_name="OpenDART",
+            published_at=date(2026, 6, 30),
+        )
+        anchor = EvidenceAnchor.text_span(document=document, document_text=text, exact_text=text)
+        ledger = AppendOnlyEvidenceLedger()
+        for primitive_id, predicate in (
+            ("contract_amount_to_prior_sales", "large contract amount disclosed"),
+            ("contract_amount_to_prior_sales", "contract amount ratio disclosed again"),
+            ("delivery_schedule", "delivery schedule disclosed"),
+        ):
+            raw = RawAssertion(
+                raw_assertion_id=f"RAW-{primitive_id}",
+                anchor_id=anchor.anchor_id,
+                subject_text="TargetIssuer",
+                predicate=predicate,
+                object_text=text,
+                polarity_proposal=Polarity.POSITIVE,
+                event_date_text="2026-06-30",
+                exact_quote=text,
+            )
+            claim = AdjudicatedClaim.from_raw(
+                raw=raw,
+                document=document,
+                anchor=anchor,
+                subject_entity_id="KR:114450",
+                target_entity_id="KR:114450",
+                relation_to_target=RelationToTarget.SELF,
+                directness=Directness.DIRECT,
+                verification_status=VerificationStatus.SEMANTIC_VERIFIED,
+                target_scope_status=TargetScopeStatus.DIRECT,
+                polarity=Polarity.POSITIVE,
+                temporal_status=TemporalStatus.CURRENT,
+                semantic_status=SemanticStatus.PASS_,
+                investigation_status=InvestigationStatus.COMPLETE,
+                event_date=date(2026, 6, 30),
+            )
+            ledger.append_claim(claim)
+            ledger.append_mapping(
+                PrimitiveMappingProposal.build(
+                    claim_id=claim.claim_id,
+                    archetype_id="C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+                    primitive_id=primitive_id,
+                    support_direction=SupportDirection.SUPPORT,
+                    mapping_status=MappingStatus.ACCEPTED,
+                    rationale="same filing supports multiple contract primitives",
+                )
+            )
+        contract = EvidenceContractV2(
+            archetype_id="C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+            required_primitives=("contract_amount_to_prior_sales", "delivery_schedule"),
+            green_gate=GateExpression.all(
+                (
+                    GateExpression.primitive("contract_amount_to_prior_sales"),
+                    GateExpression.primitive("delivery_schedule"),
+                )
+            ),
+            score_rubric={
+                "earnings_visibility": (
+                    "contract_amount_to_prior_sales",
+                    "delivery_schedule",
+                )
+            },
+        )
+
+        states = aggregate_primitive_states(ledger=ledger, contract=contract, as_of_date=date(2026, 7, 1))
+        contributions = build_component_score_contributions_from_rubric(
+            components={"earnings_visibility": 20.0},
+            primitive_states=states,
+            score_rubric=contract.score_rubric,
+        )
+
+        self.assertEqual(states["contract_amount_to_prior_sales"].support_source_family_ids, (document.document_id,))
+        self.assertEqual(states["delivery_schedule"].support_source_family_ids, (document.document_id,))
+        self.assertEqual(len(states["contract_amount_to_prior_sales"].support_claim_ids), 1)
+        self.assertEqual(contributions[0].source_family_ids, (document.document_id,))
+
+    def test_c05_contract_only_does_not_fan_out_to_margin_or_rerating_components(self):
+        c05 = load_evidence_contracts_v2(require_all_archetypes=True)["C05_EPC_MEGA_CONTRACT_MARGIN_GAP"]
+        states = {
+            primitive_id: PrimitiveStateV2(
+                primitive_id=primitive_id,
+                status=PrimitiveStatus.PRESENT_CURRENT,
+                support_claim_ids=(f"CLM-{primitive_id}",),
+                support_source_family_ids=("DART-DOC-1",),
+                support_mapping_ids=(f"MAP-{primitive_id}",),
+            )
+            for primitive_id in (
+                "contract_amount_to_prior_sales",
+                "contract_duration_months",
+                "delivery_schedule",
+            )
+        }
+
+        contributions = build_component_score_contributions_from_rubric(
+            components={
+                "earnings_visibility": 20.0,
+                "bottleneck_pricing": 20.0,
+                "market_mispricing": 15.0,
+                "valuation_rerating": 15.0,
+                "information_confidence": 5.0,
+            },
+            primitive_states=states,
+            score_rubric=c05.score_rubric,
+        )
+
+        by_component = {item.component_key: item for item in contributions}
+        self.assertEqual(by_component["earnings_visibility"].raw_points, 20.0)
+        self.assertEqual(by_component["information_confidence"].raw_points, 5.0)
+        self.assertEqual(by_component["bottleneck_pricing"].raw_points, 0.0)
+        self.assertEqual(by_component["market_mispricing"].raw_points, 0.0)
+        self.assertEqual(by_component["valuation_rerating"].raw_points, 0.0)
+        self.assertIn("margin_bridge_visible", by_component["bottleneck_pricing"].cap_reason or "")
 
     def test_score_delta_audit_flags_large_delta_without_claim_delta(self):
         before = (
@@ -21196,6 +21307,17 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         self.assertIn("customer_preorder_or_allocation", c06.score_rubric["bottleneck_pricing"])
         self.assertIn("revenue_visibility_contract", c06.score_rubric["eps_fcf_explosion"])
         self.assertTrue(all(contract.score_rubric for contract in contracts.values()))
+        for contract in contracts.values():
+            guard_primitives = set(contract.guard_modes)
+            scored_primitives = {
+                primitive_id
+                for primitives in contract.score_rubric.values()
+                for primitive_id in primitives
+            }
+            self.assertFalse(
+                guard_primitives & scored_primitives,
+                f"{contract.archetype_id} guard primitives leaked into positive score rubric",
+            )
 
         accounting_guard = contracts["R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION"]
         self.assertEqual(

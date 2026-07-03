@@ -221,6 +221,20 @@ def build_official_live_shadow_data(
         source_task_execution = {
             "task_id": task["task_id"],
             "source_task": task,
+            "candidate_event_id": event["candidate_event_id"],
+            "symbol": event["symbol"],
+            "company_name": event["company_name"],
+            "archetype_id": task.get("archetype_id"),
+            "primitive_gap": task.get("primitive_gap"),
+            "source_class": "DART",
+            "provider_name": "OpenDART",
+            "source_task_origin": "official_live_shadow",
+            "preferred_source_classes": list(task.get("preferred_source_classes") or []),
+            "fallback_source_classes": list(task.get("fallback_source_classes") or []),
+            "forbidden_source_classes": list(task.get("forbidden_source_classes") or []),
+            "requested_source_classes": list(
+                dict.fromkeys([*(task.get("preferred_source_classes") or []), *(task.get("fallback_source_classes") or [])])
+            ),
             "status": "NO_EVIDENCE_FOUND",
             "fetched_document_ids": [document["document_id"]],
             "document_urls": [document["canonical_url"]],
@@ -887,11 +901,16 @@ def _clean_planner_error(text: str) -> str:
 def _source_task_for_event(event: Mapping[str, Any], plan: Mapping[str, Any]) -> Mapping[str, Any]:
     draft = dict((plan.get("source_task_drafts") or [{}])[0])
     primitive = str(draft.get("primitive_gap") or plan["must_verify_primitives"][0])
+    archetypes = plan.get("top_k_archetype_hypotheses") or ()
+    primary_archetype = ""
+    if archetypes and isinstance(archetypes[0], Mapping):
+        primary_archetype = str(archetypes[0].get("archetype_id") or "")
     return {
         "task_id": _stable_id("SRC-TASK", event["candidate_event_id"], primitive),
         "candidate_event_id": event["candidate_event_id"],
         "symbol": event["symbol"],
         "company_name": event["company_name"],
+        "archetype_id": str(draft.get("archetype_id") or primary_archetype),
         "primitive_gap": primitive,
         "preferred_source_classes": list(draft.get("preferred_source_classes") or ["DART"]),
         "fallback_source_classes": list(draft.get("fallback_source_classes") or ["IssuerOfficial"]),

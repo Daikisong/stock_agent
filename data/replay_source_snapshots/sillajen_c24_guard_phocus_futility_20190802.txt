@@ -1,0 +1,5 @@
+SillaJen, Inc. (KOSDAQ:215600), a clinical-stage biotherapeutics company, announced that the Independent Data Monitoring Committee for the company's PHOCUS trial evaluated a formal pre-planned futility analysis and recommended discontinuation of the trial.
+The PHOCUS trial is a Phase 3 clinical trial evaluating the oncolytic immunotherapy Pexa-Vec for advanced liver cancer.
+While Pexa-Vec is generally well tolerated by patients, the interim results suggest that the study is unlikely to meet the primary objective by the time of the final analysis.
+SillaJen is taking steps to notify investigators that enrollment is being stopped.
+The primary objective of the study was to determine the overall survival of patients treated with Pexa-Vec followed by sorafenib versus sorafenib alone.

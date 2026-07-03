@@ -1,0 +1,328 @@
+{
+  "as_of_date": "2026-07-01",
+  "blockers": [
+    "full_thesis_smoke_pending",
+    "full_thesis_production_pass_false",
+    "full_thesis_seed_promotion_pass_false",
+    "brain_web_evidence_pass_false",
+    "source_backed_replay_parity_all_archetypes_pending"
+  ],
+  "brain_web_mode": "disabled",
+  "brain_web_requirement_pass": false,
+  "fail_gate_ids": [],
+  "goal_completion_minimum_pass": false,
+  "meaningful_operational_stage_requirement_pass": false,
+  "pending_gate_ids": [
+    "FULL_THESIS_SMOKE_PASS",
+    "FULL_THESIS_PRODUCTION_PASS",
+    "FULL_THESIS_SEED_PROMOTION_PASS",
+    "BRAIN_WEB_EVIDENCE_PASS",
+    "ALL_ARCHETYPE_SOURCE_BACKED_REPLAY_PASS"
+  ],
+  "production_full_thesis_requirement_pass": false,
+  "required_goal_completion_count": 19,
+  "required_goal_completion_fail_count": 0,
+  "required_goal_completion_pass_count": 14,
+  "required_goal_completion_pending_count": 5,
+  "requirements": [
+    {
+      "blocker": "v3_forensic_review_missing",
+      "evidence": {
+        "exists": true,
+        "path": "docs/operational/census_mode_v3_forensic_review.md"
+      },
+      "gate_id": "V3_FORENSIC_REVIEW_COMPLETE",
+      "required_for_goal_completion": true,
+      "status": "PASS",
+      "title": "v3 report-only pass is reclassified before v4 use"
+    },
+    {
+      "blocker": "anti_fake_leaf_audit_not_pass",
+      "evidence": {
+        "critical_count": 0,
+        "eligible_symbol_count": 3391,
+        "leaf_verdict": "PASS",
+        "stage_status_count": 3391
+      },
+      "gate_id": "ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS",
+      "required_for_goal_completion": true,
+      "status": "PASS",
+      "title": "full universe status board is leaf-audited and anti-fake"
+    },
+    {
+      "blocker": "atomic_stage_decision_not_pass",
+      "evidence": {
+        "stage_trace_claim_set_mismatch_count": 0,
+        "stage_trace_contribution_set_mismatch_count": 0,
+        "stage_trace_score_interval_mismatch_count": 0,
+        "stage_trace_stage_mismatch_count": 0
+      },
+      "gate_id": "ATOMIC_STAGE_DECISION_PASS",
+      "required_for_goal_completion": true,
+      "status": "PASS",
+      "title": "stage/score/status/trace come from atomic representative decisions"
+    },
+    {
+      "blocker": "score_scale_not_pass",
+      "evidence": {
+        "operator_score_use_distribution": {
+          "NOT_FULL_E2R_SCORE": 3391
+        },
+        "raw_contribution_fallback_as_verified_score_count": 0,
+        "score_scope_distribution": {
+          "EVENT_WEIGHTED_PARTIAL": 67,
+          "NO_SCORE": 3324
+        },
+        "verified_score_not_full_e2r_count": 0
+      },
+      "gate_id": "SCORE_SCALE_PASS",
+      "required_for_goal_completion": true,
+      "status": "PASS",
+      "title": "event scores and full E2R scores are not mixed"
+    },
+    {
+      "blocker": "stage_semantics_not_pass",
+      "evidence": {
+        "operator_stage_use_distribution": {
+          "NOT_FULL_THESIS_STAGE": 3391
+        },
+        "pending_material_marked_complete_count": 0,
+        "red_without_risk_signal_or_trace_count": 0,
+        "source_pending_marked_red_count": 0,
+        "stage_scope_distribution": {
+          "CENSUS_EVENT_BOARD": 3391
+        }
+      },
+      "gate_id": "STAGE_SEMANTICS_PASS",
+      "required_for_goal_completion": true,
+      "status": "PASS",
+      "title": "Stage0/Stage2/Red/pending labels are semantically separated"
+    },
+    {
+      "blocker": "semantic_primitive_guard_not_pass",
+      "evidence": {
+        "contract_quality_semantic_guard_missing_count": 0,
+        "known_bad_status": "PASS",
+        "semantic_guard_failed_score_count": 0
+      },
+      "gate_id": "SEMANTIC_PRIMITIVE_GUARD_PASS",
+      "required_for_goal_completion": true,
+      "status": "PASS",
+      "title": "non-revenue contract wording cannot unlock contract/revision primitives"
+    },
+    {
+      "blocker": "source_task_satisfaction_not_pass",
+      "evidence": {
+        "primitive_state_chain_verdict": "PASS",
+        "representative_score_claim_count": 67,
+        "source_task_chain_closed_to_representative_stage_count": 67,
+        "source_task_satisfaction_verdict": "PASS_LEDGER_REFRESH_SOURCE_TASK_SATISFACTION"
+      },
+      "gate_id": "SOURCE_TASK_SATISFACTION_PASS",
+      "required_for_goal_completion": true,
+      "status": "PASS",
+      "title": "representative score claims are closed to source tasks and primitive states"
+    },
+    {
+      "blocker": "ledger_reuse_or_source_coverage_not_pass",
+      "evidence": {
+        "existing_ledger_reuse_verdict": "PASS",
+        "last_effective_thesis_verdict": "PASS",
+        "live_source_pass_allowed": false,
+        "runtime_mode": "LEDGER_REFRESH",
+        "runtime_plausibility_verdict": "PASS_LEDGER_REFRESH_RUNTIME_HONESTY",
+        "source_coverage_verdict": "PASS_LEDGER_REFRESH_COVERAGE",
+        "source_task_realness_verdict": "PASS_LEDGER_REFRESH_REALNESS"
+      },
+      "gate_id": "LEDGER_REUSE_AND_SOURCE_COVERAGE_PASS",
+      "required_for_goal_completion": true,
+      "status": "PASS",
+      "title": "existing claims are lifecycle-refreshed and source coverage is honestly ledger-refresh scoped"
+    },
+    {
+      "blocker": "full_thesis_smoke_pending",
+      "evidence": {
+        "full_thesis_status": "PENDING_FULL_THESIS_REFRESH",
+        "required_symbols": [
+          "005930",
+          "000660"
+        ],
+        "verdict": "PENDING_FULL_THESIS_REFRESH"
+      },
+      "gate_id": "FULL_THESIS_SMOKE_PASS",
+      "required_for_goal_completion": true,
+      "status": "PENDING",
+      "title": "controlled Samsung/Hynix full-thesis wiring smoke passes without production substitution"
+    },
+    {
+      "blocker": "full_thesis_production_pass_false",
+      "evidence": {
+        "controlled_smoke_full_thesis_row_count": 0,
+        "production_full_thesis_row_count": 0,
+        "production_mode_requested": false,
+        "production_pass_allowed": false,
+        "verdict": "PENDING_FULL_THESIS_PRODUCTION"
+      },
+      "gate_id": "FULL_THESIS_PRODUCTION_PASS",
+      "required_for_goal_completion": true,
+      "status": "PENDING",
+      "title": "production full-thesis rows exist without controlled-smoke substitution"
+    },
+    {
+      "blocker": "full_thesis_seed_materialization_audit_not_pass",
+      "evidence": {
+        "critical_count": 0,
+        "full_thesis_promoted_seed_count": 0,
+        "seed_event_count": 85,
+        "status_counts": {
+          "PLANNER_NOT_RUN": 85
+        },
+        "trace_row_count": 85,
+        "verdict": "PASS"
+      },
+      "gate_id": "FULL_THESIS_SEED_MATERIALIZATION_AUDIT_PASS",
+      "required_for_goal_completion": true,
+      "status": "PASS",
+      "title": "full thesis seed materialization trace/audit is internally consistent"
+    },
+    {
+      "blocker": "full_thesis_seed_promotion_pass_false",
+      "evidence": {
+        "critical_count": 0,
+        "full_thesis_promoted_seed_count": 0,
+        "seed_event_count": 85,
+        "status_counts": {
+          "PLANNER_NOT_RUN": 85
+        },
+        "verdict": "PASS"
+      },
+      "gate_id": "FULL_THESIS_SEED_PROMOTION_PASS",
+      "required_for_goal_completion": true,
+      "status": "PENDING",
+      "title": "at least one full thesis seed has materialized into production FULL_THESIS"
+    },
+    {
+      "blocker": "brain_web_evidence_pass_false",
+      "evidence": {
+        "brain_web_evidence_pass_allowed": false,
+        "llm_claim_extractor_attempt_count": 0,
+        "llm_planner_call_count": 0,
+        "minimum_required_counts": {
+          "llm_claim_extractor_attempt_count": 10,
+          "llm_planner_call_count": 30,
+          "web_fetched_document_count": 10,
+          "web_or_llm_accepted_claim_count": 3,
+          "web_search_call_count": 20,
+          "web_search_task_count": 20
+        },
+        "operational_minimum_count_gate_applies": false,
+        "verdict": "NOT_REQUESTED",
+        "web_fetched_document_count": 0,
+        "web_or_llm_accepted_claim_count": 0,
+        "web_search_call_count": 0,
+        "web_search_task_count": 0
+      },
+      "gate_id": "BRAIN_WEB_EVIDENCE_PASS",
+      "required_for_goal_completion": true,
+      "status": "PENDING",
+      "title": "real planner/web/extractor/claim traces satisfy operational minimums"
+    },
+    {
+      "blocker": "source_backed_replay_parity_all_archetypes_pending",
+      "evidence": {
+        "all_archetype_replay_pass": false,
+        "guard_replay_ready_count": 6,
+        "missing_required_archetype_count": 26,
+        "required_archetype_count": 32,
+        "source_backed_ready_count": 6,
+        "status_counts": {
+          "GUARDRAIL_CONTRACT_ONLY_PENDING_SOURCE_BACKED_REPLAY": 4,
+          "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY": 6,
+          "SOURCE_GAP_PENDING": 26
+        }
+      },
+      "gate_id": "ALL_ARCHETYPE_SOURCE_BACKED_REPLAY_PASS",
+      "required_for_goal_completion": true,
+      "status": "PENDING",
+      "title": "required archetypes have source-backed positive/guard replay parity"
+    },
+    {
+      "blocker": "controlled_semantic_replay_pending",
+      "evidence": {
+        "blockers": [],
+        "case_count": 10,
+        "controlled_semantic_replay_pass": true,
+        "fail_count": 0,
+        "pass_count": 10,
+        "pending_count": 0
+      },
+      "gate_id": "CONTROLLED_SEMANTIC_REPLAY_PASS",
+      "required_for_goal_completion": true,
+      "status": "PASS",
+      "title": "goal3 priority semantic replay cases are source-backed and lifecycle-clean"
+    },
+    {
+      "blocker": "c06_guard_replay_pending",
+      "evidence": {
+        "guard_cases_pass": true,
+        "guard_replay_pass": true,
+        "positive_semantic_replay_ready": true,
+        "semantic_blockers": []
+      },
+      "gate_id": "C06_GUARD_REPLAY_PASS",
+      "required_for_goal_completion": true,
+      "status": "PASS",
+      "title": "C06 positive and qualification-lag guard are semantic replay ready"
+    },
+    {
+      "blocker": "known_bad_regression_not_run",
+      "evidence": {
+        "case_count": 11,
+        "failed_case_count": 0,
+        "status": "PASS"
+      },
+      "gate_id": "KNOWN_BAD_REGRESSION_PASS",
+      "required_for_goal_completion": true,
+      "status": "PASS",
+      "title": "known-bad fixtures fail as expected"
+    },
+    {
+      "blocker": "self_repair_unresolved_failures",
+      "evidence": {
+        "completion_eligible": true,
+        "deferred_goal_blockers": [
+          "brain_web_evidence_pass_false",
+          "full_thesis_smoke_pending",
+          "full_thesis_production_pass_false",
+          "full_thesis_seed_materialization_not_promoted",
+          "source_backed_replay_parity_all_archetypes_pending"
+        ],
+        "loop_executed": true,
+        "status": "RUN_COMPLETE",
+        "unresolved_failures": []
+      },
+      "gate_id": "SELF_REPAIR_LOOP_PASS",
+      "required_for_goal_completion": true,
+      "status": "PASS",
+      "title": "self-repair/recheck loop ran and has no unresolved non-external failures"
+    },
+    {
+      "blocker": "machine_readable_test_result_artifact_missing",
+      "evidence": {
+        "artifact_error_count": 0,
+        "artifact_failed_count": 0,
+        "artifact_status": "OK",
+        "artifact_test_count": 5077,
+        "verdict": "MACHINE_READABLE_TEST_ARTIFACT_PASS"
+      },
+      "gate_id": "FULL_TEST_ARTIFACT_PASS",
+      "required_for_goal_completion": true,
+      "status": "PASS",
+      "title": "machine-readable full test artifact is valid"
+    }
+  ],
+  "rule": "This matrix follows docs/core/goal.md, goal2.md, and goal3.md. Anti-fake status-board pass is not goal completion; Brain/Web, production full-thesis, all-archetype replay, controlled semantic replay, self-repair, known-bad, and full-test evidence must all be proven.",
+  "run_mode": "LEDGER_REFRESH_CENSUS",
+  "schema_version": "e2r_census_v4_goal_requirement_matrix_audit_v1",
+  "target_gate": "anti_fake"
+}

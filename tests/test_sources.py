@@ -17,7 +17,8 @@ from e2r.sources import (
     ReportSearchConnector,
     SECEdgarConnector,
 )
-from e2r.sources.report_search import is_recognized_report_domain
+from e2r.sources.opendart import extract_document_text, parse_disclosure_text
+from e2r.sources.report_search import is_recognized_report_domain, is_verified_report_original_url
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -51,6 +52,41 @@ class SourceConnectorTests(unittest.TestCase):
         self.assertNotIn("is_cancellable", fields)
         self.assertEqual(evidence.source_tier, SourceTier.TIER_0)
 
+    def test_opendart_parses_table_style_contract_fields(self):
+        raw_text = """
+        그린생명과학/단일판매ㆍ공급계약체결/(2026.06.30)
+        단일판매ㆍ공급계약체결
+        2. 계약내역
+        확정 계약금액
+        10,238,670,000
+        조건부 계약금액
+        -
+        계약금액 총액(원)
+        10,238,670,000
+        최근 매출액(원)
+        24,860,636,227
+        매출액 대비(%)
+        41.18
+        3. 계약상대방
+        UPL Limited
+        - 최근 매출액(원)
+        7,653,624,000,000
+        5. 계약기간
+        시작일
+        2025-11-17
+        종료일
+        2026-06-30
+        """
+
+        fields = parse_disclosure_text(raw_text, title="[기재정정]단일판매ㆍ공급계약체결")
+
+        self.assertEqual(fields["contract_amount"], 10238670000.0)
+        self.assertAlmostEqual(fields["contract_amount_to_prior_sales"], 0.4118)
+        self.assertEqual(fields["contract_start"], "2025-11-17")
+        self.assertEqual(fields["contract_end"], "2026-06-30")
+        self.assertEqual(fields["contract_duration_months"], 8)
+        self.assertEqual(fields["counterparty"], "UPL Limited")
+
     def test_opendart_parses_corp_code_zip_by_stock_code(self):
         buffer = io.BytesIO()
         with zipfile.ZipFile(buffer, "w") as archive:
@@ -82,6 +118,24 @@ class SourceConnectorTests(unittest.TestCase):
         self.assertEqual(mapping["005930"], "00126380")
         self.assertEqual(mapping["000660"], "00164779")
 
+    def test_opendart_extract_document_text_strips_css_noise(self):
+        raw = """
+        <DOCUMENT>
+          <style>.xforms * { font-family: 돋움체; font-size: 10px; }</style>
+          <SECTION-1>
+            <P>신규시설투자</P>
+            <P>투자금액: 1,200억원</P>
+            <P>완공예정일: 2027.12.31</P>
+          </SECTION-1>
+        </DOCUMENT>
+        """
+
+        text = extract_document_text(raw)
+
+        self.assertNotIn("font-family", text)
+        self.assertIn("투자금액", text)
+        self.assertIn("완공예정일", text)
+
     def test_live_connectors_report_missing_credentials_clearly(self):
         with self.assertRaises(MissingCredentialError):
             OpenDARTConnector(api_key=None).require_live_credentials()
@@ -107,6 +161,47 @@ class SourceConnectorTests(unittest.TestCase):
         self.assertTrue(results[0].is_pdf)
         self.assertTrue(results[0].is_recognized_report_domain)
         self.assertTrue(is_recognized_report_domain(results[0].url))
+        self.assertTrue(is_verified_report_original_url(results[0].url))
+        self.assertTrue(
+            is_verified_report_original_url(
+                "https://www.samsungpop.com/common.do?cmd=down&contentType=application/pdf"
+                "&saveKey=research.pdf&fileName=2010/2025102917550025K_02_03.pdf"
+            )
+        )
+        self.assertTrue(
+            is_verified_report_original_url(
+                "https://file.hanaw.com/download/research/FileServer/WEB/info/daily/2026/06/07/Daily_260608.pdf"
+            )
+        )
+        self.assertTrue(
+            is_verified_report_original_url(
+                "https://stock.pstatic.net/stock-research/company/38/20250731_company_685270000.pdf",
+                title="SK Hynix customer allocation report",
+            )
+        )
+        self.assertFalse(is_verified_report_original_url("https://www.samsungpop.com/customer/event_terms.pdf"))
+        self.assertFalse(is_verified_report_original_url("https://www.samsungpop.com/privacy.pdf"))
+        self.assertFalse(is_verified_report_original_url("https://www.samsungpop.com/support/report-center/fake.pdf"))
+        self.assertFalse(
+            is_verified_report_original_url(
+                "https://www.samsungpop.com/support/download?"
+                "saveKey=research.pdf&fileName=fake.pdf&contentType=application/pdf"
+            )
+        )
+        self.assertFalse(
+            is_verified_report_original_url(
+                "https://www.samsungpop.com/common.do?next=research.pdf&contentType=application/pdf"
+            )
+        )
+        self.assertFalse(is_verified_report_original_url("https://www.samsungpop.com/media/pdfs/fake.pdf"))
+        self.assertFalse(is_recognized_report_domain("https://samsungpop.com.evil.com/research/fake-report.pdf"))
+        self.assertFalse(
+            is_verified_report_original_url("https://samsungpop.com.evil.com/research/fake-report.pdf")
+        )
+        self.assertFalse(is_recognized_report_domain("https://evil.example/samsungpop.com/research/fake-report.pdf"))
+        self.assertFalse(
+            is_verified_report_original_url("https://evil.example/samsungpop.com/research/fake-report.pdf")
+        )
 
     def test_sec_companyfacts_fixture_maps_to_financial_actual(self):
         connector = SECEdgarConnector(fixture_root=ROOT / "data/raw/sec_edgar")

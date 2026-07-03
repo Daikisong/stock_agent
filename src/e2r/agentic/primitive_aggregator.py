@@ -20,7 +20,6 @@ from .evidence_os import (
     TargetScopeStatus,
     TemporalStatus,
     VerificationStatus,
-    stable_source_evidence_id,
 )
 
 
@@ -53,6 +52,8 @@ def aggregate_primitive_states(
     counter_mappings: dict[str, list[str]] = {primitive_id: [] for primitive_id in primitive_ids}
     support_sources: dict[str, list[str]] = {primitive_id: [] for primitive_id in primitive_ids}
     counter_sources: dict[str, list[str]] = {primitive_id: [] for primitive_id in primitive_ids}
+    support_source_seen: dict[str, set[str]] = {primitive_id: set() for primitive_id in primitive_ids}
+    counter_source_seen: dict[str, set[str]] = {primitive_id: set() for primitive_id in primitive_ids}
     freshness: dict[str, list[int]] = {primitive_id: [] for primitive_id in primitive_ids}
     lifecycle: dict[str, list[TemporalStatus]] = {primitive_id: [] for primitive_id in primitive_ids}
     implicit_closures = _implicit_lifecycle_closure_statuses(ledger, as_of_date=as_of_date)
@@ -71,6 +72,8 @@ def aggregate_primitive_states(
         counter_mappings.setdefault(primitive_id, [])
         support_sources.setdefault(primitive_id, [])
         counter_sources.setdefault(primitive_id, [])
+        support_source_seen.setdefault(primitive_id, set())
+        counter_source_seen.setdefault(primitive_id, set())
         freshness.setdefault(primitive_id, [])
         lifecycle.setdefault(primitive_id, [])
         freshness_policy = contract.freshness.get(primitive_id)
@@ -91,14 +94,21 @@ def aggregate_primitive_states(
                 )
             )
             continue
+        source_id = _source_evidence_id_for_mapping(mapping, claim)
         if mapping.support_direction == SupportDirection.COUNTER:
+            if source_id in counter_source_seen[primitive_id]:
+                continue
+            counter_source_seen[primitive_id].add(source_id)
             counter[primitive_id].append(mapping.claim_id)
             counter_mappings[primitive_id].append(mapping.mapping_id)
-            counter_sources[primitive_id].append(_source_evidence_id_for_mapping(mapping, claim))
+            counter_sources[primitive_id].append(source_id)
         elif mapping.support_direction == SupportDirection.SUPPORT:
+            if source_id in support_source_seen[primitive_id]:
+                continue
+            support_source_seen[primitive_id].add(source_id)
             support[primitive_id].append(mapping.claim_id)
             support_mappings[primitive_id].append(mapping.mapping_id)
-            support_sources[primitive_id].append(_source_evidence_id_for_mapping(mapping, claim))
+            support_sources[primitive_id].append(source_id)
         if claim.event_date is not None:
             freshness[primitive_id].append(max((as_of_date - claim.event_date).days, 0))
 
@@ -123,15 +133,8 @@ def aggregate_primitive_states(
 
 
 def _source_evidence_id_for_mapping(mapping, claim: AdjudicatedClaim) -> str:
-    source_anchor_id = claim.source_anchor_id or claim.claim_id
-    return stable_source_evidence_id(
-        archetype_id=mapping.archetype_id,
-        primitive_id=mapping.primitive_id,
-        support_direction=mapping.support_direction,
-        subject_entity_id=claim.subject_entity_id,
-        target_entity_id=claim.target_entity_id,
-        source_anchor_id=source_anchor_id,
-    )
+    del mapping
+    return claim.source_document_id or claim.source_anchor_id or claim.claim_id
 
 
 def _append_only_lifecycle_status(
@@ -278,6 +281,8 @@ def _claim_exceeds_freshness_policy(
     freshness_policy: FreshnessPolicy | None,
 ) -> bool:
     if freshness_policy is None or freshness_policy.max_age_days is None or claim.event_date is None:
+        return False
+    if claim.effective_end is not None and claim.effective_end >= as_of_date:
         return False
     age_days = (as_of_date - claim.event_date).days
     return age_days > freshness_policy.max_age_days

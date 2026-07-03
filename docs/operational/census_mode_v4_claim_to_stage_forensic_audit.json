@@ -1,0 +1,26 @@
+{
+  "critical_count": 0,
+  "critical_counts": {
+    "claim_id_not_found_count": 0,
+    "claim_to_stage_trace_missing_count": 0,
+    "no_current_thesis_recent_cutoff_reason_count": 0,
+    "provider_failed_final_score_count": 0,
+    "score_contribution_id_not_found_count": 0,
+    "scored_row_missing_claim_ids": 0,
+    "scored_row_missing_score_contribution_ids": 0,
+    "scored_row_missing_stagecourt_trace": 0,
+    "source_pending_marked_red_count": 0,
+    "source_proxy_support_claim_count": 0,
+    "stage0_without_timeline_count": 0,
+    "stage2plus_without_trace_or_pending_reason_count": 0,
+    "stagecourt_trace_id_not_found_count": 0,
+    "support_claim_missing_event_or_source_date_count": 0,
+    "support_claim_missing_source_locator_count": 0,
+    "support_claim_missing_target_temporal_adjudication_count": 0,
+    "support_claim_not_accepted_count": 0
+  },
+  "schema_version": "e2r_census_v4_claim_to_stage_forensic_audit_v1",
+  "scored_row_count": 67,
+  "stage2plus_or_risk_row_count": 31,
+  "verdict": "PASS"
+}
